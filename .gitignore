@@ -1,0 +1,4 @@
+.DS_Store
+.settings/**
+settings.xml
+.project

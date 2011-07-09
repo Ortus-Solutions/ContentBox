@@ -1,0 +1,44 @@
+/* table sorter */
+.tablesorter {
+	border-collapse: inherit !important;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	font-size: 8pt;
+	width: 100%;
+	text-align: left;
+}
+.tablesorter thead tr .header {
+	background: #E0EFEF url(../images/bg.gif) no-repeat center right !important;
+	cursor: pointer  !important;
+	-moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius:0px; 
+	color: inherit !important;
+	height: inherit !important;
+}
+.tablesorter thead tr th, .tablesorter tfoot tr th {
+	background-color: #E0EFEF !important;
+	border: 1px solid #FFF !important;
+	font-size: 8pt !important;
+	padding: 4px !important;
+}
+.tablesorter thead tr .headerSortUp {
+	background-image: url(../images/asc.gif) !important;
+}
+.tablesorter thead tr .headerSortDown {
+	background-image: url(../images/desc.gif) !important;
+}
+.tablesorter thead tr .headerSortDown, .tablesorter thead tr .headerSortUp {
+	background-color: #8dbdd8;
+}
+.tablesorter tbody td {
+	color: #3D3D3D;
+	padding: 4px;
+	vertical-align: top;
+}
+.tablesorter tbody tr.even{
+	background-color:#F0F0F0;
+}.tablesorter tbody tr{
+	background-color:#fff;
+}
+.tablesorter tbody tr:hover { background: #d7eafe; }
+.tablesorter tbody tr.center { text-align: center; }
+.tablesorter tbody td a{ text-decoration: none; border: none;}

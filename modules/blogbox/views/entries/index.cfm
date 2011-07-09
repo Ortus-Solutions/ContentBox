@@ -1,0 +1,1 @@
+<cfoutput><h1>entries.index</h1></cfoutput>

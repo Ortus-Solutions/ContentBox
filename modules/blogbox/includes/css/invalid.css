@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* CSS Document */
+fieldset, .button, .button2, .small_box, .box, .body_vertical_nav,.tooltip, .tooltip.bottom,div.info, div.warning, div.error  { -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+/**Active tab in Navigation**/
+#main_nav li a.current { border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; }
+/** Shadow in boxes **/
+.box, .small_box { -moz-box-shadow: 0px 0px 10px #808080; -webkit-box-shadow: 0px 0px 10px #808080; }
+/** Headers of boxes **/
+.small_box .header, .box .header { border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; }
+.visualize .visualize-info { opacity: .8; }
+div.wysiwyg ul.panel li a { opacity: 0.85;}
+div.wysiwyg ul.panel li a:hover, div.wysiwyg ul.panel li a.active { opacity: 1.00;}
+.paging_full_numbers span.paginate_button,  .paging_full_numbers span.paginate_active { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius:5px;}
