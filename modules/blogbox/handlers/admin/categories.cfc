@@ -4,7 +4,7 @@
 component{
 
 	// Dependencies
-	property name="categoryService"		inject="entityService:bbCategory";
+	property name="categoryService"		inject="id:categoryService@bb";
 
 	// pre handler
 	function preHandler(event,action){

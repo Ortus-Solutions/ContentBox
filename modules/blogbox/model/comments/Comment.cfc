@@ -16,8 +16,13 @@ component persistent="true" entityname="bbComment" table="bb_comment"{
 	// M20 -> Entry
 	property name="entry" cfc="blogbox.model.entries.Entry" fieldtype="many-to-one" fkcolumn="FK_entryID";
 	
-	function init(){
-		return this;
+	/************************************** PUBLIC *********************************************/
+	
+	/**
+	* is loaded?
+	*/
+	boolean function isLoaded(){
+		return len( getCommentID() );
 	}
 	
 }

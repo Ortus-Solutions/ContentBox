@@ -4,16 +4,16 @@
 component{
 
 	// Dependencies
-	property name="categoryService"		inject="entityService:bbCategory";
+	property name="categoryService"		inject="id:categoryService@bb";
 	property name="entryService"		inject="id:entryService@bb";
 
 	// pre handler
 	function preHandler(event,action){
 		var rc = event.getCollection();
 		// exit Handlers
-		rc.xehCategories 		= "#rc.bbEntryPoint#.admin.categories";
-		rc.xehCategoryEditor 	= "#rc.bbEntryPoint#.admin.categories.editor";
-		rc.xehCategoryRemove 	= "#rc.bbEntryPoint#.admin.categories.remove";
+		rc.xehEntries 		= "#rc.bbEntryPoint#.admin.entries";
+		rc.xehEntryEditor 	= "#rc.bbEntryPoint#.admin.entries.editor";
+		rc.xehEntryRemove 	= "#rc.bbEntryPoint#.admin.entries.remove";
 	}
 	
 	// index
@@ -21,34 +21,48 @@ component{
 		// get all categories
 		rc.categories = categoryService.getAll(sortOrder="category desc");
 		// get all entries
-		rc.categories = entryService.list(sortOrder="publishedDate desc");
+		rc.entries = entryService.list(sortOrder="publishedDate desc",asQuery=false);
 		// view
 		event.setView("admin/entries/index");
 	}
 
 	// editor
 	function editor(event,rc,prc){
+		// get all categories
+		rc.categories = categoryService.getAll(sortOrder="category desc");
 		// get new or persisted
-		rc.category  = categoryService.get( event.getValue("CategoryID",0) );
+		rc.entry  = entryService.get( event.getValue("entryID",0) );
 		// exit handlers
-		rc.xehCategoriesSave = "#rc.bbEntryPoint#.admin.Categories.save";
+		rc.xehEntrySave = "#rc.bbEntryPoint#.admin.entries.save";
 		// view
-		event.setView("admin/categories/editor");
+		event.setView("admin/entries/editor");
 	}	
 
 	// save
 	function save(event,rc,prc){
-		// slugify if not passed
-		if( NOT len(rc.slug) ){ rc.slug = rc.category; }
-		rc.slug = getPlugin("HTMLHelper").slugify(rc.category);
-		// populate and get category
-		var oCategory = populateModel( categoryService.get(id=rc.categoryID) );
-    	// save category
-		categoryService.save( oCategory );
-		// messagebox
-		getPlugin("MessageBox").setMessage("info","Category saved!");
+		// params
+		event.paramValue("allowComments",false);
+		event.paramValue("slug","");
+		
+		// slugify the incoming title or slug
+		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
+		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
+		
+		// Create new categories?
+		var categories = [];
+		if( len(trim(rc.newCategories)) ){
+			categories = categoryService.createCategories( trim(rc.newCategories) );
+		}
+		// Inflate sent categories from collection
+		categories.addAll( categoryService.inflateCategories( rc ) );
+		
+		// get new entry and populate it
+		var entry = populateModel( entryService.new() ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		
+		writeDump(entry);abort;
+		
 		// relocate
-		setNextEvent(rc.xehCategories);
+		setNextEvent(rc.xehEntries);
 	}
 	
 	// remove

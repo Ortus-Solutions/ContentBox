@@ -30,6 +30,7 @@ component {
 			// Admin routes
 			{pattern="/admin/authors/:action?", handler="admin.authors" },
 			{pattern="/admin/entries/:action?", handler="admin.entries" },
+			{pattern="/admin/comments/:action?", handler="admin.comments" },
 			{pattern="/admin/categories/:action?", handler="admin.categories" },
 			{pattern="/admin/dashboard/:action?", handler="admin.dashboard" },
 			// Default Route
@@ -50,6 +51,7 @@ component {
 		binder.map("authorService@bb").to("#moduleMapping#.model.entries.AuthorService");
 		binder.map("entryService@bb").to("#moduleMapping#.model.entries.EntryService");
 		binder.map("commentService@bb").to("#moduleMapping#.model.comments.CommentService");
+		binder.map("categoryService@bb").to("#moduleMapping#.model.entries.CategoryService");
 	}
 	
 	/**

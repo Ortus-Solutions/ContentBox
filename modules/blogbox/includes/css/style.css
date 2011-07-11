@@ -88,8 +88,7 @@ fieldset legend { font-weight: bold; }
 form label { 			font-size:1.0em;
 						font-weight:bold;
 						display:block;
-						margin-bottom:5px;
-						margin-top: 15px;
+						margin: 3px 0px 3px 0px;
 						}
 form p small { 			font-size: 0.75em;
 						display:block;

@@ -85,4 +85,10 @@ component persistent="true" entityname="bbAuthor" table="bb_author"{
 		return getFirstName() & " " & getLastName();
 	}
 	
+	/**
+	* is loaded?
+	*/
+	boolean function isLoaded(){
+		return len( getAuthorID() );
+	}
 }

@@ -1,18 +1,4 @@
 <cfoutput>
-<!--- js --->
-<cfsavecontent variable="js">
-<cfoutput>
-<script type="text/javascript">
-	function remove(categoryID){
-		if( confirm("Really delete?") ){
-			$("##categoryID").val( categoryID );
-			$("##authorForm").submit();
-		}
-	}
-</script>
-</cfoutput>
-</cfsavecontent>
-<cfhtmlhead text="#js#">
 <!--- Title --->
 <h1>Category Management</h1>
 <!--- MessageBox --->
@@ -49,4 +35,13 @@
 	</tbody>
 </table>
 </form>
+
+<script type="text/javascript">
+	function remove(categoryID){
+		if( confirm("Really delete?") ){
+			$("##categoryID").val( categoryID );
+			$("##authorForm").submit();
+		}
+	}
+</script>
 </cfoutput>

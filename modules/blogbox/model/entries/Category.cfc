@@ -14,4 +14,10 @@ component persistent="true" entityname="bbCategory" table="bb_category"{
 
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
 	
+	/**
+	* is loaded?
+	*/
+	boolean function isLoaded(){
+		return len( getCommentID() );
+	}
 }

@@ -36,9 +36,6 @@ form input.textfield:focus, form select:focus, form textarea:focus {
 	background: #fbfafb url(../images/textfield_active_bg.gif) repeat-x top; /*Define bacground for focussed form elements here*/
 	border: 1px solid #aeaeae;
 }
-/************** Error styles ***************/ 
-form input.error, form select.error, form textarea.error, form .wysiwyg.error, form input.error:focus, form select.error:focus, form textarea.error:focus, form .wysiwyg.error:focus { 	
-	border: 1px solid #ff8388; }
 /************** Disabled form Elements *************/
 button[disabled]:active, button[disabled], input[type="reset"][disabled]:active, input[type="reset"][disabled], input[type="button"][disabled]:active, input[type="button"][disabled], select[disabled] > input[type="button"], select[disabled] > input[type="button"]:active, input[type="submit"][disabled]:active, input[type="submit"][disabled], .textfield[disabled], .textfield_large[disabled] {
 	border: 1px solid #d6d6d6;

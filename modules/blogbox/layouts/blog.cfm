@@ -26,10 +26,6 @@
 	<script type="text/javascript" src="#rc.bbroot#/includes/js/jquery.latest.min.js"></script> <!--Import jquery tools-->
 	<script type="text/javascript" src="#rc.bbroot#/includes/js/jquery.tools.min.js"></script> <!--Import jquery tools-->
 	<script type="text/javascript" src="#rc.bbroot#/includes/js/blogbox.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/shCore.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/brushes/shBrushColdFusion.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/brushes/shBrushJScript.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/brushes/shBrushXml.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
 	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
 		<cfset addAsset("#rc.bbroot#/includes/js/#js#.js")>

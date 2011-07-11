@@ -12,8 +12,9 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	property name="createdDate" 	notnull="true"  ormtype="date" update="false";
 	property name="updatedDate" 	notnull="true"  ormtype="timestamp" sqltype="timestamp" insert="false" update="false";
 	property name="publishedDate"	notnull="false" ormtype="date";
-	property name="isPublished" 	notnull="true"  ormtype="boolean" default="false";
+	property name="isPublished" 	notnull="true"  ormtype="boolean" default="true";
 	property name="allowComments" 	notnull="true"  ormtype="boolean" default="true";
+	property name="passwordProtection" 	notnull="false" length="100";
 	
 	// M20 -> Author
 	property name="author" cfc="blogbox.model.entries.Author" fieldtype="many-to-one" fkcolumn="FK_userID" lazy="true";
@@ -34,6 +35,31 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	}
 	
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
+	
+	/**
+	* Get display publishedDate
+	*/
+	string function getDisplayPublishedDate(){
+		var pDate = getPublishedDate();
+		if( isNull(pDate) ){ pDate = now(); }
+		return dateFormat( pDate, "yyyy-mm-dd" );
+	}
+	
+	/**
+	* Get formatted createdDate
+	*/
+	string function getDisplayCreatedDate(){
+		var createdDate = getCreatedDate();
+		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+	}
+	
+	/**
+	* Get formatted updatedDate
+	*/
+	string function getDisplayUpdatedDate(){
+		var updatedDate = getUpdatedDate();
+		return dateFormat( updatedDate, "mm/dd/yyy" ) & " " & timeFormat(updatedDate, "hh:mm:ss tt");
+	}
 	
 	/*
 	* I return the number of comments for this post
@@ -56,6 +82,22 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	*/
 	string function getAuthorName(){
 		return getAuthor().getName();
+	}
+	
+	/**
+	* is loaded?
+	*/
+	boolean function isLoaded(){
+		return len( getEntryID() );
+	}
+	
+	/**
+	* addPublishedtime
+	*/
+	any function addPublishedtime(hour,minute){
+		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
+		setPublishedDate( getPublishedDate() & " " & time);
+		return this;
 	}
 	
 }
