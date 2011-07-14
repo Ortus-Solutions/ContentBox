@@ -50,7 +50,7 @@ $Build ID:	@@build_id@@
 		
 		<cfsavecontent variable="avatar">
 		<cfoutput>
-		<img align="middle" src="http://www.gravatar.com/avatar.php?gravatar_id=#lcase(Hash(emailTarget))#&s=#arguments.size#" alt="Cool Gravatar" />
+		<img class="gravatar" align="middle" src="http://www.gravatar.com/avatar.php?gravatar_id=#lcase(Hash(emailTarget))#&s=#arguments.size#" alt="Cool Gravatar" />
 		</cfoutput>
 		</cfsavecontent>
 		

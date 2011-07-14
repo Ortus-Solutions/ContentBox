@@ -1,7 +1,7 @@
 component {
 	
 	// Module Properties
-	this.title 				= "blogbox";
+	this.title 				= "BlogBox";
 	this.author 			= "Luis Majano";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "A cool blogging engine";
@@ -10,7 +10,7 @@ component {
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
-	// Module Entry Point: The SES entry point for blogbox: http://myapp/blogbox
+	// Module Entry Point: The SES entry point for blogbox: http://myapp/blog
 	this.entryPoint			= "blog";
 	
 	function configure(){
@@ -27,12 +27,6 @@ component {
 		routes = [
 			// Generic module route
 			{pattern="/", handler="entries", action="index" },
-			// Admin routes
-			{pattern="/admin/authors/:action?", handler="admin.authors" },
-			{pattern="/admin/entries/:action?", handler="admin.entries" },
-			{pattern="/admin/comments/:action?", handler="admin.comments" },
-			{pattern="/admin/categories/:action?", handler="admin.categories" },
-			{pattern="/admin/dashboard/:action?", handler="admin.dashboard" },
 			// Default Route
 			{pattern="/:handler/:action?"}
 		];		
@@ -44,6 +38,7 @@ component {
 		
 		// Custom Declared Interceptors
 		interceptors = [
+			{class="#moduleMapping#.model.ui.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bb" }
 		];
 		
 		// WireBox bindings
@@ -66,16 +61,6 @@ component {
 	*/
 	function onUnload(){
 		
-	}
-	
-	/**
-	* Fired on blogbox requests
-	*/
-	function preProcess(event, interceptData) eventPattern="^blogbox:"{
-		// store module root	
-		event.setValue("bbroot", event.getModuleRoot());
-		// store module entry point
-		event.setValue("bbEntryPoint", this.entryPoint);
 	}
 	
 }

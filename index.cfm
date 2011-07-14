@@ -6,4 +6,5 @@ Date     :	October 15, 2005
 Description : 			
 	This is only a place holder since everything occurs in application.cfc now.
 ----------------------------------------------------------------------->
+<cfsetting showdebugoutput="false" >
 <cfsetting enablecfoutputonly="no">
