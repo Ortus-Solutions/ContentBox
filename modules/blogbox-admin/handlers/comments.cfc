@@ -10,11 +10,11 @@ component extend="baseHandler"{
 	function preHandler(event,action){
 		var rc = event.getCollection();
 		// exit Handlers
-		rc.xehComments 			= "#rc.bbEntryPoint#.admin.comments";
-		rc.xehCommentEditor 	= "#rc.bbEntryPoint#.admin.comments.editor";
-		rc.xehCommentRemove 	= "#rc.bbEntryPoint#.admin.comments.remove";
-		rc.xehCommentApprove 	= "#rc.bbEntryPoint#.admin.comments.approve";
-		rc.xehCommentUnapprove	= "#rc.bbEntryPoint#.admin.comments.unapprove";
+		rc.xehComments 			= "#prc.bbEntryPoint#.admin.comments";
+		rc.xehCommentEditor 	= "#prc.bbEntryPoint#.admin.comments.editor";
+		rc.xehCommentRemove 	= "#prc.bbEntryPoint#.admin.comments.remove";
+		rc.xehCommentApprove 	= "#prc.bbEntryPoint#.admin.comments.approve";
+		rc.xehCommentUnapprove	= "#prc.bbEntryPoint#.admin.comments.unapprove";
 	}
 	
 	// index
@@ -30,7 +30,7 @@ component extend="baseHandler"{
 		// get new or persisted
 		rc.category  = categoryService.get( event.getValue("CategoryID",0) );
 		// exit handlers
-		rc.xehCategoriesSave = "#rc.bbEntryPoint#.admin.Categories.save";
+		rc.xehCategoriesSave = "#prc.bbEntryPoint#.admin.Categories.save";
 		// view
 		event.setView("admin/categories/editor");
 	}	

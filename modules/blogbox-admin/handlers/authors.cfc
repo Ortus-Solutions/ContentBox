@@ -6,10 +6,18 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="authorService"		inject="id:authorService@bb";
 	
+	// pre handler
+	function preHandler(event,action,eventArguments){
+		var rc 	= event.getCollection();
+		var prc = event.getCollection(private=true);
+		// Tab control
+		prc.tabAuthors = true;
+	}
+	
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehAuthorRemove 	= "#rc.bbEntryPoint#.authors.remove";
+		rc.xehAuthorRemove 	= "#prc.bbEntryPoint#.authors.remove";
 		// Get all authors
 		rc.authors = authorService.list(sortOrder="lastName desc",asQuery=false);
 		// View
@@ -21,8 +29,8 @@ component extends="baseHandler"{
 		// get new or persisted author
 		rc.author  = authorService.get( event.getValue("authorID",0) );
 		// exit handlers
-		rc.xehAuthorSave 			= "#rc.bbEntryPoint#.authors.save";
-		rc.xehAuthorChangePassword 	= "#rc.bbEntryPoint#.authors.passwordChange";
+		rc.xehAuthorSave 			= "#prc.bbEntryPoint#.authors.save";
+		rc.xehAuthorChangePassword 	= "#prc.bbEntryPoint#.authors.passwordChange";
 		// view
 		event.setView("authors/editor");
 	}	

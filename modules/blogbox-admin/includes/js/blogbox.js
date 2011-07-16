@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	// toggle flicker messages
+	$(".flickerMessages").slideDown();
 	//Main Navigation
 	$('#main_nav > li > ul').hide(); // Hide all subnavigation
 	// Show current subnavigation	
@@ -56,8 +58,18 @@ $(document).ready(function() {
 	//Vertical Navigation	
 	$("ul.vertical_nav").tabs("div.panes_vertical> div", {effect: 'fade'});
 	//Accordion
-	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:null});			
+	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:null});		
+	
+	// flicker messages
+	var t=setTimeout("toggleFlickers()",5000);
+	
 });
+function toggleFlickers(){
+	$(".flickerMessages").slideToggle();
+	$(".cbox_messagebox_info").slideToggle();
+	$(".cbox_messagebox_warn").slideToggle();
+	$(".cbox_messagebox_error").slideToggle();
+}
 
 /**
  * A-la-Carte closing of remote modal windows

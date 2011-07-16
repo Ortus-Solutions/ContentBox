@@ -5,7 +5,10 @@ component singleton{
 
 	// Dependencies
 	property name="authorService" 	inject="id:authorService@bb";
-	property name="sessionStorage" 	inject="coldbox:plugin:sessionStorage";
+	property name="settingService"	inject="id:settingService@bb";
+	property name="sessionStorage" 	inject="coldbox:plugin:SessionStorage";
+	property name="mailService"		inject="coldbox:plugin:MailService";
+	property name="renderer"		inject="coldbox:plugin:Renderer";
 	
 	/**
 	* Constructor
@@ -28,10 +31,6 @@ component singleton{
 	boolean function userValidator(struct rule,messagebox,controller){
 		var isAllowed 	= false;
 		var author 		= getAuthorSession();
-		
-		// Place user in rc
-		var prc = arguments.controller.getRequestService().getContext().getCollection(private=true);
-		prc.oAuthor = author;
 		
 		// is user found in session?
 		if( author.isLoaded() AND author.isLoggedIn() ){
@@ -90,8 +89,31 @@ component singleton{
 			setAuthorSession( author );
 			return true;
 		}
-		
 		return false;	
+	}
+	
+	/**
+	* Send password reminder
+	*/
+	function sendPasswordReminder(author){
+		// generate temporary password
+		var genPassword = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
+		// get settings
+		var settings = settingService.getAllSettings(asStruct=true);
+		
+		// set it in the user and save it
+		author.setPassword( genPassword );
+		authorService.saveUser(author=author,passwordChange=true);
+		
+		// get mail payload
+		var mail = mailservice.newMail(to=arguments.author.getEmail(),
+									   from=settings.bb_site_email,
+									   subject="#settings.bb_site_name# Password Reset Issued",
+									   bodyTokens={genPassword=genPassword,name=arguments.author.getName()});
+		// generate content for email from template
+		mail.setBody( renderer.renderView(view="email_templates/password_reminder",module="blogbox-admin") );
+		// send it out
+		mailService.send( mail );
 	}
 
 }

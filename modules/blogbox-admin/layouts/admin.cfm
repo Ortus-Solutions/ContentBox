@@ -11,29 +11,29 @@
 	<!--- Title --->
     <title>BlogBox Administrator</title> 
 	<!--- Favicon --->
-	<link href="#rc.bbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<link href="#prc.bbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#rc.bbroot#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
-	<link href="#rc.bbroot#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
-	<link href="#rc.bbroot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
-    <link href="#rc.bbroot#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbroot#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbroot#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbroot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
+    <link href="#prc.bbroot#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
-		<cfset addAsset("#rc.bbroot#/includes/css/#css#.css")>
+		<cfset addAsset("#prc.bbroot#/includes/css/#css#.css")>
 	</cfloop>
 	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 	        
 	<!--- JS --->
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/jquery.tools.min.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/metadata.pack.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/jquery.uitablefilter.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/tablesorter.min.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/blogbox.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/js/jquery.tools.min.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/js/metadata.pack.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/js/jquery.uitablefilter.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/js/tablesorter.min.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/js/blogbox.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
 	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
-		<cfset addAsset("#rc.bbroot#/includes/javascript/#js#.js")>
+		<cfset addAsset("#prc.bbroot#/includes/javascript/#js#.js")>
 	</cfloop>
 	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
 		<cfset addAsset("#js#.js")>
@@ -55,7 +55,7 @@
 			<!--=======Top Header area======-->
 			<div id="header_top">
 				<span class="fr">
-			  		Welcome back <strong>#prc.oAuthor.getName()#</strong> &nbsp;
+			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> &nbsp;
 					<!--- Log Out --->
 					<a href="#event.buildLink(rc.xehDoLogout)#" class="confirmIt" 
 						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall">Log Out</button></a>
@@ -68,11 +68,11 @@
 	    
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
-				<img src="#rc.bbroot#/includes/images/ColdBoxLogoSquare_125.png" height="120" border="0" alt="logo" title="ColdBox Platform Rulez!"/>
+				<img src="#prc.bbroot#/includes/images/ColdBoxLogoSquare_125.png" height="120" border="0" alt="logo" title="ColdBox Platform Rulez!"/>
 			</div>
 			
 			<div id="header_main" class="clearfix">
-	           	<a href="#event.buildLink(rc.xehDashboard)#"><h1>BlogBox Admin <span>v.#getModuleSettings('blogbox-admin').version#</span></h1></a>
+	           	<h1>BlogBox Admin <span>v.#getModuleSettings('blogbox-admin').version#</span></h1>
 			</div>
 			<!--End Search field and logo Header Area-->
 	      
@@ -82,16 +82,16 @@
 				#announceInterception("bbadmin_beforeMainNav")#
 				<!--- Dashboard Nav --->
 				<li> 
-					<a href="##" title="BlogBox Dashboard" class="current">Dashboard</a>
+					<a href="##" title="BlogBox Dashboard" <cfif prc.tabDashboard>class="current"</cfif>>Dashboard</a>
 					<ul>
-						<li><a href="#event.buildLink(rc.xehDashboard)#" <cfif event.getCurrentAction() eq "index"> class="current"</cfif>>Home</a></li>
+						<li><a href="#event.buildLink(rc.xehDashboard)#" <cfif event.getValue("tabDashboard_home",false,true)> class="current"</cfif>>Home</a></li>
 						<!--- bbadmin event --->
 						#announceInterception("bbadmin_dashboardTab")#
 					</ul>
 				</li>
 				<!--- Entries Nav --->
 				<li>
-					<a href="##" title="Blog Entries" <cfif event.getCurrentHandler() eq "blogbox-admin:entries"> class="current"</cfif>>Entries</a>
+					<a href="##" title="Blog Entries" <cfif prc.tabEntries>class="current"</cfif>>Entries</a>
 					<ul>
 						<li>
 							<a href="#event.buildLink(rc.xehEntries)#" <cfif event.getCurrentAction() eq "indexs"> class="current"</cfif>
@@ -115,7 +115,7 @@
 				</li>
 				<!--- Authors Nav --->
 				<li>
-					<a href="##" title="Authors" <cfif event.getCurrentHandler() eq "blogbox-admin:entries"> class="current"</cfif>>Authors</a>
+					<a href="##" title="Authors" <cfif prc.tabAuthors>class="current"</cfif>>Authors</a>
 					<ul>
 						<li>
 							<a href="#event.buildLink(rc.xehAuthors)#" <cfif event.getCurrentAction() eq "indexs"> class="current"</cfif>
@@ -135,11 +135,11 @@
 				</li>
 				<!--- System Nav --->
 				<li>
-					<a href="##" title="System" <cfif event.getCurrentHandler() eq "blogbox-admin:entries"> class="current"</cfif>>System</a>
+					<a href="##" title="System" <cfif prc.tabSystem>class="current"</cfif>>System</a>
 					<ul>
 						<li>
 							<a href="#event.buildLink(rc.xehSettings)#" <cfif event.getCurrentAction() eq "indexs"> class="current"</cfif>
-							   title="View All Authors">Settings</a>
+							   title="Manage The Raw Settings Table">Raw Settings</a>
 						</li>
 						<!--- bbadmin event --->
 						#announceInterception("bbadmin_systemTab")#
@@ -196,7 +196,7 @@
 	<!--- ============================ Remote Modal Window ============================ --->
 	<div id="remoteModal">
 		<div id="remoteModelContent">
-			<img src="#rc.bbroot#/includes/images/ajax-loader-blue.gif" alt="loader" />
+			<img src="#prc.bbroot#/includes/images/ajax-loader-blue.gif" alt="loader" />
 		</div>
 	</div>
 	<!--- ============================ end Confirmit ============================ --->

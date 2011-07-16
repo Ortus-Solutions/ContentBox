@@ -1,19 +1,22 @@
 /**
 * Manage blog entries
 */
-component extend="BaseHandler"{
+component extends="baseHandler"{
 
 	// Dependencies
 	property name="categoryService"		inject="id:categoryService@bb";
 	property name="entryService"		inject="id:entryService@bb";
 
 	// pre handler
-	function preHandler(event,action){
-		var rc = event.getCollection();
+	function preHandler(event,action,eventArguments){
+		var rc 	= event.getCollection();
+		var prc = event.getCollection(private=true);
 		// exit Handlers
-		rc.xehEntries 		= "#rc.bbEntryPoint#.admin.entries";
-		rc.xehEntryEditor 	= "#rc.bbEntryPoint#.admin.entries.editor";
-		rc.xehEntryRemove 	= "#rc.bbEntryPoint#.admin.entries.remove";
+		rc.xehEntries 		= "#prc.bbEntryPoint#.entries";
+		rc.xehEntryEditor 	= "#prc.bbEntryPoint#.entries.editor";
+		rc.xehEntryRemove 	= "#prc.bbEntryPoint#.entries.remove";
+		// Tab control
+		prc.tabEntries = true;
 	}
 	
 	// index
@@ -23,7 +26,7 @@ component extend="BaseHandler"{
 		// get all entries
 		rc.entries = entryService.list(sortOrder="publishedDate desc",asQuery=false);
 		// view
-		event.setView("admin/entries/index");
+		event.setView("entries/index");
 	}
 
 	// editor
@@ -33,9 +36,9 @@ component extend="BaseHandler"{
 		// get new or persisted
 		rc.entry  = entryService.get( event.getValue("entryID",0) );
 		// exit handlers
-		rc.xehEntrySave = "#rc.bbEntryPoint#.admin.entries.save";
+		rc.xehEntrySave = "#prc.bbEntryPoint#.entries.save";
 		// view
-		event.setView("admin/entries/editor");
+		event.setView("entries/editor");
 	}	
 
 	// save
@@ -58,8 +61,14 @@ component extend="BaseHandler"{
 		
 		// get new entry and populate it
 		var entry = populateModel( entryService.new() ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		// attach author
+		entry.setAuthor( prc.oAuthor );
+		// detach categories and re-attach
+		entry.removeAllCategories();
+		entry.setCategories( categories );
 		
-		writeDump(entry);abort;
+		// save entry
+		entryService.save( entry );
 		
 		// relocate
 		setNextEvent(rc.xehEntries);

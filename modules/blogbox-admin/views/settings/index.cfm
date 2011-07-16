@@ -4,15 +4,15 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Setting Editor
+			<img src="#prc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Setting Editor
 		</div>
 		<div class="body">
 			<!--- Create/Edit form --->
-			#html.startForm(action=rc.xehSettingSave,name="settingEditor")#
+			#html.startForm(action=rc.xehSettingSave,name="settingEditor",novalidate="novalidate")#
 				<input type="hidden" name="settingID" id="settingID" value="" />
 				
 				<label for="name">Setting:</label>
-				<input name="name" id="name" type="text" required="required" maxlength="100" size="30"/>
+				<input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="textfield"/>
 				
 				<label for="value">Value:</label>
 				<textarea name="value" id="value" rows="8" required="required"></textarea>
@@ -31,12 +31,12 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#rc.bbroot#/includes/images/database.png" alt="sofa" width="30" height="30" />
-			BlogBox Settings
+			<img src="#prc.bbroot#/includes/images/database.png" alt="sofa" width="30" height="30" />
+			BlogBox Raw Settings Manager
 		</div>
 		<!--- Body --->
 		<div class="body">
-			
+			<p>Manage the raw settings at your own risk buddy!</p>
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
 			
@@ -48,7 +48,7 @@
 			<div class="filterBar">
 				<div>
 					#html.label(field="settingFilter",content="Quick Filter:",class="inline")#
-					#html.textField(name="settingFilter",size="20")#
+					#html.textField(name="settingFilter",size="30",class="textfield")#
 				</div>
 			</div>
 			
@@ -69,9 +69,9 @@
 						<td>#setting.getValue()#</td>
 						<td class="center">
 							<!--- Edit Command --->
-							<a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting"><img src="#rc.bbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
+							<a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
 							<!--- Delete Command --->
-							<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><img id="delete_#setting.getsettingID()#" src="#rc.bbRoot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><img id="delete_#setting.getsettingID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 						</td>
 					</tr>
 					</cfloop>
@@ -92,7 +92,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##settings"), this.value );
 	});
 	// form validator
-	$settingEditor.validator({position:'top center'});
+	$settingEditor.validator({position:'bottom left'});
 	// reset
 	$('##btnReset').click(function() {
 		$settingEditor.find("##settingID").val( '' );

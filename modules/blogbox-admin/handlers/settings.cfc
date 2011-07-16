@@ -6,11 +6,19 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="settingsService"		inject="entityService:bbSetting";
 	
+	// pre handler
+	function preHandler(event,action,eventArguments){
+		var rc 	= event.getCollection();
+		var prc = event.getCollection(private=true);
+		// Tab control
+		prc.tabSystem = true;
+	}
+	
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehSettingRemove = "#rc.bbEntryPoint#.settings.remove";
-		rc.xehSettingSave 	= "#rc.bbEntryPoint#.settings.save";
+		rc.xehSettingRemove = "#prc.bbEntryPoint#.settings.remove";
+		rc.xehSettingSave 	= "#prc.bbEntryPoint#.settings.save";
 		// Get all settings
 		rc.settings = settingsService.list(sortOrder="name desc",asQuery=false);
 		// view

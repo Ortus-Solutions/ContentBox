@@ -2,7 +2,7 @@
 <div class="box clear" id="loginBox">
 	
 	<div class="header">
-		<img src="#rc.bbroot#/includes/images/key_icon.png" alt="help" />Login
+		<img src="#prc.bbroot#/includes/images/key_icon.png" alt="help" />Login
 	</div>
 	
 	<div class="body clearfix">
@@ -11,8 +11,7 @@
 		#getPlugin("MessageBox").renderit()#
 		
 		<div id="loginContent">
-		#html.startForm(action=rc.xehDoLogin,name="loginForm")#
-		<form action="#event.buildLink(rc.xehdoLogin)#" name="loginForm" id="loginForm" method="post">
+		#html.startForm(action=rc.xehDoLogin,name="loginForm",novalidate="novalidate")#
 			<input type="hidden" name="_securedURL" value="#event.getValue('_securedURL','')#">
 			
 			<label for="username">Username</label>
@@ -24,7 +23,7 @@
 			<br/><br/>
 			<a href="#event.buildLink(rc.xehLostPassword)#">Lost your password?</a> 
 			&nbsp;
-			<input type="submit" name="loginbutton" id="loginbutton" value="&nbsp;&nbsp;Log In&nbsp;&nbsp;" class="buttonred">
+			<input type="submit" value="&nbsp;&nbsp;Log In&nbsp;&nbsp;" class="buttonred">
 		#html.endForm()#
 		</div>
 	

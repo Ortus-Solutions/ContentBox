@@ -20,9 +20,9 @@ $(document).ready(function() {
 	    { name: 'tools',       items : [ 'Maximize','-','About' ] }
 	];
 	// Activate ckeditor
-	$content.ckeditor( function(){}, { toolbar:ckToolbar } );
+	$content.ckeditor( function(){}, { toolbar:ckToolbar,height:350 } );
 	// Date fields
 	$(":date").dateinput();
 	// form validator
-	$entryForm.validator({errorClass:'error',position:'top center'});
+	$entryForm.validator({errorClass:'error',position:'center top'});
 });

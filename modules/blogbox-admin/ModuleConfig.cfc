@@ -23,6 +23,7 @@ component {
 		routes = [
 			// Generic module route
 			{pattern="/", handler="dashboard", action="index" },
+			{pattern="/dashboard/reload/:targetModule", handler="dashboard", action="reload" },
 			{pattern="/:handler/:action?"}
 		];		
 		
@@ -39,7 +40,7 @@ component {
 		// Custom Declared Interceptors
 		interceptors = [
 			// BB Admin Request Interceptor
-			{class="#BB_PATH#.model.ui.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bbAdmin" },
+			{class="#moduleMapping#.interceptors.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bbAdmin" },
 			// BB Admin security
 			{class="coldbox.system.interceptors.Security",properties={rulesSource="xml",rulesFile="#moduleMapping#/config/security.xml.cfm", validatorModel="securityService@bb"} }
 		];

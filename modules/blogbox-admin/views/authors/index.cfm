@@ -4,13 +4,13 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#rc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Author Actions
+			<img src="#prc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Author Actions
 		</div>
 		<div class="body">
 			<!--- Help button --->
 			<p class="center">
 				<a href="#event.buildLink(rc.xehAuthorEditor)#" title="Create a new Author">
-					<button class="button"> <img src="#rc.bbroot#/includes/images/add.png" alt="help"/> Create Author</button>
+					<button class="button"> <img src="#prc.bbroot#/includes/images/add.png" alt="help"/> Create Author</button>
 				</a>
 			</p>
 		</div>
@@ -22,7 +22,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#rc.bbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" />
+			<img src="#prc.bbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" />
 			Author Management
 		</div>
 		<!--- Body --->
@@ -38,7 +38,7 @@
 			<div class="filterBar">
 				<div>
 					#html.label(field="authorFilter",content="Quick Filter:",class="inline")#
-					#html.textField(name="authorFilter",size="20")#
+					#html.textField(name="authorFilter",size="20",class="textfield")#
 				</div>
 			</div>
 
@@ -68,9 +68,9 @@
 						<td>#author.getIsActive()#</td>
 						<td class="center">
 							<!--- Edit Command --->
-							<a href="#event.buildLink(rc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#rc.bbroot#/includes/images/edit.png" alt="edit" /></a>
+							<a href="#event.buildLink(rc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" /></a>
 							<!--- Delete Command --->
-							<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><img id="delete_#author.getAuthorID()#" src="#rc.bbRoot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><img id="delete_#author.getAuthorID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 						</td>
 					</tr>
 					</cfloop>

@@ -1,7 +1,7 @@
 component {
 	
 	// Module Properties
-	this.title 				= "BlogBox";
+	this.title 				= "BlogBox Core";
 	this.author 			= "Luis Majano";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "A cool blogging engine";
@@ -17,20 +17,7 @@ component {
 	
 		// module settings - stored in modules.name.settings
 		settings = {};
-		
-		// Layout Settings
-		layoutSettings = {
-			defaultLayout = "blog.cfm"
-		};
-		
-		// SES Routes
-		routes = [
-			// Generic module route
-			{pattern="/", handler="entries", action="index" },
-			// Default Route
-			{pattern="/:handler/:action?"}
-		];		
-		
+
 		// Custom Declared Points
 		interceptorSettings = {
 			customInterceptionPoints = ""
@@ -38,11 +25,11 @@ component {
 		
 		// Custom Declared Interceptors
 		interceptors = [
-			{class="#moduleMapping#.model.ui.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bb" }
 		];
 		
 		// WireBox bindings
 		binder.map("securityService@bb").to("#moduleMapping#.model.security.SecurityService");
+		binder.map("settingService@bb").to("#moduleMapping#.model.system.SettingService");
 		binder.map("authorService@bb").to("#moduleMapping#.model.entries.AuthorService");
 		binder.map("entryService@bb").to("#moduleMapping#.model.entries.EntryService");
 		binder.map("commentService@bb").to("#moduleMapping#.model.comments.CommentService");

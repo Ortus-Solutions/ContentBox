@@ -6,11 +6,19 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="categoryService"		inject="id:categoryService@bb";
 	
+	// pre handler
+	function preHandler(event,action,eventArguments){
+		var rc 	= event.getCollection();
+		var prc = event.getCollection(private=true);
+		// Tab control
+		prc.tabEntries = true;
+	}
+	
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehCategoryRemove 	= "#rc.bbEntryPoint#.categories.remove";
-		rc.xehCategoriesSave 	= "#rc.bbEntryPoint#.Categories.save";
+		rc.xehCategoryRemove 	= "#prc.bbEntryPoint#.categories.remove";
+		rc.xehCategoriesSave 	= "#prc.bbEntryPoint#.Categories.save";
 		
 		// Get all categories
 		rc.categories = categoryService.list(sortOrder="category desc",asQuery=false);

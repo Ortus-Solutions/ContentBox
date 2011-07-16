@@ -9,9 +9,8 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	property name="slug"			notnull="true"  length="200";
 	property name="content"    		notnull="true"  ormtype="text" sqltype="longtext";
 	property name="excerpt" 		notnull="false" ormtype="text";
-	property name="createdDate" 	notnull="true"  ormtype="date" update="false";
-	property name="updatedDate" 	notnull="true"  ormtype="timestamp" sqltype="timestamp" insert="false" update="false";
-	property name="publishedDate"	notnull="false" ormtype="date";
+	property name="createdDate" 	notnull="true"  ormtype="timestamp" update="false";
+	property name="publishedDate"	notnull="false" ormtype="timestamp";
 	property name="isPublished" 	notnull="true"  ormtype="boolean" default="true";
 	property name="allowComments" 	notnull="true"  ormtype="boolean" default="true";
 	property name="passwordProtection" 	notnull="false" length="100";
@@ -39,10 +38,18 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	/**
 	* Get display publishedDate
 	*/
-	string function getDisplayPublishedDate(){
+	string function getPublishedDateForEditor(){
 		var pDate = getPublishedDate();
 		if( isNull(pDate) ){ pDate = now(); }
 		return dateFormat( pDate, "yyyy-mm-dd" );
+	}
+	
+	/**
+	* Get display publishedDate
+	*/
+	string function getDisplayPublishedDate(){
+		var publishedDate = getPublishedDate();
+		return dateFormat( publishedDate, "mm/dd/yyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
 	}
 	
 	/**
@@ -51,14 +58,6 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
-	}
-	
-	/**
-	* Get formatted updatedDate
-	*/
-	string function getDisplayUpdatedDate(){
-		var updatedDate = getUpdatedDate();
-		return dateFormat( updatedDate, "mm/dd/yyy" ) & " " & timeFormat(updatedDate, "hh:mm:ss tt");
 	}
 	
 	/*
@@ -78,6 +77,19 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	}
 	
 	/**
+	* get flat categories list
+	*/
+	function getCategoriesList(){
+		if( NOT hasCategories() ){ return "Uncategorized"; }
+		var cats 	= getCategories();
+		var catList = [];
+		for(var x=1; arrayLen(cats); x++){
+			arrayAppend( catList , cats[x].getCategory() );
+		}
+		return arrayToList( catList );
+	}
+	
+	/**
 	* Shorthand Author name
 	*/
 	string function getAuthorName(){
@@ -89,6 +101,13 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	*/
 	boolean function isLoaded(){
 		return len( getEntryID() );
+	}
+	
+	/**
+	* isPassword Protected
+	*/
+	boolean function isPasswordProtected(){
+		return len( getPasswordProtection() );
 	}
 	
 	/**

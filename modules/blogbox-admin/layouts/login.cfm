@@ -11,15 +11,15 @@
 	<!--- Title --->
     <title>BlogBox Administrator - Login</title> 
 	<!--- Favicon --->
-	<link href="#rc.bbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<link href="#prc.bbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#rc.bbroot#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
-	<link href="#rc.bbroot#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
-	<link href="#rc.bbroot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbroot#/includes/css/style.css"	rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbroot#/includes/css/teal.css" 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbroot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
             
 	<!--- JS --->
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/jquery.tools.min.js"></script>
-	<script type="text/javascript" src="#rc.bbroot#/includes/js/blogbox.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/js/jquery.tools.min.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/js/blogbox.js"></script>
 	
 	<!--- bbadmin Event --->
 	#announceInterception("bbadmin_beforeLoginHeadEnd")#
@@ -36,19 +36,14 @@
 	       
 			<!--=======Top Header area======-->
 			<div id="header_top">
-				<span class="fr">
-			  		<a href="http://www.ortussolutions.com" title="The experts behind ColdBox">www.ortussolutions.com</a>
-					<a href="http://www.coldbox.org" title="The premier ColdFusion development platform">www.coldbox.org</a>
-					<a href="http://www.github.com/coldbox/coldbox-relax" title="The Relax Source Code">Github Repo</a>
-					<a href="http://www.twitter.com/coldbox" title="Follow me!">Tweet</a>
-				</span>
+				<span class="fr"><br/></span>
 			  A Sweet Blogging Platform
 			</div>
 			<!--End Header top Area=-->
 	    
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
-				<img src="#rc.bbroot#/includes/images/ColdBoxLogoSquare_125.png" height="120" border="0" alt="logo" title="ColdBox Platform Rulez!"/>
+				<img src="#prc.bbroot#/includes/images/ColdBoxLogoSquare_125.png" height="120" border="0" alt="logo" title="ColdBox Platform Rulez!"/>
 			</div>
 			
 			<div id="header_main" class="clearfix">

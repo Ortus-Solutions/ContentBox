@@ -17,6 +17,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		return this;
 	}
 	
+	/**
+	* Save an author with extra pizazz!
+	*/
 	function saveAuthor(author,passwordChange=false){
 		// hash password if new author
 		if( !arguments.author.isLoaded() OR arguments.passwordChange ){
@@ -25,4 +28,5 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		// save the author
 		save( author );
 	}
+
 }
