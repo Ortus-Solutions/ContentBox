@@ -4,7 +4,7 @@
 	<!--- Saerch Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.bbroot#/includes/images/search.png" alt="info" width="24" height="24" />Entry Search
+			<img src="#prc.bbroot#/includes/images/search.png" alt="info" width="24" height="24" />Search
 		</div>
 		<div class="body">
 			<!--- Search Form --->
@@ -19,7 +19,7 @@
 	<!--- Filter Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.bbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Entry Filters
+			<img src="#prc.bbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Filters
 		</div>
 		<div class="body">
 			#html.startForm(name="entryFilterForm")#
@@ -48,11 +48,23 @@
 			</select>
 				
 			<div class="actionBar">
-				<input type="submit" value="Apply Filters" class="buttonred" title="Apply filters" />
-				<button class="button" onclick="return to('#event.buildLink(rc.xehEntries)#')" title="Reset Filters">Reset</button>				
+				<input type="submit" value="Apply Filters" class="buttonred" />
+				<button class="button" onclick="return to('#event.buildLink(rc.xehEntries)#')">Reset</button>				
 			</div>
 			
 			#html.endForm()#
+		</div>
+	</div>	
+	
+	<!--- Help Box--->
+	<div class="small_box">
+		<div class="header">
+			<img src="#prc.bbroot#/includes/images/help.png" alt="info" width="24" height="24" />Help Tips
+		</div>
+		<div class="body">
+			<ul>
+				<li>Right click on an entry's row to activate quick look!</li>
+			</ul>
 		</div>
 	</div>		
 </div>
@@ -63,8 +75,8 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.bbroot#/includes/images/blog.png" alt="sofa" width="30" height="30" />
-			Blog Entries
-			<cfif structKeyExists(rc,"searchEntries")> > Search: #event.getValue("searchEntries")#</cfif>
+			Blog Entries (#rc.entriesCount#)
+			<cfif len(rc.searchEntries)> > Search: #event.getValue("searchEntries")#</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -108,7 +120,7 @@
 				
 				<tbody>
 					<cfloop array="#rc.entries#" index="entry">
-					<tr>
+					<tr data-entryID="#entry.getEntryID()#">
 						<td>
 							<a href="#event.buildLink(rc.xehBlogEditor)#/entryID/#entry.getEntryID()#" title="Edit Entry">#entry.getTitle()#</a><br/>
 							<!--- password protect --->
@@ -169,7 +181,15 @@ $(document).ready(function() {
 	$("##entries").tablesorter();
 	$("##entryFilter").keyup(function(){
 		$.uiTableFilter( $("##entries"), this.value );
-	})
+	});
+	
+	$("##entries").find("tr").mousedown(function(e) {
+	    if (e.which === 3) {
+	    	openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
+			e.preventDefault();
+	    }
+	});
+
 });
 function remove(entryID){
 	$("##entryID").val( entryID );

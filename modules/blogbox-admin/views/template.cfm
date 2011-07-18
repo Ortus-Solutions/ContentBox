@@ -10,18 +10,18 @@
 <!--=========Title=========-->
     <title>ColdBox Relax - RESTful Tools For Lazy Experts</title> 
 <!--=========Stylesheets=========-->
-	<link href="#rc.root#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
-	<link href="#rc.root#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
-	<link href="#rc.root#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
-    <link href="#rc.root#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbRoot#/includes/css/style.css"	 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbRoot#/includes/css/teal.css" 		rel="stylesheet" type="text/css"/>
+	<link href="#prc.bbRoot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
+    <link href="#prc.bbRoot#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
 	        
 <!--========= JAVASCRIPT -->
-	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
-	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
-	<script type="text/javascript" src="#rc.root#/includes/javascript/jquery.uitablefilter.js"></script>
-	<script type="text/javascript" src="#rc.root#/includes/javascript/metadata.pack.js"></script>
-	<script type="text/javascript" src="#rc.root#/includes/javascript/tablesorter.min.js"></script>
-	<script type="text/javascript" src="#rc.root#/includes/javascript/relax.js"></script>
+	<script type="text/javascript" src="#prc.bbRoot#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
+	<script type="text/javascript" src="#prc.bbRoot#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
+	<script type="text/javascript" src="#prc.bbRoot#/includes/javascript/jquery.uitablefilter.js"></script>
+	<script type="text/javascript" src="#prc.bbRoot#/includes/javascript/metadata.pack.js"></script>
+	<script type="text/javascript" src="#prc.bbRoot#/includes/javascript/tablesorter.min.js"></script>
+	<script type="text/javascript" src="#prc.bbRoot#/includes/javascript/relax.js"></script>
 </head>
 <!--End Head-->
 <!--============================Body============================-->
@@ -47,11 +47,11 @@
     
 		<!--=========Header Area including search field and logo=========-->
 		<div id="logo">
-			<a title="Go Relax!" href="#event.buildLink(rc.xehHome)#"><img src="#rc.root#/includes/images/ColdBoxLogoSquare_125.png" border="0" alt="logo" /></a>
+			<img src="#prc.bbRoot#/includes/images/ColdBoxLogoSquare_125.png" border="0" alt="logo" />
 		</div>
 		
 		<div id="header_main" class="clearfix">
-           	<h1>Relax <span>v.#getModuleSettings('relax').version#</span></h1>		
+           	<h1>Relax <span>v1</span></h1>		
 		</div>
 		<!--End Search field and logo Header Area-->
       
@@ -87,11 +87,11 @@
         <div class="jump_menu">
             <a href="##" class="jump_menu_btn">Jump To</a>
             <ul class="jump_menu_list">
-                <li><a href="##"><img src="#rc.root#/includes/images/users2_icon.png" alt="" width="24" height="24" />Users</a></li>
-                <li><a href="##"><img src="#rc.root#/includes/images/tools_icon.png" alt="" width="24" height="24" />Settings</a></li>
-                <li><a href="##"><img src="#rc.root#/includes/images/messages_icon.png" alt="" width="24" height="24" />Messages</a></li>
-                <li><a href="##"><img src="#rc.root#/includes/images/key_icon.png" alt="" width="24" height="24" />Credentials</a></li>
-                <li><a href="##"><img src="#rc.root#/includes/images/documents_icon.png" alt="" width="24" height="24" />Pages</a></li>
+                <li><a href="##"><img src="#prc.bbRoot#/includes/images/users2_icon.png" alt="" width="24" height="24" />Users</a></li>
+                <li><a href="##"><img src="#prc.bbRoot#/includes/images/tools_icon.png" alt="" width="24" height="24" />Settings</a></li>
+                <li><a href="##"><img src="#prc.bbRoot#/includes/images/messages_icon.png" alt="" width="24" height="24" />Messages</a></li>
+                <li><a href="##"><img src="#prc.bbRoot#/includes/images/key_icon.png" alt="" width="24" height="24" />Credentials</a></li>
+                <li><a href="##"><img src="#prc.bbRoot#/includes/images/documents_icon.png" alt="" width="24" height="24" />Pages</a></li>
             </ul>
         </div>
 		--->
@@ -112,7 +112,7 @@
 		<!--=========History Box=========-->
 		<div class="small_box">
 			<div class="header">
-				<img src="#rc.root#/includes/images/history_icon.png" alt="History" width="24" height="24" />History
+				<img src="#prc.bbRoot#/includes/images/history_icon.png" alt="History" width="24" height="24" />History
 			</div>
 			<div class="body">
 				<ul class="bulleted_list">
@@ -126,7 +126,7 @@
 		<!--=========Calendar Box=========-->
 		<div class="small_box">
 			<div class="header">
-				<img src="#rc.root#/includes/images/calendar_icon.png" alt="Calendar" width="24" height="24" />Calendar
+				<img src="#prc.bbRoot#/includes/images/calendar_icon.png" alt="Calendar" width="24" height="24" />Calendar
 			</div>
 			<div class="body">
 				<div id="date" class="clearfix">
@@ -138,12 +138,12 @@
 		<!--=========Users Box=========-->
 		<div class="small_box">
 			<div class="header">
-				<img src="#rc.root#/includes/images/users_icon.png" alt="History" width="24" height="24" />Online Users
+				<img src="#prc.bbRoot#/includes/images/users_icon.png" alt="History" width="24" height="24" />Online Users
 			</div>
 			<div class="body">
 				<ul class="user_list">
-					<li><img src="#rc.root#/includes/images/user_placeholder.gif" width="54" height="54" alt="Username" /><a href="##">John Doe</a><small>Administrator</small></li>
-					<li><img src="#rc.root#/includes/images/user_placeholder.gif" width="54" height="54" alt="Username" /><a href="##">John Doe</a><small>Administrator</small></li>
+					<li><img src="#prc.bbRoot#/includes/images/user_placeholder.gif" width="54" height="54" alt="Username" /><a href="##">John Doe</a><small>Administrator</small></li>
+					<li><img src="#prc.bbRoot#/includes/images/user_placeholder.gif" width="54" height="54" alt="Username" /><a href="##">John Doe</a><small>Administrator</small></li>
 				</ul>
 			</div>
 		</div>
@@ -151,13 +151,13 @@
 		<!--========= Accordion Box =========-->
 		<div class="small_box clearfix">
 			<div class="header">
-				<img src="#rc.root#/includes/images/accordion_icon.png" alt="Accordion" width="24" height="24" />Accordion
+				<img src="#prc.bbRoot#/includes/images/accordion_icon.png" alt="Accordion" width="24" height="24" />Accordion
 			</div>
 			<div class="body">
 				<!--=== Accordion ===-->
 				<div id="accordion" class="clearfix">
 					<!-- Accordion 1 -->
-					<h2 class="current"> <img src="#rc.root#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#rc.root#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> First pane </h2>
+					<h2 class="current"> <img src="#prc.bbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#prc.bbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> First pane </h2>
 					<div class="pane">
 						<!-- All div's with a class of .pane will become accordion panes -->
 						<ul>
@@ -167,7 +167,7 @@
 						</ul>
 					</div>
 					<!-- Accordion 2-->
-					<h2> <img src="#rc.root#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#rc.root#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> Second pane </h2>
+					<h2> <img src="#prc.bbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#prc.bbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> Second pane </h2>
 					<div class="pane">
 						<ul>
 							<li>Sub Menu Item</li>
@@ -176,7 +176,7 @@
 						</ul>
 					</div>
 					<!-- Accordion 3 -->
-					<h2> <img src="#rc.root#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#rc.root#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> Third pane </h2>
+					<h2> <img src="#prc.bbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> <img src="#prc.bbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> Third pane </h2>
 					<div class="pane">
 						<ul>
 							<li>Sub Menu Item</li>
@@ -269,7 +269,7 @@
 					<li title="Click on any row in the table to expand it"><a href="##">Expandable Table With Pagination</a></li>
 				</ul>
 				<!--End sub navigation-->
-				<img src="#rc.root#/includes/images/tables_icon.png" alt="Accordion" width="30" height="30" />Tables
+				<img src="#prc.bbRoot#/includes/images/tables_icon.png" alt="Accordion" width="30" height="30" />Tables
 			</div>
 			<div class="body">
 				<div class="panes">
@@ -296,7 +296,7 @@
 	<!--=======================Forms and Further Sub-Navigations==========================-->
 	<div class="box clear">
 		<div class="header">
-			<img src="#rc.root#/includes/images/tables_icon.png" alt="Accordion" width="30" height="30" />Forms &amp; Typography
+			<img src="#prc.bbRoot#/includes/images/tables_icon.png" alt="Accordion" width="30" height="30" />Forms &amp; Typography
 		</div>
 		<div class="body_vertical_nav clearfix">
 			<!-- Grey backgound applied to box body -->
@@ -423,7 +423,7 @@
 	<div class="box column-left">
 		<!--Begin Box-->
 		<div class="header">
-			<p><img src="#rc.root#/includes/images/half_width_icon.png" alt="Half Width Box" width="30" height="30" />Half Width</p>
+			<p><img src="#prc.bbRoot#/includes/images/half_width_icon.png" alt="Half Width Box" width="30" height="30" />Half Width</p>
 		</div>
 		<div class="body">
 			Lorem ipsum dolor sit amet, <a href="##">consectetur</a> adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo <a href="##">consequat</a>. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -433,7 +433,7 @@
 	<div class="box column-right">
 		<!--Begin Box-->
 		<div class="header">
-			<p><img src="#rc.root#/includes/images/half_width_icon.png" alt="Half Width Box" width="30" height="30" />Half Width</p>
+			<p><img src="#prc.bbRoot#/includes/images/half_width_icon.png" alt="Half Width Box" width="30" height="30" />Half Width</p>
 		</div>
 		<div class="body">
 			<ul class="bulleted_list">

@@ -26,11 +26,27 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
-	* entry search by title or content
+	* entry search by title or content, returns struct with keys [entries,count]
 	*/
-	function search(criteria){
-		var r = executeQuery(query="from bbEntry where title like :criteria OR content like :criteria",params={criteria="%#arguments.criteria#%"},asQuery=false);
-		return r;
+	struct function search(criteria="",max=0,offset=0){
+		var results = {};
+		
+		// do search if criteria passed
+		if( len(criteria) ){
+			results.entries = executeQuery(query="from bbEntry where title like :criteria OR content like :criteria ORDER BY publishedDate desc",
+							 			   params={criteria="%#arguments.criteria#%"},
+							 			   offset=arguments.offset,
+							 			   max=arguments.max,
+							 			   asQuery=false);
+			results.count = ORMExecuteQuery("select count(*) as total from bbEntry where title like :criteria OR content like :criteria",{criteria="%#arguments.criteria#%"},true);
+		}
+		else{
+			// else do normal listing with paging
+			results.entries = list(sortOrder="publishedDate desc",asQuery=false,offset=arguments.offset,max=arguments.max);
+			results.count 	= count();
+		}
+		
+		return results;
 	}
 	
 }

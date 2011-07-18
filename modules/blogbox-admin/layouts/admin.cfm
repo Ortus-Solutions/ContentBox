@@ -95,19 +95,19 @@
 					<a href="##" title="Blog Entries" <cfif prc.tabEntries>class="current"</cfif>>Entries</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehEntries)#" <cfif event.getCurrentAction() eq "indexs"> class="current"</cfif>
+							<a href="#event.buildLink(rc.xehEntries)#" <cfif event.getValue("tabEntries_viewAll",false,true)> class="current"</cfif>
 							   title="View All Entries">View All</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehBlogEditor)#" <cfif event.getCurrentAction() eq "editor"> class="current"</cfif>
+							<a href="#event.buildLink(rc.xehBlogEditor)#" <cfif event.getValue("tabEntries_editor",false,true)> class="current"</cfif>
 							   title="Create a new entry">Create New</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehCategories)#"
+							<a href="#event.buildLink(rc.xehCategories)#" <cfif event.getValue("tabEntries_categories",false,true)> class="current"</cfif>
 							   title="Manage Categories">Categories</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehCategories)#"
+							<a href="#event.buildLink(rc.xehComments)#" <cfif event.getValue("tabEntries_comments",false,true)> class="current"</cfif>
 							   title="Manage Comments">Comments</a>
 						</li>
 						<!--- bbadmin event --->
@@ -119,7 +119,7 @@
 					<a href="##" title="Authors" <cfif prc.tabAuthors>class="current"</cfif>>Authors</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(rc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
 							   title="View All Authors">View All</a>
 						</li>
 						<li>

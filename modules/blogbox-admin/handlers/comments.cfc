@@ -8,13 +8,17 @@ component extend="baseHandler"{
 
 	// pre handler
 	function preHandler(event,action){
-		var rc = event.getCollection();
+		var rc 	= event.getCollection();
+		var prc = event.getCollection(private=true);
 		// exit Handlers
 		rc.xehComments 			= "#prc.bbEntryPoint#.admin.comments";
 		rc.xehCommentEditor 	= "#prc.bbEntryPoint#.admin.comments.editor";
 		rc.xehCommentRemove 	= "#prc.bbEntryPoint#.admin.comments.remove";
 		rc.xehCommentApprove 	= "#prc.bbEntryPoint#.admin.comments.approve";
 		rc.xehCommentUnapprove	= "#prc.bbEntryPoint#.admin.comments.unapprove";
+		// Tab
+		prc.tabEntries = true;
+		prc.tabEntries_comments = true;
 	}
 	
 	// index

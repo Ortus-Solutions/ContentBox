@@ -25,8 +25,9 @@ component extends="baseHandler"{
 	
 	// index
 	function index(event,rc,prc){
-		// paging
+		// params
 		event.paramValue("page",1);
+		event.paramValue("searchEntries","");
 		
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox-admin");
@@ -38,24 +39,27 @@ component extends="baseHandler"{
 		// get all authors
 		rc.authors    = authorService.getAll(sortOrder="lastName");
 		
-		// search entries?
-		if( len(event.getValue("searchEntries","")) ){
-			rc.entries = entryService.search( rc.searchEntries );
-			rc.entriesCount = arrayLen(rc.entries);
-		}
-		else{
-			// get all entries
-			rc.entries 		= entryService.list(sortOrder="publishedDate desc",asQuery=false,offset=rc.paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
-			rc.entriesCount = entryService.count();
-		}
+		// search entries
+		var entryResults = entryService.search(criteria=rc.searchEntries,offset=rc.paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
+		rc.entries 		 = entryResults.entries;
+		rc.entriesCount  = entryResults.count;
 		
 		// exit handlers
-		rc.xehEntrySearch = "#prc.bbEntryPoint#.entries";
-		
+		rc.xehEntrySearch 	= "#prc.bbEntryPoint#.entries";
+		rc.xehEntryQuickLook= "#prc.bbEntryPoint#.entries.quickLook";
+		// Tab
+		prc.tabEntries_viewAll = true;
 		// view
 		event.setView("entries/index");
 	}
-
+	
+	// Quick Look
+	function quickLook(event,rc,prc){
+		// get entry
+		rc.entry  = entryService.get( event.getValue("entryID",0) );
+		event.setView(view="entries/quickLook",layout="ajax");
+	}
+	
 	// editor
 	function editor(event,rc,prc){
 		// get all categories
@@ -64,6 +68,8 @@ component extends="baseHandler"{
 		rc.entry  = entryService.get( event.getValue("entryID",0) );
 		// exit handlers
 		rc.xehEntrySave = "#prc.bbEntryPoint#.entries.save";
+		// Tab
+		prc.tabEntries_editor = true;
 		// view
 		event.setView("entries/editor");
 	}	
