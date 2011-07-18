@@ -9,9 +9,7 @@
 		<div class="body">
 			<!--- Back button --->
 			<p class="center">
-				<a href="#event.buildLink(rc.xehAuthors)#">
-					<button class="button"> <img src="#prc.bbroot#/includes/images/go-back.png" alt="help"/> Back To Authors</button>
-				</a>
+				<button class="button" onclick="return to('#event.buildLink(rc.xehAuthors)#')"> <img src="#prc.bbroot#/includes/images/go-back.png" alt="help"/> Back To Authors</button>
 			</p>			
 		</div>
 	</div>	
@@ -43,13 +41,7 @@
 					<td>
 						#rc.author.getDisplayCreatedDate()#
 					</td>
-				</tr>
-				<tr>
-					<th width="75" class="textRight">Updated Date</th>
-					<td>
-						#rc.author.getDisplayCreatedDate()#
-					</td>
-				</tr>							
+				</tr>						
 			</table>			
 		</div>
 	</div>			
@@ -62,7 +54,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.bbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" />
-			Author Editor
+			<cfif rc.author.isLoaded()>Edit #rc.author.getName()#<cfelse>Create Author</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -106,6 +98,13 @@
 				</div>
 				#html.endFieldSet()#
 			#html.endForm()#
+			
+			<!--- My Entries --->
+			#html.startFieldset(legend="Author Entries")#
+				<!--- Entries Pager Viewlet --->
+				#rc.pagerViewlet#
+			#html.endFieldSet()#
+			
 			</cfif>
 		</div>	<!--- body --->
 	</div> <!--- main box --->
@@ -113,6 +112,7 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
+	$("##entries").tablesorter();
 	// form validators
 	$("##authorForm").validator({grouped:true});
 	$("##authorPasswordForm").validator({grouped:true});

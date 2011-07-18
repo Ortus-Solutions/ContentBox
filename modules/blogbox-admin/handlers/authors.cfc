@@ -5,6 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="authorService"		inject="id:authorService@bb";
+	property name="entryService"		inject="id:entryService@bb";
 	
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -16,21 +17,53 @@ component extends="baseHandler"{
 	
 	// index
 	function index(event,rc,prc){
+		// paging
+		event.paramValue("page",1);
+		
+		// prepare paging plugin
+		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox-admin");
+		rc.paging 		= rc.pagingPlugin.getBoundaries();
+		rc.pagingLink 	= event.buildLink('#rc.xehAuthors#.page.@page@');
+		
 		// exit Handlers
 		rc.xehAuthorRemove 	= "#prc.bbEntryPoint#.authors.remove";
-		// Get all authors
-		rc.authors = authorService.list(sortOrder="lastName desc",asQuery=false);
+		rc.xehAuthorSearch 	= "#prc.bbEntryPoint#.authors";
+		
+		// Get all authors or search
+		if( len(event.getValue("searchAuthor","")) ){
+			rc.authors = authorService.search( rc.searchAuthor );
+			rc.authorCount = arrayLen(rc.authors);
+		}
+		else{
+			rc.authors		= authorService.list(sortOrder="lastName desc",asQuery=false,offset=rc.paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
+			rc.authorCount 	= authorService.count();
+		}
+		
+		// View all tab
+		prc.tabAuthors_viewAll = true;
+		
 		// View
 		event.setView("authors/index");
 	}
 
 	// user editor
 	function editor(event,rc,prc){
-		// get new or persisted author
-		rc.author  = authorService.get( event.getValue("authorID",0) );
 		// exit handlers
 		rc.xehAuthorSave 			= "#prc.bbEntryPoint#.authors.save";
 		rc.xehAuthorChangePassword 	= "#prc.bbEntryPoint#.authors.passwordChange";
+		rc.xehEntriesPager			= "blogbox-admin:entries.pager";
+		
+		// get new or persisted author
+		rc.author  = authorService.get( event.getValue("authorID",0) );
+		// pager Viewlet
+		rc.pagerViewlet = "";
+		if( rc.author.isLoaded() ){
+			rc.pagerViewlet = runEvent(event=rc.xehEntriesPager,eventArguments={authorID=rc.authorID});
+		}
+		
+		// Editor
+		prc.tabAuthors_editor = true;
+		
 		// view
 		event.setView("authors/editor");
 	}	

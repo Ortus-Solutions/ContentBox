@@ -28,5 +28,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		// save the author
 		save( author );
 	}
+	
+	/**
+	* Author search by name, email or username
+	*/
+	function search(criteria){
+		var r = executeQuery(query="from bbAuthor where firstName like :criteria OR lastName like :criteria OR email like :criteria",params={criteria="%#arguments.criteria#%"},asQuery=false);
+		return r;
+	}
 
 }

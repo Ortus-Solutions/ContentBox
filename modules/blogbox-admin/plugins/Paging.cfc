@@ -39,7 +39,7 @@ FoundRows = The total rows found in the recordset
 link = The link to use for paging, including a placeholder for the page @page@
 	ex: index.cfm?event=users.list&page=@page@
 ----------------------------------------------------------------------->
-<cfcomponent hint="A paging plugin" output="false" cache="true">
+<cfcomponent hint="A paging plugin" output="false">
   
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    
@@ -47,11 +47,12 @@ link = The link to use for paging, including a placeholder for the page @page@
 		<cfscript>
   		setpluginName("Paging");
   		setpluginVersion("2.0");
-  		setpluginDescription("Relax Paging plugin");
+  		setpluginDescription("Paging plugin");
   		
-  		/* Paging properties */
-  		setPagingMaxRows( getModuleSettings("relax").settings.relaxLogs.maxrows );
-  		setPagingBandGap( getModuleSettings("relax").settings.relaxLogs.bandgap );
+  		// Paging properties
+  		var prc = controller.getRequestService().getContext().getCollection(private=true);
+  		setPagingMaxRows( prc.bbSettings.bb_paging_maxrows );
+  		setPagingBandGap( prc.bbSettings.bb_paging_bandgap );
   		
   		//Return instance
   		return this;
@@ -64,29 +65,31 @@ link = The link to use for paging, including a placeholder for the page @page@
 	<cffunction name="getPagingMaxRows" access="public" returntype="numeric" hint="Get the paging max rows setting" output="false">
 		<cfreturn instance.pagingMaxRows>
 	</cffunction>
-	<cffunction name="setPagingMaxRows" access="public" returntype="void" hint="Set the paging max rows setting" output="false">
+	<cffunction name="setPagingMaxRows" access="public" returntype="any" hint="Set the paging max rows setting" output="false">
 		<cfargument name="pagingMaxRows" required="true" type="numeric">
 		<cfset instance.pagingMaxRows = arguments.pagingMaxRows>
+		<cfreturn this>
 	</cffunction>
 	
 	<!--- Get/Set paging band gap --->
 	<cffunction name="getPagingBandGap" access="public" returntype="numeric" hint="Get the paging carrousel band gap" output="false">
 		<cfreturn instance.PagingBandGap>
 	</cffunction>
-	<cffunction name="setPagingBandGap" access="public" returntype="void" hint="Set the paging band gap" output="false">
+	<cffunction name="setPagingBandGap" access="public" returntype="any" hint="Set the paging band gap" output="false">
 		<cfargument name="PagingBandGap" required="true" type="numeric">
 		<cfset instance.PagingBandGap = arguments.PagingBandGap>
+		<cfreturn this>
 	</cffunction>
 	
 	<!--- Get boundaries --->
 	<cffunction name="getboundaries" access="public" returntype="struct" hint="Calculate the startrow and maxrow" output="false" >
-		<cfargument name="PagingMaxRows" required="false" type="numeric" hint="You can override the paging max rows here.">
+		<cfargument name="pagingMaxRows" required="false" type="numeric" hint="You can override the paging max rows here.">
 		<cfscript>
-			var boundaries = structnew();
-			var event = getController().getRequestService().getContext();
-			var maxRows = getPagingMaxRows();
+			var boundaries 	= structnew();
+			var event 		= getController().getRequestService().getContext();
+			var maxRows 	= getPagingMaxRows();
 			
-			/* Check for Override */
+			// Check for Overrides
 			if( structKeyExists(arguments,"PagingMaxRows") ){
 				maxRows = arguments.pagingMaxRows;
 			}
@@ -101,9 +104,9 @@ link = The link to use for paging, including a placeholder for the page @page@
 	<!--- render paging --->
 	<cffunction name="renderit" access="public" returntype="any" hint="render plugin tabs" output="false" >
 		<!--- ***************************************************************** --->
-		<cfargument name="FoundRows"    required="true"  type="numeric" hint="The found rows to page">
+		<cfargument name="foundRows"    required="true"  type="numeric" hint="The found rows to page">
 		<cfargument name="link"   		required="true"  type="string"  hint="The link to use, you must place the @page@ place holder so the link ca be created correctly">
-		<cfargument name="PagingMaxRows" required="false" type="numeric" hint="You can override the paging max rows here.">
+		<cfargument name="pagingMaxRows" required="false" type="numeric" hint="You can override the paging max rows here.">
 		<!--- ***************************************************************** --->
 		<cfset var event = getController().getRequestService().getContext()>
 		<cfset var pagingTabs = "">

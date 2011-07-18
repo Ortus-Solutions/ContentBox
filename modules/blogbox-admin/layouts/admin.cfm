@@ -9,7 +9,7 @@
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>BlogBox Administrator</title> 
+    <title>BlogBox Administrator - #prc.bbSettings.bb_site_name#</title> 
 	<!--- Favicon --->
 	<link href="#prc.bbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
@@ -62,7 +62,8 @@
 					<!--- View Blog --->
 					<a href="#event.buildLink(getModuleSettings("blogbox").entryPoint)#" target="_blank"><button class="buttonsmall">View Blog</button></a>
 				</span>
-			  A Sweet Blogging Platform
+			  	<!--- site tag line --->
+				#prc.bbSettings.bb_site_name# - #prc.bbSettings.bb_site_tagline#
 			</div>
 			<!--End Header top Area=-->
 	    
@@ -118,15 +119,17 @@
 					<a href="##" title="Authors" <cfif prc.tabAuthors>class="current"</cfif>>Authors</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehAuthors)#" <cfif event.getCurrentAction() eq "indexs"> class="current"</cfif>
+							<a href="#event.buildLink(rc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)> class="current"</cfif>
 							   title="View All Authors">View All</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehAuthorEditor)#" <cfif event.getCurrentAction() eq "editor"> class="current"</cfif>
+							<a href="#event.buildLink(rc.xehAuthorEditor)#" 
+							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() NEQ event.getValue("authorID","")>class="current"</cfif>
 							   title="Create a new author">Create New</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehAuthorsProfile)#"
+							<a href="#event.buildLink(linkto=rc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
+							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() eq event.getValue("authorID","")>class="current"</cfif>
 							   title="Manage your profile">My Profile</a>
 						</li>
 						<!--- bbadmin event --->
@@ -138,7 +141,7 @@
 					<a href="##" title="System" <cfif prc.tabSystem>class="current"</cfif>>System</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehSettings)#" <cfif event.getCurrentAction() eq "indexs"> class="current"</cfif>
+							<a href="#event.buildLink(rc.xehSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
 							   title="Manage The Raw Settings Table">Raw Settings</a>
 						</li>
 						<!--- bbadmin event --->

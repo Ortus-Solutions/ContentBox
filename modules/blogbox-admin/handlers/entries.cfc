@@ -6,6 +6,10 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="categoryService"		inject="id:categoryService@bb";
 	property name="entryService"		inject="id:entryService@bb";
+	property name="authorService"		inject="id:authorService@bb";
+
+	// Public properties
+	this.preHandler_except = "pager";
 
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -21,10 +25,33 @@ component extends="baseHandler"{
 	
 	// index
 	function index(event,rc,prc){
+		// paging
+		event.paramValue("page",1);
+		
+		// prepare paging plugin
+		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox-admin");
+		rc.paging 		= rc.pagingPlugin.getBoundaries();
+		rc.pagingLink 	= event.buildLink('#rc.xehEntries#.page.@page@');
+		
 		// get all categories
-		rc.categories = categoryService.getAll(sortOrder="category desc");
-		// get all entries
-		rc.entries = entryService.list(sortOrder="publishedDate desc",asQuery=false);
+		rc.categories = categoryService.getAll(sortOrder="category");
+		// get all authors
+		rc.authors    = authorService.getAll(sortOrder="lastName");
+		
+		// search entries?
+		if( len(event.getValue("searchEntries","")) ){
+			rc.entries = entryService.search( rc.searchEntries );
+			rc.entriesCount = arrayLen(rc.entries);
+		}
+		else{
+			// get all entries
+			rc.entries 		= entryService.list(sortOrder="publishedDate desc",asQuery=false,offset=rc.paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
+			rc.entriesCount = entryService.count();
+		}
+		
+		// exit handlers
+		rc.xehEntrySearch = "#prc.bbEntryPoint#.entries";
+		
 		// view
 		event.setView("entries/index");
 	}
@@ -32,7 +59,7 @@ component extends="baseHandler"{
 	// editor
 	function editor(event,rc,prc){
 		// get all categories
-		rc.categories = categoryService.getAll(sortOrder="category desc");
+		rc.categories = categoryService.getAll(sortOrder="category");
 		// get new or persisted
 		rc.entry  = entryService.get( event.getValue("entryID",0) );
 		// exit handlers
@@ -84,9 +111,30 @@ component extends="baseHandler"{
 		}
 		
 		categoryService.delete( oCategory );
-		
 		getPlugin("MessageBox").setMessage("info","Category Removed!");
-		
 		setNextEvent(rc.xehCategories);
+	}
+	
+	// pager viewlet
+	function pager(event,rc,prc,authorID=0){
+		// check if authorID exists in rc
+		if( event.valueExists("pager_authorID") ){
+			arguments.authorID = rc.pager_authorID;
+		}
+		// paging
+		event.paramValue("page",1);
+		// exit handlers
+		rc.xehPager 		= "#prc.bbEntryPoint#.entries.pager";
+		rc.xehEntryEditor	= "#prc.bbEntryPoint#.entries.editor";
+		// prepare paging plugin
+		rc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox-admin");
+		rc.pager_paging 	  	= rc.pager_pagingPlugin.getBoundaries();
+		rc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
+		// get author entries to page
+		rc.pager_entries 		= entryService.findByAuthor(authorID=arguments.authorID,offset=rc.pager_paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
+		rc.pager_entriesCount 	= entryService.count(where="author.authorID = #arguments.authorID#");
+		rc.pager_authorID		= arguments.authorID;
+		// view pager
+		return renderView(view="entries/pager",module="blogbox-admin");
 	}
 }

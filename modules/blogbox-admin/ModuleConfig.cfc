@@ -24,6 +24,8 @@ component {
 			// Generic module route
 			{pattern="/", handler="dashboard", action="index" },
 			{pattern="/dashboard/reload/:targetModule", handler="dashboard", action="reload" },
+			{pattern="/authors/page/:page",handler="authors"},
+			{pattern="/entries/pager/page/:page",handler="authors",action="pager"},
 			{pattern="/:handler/:action?"}
 		];		
 		

@@ -83,8 +83,8 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 		if( NOT hasCategories() ){ return "Uncategorized"; }
 		var cats 	= getCategories();
 		var catList = [];
-		for(var x=1; arrayLen(cats); x++){
-			arrayAppend( catList , cats[x].getCategory() );
+		for(var x=1; x lte arrayLen(cats); x++){
+			arrayAppend( catList , cats[x].getCategory() & " " );
 		}
 		return arrayToList( catList );
 	}

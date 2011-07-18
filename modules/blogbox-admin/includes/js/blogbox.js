@@ -22,17 +22,10 @@ $(document).ready(function() {
 	$remoteModalContent	= $remoteModal.find("#remoteModelContent");
 	$remoteModalLoading	= $remoteModalContent.html();
 	
-	// Tooltip settings
-	var toolTipSettings	= {	//will make a tooltip of all elements having a title property
-		 opacity: 0.8,
-		 effect: 'slide',
-		 predelay: 200,
-		 delay: 10,
-		 offset:[5, 0]
-	};
-	
 	// activate confirmations
 	activateConfirmations();
+	// activate tooltips
+	activateTooltips();
 	
 	// Jump Menu
 	$('.jump_menu').hover(function(){
@@ -48,11 +41,6 @@ $(document).ready(function() {
 		$(this).expose({ });
 	});
 	
-	//Tooltip 
-	$("[title]").tooltip(toolTipSettings)
-		 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isn't space on the top
-	});
-	
 	//Tabs in box header 
 	$("ul.sub_nav").tabs("div.panes > div", {effect: 'slide'});
 	//Vertical Navigation	
@@ -64,6 +52,20 @@ $(document).ready(function() {
 	var t=setTimeout("toggleFlickers()",5000);
 	
 });
+function activateTooltips(){
+	// Tooltip settings
+	var toolTipSettings	= {	//will make a tooltip of all elements having a title property
+		 opacity: 0.8,
+		 effect: 'slide',
+		 predelay: 200,
+		 delay: 10,
+		 offset:[5, 0]
+	};
+	//Tooltip 
+	$("[title]").tooltip(toolTipSettings)
+		 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isn't space on the top
+	});
+}
 function toggleFlickers(){
 	$(".flickerMessages").slideToggle();
 	$(".cbox_messagebox_info").slideToggle();
@@ -152,4 +154,8 @@ function activateConfirmations(){
 		// prevent default action
 		e.preventDefault();
 	});
+}
+function to(link){
+	window.location = link;
+	return false;
 }

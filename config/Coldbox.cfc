@@ -10,7 +10,7 @@
 			eventName 				= "event",
 			
 			//Development Settings
-			debugMode				= true,
+			debugMode				= false,
 			debugPassword			= "",
 			reinitPassword			= "",
 			handlersIndexAutoReload = true,

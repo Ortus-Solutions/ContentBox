@@ -1,18 +1,18 @@
 <cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
-	<!--- Info Box --->
+	<!--- Search Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Author Actions
+			<img src="#prc.bbroot#/includes/images/search.png" alt="info" width="24" height="24" />Author Search
 		</div>
 		<div class="body">
-			<!--- Help button --->
-			<p class="center">
-				<a href="#event.buildLink(rc.xehAuthorEditor)#" title="Create a new Author">
-					<button class="button"> <img src="#prc.bbroot#/includes/images/add.png" alt="help"/> Create Author</button>
-				</a>
-			</p>
+			<!--- Search Form --->
+			#html.startForm(name="authorSearchForm",action=rc.xehAuthorSearch)#
+				#html.textField(label="Search:",name="searchAuthor",class="textfield",size="16",title="Search authors by name, username or email",value=event.getValue("searchAuthor",""))#
+				<input type="submit" class="buttonred" value="Search" />
+				<button class="button" onclick="return to('#event.buildLink(rc.xehAuthors)#')">Clear</button>				
+			#html.endForm()#			
 		</div>
 	</div>		
 </div>
@@ -31,17 +31,25 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- AuthorForm --->
-			<form name="authorForm" id="authorForm" method="post" action="#event.buildLink(rc.xehAuthorRemove)#">
+			#html.startForm(name="authorForm",action=rc.xehAuthorRemove)#
 			<input type="hidden" name="authorID" id="authorID" value="" />
+			
+			<!--- Create Butons --->
+			<div class="floatRight">
+				<button class="button2" onclick="return to('#event.buildLink(rc.xehAuthorEditor)#')" title="Create new author">Create Author</button>
+			</div>
 			
 			<!--- Filter Bar --->
 			<div class="filterBar">
 				<div>
 					#html.label(field="authorFilter",content="Quick Filter:",class="inline")#
-					#html.textField(name="authorFilter",size="20",class="textfield")#
+					#html.textField(name="authorFilter",size="30",class="textfield")#
 				</div>
 			</div>
-
+			
+			<!--- Paging --->
+			#rc.pagingPlugin.renderit(rc.authorCount,rc.pagingLink)#
+		
 			<!--- authors --->
 			<table name="authors" id="authors" class="tablesorter" width="98%">
 				<thead>
@@ -50,33 +58,48 @@
 						<th>Email</th>
 						<th>Username</th>
 						<th>Last Login</th>
-						<th>isActive</th>
+						<th width="75">Active</th>
 						<th width="125" class="center {sorter: false}">Actions</th>
 					</tr>
 				</thead>
 				
 				<tbody>
 					<cfloop array="#rc.authors#" index="author">
-					<tr>
+					<tr<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()> class="selected"</cfif>>
 						<td>
 							#getMyPlugin(plugin="Avatar",module="blogbox").renderAvatar(email=author.getEmail(),size="30")#
 							<a href="#event.buildLink(rc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
+							<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()>
+								<img src="#prc.bbRoot#/includes/images/asterisk_orange.png" alt="you" title="You dude!" />
+							</cfif>
 						</td>
 						<td>#author.getEmail()#</td>
 						<td>#author.getUsername()#</td>
 						<td>#author.getDisplayLastLogin()#</td>
-						<td>#author.getIsActive()#</td>
+						<td class="center">
+							<cfif author.getIsActive()>
+								<img src="#prc.bbRoot#/includes/images/button_ok.png" alt="ok" title="User Active" />
+							<cfelse>
+								<img src="#prc.bbRoot#/includes/images/button_cancel.png" alt="off" title="User Deactivated" />
+							</cfif>
+						</td>
 						<td class="center">
 							<!--- Edit Command --->
 							<a href="#event.buildLink(rc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" /></a>
 							<!--- Delete Command --->
+							<cfif prc.oAuthor.getAuthorID() neq author.getAuthorID()>
 							<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><img id="delete_#author.getAuthorID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							</cfif>
 						</td>
 					</tr>
 					</cfloop>
 				</tbody>
 			</table>
-			</form>
+			
+			<!--- Paging --->
+			#rc.pagingPlugin.renderit(rc.authorCount,rc.pagingLink)#
+		
+			#html.endForm()#
 		
 		</div>	<!--- body --->
 	</div> <!--- main box --->

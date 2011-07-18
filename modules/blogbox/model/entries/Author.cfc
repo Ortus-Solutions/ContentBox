@@ -10,10 +10,9 @@ component persistent="true" entityname="bbAuthor" table="bb_author"{
 	property name="email"		length="255" notnull="true";
 	property name="userName"	length="100" notnull="true";
 	property name="password"	length="100" notnull="true";
-	property name="isActive" 	notnull="true"  ormtype="boolean" default="false";
-	property name="lastLogin" 	ormtype="date"  notnull="false";
-	property name="createdDate" notnull="true"  ormtype="date" update="false";
-	property name="updatedDate" notnull="true"  ormtype="timestamp" sqltype="timestamp" insert="false" update="false";
+	property name="isActive" 	ormtype="boolean"   notnull="true" default="false";
+	property name="lastLogin" 	ormtype="timestamp" notnull="false";
+	property name="createdDate" ormtype="timestamp" notnull="true" update="false";
 	
 	// Non-persisted properties
 	property name="loggedIn"	persistent="false" default="false" type="boolean";
@@ -29,7 +28,6 @@ component persistent="true" entityname="bbAuthor" table="bb_author"{
 	*/
 	public void function preInsert(){
 		setCreatedDate( now() );
-		setUpdatedDate( now() );
 	}
 	
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
@@ -68,14 +66,6 @@ component persistent="true" entityname="bbAuthor" table="bb_author"{
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
-	}
-	
-	/**
-	* Get formatted updatedDate
-	*/
-	string function getDisplayUpdatedDate(){
-		var updatedDate = getUpdatedDate();
-		return dateFormat( updatedDate, "mm/dd/yyy" ) & " " & timeFormat(updatedDate, "hh:mm:ss tt");
 	}
 	
 	/**

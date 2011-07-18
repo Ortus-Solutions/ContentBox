@@ -3,10 +3,11 @@
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton{
 	
-	// DI
+	// DI properties
 	property name="cache" inject="cachebox:default";
-	property name="requestService" inject="coldbox:requestService";
-	
+	// Properties
+	property name="settingsCacheKey" type="string";
+	 
 	/**
 	* Constructor
 	*/
@@ -14,8 +15,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		// init it
 		super.init(entityName="bbSetting");
 		// settings cache key
-		cacheKey = "bb-settings";
-		
+		setSettingsCacheKey("bb-settings");
 		return this;
 	}
 	
@@ -24,12 +24,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	*/
 	function getAllSettings(asStruct=false){
 		// retrieve from cache
-		var settings = cache.get( cacheKey );
+		var settings = cache.get( settingsCacheKey );
 	
 		// found in cache?
 		if( isNull(settings) ){
 			// not found, so query db
 			var settings = list(sortOrder="name");	
+			// cache them for an hour
+			cache.set(settingsCacheKey,settings,60);
 		}
 		
 		// convert to struct
@@ -48,7 +50,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	* flush settings cache
 	*/
 	function flushSettingsCache(){
-		cache.clear( cacheKey );
+		cache.clear( settingsCacheKey );
 	}
 	
 }

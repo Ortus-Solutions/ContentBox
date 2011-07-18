@@ -41,7 +41,6 @@ component extends="coldbox.system.Interceptor"{
 		// Authors Tab
 		rc.xehAuthors			= "#prc.bbEntryPoint#.authors";
 		rc.xehAuthorEditor		= "#prc.bbEntryPoint#.authors.editor";
-		rc.xehAuthorsProfile	= "#prc.bbEntryPoint#.authors.profile";
 		
 		// System
 		rc.xehSettings		= "#prc.bbEntryPoint#.settings";
