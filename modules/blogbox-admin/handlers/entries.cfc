@@ -28,6 +28,9 @@ component extends="baseHandler"{
 		// params
 		event.paramValue("page",1);
 		event.paramValue("searchEntries","");
+		event.paramValue("fAuthors","all");
+		event.paramValue("fCategories","all");
+		event.paramValue("fStatus","any");
 		
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox-admin");

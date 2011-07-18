@@ -34,16 +34,18 @@
 			#html.startForm(name="authorForm",action=rc.xehAuthorRemove)#
 			<input type="hidden" name="authorID" id="authorID" value="" />
 			
-			<!--- Create Butons --->
-			<div class="floatRight">
-				<button class="button2" onclick="return to('#event.buildLink(rc.xehAuthorEditor)#')" title="Create new author">Create Author</button>
-			</div>
-			
-			<!--- Filter Bar --->
-			<div class="filterBar">
-				<div>
-					#html.label(field="authorFilter",content="Quick Filter:",class="inline")#
-					#html.textField(name="authorFilter",size="30",class="textfield")#
+			<div class="contentBar">
+				<!--- Create Butons --->
+				<div class="buttonBar">
+					<button class="button2" onclick="return to('#event.buildLink(rc.xehAuthorEditor)#')" title="Create new author">Create Author</button>
+				</div>
+				
+				<!--- Filter Bar --->
+				<div class="filterBar">
+					<div>
+						#html.label(field="authorFilter",content="Quick Filter:",class="inline")#
+						#html.textField(name="authorFilter",size="30",class="textfield")#
+					</div>
 				</div>
 			</div>
 			

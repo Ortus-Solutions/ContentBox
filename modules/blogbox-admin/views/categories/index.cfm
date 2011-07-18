@@ -8,7 +8,7 @@
 		</div>
 		<div class="body">
 			<!--- Create/Edit form --->
-			#html.startForm(action=rc.xehCategoriesSave,name="categoryEditor")#
+			#html.startForm(action=rc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate")#
 				<input type="hidden" name="categoryID" id="categoryID" value="" />
 				
 				<label for="category">Category:</label>
@@ -41,18 +41,21 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- CategoryForm --->
-			<form name="categoryForm" id="categoryForm" method="post" action="#event.buildLink(rc.xehCategoryRemove)#">
+			#html.startForm(name="categoryForm",action=rc.xehCategoryRemove)#
 			<input type="hidden" name="categoryID" id="categoryID" value="" />
 			
-			<!--- Filter Bar --->
-			<div class="filterBar">
-				<div>
-					#html.label(field="categoryFilter",content="Quick Filter:",class="inline")#
-					#html.textField(name="categoryFilter",size="20",class="textfield")#
+			<!--- Content Bar --->
+			<div class="contentBar">
+				<!--- Filter Bar --->
+				<div class="filterBar">
+					<div>
+						#html.label(field="categoryFilter",content="Quick Filter:",class="inline")#
+						#html.textField(name="categoryFilter",size="20",class="textfield")#
+					</div>
 				</div>
 			</div>
 			
-			<!--- authors --->
+			<!--- categories --->
 			<table name="categories" id="categories" class="tablesorter" width="98%">
 				<thead>
 					<tr>
@@ -60,8 +63,7 @@
 						<th>Slug</th>			
 						<th width="125" class="center {sorter:false}">Actions</th>
 					</tr>
-				</thead>
-				
+				</thead>				
 				<tbody>
 					<cfloop array="#rc.categories#" index="category">
 					<tr>
@@ -77,7 +79,7 @@
 					</cfloop>
 				</tbody>
 			</table>
-			</form>
+			#html.endForm()#
 		
 		</div>	
 	</div>
@@ -92,7 +94,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##categories"), this.value );
 	});
 	// form validator
-	$categoryEditor.validator({position:'top center'});
+	$categoryEditor.validator({position:'top left'});
 	// reset
 	$('##btnReset').click(function() {
 		$categoryEditor.find("##categoryID").val( '' );

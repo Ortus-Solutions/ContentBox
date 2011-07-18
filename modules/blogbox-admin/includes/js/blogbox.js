@@ -52,6 +52,9 @@ $(document).ready(function() {
 	var t=setTimeout("toggleFlickers()",5000);
 	
 });
+function exposeIt(vID){
+	$(vID).expose();
+}
 function activateTooltips(){
 	// Tooltip settings
 	var toolTipSettings	= {	//will make a tooltip of all elements having a title property
@@ -96,7 +99,7 @@ function openRemoteModal(url,params,w,h){
 			loadSpeed: 200,
 			opacity: 0.6
 		},
-		closeOnClick:false,
+		closeOnClick : true,
 		onBeforeLoad : function(){
 			$remoteModalContent.load( $remoteModal.data("url"),$remoteModal.data("params") );
 		},

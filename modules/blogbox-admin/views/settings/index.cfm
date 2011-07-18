@@ -44,17 +44,20 @@
 			<form name="settingForm" id="settingForm" method="post" action="#event.buildLink(rc.xehSettingRemove)#">
 			<input type="hidden" name="settingID" id="settingID" value="" />
 			
-			<!--- Flush Cache Button --->
-			<div class="floatRight">
-				<button class="button2" onclick="openRemoteModal('#event.buildLink(rc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
-				<button class="button2" onclick="return to('#event.buildLink(rc.xehFlushCache)#')" title="Flush the settings cache">Flush Settings Cache</button>
-			</div>
-			
-			<!--- Filter Bar --->
-			<div class="filterBar">
-				<div>
-					#html.label(field="settingFilter",content="Quick Filter:",class="inline")#
-					#html.textField(name="settingFilter",size="30",class="textfield")#
+			<!--- content bar --->
+			<div class="contentBar">
+				<!--- Flush Cache Button --->
+				<div class="buttonBar">
+					<button class="button2" onclick="openRemoteModal('#event.buildLink(rc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
+					<button class="button2" onclick="return to('#event.buildLink(rc.xehFlushCache)#')" title="Flush the settings cache">Flush Settings Cache</button>
+				</div>
+				
+				<!--- Filter Bar --->
+				<div class="filterBar">
+					<div>
+						#html.label(field="settingFilter",content="Quick Filter:",class="inline")#
+						#html.textField(name="settingFilter",size="30",class="textfield")#
+					</div>
 				</div>
 			</div>
 			

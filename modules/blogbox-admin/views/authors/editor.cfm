@@ -61,7 +61,7 @@
 			#getPlugin("MessageBox").renderIt()#
 			
 			<!--- AuthorForm --->
-			#html.startForm(name="authorForm",action=rc.xehAuthorSave)#
+			#html.startForm(name="authorForm",action=rc.xehAuthorSave,novalidate="novalidate")#
 				#html.startFieldset(legend="Author Details")#
 				#html.hiddenField(name="authorID",bind=rc.author)#
 				<!--- Fields --->
@@ -84,7 +84,7 @@
 			
 			<cfif rc.author.isLoaded()>
 			<!--- Change Password --->
-			#html.startForm(name="authorPasswordForm",action=rc.xehAuthorChangePassword)#
+			#html.startForm(name="authorPasswordForm",action=rc.xehAuthorChangePassword,novalidate="novalidate")#
 				#html.startFieldset(legend="Change Password")#
 				#html.hiddenField(name="authorID",bind=rc.author)#
 				<!--- Fields --->

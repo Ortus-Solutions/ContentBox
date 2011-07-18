@@ -26,25 +26,25 @@
 			<!--- Authors --->
 			<label for="fAuthors">Authors: </label>
 			<select name="fAuthors" id="fAuthors" style="width:200px">
-				<option value="all" selected="selected">All Authors</option>
+				<option value="all" <cfif rc.fAuthors eq "all">selected="selected"</cfif>>All Authors</option>
 				<cfloop array="#rc.authors#" index="author">
-				<option value="#author.getAuthorID()#">#author.getName()#</option>
+				<option value="#author.getAuthorID()#" <cfif rc.fAuthors eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
 				</cfloop>
 			</select>
 			<!--- Categories --->
 			<label for="fCategories">Categories: </label>
 			<select name="fCategories" id="fCategories" style="width:200px">
-				<option value="all" selected="selected">All Categories</option>
+				<option value="all" <cfif rc.fCategories eq "all">selected="selected"</cfif>>All Categories</option>
 				<cfloop array="#rc.categories#" index="category">
-				<option value="#category.getCategoryID()#">#category.getCategory()#</option>
+				<option value="#category.getCategoryID()#" <cfif rc.fCategories eq category.getCategoryID()>selected="selected"</cfif>>#category.getCategory()#</option>
 				</cfloop>
 			</select>
 			<!--- Status --->
 			<label for="fStatus">Entry Status: </label>
 			<select name="fStatus" id="fStatus" style="width:200px">
-				<option value="any" selected="selected">Any Status</option>
-				<option value="true">Published</option>
-				<option value="false">Draft</option>				
+				<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status</option>
+				<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Published</option>
+				<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Draft</option>				
 			</select>
 				
 			<div class="actionBar">
@@ -57,20 +57,21 @@
 	</div>	
 	
 	<!--- Help Box--->
-	<div class="small_box">
+	<div class="small_box" id="help_tips">
 		<div class="header">
 			<img src="#prc.bbroot#/includes/images/help.png" alt="info" width="24" height="24" />Help Tips
 		</div>
 		<div class="body">
-			<ul>
-				<li>Right click on an entry's row to activate quick look!</li>
+			<ul class="tipList">
+				<li title="Click Me!" onclick="exposeIt('##entries')">Right click on a row to activate quick look!</li>
+				<li title="Click Me!" onclick="exposeIt('##main_column')">Sorting is only done within your paging window</li>
 			</ul>
 		</div>
 	</div>		
 </div>
 <!--End sidebar-->	
 <!--============================Main Column============================-->
-<div class="main_column">
+<div class="main_column" id="main_column">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
@@ -88,16 +89,20 @@
 			#html.startForm(name="entryForm",action=rc.xehEntryRemove)#
 			<input type="hidden" name="entryID" id="entryID" value="" />
 			
-			<!--- Create Butons --->
-			<div class="floatRight">
-				<button class="button2" onclick="return to('#event.buildLink(rc.xehEntryEditor)#');" title="Create new entry">Create Entry</button>
-			</div>
-			
-			<!--- Filter Bar --->
-			<div class="filterBar">
-				<div>
-					#html.label(field="entryFilter",content="Quick Filter:",class="inline")#
-					#html.textField(name="entryFilter",size="30",class="textfield")#
+			<!--- Content Bar --->
+			<div class="contentBar">
+				
+				<!--- Create Butons --->
+				<div class="buttonBar">
+					<button class="button2" onclick="return to('#event.buildLink(rc.xehEntryEditor)#');" title="Create new entry">Create Entry</button>
+				</div>
+				
+				<!--- Filter Bar --->
+				<div class="filterBar">
+					<div>
+						#html.label(field="entryFilter",content="Quick Filter:",class="inline")#
+						#html.textField(name="entryFilter",size="30",class="textfield")#
+					</div>
 				</div>
 			</div>
 			
@@ -182,7 +187,7 @@ $(document).ready(function() {
 	$("##entryFilter").keyup(function(){
 		$.uiTableFilter( $("##entries"), this.value );
 	});
-	
+	// quick look
 	$("##entries").find("tr").mousedown(function(e) {
 	    if (e.which === 3) {
 	    	openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
