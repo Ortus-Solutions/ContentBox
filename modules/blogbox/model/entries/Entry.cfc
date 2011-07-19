@@ -14,6 +14,8 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	property name="isPublished" 	notnull="true"  ormtype="boolean" default="true";
 	property name="allowComments" 	notnull="true"  ormtype="boolean" default="true";
 	property name="passwordProtection" 	notnull="false" length="100";
+	property name="HTMLKeywords"	notnull="false" length="160";
+	property name="HTMLDescription"	notnull="false" length="160";
 	
 	// M20 -> Author
 	property name="author" cfc="blogbox.model.entries.Author" fieldtype="many-to-one" fkcolumn="FK_userID" lazy="true";
@@ -34,6 +36,26 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	}
 	
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
+	
+	/*
+	* Validate entry, returns an array of error or no messages
+	*/
+	array function validate(){
+		var errors = [];
+		
+		// limits
+		HTMLKeyWords 		= left(HTMLKeywords,160);
+		HTMLDescription 	= left(HTMLDescription,160); 
+		passwordProtection 	= left(passwordProtection,100);
+		title				= left(title,200);
+		slug				= left(slug,200);
+		
+		// Required
+		if( !len(title) ){ arrayAppend(errors, "Title is required"); }
+		if( !len(content) ){ arrayAppend(errors, "Content is required"); }
+		
+		return errors;
+	}
 	
 	/**
 	* Get display publishedDate
@@ -70,10 +92,11 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	/*
 	* I remove all category associations
 	*/
-	public void function removeAllCategories(){
+	any function removeAllCategories(){
 		if ( hasCategories() ){
 			variables.categories = [];
 		}
+		return this;
 	}
 	
 	/**

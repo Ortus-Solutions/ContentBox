@@ -25,13 +25,13 @@ html { font:62.5% Arial, Helvetica, sans-serif; line-height:2.4em; }
 .content { font-size:1.3em; padding-top:5px; }
 /**============================== Element Styling ==============================**/
 a { text-decoration:none; }
-h1,h2,h3,h4,h5,h6 { margin-top:20px; margin-bottom:.3em; font:normal 1em Arial, Helvetica, sans-serif; }
+h1,h2,h3,h4,h5,h6 { margin-top: 10px; margin-bottom:.3em; font:normal 1em Arial, Helvetica, sans-serif; }
 h1 { font-size:2.4em; }
 h2 { font-size:2.1em; }
-h3 { font-size:1.9em; }
-h4 { font-size:1.8em; }
-h5 { font-size:1.7em; }
-h6 { font-size:1.5em; }
+h3 { font-size:1.7em; }
+h4 { font-size:1.6em; }
+h5 { font-size:1.5em; }
+h6 { font-size:1.3em; }
 hr { height:1px; margin:2em 0; border-bottom:1px solid; border-top-style:none; border-right-style:none; border-left-style:none; }
 td,th { padding:5px; display:table-cell; }
 p { margin:0 0 1em; }
@@ -42,12 +42,12 @@ blockquote { font-style:italic; padding-left:4em; background:no-repeat left top;
 fieldset { padding:1em; }
 fieldset legend { font-weight:bold; }
 form label { font-size:1em; font-weight:bold; display:block; margin:3px 0; }
-form p small { font-size:.75em; display:block; }
+form p small { font-size: 1em; display:block; }
 form input.textfield,form select,form textarea,form .wysiwyg { padding:6px; margin-right:5px; }
 form input.small { width:40%; }
 form input.med { width:60%; }
 form input.large { width:95%; }
-form textarea,form .wysiwyg { font-family:Arial, Helvetica, sans-serif; width:95%; font-size:1em; }
+form textarea,form .wysiwyg { font-family:Arial, Helvetica, sans-serif; width:96%; font-size:1em; }
 form input[type=checkbox],form input[type=radio] { padding:0; background:none; border:0; }
 .wysiwyg { width:auto!important; }
 /******* Form Hints and Errors **********/
@@ -120,7 +120,7 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 .small_box { margin-bottom:15px; }
 .small_box .header { height:30px; font-size:1.3em; line-height:1.8em; padding:0 12px; }
 .small_box .header img { position:relative; top:2px; float:right; }
-.small_box .body { padding:15px 12px; font-size:.9em; }
+.small_box .body { padding:10px 12px; font-size:.9em; }
 /**============================== Box ==============================**/
 .box { margin-bottom:15px; }
 .box .header { height:40px; font-size:1.5em; line-height:1.8em; padding:0 15px; position:relative; }

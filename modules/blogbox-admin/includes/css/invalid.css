@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-fieldset, .button, .button2, .small_box, .box, .body_vertical_nav,.tooltip, .tooltip.bottom,div.info, div.warning, div.error  { -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+fieldset, .button, .button2, .buttonred, .buttonsmall, .small_box, .box, .body_vertical_nav,.tooltip, .tooltip.bottom,div.info, div.warning, div.error  { -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
 /**Active tab in Navigation**/
 #main_nav li a.current { border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; }
 /** Shadow in boxes **/

@@ -1,6 +1,7 @@
 $(document).ready(function() {
  	// pointers
 	$content 	= $("#content");
+	$excerpt	= $("#excerpt");
 	$entryForm 	= $("#entryForm");
 	// toolbar config
 	var ckToolbar =
@@ -20,9 +21,20 @@ $(document).ready(function() {
 	    { name: 'tools',       items : [ 'Maximize','-','About' ] }
 	];
 	// Activate ckeditor
-	$content.ckeditor( function(){}, { toolbar:ckToolbar,height:350 } );
+	$content.ckeditor( function(){}, { toolbar:ckToolbar,height:300 } );
+	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175 } );
 	// Date fields
 	$(":date").dateinput();
 	// form validator
 	$entryForm.validator({errorClass:'error',position:'center top'});
 });
+/**
+ * Create permalink from title field
+ * @param slugger
+ */
+function createPermalink(slugger){
+	$slug = $("#slug").fadeOut();
+	$.get(slugger,{slug:$("#title").val()},function(data){ 
+		$slug.fadeIn().val($.trim(data)); 		
+	} );
+}

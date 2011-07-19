@@ -41,7 +41,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .buttonred { background:#c6c6c6 url(../images/buttonred_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#fff; }
 .buttonred:hover { background:#0063a8 url(../images/buttonred_bg_hover.gif) repeat-x left bottom; border:1px solid #a9c8ed; }
 .button:active,.button2:active,.buttonred:active,.buttonsmall { color:#000; }
-.buttonsmall { background:#fff url(../images/button_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#000; cursor:pointer; }
+.buttonsmall { background:#fff url(../images/button_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#000; cursor:pointer; -moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; }
 .buttonsmall:hover { background:#fddedc; border:1px solid white; }
 /** ============================== Header ============================== **/
 #header_bg { background:url(../images/header_bg.png) repeat-x; }
@@ -143,6 +143,8 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .center { text-align:center!important; margin:auto!important; }
 .padding10 { padding:10px; }
 .margin10 { margin:10px; }
+.width98{ width: 98%; }
+.width95{ width: 95%; }
 .hidden { display:none!important; }
 .flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 URL(../images/iinfo_icon.png) no-repeat 2% 50%; }
 /**============================== ColdBox MessageBox ==============================**/
@@ -151,7 +153,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .cbox_messagebox_warning { background:#FFF2CF url(../images/warning_icon.png) no-repeat scroll .5em 50%; color:#bc6c34; border:1px solid #bc6c34; margin:.3em auto; padding:0 1em 0 3.5em; }
 .cbox_messagebox_error { background:#FFFFE0 url(../images/error_icon.png) no-repeat scroll .5em 50%; color:#b22723; border:1px solid #ff0606; margin:.3em auto; padding:0 1em 0 3.5em; }
 /**============================== Table Listings ==============================**/
-tr.selected{ background-color: #fcdddb !important; }
+.selected{ background-color: #fcdddb !important; }
 .tablelisting { background-color:#CDCDCD; margin:5px 0; border-spacing:1px; font-size:8pt; border-collapse:inherit!important; }
 .tablelisting tr { background-color:#F7F7F7; }
 .tablelisting tr.even { background-color:#ffffff; }
@@ -214,6 +216,7 @@ tr.selected{ background-color: #fcdddb !important; }
 #loginBox { width:500px; margin:100px auto; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
 #loginContent { text-align:center; }
 #header_top_authorName { color:orange; font-weight:bold; }
+#categoriesChecks{ overflow: auto; max-height: 200px; border: 1px dotted #707171;}
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/

@@ -6,7 +6,7 @@
 		<div class="header">
 			<img src="#prc.bbroot#/includes/images/search.png" alt="info" width="24" height="24" />Search
 		</div>
-		<div class="body">
+		<div class="body<cfif len(rc.searchEntries)> selected</cfif>">
 			<!--- Search Form --->
 			#html.startForm(name="authorSearchForm",action=rc.xehEntrySearch)#
 				#html.textField(label="Search:",name="searchEntries",class="textfield",size="16",title="Search all entries",value=event.getValue("searchEntries",""))#
@@ -21,7 +21,7 @@
 		<div class="header">
 			<img src="#prc.bbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Filters
 		</div>
-		<div class="body">
+		<div class="body<cfif rc.isFiltering> selected</cfif>">
 			#html.startForm(name="entryFilterForm")#
 			<!--- Authors --->
 			<label for="fAuthors">Authors: </label>
@@ -35,6 +35,7 @@
 			<label for="fCategories">Categories: </label>
 			<select name="fCategories" id="fCategories" style="width:200px">
 				<option value="all" <cfif rc.fCategories eq "all">selected="selected"</cfif>>All Categories</option>
+				<option value="none" <cfif rc.fCategories eq "none">selected="selected"</cfif>>Uncategorized</option>
 				<cfloop array="#rc.categories#" index="category">
 				<option value="#category.getCategoryID()#" <cfif rc.fCategories eq category.getCategoryID()>selected="selected"</cfif>>#category.getCategory()#</option>
 				</cfloop>
@@ -65,6 +66,7 @@
 			<ul class="tipList">
 				<li title="Click Me!" onclick="exposeIt('##entries')">Right click on a row to activate quick look!</li>
 				<li title="Click Me!" onclick="exposeIt('##main_column')">Sorting is only done within your paging window</li>
+				<li title="Click Me!" onclick="exposeIt('##contentBar')">Quick Filtering is only for viewed results</li>
 			</ul>
 		</div>
 	</div>		
@@ -78,6 +80,7 @@
 			<img src="#prc.bbroot#/includes/images/blog.png" alt="sofa" width="30" height="30" />
 			Blog Entries (#rc.entriesCount#)
 			<cfif len(rc.searchEntries)> > Search: #event.getValue("searchEntries")#</cfif>
+			<cfif rc.isFiltering> > Filtered View</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -90,7 +93,7 @@
 			<input type="hidden" name="entryID" id="entryID" value="" />
 			
 			<!--- Content Bar --->
-			<div class="contentBar">
+			<div class="contentBar" id="contentBar">
 				
 				<!--- Create Butons --->
 				<div class="buttonBar">

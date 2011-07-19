@@ -13,7 +13,7 @@
 				</div>
 			</cfif>
 			<!--- Reload button --->
-			<p class="center">
+			<p class="actionBar">
 				<a href="#event.buildLink(rc.xehReloadModule&"/blogbox-admin")#" title="Reload Administrator Module" class="confirmIt">
 					<button class="button2">Reload Admin</button>
 				</a>
@@ -56,83 +56,28 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- Latest 10 Entries --->
-			<h2>Latest 10 Entries</h2>
-			<input type="button" class="button" onclick="window.location='#event.buildLink(rc.xehBlogEditor)#'" value="Create Entry" />
-			
-			#html.startForm(name="entryForm",action=rc.xehRemoveEntry)#
-				<!--- Render latest posts --->
-				<input type="hidden" name="entryID" id="entryID" value="" />
-				<table name="entries" id="entries" class="tablesorter" width="98%">
-					<thead>
-						<tr>
-							<th>Title</th>
-							<th width="200" class="center">Entry Info</th>
-							<th width="75">Comments</th>
-							<th width="75">Published</th>
-							<th width="75" class="center {sorter:false}">Actions</th>
-						</tr>
-					</thead>
-					
-					<tbody>
-						<cfloop array="#rc.posts#" index="post">
-						<tr>
-							<td>
-								<a href="#event.buildLink(rc.xehBlogEditor)#/entryID/#post.getEntryID()#" title="Edit Post">#post.getTitle()#</a><br/>
-								<strong>By #post.getAuthorName()#</strong>
-							</td>
-							<td>
-								<!--- password protect --->
-								<cfif post.isPasswordProtected()>
-									<img src="#prc.bbRoot#/includes/images/lock.png" alt="locked" title="Entry is password protected"/>
-								<cfelse>
-									<img src="#prc.bbRoot#/includes/images/lock_off.png" alt="locked" title="Entry is public"/>
-								</cfif>
-								&nbsp;
-								<!--- comments icon --->
-								<cfif post.getallowComments()>
-									<img src="#prc.bbRoot#/includes/images/comments.png" alt="locked" title="Commenting is Open!"/>
-								<cfelse>
-									<img src="#prc.bbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
-								</cfif>
-								<br/>
-								<strong>Created:</strong> #post.getDisplayCreatedDate()#
-								<strong>Published:</strong> #post.getDisplayPublishedDate()#
-							</td>
-							<td class="center">#post.getNumberOfComments()#</td>
-							<td class="center">
-								<cfif post.getIsPublished()>
-									<img src="#prc.bbRoot#/includes/images/button_ok.png" alt="published" title="Entry Published!" />
-								<cfelse>
-									<img src="#prc.bbRoot#/includes/images/button_cancel.png" alt="draft" title="Entry Draft!" />
-								</cfif>
-							</td>
-							<td class="center">
-								<!--- Edit Command --->
-								<a href="#event.buildLink(rc.xehEntryEditor)#/entryID/#post.getEntryID()#" title="Edit #post.getTitle()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" /></a>
-								&nbsp;
-								<!--- View in Site --->
-								<a href="##" title="View Entry In Site"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" /></a>
-								&nbsp;
-								<!--- Delete Command --->
-								<a title="Delete Entry" href="javascript:removePost('#post.getEntryID()#')" class="confirmIt" data-title="Delete Entry?"><img src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
-							</td>
-						</tr>
-						</cfloop>
-					</tbody>
-				</table>
-			#html.endForm()#
+			<div class="contentBar">
+				<div class="buttonBar">
+					<input type="button" title="Create new blog entry" class="button2" onclick="window.location='#event.buildLink(rc.xehBlogEditor)#'" value="Create Entry" />
+					<button class="buttonred" title="Create a new quick post" onclick="remoteModal('#event.buildLink(rc.xehEntryQuickPost)#')">Quick Post</button>
+				</div>				
+				<div class="filterBar">
+					<h3><img src="#prc.bbroot#/includes/images/blog.png" alt="blog" /> Recent Entries</h3>
+				</div>				
+			#rc.entriesViewlet#
+			</div>
 			
 			<!--- Latest Comments --->
-			<h2>Latest 10 Comments</h2>
+			<h3><img src="#prc.bbroot#/includes/images/comments_32.png" alt="comment" /> Recent Comments</h3>
 			<form name="commentForm" id="commentForm" method="post" action="#event.buildLink(rc.xehRemoveComment)#">
 			<input type="hidden" name="commentID" id="commentID" value="" />
 			
-			<!--- Render latest posts --->
+			<!--- Render latest entrys --->
 			<table name="comments" id="comments" class="tablesorter" width="98%">
 				<thead>
 					<tr>
 						<th>Comment</th>
-						<th width="200" class="center">Post Info</th>
+						<th width="200" class="center">entry Info</th>
 						<th width="75" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
@@ -142,7 +87,7 @@
 					<tr>
 						<td>
 							<span class="commentTablePostInfo">
-							Posted on <a href="#event.buildLink('entry')#/#comment.getPost().getEntryID()#">#comment.getPost().getTitle()#</a>
+							Posted on <a href="#event.buildLink('entry')#/#comment.getentry().getEntryID()#">#comment.getentry().getTitle()#</a>
 							</span><br/>
 							#comment.getComment()#
 						</td>
@@ -175,17 +120,13 @@
 </div>
 <!--- Custom JS --->
 <script type="text/javascript">
-function removePost(entryID){
-	$("##entryID").val( entryID );
-	$("##entryForm").submit();
-}
-function removeComment(commentID){
-	$("##commentID").val( commentID );
-	$("##commentForm").submit();
-}
 $(document).ready(function() {
 	$("##comments").tablesorter();
 	$("##entries").tablesorter();
 });
+function removeComment(commentID){
+	$("##commentID").val( commentID );
+	$("##commentForm").submit();
+}
 </script>
 </cfoutput>

@@ -39,6 +39,28 @@ component persistent="true" entityname="bbAuthor" table="bb_author"{
 		setLoggedIn( false );
 		return this;
 	}
+	
+	/*
+	* Validate entry, returns an array of error or no messages
+	*/
+	array function validate(){
+		var errors = [];
+		
+		// limits
+		firstName 	= left(firstName,100);
+		lastName 	= left(lastName,100);
+		email 		= left(email,255);
+		username 	= left(username,100);
+		password 	= left(password,100);
+		
+		// Required
+		if( len(firstName) ){ arrayAppend(errors, "First Name is required"); }
+		if( len(lastName) ){ arrayAppend(errors, "Last Name is required"); }
+		if( len(email) ){ arrayAppend(errors, "Email is required"); }
+		if( len(username) ){ arrayAppend(errors, "Username is required"); }
+		
+		return errors;
+	}
 
 	/**
 	* Logged in

@@ -14,39 +14,73 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
-	* List entries by author with paging
+	* entry search returns struct with keys [entries,count]
 	*/
-	function findByAuthor(authorID,numeric offset=0,numeric max=0){
-		var q = executeQuery(query="FROM bbEntry WHERE author.authorID = :authorID ORDER BY publishedDate DESC",
-							 params={authorID=arguments.authorID},
-							 offset=arguments.offset,
-							 max=arguments.max,
-							 asQuery=false);
-		return q;
+	struct function search(search="",isPublished,category,author,max=0,offset=0){
+		var results = {};
+		// get Hibernate Restrictions class
+		var restrictions = getRestrictions();	
+		// criteria queries
+		var criteria = [];
+		
+		// isPublished filter
+		if( structKeyExists(arguments,"isPublished") AND arguments.isPublished NEQ "any"){
+			arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",arguments.isPublished)) );
+		}		
+		// Author Filter
+		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
+			arrayAppend(criteria, restrictions.eq("author.authorID", javaCast("int",arguments.author)) );
+		}
+		// Search Criteria
+		if( len(arguments.search) ){
+			// like disjunctions
+			var orCriteria = [];
+ 			arrayAppend(orCriteria, restrictions.like("title","%#arguments.search#%"));
+ 			arrayAppend(orCriteria, restrictions.like("content","%#arguments.search#%"));
+			// append disjunction to main criteria
+			arrayAppend( criteria, restrictions.disjunction( orCriteria ) );
+		}
+		// Category Filter
+		if( structKeyExists(arguments,"category") AND arguments.category NEQ "all"){
+			
+			// Uncategorized?
+			if( arguments.category eq "none" ){
+				arrayAppend(criteria, restrictions.isEmpty("categories") );
+			}
+			// With categories
+			else{
+				// create association criteria, by passing a simple value the method will inflate.
+				arrayAppend(criteria, "categories");
+				// add the association criteria to the main search
+				arrayAppend(criteria, restrictions.in("categories.categoryID",JavaCast("java.lang.Integer[]",[arguments.category])));
+			}			
+		}	
+		
+		// run criteria query and projections count
+		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
+		results.count 	= criteriaCount(criteria=criteria);
+		
+		return results;
 	}
 	
 	/**
-	* entry search by title or content, returns struct with keys [entries,count]
+	* @override Create a new hibernate criteria object according to entityname and criterion array objects
 	*/
-	struct function search(criteria="",max=0,offset=0){
-		var results = {};
-		
-		// do search if criteria passed
-		if( len(criteria) ){
-			results.entries = executeQuery(query="from bbEntry where title like :criteria OR content like :criteria ORDER BY publishedDate desc",
-							 			   params={criteria="%#arguments.criteria#%"},
-							 			   offset=arguments.offset,
-							 			   max=arguments.max,
-							 			   asQuery=false);
-			results.count = ORMExecuteQuery("select count(*) as total from bbEntry where title like :criteria OR content like :criteria",{criteria="%#arguments.criteria#%"},true);
+	private any function createCriteriaQuery(required entityName, array criteria=ArrayNew(1)){
+		var qry = ORMGetSession().createCriteria( arguments.entityName );
+
+		for(var i=1; i LTE ArrayLen(arguments.criteria); i++) {
+			if( isSimpleValue( arguments.criteria[i] ) ){
+				// create criteria out of simple values for associations with alias
+				qry.createCriteria( arguments.criteria[i], arguments.criteria[i] );
+			}
+			else{
+				// add criterion
+				qry.add( arguments.criteria[i] );
+			}
 		}
-		else{
-			// else do normal listing with paging
-			results.entries = list(sortOrder="publishedDate desc",asQuery=false,offset=arguments.offset,max=arguments.max);
-			results.count 	= count();
-		}
-		
-		return results;
+
+		return qry;
 	}
 	
 }

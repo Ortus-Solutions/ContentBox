@@ -16,17 +16,18 @@ component extends="baseHandler"{
 	function index(event,rc,prc){
 		
 		// exit Handlers
-		rc.xehRemoveEntry		= "#prc.bbEntryPoint#.entries.remove";
 		rc.xehEntryEditor		= "#prc.bbEntryPoint#.entries.editor";
+		rc.xehEntryQuickPost	= "#prc.bbEntryPoint#.entries.quickpost";
 		rc.xehRemoveComment		= "#prc.bbEntryPoint#.comments.remove";
 		rc.xehReloadModule		= "#prc.bbEntryPoint#.dashboard.reload";
 		
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
 		
-		// Get only the latest 10 posts to display in the admin dashboard.
-		rc.posts 	= entryService.list(sortOrder="createdDate desc",max=10,asQuery=false);
-		rc.comments = commentService.list(sortOrder="createdDate desc",max=10,asQuery=false);
+		// Get entries viewlet
+		rc.entriesViewlet = runEvent(event="blogbox-admin:entries.pager",eventArguments={max=5,pagination=false});
+		
+		rc.comments = commentService.list(sortOrder="createdDate desc",max=5,asQuery=false);
 		
 		// dashboard view
 		event.setView("dashboard/index");

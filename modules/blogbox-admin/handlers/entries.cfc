@@ -31,19 +31,33 @@ component extends="baseHandler"{
 		event.paramValue("fAuthors","all");
 		event.paramValue("fCategories","all");
 		event.paramValue("fStatus","any");
+		event.paramValue("isFiltering",false);
 		
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox-admin");
 		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#rc.xehEntries#.page.@page@');
+		rc.pagingLink 	= event.buildLink('#rc.xehEntries#.page.@page@?');
+		// Append search to paging link?
+		if( len(rc.searchEntries) ){ rc.pagingLink&="&searchEntries=#rc.searchEntries#"; }
+		// Append filters to paging link?
+		if( rc.fAuthors neq "all"){ rc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
+		if( rc.fCategories neq "all"){ rc.pagingLink&="&fCategories=#rc.fCategories#"; }
+		if( rc.fStatus neq "any"){ rc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		// is Filtering?
+		if( rc.fAuthors neq "all" OR rc.fCategories neq "all" or rc.fStatus neq "any"){ rc.isFiltering = true; }
 		
 		// get all categories
 		rc.categories = categoryService.getAll(sortOrder="category");
 		// get all authors
 		rc.authors    = authorService.getAll(sortOrder="lastName");
 		
-		// search entries
-		var entryResults = entryService.search(criteria=rc.searchEntries,offset=rc.paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
+		// search entries with filters and all
+		var entryResults = entryService.search(search=rc.searchEntries,
+											   offset=rc.paging.startRow-1,
+											   max=prc.bbSettings.bb_paging_maxrows,
+											   isPublished=rc.fStatus,
+											   category=rc.fCategories,
+											   author=rc.fAuthors);
 		rc.entries 		 = entryResults.entries;
 		rc.entriesCount  = entryResults.count;
 		
@@ -71,6 +85,7 @@ component extends="baseHandler"{
 		rc.entry  = entryService.get( event.getValue("entryID",0) );
 		// exit handlers
 		rc.xehEntrySave = "#prc.bbEntryPoint#.entries.save";
+		rc.xehSlugify	= "#prc.bbEntryPoint#.entries.slugify";
 		// Tab
 		prc.tabEntries_editor = true;
 		// view
@@ -81,11 +96,22 @@ component extends="baseHandler"{
 	function save(event,rc,prc){
 		// params
 		event.paramValue("allowComments",false);
+		event.paramValue("isPublished",true);
 		event.paramValue("slug","");
 		
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
+		
+		// get new/persisted entry and populate it
+		var entry = populateModel( entryService.get(rc.entryID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		// Validate it
+		var errors = entry.validate();
+		if( arrayLen(errors) ){
+			getPlugin("MessageBox").warn(messageArray=errors);
+			editor(argumentCollection=arguments);
+			return;
+		}
 		
 		// Create new categories?
 		var categories = [];
@@ -95,18 +121,15 @@ component extends="baseHandler"{
 		// Inflate sent categories from collection
 		categories.addAll( categoryService.inflateCategories( rc ) );
 		
-		// get new entry and populate it
-		var entry = populateModel( entryService.new() ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		// attach author
 		entry.setAuthor( prc.oAuthor );
 		// detach categories and re-attach
-		entry.removeAllCategories();
-		entry.setCategories( categories );
-		
+		entry.removeAllCategories().setCategories( categories );
 		// save entry
 		entryService.save( entry );
 		
 		// relocate
+		getPlugin("MessageBox").info("Entry Saved!");
 		setNextEvent(rc.xehEntries);
 	}
 	
@@ -115,7 +138,7 @@ component extends="baseHandler"{
 		var oCategory	= categoryService.get( rc.categoryID );
     	
 		if( isNull(oCategory) ){
-			getPlugin("MessageBox").setMessage("warning","Invalid Category detected!");
+			getPlugin("MessageBox").warn("Invalid Category detected!");
 			setNextEvent( rc.xehCategories );
 		}
 		
@@ -125,25 +148,45 @@ component extends="baseHandler"{
 	}
 	
 	// pager viewlet
-	function pager(event,rc,prc,authorID=0){
-		// check if authorID exists in rc
+	function pager(event,rc,prc,authorID="all",max=0,pagination=true){
+		
+		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pager_authorID") ){
 			arguments.authorID = rc.pager_authorID;
 		}
-		// paging
+		// Max rows incoming or take default for pagination.
+		if( arguments.max eq 0 ){ arguments.max = prc.bbSettings.bb_paging_maxrows; }
+		
+		// paging default
 		event.paramValue("page",1);
+		
 		// exit handlers
 		rc.xehPager 		= "#prc.bbEntryPoint#.entries.pager";
 		rc.xehEntryEditor	= "#prc.bbEntryPoint#.entries.editor";
+		rc.xehEntryQuickLook= "#prc.bbEntryPoint#.entries.quickLook";
+		
 		// prepare paging plugin
 		rc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox-admin");
 		rc.pager_paging 	  	= rc.pager_pagingPlugin.getBoundaries();
 		rc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
-		// get author entries to page
-		rc.pager_entries 		= entryService.findByAuthor(authorID=arguments.authorID,offset=rc.pager_paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
-		rc.pager_entriesCount 	= entryService.count(where="author.authorID = #arguments.authorID#");
+		rc.pager_pagination		= arguments.pagination;
+		
+		// search entries with filters and all
+		var entryResults = entryService.search(author=arguments.authorID,
+											   offset=rc.pager_paging.startRow-1,
+											   max=arguments.max);
+		rc.pager_entries 	   = entryResults.entries;
+		rc.pager_entriesCount  = entryResults.count;
+		
+		// author in RC
 		rc.pager_authorID		= arguments.authorID;
+		
 		// view pager
 		return renderView(view="entries/pager",module="blogbox-admin");
+	}
+	
+	// slugify remotely
+	function slugify(event,rc,prc){
+		return getPlugin("HTMLHelper").slugify( rc.slug );
 	}
 }
