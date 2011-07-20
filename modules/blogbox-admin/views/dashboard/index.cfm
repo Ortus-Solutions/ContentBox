@@ -59,7 +59,7 @@
 			<div class="contentBar">
 				<div class="buttonBar">
 					<input type="button" title="Create new blog entry" class="button2" onclick="window.location='#event.buildLink(rc.xehBlogEditor)#'" value="Create Entry" />
-					<button class="buttonred" title="Create a new quick post" onclick="remoteModal('#event.buildLink(rc.xehEntryQuickPost)#')">Quick Post</button>
+					<button class="buttonred" title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 				</div>				
 				<div class="filterBar">
 					<h3><img src="#prc.bbroot#/includes/images/blog.png" alt="blog" /> Recent Entries</h3>
@@ -118,6 +118,8 @@
 		</div>	
 	</div>
 </div>
+<!--- QUick Post --->
+#renderView("dashboard/quickPost")#
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {

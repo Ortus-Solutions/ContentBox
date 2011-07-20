@@ -26,7 +26,7 @@ $(document).ready(function() {
 	// Date fields
 	$(":date").dateinput();
 	// form validator
-	$entryForm.validator({errorClass:'error',position:'center top'});
+	$entryForm.validator({position:'center top'});
 });
 /**
  * Create permalink from title field

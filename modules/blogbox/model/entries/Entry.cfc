@@ -5,17 +5,17 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	
 	// Properties
 	property name="entryID" fieldtype="id" generator="native" setter="false";
-	property name="title"			notnull="true"  length="200";
-	property name="slug"			notnull="true"  length="200";
-	property name="content"    		notnull="true"  ormtype="text" sqltype="longtext";
-	property name="excerpt" 		notnull="false" ormtype="text";
-	property name="createdDate" 	notnull="true"  ormtype="timestamp" update="false";
-	property name="publishedDate"	notnull="false" ormtype="timestamp";
-	property name="isPublished" 	notnull="true"  ormtype="boolean" default="true";
-	property name="allowComments" 	notnull="true"  ormtype="boolean" default="true";
-	property name="passwordProtection" 	notnull="false" length="100";
-	property name="HTMLKeywords"	notnull="false" length="160";
-	property name="HTMLDescription"	notnull="false" length="160";
+	property name="title"				notnull="true"  length="200" default="";
+	property name="slug"				notnull="true"  length="200" default="";
+	property name="content"    			notnull="true"  ormtype="text" sqltype="longtext";
+	property name="excerpt" 			notnull="false" ormtype="text" default="";
+	property name="createdDate" 		notnull="true"  ormtype="timestamp" update="false";
+	property name="publishedDate"		notnull="false" ormtype="timestamp";
+	property name="isPublished" 		notnull="true"  ormtype="boolean" default="true";
+	property name="allowComments" 		notnull="true"  ormtype="boolean" default="true";
+	property name="passwordProtection" 	notnull="false" length="100" default="";
+	property name="HTMLKeywords"		notnull="false" length="160" default="";
+	property name="HTMLDescription"		notnull="false" length="160" default="";
 	
 	// M20 -> Author
 	property name="author" cfc="blogbox.model.entries.Author" fieldtype="many-to-one" fkcolumn="FK_userID" lazy="true";

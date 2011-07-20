@@ -6,7 +6,8 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="entryService" 	inject="id:entryService@bb";
 	property name="commentService" 	inject="id:commentService@bb";
-
+	property name="categoryService"		inject="id:categoryService@bb";
+	
 	function preHandler(event,action,eventArguments){
 		var prc = event.getCollection(private=true);
 		prc.tabDashboard	  = true;
@@ -17,7 +18,7 @@ component extends="baseHandler"{
 		
 		// exit Handlers
 		rc.xehEntryEditor		= "#prc.bbEntryPoint#.entries.editor";
-		rc.xehEntryQuickPost	= "#prc.bbEntryPoint#.entries.quickpost";
+		rc.xehEntrySave			= "#prc.bbEntryPoint#.entries.save";
 		rc.xehRemoveComment		= "#prc.bbEntryPoint#.comments.remove";
 		rc.xehReloadModule		= "#prc.bbEntryPoint#.dashboard.reload";
 		
@@ -26,6 +27,8 @@ component extends="baseHandler"{
 		
 		// Get entries viewlet
 		rc.entriesViewlet = runEvent(event="blogbox-admin:entries.pager",eventArguments={max=5,pagination=false});
+		// get all categories for quick post
+		rc.categories = categoryService.getAll(sortOrder="category");
 		
 		rc.comments = commentService.list(sortOrder="createdDate desc",max=5,asQuery=false);
 		

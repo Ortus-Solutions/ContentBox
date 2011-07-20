@@ -95,9 +95,13 @@ component extends="baseHandler"{
 	// save
 	function save(event,rc,prc){
 		// params
-		event.paramValue("allowComments",false);
+		event.paramValue("allowComments",true);
+		event.paramValue("newCategories","");
 		event.paramValue("isPublished",true);
 		event.paramValue("slug","");
+		event.paramValue("publishedDate",now());
+		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
+		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
 		
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }

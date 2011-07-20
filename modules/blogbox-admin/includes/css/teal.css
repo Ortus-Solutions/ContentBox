@@ -118,15 +118,15 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 /** ============================== ConfirmIt ============================== **/
 #exposeMask { background:#000!important; }
 /* background color for overlay and expose mask */
-#confirmIt,#remoteModal { border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
-#remoteModal { width:950px; }
+#confirmIt,#remoteModal, #quickPost { border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
+#remoteModal, #quickPost { width:950px; }
 #confirmIt div { border:1px solid #3B5998; background-color:#fff; padding:10px; font-size:1.2em; margin:0; }
-#confirmIt h2,#remoteModal h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom:1em; padding:5px 10px!important; color:inherit; }
+#confirmIt h2,#remoteModal h2, #quickPost h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
 #confirmIt p { font-size:12px; }
-#confirmIt hr,#remoteModelContent hr { border-bottom-color:#C0C0C0; color:#C0C0C0; border-bottom:1px solid; border-style:none none solid; height:1px; margin:2em 0; }
-#confirmIt a.close,#remoteModal a.close { background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
+#confirmIt hr,#remoteModelContent hr, #quickPost hr { border-bottom-color:#C0C0C0; color:#C0C0C0; border-bottom:1px solid; border-style:none none solid; height:1px; margin:2em 0; }
+#confirmIt a.close,#remoteModal a.close, #quickPost a.close { background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
 /** ============================== REmoteModal ============================== **/
-#remoteModelContent { background-color:#fff; padding:10px; font-size:1.2em; margin:0; height:95%; max-height:600px; overflow-y:auto; }
+#remoteModelContent, #quickPostContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:95%; max-height:600px; overflow-y:auto; }
 /** ============================== PAGING TABS =============================== **/
 .pagingTabs { font-size:.8em; text-align:left; }
 .pagingTabs a { color:#000; padding:2px 4px; background-color:#fff; border:1px solid #ccc; margin-left:2px; }
@@ -216,7 +216,8 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 #loginBox { width:500px; margin:100px auto; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
 #loginContent { text-align:center; }
 #header_top_authorName { color:orange; font-weight:bold; }
-#categoriesChecks{ overflow: auto; max-height: 200px; border: 1px dotted #707171;}
+#categoriesChecks{ overflow: auto; max-height: 175px; border: 1px dotted #707171;}
+#quickPost{display: none;}
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
