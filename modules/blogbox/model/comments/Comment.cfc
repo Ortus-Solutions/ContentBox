@@ -9,14 +9,32 @@ component persistent="true" entityname="bbComment" table="bb_comment"{
 	property name="author"			length="100" 	notnull="true";
 	property name="authorIP"		length="100" 	notnull="true";
 	property name="authorEmail"		length="255" 	notnull="true";
-	property name="authorURL"		length="500" 	notnull="false";
-	property name="createdDate" 	notnull="true"  ormtype="date" 		update="false";
+	property name="authorURL"		length="255" 	notnull="false";
+	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false";
 	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false";
 	
-	// M20 -> Entry
-	property name="entry" cfc="blogbox.model.entries.Entry" fieldtype="many-to-one" fkcolumn="FK_entryID";
+	// M20 -> Entry loaded as a proxy
+	property name="entry" cfc="blogbox.model.entries.Entry" fieldtype="many-to-one" fkcolumn="FK_entryID" lazy="true";
+	
+	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
+	
+	/*
+	* In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
+	*/
+	public void function preInsert(){
+		setCreatedDate( now() );
+	}
 	
 	/************************************** PUBLIC *********************************************/
+	
+	/**
+	* Get formatted createdDate
+	*/
+	string function getDisplayCreatedDate(){
+		var createdDate = getCreatedDate();
+		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+	}
+	
 	
 	/**
 	* is loaded?

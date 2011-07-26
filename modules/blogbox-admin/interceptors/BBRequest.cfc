@@ -36,7 +36,10 @@ component extends="coldbox.system.Interceptor"{
 		rc.xehEntries		= "#prc.bbEntryPoint#.entries";
 		rc.xehBlogEditor 	= "#prc.bbEntryPoint#.entries.editor";
 		rc.xehCategories	= "#prc.bbEntryPoint#.categories";
-		rc.xehComments		= "#prc.bbEntryPoint#.comments";
+		
+		// Comments Tab
+		rc.xehComments			= "#prc.bbEntryPoint#.comments";
+		rc.xehCommentSettings	= "#prc.bbEntryPoint#.comments.settings";
 		
 		// Authors Tab
 		rc.xehAuthors			= "#prc.bbEntryPoint#.authors";
@@ -44,12 +47,16 @@ component extends="coldbox.system.Interceptor"{
 		
 		// System
 		rc.xehSettings		= "#prc.bbEntryPoint#.settings";
+		rc.xehRawSettings	= "#prc.bbEntryPoint#.settings.raw";
+		
+		// Login/Logout
 		rc.xehDoLogout 		= "#prc.bbEntryPoint#.security.doLogout";
 		rc.xehLogin 		= "#prc.bbEntryPoint#.security.login";
 		
 		/************************************** NAVIGATION TABS *********************************************/
 		event.paramValue(name="tabDashboard",value=false,private=true);
 		event.paramValue(name="tabEntries",value=false,private=true);
+		event.paramValue(name="tabComments",value=false,private=true);
 		event.paramValue(name="tabAuthors",value=false,private=true);
 		event.paramValue(name="tabSystem",value=false,private=true);		
 	}	

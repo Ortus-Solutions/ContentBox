@@ -13,7 +13,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on blogbox requests
 	*/
-	function preProcess(event, interceptData) eventPattern="^blogbox-admin"{
+	function preProcess(event, interceptData) eventPattern="^blogbox-ui"{
 		var prc = event.getCollection(private=true);
 		var rc	= event.getCollection();
 		

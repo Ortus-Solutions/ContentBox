@@ -31,6 +31,7 @@ component {
 			{pattern="/authors/page/:page",handler="authors"},
 			{pattern="/entries/page/:page",handler="entries"},
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
+			{pattern="/comments/page/:page",handler="comments"},
 			{pattern="/:handler/:action?"}
 		];		
 		
@@ -38,10 +39,10 @@ component {
 		interceptorSettings = {
 			// BB Admin Custom Events
 			customInterceptionPoints = arrayToList([
-				"bbadmin_beforeHeadEnd","bbadmin_afterBodyStart","bbadmin_beforeBodyEnd","bbadmin_footer","bbadmin_beforeContent","bbadmin_afterContent", // Admin Layout HTML points
+				"bbadmin_beforeHeadEnd","bbadmin_afterBodyStart","bbadmin_beforeBodyEnd","bbadmin_footer","bbadmin_beforeContent","bbadmin_afterContent","bbadmin_onTagLine", "bbadmin_onTopBar", // Admin Layout HTML points
 				"bbadmin_beforeLoginHeadEnd","bbadmin_afterLoginBodyStart","bbadmin_beforeLoginBodyEnd","bbadmin_loginFooter","bbadmin_beforeLoginContent","bbadmin_afterLoginContent", // Login Layout HTML points
 				"bbadmin_beforeMainNav","bbadmin_afterMainNav", // Main Navigation
-				"bbadmin_dashboardTab","bbadmin_entriesTab","bbadmin_authorsTab","bbadmin_systemTab" // Main Tabs
+				"bbadmin_dashboardTab","bbadmin_entriesTab","bbadmin_commentsTab","bbadmin_authorsTab","bbadmin_systemTab" // Main Tabs
 			])
 		};
 		

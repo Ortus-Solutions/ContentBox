@@ -61,9 +61,13 @@
 						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall">Log Out</button></a>
 					<!--- View Blog --->
 					<a href="#event.buildLink(getModuleSettings("blogbox").entryPoint)#" target="_blank"><button class="buttonsmall">View Blog</button></a>
+					<!--- bbadmin event --->
+					#announceInterception("bbadmin_onTopBar")#
 				</span>
 			  	<!--- site tag line --->
 				#prc.bbSettings.bb_site_name# - #prc.bbSettings.bb_site_tagline#
+				<!--- bbadmin event --->
+				#announceInterception("bbadmin_onTagline")#
 			</div>
 			<!--End Header top Area=-->
 	    
@@ -96,22 +100,34 @@
 					<ul>
 						<li>
 							<a href="#event.buildLink(rc.xehEntries)#" <cfif event.getValue("tabEntries_viewAll",false,true)> class="current"</cfif>
-							   title="View All Entries">View All</a>
+							   title="View All Blog Entries">View All</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(rc.xehBlogEditor)#" <cfif event.getValue("tabEntries_editor",false,true)> class="current"</cfif>
-							   title="Create a new entry">Create New</a>
+							   title="Create a new blog entry">Create New</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(rc.xehCategories)#" <cfif event.getValue("tabEntries_categories",false,true)> class="current"</cfif>
-							   title="Manage Categories">Categories</a>
-						</li>
-						<li>
-							<a href="#event.buildLink(rc.xehComments)#" <cfif event.getValue("tabEntries_comments",false,true)> class="current"</cfif>
-							   title="Manage Comments">Comments</a>
+							   title="Manage Blog Entry Categories">Categories</a>
 						</li>
 						<!--- bbadmin event --->
 						#announceInterception("bbadmin_entriesTab")#
+					</ul>
+				</li>
+				<!--- Comments Nav --->
+				<li>
+					<a href="##" title="Comments" <cfif prc.tabComments>class="current"</cfif>>Comments</a>
+					<ul>
+						<li>
+							<a href="#event.buildLink(rc.xehComments)#" <cfif event.getValue("tabComments_inbox",false,true)> class="current"</cfif>
+							   title="View All Incoming Comments">Inbox</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(rc.xehCommentSettings)#" <cfif event.getValue("tabComments_settings",false,true)> class="current"</cfif>
+							   title="Configure the BlogBox Commenting System">Settings</a>
+						</li>
+						<!--- bbadmin event --->
+						#announceInterception("bbadmin_commentsTab")#
 					</ul>
 				</li>
 				<!--- Authors Nav --->
@@ -141,7 +157,11 @@
 					<a href="##" title="System" <cfif prc.tabSystem>class="current"</cfif>>System</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(rc.xehSettings)#" <cfif event.getValue("tabSystem_Settings",false,true)> class="current"</cfif>
+							   title="Manage BlogBox Global Configuration">BlogBox Settings</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(rc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
 							   title="Manage The Raw Settings Table">Raw Settings</a>
 						</li>
 						<!--- bbadmin event --->

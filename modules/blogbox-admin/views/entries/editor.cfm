@@ -135,6 +135,18 @@
 		
 		</div>	
 	</div>
+	<!--- Entry Comments --->
+	<div class="box">	
+		<cfif structKeyExists(rc,"commentsViewlet")> 
+			<div class="header">
+				<img src="#prc.bbroot#/includes/images/comments_32.png" alt="entry editor" width="30" height="30" />
+				Entry Comments
+			</div>
+			<div class="body">
+				#rc.commentsViewlet#
+			</div>
+		</cfif>
+	</div>
 </div>
 #html.endForm()#
 

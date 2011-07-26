@@ -33,7 +33,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	* Author search by name, email or username
 	*/
 	function search(criteria){
-		var r = executeQuery(query="from bbAuthor where firstName like :criteria OR lastName like :criteria OR email like :criteria",params={criteria="%#arguments.criteria#%"},asQuery=false);
+		var params = {criteria="%#arguments.criteria#%"};
+		var r = executeQuery(query="from bbAuthor where firstName like :criteria OR lastName like :criteria OR email like :criteria",params=params,asQuery=false);
 		return r;
 	}
 

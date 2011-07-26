@@ -12,10 +12,10 @@
 
 	// Base URL
 	if( len(getSetting('AppMapping') ) lte 1){
-		setBaseURL("http://#cgi.HTTP_HOST#/index.cfm");
+		setBaseURL("http://#cgi.HTTP_HOST#");
 	}
 	else{
-		setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#/index.cfm");
+		setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#");
 	}
 
 	// Your Application Routes

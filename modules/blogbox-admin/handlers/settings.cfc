@@ -16,6 +16,14 @@ component extends="baseHandler"{
 	
 	// index - raw settings
 	function index(event,rc,prc){
+		// Get all settings
+		rc.settings = settingsService.list(sortOrder="name desc",asQuery=false);
+		// view
+		event.setView("settings/index");
+	}
+	
+	// raw settings manager
+	function raw(event,rc,prc){
 		// exit Handlers
 		rc.xehSettingRemove = "#prc.bbEntryPoint#.settings.remove";
 		rc.xehSettingSave 	= "#prc.bbEntryPoint#.settings.save";
@@ -26,8 +34,8 @@ component extends="baseHandler"{
 		// Raw tab
 		prc.tabSystem_rawSettings = true;
 		// view
-		event.setView("settings/index");
-	}
+		event.setView("settings/raw");
+	}	
 
 	// save
 	function save(event,rc,prc){
@@ -39,7 +47,7 @@ component extends="baseHandler"{
 		// messagebox
 		getPlugin("MessageBox").setMessage("info","Setting saved!");
 		// relocate
-		setNextEvent(rc.xehSettings);
+		setNextEvent(rc.xehRawSettings);
 	}
 	
 	// remove
@@ -52,14 +60,14 @@ component extends="baseHandler"{
 			settingsService.flushSettingsCache();
 			getPlugin("MessageBox").setMessage("info","Setting Removed!");
 		}
-		setNextEvent(rc.xehSettings);
+		setNextEvent(rc.xehRawSettings);
 	}
 	
 	// flush cache
 	function flushCache(event,rc,prc){
 		settingsService.flushSettingsCache();
 		getPlugin("MessageBox").setMessage("info","Settings Flushed From Cache");
-		setNextEvent(rc.xehSettings);
+		setNextEvent(rc.xehRawSettings);
 	}
 	
 	// View cached Keys

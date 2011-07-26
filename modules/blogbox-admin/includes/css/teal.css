@@ -154,6 +154,8 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .cbox_messagebox_error { background:#FFFFE0 url(../images/error_icon.png) no-repeat scroll .5em 50%; color:#b22723; border:1px solid #ff0606; margin:.3em auto; padding:0 1em 0 3.5em; }
 /**============================== Table Listings ==============================**/
 .selected{ background-color: #fcdddb !important; }
+.unapproved{ background-color: #fcdddb !important;}
+tr.unapproved td{ border: 1px solid #000 !important; }
 .tablelisting { background-color:#CDCDCD; margin:5px 0; border-spacing:1px; font-size:8pt; border-collapse:inherit!important; }
 .tablelisting tr { background-color:#F7F7F7; }
 .tablelisting tr.even { background-color:#ffffff; }

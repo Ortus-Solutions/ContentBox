@@ -1,7 +1,7 @@
 /**
 * I am a author entity
 */
-component persistent="true" entityname="bbAuthor" table="bb_author"{
+component persistent="true" entityname="bbAuthor" table="bb_author" batchsize="10"{
 	
 	// Properties
 	property name="authorID" 	fieldtype="id" generator="native" setter="false";
@@ -18,8 +18,8 @@ component persistent="true" entityname="bbAuthor" table="bb_author"{
 	property name="loggedIn"	persistent="false" default="false" type="boolean";
 	
 	// O2M -> Entries
-	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" 
-			 cfc="blogbox.model.entries.Entry" fkcolumn="FK_userID" inverse="true" lazy="true" cascade="all-delete-orphan";
+	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="blogbox.model.entries.Entry"
+			 fkcolumn="FK_userID" inverse="true" lazy="extra" cascade="all-delete-orphan" batchsize="10" orderby="publishedDate DESC";
 	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	

@@ -20,8 +20,8 @@ component {
 		
 		// Module Conventions
 		conventions = {
-			layoutsLocation = "layouts",
-			viewsLocation = "layouts"
+			layoutsLocation = "content/layouts",
+			viewsLocation 	= "content"
 		};
 
 		// BLOGBOX MODULE LOCATION: CHANGE IF DIFFERENT FROM CONVENTIONS
@@ -43,7 +43,7 @@ component {
 		// Custom Declared Interceptors
 		interceptors = [
 			// BB UI Request Interceptor
-			{class="#moduleMapping#.interceptors.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bbAdmin" }
+			{class="#moduleMapping#.interceptors.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bbUI" }
 		];
 		
 	}

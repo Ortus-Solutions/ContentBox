@@ -26,11 +26,14 @@ component extends="baseHandler"{
 		prc.tabDashboard_home = true;
 		
 		// Get entries viewlet
-		rc.entriesViewlet = runEvent(event="blogbox-admin:entries.pager",eventArguments={max=5,pagination=false});
+		var eArgs = {max=prc.bbSettings.bb_dashboard_recentEntries,pagination=false};
+		rc.entriesViewlet = runEvent(event="blogbox-admin:entries.pager",eventArguments=eArgs);
+		// Get Comments viewlet
+		var eArgs = {max=prc.bbSettings.bb_dashboard_recentComments,pagination=false};
+		rc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments=eArgs);
+		
 		// get all categories for quick post
 		rc.categories = categoryService.getAll(sortOrder="category");
-		
-		rc.comments = commentService.list(sortOrder="createdDate desc",max=5,asQuery=false);
 		
 		// dashboard view
 		event.setView("dashboard/index");

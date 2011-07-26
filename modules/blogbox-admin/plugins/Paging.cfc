@@ -153,7 +153,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 					<cfset pageFrom=1>
 					<cfif (currentPage-bandGap) gt 1>
 						<cfset pageFrom=currentPage-bandgap>
-						<a href="#replace(theLink,"@page@",1)#" title="Goto Page 1">1</a>
+						<a href="#replace(theLink,"@page@",1)#">1</a>
 						...
 					</cfif>
 					
@@ -164,13 +164,13 @@ link = The link to use for paging, including a placeholder for the page @page@
 					</cfif>
 					<cfloop index="pageIndex" from="#pageFrom#" to="#pageTo#">
 						<a href="#replace(theLink,"@page@",pageIndex)#"
-						   <cfif currentPage eq pageIndex>class="selected"</cfif> title="Goto Page #pageIndex#">#pageIndex#</a>
+						   <cfif currentPage eq pageIndex>class="selected"</cfif>>#pageIndex#</a>
 					</cfloop>
 					
 					<!--- End Token --->
 					<cfif (currentPage+bandgap) lt totalPages>
 						...
-						<a href="#replace(theLink,"@page@",totalPages)#" title="Goto Page #totalPages#">#totalPages#</a>
+						<a href="#replace(theLink,"@page@",totalPages)#">#totalPages#</a>
 					</cfif>
 					
 					<!--- NEXT PAGE --->

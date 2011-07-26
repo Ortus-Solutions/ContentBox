@@ -83,6 +83,12 @@ component extends="baseHandler"{
 		rc.categories = categoryService.getAll(sortOrder="category");
 		// get new or persisted
 		rc.entry  = entryService.get( event.getValue("entryID",0) );
+		// load comments viewlet if persisted
+		if( rc.entry.isLoaded() ){
+			// Get Comments viewlet
+			rc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments={entryID=rc.entryID});
+		}
+		
 		// exit handlers
 		rc.xehEntrySave = "#prc.bbEntryPoint#.entries.save";
 		rc.xehSlugify	= "#prc.bbEntryPoint#.entries.slugify";

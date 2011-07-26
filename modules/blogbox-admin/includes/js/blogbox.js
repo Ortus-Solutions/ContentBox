@@ -158,7 +158,34 @@ function activateConfirmations(){
 		e.preventDefault();
 	});
 }
+/**
+ * Relocation shorcuts
+ * @param link
+ * @returns {Boolean}
+ */
 function to(link){
 	window.location = link;
 	return false;
+}
+/**
+ * Check all checkboxes utility function
+ * @param checked
+ * @param id
+ */
+function checkAll(checked,id){
+	$("input[name='"+id+"']").each(function(){
+		this.checked = checked;
+	});
+}
+/**
+ * Check all checkboxes by value
+ * @param id
+ * @param recordID
+ * @returns
+ */
+function checkByValue(id,recordID){
+	$("input[name='"+id+"']").each(function(){
+		if( this.value == recordID ){ this.checked = true; }
+		else{ this.checked = false; }
+	});	
 }

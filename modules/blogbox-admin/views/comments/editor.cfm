@@ -1,25 +1,28 @@
 <cfoutput>
-<cfform action="#event.buildLink(rc.xehCategoriesSave)#" method="POST" name="categoryForm" id="categoryForm">
-	<input type="hidden" name="categoryID" id="category" value="#rc.category.getCategoryID()#" />
-	<h1>Category Editor</h1>
+<h2>Comment Editor</h2>
+#html.startForm(name="commentEditForm",action=rc.xehCommentSave)#
 	
-	<p>Name:<br/>
-	<cfinput name="category" type="text" required="true" validateat="onSubmit" 
-			 maxlength="100" size="50" message="Please enter a category." 
-			 value="#rc.category.getCategory()#"/>
-	</p>
+	#html.hiddenField(name="commentID",bind=rc.comment)#
 	
-	<p>Slug: (Optional-Blank to generate it)<br/>
-	<cfinput name="slug" type="text" required="false" validateat="onSubmit" 
-			 maxlength="100" size="50" 
-			 value="#rc.category.getSlug()#"/>
-	</p>
+	#html.textField(name="author",label="Author:",bind=rc.comment,required="required",maxlength="100",class="textfield",size="50")#
+	#html.textField(name="authorEmail",label="Author Email:",bind=rc.comment,required="required",maxlength="255",class="textfield",size="50")#
+	#html.textField(name="authorURL",label="Author URL:",bind=rc.comment,maxlength="255",class="textfield",size="50")#
+	
+	#html.textarea(name="content",label="Content:",bind=rc.comment,rows=8,required="required")#
 	
 	<hr/>
 	
-	<p>
-		<a href="#event.buildLink(rc.xehCategories)#">Cancel</a> or
-		<input type="submit" value="Save">
-	</p>
-</cfform>
+	<!--- Button Bar --->
+	<div id="bottomCenteredBar" class="textRight">
+		<button class="button" onclick="return closeRemoteModal()"> Cancel </button>
+		&nbsp;<input type="submit" class="buttonred" value="Save">
+	</div>
+#html.endForm()#
+
+<script type="text/javascript">
+$(document).ready(function() {
+	// form validators
+	$("##commentEditForm").validator({grouped:true});
+});
+</script>
 </cfoutput>

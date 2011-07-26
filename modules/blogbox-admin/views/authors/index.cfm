@@ -22,7 +22,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.bbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" />
+			<img src="#prc.bbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" title="I am a geek and I love it!"/>
 			Author Management
 		</div>
 		<!--- Body --->

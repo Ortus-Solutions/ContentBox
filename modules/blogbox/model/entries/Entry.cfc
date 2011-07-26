@@ -1,7 +1,7 @@
 /**
 * I am a blog entry entity
 */
-component persistent="true" entityname="bbEntry" table="bb_entry"{
+component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"{
 	
 	// Properties
 	property name="entryID" fieldtype="id" generator="native" setter="false";
@@ -17,13 +17,13 @@ component persistent="true" entityname="bbEntry" table="bb_entry"{
 	property name="HTMLKeywords"		notnull="false" length="160" default="";
 	property name="HTMLDescription"		notnull="false" length="160" default="";
 	
-	// M20 -> Author
+	// M20 -> Author loaded as a proxy
 	property name="author" cfc="blogbox.model.entries.Author" fieldtype="many-to-one" fkcolumn="FK_userID" lazy="true";
 	// O2M -> Comments
-	property name="comments" singularName="comment" fieldtype="one-to-many" type="array"
-			  cfc="blogbox.model.comments.Comment" fkcolumn="entry_id" inverse="true" cascade="all-delete-orphan"; 
+	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10" orderby="createdDate"
+			  cfc="blogbox.model.comments.Comment" fkcolumn="FK_entryID" inverse="true" cascade="all-delete-orphan"; 
 	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="true"
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category"
 			  cfc="blogbox.model.entries.Category" fkcolumn="FK_categoryID" linktable="bb_entryCategories" inversejoincolumn="FK_entryID"; 
 
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */

@@ -36,8 +36,14 @@
 	       
 			<!--=======Top Header area======-->
 			<div id="header_top">
-				<span class="fr"><br/></span>
-			  A Sweet Blogging Platform
+				<span class="fr"><br/>
+				<!--- bbadmin event --->
+				#announceInterception("bbadmin_onTopBar")#
+				</span>
+			  	<!--- site tag line --->
+				#prc.bbSettings.bb_site_name# - #prc.bbSettings.bb_site_tagline#
+				<!--- bbadmin event --->
+				#announceInterception("bbadmin_onTagline")#
 			</div>
 			<!--End Header top Area=-->
 	    

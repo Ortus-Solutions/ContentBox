@@ -1,5 +1,9 @@
 <cfoutput>
 <div id="pagerEntries">
+<!--- Loader --->
+<div class="loaders floatRight" id="pagerLoader">
+	<img src="#prc.bbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+</div>
 <!--- Paging --->
 <cfif rc.pager_pagination>
 	#rc.pager_pagingPlugin.renderit(rc.pager_entriesCount,rc.pager_pagingLink)#
@@ -42,7 +46,7 @@
 			<td class="center">#entry.getNumberOfComments()#</td>
 			<td class="center">
 				<!--- View Command --->
-				<a href="##" title="View Entry"><img src="#prc.bbroot#/includes/images/eye.png" alt="view" /></a>
+				<a href="##" title="View Entry In Site"><img src="#prc.bbroot#/includes/images/eye.png" alt="view" /></a>
 				<!--- Edit Command --->
 				<a href="#event.buildLink(rc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" /></a>
 			</td>
@@ -63,9 +67,11 @@ $(document).ready(function() {
 	});
 });
 function pagerLink(page){
-	$('##pagerEntries').fadeOut().load('#event.buildLink(rc.xehPager)#/pager_authorID/#rc.pager_authorID#/page/' + page, function() {
-		$(this).fadeIn();
-		activateTooltips();
+	$("##pagerLoader").fadeIn("fast");
+	$('##pagerEntries')
+		.load('#event.buildLink(rc.xehPager)#/pager_authorID/#rc.pager_authorID#/page/' + page, function() {
+			$("##pagerLoader").fadeOut();
+			activateTooltips();
 	});
 }
 </script>
