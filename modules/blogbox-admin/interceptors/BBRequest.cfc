@@ -41,6 +41,10 @@ component extends="coldbox.system.Interceptor"{
 		rc.xehComments			= "#prc.bbEntryPoint#.comments";
 		rc.xehCommentSettings	= "#prc.bbEntryPoint#.comments.settings";
 		
+		// Site Tab
+		rc.xehLayouts			= "#prc.bbEntryPoint#.layouts";
+		rc.xehCustomHTML		= "#prc.bbEntryPoint#.customHTML";
+		
 		// Authors Tab
 		rc.xehAuthors			= "#prc.bbEntryPoint#.authors";
 		rc.xehAuthorEditor		= "#prc.bbEntryPoint#.authors.editor";
@@ -58,6 +62,7 @@ component extends="coldbox.system.Interceptor"{
 		event.paramValue(name="tabEntries",value=false,private=true);
 		event.paramValue(name="tabComments",value=false,private=true);
 		event.paramValue(name="tabAuthors",value=false,private=true);
+		event.paramValue(name="tabSite",value=false,private=true);
 		event.paramValue(name="tabSystem",value=false,private=true);		
 	}	
 				

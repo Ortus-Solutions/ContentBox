@@ -88,7 +88,14 @@
 				</div>				
 				<div class="filterBar">
 					<h3><img src="#prc.bbroot#/includes/images/comments_32.png" alt="blog" /> Recent (#prc.bbSettings.bb_dashboard_recentComments#) Comments</h3>
-				</div>				
+				</div>	
+				<!--- Info Bar --->
+				<cfif NOT prc.bbSettings.bb_comments_enabled>
+					<div class="infoBar">
+						<img src="#prc.bbRoot#/includes/images/info.png" alt="comments" />
+						Comments are currently disabled site-wide!
+					</div>
+				</cfif>			
 				#rc.commentsViewlet#
 			</div>
 			

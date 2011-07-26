@@ -14,19 +14,43 @@ component extends="baseHandler"{
 		prc.tabSystem = true;
 	}
 	
-	// index - raw settings
+	// index
 	function index(event,rc,prc){
-		// Get all settings
-		rc.settings = settingsService.list(sortOrder="name desc",asQuery=false);
+		// Exit Handler
+		rc.xehSaveSettings 	= "#prc.bbEntryPoint#.settings.save";
+		// tab
+		prc.tabSystem_Settings = true; 
 		// view
 		event.setView("settings/index");
+	}
+	
+	// custom HTML
+	function customHTML(event,rc,prc){
+		// exit handler
+		rc.xehSaveSettings 	= "#prc.bbEntryPoint#.settings.save";
+		// tab
+		prc.tabSite 			= true;
+		prc.tabSite_customHTML 	= true; 
+		// view
+		event.setView("settings/index");
+	}
+	
+	// save settings
+	function save(event,rc,prc){
+		
+		// bulk save the options
+		settingsService.bulkSave(rc);
+		
+		// relocate back to editor
+		getPlugin("MessageBox").info("All BlogBox settings updated! Yeeehaww!");
+		setNextEvent(rc.xehSettings);
 	}
 	
 	// raw settings manager
 	function raw(event,rc,prc){
 		// exit Handlers
 		rc.xehSettingRemove = "#prc.bbEntryPoint#.settings.remove";
-		rc.xehSettingSave 	= "#prc.bbEntryPoint#.settings.save";
+		rc.xehSettingSave 	= "#prc.bbEntryPoint#.settings.saveRaw";
 		rc.xehFlushCache    = "#prc.bbEntryPoint#.settings.flushCache";
 		rc.xehViewCached    = "#prc.bbEntryPoint#.settings.viewCached";
 		// Get all settings
@@ -37,8 +61,8 @@ component extends="baseHandler"{
 		event.setView("settings/raw");
 	}	
 
-	// save
-	function save(event,rc,prc){
+	// saveRaw
+	function saveRaw(event,rc,prc){
 		// populate and get setting
 		var setting = populateModel( settingsService.get(id=rc.settingID) );
     	// save new setting
@@ -77,4 +101,5 @@ component extends="baseHandler"{
 		rc.metadata = getColdBoxOCM().getCachedObjectMetadata( key );
 		event.setView(view="settings/viewCached",layout="ajax");
 	}
+	
 }

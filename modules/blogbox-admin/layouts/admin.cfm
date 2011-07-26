@@ -100,7 +100,7 @@
 					<ul>
 						<li>
 							<a href="#event.buildLink(rc.xehEntries)#" <cfif event.getValue("tabEntries_viewAll",false,true)> class="current"</cfif>
-							   title="View All Blog Entries">View All</a>
+							   title="View All Blog Entries">Inbox</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(rc.xehBlogEditor)#" <cfif event.getValue("tabEntries_editor",false,true)> class="current"</cfif>
@@ -128,6 +128,22 @@
 						</li>
 						<!--- bbadmin event --->
 						#announceInterception("bbadmin_commentsTab")#
+					</ul>
+				</li>
+				<!--- Site Nav --->
+				<li>
+					<a href="##" title="Site appearance, widgets, custom HTML and more" <cfif prc.tabSite>class="current"</cfif>>Look & Feel</a>
+					<ul>
+						<li>
+							<a href="#event.buildLink(rc.xehLayouts)#" <cfif event.getValue("tabSite_layouts",false,true)> class="current"</cfif>
+							   title="Manage Site Layouts">Manage Layouts</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(rc.xehCustomHTML)#" <cfif event.getValue("tabSite_customHTML",false,true)> class="current"</cfif>
+							   title="Easy custom HTML for your site">Custom HTML</a>
+						</li>
+						<!--- bbadmin event --->
+						#announceInterception("bbadmin_siteTab")#
 					</ul>
 				</li>
 				<!--- Authors Nav --->

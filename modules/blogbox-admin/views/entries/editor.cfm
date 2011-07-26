@@ -66,11 +66,13 @@
 			<!--- Entry Modifiers --->
 			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/settings.png" alt="modifiers" width="16"/> Modifiers')#
 				<!--- Allow Comments --->
+				<cfif prc.bbSettings.bb_comments_enabled>
 				<img src="#prc.bbRoot#/includes/images/comments_black.png" alt="comments" />
 				#html.label(field="allowComments",content="Allow Comments",class="inline")#
 				#html.checkbox(name="allowComments",value="true",class="inline",checked=rc.entry.getAllowComments())#
-				<!--- Password Protection --->
 				<br/>
+				</cfif>
+				<!--- Password Protection --->
 				<label for="passwordProtection"><img src="#prc.bbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>
 				#html.textfield(name="passwordProtection",bind=rc.entry,title="Password protect your entry, leave empty for none",class="textfield",size="25",maxlength="100")#
 			#html.endFieldSet()#

@@ -20,8 +20,8 @@ component {
 		
 		// Module Conventions
 		conventions = {
-			layoutsLocation = "content/layouts",
-			viewsLocation 	= "content"
+			layoutsLocation = "layouts",
+			viewsLocation 	= "layouts"
 		};
 
 		// BLOGBOX MODULE LOCATION: CHANGE IF DIFFERENT FROM CONVENTIONS

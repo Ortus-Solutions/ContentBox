@@ -77,7 +77,7 @@
 				<!--- Action Bar --->
 				<div class="actionBar">
 					<a href="#event.buildLink(rc.xehAuthors)#"><button class="button">Cancel</button></a> or
-					<input type="submit" value="Save" class="button2">
+					<input type="submit" value="Save" class="buttonred">
 				</div>
 				#html.endFieldSet()#
 			#html.endForm()#
@@ -94,7 +94,7 @@
 				<!--- Action Bar --->
 				<div class="actionBar">
 					<a href="#event.buildLink(rc.xehAuthors)#"><button class="button">Cancel</button></a> or
-					<input type="submit" value="Change Password" class="button2">
+					<input type="submit" value="Change Password" class="buttonred">
 				</div>
 				#html.endFieldSet()#
 			#html.endForm()#

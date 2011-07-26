@@ -120,12 +120,12 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 .small_box { margin-bottom:15px; }
 .small_box .header { height:30px; font-size:1.3em; line-height:1.8em; padding:0 12px; }
 .small_box .header img { position:relative; top:2px; float:right; }
-.small_box .body { padding:10px 12px; font-size:.9em; }
+.small_box .body { padding: 5px 12px; font-size:.9em; }
 /**============================== Box ==============================**/
 .box { margin-bottom:15px; }
 .box .header { height:40px; font-size:1.5em; line-height:1.8em; padding:0 15px; position:relative; }
 .box .header img { position:relative; margin-right:10px; }
-.box .body { padding:0 15px 10px; }
+.box .body { padding:10px 15px 10px; }
 /** ============================== Footer ============================== **/
 #footer { text-align:center; padding:20px 0; height:45px; position:absolute; width:100%; bottom:0; font-size:1.1em; }
 /** ============================== Bulleted List ============================== **/

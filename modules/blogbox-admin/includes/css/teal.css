@@ -16,7 +16,7 @@ h6 { color:#373737; }
 hr { color:#c0c0c0; border-bottom-color:#c0c0c0; }
 blockquote { color:#000; background-image:url(../images/blockquote_bg.gif); }
 /** ============================== Form Styling ============================== **/
-fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
 fieldset legend { color:#3a3a3a; }
 form label { color:#585858; }
 form p small { color:#777; }
@@ -207,12 +207,13 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 .filterBar { margin:10px 0 2px; }
 .buttonBar { float:  right; margin:7px 0px 0px 0px;}
 .contentBar { padding:10px;margin:10px 0px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;}
+.infoBar { padding:10px;margin:10px 0px;background-color: #fdfdbd;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;border:1px solid #ccc;font-weight: bold;}
 .actionBar { margin:10px 0 5px; }
 #bottomCenteredBar { margin:20px 0 0; text-align:right; }
 #bottomCenteredLoader { margin:10px 0 0; text-align:center; display:none; }
 /**============================== UNIQUE CSS ==============================**/
 .loaders { margin:10px; display:none; text-align:center; }
-.tipList { list-style-image: url("../images/light_bulb.png");}
+.tipList { list-style-image: url("../images/light_bulb.png"); cursor: pointer;}
 .tipList li{ padding: 5px 0px 0px 0px; }
 #authorDetails { margin:7px 0 0 45px; font-size:16px; }
 #loginBox { width:500px; margin:100px auto; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }

@@ -101,7 +101,7 @@ component extends="baseHandler"{
 	// save
 	function save(event,rc,prc){
 		// params
-		event.paramValue("allowComments",true);
+		event.paramValue("allowComments",prc.bbSettings.bb_comments_enabled);
 		event.paramValue("newCategories","");
 		event.paramValue("isPublished",true);
 		event.paramValue("slug","");

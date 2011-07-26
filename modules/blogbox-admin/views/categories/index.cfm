@@ -19,7 +19,7 @@
 				
 				<div class="actionBar">
 					#html.resetButton(name="btnReset",value="Reset",class="button")#
-					#html.submitButton(value="Save",class="button2")#
+					#html.submitButton(value="Save",class="buttonred")#
 				</div>
 			#html.endForm()#
 		</div>
@@ -50,7 +50,7 @@
 				<div class="filterBar">
 					<div>
 						#html.label(field="categoryFilter",content="Quick Filter:",class="inline")#
-						#html.textField(name="categoryFilter",size="20",class="textfield")#
+						#html.textField(name="categoryFilter",size="30",class="textfield")#
 					</div>
 				</div>
 			</div>

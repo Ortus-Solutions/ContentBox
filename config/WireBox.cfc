@@ -46,7 +46,7 @@ Description :
 			
 			// Register all event listeners here, they are created in the specified order
 			listeners = [
-				// { class="", name="", properties={} }
+				{ class="coldbox.system.aop.Mixer" }
 			]			
 		};
 		

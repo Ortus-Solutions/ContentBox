@@ -59,6 +59,14 @@
 			#html.hiddenField(name="commentStatus",value="")#
 			#html.hiddenField(name="page",value=rc.page)#
 			
+			<!--- Info Bar --->
+			<cfif NOT prc.bbSettings.bb_comments_enabled>
+				<div class="infoBar">
+					<img src="#prc.bbRoot#/includes/images/info.png" alt="comments" />
+					Comments are currently disabled site-wide!
+				</div>
+			</cfif>
+			
 			<!--- Content Bar --->
 			<div class="contentBar" id="contentBar">
 				

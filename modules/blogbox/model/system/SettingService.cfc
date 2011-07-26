@@ -53,4 +53,29 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		cache.clear( settingsCacheKey );
 	}
 	
+	/**
+	* Bulk saving of options using a memento structure of options
+	*/
+	any function bulkSave(struct memento){
+		var settings 	= getAllSettings(asStruct=true);
+		var oOption  	= "";
+		var newOptions 	= [];
+		
+		// iterate over settings
+		for(var key in settings){
+			// save only sent in setting keys
+			if( structKeyExists(memento, key) ){
+				oOption = findWhere({name=key});
+				oOption.setValue( memento[key] );
+				arrayAppend( newOptions, oOption );
+			}						
+		}
+		
+		// save new settings and flush cache
+		saveAll( newOptions );
+		flushSettingsCache();
+		
+		return this;
+	}
+	
 }
