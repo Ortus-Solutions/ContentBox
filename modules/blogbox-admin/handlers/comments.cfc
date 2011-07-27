@@ -83,7 +83,18 @@ component extend="baseHandler"{
 		rc.xehCommentSave = "#prc.bbEntryPoint#.comments.save";
 		// view
 		event.setView(view="comments/editor",layout="ajax");
-	}	
+	}
+	
+	// comment moderators
+	function moderate(event,rc,prc){
+		// get new or persisted
+		rc.comment  = commentService.get( event.getValue("commentID",0) );
+		// exit handlers
+		rc.xehCommentStatus = "#prc.bbEntryPoint#.comments.doStatusUpdate";
+		rc.xehCommentRemove = "#prc.bbEntryPoint#.comments.remove";
+		// view
+		event.setView("comments/moderate");
+	}
 	
 	// quick look
 	function quickLook(event,rc,prc){
