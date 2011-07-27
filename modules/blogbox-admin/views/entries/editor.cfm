@@ -2,7 +2,7 @@
 
 <!--- Entry Form  --->
 #html.startForm(action=rc.xehEntrySave,name="entryForm",novalidate="novalidate")#
-			
+	
 <!--============================Sidebar============================-->
 <div class="sidebar">
 	<!--- Info Box --->
@@ -54,22 +54,20 @@
 			</cfif>
 			
 			<!--- Publish Info --->
-			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/calendar.png" alt="publish" width="16"/> Publishing Status')#
+			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/calendar.png" alt="publish" width="16"/> Publishing')#
 				<!--- is Published --->
-				#html.radioButton(name="isPublished",value=true,checked=rc.entry.getIsPublished(),title="Publish Immediately or at Publish Date")#
-				Publish
-				#html.radioButton(name="isPublished",value=false,checked=(NOT rc.entry.getIsPublished()),title="Save as Draft or Un-Publish Entry")#
-				Draft
+				#html.hiddenField(name="isPublished",value=true)#
 				<!--- publish date --->
 				#html.inputField(size="9",type="date",name="publishedDate",label="Publish Date",value=rc.entry.getPublishedDateForEditor(),class="textfield")#
 				@
-				#html.inputField(type="number",name="publishedHour",value=ckHour( rc.entry.getPublishedDateForEditor() ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
-				#html.inputField(type="number",name="publishedMinute",value=ckMinute( rc.entry.getPublishedDateForEditor() ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
+				#html.inputField(type="number",name="publishedHour",value=ckHour( rc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
+				#html.inputField(type="number",name="publishedMinute",value=ckMinute( rc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
 			
 				<!--- Action Bar --->
 				<div class="actionBar">
-					<a href="#event.buildLink(rc.xehEntries)#"><button class="button">Cancel</button></a> or
-					&nbsp;<input type="submit" class="buttonred" value="Save">
+					&nbsp;<button class="button" title="Preview this masterpiece"> Preview </button>
+					&nbsp;<input type="submit" class="button2" value="Save Draft" title="Save this masterpiece as a draft!" onclick="toggleDraft()">
+					&nbsp;<input type="submit" class="buttonred" value="Publish" title="Let's publish this masterpiece!">
 				</div>
 			
 			#html.endFieldSet()#
@@ -100,7 +98,7 @@
 				</div>
 				
 				<!--- New Categories --->
-				#html.textField(name="newCategories",label="New Categories",size="25",title="Comma delimited list of new categories to create",class="textfield")#
+				#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="textfield")#
 			#html.endFieldSet()#
 			
 			<!--- HTML Attributes --->

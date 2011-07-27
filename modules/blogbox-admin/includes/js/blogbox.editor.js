@@ -6,7 +6,7 @@ $(document).ready(function() {
 	// toolbar config
 	var ckToolbar =
 	[
-	    { name: 'document',    items : [ 'Source','-','DocProps','Preview','-','Templates' ] },
+	    { name: 'document',    items : [ 'Source','-','Templates' ] },
 	    { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
 	    { name: 'editing',     items : [ 'Find','Replace','-','SpellChecker', 'Scayt' ] },
 	    //{ name: 'forms',       items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
@@ -18,7 +18,7 @@ $(document).ready(function() {
 	    '/',
 	    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
 	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
-	    { name: 'tools',       items : [ 'Maximize','-','About' ] }
+	    { name: 'tools',       items : [ 'Maximize' ] }
 	];
 	// Activate ckeditor
 	$content.ckeditor( function(){}, { toolbar:ckToolbar,height:300 } );
@@ -37,4 +37,7 @@ function createPermalink(slugger){
 	$.get(slugger,{slug:$("#title").val()},function(data){ 
 		$slug.fadeIn().val($.trim(data)); 		
 	} );
+}
+function toggleDraft(){
+	$("#isPublished").val('false');
 }

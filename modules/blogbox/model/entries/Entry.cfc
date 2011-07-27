@@ -64,10 +64,15 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 	/**
 	* Get display publishedDate
 	*/
-	string function getPublishedDateForEditor(){
+	string function getPublishedDateForEditor(boolean showTime=false){
 		var pDate = getPublishedDate();
 		if( isNull(pDate) ){ pDate = now(); }
-		return dateFormat( pDate, "yyyy-mm-dd" );
+		// get formatted date
+		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
+		if( arguments.showTime ){
+			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt");
+		}
+		return fDate;
 	}
 	
 	/**

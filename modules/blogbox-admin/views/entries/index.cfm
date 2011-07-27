@@ -137,7 +137,7 @@
 				
 				<tbody>
 					<cfloop array="#rc.entries#" index="entry">
-					<tr data-entryID="#entry.getEntryID()#">
+					<tr data-entryID="#entry.getEntryID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
 						<td>
 							<a href="#event.buildLink(rc.xehBlogEditor)#/entryID/#entry.getEntryID()#" title="Edit Entry">#entry.getTitle()#</a><br/>
 							<!--- password protect --->
