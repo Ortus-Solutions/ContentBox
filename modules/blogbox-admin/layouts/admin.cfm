@@ -31,6 +31,8 @@
 	<script type="text/javascript" src="#prc.bbroot#/includes/js/jquery.uitablefilter.js"></script>
 	<script type="text/javascript" src="#prc.bbroot#/includes/js/tablesorter.min.js"></script>
 	<script type="text/javascript" src="#prc.bbroot#/includes/js/blogbox.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="#prc.bbroot#/includes/ckeditor/adapters/jquery.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
 	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
 		<cfset addAsset("#prc.bbroot#/includes/javascript/#js#.js")>
@@ -57,10 +59,12 @@
 				<span class="fr">
 			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> &nbsp;
 					<!--- Log Out --->
-					<a href="#event.buildLink(rc.xehDoLogout)#" class="confirmIt" 
+					<a href="#event.buildLink(rc.xehDoLogout)#" class="confirmIt" title="Get outta here!"
 						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall">Log Out</button></a>
 					<!--- View Blog --->
-					<a href="#event.buildLink(getModuleSettings("blogbox").entryPoint)#" target="_blank"><button class="buttonsmall">View Blog</button></a>
+					<a href="#event.buildLink(getModuleSettings("blogbox").entryPoint)#" target="_blank" title="View your awesome blog!"><button class="buttonsmall">View Blog</button></a>
+					<!--- QUick Post --->
+					<button class="buttonsmall" id="btnQuickPost" title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 					<!--- bbadmin event --->
 					#announceInterception("bbadmin_onTopBar")#
 				</span>
@@ -239,6 +243,11 @@
 		</div>
 	</div>
 	<!--- ============================ end Confirmit ============================ --->
+	
+	<!--- ============================ QuickPost ============================ --->
+	#runEvent(event="blogbox-admin:entries.quickPost",prePostExempt=true)#
+	<!--- ============================ end QuickPost ============================ --->
+	
 	
 	<!--- bbadmin Event --->
 	#announceInterception("bbadmin_beforeBodyEnd")#

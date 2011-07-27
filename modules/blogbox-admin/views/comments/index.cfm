@@ -174,8 +174,12 @@ $(document).ready(function() {
 	// comment quick look
 	$commentForm.find("##comments").find("tr").mousedown(function(e) {
 	    if (e.which === 3) {
-	    	openRemoteModal('#event.buildLink(rc.xehCommentQuickLook)#', {commentID: $(this).attr('data-commentID')});
-			e.preventDefault();
+	    	if ($(this).attr('data-commentID') != null) {
+				openRemoteModal('#event.buildLink(rc.xehCommentQuickLook)#', {
+					commentID: $(this).attr('data-commentID')
+				});
+				e.preventDefault();
+			}
 	    }
 	});
 });

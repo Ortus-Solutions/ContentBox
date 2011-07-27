@@ -60,8 +60,9 @@
 						<th>Email</th>
 						<th>Username</th>
 						<th>Last Login</th>
-						<th width="75">Active</th>
-						<th width="125" class="center {sorter: false}">Actions</th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/pen.png" alt="posts" title="Number of Entries"/></th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="active" title="User Active Flag"/></th>
+						<th width="75" class="center {sorter: false}">Actions</th>
 					</tr>
 				</thead>
 				
@@ -78,6 +79,7 @@
 						<td>#author.getEmail()#</td>
 						<td>#author.getUsername()#</td>
 						<td>#author.getDisplayLastLogin()#</td>
+						<th class="center">#author.getNumberOfEntries()#</th>
 						<td class="center">
 							<cfif author.getIsActive()>
 								<img src="#prc.bbRoot#/includes/images/button_ok.png" alt="ok" title="User Active" />

@@ -16,8 +16,9 @@
 			<th>Title</th>	
 			<th>Categories</th>
 			<th width="125">Dates</th>
-			<th width="40" class="center">Online</th>
-			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments"/></th>
+			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="publish" title="Entry Published"/></th>
+			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
+			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments" title="Number of Comments"/></th>
 			<th width="50" class="center">Actions</th>
 		</tr>
 	</thead>
@@ -43,6 +44,7 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
+			<td class="center">#entry.getHits()#</td>
 			<td class="center">#entry.getNumberOfComments()#</td>
 			<td class="center">
 				<!--- View Command --->
@@ -61,8 +63,10 @@ $(document).ready(function() {
 	// quick look
 	$("##entries_pager").find("tr").mousedown(function(e) {
 	    if (e.which === 3) {
-	    	openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
-			e.preventDefault();
+	    	if( $(this).attr('data-entryID') != null ){
+				openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
+				e.preventDefault();
+			}
 	    }
 	});
 });

@@ -128,9 +128,10 @@
 						<th>Author</th>			
 						<th>Categories</th>
 						<th width="125">Dates</th>
-						<th width="50">Online</th>
-						<th width="50" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments"/></th>
-						<th width="75" class="center {sorter:false}">Actions</th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="publish"/></th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/glasses.png" alt="hits"/></th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments"/></th>
+						<th width="70" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
 				
@@ -168,6 +169,7 @@
 								<span class="hidden">draft</span>
 							</cfif>
 						</td>
+						<td class="center">#entry.getHits()#</td>
 						<td class="center">#entry.getNumberOfComments()#</td>
 						<td class="center">
 							<!--- Edit Command --->
@@ -201,8 +203,10 @@ $(document).ready(function() {
 	// quick look
 	$("##entries").find("tr").mousedown(function(e) {
 	    if (e.which === 3) {
-	    	openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
-			e.preventDefault();
+	    	if($(this).attr('data-entryID') != null) {
+				openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
+				e.preventDefault();
+			}
 	    }
 	});
 

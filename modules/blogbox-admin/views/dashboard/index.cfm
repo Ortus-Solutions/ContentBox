@@ -102,17 +102,9 @@
 		</div>	
 	</div>
 </div>
-<!--- QUick Post --->
-#renderView("dashboard/quickPost")#
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("##comments").tablesorter();
-	$("##entries").tablesorter();
 });
-function removeComment(commentID){
-	$("##commentID").val( commentID );
-	$("##commentForm").submit();
-}
 </script>
 </cfoutput>

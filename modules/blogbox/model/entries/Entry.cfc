@@ -11,20 +11,24 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 	property name="excerpt" 			notnull="false" ormtype="text" default="";
 	property name="createdDate" 		notnull="true"  ormtype="timestamp" update="false";
 	property name="publishedDate"		notnull="false" ormtype="timestamp";
-	property name="isPublished" 		notnull="true"  ormtype="boolean" default="true";
-	property name="allowComments" 		notnull="true"  ormtype="boolean" default="true";
+	property name="isPublished" 		notnull="true"  ormtype="boolean" default="true" dbdefault="true";
+	property name="allowComments" 		notnull="true"  ormtype="boolean" default="true" dbdefault="true";
 	property name="passwordProtection" 	notnull="false" length="100" default="";
 	property name="HTMLKeywords"		notnull="false" length="160" default="";
 	property name="HTMLDescription"		notnull="false" length="160" default="";
+	property name="hits"				notnull="false" default="0" dbdefault="0" ormtype="long";
 	
 	// M20 -> Author loaded as a proxy
-	property name="author" cfc="blogbox.model.entries.Author" fieldtype="many-to-one" fkcolumn="FK_userID" lazy="true";
+	property name="author" cfc="blogbox.model.entries.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true";
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10" orderby="createdDate"
 			  cfc="blogbox.model.comments.Comment" fkcolumn="FK_entryID" inverse="true" cascade="all-delete-orphan"; 
 	// M2M -> Categories
 	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category"
 			  cfc="blogbox.model.entries.Category" fkcolumn="FK_categoryID" linktable="bb_entryCategories" inversejoincolumn="FK_entryID"; 
+
+	// Calculated Fields
+	property name="numberOfComments" formula="select count(*) from bb_comment comment where comment.FK_entryID=entryID";
 
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	
@@ -81,14 +85,7 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
-	
-	/*
-	* I return the number of comments for this post
-	*/
-	numeric function getNumberOfComments(){
-		return ArrayLen( getComments() );
-	}
-	
+		
 	/*
 	* I remove all category associations
 	*/

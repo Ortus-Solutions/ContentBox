@@ -14,6 +14,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
+	* Update an entry's hits
+	*/
+	function updateHits(entry){
+		var q = new Query(sql="UPDATE bb_entry SET hits = hits + 1 WHERE entryID = #arguments.entry.getEntryID()#").execute();
+	}
+	
+	/**
 	* entry search returns struct with keys [entries,count]
 	*/
 	struct function search(search="",isPublished,category,author,max=0,offset=0){

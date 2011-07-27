@@ -88,7 +88,6 @@ component extends="baseHandler"{
 			// Get Comments viewlet
 			rc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments={entryID=rc.entryID});
 		}
-		
 		// exit handlers
 		rc.xehEntrySave = "#prc.bbEntryPoint#.entries.save";
 		rc.xehSlugify	= "#prc.bbEntryPoint#.entries.slugify";
@@ -198,5 +197,15 @@ component extends="baseHandler"{
 	// slugify remotely
 	function slugify(event,rc,prc){
 		return getPlugin("HTMLHelper").slugify( rc.slug );
+	}
+	
+	// quick post viewlet
+	function quickPost(event,rc,prc){
+		// get all categories for quick post
+		prc.qpCategories = categoryService.getAll(sortOrder="category");
+		// exit handlers
+		prc.xehQPEntrySave = "#prc.bbEntryPoint#.entries.save";
+		// render it out
+		return renderView(view="entries/quickPost",module="blogbox-admin");		
 	}
 }

@@ -17,23 +17,35 @@
 			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/eye.png" alt="publish" width="16"/> Info')#
 			<table class="tablelisting" width="100%">
 				<tr>
-					<th width="75" class="textRight">Created By:</th>
+					<th width="85" class="textRight">Created By:</th>
 					<td>
 						<a href="mailto:#rc.entry.getAuthor().getEmail()#">#rc.entry.getAuthorName()#</a>
 					</td>
 				</tr>
 				<tr>
-					<th width="75" class="textRight">Published On:</th>
+					<th class="textRight">Published On:</th>
 					<td>
 						#rc.entry.getDisplayPublishedDate()#
 					</td>
 				</tr>
 				<tr>
-					<th width="75" class="textRight">Created On:</th>
+					<th class="textRight">Created On:</th>
 					<td>
 						#rc.entry.getDisplayCreatedDate()#
 					</td>
-				</tr>						
+				</tr>
+				<tr>
+					<th class="textRight">Views:</th>
+					<td>
+						#rc.entry.getHits()#
+					</td>
+				</tr>	
+				<tr>
+					<th class="textRight">Comments:</th>
+					<td>
+						#rc.entry.getNumberOfComments()#
+					</td>
+				</tr>					
 			</table>	
 			<div class="center">
 				<button class="button2" onclick="return to('')" title="Open entry in site">Open In Site</button>
@@ -42,9 +54,8 @@
 			</cfif>
 			
 			<!--- Publish Info --->
-			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/calendar.png" alt="publish" width="16"/> Publish')#
+			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/calendar.png" alt="publish" width="16"/> Publishing Status')#
 				<!--- is Published --->
-				#html.label(field="none",content="Status")#
 				#html.radioButton(name="isPublished",value=true,checked=rc.entry.getIsPublished(),title="Publish Immediately or at Publish Date")#
 				Publish
 				#html.radioButton(name="isPublished",value=false,checked=(NOT rc.entry.getIsPublished()),title="Save as Draft or Un-Publish Entry")#

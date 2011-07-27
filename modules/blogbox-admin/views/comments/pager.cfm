@@ -73,8 +73,10 @@ $(document).ready(function() {
 	// quick look
 	$("##comments_pager").find("tr").mousedown(function(e) {
 	    if (e.which === 3) {
-	    	openRemoteModal('#event.buildLink(prc.xehCommentPagerQuickLook)#', {commentID: $(this).attr('data-commentID')});
-			e.preventDefault();
+			if( $(this).attr('data-commentID') != null ){
+	    		openRemoteModal('#event.buildLink(prc.xehCommentPagerQuickLook)#', {commentID: $(this).attr('data-commentID')});
+				e.preventDefault();
+			}
 	    }
 	});
 });

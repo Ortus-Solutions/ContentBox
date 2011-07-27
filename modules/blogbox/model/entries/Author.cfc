@@ -19,7 +19,10 @@ component persistent="true" entityname="bbAuthor" table="bb_author" batchsize="1
 	
 	// O2M -> Entries
 	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="blogbox.model.entries.Entry"
-			 fkcolumn="FK_userID" inverse="true" lazy="extra" cascade="all-delete-orphan" batchsize="10" orderby="publishedDate DESC";
+			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="all-delete-orphan" batchsize="10" orderby="publishedDate DESC";
+			 
+	// Calculated properties
+	property name="numberOfEntries" formula="select count(*) from bb_entry entry where entry.FK_authorID=authorID" ;
 	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	

@@ -25,15 +25,12 @@ component extends="baseHandler"{
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
 		
-		// Get entries viewlet
+		// Get entries viewlet: Stupid cf9 and its local scope blown on argument literals
 		var eArgs = {max=prc.bbSettings.bb_dashboard_recentEntries,pagination=false};
 		rc.entriesViewlet = runEvent(event="blogbox-admin:entries.pager",eventArguments=eArgs);
 		// Get Comments viewlet
 		var eArgs = {max=prc.bbSettings.bb_dashboard_recentComments,pagination=false};
 		rc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments=eArgs);
-		
-		// get all categories for quick post
-		rc.categories = categoryService.getAll(sortOrder="category");
 		
 		// dashboard view
 		event.setView("dashboard/index");
