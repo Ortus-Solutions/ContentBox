@@ -41,6 +41,13 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 	
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
 	
+	/**
+	* has excerpt
+	*/
+	boolean function hasExcerpt(){
+		return len( getExcerpt() ) GT 0;
+	}
+	
 	/*
 	* Validate entry, returns an array of error or no messages
 	*/

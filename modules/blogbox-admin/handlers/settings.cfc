@@ -48,13 +48,23 @@ component extends="baseHandler"{
 	
 	// raw settings manager
 	function raw(event,rc,prc){
+		// params
+		event.paramValue("page",1);
+		
 		// exit Handlers
 		rc.xehSettingRemove = "#prc.bbEntryPoint#.settings.remove";
 		rc.xehSettingSave 	= "#prc.bbEntryPoint#.settings.saveRaw";
 		rc.xehFlushCache    = "#prc.bbEntryPoint#.settings.flushCache";
 		rc.xehViewCached    = "#prc.bbEntryPoint#.settings.viewCached";
+		
+		// prepare paging plugin
+		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
+		rc.paging 		= rc.pagingPlugin.getBoundaries();
+		rc.pagingLink 	= event.buildLink('#rc.xehRawSettings#.page.@page@?');
+		
 		// Get all settings
-		rc.settings = settingsService.list(sortOrder="name desc",asQuery=false);
+		rc.settings = settingsService.list(sortOrder="name desc",asQuery=false,offset=rc.paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
+		rc.settingsCount = settingsService.count();
 		// Raw tab
 		prc.tabSystem_rawSettings = true;
 		// view
@@ -63,6 +73,9 @@ component extends="baseHandler"{
 
 	// saveRaw
 	function saveRaw(event,rc,prc){
+		// params
+		event.paramValue("page",1);
+		
 		// populate and get setting
 		var setting = populateModel( settingsService.get(id=rc.settingID) );
     	// save new setting
@@ -71,7 +84,7 @@ component extends="baseHandler"{
 		// messagebox
 		getPlugin("MessageBox").setMessage("info","Setting saved!");
 		// relocate
-		setNextEvent(rc.xehRawSettings);
+		setNextEvent(event=rc.xehRawSettings,queryString="page=#rc.page#");
 	}
 	
 	// remove

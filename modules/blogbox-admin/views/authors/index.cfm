@@ -62,7 +62,7 @@
 						<th>Last Login</th>
 						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/pen.png" alt="posts" title="Number of Entries"/></th>
 						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="active" title="User Active Flag"/></th>
-						<th width="75" class="center {sorter: false}">Actions</th>
+						<th width="65" class="center {sorter: false}">Actions</th>
 					</tr>
 				</thead>
 				

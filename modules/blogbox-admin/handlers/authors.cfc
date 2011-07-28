@@ -21,7 +21,7 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox-admin");
+		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
 		rc.paging 		= rc.pagingPlugin.getBoundaries();
 		rc.pagingLink 	= event.buildLink('#rc.xehAuthors#.page.@page@');
 		

@@ -27,7 +27,7 @@ component extend="baseHandler"{
 		event.paramValue("isFiltering",false);
 		
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox-admin");
+		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
 		rc.paging 		= rc.pagingPlugin.getBoundaries();
 		rc.pagingLink 	= event.buildLink('#rc.xehComments#.page.@page@?');
 		// Append search to paging link?
@@ -156,7 +156,7 @@ component extend="baseHandler"{
 		prc.xehCommentPagerRemove		= "#prc.bbEntryPoint#.comments.remove";
 		
 		// prepare paging plugin
-		prc.commentPager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox-admin");
+		prc.commentPager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox");
 		prc.commentPager_paging 	  	= prc.commentPager_pagingPlugin.getBoundaries();
 		prc.commentPager_pagingLink 	= "javascript:commentPagerLink(@page@)";
 		prc.commentPager_pagination		= arguments.pagination;

@@ -13,12 +13,12 @@ component {
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
-	// YOUR SES URL ENTRY POINT
-	this.entryPoint			= "/blog";
+	// YOUR SES URL ENTRY POINT /blog is a perfect example
+	this.entryPoint			= "blog";
 	
 	function configure(){
 		
-		// Module Conventions
+		// BB UI Module Conventions
 		conventions = {
 			layoutsLocation = "layouts",
 			viewsLocation 	= "layouts"
@@ -27,20 +27,29 @@ component {
 		// BLOGBOX MODULE LOCATION: CHANGE IF DIFFERENT FROM CONVENTIONS
 		var BB_PATH = controller.getSetting("modules").blogbox.invocationPath;
 		
-		// SES Routes
+		// BB UI SES Routing
 		routes = [
-			{pattern="/", handler="blog", action="index" }
+			// home
+			{pattern="/", handler="blog", action="index" },
+			// paging
+			{pattern="/page/:page-numeric", handler="blog", action="index" },
+			// category
+			{pattern="/category/:category", handler="blog", action="index" },
+			// blog permalink
+			{pattern="/:slug", handler="blog", action="entry" }
+			
 		];		
 		
-		// Custom Declared Points
+		// BB UI Event driven programming extensions
 		interceptorSettings = {
-			// BB Admin Custom Events
+			// BlogBox UI Custom Events, you can add your own if you like to!
 			customInterceptionPoints = arrayToList([
-				"bbui_beforeHeadEnd","bbui_afterBodyStart","bbui_beforeBodyEnd","bbui_footer","bbui_beforeContent","bbui_afterContent" // Layout HTML points
+				// Layout HTML points: A layout must announce them via bb.event("bbui_footer",{renderer=this}) make sure you pass in the renderer
+				"bbui_beforeHeadEnd","bbui_afterBodyStart","bbui_beforeBodyEnd","bbui_footer","bbui_beforeContent","bbui_afterContent","bbui_beforeSideBar","bbui_afterSideBar"
 			])
 		};
 		
-		// Custom Declared Interceptors
+		// BB UI Interceptors
 		interceptors = [
 			// BB UI Request Interceptor
 			{class="#moduleMapping#.interceptors.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bbUI" }
@@ -52,14 +61,14 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		
+		// TODO: Register currently selected layout's interception points
 	}
 	
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-		
+		// TODO: UnRegister currently selected layout's interception points
 	}
 	
 }

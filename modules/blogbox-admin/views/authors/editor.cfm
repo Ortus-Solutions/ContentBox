@@ -76,14 +76,14 @@
 				
 				<!--- Action Bar --->
 				<div class="actionBar">
-					<a href="#event.buildLink(rc.xehAuthors)#"><button class="button">Cancel</button></a> or
+					<button class="button" onclick="return to('#event.buildLink(rc.xehAuthors)#')">Cancel</button> or 
 					<input type="submit" value="Save" class="buttonred">
 				</div>
 				#html.endFieldSet()#
 			#html.endForm()#
 			
-			<cfif rc.author.isLoaded()>
 			<!--- Change Password --->
+			<cfif rc.author.isLoaded()>
 			#html.startForm(name="authorPasswordForm",action=rc.xehAuthorChangePassword,novalidate="novalidate")#
 				#html.startFieldset(legend="Change Password")#
 				#html.hiddenField(name="authorID",bind=rc.author)#
@@ -93,7 +93,7 @@
 				
 				<!--- Action Bar --->
 				<div class="actionBar">
-					<a href="#event.buildLink(rc.xehAuthors)#"><button class="button">Cancel</button></a> or
+					<button class="button" onclick="return to('#event.buildLink(rc.xehAuthors)#')">Cancel</button> or 
 					<input type="submit" value="Change Password" class="buttonred">
 				</div>
 				#html.endFieldSet()#

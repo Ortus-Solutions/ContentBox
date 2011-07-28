@@ -70,6 +70,33 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		return results;
 	}
 	
+	// Entry listing for UI
+	function findPublishedEntries(max=0,offset=0,categoryID=0){
+		var results = {};
+		// get Hibernate Restrictions class
+		var restrictions = getRestrictions();	
+		// criteria queries
+		var criteria = [];
+		
+		// only published entries
+		arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",1)) );
+		
+		// Category Filter
+		if( len(arguments.categoryID) AND arguments.categoryID neq 0){
+			// create association criteria, by passing a simple value the method will inflate.
+			arrayAppend(criteria, "categories");
+			// add the association criteria to the main search
+			arrayAppend(criteria, restrictions.in("categories.categoryID",JavaCast("java.lang.Integer[]",[arguments.categoryID])));			
+		}	
+		
+		// run criteria query and projections count
+		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
+		results.count 	= criteriaCount(criteria=criteria);
+		
+		return results;
+	}
+	
+	
 	/**
 	* @override Create a new hibernate criteria object according to entityname and criterion array objects
 	*/

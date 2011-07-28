@@ -34,7 +34,7 @@ component extends="baseHandler"{
 		event.paramValue("isFiltering",false);
 		
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox-admin");
+		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
 		rc.paging 		= rc.pagingPlugin.getBoundaries();
 		rc.pagingLink 	= event.buildLink('#rc.xehEntries#.page.@page@?');
 		// Append search to paging link?
@@ -175,7 +175,7 @@ component extends="baseHandler"{
 		rc.xehEntryQuickLook= "#prc.bbEntryPoint#.entries.quickLook";
 		
 		// prepare paging plugin
-		rc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox-admin");
+		rc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox");
 		rc.pager_paging 	  	= rc.pager_pagingPlugin.getBoundaries();
 		rc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
 		rc.pager_pagination		= arguments.pagination;

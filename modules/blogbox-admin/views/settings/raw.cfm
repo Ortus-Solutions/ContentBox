@@ -10,6 +10,7 @@
 			<!--- Create/Edit form --->
 			#html.startForm(action=rc.xehSettingSave,name="settingEditor",novalidate="novalidate")#
 				<input type="hidden" name="settingID" id="settingID" value="" />
+				<input type="hidden" name="page" id="page" value="#rc.page#" />
 				
 				<label for="name">Setting:</label>
 				<input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="textfield"/>
@@ -41,7 +42,7 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- settingForm --->
-			<form name="settingForm" id="settingForm" method="post" action="#event.buildLink(rc.xehSettingRemove)#">
+			#html.startForm(name="settingForm",action=rc.xehSettingRemove)#
 			<input type="hidden" name="settingID" id="settingID" value="" />
 			
 			<!--- content bar --->
@@ -61,6 +62,9 @@
 				</div>
 			</div>
 			
+			<!--- Paging --->
+			#rc.pagingPlugin.renderit(rc.settingsCount,rc.pagingLink)#
+		
 			<!--- authors --->
 			<table name="settings" id="settings" class="tablesorter" width="98%">
 				<thead>
@@ -86,8 +90,11 @@
 					</cfloop>
 				</tbody>
 			</table>
-			</form>
 		
+			<!--- Paging --->
+			#rc.pagingPlugin.renderit(rc.settingsCount,rc.pagingLink)#
+		
+			#html.endForm()#			
 		</div>	
 	</div>
 </div>
