@@ -38,7 +38,7 @@ component {
 			// search filter
 			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" },
 			// blog permalink
-			{pattern="/:slug", handler="blog", action="entry" }
+			{pattern="/:entrySlug", handler="blog", action="entry" }
 			
 		];		
 		
@@ -47,7 +47,13 @@ component {
 			// BlogBox UI Custom Events, you can add your own if you like to!
 			customInterceptionPoints = arrayToList([
 				// Layout HTML points: A layout must announce them via bb.event("bbui_footer",{renderer=this}) make sure you pass in the renderer
-				"bbui_beforeHeadEnd","bbui_afterBodyStart","bbui_beforeBodyEnd","bbui_footer","bbui_beforeContent","bbui_afterContent","bbui_beforeSideBar","bbui_afterSideBar"
+				"bbui_beforeHeadEnd","bbui_afterBodyStart","bbui_beforeBodyEnd","bbui_footer","bbui_beforeContent","bbui_afterContent","bbui_beforeSideBar","bbui_afterSideBar",
+				// Code Interception points
+				"bbui_onPageNotFound","bbui_onError","bbui_preRequest","bbui_postRequest","bbui_onRendererDecoration",
+				// Fixed Handler Points
+				"bbui_onIndex","bbui_onEntry",
+				// Fixed HTML Points
+				"bbui_preEntryDisplay","bbui_postEntryDisplay","bbui_preIndexDisplay","bbui_postIndexDisplay"
 			])
 		};
 		

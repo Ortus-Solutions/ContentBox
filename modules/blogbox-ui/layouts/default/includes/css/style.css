@@ -173,3 +173,9 @@ padding:10px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-
 .pagingTabs a:hover { color:#000; background-color:#FCF9C3; border:1px solid black; }
 .pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }
 .pagingTabsCarrousel { margin-top:5px; }
+/** ============================== comments =============================== **/
+.comment{border-bottom: 1px solid #E5E5E5;color: #222222;margin-bottom: 18px;margin-left: 5px;}
+.comment h4{font-weight: bold;}
+.comment p{color: #666666;font-size: 10px;}
+.commentContent{clear:both;margin: 5px 0px 15px 5px;font-size: 12px;}
+.commentPicture{float: left;padding: 5px;height: 60px;}

@@ -27,6 +27,19 @@ component extends="coldbox.system.Interceptor"{
 		prc.bbLayout = prc.bbSettings.bb_site_layout;
 		// Place layout root location
 		prc.bbLayoutRoot = prc.bbRoot & "/layouts/" & prc.bbLayout;
+		// announce event
+		announceInterception("bbui_preRequest");	
+	}	
+	
+	/**
+	* Fired on blogbox requests
+	*/
+	function postProcess(event, interceptData) eventPattern="^blogbox-ui"{
+		var prc = event.getCollection(private=true);
+		var rc	= event.getCollection();
+		
+		// announce event
+		announceInterception("bbui_postRequest");	
 	}	
 	
 	/*
@@ -42,6 +55,8 @@ component extends="coldbox.system.Interceptor"{
 			// decorate it
 			arguments.interceptData.oPlugin.bb = getMyPlugin(plugin="BBHelper",module="blogbox-ui");
 			arguments.interceptData.oPlugin.includeUDF(prc.bbRoot & "/plugins/BBHelperInject.cfm");
+			// announce event
+			announceInterception("bbui_onRendererDecoration",{renderer=arguments.interceptData.oPlugin,bbHelper=arguments.interceptData.oPlugin.bb});	
 		}		
 	}
 				

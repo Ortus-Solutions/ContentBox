@@ -1,11 +1,11 @@
 <cfoutput>
 <!--- Main Content Goes Here --->
 <div class="left">
-	<!--- BlogBoxEvent --->
-	#bb.event("bbui_beforeContent",{renderer=this})#
-	
 	<!--- top gap --->
 	<div class="post-top-gap"></div>
+	
+	<!--- BlogBoxEvent --->
+	#bb.event("bbui_preIndexDisplay",{renderer=this})#
 	
 	<!--- Are we filtering by category? --->
 	<cfif len(rc.category)>
@@ -42,7 +42,8 @@
 	</cfif>
 	
 	<!--- BlogBoxEvent --->
-	#bb.event("bbui_afterContent",{renderer=this})#
+	#bb.event("bbui_postIndexDisplay",{renderer=this})#
+	
 </div> 
 
 <!--- SideBar: That's right, I can render any layout views by using quickView() or coldbo'x render methods --->

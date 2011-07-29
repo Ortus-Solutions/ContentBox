@@ -135,7 +135,7 @@ component extends="baseHandler"{
 		// detach categories and re-attach
 		entry.removeAllCategories().setCategories( categories );
 		// save entry
-		entryService.save( entry );
+		entryService.saveEntry( entry );
 		
 		// relocate
 		getPlugin("MessageBox").info("Entry Saved!");
@@ -144,11 +144,12 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
-		// delete by id
-		if( !entryService.delete( entryService.get(rc.entryID) ) ){
+		entry = entryService.get(rc.entryID);
+		if( isNull(entry) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Entry detected!");
 		}
 		else{
+			entryService.delete( entry );
 			getPlugin("MessageBox").setMessage("info","Entry Removed!");
 		}
 		setNextEvent( rc.xehEntries );

@@ -62,6 +62,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function siteDescription(){ return setting("bb_site_description"); }
 	// site keywords
 	function siteKeywords(){ return setting("bb_site_keywords"); }
+	// site comments
+	function isCommentsEnabled(entry){ 
+		return ( arguments.entry.getAllowComments() AND setting("bb_comments_enabled") ); 
+	}
 	
 	/************************************** events *********************************************/
 	
@@ -159,7 +163,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/* 
 	* Render out entries in the home page by using our ColdBox collection rendering
-	* @template The name of the template to use, by default it looks in the 'templates/_entry.cfm' convention, no '.cfm' please
+	* @template The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
 	*/
 	function quickEntries(template="entry"){
 		var prc = getRequestCollection(private=true);	
@@ -171,11 +175,23 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/* 
 	* Render out categories anywhere using ColdBox collection rendering
-	* @template The name of the template to use, by default it looks in the 'templates/_category.cfm' convention, no '.cfm' please
+	* @template The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
 	*/
 	function quickCategories(template="category"){
 		var prc = getRequestCollection(private=true);	
 		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=prc.categories,collectionAs="category");
+	}
+	
+	/* 
+	* Render out comments anywhere using ColdBox collection rendering
+	* @template The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
+	*/
+	function quickComments(template="comment"){
+		var prc = getRequestCollection(private=true);	
+		if( NOT structKeyExists(prc,"entry") ){
+			throw(message="Entry not found in collection",detail="This probably means you are trying to use the entry comments display outside of an entry page",type="BlogBox.BBHelper.InvalidEntryContext");
+		}
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=prc.entry.getComments(),collectionAs="comment");
 	}
 	
 	/**
@@ -184,7 +200,13 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @size The size of the gravatar, by default we use 25 pixels
 	*/
 	function quickAvatar(required author,numeric size=25){
-		return getMyPlugin(plugin="Avatar",module="blogbox").renderAvatar(email=arguments.author.getEmail(),size=arguments.size);
+		var targetEmail = arguments.author;
+		// check if simple or not
+		if( NOT isSimpleValue(arguments.author) ){
+			targetEmail = arguments.author.getEmail();
+		}
+		 
+		return getMyPlugin(plugin="Avatar",module="blogbox").renderAvatar(email=targetEmail,size=arguments.size);
 	}
 	
 	/**

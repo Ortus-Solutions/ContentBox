@@ -80,7 +80,12 @@
 		<div class="body_resize">
 			<div class="body">
 				<div class="body_bg">
+					<!--- BlogBoxEvent --->
+					#bb.event("bbui_beforeContent",{renderer=this})#
+					<!--- Content --->
 					#renderView()#
+					<!--- BlogBoxEvent --->
+					#bb.event("bbui_afterContent",{renderer=this})#
 				</div>
 			</div>
 			<!--- Separator --->

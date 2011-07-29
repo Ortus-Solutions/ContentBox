@@ -17,11 +17,11 @@
 	</div>
 	
 	<!---
+	--->
 	<div class="contentBar">
 		<strong>More Information:</strong> <br/>
 		#prc.exception.stackTrace#
 	</div>
-	--->
 </div>
 
 <!--- Separator --->

@@ -48,7 +48,7 @@
 				</tr>					
 			</table>	
 			<div class="center">
-				<button class="button2" onclick="return to('')" title="Open entry in site">Open In Site</button>
+				<button class="button2" onclick="window.open('#event.buildLink(prc.bbSiteEntryPoint & "/#rc.entry.getSlug()#")#');return false;" title="Open entry in site">Open In Site</button>
 			</div>
 			#html.endFieldset()#
 			</cfif>

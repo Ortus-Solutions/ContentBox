@@ -34,11 +34,12 @@
 				#entry.getContent()#
 			</cfif>
 		</div>
+		
 	</div>
 	
 	<!--- Comments --->
 	<div class="post-comments">
-		<cfif entry.getAllowComments()>
+		<cfif bb.isCommentsEnabled(entry)>
 			<!--- Comment Count --->
 			<a href="#bb.linkEntry(entry)###comments" title="Check out this entry's comments">
 				<img src="#bb.layoutRoot()#/includes/images/comments.png" alt="comments"/> #entry.getNumberOfComments()# Comment(s)

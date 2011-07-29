@@ -14,6 +14,21 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
+	* Save an entry
+	*/
+	function saveEntry(entry){
+		// verify that the slug does not exist yet?
+		if( !entry.isLoaded() ){
+			if( countWhere(slug=arguments.entry.getSlug()) GT 0){
+				// append date to slug
+				arguments.entry.setSlug( "#left(hash(now()),8)#-" & arguments.entry.getSlug() );
+			}
+		}
+		
+		save( arguments.entry );
+	}
+	
+	/**
 	* Update an entry's hits
 	*/
 	function updateHits(entry){
@@ -104,6 +119,19 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		results.count 	= criteriaCount(criteria=criteria);
 		
 		return results;
+	}
+	
+	/**
+	* Find a published entry by slug
+	*/
+	function findBySlug(required slug){
+		
+		var entry = findWhere({isPublished=true,slug=arguments.slug});
+		
+		// if not found, send and empty one
+		if( isNull(entry) ){ return new(); }
+		
+		return entry;		
 	}
 	
 	

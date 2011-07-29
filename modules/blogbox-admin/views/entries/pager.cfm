@@ -48,7 +48,7 @@
 			<td class="center">#entry.getNumberOfComments()#</td>
 			<td class="center">
 				<!--- View Command --->
-				<a href="##" title="View Entry In Site"><img src="#prc.bbroot#/includes/images/eye.png" alt="view" /></a>
+				<a href="#event.buildLink(prc.bbSiteEntryPoint & "/#entry.getSlug()#")#" title="View Entry In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 				<!--- Edit Command --->
 				<a href="#event.buildLink(rc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" /></a>
 			</td>
