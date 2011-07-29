@@ -22,6 +22,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.bbRoot = event.getModuleRoot();
 		// store module entry point
 		prc.bbEntryPoint = getProperty("entryPoint");
+		// store site entry point
+		prc.bbSiteEntryPoint = getModuleSettings("blogbox").entryPoint;
 		// Place user in prc
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global bb options on scope

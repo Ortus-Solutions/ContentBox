@@ -25,7 +25,7 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 			  cfc="blogbox.model.comments.Comment" fkcolumn="FK_entryID" inverse="true" cascade="all-delete-orphan"; 
 	// M2M -> Categories
 	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category"
-			  cfc="blogbox.model.entries.Category" fkcolumn="FK_categoryID" linktable="bb_entryCategories" inversejoincolumn="FK_entryID"; 
+			  cfc="blogbox.model.entries.Category" fkcolumn="FK_entryID" linktable="bb_entryCategories" inversejoincolumn="FK_categoryID"; 
 
 	// Calculated Fields
 	property name="numberOfComments" formula="select count(*) from bb_comment comment where comment.FK_entryID=entryID";

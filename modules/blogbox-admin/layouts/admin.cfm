@@ -62,7 +62,7 @@
 					<a href="#event.buildLink(rc.xehDoLogout)#" class="confirmIt" title="Get outta here!"
 						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall">Log Out</button></a>
 					<!--- View Blog --->
-					<a href="#event.buildLink(getModuleSettings("blogbox").entryPoint)#" target="_blank" title="View your awesome blog!"><button class="buttonsmall">View Blog</button></a>
+					<a href="#event.buildLink(prc.bbSiteEntryPoint)#" target="_blank" title="View your awesome blog!"><button class="buttonsmall">View Blog</button></a>
 					<!--- QUick Post --->
 					<button class="buttonsmall" id="btnQuickPost" title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 					<!--- bbadmin event --->

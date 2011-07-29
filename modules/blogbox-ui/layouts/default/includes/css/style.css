@@ -35,9 +35,9 @@ a:hover { text-decoration:underline;}
 .header_text_bg { margin:0; padding:0;}
 /********** body **********/
 .body_resize { margin:0; padding:0;}
-.body { width: 98%;  margin:0 auto; padding: 2px 0 0 0 ;font-family: Arial, Helvetica, sans-serif; -moz-border-radius:15px; -webkit-border-radius:15px; border-radius:15px;}
+.body { width: 98%;  margin:0 auto; padding: 2px 0 0 0 ;font-family: Arial, Helvetica, sans-serif;}
 /* body_bg */
-.body_bg { background:#fff; padding:0 20px; margin:0;}
+.body_bg { background:#fff; padding:0 15px; margin:0;border-radius: .7em;-webkit-border-radius: .7em;-moz-border-radius: .7em;-webkit-box-shadow: 0.25em 0.25em 1em rgba(0,0,0,0.25);-moz-box-shadow: rgba(0,0,0,0.25) 0.25em 0.25em 1em;}
 .body_bg h3 { color:#85c1dd; font: bold 25px Arial, Helvetica, sans-serif; padding:20px 0; margin:0;}
 .body_bg h4 { font: normal 18px Arial, Helvetica, sans-serif; color:#444; padding:10px 0; margin:0;}
 .body_bg p { font: normal 12px Arial, Helvetica, sans-serif; color:#444; padding:5px 0; margin:0; line-height:1.8em;}
@@ -52,21 +52,22 @@ a:hover { text-decoration:underline;}
 .body li a:hover { color:#c52100;}
 .body p.main_body { font:normal 12px Arial, Helvetica, sans-serif; color:#fff; line-height:1.8em; padding:5px 5px; margin:0;}
 .body a { text-decoration:none; color:#0058AF;}
-.right { width:300px; float:right; padding:5px 10px; margin:0;}
-.left { width: 775px; float:left; padding: 10px 0; margin:0;}
+.fullWidth { width: 99%; float:left; padding: 20px 0; margin:0;}
+.right { width:25%; float:right; padding:5px 10px; margin:0;}
+.left { width: 71%; float:left; padding: 10px 0; margin:0;}
 .block { width:255px; float:left; margin:10px; padding:0;}
 .ind_resize { width:300px; float:left; border:1px solid #efefef; margin:10px 4px !important; margin:10px 3px; padding:15px 5px;}
 .port_resize { width:265px; float:left; border:1px solid #efefef; margin:10px 5px 10px 0; padding:15px;}
 .serv_resize { border:1px solid #efefef; width:405px; float:left; margin:10px 10px 10px 0; padding:15px;}
 /*FBG*/
 .FBG { background: url(../images/fbg_bg.gif) top center no-repeat; margin:0; padding:0;}
-.FBG_resize { width:960px; margin:0 auto;}
+.FBG_resize { width:960px; margin:auto; text-align:center}
 .FBG_resize ul { list-style:none; margin:10px auto; padding:0;}
 .FBG_resize li { padding:0; margin:0;}
-.FBG_resize li a { font: normal 11px Arial, Helvetica, sans-serif; color:#3b6b82; text-decoration:none;}
+.FBG_resize li a { font: normal 14px Arial, Helvetica, sans-serif; color:#3b6b82; text-decoration:none;}
 .FBG_resize li a:hover { color:#fff;}
-.FBG_resize h2 { font: bold 14px Arial, Helvetica, sans-serif; color:#fff; padding:5px; margin:0;}
-.FBG_resize .left { width:120px; float:left; margin:10px !important; margin:10px 10px 10px 5px; padding:10px;}
+.FBG_resize h2 { font: bold 18px Arial, Helvetica, sans-serif; color:#fff; padding:5px; margin:0;}
+.FBG_resize .left { width:250px; float:left; margin:10px !important; margin:10px 10px 10px 5px; padding:10px;}
 /* END_bloga*/
 /*************footer**********/
 .footer {padding:0px 0px 20px 0px;  margin:0;}
@@ -91,10 +92,10 @@ p.clr, .clr { clear:both; padding:0; margin:0;}
 li.bg, .bg { clear:both; border-bottom:1px solid #dedede; padding:0px 0 0 0; margin:0 0 10px 0; background:none; list-style:none;}
 /** ============================== Tooltip ============================== **/
 fieldset, .button, .button2, .buttonred, .buttonsmall, .small_box, .box, .body_vertical_nav,.tooltip, .tooltip.bottom,div.info, div.warning, div.error  { -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
-.tooltip,.tooltip.bottom { background:#000; color:#fff; z-index: 9999;display:none; font-size: 14px; font-weight:bold; padding:5px 10px; line-height:1.3em; text-align:center;}
+.tooltip,.tooltip.bottom { background:#000; color:#fff; z-index: 9999;display:none; font-size: 14px; font-weight:bold; padding:5px 5px; line-height:1.3em; text-align:center;}
 /***** Form Toolbars ***/
 .filterBar { margin:10px 0 2px; }
-.buttonBar { float:  right; margin:7px 0px 0px 0px;}
+.buttonBar { float:  right; margin:7px 5px 0px 0px;}
 .contentBar { padding:10px;margin:10px 0px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;}
 .infoBar { padding:10px;margin:10px 0px;background-color: #fdfdbd;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;border:1px solid #ccc;font-weight: bold;}
 .actionBar { margin:10px 0 5px; }
@@ -137,20 +138,38 @@ fieldset, .button, .button2, .buttonred, .buttonsmall, .small_box, .box, .body_v
 .tablelisting #checkboxHolder { width:20px; }
 .tablelisting #status { text-align:center; width:60px; }
 /**============================== Post Specific ==============================**/
+.post-title {margin-left: 2px;margin-bottom: 30px;}
 .post {clear: both;margin: 10px 0px 0px 0px;}
-.post h2{line-height: 100%;font-size: 22px;margin: 0px 0px 0px 45px;}
+.post h2{line-height: 100%;font-size: 20px;margin: 0px 0px 0px 45px;}
 .post h2 a{ color: #525252; line-height: 100%; text-decoration: none;}
 .post h2 a:hover{ color: #ee8c42;}
 .post-date {cursor: pointer; width: 45px; height: 49px;	float:left;	background: url(../images/date-bg.gif) no-repeat; }
 .post-month {cursor:pointer;font-size: 11px;text-transform: uppercase;color: #FFFFFF;text-align: center;display:block;line-height: 11px;padding-top: 2px;margin-left: -3px;}
 .post-day {font-size: 18px;text-transform: uppercase;color: #999999;text-align: center;display:block;line-height: 18px;padding-top: 7px;margin-left: -3px;}
-.post-title {margin-left: 2px;width: 760px;}
-.post-cat {background: url(../images/tag_blue.png) no-repeat;padding-left: 20px;padding-top:0px;float:left;font-size: 14px;margin: 0px 0px 0px 5px;}
-.post-comments {padding-left: 20px;padding-top:4px;float: right;font-size: 14px; margin: 8px 0px 0px 0px;text-align: right;}
+.post-cat {background: url(../images/tag_blue.png) no-repeat;padding-left: 20px;padding-top:1px;float:left;font-size: 12px;margin: 0px 0px 0px 5px;}
+.post-comments {float: right;font-size: 12px;text-align: right;}
 .post-comments img{margin:0px}
 .post-content {clear: both;padding-top: 10px;}
-.post-content-author{margin:5px 0px 10px 0px;}
-.post .separator{border-bottom: 1px solid #c0c0c0;margin: 30px 0px 60px 0px;}
-.post-more{float: right;margin: 0px 10px 0px 0px; font-weight: bold; font-size: 14px;}
+.post-content-author{margin:0px 0px 10px 0px;float: right;font-size: 12px;
+padding:10px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;}
+.post .separator{border-bottom: 1px solid #c0c0c0;margin: 50px 0px 60px 0px;}
+.post-more{margin: 20px 10px 20px 0px; font-weight: bold; font-size: 14px;}
 .post-top-gap{margin: 20px 0px 0px 0px;}
 .categoryList{margin: 8px 0px 0px 0px; font-size: 14px;}
+/**============================== Button Specific ==============================**/
+.button,.button2,.buttonred { padding:4px 7px 7px; cursor:pointer; font-weight:bold; margin-right:3px; text-decoration:none; -webkit-border-radius:5px; -khtml-border-radius:5px; }
+.button { background:#fff url(../images/button_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#595959; }
+.button:hover { background:#fff url(../images/button_bg_hover.gif) repeat-x left bottom; border:1px solid #c6c6c6; }
+.button2 { background:#0074c6 url(../images/button2_bg.gif) repeat-x left bottom; border:1px solid #a9cbf3; color:#fff; }
+.button2:hover { background:#0063a8 url(../images/button2_bg_hover.gif) repeat-x left bottom; border:1px solid #a9c8ed; }
+.buttonred { background:#c6c6c6 url(../images/buttonred_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#fff; }
+.buttonred:hover { background:#0063a8 url(../images/buttonred_bg_hover.gif) repeat-x left bottom; border:1px solid #a9c8ed; }
+.button:active,.button2:active,.buttonred:active,.buttonsmall { color:#000; }
+.buttonsmall { background:#fff url(../images/button_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#000; cursor:pointer; -moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; }
+.buttonsmall:hover { background:#fddedc; border:1px solid white; }
+/** ============================== PAGING TABS =============================== **/
+.pagingTabs { font-size: 12px; text-align:center; margin: 0px 20px 0px 0px;}
+.pagingTabs a { color:#000; padding:2px 4px; background-color:#fff; border:1px solid #ccc; margin-left:2px; }
+.pagingTabs a:hover { color:#000; background-color:#FCF9C3; border:1px solid black; }
+.pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }
+.pagingTabsCarrousel { margin-top:5px; }

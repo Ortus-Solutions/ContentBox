@@ -77,8 +77,8 @@
 				<!--- Allow Comments --->
 				<cfif prc.bbSettings.bb_comments_enabled>
 				<img src="#prc.bbRoot#/includes/images/comments_black.png" alt="comments" />
-				#html.label(field="allowComments",content="Allow Comments",class="inline")#
-				#html.checkbox(name="allowComments",value="true",class="inline",checked=rc.entry.getAllowComments())#
+				#html.label(field="allowComments",content="Allow Comments:",class="inline")#
+				#html.select(name="allowComments",options="Yes,No",bind=rc.entry)#
 				<br/>
 				</cfif>
 				<!--- Password Protection --->

@@ -16,7 +16,10 @@ component singleton{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// set layout
-		event.setLayout("#prc.bbLayout#/layout");		
+		event.setLayout("#prc.bbLayout#/layout");	
+			
+		// Get all categories
+		prc.categories = categoryService.list(sortOrder="category desc",asQuery=false);
 	}
 
 	// Main site page
@@ -24,21 +27,29 @@ component singleton{
 		// incoming params
 		event.paramValue("page",1);
 		event.paramValue("category","");
+		event.paramValue("q","");
 		
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="blogbox");
-		prc.pagingLink 			= event.buildLink('#bbHelper.linkHome()#.page.@page@?');
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 			= bbHelper.linkHome() & "/page/@page@?";
+		
+		// Search Paging Link Override?
+		if( len(rc.q) ){
+			prc.pagingLink = bbHelper.linkHome() & "/search/#rc.q#/@page@?";
+		}
+		// Category Filter Link Override
+		if( len(rc.category) ){
+			prc.pagingLink = bbHelper.linkHome() & "/category/#rc.category#/@page@?";
+		}
 		
 		// get published entries
 		var entryResults = entryService.findPublishedEntries(offset=prc.pagingBoundaries.startRow-1,
 											   				 max=prc.bbSettings.bb_paging_maxentries,
-											   				 category=rc.category);
+											   				 category=rc.category,
+											   				 searchTerm=rc.q);
 		prc.entries 		= entryResults.entries;
 		prc.entriesCount  	= entryResults.count;
-		
-		// Get all categories
-		prc.categories = categoryService.list(sortOrder="category desc",asQuery=false);
 		
 		// set skin view
 		event.setView("#prc.bbLayout#/views/index");
@@ -56,19 +67,18 @@ component singleton{
 	
 	/*
 	* Error Pages
-	*
+	*/
 	function onError(event,faultAction,exception,eventArguments){
 		// Determine used layout
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		
 		// store exceptions
-		prc.faultAction = arguments.faulAction;
+		prc.faultAction = arguments.faultAction;
 		prc.exception   = arguments.exception;
 		
 		// Set view to render
 		event.setView("#prc.bbLayout#/views/error");
 	}
-	*/
 
 }

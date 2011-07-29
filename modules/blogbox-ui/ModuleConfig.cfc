@@ -32,9 +32,11 @@ component {
 			// home
 			{pattern="/", handler="blog", action="index" },
 			// paging
-			{pattern="/page/:page-numeric", handler="blog", action="index" },
-			// category
-			{pattern="/category/:category", handler="blog", action="index" },
+			{pattern="/p/:page-numeric", handler="blog", action="index" },
+			// category filter
+			{pattern="/category/:category/:page-numeric?", handler="blog", action="index" },
+			// search filter
+			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" },
 			// blog permalink
 			{pattern="/:slug", handler="blog", action="entry" }
 			

@@ -64,6 +64,27 @@
 		</fieldset>
 		
 		<fieldset>
+		<legend><img src="#prc.bbRoot#/includes/images/gravatar.png" alt="modifiers"/> <strong>User & Author Gravatars</strong></legend>
+			<p>An avatar is an image that follows you from site to site appearing beside your name when you comment on avatar enabled sites.(<a href="http://www.gravatar.com/" target="_blank">http://www.gravatar.com/</a>)</p>
+			
+			<!--- Gravatars  --->
+			#html.label(field="bb_gravatar_display",content="Show Avatars:")#
+			#html.radioButton(name="bb_gravatar_display",checked=prc.bbSettings.bb_comments_urltranslations,value=true)# Yes 	
+			#html.radioButton(name="bb_gravatar_display",checked=not prc.bbSettings.bb_comments_urltranslations,value=false)# No 	
+			
+			<!--- Avatar Rating --->
+			<label for="bb_gravatar_rating">Maximum Avatar Rating:</label>
+			<select name="bb_gravatar_rating" id="bb_gravatar_rating">
+				<option value="G"  <cfif prc.bbSettings.bb_gravatar_rating eq "G">selected="selected"</cfif>>G - Suitable for all audiences</option>
+				<option value="PG" <cfif prc.bbSettings.bb_gravatar_rating eq "PG">selected="selected"</cfif>>PG - Possibly offensive, usually for audiences 13 and above</option>
+				<option value="R"  <cfif prc.bbSettings.bb_gravatar_rating eq "R">selected="selected"</cfif>>R - Intended for adult audiences above 17</option>
+				<option value="X"  <cfif prc.bbSettings.bb_gravatar_rating eq "X">selected="selected"</cfif>>X - Even more mature than above</option>
+			</select>
+		</fieldset>
+		
+		
+		
+		<fieldset>
 		<legend><img src="#prc.bbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Notifications</strong></legend>
 			<!--- Site Email --->
 			#html.textField(name="bb_site_email",label="Administrator Email:",value=prc.bbSettings.bb_site_email,class="textfield width98",title="The email that receives all notifications")#

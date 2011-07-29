@@ -64,14 +64,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}	
 		
 		// run criteria query and projections count
-		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="createdDate DESC",asQuery=false);
+		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
 		results.count 	= criteriaCount(criteria=criteria);
 		
 		return results;
 	}
 	
 	// Entry listing for UI
-	function findPublishedEntries(max=0,offset=0,categoryID=0){
+	function findPublishedEntries(max=0,offset=0,category="",searchTerm=""){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
@@ -82,12 +82,22 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",1)) );
 		
 		// Category Filter
-		if( len(arguments.categoryID) AND arguments.categoryID neq 0){
+		if( len(arguments.category) ){
 			// create association criteria, by passing a simple value the method will inflate.
 			arrayAppend(criteria, "categories");
 			// add the association criteria to the main search
-			arrayAppend(criteria, restrictions.in("categories.categoryID",JavaCast("java.lang.Integer[]",[arguments.categoryID])));			
+			arrayAppend(criteria, restrictions.eq("categories.slug",arguments.category));			
 		}	
+		
+		// Search Criteria
+		if( len(arguments.searchTerm) ){
+			// like disjunctions
+			var orCriteria = [];
+ 			arrayAppend(orCriteria, restrictions.like("title","%#arguments.searchTerm#%"));
+ 			arrayAppend(orCriteria, restrictions.like("content","%#arguments.searchTerm#%"));
+			// append disjunction to main criteria
+			arrayAppend( criteria, restrictions.disjunction( orCriteria ) );
+		}
 		
 		// run criteria query and projections count
 		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);

@@ -144,16 +144,14 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
-		var oCategory	= categoryService.get( rc.categoryID );
-    	
-		if( isNull(oCategory) ){
-			getPlugin("MessageBox").warn("Invalid Category detected!");
-			setNextEvent( rc.xehCategories );
+		// delete by id
+		if( !entryService.delete( entryService.get(rc.entryID) ) ){
+			getPlugin("MessageBox").setMessage("warning","Invalid Entry detected!");
 		}
-		
-		categoryService.delete( oCategory );
-		getPlugin("MessageBox").setMessage("info","Category Removed!");
-		setNextEvent(rc.xehCategories);
+		else{
+			getPlugin("MessageBox").setMessage("info","Entry Removed!");
+		}
+		setNextEvent( rc.xehEntries );
 	}
 	
 	// pager viewlet
