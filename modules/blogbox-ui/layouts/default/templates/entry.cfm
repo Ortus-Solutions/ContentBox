@@ -37,16 +37,17 @@
 		
 	</div>
 	
-	<!--- Comments --->
+	<!--- Comments Bar --->
 	<div class="post-comments">
-		<cfif bb.isCommentsEnabled(entry)>
-			<!--- Comment Count --->
-			<a href="#bb.linkEntry(entry)###comments" title="Check out this entry's comments">
-				<img src="#bb.layoutRoot()#/includes/images/comments.png" alt="comments"/> #entry.getNumberOfComments()# Comment(s)
-			</a>		
-		<cfelse>
-			<strong><em>Comments Closed</em></strong>
-		</cfif>									
+		<div class="infoBar">
+			<cfif NOT bb.isCommentsEnabled(entry)>
+			<img src="#bb.layoutRoot()#/includes/images/important.png" alt="warning" />
+			Comments are currently closed
+			<cfelse>
+			<a href="#bb.linkEntry(entry)###comments" title="View Comments"><img src="#bb.layoutRoot()#/includes/images/comments_32.png" alt="comments" border="0" /> #entry.getNumberOfComments()#</a>
+			</cfif>
+		</div>
+		<br/>										
 	</div>
 		
 	<div class="separator"></div>

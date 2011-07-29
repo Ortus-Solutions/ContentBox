@@ -32,18 +32,10 @@
 			
 			<!--- content --->
 			<div class="post-content">
-				<!--- excerpt or content --->
-				<cfif prc.entry.hasExcerpt()>
-					#prc.entry.getExcerpt()#
-					<div class="post-more">
-						<a href="#bb.linkprc.entry(prc.entry)#" title="Read The Full prc.entry!"><button class="button2">Read More...</button></a>
-					</div>
-				<cfelse>
-					#prc.entry.getContent()#
-				</cfif>
+				#prc.entry.getContent()#
 			</div>
 		</div>
-		
+				
 		<!--- Comments Bar --->
 		#html.anchor(name="comments")#
 		<div class="post-comments">
@@ -59,13 +51,16 @@
 			<br/>										
 		</div>
 		
+		<!--- Separator --->	
+		<div class="separator"></div>
+		
+		
+		
 		<!--- Display Comments --->
 		<div id="comments">
 			#bb.quickComments()#
 		</div>
 		
-		<!--- Separator --->	
-		<div class="separator"></div>
 	</div>
 		
 	<!--- BlogBoxEvent --->
