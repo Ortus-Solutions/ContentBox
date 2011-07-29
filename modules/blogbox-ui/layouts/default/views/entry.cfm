@@ -2,7 +2,7 @@
 <!--- Main Content Goes Here --->
 <div class="left">
 	<!--- BlogBoxEvent --->
-	#bb.event("bbui_preEntryDisplay",{renderer=this})#
+	#bb.event("bbui_preEntryDisplay")#
 	
 	<!--- top gap --->
 	<div class="post-top-gap"></div>
@@ -44,7 +44,7 @@
 				<img src="#bb.layoutRoot()#/includes/images/important.png" alt="warning" />
 				Comments are currently closed
 				<cfelse>
-				<button class="button2"> Add Comment </button>
+				<button class="button2" onclick="toggleCommentForm()"> Add Comment </button>
 				<img src="#bb.layoutRoot()#/includes/images/comments_32.png" alt="comments" /> #prc.entry.getNumberOfComments()#
 				</cfif>
 			</div>
@@ -54,7 +54,12 @@
 		<!--- Separator --->	
 		<div class="separator"></div>
 		
+		<!--- Comment Form: I can build it or I can quick it? --->
+		<div id="commentFormShell">
+		#bb.quickCommentForm(prc.entry)#
+		</div>
 		
+		<div class="clr"></div>
 		
 		<!--- Display Comments --->
 		<div id="comments">
@@ -64,7 +69,7 @@
 	</div>
 		
 	<!--- BlogBoxEvent --->
-	#bb.event("bbui_postEntryDisplay",{renderer=this})#
+	#bb.event("bbui_postEntryDisplay")#
 	
 </div> 
 
@@ -73,4 +78,18 @@
 
 <!--- Separator --->
 <div class="clr"></div>
+
+<!--- Custom JS --->
+<script type="text/javascript">
+$(document).ready(function() {
+ 	// form validator
+	$("##commentForm").validator({position:'top left'});
+	<cfif bb.isCommentFormError()>
+	toggleCommentForm();
+	</cfif>
+});
+function toggleCommentForm(){
+	$("##commentForm").slideToggle();
+}
+</script>
 </cfoutput>

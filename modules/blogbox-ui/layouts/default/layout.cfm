@@ -27,13 +27,13 @@
 	<!--- Custom HTML --->
 	#bb.customHTML('beforeHeadEnd')#
 	<!--- BlogBoxEvent --->
-	#bb.event("bbui_beforeHeadEnd",{renderer=this})#
+	#bb.event("bbui_beforeHeadEnd")#
 </head>
 <body>
 	<!--- Custom HTML --->
 	#bb.customHTML('afterBodyStart')#
 	<!--- BlogBoxEvent --->
-	#bb.event("bbui_afterBodyStart",{renderer=this})#
+	#bb.event("bbui_afterBodyStart")#
 	
 	<!--- Main Content --->
 	<div class="main">
@@ -81,11 +81,11 @@
 			<div class="body">
 				<div class="body_bg">
 					<!--- BlogBoxEvent --->
-					#bb.event("bbui_beforeContent",{renderer=this})#
+					#bb.event("bbui_beforeContent")#
 					<!--- Content --->
 					#renderView()#
 					<!--- BlogBoxEvent --->
-					#bb.event("bbui_afterContent",{renderer=this})#
+					#bb.event("bbui_afterContent")#
 				</div>
 			</div>
 			<!--- Separator --->
@@ -136,7 +136,7 @@
 			<div class="clr"></div>
 		</div>
 		<!--- BlogBoxEvent --->
-		#bb.event("bbui_footer",{renderer=this})#
+		#bb.event("bbui_footer")#
 		<div class="clr"></div>
 	</div> 
 	<!--- end footer --->
@@ -144,7 +144,7 @@
 	<!--- Custom HTML --->
 	#bb.customHTML('beforeBodyEnd')#
 	<!--- BlogBoxEvent --->
-	#bb.event("bbui_beforeBodyEnd",{renderer=this})#	
+	#bb.event("bbui_beforeBodyEnd")#	
 </body>
 </html>
 </cfoutput>

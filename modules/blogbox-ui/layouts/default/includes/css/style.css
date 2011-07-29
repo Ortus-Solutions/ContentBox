@@ -6,7 +6,7 @@ a:hover { text-decoration:underline;}
 /* main */
 .main { padding:0; margin:0 auto;}
 /********** header **********/
-.blok_header { margin:0; padding:0; background: url(../images/header_bg.gif) top repeat-x;}
+.blok_header { margin:0; padding:0; }
 .header { width: 98%; margin:0 auto; padding:0;}
 /* logo */
 .logo { padding:0; margin:0; width: 80%; float:left;}
@@ -77,16 +77,15 @@ a:hover { text-decoration:underline;}
 .footer p.right { text-align:right; width:350px; margin:0; padding:15px 0 0 0; float:right;} 
 .footer p.leftt { text-align:left; width:550px; margin:0; padding:15px 0 0 0; float:left;} 
 /********** contact form **********/
-#contactform { margin:0; padding:5px 10px;}
-#contactform * { color:#7a7a7a;}
-#contactform ol { margin:0; padding:0; list-style:none;}
-#contactform li { margin:0; padding:0; background:none; border:none; display:block;}
-#contactform li.buttons { margin:5px 0 5px 0;}
-#contactform label { float:left; margin:0; width:100px; padding:5px 0; font:normal 12px Arial, Helvetica, sans-serif; color:#222; text-transform:capitalize;}
-#contactform label span { font:normal 10px Arial, Helvetica, sans-serif;}
-#contactform input.text { width:480px; border:1px solid #e8e8e8; margin:5px 0; padding:5px 2px; height:15px; background:#f8f8f8;}
-#contactform textarea { width:480px; border:1px solid #e8e8e8; margin:10px 0; padding:2px; background:#f8f8f8; height:150px;}
-#contactform li.buttons input { padding:3px 0; margin:0 0 0 400px; border:0; color:#FFF;}
+#commentForm {width: 500px;padding:10px;margin:-50px 0px 20px 0px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; display: none;float: right;}
+#commentForm * { color:#7a7a7a;}
+#commentForm label { margin:0; padding:5px 0; font:bold 12px Arial, Helvetica, sans-serif; color:#222; text-transform:capitalize;display: block;}
+#commentForm label span { font:normal 10px Arial, Helvetica, sans-serif;}
+#commentForm input { width:480px; border:1px solid #e8e8e8; margin:5px 0; padding:5px 2px; height:15px; background:#f8f8f8;}
+#commentForm textarea { width:480px; border:1px solid #e8e8e8; margin:10px 0; padding:2px; background:#f8f8f8; height:120px;}
+#commentForm .buttons { margin:5px 0 5px 0;}
+#commentForm .buttons input { width: 80px;padding:3px 0; height:40px; cursor: pointer; color: black;}
+#commentForm .buttons input:hover{background-color: #0074c6; color: white;}
 p.response { text-align:center; color:#2c2c2c; font:bold 11px Arial, Helvetica, sans-serif; line-height:1.8em; width:auto;}
 p.clr, .clr { clear:both; padding:0; margin:0;}
 li.bg, .bg { clear:both; border-bottom:1px solid #dedede; padding:0px 0 0 0; margin:0 0 10px 0; background:none; list-style:none;}
@@ -179,3 +178,7 @@ padding:10px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-
 .comment p{color: #666666;font-size: 12px; padding: 0;}
 .commentContent{clear:both;margin: 15px 0px 15px 5px;font-size: 12px;}
 .commentPicture{float: left;padding: 5px;height: 60px;}
+/* error messages - validation */
+.invalid{border:2px solid #ff9289;-moz-box-shadow:0 0 6px #ddd;-webkit-box-shadow:0 0 6px #ddd;padding:5px;z-index: 9999;}
+.error{	height:20px;background-color:#ffcfcb;border:1px solid #ff9289;font-size:12px;font-weight: bold;color:#000;padding:3px 10px;margin-left:-2px;z-index: 9999;-moz-border-radius:4px;-webkit-border-radius:4px;-moz-border-radius-bottomleft:0;-moz-border-radius-topleft:0;-webkit-order-bottom-left-radius:0;-webkit-border-top-left-radius:0;-moz-box-shadow:0 0 6px #ddd;-webkit-box-shadow:0 0 6px #ddd;}
+.error p{margin-top: 3px;}

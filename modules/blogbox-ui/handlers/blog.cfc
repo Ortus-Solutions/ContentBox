@@ -103,4 +103,69 @@ component singleton{
 		event.setView("#prc.bbLayout#/views/error");
 	}
 
+	/**
+	* Comment Form Post
+	*/
+	function commentPost(event,rc,prc){
+		// param values
+		event.paramValue("entryID","");
+		event.paramValue("author","");
+		event.paramValue("authorURL","");
+		event.paramValue("authorEmail","");
+		event.paramValue("content","");
+		
+		// announce event
+		announceInterception("bbui_preCommentPost");
+		
+		// check if entry id is empty
+		if( !len(rc.entryID) ){
+			setNextEvent(prc.bbEntryPoint);
+		}
+		
+		// Retrieve entry
+		var thisEntry = entryService.get(rc.entryID);
+		// If null, kick them out
+		if( isNull(thisEntry) ){ setNextEvent(prc.bbEntryPoint); }
+		// Check if comments enabled? else kick them out, who knows how they got here
+		if( NOT bbHelper.isCommentsEnabled( thisEntry ) ){
+			getPlugin("MessageBox").warn("Comments are disabled!");
+			setNextEvent(bbHelper.linkEntry( thisEntry ));
+		}
+		
+		// Trim values & XSS Cleanup of fields
+		var antiSamy 	= getPlugin("AntiSamy");
+		rc.author 		= antiSamy.htmlSanitizer( trim(rc.author) );
+		rc.authorEmail 	= antiSamy.htmlSanitizer( trim(rc.authorEmail) );
+		rc.authorURL 	= antiSamy.htmlSanitizer( trim(rc.authorURL) );
+		rc.content 		= antiSamy.htmlSanitizer( trim(rc.content) );
+		
+		// Validate incoming data
+		prc.commentErrors = [];
+		if( !len(rc.author) ){ arrayAppend(prc.commentErrors,"Your name is missing!"); }
+		if( !len(rc.authorEmail) OR NOT getPlugin("Validator").checkEmail(rc.authorEmail)){ arrayAppend(prc.commentErrors,"Your email is missing or is invalid!"); }
+		if( len(rc.authorURL) AND getPlugin("Validator").checkURL(rc.authorURL) ){ arrayAppend(prc.commentErrors,"Your URL is invalid!"); }
+		if( !len(rc.content) ){ arrayAppend(prc.commentErrors,"Your URL is invalid!"); }
+		
+		if( arrayLen(prc.commentErrors) ){
+			// put slug in request
+			rc.entrySlug = thisEntry.getSlug();
+			// MessageBox
+			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
+			// Execute entry again, need to correct form
+			entry(argumentCollection=arguments);
+			return;			
+		}
+		
+		
+		// Get new comment to persist
+		var comment = populateModel( commentService.new() );
+		comment.setEntry( thisEntry );
+		
+		// Data is valid, let's send it to the comment service for persistence, translations, etc
+		var results = commentService.saveComment( comment );
+		
+		// relocate back to comments
+		setNextEvent( bbHelper.linkEntry(thisEntry) & "##comments" );		
+	}
+
 }

@@ -31,6 +31,8 @@ component {
 		routes = [
 			// home
 			{pattern="/", handler="blog", action="index" },
+			// Comment post
+			{pattern="/commentPost", handler="blog", action="commentPost" },
 			// paging
 			{pattern="/p/:page-numeric", handler="blog", action="index" },
 			// category filter
@@ -53,7 +55,7 @@ component {
 				// Fixed Handler Points
 				"bbui_onIndex","bbui_onEntry",
 				// Fixed HTML Points
-				"bbui_preEntryDisplay","bbui_postEntryDisplay","bbui_preIndexDisplay","bbui_postIndexDisplay"
+				"bbui_preEntryDisplay","bbui_postEntryDisplay","bbui_preIndexDisplay","bbui_postIndexDisplay","bbui_preCommentForm","bbui_postCommentForm"
 			])
 		};
 		

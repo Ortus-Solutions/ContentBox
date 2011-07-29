@@ -2,7 +2,7 @@
 <!--- Custom HTML --->
 #bb.customHTML('beforeSideBar')#
 <!--- BlogBoxEvent --->
-#bb.event("bbui_BeforeSideBar",{renderer=this})#
+#bb.event("bbui_BeforeSideBar")#
 
 <!--- Categories --->
 <h4>Categories</h4>
@@ -24,5 +24,5 @@
 <!--- Custom HTML --->
 #bb.customHTML('afterSideBar')#
 <!--- BlogBoxEvent --->
-#bb.event("bbui_afterSideBar",{renderer=this})#
+#bb.event("bbui_afterSideBar")#
 </cfoutput>

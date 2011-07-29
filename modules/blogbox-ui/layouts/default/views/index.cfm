@@ -5,7 +5,7 @@
 	<div class="post-top-gap"></div>
 	
 	<!--- BlogBoxEvent --->
-	#bb.event("bbui_preIndexDisplay",{renderer=this})#
+	#bb.event("bbui_preIndexDisplay")#
 	
 	<!--- Are we filtering by category? --->
 	<cfif len(rc.category)>
@@ -42,7 +42,7 @@
 	</cfif>
 	
 	<!--- BlogBoxEvent --->
-	#bb.event("bbui_postIndexDisplay",{renderer=this})#
+	#bb.event("bbui_postIndexDisplay")#
 	
 </div> 
 

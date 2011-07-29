@@ -66,6 +66,22 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function isCommentsEnabled(entry){ 
 		return ( arguments.entry.getAllowComments() AND setting("bb_comments_enabled") ); 
 	}
+	// comment form error
+	function isCommentFormError(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"commentErrors") ){
+			return true;
+		}
+		return false;
+	}
+	// get comment errors array
+	array function getCommentErrors(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"commentErrors") ){
+			return prc.commentErrors;
+		}
+		return arrayNew(1);
+	}
 	
 	/************************************** events *********************************************/
 	
@@ -125,6 +141,33 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function linkEntry(entry){
 		var xehEntry = siteRoot() & "/#arguments.entry.getSlug()#";
 		return getRequestContext().buildLink(linkTo=xehEntry);
+	}
+	
+	/**
+	* Link to the commenting post action
+	*/
+	function linkCommentPost(){
+		var xehPost = siteRoot() & "/commentPost";
+		return getRequestContext().buildLink(linkTo=xehPost);
+	}
+	
+	/************************************** widget functions *********************************************/
+	
+	/**
+	* Execute a widget's renderit method
+	* @name The name of the installed widget to execute
+	* @args The argument collection to pass to the widget's renderIt() method
+	*/
+	function widget(required name,struct args=structnew()){
+		return getWidget(arguments.name).renderit(argumentCollection=arguments.args);
+	}
+	
+	/**
+	* Return a widget object
+	* @name The name of the installed widget to return
+	*/
+	function getWidget(required name){
+		return getMyPlugin(plugin="widgets.#arguments.name#",module="blogbox-ui");
 	}
 	
 	/************************************** quick HTML *********************************************/
@@ -216,6 +259,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module,args,collection,collectionAs,prepostExempt){
 		arguments.view = "#layoutName()#/views/#arguments.view#";
 		return renderView(argumentCollection=arguments);
+	}
+	
+	/**
+	* quickCommentForm will build a standard BlogBox Comment Form according to the CommentForm widget
+	* @entry The entry this comment form will be linked to
+	*/
+	function quickCommentForm(entry){
+		return widget("CommentForm",{entry=arguments.entry});
 	}
 	
 	/************************************** PRIVATE *********************************************/
