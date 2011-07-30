@@ -45,15 +45,10 @@ Description :
 			parentInjector = "",
 			
 			// Register all event listeners here, they are created in the specified order
-			listeners = [
-				// TODO: Add to blogbox binder by checking it first
-				{ class="coldbox.system.aop.Mixer" }
-			]			
+			listeners = []			
 		};
 		
 		// Map Bindings below
-		// TODO: Add to blogbox binder by checking it first
-		mapAspect("HibernateTransaction").to("coldbox.system.aop.aspects.HibernateTransaction");
 	}	
 </cfscript>
 </cfcomponent>

@@ -34,6 +34,11 @@ component {
 		binder.map("entryService@bb").to("#moduleMapping#.model.entries.EntryService");
 		binder.map("commentService@bb").to("#moduleMapping#.model.comments.CommentService");
 		binder.map("categoryService@bb").to("#moduleMapping#.model.entries.CategoryService");
+		
+		// Load AOP listener if not loaded
+		loadAOPListener(binder);
+		// Load Hibernate Transactions if not loaded
+		loadHibernateTransactions(binder);
 	}
 	
 	/**
@@ -48,6 +53,32 @@ component {
 	*/
 	function onUnload(){
 		
+	}
+	
+	private function loadHibernateTransactions(binder){
+		var mappings = arguments.binder.getMappings();
+		
+		for(var key in mappings){
+			if( mappings[key].isAspect() AND findNoCase("coldbox.system.aop.aspects.HibernateTransaction", mappings[key].getPath()) ){
+				return;
+			}
+		}
+		
+		arguments.binder.mapAspect("HibernateTransaction").to("coldbox.system.aop.aspects.HibernateTransaction");	
+	}
+	
+	private function loadAOPListener(binder){
+		var b = arguments.binder;
+		var l = b.getListeners();
+		
+		for(var x=1; x lte arrayLen(l); x++){
+			if( findnocase("coldbox.system.aop.Mixer", l[x].class) ){
+				return;
+			}
+		}
+		
+		// load AOP listener
+		binder.listener(class="coldbox.system.aop.Mixer");
 	}
 	
 }
