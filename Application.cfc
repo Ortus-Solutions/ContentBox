@@ -42,7 +42,9 @@ component{
 		cfclocation=["model","modules"],
 		// FILL OUT: THE DIALECT OF YOUR DATABASE
 		dialect 			= "MySQLwithInnoDB",
+		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update
 		dbcreate			= "update",
+		sqlscript			= "modules/blogbox/install/sql/blogbox_data.sql",
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
