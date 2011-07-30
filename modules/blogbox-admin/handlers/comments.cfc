@@ -89,6 +89,11 @@ component extend="baseHandler"{
 	function moderate(event,rc,prc){
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue("commentID",0) );
+		if( isNull(rc.Comment) ){ 
+			getPlugin("MessageBox").error("The commentID #rc.commentID# is invalid.");
+			setNextEvent(rc.xehComments);
+			return;
+		}
 		// exit handlers
 		rc.xehCommentStatus = "#prc.bbEntryPoint#.comments.doStatusUpdate";
 		rc.xehCommentRemove = "#prc.bbEntryPoint#.comments.remove";

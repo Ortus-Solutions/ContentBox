@@ -108,11 +108,11 @@ component singleton{
 		// get mail payload
 		var bodyTokens = {genPassword=genPassword,name=arguments.author.getName()};
 		var mail = mailservice.newMail(to=arguments.author.getEmail(),
-									   from=settings.bb_site_email,
+									   from=settings.bb_site_outgoingEmail,
 									   subject="#settings.bb_site_name# Password Reset Issued",
 									   bodyTokens=bodyTokens);
 		// generate content for email from template
-		mail.setBody( renderer.renderView(view="email_templates/password_reminder",module="blogbox-admin") );
+		mail.setBody( renderer.renderView(view="email_templates/password_reminder",module="blogbox") );
 		// send it out
 		mailService.send( mail );
 	}

@@ -23,7 +23,19 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 	* @entry The entry object to build the comment form for.
 	*/
 	any function renderIt(entry){
-		var event = getRequestContext();
+		var event 		= getRequestContext();
+		var bbSettings 	= event.getValue(name="bbSettings",private=true);
+		var captcha		= "";
+		
+		// captcha?
+		if( bbSettings.bb_comments_captcha ){
+			saveContent variable="captcha"{
+				writeOutput("
+					#getMyPlugin(plugin="captcha",module="blogbox").display()#<br />  
+					#html.textField(name="captchacode",label="Enter the security code shown above:",required="required",size="50")#
+				");
+			}
+		}
 		
 		// generate comment form
 		saveContent variable="commentForm"{
@@ -41,6 +53,8 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 				#html.inputField(name="authorURL",type="url",label="Website:",size="50",value=event.getValue("authorURL",""))#
 				
 				#html.textArea(name="content",label="Comment:",required="required",value=event.getValue("content",""))#
+
+				#captcha#
 				
 				#bb.event("bbui_postCommentForm")#
 				

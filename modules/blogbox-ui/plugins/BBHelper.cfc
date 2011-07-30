@@ -34,19 +34,25 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/************************************** root methods *********************************************/
 	
-	// get layout root, where your layout is in the blogbox ui
+	// Get the location of your layout in the application, great for assets, cfincludes, etc
 	function layoutRoot(){
 		var prc = getRequestCollection(private=true);		
 		return prc.bbLayoutRoot;
 	}
 	
-	// get site root, the defined entry point for your blog via the module configuration  
+	// Get the site root location using your configured module's entry point  
 	function siteRoot(){
 		var prc = getRequestCollection(private=true);		
 		return prc.bbEntryPoint;
 	}
 	
-	// get the name of the current set and active layout
+	// Get the admin site root location using the configured module's entry point
+	function adminRoot(){
+		var prc = getRequestCollection(private=true);
+		return prc.bbAdminEntryPoint;
+	}
+	
+	// Get the name of the current set and active layout
 	function layoutName(){
 		var prc = getRequestCollection(private=true);		
 		return prc.bbLayout;		
@@ -54,19 +60,23 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/************************************** site properties *********************************************/
 
-	// site name
+	// Retrieve the site name
 	function siteName(){ return setting("bb_site_name"); }
-	// site tagline
+	// Retrieve the site tagline
 	function siteTagLine(){ return setting("bb_site_tagline"); }
-	// site description
+	// Retrieve the site description
 	function siteDescription(){ return setting("bb_site_description"); }
-	// site keywords
+	// Retrieve the site keywords
 	function siteKeywords(){ return setting("bb_site_keywords"); }
-	// site comments
+	
+	/** 
+	* Determines if site comments are enabled and if the entry accepts comments
+	* @entry The entry to validate comments also with
+	*/
 	function isCommentsEnabled(entry){ 
 		return ( arguments.entry.getAllowComments() AND setting("bb_comments_enabled") ); 
 	}
-	// comment form error
+	// determines if a comment form error has ocurred
 	function isCommentFormError(){
 		var prc = getRequestCollection(private=true);		
 		if( structKeyExists(prc,"commentErrors") ){
@@ -74,7 +84,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		}
 		return false;
 	}
-	// get comment errors array
+	
+	// get comment errors array, usually when the form elements did not validate
 	array function getCommentErrors(){
 		var prc = getRequestCollection(private=true);		
 		if( structKeyExists(prc,"commentErrors") ){
@@ -90,7 +101,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/************************************** link methods *********************************************/
 	
-	// get Home Link
+	/**
+	* Link to the admin
+	* event An optional event to link to
+	*/
+	function linkAdmin(event=""){
+		return getRequestContext().buildLink(linkto=adminRoot() & ".#arguments.event#");
+	}
+	
+	/**
+	* Create a link to your site root or home page entry point for your blog.
+	*/
 	function linkHome(){
 		return getRequestContext().buildLink(linkto=siteRoot());
 	}
@@ -123,32 +144,57 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		// build link to regular RSS feed
 		return getRequestContext().buildLink(linkto=xehRSS);
 	}
-
 	
-	// get Category Link using the category object
+	/**
+	* Link to a specific filtered category view of blog entries
+	* @category The category object to link to
+	*/
 	function linkCategory(category){
-		var xehCategory = siteRoot() & "/category/" & arguments.category.getSlug();
-		return getRequestContext().buildLink(linkto=xehCategory);
-	}
-	
-	// get Search link
-	function linkSearch(){
-		var xehSearch = siteRoot() & ".search";
-		return getRequestContext().buildLink(linkto=xehSearch);
-	}
-	
-	// get entry link
-	function linkEntry(entry){
-		var xehEntry = siteRoot() & "/#arguments.entry.getSlug()#";
-		return getRequestContext().buildLink(linkTo=xehEntry);
+		var xeh = siteRoot() & "/category/" & arguments.category.getSlug();
+		return getRequestContext().buildLink(linkto=xeh);
 	}
 	
 	/**
-	* Link to the commenting post action
+	* Link to the search page for this blog
+	*/
+	function linkSearch(){
+		var xeh = siteRoot() & ".search";
+		return getRequestContext().buildLink(linkto=xeh);
+	}
+	
+	/**
+	* Link to a specific entry's page
+	* @entry The entry to link to
+	*/
+	function linkEntry(entry){
+		var xeh = siteRoot() & "/#arguments.entry.getSlug()#";
+		return getRequestContext().buildLink(linkTo=xeh);
+	}
+	
+	/**
+	* Create a link to a specific comment
+	* @comment The comment to link to
+	*/
+	function linkComment(comment){
+		var xeh = linkEntry( arguments.comment.getEntry() ) & "##comment_#arguments.comment.getCommentID()#";
+		return xeh;
+	}
+	
+	/**
+	* Create a link to an entry's comments section
+	* @entry The entry to link to its comments
+	*/
+	function linkComments(entry){
+		var xeh = linkEntry( arguments.entry ) & "##comments";
+		return xeh;
+	}
+	
+	/**
+	* Link to the commenting post action, this is where comments are submitted to
 	*/
 	function linkCommentPost(){
-		var xehPost = siteRoot() & "/commentPost";
-		return getRequestContext().buildLink(linkTo=xehPost);
+		var xeh = siteRoot() & "/commentPost";
+		return getRequestContext().buildLink(linkTo=xeh);
 	}
 	
 	/************************************** widget functions *********************************************/
@@ -231,10 +277,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	function quickComments(template="comment"){
 		var prc = getRequestCollection(private=true);	
-		if( NOT structKeyExists(prc,"entry") ){
-			throw(message="Entry not found in collection",detail="This probably means you are trying to use the entry comments display outside of an entry page",type="BlogBox.BBHelper.InvalidEntryContext");
+		if( NOT structKeyExists(prc,"comments") ){
+			throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry comments display outside of an entry page",type="BlogBox.BBHelper.InvalidCommentContext");
 		}
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=prc.entry.getComments(),collectionAs="comment");
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=prc.comments,collectionAs="comment");
 	}
 	
 	/**

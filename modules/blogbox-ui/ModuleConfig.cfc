@@ -53,7 +53,7 @@ component {
 				// Code Interception points
 				"bbui_onPageNotFound","bbui_onError","bbui_preRequest","bbui_postRequest","bbui_onRendererDecoration",
 				// Fixed Handler Points
-				"bbui_onIndex","bbui_onEntry",
+				"bbui_onIndex","bbui_onEntry","bbui_preCommentPost","bbui_onCommentPost",
 				// Fixed HTML Points
 				"bbui_preEntryDisplay","bbui_postEntryDisplay","bbui_preIndexDisplay","bbui_postIndexDisplay","bbui_preCommentForm","bbui_postCommentForm"
 			])

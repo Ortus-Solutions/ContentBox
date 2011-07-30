@@ -10,7 +10,7 @@ component persistent="true" entityname="bbComment" table="bb_comment"{
 	property name="authorIP"		length="100" 	notnull="true";
 	property name="authorEmail"		length="255" 	notnull="true";
 	property name="authorURL"		length="255" 	notnull="false";
-	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false";
+	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="";
 	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false";
 	
 	// M20 -> Entry loaded as a proxy
@@ -43,4 +43,21 @@ component persistent="true" entityname="bbComment" table="bb_comment"{
 		return len( getCommentID() );
 	}
 	
+	/**
+	* Get memento
+	*/
+	struct function getMemento(){
+		var r = {
+			author = variables.author,
+			authorIP = variables.authorIP,
+			authorEmail = variables.authorEmail,
+			authorURL = variables.authorURL,
+			createdDate = variables.createdDate,
+			isApproved = variables.isApproved,
+			content = variables.content		
+		};
+		
+		return r;
+		
+	}
 }

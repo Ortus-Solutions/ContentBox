@@ -69,6 +69,11 @@ component singleton{
 		if( prc.entry.isLoaded() ){
 			// Record hit
 			entryService.updateHits( prc.entry );
+			// Retrieve Comments
+			// TODO: paging
+			var commentResults 	= commentService.findApprovedComments(entryID=prc.entry.getEntryID());
+			prc.comments 		= commentResults.comments;
+			prc.commentsCount 	= commentResults.count;
 			// announce event
 			announceInterception("bbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug});
 			// set skin view
@@ -113,9 +118,7 @@ component singleton{
 		event.paramValue("authorURL","");
 		event.paramValue("authorEmail","");
 		event.paramValue("content","");
-		
-		// announce event
-		announceInterception("bbui_preCommentPost");
+		event.paramValue("captchacode","");
 		
 		// check if entry id is empty
 		if( !len(rc.entryID) ){
@@ -137,7 +140,8 @@ component singleton{
 		rc.author 		= antiSamy.htmlSanitizer( trim(rc.author) );
 		rc.authorEmail 	= antiSamy.htmlSanitizer( trim(rc.authorEmail) );
 		rc.authorURL 	= antiSamy.htmlSanitizer( trim(rc.authorURL) );
-		rc.content 		= antiSamy.htmlSanitizer( trim(rc.content) );
+		rc.captchacode 	= antiSamy.htmlSanitizer( trim(rc.captchacode) );
+		rc.content 		= antiSamy.htmlSanitizer( xmlFormat(trim(rc.content)) );
 		
 		// Validate incoming data
 		prc.commentErrors = [];
@@ -146,6 +150,15 @@ component singleton{
 		if( len(rc.authorURL) AND getPlugin("Validator").checkURL(rc.authorURL) ){ arrayAppend(prc.commentErrors,"Your URL is invalid!"); }
 		if( !len(rc.content) ){ arrayAppend(prc.commentErrors,"Your URL is invalid!"); }
 		
+		// Captcha Validation
+		if( prc.bbSettings.bb_comments_captcha AND NOT getMyPlugin(plugin="Captcha",module="blogbox").validate( rc.captchacode ) ){
+			ArrayAppend(prc.commentErrors, "Invalid security code. Please try again.");
+		}
+		
+		// announce event
+		announceInterception("bbui_preCommentPost",{commentErrors=prc.commentErrors,entry=thisEntry});
+		
+		// Validate if comment errors exist
 		if( arrayLen(prc.commentErrors) ){
 			// put slug in request
 			rc.entrySlug = thisEntry.getSlug();
@@ -156,7 +169,6 @@ component singleton{
 			return;			
 		}
 		
-		
 		// Get new comment to persist
 		var comment = populateModel( commentService.new() );
 		comment.setEntry( thisEntry );
@@ -164,8 +176,21 @@ component singleton{
 		// Data is valid, let's send it to the comment service for persistence, translations, etc
 		var results = commentService.saveComment( comment );
 		
-		// relocate back to comments
-		setNextEvent( bbHelper.linkEntry(thisEntry) & "##comments" );		
+		// announce event
+		announceInterception("bbui_onCommentPost",{comment=comment,entry=thisEntry,moderationResults=results});
+		
+		// Check if all good
+		if( results.moderated ){
+			// Message
+			getPlugin("MessageBox").warn(messageArray=results.messages);
+			flash.put(name="commentErrors",value=results.messages,inflateTOPRC=true);
+			// relocate back to comment
+			setNextEvent(URL=bbHelper.linkEntry(thisEntry) & "##comments" );	
+		}
+		else{
+			// relocate back to comment
+			setNextEvent(URL=bbHelper.linkEntry(thisEntry) & "##comment_#comment.getCommentID()#");		
+		}		
 	}
 
 }

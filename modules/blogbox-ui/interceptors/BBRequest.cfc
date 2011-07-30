@@ -21,6 +21,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.bbRoot = event.getModuleRoot();
 		// store module entry point
 		prc.bbEntryPoint = getProperty("entryPoint");
+		// store site entry point
+		prc.bbAdminEntryPoint = getModuleSettings("blogbox-admin").entryPoint;
 		// Place global bb options on scope
 		prc.bbSettings = settingService.getAllSettings(asStruct=true);
 		// Place layout on scope

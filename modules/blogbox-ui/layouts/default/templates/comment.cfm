@@ -11,7 +11,7 @@
 	<!--- Comment Author --->
 	<h4>
 		<cfif len(comment.getAuthorURL())>
-			<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open #comment.getAuthorURL()#"><img src="#bb.getLayoutRoot()#/includes/images/link.png" alt="url" border="0" /></a>
+			<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open #comment.getAuthorURL()#"><img src="#bb.layoutRoot()#/includes/images/link.png" alt="url" border="0" /></a>
 		</cfif>
 		<strong>#comment.getAuthor()#</strong> said
 	</h4>

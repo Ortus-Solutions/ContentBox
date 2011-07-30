@@ -44,6 +44,11 @@
 			#html.radioButton(name="bb_comments_urltranslations",checked=prc.bbSettings.bb_comments_urltranslations,value=true)# Yes 	
 			#html.radioButton(name="bb_comments_urltranslations",checked=not prc.bbSettings.bb_comments_urltranslations,value=false)# No 	
 			
+			<!--- Captcha --->
+			#html.label(field="bb_comments_captcha",content="Use Security Captcha Image:")#
+			#html.radioButton(name="bb_comments_captcha",checked=prc.bbSettings.bb_comments_captcha,value=true)# Yes 	
+			#html.radioButton(name="bb_comments_captcha",checked=not prc.bbSettings.bb_comments_captcha,value=false)# No 	
+			
 			<!--- Whois URL --->
 			#html.textField(name="bb_comments_whoisURL",label="Whois URL",value=prc.bbSettings.bb_comments_whoisURL,class="textfield",size="60")#
 			<strong>={AuthorIP}</strong>	
@@ -53,22 +58,24 @@
 		<legend><img src="#prc.bbRoot#/includes/images/lock.png" alt="modifiers"/> <strong>Before A Comment Appears</strong></legend>
 		 	<!--- Enable Moderation --->
 			#html.label(field="bb_comments_moderation",content="An administrator must moderate the comment:")#
+			<small>All comments will be moderated according to our moderation rules</small><br/>
 			#html.radioButton(name="bb_comments_moderation",checked=prc.bbSettings.bb_comments_moderation,value=true)# Yes 	
 			#html.radioButton(name="bb_comments_moderation",checked=not prc.bbSettings.bb_comments_moderation,value=false)# No 	
 			
 			<!--- Comment Previous History --->
 			#html.label(field="bb_comments_moderation_whitelist",content="Comment author must have a previously approved comment:")#
+			<small>If an approved comment is found for the submitting email address, the comment is automatically approved and not moderated.</small><br/>
 			#html.radioButton(name="bb_comments_moderation_whitelist",checked=prc.bbSettings.bb_comments_moderation_whitelist,value=true)# Yes 	
 			#html.radioButton(name="bb_comments_moderation_whitelist",checked=not prc.bbSettings.bb_comments_moderation_whitelist,value=false)# No 	
 			
 			<!--- Moderated Keywords --->
 			#html.label(field="bb_comments_moderation_blacklist",content="Moderated keywords (Affects content, Author IP, or Author Email):")#
-			<small>If a comment's content, author ip or email address matches any of these keywords, the comment is automatically moderated.</small>
+			<small>If a comment's content, author ip or email address matches any of these keywords, the comment is automatically moderated. Regular expressions are ok.</small>
 			#html.textarea(name="bb_comments_moderation_blacklist",value=prc.bbSettings.bb_comments_moderation_blacklist,rows="8",title="One per line please")#		
 			
 			<!--- Blocked Keywords --->
 			#html.label(field="bb_comments_moderation_blockedlist",content="Blocked keywords (Affects content, Author IP, or Author Email):")#
-			<small>If a comment's content, author ip or email address matches any of these keywords, the comment is automatically rejected with no notifications.</small>
+			<small>If a comment's content, author ip or email address matches any of these keywords, the comment is automatically rejected with no notifications. Regular expressions are ok.</small>
 			#html.textarea(name="bb_comments_moderation_blockedlist",value=prc.bbSettings.bb_comments_moderation_blockedlist,rows="8",title="One per line please")#		
 			
 		</fieldset>
@@ -80,7 +87,7 @@
 			but you can add more emails, ohh goody!
 			</p>
 			<!--- Email Notifications --->
-			#html.textarea(name="bb_comments_notifyemails",label="Notification Emails",value=prc.bbSettings.bb_comments_notifyemails,rows="3",title="Comma or semi-colon delimited list")#		
+			#html.textarea(name="bb_comments_notifyemails",label="Notification Emails",value=prc.bbSettings.bb_comments_notifyemails,rows="3",title="Comma delimited list")#		
 			
 			<!--- Notification on Comment --->
 			#html.label(field="bb_comments_notify",content="Send a notification that a comment has been made:")#

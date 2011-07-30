@@ -45,7 +45,7 @@
 				Comments are currently closed
 				<cfelse>
 				<button class="button2" onclick="toggleCommentForm()"> Add Comment </button>
-				<img src="#bb.layoutRoot()#/includes/images/comments_32.png" alt="comments" /> #prc.entry.getNumberOfComments()#
+				<img src="#bb.layoutRoot()#/includes/images/comments_32.png" alt="comments" /> #prc.entry.getNumberOfApprovedComments()#
 				</cfif>
 			</div>
 			<br/>										
@@ -72,6 +72,8 @@
 	#bb.event("bbui_postEntryDisplay")#
 	
 </div> 
+
+
 
 <!--- SideBar: That's right, I can render any layout views by using quickView() or coldbo'x render methods --->
 <div class="right">#bb.quickView(view='sidebar')#</div> 	

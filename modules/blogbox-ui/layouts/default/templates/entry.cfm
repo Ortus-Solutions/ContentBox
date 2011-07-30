@@ -44,7 +44,7 @@
 			<img src="#bb.layoutRoot()#/includes/images/important.png" alt="warning" />
 			Comments are currently closed
 			<cfelse>
-			<a href="#bb.linkEntry(entry)###comments" title="View Comments"><img src="#bb.layoutRoot()#/includes/images/comments_32.png" alt="comments" border="0" /> #entry.getNumberOfComments()#</a>
+			<a href="#bb.linkEntry(entry)###comments" title="View Comments"><img src="#bb.layoutRoot()#/includes/images/comments_32.png" alt="comments" border="0" /> #entry.getNumberOfApprovedComments()#</a>
 			</cfif>
 		</div>
 		<br/>										
