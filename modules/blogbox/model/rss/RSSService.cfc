@@ -10,6 +10,7 @@ component singleton{
 	property name="feedGenerator" 		inject="coldbox:plugin:feedGenerator";
 	property name="bbHelper"			inject="coldbox:myplugin:BBHelper@blogbox-ui";
 	property name="log"					inject="logbox:logger:{this}";
+	property name="cache"				inject="cachebox:default";
 	
 
 	function init(){
@@ -17,11 +18,46 @@ component singleton{
 	}
 	
 	/**
+	* Clean RSS caches asynchronously
+	*/
+	void function clearCaches(boolean comments=false,entrySlug=""){
+		if( arguments.comments ){
+			cache.clearByKeySnippet(keySnippet="bb-feeds-comments-#arguments.entrySlug#",async=true);
+		}
+		else{
+			cache.clearByKeySnippet(keySnippet="bb-feeds-entries",async=true);
+		}
+	}
+	
+	/**
+	* Clean All RSS caches NOW BABY, NOW!
+	*/
+	void function clearAllCaches(){
+		cache.clearByKeySnippet(keySnippet="bb-feeds",async=false);
+	}
+	
+	/**
 	* Build RSS feeds for BlogBox, with added caching.
 	*/
 	function getRSS(boolean comments=false,category="",entrySlug=""){
-		var rssFeed  = "";
-		var cacheKey = "bb-feeds-";
+		var settings	= settingService.getAllSettings(asStruct=true);
+		var rssFeed  	= "";
+		var cacheKey  	= "";
+		
+		// Comments cache Key
+		if( arguments.comments ){
+			cacheKey 	= "bb-feeds-comments-#arguments.entrySlug#";
+		}
+		// Entries cache Key
+		else{
+			cacheKey 	= "bb-feeds-entries-#hash(arguments.category)#";
+		}
+		
+		// Retrieve via caching? and caching active
+		if( settings.bb_rss_caching ){
+			var rssFeed = cache.get( cacheKey );
+			if( !isNull(rssFeed) ){ return rssFeed; }
+		}
 		
 		// Building comment feed or entry feed
 		switch(arguments.comments){
@@ -29,6 +65,11 @@ component singleton{
 			default   : { rssfeed = buildEntryFeed(argumentCollection=arguments); break; }
 		}
 		
+		// Cache it with settings
+		if( settings.bb_rss_caching ){
+			cache.set(cacheKey, rssFeed, settings.bb_rss_cachingTimeout, settings.bb_rss_cachingTimeoutIdle);
+		}
+
 		return rssFeed;		
 	}
 	
@@ -38,7 +79,7 @@ component singleton{
 	*/	
 	function buildEntryFeed(category=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
-		var entryResults 	= entryService.findPublishedEntries(category=arguments.category,max=settings.bb_paging_maxRSSEntries);
+		var entryResults 	= entryService.findPublishedEntries(category=arguments.category,max=settings.bb_rss_maxEntries);
 		var myArray 		= [];
 		var feedStruct 		= {};
 		var columnMap 		= {};
@@ -87,7 +128,7 @@ component singleton{
 	*/	
 	function buildCommentFeed(entrySlug=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
-		var commentResults 	= commentService.findApprovedComments(entryID=entryService.getIDBySlug(arguments.entrySlug),max=settings.bb_paging_maxRSSEntries);
+		var commentResults 	= commentService.findApprovedComments(entryID=entryService.getIDBySlug(arguments.entrySlug),max=settings.bb_rss_maxComments);
 		var myArray 		= [];
 		var feedStruct 		= {};
 		var columnMap 		= {};

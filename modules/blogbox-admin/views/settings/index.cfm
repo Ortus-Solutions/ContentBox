@@ -103,23 +103,60 @@
 		</fieldset>
 		
 		<fieldset>
+			<legend><img src="#prc.bbRoot#/includes/images/feed.png" alt="modifiers"/>  RSS Options</legend>
+					
+			<!--- Max RSS Entries --->
+			<label for="bb_rss_maxEntries">Max RSS Blog Entries:</label>
+			<small>The number of recent entries to show on the syndication feeds.</small><br/>
+			<select name="bb_rss_maxEntries" id="bb_rss_maxEntries">
+				<cfloop from="5" to="50" step="5" index="i">
+					<option value="#i#" <cfif i eq prc.bbSettings.bb_rss_maxEntries>selected="selected"</cfif>>#i#</option>
+				</cfloop>
+			</select>
+			
+			<!--- Max RSS Comments --->
+			<label for="bb_rss_maxComments">Max RSS Blog Comments:</label>
+			<small>The number of recent comments to show on the syndication feeds.</small><br/>
+			<select name="bb_rss_maxComments" id="bb_rss_maxComments">
+				<cfloop from="5" to="50" step="5" index="i">
+					<option value="#i#" <cfif i eq prc.bbSettings.bb_rss_maxComments>selected="selected"</cfif>>#i#</option>
+				</cfloop>
+			</select>	
+			
+			<!--- RSS Caching --->
+			#html.label(field="bb_rss_caching",content="Activate RSS feed caching:")#
+			#html.radioButton(name="bb_rss_caching",checked=prc.bbSettings.bb_rss_caching,value=true)# Yes 	
+			#html.radioButton(name="bb_rss_caching",checked=not prc.bbSettings.bb_rss_caching,value=false)# No 	
+			
+			<!--- Rss Cache Timeouts --->
+			<label for="bb_rss_cachingTimeout">Feed Cache Timeouts:</label>
+			<small>The number of minutes a feed XML is cached per permutation of feed type.</small><br/>
+			<select name="bb_rss_cachingTimeout" id="bb_rss_cachingTimeout">
+				<cfloop from="5" to="100" step="5" index="i">
+					<option value="#i#" <cfif i eq prc.bbSettings.bb_rss_cachingTimeout>selected="selected"</cfif>>#i#</option>
+				</cfloop>
+			</select>	
+			
+			<!--- Rss Cache Last Access Timeouts --->
+			<label for="bb_rss_cachingTimeoutIdle">Feed Cache Idle Timeouts:</label>
+			<small>The number of idle minutes allowed for cached RSS feeds to live. Usually this is less than the timeout you selected above</small><br/>
+			<select name="bb_rss_cachingTimeoutIdle" id="bb_rss_cachingTimeoutIdle">
+				<cfloop from="5" to="100" step="5" index="i">
+					<option value="#i#" <cfif i eq prc.bbSettings.bb_rss_cachingTimeoutIdle>selected="selected"</cfif>>#i#</option>
+				</cfloop>
+			</select>		
+			
+		</fieldset>
+		
+		<fieldset>
 			<legend><img src="#prc.bbRoot#/includes/images/library.png" alt="modifiers"/>  Paging Options</legend>
 			
 			<!--- Max Blog Post --->
-			<label for="bb_paging_maxentries">Max Blog Entries:</label>
+			<label for="bb_paging_maxentries">Max Home Page Blog Entries:</label>
 			<small>The number of entries to show on the blog before paging is done.</small><br/>
 			<select name="bb_paging_maxentries" id="bb_paging_maxentries">
 				<cfloop from="5" to="50" step="5" index="i">
 					<option value="#i#" <cfif i eq prc.bbSettings.bb_paging_maxentries>selected="selected"</cfif>>#i#</option>
-				</cfloop>
-			</select>
-			
-			<!--- Max Blog Post --->
-			<label for="bb_paging_maxRSSEntries">Max RSS Blog Entries:</label>
-			<small>The number of recent entries to show on the syndication feeds.</small><br/>
-			<select name="bb_paging_maxRSSEntries" id="bb_paging_maxRSSEntries">
-				<cfloop from="5" to="50" step="5" index="i">
-					<option value="#i#" <cfif i eq prc.bbSettings.bb_paging_maxRSSEntries>selected="selected"</cfif>>#i#</option>
 				</cfloop>
 			</select>
 			

@@ -25,6 +25,8 @@ component {
 		
 		// Custom Declared Interceptors
 		interceptors = [
+			// BB RSS Cache Cleanup Ghost
+			{class="#moduleMapping#.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@bb" }
 		];
 		
 		// WireBox bindings

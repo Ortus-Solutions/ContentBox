@@ -122,6 +122,9 @@ component extends="baseHandler"{
 			return;
 		}
 		
+		// announce event
+		announceInterception("bbadmin_preEntrySave",{entry=entry});
+		
 		// Create new categories?
 		var categories = [];
 		if( len(trim(rc.newCategories)) ){
@@ -137,6 +140,9 @@ component extends="baseHandler"{
 		// save entry
 		entryService.saveEntry( entry );
 		
+		// announce event
+		announceInterception("bbadmin_onEntrySave",{entry=entry});
+		
 		// relocate
 		getPlugin("MessageBox").info("Entry Saved!");
 		setNextEvent(rc.xehEntries);
@@ -149,7 +155,15 @@ component extends="baseHandler"{
 			getPlugin("MessageBox").setMessage("warning","Invalid Entry detected!");
 		}
 		else{
+			// GET id
+			var entryID = entry.getEntryID();
+			// announce event
+			announceInterception("bbadmin_preEntryRemove",{entry=entry});
+			// remove it
 			entryService.delete( entry );
+			// announce event
+			announceInterception("bbadmin_onEntryRemove",{entryID=entryID});
+			// messagebox
 			getPlugin("MessageBox").setMessage("info","Entry Removed!");
 		}
 		setNextEvent( rc.xehEntries );

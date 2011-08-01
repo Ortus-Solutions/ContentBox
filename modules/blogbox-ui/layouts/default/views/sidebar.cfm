@@ -21,7 +21,12 @@
 <div class="bg"></div>
 <p>#bb.siteDescription()#</p>
 
-<button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> RSS</button>	
+<!--- RSS Buttons --->
+<button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Site Updates</button>	
+<!--- RSS Entry Comments --->
+<cfif bb.isEntryView()>
+<button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Entry Comments</button>	
+</cfif>
 
 <!--- Custom HTML --->
 #bb.customHTML('afterSideBar')#

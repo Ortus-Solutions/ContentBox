@@ -113,6 +113,7 @@ fieldset, .button, .button2, .buttonred, .buttonsmall, .small_box, .box, .body_v
 .width98{ width: 98%; }
 .width95{ width: 95%; }
 .hidden { display:none!important; }
+.topAligned{vertical-align: text-top !important;}
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }

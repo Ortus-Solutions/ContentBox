@@ -3,19 +3,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<!--- Site Title --->
-	<title>#bb.siteName()# - #bb.siteTagLine()#</title>
+	<title>
+		<cfif bb.isEntryView()>#bb.getCurrentEntry().getTitle()# - </cfif>
+		#bb.siteName()# - #bb.siteTagLine()#
+	</title>
 	<!--- Met Tags --->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="generator" 	 content="BlogBox powered by ColdBox" />
 	<meta name="robots" 	 content="index,follow" />
-	<meta name="description" content="#bb.siteDescription()#" />
-	<meta name="keywords" 	 content="#bb.siteKeywords()#" />
+	
+	<!--- Meta per page or index --->
+	<cfif bb.isEntryView() AND len(bb.getCurrentEntry().getHTMLDescription())>
+		<meta name="description" content="#bb.getCurrentEntry().getHTMLDescription()#" />
+	<cfelse>
+		<meta name="description" content="#bb.siteDescription()#" />
+	</cfif>
+	<cfif bb.isEntryView() AND len(bb.getCurrentEntry().getHTMLKeywords())>
+		<meta name="keywords" 	 content="#bb.getCurrentEntry().getHTMLKeywords()#" />
+	<cfelse>
+		<meta name="keywords" 	 content="#bb.siteKeywords()#" />
+	</cfif>
 	
 	<!--- Base HREF For SES URLs based on ColdBox--->
 	<base href="#getSetting('htmlBaseURL')#/" />
 	
 	<!--- RSS Stuff --->
-	<link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="#bb.linkRSS()#" />	
+	<link rel="alternate" type="application/rss+xml" title="Recent Updates" href="#bb.linkRSS()#" />	
+	<cfif bb.isEntryView()>
+		<link rel="alternate" type="application/rss+xml" title="Entry's Recent Comments" href="#bb.linkRSS(comments=true,entry=bb.getCurrentEntry())#" />
+	</cfif>
 	
 	<!--- styles --->
 	<link href="#bb.layoutRoot()#/includes/css/style.css" rel="stylesheet" type="text/css" />
@@ -102,7 +118,7 @@
     <div class="left">
       <h2>Categories</h2>
       <ul>
-        <cfloop array="#prc.categories#" index="category">
+        <cfloop array="#bb.getCurrentCategories()#" index="category">
 		<li><a href="#bb.linkCategory(category)#">#category.getCategory()# (#category.getNumberOfEntries()#)</a></li>
 		</cfloop>
       </ul>
@@ -119,8 +135,8 @@
     <div class="left">
       <h2>RSS Feeds</h2>
       <ul>
-        <li><a href="#bb.linkRSS()#">Recent Updates</a></li>
-        <li><a href="#bb.linkRSS(comments=true)#">Recent Comments</a></li>
+        <li><a href="#bb.linkRSS()#">Recent Site Updates</a></li>
+        <li><a href="#bb.linkRSS(comments=true)#">Recent Site Comments</a></li>
       </ul>
     </div>
     <div class="clr"></div>

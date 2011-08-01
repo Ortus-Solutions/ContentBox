@@ -94,6 +94,55 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return arrayNew(1);
 	}
 	
+	/************************************** Context Methods *********************************************/
+	
+	// Determin if you are in the index view
+	boolean function isIndexView(){
+		var event = getRequestContext();
+		return (event.getCurrentEvent() eq "blogbox-ui:blog.index");
+	}
+	// Determin if you are in the entry view
+	boolean function isEntryView(){
+		var event = getRequestContext();
+		return (event.getCurrentEvent() eq "blogbox-ui:blog.entry");
+	}
+	// Get the index page entries, else throws exception
+	any function getCurrentEntries(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"entries") ){ return prc.entries; }
+		throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries in an non-index page",type="BlogBox.BBHelper.InvalidEntriesContext"); 
+	}
+	// Get the index page entries count, else throws exception
+	any function getCurrentEntriesCount(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"entriesCount") ){ return prc.entriesCount; }
+		throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries in an non-index page",type="BlogBox.BBHelper.InvalidEntriesContext"); 
+	}
+	// Get the the blog categories, else throws exception
+	any function getCurrentCategories(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"categories") ){ return prc.categories; }
+		throw(message="Categories not found in collection",detail="Hmm, weird as categories should be available to all blog events",type="BlogBox.BBHelper.InvalidBlogContext"); 
+	}
+	// Get the viewed entry if in entry view, else throws exception
+	any function getCurrentEntry(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"entry") ){ return prc.entry; }
+		throw(message="Entry not found in collection",detail="This probably means you are trying to use the entry in an non-entry page",type="BlogBox.BBHelper.InvalidEntryContext"); 
+	}
+	// Get the viewed entry's comments, else throw exception
+	any function getCurrentComments(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"comments") ){ return prc.comments; }
+		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry comments in an non-entry page",type="BlogBox.BBHelper.InvalidEntryContext"); 
+	}
+	// Get the viewed entry's comments count, else throw exception
+	any function getCurrentCommentsCount(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"commentsCount") ){ return prc.commentsCount; }
+		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry comments in an non-entry page",type="BlogBox.BBHelper.InvalidEntryContext"); 
+	}	
+	
 	/************************************** events *********************************************/
 	
 	// event announcements, funky for whitespace reasons
@@ -264,11 +313,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @template The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
 	*/
 	function quickEntries(template="entry"){
-		var prc = getRequestCollection(private=true);	
-		if( NOT structKeyExists(prc,"entries") ){
-			throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries display outside of the main entries index page and that is a No No",type="BlogBox.BBHelper.InvalidEntriesContext");
-		}	
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=prc.entries,collectionAs="entry");
+		var entries = getCurrentEntries();
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=entries,collectionAs="entry");
 	}
 	
 	/* 
@@ -276,8 +322,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @template The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
 	*/
 	function quickCategories(template="category"){
-		var prc = getRequestCollection(private=true);	
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=prc.categories,collectionAs="category");
+		var categories = getCurrentCategories();
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=categories,collectionAs="category");
 	}
 	
 	/* 
@@ -285,11 +331,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @template The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
 	*/
 	function quickComments(template="comment"){
-		var prc = getRequestCollection(private=true);	
-		if( NOT structKeyExists(prc,"comments") ){
-			throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry comments display outside of an entry page",type="BlogBox.BBHelper.InvalidCommentContext");
-		}
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=prc.comments,collectionAs="comment");
+		var comments = getCurrentComments();
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=comments,collectionAs="comment");
 	}
 	
 	/**
