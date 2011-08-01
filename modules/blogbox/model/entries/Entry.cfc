@@ -5,13 +5,13 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 	
 	// Properties
 	property name="entryID" fieldtype="id" generator="native" setter="false";
-	property name="title"				notnull="true"  length="200" default="";
-	property name="slug"				notnull="true"  length="200" default="" unique="true";
+	property name="title"				notnull="true"  length="200" default="" index="idx_search";
+	property name="slug"				notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="content"    			notnull="true"  ormtype="text" length="8000";
 	property name="excerpt" 			notnull="false" ormtype="text" default="" length="8000";
-	property name="createdDate" 		notnull="true"  ormtype="timestamp" update="false";
-	property name="publishedDate"		notnull="false" ormtype="timestamp";
-	property name="isPublished" 		notnull="true"  ormtype="boolean" default="true" dbdefault="true";
+	property name="createdDate" 		notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
+	property name="publishedDate"		notnull="false" ormtype="timestamp" idx="idx_publishedDate";
+	property name="isPublished" 		notnull="true"  ormtype="boolean" default="true" dbdefault="true" index="idx_published,idx_search,idx_publishedSlug";
 	property name="allowComments" 		notnull="true"  ormtype="boolean" default="true" dbdefault="true";
 	property name="passwordProtection" 	notnull="false" length="100" default="";
 	property name="HTMLKeywords"		notnull="false" length="160" default="";
