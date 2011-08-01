@@ -6,9 +6,9 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 	// Properties
 	property name="entryID" fieldtype="id" generator="native" setter="false";
 	property name="title"				notnull="true"  length="200" default="";
-	property name="slug"				notnull="true"  length="200" default="";
-	property name="content"    			notnull="true"  ormtype="text" sqltype="longtext";
-	property name="excerpt" 			notnull="false" ormtype="text" default="";
+	property name="slug"				notnull="true"  length="200" default="" unique="true";
+	property name="content"    			notnull="true"  ormtype="text" length="8000";
+	property name="excerpt" 			notnull="false" ormtype="text" default="" length="8000";
 	property name="createdDate" 		notnull="true"  ormtype="timestamp" update="false";
 	property name="publishedDate"		notnull="false" ormtype="timestamp";
 	property name="isPublished" 		notnull="true"  ormtype="boolean" default="true" dbdefault="true";

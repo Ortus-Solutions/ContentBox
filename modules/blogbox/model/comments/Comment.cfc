@@ -11,7 +11,7 @@ component persistent="true" entityname="bbComment" table="bb_comment"{
 	property name="authorEmail"		length="255" 	notnull="true";
 	property name="authorURL"		length="255" 	notnull="false";
 	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="";
-	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false";
+	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" dbdefault="false";
 	
 	// M20 -> Entry loaded as a proxy
 	property name="entry" cfc="blogbox.model.entries.Entry" fieldtype="many-to-one" fkcolumn="FK_entryID" lazy="true";

@@ -10,7 +10,7 @@ component persistent="true" entityname="bbAuthor" table="bb_author" batchsize="1
 	property name="email"		length="255" notnull="true";
 	property name="userName"	length="100" notnull="true";
 	property name="password"	length="100" notnull="true";
-	property name="isActive" 	ormtype="boolean"   notnull="true" default="false";
+	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" dbdefault="false";
 	property name="lastLogin" 	ormtype="timestamp" notnull="false";
 	property name="createdDate" ormtype="timestamp" notnull="true" update="false";
 	

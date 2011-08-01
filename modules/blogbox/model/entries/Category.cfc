@@ -6,7 +6,7 @@ component persistent="true" entityname="bbCategory" table="bb_category"{
 	// Properties
 	property name="categoryID" fieldtype="id" generator="native" setter="false";
 	property name="category"		notnull="true"  length="200";
-	property name="slug"			notnull="true"  length="200";
+	property name="slug"			notnull="true"  length="200" unique="true";
 	
 	// M2M -> Entry
 	property name="entries" cfc="blogbox.model.entries.Entry" fieldtype="many-to-many" type="array" lazy="true"
