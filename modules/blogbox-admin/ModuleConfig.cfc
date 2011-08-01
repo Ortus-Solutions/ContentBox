@@ -39,10 +39,16 @@ component {
 		interceptorSettings = {
 			// BB Admin Custom Events
 			customInterceptionPoints = arrayToList([
-				"bbadmin_beforeHeadEnd","bbadmin_afterBodyStart","bbadmin_beforeBodyEnd","bbadmin_footer","bbadmin_beforeContent","bbadmin_afterContent","bbadmin_onTagLine", "bbadmin_onTopBar", // Admin Layout HTML points
-				"bbadmin_beforeLoginHeadEnd","bbadmin_afterLoginBodyStart","bbadmin_beforeLoginBodyEnd","bbadmin_loginFooter","bbadmin_beforeLoginContent","bbadmin_afterLoginContent", // Login Layout HTML points
-				"bbadmin_beforeMainNav","bbadmin_afterMainNav", // Main Navigation
-				"bbadmin_dashboardTab","bbadmin_entriesTab","bbadmin_commentsTab","bbadmin_authorsTab","bbadmin_systemTab" // Main Tabs
+				// Admin Layout HTML points
+				"bbadmin_beforeHeadEnd","bbadmin_afterBodyStart","bbadmin_beforeBodyEnd","bbadmin_footer","bbadmin_beforeContent","bbadmin_afterContent","bbadmin_onTagLine", "bbadmin_onTopBar",
+				// Login Layout HTML points
+				"bbadmin_beforeLoginHeadEnd","bbadmin_afterLoginBodyStart","bbadmin_beforeLoginBodyEnd","bbadmin_loginFooter","bbadmin_beforeLoginContent","bbadmin_afterLoginContent", 
+				// Main Navigation
+				"bbadmin_beforeMainNav","bbadmin_afterMainNav",
+				// Main Tabs
+				"bbadmin_dashboardTab","bbadmin_entriesTab","bbadmin_commentsTab","bbadmin_authorsTab","bbadmin_systemTab", 
+				// events
+				"bbadmin_onEntrySave","bbadmin_onEntryRemove","bbui_onCommentPost"
 			])
 		};
 		
