@@ -20,7 +20,7 @@ component extends="baseHandler"{
 		rc.xehCategoryRemove 	= "#prc.bbEntryPoint#.categories.remove";
 		rc.xehCategoriesSave 	= "#prc.bbEntryPoint#.Categories.save";
 		// Get all categories
-		rc.categories = categoryService.list(sortOrder="category desc",asQuery=false);
+		rc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// Tab
 		prc.tabEntries			  = true;
 		prc.tabEntries_categories = true;

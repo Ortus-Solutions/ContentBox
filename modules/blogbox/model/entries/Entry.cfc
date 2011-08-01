@@ -16,7 +16,7 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 	property name="passwordProtection" 	notnull="false" length="100" default="";
 	property name="HTMLKeywords"		notnull="false" length="160" default="";
 	property name="HTMLDescription"		notnull="false" length="160" default="";
-	property name="hits"				notnull="false" default="0" dbdefault="0" ormtype="long";
+	property name="hits"				notnull="false" ormtype="long" default="0" dbdefault="0";
 	
 	// M20 -> Author loaded as a proxy
 	property name="author" cfc="blogbox.model.entries.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true";

@@ -63,7 +63,7 @@ component extends="baseHandler"{
 		rc.pagingLink 	= event.buildLink('#rc.xehRawSettings#.page.@page@?');
 		
 		// Get all settings
-		rc.settings = settingsService.list(sortOrder="name desc",asQuery=false,offset=rc.paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
+		rc.settings = settingsService.list(sortOrder="name",asQuery=false,offset=rc.paging.startRow-1,max=prc.bbSettings.bb_paging_maxrows);
 		rc.settingsCount = settingsService.count();
 		// Raw tab
 		prc.tabSystem_rawSettings = true;

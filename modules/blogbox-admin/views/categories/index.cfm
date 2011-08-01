@@ -55,13 +55,19 @@
 				</div>
 			</div>
 			
+			<div class="infoBar">
+				<img src="#prc.bbRoot#/includes/images/info.png" alt="info"/>
+				You cannot delete categories that have posts attached to them.  You will need to un-attach those categories first.
+			</div>
+			
 			<!--- categories --->
 			<table name="categories" id="categories" class="tablesorter" width="98%">
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Slug</th>			
-						<th width="125" class="center {sorter:false}">Actions</th>
+						<th>Slug</th>		
+						<th width="75" class="center">Entries</th>	
+						<th width="75" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
 				<tbody>
@@ -69,11 +75,14 @@
 					<tr>
 						<td><a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
 						<td>#category.getSlug()#</td>
+						<td class="center">#category.getnumberOfEntries()#</td>
 						<td class="center">
 							<!--- Edit Command --->
 							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
 							<!--- Delete Command --->
+							<cfif category.getNumberOfEntries() EQ 0>
 							<a title="Delete Author" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><img id="delete_#category.getCategoryID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							</cfif>
 						</td>
 					</tr>
 					</cfloop>

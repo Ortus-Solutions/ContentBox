@@ -1,5 +1,6 @@
 <cfoutput>
 #html.startForm(name="commentSettingsForm",action=rc.xehSaveSettings)#		
+#html.anchor(name="top")#
 <!--============================Sidebar============================-->
 <div class="sidebar">
 	<!--- Saerch Box --->
@@ -100,6 +101,12 @@
 			#html.radioButton(name="bb_comments_moderation_notify",checked=not prc.bbSettings.bb_comments_moderation_notify,value=false)# No 	
 		
 		</fieldset>
+		
+		<br/>
+		
+		<div class="textCenter">
+		<button class="button2" onclick="return to('#event.buildLink(rc.xehCommentSettings)###top')"> ^ TOP ^ </button>
+		</div>
 
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 <cfoutput>
 #html.startForm(name="settingsForm",action=rc.xehSaveSettings)#		
+#html.anchor(name="top")#
 <!--============================Sidebar============================-->
 <div class="sidebar">
 	<!--- Saerch Box --->
@@ -81,8 +82,6 @@
 				<option value="X"  <cfif prc.bbSettings.bb_gravatar_rating eq "X">selected="selected"</cfif>>X - Even more mature than above</option>
 			</select>
 		</fieldset>
-		
-		
 		
 		<fieldset>
 		<legend><img src="#prc.bbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Notifications</strong></legend>
@@ -178,7 +177,13 @@
 				</cfloop>
 			</select>
 		</fieldset>
-
+		
+		<br/>
+		
+		<div class="textCenter">
+		<button class="button2" onclick="return to('#event.buildLink(rc.xehSettings)###top')"> ^ TOP ^ </button>
+		</div>
+			
 		</div>
 	</div>
 </div>		
