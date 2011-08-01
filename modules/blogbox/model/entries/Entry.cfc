@@ -30,7 +30,7 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 	// Calculated Fields
 	property name="numberOfComments" 			formula="select count(*) from bb_comment comment where comment.FK_entryID=entryID";
 	property name="numberOfApprovedComments" 	formula="select count(*) from bb_comment comment where comment.FK_entryID=entryID and comment.isApproved = 1";
-	
+
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	
 	/*

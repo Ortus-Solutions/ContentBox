@@ -23,7 +23,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* Comment listing for UI of approved comments, returns struct of results=[comments,count]
 	*/
-	function findApprovedComments(required entryID,max=0,offset=0){
+	function findApprovedComments(entryID,max=0,offset=0){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
@@ -33,8 +33,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// only approved comments
 		arrayAppend(criteria, restrictions.eq("isApproved", javaCast("boolean",1)) );
 		
-		// By Entry
-		arrayAppend(criteria, restrictions.eq("entry.entryID",javaCast("int", arguments.entryID)));			
+		// By Entry?
+		if( structKeyExists(arguments,"entryID") AND len(arguments.entryID) ){
+			arrayAppend(criteria, restrictions.eq("entry.entryID",javaCast("int", arguments.entryID)));			
+		}
 		
 		// run criteria query and projections count
 		results.comments = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="createdDate",asQuery=false);

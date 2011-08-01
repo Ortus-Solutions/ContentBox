@@ -172,6 +172,15 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 	
 	/**
+	* Link to a specific entry's page using a slug only
+	* @slug The entry slug to link to
+	*/
+	function linkEntryWithSlug(slug){
+		var xeh = siteRoot() & "/#arguments.slug#";
+		return getRequestContext().buildLink(linkTo=xeh);
+	}
+	
+	/**
 	* Create a link to a specific comment
 	* @comment The comment to link to
 	*/

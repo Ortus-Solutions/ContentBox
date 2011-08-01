@@ -207,10 +207,10 @@ component singleton{
 		event.paramValue("entrySlug","");
 		event.paramValue("commentRSS",false);
 		
+		// Build out the RSS feeds
 		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,entrySlug=rc.entrySlug);
 		
-		writeDump(feed);abort;
-		
+		// Render out the feed xml
 		event.renderData(type="plain",data=feed,contentType="text/xml");
 	}
 

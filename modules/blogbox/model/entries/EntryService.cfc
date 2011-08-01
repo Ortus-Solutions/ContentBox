@@ -31,8 +31,18 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* Update an entry's hits
 	*/
-	function updateHits(entry){
+	function updateHits(required entry){
 		var q = new Query(sql="UPDATE bb_entry SET hits = hits + 1 WHERE entryID = #arguments.entry.getEntryID()#").execute();
+	}
+	
+	/**
+	* Get an id from a slug
+	*/
+	function getIDBySlug(required entrySlug){
+		var q = new Query(sql="select entryID from bb_entry where slug = :slug");
+		q.addParam(name="slug",value=arguments.entrySlug);
+		
+		return q.execute().getResult().entryID;
 	}
 	
 	/**
