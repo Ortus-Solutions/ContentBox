@@ -4,37 +4,58 @@
 component singleton{
 
 	// Dependecnies
-	property name="entryService" 		inject="model";
+	property name="settingService"		inject="id:settingService@bb";
+	property name="entryService"		inject="id:entryService@bb";
+	property name="commentService"		inject="id:commentService@bb";
 	property name="feedGenerator" 		inject="coldbox:plugin:feedGenerator";
-	property name="baseURL"				inject="coldbox:setting:SESBaseURL";
-	property name="maxRSSBodyLength" 	inject="coldbox:setting:maxRSSBodyLength";
+	property name="bbHelper"			inject="coldbox:myplugin:BBHelper@blogbox-ui";
+	property name="log"					inject="logbox:logger:{this}";
+	
 
 	function init(){
 		return this;
 	}
 	
-	function getRSS(string feedType="full"){
+	/**
+	* Build RSS feeds for BlogBox
+	*/
+	function getRSS(boolean comments=false,category="",entrySlug=""){
+		var rssFeed = "";
 		
-		var entries 	= entryService.getLatestEntries(asQuery=true);
-		var myArray 	= [];
-		var feedStruct 	= {};
-		var columnMap 	= {};
-		
-		// Verify feedtype
-		if( NOT reFindNocase("^(full|simple)", arguments.feedType) ){
-			arguments.feedType = "full";
+		// Building comment feed or entry feed
+		switch(arguments.comments){
+			case true : { rssfeed = buildCommentFeed(argumentCollection=arguments); }
+			default   : { rssfeed = buildEntryFeed(argumentCollection=arguments); }
 		}
 		
+		return rssFeed;		
+	}
+	
+	/**
+	* Build entries feeds
+	* @category The category to filter on if needed
+	*/	
+	function buildEntryFeed(category=""){
+		var settings		= settingService.getAllSettings(asStruct=true);
+		var entryResults 	= entryService.findPublishedEntries(category=arguments.category,max=settings.bb_paging_maxRSSEntries,asQuery=true);
+		var myArray 		= [];
+		var feedStruct 		= {};
+		var columnMap 		= {};
+		
 		// Create the column maps
-		columnMap.title = "title";
-		columnMap.description = "body";
-		columnMap.pubDate = "time";
-		columnMap.link = "link";
+		columnMap.title 		= "title";
+		columnMap.description 	= "content";
+		columnMap.pubDate 		= "publishedDate";
+		columnMap.link 			= "link";
 		
-		QueryAddColumn(entries, "link", myArray);
+		// Add necessary columns to query
+		QueryAddColumn(entryResults.entries, "link", myArray);
+		writeDump(entryResults);abort;
 		
-		for(i = 1; i <= entries.recordCount; i = i + 1){
-			entries.link[i] = baseUrl & "entry/" & entries.entryID[i];
+		// Build it
+		for(var i = 1; i <= entryResults.count; i++){
+			// build URL to entry
+			entryResults.entries.link[i] = "";
 			
 			// if feedType is simple, shorten entryBody length
 			if (arguments.feedType EQ "simple"){

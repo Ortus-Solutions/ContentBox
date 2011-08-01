@@ -31,9 +31,13 @@ component {
 		routes = [
 			// home
 			{pattern="/", handler="blog", action="index" },
+			// RSS feeds
+			{pattern="/rss/category/:category", handler="blog", action="rss" },
+			{pattern="/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true},
+			{pattern="/rss/", handler="blog", action="rss" },
 			// Comment post
 			{pattern="/commentPost", handler="blog", action="commentPost" },
-			// paging
+			// Blog index paging
 			{pattern="/p/:page-numeric", handler="blog", action="index" },
 			// category filter
 			{pattern="/category/:category/:page-numeric?", handler="blog", action="index" },

@@ -21,6 +21,8 @@
 <div class="bg"></div>
 <p>#bb.siteDescription()#</p>
 
+<button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> RSS</button>	
+
 <!--- Custom HTML --->
 #bb.customHTML('afterSideBar')#
 <!--- BlogBoxEvent --->

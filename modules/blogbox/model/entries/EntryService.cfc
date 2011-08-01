@@ -86,7 +86,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	// Entry listing for UI
-	function findPublishedEntries(max=0,offset=0,category="",searchTerm=""){
+	function findPublishedEntries(max=0,offset=0,category="",searchTerm="",asQuery=false){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
@@ -115,7 +115,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		
 		// run criteria query and projections count
-		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
+		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
 		results.count 	= criteriaCount(criteria=criteria);
 		
 		return results;

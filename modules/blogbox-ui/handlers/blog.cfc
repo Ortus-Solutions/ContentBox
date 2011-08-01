@@ -9,6 +9,7 @@ component singleton{
 	property name="authorService"		inject="id:authorService@bb";
 	property name="commentService"		inject="id:commentService@bb";
 	property name="bbHelper"			inject="coldbox:myplugin:BBHelper@blogbox-ui";
+	property name="rssService"			inject="rssService@bb";
 
 	// pre Handler
 	function preHandler(event,action,eventArguments){
@@ -21,7 +22,9 @@ component singleton{
 		prc.categories = categoryService.list(sortOrder="category desc",asQuery=false);
 	}
 
-	// Main site page
+	/**
+	* The home page
+	*/
 	function index(event,rc,prc){
 		// incoming params
 		event.paramValue("page",1);
@@ -57,7 +60,9 @@ component singleton{
 		event.setView("#prc.bbLayout#/views/index");
 	}
 	
-	// Entry site page
+	/**
+	* An entry page
+	*/
 	function entry(event,rc,prc){
 		// incoming params
 		event.paramValue("entrySlug","");
@@ -191,6 +196,22 @@ component singleton{
 			// relocate back to comment
 			setNextEvent(URL=bbHelper.linkEntry(thisEntry) & "##comment_#comment.getCommentID()#");		
 		}		
+	}
+
+	/**
+	* Display the RSS feeds
+	*/
+	function rss(event,rc,prc){
+		// params
+		event.paramValue("category","");
+		event.paramValue("entrySlug","");
+		event.paramValue("commentRSS",false);
+		
+		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,entrySlug=rc.entrySlug);
+		
+		writeDump(feed);abort;
+		
+		event.renderData(type="plain",data=feed,contentType="text/xml");
 	}
 
 }

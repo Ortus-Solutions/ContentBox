@@ -34,6 +34,7 @@ component {
 		binder.map("entryService@bb").to("#moduleMapping#.model.entries.EntryService");
 		binder.map("commentService@bb").to("#moduleMapping#.model.comments.CommentService");
 		binder.map("categoryService@bb").to("#moduleMapping#.model.entries.CategoryService");
+		binder.map("rssService@bb").to("#moduleMapping#.model.rss.RSSService");		
 		
 		// Load AOP listener if not loaded
 		loadAOPListener(binder);
