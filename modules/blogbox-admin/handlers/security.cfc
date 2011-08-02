@@ -16,8 +16,14 @@ component{
 	
 	// authenticate users
 	function doLogin(event,rc,prc){
+		// announce event
+		announceInterception("bbadmin_preLogin");
+		
 		// authenticate users
 		if( securityService.authenticate(rc.username,rc.password) ){
+			// announce event
+			announceInterception("bbadmin_onLogin");
+		
 			// check if securedURL came in?
 			if( len(event.getValue("_securedURL","")) ){
 				setNextEvent(uri=rc["_securedURL"]);
@@ -27,6 +33,9 @@ component{
 			}
 		}
 		else{
+			// announce event
+			announceInterception("bbadmin_onBadLogin");
+			// message and redirect
 			getPlugin("MessageBox").warn("Invalid Credentials, try it again!");
 			setNextEvent("#prc.bbEntryPoint#.security.login");
 		}
@@ -34,7 +43,11 @@ component{
 	
 	// logout users
 	function doLogout(event,rc,prc){
+		// logout
 		securityService.logout();
+		// announce event
+		announceInterception("bbadmin_onLogout");
+		// message redirect	
 		getPlugin("MessageBox").info("See you later!");
 		setNextEvent("#prc.bbEntryPoint#.security.login");
 	}
@@ -68,9 +81,15 @@ component{
 		if( NOT arrayLen(errors) ){
 			// Send Reminder
 			securityService.sendPasswordReminder( oAuthor );
+			// announce event
+			announceInterception("bbadmin_onPasswordReminder",{author=oAuthor});
+			// messagebox
 			getPlugin("MessageBox").info("Password reminder sent!");
 		}
 		else{
+			// announce event
+			announceInterception("bbadmin_onInvalidPasswordReminder",{errors=errors,author=oAuthor});
+			// messagebox
 			getPlugin("MessageBox").error(messageArray=errors);
 		}
 		// Re Route

@@ -66,6 +66,9 @@ component extend="baseHandler"{
 		// check if comment id list has length
 		if( len(rc.commentID) ){
 			commentService.bulkStatus(commentID=rc.commentID,status=rc.commentStatus);
+			// announce event
+			announceInterception("bbadmin_onCommentStatusUpdate",{commentID=rc.commentID,status=rc.commentStatus});
+			// Message
 			getPlugin("MessageBox").info("#listLen(rc.commentID)# Comment(s) #rc.commentStatus#d");
 		}
 		else{
@@ -113,8 +116,12 @@ component extend="baseHandler"{
 	function save(event,rc,prc){
 		// populate and get comment
 		var oComment = populateModel( commentService.get(id=rc.commentID) );
-    	// save comment
+		// announce event
+		announceInterception("bbadmin_preCommentSave",{comment=oComment,commentID=rc.commentID});
+		// save comment
 		commentService.save( oComment );
+		// announce event
+		announceInterception("bbadmin_postCommentSave",{comment=oComment});
 		// messagebox
 		getPlugin("MessageBox").setMessage("info","Comment saved!");
 		// relocate
@@ -127,8 +134,13 @@ component extend="baseHandler"{
 		event.paramValue("page","1");
 		// check for length
 		if( len(rc.commentID) ){
+			// announce event
+			announceInterception("bbadmin_preCommentRemove",{commentID=rc.commentID});
 			// remove using hibernate bulk
 			var deleted = commentService.deleteByID( listToArray(rc.commentID) );
+			// announce event
+			announceInterception("bbadmin_postCommentRemove",{commentID=rc.commentID});
+			// message
 			getPlugin("MessageBox").info("#deleted# Comment(s) Removed!");
 		}
 		else{
@@ -189,22 +201,15 @@ component extend="baseHandler"{
 	
 	// save settings
 	function saveSettings(event,rc,prc){
-		var oOption 	= 0;
-		var newOptions 	= [];
 		
-		// iterate over settings
-		for(var key in prc.bbSettings){
-			// save only sent in setting keys
-			if( structKeyExists(rc, key) ){
-				oOption = settingsService.findWhere({name=key});
-				oOption.setValue( rc[key] );
-				arrayAppend( newOptions, oOption );
-			}						
-		}
+		// announce event
+		announceInterception("bbadmin_preCommentSettingsSave",{oldSettings=prc.bbSettings,newSettings=rc});
+			
+		// bulk save the options
+		settingsService.bulkSave(rc);
 		
-		// save new settings and flush cache
-		settingsService.saveAll( newOptions );
-		settingsService.flushSettingsCache();
+		// announce event
+		announceInterception("bbadmin_postCommentSettingsSave");
 		
 		// relocate back to editor
 		getPlugin("MessageBox").info("All comment settings updated!");

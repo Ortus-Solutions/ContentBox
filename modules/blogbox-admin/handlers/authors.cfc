@@ -73,8 +73,12 @@ component extends="baseHandler"{
 		
 		// get and populate author
 		var oAuthor	= populateModel( authorService.get(id=rc.authorID) );
-    	// save Author
+    	// announce event
+		announceInterception("bbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID});
+		// save Author
 		authorService.saveAuthor( oAuthor );
+		// announce event
+		announceInterception("bbadmin_postAuthorSave",{author=oAuthor});
 		// message
 		getPlugin("MessageBox").setMessage("info","Author saved!");
 		// relocate
@@ -87,8 +91,11 @@ component extends="baseHandler"{
 		
 		// validate passwords
 		if( compareNoCase(rc.password,rc.password_confirm) EQ 0){
+			// set new password
 			oAuthor.setPassword( rc.password );
 			authorService.saveAuthor(author=oAuthor,passwordChange=true);
+			// announce event
+			announceInterception("bbadmin_onAuthorPasswordChange",{author=oAuthor,password=rc.password});
 			// message
 			getPlugin("MessageBox").info("Password Updated!");
 		}
@@ -109,11 +116,15 @@ component extends="baseHandler"{
 			getPlugin("MessageBox").setMessage("warning","Invalid Author detected!");
 			setNextEvent( rc.xehAuthors );
 		}
-		
+		// announce event
+		announceInterception("bbadmin_preAuthorRemove",{author=oAuthor,authorID=rc.authorID});
+		// remove
 		authorService.delete( oAuthor );
-		
+		// announce event
+		announceInterception("bbadmin_postAuthorRemove",{authorID=rc.authorID});
+		// message
 		getPlugin("MessageBox").setMessage("info","Author Removed!");
-		
+		// redirect
 		setNextEvent(rc.xehAuthors);
 	}
 }

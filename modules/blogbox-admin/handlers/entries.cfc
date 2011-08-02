@@ -141,7 +141,7 @@ component extends="baseHandler"{
 		entryService.saveEntry( entry );
 		
 		// announce event
-		announceInterception("bbadmin_onEntrySave",{entry=entry});
+		announceInterception("bbadmin_postEntrySave",{entry=entry});
 		
 		// relocate
 		getPlugin("MessageBox").info("Entry Saved!");
@@ -162,7 +162,7 @@ component extends="baseHandler"{
 			// remove it
 			entryService.delete( entry );
 			// announce event
-			announceInterception("bbadmin_onEntryRemove",{entryID=entryID});
+			announceInterception("bbadmin_postEntryRemove",{entryID=entryID});
 			// messagebox
 			getPlugin("MessageBox").setMessage("info","Entry Removed!");
 		}

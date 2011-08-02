@@ -13,7 +13,7 @@ component extends="coldbox.system.Interceptor"{
 	}
 	
 	// Listen when entries are removed
-	function bbadmin_onEntryRemove(event,interceptData){
+	function bbadmin_postEntryRemove(event,interceptData){
 		rssService.clearCaches();
 	}
 

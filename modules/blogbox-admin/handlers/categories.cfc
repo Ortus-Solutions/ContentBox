@@ -35,8 +35,12 @@ component extends="baseHandler"{
 		rc.slug = getPlugin("HTMLHelper").slugify(rc.category);
 		// populate and get category
 		var oCategory = populateModel( categoryService.get(id=rc.categoryID) );
-    	// save category
+    	// announce event
+		announceInterception("bbadmin_preCategorySave",{category=oCategory,categoryID=rc.categoryID});
+		// save category
 		categoryService.save( oCategory );
+		// announce event
+		announceInterception("bbadmin_postCategorySave",{category=oCategory});
 		// messagebox
 		getPlugin("MessageBox").setMessage("info","Category saved!");
 		// relocate
@@ -45,11 +49,16 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
+		// announce event
+		announceInterception("bbadmin_preCategoryRemove",{categoryID=rc.categoryID});
 		// delete by id
 		if( !categoryService.deleteByID( rc.categoryID ) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Category detected!");
 		}
 		else{
+			// announce event
+			announceInterception("bbadmin_postCategoryRemove",{categoryID=rc.categoryID});
+			// Message
 			getPlugin("MessageBox").setMessage("info","Category Removed!");
 		}
 		setNextEvent( rc.xehCategories );

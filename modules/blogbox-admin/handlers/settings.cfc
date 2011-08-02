@@ -24,22 +24,16 @@ component extends="baseHandler"{
 		event.setView("settings/index");
 	}
 	
-	// custom HTML
-	function customHTML(event,rc,prc){
-		// exit handler
-		rc.xehSaveSettings 	= "#prc.bbEntryPoint#.settings.save";
-		// tab
-		prc.tabSite 			= true;
-		prc.tabSite_customHTML 	= true; 
-		// view
-		event.setView("settings/index");
-	}
-	
 	// save settings
 	function save(event,rc,prc){
+		// announce event
+		announceInterception("bbadmin_preSettingsSave",{oldSettings=prc.bbSettings,newSettings=rc});
 		
 		// bulk save the options
 		settingsService.bulkSave(rc);
+		
+		// announce event
+		announceInterception("bbadmin_postSettingsSave");
 		
 		// relocate back to editor
 		getPlugin("MessageBox").info("All BlogBox settings updated! Yeeehaww!");
@@ -89,11 +83,16 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
+		// announce event
+		announceInterception("bbadmin_preSettingRemove",{settingID=rc.settingID});
 		// delete by id
 		if( !settingsService.deleteByID( rc.settingID ) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Setting detected!");
 		}
 		else{
+			// announce event
+			announceInterception("bbadmin_postSettingRemove",{settingID=rc.settingID});
+			// flush cache
 			settingsService.flushSettingsCache();
 			getPlugin("MessageBox").setMessage("info","Setting Removed!");
 		}

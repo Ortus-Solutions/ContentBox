@@ -32,6 +32,9 @@ component extends="baseHandler"{
 		var eArgs = {max=prc.bbSettings.bb_dashboard_recentComments,pagination=false};
 		rc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments=eArgs);
 		
+		// announce event
+		announceInterception("bbadmin_onDashboard");
+		
 		// dashboard view
 		event.setView("dashboard/index");
 	}
