@@ -21,13 +21,9 @@
 <div class="bg"></div>
 <p>#bb.siteDescription()#</p>
 
-<h4>Recent Comments</h4>
-<div class="bg"></div>
-#bb.widget('RecentComments')#
-
 <h4>Recent Entries</h4>
 <div class="bg"></div>
-#bb.widget('RecentEntries',{max=3})#
+#bb.widget('RecentEntries')#
 
 
 <!--- RSS Buttons --->
