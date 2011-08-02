@@ -134,13 +134,17 @@
 						#announceInterception("bbadmin_commentsTab")#
 					</ul>
 				</li>
-				<!--- Site Nav --->
+				<!--- Look & Feel Nav --->
 				<li>
 					<a href="##" title="Site appearance, widgets, custom HTML and more" <cfif prc.tabSite>class="current"</cfif>>Look & Feel</a>
 					<ul>
 						<li>
 							<a href="#event.buildLink(rc.xehLayouts)#" <cfif event.getValue("tabSite_layouts",false,true)> class="current"</cfif>
 							   title="Manage Site Layouts">Manage Layouts</a>
+						</li>
+						<li>
+							<a href="#event.buildLink('')#" <cfif event.getValue("tabSite_widgets",false,true)> class="current"</cfif>
+							   title="Manager your UI widgets">Manage Widgets</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(rc.xehCustomHTML)#" <cfif event.getValue("tabSite_customHTML",false,true)> class="current"</cfif>

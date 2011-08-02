@@ -21,6 +21,15 @@
 <div class="bg"></div>
 <p>#bb.siteDescription()#</p>
 
+<h4>Recent Comments</h4>
+<div class="bg"></div>
+#bb.widget('RecentComments')#
+
+<h4>Recent Entries</h4>
+<div class="bg"></div>
+#bb.widget('RecentEntries',{max=3})#
+
+
 <!--- RSS Buttons --->
 <button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Site Updates</button>	
 <!--- RSS Entry Comments --->
