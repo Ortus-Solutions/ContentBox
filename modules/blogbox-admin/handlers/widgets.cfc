@@ -19,6 +19,7 @@ component extends="baseHandler"{
 		// exit Handlers
 		rc.xehWidgetRemove 	= "#prc.bbEntryPoint#.widgets.remove";
 		rc.xehWidgetUpload  = "#prc.bbEntryPoint#.widgets.upload";
+		rc.xehWidgetDocs    = "#prc.bbEntryPoint#.widgets.docs";
 		
 		// Get all widgets
 		rc.widgets = widgetService.getWidgets();
@@ -27,6 +28,17 @@ component extends="baseHandler"{
 		prc.tabSite_widgets = true;
 		// view
 		event.setView("widgets/index");
+	}
+	
+	//docs
+	function docs(event,rc,prc){
+		rc.widgetName = widgetService.ripExtension( urlDecode(rc.widget) );
+		// get widget plugin
+		rc.oWidget  = getMyPlugin(plugin="widgets.#rc.widgetName#",module="blogbox-ui");
+		// get its metadata
+		rc.metadata = getmetadata(rc.oWidget.renderit);
+		// presetn view
+		event.setView(view="widgets/docs",layout="ajax");
 	}
 	
 	//Remove

@@ -21,7 +21,7 @@ component accessors="true" singleton{
 	* Get installed widgets
 	*/
 	function getWidgets(){
-		var widgets = directoryList(getWidgetsPath(),true,"query","*.cfc","name asc");
+		var widgets = directoryList(getWidgetsPath(),false,"query","*.cfc","name asc");
 		return widgets;
 	}
 	
@@ -42,9 +42,8 @@ component accessors="true" singleton{
 		return fileUpload(destination,arguments.fileField,"","overwrite");
 	}
 	
-	/************************************** PRIVATE *********************************************/
-	
-	private function ripExtension(required filename){
+	// rip extensions
+	function ripExtension(required filename){
 		return reReplace(arguments.filename,"\.[^.]*$","");
 	}
 	
