@@ -26,6 +26,7 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 		var event 		= getRequestContext();
 		var bbSettings 	= event.getValue(name="bbSettings",private=true);
 		var captcha		= "";
+		var commentForm = "";
 		
 		// captcha?
 		if( bbSettings.bb_comments_captcha ){
