@@ -55,12 +55,13 @@ component {
 				"bbadmin_preCategorySave","bbadmin_postCategorySave","bbadmin_preCategoryRemove","bbadmin_postCategoryRemove",
 				// Comment eVents
 				"bbadmin_onCommentStatusUpdate","bbadmin_preCommentSave","bbadmin_postCommentSave","bbadmin_preCommentRemove","bbadmin_postCommentRemove","bbadmin_preCommentSettingsSave","bbadmin_postCommentSettingsSave",
+				"bbadmin_onCommentSettingsNav","bbadmin_onCommentSettingsContent",
 				// Dashboard events
 				"bbadmin_onDashboard",
 				// Security events
 				"bbadmin_preLogin","bbadmin_onLogin","bbadmin_onBadLogin","bbadmin_onLogout","bbadmin_onPasswordReminder","bbadmin_onInvalidPasswordReminder",
 				// Settings events
-				"bbadmin_preSettingsSave","bbadmin_postSettingsSave","bbadmin_preSettingRemove","bbadmin_postSettingRemove"
+				"bbadmin_preSettingsSave","bbadmin_postSettingsSave","bbadmin_preSettingRemove","bbadmin_postSettingRemove","bbadmin_onSettingsNav","bbadmin_onSettingsContent"
 			])
 		};
 		
