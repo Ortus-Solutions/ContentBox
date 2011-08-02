@@ -46,6 +46,7 @@ component extends="coldbox.system.Interceptor"{
 		// Site Tab
 		rc.xehLayouts			= "#prc.bbEntryPoint#.layouts";
 		rc.xehCustomHTML		= "#prc.bbEntryPoint#.customHTML";
+		rc.xehWidgets			= "#prc.bbEntryPoint#.widgets";
 		
 		// Authors Tab
 		rc.xehAuthors			= "#prc.bbEntryPoint#.authors";

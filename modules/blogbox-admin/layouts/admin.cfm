@@ -143,7 +143,7 @@
 							   title="Manage Site Layouts">Manage Layouts</a>
 						</li>
 						<li>
-							<a href="#event.buildLink('')#" <cfif event.getValue("tabSite_widgets",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(rc.xehWidgets)#" <cfif event.getValue("tabSite_widgets",false,true)> class="current"</cfif>
 							   title="Manager your UI widgets">Manage Widgets</a>
 						</li>
 						<li>

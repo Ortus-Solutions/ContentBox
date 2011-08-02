@@ -5,6 +5,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	
 	// DI properties
 	property name="cache" inject="cachebox:default";
+	
 	// Properties
 	property name="settingsCacheKey" type="string";
 	 
