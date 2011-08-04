@@ -304,7 +304,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		}
 		
 		// return list of links
-		return arrayToList( catList );
+		return replace(arrayToList( catList ), ",",", ","all");
 	}
 	
 	// entry paging
