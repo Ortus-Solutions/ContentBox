@@ -24,6 +24,9 @@ component extends="baseHandler"{
 		// Get all widgets
 		rc.widgets = widgetService.getWidgets();
 		
+		// ForgeBox Entry URL
+		rc.forgeBoxEntryURL = getModuleSettings("blogbox-admin").settings.forgeBoxEntryURL;
+		
 		// Tab
 		prc.tabSite_widgets = true;
 		// view

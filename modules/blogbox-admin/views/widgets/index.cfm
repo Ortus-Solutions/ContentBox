@@ -42,15 +42,6 @@
 			#html.startForm(name="widgetForm",action=rc.xehWidgetRemove)#
 			#html.hiddenField(name="widgetFile")#
 			
-			<div class="infoBar">
-				<img src="#prc.bbRoot#/includes/images/info.png" alt="info" />Use the BB Helper in your layouts by using:
-				 ##bb.widget("name",{arg1=val,arg2=val})##
-			</div>
-			<div class="infoBar">
-				<img src="#prc.bbRoot#/includes/images/info.png" alt="info" />Get a widget in your layouts by using:
-				 ##bb.getWidget("name")##
-			</div>
-			
 			<!--- Content Bar --->
 			<div class="contentBar">
 				<!--- Filter Bar --->
@@ -67,22 +58,27 @@
 				<thead>
 					<tr>
 						<th>Widget</th>
-						<th width="65">Version</th>
-						<th>Author</th>
+						<th>Description</th>
 						<th width="75" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
 				<tbody>
 					<cfloop query="rc.widgets">
-					<cfset w = getMyPlugin(plugin="#getWidgetLocation(rc.widgets.name)#",module="blogbox-ui")>
+					<cfset p = rc.widgets.plugin>
+					<cfif isSimpleValue(p)>
+						<tr class="selected">
+							<td colspan="4">There is a problem creating widget: '#rc.widgets.name#', please check the application log files.</td>
+						</tr>
+					<cfelse>
 					<tr>
 						<td>
-							<strong>#w.getPluginName()#</strong><br/>
-							#w.getPluginDescription()#
+							<strong>#p.getPluginName()#</strong>
 						</td>
-						<td>#w.getPluginVersion()#</td>
 						<td>
-							<a href="#w.getPluginAuthor()#" target="_blank" title="#w.getPluginAuthorURL()#">#w.getPluginAuthor()#</a>
+							#p.getPluginDescription()#<br/>
+							Version #p.getPluginVersion()# | 
+							By <a href="#p.getPluginAuthor()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a> |
+							Visit ForgeBox URL <a href="#rc.forgeBoxEntryURL & "/" & p.getForgeBoxSlug()#" target="_blank">#p.getForgeBoxSlug()#</a>
 						</td>
 						<td class="center">
 							<!--- Documentation Icon --->
@@ -95,9 +91,20 @@
 							<a title="Delete Widget" href="javascript:remove('#JSStringFormat(rc.widgets.name)#')" class="confirmIt" data-title="Delete Widget?"><img src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 						</td>
 					</tr>
+					</cfif>
 					</cfloop>
 				</tbody>
 			</table>
+			
+			<!--- help bars --->
+			<div class="infoBar">
+				<img src="#prc.bbRoot#/includes/images/info.png" alt="info" />Use the BB Helper in your layouts by using:
+				 ##bb.widget("name",{arg1=val,arg2=val})##
+			</div>
+			<div class="infoBar">
+				<img src="#prc.bbRoot#/includes/images/info.png" alt="info" />Get a widget in your layouts by using:
+				 ##bb.getWidget("name")##
+			</div>
 			#html.endForm()#
 		
 		</div>	

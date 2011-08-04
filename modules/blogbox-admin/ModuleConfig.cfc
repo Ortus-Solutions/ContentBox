@@ -23,6 +23,12 @@ component {
 		// Layout Settings
 		layoutSettings = { defaultLayout = "admin.cfm" };
 		
+		// Module Settings
+		settings = {
+			forgeBoxURL 	 = "http://www.coldbox.org/forgebox",
+			forgeBoxEntryURL = "http://www.coldbox.org/forgebox/view"
+		};
+		
 		// SES Routes
 		routes = [
 			// Generic module route
