@@ -13,7 +13,7 @@ component {
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
-	// YOUR SES URL ENTRY POINT /blog is a perfect example
+	// YOUR SES URL ENTRY POINT blog is a perfect example or empty if the Blog will be the main application
 	this.entryPoint			= "blog";
 	
 	function configure(){
@@ -76,6 +76,15 @@ component {
 	*/
 	function onLoad(){
 		// TODO: Register currently selected layout's interception points
+		
+		// Treat the blog as the Main Application?
+		if( !len(this.entryPoint) ){
+			// generate the ses entry point
+			var ses = controller.getInterceptorService().getInterceptor('SES',true);
+			ses.addModuleRoutes(pattern="regex:.*",module="blogbox-ui");
+			// change the default event
+			controller.setSetting("DefaultEvent","blogbox-ui:blog");
+		}
 	}
 	
 	/**

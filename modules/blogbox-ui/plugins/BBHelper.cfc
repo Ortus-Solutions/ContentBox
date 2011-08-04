@@ -42,7 +42,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	// Get the site root location using your configured module's entry point  
 	function siteRoot(){
-		var prc = getRequestCollection(private=true);		
+		var prc = getRequestCollection(private=true);	
 		return prc.bbEntryPoint;
 	}
 	
@@ -166,13 +166,21 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 	
 	/**
+	* Get the site URL separator
+	*/
+	private function sep(){
+		if( len(siteRoot()) ){ return "."; }
+		return "";
+	}
+	
+	/**
 	* Link to RSS feeds that BlogBox generates, by default it is the recent updates feed
 	* @category You can optionally pass the category to filter on
 	* @comments A boolean flag that determines if you want the comments RSS feed
 	* @entry You can optionally pass the entry to filter the comment's RSS feed
 	*/
 	function linkRSS(category,comments=false,entry){
-		var xehRSS = siteRoot() & ".rss";
+		var xehRSS = siteRoot() & sep() & "rss";
 		
 		// do we have a category?
 		if( structKeyExists(arguments,"category") ){
@@ -199,7 +207,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @category The category object to link to
 	*/
 	function linkCategory(category){
-		var xeh = siteRoot() & "/category/" & arguments.category.getSlug();
+		var xeh = siteRoot() & sep() & "category/#arguments.category.getSlug()#";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
 	
@@ -207,7 +215,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* Link to the search page for this blog
 	*/
 	function linkSearch(){
-		var xeh = siteRoot() & ".search";
+		var xeh = siteRoot() & sep() & "search";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
 	
@@ -216,7 +224,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @entry The entry to link to
 	*/
 	function linkEntry(entry){
-		var xeh = siteRoot() & "/#arguments.entry.getSlug()#";
+		var xeh = siteRoot() & sep() & "#arguments.entry.getSlug()#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 	
@@ -225,7 +233,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @slug The entry slug to link to
 	*/
 	function linkEntryWithSlug(slug){
-		var xeh = siteRoot() & "/#arguments.slug#";
+		var xeh = siteRoot() & sep() & "#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 	
@@ -251,7 +259,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* Link to the commenting post action, this is where comments are submitted to
 	*/
 	function linkCommentPost(){
-		var xeh = siteRoot() & "/commentPost";
+		var xeh = siteRoot() & sep() & "commentPost";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 	

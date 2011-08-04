@@ -11,7 +11,7 @@ component {
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
 	// Module Entry Point: The SES entry point for blogbox: http://myapp/blog
-	this.entryPoint			= "blog";
+	this.entryPoint			= "";
 	
 	function configure(){
 	
