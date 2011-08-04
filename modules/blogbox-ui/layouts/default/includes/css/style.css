@@ -2,7 +2,7 @@
 body { margin:0; padding:0; width:100%; background:#9ed0e8 url(../images/main_bg.gif) top center repeat-x; }
 html { padding:0; margin:0;}
 a { text-decoration:none;}
-a:hover { text-decoration:underline;}
+a:hover { text-decoration:underline;color:#c52100;}
 /* main */
 .main { padding:0; margin:0 auto;}
 /********** header **********/
@@ -46,12 +46,11 @@ a:hover { text-decoration:underline;}
 .body h2 span { font: normal 11px Arial, Helvetica, sans-serif; color:#69a2bc;}
 .body img {  padding:0;margin: 0px auto;vertical-align:middle;}
 .body img.floated { float:left; padding:0; margin:10px 15px 10px 0;}
-.body ul { list-style:none; margin:10px auto; padding:20px 0;}
+.body ul { margin:5px 20px; padding:20px 0;}
 .body li { padding:3px 5px; margin:0; font: normal 12px Arial, Helvetica, sans-serif; color:#7d7d7d;}
-.body li a { font: normal 12px Arial, Helvetica, sans-serif; color:#7d7d7d; text-decoration:none;}
-.body li a:hover { color:#c52100;}
 .body p.main_body { font:normal 12px Arial, Helvetica, sans-serif; color:#fff; line-height:1.8em; padding:5px 5px; margin:0;}
 .body a { text-decoration:none; color:#0058AF;}
+.body a:hover { text-decoration:underline;color:#c52100;}
 .fullWidth { width: 99%; float:left; padding: 20px 0; margin:0;}
 .right { width:25%; float:right; padding:5px 10px; margin:0;}
 .left { width: 71%; float:left; padding: 10px 0; margin:0;}
@@ -76,10 +75,13 @@ a:hover { text-decoration:underline;}
 .footer a { font:bold 11px Arial, Helvetica, sans-serif; color:#6a8b9a; text-decoration:none; padding:5px; margin:0;}
 .footer p.right { text-align:right; width:350px; margin:0; padding:15px 0 0 0; float:right;} 
 .footer p.leftt { text-align:left; width:550px; margin:0; padding:15px 0 0 0; float:left;} 
-/********** contact form **********/
+/********** forms **********/
+label { margin:0; padding:5px 0; font:bold 12px Arial, Helvetica, sans-serif; color:#222; text-transform:capitalize;display: block;}
+input { border:1px solid #e8e8e8; margin:5px 0; padding:5px 2px; background:#f8f8f8;}
+input[type=submit]{cursor:pointer}
+textarea { border:1px solid #e8e8e8; margin:10px 0; padding:2px; background:#f8f8f8; height:120px;}
 #commentForm {width: 500px;padding:10px;margin:-50px 0px 20px 0px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; display: none;float: right;}
 #commentForm * { color:#7a7a7a;}
-#commentForm label { margin:0; padding:5px 0; font:bold 12px Arial, Helvetica, sans-serif; color:#222; text-transform:capitalize;display: block;}
 #commentForm label span { font:normal 10px Arial, Helvetica, sans-serif;}
 #commentForm input { width:480px; border:1px solid #e8e8e8; margin:5px 0; padding:5px 2px; height:15px; background:#f8f8f8;}
 #commentForm textarea { width:480px; border:1px solid #e8e8e8; margin:10px 0; padding:2px; background:#f8f8f8; height:120px;}
