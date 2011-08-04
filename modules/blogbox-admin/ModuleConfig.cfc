@@ -25,6 +25,7 @@ component {
 		
 		// Module Settings
 		settings = {
+			// ForgeBox Settings
 			forgeBoxURL 	 = "http://www.coldbox.org/forgebox",
 			forgeBoxEntryURL = "http://www.coldbox.org/forgebox/view"
 		};

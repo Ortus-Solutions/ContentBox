@@ -7,7 +7,7 @@
 			<img src="#prc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Widget Uploader
 		</div>
 		<div class="body">
-			#html.startForm(name="widgetUploadForm",action=rc.xehWidgetupload,multipart=true)#
+			#html.startForm(name="widgetUploadForm",action=rc.xehWidgetupload,multipart=true,novalidate="novalidate")#
 	
 				#html.fileField(name="filePlugin",label="Upload Plugin: ", class="textfield",required="required")#		
 				
