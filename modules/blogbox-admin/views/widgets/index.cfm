@@ -72,13 +72,13 @@
 					<cfelse>
 					<tr>
 						<td>
-							<strong>#p.getPluginName()#</strong>
+							<strong>#p.getPluginName()#</strong><br/>
+							Version #p.getPluginVersion()# 
+							By <a href="#p.getPluginAuthor()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>							
 						</td>
 						<td>
 							#p.getPluginDescription()#<br/>
-							Version #p.getPluginVersion()# | 
-							By <a href="#p.getPluginAuthor()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a> |
-							Visit ForgeBox URL <a href="#rc.forgeBoxEntryURL & "/" & p.getForgeBoxSlug()#" target="_blank">#p.getForgeBoxSlug()#</a>
+							ForgeBox URL: <a href="#rc.forgeBoxEntryURL & "/" & p.getForgeBoxSlug()#" target="_blank">#p.getForgeBoxSlug()#</a>
 						</td>
 						<td class="center">
 							<!--- Documentation Icon --->
