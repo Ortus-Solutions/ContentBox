@@ -71,7 +71,7 @@
 				</thead>				
 				<tbody>
 					<cfloop query="rc.layouts">
-					<tr <cfif prc.bbSettings.bb_site_layout eq rc.layouts.name>class="selected"</cfif>>
+					<tr>
 						<td>
 							<cfif prc.bbSettings.bb_site_layout eq rc.layouts.name>
 								<img src="#prc.bbRoot#/includes/images/asterisk_orange.png" alt="active" />
@@ -86,7 +86,7 @@
 							</cfif>		
 							<br/>
 							<!--- Button Bar --->
-							<button class="button2"   onclick="openRemoteModal('#event.buildLink(rc.xehPreview)#')"  title="Preview this layout">Preview</button>
+							<button class="button2"   onclick="popup('#event.buildLink(rc.xehPreview)#/l/#rc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;"  title="Preview this layout">Preview</button>
 							<button class="buttonred" onclick="return to('#event.buildLink(rc.xehActivate)#?layoutname=#rc.layouts.name#')" title="Activate this layout">Activate</button>		
 						</td>
 						<td>
@@ -99,7 +99,9 @@
 							</cfif>
 							<!--- description --->
 							#rc.layouts.description#<br/>
-							Layout located in <em title="#rc.layoutsPath#/#rc.layouts.name#">blogbox-ui/layouts/#rc.layouts.name#</em>
+							<div class="contentBar">
+								Layout located in <em title="#rc.layoutsPath#/#rc.layouts.name#">blogbox-ui/layouts/#rc.layouts.name#</em>
+							</div>
 						</td>
 						<td class="center">
 							<!--- Update Check --->

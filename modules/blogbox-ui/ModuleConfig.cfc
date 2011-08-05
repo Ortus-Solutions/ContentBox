@@ -31,6 +31,8 @@ component {
 		routes = [
 			// home
 			{pattern="/", handler="blog", action="index" },
+			// preview
+			{pattern="/__preview", handler="blog", action="preview" },
 			// RSS feeds
 			{pattern="/rss/category/:category", handler="blog", action="rss" },
 			{pattern="/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true},

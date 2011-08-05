@@ -21,6 +21,30 @@ component singleton{
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category desc",asQuery=false);
 	}
+	
+	/**
+	* The preview page
+	*/
+	function preview(event,rc,prc){
+		event.paramValue("h","");
+		event.paramValue("l","");
+		
+		var author = getModel("securityService@bb").getAuthorSession();
+		// valid Author?
+		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
+			// Override layouts
+			event.setLayout("#rc.l#/layout").overrideEvent("blogbox-ui:blog.index");
+			// Place layout on scope
+			prc.bbLayout = rc.l;
+			// Place layout root location
+			prc.bbLayoutRoot = prc.bbRoot & "/layouts/" & rc.l;
+			// preview it
+			index(argumentCollection=arguments);
+		}
+		else{
+			setNextEvent(URL=bbHelper.linkHome());
+		}
+	}
 
 	/**
 	* The home page

@@ -21,7 +21,7 @@ component extends="baseHandler"{
 		rc.xehLayoutUpload  = "#prc.bbEntryPoint#.layouts.upload";
 		rc.xehFlushRegistry = "#prc.bbEntryPoint#.layouts.rebuildRegistry";
 		rc.xehActivate		= "#prc.bbEntryPoint#.layouts.activate";
-		rc.xehPreview		= "#prc.bbEntryPoint#.layouts.preview";
+		rc.xehPreview		= "#prc.bbSiteEntryPoint#.__preview";
 		
 		// Get all layouts
 		rc.layouts = layoutService.getLayouts();
@@ -34,14 +34,6 @@ component extends="baseHandler"{
 		prc.tabSite_layouts = true;
 		// view
 		event.setView("layouts/index");
-	}
-	
-	// preview layouts
-	function preview(event,rc,prc){
-		// prepare index variables
-		
-		// execute the blog index
-		runEvent("blogbox-ui:blog.index");
 	}
 	
 	// activate layout
