@@ -21,6 +21,22 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	}
 	
 	/**
+	* Get a setting
+	*/
+	function getSetting(required name,defaultValue){
+		var s = getAllSettings(asStruct=true);
+		if( structKeyExists(s,arguments.name) ){
+			return s[arguments.name];
+		}
+		if( structKeyExists(arguments,"defaultValue") ){
+			return arguments.defaultValue;
+		}
+		throw(message="Setting #arguments.name# not found in settings collection",
+			  detail="Registered settings are: #structKeyList(s)#",
+			  type="BlogBox.SettingService.SettingNotFound");
+	}
+	
+	/**
 	* Get all settings
 	*/
 	function getAllSettings(asStruct=false){

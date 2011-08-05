@@ -36,7 +36,7 @@ component{
 	this.author 		= "Luis Majano";
 	this.authorURL		= "http://www.ortussolutions.com";
 	// Screenshot URL, can be absolute or locally in your layout package.
-	this.screenShotURL	= "includes/images/screenshot.png";
+	this.screenShotURL	= "reddy.png";
 	// ForgeBox slug if you want auto-update featuress
 	this.forgeBoxSlug	= "bblayouts-reddy";
 }

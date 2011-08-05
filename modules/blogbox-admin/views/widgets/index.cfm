@@ -9,7 +9,7 @@
 		<div class="body">
 			#html.startForm(name="widgetUploadForm",action=rc.xehWidgetupload,multipart=true,novalidate="novalidate")#
 	
-				#html.fileField(name="filePlugin",label="Upload Plugin: ", class="textfield",required="required")#		
+				#html.fileField(name="filePlugin",label="Upload Widget: ", class="textfield",required="required")#		
 				
 				<div class="actionBar" id="uploadBar">
 					#html.submitButton(value="Upload & Install",class="buttonred")#
@@ -78,7 +78,9 @@
 						</td>
 						<td>
 							#p.getPluginDescription()#<br/>
+							<cfif len( p.getForgeBoxSlug() )>
 							ForgeBox URL: <a href="#rc.forgeBoxEntryURL & "/" & p.getForgeBoxSlug()#" target="_blank">#p.getForgeBoxSlug()#</a>
+							</cfif>
 						</td>
 						<td class="center">
 							<!--- Documentation Icon --->

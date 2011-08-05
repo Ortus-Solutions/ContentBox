@@ -38,6 +38,7 @@ component {
 		binder.map("categoryService@bb").to("#moduleMapping#.model.entries.CategoryService");
 		binder.map("rssService@bb").to("#moduleMapping#.model.rss.RSSService");	
 		binder.map("widgetService@bb").to("#moduleMapping#.model.ui.widgetService");	
+		binder.map("layoutService@bb").to("#moduleMapping#.model.ui.LayoutService");
 		
 		// Load AOP listener if not loaded
 		loadAOPListener(binder);
@@ -49,7 +50,11 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		
+		// Startup the blogbox layout service and get the currently active layout
+		var layoutService = controller.getWireBox().getInstance("layoutService@bb");
+		var qActiveLayout = layoutService.getActiveLayout();
+		// Register the active layouts's custom points at startup
+		controller.getInterceptorService().appendInterceptionPoints(qActiveLayout.customInterceptionPoints);
 	}
 	
 	/**
