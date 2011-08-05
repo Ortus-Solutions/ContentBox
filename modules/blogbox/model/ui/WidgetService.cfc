@@ -60,7 +60,7 @@ component accessors="true" singleton{
 	/**
 	* Upload Widget
 	*/
-	function uploadPlugin(required fileField){
+	function uploadWidget(required fileField){
 		var destination = getWidgetsPath();
 		return fileUpload(destination,arguments.fileField,"","overwrite");
 	}

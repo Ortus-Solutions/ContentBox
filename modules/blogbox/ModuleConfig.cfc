@@ -39,6 +39,7 @@ component {
 		binder.map("rssService@bb").to("#moduleMapping#.model.rss.RSSService");	
 		binder.map("widgetService@bb").to("#moduleMapping#.model.ui.widgetService");	
 		binder.map("layoutService@bb").to("#moduleMapping#.model.ui.LayoutService");
+		binder.map("zipUtil@bb").to("coldbox.system.core.util.Zip");
 		
 		// Load AOP listener if not loaded
 		loadAOPListener(binder);
