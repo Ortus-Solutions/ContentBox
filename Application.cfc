@@ -44,7 +44,7 @@ component{
 		dialect 			= "MySQLwithInnoDB",
 		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update
 		dbcreate			= "update",
-		sqlscript			= "modules/blogbox/install/sql/blogbox_data.sql",
+		//sqlscript			= "modules/blogbox/install/sql/blogbox_data.sql",
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,

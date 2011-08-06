@@ -209,7 +209,7 @@ component extends="baseHandler"{
 	
 	// slugify remotely
 	function slugify(event,rc,prc){
-		return getPlugin("HTMLHelper").slugify( rc.slug );
+		event.renderData(data=getPlugin("HTMLHelper").slugify( rc.slug ),type="plain");
 	}
 	
 	// quick post viewlet
