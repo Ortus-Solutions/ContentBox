@@ -127,13 +127,14 @@
 			
 			<!--- id --->
 			#html.hiddenField(name="entryID",bind=rc.entry)#
+			#html.hiddenField(name="sluggerURL",value=event.buildLink(rc.xehSlugify))#
 			
 			<!--- title --->
 			#html.textfield(label="Title:",name="title",bind=rc.entry,maxlength="100",required="required",title="The title for this entry",class="textfield width98")#
 			<!--- slug --->
 			<cfif rc.entry.isLoaded()>
 			<label for="slug">Permalink: 
-				<img src='#prc.bbroot#/includes/images/link.png' alt='permalink' title="Convert title to permalink" onclick="createPermalink('#event.buildLink(rc.xehSlugify)#')"/>
+				<img src='#prc.bbroot#/includes/images/link.png' alt='permalink' title="Convert title to permalink" onclick="createPermalink()"/>
 				<small> #event.buildLink('')#</small>
 			</label>
 			#html.textfield(name="slug",bind=rc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#

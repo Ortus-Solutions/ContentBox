@@ -27,12 +27,16 @@ $(document).ready(function() {
 	$(":date").dateinput();
 	// form validator
 	$entryForm.validator({position:'center top'});
+	// blur slugify
+	var $title = $entryForm.find("#title");
+	$title.blur(function(){ 
+		if( $("#slug").size() ){
+			createPermalink( $title.val() );
+		}
+	});
 });
-/**
- * Create permalink from title field
- * @param slugger
- */
-function createPermalink(slugger){
+function createPermalink(){
+	var slugger = $("#sluggerURL").val();
 	$slug = $("#slug").fadeOut();
 	$.get(slugger,{slug:$("#title").val()},function(data){ 
 		$slug.fadeIn().val($.trim(data)); 		
