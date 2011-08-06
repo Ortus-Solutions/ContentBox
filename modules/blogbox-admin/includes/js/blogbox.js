@@ -158,9 +158,11 @@ function activateConfirmations(){
 		e.preventDefault();
 	});
 }
-function popup(url){
-	var winWidth = 900;
-	var winHeight = 700;
+function popup(url,w,h){
+	var winWidth = 1000;
+	var winHeight = 750;
+	if( w ){ var minWidth = w; }
+	if( h ){ var winHeight = h; }
 	var xPosition = (screen.width / 2) - (winWidth / 2);
 	var yPosition = (screen.height / 2) - (winHeight / 2);
 	window.open(url,'layoutPreview','resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=auto,width='+winWidth+',height='+winHeight+',left='+xPosition+',top='+yPosition+',screenX='+xPosition+',screenY='+yPosition);
