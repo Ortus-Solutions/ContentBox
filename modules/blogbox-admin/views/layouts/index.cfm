@@ -21,7 +21,18 @@
 				</div>
 			#html.endForm()#
 		</div>
-	</div>		
+	</div>	
+	<!--- Help Box--->
+	<div class="small_box" id="help_tips">
+		<div class="header">
+			<img src="#prc.bbroot#/includes/images/help.png" alt="info" width="24" height="24" />Help Tips
+		</div>
+		<div class="body">
+			<ul class="tipList">
+				<li>Previews only show the index page of the layout</li>
+			</ul>
+		</div>
+	</div>			
 </div>
 <!--End sidebar-->	
 <!--============================Main Column============================-->
