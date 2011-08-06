@@ -8,7 +8,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	property name="entryService"		inject="id:entryService@bb";
 	property name="authorService"		inject="id:authorService@bb";
 	property name="commentService"		inject="id:commentService@bb";
-
+	property name="customHTMLService"	inject="id:customHTMLService@bb";
+	
 	/************************************** settings *********************************************/
 	
 	// get blogbox settings
@@ -27,9 +28,16 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		throw(message="Setting requested: #arguments.key# not found",detail="Settings keys are #structKeyList(prc.bbSettings)#",type="BlogBox.BBHelper.InvalidSetting");
 	}
 	
-	// custom html
+	/**
+	* Get custom HTML content pieces by slug
+	* @slug The content slug to retrieve
+	*/
 	function customHTML(required slug){
-		return setting("bb_html_" & arguments.slug);
+		var content = customHTMLService.findWhere({slug=arguments.slug});
+		if( isNull(content) ){
+			throw(message="The content slug '#arguments.slug#' does not exist",type="BlogBox.BBHelper.InvalidCustomHTMLSlug");
+		}
+		return content.getContent();
 	}
 	
 	/************************************** root methods *********************************************/

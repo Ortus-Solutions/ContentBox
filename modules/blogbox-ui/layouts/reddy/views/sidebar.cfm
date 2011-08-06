@@ -1,6 +1,4 @@
 <cfoutput>
-<!--- Custom HTML --->
-#bb.customHTML('beforeSideBar')#
 <!--- BlogBoxEvent --->
 #bb.event("bbui_BeforeSideBar")#
 
@@ -40,8 +38,6 @@
 
 <br/><br/>
 
-<!--- Custom HTML --->
-#bb.customHTML('afterSideBar')#
 <!--- BlogBoxEvent --->
 #bb.event("bbui_afterSideBar")#
 </cfoutput>

@@ -8,6 +8,7 @@ component extends="coldbox.system.Plugin" accessors="true"{
 	property name="entryService"		inject="id:entryService@bb";
 	property name="authorService"		inject="id:authorService@bb";
 	property name="commentService"		inject="id:commentService@bb";
+	property name="customHTMLService"	inject="id:customHTMLService@bb";
 	property name="bb"					inject="coldbox:myplugin:BBHelper@blogbox-ui";
 	property name="html"				inject="coldbox:plugin:HTMLHelper";
 

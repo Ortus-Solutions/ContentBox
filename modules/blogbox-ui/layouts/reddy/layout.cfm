@@ -46,14 +46,10 @@ which means you can use it in any way you want provided you keep the link to the
 	<script type="text/javascript" src="#bb.layoutRoot()#/includes/js/jquery.tools.min.js"></script>
 	<script type="text/javascript" src="#bb.layoutRoot()#/includes/js/default.js"></script>
 	
-	<!--- Custom HTML --->
-	#bb.customHTML('beforeHeadEnd')#
 	<!--- BlogBoxEvent --->
 	#bb.event("bbui_beforeHeadEnd")#
 </head>
 <body>
-	<!--- Custom HTML --->
-	#bb.customHTML('afterBodyStart')#
 	<!--- BlogBoxEvent --->
 	#bb.event("bbui_afterBodyStart")#
 	
@@ -93,8 +89,6 @@ which means you can use it in any way you want provided you keep the link to the
 	</div>
 	<!--- end Footer --->
 		
-	<!--- Custom HTML --->
-	#bb.customHTML('beforeBodyEnd')#
 	<!--- BlogBoxEvent --->
 	#bb.event("bbui_beforeBodyEnd")#	
 </body>

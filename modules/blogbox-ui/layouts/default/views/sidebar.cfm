@@ -1,6 +1,4 @@
 <cfoutput>
-<!--- Custom HTML --->
-#bb.customHTML('beforeSideBar')#
 <!--- BlogBoxEvent --->
 #bb.event("bbui_BeforeSideBar")#
 
@@ -25,9 +23,12 @@
 <div class="bg"></div>
 #bb.widget('RecentEntries')#
 
-
+<h4>Entries Search</h4>
+<div class="bg"></div>
 #bb.widget("SearchForm")#
 <br/>
+
+#bb.customHTML("news")#
 
 <!--- RSS Buttons --->
 <button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Site Updates</button>	
@@ -36,8 +37,6 @@
 <button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Entry Comments</button>	
 </cfif>
 
-<!--- Custom HTML --->
-#bb.customHTML('afterSideBar')#
 <!--- BlogBoxEvent --->
 #bb.event("bbui_afterSideBar")#
 </cfoutput>

@@ -81,6 +81,7 @@ function toggleFlickers(){
  * @return
  */
 function closeRemoteModal(){
+	$(".error").hide();
 	$remoteModal.data("overlay").close();
 	$remoteModalContent.html('').html($remoteModalLoading);
 }

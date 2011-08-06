@@ -39,6 +39,7 @@ component {
 			{pattern="/entries/page/:page",handler="entries"},
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
 			{pattern="/comments/page/:page",handler="comments"},
+			{pattern="/customHTML/page/:page",handler="customHTML"},
 			{pattern="/:handler/:action?"}
 		];		
 		
@@ -68,7 +69,9 @@ component {
 				// Security events
 				"bbadmin_preLogin","bbadmin_onLogin","bbadmin_onBadLogin","bbadmin_onLogout","bbadmin_onPasswordReminder","bbadmin_onInvalidPasswordReminder",
 				// Settings events
-				"bbadmin_preSettingsSave","bbadmin_postSettingsSave","bbadmin_preSettingRemove","bbadmin_postSettingRemove","bbadmin_onSettingsNav","bbadmin_onSettingsContent"
+				"bbadmin_preSettingsSave","bbadmin_postSettingsSave","bbadmin_preSettingRemove","bbadmin_postSettingRemove","bbadmin_onSettingsNav","bbadmin_onSettingsContent",
+				// Custom HTML Events
+				"bbadmin_preCustomHTMLSave", "bbadmin_postCustomHTMLSave","bbadmin_preCustomHTMLRemove", "bbadmin_postCustomHTMLRemove"
 			])
 		};
 		
