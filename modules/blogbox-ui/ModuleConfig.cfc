@@ -77,8 +77,6 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// TODO: Register currently selected layout's interception points
-		
 		// Treat the blog as the Main Application?
 		if( !len(this.entryPoint) ){
 			// generate the ses entry point
@@ -88,12 +86,5 @@ component {
 			controller.setSetting("DefaultEvent","blogbox-ui:blog");
 		}
 	}
-	
-	/**
-	* Fired when the module is unregistered and unloaded
-	*/
-	function onUnload(){
-		// TODO: UnRegister currently selected layout's interception points
-	}
-	
+		
 }

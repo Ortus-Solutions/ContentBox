@@ -2,6 +2,7 @@ component accessors="true" singleton{
 	// Dependencies
 	property name="settingService"		inject="id:settingService@bb";
 	property name="moduleSettings"		inject="coldbox:setting:modules";
+	property name="interceptorService"	inject="coldbox:interceptorService";
 	property name="zipUtil"				inject="zipUtil@bb";
 	property name="log"					inject="logbox:logger:{this}";
 	
@@ -23,7 +24,7 @@ component accessors="true" singleton{
 	}
 	
 	/**
-	* onDIComplete
+	* onDIComplete startup the layouting services
 	*/
 	void function onDIComplete(){
 		// setup location paths
@@ -32,6 +33,18 @@ component accessors="true" singleton{
 		setLayoutsInvocationPath( moduleSettings["blogbox-ui"].invocationPath & ".layouts" );
 		// Register all layouts
 		buildLayoutRegistry();
+		// Startup Active Layout
+	}
+	
+	/**
+	* Startup Active Layout procedures
+	*/
+	function startupActiveLayout(){
+		var layout = settingService.findWhere({name="bb_site_layout"});
+		if( !isNull(layout) ){
+			// register layout interception points
+			interceptorService.appendInterceptionPoints( getLayoutRecord( layout.getName() ).customInterceptionPoints );
+		}	
 	}
 	
 	/**
@@ -40,6 +53,13 @@ component accessors="true" singleton{
 	query function getActiveLayout(){
 		var activeLayout = settingService.getSetting("bb_site_layout");
 		return new Query(dbtype="query",sql="SELECT * from layoutRegistry WHERE name='#activeLayout#'",layoutRegistry=getLayoutRegistry()).execute().getResult();	
+	}
+	
+	/**
+	* Get a layout record from the registry by name
+	*/
+	query function getLayoutRecord(required layoutName){
+		return new Query(dbtype="query",sql="SELECT * from layoutRegistry WHERE name='#arguments.layoutName#'",layoutRegistry=getLayoutRegistry()).execute().getResult();	
 	}
 	
 	/**
@@ -54,8 +74,13 @@ component accessors="true" singleton{
 	*/
 	LayoutService function activateLayout(required layoutName) transactional{
 		var layout = settingService.findWhere({name="bb_site_layout"});
+		// setup the new layout value
 		layout.setValue( arguments.layoutName );
+		// save the layout setting
 		settingService.save( layout );
+		// register layout interception points as we just activated it
+		startupActiveLayout();
+		// flush the settings
 		settingService.flushSettingsCache();
 		return this;
 	}

@@ -17,12 +17,7 @@ component {
 	
 		// module settings - stored in modules.name.settings
 		settings = {};
-
-		// Custom Declared Points
-		interceptorSettings = {
-			customInterceptionPoints = ""
-		};
-		
+				
 		// Custom Declared Interceptors
 		interceptors = [
 			// BB RSS Cache Cleanup Ghost
@@ -52,11 +47,8 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Startup the blogbox layout service and get the currently active layout
-		var layoutService = controller.getWireBox().getInstance("layoutService@bb");
-		var qActiveLayout = layoutService.getActiveLayout();
-		// Register the active layouts's custom points at startup
-		controller.getInterceptorService().appendInterceptionPoints(qActiveLayout.customInterceptionPoints);
+		// Startup the blogbox layout service and activate the layout
+		controller.getWireBox().getInstance("layoutService@bb").startupActiveLayout();
 	}
 	
 	/**
@@ -66,6 +58,11 @@ component {
 		
 	}
 	
+	/************************************** PRIVATE *********************************************/
+	
+	/**
+	* load hibernatate transactions via AOP
+	*/
 	private function loadHibernateTransactions(binder){
 		var mappings = arguments.binder.getMappings();
 		
@@ -78,6 +75,9 @@ component {
 		arguments.binder.mapAspect("HibernateTransaction").to("coldbox.system.aop.aspects.HibernateTransaction");	
 	}
 	
+	/**
+	* load AOP listener
+	*/
 	private function loadAOPListener(binder){
 		var b = arguments.binder;
 		var l = b.getListeners();

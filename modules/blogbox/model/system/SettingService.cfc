@@ -21,6 +21,23 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	}
 	
 	/**
+	* Check if blogbox has been installed by checking if there are no settings and no bb_active ONLY
+	*/
+	boolean function isBBReady(){
+		if( count() AND countWhere(name="bb_active") ){ return true; }
+		return false;
+	}
+	
+	/**
+	* Mark bb as ready to serve
+	*/
+	function activateBB(){
+		var s = new(properties={name="bb_active",value="true"});
+		save( s );
+		return this;
+	}
+	
+	/**
 	* Get a setting
 	*/
 	function getSetting(required name,defaultValue){
