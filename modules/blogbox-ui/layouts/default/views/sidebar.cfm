@@ -28,8 +28,6 @@
 #bb.widget("SearchForm")#
 <br/>
 
-#bb.customHTML("news")#
-
 <!--- RSS Buttons --->
 <button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Site Updates</button>	
 <!--- RSS Entry Comments --->

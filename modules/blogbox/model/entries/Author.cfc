@@ -8,7 +8,7 @@ component persistent="true" entityname="bbAuthor" table="bb_author" batchsize="1
 	property name="firstName"	length="100" notnull="true";
 	property name="lastName"	length="100" notnull="true";
 	property name="email"		length="255" notnull="true" index="idx_email";
-	property name="userName"	length="100" notnull="true" index="idx_login" ;
+	property name="username"	length="100" notnull="true" index="idx_login" ;
 	property name="password"	length="100" notnull="true" index="idx_login";
 	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" dbdefault="0" index="idx_login,idx_active";
 	property name="lastLogin" 	ormtype="timestamp" notnull="false";
