@@ -176,6 +176,18 @@
 						#announceInterception("bbadmin_authorsTab")#
 					</ul>
 				</li>
+				<!--- Tools Nav --->
+				<li>
+					<a href="##" title="Tools" <cfif prc.tabTools>class="current"</cfif>>Tools</a>
+					<ul>
+						<li>
+							<a href="#event.buildLink(rc.xehToolsImport)#" <cfif event.getValue("tabTools_import",false,true)> class="current"</cfif>
+							   title="Import your database from other blogs">Import</a>
+						</li>
+						<!--- bbadmin event --->
+						#announceInterception("bbadmin_toolsTab")#
+					</ul>
+				</li>
 				<!--- System Nav --->
 				<li>
 					<a href="##" title="System" <cfif prc.tabSystem>class="current"</cfif>>System</a>
