@@ -35,7 +35,7 @@ component{
 	this.ormEnabled = true;
 	//this.mappings["/"] 			= COLDBOX_APP_ROOT_PATH;
 	// FILL OUT: THE DATASOURCE OF BLOGBOX
-	this.datasource = "coldboxblog";
+	this.datasource = "blogbox";
 	// FILL OUT: THE LOCATION OF THE BLOG BOX MODULE
 	this.mappings["/blogbox"] 	= COLDBOX_APP_ROOT_PATH & "modules/blogbox";
 	this.ormSettings = {
