@@ -31,18 +31,19 @@ component{
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
 	
-	// ORM Settings
-	this.ormEnabled = true;
-	//this.mappings["/"] 			= COLDBOX_APP_ROOT_PATH;
-	// FILL OUT: THE DATASOURCE OF BLOGBOX
+	// FILL OUT: THE DATASOURCE FOR BLOGBOX
 	this.datasource = "blogbox";
 	// FILL OUT: THE LOCATION OF THE BLOG BOX MODULE
 	this.mappings["/blogbox"] 	= COLDBOX_APP_ROOT_PATH & "modules/blogbox";
+	
+	// ORM SETTINGS
+	this.ormEnabled = true;
 	this.ormSettings = {
+		// FILL OUT: ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation=["model","modules"],
 		// FILL OUT: THE DIALECT OF YOUR DATABASE
 		dialect 			= "MySQLwithInnoDB",
-		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update
+		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update for continuos repo updates, or remove for production
 		dbcreate			= "update",
 		sqlscript			= "modules/blogbox/install/sql/blogbox_data.sql",
 		logSQL 				= true,

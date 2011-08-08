@@ -74,10 +74,15 @@
 		logBox = {
 			// Define Appenders
 			appenders = {
-				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" }
+				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" },
+				files={class="coldbox.system.logging.appenders.RollingFileAppender",
+					properties = {
+						filename = "BlogBox", filePath="logs"
+					}
+				}
 			},
 			// Root Logger
-			root = { levelmax="INFO", appenders="*" },
+			root = { levelmax="DEBUG", appenders="*" },
 			// Implicit Level Categories
 			info = [ "coldbox.system" ] 
 		};

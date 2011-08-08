@@ -58,8 +58,7 @@
 		<fieldset>
 		<legend><img src="#prc.bbRoot#/includes/images/source.png" alt="modifiers"/> <strong>Source Blog</strong></legend>
 			#html.label(field="importer",content="Choose your importer source:")#
-			#html.select(name="importer",options="Mango,WordPress",style="width:200px")#
-			
+			#html.select(name="importer",options="Select Source,Mango,WordPress",style="width:200px")#
 			#html.label(field="defaultPassword",content="Default Author Password:")#
 			<small>Since BlogBox uses its own encryption algorithm, you cannot port passwords. Use the following
 			default password for all authors and then do password change requests.</small>

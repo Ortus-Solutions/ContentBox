@@ -36,7 +36,10 @@ component {
 		binder.map("layoutService@bb").to("#moduleMapping#.model.ui.LayoutService");
 		binder.map("customHTMLService@bb").to("#moduleMapping#.model.ui.CustomHTMLService");
 		binder.map("zipUtil@bb").to("coldbox.system.core.util.Zip");
+		
+		// importers
 		binder.map("mangoImporter@bb").to("#moduleMapping#.model.importers.MangoImporter");
+		binder.map("wordpressImporter@bb").to("#moduleMapping#.model.importers.WordpressImporter");
 		
 		// Load AOP listener if not loaded
 		loadAOPListener(binder);

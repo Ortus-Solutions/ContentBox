@@ -9,6 +9,7 @@ component implements="blogbox.model.importers.IBBImporter"{
 	property name="authorService"		inject="id:authorService@bb";
 	property name="commentService"		inject="id:commentService@bb";
 	property name="log"					inject="logbox:logger:{this}";
+	property name="htmlHelper"			inject="coldbox:plugin:HTMLHelper";
 	
 	/**
 	* Constructor
@@ -64,6 +65,17 @@ component implements="blogbox.model.importers.IBBImporter"{
 				if( q.status[x] neq "published" ){ published = false; }
 				var props = {title=q.title[x], slug=q.name[x], content=q.content[x], excerpt=q.excerpt[x], publishedDate=q.last_modified[x],
 							 createdDate=q.last_modified[x], isPublished=published, allowComments=q.comments_allowed[x]};
+				
+				// slug checks
+				if( !len(Trim(props.slug)) ){
+					props.slug = htmlHelper.slugify(props.title);
+				}
+				// check if slug already in map
+				if( structKeyExists(slugMap, props.slug) ){
+					// unique it
+					props.slug &= "-" & left(hash(now()),5);
+				}
+				
 				var entry = entryService.new(properties=props);
 				entry.setAuthor( authorService.get( authorMap[q.author_id[x]] ) );
 				
