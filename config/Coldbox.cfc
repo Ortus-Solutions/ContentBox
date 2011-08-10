@@ -57,7 +57,7 @@
 		// create a function with the name of the environment so it can be executed if that environment is detected
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
-			//development = "^cf8.,^railo."
+			development = "^cf9.,^railo."
 		};
 		
 		// Module Directives
@@ -116,6 +116,17 @@
 			 properties={}
 			}
 		];
+		
+		//Debugger Settings
+		debugger = {
+			showRCPanel = false
+		};
+	}
+	
+	function development(){
+		coldbox.debugmode=true;
+		// ses debugging
+		logbox.debug = ["coldbox.system.interceptors.SES"];
 	}
 	
 </cfscript>

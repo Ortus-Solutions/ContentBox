@@ -232,7 +232,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @entry The entry to link to
 	*/
 	function linkEntry(entry){
-		var xeh = siteRoot() & sep() & "#arguments.entry.getSlug()#";
+		var xeh = siteRoot() & sep() & "entry.#arguments.entry.getSlug()#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 	

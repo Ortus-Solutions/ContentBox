@@ -14,7 +14,7 @@ component {
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
 	// YOUR SES URL ENTRY POINT blog is a perfect example or empty if the Blog will be the main application
-	this.entryPoint			= "blog";
+	this.entryPoint			= "";
 	
 	function configure(){
 		
@@ -44,7 +44,7 @@ component {
 			// search filter
 			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" },
 			// blog permalink
-			{pattern="/entry/:entrySlug", handler="blog", action="entry" }
+			{pattern="/entry/:entrySlug", handler="blog", action="entry"}
 		];		
 		
 		// BB UI Event driven programming extensions
@@ -78,7 +78,15 @@ component {
 		if( !len(this.entryPoint) ){
 			// generate the ses entry point
 			var ses = controller.getInterceptorService().getInterceptor('SES',true);
-			ses.addModuleRoutes(pattern="regex:.*",module="blogbox-ui");
+			// Add routes manually to take over parent routes
+			for(var x=arrayLen(variables.routes); x gte 1; x--){
+				// append module location to it so the route is now system wide
+				var args = duplicate(variables.routes[x]);
+				args.handler = "blogbox-ui:#args.handler#";
+				args.append = false;
+				// add it as main application route.
+				ses.addRoute(argumentCollection=args);
+			}
 			// change the default event
 			controller.setSetting("DefaultEvent","blogbox-ui:blog");
 		}
