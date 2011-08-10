@@ -20,7 +20,7 @@ component extends="baseHandler"{
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
 		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#rc.xehCustomHTML#.page.@page@?');
+		rc.pagingLink 	= event.buildLink('#prc.xehCustomHTML#.page.@page@?');
 		
 		// Append search to paging link?
 		if( len(rc.search) ){ rc.pagingLink&="&search=#rc.search#"; }
@@ -79,7 +79,7 @@ component extends="baseHandler"{
 		}
 		
 		// relocate back to editor
-		setNextEvent(rc.xehCustomHTML);
+		setNextEvent(prc.xehCustomHTML);
 	}
 	
 	// remove
@@ -100,7 +100,7 @@ component extends="baseHandler"{
 		else{
 			getPlugin("MessageBox").warn("No ID selected!");
 		}
-		setNextEvent(event=rc.xehCustomHTML,queryString="page=#rc.page#");
+		setNextEvent(event=prc.xehCustomHTML,queryString="page=#rc.page#");
 	}
 	
 }

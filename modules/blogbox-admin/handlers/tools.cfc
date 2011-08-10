@@ -31,7 +31,7 @@ component extends="baseHandler"{
 		// validate
 		if( !len(rc.dsn) or !len(rc.defaultPassword) ){
 			getPlugin("MessageBox").warn("Please fill out all required fields.");
-			setNextEvent(rc.xehToolsImport);
+			setNextEvent(prc.xehToolsImport);
 		}
 		
 		try{
@@ -43,7 +43,7 @@ component extends="baseHandler"{
 		catch(any e){
 			getPlugin("MessageBox").error("Error importing from datasource: #e.message# #e.detail#");
 		}
-		setNextEvent(rc.xehToolsImport);
+		setNextEvent(prc.xehToolsImport);
 	}
 	
 	

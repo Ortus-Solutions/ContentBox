@@ -48,7 +48,7 @@ component extends="baseHandler"{
 	function remove(event,rc,prc){
 		widgetService.removeWidget( rc.widgetFile );
 		getPlugin("MessageBox").info("Widget Removed Forever!");
-		setNextEvent(rc.xehWidgets);
+		setNextEvent(prc.xehWidgets);
 	}
 
 	//upload
@@ -71,6 +71,6 @@ component extends="baseHandler"{
 			}
 		}
 		
-		setNextEvent(rc.xehWidgets);		
+		setNextEvent(prc.xehWidgets);		
 	}
 }

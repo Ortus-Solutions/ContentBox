@@ -17,20 +17,27 @@ component extends="baseHandler"{
 	function index(event,rc,prc){
 		
 		// exit Handlers
-		rc.xehEntryEditor		= "#prc.bbEntryPoint#.entries.editor";
-		rc.xehEntrySave			= "#prc.bbEntryPoint#.entries.save";
-		rc.xehRemoveComment		= "#prc.bbEntryPoint#.comments.remove";
-		rc.xehReloadModule		= "#prc.bbEntryPoint#.dashboard.reload";
+		prc.xehEntryEditor		= "#prc.bbEntryPoint#.entries.editor";
+		prc.xehEntrySave			= "#prc.bbEntryPoint#.entries.save";
+		prc.xehRemoveComment		= "#prc.bbEntryPoint#.comments.remove";
+		prc.xehReloadModule		= "#prc.bbEntryPoint#.dashboard.reload";
 		
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
 		
 		// Get entries viewlet: Stupid cf9 and its local scope blown on argument literals
 		var eArgs = {max=prc.bbSettings.bb_dashboard_recentEntries,pagination=false};
-		rc.entriesViewlet = runEvent(event="blogbox-admin:entries.pager",eventArguments=eArgs);
+		prc.entriesViewlet = runEvent(event="blogbox-admin:entries.pager",eventArguments=eArgs);
 		// Get Comments viewlet
 		var eArgs = {max=prc.bbSettings.bb_dashboard_recentComments,pagination=false};
-		rc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments=eArgs);
+		prc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments=eArgs);
+		
+		// Few counts
+		prc.entriesCount 			= entryService.count();
+		prc.commentsCount 			= commentService.count();
+		prc.commentsApprovedCount 	= commentService.countWhere(isApproved=true);
+		prc.commentsUnApprovedCount = prc.commentsCount-prc.commentsApprovedCount;		
+		prc.categoriesCount 		= categoryService.count();
 		
 		// announce event
 		announceInterception("bbadmin_onDashboard");
@@ -48,7 +55,7 @@ component extends="baseHandler"{
 		// flash info
 		flash.put("moduleReloaded",rc.targetModule);
 		// relocate
-		setNextEvent(rc.xehDashboard);
+		setNextEvent(prc.xehDashboard);
 	}
 	
 }

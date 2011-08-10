@@ -59,7 +59,7 @@
 				<span class="fr">
 			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> &nbsp;
 					<!--- Log Out --->
-					<a href="#event.buildLink(rc.xehDoLogout)#" class="confirmIt" title="Get outta here!"
+					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt" title="Get outta here!"
 						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall">Log Out</button></a>
 					<!--- View Blog --->
 					<a href="#event.buildLink(prc.bbSiteEntryPoint)#" target="_blank" title="View your awesome blog!"><button class="buttonsmall">View Blog</button></a>
@@ -93,7 +93,7 @@
 				<li> 
 					<a href="##" title="BlogBox Dashboard" <cfif prc.tabDashboard>class="current"</cfif>>Dashboard</a>
 					<ul>
-						<li><a href="#event.buildLink(rc.xehDashboard)#" <cfif event.getValue("tabDashboard_home",false,true)> class="current"</cfif>>Home</a></li>
+						<li><a href="#event.buildLink(prc.xehDashboard)#" <cfif event.getValue("tabDashboard_home",false,true)> class="current"</cfif>>Home</a></li>
 						<!--- bbadmin event --->
 						#announceInterception("bbadmin_dashboardTab")#
 					</ul>
@@ -103,15 +103,15 @@
 					<a href="##" title="Blog Entries" <cfif prc.tabEntries>class="current"</cfif>>Entries</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehEntries)#" <cfif event.getValue("tabEntries_viewAll",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehEntries)#" <cfif event.getValue("tabEntries_viewAll",false,true)> class="current"</cfif>
 							   title="View All Blog Entries">Inbox</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehBlogEditor)#" <cfif event.getValue("tabEntries_editor",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehBlogEditor)#" <cfif event.getValue("tabEntries_editor",false,true)> class="current"</cfif>
 							   title="Create a new blog entry">Create New</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehCategories)#" <cfif event.getValue("tabEntries_categories",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabEntries_categories",false,true)> class="current"</cfif>
 							   title="Manage Blog Entry Categories">Categories</a>
 						</li>
 						<!--- bbadmin event --->
@@ -123,11 +123,11 @@
 					<a href="##" title="Comments" <cfif prc.tabComments>class="current"</cfif>>Comments</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehComments)#" <cfif event.getValue("tabComments_inbox",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehComments)#" <cfif event.getValue("tabComments_inbox",false,true)> class="current"</cfif>
 							   title="View All Incoming Comments">Inbox</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehCommentSettings)#" <cfif event.getValue("tabComments_settings",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehCommentsettings)#" <cfif event.getValue("tabComments_settings",false,true)> class="current"</cfif>
 							   title="Configure the BlogBox Commenting System">Settings</a>
 						</li>
 						<!--- bbadmin event --->
@@ -139,15 +139,15 @@
 					<a href="##" title="Site appearance, widgets, custom HTML and more" <cfif prc.tabSite>class="current"</cfif>>Look & Feel</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehLayouts)#" <cfif event.getValue("tabSite_layouts",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehLayouts)#" <cfif event.getValue("tabSite_layouts",false,true)> class="current"</cfif>
 							   title="Manage Site Layouts">Manage Layouts</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehWidgets)#" <cfif event.getValue("tabSite_widgets",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehWidgets)#" <cfif event.getValue("tabSite_widgets",false,true)> class="current"</cfif>
 							   title="Manager your UI widgets">Manage Widgets</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehCustomHTML)#" <cfif event.getValue("tabSite_customHTML",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabSite_customHTML",false,true)> class="current"</cfif>
 							   title="Easy custom HTML for your site">Custom HTML</a>
 						</li>
 						<!--- bbadmin event --->
@@ -159,16 +159,16 @@
 					<a href="##" title="Authors" <cfif prc.tabAuthors>class="current"</cfif>>Authors</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
+							<a href="#event.buildLink(prc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
 							   title="View All Authors">View All</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehAuthorEditor)#" 
+							<a href="#event.buildLink(prc.xehAuthorEditor)#" 
 							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() NEQ event.getValue("authorID","")>class="current"</cfif>
 							   title="Create a new author">Create New</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(linkto=rc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
+							<a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
 							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() eq event.getValue("authorID","")>class="current"</cfif>
 							   title="Manage your profile">My Profile</a>
 						</li>
@@ -181,7 +181,7 @@
 					<a href="##" title="Tools" <cfif prc.tabTools>class="current"</cfif>>Tools</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehToolsImport)#" <cfif event.getValue("tabTools_import",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehToolsImport)#" <cfif event.getValue("tabTools_import",false,true)> class="current"</cfif>
 							   title="Import your database from other blogs">Import</a>
 						</li>
 						<!--- bbadmin event --->
@@ -193,11 +193,11 @@
 					<a href="##" title="System" <cfif prc.tabSystem>class="current"</cfif>>System</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(rc.xehSettings)#" <cfif event.getValue("tabSystem_Settings",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehSettings)#" <cfif event.getValue("tabSystem_Settings",false,true)> class="current"</cfif>
 							   title="Manage BlogBox Global Configuration">BlogBox Settings</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(rc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
 							   title="Manage The Raw Settings Table">Raw Settings</a>
 						</li>
 						<!--- bbadmin event --->

@@ -21,7 +21,7 @@
 			<input type="email" name="email" id="email" size="40" required="required" class="textfield">
 			
 			<br/><br/>
-			<a href="#event.buildLink(rc.xehLogin)#">< Back to Login</a> 
+			<a href="#event.buildLink(prc.xehLogin)#">< Back to Login</a> 
 			&nbsp;
 			<input type="submit" value="&nbsp;&nbsp;Reset Password&nbsp;&nbsp;" class="buttonred">
 		#html.endForm()#

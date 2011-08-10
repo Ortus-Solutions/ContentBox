@@ -8,7 +8,7 @@
 		</div>
 		<div class="body">
 			<!--- Create/Edit form --->
-			#html.startForm(action=rc.xehSettingSave,name="settingEditor",novalidate="novalidate")#
+			#html.startForm(action=prc.xehSettingsave,name="settingEditor",novalidate="novalidate")#
 				<input type="hidden" name="settingID" id="settingID" value="" />
 				<input type="hidden" name="page" id="page" value="#rc.page#" />
 				

@@ -32,36 +32,36 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 		
 		// Global Admin Exit Handlers
-		rc.xehDashboard 	= "#prc.bbEntryPoint#.dashboard";
+		prc.xehDashboard 	= "#prc.bbEntryPoint#.dashboard";
 		
 		// Entries Tab
-		rc.xehEntries		= "#prc.bbEntryPoint#.entries";
-		rc.xehBlogEditor 	= "#prc.bbEntryPoint#.entries.editor";
-		rc.xehCategories	= "#prc.bbEntryPoint#.categories";
+		prc.xehEntries		= "#prc.bbEntryPoint#.entries";
+		prc.xehBlogEditor 	= "#prc.bbEntryPoint#.entries.editor";
+		prc.xehCategories	= "#prc.bbEntryPoint#.categories";
 		
 		// Comments Tab
-		rc.xehComments			= "#prc.bbEntryPoint#.comments";
-		rc.xehCommentSettings	= "#prc.bbEntryPoint#.comments.settings";
+		prc.xehComments			= "#prc.bbEntryPoint#.comments";
+		prc.xehCommentsettings	= "#prc.bbEntryPoint#.comments.settings";
 		
 		// Site Tab
-		rc.xehLayouts			= "#prc.bbEntryPoint#.layouts";
-		rc.xehCustomHTML		= "#prc.bbEntryPoint#.customHTML";
-		rc.xehWidgets			= "#prc.bbEntryPoint#.widgets";
+		prc.xehLayouts		= "#prc.bbEntryPoint#.layouts";
+		prc.xehCustomHTML	= "#prc.bbEntryPoint#.customHTML";
+		prc.xehWidgets		= "#prc.bbEntryPoint#.widgets";
 		
 		// Authors Tab
-		rc.xehAuthors			= "#prc.bbEntryPoint#.authors";
-		rc.xehAuthorEditor		= "#prc.bbEntryPoint#.authors.editor";
+		prc.xehAuthors		= "#prc.bbEntryPoint#.authors";
+		prc.xehAuthorEditor	= "#prc.bbEntryPoint#.authors.editor";
 		
 		// Tools
-		rc.xehToolsImport	= "#prc.bbEntryPoint#.tools.importer";
+		prc.xehToolsImport	= "#prc.bbEntryPoint#.tools.importer";
 		
 		// System
-		rc.xehSettings		= "#prc.bbEntryPoint#.settings";
-		rc.xehRawSettings	= "#prc.bbEntryPoint#.settings.raw";
+		prc.xehSettings		= "#prc.bbEntryPoint#.settings";
+		prc.xehRawSettings	= "#prc.bbEntryPoint#.settings.raw";
 		
 		// Login/Logout
-		rc.xehDoLogout 		= "#prc.bbEntryPoint#.security.doLogout";
-		rc.xehLogin 		= "#prc.bbEntryPoint#.security.login";
+		prc.xehDoLogout 	= "#prc.bbEntryPoint#.security.doLogout";
+		prc.xehLogin 		= "#prc.bbEntryPoint#.security.login";
 		
 		/************************************** NAVIGATION TABS *********************************************/
 		event.paramValue(name="tabDashboard",value=false,private=true);

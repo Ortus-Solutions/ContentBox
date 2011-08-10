@@ -16,7 +16,7 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// exit Handlers
-		rc.xehEntries 		= "#prc.bbEntryPoint#.entries";
+		prc.xehEntries 		= "#prc.bbEntryPoint#.entries";
 		rc.xehEntryEditor 	= "#prc.bbEntryPoint#.entries.editor";
 		rc.xehEntryRemove 	= "#prc.bbEntryPoint#.entries.remove";
 		// Tab control
@@ -36,7 +36,7 @@ component extends="baseHandler"{
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
 		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#rc.xehEntries#.page.@page@?');
+		rc.pagingLink 	= event.buildLink('#prc.xehEntries#.page.@page@?');
 		// Append search to paging link?
 		if( len(rc.searchEntries) ){ rc.pagingLink&="&searchEntries=#rc.searchEntries#"; }
 		// Append filters to paging link?
@@ -145,7 +145,7 @@ component extends="baseHandler"{
 		
 		// relocate
 		getPlugin("MessageBox").info("Entry Saved!");
-		setNextEvent(rc.xehEntries);
+		setNextEvent(prc.xehEntries);
 	}
 	
 	// remove
@@ -166,7 +166,7 @@ component extends="baseHandler"{
 			// messagebox
 			getPlugin("MessageBox").setMessage("info","Entry Removed!");
 		}
-		setNextEvent( rc.xehEntries );
+		setNextEvent( prc.xehEntries );
 	}
 	
 	// pager viewlet

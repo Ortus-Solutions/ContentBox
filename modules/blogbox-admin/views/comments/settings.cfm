@@ -10,7 +10,7 @@
 		</div>
 		<div class="body">
 			<div class="actionBar">
-				<button class="button" onclick="return to('#event.buildLink(rc.xehComments)#')" title="Go to the comments inbox"> Comments Inbox</button>
+				<button class="button" onclick="return to('#event.buildLink(prc.xehComments)#')" title="Go to the comments inbox"> Comments Inbox</button>
 				#html.submitButton(value="Save Settings",class="buttonred",title="Save the comment settings")#
 			</div>
 		</div>

@@ -8,7 +8,7 @@
 		</div>
 		<div class="body">
 			<!--- Search Form --->
-			#html.startForm(name="commentForm",action=rc.xehCommentStatus)#
+			#html.startForm(name="commentForm",action=prc.xehCommentstatus)#
 				#html.hiddenField(name="commentID",bind=rc.comment)#
 				#html.hiddenField(name="commentStatus",value="approve")#
 				<!--- Buttons --->

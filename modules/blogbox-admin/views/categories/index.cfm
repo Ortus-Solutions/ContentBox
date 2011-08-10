@@ -8,7 +8,7 @@
 		</div>
 		<div class="body">
 			<!--- Create/Edit form --->
-			#html.startForm(action=rc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate")#
+			#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate")#
 				<input type="hidden" name="categoryID" id="categoryID" value="" />
 				
 				<label for="category">Category:</label>

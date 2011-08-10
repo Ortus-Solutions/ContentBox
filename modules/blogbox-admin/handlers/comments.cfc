@@ -29,7 +29,7 @@ component extend="baseHandler"{
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
 		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#rc.xehComments#.page.@page@?');
+		rc.pagingLink 	= event.buildLink('#prc.xehComments#.page.@page@?');
 		// Append search to paging link?
 		if( len(rc.searchComments) ){ rc.pagingLink&="&searchComments=#rc.searchComments#"; }
 		// Append filters to paging link?
@@ -50,7 +50,7 @@ component extend="baseHandler"{
 		// exit Handlers
 		rc.xehCommentEditor 	= "#prc.bbEntryPoint#.comments.editor";
 		rc.xehCommentRemove 	= "#prc.bbEntryPoint#.comments.remove";
-		rc.xehCommentStatus 	= "#prc.bbEntryPoint#.comments.doStatusUpdate";
+		prc.xehCommentstatus 	= "#prc.bbEntryPoint#.comments.doStatusUpdate";
 		rc.xehCommentQuickLook	= "#prc.bbEntryPoint#.comments.quicklook";
 		
 		// tab 
@@ -75,7 +75,7 @@ component extend="baseHandler"{
 			getPlugin("MessageBox").warn("No comments selected!");
 		}
 		// relocate back
-		setNextEvent(event=rc.xehComments,queryString="page=#rc.page#");
+		setNextEvent(event=prc.xehComments,queryString="page=#rc.page#");
 	}
 
 	// editor
@@ -83,7 +83,7 @@ component extend="baseHandler"{
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue("commentID",0) );
 		// exit handlers
-		rc.xehCommentSave = "#prc.bbEntryPoint#.comments.save";
+		prc.xehCommentsave = "#prc.bbEntryPoint#.comments.save";
 		// view
 		event.setView(view="comments/editor",layout="ajax");
 	}
@@ -94,11 +94,11 @@ component extend="baseHandler"{
 		rc.comment  = commentService.get( event.getValue("commentID",0) );
 		if( isNull(rc.Comment) ){ 
 			getPlugin("MessageBox").error("The commentID #rc.commentID# is invalid.");
-			setNextEvent(rc.xehComments);
+			setNextEvent(prc.xehComments);
 			return;
 		}
 		// exit handlers
-		rc.xehCommentStatus = "#prc.bbEntryPoint#.comments.doStatusUpdate";
+		prc.xehCommentstatus = "#prc.bbEntryPoint#.comments.doStatusUpdate";
 		rc.xehCommentRemove = "#prc.bbEntryPoint#.comments.remove";
 		// view
 		event.setView("comments/moderate");
@@ -125,7 +125,7 @@ component extend="baseHandler"{
 		// messagebox
 		getPlugin("MessageBox").setMessage("info","Comment saved!");
 		// relocate
-		setNextEvent(rc.xehComments);
+		setNextEvent(prc.xehComments);
 	}
 	
 	// remove
@@ -146,7 +146,7 @@ component extend="baseHandler"{
 		else{
 			getPlugin("MessageBox").warn("No comments selected!");
 		}
-		setNextEvent(event=rc.xehComments,queryString="page=#rc.page#");
+		setNextEvent(event=prc.xehComments,queryString="page=#rc.page#");
 	}
 	
 	// pager viewlet
@@ -213,6 +213,6 @@ component extend="baseHandler"{
 		
 		// relocate back to editor
 		getPlugin("MessageBox").info("All comment settings updated!");
-		setNextEvent(rc.xehCommentSettings);
+		setNextEvent(prc.xehCommentsettings);
 	}
 }

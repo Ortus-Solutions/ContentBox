@@ -8,10 +8,10 @@
 		</div>
 		<div class="body">
 			<!--- Search Form --->
-			#html.startForm(name="authorSearchForm",action=rc.xehAuthorSearch)#
+			#html.startForm(name="authorSearchForm",action=prc.xehAuthorsearch)#
 				#html.textField(label="Search:",name="searchAuthor",class="textfield",size="16",title="Search authors by name, username or email",value=event.getValue("searchAuthor",""))#
 				<input type="submit" class="buttonred" value="Search" />
-				<button class="button" onclick="return to('#event.buildLink(rc.xehAuthors)#')">Clear</button>				
+				<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Clear</button>				
 			#html.endForm()#			
 		</div>
 	</div>		
@@ -37,7 +37,7 @@
 			<div class="contentBar">
 				<!--- Create Butons --->
 				<div class="buttonBar">
-					<button class="button2" onclick="return to('#event.buildLink(rc.xehAuthorEditor)#')" title="Create new author">Create Author</button>
+					<button class="button2" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')" title="Create new author">Create Author</button>
 				</div>
 				
 				<!--- Filter Bar --->
@@ -71,7 +71,7 @@
 					<tr<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()> class="selected"</cfif>>
 						<td>
 							#getMyPlugin(plugin="Avatar",module="blogbox").renderAvatar(email=author.getEmail(),size="30")#
-							<a href="#event.buildLink(rc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
+							<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
 							<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()>
 								<img src="#prc.bbRoot#/includes/images/asterisk_orange.png" alt="you" title="You dude!" />
 							</cfif>
@@ -89,7 +89,7 @@
 						</td>
 						<td class="center">
 							<!--- Edit Command --->
-							<a href="#event.buildLink(rc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" /></a>
+							<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" /></a>
 							<!--- Delete Command --->
 							<cfif prc.oAuthor.getAuthorID() neq author.getAuthorID()>
 							<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><img id="delete_#author.getAuthorID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>

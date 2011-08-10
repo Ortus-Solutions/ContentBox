@@ -18,7 +18,7 @@ component extends="baseHandler"{
 	function index(event,rc,prc){
 		// exit Handlers
 		rc.xehCategoryRemove 	= "#prc.bbEntryPoint#.categories.remove";
-		rc.xehCategoriesSave 	= "#prc.bbEntryPoint#.Categories.save";
+		prc.xehCategoriesSave 	= "#prc.bbEntryPoint#.Categories.save";
 		// Get all categories
 		rc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// Tab
@@ -44,7 +44,7 @@ component extends="baseHandler"{
 		// messagebox
 		getPlugin("MessageBox").setMessage("info","Category saved!");
 		// relocate
-		setNextEvent(rc.xehCategories);
+		setNextEvent(prc.xehCategories);
 	}
 	
 	// remove
@@ -61,6 +61,6 @@ component extends="baseHandler"{
 			// Message
 			getPlugin("MessageBox").setMessage("info","Category Removed!");
 		}
-		setNextEvent( rc.xehCategories );
+		setNextEvent( prc.xehCategories );
 	}
 }

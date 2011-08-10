@@ -40,14 +40,14 @@ component extends="baseHandler"{
 	function activate(event,rc,prc){
 		layoutService.activateLayout( rc.layoutName );
 		getPlugin("MessageBox").info("#rc.layoutName# Activated!");
-		setNextEvent(rc.xehLayouts);
+		setNextEvent(prc.xehLayouts);
 	}
 	
 	// rebuild registry
 	function rebuildRegistry(event,rc,prc){
 		layoutService.buildLayoutRegistry();
 		getPlugin("MessageBox").info("Layouts re-scanned and registered!");
-		setNextEvent(rc.xehLayouts);
+		setNextEvent(prc.xehLayouts);
 	}
 	
 	//Remove
@@ -58,7 +58,7 @@ component extends="baseHandler"{
 		else{
 			getPlugin("MessageBox").error("Error removing layout, please check your logs for more information!");
 		}
-		setNextEvent(rc.xehLayouts);
+		setNextEvent(prc.xehLayouts);
 	}
 
 	//upload
@@ -88,6 +88,6 @@ component extends="baseHandler"{
 			}
 		}
 		
-		setNextEvent(rc.xehLayouts);		
+		setNextEvent(prc.xehLayouts);		
 	}
 }

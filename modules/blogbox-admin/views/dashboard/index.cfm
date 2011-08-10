@@ -4,7 +4,7 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />BlogBox Actions
+			<img src="#prc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Admin Actions
 		</div>
 		<div class="body">
 			<cfif flash.exists("moduleReloaded")>
@@ -14,13 +14,45 @@
 			</cfif>
 			<!--- Reload button --->
 			<p class="actionBar">
-				<a href="#event.buildLink(rc.xehReloadModule&"/blogbox-admin")#" title="Reload Administrator Module" class="confirmIt">
+				<a href="#event.buildLink(prc.xehReloadModule&"/blogbox-admin")#" title="Reload Administrator Module" class="confirmIt">
 					<button class="button2">Reload Admin</button>
 				</a>
-				<a href="#event.buildLink(rc.xehReloadModule&"/blogbox-ui")#" title="Reload Site Module" class="confirmIt">
+				<a href="#event.buildLink(prc.xehReloadModule&"/blogbox-ui")#" title="Reload Site Module" class="confirmIt">
 					<button class="button2">Reload Site</button>
 				</a>
 			</p>
+		</div>
+	</div>	
+	
+	<!--- Snapshot Box --->
+	<div class="small_box">
+		<div class="header">
+			<img src="#prc.bbroot#/includes/images/camera.png" alt="info" width="24" height="24" />Data Snapshot
+		</div>
+		<div class="body">
+			<form>
+			<table class="tablelisting" width="100%">
+				<thead>
+					<tr>
+						<th width="50%" class="center"><img src="#prc.bbroot#/includes/images/pen.png" alt="info" /> Content</th>
+						<th class="center"><img src="#prc.bbroot#/includes/images/comments_black.png" alt="info" /> Discussion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<label class="inline"><a title="View Entries" href="#event.buildLink(prc.xehEntries)#">#prc.entriesCount# Entries</a> </label> <br/>
+							<label class="inline"><a title="View Categories" href="#event.buildLink(prc.xehCategories)#">#prc.categoriesCount# Categories</a> </label><br/>
+						</td>
+						<td>
+							<label class="inline"><a title="View Comments" href="#event.buildLink(prc.xehComments)#">#prc.commentsCount# Comments</a> </label> <br/>
+							<label class="inline"><a title="View Approved Comments" href="#event.buildLink(prc.xehComments)#?fStatus=true">#prc.commentsApprovedCount# Approved</a></label><br/>
+							<label class="inline"><a title="View UnApproved Comments" href="#event.buildLink(prc.xehComments)#?fStatus=false">#prc.commentsUnApprovedCount# Pending</a> </label><br/>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</form>
 		</div>
 	</div>	
 	
@@ -72,13 +104,13 @@
 			#html.anchor(name="recentEntries")#
 			<div class="contentBar" id="entriesBar">
 				<div class="buttonBar">
-					<button class="button2" 	id="btnCreateEntry" title="Create a new blog entry" onclick="return to('#event.buildLink(rc.xehBlogEditor)#')">Create Entry</button>
+					<button class="button2" 	id="btnCreateEntry" title="Create a new blog entry" onclick="return to('#event.buildLink(prc.xehBlogEditor)#')">Create Entry</button>
 					<button class="buttonred" 	id="btnQuickPost" 	title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 				</div>				
 				<div class="filterBar">
-					<h3><img src="#prc.bbroot#/includes/images/blog.png" alt="blog" /> Recent (#prc.bbSettings.bb_dashboard_recentEntries#) Entries</h3>
+					<h3><img src="#prc.bbroot#/includes/images/blog.png" alt="blog" /> Recent Entries</h3>
 				</div>				
-				#rc.entriesViewlet#
+				#prc.entriesViewlet#
 			</div>
 			
 			<!--- Latest Comments --->
@@ -87,7 +119,7 @@
 				<div class="buttonBar">					
 				</div>				
 				<div class="filterBar">
-					<h3><img src="#prc.bbroot#/includes/images/comments_32.png" alt="blog" /> Recent (#prc.bbSettings.bb_dashboard_recentComments#) Comments</h3>
+					<h3><img src="#prc.bbroot#/includes/images/comments_32.png" alt="blog" /> Recent Comments</h3>
 				</div>	
 				<!--- Info Bar --->
 				<cfif NOT prc.bbSettings.bb_comments_enabled>
@@ -96,7 +128,7 @@
 						Comments are currently disabled site-wide!
 					</div>
 				</cfif>			
-				#rc.commentsViewlet#
+				#prc.commentsViewlet#
 			</div>
 			
 		</div>	

@@ -9,7 +9,7 @@
 		<div class="body">
 			<!--- Back button --->
 			<p class="center">
-				<button class="button" onclick="return to('#event.buildLink(rc.xehAuthors)#')"> <img src="#prc.bbroot#/includes/images/go-back.png" alt="help"/> Back To Authors</button>
+				<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')"> <img src="#prc.bbroot#/includes/images/go-back.png" alt="help"/> Back To Authors</button>
 			</p>			
 		</div>
 	</div>	
@@ -61,7 +61,7 @@
 			#getPlugin("MessageBox").renderIt()#
 			
 			<!--- AuthorForm --->
-			#html.startForm(name="authorForm",action=rc.xehAuthorSave,novalidate="novalidate")#
+			#html.startForm(name="authorForm",action=prc.xehAuthorsave,novalidate="novalidate")#
 				#html.startFieldset(legend="Author Details")#
 				#html.hiddenField(name="authorID",bind=rc.author)#
 				<!--- Fields --->
@@ -76,7 +76,7 @@
 				
 				<!--- Action Bar --->
 				<div class="actionBar">
-					<button class="button" onclick="return to('#event.buildLink(rc.xehAuthors)#')">Cancel</button> or 
+					<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
 					<input type="submit" value="Save" class="buttonred">
 				</div>
 				#html.endFieldSet()#
@@ -93,7 +93,7 @@
 				
 				<!--- Action Bar --->
 				<div class="actionBar">
-					<button class="button" onclick="return to('#event.buildLink(rc.xehAuthors)#')">Cancel</button> or 
+					<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
 					<input type="submit" value="Change Password" class="buttonred">
 				</div>
 				#html.endFieldSet()#

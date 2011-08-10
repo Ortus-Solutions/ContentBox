@@ -1,6 +1,6 @@
 <cfoutput>
 <h2>Comment Editor</h2>
-#html.startForm(name="commentEditForm",action=rc.xehCommentSave)#
+#html.startForm(name="commentEditForm",action=prc.xehCommentsave)#
 	<!--- commentid --->
 	#html.hiddenField(name="commentID",bind=rc.comment)#
 	<!--- fields --->

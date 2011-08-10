@@ -11,7 +11,7 @@
 			#html.startForm(name="authorSearchForm",action=rc.xehEntrySearch)#
 				#html.textField(label="Search:",name="searchEntries",class="textfield",size="16",title="Search all entries",value=event.getValue("searchEntries",""))#
 				<input type="submit" value="Search" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(rc.xehEntries)#')">Clear</button>				
+				<button class="button" onclick="return to('#event.buildLink(prc.xehEntries)#')">Clear</button>				
 			#html.endForm()#
 		</div>
 	</div>	
@@ -50,7 +50,7 @@
 				
 			<div class="actionBar">
 				<input type="submit" value="Apply Filters" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(rc.xehEntries)#')">Reset</button>				
+				<button class="button" onclick="return to('#event.buildLink(prc.xehEntries)#')">Reset</button>				
 			</div>
 			
 			#html.endForm()#
@@ -139,7 +139,7 @@
 					<cfloop array="#rc.entries#" index="entry">
 					<tr data-entryID="#entry.getEntryID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
 						<td>
-							<a href="#event.buildLink(rc.xehBlogEditor)#/entryID/#entry.getEntryID()#" title="Edit Entry">#entry.getTitle()#</a><br/>
+							<a href="#event.buildLink(prc.xehBlogEditor)#/entryID/#entry.getEntryID()#" title="Edit Entry">#entry.getTitle()#</a><br/>
 							<!--- password protect --->
 							<cfif entry.isPasswordProtected()>
 								<img src="#prc.bbRoot#/includes/images/lock.png" alt="locked" title="Entry is password protected"/>

@@ -8,10 +8,10 @@
 		</div>
 		<div class="body<cfif len(rc.searchComments)> selected</cfif>">
 			<!--- Search Form --->
-			#html.startForm(name="commentSearchForm",action=rc.xehComments)#
+			#html.startForm(name="commentSearchForm",action=prc.xehComments)#
 				#html.textField(label="Search:",name="searchComments",class="textfield",size="16",title="Search all authors, author emails and content",value=event.getValue("searchComments",""))#
 				<input type="submit" value="Search" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(rc.xehComments)#')">Clear</button>				
+				<button class="button" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>				
 			#html.endForm()#
 		</div>
 	</div>		
@@ -32,7 +32,7 @@
 			<!--- ActionBar --->
 			<div class="actionBar">
 				<input type="submit" value="Apply Filters" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(rc.xehComments)#')">Reset</button>				
+				<button class="button" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>				
 			</div>			
 			#html.endForm()#
 		</div>
@@ -184,7 +184,7 @@ $(document).ready(function() {
 	});
 });
 function changeStatus(status,recordID){
-	$commentForm.attr("action","#event.buildlink(linkTo=rc.xehCommentStatus)#");
+	$commentForm.attr("action","#event.buildlink(linkTo=prc.xehCommentstatus)#");
 	$commentForm.find("##commentStatus").val(status);
 	if( recordID != null ){
 		$('##status_'+recordID).attr('src','#prc.bbRoot#/includes/images/ajax-spinner.gif');

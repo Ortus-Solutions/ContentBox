@@ -23,11 +23,11 @@ component extends="baseHandler"{
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
 		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#rc.xehAuthors#.page.@page@');
+		rc.pagingLink 	= event.buildLink('#prc.xehAuthors#.page.@page@');
 		
 		// exit Handlers
 		rc.xehAuthorRemove 	= "#prc.bbEntryPoint#.authors.remove";
-		rc.xehAuthorSearch 	= "#prc.bbEntryPoint#.authors";
+		prc.xehAuthorsearch 	= "#prc.bbEntryPoint#.authors";
 		
 		// Get all authors or search
 		if( len(event.getValue("searchAuthor","")) ){
@@ -49,16 +49,16 @@ component extends="baseHandler"{
 	// user editor
 	function editor(event,rc,prc){
 		// exit handlers
-		rc.xehAuthorSave 			= "#prc.bbEntryPoint#.authors.save";
+		prc.xehAuthorsave 			= "#prc.bbEntryPoint#.authors.save";
 		rc.xehAuthorChangePassword 	= "#prc.bbEntryPoint#.authors.passwordChange";
-		rc.xehEntriesPager			= "blogbox-admin:entries.pager";
+		prc.xehEntriesPager			= "blogbox-admin:entries.pager";
 		
 		// get new or persisted author
 		rc.author  = authorService.get( event.getValue("authorID",0) );
 		// pager Viewlet
 		rc.pagerViewlet = "";
 		if( rc.author.isLoaded() ){
-			rc.pagerViewlet = runEvent(event=rc.xehEntriesPager,eventArguments={authorID=rc.authorID});
+			rc.pagerViewlet = runEvent(event=prc.xehEntriesPager,eventArguments={authorID=rc.authorID});
 		}
 		
 		// Editor
@@ -82,7 +82,7 @@ component extends="baseHandler"{
 		// message
 		getPlugin("MessageBox").setMessage("info","Author saved!");
 		// relocate
-		setNextEvent(rc.xehAuthors);
+		setNextEvent(prc.xehAuthors);
 	}
 	
 	// change passord
@@ -105,7 +105,7 @@ component extends="baseHandler"{
 		}
 		
 		// relocate
-		setNextEvent(event=rc.xehAuthorEditor,queryString="authorID=#rc.authorID#");
+		setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#rc.authorID#");
 	}
 	
 	// remove user
@@ -114,7 +114,7 @@ component extends="baseHandler"{
     	
 		if( isNull(oAuthor) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Author detected!");
-			setNextEvent( rc.xehAuthors );
+			setNextEvent( prc.xehAuthors );
 		}
 		// announce event
 		announceInterception("bbadmin_preAuthorRemove",{author=oAuthor,authorID=rc.authorID});
@@ -125,6 +125,6 @@ component extends="baseHandler"{
 		// message
 		getPlugin("MessageBox").setMessage("info","Author Removed!");
 		// redirect
-		setNextEvent(rc.xehAuthors);
+		setNextEvent(prc.xehAuthors);
 	}
 }

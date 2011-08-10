@@ -54,7 +54,7 @@ component{
 	
 	// lost password screen
 	function lostPassword(event,rc,prc){
-		rc.xehLogin 			= "#prc.bbEntryPoint#.security.login";
+		prc.xehLogin 			= "#prc.bbEntryPoint#.security.login";
 		rc.xehDoLostPassword 	= "#prc.bbEntryPoint#.security.doLostPassword";
 		event.setView(view="security/lostPassword",layout="login");	
 	}

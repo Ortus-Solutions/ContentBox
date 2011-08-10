@@ -8,10 +8,10 @@
 		</div>
 		<div class="body<cfif len(rc.search)> selected</cfif>">
 			<!--- Search Form --->
-			#html.startForm(name="htmlSearchForm",action=rc.xehCustomHTML)#
+			#html.startForm(name="htmlSearchForm",action=prc.xehCustomHTML)#
 				#html.textField(label="Search:",name="search",class="textfield",size="16",title="Search all content pieces",value=rc.search)#
 				<input type="submit" value="Search" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(rc.xehCustomHTML)#')">Clear</button>				
+				<button class="button" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Clear</button>				
 			#html.endForm()#
 		</div>
 	</div>	

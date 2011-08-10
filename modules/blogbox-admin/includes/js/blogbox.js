@@ -166,7 +166,7 @@ function popup(url,w,h){
 	if( h ){ var winHeight = h; }
 	var xPosition = (screen.width / 2) - (winWidth / 2);
 	var yPosition = (screen.height / 2) - (winHeight / 2);
-	window.open(url,'layoutPreview','resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=auto,width='+winWidth+',height='+winHeight+',left='+xPosition+',top='+yPosition+',screenX='+xPosition+',screenY='+yPosition);
+	window.open(url,'layoutPreview','resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width='+winWidth+',height='+winHeight+',left='+xPosition+',top='+yPosition+',screenX='+xPosition+',screenY='+yPosition);
 }
 /**
  * Relocation shorcuts
