@@ -10,8 +10,11 @@ which means you can use it in any way you want provided you keep the link to the
 <head>
 	<!--- Site Title --->
 	<title>
-		<cfif bb.isEntryView()>#bb.getCurrentEntry().getTitle()# - </cfif>
-		#bb.siteName()# - #bb.siteTagLine()#
+		<cfif bb.isEntryView()>
+			#bb.getCurrentEntry().getTitle()#
+		<cfelse>
+			#bb.siteName()# - #bb.siteTagLine()#
+		</cfif>
 	</title>
 	<!--- Met Tags --->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
