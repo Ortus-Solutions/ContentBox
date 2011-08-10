@@ -58,7 +58,7 @@ component singleton{
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="blogbox");
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 			= bbHelper.linkHome() & "/p/@page@?";
+		prc.pagingLink 			= bbHelper.linkHome() & "?page=@page@";
 		
 		// Search Paging Link Override?
 		if( len(rc.q) ){

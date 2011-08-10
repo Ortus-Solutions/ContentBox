@@ -39,15 +39,12 @@ component {
 			{pattern="/rss/", handler="blog", action="rss" },
 			// Comment post
 			{pattern="/commentPost", handler="blog", action="commentPost" },
-			// Blog index paging
-			{pattern="/p/:page-numeric", handler="blog", action="index" },
 			// category filter
 			{pattern="/category/:category/:page-numeric?", handler="blog", action="index" },
 			// search filter
 			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" },
 			// blog permalink
-			{pattern="/:entrySlug", handler="blog", action="entry" }
-			
+			{pattern="/entry/:entrySlug", handler="blog", action="entry" }
 		];		
 		
 		// BB UI Event driven programming extensions
