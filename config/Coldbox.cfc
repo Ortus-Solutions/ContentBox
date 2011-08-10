@@ -124,9 +124,9 @@
 	}
 	
 	function development(){
-		coldbox.debugmode=true;
+		//coldbox.debugmode=true;
 		// ses debugging
-		logbox.debug = ["coldbox.system.interceptors.SES"];
+		//logbox.debug = ["coldbox.system.interceptors.SES"];
 	}
 	
 </cfscript>
