@@ -6,3 +6,4 @@ _paidModules/**
 _modules/**
 coldbox/**
 coldbox
+logs/**
