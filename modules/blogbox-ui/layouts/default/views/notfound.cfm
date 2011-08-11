@@ -4,7 +4,7 @@
 	<div class="infoBar">
 	Oopsy!<br/><br/> 
 	
-	The page you requested: #rc.entrySlug# 
+	The page you requested: #bb.getMissingPage()# 
 	<br/><br/>
 	Does not exist. Please check your info and try again!
 	</div>

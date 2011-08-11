@@ -150,7 +150,7 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
-		entry = entryService.get(rc.entryID);
+		var entry = entryService.get(rc.entryID);
 		if( isNull(entry) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Entry detected!");
 		}

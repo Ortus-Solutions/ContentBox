@@ -18,11 +18,16 @@ component persistent="true" entityname="bbAuthor" table="bb_author" batchsize="1
 	property name="loggedIn"	persistent="false" default="false" type="boolean";
 	
 	// O2M -> Entries
-	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="blogbox.model.entries.Entry"
+	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="blogbox.model.content.Entry"
 			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="all-delete-orphan" batchsize="10" orderby="publishedDate DESC";
 			 
+	// O2M -> Pages
+	property name="pages" singularName="page" type="array" fieldtype="one-to-many" cfc="blogbox.model.content.Page"
+			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="all-delete-orphan" batchsize="10" orderby="publishedDate DESC";
+	
 	// Calculated properties
 	property name="numberOfEntries" formula="select count(*) from bb_entry entry where entry.FK_authorID=authorID" ;
+	property name="numberOfPages" 	formula="select count(*) from bb_page page where page.FK_authorID=authorID" ;
 	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	

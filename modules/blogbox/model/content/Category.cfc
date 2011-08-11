@@ -9,7 +9,7 @@ component persistent="true" entityname="bbCategory" table="bb_category"{
 	property name="slug"			notnull="true"  length="200" unique="true" index="idx_slug";
 	
 	// M2M -> Entry
-	property name="entries" cfc="blogbox.model.entries.Entry" fieldtype="many-to-many" type="array" lazy="true"
+	property name="entries" cfc="blogbox.model.content.Entry" fieldtype="many-to-many" type="array" lazy="true"
 		linktable="bb_entryCategories" fkcolumn="FK_categoryID" inversejoincolumn="FK_entryID";
 	
 	// Calculated properties

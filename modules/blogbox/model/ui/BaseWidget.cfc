@@ -6,12 +6,13 @@ component extends="coldbox.system.Plugin" accessors="true"{
 	// Shared DI all widgets receive
 	property name="categoryService"		inject="id:categoryService@bb";
 	property name="entryService"		inject="id:entryService@bb";
+	property name="pageService"			inject="id:pageService@bb";
 	property name="authorService"		inject="id:authorService@bb";
 	property name="commentService"		inject="id:commentService@bb";
 	property name="customHTMLService"	inject="id:customHTMLService@bb";
 	property name="bb"					inject="coldbox:myplugin:BBHelper@blogbox-ui";
 	property name="html"				inject="coldbox:plugin:HTMLHelper";
-
+	
 	// Local Properties
 	property name="forgeBoxSlug" type="string" default="";
 

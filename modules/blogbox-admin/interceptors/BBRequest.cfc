@@ -3,6 +3,7 @@
 */
 component extends="coldbox.system.Interceptor"{
 
+	// DI
 	property name="securityService" inject="id:securityService@bb";
 	property name="settingService"  inject="id:settingService@bb";
 
@@ -20,6 +21,8 @@ component extends="coldbox.system.Interceptor"{
 		
 		// store module root	
 		prc.bbRoot = event.getModuleRoot();
+		// bb helper
+		prc.bbHelper = getMyPlugin(plugin="BBHelper",module="blogbox-ui");
 		// store module entry point
 		prc.bbEntryPoint = getProperty("entryPoint");
 		// store site entry point
@@ -38,6 +41,10 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehEntries		= "#prc.bbEntryPoint#.entries";
 		prc.xehBlogEditor 	= "#prc.bbEntryPoint#.entries.editor";
 		prc.xehCategories	= "#prc.bbEntryPoint#.categories";
+		
+		// Pages Tab
+		prc.xehPages		= "#prc.bbEntryPoint#.pages";
+		prc.xehPagesEditor	= "#prc.bbEntryPoint#.pages.editor";
 		
 		// Comments Tab
 		prc.xehComments			= "#prc.bbEntryPoint#.comments";
@@ -66,6 +73,7 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** NAVIGATION TABS *********************************************/
 		event.paramValue(name="tabDashboard",value=false,private=true);
 		event.paramValue(name="tabEntries",value=false,private=true);
+		event.paramValue(name="tabPages",value=false,private=true);
 		event.paramValue(name="tabComments",value=false,private=true);
 		event.paramValue(name="tabAuthors",value=false,private=true);
 		event.paramValue(name="tabSite",value=false,private=true);

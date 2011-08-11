@@ -44,7 +44,7 @@ component{
 		// FILL OUT: THE DIALECT OF YOUR DATABASE
 		dialect 			= "MySQLwithInnoDB",
 		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update for continuos repo updates, or remove for production
-		dbcreate			= "update",
+		dbcreate			= "dropcreate",
 		sqlscript			= "modules/blogbox/install/sql/blogbox_data.sql",
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,

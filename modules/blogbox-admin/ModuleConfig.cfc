@@ -54,7 +54,7 @@ component {
 				// Main Navigation
 				"bbadmin_beforeMainNav","bbadmin_afterMainNav",
 				// Main Tabs
-				"bbadmin_dashboardTab","bbadmin_entriesTab","bbadmin_commentsTab","bbadmin_authorsTab","bbadmin_systemTab","bbadmin_toolsTab", 
+				"bbadmin_dashboardTab","bbadmin_entriesTab","bbadmin_pagesTab","bbadmin_commentsTab","bbadmin_authorsTab","bbadmin_systemTab","bbadmin_toolsTab", 
 				// Entry Events
 				"bbadmin_preEntrySave","bbadmin_postEntrySave","bbadmin_preEntryRemove","bbadmin_postEntryRemove",
 				// Author Events

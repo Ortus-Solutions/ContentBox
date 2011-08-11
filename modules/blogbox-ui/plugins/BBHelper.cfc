@@ -6,6 +6,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	// DI
 	property name="categoryService"		inject="id:categoryService@bb";
 	property name="entryService"		inject="id:entryService@bb";
+	property name="pageService"			inject="id:pageService@bb";
 	property name="authorService"		inject="id:authorService@bb";
 	property name="commentService"		inject="id:commentService@bb";
 	property name="customHTMLService"	inject="id:customHTMLService@bb";
@@ -79,10 +80,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/** 
 	* Determines if site comments are enabled and if the entry accepts comments
-	* @entry The entry to validate comments also with
+	* @content The entry or page content to validate comments also with
 	*/
-	function isCommentsEnabled(entry){ 
-		return ( arguments.entry.getAllowComments() AND setting("bb_comments_enabled") ); 
+	function isCommentsEnabled(content){ 
+		return ( arguments.content.getAllowComments() AND setting("bb_comments_enabled") ); 
 	}
 	// determines if a comment form error has ocurred
 	function isCommentFormError(){
@@ -150,6 +151,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( structKeyExists(prc,"commentsCount") ){ return prc.commentsCount; }
 		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry comments in an non-entry page",type="BlogBox.BBHelper.InvalidEntryContext"); 
 	}	
+	// Get the missing page, if any
+	function getMissingPage(){
+		var event = getRequestContext();
+		return event.getValue(name="missingPage",private="true",default="");
+	}
 	
 	/************************************** events *********************************************/
 	
@@ -241,6 +247,24 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @slug The entry slug to link to
 	*/
 	function linkEntryWithSlug(slug){
+		var xeh = siteRoot() & sep() & "entry.#arguments.slug#";
+		return getRequestContext().buildLink(linkTo=xeh);
+	}
+	
+	/**
+	* Link to a specific page
+	* @page The page to link to
+	*/
+	function linkPage(page){
+		var xeh = siteRoot() & sep() & "#arguments.page.getSlug()#";
+		return getRequestContext().buildLink(linkTo=xeh);
+	}
+	
+	/**
+	* Link to a specific page using a slug only
+	* @slug The page slug to link to
+	*/
+	function linkPageWithSlug(slug){
 		var xeh = siteRoot() & sep() & "#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
@@ -377,10 +401,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/**
 	* quickCommentForm will build a standard BlogBox Comment Form according to the CommentForm widget
-	* @entry The entry this comment form will be linked to
+	* @content The content this comment form will be linked to, page or entry
 	*/
-	function quickCommentForm(entry){
-		return widget("CommentForm",{entry=arguments.entry});
+	function quickCommentForm(content){
+		return widget("CommentForm",{content=arguments.content});
 	}
 	
 	/************************************** PRIVATE *********************************************/

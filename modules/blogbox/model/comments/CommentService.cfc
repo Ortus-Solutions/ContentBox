@@ -14,16 +14,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Constructor
 	*/
 	public CommentService function init(){
-		
 		super.init(entityName="bbComment");
-		
 		return this;
 	}
 	
 	/**
 	* Comment listing for UI of approved comments, returns struct of results=[comments,count]
 	*/
-	function findApprovedComments(entryID,max=0,offset=0){
+	function findApprovedComments(entryID,pageID,max=0,offset=0){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
@@ -36,6 +34,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// By Entry?
 		if( structKeyExists(arguments,"entryID") AND len(arguments.entryID) ){
 			arrayAppend(criteria, restrictions.eq("entry.entryID",javaCast("int", arguments.entryID)));			
+		}
+		
+		// By Page?
+		if( structKeyExists(arguments,"pageID") AND len(arguments.pageID) ){
+			arrayAppend(criteria, restrictions.eq("page.pageID",javaCast("int", arguments.pageID)));			
 		}
 		
 		// run criteria query and projections count
@@ -185,8 +188,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		bodyTokens["commentURL"] 	= bbHelper.linkComment( inComment );
 		bodyTokens["deleteURL"] 	= bbHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
 		bodyTokens["approveURL"] 	= bbHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
-		bodyTokens["entryURL"] 		= bbHelper.linkEntry( inComment.getEntry() );
-		bodyTokens["entryTitle"] 	= inComment.getEntry().getTitle();
+		if( inComment.hasEntry() ){
+			bodyTokens["entryURL"] 		= bbHelper.linkEntry( inComment.getEntry() );
+		}
+		else{
+			bodyTokens["entryURL"] 		= bbHelper.linkPage( inComment.getPage() );
+		}
+		bodyTokens["entryTitle"] 	= inComment.getParentTitle();
 		
 		// Moderation Email? Comment is moderated?
 		if( inComment.getIsApproved() eq false AND inSettings.bb_comments_moderation_notify ){
@@ -220,7 +228,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* comment search returns struct with keys [comments,count]
 	*/
-	struct function search(search="",isApproved,entryID,max=0,offset=0){
+	struct function search(search="",isApproved,entryID,pageID,max=0,offset=0){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
@@ -234,6 +242,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Entry Filter
 		if( structKeyExists(arguments,"entryID") AND arguments.entryID NEQ "all"){
 			arrayAppend(criteria, restrictions.eq("entry.entryID", javaCast("int",arguments.entryID)) );
+		}
+		// Page Filter
+		if( structKeyExists(arguments,"pageID") AND arguments.pageID NEQ "all"){
+			arrayAppend(criteria, restrictions.eq("page.pageID", javaCast("int",arguments.pageID)) );
 		}
 		// Search Criteria
 		if( len(arguments.search) ){

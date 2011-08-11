@@ -8,7 +8,7 @@
 <div id="text" >
 	<h1>Page Not Found</h1>
 	<div class="infoBar">
-	The page you requested: #rc.entrySlug# 
+	The page you requested: #bb.getMissingPage()# 
 	<br/>
 	Does not exist. Please check your info and try again!
 	</div>	

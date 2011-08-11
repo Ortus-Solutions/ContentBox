@@ -118,6 +118,22 @@
 						#announceInterception("bbadmin_entriesTab")#
 					</ul>
 				</li>
+				<!--- Pages Nav --->
+				<li>
+					<a href="##" title="Blog Pages" <cfif prc.tabPages>class="current"</cfif>>Pages</a>
+					<ul>
+						<li>
+							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabPages_viewAll",false,true)> class="current"</cfif>
+							   title="View All Blog Entries">Inbox</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehPagesEditor)#" <cfif event.getValue("tabPages_editor",false,true)> class="current"</cfif>
+							   title="Create a new blog entry">Create New</a>
+						</li>
+						<!--- bbadmin event --->
+						#announceInterception("bbadmin_pagesTab")#
+					</ul>
+				</li>
 				<!--- Comments Nav --->
 				<li>
 					<a href="##" title="Comments" <cfif prc.tabComments>class="current"</cfif>>Comments</a>

@@ -126,7 +126,8 @@
 							<a href="#prc.bbSettings.bb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
 						</td>
 						<td>
-							<img src="#prc.bbRoot#/includes/images/pen.png" alt="link" title="Posted Entry"/> <strong>#comment.getEntry().getTitle()#</strong> 
+							<!--- Entry Or Page --->
+							<img src="#prc.bbRoot#/includes/images/page.png" alt="link" title="Posted Entry"/> <strong>#comment.getParentTitle()#</strong> 
 							<br/>
 							#left(comment.getContent(),prc.bbSettings.bb_comments_maxDisplayChars)#
 							<cfif len(comment.getContent()) gt prc.bbSettings.bb_comments_maxDisplayChars>....<strong>more</strong></cfif>
@@ -146,7 +147,7 @@
 							</cfif>
 							&nbsp;	
 							<!--- View in Site --->
-							<a href="#event.buildLink(prc.bbSiteEntryPoint & "/#comment.getEntry().getSlug()###comment_#comment.getCommentID()#")#" title="View Entry In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
+							<a href="#event.buildLink(prc.bbSiteEntryPoint & "/#comment.getParentSlug()###comment_#comment.getCommentID()#")#" title="View Entry In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><img id="delete_#comment.getCommentID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>

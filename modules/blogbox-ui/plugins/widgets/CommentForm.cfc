@@ -20,13 +20,19 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* The main commenting form widget
-	* @entry The entry object to build the comment form for.
+	* @content The content object to build the comment form for: page or entry
 	*/
-	any function renderIt(entry){
+	any function renderIt(content){
 		var event 		= getRequestContext();
 		var bbSettings 	= event.getValue(name="bbSettings",private=true);
 		var captcha		= "";
 		var commentForm = "";
+		var cID 		= "";
+		var cContent	= "";
+		
+		// Determine ID
+		if( structKeyExists(arguments.content,"getPageID") ){ cID = "pageID"; }
+		if( structKeyExists(arguments.content,"getEntryID") ){ cID = "entryID"; }
 		
 		// captcha?
 		if( bbSettings.bb_comments_captcha ){
@@ -47,7 +53,7 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 				
 				#getPlugin("MessageBox").renderit()#
 				
-				#html.hiddenField(name="entryID",bind=arguments.entry)#
+				#html.hiddenField(name=cID,bind=arguments.content)#
 				
 				#html.textField(name="author",label="Name: (required)",size="50",required="required",value=event.getValue("author",""))#
 				#html.inputField(name="authorEmail",type="email",label="Email: (required)",size="50",required="required",value=event.getValue("authorEmail",""))#

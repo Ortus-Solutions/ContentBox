@@ -24,19 +24,25 @@ component {
 			{class="#moduleMapping#.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@bb" }
 		];
 		
-		// WireBox bindings
+		// Security/System
 		binder.map("securityService@bb").to("#moduleMapping#.model.security.SecurityService");
 		binder.map("settingService@bb").to("#moduleMapping#.model.system.SettingService");
-		binder.map("authorService@bb").to("#moduleMapping#.model.entries.AuthorService");
-		binder.map("entryService@bb").to("#moduleMapping#.model.entries.EntryService");
+		binder.map("authorService@bb").to("#moduleMapping#.model.security.AuthorService");
+		// Entry services
+		binder.map("entryService@bb").to("#moduleMapping#.model.content.EntryService");
+		binder.map("categoryService@bb").to("#moduleMapping#.model.content.CategoryService");
+		// Page services
+		binder.map("pageService@bb").to("#moduleMapping#.model.content.PageService");
+		// Commenting services
 		binder.map("commentService@bb").to("#moduleMapping#.model.comments.CommentService");
-		binder.map("categoryService@bb").to("#moduleMapping#.model.entries.CategoryService");
+		// RSS services
 		binder.map("rssService@bb").to("#moduleMapping#.model.rss.RSSService");	
+		// UI services
 		binder.map("widgetService@bb").to("#moduleMapping#.model.ui.widgetService");	
 		binder.map("layoutService@bb").to("#moduleMapping#.model.ui.LayoutService");
 		binder.map("customHTMLService@bb").to("#moduleMapping#.model.ui.CustomHTMLService");
+		// utils
 		binder.map("zipUtil@bb").to("coldbox.system.core.util.Zip");
-		
 		// importers
 		binder.map("mangoImporter@bb").to("#moduleMapping#.model.importers.MangoImporter");
 		binder.map("wordpressImporter@bb").to("#moduleMapping#.model.importers.WordpressImporter");

@@ -6,6 +6,7 @@ component singleton{
 	// DI
 	property name="categoryService"		inject="id:categoryService@bb";
 	property name="entryService"		inject="id:entryService@bb";
+	property name="pageService"			inject="id:pageService@bb";
 	property name="authorService"		inject="id:authorService@bb";
 	property name="commentService"		inject="id:commentService@bb";
 	property name="bbHelper"			inject="coldbox:myplugin:BBHelper@blogbox-ui";
@@ -111,6 +112,44 @@ component singleton{
 		else{
 			// announce event
 			announceInterception("bbui_onPageNotFound",{entry=prc.entry,entrySlug=rc.entrySlug});
+			// missing page
+			prc.missingPage = rc.entrySlug;
+			// set 404 headers
+			event.setHTTPHeader("404","Page not found");
+			// set skin not found
+			event.setView("#prc.bbLayout#/views/notfound");
+		}	
+	}
+	
+	/**
+	* An normal page
+	*/
+	function page(event,rc,prc){
+		// incoming params
+		event.paramValue("pageSlug","");
+		
+		// Try to retrieve by slug
+		prc.page = pageService.findBySlug(rc.pageSlug);
+		
+		// Check if loaded, else not found
+		if( prc.page.isLoaded() ){
+			// Record hit
+			pageService.updateHits( prc.page );
+			// Retrieve Comments
+			// TODO: paging
+			var commentResults 	= commentService.findApprovedComments(pageID=prc.page.getPageID());
+			prc.comments 		= commentResults.comments;
+			prc.commentsCount 	= commentResults.count;
+			// announce event
+			announceInterception("bbui_onPage",{page=prc.page,pageSlug=rc.pageSlug});
+			// set skin view
+			event.setView("#prc.bbLayout#/views/page");	
+		}
+		else{
+			// announce event
+			announceInterception("bbui_onPageNotFound",{page=prc.page,pageSlug=rc.pageSlug});
+			// missing page
+			prc.missingPage = rc.pageSlug;
 			// set 404 headers
 			event.setHTTPHeader("404","Page not found");
 			// set skin not found

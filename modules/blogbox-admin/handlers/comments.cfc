@@ -24,6 +24,7 @@ component extend="baseHandler"{
 		event.paramValue("page",1);
 		event.paramValue("searchComments","");
 		event.paramValue("fStatus","any");
+		event.paramValue("ftype","any");
 		event.paramValue("isFiltering",false);
 		
 		// prepare paging plugin
@@ -150,11 +151,16 @@ component extend="baseHandler"{
 	}
 	
 	// pager viewlet
-	function pager(event,rc,prc,entryID="all",max=0,pagination=true){
+	// TODO: add link to pages
+	function pager(event,rc,prc,entryID="all",pageID="all",max=0,pagination=true){
 		
 		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("commentPager_entryID") ){
 			arguments.entryID = rc.commentPager_entryID;
+		}
+		// check if pageID exists in rc to do an override, maybe it's the paging call
+		if( event.valueExists("commentPager_pageID") ){
+			arguments.pageID = rc.commentPager_pageID;
 		}
 		// Check pagination incoming
 		if( event.valueExists("commentPager_pagination") ){
@@ -180,6 +186,7 @@ component extend="baseHandler"{
 		
 		// search entries with filters and all
 		var commentResults = commentService.search(entryID=arguments.entryID,
+												   pageID=arguments.pageID,
 											       offset=prc.commentPager_paging.startRow-1,
 											       max=arguments.max);
 		prc.commentPager_comments 	     = commentResults.comments;

@@ -44,7 +44,9 @@ component {
 			// search filter
 			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" },
 			// blog permalink
-			{pattern="/entry/:entrySlug", handler="blog", action="entry"}
+			{pattern="/entry/:entrySlug", handler="blog", action="entry"},
+			// page permalink
+			{pattern="/:pageSlug", handler="blog", action="page"}
 		];		
 		
 		// BB UI Event driven programming extensions
@@ -56,9 +58,10 @@ component {
 				// Code Interception points
 				"bbui_onPageNotFound","bbui_onError","bbui_preRequest","bbui_postRequest","bbui_onRendererDecoration",
 				// Fixed Handler Points
-				"bbui_onIndex","bbui_onEntry","bbui_preCommentPost","bbui_onCommentPost",
+				"bbui_onIndex","bbui_onEntry","bbui_onPage","bbui_preCommentPost","bbui_onCommentPost",
 				// Fixed HTML Points
-				"bbui_preEntryDisplay","bbui_postEntryDisplay","bbui_preIndexDisplay","bbui_postIndexDisplay","bbui_preCommentForm","bbui_postCommentForm"
+				"bbui_preEntryDisplay","bbui_postEntryDisplay","bbui_preIndexDisplay","bbui_postIndexDisplay","bbui_preCommentForm","bbui_postCommentForm",
+				"bbui_prePageDisplay","bbui_postPageDisplay"
 			])
 		};
 		
