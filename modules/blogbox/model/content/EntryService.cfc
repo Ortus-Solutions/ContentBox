@@ -105,6 +105,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// only published entries
 		arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",1)) );
+		// only non-password entries
+		arrayAppend(criteria, restrictions.isNull("passwordProtection") );
 		
 		// Category Filter
 		if( len(arguments.category) ){

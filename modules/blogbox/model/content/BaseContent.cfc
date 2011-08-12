@@ -11,7 +11,7 @@ component mappedsuperclass="true" {
 	property name="publishedDate"		notnull="false" ormtype="timestamp" idx="idx_publishedDate";
 	property name="isPublished" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
 	property name="allowComments" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1";
-	property name="passwordProtection" 	notnull="false" length="100" default="";
+	property name="passwordProtection" 	notnull="false" length="100" default="" index="idx_published";
 	property name="HTMLKeywords"		notnull="false" length="160" default="";
 	property name="HTMLDescription"		notnull="false" length="160" default="";
 	property name="hits"				notnull="false" ormtype="long" default="0" dbdefault="0";
