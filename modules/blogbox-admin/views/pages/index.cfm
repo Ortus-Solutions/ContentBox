@@ -129,7 +129,7 @@
 					<cfloop array="#prc.pages#" index="page">
 					<tr data-pageID="#page.getPageID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
 						<td>
-							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getTitle()#</a><br/>
+							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getRecursiveSlug()#</a><br/>
 							<!--- password protect --->
 							<cfif page.isPasswordProtected()>
 								<img src="#prc.bbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>

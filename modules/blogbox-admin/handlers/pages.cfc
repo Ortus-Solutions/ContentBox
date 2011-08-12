@@ -80,6 +80,8 @@ component extends="baseHandler"{
 			// Get Comments viewlet
 			prc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments={pageID=rc.pageID});
 		}
+		// Get all pages for parent drop downs
+		prc.pages = pageService.list(sortOrder="title asc");		
 		// exit handlers
 		prc.xehPageSave = "#prc.bbAdminEntryPoint#.pages.save";
 		prc.xehSlugify	= "#prc.bbAdminEntryPoint#.pages.slugify";
@@ -118,8 +120,8 @@ component extends="baseHandler"{
 		
 		// attach author
 		page.setAuthor( prc.oAuthor );
-		// TOOD: Attach parent page
-		
+		// attach parent page
+		if( len(rc.parentPage) ){ page.setParent( pageService.get( rc.parentPage ) ); }
 		// save entry
 		pageService.savePage( page );
 		

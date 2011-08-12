@@ -51,4 +51,29 @@ component persistent="true" entityname="bbPage" table="bb_page" batchsize="10" e
 		return len( getPageID() );
 	}
 	
+	/**
+	* Get parent ID if set or empty
+	*/
+	function getParentID(){
+		if( hasParent() ){ return getParent().getPageID(); }
+		return "";
+	}
+	
+	/**
+	* Get parent name or empty
+	*/
+	function getParentName(){
+		if( hasParent() ){ return getParent().getTitle(); }
+		return "";
+	}
+	
+	/**
+	* Get recursive slug paths
+	*/
+	function getRecursiveSlug(separator="/"){
+		var pPath = "";
+		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
+		return pPath & arguments.separator & getSlug();
+	}
+	
 }

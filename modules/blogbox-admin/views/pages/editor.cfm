@@ -72,6 +72,20 @@
 			
 			#html.endFieldSet()#
 			
+			<!--- Page Options --->
+			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/page.png" alt="modifiers" width="16"/> Page Options')#
+				<!--- Parent Page --->
+				#html.label(field="parentPage",content='<img src="#prc.bbRoot#/includes/images/parent.png" alt="parent" /> Parent Page:')#
+				<select name="parentPage" id="parentPage" class="width98">
+					<option value="">No Parent</option>
+					#html.options(values=prc.pages,column="pageID",nameColumn="title",selectedValue=prc.page.getParentID())#
+				</select>
+				
+				<!--- layout --->
+				#html.label(field="layout",content='<img src="#prc.bbRoot#/includes/images/layout.png" alt="layout" /> Page Layout:')#
+			
+			#html.endFieldSet()#
+			
 			<!--- Page Modifiers --->
 			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/settings.png" alt="modifiers" width="16"/> Modifiers')#
 				<!--- Allow Comments --->

@@ -74,7 +74,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		
 		// run criteria query and projections count
-		results.pages 	= criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
+		results.pages 	= criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="title asc",asQuery=false);
 		results.count 	= criteriaCount(criteria=criteria);
 		
 		return results;
