@@ -49,10 +49,10 @@ component extend="baseHandler"{
 		rc.countUnApproved 	= commentService.countWhere(isApproved=false);
 		
 		// exit Handlers
-		rc.xehCommentEditor 	= "#prc.bbEntryPoint#.comments.editor";
-		rc.xehCommentRemove 	= "#prc.bbEntryPoint#.comments.remove";
-		prc.xehCommentstatus 	= "#prc.bbEntryPoint#.comments.doStatusUpdate";
-		rc.xehCommentQuickLook	= "#prc.bbEntryPoint#.comments.quicklook";
+		rc.xehCommentEditor 	= "#prc.bbAdminEntryPoint#.comments.editor";
+		rc.xehCommentRemove 	= "#prc.bbAdminEntryPoint#.comments.remove";
+		prc.xehCommentstatus 	= "#prc.bbAdminEntryPoint#.comments.doStatusUpdate";
+		rc.xehCommentQuickLook	= "#prc.bbAdminEntryPoint#.comments.quicklook";
 		
 		// tab 
 		prc.tabComments_inbox = true;
@@ -84,7 +84,7 @@ component extend="baseHandler"{
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue("commentID",0) );
 		// exit handlers
-		prc.xehCommentsave = "#prc.bbEntryPoint#.comments.save";
+		prc.xehCommentsave = "#prc.bbAdminEntryPoint#.comments.save";
 		// view
 		event.setView(view="comments/editor",layout="ajax");
 	}
@@ -99,8 +99,8 @@ component extend="baseHandler"{
 			return;
 		}
 		// exit handlers
-		prc.xehCommentstatus = "#prc.bbEntryPoint#.comments.doStatusUpdate";
-		rc.xehCommentRemove = "#prc.bbEntryPoint#.comments.remove";
+		prc.xehCommentstatus = "#prc.bbAdminEntryPoint#.comments.doStatusUpdate";
+		rc.xehCommentRemove = "#prc.bbAdminEntryPoint#.comments.remove";
 		// view
 		event.setView("comments/moderate");
 	}
@@ -173,10 +173,10 @@ component extend="baseHandler"{
 		event.paramValue("page",1);
 		
 		// exit handlers
-		prc.xehCommentPager 			= "#prc.bbEntryPoint#.comments.pager";
-		prc.xehCommentPagerQuickLook	= "#prc.bbEntryPoint#.comments.quickLook";
-		prc.xehCommentPagerStatus		= "#prc.bbEntryPoint#.comments.doStatusUpdate";
-		prc.xehCommentPagerRemove		= "#prc.bbEntryPoint#.comments.remove";
+		prc.xehCommentPager 			= "#prc.bbAdminEntryPoint#.comments.pager";
+		prc.xehCommentPagerQuickLook	= "#prc.bbAdminEntryPoint#.comments.quickLook";
+		prc.xehCommentPagerStatus		= "#prc.bbAdminEntryPoint#.comments.doStatusUpdate";
+		prc.xehCommentPagerRemove		= "#prc.bbAdminEntryPoint#.comments.remove";
 		
 		// prepare paging plugin
 		prc.commentPager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox");
@@ -201,7 +201,7 @@ component extend="baseHandler"{
 	
 	// settings
 	function settings(event,rc,prc){
-		rc.xehSaveSettings = "#prc.bbEntryPoint#.comments.saveSettings";
+		rc.xehSaveSettings = "#prc.bbAdminEntryPoint#.comments.saveSettings";
 		prc.tabComments_settings = true;
 		event.setView("comments/settings");
 	}

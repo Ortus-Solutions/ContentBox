@@ -17,10 +17,10 @@ component extends="baseHandler"{
 	function index(event,rc,prc){
 		
 		// exit Handlers
-		prc.xehEntryEditor		= "#prc.bbEntryPoint#.entries.editor";
-		prc.xehEntrySave			= "#prc.bbEntryPoint#.entries.save";
-		prc.xehRemoveComment		= "#prc.bbEntryPoint#.comments.remove";
-		prc.xehReloadModule		= "#prc.bbEntryPoint#.dashboard.reload";
+		prc.xehEntryEditor		= "#prc.bbAdminEntryPoint#.entries.editor";
+		prc.xehEntrySave			= "#prc.bbAdminEntryPoint#.entries.save";
+		prc.xehRemoveComment		= "#prc.bbAdminEntryPoint#.comments.remove";
+		prc.xehReloadModule		= "#prc.bbAdminEntryPoint#.dashboard.reload";
 		
 		// Tab Manipulation
 		prc.tabDashboard_home = true;

@@ -163,8 +163,9 @@
 						<td class="center">
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit #page.getTitle()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
+							&nbsp;
 							<!--- View in Site --->
-							<a href="#event.buildLink(prc.bbSiteEntryPoint & "/#page.getSlug()#")#" title="View Page In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
+							<a href="#prc.bbHelper.linkPage(page)#" title="View Page In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete Page" href="javascript:remove('#page.getPageID()#')" class="confirmIt" data-title="Delete Page?"><img id="delete_#page.getPageID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>

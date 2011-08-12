@@ -55,7 +55,7 @@
 				</cfif>
 				&nbsp;	
 				<!--- View in Site --->
-				<a href="#event.buildLink(prc.bbSiteEntryPoint & "/#comment.getEntry().getSlug()###comment_#comment.getCommentID()#")#" title="View Entry In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
+				<a href="#prc.bbHelper.linkComment(comment)#" title="View Entry In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 				&nbsp;
 				<!--- Delete Command --->
 				<a title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><img id="delete_#comment.getCommentID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>

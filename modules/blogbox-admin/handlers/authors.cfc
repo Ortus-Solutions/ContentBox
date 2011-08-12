@@ -26,8 +26,8 @@ component extends="baseHandler"{
 		rc.pagingLink 	= event.buildLink('#prc.xehAuthors#.page.@page@');
 		
 		// exit Handlers
-		rc.xehAuthorRemove 	= "#prc.bbEntryPoint#.authors.remove";
-		prc.xehAuthorsearch 	= "#prc.bbEntryPoint#.authors";
+		rc.xehAuthorRemove 	= "#prc.bbAdminEntryPoint#.authors.remove";
+		prc.xehAuthorsearch 	= "#prc.bbAdminEntryPoint#.authors";
 		
 		// Get all authors or search
 		if( len(event.getValue("searchAuthor","")) ){
@@ -49,8 +49,8 @@ component extends="baseHandler"{
 	// user editor
 	function editor(event,rc,prc){
 		// exit handlers
-		prc.xehAuthorsave 			= "#prc.bbEntryPoint#.authors.save";
-		rc.xehAuthorChangePassword 	= "#prc.bbEntryPoint#.authors.passwordChange";
+		prc.xehAuthorsave 			= "#prc.bbAdminEntryPoint#.authors.save";
+		rc.xehAuthorChangePassword 	= "#prc.bbAdminEntryPoint#.authors.passwordChange";
 		prc.xehEntriesPager			= "blogbox-admin:entries.pager";
 		
 		// get new or persisted author

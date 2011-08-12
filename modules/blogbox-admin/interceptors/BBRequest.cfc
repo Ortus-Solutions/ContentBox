@@ -23,10 +23,10 @@ component extends="coldbox.system.Interceptor"{
 		prc.bbRoot = event.getModuleRoot();
 		// bb helper
 		prc.bbHelper = getMyPlugin(plugin="BBHelper",module="blogbox");
-		// store module entry point
-		prc.bbEntryPoint = getProperty("entryPoint");
+		// store admin module entry point
+		prc.bbAdminEntryPoint = getProperty("entryPoint");
 		// store site entry point
-		prc.bbSiteEntryPoint = getModuleSettings("blogbox-ui").entryPoint;
+		prc.bbEntryPoint = getModuleSettings("blogbox-ui").entryPoint;
 		// Place user in prc
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global bb options on scope
@@ -35,40 +35,40 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 		
 		// Global Admin Exit Handlers
-		prc.xehDashboard 	= "#prc.bbEntryPoint#.dashboard";
+		prc.xehDashboard 	= "#prc.bbAdminEntryPoint#.dashboard";
 		
 		// Entries Tab
-		prc.xehEntries		= "#prc.bbEntryPoint#.entries";
-		prc.xehBlogEditor 	= "#prc.bbEntryPoint#.entries.editor";
-		prc.xehCategories	= "#prc.bbEntryPoint#.categories";
+		prc.xehEntries		= "#prc.bbAdminEntryPoint#.entries";
+		prc.xehBlogEditor 	= "#prc.bbAdminEntryPoint#.entries.editor";
+		prc.xehCategories	= "#prc.bbAdminEntryPoint#.categories";
 		
 		// Pages Tab
-		prc.xehPages		= "#prc.bbEntryPoint#.pages";
-		prc.xehPagesEditor	= "#prc.bbEntryPoint#.pages.editor";
+		prc.xehPages		= "#prc.bbAdminEntryPoint#.pages";
+		prc.xehPagesEditor	= "#prc.bbAdminEntryPoint#.pages.editor";
 		
 		// Comments Tab
-		prc.xehComments			= "#prc.bbEntryPoint#.comments";
-		prc.xehCommentsettings	= "#prc.bbEntryPoint#.comments.settings";
+		prc.xehComments			= "#prc.bbAdminEntryPoint#.comments";
+		prc.xehCommentsettings	= "#prc.bbAdminEntryPoint#.comments.settings";
 		
 		// Site Tab
-		prc.xehLayouts		= "#prc.bbEntryPoint#.layouts";
-		prc.xehCustomHTML	= "#prc.bbEntryPoint#.customHTML";
-		prc.xehWidgets		= "#prc.bbEntryPoint#.widgets";
+		prc.xehLayouts		= "#prc.bbAdminEntryPoint#.layouts";
+		prc.xehCustomHTML	= "#prc.bbAdminEntryPoint#.customHTML";
+		prc.xehWidgets		= "#prc.bbAdminEntryPoint#.widgets";
 		
 		// Authors Tab
-		prc.xehAuthors		= "#prc.bbEntryPoint#.authors";
-		prc.xehAuthorEditor	= "#prc.bbEntryPoint#.authors.editor";
+		prc.xehAuthors		= "#prc.bbAdminEntryPoint#.authors";
+		prc.xehAuthorEditor	= "#prc.bbAdminEntryPoint#.authors.editor";
 		
 		// Tools
-		prc.xehToolsImport	= "#prc.bbEntryPoint#.tools.importer";
+		prc.xehToolsImport	= "#prc.bbAdminEntryPoint#.tools.importer";
 		
 		// System
-		prc.xehSettings		= "#prc.bbEntryPoint#.settings";
-		prc.xehRawSettings	= "#prc.bbEntryPoint#.settings.raw";
+		prc.xehSettings		= "#prc.bbAdminEntryPoint#.settings";
+		prc.xehRawSettings	= "#prc.bbAdminEntryPoint#.settings.raw";
 		
 		// Login/Logout
-		prc.xehDoLogout 	= "#prc.bbEntryPoint#.security.doLogout";
-		prc.xehLogin 		= "#prc.bbEntryPoint#.security.login";
+		prc.xehDoLogout 	= "#prc.bbAdminEntryPoint#.security.doLogout";
+		prc.xehLogin 		= "#prc.bbAdminEntryPoint#.security.login";
 		
 		/************************************** NAVIGATION TABS *********************************************/
 		event.paramValue(name="tabDashboard",value=false,private=true);

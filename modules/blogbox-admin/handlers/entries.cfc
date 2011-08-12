@@ -16,9 +16,9 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// exit Handlers
-		prc.xehEntries 		= "#prc.bbEntryPoint#.entries";
-		rc.xehEntryEditor 	= "#prc.bbEntryPoint#.entries.editor";
-		rc.xehEntryRemove 	= "#prc.bbEntryPoint#.entries.remove";
+		prc.xehEntries 		= "#prc.bbAdminEntryPoint#.entries";
+		rc.xehEntryEditor 	= "#prc.bbAdminEntryPoint#.entries.editor";
+		rc.xehEntryRemove 	= "#prc.bbAdminEntryPoint#.entries.remove";
 		// Tab control
 		prc.tabEntries = true;
 	}
@@ -62,8 +62,8 @@ component extends="baseHandler"{
 		rc.entriesCount  = entryResults.count;
 		
 		// exit handlers
-		rc.xehEntrySearch 	= "#prc.bbEntryPoint#.entries";
-		rc.xehEntryQuickLook= "#prc.bbEntryPoint#.entries.quickLook";
+		rc.xehEntrySearch 	= "#prc.bbAdminEntryPoint#.entries";
+		rc.xehEntryQuickLook= "#prc.bbAdminEntryPoint#.entries.quickLook";
 		// Tab
 		prc.tabEntries_viewAll = true;
 		// view
@@ -89,8 +89,8 @@ component extends="baseHandler"{
 			rc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments={entryID=rc.entryID});
 		}
 		// exit handlers
-		rc.xehEntrySave = "#prc.bbEntryPoint#.entries.save";
-		rc.xehSlugify	= "#prc.bbEntryPoint#.entries.slugify";
+		rc.xehEntrySave = "#prc.bbAdminEntryPoint#.entries.save";
+		rc.xehSlugify	= "#prc.bbAdminEntryPoint#.entries.slugify";
 		// Tab
 		prc.tabEntries_editor = true;
 		// view
@@ -183,9 +183,9 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// exit handlers
-		rc.xehPager 		= "#prc.bbEntryPoint#.entries.pager";
-		rc.xehEntryEditor	= "#prc.bbEntryPoint#.entries.editor";
-		rc.xehEntryQuickLook= "#prc.bbEntryPoint#.entries.quickLook";
+		rc.xehPager 		= "#prc.bbAdminEntryPoint#.entries.pager";
+		rc.xehEntryEditor	= "#prc.bbAdminEntryPoint#.entries.editor";
+		rc.xehEntryQuickLook= "#prc.bbAdminEntryPoint#.entries.quickLook";
 		
 		// prepare paging plugin
 		rc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox");
@@ -217,7 +217,7 @@ component extends="baseHandler"{
 		// get all categories for quick post
 		prc.qpCategories = categoryService.getAll(sortOrder="category");
 		// exit handlers
-		prc.xehQPEntrySave = "#prc.bbEntryPoint#.entries.save";
+		prc.xehQPEntrySave = "#prc.bbAdminEntryPoint#.entries.save";
 		// render it out
 		return renderView(view="entries/quickPost",module="blogbox-admin");		
 	}

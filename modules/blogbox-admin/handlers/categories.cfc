@@ -17,8 +17,8 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehCategoryRemove 	= "#prc.bbEntryPoint#.categories.remove";
-		prc.xehCategoriesSave 	= "#prc.bbEntryPoint#.Categories.save";
+		rc.xehCategoryRemove 	= "#prc.bbAdminEntryPoint#.categories.remove";
+		prc.xehCategoriesSave 	= "#prc.bbAdminEntryPoint#.Categories.save";
 		// Get all categories
 		rc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// Tab

@@ -17,11 +17,11 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehLayoutRemove 	= "#prc.bbEntryPoint#.layouts.remove";
-		rc.xehLayoutUpload  = "#prc.bbEntryPoint#.layouts.upload";
-		rc.xehFlushRegistry = "#prc.bbEntryPoint#.layouts.rebuildRegistry";
-		rc.xehActivate		= "#prc.bbEntryPoint#.layouts.activate";
-		rc.xehPreview		= "#prc.bbSiteEntryPoint#.__preview";
+		rc.xehLayoutRemove 	= "#prc.bbAdminEntryPoint#.layouts.remove";
+		rc.xehLayoutUpload  = "#prc.bbAdminEntryPoint#.layouts.upload";
+		rc.xehFlushRegistry = "#prc.bbAdminEntryPoint#.layouts.rebuildRegistry";
+		rc.xehActivate		= "#prc.bbAdminEntryPoint#.layouts.activate";
+		rc.xehPreview		= "#prc.bbEntryPoint#.__preview";
 		
 		// Get all layouts
 		rc.layouts = layoutService.getLayouts();

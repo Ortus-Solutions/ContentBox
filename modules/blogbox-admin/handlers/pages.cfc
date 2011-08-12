@@ -15,9 +15,9 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// exit Handlers
-		prc.xehPages 		= "#prc.bbEntryPoint#.pages";
-		prc.xehPageEditor 	= "#prc.bbEntryPoint#.pages.editor";
-		prc.xehPageRemove 	= "#prc.bbEntryPoint#.pages.remove";
+		prc.xehPages 		= "#prc.bbAdminEntryPoint#.pages";
+		prc.xehPageEditor 	= "#prc.bbAdminEntryPoint#.pages.editor";
+		prc.xehPageRemove 	= "#prc.bbAdminEntryPoint#.pages.remove";
 		// Tab control
 		prc.tabPages = true;
 	}
@@ -56,8 +56,8 @@ component extends="baseHandler"{
 		prc.pagesCount  = pageResults.count;
 		
 		// exit handlers
-		prc.xehPageSearch 	= "#prc.bbEntryPoint#.pages";
-		prc.xehPageQuickLook= "#prc.bbEntryPoint#.pages.quickLook";
+		prc.xehPageSearch 	= "#prc.bbAdminEntryPoint#.pages";
+		prc.xehPageQuickLook= "#prc.bbAdminEntryPoint#.pages.quickLook";
 		// Tab
 		prc.tabPages_viewAll = true;
 		// view
@@ -81,8 +81,8 @@ component extends="baseHandler"{
 			prc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments={pageID=rc.pageID});
 		}
 		// exit handlers
-		prc.xehPageSave = "#prc.bbEntryPoint#.pages.save";
-		prc.xehSlugify	= "#prc.bbEntryPoint#.pages.slugify";
+		prc.xehPageSave = "#prc.bbAdminEntryPoint#.pages.save";
+		prc.xehSlugify	= "#prc.bbAdminEntryPoint#.pages.slugify";
 		// Tab
 		prc.tabPages_editor = true;
 		// view
@@ -166,9 +166,9 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// exit handlers
-		prc.xehPagePager 		= "#prc.bbEntryPoint#.pages.pager";
-		prc.xehPageEditor		= "#prc.bbEntryPoint#.pages.editor";
-		prc.xehPageQuickLook	= "#prc.bbEntryPoint#.pages.quickLook";
+		prc.xehPagePager 		= "#prc.bbAdminEntryPoint#.pages.pager";
+		prc.xehPageEditor		= "#prc.bbAdminEntryPoint#.pages.editor";
+		prc.xehPageQuickLook	= "#prc.bbAdminEntryPoint#.pages.quickLook";
 		
 		// prepare paging plugin
 		prc.pagePager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox");

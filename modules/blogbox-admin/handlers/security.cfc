@@ -9,8 +9,8 @@ component{
 	
 	// login screen
 	function login(event,rc,prc){
-		rc.xehDoLogin 		= "#prc.bbEntryPoint#.security.doLogin";
-		rc.xehLostPassword 	= "#prc.bbEntryPoint#.security.lostPassword";
+		rc.xehDoLogin 		= "#prc.bbAdminEntryPoint#.security.doLogin";
+		rc.xehLostPassword 	= "#prc.bbAdminEntryPoint#.security.lostPassword";
 		event.setView(view="security/login",layout="login");	
 	}
 	
@@ -29,7 +29,7 @@ component{
 				setNextEvent(uri=rc["_securedURL"]);
 			}
 			else{
-				setNextEvent("#prc.bbEntryPoint#.dashboard");
+				setNextEvent("#prc.bbAdminEntryPoint#.dashboard");
 			}
 		}
 		else{
@@ -37,7 +37,7 @@ component{
 			announceInterception("bbadmin_onBadLogin");
 			// message and redirect
 			getPlugin("MessageBox").warn("Invalid Credentials, try it again!");
-			setNextEvent("#prc.bbEntryPoint#.security.login");
+			setNextEvent("#prc.bbAdminEntryPoint#.security.login");
 		}
 	}
 	
@@ -49,13 +49,13 @@ component{
 		announceInterception("bbadmin_onLogout");
 		// message redirect	
 		getPlugin("MessageBox").info("See you later!");
-		setNextEvent("#prc.bbEntryPoint#.security.login");
+		setNextEvent("#prc.bbAdminEntryPoint#.security.login");
 	}
 	
 	// lost password screen
 	function lostPassword(event,rc,prc){
-		prc.xehLogin 			= "#prc.bbEntryPoint#.security.login";
-		rc.xehDoLostPassword 	= "#prc.bbEntryPoint#.security.doLostPassword";
+		prc.xehLogin 			= "#prc.bbAdminEntryPoint#.security.login";
+		rc.xehDoLostPassword 	= "#prc.bbAdminEntryPoint#.security.doLostPassword";
 		event.setView(view="security/lostPassword",layout="login");	
 	}
 	
@@ -93,7 +93,7 @@ component{
 			getPlugin("MessageBox").error(messageArray=errors);
 		}
 		// Re Route
-		setNextEvent("#prc.bbEntryPoint#.security.lostPassword");
+		setNextEvent("#prc.bbAdminEntryPoint#.security.lostPassword");
 	}
 	
 }

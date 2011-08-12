@@ -14,7 +14,7 @@ component extends="baseHandler"{
 	// importer
 	function importer(event,rc,prc){
 		// Exit Handler
-		rc.xehImport 	= "#prc.bbEntryPoint#.tools.doImport";
+		rc.xehImport 	= "#prc.bbAdminEntryPoint#.tools.doImport";
 		// tab
 		prc.tabTools_import = true; 
 		// view

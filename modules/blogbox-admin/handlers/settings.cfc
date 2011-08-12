@@ -17,7 +17,7 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// Exit Handler
-		rc.xehSaveSettings 	= "#prc.bbEntryPoint#.settings.save";
+		rc.xehSaveSettings 	= "#prc.bbAdminEntryPoint#.settings.save";
 		// tab
 		prc.tabSystem_Settings = true; 
 		// view
@@ -46,10 +46,10 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// exit Handlers
-		rc.xehSettingRemove = "#prc.bbEntryPoint#.settings.remove";
-		prc.xehSettingsave 	= "#prc.bbEntryPoint#.settings.saveRaw";
-		rc.xehFlushCache    = "#prc.bbEntryPoint#.settings.flushCache";
-		rc.xehViewCached    = "#prc.bbEntryPoint#.settings.viewCached";
+		rc.xehSettingRemove = "#prc.bbAdminEntryPoint#.settings.remove";
+		prc.xehSettingsave 	= "#prc.bbAdminEntryPoint#.settings.saveRaw";
+		rc.xehFlushCache    = "#prc.bbAdminEntryPoint#.settings.flushCache";
+		rc.xehViewCached    = "#prc.bbAdminEntryPoint#.settings.viewCached";
 		
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");

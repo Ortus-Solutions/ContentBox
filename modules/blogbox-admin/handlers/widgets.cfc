@@ -17,9 +17,9 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehWidgetRemove 	= "#prc.bbEntryPoint#.widgets.remove";
-		rc.xehWidgetUpload  = "#prc.bbEntryPoint#.widgets.upload";
-		rc.xehWidgetDocs    = "#prc.bbEntryPoint#.widgets.docs";
+		rc.xehWidgetRemove 	= "#prc.bbAdminEntryPoint#.widgets.remove";
+		rc.xehWidgetUpload  = "#prc.bbAdminEntryPoint#.widgets.upload";
+		rc.xehWidgetDocs    = "#prc.bbAdminEntryPoint#.widgets.docs";
 		
 		// Get all widgets
 		rc.widgets = widgetService.getWidgets();

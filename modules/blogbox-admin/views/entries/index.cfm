@@ -174,8 +174,9 @@
 						<td class="center">
 							<!--- Edit Command --->
 							<a href="#event.buildLink(rc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
+							&nbsp;
 							<!--- View in Site --->
-							<a href="#event.buildLink(prc.bbSiteEntryPoint & "/#entry.getSlug()#")#" title="View Entry In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
+							<a href="#prc.bbHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete Entry" href="javascript:remove('#entry.getEntryID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getEntryID()#" src="#prc.bbroot#/includes/images/delete.png" border="0" alt="delete"/></a>

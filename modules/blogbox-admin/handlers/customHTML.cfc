@@ -13,9 +13,9 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// Exit Handler
-		rc.xehSaveHTML 		= "#prc.bbEntryPoint#.customHTML.save";
-		rc.xehRemoveHTML	= "#prc.bbEntryPoint#.customHTML.remove";
-		rc.xehEditorHTML	= "#prc.bbEntryPoint#.customHTML.editor";
+		rc.xehSaveHTML 		= "#prc.bbAdminEntryPoint#.customHTML.save";
+		rc.xehRemoveHTML	= "#prc.bbAdminEntryPoint#.customHTML.remove";
+		rc.xehEditorHTML	= "#prc.bbAdminEntryPoint#.customHTML.editor";
 		
 		// prepare paging plugin
 		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
@@ -50,8 +50,8 @@ component extends="baseHandler"{
 		// get new or persisted
 		rc.content  = htmlService.get( event.getValue("contentID",0) );
 		// exit handlers
-		rc.xehContentSave = "#prc.bbEntryPoint#.customHTML.save";
-		rc.xehSlugify	  = "#prc.bbEntryPoint#.customHTML.slugify";
+		rc.xehContentSave = "#prc.bbAdminEntryPoint#.customHTML.save";
+		rc.xehSlugify	  = "#prc.bbAdminEntryPoint#.customHTML.slugify";
 		// view
 		event.setView(view="customHTML/editor",layout="ajax");
 	}
