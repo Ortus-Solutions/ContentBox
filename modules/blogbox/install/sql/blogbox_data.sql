@@ -54,19 +54,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table bb_comment
-# ------------------------------------------------------------
-
-LOCK TABLES `bb_comment` WRITE;
-/*!40000 ALTER TABLE `bb_comment` DISABLE KEYS */;
-
-INSERT INTO `bb_comment` (`commentID`, `content`, `author`, `authorIP`, `authorEmail`, `authorURL`, `createdDate`, `isApproved`, `FK_entryID`, `FK_pageID`)
-VALUES
-	(22,'WOW! I really need to use this in all my sites now!','Luis Majano','127.0.0.1','blogbox@ortussolutions.com','www.ortussolutions.com','2011-07-30 10:10:32',b'1',5,NULL),
-	(23,'ColdBox has changed my life, I really recommend it.','Luis Majano','127.0.0.1','lmajano@gmail.com','www.luismajano.com','2011-07-30 10:11:22',b'0',5,NULL);
-
-/*!40000 ALTER TABLE `bb_comment` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table bb_customhtml
@@ -90,6 +77,20 @@ VALUES
 /*!40000 ALTER TABLE `bb_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+# Dump of table bb_comment
+# ------------------------------------------------------------
+
+LOCK TABLES `bb_comment` WRITE;
+/*!40000 ALTER TABLE `bb_comment` DISABLE KEYS */;
+
+INSERT INTO `bb_comment` (`commentID`, `content`, `author`, `authorIP`, `authorEmail`, `authorURL`, `createdDate`, `isApproved`, `FK_entryID`, `FK_pageID`)
+VALUES
+	(22,'WOW! I really need to use this in all my sites now!','Luis Majano','127.0.0.1','blogbox@ortussolutions.com','www.ortussolutions.com','2011-07-30 10:10:32',b'1',5,NULL),
+	(23,'ColdBox has changed my life, I really recommend it.','Luis Majano','127.0.0.1','lmajano@gmail.com','www.luismajano.com','2011-07-30 10:11:22',b'0',5,NULL);
+
+/*!40000 ALTER TABLE `bb_comment` ENABLE KEYS */;
+UNLOCK TABLES;
 
 # Dump of table bb_entryCategories
 # ------------------------------------------------------------

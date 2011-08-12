@@ -55,11 +55,19 @@ component extends="coldbox.system.Interceptor"{
 		// check for renderer
 		if( isInstanceOf(arguments.interceptData.oPlugin,"coldbox.system.plugins.Renderer") ){
 			// decorate it
-			arguments.interceptData.oPlugin.bb = getMyPlugin(plugin="BBHelper",module="blogbox-ui");
-			arguments.interceptData.oPlugin.includeUDF(prc.bbRoot & "/plugins/BBHelperInject.cfm");
+			arguments.interceptData.oPlugin.bb = getMyPlugin(plugin="BBHelper",module="blogbox");
+			arguments.interceptData.oPlugin.$bbInject = variables.$bbInject;
+			arguments.interceptData.oPlugin.$bbInject();
 			// announce event
 			announceInterception("bbui_onRendererDecoration",{renderer=arguments.interceptData.oPlugin,bbHelper=arguments.interceptData.oPlugin.bb});	
 		}		
+	}
+	
+	/**
+	* private inject
+	*/
+	function $bbinject(){
+		variables.bb = this.bb;
 	}
 				
 }

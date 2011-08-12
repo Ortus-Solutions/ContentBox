@@ -9,7 +9,7 @@ component singleton{
 	property name="pageService"			inject="id:pageService@bb";
 	property name="authorService"		inject="id:authorService@bb";
 	property name="commentService"		inject="id:commentService@bb";
-	property name="bbHelper"			inject="coldbox:myplugin:BBHelper@blogbox-ui";
+	property name="bbHelper"			inject="id:bbhelper@bb";
 	property name="rssService"			inject="rssService@bb";
 
 	// pre Handler

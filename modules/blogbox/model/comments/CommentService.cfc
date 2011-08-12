@@ -7,8 +7,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	property name="mailService"		inject="coldbox:plugin:MailService";
 	property name="renderer" 		inject="coldbox:plugin:Renderer";
 	property name="settingService"	inject="id:settingService@bb";
+	property name="bbHelper"		inject="id:bbhelper@bb";
 	property name="log"				inject="logbox:logger:{this}";
-	property name="bbHelper"		inject="coldbox:myplugin:BBHelper@blogbox-ui";
 
 	/**
 	* Constructor

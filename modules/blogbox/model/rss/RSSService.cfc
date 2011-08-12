@@ -7,8 +7,8 @@ component singleton{
 	property name="settingService"		inject="id:settingService@bb";
 	property name="entryService"		inject="id:entryService@bb";
 	property name="commentService"		inject="id:commentService@bb";
+	property name="bbHelper"			inject="id:bbhelper@bb";
 	property name="feedGenerator" 		inject="coldbox:plugin:feedGenerator";
-	property name="bbHelper"			inject="coldbox:myplugin:BBHelper@blogbox-ui";
 	property name="log"					inject="logbox:logger:{this}";
 	property name="cache"				inject="cachebox:default";
 	

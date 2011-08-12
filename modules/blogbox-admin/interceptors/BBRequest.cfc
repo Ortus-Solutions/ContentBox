@@ -22,7 +22,7 @@ component extends="coldbox.system.Interceptor"{
 		// store module root	
 		prc.bbRoot = event.getModuleRoot();
 		// bb helper
-		prc.bbHelper = getMyPlugin(plugin="BBHelper",module="blogbox-ui");
+		prc.bbHelper = getMyPlugin(plugin="BBHelper",module="blogbox");
 		// store module entry point
 		prc.bbEntryPoint = getProperty("entryPoint");
 		// store site entry point

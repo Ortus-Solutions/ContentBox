@@ -41,6 +41,7 @@ component {
 		binder.map("widgetService@bb").to("#moduleMapping#.model.ui.widgetService");	
 		binder.map("layoutService@bb").to("#moduleMapping#.model.ui.LayoutService");
 		binder.map("customHTMLService@bb").to("#moduleMapping#.model.ui.CustomHTMLService");
+		binder.map("bbHelper@bb").toDSL("coldbox:myplugin:BBHelper@blogbox");
 		// utils
 		binder.map("zipUtil@bb").to("coldbox.system.core.util.Zip");
 		// importers
