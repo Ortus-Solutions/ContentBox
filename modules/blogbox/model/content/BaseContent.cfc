@@ -19,6 +19,9 @@ component mappedsuperclass="true" {
 	// M20 -> Author loaded as a proxy
 	property name="author" cfc="blogbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true";
 	
+	// Get content type
+	property name="type" persistent="false";
+	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	
 	/*

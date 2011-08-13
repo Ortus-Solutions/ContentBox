@@ -4,7 +4,7 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Layout Uploader
+			<img src="#prc.bbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Layout Theme Uploader
 		</div>
 		<div class="body">
 			#html.startForm(name="layoutUploadForm",action=rc.xehlayoutupload,multipart=true,novalidate="novalidate")#
@@ -41,7 +41,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.bbroot#/includes/images/layouts.png" alt="layouts"/>
-			Layouts
+			Layout Themes
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -69,15 +69,16 @@
 			</div>
 			
 			<img src="#prc.bbRoot#/includes/images/asterisk_orange.png" alt="active" title="Currently Active Layout"/>
-			<strong>Currently Active Layout</strong>
+			<strong>Active Layout Theme</strong>
 			
 			<!--- layouts --->
 			<table name="layouts" id="layouts" class="tablesorter" width="98%">
 				<thead>
 					<tr>
-						<th width="300">Layout</th>
-						<th>Info</th>
-						<th width="75" class="center {sorter:false}">Actions</th>
+						<th>Theme Info</th>
+						<th width="310">Description</th>
+						<th>Layouts</th>
+						<th width="55" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
 				<tbody>
@@ -111,8 +112,15 @@
 							<!--- description --->
 							#rc.layouts.description#<br/>
 							<div class="contentBar">
-								Layout located in <em title="#rc.layoutsPath#/#rc.layouts.name#">blogbox-ui/layouts/#rc.layouts.name#</em>
+								Theme located in <em title="#rc.layoutsPath#/#rc.layouts.name#">blogbox-ui/layouts/#rc.layouts.name#</em>
 							</div>
+						</td>
+						<td>
+							<ul>
+							<cfloop list="#rc.layouts.layouts#" index="thisLayout">
+								<li>#thisLayout#</li>
+							</cfloop>
+							</ul>
 						</td>
 						<td class="center">
 							<!--- Update Check --->

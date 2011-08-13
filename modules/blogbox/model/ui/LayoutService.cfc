@@ -113,6 +113,7 @@ component accessors="true" singleton{
 		QueryAddColumn(rawLayouts,"screenShotURL",[]);
 		QueryAddColumn(rawLayouts,"forgeBoxSlug",[]);
 		QueryAddColumn(rawLayouts,"customInterceptionPoints",[]);
+		QueryAddColumn(rawLayouts,"layouts",[]);
 		
 		// Register each layout CFC
 		for(var x=1; x lte rawLayouts.recordCount; x++){
@@ -153,6 +154,10 @@ component accessors="true" singleton{
 			else{
 				rawLayouts.customInterceptionPoints[x] = "";
 			}
+			
+			// layouts
+			var thisLayouts = directoryList(getLayoutsPath() & "/#layoutName#/layouts",false,"query","*.cfm","name asc");
+			rawLayouts.layouts[x] = replacenocase(valueList(thisLayouts.name),".cfm","","all");
 		}
 		
 		var rawLayouts 	= new Query(dbtype="query",sql="SELECT * from rawLayouts WHERE isValid='true'",rawlayouts=rawlayouts).execute().getResult();

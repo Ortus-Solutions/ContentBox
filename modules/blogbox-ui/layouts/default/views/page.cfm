@@ -1,6 +1,5 @@
 <cfoutput>
-<!--- Main Content Goes Here --->
-<div class="left">
+
 	<!--- BlogBoxEvent --->
 	#bb.event("bbui_prePageDisplay")#
 	
@@ -12,65 +11,49 @@
 		
 		<!--- Title --->
 		<div class="post-title">
-			
-			<!--- content Author --->
-			<div class="post-content-author">
-				#bb.quickAvatar(author=prc.page.getAuthor(),size=30)# #prc.page.getAuthorName()#
-			</div>
-			
+						
 			<!--- Title --->
-			<h1><a href="#bb.linkPage(prc.page)#" rel="bookmark" title="#prc.page.getTitle()#">#prc.page.getTitle()#</a></h1>
+			<h1>#prc.page.getTitle()#</h1>
 			
 			<!--- content --->
-			<div class="post-content">
-				#prc.page.getContent()#
-			</div>
+			#prc.page.getContent()#
 		</div>
 				
 		<!--- Comments Bar --->
-		#html.anchor(name="comments")#
-		<div class="post-comments">
-			<div class="infoBar">
-				<cfif NOT bb.isCommentsEnabled(prc.page)>
-				<img src="#bb.layoutRoot()#/includes/images/important.png" alt="warning" />
-				Comments are currently closed
-				<cfelse>
-				<button class="button2" onclick="toggleCommentForm()"> Add Comment </button>
-				<img src="#bb.layoutRoot()#/includes/images/comments_32.png" alt="comments" /> #prc.page.getNumberOfApprovedComments()#
-				</cfif>
+		<cfif bb.isCommentsEnabled(prc.page)>
+					
+			#html.anchor(name="comments")#
+			<div class="post-comments">
+				<div class="infoBar">
+					<button class="button2" onclick="toggleCommentForm()"> Add Comment </button>
+					<img src="#bb.layoutRoot()#/includes/images/comments_32.png" alt="comments" /> #prc.page.getNumberOfApprovedComments()#
+				</div>
+				<br/>										
 			</div>
-			<br/>										
-		</div>
+			
+			<!--- Separator --->	
+			<div class="separator"></div>
+			
+			<!--- Comment Form: I can build it or I can quick it? --->
+			<div id="commentFormShell">
+			#bb.quickCommentForm(prc.page)#
+			</div>
+			
+			<!--- clear --->
+			<div class="clr"></div>
+			
+			<!--- Display Comments --->
+			<div id="comments">
+				#bb.quickComments()#
+			</div>
 		
-		<!--- Separator --->	
-		<div class="separator"></div>
-		
-		<!--- Comment Form: I can build it or I can quick it? --->
-		<div id="commentFormShell">
-		#bb.quickCommentForm(prc.page)#
-		</div>
-		
-		<div class="clr"></div>
-		
-		<!--- Display Comments --->
-		<div id="comments">
-			#bb.quickComments()#
-		</div>
+		</cfif>
 		
 	</div>
 		
 	<!--- BlogBoxEvent --->
 	#bb.event("bbui_postPageDisplay")#
 	
-</div> 
-
-
-
-<!--- SideBar: That's right, I can render any layout views by using quickView() or coldbo'x render methods --->
-<div class="right">#bb.quickView(view='sidebar')#</div> 	
-
-<!--- Separator --->
-<div class="clr"></div>
 
 <!--- Custom JS --->
 <script type="text/javascript">

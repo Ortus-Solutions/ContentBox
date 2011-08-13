@@ -22,6 +22,21 @@ component persistent="true" entityname="bbPage" table="bb_page" batchsize="10" e
 	
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
 	
+	/**
+	* constructor
+	*/
+	function init(){
+		setType("page");
+	}
+	
+	/**
+	* Get the layout or if empty the default convention of "pages"
+	*/
+	function getLayoutWithDefault(){
+		if( len(getLayout()) ){ return getLayout(); }
+		return "pages";
+	}
+	
 	
 	/*
 	* Validate page, returns an array of error or no messages

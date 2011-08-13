@@ -24,6 +24,13 @@ component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10"
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
 	
 	/**
+	* constructor
+	*/
+	function init(){
+		setType("entry");
+	}
+	
+	/**
 	* has excerpt
 	*/
 	boolean function hasExcerpt(){

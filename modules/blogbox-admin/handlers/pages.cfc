@@ -6,7 +6,8 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="pageService"			inject="id:pageService@bb";
 	property name="authorService"		inject="id:authorService@bb";
-
+	property name="layoutService"		inject="id:layoutService@bb";
+	
 	// Public properties
 	this.preHandler_except = "pager";
 
@@ -82,6 +83,8 @@ component extends="baseHandler"{
 		}
 		// Get all pages for parent drop downs
 		prc.pages = pageService.list(sortOrder="title asc");		
+		// Get active layout record
+		prc.layoutRecord = layoutService.getActiveLayout();
 		// exit handlers
 		prc.xehPageSave = "#prc.bbAdminEntryPoint#.pages.save";
 		prc.xehSlugify	= "#prc.bbAdminEntryPoint#.pages.slugify";

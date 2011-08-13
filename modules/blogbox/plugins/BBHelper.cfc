@@ -115,6 +115,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var event = getRequestContext();
 		return (event.getCurrentEvent() eq "blogbox-ui:blog.entry");
 	}
+	// Determin if you are in the page view
+	boolean function isPageView(){
+		var event = getRequestContext();
+		return (event.getCurrentEvent() eq "blogbox-ui:blog.page");
+	}
 	// Get the index page entries, else throws exception
 	any function getCurrentEntries(){
 		var prc = getRequestCollection(private=true);		
@@ -139,17 +144,23 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( structKeyExists(prc,"entry") ){ return prc.entry; }
 		throw(message="Entry not found in collection",detail="This probably means you are trying to use the entry in an non-entry page",type="BlogBox.BBHelper.InvalidEntryContext"); 
 	}
-	// Get the viewed entry's comments, else throw exception
+	// Get the viewed page if in page view, else throws exception
+	any function getCurrentPage(){
+		var prc = getRequestCollection(private=true);		
+		if( structKeyExists(prc,"page") ){ return prc.page; }
+		throw(message="Page not found in collection",detail="This probably means you are trying to use the page in an non-page page! Redundant huh?",type="BlogBox.BBHelper.InvalidPageContext"); 
+	}
+	// Get the viewed page's or entry's comments, else throw exception
 	any function getCurrentComments(){
 		var prc = getRequestCollection(private=true);		
 		if( structKeyExists(prc,"comments") ){ return prc.comments; }
-		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry comments in an non-entry page",type="BlogBox.BBHelper.InvalidEntryContext"); 
+		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="BlogBox.BBHelper.InvalidCommentContext"); 
 	}
 	// Get the viewed entry's comments count, else throw exception
 	any function getCurrentCommentsCount(){
 		var prc = getRequestCollection(private=true);		
 		if( structKeyExists(prc,"commentsCount") ){ return prc.commentsCount; }
-		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry comments in an non-entry page",type="BlogBox.BBHelper.InvalidEntryContext"); 
+		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="BlogBox.BBHelper.InvalidCommentContext"); 
 	}	
 	// Get the missing page, if any
 	function getMissingPage(){
@@ -270,20 +281,34 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 	
 	/**
-	* Create a link to a specific comment
+	* Create a link to a specific comment in a page or in an entry
 	* @comment The comment to link to
 	*/
 	function linkComment(comment){
-		var xeh = linkEntry( arguments.comment.getEntry() ) & "##comment_#arguments.comment.getCommentID()#";
+		var xeh = "";
+		if( arguments.comment.hasPage() ){
+			xeh = linkPage( arguments.comment.getPage() );
+		}
+		else{
+			xeh = linkEntry( arguments.comment.getEntry() );
+		}
+		xeh &= xeh & "##comment_#arguments.comment.getCommentID()#";
 		return xeh;
 	}
 	
 	/**
-	* Create a link to an entry's comments section
-	* @entry The entry to link to its comments
+	* Create a link to an entry's or page's comments section
+	* @content The entry or page to link to its comments
 	*/
-	function linkComments(entry){
-		var xeh = linkEntry( arguments.entry ) & "##comments";
+	function linkComments(content){
+		var xeh = "";
+		if( arguments.content.getType() eq "page" ){
+			xeh = linkPage( arguments.content );
+		}
+		else{
+			xeh = linkEntry( arguments.content );
+		}
+		xeh &= "##comments";
 		return xeh;
 	}
 	

@@ -17,8 +17,10 @@ component singleton{
 		// Determine used layout
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
-		// set layout
-		event.setLayout("#prc.bbLayout#/layout");	
+		
+		// set blog layout
+		event.setLayout("#prc.bbLayout#/layouts/blog");
+		
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category desc",asQuery=false);
 	}
@@ -34,7 +36,7 @@ component singleton{
 		// valid Author?
 		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
 			// Override layouts
-			event.setLayout("#rc.l#/layout").overrideEvent("blogbox-ui:blog.index");
+			event.setLayout("#rc.l#/layouts/blog").overrideEvent("blogbox-ui:blog.index");
 			// Place layout on scope
 			prc.bbLayout = rc.l;
 			// Place layout root location
@@ -143,7 +145,7 @@ component singleton{
 			// announce event
 			announceInterception("bbui_onPage",{page=prc.page,pageSlug=rc.pageSlug});
 			// set skin view
-			event.setView("#prc.bbLayout#/views/page");	
+			event.setView(view="#prc.bbLayout#/views/page",layout="#prc.bbLayout#/layouts/#prc.page.getLayout()#");	
 		}
 		else{
 			// announce event
@@ -153,7 +155,7 @@ component singleton{
 			// set 404 headers
 			event.setHTTPHeader("404","Page not found");
 			// set skin not found
-			event.setView("#prc.bbLayout#/views/notfound");
+			event.setView(view="#prc.bbLayout#/views/notfound",layout="#prc.bbLayout#/layouts/#prc.page.getLayout()#");
 		}	
 	}
 	

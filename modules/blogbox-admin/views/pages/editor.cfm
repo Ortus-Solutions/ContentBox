@@ -83,6 +83,9 @@
 				
 				<!--- layout --->
 				#html.label(field="layout",content='<img src="#prc.bbRoot#/includes/images/layout.png" alt="layout" /> Page Layout:')#
+				<select name="layout" id="layout" class="width98">
+					#html.options(values=prc.layoutRecord.layouts,selectedValue=prc.page.getLayoutWithDefault())#
+				</select>
 			
 			#html.endFieldSet()#
 			
@@ -142,6 +145,7 @@
 		
 		</div>	
 	</div>
+	<cfif prc.page.getallowComments()>
 	<!--- Page Comments --->
 	<div class="box">	
 		<cfif structKeyExists(prc,"commentsViewlet")> 
@@ -154,6 +158,7 @@
 			</div>
 		</cfif>
 	</div>
+	</cfif>
 </div>
 #html.endForm()#
 

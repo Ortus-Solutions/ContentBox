@@ -142,6 +142,7 @@ fieldset, .button, .button2, .buttonred, .buttonsmall, .small_box, .box, .body_v
 /**============================== Post Specific ==============================**/
 .post-title {margin-left: 2px;margin-bottom: 30px;}
 .post {clear: both;margin: 10px 0px 0px 0px;}
+.post h1{font-size: 28px;margin: 10px 0px;}
 .post h2{line-height: 100%;font-size: 20px;margin: 0px 0px 0px 45px;}
 .post h2 a{ color: #525252; line-height: 100%; text-decoration: none;}
 .post h2 a:hover{ color: #ee8c42;}
