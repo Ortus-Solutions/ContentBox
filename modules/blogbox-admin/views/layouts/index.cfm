@@ -77,7 +77,7 @@
 					<tr>
 						<th>Theme Info</th>
 						<th width="310">Description</th>
-						<th>Layouts</th>
+						<th>Included Layouts</th>
 						<th width="55" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
