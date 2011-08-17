@@ -31,11 +31,12 @@ component extends="baseHandler"{
 		event.paramValue("fAuthors","all");
 		event.paramValue("fStatus","any");
 		event.paramValue("isFiltering",false,true);
+		event.paramValue("parent","");
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="blogbox");
 		prc.paging 		 = prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	 = event.buildLink('#prc.xehPages#.page.@page@?');
+		prc.pagingLink 	 = event.buildLink('#prc.xehPages#?page=@page@');
 		// Append search to paging link?
 		if( len(rc.searchPages) ){ prc.pagingLink&="&searchPages=#rc.searchPages#"; }
 		// Append filters to paging link?
@@ -49,16 +50,24 @@ component extends="baseHandler"{
 		
 		// search entries with filters and all
 		var pageResults = pageService.search(search=rc.searchPages,
-											   offset=prc.paging.startRow-1,
-											   max=prc.bbSettings.bb_paging_maxrows,
-											   isPublished=rc.fStatus,
-											   author=rc.fAuthors);
+											 offset=prc.paging.startRow-1,
+											 max=prc.bbSettings.bb_paging_maxrows,
+											 isPublished=rc.fStatus,
+											 author=rc.fAuthors,
+											 parent=rc.parent);
 		prc.pages 		= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
+		
+		// Do we have a parent?
+		if( len(rc.parent) ){
+			prc.page = pageService.get( rc.parent );
+		}
 		
 		// exit handlers
 		prc.xehPageSearch 	= "#prc.bbAdminEntryPoint#.pages";
 		prc.xehPageQuickLook= "#prc.bbAdminEntryPoint#.pages.quickLook";
+		prc.xehPageOrder 	= "#prc.bbAdminEntryPoint#.pages.changeOrder";
+		
 		// Tab
 		prc.tabPages_viewAll = true;
 		// view

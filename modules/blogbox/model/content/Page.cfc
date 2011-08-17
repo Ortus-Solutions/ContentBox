@@ -16,6 +16,7 @@ component persistent="true" entityname="bbPage" table="bb_page" batchsize="10" e
 	property name="parent" notnull="false" cfc="blogbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
 	
 	// Calculated Fields
+	property name="numberOfChildren" 			formula="select count(*) from bb_page page where page.FK_parentID=pageID";
 	property name="numberOfComments" 			formula="select count(*) from bb_comment comment where comment.FK_pageID=pageID";
 	property name="numberOfApprovedComments" 	formula="select count(*) from bb_comment comment where comment.FK_pageID=pageID and comment.isApproved = 1";
 

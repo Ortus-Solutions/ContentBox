@@ -65,7 +65,6 @@
 			
 				<!--- Action Bar --->
 				<div class="actionBar">
-					&nbsp;<button class="button" title="Preview this masterpiece"> Preview </button>
 					&nbsp;<input type="submit" class="button2" value="Save Draft" title="Save this masterpiece as a draft!" onclick="toggleDraft()">
 					&nbsp;<input type="submit" class="buttonred" value="Publish" title="Let's publish this masterpiece!">
 				</div>

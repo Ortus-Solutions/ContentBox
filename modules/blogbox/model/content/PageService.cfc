@@ -66,8 +66,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			arrayAppend(criteria, restrictions.eq("author.authorID", javaCast("int",arguments.author)) );
 		}
 		// parent filter
-		if( structKeyExists(arguments,"parent") AND len(arguments.parent) ){
-			arrayAppend(criteria, restrictions.eq("parent.pageID", javaCast("int",arguments.parent)) );
+		if( structKeyExists(arguments,"parent") ){
+			if( len(arguments.parent) ){
+				arrayAppend(criteria, restrictions.eq("parent.pageID", javaCast("int",arguments.parent)) );
+			}
+			else{
+				arrayAppend(criteria, restrictions.isNull("parent") );
+			}
 			sortOrder = "order asc";
 		}	
 		// Search Criteria

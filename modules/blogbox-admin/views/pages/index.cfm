@@ -22,7 +22,7 @@
 			<img src="#prc.bbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Filters
 		</div>
 		<div class="body<cfif prc.isFiltering> selected</cfif>">
-			#html.startForm(name="pageFilterForm")#
+			#html.startForm(name="pageFilterForm",action=prc.xehPageSearch)#
 			<!--- Authors --->
 			<label for="fAuthors">Authors: </label>
 			<select name="fAuthors" id="fAuthors" style="width:200px">
@@ -42,8 +42,7 @@
 			<div class="actionBar">
 				<input type="submit" value="Apply Filters" class="buttonred" />
 				<button class="button" onclick="return to('#event.buildLink(prc.xehPages)#')">Reset</button>				
-			</div>
-			
+			</div>			
 			#html.endForm()#
 		</div>
 	</div>	
@@ -58,6 +57,8 @@
 				<li title="Click Me!" onclick="exposeIt('##pages')">Right click on a row to activate quick look!</li>
 				<li title="Click Me!" onclick="exposeIt('##main_column')">Sorting is only done within your paging window</li>
 				<li title="Click Me!" onclick="exposeIt('##contentBar')">Quick Filtering is only for viewed results</li>
+				<li title="Click Me!" onclick="exposeIt('##th_order')">Order down means increase ordering index</li>
+				<li title="Click Me!" onclick="exposeIt('##th_order')">Order up means decrease ordering index</li>
 			</ul>
 		</div>
 	</div>		
@@ -110,32 +111,43 @@
 			
 			<!--- Paging --->
 			#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
-		
+			
+			<!--- Location Bar --->
+			<cfif len(rc.parent)>
+			<div class="infoBar">
+			  <a href="#event.buildLink(prc.xehPages)#">Root</a> #getMyPlugin(plugin="PageBreadcrumbVisitor",module="blogbox-admin").visit(prc.page, event.buildLink(prc.xehPages))#
+			</div>
+			</cfif>
+			
 			<!--- pages --->
 			<table name="pages" id="pages" class="tablesorter" width="98%">
 				<thead>
 					<tr>
+						<th width="15" class="center {sorter:false}"></th>
 						<th>Name</th>
-						<th>Author</th>			
-						<th width="125">Dates</th>
-						<th width="60" class="center"><img src="#prc.bbRoot#/includes/images/sort.png" alt="order" title="Page Order"/></th>
+						<th width="55" class="center" id="th_order"><img src="#prc.bbRoot#/includes/images/sort.png" alt="order" title="Page Order"/></th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/glasses.png" alt="hits" title="Hits"/></th>
 						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments" title="Comments"/></th>
-						<th width="85" class="center {sorter:false}">Actions</th>
+						<th width="95" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
 				
 				<tbody>
 					<cfloop array="#prc.pages#" index="page">
 					<tr data-pageID="#page.getPageID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
+						<td class="middle">
+							<!--- Children Dig Deeper --->
+							<cfif page.getNumberOfChildren()>
+								<a href="#event.buildLink(prc.xehPages)#/parent/#page.getPageID()#" title="View Child Pages (#page.getNumberOfChildren()#)"><img src="#prc.bbRoot#/includes/images/plus.png" alt="child" border="0"/></a>
+							<cfelse>
+								<img src="#prc.bbRoot#/includes/images/page.png" alt="child"/>
+							</cfif>
+						</td>
 						<td>
-							
 							<!--- Title --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getTitle()#</a><br>
-							<!--- Recursive Slug --->
-							<strong>Layout: </strong> #page.getLayout()#<br/>
-							<strong>Hierarchy: </strong> #page.getRecursiveSlug()#<br/>
 							<!--- password protect --->
 							<cfif page.isPasswordProtected()>
 								<img src="#prc.bbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>
@@ -150,11 +162,6 @@
 								<img src="#prc.bbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
 							</cfif>
 						</td>
-						<td>#page.getAuthorName()#</td>
-						<td>
-							<strong title="Published Date">P:</strong> #page.getDisplayPublishedDate()#<br/>
-							<strong title="Created Date">C:</strong> #page.getDisplayCreatedDate()#
-						</td>
 						<td class="center">
 							#page.getOrder()#
 							<!--- Order Up --->
@@ -164,6 +171,9 @@
 							<!--- Increase Order Index--->
 							<a href="javascript:changeOrder('#page.getPageID()#',#page.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#page.getPageID()#" src="#prc.bbRoot#/includes/images/_down.gif" alt="order"/></a>
 						
+						</td>
+						<td class="center">
+							#page.getNumberOfChildren()#
 						</td>
 						<td class="center">
 							<cfif page.getIsPublished()>
@@ -183,7 +193,6 @@
 							<!--- Create Child --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getPageID()#" title="Create Child Page"><img src="#prc.bbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
 							&nbsp;
-							
 							<!--- View in Site --->
 							<a href="#prc.bbHelper.linkPage(page)#" title="View Page In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 							&nbsp;
@@ -222,6 +231,8 @@ $(document).ready(function() {
 
 });
 function remove(pageID){
+	// img change
+	$('##delete_'+pageID).attr('src','#prc.bbRoot#/includes/images/ajax-spinner.gif');
 	$("##pageID").val( pageID );
 	$("##pageForm").submit();
 }
@@ -229,7 +240,9 @@ function changeOrder(pageID,order,direction){
 	// img change
 	$('##order'+direction+'_'+pageID).attr('src','#prc.bbRoot#/includes/images/ajax-spinner.gif');
 	// change order
-	
+	$.post('#event.buildLink(prc.xehPageOrder)#',{pageid:pageID,order:order},function(){
+		location.reload(true);
+	});
 }
 </script>
 

@@ -35,6 +35,9 @@
 	padding: 4px;
 	vertical-align: top;
 }
+.tablesorter tbody td.middle{
+	vertical-align: middle; text-align: center;
+}
 .tablesorter tbody tr.even{
 	background-color:#F0F0F0;
 }.tablesorter tbody tr{

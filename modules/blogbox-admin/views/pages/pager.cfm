@@ -14,9 +14,8 @@
 	<thead>
 		<tr>
 			<th>Page</th>	
-			<th>Author</th>
-			<th width="125">Dates</th>
 			<th width="60" class="center"><img src="#prc.bbRoot#/includes/images/sort.png" alt="sort" title="Page Order"/></th>
+			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
 			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments" title="Number of Comments"/></th>
@@ -32,9 +31,6 @@
 			<td>
 				<!--- Title --->
 				<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getTitle()#</a><br>
-				<!--- Recursive Slug --->
-				<strong>Layout: </strong> #page.getLayout()#<br/>
-				<strong>Hierarchy: </strong> #page.getRecursiveSlug()#<br/>
 				<!--- password protect --->
 				<cfif page.isPasswordProtected()>
 					<img src="#prc.bbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>
@@ -49,11 +45,6 @@
 					<img src="#prc.bbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
 				</cfif>			
 			</td>
-			<td>#page.getAuthorName()#</td>
-			<td>
-				<strong title="Published Date">P:</strong> #page.getDisplayPublishedDate()#<br/>
-				<strong title="Created Date">C:</strong> #page.getDisplayCreatedDate()#
-			</td>
 			<td class="center">
 				#page.getOrder()#
 				<!--- Order Up --->
@@ -62,6 +53,9 @@
 				</cfif>
 				<!--- Increase Order Index--->
 				<a href="javascript:changeOrder('#page.getPageID()#',#page.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#page.getPageID()#" src="#prc.bbRoot#/includes/images/_down.gif" alt="order"/></a>
+			</td>
+			<td class="center">
+				#page.getNumberOfChildren()#	
 			</td>
 			<td class="center">
 				<cfif page.getIsPublished()>
