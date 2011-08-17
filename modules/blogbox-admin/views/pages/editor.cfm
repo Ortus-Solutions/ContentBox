@@ -75,17 +75,20 @@
 			<!--- Page Options --->
 			#html.startFieldset(legend='<img src="#prc.bbRoot#/includes/images/page.png" alt="modifiers" width="16"/> Page Options')#
 				<!--- Parent Page --->
-				#html.label(field="parentPage",content='<img src="#prc.bbRoot#/includes/images/parent.png" alt="parent" /> Parent Page:')#
+				#html.label(field="parentPage",content='Parent:')#
 				<select name="parentPage" id="parentPage" class="width98">
 					<option value="">No Parent</option>
-					#html.options(values=prc.pages,column="pageID",nameColumn="title",selectedValue=prc.page.getParentID())#
+					#html.options(values=prc.pages,column="pageID",nameColumn="title",selectedValue=prc.parentPageID)#
 				</select>
 				
 				<!--- layout --->
-				#html.label(field="layout",content='<img src="#prc.bbRoot#/includes/images/layout.png" alt="layout" /> Page Layout:')#
+				#html.label(field="layout",content='Layout:')#
 				<select name="layout" id="layout" class="width98">
 					#html.options(values=prc.layoutRecord.layouts,selectedValue=prc.page.getLayoutWithDefault())#
 				</select>
+				
+				<!--- order --->
+				#html.inputfield(type="number",label="Order: (0-99)",name="order",bind=prc.page,title="The ordering index",class="textfield",size="5",maxlength="2",min="0",max="99")#
 			
 			#html.endFieldSet()#
 			
@@ -151,13 +154,25 @@
 		<cfif structKeyExists(prc,"commentsViewlet")> 
 			<div class="header">
 				<img src="#prc.bbroot#/includes/images/comments_32.png" alt="editor" width="30" height="30" />
-				Page Comments
+				Comments
 			</div>
 			<div class="body">
 				#prc.commentsViewlet#
 			</div>
 		</cfif>
 	</div>
+	</cfif>
+	<!--- Sub Pages --->
+	<cfif prc.page.isLoaded()>
+		<div class="box">	
+			<div class="header">
+				<img src="#prc.bbroot#/includes/images/parent_color.png" alt="editor" width="30" height="30" />
+				Child Pages
+			</div>
+			<div class="body">
+				#prc.childPagesViewlet#
+			</div>
+		</div>
 	</cfif>
 </div>
 #html.endForm()#

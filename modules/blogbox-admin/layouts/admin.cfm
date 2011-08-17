@@ -124,7 +124,7 @@
 					<ul>
 						<li>
 							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabPages_viewAll",false,true)> class="current"</cfif>
-							   title="View All Blog Entries">Inbox</a>
+							   title="View All Blog Entries">Manage Pages</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehPagesEditor)#" <cfif event.getValue("tabPages_editor",false,true)> class="current"</cfif>

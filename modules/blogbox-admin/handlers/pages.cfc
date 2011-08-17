@@ -80,11 +80,20 @@ component extends="baseHandler"{
 		if( prc.page.isLoaded() ){
 			// Get Comments viewlet
 			prc.commentsViewlet = runEvent(event="blogbox-admin:comments.pager",eventArguments={pageID=rc.pageID});
+			// Get Child Pages Viewlet
+			prc.childPagesViewlet = pager(event=arguments.event,rc=arguments.rc,prc=arguments.prc,parent=prc.page.getPageID());
 		}
 		// Get all pages for parent drop downs
 		prc.pages = pageService.list(sortOrder="title asc");		
 		// Get active layout record
 		prc.layoutRecord = layoutService.getActiveLayout();
+		// Get parent from active page
+		prc.parentPageID = prc.page.getParentID();
+		// Override the parent page if incoming
+		if( structKeyExistS(rc,"parentID") ){
+			prc.parentPageID = rc.parentID;
+		}
+		
 		// exit handlers
 		prc.xehPageSave = "#prc.bbAdminEntryPoint#.pages.save";
 		prc.xehSlugify	= "#prc.bbAdminEntryPoint#.pages.slugify";
@@ -158,12 +167,17 @@ component extends="baseHandler"{
 	}
 	
 	// pager viewlet
-	function pager(event,rc,prc,authorID="all",max=0,pagination=true){
+	function pager(event,rc,prc,authorID="all",parent="",max=0,pagination=true){
 		
 		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pager_authorID") ){
 			arguments.authorID = rc.pager_authorID;
 		}
+		// check if parent exists in rc to do an override, maybe it's the paging call
+		if( event.valueExists("pager_parentID") ){
+			arguments.parent = rc.pager_parentID;
+		}
+		
 		// Max rows incoming or take default for pagination.
 		if( arguments.max eq 0 ){ arguments.max = prc.bbSettings.bb_paging_maxrows; }
 		
@@ -182,14 +196,18 @@ component extends="baseHandler"{
 		prc.pagePager_pagination	= arguments.pagination;
 		
 		// search entries with filters and all
-		var pageResults = entryService.search(author=arguments.authorID,
-											  offset=prc.pagePager_paging.startRow-1,
-											  max=arguments.max);
-		rc.pager_pages 	     = pageResults.pages;
-		rc.pager_pagesCount  = pageResults.count;
+		var pageResults = pageService.search(author=arguments.authorID,
+											 parent=arguments.parent,
+											 offset=prc.pagePager_paging.startRow-1,
+											 max=arguments.max);
+		prc.pager_pages 	  = pageResults.pages;
+		prc.pager_pagesCount  = pageResults.count;
 		
 		// author in RC
-		rc.pagePager_authorID	= arguments.authorID;
+		prc.pagePager_authorID	= arguments.authorID;
+		
+		// parent in RC
+		prc.pagePager_parentID = arguments.parent;
 		
 		// view pager
 		return renderView(view="pages/pager",module="blogbox-admin");

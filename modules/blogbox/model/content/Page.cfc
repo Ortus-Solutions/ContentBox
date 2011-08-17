@@ -5,7 +5,8 @@ component persistent="true" entityname="bbPage" table="bb_page" batchsize="10" e
 	
 	// Properties
 	property name="pageID" fieldtype="id" generator="native" setter="false";
-	property name="layout"	notnull="false"  length="200" default="";
+	property name="layout"	notnull="false" length="200" default="";
+	property name="order"	notnull="false" ormtype="integer" default="0" dbdefault="0";
 	
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10" orderby="createdDate"

@@ -118,10 +118,11 @@
 						<th>Name</th>
 						<th>Author</th>			
 						<th width="125">Dates</th>
-						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="publish"/></th>
-						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/glasses.png" alt="hits"/></th>
-						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments"/></th>
-						<th width="70" class="center {sorter:false}">Actions</th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/sort.png" alt="order" title="Page Order"/></th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/glasses.png" alt="hits" title="Hits"/></th>
+						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments" title="Comments"/></th>
+						<th width="85" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
 				
@@ -154,6 +155,7 @@
 							<strong title="Published Date">P:</strong> #page.getDisplayPublishedDate()#<br/>
 							<strong title="Created Date">C:</strong> #page.getDisplayCreatedDate()#
 						</td>
+						<td class="center">#page.getOrder()#</td>
 						<td class="center">
 							<cfif page.getIsPublished()>
 								<img src="#prc.bbRoot#/includes/images/button_ok.png" alt="published" title="Page Published!" />
@@ -169,6 +171,10 @@
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit #page.getTitle()#"><img src="#prc.bbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
 							&nbsp;
+							<!--- Create Child --->
+							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getPageID()#" title="Create Child Page"><img src="#prc.bbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
+							&nbsp;
+							
 							<!--- View in Site --->
 							<a href="#prc.bbHelper.linkPage(page)#" title="View Page In Site" target="_blank"><img src="#prc.bbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 							&nbsp;
