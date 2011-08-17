@@ -1,5 +1,5 @@
 <cfoutput>
-#html.startForm(name="settingsForm",action=rc.xehSaveSettings)#		
+#html.startForm(name="settingsForm",action=prc.xehSaveSettings)#		
 #html.anchor(name="top")#
 <!--============================Sidebar============================-->
 <div class="sidebar">
@@ -61,6 +61,14 @@
 							#html.textarea(name="bb_site_description",label="Site Description:",value=prc.bbSettings.bb_site_description,rows="3",title="Your site description, also used in the HTML description meta tag")#		
 							<!--- Keywords --->
 							#html.textarea(name="bb_site_keywords",label="Site Keywords:",value=prc.bbSettings.bb_site_keywords,rows="3",title="A comma delimited list of keywords to be used in the HTML keywords meta tag")#		
+							<!--- HomePage --->
+							<label for="bb_site_homepage">Home Page Displays:</label>
+							<small>Choose the latest blog entries or a static page.</small><br/>
+							<select name="bb_site_homepage" id="bb_site_homepage" class="width98">
+								<option value="bbBlog" <cfif prc.bbSettings.bb_site_homepage eq "bbBlog">selected="selected"</cfif>>Latest Blog Entries</option>
+								#html.options(values=prc.pages,column="slug",nameColumn="title",selectedValue=prc.bbSettings.bb_site_homepage)#
+							</select> 	
+							
 						</fieldset>
 					</div>
 					<!--- Dashboard Options --->

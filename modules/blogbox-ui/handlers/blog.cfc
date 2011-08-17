@@ -20,9 +20,14 @@ component singleton{
 		
 		// set blog layout
 		event.setLayout("#prc.bbLayout#/layouts/blog");
-		
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category desc",asQuery=false);
+		
+		// Home page determination
+		if( event.getCurrentRoute() eq "/" AND prc.bbSettings.bb_site_homepage neq "bbBlog"){
+			event.overrideEvent("blogbox-ui:blog.page");
+			rc.pageSlug = prc.bbSettings.bb_site_homepage;
+		}
 	}
 	
 	/**

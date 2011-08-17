@@ -118,7 +118,7 @@
 						<th>Name</th>
 						<th>Author</th>			
 						<th width="125">Dates</th>
-						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/sort.png" alt="order" title="Page Order"/></th>
+						<th width="60" class="center"><img src="#prc.bbRoot#/includes/images/sort.png" alt="order" title="Page Order"/></th>
 						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/glasses.png" alt="hits" title="Hits"/></th>
 						<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments" title="Comments"/></th>
@@ -155,7 +155,16 @@
 							<strong title="Published Date">P:</strong> #page.getDisplayPublishedDate()#<br/>
 							<strong title="Created Date">C:</strong> #page.getDisplayCreatedDate()#
 						</td>
-						<td class="center">#page.getOrder()#</td>
+						<td class="center">
+							#page.getOrder()#
+							<!--- Order Up --->
+							<cfif ( page.getOrder()-1 ) GTE 0 >
+								<a href="javascript:changeOrder('#page.getPageID()#', #page.getOrder()-1#,'up')" title="Order Up"><img id="orderup_#page.getPageID()#" src="#prc.bbRoot#/includes/images/_up.gif" alt="order"/></a>
+							</cfif>
+							<!--- Increase Order Index--->
+							<a href="javascript:changeOrder('#page.getPageID()#',#page.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#page.getPageID()#" src="#prc.bbRoot#/includes/images/_down.gif" alt="order"/></a>
+						
+						</td>
 						<td class="center">
 							<cfif page.getIsPublished()>
 								<img src="#prc.bbRoot#/includes/images/button_ok.png" alt="published" title="Page Published!" />
@@ -215,6 +224,12 @@ $(document).ready(function() {
 function remove(pageID){
 	$("##pageID").val( pageID );
 	$("##pageForm").submit();
+}
+function changeOrder(pageID,order,direction){
+	// img change
+	$('##order'+direction+'_'+pageID).attr('src','#prc.bbRoot#/includes/images/ajax-spinner.gif');
+	// change order
+	
 }
 </script>
 

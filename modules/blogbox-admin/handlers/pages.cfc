@@ -166,6 +166,19 @@ component extends="baseHandler"{
 		setNextEvent( prc.xehPages );
 	}
 	
+	// order change
+	function changeOrder(event,rc,prc){
+		var results = false;
+		var page = pageService.get(rc.pageID);
+		if( !isNull( page ) ){
+			page.setOrder( rc.order );
+			pageService.savePage( page );
+			results = true;
+		}
+		
+		event.renderData(type="json",data=results);
+	}
+	
 	// pager viewlet
 	function pager(event,rc,prc,authorID="all",parent="",max=0,pagination=true){
 		
@@ -188,6 +201,7 @@ component extends="baseHandler"{
 		prc.xehPagePager 		= "#prc.bbAdminEntryPoint#.pages.pager";
 		prc.xehPageEditor		= "#prc.bbAdminEntryPoint#.pages.editor";
 		prc.xehPageQuickLook	= "#prc.bbAdminEntryPoint#.pages.quickLook";
+		prc.xehPageOrder		= "#prc.bbAdminEntryPoint#.pages.changeOrder";
 		
 		// prepare paging plugin
 		prc.pagePager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="blogbox");

@@ -54,6 +54,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var restrictions = getRestrictions();	
 		// criteria queries
 		var criteria = [];
+		// default sort order
+		var sortOrder = "title asc";
 		
 		// isPublished filter
 		if( structKeyExists(arguments,"isPublished") AND arguments.isPublished NEQ "any"){
@@ -66,6 +68,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// parent filter
 		if( structKeyExists(arguments,"parent") AND len(arguments.parent) ){
 			arrayAppend(criteria, restrictions.eq("parent.pageID", javaCast("int",arguments.parent)) );
+			sortOrder = "order asc";
 		}	
 		// Search Criteria
 		if( len(arguments.search) ){
@@ -78,7 +81,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		
 		// run criteria query and projections count
-		results.pages 	= criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="title asc",asQuery=false);
+		results.pages 	= criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=false);
 		results.count 	= criteriaCount(criteria=criteria);
 		
 		return results;

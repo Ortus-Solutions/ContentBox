@@ -5,6 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="settingsService"		inject="id:settingService@bb";
+	property name="pageService"			inject="id:pageService@bb";
 	
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -17,7 +18,9 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// Exit Handler
-		rc.xehSaveSettings 	= "#prc.bbAdminEntryPoint#.settings.save";
+		prc.xehSaveSettings 	= "#prc.bbAdminEntryPoint#.settings.save";
+		// pages
+		prc.pages = pageService.search().pages;
 		// tab
 		prc.tabSystem_Settings = true; 
 		// view

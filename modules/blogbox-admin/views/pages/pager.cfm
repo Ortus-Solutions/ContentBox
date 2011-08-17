@@ -13,10 +13,10 @@
 <table name="entries_pager" id="entries_pager" class="tablelisting" width="100%">
 	<thead>
 		<tr>
-			<th>Page Info</th>	
+			<th>Page</th>	
 			<th>Author</th>
 			<th width="125">Dates</th>
-			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/sort.png" alt="sort" title="Page Order"/></th>
+			<th width="60" class="center"><img src="#prc.bbRoot#/includes/images/sort.png" alt="sort" title="Page Order"/></th>
 			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
 			<th width="40" class="center"><img src="#prc.bbRoot#/includes/images/comments.png" alt="comments" title="Number of Comments"/></th>
@@ -25,7 +25,9 @@
 	</thead>
 	
 	<tbody>
+		<cfset i = 0>
 		<cfloop array="#prc.pager_pages#" index="page">
+		<cfset i++>
 		<tr data-pageID="#page.getPageID()#">
 			<td>
 				<!--- Title --->
@@ -52,13 +54,21 @@
 				<strong title="Published Date">P:</strong> #page.getDisplayPublishedDate()#<br/>
 				<strong title="Created Date">C:</strong> #page.getDisplayCreatedDate()#
 			</td>
-			<td class="center">#page.getOrder()#</td>
+			<td class="center">
+				#page.getOrder()#
+				<!--- Order Up --->
+				<cfif ( page.getOrder()-1 ) GTE 0 >
+					<a href="javascript:changeOrder('#page.getPageID()#', #page.getOrder()-1#,'up')" title="Order Up"><img id="orderup_#page.getPageID()#" src="#prc.bbRoot#/includes/images/_up.gif" alt="order"/></a>
+				</cfif>
+				<!--- Increase Order Index--->
+				<a href="javascript:changeOrder('#page.getPageID()#',#page.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#page.getPageID()#" src="#prc.bbRoot#/includes/images/_down.gif" alt="order"/></a>
+			</td>
 			<td class="center">
 				<cfif page.getIsPublished()>
-					<img src="#prc.bbRoot#/includes/images/button_ok.png" alt="published" title="Entry Published!" />
+					<img src="#prc.bbRoot#/includes/images/button_ok.png" alt="published" title="Page Published!" />
 					<span class="hidden">published</span>
 				<cfelse>
-					<img src="#prc.bbRoot#/includes/images/button_cancel.png" alt="draft" title="Entry Draft!" />
+					<img src="#prc.bbRoot#/includes/images/button_cancel.png" alt="draft" title="Page Draft!" />
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
@@ -94,10 +104,19 @@ $(document).ready(function() {
 });
 function pagerLink(page){
 	$("##pagePagerLoader").fadeIn("fast");
+	$(".tooltip").hide();
 	$('##pagerPages')
 		.load('#event.buildLink(prc.xehPagePager)#/pager_authorID/#prc.pagePager_authorID#/pager_parentID/#prc.pagePager_parentID#/page/' + page, function() {
 			$("##pagePagerLoader").fadeOut();
 			activateTooltips();
+	});
+}
+function changeOrder(pageID,order,direction){
+	// img change
+	$('##order'+direction+'_'+pageID).attr('src','#prc.bbRoot#/includes/images/ajax-spinner.gif');
+	// change order
+	$.post('#event.buildLink(prc.xehPageOrder)#',{pageID:pageID,order:order},function(){ 
+		pagerLink(#rc.page#); 
 	});
 }
 </script>
