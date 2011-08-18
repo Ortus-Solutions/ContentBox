@@ -432,6 +432,79 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return widget("CommentForm",{content=arguments.content});
 	}
 	
+	/************************************** MENUS *********************************************/
+	
+	/**
+	* Render out a quick menu for root level pages
+	* @excludes The list of pages to exclude from the menu
+	* @type The type of menu, valid choices are: ul,ol,none
+	* @separator Used if type eq none, to separate the list of href's
+	*/
+	function rootMenu(excludes="",type="ul",separator=""){
+		arguments.showNone = false;
+		// get root pages
+		arguments.pageRecords = pageService.findPublishedPages(parent="");	
+		// build it out
+		return buildMenu(argumentCollection=arguments);		
+	}
+	
+	/**
+	* Create a sub page menu for a given page or current page
+	* @page Optional page to create menu for, else look for current page
+	* @excludes The list of pages to exclude from the menu
+	* @type The type of menu, valid choices are: ul,ol,none
+	* @separator Used if type eq none, to separate the list of href's
+	* @showNone Shows a 'No Sub Pages' message or not
+	*/
+	function subPageMenu(any page,excludes="",type="ul",separator="",boolean showNone=true){
+		// verify incoming page
+		if( !structKeyExists(arguments,"page") ){
+			arguments.page = getCurrentPage();
+		}
+		// get child pages
+		arguments.pageRecords = pageService.findPublishedPages(parent=page.getPageID());
+		// build it out
+		return buildMenu(argumentCollection=arguments);	
+	}
+	
 	/************************************** PRIVATE *********************************************/
+
+	private function buildMenu(pageRecords,excludes="",type="ul",separator="",boolean showNone=true){
+		// check type?
+		if( !reFindNoCase("^(ul|ol|none)$", arguments.type) ){ arguments.type="ul"; }
+		var pageResults = arguments.pageRecords;
+		// buffer
+		var b = createObject("java","java.lang.StringBuilder").init('');
+		// current page?
+		var prc = getRequestCollection(private=true);		
+		var currentPageID = "";
+		if( structKeyExists(prc,"page") ){
+			currentPageID = prc.page.getPageID();
+		}
+		
+		// list start
+		if( arguments.type neq "none"){	b.append('<#arguments.type# class="submenu">'); }
+		for(var x=1; x lte pageResults.count; x++ ){
+			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[x].getTitle() )){
+				// class = active?
+				if( currentPageID eq pageResults.pages[x].getPageID() ){ classText = ' class="active"'; }else{ classText = ''; }
+				// list
+				if( arguments.type neq "none"){
+					b.append('<li#classText#><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a></li>');
+				}
+				else{
+					b.append('<a href="#linkPage(pageResults.pages[x])#"#classText#>#pageResults.pages[x].getTitle()#</a>#arguments.separator#');
+				}
+			}
+		}
+		// None?
+		if( pageResults.count eq 0 and arguments.showNone ){ b.append("<li>No Sub Pages</li>"); }
+		
+		// list end
+		if( arguments.type neq "none"){	b.append('</#arguments.type#>'); }
+		
+		// return 
+		return b.toString();
+	}
 
 }

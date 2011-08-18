@@ -62,7 +62,7 @@ which means you can use it in any way you want provided you keep the link to the
 			<div id="menu_list"> 
 				<a href="#bb.linkHome()#" title="Go Home!">Home</a>
 				<img src="#bb.layoutRoot()#/includes/images/splitter.gif" class="splitter" alt="" />
-				<!---<a href="##">About Us</a>--->
+				#bb.rootMenu(type="none",separator='<img src="#bb.layoutRoot()#/includes/images/splitter.gif" class="splitter" alt="" />')#
 	        </div>
 	    </div>
 	</div>

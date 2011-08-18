@@ -2,13 +2,9 @@
 <!--- BlogBoxEvent --->
 #bb.event("bbui_BeforeSideBar")#
 
-<!--- Search Form --->
-<h2>Entry Search</h2>
-#bb.widget("SearchForm")#
-
-<h2>Recent Pages</h2>
-<div class="bg"></div>
-#bb.widget('RecentPages')#
+<!--- Page Navigation --->
+<h2>Sub Pages</h2>
+#bb.subPageMenu(type="ul")#
 
 <br/>
 

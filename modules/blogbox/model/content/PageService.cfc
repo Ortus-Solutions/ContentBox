@@ -93,12 +93,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	// Page listing for UI
-	function findPublishedPages(max=0,offset=0,searchTerm="",asQuery=false){
+	function findPublishedPages(max=0,offset=0,searchTerm="",asQuery=false,parent){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
 		// criteria queries
 		var criteria = [];
+		// sorting
+		var sortOrder = "publishedDate DESC";
 		
 		// only published pages
 		arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",1)) );
@@ -115,8 +117,19 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			arrayAppend( criteria, restrictions.disjunction( orCriteria ) );
 		}
 		
+		// parent filter
+		if( structKeyExists(arguments,"parent") ){
+			if( len(arguments.parent) ){
+				arrayAppend(criteria, restrictions.eq("parent.pageID", javaCast("int",arguments.parent)) );
+			}
+			else{
+				arrayAppend(criteria, restrictions.isNull("parent") );
+			}
+			sortOrder = "order asc";
+		}	
+		
 		// run criteria query and projections count
-		results.pages 	= criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
+		results.pages 	= criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 		results.count 	= criteriaCount(criteria=criteria);
 		
 		return results;
