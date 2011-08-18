@@ -8,3 +8,4 @@ coldbox/**
 coldbox
 logs/**
 logs/BlogBox.log
+web.config

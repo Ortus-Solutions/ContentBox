@@ -62,11 +62,11 @@
 $(document).ready(function() {
 	$("tr:even").addClass("even");
 	// quick look
-	$("##entries_pager").find("tr").mousedown(function(e) {
+	$("##entries_pager").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if( $(this).attr('data-entryID') != null ){
-				openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
 				e.preventDefault();
+				openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
 			}
 	    }
 	});

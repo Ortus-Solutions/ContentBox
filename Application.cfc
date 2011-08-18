@@ -13,7 +13,6 @@ Description :
 	
 	So if you have refactored your framework, make sure it extends coldbox.
  
-@output false
 */
 component{
 	// Application properties
@@ -41,8 +40,8 @@ component{
 	this.ormSettings = {
 		// FILL OUT: ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation=["model","modules"],
-		// FILL OUT: THE DIALECT OF YOUR DATABASE
-		dialect 			= "MySQLwithInnoDB",
+		// FILL OUT: THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT
+		//dialect 			= "MySQLwithInnoDB",
 		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update for continuos repo updates, or remove for production
 		dbcreate			= "update",
 		sqlscript			= "modules/blogbox/install/sql/blogbox_data.sql",

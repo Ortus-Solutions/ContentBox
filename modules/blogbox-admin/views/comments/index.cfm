@@ -173,7 +173,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##comments"), this.value );
 	});
 	// comment quick look
-	$commentForm.find("##comments").find("tr").mousedown(function(e) {
+	$commentForm.find("##comments").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if ($(this).attr('data-commentID') != null) {
 				openRemoteModal('#event.buildLink(rc.xehCommentQuickLook)#', {

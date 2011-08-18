@@ -71,7 +71,7 @@
 $(document).ready(function() {
 	$("tr:even").addClass("even");
 	// quick look
-	$("##comments_pager").find("tr").mousedown(function(e) {
+	$("##comments_pager").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 			if( $(this).attr('data-commentID') != null ){
 	    		openRemoteModal('#event.buildLink(prc.xehCommentPagerQuickLook)#', {commentID: $(this).attr('data-commentID')});

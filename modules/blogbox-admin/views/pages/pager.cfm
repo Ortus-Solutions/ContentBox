@@ -87,7 +87,7 @@
 $(document).ready(function() {
 	$("tr:even").addClass("even");
 	// quick look
-	$("##entries_pager").find("tr").mousedown(function(e) {
+	$("##entries_pager").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if( $(this).attr('data-pageID') != null ){
 				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/pageID/' + $(this).attr('data-pageID'));

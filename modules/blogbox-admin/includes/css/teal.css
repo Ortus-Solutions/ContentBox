@@ -118,7 +118,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 /** ============================== ConfirmIt ============================== **/
 #exposeMask { background:#000!important; }
 /* background color for overlay and expose mask */
-#confirmIt,#remoteModal, #quickPost { border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
+#confirmIt,#remoteModal, #quickPost {top:20px !important; border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
 #remoteModal, #quickPost { width:1000px; }
 #confirmIt div { border:1px solid #3B5998; background-color:#fff; padding:10px; font-size:1.2em; margin:0; }
 #confirmIt h2,#remoteModal h2, #quickPost h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }

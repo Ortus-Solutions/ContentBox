@@ -220,7 +220,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##pages"), this.value );
 	});
 	// quick look
-	$("##pages").find("tr").mousedown(function(e) {
+	$("##pages").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if($(this).attr('data-pageID') != null) {
 				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/pageID/' + $(this).attr('data-pageID'));

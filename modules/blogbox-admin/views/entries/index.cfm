@@ -202,7 +202,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##entries"), this.value );
 	});
 	// quick look
-	$("##entries").find("tr").mousedown(function(e) {
+	$("##entries").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if($(this).attr('data-entryID') != null) {
 				openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
