@@ -33,7 +33,7 @@
 <button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Site Updates</button>	
 <!--- RSS Entry Comments --->
 <cfif bb.isEntryView()>
-<button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Comments</button>	
+<button class="button" onclick="return to('#bb.linkRSS(comments=true)#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Comments</button>	
 </cfif>
 
 <br/><br/>
