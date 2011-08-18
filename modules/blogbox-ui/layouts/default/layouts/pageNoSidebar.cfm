@@ -71,9 +71,7 @@
 				
 				<!--- Top Menu Bar --->
 				<div class="menu">
-					<ul>
-					  <li><a href="#bb.linkHome()#" title="Go Home!">Home</a></li>
-					</ul>
+					#bb.quickView('_menu')#
 					<div id="tagline">#bb.siteTagLine()#</div>
 					<div class="clr"></div>
 				</div>

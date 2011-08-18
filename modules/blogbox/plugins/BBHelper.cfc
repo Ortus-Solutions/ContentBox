@@ -437,7 +437,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	/**
 	* Render out a quick menu for root level pages
 	* @excludes The list of pages to exclude from the menu
-	* @type The type of menu, valid choices are: ul,ol,none
+	* @type The type of menu, valid choices are: ul,ol,li,none
 	* @separator Used if type eq none, to separate the list of href's
 	*/
 	function rootMenu(excludes="",type="ul",separator=""){
@@ -452,7 +452,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* Create a sub page menu for a given page or current page
 	* @page Optional page to create menu for, else look for current page
 	* @excludes The list of pages to exclude from the menu
-	* @type The type of menu, valid choices are: ul,ol,none
+	* @type The type of menu, valid choices are: ul,ol,li,none
 	* @separator Used if type eq none, to separate the list of href's
 	* @showNone Shows a 'No Sub Pages' message or not
 	*/
@@ -467,11 +467,44 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return buildMenu(argumentCollection=arguments);	
 	}
 	
+	/**
+	* Create an href to a page's parent
+	* @page Optional page to create link for, else look for current page
+	* @text The optional text to use for the link, else it uses the page's title
+	*/
+	function linkToParentPage(page,text=""){
+		// verify incoming page
+		if( !structKeyExists(arguments,"page") ){
+			arguments.page = getCurrentPage();
+		}
+		// link if parent found.
+		if( arguments.page.hasParent() ){
+			if( !len(arguments.text) ){ arguments.text = arguments.page.getParent().getTitle(); }
+			// build link
+			return '<a href="#linkPage( arguments.page.getParent() )#">#arguments.text#</a>';
+		}
+		return '';
+	}
+	
+	/**
+	* Create breadcrumbs for a page
+	* @page Optional page to create link for, else look for current page
+	* @separator Breadcrumb separator
+	*/
+	function breadCrumbs(page,separator=">"){
+		// verify incoming page
+		if( !structKeyExists(arguments,"page") ){
+			arguments.page = getCurrentPage();
+		}
+		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="blogbox-ui").visit( arguments.page, arguments.separator );
+		
+	}
+	
 	/************************************** PRIVATE *********************************************/
 
 	private function buildMenu(pageRecords,excludes="",type="ul",separator="",boolean showNone=true){
 		// check type?
-		if( !reFindNoCase("^(ul|ol|none)$", arguments.type) ){ arguments.type="ul"; }
+		if( !reFindNoCase("^(ul|ol|li|none)$", arguments.type) ){ arguments.type="ul"; }
 		var pageResults = arguments.pageRecords;
 		// buffer
 		var b = createObject("java","java.lang.StringBuilder").init('');
@@ -483,7 +516,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		}
 		
 		// list start
-		if( arguments.type neq "none"){	b.append('<#arguments.type# class="submenu">'); }
+		if( !listFindNoCase("li,none", arguments.type) ){	b.append('<#arguments.type# class="submenu">'); }
 		for(var x=1; x lte pageResults.count; x++ ){
 			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[x].getTitle() )){
 				// class = active?
@@ -501,7 +534,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( pageResults.count eq 0 and arguments.showNone ){ b.append("<li>No Sub Pages</li>"); }
 		
 		// list end
-		if( arguments.type neq "none"){	b.append('</#arguments.type#>'); }
+		if( !listFindNoCase("li,none", arguments.type) ){	b.append('</#arguments.type#>'); }
 		
 		// return 
 		return b.toString();

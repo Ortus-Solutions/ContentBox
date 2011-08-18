@@ -60,9 +60,7 @@ which means you can use it in any way you want provided you keep the link to the
     <div id="header">
 	    <div id="menu">
 			<div id="menu_list"> 
-				<a href="#bb.linkHome()#" title="Go Home!">Home</a>
-				<img src="#bb.layoutRoot()#/includes/images/splitter.gif" class="splitter" alt="" />
-				#bb.rootMenu(type="none",separator='<img src="#bb.layoutRoot()#/includes/images/splitter.gif" class="splitter" alt="" />')#
+				#bb.quickView("_topMenu")#
 	        </div>
 	    </div>
 	</div>

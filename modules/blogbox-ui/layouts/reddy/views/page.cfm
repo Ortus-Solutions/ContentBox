@@ -11,6 +11,8 @@
 	<!--- post --->
 	<div class="post" id="page_#prc.page.getPageID()#">
 		
+		<div class="infoBar">> <a href="#bb.linkHome()#">Home</a> #bb.breadCrumbs()#</div>
+	
 		<!--- Title --->
 		<div class="post-title">
 						

@@ -3,7 +3,8 @@
 #bb.event("bbui_BeforeSideBar")#
 
 <!--- Page Navigation --->
-<h2>Sub Pages</h2>
+<h2>#bb.linkToParentPage()# Sub Pages</h2>
+<div class="bg"></div>
 #bb.subPageMenu(type="ul")#
 
 <br/>

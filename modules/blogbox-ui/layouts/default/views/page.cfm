@@ -3,6 +3,9 @@
 	<!--- BlogBoxEvent --->
 	#bb.event("bbui_prePageDisplay")#
 	
+	<!--- breadcrumbs --->
+	<div class="infoBar">> <a href="#bb.linkHome()#">Home</a> #bb.breadCrumbs()#</div>
+	
 	<!--- top gap --->
 	<div class="post-top-gap"></div>
 	
