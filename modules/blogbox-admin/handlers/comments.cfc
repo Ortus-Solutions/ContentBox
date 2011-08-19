@@ -193,7 +193,8 @@ component extend="baseHandler"{
 		prc.commentPager_commentsCount   = commentResults.count;
 		
 		// incoming entry ID
-		prc.commentPager_entryID		= arguments.entryID;
+		prc.commentPager_entryID	= arguments.entryID;
+		prc.commentPager_pageID		= arguments.pageID;
 		
 		// view pager
 		return renderView(view="comments/pager",module="blogbox-admin");
