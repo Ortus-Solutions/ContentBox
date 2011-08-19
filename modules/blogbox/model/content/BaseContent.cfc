@@ -1,7 +1,7 @@
 /**
 * A mapped super class used for blogbox content: entries and pages
 */
-component mappedsuperclass="true" {
+component mappedsuperclass="true" accessors="true"{
 	
 	// Properties
 	property name="title"				notnull="true"  length="200" default="" index="idx_search";
