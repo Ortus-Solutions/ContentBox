@@ -31,6 +31,8 @@ component {
 		routes = [
 			// home
 			{pattern="/", handler="blog", action="index" },
+			// Blog reserved route
+			{pattern="/blog", handler="blog", action="index" },
 			// preview
 			{pattern="/__preview", handler="blog", action="preview" },
 			// RSS feeds

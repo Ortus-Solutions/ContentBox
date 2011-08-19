@@ -31,6 +31,15 @@ component persistent="true" entityname="bbComment" table="bb_comment"{
 	/************************************** PUBLIC *********************************************/
 	
 	/**
+	* setRelatedContent
+	*/
+	Comment function setRelatedContent(content){
+		if( arguments.content.getType() eq "entry" ){ setEntry( arguments.content ); }
+		else{ setPage( arguments.content ); }
+		return this;
+	}
+	
+	/**
 	* Get formatted createdDate
 	*/
 	string function getDisplayCreatedDate(){

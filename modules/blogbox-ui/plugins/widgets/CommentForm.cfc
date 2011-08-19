@@ -28,11 +28,10 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 		var captcha		= "";
 		var commentForm = "";
 		var cID 		= "";
-		var cContent	= "";
 		
 		// Determine ID
-		if( structKeyExists(arguments.content,"getPageID") ){ cID = "pageID"; }
-		if( structKeyExists(arguments.content,"getEntryID") ){ cID = "entryID"; }
+		if( structKeyExists(arguments.content,"getPageID") ){  cID = arguments.content.getPageID(); }
+		if( structKeyExists(arguments.content,"getEntryID") ){ cID = arguments.content.getEntryID(); }
 		
 		// captcha?
 		if( bbSettings.bb_comments_captcha ){
@@ -53,7 +52,8 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 				
 				#getPlugin("MessageBox").renderit()#
 				
-				#html.hiddenField(name=cID,bind=arguments.content)#
+				#html.hiddenField(name="contentID",value=cID)#
+				#html.hiddenField(name="contentType",value=arguments.content.getType())#
 				
 				#html.textField(name="author",label="Name: (required)",size="50",required="required",value=event.getValue("author",""))#
 				#html.inputField(name="authorEmail",type="email",label="Email: (required)",size="50",required="required",value=event.getValue("authorEmail",""))#

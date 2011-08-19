@@ -19,8 +19,8 @@ component mappedsuperclass="true" accessors="true"{
 	// M20 -> Author loaded as a proxy
 	property name="author" cfc="blogbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true";
 	
-	// Get content type
-	property name="type" persistent="false";
+	// NON-persistent content type discriminator
+	property name="type" persistent="false" type="string" hint="Valid content types are page,entry";
 	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	

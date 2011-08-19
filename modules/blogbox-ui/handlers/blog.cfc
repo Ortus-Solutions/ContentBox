@@ -188,7 +188,8 @@ component singleton{
 	*/
 	function commentPost(event,rc,prc){
 		// param values
-		event.paramValue("entryID","");
+		event.paramValue("contentID","");
+		event.paramValue("contentType","blog");
 		event.paramValue("author","");
 		event.paramValue("authorURL","");
 		event.paramValue("authorEmail","");
@@ -196,18 +197,26 @@ component singleton{
 		event.paramValue("captchacode","");
 		
 		// check if entry id is empty
-		if( !len(rc.entryID) ){
+		if( !len(rc.contentID) ){
 			setNextEvent(prc.bbEntryPoint);
 		}
 		
-		// Retrieve entry
-		var thisEntry = entryService.get(rc.entryID);
+		var thisContent = "";
+		// entry or page
+		switch(rc.contenttype){
+			case "page" : {
+				thisContent = pageService.get( rc.contentID ); break;
+			}
+			default: {
+				thisContent = entryService.get( rc.contentID ); break;
+			}
+		}
 		// If null, kick them out
-		if( isNull(thisEntry) ){ setNextEvent(prc.bbEntryPoint); }
+		if( isNull(thisContent) ){ setNextEvent(prc.bbEntryPoint); }
 		// Check if comments enabled? else kick them out, who knows how they got here
-		if( NOT bbHelper.isCommentsEnabled( thisEntry ) ){
+		if( NOT bbHelper.isCommentsEnabled( thisContent ) ){
 			getPlugin("MessageBox").warn("Comments are disabled!");
-			setNextEvent(bbHelper.linkEntry( thisEntry ));
+			setNextEvent(bbHelper.linkContent( thisContent ));
 		}
 		
 		// Trim values & XSS Cleanup of fields
@@ -231,40 +240,47 @@ component singleton{
 		}
 		
 		// announce event
-		announceInterception("bbui_preCommentPost",{commentErrors=prc.commentErrors,entry=thisEntry});
+		announceInterception("bbui_preCommentPost",{commentErrors=prc.commentErrors,content=thisContent,contentType=rc.contentType});
 		
 		// Validate if comment errors exist
 		if( arrayLen(prc.commentErrors) ){
-			// put slug in request
-			rc.entrySlug = thisEntry.getSlug();
 			// MessageBox
 			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
-			// Execute entry again, need to correct form
-			entry(argumentCollection=arguments);
+			// Execute event again
+			if( thisContent.getType() eq "entry" ){
+				// put slug in request
+				rc.entrySlug = thisContent.getSlug();
+				// Execute entry again, need to correct form
+				entry(argumentCollection=arguments);
+			}
+			else{
+				// put slug in request
+				rc.pageSlug = thisContent.getSlug();
+				// Execute entry again, need to correct form
+				page(argumentCollection=arguments);
+			}
 			return;			
 		}
 		
 		// Get new comment to persist
-		var comment = populateModel( commentService.new() );
-		comment.setEntry( thisEntry );
-		
+		var comment = populateModel( commentService.new() ).setRelatedContent( thisContent );
 		// Data is valid, let's send it to the comment service for persistence, translations, etc
 		var results = commentService.saveComment( comment );
 		
 		// announce event
-		announceInterception("bbui_onCommentPost",{comment=comment,entry=thisEntry,moderationResults=results});
+		announceInterception("bbui_onCommentPost",{comment=comment,content=thisContent,moderationResults=results,contentType=rc.contentType});
 		
 		// Check if all good
 		if( results.moderated ){
 			// Message
 			getPlugin("MessageBox").warn(messageArray=results.messages);
 			flash.put(name="commentErrors",value=results.messages,inflateTOPRC=true);
-			// relocate back to comment
-			setNextEvent(URL=bbHelper.linkEntry(thisEntry) & "##comments" );	
+			// relocate back to comments
+			setNextEvent(URL=bbHelper.linkComments(thisContent));	
 		}
 		else{
 			// relocate back to comment
-			setNextEvent(URL=bbHelper.linkEntry(thisEntry) & "##comment_#comment.getCommentID()#");		
+			setNextEvent(URL=bbHelper.linkComment(comment));		
 		}		
 	}
 

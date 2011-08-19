@@ -263,6 +263,15 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 	
 	/**
+	* Link to a specific content object
+	* @content The content object to link to
+	*/
+	function linkContent(content){
+		if( arguments.content.getType() eq "entry" ){ return linkEntry(arguments.content); }
+		if( arguments.content.getType() eq "page" ){ return linkPage(arguments.content); }
+	}
+	
+	/**
 	* Link to a specific page
 	* @page The page to link to
 	*/
@@ -292,7 +301,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		else{
 			xeh = linkEntry( arguments.comment.getEntry() );
 		}
-		xeh &= xeh & "##comment_#arguments.comment.getCommentID()#";
+		xeh &= "##comment_#arguments.comment.getCommentID()#";
 		return xeh;
 	}
 	
