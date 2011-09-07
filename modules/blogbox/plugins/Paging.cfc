@@ -174,7 +174,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 					</cfif>
 					
 					<!--- NEXT PAGE --->
-					<cfif (currentPage+bandgap) lt totalPages >
+					<cfif currentPage lt totalPages >
 						<a href="#replace(theLink,"@page@",currentPage+1)#" title="Next Page">&gt;&gt;</a>
 					</cfif>
 					
