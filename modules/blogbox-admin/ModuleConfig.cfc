@@ -17,9 +17,6 @@ component {
 	
 	function configure(){
 	
-		// BLOGBOX MODULE LOCATION: CHANGE IF DIFFERENT FROM CONVENTIONS
-		var BB_PATH = controller.getSetting("modules").blogbox.invocationPath;
-		
 		// Layout Settings
 		layoutSettings = { defaultLayout = "admin.cfm" };
 		

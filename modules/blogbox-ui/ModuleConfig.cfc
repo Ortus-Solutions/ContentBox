@@ -23,9 +23,6 @@ component {
 			layoutsLocation = "layouts",
 			viewsLocation 	= "layouts"
 		};
-
-		// BLOGBOX MODULE LOCATION: CHANGE IF DIFFERENT FROM CONVENTIONS
-		var BB_PATH = controller.getSetting("modules").blogbox.invocationPath;
 		
 		// BB UI SES Routing
 		routes = [
