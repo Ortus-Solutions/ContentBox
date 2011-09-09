@@ -37,7 +37,7 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 		if( bbSettings.bb_comments_captcha ){
 			saveContent variable="captcha"{
 				writeOutput("
-					#getMyPlugin(plugin="captcha",module="blogbox").display()#<br />  
+					#getMyPlugin(plugin="Captcha",module="blogbox").display()#<br />  
 					#html.textField(name="captchacode",label="Enter the security code shown above:",required="required",size="50")#
 				");
 			}
