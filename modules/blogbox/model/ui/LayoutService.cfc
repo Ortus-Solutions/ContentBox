@@ -1,4 +1,4 @@
-component accessors="true" singleton{
+﻿component accessors="true" singleton{
 	// Dependencies
 	property name="settingService"		inject="id:settingService@bb";
 	property name="moduleSettings"		inject="coldbox:setting:modules";

@@ -1,4 +1,4 @@
-/**
+﻿/**
 * This is the BlogBox UI helper class that is injected by the BBRequest interceptor
 */
 component extends="coldbox.system.Plugin" accessors="true" singleton{

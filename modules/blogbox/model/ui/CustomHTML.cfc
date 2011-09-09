@@ -1,4 +1,4 @@
-/**
+﻿/**
 * I model a custom HTML content piece
 */
 component persistent="true" entityname="bbCustomHTML" table="bb_customHTML"{

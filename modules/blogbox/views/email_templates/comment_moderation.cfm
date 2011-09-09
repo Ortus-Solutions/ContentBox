@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 A new comment has been posted and needs moderation on the page: <a href="@entryURL@">@entryTitle@<a/>. 
 	
 <br/><br/>

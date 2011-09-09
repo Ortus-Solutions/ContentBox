@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <!--- post --->
 <div class="post" id="post_#entry.getEntryID()#">
 	

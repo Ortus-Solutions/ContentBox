@@ -1,4 +1,4 @@
-/**
+﻿/**
 * BlogBox security
 */
 component{

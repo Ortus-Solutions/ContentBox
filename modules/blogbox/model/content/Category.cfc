@@ -1,4 +1,4 @@
-/**
+﻿/**
 * I am a blog entry category
 */
 component persistent="true" entityname="bbCategory" table="bb_category"{

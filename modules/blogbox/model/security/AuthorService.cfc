@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Service to handle auhtor operations.
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton{

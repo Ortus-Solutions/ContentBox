@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Setting Service for BlogBox
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton{

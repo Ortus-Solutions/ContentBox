@@ -1,4 +1,4 @@
-/**
+﻿/**
 * This widget creates a simple blogbox search form
 */
 component extends="blogbox.model.ui.BaseWidget" singleton{

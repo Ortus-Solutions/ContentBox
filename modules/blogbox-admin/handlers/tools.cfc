@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Tools for BlogBox.
 */
 component extends="baseHandler"{

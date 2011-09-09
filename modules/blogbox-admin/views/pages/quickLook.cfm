@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <h2>#prc.page.getTitle()#</h2>
 <div>
 #prc.page.getContent()#

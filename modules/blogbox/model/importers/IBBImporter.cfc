@@ -1,4 +1,4 @@
-/**
+﻿/**
 * This is the main importer for importing databases into blogbox
 */
 interface{

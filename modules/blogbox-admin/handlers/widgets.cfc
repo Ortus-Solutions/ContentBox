@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Manage widgets
 */
 component extends="baseHandler"{

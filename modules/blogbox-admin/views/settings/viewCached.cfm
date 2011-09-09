@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <h2>Cached Settings</h2>
 
 <h3>Cached Metadata</h3>

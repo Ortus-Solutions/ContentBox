@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <h2>#rc.entry.getTitle()#</h2>
 <div>
 #rc.entry.getContent()#

@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
 	<!--- Search Box --->

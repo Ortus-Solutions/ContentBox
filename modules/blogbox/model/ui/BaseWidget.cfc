@@ -1,4 +1,4 @@
-/**
+﻿/**
 * This is the base class for BlogBox widgets
 */
 component extends="coldbox.system.Plugin" accessors="true"{

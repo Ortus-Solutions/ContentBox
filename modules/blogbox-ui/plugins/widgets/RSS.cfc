@@ -1,4 +1,4 @@
-/**
+﻿/**
 * A widget that reads an RSS feed and displays the items
 */
 component extends="blogbox.model.ui.BaseWidget" singleton{

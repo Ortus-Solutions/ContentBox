@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <div class="fullWidth">
 	
 	<div class="infoBar">

@@ -1,4 +1,4 @@
-/**
+﻿/**
 * A cool basic widget that shows N recent comments
 */
 component extends="blogbox.model.ui.BaseWidget" singleton{

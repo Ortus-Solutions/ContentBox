@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Manage comments
 */
 component extend="baseHandler"{

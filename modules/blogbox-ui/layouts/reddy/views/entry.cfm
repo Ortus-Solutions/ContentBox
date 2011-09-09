@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <!--- BlogBoxEvent --->
 #bb.event("bbui_preEntryDisplay")#
 

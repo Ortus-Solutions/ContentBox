@@ -1,4 +1,4 @@
-/**
+﻿/**
 * I am a Comment Entity
 */
 component persistent="true" entityname="bbComment" table="bb_comment"{

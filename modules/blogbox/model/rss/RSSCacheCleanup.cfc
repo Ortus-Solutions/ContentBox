@@ -1,4 +1,4 @@
-/**
+﻿/**
 * This interceptor monitors new comments and new entries to clear RSS cache entries
 */
 component extends="coldbox.system.Interceptor"{

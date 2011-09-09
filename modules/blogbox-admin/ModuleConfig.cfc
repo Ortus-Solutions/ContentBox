@@ -1,4 +1,4 @@
-/**
+﻿/**
 * BlogBox Admin module configuration
 * Icon Themes: woothemesiconset, duesseldorf
 */

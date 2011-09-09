@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Manage categories
 */
 component extends="baseHandler"{

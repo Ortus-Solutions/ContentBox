@@ -1,4 +1,4 @@
-/**
+﻿/**
 * BlogBox UI module configuration
 */
 component {

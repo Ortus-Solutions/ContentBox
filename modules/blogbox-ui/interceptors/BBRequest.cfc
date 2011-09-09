@@ -1,4 +1,4 @@
-/**
+﻿/**
 * This simulates the onRequest start for the UI interface
 */
 component extends="coldbox.system.Interceptor"{

@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Visit page hierarchies and create breadcrumbs
 */
 component singleton="true"{

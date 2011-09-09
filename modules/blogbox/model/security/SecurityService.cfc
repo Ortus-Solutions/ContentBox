@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Our blogbox security service
 */
 component singleton{

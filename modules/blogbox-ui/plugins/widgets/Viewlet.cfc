@@ -1,4 +1,4 @@
-/**
+﻿/**
 * A widget that executes any internal ColdBox event and return its results
 */
 component extends="blogbox.model.ui.BaseWidget" singleton{

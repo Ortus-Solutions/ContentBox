@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <div id="pagerPages">
 <!--- Loader --->
 <div class="loaders floatRight" id="pagePagerLoader">

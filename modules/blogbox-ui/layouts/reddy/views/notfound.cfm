@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <!--- SideBar --->
 <div id="sidebar">
 	#html.href(href="#bb.linkHome()#",text=html.button(class="button2",value="Go Home!"))#

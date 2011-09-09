@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <div id="comment_#comment.getCommentID()#" class="comment">
 	<!--- Anchor --->
 	<a name="comment_#comment.getCommentID()#"></a>

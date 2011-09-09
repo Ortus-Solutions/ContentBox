@@ -1,4 +1,4 @@
-/**
+﻿/**
 * I am a author entity
 */
 component persistent="true" entityname="bbAuthor" table="bb_author" batchsize="10"{

@@ -1,4 +1,4 @@
-<cfscript>
+﻿<cfscript>
 	function toCKDate(inDate){
 		return dateFormat(arguments.inDate,"yyyy-mm-dd");
 	}

@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <h2>Comment Quick Look</h2>
 <div>
 	#getMyPlugin(plugin="Avatar",module="blogbox").renderAvatar(email=rc.comment.getAuthorEmail(),size="50")#

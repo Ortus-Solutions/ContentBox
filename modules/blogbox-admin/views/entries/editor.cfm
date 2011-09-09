@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 
 <!--- Entry Form  --->
 #html.startForm(action=rc.xehEntrySave,name="entryForm",novalidate="novalidate")#

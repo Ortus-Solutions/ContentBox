@@ -1,4 +1,4 @@
-/**
+﻿/**
 BlogBox Goodness Layout
 
 A layout is composed of the following pieces

@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 #html.startForm(name="commentSettingsForm",action=rc.xehSaveSettings)#		
 #html.anchor(name="top")#
 <!--============================Sidebar============================-->

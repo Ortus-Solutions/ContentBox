@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Entry service for BlogBox
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{

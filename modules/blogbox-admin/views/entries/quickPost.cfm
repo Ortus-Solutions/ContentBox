@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <div id="quickPost">
 	<div id="quickPostContent">
 		<!--- Entry Form  --->

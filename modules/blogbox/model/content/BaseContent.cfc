@@ -1,4 +1,4 @@
-/**
+﻿/**
 * A mapped super class used for blogbox content: entries and pages
 */
 component mappedsuperclass="true" accessors="true"{

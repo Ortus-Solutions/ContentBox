@@ -1,4 +1,4 @@
-/**
+﻿/**
 * A cool basic commenting form for BlogBox
 */
 component extends="blogbox.model.ui.BaseWidget" singleton{

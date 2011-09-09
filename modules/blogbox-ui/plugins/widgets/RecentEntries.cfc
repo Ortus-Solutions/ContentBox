@@ -1,4 +1,4 @@
-/**
+﻿/**
 * A cool basic widget that shows N recent entries
 */
 component extends="blogbox.model.ui.BaseWidget" singleton{

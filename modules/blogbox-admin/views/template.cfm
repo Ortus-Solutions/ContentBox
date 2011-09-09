@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!--============================Head============================-->
@@ -387,7 +387,7 @@
 						</ul>
 						<h6>Heading 6</h6>
 						<p>Lorem ipsum dolor sit amet, <a href="##">consectetur</a> adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo <a href="##">consequat</a>. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-						<p> </p>
+						<p>Â </p>
 						<hr />
 						<!-- Heading with borders -->
 						<h1 class="border_blue">Heading 1 with border style</h1>
@@ -454,7 +454,7 @@
 <!--============================Footer============================-->
 <div id="footer">
 	<div class="wrapper">
-	Copyright (C) 2009    Your Company  . All Rights Reserved. Powered by <a href="##">Evolution</a>.
+	Copyright (C) 2009   Â Your Company  . All Rights Reserved. Powered by <a href="##">Evolution</a>.
 	</div>
 </div>
 <!--End Footer-->

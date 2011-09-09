@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <div class="fullWidth">
 	
 	<!--- This page is rendered whenever an error ocurrs in your blog --->

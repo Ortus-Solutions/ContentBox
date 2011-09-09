@@ -1,4 +1,4 @@
-/**
+﻿/**
 * A cool basic widget that shows our blog categories
 */
 component extends="blogbox.model.ui.BaseWidget" singleton{

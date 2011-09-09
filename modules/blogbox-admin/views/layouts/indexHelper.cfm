@@ -1,4 +1,4 @@
-<cfscript>
+﻿<cfscript>
 	function getWidgetLocation(fileName){
 		return "widgets." & ripExtension(arguments.fileName);
 	};

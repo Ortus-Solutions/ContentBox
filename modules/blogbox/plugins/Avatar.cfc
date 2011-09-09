@@ -1,4 +1,4 @@
-/*
+﻿/*
 * An avatar plugin for BlogBox
 */
 component extends="coldbox.system.Plugin" singleton{

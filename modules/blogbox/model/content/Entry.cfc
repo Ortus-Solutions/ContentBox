@@ -1,4 +1,4 @@
-/**
+﻿/**
 * I am a blog entry entity
 */
 component persistent="true" entityname="bbEntry" table="bb_entry" batchsize="10" extends="BaseContent" {

@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Import a wordpress database into blogbox
 */
 component implements="blogbox.model.importers.IBBImporter"{

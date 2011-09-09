@@ -1,4 +1,4 @@
-/**
+﻿/**
 * RSS Service for this application
 */
 component singleton{

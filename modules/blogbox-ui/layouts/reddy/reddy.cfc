@@ -1,4 +1,4 @@
-/**
+﻿/**
 BlogBox Reddy Layout
 
 A layout is composed of the following pieces

@@ -1,4 +1,4 @@
-/**
+﻿/**
 * The main BlogBox engine handler
 */
 component singleton{

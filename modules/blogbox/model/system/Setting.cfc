@@ -1,4 +1,4 @@
-/**
+﻿/**
 * I am a system setting
 */
 component persistent="true" entityname="bbSetting" table="bb_setting"{

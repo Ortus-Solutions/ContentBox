@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <h2>'#rc.oWidget.getPluginName()#' Widget</h2>
 <div>
 	<ul>

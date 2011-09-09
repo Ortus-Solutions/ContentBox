@@ -1,4 +1,4 @@
-component extends="coldbox.system.testing.BaseModelTest" model="blogbox.model.system.SettingService"{
+﻿component extends="coldbox.system.testing.BaseModelTest" model="blogbox.model.system.SettingService"{
 
 	function setup(){
 		super.setup();

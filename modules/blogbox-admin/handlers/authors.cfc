@@ -1,4 +1,4 @@
-/**
+﻿/**
 * Manage authors
 */
 component extends="baseHandler"{

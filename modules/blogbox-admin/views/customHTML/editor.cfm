@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 <h2>Content Editor</h2>
 #html.startForm(name="contentEditForm",action=rc.xehContentSave,novalidate="novalidate")#
 	<!--- contentid --->
