@@ -4,9 +4,10 @@ settings.xml
 .project
 _paidModules/**
 _modules/**
-coldbox/**
-coldbox
 logs/**
 logs/BlogBox.log
 web.config
-/Icon
+/coldbox
+/coldbox/**
+coldbox
+"Icon\r"
