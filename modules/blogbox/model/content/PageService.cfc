@@ -104,6 +104,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// only published pages
 		arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",1)) );
+		arrayAppend(criteria, restrictions.lt("publishedDate", Now()) );
 		// only non-password pages
 		arrayAppend(criteria, restrictions.eq("passwordProtection","") );
 		
