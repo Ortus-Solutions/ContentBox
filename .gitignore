@@ -10,3 +10,4 @@ logs/**
 logs/BlogBox.log
 web.config
 /Icon
+/coldbox
