@@ -1,4 +1,4 @@
-﻿RewriteEngine on
+RewriteEngine on
 #RepeatLimit 0
 
 #SQL Injection Protection --Read More www.cybercrime.gov

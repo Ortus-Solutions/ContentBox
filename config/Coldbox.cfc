@@ -74,12 +74,7 @@
 		logBox = {
 			// Define Appenders
 			appenders = {
-				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" },
-				files={class="coldbox.system.logging.appenders.RollingFileAppender",
-					properties = {
-						filename = "BlogBox", filePath="logs"
-					}
-				}
+				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" }
 			},
 			// Root Logger
 			root = { levelmax="DEBUG", appenders="*" },
@@ -126,7 +121,13 @@
 	function development(){
 		//coldbox.debugmode=true;
 		// ses debugging
+		logbox.appenders.files={class="coldbox.system.logging.appenders.RollingFileAppender",
+			properties = {
+				filename = "BlogBox", filePath="../logs"
+			}
+		};
 		//logbox.debug = ["coldbox.system.interceptors.SES"];
+		
 	}
 	
 </cfscript>
