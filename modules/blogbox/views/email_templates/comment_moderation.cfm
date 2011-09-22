@@ -12,7 +12,7 @@ Comment:<br/>
 @content@
 <br/><br/>
 
-Approve it: <a href="@deleteURL@">@approveURL@</a><br/>
+Approve it: <a href="@approveURL@">@approveURL@</a><br/>
 Delete it: <a href="@deleteURL@">@deleteURL@</a><br/>
 Comment URL: <a href="@commentURL@">@commentURL@</a><br/>
 </cfoutput>
