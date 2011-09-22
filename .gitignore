@@ -11,3 +11,4 @@ web.config
 /coldbox/**
 coldbox
 "Icon\r"
+WEB-INF/**
