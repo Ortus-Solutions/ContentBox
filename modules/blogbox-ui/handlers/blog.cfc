@@ -93,6 +93,38 @@ component singleton{
 	}
 	
 	/**
+	* The archives
+	*/
+	function archives(event,rc,prc){
+		// incoming params
+		event.paramValue("page",1);
+		// archived params
+		event.paramValue("year","");
+		event.paramValue("month","0");
+		event.paramValue("day","0");
+		
+		// prepare paging plugin
+		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="blogbox");
+		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 			= bbHelper.linkHome() & event.getCurrentRoutedURL() & "?page=@page@";
+		
+		// get published entries
+		var entryResults = entryService.findPublishedEntriesByDate(year=rc.year,
+											   				  	   month=rc.month,
+											   				 	   day=rc.day,
+											   				 	   offset=prc.pagingBoundaries.startRow-1,
+											   					   max=prc.bbSettings.bb_paging_maxentries);
+		prc.entries 		= entryResults.entries;
+		prc.entriesCount  	= entryResults.count;
+		
+		// announce event
+		announceInterception("bbui_onArchives",{entries=prc.entries,entriesCount=prc.entriesCount});
+		
+		// set skin view
+		event.setView("#prc.bbLayout#/views/archives");
+	}
+	
+	/**
 	* An entry page
 	*/
 	function entry(event,rc,prc){
@@ -160,7 +192,7 @@ component singleton{
 			// set 404 headers
 			event.setHTTPHeader("404","Page not found");
 			// set skin not found
-			event.setView(view="#prc.bbLayout#/views/notfound",layout="#prc.bbLayout#/layouts/#prc.page.getLayout()#");
+			event.setView(view="#prc.bbLayout#/views/notfound",layout="#prc.bbLayout#/layouts/pages");
 		}	
 	}
 	

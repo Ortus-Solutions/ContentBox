@@ -48,7 +48,8 @@ component{
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
-		eventHandling 		= true
+		eventHandling 		= true,
+		eventHandler		= "modules.blogbox.model.system.EventHandler"
 	};
 
 	public boolean function onApplicationStart(){

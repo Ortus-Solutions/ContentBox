@@ -30,6 +30,8 @@ component {
 			{pattern="/", handler="blog", action="index" },
 			// Blog reserved route
 			{pattern="/blog", handler="blog", action="index" },
+			// Blog Archives
+			{pattern="/archives/:year-numeric{4}/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives"},
 			// preview
 			{pattern="/__preview", handler="blog", action="preview" },
 			// RSS feeds
@@ -44,7 +46,7 @@ component {
 			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" },
 			// blog permalink
 			{pattern="/entry/:entrySlug", handler="blog", action="entry"},
-			// page permalink
+			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
 			{pattern="/:pageSlug", handler="blog", action="page"}
 		];		
 		
@@ -57,10 +59,10 @@ component {
 				// Code Interception points
 				"bbui_onPageNotFound","bbui_onError","bbui_preRequest","bbui_postRequest","bbui_onRendererDecoration",
 				// Fixed Handler Points
-				"bbui_onIndex","bbui_onEntry","bbui_onPage","bbui_preCommentPost","bbui_onCommentPost",
+				"bbui_onIndex","bbui_onArchives","bbui_onEntry","bbui_onPage","bbui_preCommentPost","bbui_onCommentPost",
 				// Fixed HTML Points
 				"bbui_preEntryDisplay","bbui_postEntryDisplay","bbui_preIndexDisplay","bbui_postIndexDisplay","bbui_preCommentForm","bbui_postCommentForm",
-				"bbui_prePageDisplay","bbui_postPageDisplay"
+				"bbui_prePageDisplay","bbui_postPageDisplay","bbui_preArchivesDisplay","bbui_postArchivesDisplay"
 			])
 		};
 		
@@ -79,16 +81,27 @@ component {
 		// Treat the blog as the Main Application?
 		if( !len(this.entryPoint) ){
 			// generate the ses entry point
-			var ses = controller.getInterceptorService().getInterceptor('SES',true);
+			var ses 		 = controller.getInterceptorService().getInterceptor('SES',true);
+			// get parent routes so we can re-mix them later
+			var parentRoutes = ses.getRoutes();
+			
+			// clean routes
+			ses.setRoutes( [] );			
+			
 			// Add routes manually to take over parent routes
-			for(var x=arrayLen(variables.routes); x gte 1; x--){
+			for(var x=1; x LTE arrayLen(variables.routes); x++){
 				// append module location to it so the route is now system wide
 				var args = duplicate(variables.routes[x]);
-				args.handler = "blogbox-ui:#args.handler#";
-				args.append = false;
+				// Check if handler defined
+				if( structKeyExists(args,"handler") ){
+					args.handler = "blogbox-ui:#args.handler#";
+				}
 				// add it as main application route.
 				ses.addRoute(argumentCollection=args);
 			}
+			// Load back the parent routes at the end now.
+			ses.getRoutes().addAll( parentRoutes );
+			
 			// change the default event
 			controller.setSetting("DefaultEvent","blogbox-ui:blog");
 		}

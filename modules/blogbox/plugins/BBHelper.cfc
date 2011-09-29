@@ -520,7 +520,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		// current page?
 		var prc = getRequestCollection(private=true);		
 		var currentPageID = "";
-		if( structKeyExists(prc,"page") ){
+		if( structKeyExists(prc,"page") and prc.page.isLoaded() ){
 			currentPageID = prc.page.getPageID();
 		}
 		
