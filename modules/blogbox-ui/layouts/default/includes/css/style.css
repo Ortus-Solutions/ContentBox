@@ -46,7 +46,7 @@ a:hover { text-decoration:underline;color:#c52100;}
 .body h2 span { font: normal 11px Arial, Helvetica, sans-serif; color:#69a2bc;}
 .body img {  padding:0;margin: 0px auto;vertical-align:middle;}
 .body img.floated { float:left; padding:0; margin:10px 15px 10px 0;}
-.body ul { margin:5px 20px; padding:20px 0;}
+.body ul { margin:5px 20px; padding: 10px 0;}
 .body li { padding:3px 5px; margin:0; font: normal 12px Arial, Helvetica, sans-serif; color:#7d7d7d;}
 .body p.main_body { font:normal 12px Arial, Helvetica, sans-serif; color:#fff; line-height:1.8em; padding:5px 5px; margin:0;}
 .body a { text-decoration:none; color:#0058AF;}

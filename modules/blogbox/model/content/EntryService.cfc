@@ -3,6 +3,9 @@
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
+	// DI
+	property name="HQLHelper" inject="id:HQLHelper@bb";
+	
 	/**
 	* Constructor
 	*/
@@ -32,6 +35,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Update an entry's hits
 	*/
 	function updateHits(required entry){
+		// direct SQL as it is pretty standard SQL
 		var q = new Query(sql="UPDATE bb_entry SET hits = hits + 1 WHERE entryID = #arguments.entry.getEntryID()#").execute();
 	}
 	
@@ -39,6 +43,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Get an id from a slug
 	*/
 	function getIDBySlug(required entrySlug){
+		// direct SQL as it is pretty standard SQL
 		var q = new Query(sql="select entryID from bb_entry where slug = :slug");
 		q.addParam(name="slug",value=arguments.entrySlug);
 		
@@ -93,6 +98,24 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		results.count 	= criteriaCount(criteria=criteria);
 		
 		return results;
+	}
+	
+	// Entry Archive Report
+	function getArchiveReport(){
+		var results = {};
+		// we use HQL so we can be DB independent
+		var hql = "SELECT count(*), YEAR(publishedDate) as year, MONTH(publishedDate) as month
+				   FROM bbEntry
+				  WHERE isPublished = true
+				    AND passwordProtection = ''
+				  GROUP BY YEAR(publishedDate), MONTH(publishedDate)
+				  ORDER BY 2 DESC, 3 DESC";
+		
+		// run report
+		results = executeQuery(query=hql,asQuery=false);
+		
+		// build up a nicer structure
+		return HQLHelper.arrayReportToStruct(hqlData=results,columnNames=["count","year","month"] );		
 	}
 	
 	// Entry listing by Date

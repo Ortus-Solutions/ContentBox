@@ -3,6 +3,15 @@
 	function setup(){
 		super.setup();
 		model.init();
+		
+		model.$property("HQLUtil","variables", new modules.blogbox.model.util.HQLHelper() );
+	}
+	
+	function testgetArchivesReport(){
+		
+		r = model.getArchiveReport();
+		assertTrue( arrayLen( r ) );
+		
 	}
 	
 	function testFindPublishedEntriesByDate(){

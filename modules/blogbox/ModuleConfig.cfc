@@ -44,6 +44,7 @@
 		binder.map("bbHelper@bb").toDSL("coldbox:myplugin:BBHelper@blogbox");
 		// utils
 		binder.map("zipUtil@bb").to("coldbox.system.core.util.Zip");
+		binder.map("HQLHelper@bb").to("#moduleMapping#.model.util.HQLHelper");
 		// importers
 		binder.map("mangoImporter@bb").to("#moduleMapping#.model.importers.MangoImporter");
 		binder.map("wordpressImporter@bb").to("#moduleMapping#.model.importers.WordpressImporter");

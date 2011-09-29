@@ -19,13 +19,13 @@
 
 <br/>
 
-<h2>Description</h2>
-<div class="bg"></div>
-<p>#bb.siteDescription()#</p>
-
 <h2>Recent Entries</h2>
 <div class="bg"></div>
 #bb.widget('RecentEntries')#
+
+<h2>Archives</h2>
+<div class="bg"></div>
+#bb.widget('Archives')#
 
 <br/>
 
