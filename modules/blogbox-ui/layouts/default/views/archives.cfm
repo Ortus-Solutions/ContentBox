@@ -11,7 +11,7 @@
 	<h1>Blog Archives - #prc.entriesCount# Record(s)</h1>
 	
 	<!--- Archives --->
-	<cfif len(rc.year)>
+	<cfif rc.year NEQ 0>
 		<div class="buttonBar">
 			<button class="button2" onclick="return to('#bb.linkHome()#')" title="Remove filter and view all entries">Remove Filter</button>
 		</div>
