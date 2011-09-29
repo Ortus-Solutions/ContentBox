@@ -11,7 +11,7 @@ component{
 	function login(event,rc,prc){
 		rc.xehDoLogin 		= "#prc.bbAdminEntryPoint#.security.doLogin";
 		rc.xehLostPassword 	= "#prc.bbAdminEntryPoint#.security.lostPassword";
-		event.setView(view="security/login",layout="login");	
+		event.setView(view="security/login",layout="simple");	
 	}
 	
 	// authenticate users
@@ -56,7 +56,7 @@ component{
 	function lostPassword(event,rc,prc){
 		prc.xehLogin 			= "#prc.bbAdminEntryPoint#.security.login";
 		rc.xehDoLostPassword 	= "#prc.bbAdminEntryPoint#.security.doLostPassword";
-		event.setView(view="security/lostPassword",layout="login");	
+		event.setView(view="security/lostPassword",layout="simple");	
 	}
 	
 	// do the lost password goodness

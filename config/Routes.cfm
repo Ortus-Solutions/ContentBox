@@ -10,12 +10,14 @@
 	// If enabled, the interceptor will throw a 406 exception that an invalid format was detected or just ignore it
 	// setThrowOnInvalidExtension(true);
 
+	// TO ENABLE FULL REWRITES REMOVE THE "INDEX.CFM" FROM THE LINES BELOW
+
 	// Base URL
 	if( len(getSetting('AppMapping') ) lte 1){
-		setBaseURL("http://#cgi.HTTP_HOST#");
+		setBaseURL("http://#cgi.HTTP_HOST#/index.cfm");
 	}
 	else{
-		setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#");
+		setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#/index.cfm");
 	}
 	
 	// Your Application Routes
