@@ -95,6 +95,34 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		return results;
 	}
 	
+	// Entry listing by Date
+	function findPublishedEntriesByDate(required numeric year,numeric month=0, numeric day=0,max=0,offset=0,asQuery=false){
+		var results = {};
+		var hql = "FROM bbEntry
+				  WHERE isPublished = true
+				    AND passwordProtection = ''";
+		var params = {};
+		
+		// year lookup mandatory
+		params["year"] = arguments.year;
+		hql &= " AND YEAR(publishedDate) = :year";
+		// month lookup
+		if( arguments.month NEQ 0 ){
+			params["month"] = arguments.month;
+			hql &= " AND MONTH(publishedDate) = :month";
+		}
+		// day lookup
+		if( arguments.day NEQ 0 ){
+			params["day"] = arguments.day;
+			hql &= " AND DAY(publishedDate) = :day";
+		}
+		// find
+		results.entries = executeQuery(query=hql,params=params,max=arguments.max,offset=arguments.offset,asQuery=arguments.asQuery);
+		results.count 	= executeQuery(query="select count(*) #hql#",params=params,max=1,asQuery=false)[1];
+		
+		return results;
+	}
+	
 	// Entry listing for UI
 	function findPublishedEntries(max=0,offset=0,category="",searchTerm="",asQuery=false){
 		var results = {};
@@ -105,7 +133,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// only published entries
 		arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",1)) );
-		arrayAppend(criteria, restrictions.lt("publishedDate", Now()) );
+		arrayAppend(criteria, restrictions.lt("publishedDate", now() ));
+		
 		// only non-password entries
 		arrayAppend(criteria, restrictions.eq("passwordProtection","") );
 		
