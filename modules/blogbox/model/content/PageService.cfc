@@ -148,26 +148,5 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		return page;		
 	}
-	
-	
-	/**
-	* @override Create a new hibernate criteria object according to entityname and criterion array objects
-	*/
-	private any function createCriteriaQuery(required entityName, array criteria=ArrayNew(1)){
-		var qry = ORMGetSession().createCriteria( arguments.entityName );
-
-		for(var i=1; i LTE ArrayLen(arguments.criteria); i++) {
-			if( isSimpleValue( arguments.criteria[i] ) ){
-				// create criteria out of simple values for associations with alias
-				qry.createCriteria( arguments.criteria[i], arguments.criteria[i] );
-			}
-			else{
-				// add criterion
-				qry.add( arguments.criteria[i] );
-			}
-		}
-
-		return qry;
-	}
-	
+		
 }
