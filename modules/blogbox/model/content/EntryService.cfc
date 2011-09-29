@@ -96,7 +96,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	// Entry listing by Date
-	function findPublishedEntriesByDate(required numeric year,numeric month=0, numeric day=0,max=0,offset=0,asQuery=false){
+	function findPublishedEntriesByDate(numeric year=0,numeric month=0, numeric day=0,max=0,offset=0,asQuery=false){
 		var results = {};
 		var hql = "FROM bbEntry
 				  WHERE isPublished = true
@@ -104,8 +104,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var params = {};
 		
 		// year lookup mandatory
-		params["year"] = arguments.year;
-		hql &= " AND YEAR(publishedDate) = :year";
+		if( arguments.year NEQ 0 ){
+			params["year"] = arguments.year;
+			hql &= " AND YEAR(publishedDate) = :year";
+		}
 		// month lookup
 		if( arguments.month NEQ 0 ){
 			params["month"] = arguments.month;

@@ -99,7 +99,7 @@ component singleton{
 		// incoming params
 		event.paramValue("page",1);
 		// archived params
-		event.paramValue("year","");
+		event.paramValue("year","0");
 		event.paramValue("month","0");
 		event.paramValue("day","0");
 		

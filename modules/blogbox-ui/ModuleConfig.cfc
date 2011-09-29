@@ -31,7 +31,7 @@ component {
 			// Blog reserved route
 			{pattern="/blog", handler="blog", action="index" },
 			// Blog Archives
-			{pattern="/archives/:year-numeric{4}/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives"},
+			{pattern="/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives"},
 			// preview
 			{pattern="/__preview", handler="blog", action="preview" },
 			// RSS feeds
