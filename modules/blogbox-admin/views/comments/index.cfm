@@ -21,7 +21,7 @@
 			<img src="#prc.bbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Filters
 		</div>
 		<div class="body<cfif rc.isFiltering> selected</cfif>">
-			#html.startForm(name="commentFilterForm")#
+			#html.startForm(name="commentFilterForm",action=prc.xehComments)#
 			<!--- Status --->
 			<label for="fStatus">Comment Status: </label>
 			<select name="fStatus" id="fStatus" style="width:200px">
