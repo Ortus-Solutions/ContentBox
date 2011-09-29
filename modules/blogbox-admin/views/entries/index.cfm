@@ -22,7 +22,7 @@
 			<img src="#prc.bbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Filters
 		</div>
 		<div class="body<cfif rc.isFiltering> selected</cfif>">
-			#html.startForm(name="entryFilterForm")#
+			#html.startForm(name="entryFilterForm",action=rc.xehEntrySearch)#
 			<!--- Authors --->
 			<label for="fAuthors">Authors: </label>
 			<select name="fAuthors" id="fAuthors" style="width:200px">
