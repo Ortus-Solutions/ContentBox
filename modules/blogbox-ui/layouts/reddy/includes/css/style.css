@@ -23,7 +23,7 @@ p.additional { margin:0 10px; color:#9c9c9c; font-size:11px; line-height:12px; b
 #sidebar { float:right; width:245px; padding: 10px 20px 0 30px; font-size:12px;}
 #sidebar a{ font-weight:bold; }
 #sidebar h1 { margin:0; padding:0 0 20px 0; text-transform:uppercase; font-size:18px; color:#000; font-weight:normal;}
-#main {  background:url(../images/sidebar_bckg.gif) no-repeat top right #fff; padding:20px 0 0 0;}
+#main {  background:url(../images/sidebar_bckg.gif) no-repeat top right #fff; padding:20px 0 0 0; min-height:700px;}
 #footer {background:url(../images/footer_bckg.gif) repeat-x #000; height:57px; clear:both;  }
 #left_footer { float:left; padding:20px 0 0 30px; background:url(../images/c.gif) no-repeat 30px 35px;  color:#fff; font-size:12px;}
 #left_footer a { color:#fff;}

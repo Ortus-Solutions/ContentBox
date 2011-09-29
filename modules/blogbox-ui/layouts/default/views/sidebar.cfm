@@ -28,6 +28,11 @@
 #bb.widget("SearchForm")#
 <br/>
 
+<h4>Archives</h4>
+<div class="bg"></div>
+#bb.widget("Archives")#
+<br/>
+
 <!--- RSS Buttons --->
 <button class="button" onclick="return to('#bb.linkRSS()#')" title="Subscribe to our RSS Feed!"><img class="topAligned" src="#bb.layoutRoot()#/includes/images/feed.png" alt="feed" /> Site Updates</button>	
 <!--- RSS Entry Comments --->

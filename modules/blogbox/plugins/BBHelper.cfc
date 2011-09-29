@@ -237,6 +237,20 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 	
 	/**
+	* Link to a specific filtered archive of entries
+	* @year The year of the archive
+	* @month The month of the archive
+	* @day The day of the archive
+	*/
+	function linkArchive(year,month,day){
+		var xeh = siteRoot() & sep() & "archives";
+		if( structKeyExists(arguments,"year") ){ xeh &= "/#arguments.year#"; }
+		if( structKeyExists(arguments,"month") ){ xeh &= "/#arguments.month#"; }
+		if( structKeyExists(arguments,"day") ){ xeh &= "/#arguments.day#"; }
+		return getRequestContext().buildLink(linkto=xeh);
+	}
+	
+	/**
 	* Link to the search page for this blog
 	*/
 	function linkSearch(){
