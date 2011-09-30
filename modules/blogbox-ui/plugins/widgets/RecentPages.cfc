@@ -11,7 +11,7 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 		setPluginName("RecentPages");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows N recent pages");
-		setPluginAuthor("Luis Majano");
+		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
 		setForgeBoxSlug("bbwidget-recentpages");
 		

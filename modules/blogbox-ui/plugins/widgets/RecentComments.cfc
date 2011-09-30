@@ -11,7 +11,7 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 		setPluginName("RecentComments");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows N recent comments");
-		setPluginAuthor("Luis Majano");
+		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
 		setForgeBoxSlug("bbwidget-recentcomments");
 		

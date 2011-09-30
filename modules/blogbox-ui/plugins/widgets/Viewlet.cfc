@@ -11,7 +11,7 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 		setPluginName("Viewlet");
 		setPluginVersion("1.0");
 		setPluginDescription("A widget that executes any internal ColdBox event and return its results");
-		setPluginAuthor("Luis Majano");
+		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
 		setForgeBoxSlug("bbwidget-viewlet");
 		
