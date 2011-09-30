@@ -11,7 +11,7 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 		setPluginName("Archives");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows our blog archives");
-		setPluginAuthor("Luis Majano");
+		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
 		setForgeBoxSlug("bbwidget-archives");
 		

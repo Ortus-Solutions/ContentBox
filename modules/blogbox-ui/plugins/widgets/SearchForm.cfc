@@ -11,7 +11,7 @@ component extends="blogbox.model.ui.BaseWidget" singleton{
 		setPluginName("SearchForm");
 		setPluginVersion("1.0");
 		setPluginDescription("This widget creates a simple blogbox search form");
-		setPluginAuthor("Luis Majano");
+		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
 		setForgeBoxSlug("bbwidget-searchform");
 		
