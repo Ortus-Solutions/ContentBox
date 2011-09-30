@@ -116,5 +116,37 @@ component singleton{
 		// send it out
 		mailService.send( mail );
 	}
-
+	
+	/**
+	* Check to authorize a user to view a content entry or page
+	*/
+	function authorizeContent(content,password){
+		// Validate Password
+		if( compare(arguments.content.getPasswordProtection(),arguments.password) eq 0 ){
+			// Set simple validation
+			sessionStorage.setVar("protection-#hash(arguments.content.getSlug())#",  getContentProtectedHash( arguments.content ) );
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	* Checks Whether a content entry or page is protected and user has credentials for it
+	*/
+	function isContentViewable(content){
+		var protectedHash = sessionStorage.getVar("protection-#hash(arguments.content.getSlug())#","");
+		//check hash against validated content
+		if( compare( protectedHash, getContentProtectedHash( arguments.content ) )  EQ 0 ){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	* Get password content protected salt
+	*/
+	private function getContentProtectedHash(content){
+		return hash(arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256");
+	}
 }
