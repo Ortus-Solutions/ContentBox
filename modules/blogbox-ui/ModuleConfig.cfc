@@ -57,7 +57,7 @@ component {
 				// Layout HTML points: A layout must announce them via bb.event("bbui_footer",{renderer=this}) make sure you pass in the renderer
 				"bbui_beforeHeadEnd","bbui_afterBodyStart","bbui_beforeBodyEnd","bbui_footer","bbui_beforeContent","bbui_afterContent","bbui_beforeSideBar","bbui_afterSideBar",
 				// Code Interception points
-				"bbui_onPageNotFound","bbui_onError","bbui_preRequest","bbui_postRequest","bbui_onRendererDecoration",
+				"bbui_onPageNotFound","bbui_onEntryNotFound","bbui_onError","bbui_preRequest","bbui_postRequest","bbui_onRendererDecoration",
 				// Fixed Handler Points
 				"bbui_onIndex","bbui_onArchives","bbui_onEntry","bbui_onPage","bbui_preCommentPost","bbui_onCommentPost",
 				// Fixed HTML Points
@@ -69,7 +69,9 @@ component {
 		// BB UI Interceptors
 		interceptors = [
 			// BB UI Request Interceptor
-			{class="#moduleMapping#.interceptors.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bbUI" }
+			{class="#moduleMapping#.interceptors.BBRequest", properties={ entryPoint=this.entryPoint }, name="BBRequest@bbUI" },
+			// Simple Security
+			{class="#moduleMapping#.interceptors.SimpleSecurity"}
 		];
 		
 	}

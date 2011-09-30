@@ -150,11 +150,11 @@ component singleton{
 		}
 		else{
 			// announce event
-			announceInterception("bbui_onPageNotFound",{entry=prc.entry,entrySlug=rc.entrySlug});
+			announceInterception("bbui_onEntryNotFound",{entry=prc.entry,entrySlug=rc.entrySlug});
 			// missing page
 			prc.missingPage = rc.entrySlug;
 			// set 404 headers
-			event.setHTTPHeader("404","Page not found");
+			event.setHTTPHeader("404","Entry not found");
 			// set skin not found
 			event.setView("#prc.bbLayout#/views/notfound");
 		}	
@@ -182,7 +182,7 @@ component singleton{
 			// announce event
 			announceInterception("bbui_onPage",{page=prc.page,pageSlug=rc.pageSlug});
 			// set skin view
-			event.setView(view="#prc.bbLayout#/views/page",layout="#prc.bbLayout#/layouts/#prc.page.getLayout()#");	
+			event.setView(view="#prc.bbLayout#/views/page",layout="#prc.bbLayout#/layouts/#prc.page.getLayout()#");
 		}
 		else{
 			// announce event
@@ -194,6 +194,7 @@ component singleton{
 			// set skin not found
 			event.setView(view="#prc.bbLayout#/views/notfound",layout="#prc.bbLayout#/layouts/pages");
 		}	
+		
 	}
 	
 	/*
