@@ -75,8 +75,8 @@
 			<table name="layouts" id="layouts" class="tablesorter" width="98%">
 				<thead>
 					<tr>
-						<th>Theme Info</th>
-						<th width="310">Description</th>
+						<th width="300">Theme Info</th>
+						<th width="300">Description</th>
 						<th>Included Layouts</th>
 						<th width="55" class="center {sorter:false}">Actions</th>
 					</tr>
