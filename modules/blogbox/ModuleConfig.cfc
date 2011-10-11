@@ -38,7 +38,7 @@
 		// RSS services
 		binder.map("rssService@bb").to("#moduleMapping#.model.rss.RSSService");	
 		// UI services
-		binder.map("widgetService@bb").to("#moduleMapping#.model.ui.widgetService");	
+		binder.map("widgetService@bb").to("#moduleMapping#.model.ui.WidgetService");	
 		binder.map("layoutService@bb").to("#moduleMapping#.model.ui.LayoutService");
 		binder.map("customHTMLService@bb").to("#moduleMapping#.model.ui.CustomHTMLService");
 		binder.map("bbHelper@bb").toDSL("coldbox:myplugin:BBHelper@blogbox");
