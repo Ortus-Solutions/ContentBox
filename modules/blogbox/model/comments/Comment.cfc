@@ -14,10 +14,10 @@ component persistent="true" entityname="bbComment" table="bb_comment"{
 	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" dbdefault="0" index="idx_entryComment,idx_approved,idx_pageComment";
 	
 	// M20 -> Entry loaded as a proxy
-	property name="entry" nontnull="false" cfc="blogbox.model.content.Entry" fieldtype="many-to-one" fkcolumn="FK_entryID" lazy="true" index="idx_entryComment";
+	property name="entry" notnull="false" cfc="blogbox.model.content.Entry" fieldtype="many-to-one" fkcolumn="FK_entryID" lazy="true" index="idx_entryComment";
 	
 	// M20 -> Page loaded as a proxy
-	property name="page" nontnull="false" cfc="blogbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_pageID" lazy="true" index="idx_pageComment";
+	property name="page" notnull="false" cfc="blogbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_pageID" lazy="true" index="idx_pageComment";
 	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	
