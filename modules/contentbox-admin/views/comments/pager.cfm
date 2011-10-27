@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div id="pagerComments">
 <!--- Loader --->
-<div class="loaders floatRight" id="pagerLoader">
+<div class="loaders floatRight" id="commentsPagerLoader">
 	<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
 </div>
 <!--- Paging --->
@@ -97,11 +97,11 @@ function commentPagerRemove(recordID){
 	});	
 }
 function commentPagerLink(page){
-	$("##pagerLoader").fadeIn("fast");
+	$("##commentsPagerLoader").fadeIn("fast");
 	$('##pagerComments')
 		.load('#event.buildLink(prc.xehCommentPager)#',
 			{commentPager_entryID:'#prc.commentPager_entryID#',commentPager_pageID:'#prc.commentPager_pageID#', page:page, commentPager_pagination: '#prc.commentPager_pagination#'},function() {
-			$("##pagerLoader").fadeOut();
+			$("##commentsPagerLoader").fadeOut();
 			activateTooltips();
 	});
 }

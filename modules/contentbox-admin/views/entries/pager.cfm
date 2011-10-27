@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div id="pagerEntries">
 <!--- Loader --->
-<div class="loaders floatRight" id="pagerLoader">
+<div class="loaders floatRight" id="entryPagerLoader">
 	<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
 </div>
 <!--- Paging --->
@@ -72,10 +72,10 @@ $(document).ready(function() {
 	});
 });
 function pagerLink(page){
-	$("##pagerLoader").fadeIn("fast");
+	$("##entryPagerLoader").fadeIn("fast");
 	$('##pagerEntries')
 		.load('#event.buildLink(rc.xehPager)#/pager_authorID/#rc.pager_authorID#/page/' + page, function() {
-			$("##pagerLoader").fadeOut();
+			$("##entryPagerLoader").fadeOut();
 			activateTooltips();
 	});
 }

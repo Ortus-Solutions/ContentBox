@@ -64,7 +64,7 @@
 					<!--- View Site --->
 					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="View your awesome site!"><button class="buttonsmall">View Site</button></a>
 					<!--- QUick Post --->
-					<button class="buttonsmall" id="btnQuickPost" title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
+					<button class="buttonsmall" title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 					<!--- cbadmin event --->
 					#announceInterception("cbadmin_onTopBar")#
 				</span>
