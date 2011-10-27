@@ -161,6 +161,11 @@
 							#html.radioButton(name="cb_rss_caching",checked=prc.cbSettings.cb_rss_caching,value=true)# Yes 	
 							#html.radioButton(name="cb_rss_caching",checked=not prc.cbSettings.cb_rss_caching,value=false)# No 	
 							
+							<!--- RSS Cache Name --->
+							<label for="cb_rss_cacheName">Feed Cache Provider:</label>
+							<small>Choose the CacheBox provider to cache feeds into.</small><br/>
+							#html.select(name="cb_rss_cacheName",options=prc.cacheNames,selectedValue=prc.cbSettings.cb_rss_cacheName)#
+							
 							<!--- Rss Cache Timeouts --->
 							<label for="cb_rss_cachingTimeout">Feed Cache Timeouts:</label>
 							<small>The number of minutes a feed XML is cached per permutation of feed type.</small><br/>

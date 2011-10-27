@@ -10,11 +10,18 @@ component singleton{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="feedGenerator" 		inject="coldbox:plugin:FeedGenerator";
 	property name="log"					inject="logbox:logger:{this}";
-	property name="cache"				inject="cachebox:default";
+	property name="cachebox"			inject="cachebox";
 	
 
 	function init(){
 		return this;
+	}
+	
+	// Startup the service
+	function onDIComplete(){
+		var settings	= settingService.getAllSettings(asStruct=true);
+		// setup the user selected cache provider
+		cache = cacheBox.getCache( settings.cb_rss_cacheName );
 	}
 	
 	/**

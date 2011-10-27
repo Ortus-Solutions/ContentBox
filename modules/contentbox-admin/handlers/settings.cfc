@@ -23,6 +23,8 @@ component extends="baseHandler"{
 		prc.pages = pageService.search().pages;
 		// tab
 		prc.tabSystem_Settings = true; 
+		// caches
+		prc.cacheNames = cachebox.getCacheNames();
 		// view
 		event.setView("settings/index");
 	}
