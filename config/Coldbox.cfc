@@ -6,7 +6,7 @@
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= "BlogBox",
+			appName 				= "ContentBox",
 			eventName 				= "event",
 			
 			//Development Settings
@@ -123,7 +123,7 @@
 		// ses debugging
 		logbox.appenders.files={class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {
-				filename = "BlogBox", filePath="../logs"
+				filename = "ContentBox", filePath="../logs"
 			}
 		};
 		//logbox.debug = ["coldbox.system.interceptors.SES"];
