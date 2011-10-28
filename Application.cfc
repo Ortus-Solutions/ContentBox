@@ -7,16 +7,11 @@ www.coldboxframework.com | www.luismajano.com | www.ortussolutions.com
 Author     :	Luis Majano
 Date        :	10/16/2007
 Description :
-	This is the Application.cfc for usage withing the ColdBox Framework.
-	Make sure that it extends the coldbox object:
-	coldbox.system.Coldbox
-	
-	So if you have refactored your framework, make sure it extends coldbox.
- 
+	This is the Application.cfc for usage withing the ColdBox Framework
 */
 component{
 	// Application properties
-	this.name 				= hash(getCurrentTemplatePath());
+	this.name 				= "ContentBox-Shell-" & hash(getCurrentTemplatePath());
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan(0,0,30,0);
 	this.setClientCookies 	= true;
@@ -25,31 +20,31 @@ component{
 	import coldbox.system.*;
 	
 	// ColdBox Specifics
-	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath(getCurrentTemplatePath());
+	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
 	COLDBOX_APP_MAPPING		= "";
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
 	
-	// FILL OUT: THE DATASOURCE FOR BLOGBOX
-	this.datasource = "blogbox";
-	// FILL OUT: THE LOCATION OF THE BLOG BOX MODULE
-	this.mappings["/blogbox"] 	= COLDBOX_APP_ROOT_PATH & "modules/blogbox";
+	// FILL OUT: THE DATASOURCE FOR CONTENTBOX
+	this.datasource = "contentbox";
+	// FILL OUT: THE LOCATION OF THE 'CONTENTBOX' MODULE
+	this.mappings["/contentbox"] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	
 	// ORM SETTINGS
 	this.ormEnabled = true;
 	this.ormSettings = {
 		// FILL OUT: ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation=["model","modules"],
-		// FILL OUT: THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT
+		// FILL OUT: THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
 		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update for continuos repo updates, or remove for production
 		dbcreate			= "update",
-		sqlscript			= "modules/blogbox/install/sql/blogbox_data.sql",
+		sqlscript			= "modules/contentbox/install/sql/contentbox_data.sql",
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		eventHandling 		= true,
-		eventHandler		= "modules.blogbox.model.system.EventHandler"
+		eventHandler		= "modules.contentbox.model.system.EventHandler"
 	};
 
 	public boolean function onApplicationStart(){
@@ -60,7 +55,7 @@ component{
 	
 	public boolean function onRequestStart(String targetPage){
 		
-		// ORM Reload
+		// ORM Reload: REMOVE IN PRODUCTION IF NEEDED
 		if( structKeyExists(url,"ormReload") ){ ormReload(); }
 		
 		// Bootstrap Reinit
