@@ -60,9 +60,10 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("tr:even").addClass("even");
+	$entriesPager = $("##entries_pager");
+	$entriesPager.find("tr:even").addClass("even");
 	// quick look
-	$("##entries_pager").find("tr").bind("contextmenu",function(e) {
+	$entriesPager.find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if( $(this).attr('data-entryID') != null ){
 				e.preventDefault();

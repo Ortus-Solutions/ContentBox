@@ -50,15 +50,17 @@ component extends="baseHandler"{
 	function editor(event,rc,prc){
 		// exit handlers
 		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#.authors.save";
-		rc.xehAuthorChangePassword 	= "#prc.cbAdminEntryPoint#.authors.passwordChange";
-		prc.xehEntriesPager			= "contentbox-admin:entries.pager";
+		prc.xehAuthorChangePassword = "#prc.cbAdminEntryPoint#.authors.passwordChange";
 		
 		// get new or persisted author
-		rc.author  = authorService.get( event.getValue("authorID",0) );
-		// pager Viewlet
-		rc.pagerViewlet = "";
-		if( rc.author.isLoaded() ){
-			rc.pagerViewlet = runEvent(event=prc.xehEntriesPager,eventArguments={authorID=rc.authorID});
+		prc.author  = authorService.get( event.getValue("authorID",0) );
+		// viewlets
+		prc.entryViewlet = "";
+		prc.pageViewlet  = "";
+		if( prc.author.isLoaded() ){
+			var args = {authorID=rc.authorID};
+			prc.entryViewlet = runEvent(event="contentbox-admin:entries.pager",eventArguments=args);
+			prc.pageViewlet  = runEvent(event="contentbox-admin:pages.pager",eventArguments=args);
 		}
 		
 		// Editor

@@ -148,6 +148,7 @@
 						<td>
 							<!--- Title --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getTitle()#</a><br>
+							by #page.getAuthorName()#<br/>
 							<!--- password protect --->
 							<cfif page.isPasswordProtected()>
 								<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>

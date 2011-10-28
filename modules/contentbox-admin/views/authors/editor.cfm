@@ -14,7 +14,7 @@
 		</div>
 	</div>	
 	<!--- User Details --->
-	<cfif rc.author.isLoaded()>
+	<cfif prc.author.isLoaded()>
 	<div class="small_box">
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/users_icon.png" alt="info" width="24" height="24" />Author Details
@@ -22,10 +22,10 @@
 		<div class="body">
 			<!--- Info --->
 			<div class="floatLeft">
-				#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=rc.author.getEmail(),size="40")#
+				#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=prc.author.getEmail(),size="40")#
 			</div>	
 			<div id="authorDetails">
-				<a title="Email Me!" href="mailto:#rc.author.getEmail()#">#rc.author.getName()#</a>
+				<a title="Email Me!" href="mailto:#prc.author.getEmail()#">#prc.author.getName()#</a>
 			</div>
 				
 			<!--- Persisted Info --->
@@ -33,13 +33,13 @@
 				<tr>
 					<th width="75" class="textRight">Last Login</th>
 					<td>
-						#rc.author.getDisplayLastLogin()#
+						#prc.author.getDisplayLastLogin()#
 					</td>
 				</tr>
 				<tr>
 					<th width="75" class="textRight">Created Date</th>
 					<td>
-						#rc.author.getDisplayCreatedDate()#
+						#prc.author.getDisplayCreatedDate()#
 					</td>
 				</tr>						
 			</table>			
@@ -54,7 +54,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" />
-			<cfif rc.author.isLoaded()>Edit #rc.author.getName()#<cfelse>Create Author</cfif>
+			<cfif prc.author.isLoaded()>Edit #prc.author.getName()#<cfelse>Create Author</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -63,16 +63,16 @@
 			<!--- AuthorForm --->
 			#html.startForm(name="authorForm",action=prc.xehAuthorsave,novalidate="novalidate")#
 				#html.startFieldset(legend="Author Details")#
-				#html.hiddenField(name="authorID",bind=rc.author)#
+				#html.hiddenField(name="authorID",bind=prc.author)#
 				<!--- Fields --->
-				#html.textField(name="firstName",bind=rc.author,label="First Name:",required="required",size="50",class="textfield")#
-				#html.textField(name="lastName",bind=rc.author,label="Last Name:",required="required",size="50",class="textfield")#
-				#html.inputField(name="email",type="email",bind=rc.author,label="Email:",required="required",size="50",class="textfield")#
-				#html.textField(name="username",bind=rc.author,label="Username:",required="required",size="50",class="textfield")#
-				<cfif NOT rc.author.isLoaded()>
-				#html.textField(name="password",bind=rc.author,label="Password:",required="required",size="50",class="textfield")#
+				#html.textField(name="firstName",bind=prc.author,label="First Name:",required="required",size="50",class="textfield")#
+				#html.textField(name="lastName",bind=prc.author,label="Last Name:",required="required",size="50",class="textfield")#
+				#html.inputField(name="email",type="email",bind=prc.author,label="Email:",required="required",size="50",class="textfield")#
+				#html.textField(name="username",bind=prc.author,label="Username:",required="required",size="50",class="textfield")#
+				<cfif NOT prc.author.isLoaded()>
+				#html.textField(name="password",bind=prc.author,label="Password:",required="required",size="50",class="textfield")#
 				</cfif>
-				#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=rc.author)#
+				#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
 				
 				<!--- Action Bar --->
 				<div class="actionBar">
@@ -83,10 +83,10 @@
 			#html.endForm()#
 			
 			<!--- Change Password --->
-			<cfif rc.author.isLoaded()>
-			#html.startForm(name="authorPasswordForm",action=rc.xehAuthorChangePassword,novalidate="novalidate")#
+			<cfif prc.author.isLoaded()>
+			#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate")#
 				#html.startFieldset(legend="Change Password")#
-				#html.hiddenField(name="authorID",bind=rc.author)#
+				#html.hiddenField(name="authorID",bind=prc.author)#
 				<!--- Fields --->
 				#html.textField(name="password",label="Password:",required="required",size="50",class="textfield")#
 				#html.textField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield")#
@@ -102,7 +102,13 @@
 			<!--- My Entries --->
 			#html.startFieldset(legend="Author Entries")#
 				<!--- Entries Pager Viewlet --->
-				#rc.pagerViewlet#
+				#prc.entryViewlet#
+			#html.endFieldSet()#
+			
+			<!--- My Pages --->
+			#html.startFieldset(legend="Author Pages")#
+				<!--- Pages Pager Viewlet --->
+				#prc.pageViewlet#
 			#html.endFieldSet()#
 			
 			</cfif>
@@ -116,7 +122,7 @@ $(document).ready(function() {
 	// form validators
 	$("##authorForm").validator({grouped:true});
 	$("##authorPasswordForm").validator({grouped:true});
-	<cfif rc.author.isLoaded()>
+	<cfif prc.author.isLoaded()>
 	$.tools.validator.fn("[name=password_confirm]", "Passwords need to match", function(el, value) {
 		return (value==$("[name=password]").val()) ? true : false;
 	});

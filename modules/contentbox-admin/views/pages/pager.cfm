@@ -10,7 +10,7 @@
 </cfif>
 
 <!--- entries --->
-<table name="entries_pager" id="entries_pager" class="tablelisting" width="100%">
+<table name="pages_pager" id="pages_pager" class="tablelisting" width="100%">
 	<thead>
 		<tr>
 			<th>Page</th>	
@@ -31,6 +31,7 @@
 			<td>
 				<!--- Title --->
 				<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getTitle()#</a><br>
+				by #page.getAuthorName()#<br/>
 				<!--- password protect --->
 				<cfif page.isPasswordProtected()>
 					<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>
@@ -85,9 +86,10 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("tr:even").addClass("even");
+	$pagesPager = $("##pages_pager"); 
+	$pagesPager.find("tr:even").addClass("even");
 	// quick look
-	$("##entries_pager").find("tr").bind("contextmenu",function(e) {
+	$pagesPager.find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if( $(this).attr('data-pageID') != null ){
 				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/pageID/' + $(this).attr('data-pageID'));
@@ -98,7 +100,6 @@ $(document).ready(function() {
 });
 function pagerLink(page){
 	$("##pagePagerLoader").fadeIn("fast");
-	$(".tooltip").hide();
 	$('##pagerPages')
 		.load('#event.buildLink(prc.xehPagePager)#/pager_authorID/#prc.pagePager_authorID#/pager_parentID/#prc.pagePager_parentID#/page/' + page, function() {
 			$("##pagePagerLoader").fadeOut();

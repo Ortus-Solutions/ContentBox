@@ -18,8 +18,8 @@ component extends="baseHandler"{
 		
 		// exit Handlers
 		prc.xehEntryEditor		= "#prc.cbAdminEntryPoint#.entries.editor";
-		prc.xehEntrySave			= "#prc.cbAdminEntryPoint#.entries.save";
-		prc.xehRemoveComment		= "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehEntrySave		= "#prc.cbAdminEntryPoint#.entries.save";
+		prc.xehRemoveComment	= "#prc.cbAdminEntryPoint#.comments.remove";
 		prc.xehReloadModule		= "#prc.cbAdminEntryPoint#.dashboard.reload";
 		
 		// Tab Manipulation
