@@ -46,7 +46,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// generate comment form
 		saveContent variable="commentForm"{
 			writeOutput('
-			#html.startForm(name="commentForm",action=cb.linkCommentPost(),novalidate="novalidate")#
+			#html.startForm(name="commentForm",action=cb.linkCommentPost(arguments.content),novalidate="novalidate")#
 			
 				#cb.event("cbui_preCommentForm")#
 				

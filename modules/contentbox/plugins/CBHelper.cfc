@@ -11,6 +11,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	property name="commentService"		inject="id:commentService@cb";
 	property name="customHTMLService"	inject="id:customHTMLService@cb";
 	
+	function init(controller){
+		super.init( arguments.controller );
+		
+		blogEntryPoint = "blog";
+	}
+	
 	/************************************** settings *********************************************/
 	
 	// get contentbox settings
@@ -205,7 +211,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @entry You can optionally pass the entry to filter the comment's RSS feed
 	*/
 	function linkRSS(category,comments=false,entry){
-		var xehRSS = siteRoot() & sep() & "rss";
+		var xehRSS = siteRoot() & sep() & "#blogEntryPoint#.rss";
 		
 		// do we have a category?
 		if( structKeyExists(arguments,"category") ){
@@ -232,7 +238,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @category The category object to link to
 	*/
 	function linkCategory(category){
-		var xeh = siteRoot() & sep() & "category/#arguments.category.getSlug()#";
+		var xeh = siteRoot() & sep() & "#blogEntryPoint#.category/#arguments.category.getSlug()#";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
 	
@@ -243,7 +249,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @day The day of the archive
 	*/
 	function linkArchive(year,month,day){
-		var xeh = siteRoot() & sep() & "archives";
+		var xeh = siteRoot() & sep() & "#blogEntryPoint#.archives";
 		if( structKeyExists(arguments,"year") ){ xeh &= "/#arguments.year#"; }
 		if( structKeyExists(arguments,"month") ){ xeh &= "/#arguments.month#"; }
 		if( structKeyExists(arguments,"day") ){ xeh &= "/#arguments.day#"; }
@@ -254,16 +260,16 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* Link to the search page for this blog
 	*/
 	function linkSearch(){
-		var xeh = siteRoot() & sep() & "search";
+		var xeh = siteRoot() & sep() & "#blogEntryPoint#.search";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
 	
 	/**
-	* Link to a specific entry's page
+	* Link to a specific blog entry's page
 	* @entry The entry to link to
 	*/
 	function linkEntry(entry){
-		var xeh = siteRoot() & sep() & "entry.#arguments.entry.getSlug()#";
+		var xeh = siteRoot() & sep() & "#blogEntryPoint#.#arguments.entry.getSlug()#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 	
@@ -272,7 +278,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @slug The entry slug to link to
 	*/
 	function linkEntryWithSlug(slug){
-		var xeh = siteRoot() & sep() & "entry.#arguments.slug#";
+		var xeh = siteRoot() & sep() & "#blogEntryPoint#.#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 	
@@ -337,10 +343,16 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/**
 	* Link to the commenting post action, this is where comments are submitted to
+	* @content The entry or page to link to its comments
 	*/
-	function linkCommentPost(){
-		var xeh = siteRoot() & sep() & "commentPost";
-		return getRequestContext().buildLink(linkTo=xeh);
+	function linkCommentPost(content){
+		
+		if( arguments.content.getType() eq "page" ){
+			var xeh = siteRoot() & sep() & "__pageCommentPost";
+			return getRequestContext().buildLink(linkTo=xeh);
+		}
+		
+		return linkEntry( arguments.content ) & "/commentPost";
 	}
 	
 	/************************************** widget functions *********************************************/

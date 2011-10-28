@@ -3,9 +3,11 @@
 #cb.event("cbui_BeforeSideBar")#
 
 <!--- Page Navigation --->
+<cfif prc.page.getNumberOfChildren()>
 <h4>Sub Pages</h4>
 <div class="bg"></div>
 #cb.subPageMenu(type="ul")#
+</cfif>
 
 <h4>Description</h4>
 <div class="bg"></div>

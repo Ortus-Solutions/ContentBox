@@ -154,10 +154,11 @@ component singleton{
 		QueryAddColumn(qComments, "linkComments", myArray);
 		QueryAddColumn(qComments, "rssAuthor", myArray);
 		
+		
 		// Attach permalinks
 		for(var i = 1; i lte commentResults.count; i++){
 			// build URL to entry
-			qComments.title[i] 			= "Comment (approved:#yesNoFormat(qComments.isApproved)#) by #qComments.author[i]# on #commentResults.comments[i].getEntry().getSlug()#";
+			qComments.title[i] 			= "Comment by #qComments.author[i]# on #commentResults.comments[i].getParentTitle()#";
 			qComments.rssAuthor[i]		= "#qComments.authorEmail# (#qComments.author#)";
 			qComments.linkComments[i]	= CBHelper.linkComment( commentResults.comments[i] );
 		}

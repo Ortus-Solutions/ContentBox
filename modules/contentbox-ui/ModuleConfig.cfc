@@ -18,37 +18,38 @@ component {
 	
 	function configure(){
 		
+		// CB UI SES Routing
+		routes = [
+			// Blog Archives
+			{pattern="/blog/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives"},
+			// Blog RSS feeds
+			{pattern="/blog/rss/category/:category", handler="blog", action="rss" },
+			{pattern="/blog/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true},
+			{pattern="/blog/rss/", handler="blog", action="rss" },
+			// category filter
+			{pattern="/blog/category/:category/:page-numeric?", handler="blog", action="index" },
+			// search filter
+			{pattern="/blog/search/:q?/:page-numeric?", handler="blog", action="index" },
+			// Blog comment post
+			{pattern="/blog/:entrySlug/commentPost", handler="blog", action="commentPost" },
+			// blog permalink
+			{pattern="/blog/:entrySlug", handler="blog", action="entry"},
+			// Blog reserved route
+			{pattern="/blog", handler="blog", action="index" },
+			// preview
+			{pattern="/__preview", handler="blog", action="preview" },
+			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
+			{pattern="/__pageCommentPost", handler="page", action="commentPost"},
+			{pattern="/:pageSlug", handler="page", action="index"},
+			// Home Pattern  xc
+			{pattern="/", handler="blog", action="index" }
+		];	
+		
 		// CB UI Module Conventions
 		conventions = {
 			layoutsLocation = "layouts",
 			viewsLocation 	= "layouts"
 		};
-		
-		// CB UI SES Routing
-		routes = [
-			// home
-			{pattern="/", handler="blog", action="index" },
-			// Blog reserved route
-			{pattern="/blog", handler="blog", action="index" },
-			// Blog Archives
-			{pattern="/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives"},
-			// preview
-			{pattern="/__preview", handler="blog", action="preview" },
-			// RSS feeds
-			{pattern="/rss/category/:category", handler="blog", action="rss" },
-			{pattern="/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true},
-			{pattern="/rss/", handler="blog", action="rss" },
-			// Comment post
-			{pattern="/commentPost", handler="blog", action="commentPost" },
-			// category filter
-			{pattern="/category/:category/:page-numeric?", handler="blog", action="index" },
-			// search filter
-			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" },
-			// blog permalink
-			{pattern="/entry/:entrySlug", handler="blog", action="entry"},
-			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
-			{pattern="/:pageSlug", handler="blog", action="page"}
-		];		
 		
 		// CB UI Event driven programming extensions
 		interceptorSettings = {

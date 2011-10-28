@@ -96,7 +96,7 @@
 			<table name="comments" id="comments" class="tablesorter" width="98%">
 				<thead>
 					<tr>
-						<th id="checkboxHolder" class="{sorter:false}"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
+						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 						<th width="200">Author</th>
 						<th>Comment</th>
 						<th width="115" class="center">Date</th>			
