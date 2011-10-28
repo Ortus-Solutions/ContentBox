@@ -69,6 +69,9 @@ function activateTooltips(){
 		 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isn't space on the top
 	});
 }
+function hideAllTooltips(){
+	$(".tooltip").hide();
+}
 function toggleFlickers(){
 	$(".flickerMessages").slideToggle();
 	$(".cbox_messagebox_info").slideToggle();

@@ -223,6 +223,7 @@ component extends="baseHandler"{
 											 parent=arguments.parent,
 											 offset=prc.pagePager_paging.startRow-1,
 											 max=arguments.max);
+											 
 		prc.pager_pages 	  = pageResults.pages;
 		prc.pager_pagesCount  = pageResults.count;
 		

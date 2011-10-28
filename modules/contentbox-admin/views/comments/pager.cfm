@@ -85,6 +85,7 @@ function commentPagerChangeStatus(status,recordID){
 	$('##status_'+recordID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// ajax status change
 	$.post("#event.buildlink(linkTo=prc.xehCommentPagerStatus)#",{commentStatus:status,commentID:recordID},function(data){
+		hideAllTooltips();
 		commentPagerLink(#rc.page#);
 	});
 }
@@ -93,6 +94,7 @@ function commentPagerRemove(recordID){
 	$('##delete_'+recordID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// ajax remove change
 	$.post("#event.buildlink(linkTo=prc.xehCommentPagerRemove)#",{commentID:recordID},function(data){
+		hideAllTooltips();
 		commentPagerLink(#rc.page#);
 	});	
 }
@@ -101,6 +103,7 @@ function commentPagerLink(page){
 	$('##pagerComments')
 		.load('#event.buildLink(prc.xehCommentPager)#',
 			{commentPager_entryID:'#prc.commentPager_entryID#',commentPager_pageID:'#prc.commentPager_pageID#', page:page, commentPager_pagination: '#prc.commentPager_pagination#'},function() {
+			hideAllTooltips();
 			$("##commentsPagerLoader").fadeOut();
 			activateTooltips();
 	});

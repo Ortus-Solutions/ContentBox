@@ -102,6 +102,7 @@ function pagerLink(page){
 	$('##pagerPages')
 		.load('#event.buildLink(prc.xehPagePager)#/pager_authorID/#prc.pagePager_authorID#/pager_parentID/#prc.pagePager_parentID#/page/' + page, function() {
 			$("##pagePagerLoader").fadeOut();
+			hideAllTooltips();
 			activateTooltips();
 	});
 }
@@ -110,6 +111,7 @@ function changeOrder(pageID,order,direction){
 	$('##order'+direction+'_'+pageID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// change order
 	$.post('#event.buildLink(prc.xehPageOrder)#',{pageID:pageID,order:order},function(){ 
+		hideAllTooltips();
 		pagerLink(#rc.page#); 
 	});
 }

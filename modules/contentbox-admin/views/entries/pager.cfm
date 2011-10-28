@@ -76,6 +76,7 @@ function pagerLink(page){
 	$('##pagerEntries')
 		.load('#event.buildLink(rc.xehPager)#/pager_authorID/#rc.pager_authorID#/page/' + page, function() {
 			$("##entryPagerLoader").fadeOut();
+			hideAllTooltips();
 			activateTooltips();
 	});
 }

@@ -20,7 +20,7 @@ component{
 	import coldbox.system.*;
 	
 	// ColdBox Specifics
-	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath(getCurrentTemplatePath());
+	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
 	COLDBOX_APP_MAPPING		= "";
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
@@ -55,7 +55,7 @@ component{
 	
 	public boolean function onRequestStart(String targetPage){
 		
-		// ORM Reload
+		// ORM Reload: REMOVE IN PRODUCTION IF NEEDED
 		if( structKeyExists(url,"ormReload") ){ ormReload(); }
 		
 		// Bootstrap Reinit
