@@ -23,6 +23,8 @@
 <div class="bg"></div>
 #cb.widget('RecentEntries')#
 
+#cb.widget("Meta")#
+
 <h2>Archives</h2>
 <div class="bg"></div>
 #cb.widget('Archives')#

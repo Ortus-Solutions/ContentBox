@@ -59,12 +59,12 @@
 				<span class="fr">
 			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> &nbsp;
 					<!--- Log Out --->
-					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt" title="Get outta here!"
+					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt"
 						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall">Log Out</button></a>
 					<!--- View Site --->
-					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="View your awesome site!"><button class="buttonsmall">View Site</button></a>
+					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank"><button class="buttonsmall">View Site</button></a>
 					<!--- QUick Post --->
-					<button class="buttonsmall" title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
+					<button class="buttonsmall" onclick="showQuickPost()">Quick Post</button>
 					<!--- cbadmin event --->
 					#announceInterception("cbadmin_onTopBar")#
 				</span>
@@ -77,7 +77,7 @@
 	    
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
-				<img src="#prc.cbroot#/includes/images/ContentBox_125.gif" height="120" border="0" alt="logo" title="ColdBox Platform Rulez!"/>
+				<img src="#prc.cbroot#/includes/images/ContentBox_125.gif" height="120" border="0" alt="logo"/>
 			</div>
 			
 			<div id="header_main" class="clearfix">

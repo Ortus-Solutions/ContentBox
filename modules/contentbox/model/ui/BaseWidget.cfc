@@ -11,6 +11,7 @@ component extends="coldbox.system.Plugin" accessors="true"{
 	property name="commentService"		inject="id:commentService@cb";
 	property name="customHTMLService"	inject="id:customHTMLService@cb";
 	property name="cb"					inject="id:CBHelper@cb";
+	property name="securityService" 	inject="id:securityService@cb";
 	property name="html"				inject="coldbox:plugin:HTMLHelper";
 	
 	// Local Properties
