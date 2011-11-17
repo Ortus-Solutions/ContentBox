@@ -222,12 +222,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	function linkSelf(){
 		//check if we are a page or entry view
-		if (isEntryView())
-			var xeh = siteRoot() & sep() & "#getCurrentEntry().getSlug()#";
-		else
-			var xeh = siteRoot() & sep() & "#getCurrentPage().getSlug()#";
-
-		return getRequestContext().buildLink(linkTo=xeh);
+		if ( isEntryView() ){
+			return linkEntry( getCurrentEntry() );
+		}
+	
+		return linkPage( getCurrentPage() );
 	}
 
 	/**
