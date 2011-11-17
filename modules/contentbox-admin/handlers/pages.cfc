@@ -20,7 +20,7 @@ component extends="baseHandler"{
 		prc.xehPageEditor 	= "#prc.cbAdminEntryPoint#.pages.editor";
 		prc.xehPageRemove 	= "#prc.cbAdminEntryPoint#.pages.remove";
 		// Tab control
-		prc.tabPages = true;
+		prc.tabContent = true;
 	}
 	
 	// index
@@ -69,7 +69,7 @@ component extends="baseHandler"{
 		prc.xehPageOrder 	= "#prc.cbAdminEntryPoint#.pages.changeOrder";
 		
 		// Tab
-		prc.tabPages_viewAll = true;
+		prc.tabContent_viewAll = true;
 		// view
 		event.setView("pages/index");
 	}
@@ -107,7 +107,7 @@ component extends="baseHandler"{
 		prc.xehPageSave = "#prc.cbAdminEntryPoint#.pages.save";
 		prc.xehSlugify	= "#prc.cbAdminEntryPoint#.pages.slugify";
 		// Tab
-		prc.tabPages_editor = true;
+		prc.tabContent_viewAll = true;
 		// view
 		event.setView("pages/editor");
 	}	

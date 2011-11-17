@@ -3,6 +3,10 @@
 */
 component mappedsuperclass="true" accessors="true"{
 	
+	// DI Injections
+	property name="cachebox" 		inject="cachebox" persistent="false";
+	property name="settingService"	inject="id:settingService@cb" persistent="false";
+	
 	// Properties
 	property name="title"				notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"				notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
@@ -84,6 +88,13 @@ component mappedsuperclass="true" accessors="true"{
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
 		setPublishedDate( getPublishedDate() & " " & time);
 		return this;
+	}
+	
+	/**
+	* Render content out
+	*/
+	function getRenderedContent(){
+		
 	}
 
 }

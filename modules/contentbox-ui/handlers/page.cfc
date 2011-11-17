@@ -36,12 +36,16 @@ component extends="BaseContentHandler" singleton{
 			event.setView(view="#prc.cbLayout#/views/page",layout="#prc.cbLayout#/layouts/#prc.page.getLayout()#");
 		}
 		else{
-			// announce event
-			announceInterception("cbui_onPageNotFound",{page=prc.page,pageSlug=rc.pageSlug});
 			// missing page
-			prc.missingPage = rc.pageSlug;
+			prc.missingPage 	 = rc.pageSlug;
+			prc.missingRoutedURL = event.getCurrentRoutedURL();
+			
+			// announce event
+			announceInterception("cbui_onPageNotFound",{page=prc.page,pageSlug=rc.pageSlug,routedURL=prc.missingRoutedURL});
+			
 			// set 404 headers
 			event.setHTTPHeader("404","Page not found");
+			
 			// set skin not found
 			event.setView(view="#prc.cbLayout#/views/notfound",layout="#prc.cbLayout#/layouts/pages");
 		}	

@@ -126,7 +126,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/blog.png" alt="editor" width="30" height="30" />
+			<img src="#prc.cbroot#/includes/images/page_big.png" alt="editor" width="30" height="30" />
 			Page Editor
 		</div>
 		<!--- Body --->

@@ -107,10 +107,6 @@
 							   title="View All Blog Entries">Inbox</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(prc.xehBlogEditor)#" <cfif event.getValue("tabEntries_editor",false,true)> class="current"</cfif>
-							   title="Create a new blog entry">Create New</a>
-						</li>
-						<li>
 							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabEntries_categories",false,true)> class="current"</cfif>
 							   title="Manage Blog Entry Categories">Categories</a>
 						</li>
@@ -118,17 +114,17 @@
 						#announceInterception("cbadmin_entriesTab")#
 					</ul>
 				</li>
-				<!--- Pages Nav --->
+				<!--- Content Nav --->
 				<li>
-					<a href="##" title="Blog Pages" <cfif prc.tabPages>class="current"</cfif>>Pages</a>
+					<a href="##" title="Site Content" <cfif prc.tabContent>class="current"</cfif>>Content</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabPages_viewAll",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabContent_viewAll",false,true)> class="current"</cfif>
 							   title="View All Blog Entries">Manage Pages</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(prc.xehPagesEditor)#" <cfif event.getValue("tabPages_editor",false,true)> class="current"</cfif>
-							   title="Create a new blog entry">Create New</a>
+							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
+							   title="Easy custom HTML for your site">Custom HTML</a>
 						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_pagesTab")#
@@ -161,10 +157,6 @@
 						<li>
 							<a href="#event.buildLink(prc.xehWidgets)#" <cfif event.getValue("tabSite_widgets",false,true)> class="current"</cfif>
 							   title="Manager your UI widgets">Manage Widgets</a>
-						</li>
-						<li>
-							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabSite_customHTML",false,true)> class="current"</cfif>
-							   title="Easy custom HTML for your site">Custom HTML</a>
 						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_siteTab")#

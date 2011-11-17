@@ -7,6 +7,8 @@
 <div class="bg"></div>
 #cb.subPageMenu(type="ul")#
 
+#cb.widget("Meta")#
+
 <br/>
 
 <!--- ContentBoxEvent --->
