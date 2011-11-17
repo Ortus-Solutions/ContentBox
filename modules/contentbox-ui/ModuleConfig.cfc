@@ -9,14 +9,18 @@ component {
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox UI Module";
 	this.version			= "1.0";
-	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
-	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
-	// YOUR SES URL ENTRY POINT blog is a perfect example or empty if the Blog will be the main application
+	
+	// YOUR SES URL ENTRY POINT FOR CONTENTBOX, IF EMPTY IT WILL TAKE OVER THE ENTIRE APPLICATION
+	// IF YOU WANT TO SECTION OFF CONTENTBOX THEN FILL OUT AN SES ENTRY POINT LIKE /site OR /content
+	// BY DEFAULT IT TAKES OVER THE ENTIRE APPLICATION
 	this.entryPoint			= "";
 	
 	function configure(){
+		
+		// PARENT APPLICATION ROUTING IF IN TAKE OVER MODE. YOU CAN CUSTOMIZE THIS IF YOU LIKE.
+		parentSESPrefix = "/parent";
 		
 		// CB UI SES Routing
 		routes = [
@@ -85,24 +89,28 @@ component {
 		if( !len(this.entryPoint) ){
 			// generate the ses entry point
 			var ses 		 = controller.getInterceptorService().getInterceptor('SES',true);
+			
 			// get parent routes so we can re-mix them later
 			var parentRoutes 		= ses.getRoutes();
-			var parentModuleRoutes = [];
+			var newRoutes			= [];
 			
 			// iterate and only keep module routing
 			for(var x=1; x lte arrayLen(parentRoutes); x++){
-				if( len( parentRoutes[x].moduleRouting ) ){
-					arrayAppend( parentModuleRoutes, parentRoutes[x] );
+				if( parentRoutes[x].pattern NEQ ":handler/" AND
+				    parentRoutes[x].pattern NEQ ":handler/:action/" ){
+					arrayAppend(newRoutes, parentRoutes[x]);
 				}
 			}
+			// override new cleaned routes
+			ses.setRoutes( newRoutes );			
 			
-			// clean routes
-			ses.setRoutes( parentModuleRoutes );			
+			// Add parent routing
+			ses.addRoute(pattern="#variables.parentSESPrefix#/:handler/:action?");
 			
 			// Add routes manually to take over parent routes
-			for(var x=1; x LTE arrayLen(variables.routes); x++){
+			for(var x=1; x LTE arrayLen( variables.routes ); x++){
 				// append module location to it so the route is now system wide
-				var args = duplicate(variables.routes[x]);
+				var args = duplicate( variables.routes[x] );
 				// Check if handler defined
 				if( structKeyExists(args,"handler") ){
 					args.handler = "contentbox-ui:#args.handler#";
@@ -110,8 +118,6 @@ component {
 				// add it as main application route.
 				ses.addRoute(argumentCollection=args);
 			}
-			// Load back the parent routes at the end now.
-			ses.getRoutes().addAll( parentRoutes );
 			
 			// change the default event
 			controller.setSetting("DefaultEvent","contentbox-ui:blog");

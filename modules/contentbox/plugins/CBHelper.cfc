@@ -190,6 +190,20 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 
 	/**
+	* Link to the admin logout
+	*/
+	function linkAdminLogout(){
+		return getRequestContext().buildLink(linkto=adminRoot() & "/security/doLogout");
+	}
+	
+	/**
+	* Link to the admin login
+	*/
+	function linkAdminLogin(){
+		return getRequestContext().buildLink(linkto=adminRoot() & "/security/login");
+	}
+	
+	/**
 	* Create a link to your site root or home page entry point for your blog.
 	*/
 	function linkHome(){
