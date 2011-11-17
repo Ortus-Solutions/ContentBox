@@ -48,14 +48,12 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* page search returns struct with keys [pages,count]
 	*/
-	struct function search(search="",isPublished,author,parent,max=0,offset=0){
+	struct function search(search="",isPublished,author,parent,max=0,offset=0,sortOrder="title asc"){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
 		// criteria queries
 		var criteria = [];
-		// default sort order
-		var sortOrder = "title asc";
 		
 		// isPublished filter
 		if( structKeyExists(arguments,"isPublished") AND arguments.isPublished NEQ "any"){
@@ -67,7 +65,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
-			if( len(arguments.parent) ){
+			if( len( trim(arguments.parent) ) ){
 				arrayAppend(criteria, restrictions.eq("parent.pageID", javaCast("int",arguments.parent)) );
 			}
 			else{

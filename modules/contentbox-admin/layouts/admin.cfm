@@ -57,14 +57,28 @@
 			<!--=======Top Header area======-->
 			<div id="header_top">
 				<span class="fr">
-			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> &nbsp;
-					<!--- Log Out --->
-					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt"
-						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall">Log Out</button></a>
 					<!--- View Site --->
 					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank"><button class="buttonsmall">View Site</button></a>
-					<!--- QUick Post --->
+					<!--- Quick Post --->
 					<button class="buttonsmall" onclick="showQuickPost()">Quick Post</button>
+					
+					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
+						<option value="null">Quick Links</option>
+						<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
+						<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
+						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
+						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>
+						
+					</select>
+					
+					&nbsp;
+			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> 
+					&nbsp;
+					
+					<!--- Log Out --->
+					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt"
+						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall" onclick="return false;">Log Out</button></a>
+					
 					<!--- cbadmin event --->
 					#announceInterception("cbadmin_onTopBar")#
 				</span>

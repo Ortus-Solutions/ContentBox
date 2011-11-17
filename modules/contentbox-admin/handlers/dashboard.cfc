@@ -28,6 +28,9 @@ component extends="baseHandler"{
 		// Get entries viewlet: Stupid cf9 and its local scope blown on argument literals
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentEntries,pagination=false};
 		prc.entriesViewlet = runEvent(event="contentbox-admin:entries.pager",eventArguments=eArgs);
+		// Get Pages viewlet
+		var eArgs = {max=prc.cbSettings.cb_dashboard_recentPages,pagination=false,latest=true};
+		prc.pagesViewlet = runEvent(event="contentbox-admin:pages.pager",eventArguments=eArgs);
 		// Get Comments viewlet
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentComments,pagination=false};
 		prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments=eArgs);
@@ -57,5 +60,7 @@ component extends="baseHandler"{
 		// relocate
 		setNextEvent(prc.xehDashboard);
 	}
+	
+	function template(event,rc,prc){ event.setView(view="dashboard/template",nolayout=true); }
 	
 }

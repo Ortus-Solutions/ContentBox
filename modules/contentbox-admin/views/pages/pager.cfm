@@ -101,7 +101,7 @@ $(document).ready(function() {
 function pagerLink(page){
 	$("##pagePagerLoader").fadeIn("fast");
 	$('##pagerPages')
-		.load('#event.buildLink(prc.xehPagePager)#/pager_authorID/#prc.pagePager_authorID#/pager_parentID/#prc.pagePager_parentID#/page/' + page, function() {
+		.load('#event.buildLink(prc.xehPagePager)#?pagePager_pagination=#prc.pagePager_pagination#&pager_authorID=#prc.pagePager_authorID#&pager_parentID=#prc.pagePager_parentID#&page=' + page, function() {
 			$("##pagePagerLoader").fadeOut();
 			hideAllTooltips();
 			activateTooltips();

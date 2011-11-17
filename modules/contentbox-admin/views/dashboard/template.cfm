@@ -16,12 +16,11 @@
     <link href="#prc.cbRoot#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
 	        
 <!--========= JAVASCRIPT -->
-	<script type="text/javascript" src="#prc.cbRoot#/includes/javascript/jquery-1.4.4.min.js"></script> <!--Import jquery tools-->
-	<script type="text/javascript" src="#prc.cbRoot#/includes/javascript/jquery.tools.min.js"></script> <!--Import jquery tools-->
-	<script type="text/javascript" src="#prc.cbRoot#/includes/javascript/jquery.uitablefilter.js"></script>
-	<script type="text/javascript" src="#prc.cbRoot#/includes/javascript/metadata.pack.js"></script>
-	<script type="text/javascript" src="#prc.cbRoot#/includes/javascript/tablesorter.min.js"></script>
-	<script type="text/javascript" src="#prc.cbRoot#/includes/javascript/relax.js"></script>
+	<script type="text/javascript" src="#prc.cbRoot#/includes/js/jquery.tools.min.js"></script> <!--Import jquery tools-->
+	<script type="text/javascript" src="#prc.cbRoot#/includes/js/jquery.uitablefilter.js"></script>
+	<script type="text/javascript" src="#prc.cbRoot#/includes/js/metadata.pack.js"></script>
+	<script type="text/javascript" src="#prc.cbRoot#/includes/js/tablesorter.min.js"></script>
+	<script type="text/javascript" src="#prc.cbRoot#/includes/js/contentbox.js"></script>
 </head>
 <!--End Head-->
 <!--============================Body============================-->
