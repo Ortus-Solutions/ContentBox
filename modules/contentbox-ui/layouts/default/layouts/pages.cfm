@@ -123,13 +123,7 @@
       </ul>
     </div>
     <div class="left">
-      <h2>Services</h2>
-      <ul>
-        <li><a href="##">First Service</a></li>
-        <li> <a href="##">Second Service</a></li>
-        <li> <a href="##">Another Service</a></li>
-        <li> <a href="##">A Fourth Service</a></li>
-      </ul>
+      #cb.widget("Meta")#
     </div>
     <div class="left">
       <h2>RSS Feeds</h2>

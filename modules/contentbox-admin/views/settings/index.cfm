@@ -83,6 +83,14 @@
 								</cfloop>
 							</select>
 							
+							<!--- Recent Pages --->
+							<label for="cb_dashboard_recentPages">Recent Pages Count</label>
+							<select name="cb_dashboard_recentPages" id="cb_dashboard_recentPages">
+								<cfloop from="5" to="50" step="5" index="i">
+									<option value="#i#" <cfif i eq prc.cbSettings.cb_dashboard_recentPages>selected="selected"</cfif>>#i#</option>
+								</cfloop>
+							</select>
+							
 							<!--- Recent Comments--->
 							<label for="cb_dashboard_recentComments">Recent Comments Count</label>
 							<select name="cb_dashboard_recentComments" id="cb_dashboard_recentComments">

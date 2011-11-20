@@ -19,6 +19,8 @@
 <div class="bg"></div>
 <p>#cb.siteDescription()#</p>
 
+#cb.widget("Meta",{titleLevel="4"})#
+
 <h4>Recent Entries</h4>
 <div class="bg"></div>
 #cb.widget('RecentEntries')#

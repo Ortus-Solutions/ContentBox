@@ -137,6 +137,10 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .inline { display:inline; margin:5px 0; }
 .floatLeft { float:left!important; }
 .floatRight { float:right!important; }
+.textOrange{ color:orange }
+.textRed{ color:red}
+.textBlue{ color:blue}
+.textWhite{ color:white}
 .textRight { text-align:right!important; }
 .textLeft { text-align:left!important; }
 .textCenter { text-align:center!important; }
@@ -146,6 +150,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .width98{ width: 98%; }
 .width95{ width: 95%; }
 .hidden { display:none!important; }
+.show{ display: block; }
 .flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 URL(../images/iinfo_icon.png) no-repeat 2% 50%; }
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }

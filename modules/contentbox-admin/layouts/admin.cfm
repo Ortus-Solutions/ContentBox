@@ -57,14 +57,28 @@
 			<!--=======Top Header area======-->
 			<div id="header_top">
 				<span class="fr">
-			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> &nbsp;
-					<!--- Log Out --->
-					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt" title="Get outta here!"
-						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall">Log Out</button></a>
 					<!--- View Site --->
-					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="View your awesome site!"><button class="buttonsmall">View Site</button></a>
-					<!--- QUick Post --->
-					<button class="buttonsmall" title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
+					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank"><button class="buttonsmall">View Site</button></a>
+					<!--- Quick Post --->
+					<button class="buttonsmall" onclick="showQuickPost()">Quick Post</button>
+					
+					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
+						<option value="null">Quick Links</option>
+						<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
+						<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
+						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
+						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>
+						
+					</select>
+					
+					&nbsp;
+			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> 
+					&nbsp;
+					
+					<!--- Log Out --->
+					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt"
+						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall" onclick="return false;">Log Out</button></a>
+					
 					<!--- cbadmin event --->
 					#announceInterception("cbadmin_onTopBar")#
 				</span>
@@ -77,7 +91,7 @@
 	    
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
-				<img src="#prc.cbroot#/includes/images/ContentBox_125.gif" height="120" border="0" alt="logo" title="ColdBox Platform Rulez!"/>
+				<img src="#prc.cbroot#/includes/images/ContentBox_125.gif" height="120" border="0" alt="logo"/>
 			</div>
 			
 			<div id="header_main" class="clearfix">
@@ -107,10 +121,6 @@
 							   title="View All Blog Entries">Inbox</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(prc.xehBlogEditor)#" <cfif event.getValue("tabEntries_editor",false,true)> class="current"</cfif>
-							   title="Create a new blog entry">Create New</a>
-						</li>
-						<li>
 							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabEntries_categories",false,true)> class="current"</cfif>
 							   title="Manage Blog Entry Categories">Categories</a>
 						</li>
@@ -118,17 +128,17 @@
 						#announceInterception("cbadmin_entriesTab")#
 					</ul>
 				</li>
-				<!--- Pages Nav --->
+				<!--- Content Nav --->
 				<li>
-					<a href="##" title="Blog Pages" <cfif prc.tabPages>class="current"</cfif>>Pages</a>
+					<a href="##" title="Site Content" <cfif prc.tabContent>class="current"</cfif>>Content</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabPages_viewAll",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabContent_viewAll",false,true)> class="current"</cfif>
 							   title="View All Blog Entries">Manage Pages</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(prc.xehPagesEditor)#" <cfif event.getValue("tabPages_editor",false,true)> class="current"</cfif>
-							   title="Create a new blog entry">Create New</a>
+							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
+							   title="Easy custom HTML for your site">Custom HTML</a>
 						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_pagesTab")#
@@ -161,10 +171,6 @@
 						<li>
 							<a href="#event.buildLink(prc.xehWidgets)#" <cfif event.getValue("tabSite_widgets",false,true)> class="current"</cfif>
 							   title="Manager your UI widgets">Manage Widgets</a>
-						</li>
-						<li>
-							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabSite_customHTML",false,true)> class="current"</cfif>
-							   title="Easy custom HTML for your site">Custom HTML</a>
 						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_siteTab")#

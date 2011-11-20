@@ -16,9 +16,9 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="10" e
 	property name="parent" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
 	
 	// Calculated Fields
-	property name="numberOfChildren" 			formula="select count(*) from cb_page page where page.FK_parentID=pageID";
-	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_pageID=pageID";
-	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_pageID=pageID and comment.isApproved = 1";
+	property name="numberOfChildren" 			formula="select count(*) from cb_page page where page.FK_parentID=pageID" default="0";
+	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_pageID=pageID" default="0";
+	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_pageID=pageID and comment.isApproved = 1" default="0";
 
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	

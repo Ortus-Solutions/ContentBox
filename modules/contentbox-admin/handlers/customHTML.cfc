@@ -13,28 +13,28 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// Exit Handler
-		rc.xehSaveHTML 		= "#prc.cbAdminEntryPoint#.customHTML.save";
-		rc.xehRemoveHTML	= "#prc.cbAdminEntryPoint#.customHTML.remove";
-		rc.xehEditorHTML	= "#prc.cbAdminEntryPoint#.customHTML.editor";
+		prc.xehSaveHTML 	= "#prc.cbAdminEntryPoint#.customHTML.save";
+		prc.xehRemoveHTML	= "#prc.cbAdminEntryPoint#.customHTML.remove";
+		prc.xehEditorHTML	= "#prc.cbAdminEntryPoint#.customHTML.editor";
 		
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
-		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#prc.xehCustomHTML#.page.@page@?');
+		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 		 = prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	 = event.buildLink('#prc.xehCustomHTML#.page.@page@?');
 		
 		// Append search to paging link?
-		if( len(rc.search) ){ rc.pagingLink&="&search=#rc.search#"; }
+		if( len(rc.search) ){ prc.pagingLink&="&search=#rc.search#"; }
 		
 		// get content pieces
 		var entryResults = htmlService.search(search=rc.search,
-											  offset=rc.paging.startRow-1,
+											  offset=prc.paging.startRow-1,
 											  max=prc.cbSettings.cb_paging_maxrows);
-		rc.entries 		 = entryResults.entries;
-		rc.entriesCount  = entryResults.count;
+		prc.entries 		 = entryResults.entries;
+		prc.entriesCount  = entryResults.count;
 		
 		// tab
-		prc.tabSite				= true;
-		prc.tabSite_customHTML	= true; 
+		prc.tabContent				= true;
+		prc.tabContent_customHTML	= true; 
 		
 		// view
 		event.setView("customHTML/index");
@@ -47,13 +47,20 @@ component extends="baseHandler"{
 	
 	// editor
 	function editor(event,rc,prc){
+		
+		// tab
+		prc.tabContent				= true;
+		prc.tabContent_customHTML	= true; 
+		
 		// get new or persisted
 		rc.content  = htmlService.get( event.getValue("contentID",0) );
+		
 		// exit handlers
 		rc.xehContentSave = "#prc.cbAdminEntryPoint#.customHTML.save";
 		rc.xehSlugify	  = "#prc.cbAdminEntryPoint#.customHTML.slugify";
+		
 		// view
-		event.setView(view="customHTML/editor",layout="ajax");
+		event.setView(view="customHTML/editor");
 	}
 	
 	// save html

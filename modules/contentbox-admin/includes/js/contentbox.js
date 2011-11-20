@@ -46,12 +46,16 @@ $(document).ready(function() {
 	//Vertical Navigation	
 	$("ul.vertical_nav").tabs("div.panes_vertical> div", {effect: 'fade'});
 	//Accordion
-	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:null});		
+	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:0});		
 	
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
 	
 });
+function quickLinks( inURL ){
+	if( inURL != 'null' )
+		window.location = inURL;
+}
 function exposeIt(vID){
 	$(vID).expose();
 }

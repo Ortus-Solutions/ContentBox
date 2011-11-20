@@ -27,32 +27,37 @@
 	<!--- Snapshot Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/camera.png" alt="info" width="24" height="24" />Data Snapshot
+			<img src="#prc.cbroot#/includes/images/camera.png" alt="info" width="24" height="24" />Data Snapshots
 		</div>
 		<div class="body">
-			<form>
-			<table class="tablelisting" width="100%">
-				<thead>
-					<tr>
-						<th width="50%" class="center"><img src="#prc.cbroot#/includes/images/pen.png" alt="info" /> Content</th>
-						<th class="center"><img src="#prc.cbroot#/includes/images/comments_black.png" alt="info" /> Discussion</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<label class="inline"><a title="View Entries" href="#event.buildLink(prc.xehEntries)#">#prc.entriesCount# Entries</a> </label> <br/>
-							<label class="inline"><a title="View Categories" href="#event.buildLink(prc.xehCategories)#">#prc.categoriesCount# Categories</a> </label><br/>
-						</td>
-						<td>
-							<label class="inline"><a title="View Comments" href="#event.buildLink(prc.xehComments)#">#prc.commentsCount# Comments</a> </label> <br/>
-							<label class="inline"><a title="View Approved Comments" href="#event.buildLink(prc.xehComments)#?fStatus=true">#prc.commentsApprovedCount# Approved</a></label><br/>
-							<label class="inline"><a title="View UnApproved Comments" href="#event.buildLink(prc.xehComments)#?fStatus=false">#prc.commentsUnApprovedCount# Pending</a> </label><br/>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			</form>
+			<!--- Accordion Snapshots --->
+			<div id="accordion" class="clearfix">
+				<!--- Discussion Snapshot --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/comments_black.png" alt="info" /> Discussions </h2>
+				<div class="pane">
+					<ul>
+						<li><a title="View Comments" href="#event.buildLink(prc.xehComments)#">#prc.commentsCount# Comments</a> </li>
+						<li><a title="View Approved Comments" href="#event.buildLink(prc.xehComments)#?fStatus=true">#prc.commentsApprovedCount# Approved</a></li>
+						<li><a title="View UnApproved Comments" href="#event.buildLink(prc.xehComments)#?fStatus=false">#prc.commentsUnApprovedCount# Pending</a> </li>
+					</ul>		
+				</div>
+				<!--- Content Snapshot --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/pen.png" alt="info" /> Content </h2>
+				<div class="pane">
+					<ul>
+						<li><a title="View Entries" href="#event.buildLink(prc.xehEntries)#">#prc.entriesCount# Entries</a> </li>
+						<li><a title="View Categories" href="#event.buildLink(prc.xehCategories)#">#prc.categoriesCount# Categories</a> </li>
+					</ul>
+				</div>
+			</div>
+			<!--End Accordion-->
+			
 		</div>
 	</div>	
 	
@@ -100,7 +105,8 @@
 			<!--- Messagebox --->
 			#getPlugin("MessageBox").renderit()#
 			
-			<!--- Latest 10 Entries --->
+			
+			<!--- Latest Entries --->
 			#html.anchor(name="recentEntries")#
 			<div class="contentBar" id="entriesBar">
 				<div class="buttonBar">
@@ -111,6 +117,18 @@
 					<h3><img src="#prc.cbroot#/includes/images/blog.png" alt="blog" /> Recent Entries</h3>
 				</div>				
 				#prc.entriesViewlet#
+			</div>
+			
+			<!--- Latest Pages --->
+			#html.anchor(name="recentPages")#
+			<div class="contentBar" id="entriesBar">
+				<div class="buttonBar">
+					<button class="button2" 	id="btnCreateEntry" title="Create a new page" onclick="return to('#event.buildLink(prc.xehPageEditor)#')">Create Page</button>
+				</div>				
+				<div class="filterBar">
+					<h3><img src="#prc.cbroot#/includes/images/page_big.png" alt="blog" /> Recent Pages</h3>
+				</div>				
+				#prc.pagesViewlet#
 			</div>
 			
 			<!--- Latest Comments --->

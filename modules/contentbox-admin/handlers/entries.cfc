@@ -92,7 +92,7 @@ component extends="baseHandler"{
 		rc.xehEntrySave = "#prc.cbAdminEntryPoint#.entries.save";
 		rc.xehSlugify	= "#prc.cbAdminEntryPoint#.entries.slugify";
 		// Tab
-		prc.tabEntries_editor = true;
+		prc.tabEntries_viewAll = true;
 		// view
 		event.setView("entries/editor");
 	}	

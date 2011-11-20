@@ -20,7 +20,7 @@ component extends="baseHandler"{
 		prc.xehPageEditor 	= "#prc.cbAdminEntryPoint#.pages.editor";
 		prc.xehPageRemove 	= "#prc.cbAdminEntryPoint#.pages.remove";
 		// Tab control
-		prc.tabPages = true;
+		prc.tabContent = true;
 	}
 	
 	// index
@@ -69,7 +69,7 @@ component extends="baseHandler"{
 		prc.xehPageOrder 	= "#prc.cbAdminEntryPoint#.pages.changeOrder";
 		
 		// Tab
-		prc.tabPages_viewAll = true;
+		prc.tabContent_viewAll = true;
 		// view
 		event.setView("pages/index");
 	}
@@ -107,7 +107,7 @@ component extends="baseHandler"{
 		prc.xehPageSave = "#prc.cbAdminEntryPoint#.pages.save";
 		prc.xehSlugify	= "#prc.cbAdminEntryPoint#.pages.slugify";
 		// Tab
-		prc.tabPages_editor = true;
+		prc.tabContent_viewAll = true;
 		// view
 		event.setView("pages/editor");
 	}	
@@ -189,7 +189,7 @@ component extends="baseHandler"{
 	}
 	
 	// pager viewlet
-	function pager(event,rc,prc,authorID="all",parent="",max=0,pagination=true){
+	function pager(event,rc,prc,authorID="all",parent="",max=0,pagination=true,latest=false){
 		
 		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pager_authorID") ){
@@ -198,6 +198,10 @@ component extends="baseHandler"{
 		// check if parent exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pager_parentID") ){
 			arguments.parent = rc.pager_parentID;
+		}
+		// check if pagination exists in rc to do an override, maybe it's the paging call
+		if( event.valueExists("pagePager_pagination") ){
+			arguments.pagination = rc.pagePager_pagination;
 		}
 		
 		// Max rows incoming or take default for pagination.
@@ -218,11 +222,16 @@ component extends="baseHandler"{
 		prc.pagePager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pagePager_pagination	= arguments.pagination;
 		
+		// Sorting
+		var sortOrder = "title asc";
+		if( arguments.latest ){ sortOrder = "publishedDate desc"; }
+		
 		// search entries with filters and all
 		var pageResults = pageService.search(author=arguments.authorID,
 											 parent=arguments.parent,
 											 offset=prc.pagePager_paging.startRow-1,
-											 max=arguments.max);
+											 max=arguments.max,
+											 sortOrder=sortOrder);
 											 
 		prc.pager_pages 	  = pageResults.pages;
 		prc.pager_pagesCount  = pageResults.count;

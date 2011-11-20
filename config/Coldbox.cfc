@@ -13,14 +13,13 @@
 			debugMode				= false,
 			debugPassword			= "",
 			reinitPassword			= "",
-			handlersIndexAutoReload = true,
-			configAutoReload		= false,
+			handlersIndexAutoReload = false,
 			
 			//Implicit Events
 			defaultEvent			= "General.index",
-			requestStartHandler		= "Main.onRequestStart",
+			requestStartHandler		= "",
 			requestEndHandler		= "",
-			applicationStartHandler = "Main.onAppInit",
+			applicationStartHandler = "",
 			applicationEndHandler	= "",
 			sessionStartHandler 	= "",
 			sessionEndHandler		= "",
@@ -42,10 +41,8 @@
 			customErrorTemplate		= "",
 				
 			//Application Aspects
-			handlerCaching 			= false,
-			eventCaching			= false,
-			proxyReturnCollection 	= false,
-			flashURLPersistScope	= "session"	
+			handlerCaching 			= true,
+			eventCaching			= true	
 		};
 	
 		// custom settings
@@ -77,7 +74,7 @@
 				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" }
 			},
 			// Root Logger
-			root = { levelmax="DEBUG", appenders="*" },
+			root = { levelmax="INFO", appenders="*" },
 			// Implicit Level Categories
 			info = [ "coldbox.system" ] 
 		};
@@ -87,29 +84,17 @@
 			defaultLayout = "Layout.Main.cfm"
 		};
 		
-		//WireBox Integration
-		wireBox = { 
-			enabled = true,
-			//binder="config.WireBox", 
-			singletonReload=true 
-		};
-		
 		//Interceptor Settings
 		interceptorSettings = {
-			throwOnInvalidStates = false,
 			customInterceptionPoints = ""
 		};
 		
 		//Register interceptors as an array, we need order
 		interceptors = [
 			//Autowire
-			{class="coldbox.system.interceptors.Autowire",
-			 properties={}
-			},
+			{class="coldbox.system.interceptors.Autowire"},
 			//SES
-			{class="coldbox.system.interceptors.SES",
-			 properties={}
-			}
+			{class="coldbox.system.interceptors.SES"}
 		];
 		
 		//Debugger Settings
@@ -120,6 +105,9 @@
 	
 	function development(){
 		//coldbox.debugmode=true;
+		coldbox.handlersIndexAutoReload = true;
+		coldbox.handlerCaching = false;
+		
 		// ses debugging
 		logbox.appenders.files={class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {

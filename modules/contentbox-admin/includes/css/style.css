@@ -58,7 +58,7 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 /**============================== Header ==============================**/
 #header_bg { height:194px; }
 #header_top { font-size:1.2em; padding-top:8px; height:10px; }
-#header_top a { text-decoration:none; margin-right:10px; }
+#header_top a { text-decoration:none; margin-right: 5px; }
 #header_top a:hover { text-decoration:underline; }
 /************ Search field in Header ************/
 .header_search { float:right; margin-top:25px; width:280px; }

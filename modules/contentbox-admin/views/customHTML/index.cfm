@@ -44,7 +44,7 @@
 		</div>
 		
 		<!--- entryForm --->
-		#html.startForm(name="contentForm",action=rc.xehRemoveHTML)#
+		#html.startForm(name="contentForm",action=prc.xehRemoveHTML)#
 			#html.hiddenField(name="page",value=rc.page)#
 			#html.hiddenField(name="contentID")#
 		
@@ -52,7 +52,7 @@
 			<div class="contentBar" id="contentBar">
 				<!--- Create Butons --->
 				<div class="buttonBar">
-					<button class="button2" onclick="openRemoteModal('#event.buildLink(rc.xehEditorHTML)#');return false;" title="Create new content entry">Create Content</button>
+					<button class="button2" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');" title="Create new content">Create Content</button>
 				</div>
 				<!--- Filter Bar --->
 				<div class="filterBar">
@@ -64,7 +64,7 @@
 			</div>
 			
 			<!--- Paging --->
-			#rc.pagingPlugin.renderit(rc.entriesCount,rc.pagingLink)#
+			#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
 			
 			<!--- comments --->
 			<table name="entries" id="entries" class="tablesorter" width="98%">
@@ -78,7 +78,7 @@
 				</thead>
 				
 				<tbody>
-					<cfloop array="#rc.entries#" index="entry">
+					<cfloop array="#prc.entries#" index="entry">
 					<tr>
 						<td>
 							#entry.getTitle()#
@@ -91,10 +91,10 @@
 						</td>
 						<td class="center">
 							<!--- Edit Command --->
-							<a href="javascript:openRemoteModal('#event.buildLink(rc.xehEditorHTML)#',{contentID:'#entry.getContentID()#'});" title="Edit Content"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+							<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
 							&nbsp;
 							<!--- Delete Command --->
-							<a title="Delete Entry Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 						</td>
 					</tr>
 					</cfloop>
@@ -102,7 +102,7 @@
 			</table>
 			
 			<!--- Paging --->
-			#rc.pagingPlugin.renderit(rc.entriesCount,rc.pagingLink)#
+			#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
 		
 		#html.endForm()#
 		

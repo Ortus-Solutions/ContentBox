@@ -73,7 +73,7 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** NAVIGATION TABS *********************************************/
 		event.paramValue(name="tabDashboard",value=false,private=true);
 		event.paramValue(name="tabEntries",value=false,private=true);
-		event.paramValue(name="tabPages",value=false,private=true);
+		event.paramValue(name="tabContent",value=false,private=true);
 		event.paramValue(name="tabComments",value=false,private=true);
 		event.paramValue(name="tabAuthors",value=false,private=true);
 		event.paramValue(name="tabSite",value=false,private=true);
