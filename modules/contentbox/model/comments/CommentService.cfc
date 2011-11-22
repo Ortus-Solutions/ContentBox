@@ -161,7 +161,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @email The email address to check.
 	*/
 	private boolean function userHasPreviousAcceptedComment(required email){
-		return ( countWhere(authorEmail=arguments.email,isApproved=true) GT 0 );
+		var args = {"authorEmail" = arguments.email, "isApproved" = true};
+		return ( countWhere(argumentCollection=args) GT 0 );
 	}
 	
 	/**

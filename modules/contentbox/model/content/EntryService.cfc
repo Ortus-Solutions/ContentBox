@@ -22,7 +22,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	function saveEntry(entry){
 		// verify that the slug does not exist yet?
 		if( !entry.isLoaded() ){
-			if( countWhere(slug=arguments.entry.getSlug()) GT 0){
+			var args = {"slug" = arguments.entry.getSlug() };
+			if( countWhere(argumentCollection=args) GT 0){
 				// append date to slug
 				arguments.entry.setSlug( "#left(hash(now()),8)#-" & arguments.entry.getSlug() );
 			}

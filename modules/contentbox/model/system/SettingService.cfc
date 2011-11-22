@@ -24,7 +24,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	* Check if contentbox has been installed by checking if there are no settings and no cb_active ONLY
 	*/
 	boolean function isCBReady(){
-		if( count() AND countWhere(name="cb_active") ){ return true; }
+		var args = { "name" = "cb_active" };
+		if( count() AND countWhere(argumentCollection=args) ){ return true; }
 		return false;
 	}
 	
