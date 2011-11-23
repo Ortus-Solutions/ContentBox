@@ -19,7 +19,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	function savePage(required page){
 		// verify that the slug does not exist yet?
 		if( !page.isLoaded() ){
-			if( countWhere(slug=arguments.page.getSlug()) GT 0){
+			var args = { "slug" = page.getSlug() };
+			if( countWhere(argumentCollection=arguments) GT 0){
 				// append date to slug
 				arguments.page.setSlug( "#left(hash(now()),8)#-" & arguments.page.getSlug() );
 			}
