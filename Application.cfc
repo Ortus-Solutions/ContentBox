@@ -4,30 +4,30 @@ Copyright 2005-2007 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 www.coldboxframework.com | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 
-Author     :	Luis Majano
-Date        :	10/16/2007
+Author      :	Luis Majano
 Description :
-	This is the Application.cfc for usage withing the ColdBox Framework
+	This is the Application.cfc for usage withing the ColdBox Framework with some
+	extra funkyness for ContentBox
 */
 component{
-	// Application properties
+	// Application properties, modify as you see fit
 	this.name 				= "ContentBox-Shell-" & hash(getCurrentTemplatePath());
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan(0,0,30,0);
 	this.setClientCookies 	= true;
 
-	// Mappings Imports
+	// Mapping Imports
 	import coldbox.system.*;
 
-	// ColdBox Specifics
+	// ColdBox Application Specific, Modify if you need to
 	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
 	COLDBOX_APP_MAPPING		= "";
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
 
-	// FILL OUT: THE DATASOURCE FOR CONTENTBOX
+	// FILL OUT: THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";
-	// FILL OUT: THE LOCATION OF THE 'CONTENTBOX' MODULE
+	// THE LOCATION OF THE 'CONTENTBOX' MODULE MANDATORY
 	this.mappings["/contentbox"] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 
 	// ORM SETTINGS
@@ -40,7 +40,7 @@ component{
 		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update for continuos repo updates, or remove for production
 		dbcreate			= "update",
 		// FILL OUT: Change script for the MS SQL version of the install/setup script
-		sqlscript			= "modules/contentbox/install/sql/contentbox_data.sql",
+		//sqlscript			= "modules/contentbox/install/sql/contentbox_data.sql",
 		//sqlscript			= "modules/contentbox/install/sql/contentbox_data_ms.sql",
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
@@ -48,13 +48,15 @@ component{
 		eventHandling 		= true,
 		eventHandler		= "modules.contentbox.model.system.EventHandler"
 	};
-
+	
+	// application start
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new Coldbox(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH,COLDBOX_APP_KEY);
 		application.cbBootstrap.loadColdbox();
 		return true;
 	}
-
+	
+	// request start
 	public boolean function onRequestStart(String targetPage){
 
 		// ORM Reload: REMOVE IN PRODUCTION IF NEEDED

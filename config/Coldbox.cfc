@@ -103,6 +103,7 @@
 		};
 	}
 	
+	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
 	function development(){
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
@@ -115,6 +116,7 @@
 			}
 		};
 		//logbox.debug = ["coldbox.system.interceptors.SES"];
+		logbox.debug = ["coldbox.system.aop"];
 		
 	}
 	
