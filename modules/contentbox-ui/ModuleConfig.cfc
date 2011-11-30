@@ -5,7 +5,7 @@ component {
 	
 	// Module Properties
 	this.title 				= "contentbox-ui";
-	this.author 			= "Luis Majano";
+	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox UI Module";
 	this.version			= "1.0";
@@ -20,6 +20,7 @@ component {
 	function configure(){
 		
 		// PARENT APPLICATION ROUTING IF IN TAKE OVER MODE. YOU CAN CUSTOMIZE THIS IF YOU LIKE.
+		// THIS MEANS THAT IF YOU WANT TO EXECUTE PARENT EVENTS YOU NEED TO PREFIX THEM WITH '/parent'
 		parentSESPrefix = "/parent";
 		
 		// CB UI SES Routing
@@ -75,7 +76,7 @@ component {
 		interceptors = [
 			// CB UI Request Interceptor
 			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbUI" },
-			// Simple Security
+			// Simple Security For pages and blog entries
 			{class="#moduleMapping#.interceptors.SimpleSecurity"}
 		];
 		
@@ -85,6 +86,9 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		// Startup the ContentBox layout service and activate the current layout
+		controller.getWireBox().getInstance("layoutService@cb").startupActiveLayout();
+		
 		// Treat the blog as the Main Application?
 		if( !len(this.entryPoint) ){
 			// generate the ses entry point
@@ -121,6 +125,16 @@ component {
 			
 			// change the default event
 			controller.setSetting("DefaultEvent","contentbox-ui:blog");
+		}
+	}
+	
+	/**
+	* pre process checks
+	*/
+	function preProcess(event,interceptData) eventPattern="^contentbox-ui"{
+		// Verify ContentBox installer has been ran?
+		if( !controller.getWireBox().getInstance("SettingService@cb").isCBReady() ){
+			controller.setNextEvent('cbInstaller');
 		}
 	}
 		

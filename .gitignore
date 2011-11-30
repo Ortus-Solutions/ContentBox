@@ -5,7 +5,6 @@ settings.xml
 _paidModules/**
 _modules/**
 logs/**
-logs/BlogBox.log
 web.config
 /coldbox
 /coldbox/**

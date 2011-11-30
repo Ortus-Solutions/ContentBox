@@ -6,13 +6,13 @@ component {
 	
 	// Module Properties
 	this.title 				= "ContentBox-Admin";
-	this.author 			= "Luis Majano";
+	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
-	this.description 		= "A cool blogging engine administrator";
+	this.description 		= "ContentBox Admin";
 	this.version			= "1.0";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
-	// Module Entry Point: The SES entry point for contentbox: http://myapp/cbadmin
+	// Module Entry Point: The SES entry point for contentbox administrator : http://myapp/cbadmin
 	this.entryPoint			= "cbadmin";
 	
 	function configure(){
@@ -29,7 +29,6 @@ component {
 		
 		// SES Routes
 		routes = [
-			// Generic module route
 			{pattern="/", handler="dashboard", action="index" },
 			{pattern="/dashboard/reload/:targetModule", handler="dashboard", action="reload" },
 			{pattern="/authors/page/:page",handler="authors"},
@@ -80,8 +79,6 @@ component {
 			// CB Admin security
 			{class="coldbox.system.interceptors.Security",properties={rulesSource="xml",rulesFile="#moduleMapping#/config/security.xml.cfm", validatorModel="securityService@cb"} }
 		];
-		
-		// WireBox bindings
-		
+
 	}	
 }

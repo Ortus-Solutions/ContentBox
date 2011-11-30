@@ -1,24 +1,23 @@
-﻿component {
+﻿/**
+* ContentBox main module configuration
+*/
+component {
 	
 	// Module Properties
 	this.title 				= "ContentBox Core";
-	this.author 			= "Luis Majano";
+	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
-	this.description 		= "A cool blogging engine";
+	this.description 		= "An enterprise modular content platform";
 	this.version			= "1.0";
-	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
-	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
-	// Module Entry Point: The SES entry point for ContentBox: http://myapp/blog
-	this.entryPoint			= "";
+	this.entryPoint			= "cbcore";
 	
 	function configure(){
-	
-		// module settings - stored in modules.name.settings
+		// contentbox settings
 		settings = {};
 				
-		// Custom Declared Interceptors
+		// interceptors
 		interceptors = [
 			// CB RSS Cache Cleanup Ghost
 			{class="#moduleMapping#.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" }
@@ -60,15 +59,12 @@
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Startup the ContentBox layout service and activate the layout
-		controller.getWireBox().getInstance("layoutService@cb").startupActiveLayout();
 	}
 	
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-		
 	}
 	
 	/************************************** PRIVATE *********************************************/
@@ -77,15 +73,21 @@
 	* load hibernatate transactions via AOP
 	*/
 	private function loadHibernateTransactions(binder){
-		var mappings = arguments.binder.getMappings();
+		var mappings = binder.getMappings();
 		
 		for(var key in mappings){
 			if( mappings[key].isAspect() AND findNoCase("coldbox.system.aop.aspects.HibernateTransaction", mappings[key].getPath()) ){
 				return;
 			}
 		}
-		
-		arguments.binder.mapAspect("HibernateTransaction").to("coldbox.system.aop.aspects.HibernateTransaction");	
+		// map the hibernate transaction manually.
+		binder.mapAspect(aspect="CBHibernateTransaction",autoBinding=false)
+			.to("coldbox.system.aop.aspects.HibernateTransaction");	
+			
+		// bind the aspect
+		binder.bindAspect(classes=binder.match().regex("contentbox\."),
+									methods=binder.match().annotatedWith("transactional"),
+									aspects="CBHibernateTransaction");
 	}
 	
 	/**
