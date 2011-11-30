@@ -86,6 +86,9 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		// Startup the ContentBox layout service and activate the current layout
+		controller.getWireBox().getInstance("layoutService@cb").startupActiveLayout();
+		
 		// Treat the blog as the Main Application?
 		if( !len(this.entryPoint) ){
 			// generate the ses entry point
@@ -122,6 +125,16 @@ component {
 			
 			// change the default event
 			controller.setSetting("DefaultEvent","contentbox-ui:blog");
+		}
+	}
+	
+	/**
+	* pre process checks
+	*/
+	function preProcess(event,interceptData) eventPattern="^contentbox-ui"{
+		// Verify ContentBox installer has been ran?
+		if( !controller.getWireBox().getInstance("SettingService@cb").isCBReady() ){
+			controller.setNextEvent('cbInstaller');
 		}
 	}
 		

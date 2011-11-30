@@ -59,29 +59,12 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Startup the ContentBox layout service and activate the layout
-		controller.getWireBox().getInstance("layoutService@cb").startupActiveLayout();
 	}
 	
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-		
-	}
-	
-	/**
-	* Runs after application loads
-	*/
-	function afterAspectsLoad(event,interceptData){
-		
-		// set ses mode
-		event.setISSES( true );
-		
-		// Verify ContentBox installer has been ran? Else redirect them to it.
-		if( !controller.getWireBox().getInstance("SettingService@cb").isCBReady() ){
-			controller.setNextEvent("cbinstaller");		
-		}
 	}
 	
 	/************************************** PRIVATE *********************************************/
