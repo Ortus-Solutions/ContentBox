@@ -49,9 +49,6 @@ component{
 		eventHandler		= "modules.contentbox.model.system.EventHandler"
 	};
 	
-	// drop create
-	if( structKeyExists(url,"drop") ){ this.ormsettings.dbcreate = "dropcreate"; }
-	
 	// application start
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new Coldbox(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH,COLDBOX_APP_KEY);

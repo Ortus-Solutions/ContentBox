@@ -26,6 +26,10 @@ component {
 			{pattern="/install", handler="home", action="install"},
 			{pattern="/:handler/:action?"}	
 		];
+		
+		// Binder
+		binder.map("InstallerService@cbi").to("#moduleMapping#.model.InstallerService");
+		binder.map("SetupBean@cbi").to("#moduleMapping#.model.Setup");
 	}
 	
 	/**

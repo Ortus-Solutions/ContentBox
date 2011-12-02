@@ -7,7 +7,7 @@
 #
 # Host: Localhost (MySQL 5.5.15)
 # Database: contentbox
-# Generation Time: 2011-11-30 17:08:01 +0000
+# Generation Time: 2011-12-01 18:30:46 +0000
 # ************************************************************
 
 
@@ -180,7 +180,8 @@ VALUES
 	(45,'cb_rss_cachingTimeoutIdle','15'),
 	(46,'cb_site_homepage','cbBlog'),
 	(47,'cb_rss_cacheName','TEMPLATE'),
-	(48,'cb_dashboard_recentPages','5');
+	(48,'cb_dashboard_recentPages','5'),
+	(49,'cb_active','true\n');
 
 /*!40000 ALTER TABLE `cb_setting` ENABLE KEYS */;
 UNLOCK TABLES;
