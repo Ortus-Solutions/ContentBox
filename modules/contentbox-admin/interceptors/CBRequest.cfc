@@ -19,6 +19,11 @@ component extends="coldbox.system.Interceptor"{
 		var prc = event.getCollection(private=true);
 		var rc	= event.getCollection();
 		
+		// Verify ContentBox installer has been ran?
+		if( !settingService.isCBReady() ){
+			setNextEvent('cbInstaller');
+		}
+		
 		// store module root	
 		prc.cbRoot = event.getModuleRoot();
 		// cb helper

@@ -19,11 +19,11 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="1
 	
 	// O2M -> Entries
 	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="contentbox.model.content.Entry"
-			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="all-delete-orphan" batchsize="10" orderby="publishedDate DESC";
+			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="save-update" batchsize="10" orderby="publishedDate DESC";
 			 
 	// O2M -> Pages
 	property name="pages" singularName="page" type="array" fieldtype="one-to-many" cfc="contentbox.model.content.Page"
-			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="all-delete-orphan" batchsize="10" orderby="publishedDate DESC";
+			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="save-update" batchsize="10" orderby="publishedDate DESC";
 	
 	// Calculated properties
 	property name="numberOfEntries" formula="select count(*) from cb_entry entry where entry.FK_authorID=authorID" ;

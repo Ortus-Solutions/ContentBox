@@ -20,34 +20,34 @@ component {
 		// interceptors
 		interceptors = [
 			// CB RSS Cache Cleanup Ghost
-			{class="#moduleMapping#.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" }
+			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" }
 		];
 		
 		// Security/System
-		binder.map("securityService@cb").to("#moduleMapping#.model.security.SecurityService");
-		binder.map("settingService@cb").to("#moduleMapping#.model.system.SettingService");
-		binder.map("authorService@cb").to("#moduleMapping#.model.security.AuthorService");
+		binder.map("securityService@cb").to("contentbox.model.security.SecurityService");
+		binder.map("settingService@cb").to("contentbox.model.system.SettingService");
+		binder.map("authorService@cb").to("contentbox.model.security.AuthorService");
 		// Entry services
-		binder.map("entryService@cb").to("#moduleMapping#.model.content.EntryService");
-		binder.map("categoryService@cb").to("#moduleMapping#.model.content.CategoryService");
+		binder.map("entryService@cb").to("contentbox.model.content.EntryService");
+		binder.map("categoryService@cb").to("contentbox.model.content.CategoryService");
 		// Page services
-		binder.map("pageService@cb").to("#moduleMapping#.model.content.PageService");
+		binder.map("pageService@cb").to("contentbox.model.content.PageService");
 		// Commenting services
-		binder.map("commentService@cb").to("#moduleMapping#.model.comments.CommentService");
+		binder.map("commentService@cb").to("contentbox.model.comments.CommentService");
 		// RSS services
-		binder.map("rssService@cb").to("#moduleMapping#.model.rss.RSSService");	
+		binder.map("rssService@cb").to("contentbox.model.rss.RSSService");	
 		// UI services
-		binder.map("widgetService@cb").to("#moduleMapping#.model.ui.WidgetService");	
-		binder.map("layoutService@cb").to("#moduleMapping#.model.ui.LayoutService");
-		binder.map("customHTMLService@cb").to("#moduleMapping#.model.ui.CustomHTMLService");
+		binder.map("widgetService@cb").to("contentbox.model.ui.WidgetService");	
+		binder.map("layoutService@cb").to("contentbox.model.ui.LayoutService");
+		binder.map("customHTMLService@cb").to("contentbox.model.ui.CustomHTMLService");
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
 		// utils
 		binder.map("zipUtil@cb").to("coldbox.system.core.util.Zip");
-		binder.map("HQLHelper@cb").to("#moduleMapping#.model.util.HQLHelper");
+		binder.map("HQLHelper@cb").to("contentbox.model.util.HQLHelper");
 		binder.map("Validator@cb").to("coldbox.system.core.util.Validator");
 		// importers
-		binder.map("mangoImporter@cb").to("#moduleMapping#.model.importers.MangoImporter");
-		binder.map("wordpressImporter@cb").to("#moduleMapping#.model.importers.WordpressImporter");
+		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
+		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
 		
 		// Load AOP listener if not loaded
 		loadAOPListener(binder);

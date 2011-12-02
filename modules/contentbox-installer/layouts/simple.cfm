@@ -32,7 +32,9 @@
 			<!--=======Top Header area======-->
 			<div id="header_top">
 				<span class="fr"><br/></span>
-			  	www.gocontentbox.org | twitter.com/gocontentbox
+			  	<a href="http://www.gocontentbox.com">www.gocontentbox.com</a> | 
+				<a href="http://twitter.com/gocontentbox">twitter.com/gocontentbox</a> |
+				<a href="http://www.ortussolutions.com">www.ortussolutions.com</a>
 			</div>
 			<!--End Header top Area=-->
 	    

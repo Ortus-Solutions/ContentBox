@@ -73,6 +73,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return prc.cbLayout;
 	}
 
+	// Get the location of the widgets in the application, great for assets, cfincludes, etc
+	function widgetRoot(){
+		var prc = getRequestCollection(private=true);
+		return prc.cbWidgetRoot;
+	}
+
 	/************************************** site properties *********************************************/
 
 	// Retrieve the site name
@@ -225,7 +231,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if ( isEntryView() ){
 			return linkEntry( getCurrentEntry() );
 		}
-	
+
 		return linkPage( getCurrentPage() );
 	}
 
