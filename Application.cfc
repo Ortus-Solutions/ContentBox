@@ -37,7 +37,7 @@ component{
 		cfclocation=["model","modules"],
 		// FILL OUT: THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
-		// FILL OUT: Change to dropcreate if you are running this for the first time, then change it back to update for continuos repo updates, or remove for production
+		// FILL OUT: FOR FIRST TIME INSTALLATION LEAVE AS IS, THEN CHANGE TO 'none' OR LEAVE AS IS FOR CONTINUOUS REPO UPDATES
 		dbcreate			= "update",
 		// FILL OUT: Change script for the MS SQL version of the install/setup script
 		//sqlscript			= "modules/contentbox/install/sql/contentbox_data.sql",
