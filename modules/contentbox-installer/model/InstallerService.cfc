@@ -24,6 +24,8 @@ component accessors="true"{
 		if( setup.getpopulateData() ){
 			createSampleData( setup, author );
 		}
+		// ContentBox is now online, mark it:
+		settingService.activateCB();
 	}
 	
 	function createAuthor(required setup){

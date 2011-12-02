@@ -127,15 +127,5 @@ component {
 			controller.setSetting("DefaultEvent","contentbox-ui:blog");
 		}
 	}
-	
-	/**
-	* pre process checks
-	*/
-	function preProcess(event,interceptData) eventPattern="^contentbox-ui"{
-		// Verify ContentBox installer has been ran?
-		if( !controller.getWireBox().getInstance("SettingService@cb").isCBReady() ){
-			controller.setNextEvent('cbInstaller');
-		}
-	}
 		
 }

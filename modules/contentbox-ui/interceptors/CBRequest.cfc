@@ -16,7 +16,12 @@ component extends="coldbox.system.Interceptor"{
 	function preProcess(event, interceptData) eventPattern="^contentbox-ui"{
 		var prc = event.getCollection(private=true);
 		var rc	= event.getCollection();
-
+		
+		// Verify ContentBox installer has been ran?
+		if( !settingService.isCBReady() ){
+			setNextEvent('cbInstaller');
+		}
+		
 		// store module root
 		prc.cbRoot = event.getModuleRoot();
 		// store module entry point
