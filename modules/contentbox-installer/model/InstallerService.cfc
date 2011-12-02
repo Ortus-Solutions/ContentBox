@@ -112,7 +112,7 @@ component accessors="true"{
 		var entry = entryService.new(properties={
 			title = "My first entry",
 			slug  = "my-first-entry",
-			content = "",
+			content = "Hey everybody, this is my first blog entry made from ContentBox.  Isn't this amazing!'",
 			publishedDate = now(),
 			isPublished = true,
 			allowComments = true,
