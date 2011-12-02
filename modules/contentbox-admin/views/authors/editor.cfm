@@ -60,58 +60,90 @@
 		<div class="body">
 			#getPlugin("MessageBox").renderIt()#
 			
-			<!--- AuthorForm --->
-			#html.startForm(name="authorForm",action=prc.xehAuthorsave,novalidate="novalidate")#
-				#html.startFieldset(legend="Author Details")#
-				#html.hiddenField(name="authorID",bind=prc.author)#
-				<!--- Fields --->
-				#html.textField(name="firstName",bind=prc.author,label="First Name:",required="required",size="50",class="textfield")#
-				#html.textField(name="lastName",bind=prc.author,label="Last Name:",required="required",size="50",class="textfield")#
-				#html.inputField(name="email",type="email",bind=prc.author,label="Email:",required="required",size="50",class="textfield")#
-				#html.textField(name="username",bind=prc.author,label="Username:",required="required",size="50",class="textfield")#
-				<cfif NOT prc.author.isLoaded()>
-				#html.textField(name="password",bind=prc.author,label="Password:",required="required",size="50",class="textfield")#
-				</cfif>
-				#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
-				
-				<!--- Action Bar --->
-				<div class="actionBar">
-					<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
-					<input type="submit" value="Save" class="buttonred">
+			<!--- Vertical Nav --->
+			<div class="body_vertical_nav clearfix">
+				<!--- User Navigation Bar --->
+				<ul class="vertical_nav">
+					<li class="active"><a href="##authorDetails"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> Author Details</a></li>
+					<cfif prc.author.isLoaded()>
+					<li><a href="##password"><img src="#prc.cbRoot#/includes/images/lock.png" alt="modifiers"/> Change Password</a></li>
+					<li><a href="##entries"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Author Entries</a></li>
+					<li><a href="##pages"><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/> Author Pages</a></li>
+					</cfif>
+				</ul>	
+				<!--- Documentation Panes --->	
+				<div class="main_column">
+					<!-- Content area that wil show the form and stuff -->
+					<div class="panes_vertical">
+						<!--- Author Details --->
+						<div>
+							<!--- AuthorForm --->
+							#html.startForm(name="authorForm",action=prc.xehAuthorsave,novalidate="novalidate")#
+								#html.startFieldset(legend="Author Details")#
+								#html.hiddenField(name="authorID",bind=prc.author)#
+								<!--- Fields --->
+								#html.textField(name="firstName",bind=prc.author,label="First Name:",required="required",size="50",class="textfield")#
+								#html.textField(name="lastName",bind=prc.author,label="Last Name:",required="required",size="50",class="textfield")#
+								#html.inputField(name="email",type="email",bind=prc.author,label="Email:",required="required",size="50",class="textfield")#
+								#html.textField(name="username",bind=prc.author,label="Username:",required="required",size="50",class="textfield")#
+								<cfif NOT prc.author.isLoaded()>
+								#html.textField(name="password",bind=prc.author,label="Password:",required="required",size="50",class="textfield")#
+								</cfif>
+								#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
+								
+								<!--- Action Bar --->
+								<div class="actionBar">
+									<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
+									<input type="submit" value="Save" class="buttonred">
+								</div>
+								#html.endFieldSet()#
+							#html.endForm()#
+						</div>
+						
+						<cfif prc.author.isLoaded()>
+						<!--- Change Password --->
+						<div>
+						#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate")#
+							#html.startFieldset(legend="Change Password")#
+							#html.hiddenField(name="authorID",bind=prc.author)#
+							<!--- Fields --->
+							#html.textField(name="password",label="Password:",required="required",size="50",class="textfield")#
+							#html.textField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield")#
+							
+							<!--- Action Bar --->
+							<div class="actionBar">
+								<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
+								<input type="submit" value="Change Password" class="buttonred">
+							</div>
+							#html.endFieldSet()#
+						#html.endForm()#
+						</div>
+						
+						<!--- My Entries --->
+						<div>
+						#html.startFieldset(legend="Author Entries")#
+							<!--- Entries Pager Viewlet --->
+							#prc.entryViewlet#
+						#html.endFieldSet()#
+						</div>
+						
+						<!--- My Pages --->
+						<div>
+						#html.startFieldset(legend="Author Pages")#
+							<!--- Pages Pager Viewlet --->
+							#prc.pageViewlet#
+						#html.endFieldSet()#
+						</div>
+						</cfif>
+						
+					</div>
 				</div>
-				#html.endFieldSet()#
-			#html.endForm()#
+			</div>
 			
-			<!--- Change Password --->
-			<cfif prc.author.isLoaded()>
-			#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate")#
-				#html.startFieldset(legend="Change Password")#
-				#html.hiddenField(name="authorID",bind=prc.author)#
-				<!--- Fields --->
-				#html.textField(name="password",label="Password:",required="required",size="50",class="textfield")#
-				#html.textField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield")#
-				
-				<!--- Action Bar --->
-				<div class="actionBar">
-					<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
-					<input type="submit" value="Change Password" class="buttonred">
-				</div>
-				#html.endFieldSet()#
-			#html.endForm()#
 			
-			<!--- My Entries --->
-			#html.startFieldset(legend="Author Entries")#
-				<!--- Entries Pager Viewlet --->
-				#prc.entryViewlet#
-			#html.endFieldSet()#
 			
-			<!--- My Pages --->
-			#html.startFieldset(legend="Author Pages")#
-				<!--- Pages Pager Viewlet --->
-				#prc.pageViewlet#
-			#html.endFieldSet()#
 			
-			</cfif>
+			
 		</div>	<!--- body --->
 	</div> <!--- main box --->
 </div> <!--- main column --->
