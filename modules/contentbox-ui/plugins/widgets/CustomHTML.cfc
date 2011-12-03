@@ -1,5 +1,5 @@
 ﻿/**
-* A cool basic widget that shows some ContentBox meta links
+* A widget that renders Custom HTML in ContentBox
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
 	
