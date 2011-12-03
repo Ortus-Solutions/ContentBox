@@ -29,6 +29,7 @@
 			</div>
 				
 			<!--- Persisted Info --->
+			<br/>
 			<table class="tablelisting" width="100%">
 				<tr>
 					<th width="75" class="textRight">Last Login</th>
@@ -54,7 +55,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" />
-			<cfif prc.author.isLoaded()>Edit #prc.author.getName()#<cfelse>Create Author</cfif>
+			<cfif prc.author.isLoaded()>Editing #prc.author.getName()#<cfelse>Create Author</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">

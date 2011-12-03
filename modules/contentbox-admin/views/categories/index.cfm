@@ -9,17 +9,12 @@
 		<div class="body">
 			<!--- Create/Edit form --->
 			#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate")#
-				<input type="hidden" name="categoryID" id="categoryID" value="" />
-				
-				<label for="category">Category:</label>
-				<input name="category" id="category" type="text" required="required" maxlength="100" size="25" class="textfield"/>
-				
-				<label for="slug">Slug: (blank to generate it):</label>
-				<input name="slug" id="slug" type="text" maxlength="100" size="25" class="textfield"/>
-				
+				#html.hiddenField(name="categoryID",value="")#
+				#html.textField(name="category",label="Category:",required="required",maxlength="100",size="30",class="textfield")#
+				#html.textField(name="slug",label="Slug (blank to generate it):",maxlength="100",size="30",class="textfield")#
 				<div class="actionBar">
-					#html.resetButton(name="btnReset",value="Reset",class="button")#
-					#html.submitButton(value="Save",class="buttonred")#
+					#html.resetButton(name="btnReset",value="Reset Form",class="button")#
+					#html.submitButton(value="Save Category",class="buttonred")#
 				</div>
 			#html.endForm()#
 		</div>
@@ -41,7 +36,7 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- CategoryForm --->
-			#html.startForm(name="categoryForm",action=rc.xehCategoryRemove)#
+			#html.startForm(name="categoryForm",action=prc.xehCategoryRemove)#
 			<input type="hidden" name="categoryID" id="categoryID" value="" />
 			
 			<!--- Content Bar --->
@@ -71,7 +66,7 @@
 					</tr>
 				</thead>				
 				<tbody>
-					<cfloop array="#rc.categories#" index="category">
+					<cfloop array="#prc.categories#" index="category">
 					<tr>
 						<td><a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
 						<td>#category.getSlug()#</td>
@@ -81,7 +76,7 @@
 							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
 							<!--- Delete Command --->
 							<cfif category.getNumberOfEntries() EQ 0>
-							<a title="Delete Author" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><img id="delete_#category.getCategoryID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><img id="delete_#category.getCategoryID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 							</cfif>
 						</td>
 					</tr>

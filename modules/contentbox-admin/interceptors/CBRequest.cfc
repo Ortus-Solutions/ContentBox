@@ -69,6 +69,8 @@ component extends="coldbox.system.Interceptor"{
 		
 		// System
 		prc.xehSettings		= "#prc.cbAdminEntryPoint#.settings";
+		prc.xehPermissions	= "#prc.cbAdminEntryPoint#.permissions";
+		prc.xehRoles		= "#prc.cbAdminEntryPoint#.roles";
 		prc.xehRawSettings	= "#prc.cbAdminEntryPoint#.settings.raw";
 		
 		// Login/Logout

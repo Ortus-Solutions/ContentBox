@@ -27,6 +27,8 @@ component {
 		binder.map("securityService@cb").to("contentbox.model.security.SecurityService");
 		binder.map("settingService@cb").to("contentbox.model.system.SettingService");
 		binder.map("authorService@cb").to("contentbox.model.security.AuthorService");
+		binder.map("permissionService@cb").to("contentbox.model.security.PermissionService");
+		binder.map("roleService@cb").to("contentbox.model.security.RoleService");
 		// Entry services
 		binder.map("entryService@cb").to("contentbox.model.content.EntryService");
 		binder.map("categoryService@cb").to("contentbox.model.content.CategoryService");

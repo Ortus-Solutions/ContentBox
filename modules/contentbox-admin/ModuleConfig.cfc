@@ -61,6 +61,8 @@ component {
 				// Comment eVents
 				"cbadmin_onCommentStatusUpdate","cbadmin_preCommentSave","cbadmin_postCommentSave","cbadmin_preCommentRemove","cbadmin_postCommentRemove","cbadmin_preCommentSettingsSave","cbadmin_postCommentSettingsSave",
 				"cbadmin_onCommentSettingsNav","cbadmin_onCommentSettingsContent",
+				// Permission events
+				"cbadmin_prePermissionSave", "cbadmin_postPermissionSave",
 				// Dashboard events
 				"cbadmin_onDashboard",
 				// Security events
