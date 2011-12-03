@@ -1,7 +1,7 @@
 ﻿/**
 * I am a blog entry entity
 */
-component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="10" extends="BaseContent" {
+component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25" extends="BaseContent" {
 	
 	// Properties
 	property name="entryID" fieldtype="id" generator="native" setter="false";

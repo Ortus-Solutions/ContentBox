@@ -4,8 +4,8 @@
 component mappedsuperclass="true" accessors="true"{
 	
 	// DI Injections
-	property name="cachebox" 		inject="cachebox" persistent="false";
-	property name="settingService"	inject="id:settingService@cb" persistent="false";
+	property name="cachebox" 		inject="cachebox" 				persistent="false";
+	property name="settingService"	inject="id:settingService@cb" 	persistent="false";
 	
 	// Properties
 	property name="title"				notnull="true"  length="200" default="" index="idx_search";
@@ -20,8 +20,8 @@ component mappedsuperclass="true" accessors="true"{
 	property name="HTMLDescription"		notnull="false" length="160" default="";
 	property name="hits"				notnull="false" ormtype="long" default="0" dbdefault="0";
 
-	// M20 -> Author loaded as a proxy
-	property name="author" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true";
+	// M20 -> Author loaded as a proxy and fetched immediately
+	property name="author" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
 	
 	// NON-persistent content type discriminator
 	property name="type" persistent="false" type="string" hint="Valid content types are page,entry";
