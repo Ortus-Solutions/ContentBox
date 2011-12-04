@@ -17,6 +17,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Delete a Permission which also removes itself from all many-to-many relationships
 	*/
 	boolean function deletePermission(required permissionID) transactional{
+		// We do SQL deletions as those relationships are not bi-directional
 		// delete role relationships
 		var q = new Query(sql="delete from cb_rolePermissions where FK_permissionID = :permissionID");
 		q.addParam(name="permissionID",value=arguments.permissionID,cfsqltype="numeric");
