@@ -48,14 +48,14 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception("cbadmin_prePermissionRemove",{permissionID=rc.permissionID});
 		// delete by id
-		if( !permissionService.deleteByID( rc.permissionID ) ){
+		if( !permissionService.deletePermission( rc.permissionID ) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Permission detected!");
 		}
 		else{
 			// announce event
 			announceInterception("cbadmin_postPermissionRemove",{permissionID=rc.permissionID});
 			// Message
-			getPlugin("MessageBox").setMessage("info","Permission Removed!");
+			getPlugin("MessageBox").setMessage("info","Permission and all relationships Removed!");
 		}
 		setNextEvent( prc.xehPermissions );
 	}

@@ -74,9 +74,9 @@
 				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" }
 			},
 			// Root Logger
-			root = { levelmax="INFO", appenders="*" },
+			root = { levelmax="INFO", appenders="*" }
 			// Implicit Level Categories
-			info = [ "coldbox.system" ] 
+			//info = [ "coldbox.system" ] 
 		};
 		
 		//Layout Settings
@@ -116,7 +116,7 @@
 			}
 		};
 		//logbox.debug = ["coldbox.system.interceptors.SES"];
-		logbox.debug = ["coldbox.system.aop"];
+		//logbox.debug = [ "coldbox.system.aop" ];
 		
 	}
 	

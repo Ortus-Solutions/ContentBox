@@ -6,6 +6,8 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="authorService"		inject="id:authorService@cb";
 	property name="entryService"		inject="id:entryService@cb";
+	property name="permissionService"	inject="id:permissionService@cb";
+	property name="roleService"			inject="id:roleService@cb";
 	
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -51,9 +53,13 @@ component extends="baseHandler"{
 		// exit handlers
 		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#.authors.save";
 		prc.xehAuthorChangePassword = "#prc.cbAdminEntryPoint#.authors.passwordChange";
+		prc.xehAuthorPermissions 	= "#prc.cbAdminEntryPoint#.authors.permissions";
 		
 		// get new or persisted author
 		prc.author  = authorService.get( event.getValue("authorID",0) );
+		// get roles
+		prc.roles = roleService.list(sortOrder="role",asQuery=false);
+		
 		// viewlets
 		prc.entryViewlet = "";
 		prc.pageViewlet  = "";
@@ -72,15 +78,18 @@ component extends="baseHandler"{
 
 	// save user
 	function save(event,rc,prc){
-		
 		// get and populate author
 		var oAuthor	= populateModel( authorService.get(id=rc.authorID) );
+    	// role assignment
+    	oAuthor.setRole( roleService.get( rc.roleID ) );
+    	
     	// announce event
 		announceInterception("cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID});
 		// save Author
 		authorService.saveAuthor( oAuthor );
 		// announce event
 		announceInterception("cbadmin_postAuthorSave",{author=oAuthor});
+		
 		// message
 		getPlugin("MessageBox").setMessage("info","Author saved!");
 		// relocate
@@ -128,5 +137,47 @@ component extends="baseHandler"{
 		getPlugin("MessageBox").setMessage("info","Author Removed!");
 		// redirect
 		setNextEvent(prc.xehAuthors);
+	}
+	
+	// permissions
+	function permissions(event,rc,prc){
+		// exit Handlers
+		prc.xehPermissionRemove = "#prc.cbAdminEntryPoint#.authors.removePermission";
+		prc.xehPermissionSave 	= "#prc.cbAdminEntryPoint#.authors.savePermission";
+		prc.xehRolePermissions 	= "#prc.cbAdminEntryPoint#.authors.permissions";
+		// Get all permissions
+		prc.permissions = permissionService.list(sortOrder="permission",asQuery=false);
+		// Get author
+		prc.author = authorService.get( rc.authorID );
+		// view
+		event.setView(view="authors/permissions",layout="ajax");
+	}
+	
+	// Save permission to the author and gracefully end.
+	function savePermission(event,rc,prc){
+		var oAuthor 	= authorService.get( rc.authorID );
+		var oPermission = permissionService.get( rc.permissionID );
+		
+		// Assign it
+		if( !oAuthor.hasPermission( oPermission) ){
+			oAuthor.addPermission( oPermission );
+			// Save it
+			authorService.saveAuthor( oAuthor );
+		}
+		// Saved
+		event.renderData(data="true",type="json");
+	}
+	
+	// remove permission to a author and gracefully end.
+	function removePermission(event,rc,prc){
+		var oAuthor 	= authorService.get( rc.authorID );
+		var oPermission = permissionService.get( rc.permissionID );
+		
+		// Remove it
+		oAuthor.removePermission( oPermission );
+		// Save it
+		authorService.saveAuthor( oAuthor );
+		// Saved
+		event.renderData(data="true",type="json");
 	}
 }

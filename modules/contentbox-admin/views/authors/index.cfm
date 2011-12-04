@@ -58,7 +58,7 @@
 					<tr>
 						<th>Name</th>
 						<th>Email</th>
-						<th>Username</th>
+						<th>Role</th>
 						<th>Last Login</th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/pen.png" alt="posts" title="Number of Entries"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="active" title="User Active Flag"/></th>
@@ -77,7 +77,7 @@
 							</cfif>
 						</td>
 						<td>#author.getEmail()#</td>
-						<td>#author.getUsername()#</td>
+						<td>#author.getRole().getRole()#</td>
 						<td>#author.getDisplayLastLogin()#</td>
 						<th class="center">#author.getNumberOfEntries()#</th>
 						<td class="center">

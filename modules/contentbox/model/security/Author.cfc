@@ -8,7 +8,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	property name="firstName"	length="100" notnull="true";
 	property name="lastName"	length="100" notnull="true";
 	property name="email"		length="255" notnull="true" index="idx_email";
-	property name="username"	length="100" notnull="true" index="idx_login" ;
+	property name="username"	length="100" notnull="true" index="idx_login" unique="true";
 	property name="password"	length="100" notnull="true" index="idx_login";
 	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" dbdefault="0" index="idx_login,idx_active";
 	property name="lastLogin" 	ormtype="timestamp" notnull="false";
@@ -26,8 +26,8 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	property name="role" fieldtype="many-to-one" cfc="contentbox.model.security.Role" fkcolumn="FK_roleID" lazy="true";
 	
 	// M2M -> A-la-carte Author Permissions
-	property name="permissions" fieldtype="many-to-many" type="array" lazy="extra"
-			 cfc="contentbox.model.security.Permission" cascade="all-delete-orphan" 
+	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra"
+			 cfc="contentbox.model.security.Permission" cascade="all" 
 			 fkcolumn="FK_authorID" linktable="cb_authorPermissions" inversejoincolumn="FK_permissionID" orderby="permission"; 
 	
 	// Calculated properties

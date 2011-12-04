@@ -50,11 +50,6 @@
 				</div>
 			</div>
 			
-			<div class="infoBar">
-				<img src="#prc.cbRoot#/includes/images/info.png" alt="info"/>
-				You cannot delete categories that have posts attached to them.  You will need to un-attach those categories first.
-			</div>
-			
 			<!--- categories --->
 			<table name="categories" id="categories" class="tablesorter" width="98%">
 				<thead>
@@ -75,9 +70,7 @@
 							<!--- Edit Command --->
 							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
 							<!--- Delete Command --->
-							<cfif category.getNumberOfEntries() EQ 0>
 							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><img id="delete_#category.getCategoryID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
-							</cfif>
 						</td>
 					</tr>
 					</cfloop>

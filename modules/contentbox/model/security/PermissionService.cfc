@@ -13,4 +13,20 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		return this;
 	}
 	
+	/**
+	* Delete a Permission which also removes itself from all many-to-many relationships
+	*/
+	boolean function deletePermission(required permissionID) transactional{
+		// delete role relationships
+		var q = new Query(sql="delete from cb_rolePermissions where FK_permissionID = :permissionID");
+		q.addParam(name="permissionID",value=arguments.permissionID,cfsqltype="numeric");
+		q.execute();
+		// delete user relationships
+		var q = new Query(sql="delete from cb_authorPermissions where FK_permissionID = :permissionID");
+		q.addParam(name="permissionID",value=arguments.permissionID,cfsqltype="numeric");
+		q.execute();
+		// delete permission now
+		return deleteById( arguments.permissionID );
+	}
+	
 }

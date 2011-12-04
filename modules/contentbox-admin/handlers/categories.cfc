@@ -52,7 +52,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception("cbadmin_preCategoryRemove",{categoryID=rc.categoryID});
 		// delete by id
-		if( !categoryService.deleteByID( rc.categoryID ) ){
+		if( !categoryService.deleteCategory( rc.categoryID ) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Category detected!");
 		}
 		else{

@@ -51,9 +51,7 @@ component {
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
 		
-		// Load AOP listener if not loaded
-		loadAOPListener(binder);
-		// Load Hibernate Transactions if not loaded
+		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
 	}
 	
@@ -75,38 +73,14 @@ component {
 	* load hibernatate transactions via AOP
 	*/
 	private function loadHibernateTransactions(binder){
-		var mappings = binder.getMappings();
-		
-		for(var key in mappings){
-			if( mappings[key].isAspect() AND findNoCase("coldbox.system.aop.aspects.HibernateTransaction", mappings[key].getPath()) ){
-				return;
-			}
-		}
-		// map the hibernate transaction manually.
+		// map the hibernate transaction for contentbox
 		binder.mapAspect(aspect="CBHibernateTransaction",autoBinding=false)
 			.to("coldbox.system.aop.aspects.HibernateTransaction");	
 			
 		// bind the aspect
-		binder.bindAspect(classes=binder.match().regex("contentbox\."),
+		binder.bindAspect(classes=binder.match().regex("contentbox.*"),
 									methods=binder.match().annotatedWith("transactional"),
 									aspects="CBHibernateTransaction");
-	}
-	
-	/**
-	* load AOP listener
-	*/
-	private function loadAOPListener(binder){
-		var b = arguments.binder;
-		var l = b.getListeners();
-		
-		for(var x=1; x lte arrayLen(l); x++){
-			if( findnocase("coldbox.system.aop.Mixer", l[x].class) ){
-				return;
-			}
-		}
-		
-		// load AOP listener
-		binder.listener(class="coldbox.system.aop.Mixer");
 	}
 	
 }
