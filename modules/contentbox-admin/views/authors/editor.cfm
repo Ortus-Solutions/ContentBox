@@ -29,6 +29,7 @@
 			</div>
 				
 			<!--- Persisted Info --->
+			<br/>
 			<table class="tablelisting" width="100%">
 				<tr>
 					<th width="75" class="textRight">Last Login</th>
@@ -54,7 +55,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" />
-			<cfif prc.author.isLoaded()>Edit #prc.author.getName()#<cfelse>Create Author</cfif>
+			<cfif prc.author.isLoaded()>Editing #prc.author.getName()#<cfelse>Create Author</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -66,14 +67,14 @@
 				<ul class="vertical_nav">
 					<li class="active"><a href="##authorDetails"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> Author Details</a></li>
 					<cfif prc.author.isLoaded()>
-					<li><a href="##password"><img src="#prc.cbRoot#/includes/images/lock.png" alt="modifiers"/> Change Password</a></li>
+					<li><a href="##password"><img src="#prc.cbRoot#/includes/images/credit-card.png" alt="modifiers"/> Change Password</a></li>
+					<li><a href="##permissions" onclick="loadPermissions()"><img src="#prc.cbRoot#/includes/images/lock.png" alt="modifiers"/> Permissions</a></li>
 					<li><a href="##entries"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Author Entries</a></li>
 					<li><a href="##pages"><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/> Author Pages</a></li>
 					</cfif>
 				</ul>	
-				<!--- Documentation Panes --->	
+				<!--- Tab Content --->	
 				<div class="main_column">
-					<!-- Content area that wil show the form and stuff -->
 					<div class="panes_vertical">
 						<!--- Author Details --->
 						<div>
@@ -90,6 +91,8 @@
 								#html.textField(name="password",bind=prc.author,label="Password:",required="required",size="50",class="textfield")#
 								</cfif>
 								#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
+								#html.select(label="User Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role",bind=prc.author.getRole(),style="width:200px")#
+								
 								
 								<!--- Action Bar --->
 								<div class="actionBar">
@@ -119,6 +122,9 @@
 						#html.endForm()#
 						</div>
 						
+						<!--- Permissions --->
+						<div id="permissionsTab"></div>
+						
 						<!--- My Entries --->
 						<div>
 						#html.startFieldset(legend="Author Entries")#
@@ -137,12 +143,11 @@
 						</cfif>
 						
 					</div>
+					<!--- end panes_vertical --->
 				</div>
+				<!--- end panes content --->
 			</div>
-			
-			
-			
-			
+			<!--- end vertical nav --->
 			
 		</div>	<!--- body --->
 	</div> <!--- main box --->
@@ -159,6 +164,11 @@ $(document).ready(function() {
 		return (value==$("[name=password]").val()) ? true : false;
 	});
 	</cfif>
+	// Setup Permissions
+	$permissionsTab = $("##permissionsTab");
 });
+function loadPermissions(){
+	$permissionsTab.load('#event.buildLink(prc.xehAuthorPermissions)#/authorID/'+#rc.authorID#);
+}
 </script>
 </cfoutput>

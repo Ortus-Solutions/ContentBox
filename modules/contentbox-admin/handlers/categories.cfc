@@ -17,10 +17,10 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehCategoryRemove 	= "#prc.cbAdminEntryPoint#.categories.remove";
+		prc.xehCategoryRemove 	= "#prc.cbAdminEntryPoint#.categories.remove";
 		prc.xehCategoriesSave 	= "#prc.cbAdminEntryPoint#.Categories.save";
 		// Get all categories
-		rc.categories = categoryService.list(sortOrder="category",asQuery=false);
+		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// Tab
 		prc.tabEntries			  = true;
 		prc.tabEntries_categories = true;
@@ -52,7 +52,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception("cbadmin_preCategoryRemove",{categoryID=rc.categoryID});
 		// delete by id
-		if( !categoryService.deleteByID( rc.categoryID ) ){
+		if( !categoryService.deleteCategory( rc.categoryID ) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Category detected!");
 		}
 		else{

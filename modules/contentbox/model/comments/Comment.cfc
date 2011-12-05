@@ -1,7 +1,7 @@
 ﻿/**
 * I am a Comment Entity
 */
-component persistent="true" entityname="cbComment" table="cb_comment"{
+component persistent="true" entityname="cbComment" table="cb_comment" batchsize="25"{
 	
 	// PROPERTIES
 	property name="commentID" fieldtype="id" generator="native" setter="false";

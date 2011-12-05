@@ -1,7 +1,7 @@
 ﻿/**
 * I am a blog page entity
 */
-component persistent="true" entityname="cbPage" table="cb_page" batchsize="10" extends="BaseContent"{
+component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" extends="BaseContent"{
 	
 	// Properties
 	property name="pageID" fieldtype="id" generator="native" setter="false";

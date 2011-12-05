@@ -137,6 +137,7 @@ component extends="baseHandler"{
 		entry.setAuthor( prc.oAuthor );
 		// detach categories and re-attach
 		entry.removeAllCategories().setCategories( categories );
+		
 		// save entry
 		entryService.saveEntry( entry );
 		

@@ -1,18 +1,18 @@
 ﻿/**
 * I am a blog entry entity
 */
-component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="10" extends="BaseContent" {
+component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25" extends="BaseContent" {
 	
 	// Properties
 	property name="entryID" fieldtype="id" generator="native" setter="false";
 	property name="excerpt" 			notnull="false" ormtype="text" default="" length="8000";
 	
 	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category"
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"  
 			  cfc="contentbox.model.content.Category" fkcolumn="FK_entryID" linktable="cb_entryCategories" inversejoincolumn="FK_categoryID"; 
 	
 	// O2M -> Comments
-	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10" orderby="createdDate"
+	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_entryID" inverse="true" cascade="all-delete-orphan"; 
 	
 	// Calculated Fields
@@ -27,6 +27,7 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="10"
 	* constructor
 	*/
 	function init(){
+		categories = [];
 		setType("entry");
 	}
 	

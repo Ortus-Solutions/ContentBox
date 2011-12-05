@@ -216,7 +216,15 @@
 					<ul>
 						<li>
 							<a href="#event.buildLink(prc.xehSettings)#" <cfif event.getValue("tabSystem_Settings",false,true)> class="current"</cfif>
-							   title="Manage ContentBox Global Configuration">ContentBox Settings</a>
+							   title="Manage ContentBox Global Configuration">Settings</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehPermissions)#" <cfif event.getValue("tabSystem_Permissions",false,true)> class="current"</cfif>
+							   title="Manage ContentBox Security Permissions">Permissions</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabSystem_Roles",false,true)> class="current"</cfif>
+							   title="Manage ContentBox Security Roles">Roles</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>

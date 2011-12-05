@@ -28,7 +28,9 @@ component{
 	// FILL OUT: THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";
 	// THE LOCATION OF THE 'CONTENTBOX' MODULE MANDATORY
-	this.mappings["/contentbox"] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
+	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
+	// THE LOCATION OF COLDBOX
+	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
 
 	// ORM SETTINGS
 	this.ormEnabled = true;

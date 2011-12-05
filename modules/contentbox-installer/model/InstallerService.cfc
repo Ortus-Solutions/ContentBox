@@ -11,7 +11,6 @@ component accessors="true"{
 	property name="commentService"	inject="commentService@cb";
 	
 	InstallerService function init(){
-		
 		return this;
 	}
 	

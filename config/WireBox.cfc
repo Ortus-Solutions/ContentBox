@@ -45,7 +45,9 @@ Description :
 			parentInjector = "",
 			
 			// Register all event listeners here, they are created in the specified order
-			listeners = []			
+			listeners = [
+				{class="coldbox.system.aop.Mixer"}
+			]			
 		};
 		
 		// Map Bindings below

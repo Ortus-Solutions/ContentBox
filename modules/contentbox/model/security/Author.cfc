@@ -1,21 +1,18 @@
 ﻿/**
 * I am a author entity
 */
-component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="10"{
+component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="25"{
 	
 	// Properties
 	property name="authorID" 	fieldtype="id" generator="native" setter="false";
 	property name="firstName"	length="100" notnull="true";
 	property name="lastName"	length="100" notnull="true";
 	property name="email"		length="255" notnull="true" index="idx_email";
-	property name="username"	length="100" notnull="true" index="idx_login" ;
+	property name="username"	length="100" notnull="true" index="idx_login" unique="true";
 	property name="password"	length="100" notnull="true" index="idx_login";
 	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" dbdefault="0" index="idx_login,idx_active";
 	property name="lastLogin" 	ormtype="timestamp" notnull="false";
 	property name="createdDate" ormtype="timestamp" notnull="true" update="false";
-	
-	// Non-persisted properties
-	property name="loggedIn"	persistent="false" default="false" type="boolean";
 	
 	// O2M -> Entries
 	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="contentbox.model.content.Entry"
@@ -25,9 +22,20 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="1
 	property name="pages" singularName="page" type="array" fieldtype="one-to-many" cfc="contentbox.model.content.Page"
 			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="save-update" batchsize="10" orderby="publishedDate DESC";
 	
+	// M20 -> Role
+	property name="role" fieldtype="many-to-one" cfc="contentbox.model.security.Role" fkcolumn="FK_roleID" lazy="true";
+	
+	// M2M -> A-la-carte Author Permissions
+	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra"
+			 cfc="contentbox.model.security.Permission" cascade="all" 
+			 fkcolumn="FK_authorID" linktable="cb_authorPermissions" inversejoincolumn="FK_permissionID" orderby="permission"; 
+	
 	// Calculated properties
 	property name="numberOfEntries" formula="select count(*) from cb_entry entry where entry.FK_authorID=authorID" ;
 	property name="numberOfPages" 	formula="select count(*) from cb_page page where page.FK_authorID=authorID" ;
+	
+	// Non-persisted properties
+	property name="loggedIn"	persistent="false" default="false" type="boolean";
 	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	
