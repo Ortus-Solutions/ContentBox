@@ -72,7 +72,7 @@
 	/**
 	* Activate the current layout in the settings
 	*/
-	LayoutService function activateLayout(required layoutName) transactional{
+	function activateLayout(required layoutName) transactional{
 		var layout = settingService.findWhere({name="cb_site_layout"});
 		// setup the new layout value
 		layout.setValue( arguments.layoutName );
