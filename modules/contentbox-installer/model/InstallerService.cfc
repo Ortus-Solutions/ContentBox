@@ -4,19 +4,29 @@
 component accessors="true"{
 	
 	// DI
-	property name="authorService" 	inject="id:authorService@cb";
-	property name="settingService" 	inject="id:settingService@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="entryService"	inject="entryService@cb";
-	property name="commentService"	inject="commentService@cb";
+	property name="authorService" 		inject="id:authorService@cb";
+	property name="settingService" 		inject="id:settingService@cb";
+	property name="categoryService" 	inject="categoryService@cb";
+	property name="entryService"		inject="entryService@cb";
+	property name="commentService"		inject="commentService@cb";
+	property name="roleService" 		inject="roleService@cb";
+	property name="permissionService" 	inject="permissionService@cb";
 	
+	/**
+	* Constructor
+	*/
 	InstallerService function init(){
 		return this;
 	}
 	
+	/**
+	* Execute the installer
+	*/
 	function execute(required setup) transactional{
+		// create roles
+		var adminRole = createRoles( setup );
 		// create Author
-		var author = createAuthor( setup );
+		var author = createAuthor( setup, adminRole );
 		// create All Settings
 		createSettings( setup );
 		// Do we create sample data?
@@ -26,16 +36,56 @@ component accessors="true"{
 		// ContentBox is now online, mark it:
 		settingService.activateCB();
 	}
+		
+	/**
+	* Create permissions
+	*/
+	function createPermissions(required setup ){
+		var perms = {
+			
+		};
+		
+		var allperms = [];
+		for(var key in perms){
+			arrayAppend(allPerms, permissionService.new() );	
+		}
+		
+		writeDump(allperms);abort;
+	}
 	
-	function createAuthor(required setup){
-		// First start by creating user
+	/**
+	* Create roles and return the admin
+	*/
+	function createRoles(required setup ){
+		// Create Permissions
+		//createPermissions( setup );
+		
+		// Create Editor
+		var oRole = roleService.new(properties={role="Editor",description="A ContentBox editor"});
+		roleService.save( oRole );
+		
+		// Create Admin
+		var oRole = roleService.new(properties={role="Administrator",description="A ContentBox Administrator"});
+		roleService.save( oRole );
+		
+		return oRole;
+	}
+	
+	/**
+	* Create author
+	*/
+	function createAuthor(required setup, required adminRole){
 		var oAuthor = authorService.new(properties=setup.getUserData());
 		oAuthor.setIsActive( true );
+		oAuthor.setRole( adminRole );
 		authorService.saveAuthor( oAuthor );
 		
 		return oAuthor;
 	}
 	
+	/**
+	* Create settings
+	*/
 	function createSettings(required setup){
 		
 		// Create Settings
@@ -102,6 +152,9 @@ component accessors="true"{
 		settingService.saveAll( aSettings );
 	}
 	
+	/**
+	* Create Sample Data
+	*/
 	function createSampleData(required setup, required author){
 		
 		// create a few categories

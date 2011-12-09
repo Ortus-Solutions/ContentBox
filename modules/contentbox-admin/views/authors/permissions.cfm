@@ -40,7 +40,11 @@
 		#html.select(name="permissionID",options=prc.permissions,column="permissionID",nameColumn="permission")#
 		
 		<!--- Button --->
-		<button class="buttonred" onclick="addPermission();return false;">Add Permission</button>
+		<cfif arrayLen(prc.permissions) GT 0>
+			<button class="buttonred" onclick="addPermission();return false;">Add Permission</button>
+		<cfelse>
+			<button class="buttonred" onclick="alert('No Permissions Found, Cannot Add!'); return false">Add Permission</button>
+		</cfif>
 		
 	#html.endFieldSet()#
 	#html.endForm()#
