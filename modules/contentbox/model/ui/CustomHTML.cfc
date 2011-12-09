@@ -1,7 +1,7 @@
 ﻿/**
 * I model a custom HTML content piece
 */
-component persistent="true" entityname="cbCustomHTML" table="cb_customHTML"{
+component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cachename="cbCustomHTML" cacheuse="read-write"{
 	
 	// PROPERTIES
 	property name="contentID" 	fieldtype="id" generator="native" setter="false";

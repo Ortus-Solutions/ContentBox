@@ -29,6 +29,8 @@ component extends="baseHandler"{
 
 	// save
 	function save(event,rc,prc){
+		// UCASE permission
+		rc.permission = ucase( rc.permission );
 		// populate and get
 		var oPermission = populateModel( permissionService.get(id=rc.permissionID) );
     	// announce event
