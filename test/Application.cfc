@@ -26,8 +26,9 @@ Description :
 	// FILL OUT: THE DATASOURCE OF CONTENTBOX
 	this.datasource = "contentbox";
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
-	this.mappings["/contentbox"] 	= replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test/","");
-	this.mappings["/contentbox"] 	= replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test/","");
+	this.mappings["/contentbox-shell"] 	= replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test/","");
+	this.mappings["/contentbox"] 		= this.mappings["/contentbox-shell"] & "/modules/contentbox" ;
+	
 	this.ormSettings = {
 		cfclocation=["/contentbox"],
 		// FILL OUT: THE DIALECT OF YOUR DATABASE
