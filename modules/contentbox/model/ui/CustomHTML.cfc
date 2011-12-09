@@ -6,7 +6,7 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML"{
 	// PROPERTIES
 	property name="contentID" 	fieldtype="id" generator="native" setter="false";
 	property name="title"			notnull="true"  length="200";
-	property name="slug"			notnull="true"  length="200" unique="true" index="idx_slug";
+	property name="slug"			notnull="true"  length="200" unique="true" index="idx_customHTML_slug";
 	property name="description"		notnull="false" length="500" default="";
 	property name="content" 		notnull="true"  ormtype="text" length="8000";
 	property name="createdDate" 	notnull="true"  ormtype="timestamp" update="false";
