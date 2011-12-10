@@ -41,9 +41,9 @@ component{
 		//dialect 			= "MySQLwithInnoDB",
 		// FILL OUT: FOR FIRST TIME INSTALLATION LEAVE AS IS, THEN CHANGE TO 'none' OR LEAVE AS IS FOR CONTINUOUS REPO UPDATES
 		dbcreate			= "update",
-		// FILL OUT: Change script for the MS SQL version of the install/setup script
-		//sqlscript			= "modules/contentbox/install/sql/contentbox_data.sql",
-		//sqlscript			= "modules/contentbox/install/sql/contentbox_data_ms.sql",
+		secondarycacheenabled = true,
+		// FILL OUT: IF YOU WANT ANOTHER SECONDARY CACHE, PLEASE UPDATE HERE
+		cacheprovider		= "ehCache",
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,

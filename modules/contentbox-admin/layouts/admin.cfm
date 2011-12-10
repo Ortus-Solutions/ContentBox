@@ -211,6 +211,7 @@
 					</ul>
 				</li>
 				<!--- System Nav --->
+				<cfif prc.oAuthor.checkPermission("SYSTEM_TAB")>
 				<li>
 					<a href="##" title="System" <cfif prc.tabSystem>class="current"</cfif>>System</a>
 					<ul>
@@ -234,6 +235,7 @@
 						#announceInterception("cbadmin_systemTab")#
 					</ul>
 				</li>
+				</cfif>
 				<!--- cbadmin event --->
 				#announceInterception("cbadmin_afterMainNav")#
 			</ul>

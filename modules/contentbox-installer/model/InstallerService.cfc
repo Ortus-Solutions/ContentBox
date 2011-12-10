@@ -16,6 +16,7 @@ component accessors="true"{
 	* Constructor
 	*/
 	InstallerService function init(){
+		permissions = {};
 		return this;
 	}
 	
@@ -42,15 +43,30 @@ component accessors="true"{
 	*/
 	function createPermissions(required setup ){
 		var perms = {
-			
+			"SYSTEM_TAB" = "Access to the ContentBox System tools",
+			"SYSTEM_SAVE_CONFIGURATION" = "Ability to update global configuration data",
+			"SYSTEM_RAW_SETTINGS" = "Access to the ContentBox raw settings panel",
+			"TOOLS_IMPORT" = "Ability to import data into ContentBox",
+			"ROLES_ADMIN" = "Ability to manage roles, default is view only",
+			"PERMISSIONS_ADMIN" = "Ability to manage permissions, default is view only",
+			"AUTHOR_ADMIN" = "Ability to manage authors, default is view only",
+			"WIDGET_ADMIN" = "Ability to manage widgets, default is view only",
+			"LAYOUT_ADMIN" = "Ability to manage layouts, default is view only",
+			"COMMENTS_ADMIN" = "Ability to manage comments, default is view only",
+			"CUSTOMHTML_ADMIN" = "Ability to manage custom HTML, default is view only",
+			"PAGES_ADMIN" = "Ability to manage content pages, default is view only",
+			"CATEGORIES_ADMIN" = "Ability to manage categories, default is view only",
+			"ENTRIES_ADMIN" = "Ability to manage blog entries, default is view only",
+			"RELOAD_MODULES" = "Ability to reload modules"
 		};
 		
 		var allperms = [];
 		for(var key in perms){
-			arrayAppend(allPerms, permissionService.new() );	
+			var props = {permission=key, description=perms[key]};
+			permissions[ key ] = permissionService.new(properties=props);
+			arrayAppend(allPerms, permissions[ key ] );			
 		}
-		
-		writeDump(allperms);abort;
+		permissionService.saveAll( allPerms );
 	}
 	
 	/**
@@ -58,14 +74,25 @@ component accessors="true"{
 	*/
 	function createRoles(required setup ){
 		// Create Permissions
-		//createPermissions( setup );
+		createPermissions( setup );
 		
 		// Create Editor
 		var oRole = roleService.new(properties={role="Editor",description="A ContentBox editor"});
+		// Add Editor Permissions
+		oRole.addPermission( permissions["COMMENTS_ADMIN"] );
+		oRole.addPermission( permissions["CUSTOMHTML_ADMIN"] );
+		oRole.addPermission( permissions["PAGES_ADMIN"] );
+		oRole.addPermission( permissions["CATEGORIES_ADMIN"] );
+		oRole.addPermission( permissions["ENTRIES_ADMIN"] );
+		oRole.addPermission( permissions["LAYOUT_ADMIN"] );
 		roleService.save( oRole );
 		
 		// Create Admin
 		var oRole = roleService.new(properties={role="Administrator",description="A ContentBox Administrator"});
+		// Add All Permissions To Admin
+		for(var key in permissions){
+			oRole.addPermission( permissions[key] );
+		}
 		roleService.save( oRole );
 		
 		return oRole;

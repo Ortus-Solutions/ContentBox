@@ -29,13 +29,14 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra"
 			 cfc="contentbox.model.security.Permission" cascade="all" 
 			 fkcolumn="FK_authorID" linktable="cb_authorPermissions" inversejoincolumn="FK_permissionID" orderby="permission"; 
-	
+		
 	// Calculated properties
 	property name="numberOfEntries" formula="select count(*) from cb_entry entry where entry.FK_authorID=authorID" ;
 	property name="numberOfPages" 	formula="select count(*) from cb_page page where page.FK_authorID=authorID" ;
 	
 	// Non-persisted properties
-	property name="loggedIn"	persistent="false" default="false" type="boolean";
+	property name="loggedIn"		persistent="false" default="false" type="boolean";
+	property name="permissionList" 	persistent="false";
 	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	
@@ -52,8 +53,26 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	* Constructor
 	*/
 	function init(){
+		setPermissionList( '' );
 		setLoggedIn( false );
 		return this;
+	}
+	
+	/**
+	* Check for permission
+	*/
+	boolean function checkPermission(required slug){
+		// cache list
+		if( !len( permissionList ) AND hasPermission() ){
+			var q = entityToQuery( getPermissions() );
+			permissionList = valueList( q.permission );	
+		}
+		// checks via role and local
+		if( getRole().checkPermission( arguments.slug ) OR listFindNoCase(permissionList, arguments.slug) ){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/*
