@@ -1,7 +1,7 @@
 /**
 * A cool Permission entity
 */
-component persistent="true" entityName="cbPermission" table="cb_permission"{
+component persistent="true" entityName="cbPermission" table="cb_permission" cachename="cbPermission" cacheuse="read-write"{
 
 	// Primary Key
 	property name="permissionID" fieldtype="id" generator="native" setter="false";

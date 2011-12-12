@@ -1,7 +1,7 @@
 /**
 * A cool Role entity
 */
-component persistent="true" entityName="cbRole" table="cb_role"{
+component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRole" cacheuse="read-write"{
 
 	// Primary Key
 	property name="roleID" fieldtype="id" generator="native" setter="false";
@@ -9,7 +9,7 @@ component persistent="true" entityName="cbRole" table="cb_role"{
 	// Properties
 	property name="role"  		ormtype="string" notnull="true" length="255" unique="true" default="";	property name="description" ormtype="string" notnull="false" default="" length="500";	
 	// M2M -> Permissions
-	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra" orderby="permission" cascade="all"
+	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra" orderby="permission" cascade="all" cacheuse="read-write"  
 			  cfc="contentbox.model.security.Permission" fkcolumn="FK_roleID" linktable="cb_rolePermissions" inversejoincolumn="FK_permissionID"; 
 	
 	// Calculated Fields
