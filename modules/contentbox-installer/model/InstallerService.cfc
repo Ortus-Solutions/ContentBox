@@ -11,6 +11,7 @@ component accessors="true"{
 	property name="commentService"		inject="commentService@cb";
 	property name="roleService" 		inject="roleService@cb";
 	property name="permissionService" 	inject="permissionService@cb";
+	property name="appPath" 			inject="coldbox:setting:applicationPath";
 	
 	/**
 	* Constructor
@@ -24,6 +25,12 @@ component accessors="true"{
 	* Execute the installer
 	*/
 	function execute(required setup) transactional{
+		
+		// process rerwite
+		if( setup.fullRewrite ){
+			processRewrite( setup );
+		}
+		
 		// create roles
 		var adminRole = createRoles( setup );
 		// create Author
@@ -34,8 +41,26 @@ component accessors="true"{
 		if( setup.getpopulateData() ){
 			createSampleData( setup, author );
 		}
+		
+		// Remove ORM update from Application.cfc
+		processORMUpdate();
+		
 		// ContentBox is now online, mark it:
 		settingService.activateCB();
+	}
+	
+	function processORMUpdate(){
+		var appCFCPath = appPath & "Application.cfc";
+		var c = fileRead(appCFCPath);
+		c = replacenocase(c, '"update"',"none");
+		fileWrite(appCFCPath, c);
+	}
+	
+	function processRewrite(required setup){
+		var routesPath = appPath & "config/routes.cfm";
+		var c = fileRead(routesPath);
+		c = replacenocase(c, "index.cfm","","all");
+		fileWrite(routesPath, c);
 	}
 		
 	/**

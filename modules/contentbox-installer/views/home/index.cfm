@@ -1,6 +1,5 @@
 <cfoutput>
 #html.startForm(action="cbinstaller/install",name="installerForm",novalidate="novalidate")#
-
 <div class="box clear">
 	<div class="header">
 		<img src="#prc.assetRoot#/includes/images/help.png" alt="help" width="30" height="30" />Install Wizard
@@ -75,6 +74,42 @@
 					<!--- Keywords --->
 					#html.textarea(name="siteKeywords",label="Site Keywords:",rows="3",title="A comma delimited list of keywords to be used in the HTML keywords meta tag")#		
 					#html.endFieldSet()#
+					
+					
+					<!--- URL Rewrites --->
+					#html.startFieldset(legend="Site URL Rewrites")#
+					<p>
+						ContentBox by default is configured to work with SES (Search Engine Safe) URLs.  However, in order to remove the 
+						<strong>index.cfm</strong> from your URL's you will need to configure a web server rewrite engine like
+						<a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">Apache mod_rewrite</a>, 
+						<a href="http://www.tuckey.org/urlrewrite/">tuckey URL Rewrite filter</a> or 
+						<a href="http://www.iis.net/download/urlrewrite">IIS 7 rewrite module</a>.  
+						A fully working apache mod_rewrite <strong>.htaccess</strong> file
+						has been created and placed in the root of your installation.
+					</p>
+					<p>
+						If you select full URL rewrites below, then we will modify your application's routing table to remove the 
+						<strong>index.cfm</strong> from the URLs (<em>config/routes.cfm</em>).  You can also select not to have full URL rewrites and your URLs
+						will contain an <strong>index.cfm</strong> in them. 
+
+					</p>
+					<strong>Full URL Rewrite:</strong>
+					<code>
+						http://myapp/about-us
+					</code>
+					<br/>
+					<strong>Default URL Rewrite</strong>
+					<code>
+						http://myapp/index.cfm/about-us
+					</code>
+					<br/><br/>
+					<!--- Populate With Sample Data --->
+					#html.label(field="fullrewrite",content="Enable Full URL Rewrites:")#
+					#html.radioButton(name="fullrewrite",checked=true,value=true)# Yes 	
+					#html.radioButton(name="fullrewrite",value=false)# No 	
+					
+					#html.endFieldSet()#
+					
 					
 					<!--- Action Bar --->
 					<div class="actionBar">
