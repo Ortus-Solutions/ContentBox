@@ -104,9 +104,11 @@
 			<div class="contentBar" id="contentBar">
 				
 				<!--- Create Butons --->
+				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(rc.xehEntryEditor)#');" title="Create new entry">Create Entry</button>
 				</div>
+				</cfif>
 				
 				<!--- Filter Bar --->
 				<div class="filterBar">
@@ -172,14 +174,16 @@
 						<td class="center">#entry.getHits()#</td>
 						<td class="center">#entry.getNumberOfComments()#</td>
 						<td class="center">
+							<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 							<!--- Edit Command --->
 							<a href="#event.buildLink(rc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
 							&nbsp;
-							<!--- View in Site --->
-							<a href="#prc.CBHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
-							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete Entry" href="javascript:remove('#entry.getEntryID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getEntryID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							&nbsp;
+							</cfif>
+							<!--- View in Site --->
+							<a href="#prc.CBHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 						</td>
 					</tr>
 					</cfloop>

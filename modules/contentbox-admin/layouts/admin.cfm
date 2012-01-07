@@ -59,18 +59,21 @@
 				<span class="fr">
 					<!--- View Site --->
 					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank"><button class="buttonsmall">View Site</button></a>
+					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 					<!--- Quick Post --->
 					<button class="buttonsmall" onclick="showQuickPost()">Quick Post</button>
-					
+					</cfif>
+					<!--- Quick Links --->
 					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
 						<option value="null">Quick Links</option>
 						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-						<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
+							<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
 						</cfif>
-						<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
+						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+							<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
+						</cfif>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
-						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>
-						
+						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>						
 					</select>
 					
 					&nbsp;
@@ -186,11 +189,13 @@
 							<a href="#event.buildLink(prc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
 							   title="View All Authors">View All</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 						<li>
 							<a href="#event.buildLink(prc.xehAuthorEditor)#" 
 							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() NEQ event.getValue("authorID","")>class="current"</cfif>
 							   title="Create a new author">Create New</a>
 						</li>
+						</cfif>
 						<li>
 							<a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
 							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() eq event.getValue("authorID","")>class="current"</cfif>

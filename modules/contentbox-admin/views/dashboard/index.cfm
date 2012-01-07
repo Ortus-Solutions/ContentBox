@@ -112,10 +112,12 @@
 			<!--- Latest Entries --->
 			#html.anchor(name="recentEntries")#
 			<div class="contentBar" id="entriesBar">
+				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" 	id="btnCreateEntry" title="Create a new blog entry" onclick="return to('#event.buildLink(prc.xehBlogEditor)#')">Create Entry</button>
 					<button class="buttonred" 	id="btnQuickPost" 	title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 				</div>				
+				</cfif>
 				<div class="filterBar">
 					<h3><img src="#prc.cbroot#/includes/images/blog.png" alt="blog" /> Recent Entries</h3>
 				</div>				

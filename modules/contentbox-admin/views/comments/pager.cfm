@@ -47,18 +47,20 @@
 				#comment.getDisplayCreatedDate()#
 			</td>
 			<td class="center">
-				<!--- Approve/Unapprove --->
-				<cfif !comment.getIsApproved()>
-					<a href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_pro.png" alt="approve" /></a>
-				<cfelse>
-					<a href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_contra.png" alt="unapprove" /></a>
+				<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+					<!--- Approve/Unapprove --->
+					<cfif !comment.getIsApproved()>
+						<a href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_pro.png" alt="approve" /></a>
+					<cfelse>
+						<a href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_contra.png" alt="unapprove" /></a>
+					</cfif>
+					&nbsp;	
+					<!--- Delete Command --->
+					<a title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><img id="delete_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+					&nbsp;
 				</cfif>
-				&nbsp;	
 				<!--- View in Site --->
 				<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
-				&nbsp;
-				<!--- Delete Command --->
-				<a title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><img id="delete_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 			</td>
 		</tr>
 		</cfloop>
@@ -80,6 +82,7 @@ $(document).ready(function() {
 	    }
 	});
 });
+<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 function commentPagerChangeStatus(status,recordID){
 	// update icon
 	$('##status_'+recordID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
@@ -98,6 +101,7 @@ function commentPagerRemove(recordID){
 		commentPagerLink(#rc.page#);
 	});	
 }
+</cfif>
 function commentPagerLink(page){
 	$("##commentsPagerLoader").fadeIn("fast");
 	$('##pagerComments')

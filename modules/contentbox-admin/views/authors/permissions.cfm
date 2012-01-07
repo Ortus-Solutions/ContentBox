@@ -25,6 +25,7 @@
 	#html.endForm()#
 	
 	<!--- Add Permission Form--->
+	<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 	#html.startForm(name="permissionForm")#
 	#html.startFieldset(legend="Assign A-la-Carte Permissions")#
 		#html.hiddenField(name="authorID",bind=prc.author)#
@@ -48,6 +49,7 @@
 		
 	#html.endFieldSet()#
 	#html.endForm()#
+	</cfif>
 	
 	<!--- Show/Remove Form--->
 	#html.startForm(name="alacartePermissions")#
@@ -62,8 +64,10 @@
 		<div>
 			<!--- Assigned --->
 			<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="Assigned" title="#perm.getPermission()# Assigned"/>
+			<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 			<!--- Remove --->
 			<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="Assigned" border="0"/></a>
+			</cfif>
 			<!--- Name --->
 			&nbsp; 
 			<strong>#perm.getPermission()#</strong>
@@ -79,6 +83,7 @@
 $(document).ready(function() {
 	$permissionForm = $("##permissionForm");
 });
+<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 function addPermission(){
 	// loader
 	$("##permissionLoader").slideDown();
@@ -99,5 +104,6 @@ function removePermission(permissionID){
 		loadPermissions();
 	});
 }
+</cfif>
 </script>
 </cfoutput>

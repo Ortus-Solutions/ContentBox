@@ -47,11 +47,13 @@
 			<td class="center">#entry.getHits()#</td>
 			<td class="center">#entry.getNumberOfComments()#</td>
 			<td class="center">
-				<!--- View Command --->
-				<a href="#prc.CBHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
-				&nbsp;
+				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<!--- Edit Command --->
 				<a href="#event.buildLink(rc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+				&nbsp;
+				</cfif>
+				<!--- View Command --->
+				<a href="#prc.CBHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 			</td>
 		</tr>
 		</cfloop>
