@@ -3,6 +3,7 @@
 <div class="sidebar">
 	<!--- Info Box --->
 	<div class="small_box">
+		<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/entry.png" alt="info" width="24" height="24" />Editor
 		</div>
@@ -18,6 +19,7 @@
 				</div>
 			#html.endForm()#
 		</div>
+		</cfif>
 	</div>		
 </div>
 <!--End sidebar-->	
@@ -66,11 +68,13 @@
 							   title="Edit #permission.getPermission()#">#permission.getPermission()#</a></td>
 						<td>#permission.getDescription()#</td>
 						<td class="center">
+							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 							<!--- Edit Command --->
 							<a href="javascript:edit('#permission.getPermissionID()#','#permission.getPermission()#','#permission.getDescription()#')" 
 							   title="Edit #permission.getPermission()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
 							<!--- Delete Command --->
 							<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><img id="delete_#permission.getPermissionID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							</cfif>
 						</td>
 					</tr>
 					</cfloop>
@@ -84,19 +88,23 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$permissionEditor = $("##permissionEditor");
 	// table sorting + filtering
 	$("##permissions").tablesorter();
 	$("##permissionFilter").keyup(function(){
 		$.uiTableFilter( $("##permissions"), this.value );
 	});
+	<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
+	// form id
+	$permissionEditor = $("##permissionEditor");
 	// form validator
 	$permissionEditor.validator({position:'top left'});
 	// reset
 	$('##btnReset').click(function() {
 		$permissionEditor.find("##permissionID").val( '' );
 	});
+	</cfif>
 });
+<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 function edit(permissionID,permission,description){
 	$permissionEditor.find("##permissionID").val( permissionID );
 	$permissionEditor.find("##permission").val( permission );
@@ -107,5 +115,6 @@ function remove(permissionID){
 	$permissionForm.find("##permissionID").val( permissionID );
 	$permissionForm.submit();
 }
+</cfif>
 </script>
 </cfoutput>

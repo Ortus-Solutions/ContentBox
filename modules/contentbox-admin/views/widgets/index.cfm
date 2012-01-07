@@ -3,6 +3,7 @@
 <div class="sidebar">
 	<!--- Info Box --->
 	<div class="small_box">
+		<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Widget Uploader
 		</div>
@@ -21,6 +22,7 @@
 				</div>
 			#html.endForm()#
 		</div>
+		</cfif>
 	</div>		
 </div>
 <!--End sidebar-->	
@@ -86,11 +88,13 @@
 							<!--- Documentation Icon --->
 							<a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(rc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(rc.widgets.name)#'})"><img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" /></a>
 							&nbsp;
+							<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 							<!--- Update Check --->
 							<a title="Check For Updates" href="##"><img src="#prc.cbRoot#/includes/images/download_black.png" alt="download" /></a>
 							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete Widget" href="javascript:remove('#JSStringFormat(rc.widgets.name)#')" class="confirmIt" data-title="Delete Widget?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							</cfif>
 						</td>
 					</tr>
 					</cfif>

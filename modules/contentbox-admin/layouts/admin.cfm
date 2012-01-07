@@ -64,7 +64,9 @@
 					
 					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
 						<option value="null">Quick Links</option>
+						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 						<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
+						</cfif>
 						<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
 						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>
@@ -202,10 +204,12 @@
 				<li>
 					<a href="##" title="Tools" <cfif prc.tabTools>class="current"</cfif>>Tools</a>
 					<ul>
+						<cfif prc.oAuthor.checkPermission("TOOLS_IMPORT")>
 						<li>
 							<a href="#event.buildLink(prc.xehToolsImport)#" <cfif event.getValue("tabTools_import",false,true)> class="current"</cfif>
 							   title="Import your database from other blogs">Import</a>
 						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_toolsTab")#
 					</ul>
@@ -227,10 +231,12 @@
 							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabSystem_Roles",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Roles">Roles</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS")>
 						<li>
 							<a href="#event.buildLink(prc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
 							   title="Manage The Raw Settings Table">Raw Settings</a>
 						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_systemTab")#
 					</ul>

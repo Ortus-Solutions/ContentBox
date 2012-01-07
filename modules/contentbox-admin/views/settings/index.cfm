@@ -5,6 +5,7 @@
 <div class="sidebar">
 	<!--- Saerch Box --->
 	<div class="small_box">
+		<cfif prc.oAuthor.checkPermission("SYSTEM_SAVE_CONFIGURATION")>
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Actions
 		</div>
@@ -13,6 +14,7 @@
 				#html.submitButton(value="Save Settings",class="buttonred",title="Save the ContentBox settings")#
 			</div>
 		</div>
+		</cfif>
 	</div>	
 </div>
 <!--End sidebar-->	

@@ -96,9 +96,11 @@
 			<div class="contentBar" id="contentBar">
 				
 				<!--- Create Butons --->
+				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(prc.xehPageEditor)#');" title="Create new page">Create Page</button>
 				</div>
+				</cfif>
 				
 				<!--- Filter Bar --->
 				<div class="filterBar">

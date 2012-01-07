@@ -1,7 +1,9 @@
 ﻿<cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
-	<!--- Info Box --->
+	
+	<!--- Admin Actions --->
+	<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
 	<div class="small_box">
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Admin Actions
@@ -23,6 +25,7 @@
 			</p>
 		</div>
 	</div>	
+	</cfif>
 	
 	<!--- Snapshot Box --->
 	<div class="small_box">
@@ -122,9 +125,11 @@
 			<!--- Latest Pages --->
 			#html.anchor(name="recentPages")#
 			<div class="contentBar" id="entriesBar">
+				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" 	id="btnCreateEntry" title="Create a new page" onclick="return to('#event.buildLink(prc.xehPageEditor)#')">Create Page</button>
 				</div>				
+				</cfif>
 				<div class="filterBar">
 					<h3><img src="#prc.cbroot#/includes/images/page_big.png" alt="blog" /> Recent Pages</h3>
 				</div>				
