@@ -27,7 +27,7 @@ component accessors="true"{
 	function execute(required setup) transactional{
 		
 		// process rerwite
-		if( setup.fullRewrite ){
+		if( setup.getFullRewrite() ){
 			processRewrite( setup );
 		}
 		
@@ -52,7 +52,7 @@ component accessors="true"{
 	function processORMUpdate(){
 		var appCFCPath = appPath & "Application.cfc";
 		var c = fileRead(appCFCPath);
-		c = replacenocase(c, '"update"',"none");
+		c = replacenocase(c, '"update"','"none"');
 		fileWrite(appCFCPath, c);
 	}
 	

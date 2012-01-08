@@ -18,11 +18,10 @@
 				<div>
 					<h1>Welcome To ContentBox!</h1>
 					<p>
-						We have detected that your ContentBox is not setup yet, so let's get you up and running in no time.
-						You have already done the first step which is created the datasource in which ContentBox will run under as you are
-						now seeing this message.
-						What you might not know is that we already created the entire database structure for you, we now just need
-						a little information from you to get ContentBox ready for prime time.
+						We have detected that your <strong>ContentBox</strong> is not setup yet, so let's get you up and running in no time.
+						You have already done the first step, which is created the datasource in which ContentBox will run under.
+						What you might not know, is that we already created the entire database structure for you, we now just need
+						a little information from you to get <strong>ContentBox</strong> ready for prime time.
 					</p>
 					<p>
 						So what are you waiting for? Let's get started!
@@ -46,8 +45,8 @@
 					#html.textField(name="lastName",label="Last Name:",required="required",size="100",class="textfield")#
 					#html.inputField(name="email",type="email",label="Email:",required="required",size="100",class="textfield")#
 					#html.textField(name="username",label="Username:",required="required",size="100",class="textfield")#
-					#html.textField(name="password",label="Password:",required="required",size="100",class="textfield")#
-					#html.textField(name="password_confirm",label="Confirm Password:",required="required",size="100",class="textfield")#
+					#html.passwordField(name="password",label="Password:",required="required",size="100",class="textfield")#
+					#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="100",class="textfield")#
 					#html.endFieldSet()#
 					
 					<!--- Site Info --->
@@ -105,8 +104,8 @@
 					<br/><br/>
 					<!--- Populate With Sample Data --->
 					#html.label(field="fullrewrite",content="Enable Full URL Rewrites:")#
-					#html.radioButton(name="fullrewrite",checked=true,value=true)# Yes 	
-					#html.radioButton(name="fullrewrite",value=false)# No 	
+					#html.radioButton(name="fullrewrite",value=true)# Yes 	
+					#html.radioButton(name="fullrewrite",checked=true,value=false)# No 	
 					
 					#html.endFieldSet()#
 					
