@@ -1,0 +1,43 @@
+﻿/**
+* Security rules manager
+*/
+component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
+	
+	/**
+	* Constructor
+	*/
+	SecurityRuleService function init(){
+		// init it
+		super.init(entityName="cbSecurityRule");
+		
+		return this;
+	}
+	
+	/**
+	* Get the maximum used order
+	*/
+	numeric function getMaxOrder(){
+		return executeQuery(query="select max( sr.order ) from cbSecurityRule as sr",asQuery=false)[1];
+	}
+	
+	/**
+	* Get the next maximum used order
+	*/
+	numeric function getNextMaxOrder(){
+		return getMaxOrder()+1;
+	}	
+	
+	/**
+    * Save rule
+    */
+	any function saveRule(required any entity, boolean forceInsert=false, boolean flush=false, boolean transactional=getUseTransactions()){
+		
+		// determine new or not
+		if( !arguments.entity.isLoaded() ){
+			// new, so add next max order
+			arguments.entity.setOrder( getNextMaxOrder() );
+		}
+		
+		return save(argumentCollection=arguments);
+	}
+}

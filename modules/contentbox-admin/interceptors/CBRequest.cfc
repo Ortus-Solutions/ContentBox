@@ -68,10 +68,11 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";
 		
 		// System
-		prc.xehSettings		= "#prc.cbAdminEntryPoint#.settings";
-		prc.xehPermissions	= "#prc.cbAdminEntryPoint#.permissions";
-		prc.xehRoles		= "#prc.cbAdminEntryPoint#.roles";
-		prc.xehRawSettings	= "#prc.cbAdminEntryPoint#.settings.raw";
+		prc.xehSettings			= "#prc.cbAdminEntryPoint#.settings";
+		prc.xehPermissions		= "#prc.cbAdminEntryPoint#.permissions";
+		prc.xehRoles			= "#prc.cbAdminEntryPoint#.roles";
+		prc.xehSecurityRules	= "#prc.cbAdminEntryPoint#.securityrules";
+		prc.xehRawSettings		= "#prc.cbAdminEntryPoint#.settings.raw";
 		
 		// Login/Logout
 		prc.xehDoLogout 	= "#prc.cbAdminEntryPoint#.security.doLogout";

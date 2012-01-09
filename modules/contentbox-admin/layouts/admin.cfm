@@ -236,6 +236,10 @@
 							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabSystem_Roles",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Roles">Roles</a>
 						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehSecurityRules)#" <cfif event.getValue("tabSystem_SecurityRules",false,true)> class="current"</cfif>
+							   title="Manage ContentBox Security Rules">Security Rules</a>
+						</li>
 						<cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS")>
 						<li>
 							<a href="#event.buildLink(prc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
