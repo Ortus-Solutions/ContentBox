@@ -1,7 +1,7 @@
 ﻿<cfoutput>
-#html.startForm(name="contentEditForm",action=rc.xehContentSave,novalidate="novalidate")#
+#html.startForm(name="contentEditForm",action=prc.xehContentSave,novalidate="novalidate")#
 <!--- contentid --->
-#html.hiddenField(name="contentID",bind=rc.content)#
+#html.hiddenField(name="contentID",bind=prc.content)#
 	
 <!--============================Sidebar============================-->
 <div class="sidebar">
@@ -39,12 +39,12 @@
 			#getPlugin("MessageBox").renderit()#
 
 			<!--- fields --->
-			#html.textField(name="title",label="Title:",bind=rc.content,required="required",maxlength="200",class="textfield width98",size="50",title="A human friendly name for the content piece")#
-			#html.textField(name="slug",label="Slug:",bind=rc.content,required="required",maxlength="200",class="textfield width98",size="50",title="The slug used to retrieve this content piece")#
-			#html.textarea(name="description",label="Short Description:",bind=rc.content,rows=3,class="width98",title="A short description for metadata purposes")#
+			#html.textField(name="title",label="Title:",bind=prc.content,required="required",maxlength="200",class="textfield width98",size="50",title="A human friendly name for the content piece")#
+			#html.textField(name="slug",label="Slug:",bind=prc.content,required="required",maxlength="200",class="textfield width98",size="50",title="The slug used to retrieve this content piece")#
+			#html.textarea(name="description",label="Short Description:",bind=prc.content,rows=3,class="width98",title="A short description for metadata purposes")#
 			
 			<!--- content --->
-			#html.textarea(name="content",label="Content (HTML,JS,plain,or whatever):",bind=rc.content,required="required")#
+			#html.textarea(name="content",label="Content (HTML,JS,plain,or whatever):",bind=prc.content,required="required")#
 		</div>	
 	</div>
 </div>	
@@ -80,7 +80,7 @@ function activateCustomEditor(){
 	$contentEditForm.find("##content").ckeditor( function(){}, { toolbar:ckToolbar, height:250 } );
 }
 function createPermalink(){
-	var slugger = '#event.buildLink(rc.xehSlugify)#';
+	var slugger = '#event.buildLink(prc.xehSlugify)#';
 	$slug = $contentEditForm.find("##slug").fadeOut();
 	$.get(slugger,{slug:$contentEditForm.find("##title").val()},function(data){ 
 		$slug.fadeIn().val($.trim(data)); 		

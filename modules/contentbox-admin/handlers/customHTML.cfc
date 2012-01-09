@@ -53,11 +53,11 @@ component extends="baseHandler"{
 		prc.tabContent_customHTML	= true; 
 		
 		// get new or persisted
-		rc.content  = htmlService.get( event.getValue("contentID",0) );
+		prc.content  = htmlService.get( event.getValue("contentID",0) );
 		
 		// exit handlers
-		rc.xehContentSave = "#prc.cbAdminEntryPoint#.customHTML.save";
-		rc.xehSlugify	  = "#prc.cbAdminEntryPoint#.customHTML.slugify";
+		prc.xehContentSave = "#prc.cbAdminEntryPoint#.customHTML.save";
+		prc.xehSlugify	  = "#prc.cbAdminEntryPoint#.customHTML.slugify";
 		
 		// view
 		event.setView(view="customHTML/editor");
