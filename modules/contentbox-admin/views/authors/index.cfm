@@ -36,9 +36,11 @@
 			
 			<div class="contentBar">
 				<!--- Create Butons --->
+				<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')" title="Create new author">Create Author</button>
 				</div>
+				</cfif>
 				
 				<!--- Filter Bar --->
 				<div class="filterBar">
@@ -88,11 +90,13 @@
 							</cfif>
 						</td>
 						<td class="center">
-							<!--- Edit Command --->
-							<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
-							<!--- Delete Command --->
-							<cfif prc.oAuthor.getAuthorID() neq author.getAuthorID()>
-							<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><img id="delete_#author.getAuthorID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+								<!--- Edit Command --->
+								<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+								<!--- Delete Command --->
+								<cfif prc.oAuthor.getAuthorID() neq author.getAuthorID()>
+								<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><img id="delete_#author.getAuthorID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+								</cfif>
 							</cfif>
 						</td>
 					</tr>

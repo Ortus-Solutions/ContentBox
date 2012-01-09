@@ -95,10 +95,12 @@
 								
 								
 								<!--- Action Bar --->
+								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 								<div class="actionBar">
 									<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
-									<input type="submit" value="Save" class="buttonred">
+										<input type="submit" value="Save" class="buttonred">
 								</div>
+								</cfif>
 								#html.endFieldSet()#
 							#html.endForm()#
 						</div>
@@ -114,10 +116,13 @@
 							#html.textField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield")#
 							
 							<!--- Action Bar --->
+							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 							<div class="actionBar">
 								<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
 								<input type="submit" value="Change Password" class="buttonred">
 							</div>
+							</cfif>
+							
 							#html.endFieldSet()#
 						#html.endForm()#
 						</div>
@@ -168,7 +173,7 @@ $(document).ready(function() {
 	$permissionsTab = $("##permissionsTab");
 });
 function loadPermissions(){
-	$permissionsTab.load('#event.buildLink(prc.xehAuthorPermissions)#/authorID/'+#rc.authorID#);
+	$permissionsTab.load('#event.buildLink(prc.xehAuthorPermissions)#/authorID/'+#prc.author.getAuthorID()#);
 }
 </script>
 </cfoutput>

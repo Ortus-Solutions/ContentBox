@@ -24,6 +24,7 @@ component {
 		routes = [
 			{pattern="/", handler="home", action="index"},
 			{pattern="/install", handler="home", action="install"},
+			{pattern="/finished", handler="home", action="finished"},
 			{pattern="/:handler/:action?"}	
 		];
 		

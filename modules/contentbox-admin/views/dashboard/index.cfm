@@ -1,7 +1,9 @@
 ﻿<cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
-	<!--- Info Box --->
+	
+	<!--- Admin Actions --->
+	<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
 	<div class="small_box">
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Admin Actions
@@ -23,6 +25,7 @@
 			</p>
 		</div>
 	</div>	
+	</cfif>
 	
 	<!--- Snapshot Box --->
 	<div class="small_box">
@@ -109,10 +112,12 @@
 			<!--- Latest Entries --->
 			#html.anchor(name="recentEntries")#
 			<div class="contentBar" id="entriesBar">
+				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" 	id="btnCreateEntry" title="Create a new blog entry" onclick="return to('#event.buildLink(prc.xehBlogEditor)#')">Create Entry</button>
 					<button class="buttonred" 	id="btnQuickPost" 	title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 				</div>				
+				</cfif>
 				<div class="filterBar">
 					<h3><img src="#prc.cbroot#/includes/images/blog.png" alt="blog" /> Recent Entries</h3>
 				</div>				
@@ -122,9 +127,11 @@
 			<!--- Latest Pages --->
 			#html.anchor(name="recentPages")#
 			<div class="contentBar" id="entriesBar">
+				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" 	id="btnCreateEntry" title="Create a new page" onclick="return to('#event.buildLink(prc.xehPageEditor)#')">Create Page</button>
 				</div>				
+				</cfif>
 				<div class="filterBar">
 					<h3><img src="#prc.cbroot#/includes/images/page_big.png" alt="blog" /> Recent Pages</h3>
 				</div>				

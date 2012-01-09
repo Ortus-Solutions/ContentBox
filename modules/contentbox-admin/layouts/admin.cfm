@@ -59,16 +59,21 @@
 				<span class="fr">
 					<!--- View Site --->
 					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank"><button class="buttonsmall">View Site</button></a>
+					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 					<!--- Quick Post --->
 					<button class="buttonsmall" onclick="showQuickPost()">Quick Post</button>
-					
+					</cfif>
+					<!--- Quick Links --->
 					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
 						<option value="null">Quick Links</option>
-						<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
-						<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
+						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+							<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
+						</cfif>
+						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+							<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
+						</cfif>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
-						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>
-						
+						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>						
 					</select>
 					
 					&nbsp;
@@ -184,11 +189,13 @@
 							<a href="#event.buildLink(prc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
 							   title="View All Authors">View All</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 						<li>
 							<a href="#event.buildLink(prc.xehAuthorEditor)#" 
 							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() NEQ event.getValue("authorID","")>class="current"</cfif>
 							   title="Create a new author">Create New</a>
 						</li>
+						</cfif>
 						<li>
 							<a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
 							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() eq event.getValue("authorID","")>class="current"</cfif>
@@ -202,10 +209,12 @@
 				<li>
 					<a href="##" title="Tools" <cfif prc.tabTools>class="current"</cfif>>Tools</a>
 					<ul>
+						<cfif prc.oAuthor.checkPermission("TOOLS_IMPORT")>
 						<li>
 							<a href="#event.buildLink(prc.xehToolsImport)#" <cfif event.getValue("tabTools_import",false,true)> class="current"</cfif>
 							   title="Import your database from other blogs">Import</a>
 						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_toolsTab")#
 					</ul>
@@ -227,10 +236,12 @@
 							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabSystem_Roles",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Roles">Roles</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS")>
 						<li>
 							<a href="#event.buildLink(prc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
 							   title="Manage The Raw Settings Table">Raw Settings</a>
 						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_systemTab")#
 					</ul>

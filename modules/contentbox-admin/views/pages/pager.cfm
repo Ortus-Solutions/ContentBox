@@ -48,12 +48,14 @@
 			</td>
 			<td class="center">
 				#page.getOrder()#
+				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<!--- Order Up --->
 				<cfif ( page.getOrder()-1 ) GTE 0 >
 					<a href="javascript:changeOrder('#page.getPageID()#', #page.getOrder()-1#,'up')" title="Order Up"><img id="orderup_#page.getPageID()#" src="#prc.cbRoot#/includes/images/_up.gif" alt="order"/></a>
 				</cfif>
 				<!--- Increase Order Index--->
 				<a href="javascript:changeOrder('#page.getPageID()#',#page.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#page.getPageID()#" src="#prc.cbRoot#/includes/images/_down.gif" alt="order"/></a>
+				</cfif>
 			</td>
 			<td class="center">
 				#page.getNumberOfChildren()#	
@@ -70,12 +72,14 @@
 			<td class="center">#page.getHits()#</td>
 			<td class="center">#page.getNumberOfComments()#</td>
 			<td class="center">
+				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<!--- Edit Command --->
 				<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
 				&nbsp;
 				<!--- Create Child --->
 				<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getPageID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
 				&nbsp;
+				</cfif>
 				<!--- View in Site --->
 				<a href="#prc.CBHelper.linkPage(page)#" title="View Page In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 			</td>
@@ -107,6 +111,7 @@ function pagerLink(page){
 			activateTooltips();
 	});
 }
+<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 function changeOrder(pageID,order,direction){
 	// img change
 	$('##order'+direction+'_'+pageID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
@@ -116,6 +121,7 @@ function changeOrder(pageID,order,direction){
 		pagerLink(#rc.page#); 
 	});
 }
+</cfif>
 </script>
 </div>
 </cfoutput>

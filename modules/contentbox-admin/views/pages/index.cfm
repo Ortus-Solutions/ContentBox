@@ -96,9 +96,11 @@
 			<div class="contentBar" id="contentBar">
 				
 				<!--- Create Butons --->
+				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(prc.xehPageEditor)#');" title="Create new page">Create Page</button>
 				</div>
+				</cfif>
 				
 				<!--- Filter Bar --->
 				<div class="filterBar">
@@ -165,13 +167,14 @@
 						</td>
 						<td class="center">
 							#page.getOrder()#
+							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Order Up --->
 							<cfif ( page.getOrder()-1 ) GTE 0 >
 								<a href="javascript:changeOrder('#page.getPageID()#', #page.getOrder()-1#,'up')" title="Order Up"><img id="orderup_#page.getPageID()#" src="#prc.cbRoot#/includes/images/_up.gif" alt="order"/></a>
 							</cfif>
 							<!--- Increase Order Index--->
 							<a href="javascript:changeOrder('#page.getPageID()#',#page.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#page.getPageID()#" src="#prc.cbRoot#/includes/images/_down.gif" alt="order"/></a>
-						
+							</cfif>
 						</td>
 						<td class="center">
 							#page.getNumberOfChildren()#
@@ -188,17 +191,19 @@
 						<td class="center">#page.getHits()#</td>
 						<td class="center">#page.getNumberOfComments()#</td>
 						<td class="center">
+							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Create Child --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getPageID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
 							&nbsp;
-							<!--- View in Site --->
-							<a href="#prc.CBHelper.linkPage(page)#" title="View Page In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
-							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete Page" href="javascript:remove('#page.getPageID()#')" class="confirmIt" data-title="Delete Page?"><img id="delete_#page.getPageID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							&nbsp;
+							</cfif>
+							<!--- View in Site --->
+							<a href="#prc.CBHelper.linkPage(page)#" title="View Page In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 						</td>
 					</tr>
 					</cfloop>

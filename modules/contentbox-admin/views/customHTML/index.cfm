@@ -51,9 +51,11 @@
 			<!--- Content Bar --->
 			<div class="contentBar" id="contentBar">
 				<!--- Create Butons --->
+				<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');" title="Create new content">Create Content</button>
 				</div>
+				</cfif>
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>
@@ -90,11 +92,13 @@
 							#entry.getDescription()#
 						</td>
 						<td class="center">
+							<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
 							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							</cfif>
 						</td>
 					</tr>
 					</cfloop>

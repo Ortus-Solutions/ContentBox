@@ -1,7 +1,8 @@
 ﻿<cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
-	<!--- Info Box --->
+	<!--- Install Box --->
+	<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 	<div class="small_box">
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Layout Theme Uploader
@@ -20,8 +21,9 @@
 					<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
 				</div>
 			#html.endForm()#
-		</div>
+		</div>		
 	</div>	
+	</cfif>
 	<!--- Help Box--->
 	<div class="small_box" id="help_tips">
 		<div class="header">
@@ -56,9 +58,11 @@
 			<!--- Content Bar --->
 			<div class="contentBar">
 				<!--- Flush Cache Button --->
+				<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(rc.xehFlushRegistry)#')" title="Rescan layouts directory and rebuild registry">Rebuild Registry</button>
 				</div>
+				</cfif>
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>
@@ -75,7 +79,7 @@
 			<table name="layouts" id="layouts" class="tablesorter" width="98%">
 				<thead>
 					<tr>
-						<th width="300">Theme Info</th>
+						<th width="200">Theme Info</th>
 						<th width="300">Description</th>
 						<th>Included Layouts</th>
 						<th width="55" class="center {sorter:false}">Actions</th>
@@ -92,14 +96,12 @@
 							<br/>	
 							Version #rc.layouts.version# by 
 							<a href="#rc.layouts.authorURL#" title="#rc.layouts.AuthorURL#" target="_blank">#rc.layouts.Author#</a>
-							<cfif len(rc.layouts.forgeBoxSlug)>
-							<br/>
-							ForgeBox URL: <a href="#rc.forgeBoxEntryURL & "/"#" target="_blank">#rc.layouts.forgeBoxSlug#</a>
-							</cfif>		
 							<br/>
 							<!--- Button Bar --->
-							<button class="button2"   onclick="popup('#event.buildLink(rc.xehPreview)#/l/#rc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;"  title="Preview this layout">Preview</button>
-							<button class="buttonred" onclick="return to('#event.buildLink(rc.xehActivate)#?layoutname=#rc.layouts.name#')" title="Activate this layout">Activate</button>		
+							<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
+								<button class="button2"   onclick="popup('#event.buildLink(rc.xehPreview)#/l/#rc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;"  title="Preview this layout">Preview</button>
+								<button class="buttonred" onclick="return to('#event.buildLink(rc.xehActivate)#?layoutname=#rc.layouts.name#')" title="Activate this layout">Activate</button>
+							</cfif>		
 						</td>
 						<td>
 							<cfif len( rc.layouts.screenShotURL )>
@@ -123,12 +125,14 @@
 							</ul>
 						</td>
 						<td class="center">
+							<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 							<!--- Update Check --->
 							<a title="Check For Updates" href="##"><img src="#prc.cbRoot#/includes/images/download_black.png" alt="download" /></a>
 							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete layout" href="javascript:remove('#JSStringFormat(rc.layouts.name)#')" 
 							   class="confirmIt" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							</cfif>
 						</td>
 					</tr>
 					</cfloop>

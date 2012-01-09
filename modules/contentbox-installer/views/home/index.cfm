@@ -1,6 +1,5 @@
 <cfoutput>
 #html.startForm(action="cbinstaller/install",name="installerForm",novalidate="novalidate")#
-
 <div class="box clear">
 	<div class="header">
 		<img src="#prc.assetRoot#/includes/images/help.png" alt="help" width="30" height="30" />Install Wizard
@@ -19,11 +18,10 @@
 				<div>
 					<h1>Welcome To ContentBox!</h1>
 					<p>
-						We have detected that your ContentBox is not setup yet, so let's get you up and running in no time.
-						You have already done the first step which is created the datasource in which ContentBox will run under as you are
-						now seeing this message.
-						What you might not know is that we already created the entire database structure for you, we now just need
-						a little information from you to get ContentBox ready for prime time.
+						We have detected that your <strong>ContentBox</strong> is not setup yet, so let's get you up and running in no time.
+						You have already done the first step, which is created the datasource in which ContentBox will run under.
+						What you might not know, is that we already created the entire database structure for you, we now just need
+						a little information from you to get <strong>ContentBox</strong> ready for prime time.
 					</p>
 					<p>
 						So what are you waiting for? Let's get started!
@@ -47,8 +45,8 @@
 					#html.textField(name="lastName",label="Last Name:",required="required",size="100",class="textfield")#
 					#html.inputField(name="email",type="email",label="Email:",required="required",size="100",class="textfield")#
 					#html.textField(name="username",label="Username:",required="required",size="100",class="textfield")#
-					#html.textField(name="password",label="Password:",required="required",size="100",class="textfield")#
-					#html.textField(name="password_confirm",label="Confirm Password:",required="required",size="100",class="textfield")#
+					#html.passwordField(name="password",label="Password:",required="required",size="100",class="textfield")#
+					#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="100",class="textfield")#
 					#html.endFieldSet()#
 					
 					<!--- Site Info --->
@@ -75,6 +73,42 @@
 					<!--- Keywords --->
 					#html.textarea(name="siteKeywords",label="Site Keywords:",rows="3",title="A comma delimited list of keywords to be used in the HTML keywords meta tag")#		
 					#html.endFieldSet()#
+					
+					
+					<!--- URL Rewrites --->
+					#html.startFieldset(legend="Site URL Rewrites")#
+					<p>
+						ContentBox by default is configured to work with SES (Search Engine Safe) URLs.  However, in order to remove the 
+						<strong>index.cfm</strong> from your URL's you will need to configure a web server rewrite engine like
+						<a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">Apache mod_rewrite</a>, 
+						<a href="http://www.tuckey.org/urlrewrite/">tuckey URL Rewrite filter</a> or 
+						<a href="http://www.iis.net/download/urlrewrite">IIS 7 rewrite module</a>.  
+						A fully working apache mod_rewrite <strong>.htaccess</strong> file
+						has been created and placed in the root of your installation.
+					</p>
+					<p>
+						If you select full URL rewrites below, then we will modify your application's routing table to remove the 
+						<strong>index.cfm</strong> from the URLs (<em>config/routes.cfm</em>).  You can also select not to have full URL rewrites and your URLs
+						will contain an <strong>index.cfm</strong> in them. 
+
+					</p>
+					<strong>Full URL Rewrite:</strong>
+					<code>
+						http://myapp/about-us
+					</code>
+					<br/>
+					<strong>Default URL Rewrite</strong>
+					<code>
+						http://myapp/index.cfm/about-us
+					</code>
+					<br/><br/>
+					<!--- Populate With Sample Data --->
+					#html.label(field="fullrewrite",content="Enable Full URL Rewrites:")#
+					#html.radioButton(name="fullrewrite",value=true)# Yes 	
+					#html.radioButton(name="fullrewrite",checked=true,value=false)# No 	
+					
+					#html.endFieldSet()#
+					
 					
 					<!--- Action Bar --->
 					<div class="actionBar">

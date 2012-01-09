@@ -25,6 +25,16 @@
 			#html.endForm()#
 		</div>
 	</div>		
+	
+	<!--- Info Box --->
+	<div class="small_box">
+		<div class="header">
+			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />ORM Stats
+		</div>
+		<div class="body">
+			<cfdump var="#prc.ormStatsStruct#">
+		</div>
+	</div>		
 </div>
 <!--End sidebar-->	
 <!--============================Main Column============================-->

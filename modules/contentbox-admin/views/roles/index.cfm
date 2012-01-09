@@ -3,6 +3,7 @@
 <div class="sidebar">
 	<!--- Info Box --->
 	<div class="small_box">
+		<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/entry.png" alt="info" width="24" height="24" />Editor
 		</div>
@@ -18,6 +19,7 @@
 				</div>
 			#html.endForm()#
 		</div>
+		</cfif>
 	</div>		
 </div>
 <!--End sidebar-->	
@@ -70,8 +72,14 @@
 				<tbody>
 					<cfloop array="#prc.roles#" index="role">
 					<tr>
-						<td><a href="javascript:edit('#role.getRoleID()#','#role.getRole()#','#role.getDescription()#')" 
-							   title="Edit #role.getRole()#">#role.getRole()#</a></td>
+						<td>
+							<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
+							<a href="javascript:edit('#role.getRoleID()#','#role.getRole()#','#role.getDescription()#')" 
+							   title="Edit #role.getRole()#">#role.getRole()#</a>
+							<cfelse>
+								#role.getRole()#
+							</cfif>
+						</td>
 						<td>#role.getDescription()#</td>
 						<td class="center">#role.getNumberOfPermissions()#</td>
 						<td class="center">#role.getNumberOfAuthors()#</td>
@@ -80,13 +88,17 @@
 							<a href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" 
 							   title="Manage Permissions"><img src="#prc.cbroot#/includes/images/lock.png" alt="edit" border="0" /></a>
 							&nbsp;
-							<!--- Edit Command --->
-							<a href="javascript:edit('#role.getRoleID()#','#role.getRole()#','#role.getDescription()#')" 
-							   title="Edit Role"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
-							&nbsp;
-							<!--- Delete Command --->
-							<cfif role.getNumberOfAuthors() eq 0>
-							<a title="Delete Role" href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><img id="delete_#role.getRoleID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							
+							<!--- ROLES_ADMIN --->
+							<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
+								<!--- Edit Command --->
+								<a href="javascript:edit('#role.getRoleID()#','#role.getRole()#','#role.getDescription()#')" 
+								   title="Edit Role"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
+								&nbsp;
+								<!--- Delete Command --->
+								<cfif role.getNumberOfAuthors() eq 0>
+								<a title="Delete Role" href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><img id="delete_#role.getRoleID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+								</cfif>
 							</cfif>
 						</td>
 					</tr>
@@ -101,19 +113,22 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
+	<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 	$roleEditor = $("##roleEditor");
-	// table sorting + filtering
-	$("##roles").tablesorter();
-	$("##roleFilter").keyup(function(){
-		$.uiTableFilter( $("##roles"), this.value );
-	});
 	// form validator
 	$roleEditor.validator({position:'top left'});
 	// reset
 	$('##btnReset').click(function() {
 		$roleEditor.find("##roleID").val( '' );
 	});
+	</cfif>
+	// table sorting + filtering
+	$("##roles").tablesorter();
+	$("##roleFilter").keyup(function(){
+		$.uiTableFilter( $("##roles"), this.value );
+	});
 });
+<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 function edit(roleID,role,description){
 	$roleEditor.find("##roleID").val( roleID );
 	$roleEditor.find("##role").val( role );
@@ -124,5 +139,6 @@ function remove(roleID){
 	$roleForm.find("##roleID").val( roleID );
 	$roleForm.submit();
 }
+</cfif>
 </script>
 </cfoutput>

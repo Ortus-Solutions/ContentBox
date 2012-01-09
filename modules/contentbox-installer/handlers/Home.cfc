@@ -5,6 +5,7 @@ component{
 
 	// DI
 	property name="installerService" inject="id:installerService@cbi";
+	property name="settingService" 	 inject="id:settingService@cb";
 	
 	function preHandler(event,currentAction){
 		var prc = event.getCollection(private=true);
@@ -18,12 +19,24 @@ component{
 	}
 	
 	function install(event,rc,prc){
+		// Verify installed?
+		if( settingService.isCBReady() ){
+			getPlugin("MessageBox").warn("Cannot run installer again as ContentBox is already installed.");
+			setNextEvent(  getModuleSettings("contentbox-admin").entryPoint );
+		}
 		// start installation
 		installerService.execute( populateModel("SetupBean@cbi") );
 		
-		// Take them to the admin now
+		// Take them to the finalized screen
 		getPlugin("MessageBox").info("Setup complete! Log in to your ContentBox installation now.");
-		setNextEvent( getModuleSettings("contentbox-admin").entryPoint );
+		setNextEvent("cbinstaller/finished");
+	}
+	
+	function finished(event,rc,prc){
+		prc.xehAdmin = getModuleSettings("contentbox-admin").entryPoint;
+		prc.xehSite  = getModuleSettings("contentbox-ui").entryPoint;
+		
+		event.setView("home/finished");
 	}
 
 }

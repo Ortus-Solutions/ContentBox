@@ -71,6 +71,7 @@
 			<div class="contentBar" id="contentBar">
 				
 				<!--- Bulk Butons --->
+				<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return changeStatus('approve')" title="Bulk Approve Comments">Approve</button>
 					<button class="button2" onclick="return changeStatus('moderate')" title="Bulk Moderate Comments">Moderate</button>
@@ -79,6 +80,7 @@
 						<button class="button2" onclick="return false" title="Bulk Remove Comments">Remove</button>
 					</a>
 				</div>
+				</cfif>
 				
 				<!--- Filter Bar --->
 				<div class="filterBar">
@@ -136,21 +138,23 @@
 							#comment.getDisplayCreatedDate()#
 						</td>
 						<td class="center">
-							<!--- Edit Command --->
-							<a href="javascript:openRemoteModal('#event.buildLink(rc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
-							&nbsp;
-							<!--- Approve/Unapprove --->
-							<cfif !comment.getIsApproved()>
-								<a href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_pro.png" alt="approve" /></a>
-							<cfelse>
-								<a href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_contra.png" alt="unapprove" /></a>
+							<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+								<!--- Edit Command --->
+								<a href="javascript:openRemoteModal('#event.buildLink(rc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+								&nbsp;
+								<!--- Approve/Unapprove --->
+								<cfif !comment.getIsApproved()>
+									<a href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_pro.png" alt="approve" /></a>
+								<cfelse>
+									<a href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_contra.png" alt="unapprove" /></a>
+								</cfif>
+								&nbsp;
+								<!--- Delete Command --->
+								<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><img id="delete_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+								&nbsp;	
 							</cfif>
-							&nbsp;	
 							<!--- View in Site --->
 							<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
-							&nbsp;
-							<!--- Delete Command --->
-							<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><img id="delete_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 						</td>
 					</tr>
 					</cfloop>
@@ -184,6 +188,7 @@ $(document).ready(function() {
 	    }
 	});
 });
+<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 function changeStatus(status,recordID){
 	$commentForm.attr("action","#event.buildlink(linkTo=prc.xehCommentstatus)#");
 	$commentForm.find("##commentStatus").val(status);
@@ -201,5 +206,6 @@ function remove(recordID){
 	//Submit Form
 	$commentForm.submit();
 }
+</cfif>
 </script>
 </cfoutput>

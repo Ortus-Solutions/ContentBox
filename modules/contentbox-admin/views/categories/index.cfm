@@ -1,7 +1,8 @@
 ﻿<cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
-	<!--- Info Box --->
+	<!--- Editor Box --->
+	<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
 	<div class="small_box">
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/entry.png" alt="info" width="24" height="24" />Editor
@@ -19,6 +20,7 @@
 			#html.endForm()#
 		</div>
 	</div>		
+	</cfif>
 </div>
 <!--End sidebar-->	
 <!--============================Main Column============================-->
@@ -67,10 +69,12 @@
 						<td>#category.getSlug()#</td>
 						<td class="center">#category.getnumberOfEntries()#</td>
 						<td class="center">
+							<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
 							<!--- Edit Command --->
 							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
 							<!--- Delete Command --->
 							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><img id="delete_#category.getCategoryID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							</cfif>
 						</td>
 					</tr>
 					</cfloop>
@@ -97,6 +101,7 @@ $(document).ready(function() {
 		$categoryEditor.find("##categoryID").val( '' );
 	});
 });
+<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
 function edit(categoryID,category,slug){
 	$categoryEditor.find("##categoryID").val( categoryID );
 	$categoryEditor.find("##category").val( category );
@@ -107,5 +112,6 @@ function remove(categoryID){
 	$categoryForm.find("##categoryID").val( categoryID );
 	$categoryForm.submit();
 }
+</cfif>
 </script>
 </cfoutput>
