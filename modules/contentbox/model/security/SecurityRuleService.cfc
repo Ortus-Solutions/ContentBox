@@ -17,7 +17,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Get the maximum used order
 	*/
 	numeric function getMaxOrder(){
-		return executeQuery(query="select max( sr.order ) from cbSecurityRule as sr",asQuery=false)[1];
+		var q = executeQuery(query="select max( sr.order ) from cbSecurityRule as sr",asQuery=false);
+		if( ArrayIsDefined(q,1) ){ return q[1]; }
+		return 0;
 	}
 	
 	/**

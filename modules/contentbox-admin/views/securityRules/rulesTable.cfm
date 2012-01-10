@@ -3,12 +3,13 @@
 <table name="rules" id="rules" class="tablesorter" width="98%">
 	<thead>
 		<tr>
+			<th width="50">Match</th>
 			<th>Securelist</th>
 			<th>Whitelist</th>
 			<th>Redirect</th>
 			<th>Permissions</th>
 			<th>Roles</th>
-			<th width="60" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Order"/></th>
+			<th width="55" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Order"/></th>
 			<th width="70" class="center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
@@ -16,6 +17,9 @@
 	<tbody>
 		<cfloop array="#prc.rules#" index="rule">
 		<tr>
+			<td>
+				#rule.getMatch()#
+			</td>
 			<td>
 				#rule.getSecureList()#
 			</td>

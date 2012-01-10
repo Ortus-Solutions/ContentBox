@@ -64,7 +64,6 @@ component extends="baseHandler"{
 		
 		// populate and get content
 		var oRule = populateModel( ruleService.get(id=rc.ruleID) );
-		
 		// validate it
 		var errors = oRule.validate();
 		if( !arrayLen(errors) ){

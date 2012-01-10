@@ -10,10 +10,22 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule"{
 	property name="whitelist" 	ormtype="string"  notnull="false" 	default="" length="255";	property name="securelist" 	ormtype="string"  notnull="true" 	default="" length="255";	property name="roles" 		ormtype="string"  notnull="false"  	default="" length="255";	property name="permissions" ormtype="string"  notnull="false"  	default="" length="500";	property name="redirect"	ormtype="string"  notnull="true"  	default="" length="500";
 	property name="useSSL"		ormtype="boolean" notnull="false" 	default="false" dbdefault="0";
 	property name="order"		ormtype="integer" notnull="true" 	default="0" dbdefault="0";
+	property name="match"		ormtype="string"  notnull="false" 	default="" length="50";
 	
 	// Constructor
 	function init(){
+		setMatch('event');
 		return this;
+	}
+	
+	/**
+	* Overriden setter
+	*/
+	function setMatch(required match){
+		if( not reFindnocase("^(event|url)$", arguments.match) ){
+			throw(message="Invalid match type sent: #arguments.match#",detail="Valid match types are 'event,url'",type="InvalidMatchType");
+		}
+		variables.match = arguments.match;
 	}
 	
 	/*

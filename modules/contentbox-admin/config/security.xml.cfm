@@ -15,9 +15,10 @@ If you are not using regular expression, just write the text
 that can be found in an event.
 -->
 <rules>
-    <rule>
-        <whitelist>^contentbox-admin:security</whitelist>
+	<rule>
+        <whitelist>^contentbox-admin:security\.</whitelist>
         <securelist>^contentbox-admin:.*</securelist>
+		<match>event</match>
         <roles></roles>
 		<permissions></permissions>
         <redirect>cbadmin/security/login</redirect>
