@@ -112,7 +112,13 @@
 				<li> 
 					<a href="##" title="ContentBox Dashboard" <cfif prc.tabDashboard>class="current"</cfif>>Dashboard</a>
 					<ul>
-						<li><a href="#event.buildLink(prc.xehDashboard)#" <cfif event.getValue("tabDashboard_home",false,true)> class="current"</cfif>>Home</a></li>
+						<li>
+							<a href="#event.buildLink(prc.xehDashboard)#" <cfif event.getValue("tabDashboard_home",false,true)> class="current"</cfif>>Home</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
+							   title="Manage your profile">My Profile</a>
+						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_dashboardTab")#
 					</ul>

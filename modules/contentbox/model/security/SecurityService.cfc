@@ -9,6 +9,7 @@ component singleton{
 	property name="sessionStorage" 	inject="coldbox:plugin:SessionStorage";
 	property name="mailService"		inject="coldbox:plugin:MailService";
 	property name="renderer"		inject="coldbox:plugin:Renderer";
+	property name="CBHelper"		inject="id:CBHelper@cb";
 	
 	/**
 	* Constructor
@@ -103,10 +104,14 @@ component singleton{
 		
 		// set it in the user and save it
 		author.setPassword( genPassword );
-		authorService.saveUser(author=author,passwordChange=true);
+		authorService.saveAuthor(author=author,passwordChange=true);
 		
 		// get mail payload
-		var bodyTokens = {genPassword=genPassword,name=arguments.author.getName()};
+		var bodyTokens = {
+			genPassword=genPassword,
+			name=arguments.author.getName(),
+			linkLogin = CBHelper.linkAdminLogin()
+		};
 		var mail = mailservice.newMail(to=arguments.author.getEmail(),
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# Password Reset Issued",

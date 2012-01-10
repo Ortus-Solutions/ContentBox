@@ -63,8 +63,10 @@ component{
 	function doLostPassword(event,rc,prc){
 		var errors 	= [];
 		var oAuthor = "";
+		
 		// Param email
 		event.paramValue("email","");
+		
 		// Validate email
 		if( NOT trim(rc.email).length() ){
 			arrayAppend(errors,"Please enter an email address<br />");	
@@ -84,7 +86,7 @@ component{
 			// announce event
 			announceInterception("cbadmin_onPasswordReminder",{author=oAuthor});
 			// messagebox
-			getPlugin("MessageBox").info("Password reminder sent!");
+			getPlugin("MessageBox").info("Password reminder sent! Please try to log in with your new password.");
 		}
 		else{
 			// announce event
@@ -93,7 +95,7 @@ component{
 			getPlugin("MessageBox").error(messageArray=errors);
 		}
 		// Re Route
-		setNextEvent("#prc.cbAdminEntryPoint#.security.lostPassword");
+		setNextEvent("#prc.cbAdminEntryPoint#.security.login");
 	}
 	
 }
