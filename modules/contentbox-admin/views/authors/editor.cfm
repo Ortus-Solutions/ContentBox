@@ -169,6 +169,11 @@ $(document).ready(function() {
 	
 	// Custom username unique validator
 	$.tools.validator.fn($authorUsername, function(el, value) {
+		// verify if same as user
+		if(value.length && value == "#prc.author.getUsername()#" ){
+			return true;
+		}
+		// verify username
 		if( isUsernameFound(value) ){
 			return "The username you entered already exists, try a new one!";
 		}
