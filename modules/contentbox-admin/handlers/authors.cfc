@@ -79,16 +79,18 @@ component extends="baseHandler"{
 	// save user
 	function save(event,rc,prc){
 		// get and populate author
-		var oAuthor	= populateModel( authorService.get(id=rc.authorID) );
+		var oAuthor		= populateModel( authorService.get(id=rc.authorID) );
+		var newAuthor 	= (NOT oAuthor.isLoaded());
+		 
     	// role assignment
     	oAuthor.setRole( roleService.get( rc.roleID ) );
     	
     	// announce event
-		announceInterception("cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID});
+		announceInterception("cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID,isNew=newAuthor});
 		// save Author
 		authorService.saveAuthor( oAuthor );
 		// announce event
-		announceInterception("cbadmin_postAuthorSave",{author=oAuthor});
+		announceInterception("cbadmin_postAuthorSave",{author=oAuthor,isNew=newAuthor});
 		
 		// message
 		getPlugin("MessageBox").setMessage("info","Author saved!");

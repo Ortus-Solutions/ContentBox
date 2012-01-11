@@ -13,3 +13,5 @@
 "ERROR","FILES","12/05/2011","12:21:21","coldbox.system.ioc.Injector","Requested instance:InstallerService was not located in any declared scan location(s): contentbox-shell.model or full CFC path"
 "INFO","FILES","12/05/2011","12:21:34","coldbox.system.cache.providers.CacheBoxColdBoxProvider","CacheBox Cache: default has been initialized successfully for operation"
 "INFO","FILES","12/05/2011","12:21:34","coldbox.system.cache.providers.CacheBoxColdBoxProvider","CacheBox Cache: TEMPLATE has been initialized successfully for operation"
+"INFO","FILES","01/11/2012","09:46:19","coldbox.system.cache.providers.CacheBoxColdBoxProvider","CacheBox Cache: default has been initialized successfully for operation"
+"INFO","FILES","01/11/2012","09:46:19","coldbox.system.cache.providers.CacheBoxColdBoxProvider","CacheBox Cache: TEMPLATE has been initialized successfully for operation"

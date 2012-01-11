@@ -88,7 +88,7 @@
 								#html.inputField(name="email",type="email",bind=prc.author,label="Email:",required="required",size="50",class="textfield")#
 								#html.textField(name="username",bind=prc.author,label="Username:",required="required",size="50",class="textfield")#
 								<cfif NOT prc.author.isLoaded()>
-								#html.textField(name="password",bind=prc.author,label="Password:",required="required",size="50",class="textfield")#
+								#html.passwordField(name="password",bind=prc.author,label="Password:",required="required",size="50",class="textfield")#
 								</cfif>
 								#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
 								#html.select(label="User Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role",bind=prc.author.getRole(),style="width:200px")#

@@ -20,7 +20,9 @@ component {
 		// interceptors
 		interceptors = [
 			// CB RSS Cache Cleanup Ghost
-			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" }
+			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
+			// Notification service interceptor
+			{class="contentbox.model.system.NotificationService",name="NotificationService@cb" }			
 		];
 		
 		// Security/System
