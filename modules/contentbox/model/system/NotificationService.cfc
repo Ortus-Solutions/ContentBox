@@ -164,4 +164,78 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		mailService.send( mail );
 	}
 	
+	/**
+	* Listen to when pages are saved
+	*/
+	function cbadmin_postPageSave(event,interceptData){
+		var page 		= arguments.interceptData.page;
+		// Get settings
+		var settings 	= settingService.getAllSettings(asStruct=true);
+		
+		// Only new pages are announced, not updates, and also verify page notifications are online.
+		if( NOT arguments.interceptData.isNew OR NOT settings.cb_notify_page ){ return; }
+		
+		// get current logged in author performing the action
+		var currentAuthor = securityService.getAuthorSession();
+	
+		// get mail payload
+		var bodyTokens = {
+			pageTitle			= page.getTitle(),
+			pageExcerpt			= "",
+			pageAuthor			= page.getAuthorName(),
+			pageURL				= CBHelper.linkPage( page ),
+			currentAuthor		= currentAuthor.getName(),
+			currentAuthorEmail 	= currentAuthor.getEmail()
+		};
+		bodyTokens.pageExcerpt = left(page.renderContent(),500) & "... more ....";
+		
+		var mail = mailservice.newMail(to=settings.cb_site_email,
+									   from=settings.cb_site_outgoingEmail,
+									   subject="#settings.cb_site_name# - Page Created - #bodyTokens.pageTitle#",
+									   bodyTokens=bodyTokens);
+									   
+		// generate content for email from template
+		mail.setBody( renderer.renderView(view="email_templates/page_new",module="contentbox") );
+		
+		// send it out
+		mailService.send( mail );
+	}
+	
+	/**
+	* Listen to when pages are removed
+	*/
+	function cbadmin_prePageRemove(event,interceptData){
+		var page 		= arguments.interceptData.page;
+		// Get settings
+		var settings 	= settingService.getAllSettings(asStruct=true);
+		
+		// Only notify when enabled.
+		if( NOT settings.cb_notify_page ){ return; }
+		
+		// get current logged in author performing the action
+		var currentAuthor = securityService.getAuthorSession();
+		
+		// get mail payload
+		var bodyTokens = {
+			pageTitle			= page.getTitle(),
+			pageExcerpt			= "",
+			pageAuthor			= page.getAuthorName(),
+			pageURL				= CBHelper.linkPage( page ),
+			currentAuthor		= currentAuthor.getName(),
+			currentAuthorEmail 	= currentAuthor.getEmail()
+		};
+		bodyTokens.pageExcerpt = left(page.renderContent(),500) & "... more ....";
+		
+		var mail = mailservice.newMail(to=settings.cb_site_email,
+									   from=settings.cb_site_outgoingEmail,
+									   subject="#settings.cb_site_name# - Page Removed - #bodyTokens.pageTitle#",
+									   bodyTokens=bodyTokens);
+									   
+		// generate content for email from template
+		mail.setBody( renderer.renderView(view="email_templates/page_remove",module="contentbox") );
+		
+		// send it out
+		mailService.send( mail );
+	}
+	
 }

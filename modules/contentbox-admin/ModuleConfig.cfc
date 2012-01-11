@@ -54,11 +54,13 @@ component {
 				"cbadmin_dashboardTab","cbadmin_entriesTab","cbadmin_pagesTab","cbadmin_commentsTab","cbadmin_authorsTab","cbadmin_systemTab","cbadmin_toolsTab", 
 				// Entry Events
 				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove",
+				// Page Events
+				"cbadmin_prePageSave","cbadmin_postPageSave","cbadmin_prePageRemove","cbadmin_postPageRemove",
 				// Author Events
 				"cbadmin_preAuthorSave","cbadmin_postAuthorSave","cbadmin_onAuthorPasswordChange","cbadmin_preAuthorRemove","cbadmin_postAuthorRemove",
 				// Category Events
 				"cbadmin_preCategorySave","cbadmin_postCategorySave","cbadmin_preCategoryRemove","cbadmin_postCategoryRemove",
-				// Comment eVents
+				// Comment Events
 				"cbadmin_onCommentStatusUpdate","cbadmin_preCommentSave","cbadmin_postCommentSave","cbadmin_preCommentRemove","cbadmin_postCommentRemove","cbadmin_preCommentSettingsSave","cbadmin_postCommentSettingsSave",
 				"cbadmin_onCommentSettingsNav","cbadmin_onCommentSettingsContent",
 				// Permission events

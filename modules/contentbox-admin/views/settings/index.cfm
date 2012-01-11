@@ -140,7 +140,12 @@
 							<!--- Notification on Entry Create --->
 							#html.label(field="cb_notify_entry",content="Send a notification when a blog entry has been created or removed:")#
 							#html.radioButton(name="cb_notify_entry",checked=prc.cbSettings.cb_notify_entry,value=true)# Yes 	
-							#html.radioButton(name="cb_notify_entry",checked=not prc.cbSettings.cb_notify_entry,value=false)# No 	
+							#html.radioButton(name="cb_notify_entry",checked=not prc.cbSettings.cb_notify_entry,value=false)# No 
+							
+							<!--- Notification on Page Create --->
+							#html.label(field="cb_notify_page",content="Send a notification when a page has been created or removed:")#
+							#html.radioButton(name="cb_notify_page",checked=prc.cbSettings.cb_notify_page,value=true)# Yes 	
+							#html.radioButton(name="cb_notify_page",checked=not prc.cbSettings.cb_notify_page,value=false)# No 		
 						</fieldset>
 					</div>
 					<!--- RSS Options --->
