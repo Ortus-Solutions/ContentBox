@@ -62,7 +62,9 @@ component {
 				"cbadmin_onCommentStatusUpdate","cbadmin_preCommentSave","cbadmin_postCommentSave","cbadmin_preCommentRemove","cbadmin_postCommentRemove","cbadmin_preCommentSettingsSave","cbadmin_postCommentSettingsSave",
 				"cbadmin_onCommentSettingsNav","cbadmin_onCommentSettingsContent",
 				// Permission events
-				"cbadmin_prePermissionSave", "cbadmin_postPermissionSave",
+				"cbadmin_prePermissionSave", "cbadmin_postPermissionSave", "cbadmin_prePermissionRemove" , "cbadmin_postPermissionRemove" ,
+				// Roles events
+				"cbadmin_preRoleSave", "cbadmin_postRoleSave", "cbadmin_preRoleRemove" , "cbadmin_postRoleRemove" ,
 				// Dashboard events
 				"cbadmin_onDashboard",
 				// Security events
@@ -70,7 +72,9 @@ component {
 				// Settings events
 				"cbadmin_preSettingsSave","cbadmin_postSettingsSave","cbadmin_preSettingRemove","cbadmin_postSettingRemove","cbadmin_onSettingsNav","cbadmin_onSettingsContent",
 				// Custom HTML Events
-				"cbadmin_preCustomHTMLSave", "cbadmin_postCustomHTMLSave","cbadmin_preCustomHTMLRemove", "cbadmin_postCustomHTMLRemove"
+				"cbadmin_preCustomHTMLSave", "cbadmin_postCustomHTMLSave","cbadmin_preCustomHTMLRemove", "cbadmin_postCustomHTMLRemove",
+				// Security Rules Events
+				"cbadmin_preSecurityRulesSave", "cbadmin_postSecurityRulesSave", "cbadmin_preSecurityRulesRemove", "cbadmin_postSecurityRulesRemove"
 			])
 		};
 		

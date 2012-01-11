@@ -82,7 +82,8 @@ component accessors="true"{
 			"PAGES_ADMIN" = "Ability to manage content pages, default is view only",
 			"CATEGORIES_ADMIN" = "Ability to manage categories, default is view only",
 			"ENTRIES_ADMIN" = "Ability to manage blog entries, default is view only",
-			"RELOAD_MODULES" = "Ability to reload modules"
+			"RELOAD_MODULES" = "Ability to reload modules",
+			"SECURITYRULES_ADMIN" = "Ability to manage the system's security rules, default is view only"
 		};
 		
 		var allperms = [];
