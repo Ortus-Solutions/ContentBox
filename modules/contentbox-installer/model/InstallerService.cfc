@@ -189,7 +189,7 @@ component accessors="true"{
 			// RSS Feeds
 			"cb_rss_cachingTimeout" = 60,
 			"cb_rss_maxEntries" = 10,
-			"cb_rss_caching" = false,
+			"cb_rss_caching" = true,
 			"cb_rss_maxComments" = 10,
 			"cb_rss_cachingTimeoutIdle" = 15,
 			"cb_rss_cacheName" = "Template"

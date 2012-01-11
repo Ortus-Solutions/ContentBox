@@ -75,7 +75,7 @@
 			<!--- Paging --->
 			#rc.pagingPlugin.renderit(rc.settingsCount,rc.pagingLink)#
 		
-			<!--- authors --->
+			<!--- settings --->
 			<table name="settings" id="settings" class="tablesorter" width="98%">
 				<thead>
 					<tr>

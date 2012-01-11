@@ -119,6 +119,9 @@
 							<a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
 							   title="Manage your profile">My Profile</a>
 						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehAbout)#" <cfif event.getValue("tabDashboard_about",false,true)> class="current"</cfif>>About</a>
+						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_dashboardTab")#
 					</ul>
