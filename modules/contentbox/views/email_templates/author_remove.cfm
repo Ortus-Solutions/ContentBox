@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-A new author has been removed from your system. 
+An author has been removed from your system by @currentAuthor@ (@currentAuthorEmail@):
 	
 <br/><br/>
 

@@ -114,6 +114,7 @@ component extends="baseHandler"{
 		
 		// get new/persisted entry and populate it
 		var entry = populateModel( entryService.get(rc.entryID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		var isNew = (NOT entry.isLoaded());
 		// Validate it
 		var errors = entry.validate();
 		if( arrayLen(errors) ){
@@ -123,7 +124,7 @@ component extends="baseHandler"{
 		}
 		
 		// announce event
-		announceInterception("cbadmin_preEntrySave",{entry=entry});
+		announceInterception("cbadmin_preEntrySave",{entry=entry,isNew=isNew});
 		
 		// Create new categories?
 		var categories = [];
@@ -142,7 +143,7 @@ component extends="baseHandler"{
 		entryService.saveEntry( entry );
 		
 		// announce event
-		announceInterception("cbadmin_postEntrySave",{entry=entry});
+		announceInterception("cbadmin_postEntrySave",{entry=entry,isNew=isNew});
 		
 		// relocate
 		getPlugin("MessageBox").info("Entry Saved!");

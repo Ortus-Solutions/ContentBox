@@ -38,6 +38,20 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		return len( getExcerpt() ) GT 0;
 	}
 	
+	/**
+	* Render excerpt
+	*/
+	any function renderExcerpt(){
+		return getExcerpt();
+	}
+	
+	/**
+	* Render content
+	*/
+	any function renderContent(){
+		return getContent();
+	}
+	
 	/*
 	* Validate entry, returns an array of error or no messages
 	*/

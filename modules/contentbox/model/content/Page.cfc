@@ -96,4 +96,11 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 		return pPath & arguments.separator & getSlug();
 	}
 	
+	/**
+	* Render content
+	*/
+	any function renderContent(){
+		return getContent();
+	}
+	
 }
