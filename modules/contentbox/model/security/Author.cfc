@@ -89,10 +89,10 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		password 	= left(password,100);
 		
 		// Required
-		if( len(firstName) ){ arrayAppend(errors, "First Name is required"); }
-		if( len(lastName) ){ arrayAppend(errors, "Last Name is required"); }
-		if( len(email) ){ arrayAppend(errors, "Email is required"); }
-		if( len(username) ){ arrayAppend(errors, "Username is required"); }
+		if( !len(firstName) ){ arrayAppend(errors, "First Name is required"); }
+		if( !len(lastName) ){ arrayAppend(errors, "Last Name is required"); }
+		if( !len(email) ){ arrayAppend(errors, "Email is required"); }
+		if( !len(username) ){ arrayAppend(errors, "Username is required"); }
 		
 		return errors;
 	}

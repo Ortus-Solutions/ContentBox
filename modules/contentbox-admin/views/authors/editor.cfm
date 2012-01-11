@@ -83,12 +83,12 @@
 								#html.startFieldset(legend="Author Details")#
 								#html.hiddenField(name="authorID",bind=prc.author)#
 								<!--- Fields --->
-								#html.textField(name="firstName",bind=prc.author,label="First Name:",required="required",size="50",class="textfield")#
-								#html.textField(name="lastName",bind=prc.author,label="Last Name:",required="required",size="50",class="textfield")#
-								#html.inputField(name="email",type="email",bind=prc.author,label="Email:",required="required",size="50",class="textfield")#
-								#html.textField(name="username",bind=prc.author,label="Username:",required="required",size="50",class="textfield")#
+								#html.textField(name="firstName",bind=prc.author,label="*First Name:",required="required",size="50",class="textfield")#
+								#html.textField(name="lastName",bind=prc.author,label="*Last Name:",required="required",size="50",class="textfield")#
+								#html.inputField(name="email",type="email",bind=prc.author,label="*Email:",required="required",size="50",class="textfield")#
+								#html.textField(name="username",bind=prc.author,label="*Username:",required="required",size="50",class="textfield")#
 								<cfif NOT prc.author.isLoaded()>
-								#html.passwordField(name="password",bind=prc.author,label="Password:",required="required",size="50",class="textfield")#
+								#html.passwordField(name="password",bind=prc.author,label="*Password:",required="required",size="50",class="textfield")#
 								</cfif>
 								#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
 								#html.select(label="User Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role",bind=prc.author.getRole(),style="width:200px")#
@@ -98,7 +98,7 @@
 								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 								<div class="actionBar">
 									<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
-										<input type="submit" value="Save" class="buttonred">
+									<input type="submit" value="Save" class="buttonred">
 								</div>
 								</cfif>
 								#html.endFieldSet()#
@@ -160,20 +160,48 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("##entries").tablesorter();
-	// form validators
-	$("##authorForm").validator({grouped:true});
-	$("##authorPasswordForm").validator({grouped:true});
+	// pointers
+	$authorForm 	= $("##authorForm");
+	$authorUsername = $authorForm.find("##username");
+	
+	// initialize validator and add a custom form submission logic
+	$authorForm.validator({grouped:true});
+	
+	// Custom username unique validator
+	$.tools.validator.fn($authorUsername, function(el, value) {
+		if( isUsernameFound(value) ){
+			return "The username you entered already exists, try a new one!";
+		}
+		return true;
+	});
+	
 	<cfif prc.author.isLoaded()>
+	$("##authorPasswordForm").validator({grouped:true});
 	$.tools.validator.fn("[name=password_confirm]", "Passwords need to match", function(el, value) {
 		return (value==$("[name=password]").val()) ? true : false;
 	});
-	</cfif>
 	// Setup Permissions
 	$permissionsTab = $("##permissionsTab");
+	</cfif>
+	
 });
+function isUsernameFound(username){
+	var usernameFound = false;
+	$.ajax({
+		url:'#event.buildLink(prc.xehUsernameCheck)#',
+		data: {username: username},
+		async:false,
+		success: function(data){
+			usernameFound = data;
+		},
+		dataType:"json"
+	});
+	return usernameFound;
+}
+<cfif prc.author.isLoaded()>
 function loadPermissions(){
 	$permissionsTab.load('#event.buildLink(prc.xehAuthorPermissions)#/authorID/'+#prc.author.getAuthorID()#);
 }
+</cfif>
 </script>
 </cfoutput>

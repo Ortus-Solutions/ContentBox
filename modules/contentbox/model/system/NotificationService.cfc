@@ -21,7 +21,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var settings 	= settingService.getAllSettings(asStruct=true);
 		
 		// Only new authors are announced, not updates, and also verify author notifications are online.
-		if( NOT arguments.interceptData.isNew OR NOT cb_notify_author ){ return; }
+		if( NOT arguments.interceptData.isNew OR NOT settings.cb_notify_author ){ return; }
 		
 		// get current logged in author performing the action
 		var currentAuthor = securityService.getAuthorSession();
@@ -56,7 +56,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var settings 	= settingService.getAllSettings(asStruct=true);
 		
 		// Only notify when enabled.
-		if( NOT cb_notify_author ){ return; }
+		if( NOT settings.cb_notify_author ){ return; }
 		// get current logged in author performing the action
 		var currentAuthor = securityService.getAuthorSession();
 		
