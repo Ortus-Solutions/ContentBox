@@ -85,7 +85,13 @@ component {
 			// CB Admin Request Interceptor
 			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
 			// CB Admin security
-			{class="coldbox.system.interceptors.Security",properties={rulesSource="xml",rulesFile="#moduleMapping#/config/security.xml.cfm", validatorModel="securityService@cb"} }
+			{class="coldbox.system.interceptors.Security",
+			 properties={
+			 	 rulesSource 	= "model",
+			 	 rulesModel		= "securityRuleService@cb",
+			 	 rulesModelMethod = "getSecurityRules",
+			 	 validatorModel = "securityService@cb"} 
+			 }
 		];
 
 	}	

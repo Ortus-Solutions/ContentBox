@@ -8,9 +8,9 @@
 		</div>
 		<div class="body">
 			<ul class="tipList">
-				<li>Security rules are used to secure ContentBox according to incoming events, much like a firewall.</li>
+				<li>Security rules are used to secure ContentBox according to incoming events or URLs, much like a firewall.</li>
 				<li>The order of the rules is extremely important as they fire and traverse as you see them on screen.</li>
-				<li>You can also create your own rules and modify as you see fit.</li>
+				<li>If a security rule has no permissions or roles it means that only authentication is needed.</li>
 			</ul>
 		</div>
 	</div>	
@@ -33,7 +33,7 @@
 		<!--- Usage --->
 		<div class="infoBar">
 			<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />
-			Please remember that the security rules are fired in the order shown.
+			Please remember that the security rules are fired in the order shown. Be careful with security rules as with much power comes great responsibility!
 		</div>
 		
 		<!--- entryForm --->
