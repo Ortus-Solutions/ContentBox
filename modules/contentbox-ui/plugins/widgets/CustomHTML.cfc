@@ -26,7 +26,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	any function renderIt(required slug, defaultValue){
 		var content = customHTMLService.findWhere({slug=arguments.slug});
 		if( !isNull(content) ){
-			return content.getContent();	
+			return content.renderContent();	
 		}
 		
 		// default value

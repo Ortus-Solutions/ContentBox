@@ -20,7 +20,7 @@
 			<h1>#prc.page.getTitle()#</h1>
 			
 			<!--- content --->
-			#prc.page.getContent()#
+			#prc.page.renderContent()#
 		</div>
 				
 		<!--- Comments Bar --->

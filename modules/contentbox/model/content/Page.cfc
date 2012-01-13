@@ -1,7 +1,7 @@
 ﻿/**
-* I am a blog page entity
+* I am a cms page entity that totally rocks
 */
-component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" extends="BaseContent"{
+component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" extends="BaseContent" cachename="cbPage" cacheuse="read-write"{
 	
 	// Properties
 	property name="pageID" fieldtype="id" generator="native" setter="false";
@@ -31,7 +31,15 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	* constructor
 	*/
 	function init(){
-		setType("page");
+		type 			= "page";
+		renderedContent = "";
+	}
+	
+	/**
+	* Get content id based on implementation
+	*/
+	any function getContentID(){
+		return getPageID();
 	}
 	
 	/**
@@ -72,7 +80,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	}
 	
 	/**
-	* Get parent ID if set or empty
+	* Get parent ID if set or empty if none
 	*/
 	function getParentID(){
 		if( hasParent() ){ return getParent().getPageID(); }
@@ -80,7 +88,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	}
 	
 	/**
-	* Get parent name or empty
+	* Get parent name or empty if none
 	*/
 	function getParentName(){
 		if( hasParent() ){ return getParent().getTitle(); }
@@ -88,19 +96,12 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	}
 	
 	/**
-	* Get recursive slug paths
+	* Get recursive slug paths to get ancestry
 	*/
 	function getRecursiveSlug(separator="/"){
 		var pPath = "";
 		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
 		return pPath & arguments.separator & getSlug();
-	}
-	
-	/**
-	* Render content
-	*/
-	any function renderContent(){
-		return getContent();
 	}
 	
 }

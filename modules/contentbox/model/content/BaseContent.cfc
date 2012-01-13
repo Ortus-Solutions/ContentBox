@@ -4,8 +4,12 @@
 component mappedsuperclass="true" accessors="true"{
 	
 	// DI Injections
-	property name="cachebox" 		inject="cachebox" 				persistent="false";
-	property name="settingService"	inject="id:settingService@cb" 	persistent="false";
+	property name="cachebox" 			inject="cachebox" 					persistent="false";
+	property name="settingService"		inject="id:settingService@cb" 		persistent="false";
+	property name="interceptorService"	inject="coldbox:interceptorService" persistent="false";
+	
+	// Non-Persistable
+	property name="renderedContent" persistent="false";
 	
 	// Properties
 	property name="title"				notnull="true"  length="200" default="" index="idx_search";
@@ -93,8 +97,30 @@ component mappedsuperclass="true" accessors="true"{
 	/**
 	* Render content out
 	*/
-	function getRenderedContent(){
+	any function renderContent(){
+	
+		// Check if we need to translate
+		if( NOT len(renderedContent) ){
+			lock name="cb1.contentrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
+				if( NOT len(renderedContent) ){
+					// else render content out, prepare builder
+					var b = createObject("java","java.lang.StringBuilder").init( content );
+					
+					// announce renderings with data, so content renderers can process them
+					var iData = {
+						builder = b,
+						content	= this
+					};
+					interceptorService.processState("cb_onContentRendering", iData);
+					
+					// save content
+					renderedContent = b.toString();
+				}
+			}
+		}	
 		
+		// renturn translated content
+		return renderedContent;
 	}
 
 }

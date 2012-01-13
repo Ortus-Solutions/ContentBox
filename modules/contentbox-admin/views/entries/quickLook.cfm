@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <h2>#rc.entry.getTitle()#</h2>
 <div>
-#rc.entry.getContent()#
+#rc.entry.renderContent()#
 </div>
 <hr/>
 <!--- Button Bar --->

@@ -44,7 +44,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( isNull(content) ){
 			throw(message="The content slug '#arguments.slug#' does not exist",type="ContentBox.CBHelper.InvalidCustomHTMLSlug");
 		}
-		return content.getContent();
+		return content.renderContent();
 	}
 
 	/************************************** root methods *********************************************/

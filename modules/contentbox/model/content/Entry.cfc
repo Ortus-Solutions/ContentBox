@@ -1,7 +1,7 @@
 ﻿/**
-* I am a blog entry entity
+* I am a blog entry entity that is amazing
 */
-component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25" extends="BaseContent" {
+component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25" extends="BaseContent" cachename="cbEntry" cacheuse="read-write"{
 	
 	// Properties
 	property name="entryID" fieldtype="id" generator="native" setter="false";
@@ -27,8 +27,16 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 	* constructor
 	*/
 	function init(){
-		categories = [];
-		setType("entry");
+		categories 		= [];
+		type 			= "entry";
+		renderedContent = "";
+	}
+	
+	/**
+	* Get content id based on implementation
+	*/
+	any function getContentID(){
+		return getEntryID();
 	}
 	
 	/**
@@ -43,13 +51,6 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 	*/
 	any function renderExcerpt(){
 		return getExcerpt();
-	}
-	
-	/**
-	* Render content
-	*/
-	any function renderContent(){
-		return getContent();
 	}
 	
 	/*
