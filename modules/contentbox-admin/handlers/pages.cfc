@@ -127,7 +127,9 @@ component extends="baseHandler"{
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
 		
 		// get new/persisted entry and populate it
-		var page = populateModel( pageService.get(rc.pageID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		var page 	= populateModel( pageService.get(rc.pageID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		var isNew 	= (NOT page.isLoaded());
+		
 		// Validate it
 		var errors = page.validate();
 		if( arrayLen(errors) ){
@@ -137,7 +139,7 @@ component extends="baseHandler"{
 		}
 		
 		// announce event
-		announceInterception("cbadmin_prePageSave",{page=page});
+		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
 		
 		// attach author
 		page.setAuthor( prc.oAuthor );
@@ -147,7 +149,7 @@ component extends="baseHandler"{
 		pageService.savePage( page );
 		
 		// announce event
-		announceInterception("cbadmin_postPageSave",{page=page});
+		announceInterception("cbadmin_postPageSave",{page=page,isNew=isNew});
 		
 		// relocate
 		getPlugin("MessageBox").info("Page Saved!");

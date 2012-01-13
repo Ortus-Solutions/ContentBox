@@ -1,7 +1,7 @@
 ﻿/**
-* I am a blog page entity
+* I am a cms page entity that totally rocks
 */
-component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" extends="BaseContent"{
+component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" extends="BaseContent" cachename="cbPage" cacheuse="read-write"{
 	
 	// Properties
 	property name="pageID" fieldtype="id" generator="native" setter="false";
@@ -14,6 +14,9 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	
 	// M20 -> Parent Page loaded as a proxy
 	property name="parent" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
+	// O2M -> Sub Pages inverse
+	property name="childPages" singularName="childPage" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
+			  cfc="contentbox.model.content.Page" fkcolumn="FK_parentID" inverse="true" cascade="all"; 
 	
 	// Calculated Fields
 	property name="numberOfChildren" 			formula="select count(*) from cb_page page where page.FK_parentID=pageID" default="0";
@@ -28,7 +31,15 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	* constructor
 	*/
 	function init(){
-		setType("page");
+		type 			= "page";
+		renderedContent = "";
+	}
+	
+	/**
+	* Get content id based on implementation
+	*/
+	any function getContentID(){
+		return getPageID();
 	}
 	
 	/**
@@ -69,7 +80,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	}
 	
 	/**
-	* Get parent ID if set or empty
+	* Get parent ID if set or empty if none
 	*/
 	function getParentID(){
 		if( hasParent() ){ return getParent().getPageID(); }
@@ -77,7 +88,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	}
 	
 	/**
-	* Get parent name or empty
+	* Get parent name or empty if none
 	*/
 	function getParentName(){
 		if( hasParent() ){ return getParent().getTitle(); }
@@ -85,7 +96,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	}
 	
 	/**
-	* Get recursive slug paths
+	* Get recursive slug paths to get ancestry
 	*/
 	function getRecursiveSlug(separator="/"){
 		var pPath = "";

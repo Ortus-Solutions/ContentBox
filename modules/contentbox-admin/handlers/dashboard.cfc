@@ -48,6 +48,12 @@ component extends="baseHandler"{
 		// dashboard view
 		event.setView("dashboard/index");
 	}
+	
+	// about
+	function about(event,rc,prc){
+		prc.tabDashboard_about = true;
+		event.setView("dashboard/about");
+	}
 
 	// reload modules
 	function reload(event,rc,prc){

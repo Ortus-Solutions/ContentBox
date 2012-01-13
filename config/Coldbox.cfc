@@ -84,23 +84,20 @@
 			defaultLayout = "Layout.Main.cfm"
 		};
 		
-		//Interceptor Settings
-		interceptorSettings = {
-			customInterceptionPoints = ""
+		// ORM
+		orm = {
+			// Enable Injection
+			injection = {
+				enabled = true
+			}
 		};
 		
 		//Register interceptors as an array, we need order
 		interceptors = [
-			//Autowire
-			{class="coldbox.system.interceptors.Autowire"},
 			//SES
 			{class="coldbox.system.interceptors.SES"}
 		];
 		
-		//Debugger Settings
-		debugger = {
-			showRCPanel = false
-		};
 	}
 	
 	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
@@ -108,6 +105,9 @@
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching = false;
+		
+		//Debugger Settings
+		debugger.showRCPanel = false;
 		
 		// ses debugging
 		logbox.appenders.files={class="coldbox.system.logging.appenders.RollingFileAppender",

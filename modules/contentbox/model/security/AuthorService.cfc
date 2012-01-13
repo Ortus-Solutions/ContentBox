@@ -37,5 +37,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var r = executeQuery(query="from cbAuthor where firstName like :criteria OR lastName like :criteria OR email like :criteria",params=params,asQuery=false);
 		return r;
 	}
+	
+	/**
+	* Username checks for authors
+	*/
+	boolean function usernameFound(required username){
+		var args = {"username" = arguments.username};
+		return ( countWhere(argumentCollection=args) GT 0 );
+	}
 
 }

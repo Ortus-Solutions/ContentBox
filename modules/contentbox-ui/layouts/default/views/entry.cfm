@@ -32,7 +32,7 @@
 			
 			<!--- content --->
 			<div class="post-content">
-				#prc.entry.getContent()#
+				#prc.entry.renderContent()#
 			</div>
 		</div>
 				

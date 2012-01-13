@@ -16,11 +16,24 @@ component {
 	function configure(){
 		// contentbox settings
 		settings = {};
+		
+		// interceptor settings
+		interceptorSettings = {
+			// ContentBox Custom Events
+			customInterceptionPoints = arrayToList([
+				// Code Rendering
+				"cb_onContentRendering","cb_onCustomHTMLRendering"
+			])
+		};
 				
 		// interceptors
 		interceptors = [
 			// CB RSS Cache Cleanup Ghost
-			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" }
+			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
+			// Notification service interceptor
+			{class="contentbox.model.system.NotificationService",name="NotificationService@cb" },
+			// Content Renderers, remember order is important.
+			{class="contentbox.model.content.renderers.WidgetRenderer"}		
 		];
 		
 		// Security/System

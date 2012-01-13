@@ -93,7 +93,7 @@
 				</select>
 				
 				<!--- order --->
-				#html.inputfield(type="number",label="Order: (0-99)",name="order",bind=prc.page,title="The ordering index",class="textfield",size="5",maxlength="2",min="0",max="99")#
+				#html.inputfield(type="number",label="Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="textfield",size="5",maxlength="2",min="0",max="99")#
 			
 			#html.endFieldSet()#
 			

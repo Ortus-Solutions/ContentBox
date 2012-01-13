@@ -1,4 +1,4 @@
-﻿/**
+/**
 ********************************************************************************
 Copyright 2005-2007 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 www.coldboxframework.com | www.luismajano.com | www.ortussolutions.com
@@ -40,7 +40,7 @@ component{
 		// FILL OUT: THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
 		// FILL OUT: FOR FIRST TIME INSTALLATION LEAVE AS IS, THEN CHANGE TO 'none' OR LEAVE AS IS FOR CONTINUOUS REPO UPDATES
-		dbcreate = "update",
+		dbcreate = "none",
 		secondarycacheenabled = true,
 		// FILL OUT: IF YOU WANT ANOTHER SECONDARY CACHE, PLEASE UPDATE HERE
 		cacheprovider		= "ehCache",

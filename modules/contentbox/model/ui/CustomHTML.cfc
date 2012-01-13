@@ -3,6 +3,11 @@
 */
 component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cachename="cbCustomHTML" cacheuse="read-write"{
 	
+	// DI Injections
+	property name="cachebox" 			inject="cachebox" 					persistent="false";
+	property name="settingService"		inject="id:settingService@cb" 		persistent="false";
+	property name="interceptorService"	inject="coldbox:interceptorService" persistent="false";
+	
 	// PROPERTIES
 	property name="contentID" 	fieldtype="id" generator="native" setter="false";
 	property name="title"			notnull="true"  length="200";
@@ -10,6 +15,9 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	property name="description"		notnull="false" length="500" default="";
 	property name="content" 		notnull="true"  ormtype="text" length="8000";
 	property name="createdDate" 	notnull="true"  ormtype="timestamp" update="false";
+	
+	// Non-Persistable
+	property name="renderedContent" persistent="false";
 	
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 	
@@ -21,6 +29,13 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	}
 	
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
+	
+	/**
+	* constructor
+	*/
+	function init(){
+		renderedContent = "";
+	}
 	
 	/**
 	* has excerpt
@@ -56,7 +71,34 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
 		
+	/**
+	* Render content out
+	*/
+	any function renderContent(){
 	
+		// Check if we need to translate
+		if( NOT len(renderedContent) ){
+			lock name="contentbox.customHTMLRendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
+				if( NOT len(renderedContent) ){
+					// else render content out, prepare builder
+					var b = createObject("java","java.lang.StringBuilder").init( content );
+					
+					// announce renderings with data, so content renderers can process them
+					var iData = {
+						builder = b,
+						customHTML	= this
+					};
+					interceptorService.processState("cb_onCustomHTMLRendering", iData);
+					
+					// save content
+					renderedContent = b.toString();
+				}
+			}
+		}	
+		
+		// renturn translated content
+		return renderedContent;
+	}
 	
 	
 }

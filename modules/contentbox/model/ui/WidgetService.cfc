@@ -20,6 +20,14 @@
 	}
 
 	/**
+	* Get installed widgets as a list of names
+	*/
+	function getWidgetsList(){
+		var w = getWidgets();
+		return valueList(w.name);
+	}
+	
+	/**
 	* Get installed widgets
 	*/
 	function getWidgets(){
@@ -38,7 +46,7 @@
 			// try to create the plugin
 			widgets.plugin[x] = "";
 			try{
-				widgets.plugin[x] = coldbox.getPlugin(plugin="widgets." & widgets.name[x],module="contentbox-ui",custom=true);
+				widgets.plugin[x] = getWidget( widgets.name[x] );
 			}
 			catch(any e){
 				log.error("Error creating widget plugin: #widgets.name[x]#",e);
@@ -46,6 +54,13 @@
 		}
 		
 		return widgets;
+	}
+	
+	/**
+	* Get a widget by name
+	*/
+	any function getWidget(required name){
+		return coldbox.getPlugin(plugin="widgets." & arguments.name,module="contentbox-ui",custom=true);
 	}
 	
 	/**

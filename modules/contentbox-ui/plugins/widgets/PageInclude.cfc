@@ -27,7 +27,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		var page = pageService.findWhere({slug=arguments.slug});
 		
 		if( !isNull(page) ){
-			return page.getContent();	
+			return page.renderContent();	
 		}
 		
 		// default value

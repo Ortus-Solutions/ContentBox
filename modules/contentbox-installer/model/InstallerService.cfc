@@ -182,14 +182,17 @@ component accessors="true"{
 			"cb_comments_captcha" = true,
 			
 			// Notifications
-			"cb_notify_author" = false,
-			"cb_notify_entry" = true,
+			"cb_notify_author" = true,
+			"cb_notify_entry"  = true,
+			"cb_notify_page"   = true,
+			
+			// Site Layout
 			"cb_site_layout" = "default",
 			
 			// RSS Feeds
 			"cb_rss_cachingTimeout" = 60,
 			"cb_rss_maxEntries" = 10,
-			"cb_rss_caching" = false,
+			"cb_rss_caching" = true,
 			"cb_rss_maxComments" = 10,
 			"cb_rss_cachingTimeoutIdle" = 15,
 			"cb_rss_cacheName" = "Template"

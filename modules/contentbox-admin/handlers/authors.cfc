@@ -29,7 +29,7 @@ component extends="baseHandler"{
 		
 		// exit Handlers
 		rc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
-		prc.xehAuthorsearch 	= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehAuthorsearch = "#prc.cbAdminEntryPoint#.authors";
 		
 		// Get all authors or search
 		if( len(event.getValue("searchAuthor","")) ){
@@ -48,12 +48,27 @@ component extends="baseHandler"{
 		event.setView("authors/index");
 	}
 
+	// username check
+	function usernameCheck(event,rc,prc){
+		var found = true;
+		
+		event.paramValue("username","");
+		
+		// only check if we have a username
+		if( len(username) ){
+			found = authorService.usernameFound( rc.username );
+		}
+		
+		event.renderData(type="json",data=found);
+	}
+
 	// user editor
 	function editor(event,rc,prc){
 		// exit handlers
 		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#.authors.save";
 		prc.xehAuthorChangePassword = "#prc.cbAdminEntryPoint#.authors.passwordChange";
 		prc.xehAuthorPermissions 	= "#prc.cbAdminEntryPoint#.authors.permissions";
+		prc.xehUsernameCheck	 	= "#prc.cbAdminEntryPoint#.authors.usernameCheck";
 		
 		// get new or persisted author
 		prc.author  = authorService.get( event.getValue("authorID",0) );
@@ -79,21 +94,32 @@ component extends="baseHandler"{
 	// save user
 	function save(event,rc,prc){
 		// get and populate author
-		var oAuthor	= populateModel( authorService.get(id=rc.authorID) );
+		var oAuthor		= populateModel( authorService.get(id=rc.authorID) );
+		var newAuthor 	= (NOT oAuthor.isLoaded());
+		 
     	// role assignment
     	oAuthor.setRole( roleService.get( rc.roleID ) );
     	
-    	// announce event
-		announceInterception("cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID});
-		// save Author
-		authorService.saveAuthor( oAuthor );
-		// announce event
-		announceInterception("cbadmin_postAuthorSave",{author=oAuthor});
+    	// validate it
+		var errors = oAuthor.validate();
 		
-		// message
-		getPlugin("MessageBox").setMessage("info","Author saved!");
-		// relocate
-		setNextEvent(prc.xehAuthors);
+		if( !arrayLen(errors) ){
+			// announce event
+			announceInterception("cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID,isNew=newAuthor});
+			// save Author
+			authorService.saveAuthor( oAuthor );
+			// announce event
+			announceInterception("cbadmin_postAuthorSave",{author=oAuthor,isNew=newAuthor});
+			// message
+			getPlugin("MessageBox").setMessage("info","Author saved!");
+			// relocate
+			setNextEvent(prc.xehAuthors);
+		}
+		else{
+			getPlugin("MessageBox").warn(messageArray=errors);
+			setNextEvent(event=prc.xehAuthorEditor,queryString="author=#oAuthor.getAuthorID()#");
+		}	
+		
 	}
 	
 	// change passord

@@ -31,7 +31,7 @@
 					<a href="#cb.linkEntry(entry)#" title="Read The Full Entry!"><button class="button2">Read More...</button></a>
 				</div>
 			<cfelse>
-				#entry.getContent()#
+				#entry.renderContent()#
 			</cfif>
 		</div>
 		

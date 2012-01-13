@@ -44,7 +44,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( isNull(content) ){
 			throw(message="The content slug '#arguments.slug#' does not exist",type="ContentBox.CBHelper.InvalidCustomHTMLSlug");
 		}
-		return content.getContent();
+		return content.renderContent();
 	}
 
 	/************************************** root methods *********************************************/
@@ -89,7 +89,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function siteDescription(){ return setting("cb_site_description"); }
 	// Retrieve the site keywords
 	function siteKeywords(){ return setting("cb_site_keywords"); }
-
+	// Retrieve the site administrator email
+	function siteEmail(){ return setting("cb_site_email"); }
+	// Retrieve the site outgoing email
+	function siteOutgoingEmail(){ return setting("cb_site_outgoingEmail"); }
+	
 	/**
 	* Determines if site comments are enabled and if the entry accepts comments
 	* @content The entry or page content to validate comments also with
