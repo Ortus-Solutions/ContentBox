@@ -143,6 +143,17 @@
 			#html.textarea(label="Content:",name="content",bind=rc.entry,rows="25")#
 			<!--- excerpt --->
 			#html.textarea(label="Excerpt:",name="excerpt",bind=rc.entry)#	
+			
+			<!--- Custom Fields --->
+			#html.startFieldSet(legend='Custom Fields:')#
+				<!--- Add CustomField --->
+				<button class="button dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;">
+					<img src="#prc.cbRoot#/includes/images/add.png" />
+				</button>
+				<p>You can add as many name-value pairs of custom fields to this entry, that can later be used by your themes or layouts</p>
+				<!--- CustomFields Holder --->
+				<div id="customFields"></div>
+			#html.endFieldset()#
 		
 		</div>	
 	</div>
@@ -161,9 +172,35 @@
 </div>
 #html.endForm()#
 
+<!--- Fields Template --->
+<p id="fieldsTemplate" style="display:none;margin:0px">
+	<label>Key:</label>
+	<input type="text" name="CustomFieldKeys" class="textfield" size="30" title="Enter a custom field key" />
+	<label>Value:</label>
+	<textarea name="CustomFieldValues" class="textfield" title="Enter the custom field value"></textarea>
+	<button class="button dynamicRemove" onclick="return false;"><img src="#prc.cbroot#/includes/images/delete.png" alt="delete"/></button>
+</p>
+
 <!--- Load Assets --->
 #html.addAsset(prc.cbroot&"/includes/ckeditor/ckeditor.js")#
 #html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
 #html.addAsset(prc.cbroot&"/includes/js/contentbox.editor.js")#
 #html.addAsset(prc.cbroot&"/includes/css/date.css")#
+
+<!--- Custom JS --->
+<script type="text/javascript">
+$(document).ready(function() {
+ 
+// Dynamic Add
+$(".dynamicAdd").click(function() {
+	addDynamicItem($(this));
+	return false;
+});
+// Removal Dynamic
+$(".dynamicRemove").click(function() {
+	$container = $(this).parent().parent();
+	$(this).parent().remove();
+	return false;
+});
+</script>
 </cfoutput>

@@ -15,6 +15,10 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_entryID" inverse="true" cascade="all-delete-orphan"; 
 	
+	// O2M -> CustomFields
+	property name="customFields" singularName="customField" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10"
+			  cfc="contentbox.model.content.CustomField" fkcolumn="FK_entryID" inverse="true" cascade="all-delete-orphan"; 
+	
 	// Calculated Fields
 	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_entryID=entryID";
 	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_entryID=entryID and comment.isApproved = 1";

@@ -226,6 +226,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #header_top_authorName { color:orange; font-weight:bold; }
 #categoriesChecks{ overflow: auto; max-height: 175px; border: 1px dotted #707171;}
 #quickPost{display: none;}
+#addCustomFieldButton{float:right;margin-right:10px}
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
