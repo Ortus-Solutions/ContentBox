@@ -56,6 +56,7 @@ component extends="baseHandler"{
 		prc.xehFlushCache    	= "#prc.cbAdminEntryPoint#.settings.flushCache";
 		prc.xehFlushSingletons  = "#prc.cbAdminEntryPoint#.settings.flushSingletons";
 		prc.xehViewCached    	= "#prc.cbAdminEntryPoint#.settings.viewCached";
+		prc.xehMappingDump		= "#prc.cbAdminEntryPoint#.settings.mappingDump";
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
@@ -74,6 +75,14 @@ component extends="baseHandler"{
 		// view
 		event.setView("settings/raw");
 	}	
+	
+	// mappingDump
+	function mappingDump(event,rc,prc){
+		// params
+		event.paramValue("id","");
+		prc.mapping = wirebox.getBinder().getMapping( rc.id );
+		event.setView(view="settings/mappingDump",layout="ajax");
+	}
 
 	// saveRaw
 	function saveRaw(event,rc,prc){

@@ -135,7 +135,8 @@
 						<thead>
 							<tr>
 								<th width="250">ID</th>	
-								<th width="125" class="center {sorter:false}">Actions</th>
+								<th>Path</th>
+								<th width="50" class="center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
 						
@@ -143,7 +144,12 @@
 							<cfloop collection="#prc.singletons#" item="target">
 							<tr>
 								<td><strong>#target#</strong></td>
-								<td></td>
+								<td>
+									#wirebox.getBinder().getMapping(target).getPath()#
+								</td>
+								<td class="center">
+									<a href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'})" title="Dump Mapping Memento"><img src="#prc.cbroot#/includes/images/eye.png" alt="icon" border="0"/></a>
+								</td>
 							</tr>
 							</cfloop>
 						</tbody>
