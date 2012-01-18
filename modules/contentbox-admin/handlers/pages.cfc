@@ -94,8 +94,9 @@ component extends="baseHandler"{
 		}
 		// Get all pages for parent drop downs
 		prc.pages = pageService.list(sortOrder="title asc");		
-		// Get active layout record
-		prc.layoutRecord = layoutService.getActiveLayout();
+		// Get active layout record and available page only layouts
+		prc.themeRecord = layoutService.getActiveLayout();
+		prc.availableLayouts = REreplacenocase( prc.themeRecord.layouts,"blog,?","");
 		// Get parent from active page
 		prc.parentPageID = prc.page.getParentID();
 		// Override the parent page if incoming

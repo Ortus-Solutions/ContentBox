@@ -89,7 +89,7 @@
 				<!--- layout --->
 				#html.label(field="layout",content='Layout:')#
 				<select name="layout" id="layout" class="width98">
-					#html.options(values=prc.layoutRecord.layouts,selectedValue=prc.page.getLayoutWithDefault())#
+					#html.options(values=prc.availableLayouts,selectedValue=prc.page.getLayoutWithDefault())#
 				</select>
 				
 				<!--- order --->
@@ -106,6 +106,11 @@
 				#html.select(name="allowComments",options="Yes,No",bind=prc.page)#
 				<br/>
 				</cfif>
+				<!--- Show in Menu Builders --->
+				<img src="#prc.cbRoot#/includes/images/source.png" alt="showInMenu" />
+				#html.label(field="showInMenu",content="Show In Menu:",class="inline")#
+				#html.select(name="showInMenu",options="Yes,No",bind=prc.page)#
+				<br/>
 				<!--- Password Protection --->
 				<label for="passwordProtection"><img src="#prc.cbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>
 				#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="textfield",size="25",maxlength="100")#

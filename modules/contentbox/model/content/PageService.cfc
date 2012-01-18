@@ -92,7 +92,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	// Page listing for UI
-	function findPublishedPages(max=0,offset=0,searchTerm="",asQuery=false,parent){
+	function findPublishedPages(max=0,offset=0,searchTerm="",asQuery=false,parent,boolean showInMenu){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
@@ -106,6 +106,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		arrayAppend(criteria, restrictions.lt("publishedDate", Now()) );
 		// only non-password pages
 		arrayAppend(criteria, restrictions.eq("passwordProtection","") );
+		// Show only pages with showInMenu criteria?
+		if( structKeyExists(arguments,"showInMenu") ){
+			arrayAppend(criteria, restrictions.eq("showInMenu",javaCast("boolean",1)) );
+		}
 		
 		// Search Criteria
 		if( len(arguments.searchTerm) ){

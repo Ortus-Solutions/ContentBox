@@ -521,7 +521,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function rootMenu(excludes="",type="ul",separator=""){
 		arguments.showNone = false;
 		// get root pages
-		arguments.pageRecords = pageService.findPublishedPages(parent="");
+		arguments.pageRecords = pageService.findPublishedPages(parent="",showInMenu=true);
 		// build it out
 		return buildMenu(argumentCollection=arguments);
 	}
@@ -540,7 +540,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 			arguments.page = getCurrentPage();
 		}
 		// get child pages
-		arguments.pageRecords = pageService.findPublishedPages(parent=page.getPageID());
+		arguments.pageRecords = pageService.findPublishedPages(parent=page.getPageID(),showInMenu=true);
 		// build it out
 		return buildMenu(argumentCollection=arguments);
 	}
