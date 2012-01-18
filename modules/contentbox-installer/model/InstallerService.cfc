@@ -4,13 +4,14 @@
 component accessors="true"{
 	
 	// DI
-	property name="authorService" 		inject="id:authorService@cb";
-	property name="settingService" 		inject="id:settingService@cb";
+	property name="authorService" 		inject="authorService@cb";
+	property name="settingService" 		inject="settingService@cb";
 	property name="categoryService" 	inject="categoryService@cb";
 	property name="entryService"		inject="entryService@cb";
 	property name="commentService"		inject="commentService@cb";
 	property name="roleService" 		inject="roleService@cb";
 	property name="permissionService" 	inject="permissionService@cb";
+	property name="securityRuleService" inject="securityRuleService@cb";
 	property name="appPath" 			inject="coldbox:setting:applicationPath";
 	
 	/**
@@ -37,6 +38,8 @@ component accessors="true"{
 		var author = createAuthor( setup, adminRole );
 		// create All Settings
 		createSettings( setup );
+		// create all security rules
+		createSecurityRules( setup );
 		// Do we create sample data?
 		if( setup.getpopulateData() ){
 			createSampleData( setup, author );
@@ -49,6 +52,23 @@ component accessors="true"{
 		settingService.activateCB();
 	}
 	
+	function createSecurityRules(required setup){
+		// Create internal rules
+		var props = {
+			whitelist 	= "^contentbox-admin:security\.",
+			secureList 	= "^contentbox-admin:.*",
+			match		= "event",
+			roles 		= "",
+			permissions	= "",
+			redirect	= "cbadmin/security/login",
+			useSSL		= false,
+			order		= 1
+			
+		};
+		var rule = securityRuleService.new(properties=props);
+		securityRuleService.save( rule );
+	}
+	
 	function processORMUpdate(){
 		var appCFCPath = appPath & "Application.cfc";
 		var c = fileRead(appCFCPath);
@@ -57,7 +77,7 @@ component accessors="true"{
 	}
 	
 	function processRewrite(required setup){
-		var routesPath = appPath & "config/routes.cfm";
+		var routesPath = appPath & "config/Routes.cfm";
 		var c = fileRead(routesPath);
 		c = replacenocase(c, "index.cfm","","all");
 		fileWrite(routesPath, c);
@@ -70,7 +90,7 @@ component accessors="true"{
 		var perms = {
 			"SYSTEM_TAB" = "Access to the ContentBox System tools",
 			"SYSTEM_SAVE_CONFIGURATION" = "Ability to update global configuration data",
-			"SYSTEM_RAW_SETTINGS" = "Access to the ContentBox raw settings panel",
+			"SYSTEM_RAW_SETTINGS" = "Access to the ContentBox raw geek settings panel",
 			"TOOLS_IMPORT" = "Ability to import data into ContentBox",
 			"ROLES_ADMIN" = "Ability to manage roles, default is view only",
 			"PERMISSIONS_ADMIN" = "Ability to manage permissions, default is view only",
@@ -153,48 +173,48 @@ component accessors="true"{
 			"cb_site_homepage" = "cbBlog",
 			
 			// Paging Defaults
-			"cb_paging_maxrows" = 20,
-			"cb_paging_bandgap" = 5,
-			"cb_paging_maxentries" = 10,
-			"cb_paging_maxRSSComments" = 10,
+			"cb_paging_maxrows" = "20",
+			"cb_paging_bandgap" = "5",
+			"cb_paging_maxentries" = "10",
+			"cb_paging_maxRSSComments" = "10",
 			
 			// Gravatar
-			"cb_gravatar_display" = true,
+			"cb_gravatar_display" = "true",
 			"cb_gravatar_rating" = "PG",
 			
 			// Dashboard Settings
-			"cb_dashboard_recentEntries" = 5,
-			"cb_dashboard_recentPages" = 5,
-			"cb_dashboard_recentComments" = 5,
+			"cb_dashboard_recentEntries" = "5",
+			"cb_dashboard_recentPages" = "5",
+			"cb_dashboard_recentComments" = "5",
 			
 			// Comment Settings
 			"cb_comments_whoisURL" = "http://whois.arin.net/ui/query.do?q",
-			"cb_comments_maxDisplayChars" = 500,
-			"cb_comments_enabled" = true,
-			"cb_comments_urltranslations" = true,
-			"cb_comments_moderation" = true,
-			"cb_comments_moderation_whitelist" = true,
-			"cb_comments_notify" = true,
-			"cb_comments_moderation_notify" = true,
+			"cb_comments_maxDisplayChars" = "500",
+			"cb_comments_enabled" = "true",
+			"cb_comments_urltranslations" = "true",
+			"cb_comments_moderation" = "true",
+			"cb_comments_moderation_whitelist" = "true",
+			"cb_comments_notify" = "true",
+			"cb_comments_moderation_notify" = "true",
 			"cb_comments_notifyemails" = "",
 			"cb_comments_moderation_blacklist" = "",
 			"cb_comments_moderation_blockedlist" = "",
-			"cb_comments_captcha" = true,
+			"cb_comments_captcha" = "true",
 			
 			// Notifications
-			"cb_notify_author" = true,
-			"cb_notify_entry"  = true,
-			"cb_notify_page"   = true,
+			"cb_notify_author" = "true",
+			"cb_notify_entry"  = "true",
+			"cb_notify_page"   = "true",
 			
 			// Site Layout
 			"cb_site_layout" = "default",
 			
 			// RSS Feeds
-			"cb_rss_cachingTimeout" = 60,
-			"cb_rss_maxEntries" = 10,
+			"cb_rss_cachingTimeout" = "60",
+			"cb_rss_maxEntries" = "10",
 			"cb_rss_caching" = true,
-			"cb_rss_maxComments" = 10,
-			"cb_rss_cachingTimeoutIdle" = 15,
+			"cb_rss_maxComments" = "10",
+			"cb_rss_cachingTimeoutIdle" = "10",
 			"cb_rss_cacheName" = "Template"
 		};
 		

@@ -42,4 +42,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		return save(argumentCollection=arguments);
 	}
+	
+	/**
+	* Get all rules in firing order
+	*/
+	query function getSecurityRules(){
+		return list(sortOrder="order asc");
+	}
 }

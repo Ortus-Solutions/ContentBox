@@ -2,7 +2,7 @@
 
 	function setup(){
 		super.setup();
-		model.init();
+		model.init().setEventHandling( false );
 	}
 	
 	function testGetMaxORder(){
@@ -28,6 +28,22 @@
 		model.saveRule( t );
 		assertEquals(40, t.getOrder() );
 		
+	}
+	
+	function testgetSecurityRules(){
+		var rule = model.new(properties={whitelist="",securelist="firstRule",roles="",permissions="ADMIN",redirect="cbadmin/login",useSSL=false,order=0,match="event"});
+		model.save( rule );
+		var rule = model.new(properties={whitelist="",securelist="secondRule",roles="",permissions="ADMIN",redirect="cbadmin/login",useSSL=false,order=1,match="event"});
+		model.save( rule );
+		r = model.getSecurityRules();
+		
+		lastOrder = r.order[1];
+		for(var x=2; x lte r.recordcount; x++){
+			assertTrue( lastOrder lte r.order[x] );
+			lastOrder = r.order[x];
+		}
+		
+		model.delete( rule );
 	}
 
 } 

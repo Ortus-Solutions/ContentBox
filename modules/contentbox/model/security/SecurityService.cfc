@@ -1,12 +1,13 @@
 ﻿/**
 * Our contentbox security service
 */
-component singleton{
+component implements="ISecurityService" singleton{
 
 	// Dependencies
 	property name="authorService" 	inject="id:authorService@cb";
 	property name="settingService"	inject="id:settingService@cb";
 	property name="sessionStorage" 	inject="coldbox:plugin:SessionStorage";
+	property name="cookieStorage" 	inject="coldbox:plugin:CookieStorage";
 	property name="mailService"		inject="coldbox:plugin:MailService";
 	property name="renderer"		inject="coldbox:plugin:Renderer";
 	property name="CBHelper"		inject="id:CBHelper@cb";
@@ -21,29 +22,31 @@ component singleton{
 	/**
 	* Update an author's last login timestamp
 	*/
-	void function updateAuthorLoginTimestamp(author){
+	ISecurityService function updateAuthorLoginTimestamp(author){
 		arguments.author.setLastLogin( now() );
 		authorService.save( arguments.author );
+		return this;
 	}
 	
 	/**
 	* User validator via security interceptor
 	*/
-	boolean function userValidator(struct rule,messagebox,controller){
+	boolean function userValidator(required struct rule, messagebox, controller){
 		var isAllowed 	= false;
 		var author 		= getAuthorSession();
 		
-		// is user found in session?
+		// First check if user has been authenticated.
 		if( author.isLoaded() AND author.isLoggedIn() ){
 			isAllowed = true;
 		}
+		
 		return isAllowed;
 	}
 	
 	/**
 	* Get an author from session, or returns a new empty author entity
 	*/
-	function getAuthorSession(){
+	Author function getAuthorSession(){
 		
 		// Check if valid user id in session?
 		if( sessionStorage.exists("loggedInAuthorID") ){
@@ -63,15 +66,17 @@ component singleton{
 	/**
 	* Set a new author in session
 	*/
-	void function setAuthorSession(author){
+	ISecurityService function setAuthorSession(required Author author){
 		sessionStorage.setVar("loggedInAuthorID", author.getAuthorID() );
+		return this;
 	} 
 
 	/**
 	* Delete author session
 	*/
-	void function logout(){
+	ISecurityService function logout(){
 		sessionStorage.clearAll();
+		return this;
 	}
 
 	/**
@@ -96,7 +101,7 @@ component singleton{
 	/**
 	* Send password reminder
 	*/
-	function sendPasswordReminder(author){
+	ISecurityService function sendPasswordReminder(required Author author){
 		// generate temporary password
 		var genPassword = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
 		// get settings
@@ -120,12 +125,14 @@ component singleton{
 		mail.setBody( renderer.renderView(view="email_templates/password_reminder",module="contentbox") );
 		// send it out
 		mailService.send( mail );
+		
+		return this;
 	}
 	
 	/**
 	* Check to authorize a user to view a content entry or page
 	*/
-	function authorizeContent(content,password){
+	boolean function authorizeContent(required content, required password){
 		// Validate Password
 		if( compare(arguments.content.getPasswordProtection(),arguments.password) eq 0 ){
 			// Set simple validation
@@ -139,7 +146,7 @@ component singleton{
 	/**
 	* Checks Whether a content entry or page is protected and user has credentials for it
 	*/
-	function isContentViewable(content){
+	boolean function isContentViewable(required content){
 		var protectedHash = sessionStorage.getVar("protection-#hash(arguments.content.getSlug())#","");
 		//check hash against validated content
 		if( compare( protectedHash, getContentProtectedHash( arguments.content ) )  EQ 0 ){
@@ -154,4 +161,20 @@ component singleton{
 	private function getContentProtectedHash(content){
 		return hash(arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256");
 	}
+	
+	/**
+	* Get remember me cookie
+	*/
+	any function getRememberMe(){
+		return cookieStorage.getVar(name="contentbox_remember_me",default="");
+	}
+	
+	/**
+	* Set remember me cookie
+	*/
+	ISecurityService function setRememberMe(required username){
+		cookieStorage.setVar(name="contentbox_remember_me",value=arguments.username);
+		return this;
+	}
+	
 }

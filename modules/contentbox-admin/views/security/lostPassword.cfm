@@ -10,20 +10,20 @@
 		<!--- Render Messagebox. --->
 		#getPlugin("MessageBox").renderit()#
 		
-		<div id="loginContent">
-		#html.startForm(action=rc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate")#
-			<input type="hidden" name="_securedURL" value="#event.getValue('_securedURL','')#">
-			<br/>
-			<p>Enter your email address below in order to reset your password.  A new password
+		<!--- Instructions --->
+		<p>Enter your email address below in order to reset your password.  A new password
 			will be generated and sent to your email address.</p>
 			
-			<label for="email">Email</label>
-			<input type="email" name="email" id="email" size="40" required="required" class="textfield">
+		<div id="loginContent">
+		#html.startForm(action=rc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate")#
+			#html.hiddenField(name="_securedURL",value=event.getValue('_securedURL',''))#
+			#html.textfield(name="email",label="Email Address: ",size="40",required="required",class="textfield")#
 			
-			<br/><br/>
-			<a href="#event.buildLink(prc.xehLogin)#">< Back to Login</a> 
-			&nbsp;
-			<input type="submit" value="&nbsp;&nbsp;Reset Password&nbsp;&nbsp;" class="buttonred">
+			<div id="loginButtonbar">
+			#html.href(href=event.buildLink(prc.xehLogin),text=html.button(class="button",value="&nbsp;&nbsp;Back To Login&nbsp;&nbsp;"))#
+			#html.submitButton(value="&nbsp;&nbsp;Reset Password&nbsp;&nbsp;",class="buttonred")#
+			</div>
+			
 		#html.endForm()#
 		</div>
 	

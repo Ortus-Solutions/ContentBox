@@ -6,7 +6,9 @@
 <hr/>
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
+	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 	<button class="button2" onclick="return to('#event.buildLink(prc.xehPageEditor)#/pageID/#prc.page.getPageID()#')"> Edit </button>
+	</cfif>
 	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

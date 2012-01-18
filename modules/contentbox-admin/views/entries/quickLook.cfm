@@ -1,12 +1,14 @@
 ﻿<cfoutput>
-<h2>#rc.entry.getTitle()#</h2>
+<h2>#prc.entry.getTitle()#</h2>
 <div>
-#rc.entry.renderContent()#
+#prc.entry.renderContent()#
 </div>
 <hr/>
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
-	<button class="button2" onclick="return to('#event.buildLink(rc.xehEntryEditor)#/entryID/#rc.entry.getEntryID()#')"> Edit </button>
+	<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+		<button class="button2" onclick="return to('#event.buildLink(prc.xehEntryEditor)#/entryID/#prc.entry.getEntryID()#')"> Edit </button>
+	</cfif>
 	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

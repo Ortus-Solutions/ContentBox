@@ -9,18 +9,29 @@ component{
 	
 	// login screen
 	function login(event,rc,prc){
+		// exit handlers
 		rc.xehDoLogin 		= "#prc.cbAdminEntryPoint#.security.doLogin";
 		rc.xehLostPassword 	= "#prc.cbAdminEntryPoint#.security.lostPassword";
+		// remember me
+		prc.rememberMe = securityService.getRememberMe();
+		// view
 		event.setView(view="security/login",layout="simple");	
 	}
 	
 	// authenticate users
 	function doLogin(event,rc,prc){
+		// params
+		event.paramValue("rememberMe",false);
 		// announce event
 		announceInterception("cbadmin_preLogin");
 		
 		// authenticate users
 		if( securityService.authenticate(rc.username,rc.password) ){
+			// set remember me
+			if( rc.rememberMe ){
+				securityService.setRememberMe( rc.username );
+			}
+			
 			// announce event
 			announceInterception("cbadmin_onLogin");
 		

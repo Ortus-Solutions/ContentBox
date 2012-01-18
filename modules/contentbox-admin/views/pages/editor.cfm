@@ -89,7 +89,7 @@
 				<!--- layout --->
 				#html.label(field="layout",content='Layout:')#
 				<select name="layout" id="layout" class="width98">
-					#html.options(values=prc.layoutRecord.layouts,selectedValue=prc.page.getLayoutWithDefault())#
+					#html.options(values=prc.availableLayouts,selectedValue=prc.page.getLayoutWithDefault())#
 				</select>
 				
 				<!--- order --->
@@ -106,6 +106,11 @@
 				#html.select(name="allowComments",options="Yes,No",bind=prc.page)#
 				<br/>
 				</cfif>
+				<!--- Show in Menu Builders --->
+				<img src="#prc.cbRoot#/includes/images/source.png" alt="showInMenu" />
+				#html.label(field="showInMenu",content="Show In Menu:",class="inline")#
+				#html.select(name="showInMenu",options="Yes,No",bind=prc.page)#
+				<br/>
 				<!--- Password Protection --->
 				<label for="passwordProtection"><img src="#prc.cbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>
 				#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="textfield",size="25",maxlength="100")#
@@ -116,9 +121,12 @@
 				#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.page,class="textfield width95",maxlength="160")#
 				#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.page,class="textfield",maxlength="160")#
 			#html.endFieldSet()#
-			
+			<!--- Event --->
+			#announceInterception("cbadmin_pageEditorSidebar")#
 		</div>
 	</div>		
+	<!--- Event --->
+	#announceInterception("cbadmin_pageEditorSidebarFooter")#	
 </div>
 <!--End sidebar-->	
 <!--============================Main Column============================-->
@@ -150,9 +158,17 @@
 			
 			<!--- content --->
 			#html.textarea(label="Content:",name="content",bind=prc.page,rows="25")#
-		
+			
+			<!--- Custom Fields --->
+			<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
+			<cfset mArgs = {fieldType="Page", customFields=prc.page.getCustomFields()}>
+			#renderView(view="_tags/customFields",args=mArgs)#
+			
+			<!--- Event --->
+			#announceInterception("cbadmin_pageEditorInBody")#
 		</div>	
 	</div>
+	
 	<cfif prc.page.getallowComments()>
 	<!--- Page Comments --->
 	<div class="box">	
@@ -167,6 +183,7 @@
 		</cfif>
 	</div>
 	</cfif>
+	
 	<!--- Sub Pages --->
 	<cfif prc.page.isLoaded()>
 		<div class="box">	
@@ -179,12 +196,9 @@
 			</div>
 		</div>
 	</cfif>
+	
+	<!--- Event --->
+	#announceInterception("cbadmin_pageEditorFooter")#
 </div>
 #html.endForm()#
-
-<!--- Load Assets --->
-#html.addAsset(prc.cbroot&"/includes/ckeditor/ckeditor.js")#
-#html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
-#html.addAsset(prc.cbroot&"/includes/js/contentbox.page.editor.js")#
-#html.addAsset(prc.cbroot&"/includes/css/date.css")#
 </cfoutput>

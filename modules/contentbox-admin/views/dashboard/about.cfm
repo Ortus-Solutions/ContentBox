@@ -33,7 +33,7 @@
 			
 			<!--- Logo --->
 			<div class="center">
-				<img src="#prc.cbroot#/includes/images/ContentBox_125.gif" alt="logo"/><br/><br/>
+				<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo"/><br/><br/>
 			</div>
 			
 			<p>

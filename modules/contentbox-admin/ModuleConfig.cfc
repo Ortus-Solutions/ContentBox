@@ -53,9 +53,13 @@ component {
 				// Main Tabs
 				"cbadmin_dashboardTab","cbadmin_entriesTab","cbadmin_pagesTab","cbadmin_commentsTab","cbadmin_authorsTab","cbadmin_systemTab","cbadmin_toolsTab", 
 				// Entry Events
-				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove",
+				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove", 
+				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarFooter",
+				"cbadmin_entryEditorFooter", "cbadmin_entryEditorInBody",
 				// Page Events
 				"cbadmin_prePageSave","cbadmin_postPageSave","cbadmin_prePageRemove","cbadmin_postPageRemove",
+				"cbadmin_pageEditorSidebar", "cbadmin_pageEditorSidebarFooter",
+				"cbadmin_pageEditorFooter", "cbadmin_pageEditorInBody",
 				// Author Events
 				"cbadmin_preAuthorSave","cbadmin_postAuthorSave","cbadmin_onAuthorPasswordChange","cbadmin_preAuthorRemove","cbadmin_postAuthorRemove",
 				// Category Events
@@ -85,7 +89,13 @@ component {
 			// CB Admin Request Interceptor
 			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
 			// CB Admin security
-			{class="coldbox.system.interceptors.Security",properties={rulesSource="xml",rulesFile="#moduleMapping#/config/security.xml.cfm", validatorModel="securityService@cb"} }
+			{class="coldbox.system.interceptors.Security",
+			 properties={
+			 	 rulesSource 	= "model",
+			 	 rulesModel		= "securityRuleService@cb",
+			 	 rulesModelMethod = "getSecurityRules",
+			 	 validatorModel = "securityService@cb"} 
+			 }
 		];
 
 	}	
