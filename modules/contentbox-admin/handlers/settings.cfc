@@ -51,19 +51,23 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// exit Handlers
-		rc.xehSettingRemove = "#prc.cbAdminEntryPoint#.settings.remove";
-		prc.xehSettingsave 	= "#prc.cbAdminEntryPoint#.settings.saveRaw";
-		rc.xehFlushCache    = "#prc.cbAdminEntryPoint#.settings.flushCache";
-		rc.xehViewCached    = "#prc.cbAdminEntryPoint#.settings.viewCached";
+		prc.xehSettingRemove 	= "#prc.cbAdminEntryPoint#.settings.remove";
+		prc.xehSettingsave 		= "#prc.cbAdminEntryPoint#.settings.saveRaw";
+		prc.xehFlushCache    	= "#prc.cbAdminEntryPoint#.settings.flushCache";
+		prc.xehFlushSingletons  = "#prc.cbAdminEntryPoint#.settings.flushSingletons";
+		prc.xehViewCached    	= "#prc.cbAdminEntryPoint#.settings.viewCached";
 		
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
-		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
+		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 		= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
 		
 		// Get all settings
-		rc.settings = settingsService.list(sortOrder="name",asQuery=false,offset=rc.paging.startRow-1,max=prc.cbSettings.cb_paging_maxrows);
-		rc.settingsCount = settingsService.count();
+		prc.settings = settingsService.list(sortOrder="name",asQuery=false,offset=prc.paging.startRow-1,max=prc.cbSettings.cb_paging_maxrows);
+		prc.settingsCount = settingsService.count();
+		
+		// Get Singletons
+		prc.singletons = wirebox.getScope("singleton").getSingletons();
 		
 		// Raw tab
 		prc.tabSystem_rawSettings = true;
@@ -110,6 +114,13 @@ component extends="baseHandler"{
 		settingsService.flushSettingsCache();
 		getPlugin("MessageBox").setMessage("info","Settings Flushed From Cache");
 		setNextEvent(prc.xehRawSettings);
+	}
+	
+	// flush singletons
+	function flushSingletons(event,rc,prc){
+		wirebox.clearSingletons();
+		getPlugin("MessageBox").setMessage("info","All singletons flushed and awaiting re-creation.");
+		setNextEvent(event=prc.xehRawSettings,queryString="##wirebox");
 	}
 	
 	// View cached Keys
