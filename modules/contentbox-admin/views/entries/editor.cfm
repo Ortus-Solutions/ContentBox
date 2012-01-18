@@ -145,7 +145,7 @@
 			#html.textarea(label="Excerpt:",name="excerpt",bind=rc.entry)#	
 			
 			<!--- Custom Fields --->
-			#html.startFieldSet(legend='Custom Fields:')#
+			#html.startFieldSet(legend='<img src="#prc.cbRoot#/includes/images/database_black.png" alt="publish" width="16"/> Custom Fields:')#
 				<!--- Add CustomField --->
 				<button class="button dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;">
 					<img src="#prc.cbRoot#/includes/images/add.png" />
@@ -157,6 +157,7 @@
 		
 		</div>	
 	</div>
+	
 	<!--- Entry Comments --->
 	<div class="box">	
 		<cfif structKeyExists(rc,"commentsViewlet")> 

@@ -252,7 +252,7 @@
 						<cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS")>
 						<li>
 							<a href="#event.buildLink(prc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
-							   title="Manage The Raw Settings Table">Raw Settings</a>
+							   title="Manage The Raw Settings Geek Style">Geek Settings</a>
 						</li>
 						</cfif>
 						<!--- cbadmin event --->

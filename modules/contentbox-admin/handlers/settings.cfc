@@ -65,10 +65,6 @@ component extends="baseHandler"{
 		rc.settings = settingsService.list(sortOrder="name",asQuery=false,offset=rc.paging.startRow-1,max=prc.cbSettings.cb_paging_maxrows);
 		rc.settingsCount = settingsService.count();
 		
-		prc.ormStats = ORMGetSessionFactory().getStatistics();
-    	prc.ormStats.setStatisticsEnabled( true );
-    	prc.ormStatsStruct = settingsService.getSessionStatistics();
-		
 		// Raw tab
 		prc.tabSystem_rawSettings = true;
 		// view
