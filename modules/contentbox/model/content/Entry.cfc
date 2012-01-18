@@ -32,6 +32,7 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 	*/
 	function init(){
 		categories 		= [];
+		customFields	= [];
 		type 			= "entry";
 		renderedContent = "";
 	}
@@ -106,5 +107,5 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 	boolean function isLoaded(){
 		return len( getEntryID() );
 	}
-	
+		
 }

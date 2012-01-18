@@ -26,7 +26,7 @@ component persistent="true" entityname="cbCustomField" table="cb_customfield"{
 	/**
 	* setRelatedContent
 	*/
-	CustomField function setRelatedContent(content){
+	CustomField function setRelatedContent(required content){
 		if( arguments.content.getType() eq "entry" ){ setEntry( arguments.content ); }
 		else{ setPage( arguments.content ); }
 		return this;

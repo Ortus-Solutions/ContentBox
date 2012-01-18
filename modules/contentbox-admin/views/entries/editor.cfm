@@ -1,7 +1,6 @@
 ﻿<cfoutput>
-
 <!--- Entry Form  --->
-#html.startForm(action=rc.xehEntrySave,name="entryForm",novalidate="novalidate")#
+#html.startForm(action=prc.xehEntrySave,name="entryForm",novalidate="novalidate")#
 	
 <!--============================Sidebar============================-->
 <div class="sidebar">
@@ -12,43 +11,43 @@
 			Entry Details
 		</div>
 		<div class="body">
-			<cfif rc.entry.isLoaded()>
+			<cfif prc.entry.isLoaded()>
 			<!--- Persisted Info --->
 			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/eye.png" alt="publish" width="16"/> Info')#
 			<table class="tablelisting" width="100%">
 				<tr>
 					<th width="85" class="textRight">Created By:</th>
 					<td>
-						<a href="mailto:#rc.entry.getAuthor().getEmail()#">#rc.entry.getAuthorName()#</a>
+						<a href="mailto:#prc.entry.getAuthor().getEmail()#">#prc.entry.getAuthorName()#</a>
 					</td>
 				</tr>
 				<tr>
 					<th class="textRight">Published On:</th>
 					<td>
-						#rc.entry.getDisplayPublishedDate()#
+						#prc.entry.getDisplayPublishedDate()#
 					</td>
 				</tr>
 				<tr>
 					<th class="textRight">Created On:</th>
 					<td>
-						#rc.entry.getDisplayCreatedDate()#
+						#prc.entry.getDisplayCreatedDate()#
 					</td>
 				</tr>
 				<tr>
 					<th class="textRight">Views:</th>
 					<td>
-						#rc.entry.getHits()#
+						#prc.entry.getHits()#
 					</td>
 				</tr>	
 				<tr>
 					<th class="textRight">Comments:</th>
 					<td>
-						#rc.entry.getNumberOfComments()#
+						#prc.entry.getNumberOfComments()#
 					</td>
 				</tr>					
 			</table>	
 			<div class="center">
-				<button class="button2" onclick="window.open('#prc.CBHelper.linkEntry(rc.entry)#');return false;" title="Open entry in site">Open In Site</button>
+				<button class="button2" onclick="window.open('#prc.CBHelper.linkEntry(prc.entry)#');return false;" title="Open entry in site">Open In Site</button>
 			</div>
 			#html.endFieldset()#
 			</cfif>
@@ -58,10 +57,10 @@
 				<!--- is Published --->
 				#html.hiddenField(name="isPublished",value=true)#
 				<!--- publish date --->
-				#html.inputField(size="9",type="date",name="publishedDate",label="Publish Date",value=rc.entry.getPublishedDateForEditor(),class="textfield")#
+				#html.inputField(size="9",type="date",name="publishedDate",label="Publish Date",value=prc.entry.getPublishedDateForEditor(),class="textfield")#
 				@
-				#html.inputField(type="number",name="publishedHour",value=ckHour( rc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
-				#html.inputField(type="number",name="publishedMinute",value=ckMinute( rc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
+				#html.inputField(type="number",name="publishedHour",value=ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
+				#html.inputField(type="number",name="publishedMinute",value=ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
 			
 				<!--- Action Bar --->
 				<div class="actionBar">
@@ -77,12 +76,12 @@
 				<cfif prc.cbSettings.cb_comments_enabled>
 				<img src="#prc.cbRoot#/includes/images/comments_black.png" alt="comments" />
 				#html.label(field="allowComments",content="Allow Comments:",class="inline")#
-				#html.select(name="allowComments",options="Yes,No",bind=rc.entry)#
+				#html.select(name="allowComments",options="Yes,No",bind=prc.entry)#
 				<br/>
 				</cfif>
 				<!--- Password Protection --->
 				<label for="passwordProtection"><img src="#prc.cbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>
-				#html.textfield(name="passwordProtection",bind=rc.entry,title="Password protect your entry, leave empty for none",class="textfield",size="25",maxlength="100")#
+				#html.textfield(name="passwordProtection",bind=prc.entry,title="Password protect your entry, leave empty for none",class="textfield",size="25",maxlength="100")#
 			#html.endFieldSet()#
 			
 			<!--- Categories --->
@@ -90,9 +89,9 @@
 				
 				<!--- Display categories --->
 				<div id="categoriesChecks">
-				<cfloop from="1" to="#arrayLen(rc.categories)#" index="x">
-					#html.checkbox(name="category_#x#",value="#rc.categories[x].getCategoryID()#",checked=rc.entry.hasCategories( rc.categories[x] ))#
-					#html.label(field="category_#x#",content="#rc.categories[x].getCategory()#",class="inline")#<br/>
+				<cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
+					#html.checkbox(name="category_#x#",value="#prc.categories[x].getCategoryID()#",checked=prc.entry.hasCategories( prc.categories[x] ))#
+					#html.label(field="category_#x#",content="#prc.categories[x].getCategory()#",class="inline")#<br/>
 				</cfloop>
 				</div>
 				
@@ -102,12 +101,16 @@
 			
 			<!--- HTML Attributes --->
 			#html.startFieldSet(legend='<img src="#prc.cbRoot#/includes/images/world.png" alt="world" width="16"/> HTML Attributes')#
-				#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=rc.entry,class="textfield width95",maxlength="160")#
-				#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=rc.entry,class="textfield",maxlength="160")#
+				#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.entry,class="textfield width95",maxlength="160")#
+				#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.entry,class="textfield",maxlength="160")#
 			#html.endFieldSet()#
 			
+			<!--- Event --->
+			#announceInterception("cbadmin_entryEditorSidebar")#
 		</div>
 	</div>		
+	<!--- Event --->
+	#announceInterception("cbadmin_entryEditorSidebarFooter")#
 </div>
 <!--End sidebar-->	
 <!--============================Main Column============================-->
@@ -125,36 +128,32 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- id --->
-			#html.hiddenField(name="entryID",bind=rc.entry)#
-			#html.hiddenField(name="sluggerURL",value=event.buildLink(rc.xehSlugify))#
+			#html.hiddenField(name="entryID",bind=prc.entry)#
+			#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 			
 			<!--- title --->
-			#html.textfield(label="Title:",name="title",bind=rc.entry,maxlength="100",required="required",title="The title for this entry",class="textfield width98")#
+			#html.textfield(label="Title:",name="title",bind=prc.entry,maxlength="100",required="required",title="The title for this entry",class="textfield width98")#
 			<!--- slug --->
-			<cfif rc.entry.isLoaded()>
+			<cfif prc.entry.isLoaded()>
 			<label for="slug">Permalink: 
 				<img src='#prc.cbroot#/includes/images/link.png' alt='permalink' title="Convert title to permalink" onclick="createPermalink()"/>
 				<small> #event.buildLink('')#</small>
 			</label>
-			#html.textfield(name="slug",bind=rc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
+			#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
 			</cfif>
 			
 			<!--- content --->
-			#html.textarea(label="Content:",name="content",bind=rc.entry,rows="25")#
+			#html.textarea(label="Content:",name="content",bind=prc.entry,rows="25")#
 			<!--- excerpt --->
-			#html.textarea(label="Excerpt:",name="excerpt",bind=rc.entry)#	
+			#html.textarea(label="Excerpt:",name="excerpt",bind=prc.entry)#	
 			
 			<!--- Custom Fields --->
-			#html.startFieldSet(legend='<img src="#prc.cbRoot#/includes/images/database_black.png" alt="publish" width="16"/> Custom Fields:')#
-				<!--- Add CustomField --->
-				<button class="button dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;">
-					<img src="#prc.cbRoot#/includes/images/add.png" />
-				</button>
-				<p>You can add as many name-value pairs of custom fields to this entry, that can later be used by your themes or layouts</p>
-				<!--- CustomFields Holder --->
-				<div id="customFields"></div>
-			#html.endFieldset()#
-		
+			<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
+			<cfset mArgs = {fieldType="Entry", customFields=prc.entry.getCustomFields()}>
+			#renderView(view="_tags/customFields",args=mArgs)#
+			
+			<!--- Event --->
+			#announceInterception("cbadmin_entryEditorInBody")#
 		</div>	
 	</div>
 	
@@ -166,42 +165,13 @@
 				Entry Comments
 			</div>
 			<div class="body">
-				#rc.commentsViewlet#
+				#prc.commentsViewlet#
 			</div>
 		</cfif>
 	</div>
+	
+	<!--- Event --->
+	#announceInterception("cbadmin_entryEditorFooter")#
 </div>
 #html.endForm()#
-
-<!--- Fields Template --->
-<p id="fieldsTemplate" style="display:none;margin:0px">
-	<label>Key:</label>
-	<input type="text" name="CustomFieldKeys" class="textfield" size="30" title="Enter a custom field key" />
-	<label>Value:</label>
-	<textarea name="CustomFieldValues" class="textfield" title="Enter the custom field value"></textarea>
-	<button class="button dynamicRemove" onclick="return false;"><img src="#prc.cbroot#/includes/images/delete.png" alt="delete"/></button>
-</p>
-
-<!--- Load Assets --->
-#html.addAsset(prc.cbroot&"/includes/ckeditor/ckeditor.js")#
-#html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
-#html.addAsset(prc.cbroot&"/includes/js/contentbox.editor.js")#
-#html.addAsset(prc.cbroot&"/includes/css/date.css")#
-
-<!--- Custom JS --->
-<script type="text/javascript">
-$(document).ready(function() {
- 
-// Dynamic Add
-$(".dynamicAdd").click(function() {
-	addDynamicItem($(this));
-	return false;
-});
-// Removal Dynamic
-$(".dynamicRemove").click(function() {
-	$container = $(this).parent().parent();
-	$(this).parent().remove();
-	return false;
-});
-</script>
 </cfoutput>

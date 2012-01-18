@@ -7,6 +7,7 @@ component mappedsuperclass="true" accessors="true"{
 	property name="cachebox" 			inject="cachebox" 					persistent="false";
 	property name="settingService"		inject="id:settingService@cb" 		persistent="false";
 	property name="interceptorService"	inject="coldbox:interceptorService" persistent="false";
+	property name="customFieldService"  inject="customFieldService@cb" 		persistent="false";
 	
 	// Non-Persistable
 	property name="renderedContent" persistent="false";
@@ -121,6 +122,29 @@ component mappedsuperclass="true" accessors="true"{
 		
 		// renturn translated content
 		return renderedContent;
+	}
+	
+	/**
+	* Inflate custom fields from a list of keys and values, it will remove original custom values as well.
+	*/
+	any function inflateCustomFields(required string keys, required string values){
+		
+		// remove original custom fields
+		getCustomFields().clear();
+		
+		// inflate custom fields
+		arguments.keys   = listToArray(arguments.keys);
+		arguments.values = listToArray(arguments.values);
+		for(var x=1; x lte arrayLen(arguments.keys); x++){
+			if( len(trim(arguments.keys[x])) ){
+				var args = { key = arguments.keys[x], value="" };
+				if( arrayIsDefined(arguments.keys, x) ){
+					args.value = arguments.values[x];
+				}
+				addCustomField( customFieldService.new(properties=args).setRelatedContent( this ) );
+			}
+		}
+		return this;
 	}
 
 }

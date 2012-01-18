@@ -5,8 +5,8 @@
 	<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
 </div>
 <!--- Paging --->
-<cfif rc.pager_pagination>
-	#rc.pager_pagingPlugin.renderit(rc.pager_entriesCount,rc.pager_pagingLink)#
+<cfif prc.pager_pagination>
+	#prc.pager_pagingPlugin.renderit(prc.pager_entriesCount,prc.pager_pagingLink)#
 </cfif>
 
 <!--- entries --->
@@ -24,10 +24,10 @@
 	</thead>
 	
 	<tbody>
-		<cfloop array="#rc.pager_entries#" index="entry">
+		<cfloop array="#prc.pager_entries#" index="entry">
 		<tr data-entryID="#entry.getEntryID()#">
 			<td>
-				<a href="#event.buildLink(rc.xehEntryEditor)#/entryID/#entry.getentryID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
+				<a href="#event.buildLink(prc.xehEntryEditor)#/entryID/#entry.getentryID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
 				by <a href="mailto:#entry.getAuthor().getEmail()#">#entry.getAuthorName()#</a>				
 			</td>
 			<td>#entry.getCategoriesList()#</td>
@@ -49,7 +49,7 @@
 			<td class="center">
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<!--- Edit Command --->
-				<a href="#event.buildLink(rc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+				<a href="#event.buildLink(prc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
 				&nbsp;
 				</cfif>
 				<!--- View Command --->
@@ -69,7 +69,7 @@ $(document).ready(function() {
 	    if (e.which === 3) {
 	    	if( $(this).attr('data-entryID') != null ){
 				e.preventDefault();
-				openRemoteModal('#event.buildLink(rc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
+				openRemoteModal('#event.buildLink(prc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
 			}
 	    }
 	});
@@ -77,7 +77,7 @@ $(document).ready(function() {
 function pagerLink(page){
 	$("##entryPagerLoader").fadeIn("fast");
 	$('##pagerEntries')
-		.load('#event.buildLink(rc.xehPager)#/pager_authorID/#rc.pager_authorID#/page/' + page, function() {
+		.load('#event.buildLink(prc.xehPager)#/pager_authorID/#prc.pager_authorID#/page/' + page, function() {
 			$("##entryPagerLoader").fadeOut();
 			hideAllTooltips();
 			activateTooltips();
