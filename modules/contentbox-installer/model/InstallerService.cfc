@@ -7,12 +7,14 @@ component accessors="true"{
 	property name="authorService" 		inject="authorService@cb";
 	property name="settingService" 		inject="settingService@cb";
 	property name="categoryService" 	inject="categoryService@cb";
+	property name="pageService"			inject="pageService@cb";
 	property name="entryService"		inject="entryService@cb";
 	property name="commentService"		inject="commentService@cb";
 	property name="roleService" 		inject="roleService@cb";
 	property name="permissionService" 	inject="permissionService@cb";
 	property name="securityRuleService" inject="securityRuleService@cb";
 	property name="appPath" 			inject="coldbox:setting:applicationPath";
+	property name="securityInterceptor" inject="securityInterceptor@cb";
 	
 	/**
 	* Constructor
@@ -44,12 +46,12 @@ component accessors="true"{
 		if( setup.getpopulateData() ){
 			createSampleData( setup, author );
 		}
-		
 		// Remove ORM update from Application.cfc
 		processORMUpdate();
-		
 		// ContentBox is now online, mark it:
 		settingService.activateCB();
+		// Reload Security Rules
+		securityInterceptor.loadRules();
 	}
 	
 	function createSecurityRules(required setup){
@@ -63,7 +65,6 @@ component accessors="true"{
 			redirect	= "cbadmin/security/login",
 			useSSL		= false,
 			order		= 1
-			
 		};
 		var rule = securityRuleService.new(properties=props);
 		securityRuleService.save( rule );
@@ -276,6 +277,22 @@ component accessors="true"{
 		
 		// save entry
 		entryService.saveEntry( entry );
+		
+		// create a page
+		var page = pageService.new(properties={
+			title = "About",
+			slug  = "about",
+			content = "Hey welcome to my about page for ContentBox, isn't this great!",
+			publishedDate = now(),
+			isPublished = true,
+			allowComments = false,
+			passwordProtection='',
+			HTMLKeywords = "about, contentbox,coldfusion,coldbox",
+			HTMLDescription = "The most amazing ContentBox page in the world",
+			layout = "pages"			
+		});
+		page.setAuthor( author );
+		pageService.savePage( page );
 	}
 	
 }
