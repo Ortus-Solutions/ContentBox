@@ -7,6 +7,7 @@ component implements="ISecurityService" singleton{
 	property name="authorService" 	inject="id:authorService@cb";
 	property name="settingService"	inject="id:settingService@cb";
 	property name="sessionStorage" 	inject="coldbox:plugin:SessionStorage";
+	property name="cookieStorage" 	inject="coldbox:plugin:CookieStorage";
 	property name="mailService"		inject="coldbox:plugin:MailService";
 	property name="renderer"		inject="coldbox:plugin:Renderer";
 	property name="CBHelper"		inject="id:CBHelper@cb";
@@ -160,4 +161,20 @@ component implements="ISecurityService" singleton{
 	private function getContentProtectedHash(content){
 		return hash(arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256");
 	}
+	
+	/**
+	* Get remember me cookie
+	*/
+	any function getRememberMe(){
+		return cookieStorage.getVar(name="contentbox_remember_me",default="");
+	}
+	
+	/**
+	* Set remember me cookie
+	*/
+	ISecurityService function setRememberMe(required username){
+		cookieStorage.setVar(name="contentbox_remember_me",value=arguments.username);
+		return this;
+	}
+	
 }
