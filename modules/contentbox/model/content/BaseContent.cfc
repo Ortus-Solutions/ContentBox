@@ -133,12 +133,12 @@ component mappedsuperclass="true" accessors="true"{
 		getCustomFields().clear();
 		
 		// inflate custom fields
-		arguments.keys   = listToArray(arguments.keys);
-		arguments.values = listToArray(arguments.values);
+		arguments.keys   = listToArray(arguments.keys,",");
+		arguments.values = listToArray(arguments.values,",");
 		for(var x=1; x lte arrayLen(arguments.keys); x++){
 			if( len(trim(arguments.keys[x])) ){
 				var args = { key = arguments.keys[x], value="" };
-				if( arrayIsDefined(arguments.keys, x) ){
+				if( arrayIsDefined(arguments.values, x) ){
 					args.value = arguments.values[x];
 				}
 				addCustomField( customFieldService.new(properties=args).setRelatedContent( this ) );
