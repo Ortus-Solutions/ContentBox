@@ -7,7 +7,7 @@ component extends="baseHandler"{
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="authorService"		inject="id:authorService@cb";
-
+	
 	// Public properties
 	this.preHandler_except = "pager";
 
@@ -17,8 +17,8 @@ component extends="baseHandler"{
 		var prc = event.getCollection(private=true);
 		// exit Handlers
 		prc.xehEntries 		= "#prc.cbAdminEntryPoint#.entries";
-		rc.xehEntryEditor 	= "#prc.cbAdminEntryPoint#.entries.editor";
-		rc.xehEntryRemove 	= "#prc.cbAdminEntryPoint#.entries.remove";
+		prc.xehEntryEditor 	= "#prc.cbAdminEntryPoint#.entries.editor";
+		prc.xehEntryRemove 	= "#prc.cbAdminEntryPoint#.entries.remove";
 		// Tab control
 		prc.tabEntries = true;
 	}
@@ -34,11 +34,11 @@ component extends="baseHandler"{
 		event.paramValue("isFiltering",false);
 		
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
-		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#prc.xehEntries#.page.@page@?');
+		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 			= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 		= event.buildLink('#prc.xehEntries#.page.@page@?');
 		// Append search to paging link?
-		if( len(rc.searchEntries) ){ rc.pagingLink&="&searchEntries=#rc.searchEntries#"; }
+		if( len(rc.searchEntries) ){ prc.pagingLink&="&searchEntries=#rc.searchEntries#"; }
 		// Append filters to paging link?
 		if( rc.fAuthors neq "all"){ rc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
 		if( rc.fCategories neq "all"){ rc.pagingLink&="&fCategories=#rc.fCategories#"; }
@@ -47,23 +47,23 @@ component extends="baseHandler"{
 		if( rc.fAuthors neq "all" OR rc.fCategories neq "all" or rc.fStatus neq "any"){ rc.isFiltering = true; }
 		
 		// get all categories
-		rc.categories = categoryService.getAll(sortOrder="category");
+		prc.categories = categoryService.getAll(sortOrder="category");
 		// get all authors
-		rc.authors    = authorService.getAll(sortOrder="lastName");
+		prc.authors    = authorService.getAll(sortOrder="lastName");
 		
 		// search entries with filters and all
 		var entryResults = entryService.search(search=rc.searchEntries,
-											   offset=rc.paging.startRow-1,
+											   offset=prc.paging.startRow-1,
 											   max=prc.cbSettings.cb_paging_maxrows,
 											   isPublished=rc.fStatus,
 											   category=rc.fCategories,
 											   author=rc.fAuthors);
-		rc.entries 		 = entryResults.entries;
-		rc.entriesCount  = entryResults.count;
+		prc.entries 	 = entryResults.entries;
+		prc.entriesCount = entryResults.count;
 		
 		// exit handlers
-		rc.xehEntrySearch 	= "#prc.cbAdminEntryPoint#.entries";
-		rc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
+		prc.xehEntrySearch 	= "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
 		// Tab
 		prc.tabEntries_viewAll = true;
 		// view
@@ -73,24 +73,24 @@ component extends="baseHandler"{
 	// Quick Look
 	function quickLook(event,rc,prc){
 		// get entry
-		rc.entry  = entryService.get( event.getValue("entryID",0) );
+		prc.entry  = entryService.get( event.getValue("entryID",0) );
 		event.setView(view="entries/quickLook",layout="ajax");
 	}
 	
 	// editor
 	function editor(event,rc,prc){
 		// get all categories
-		rc.categories = categoryService.getAll(sortOrder="category");
+		prc.categories = categoryService.getAll(sortOrder="category");
 		// get new or persisted
-		rc.entry  = entryService.get( event.getValue("entryID",0) );
+		prc.entry  = entryService.get( event.getValue("entryID",0) );
 		// load comments viewlet if persisted
-		if( rc.entry.isLoaded() ){
+		if( prc.entry.isLoaded() ){
 			// Get Comments viewlet
-			rc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={entryID=rc.entryID});
+			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={entryID=rc.entryID});
 		}
 		// exit handlers
-		rc.xehEntrySave = "#prc.cbAdminEntryPoint#.entries.save";
-		rc.xehSlugify	= "#prc.cbAdminEntryPoint#.entries.slugify";
+		prc.xehEntrySave = "#prc.cbAdminEntryPoint#.entries.save";
+		prc.xehSlugify	= "#prc.cbAdminEntryPoint#.entries.slugify";
 		// Tab
 		prc.tabEntries_viewAll = true;
 		// view
@@ -107,6 +107,8 @@ component extends="baseHandler"{
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
+		event.paramValue("customFieldKeys","");
+		event.paramValue("customFieldValues","");
 		
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
@@ -115,6 +117,7 @@ component extends="baseHandler"{
 		// get new/persisted entry and populate it
 		var entry = populateModel( entryService.get(rc.entryID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		var isNew = (NOT entry.isLoaded());
+		
 		// Validate it
 		var errors = entry.validate();
 		if( arrayLen(errors) ){
@@ -138,7 +141,9 @@ component extends="baseHandler"{
 		entry.setAuthor( prc.oAuthor );
 		// detach categories and re-attach
 		entry.removeAllCategories().setCategories( categories );
-		
+		// Inflate Custom Fields into the entry
+		entry.inflateCustomFields( rc.customFieldKeys, rc.customFieldValues );
+				
 		// save entry
 		entryService.saveEntry( entry );
 		
@@ -185,25 +190,25 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// exit handlers
-		rc.xehPager 		= "#prc.cbAdminEntryPoint#.entries.pager";
-		rc.xehEntryEditor	= "#prc.cbAdminEntryPoint#.entries.editor";
-		rc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
+		prc.xehPager 		= "#prc.cbAdminEntryPoint#.entries.pager";
+		prc.xehEntryEditor	= "#prc.cbAdminEntryPoint#.entries.editor";
+		prc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
 		
 		// prepare paging plugin
-		rc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
-		rc.pager_paging 	  	= rc.pager_pagingPlugin.getBoundaries();
-		rc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
-		rc.pager_pagination		= arguments.pagination;
+		prc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pager_paging 	  	= prc.pager_pagingPlugin.getBoundaries();
+		prc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
+		prc.pager_pagination	= arguments.pagination;
 		
 		// search entries with filters and all
 		var entryResults = entryService.search(author=arguments.authorID,
-											   offset=rc.pager_paging.startRow-1,
+											   offset=prc.pager_paging.startRow-1,
 											   max=arguments.max);
-		rc.pager_entries 	   = entryResults.entries;
-		rc.pager_entriesCount  = entryResults.count;
+		prc.pager_entries 	    = entryResults.entries;
+		prc.pager_entriesCount  = entryResults.count;
 		
 		// author in RC
-		rc.pager_authorID		= arguments.authorID;
+		prc.pager_authorID		= arguments.authorID;
 		
 		// view pager
 		return renderView(view="entries/pager",module="contentbox-admin");

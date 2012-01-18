@@ -53,6 +53,7 @@ component {
 		// RSS services
 		binder.map("rssService@cb").to("contentbox.model.rss.RSSService");	
 		// UI services
+		binder.map("customFieldService@cb").toDSL("entityService:cbCustomField");	
 		binder.map("widgetService@cb").to("contentbox.model.ui.WidgetService");	
 		binder.map("layoutService@cb").to("contentbox.model.ui.LayoutService");
 		binder.map("customHTMLService@cb").to("contentbox.model.ui.CustomHTMLService");

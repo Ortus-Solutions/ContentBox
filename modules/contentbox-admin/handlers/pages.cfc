@@ -121,6 +121,8 @@ component extends="baseHandler"{
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
+		event.paramValue("customFieldKeys","");
+		event.paramValue("customFieldValues","");
 		
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
@@ -145,6 +147,9 @@ component extends="baseHandler"{
 		page.setAuthor( prc.oAuthor );
 		// attach parent page
 		if( len(rc.parentPage) ){ page.setParent( pageService.get( rc.parentPage ) ); }
+		// Inflate Custom Fields into the page
+		page.inflateCustomFields( rc.customFieldKeys, rc.customFieldValues );
+		
 		// save entry
 		pageService.savePage( page );
 		

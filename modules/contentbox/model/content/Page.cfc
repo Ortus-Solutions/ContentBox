@@ -12,6 +12,10 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10" orderby="createdDate"
 			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_pageID" inverse="true" cascade="all-delete-orphan"; 
 	
+	// O2M -> CustomFields
+	property name="customFields" singularName="customField" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10"
+			  cfc="contentbox.model.content.CustomField" fkcolumn="FK_pageID" inverse="true" cascade="all-delete-orphan"; 
+	
 	// M20 -> Parent Page loaded as a proxy
 	property name="parent" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
 	// O2M -> Sub Pages inverse

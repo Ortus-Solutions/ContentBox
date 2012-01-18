@@ -147,11 +147,13 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .center { text-align:center!important; margin:auto!important; }
 .padding10 { padding:10px; }
 .margin10 { margin:10px; }
+.margin0 { margin:0px; }
 .width98{ width: 98%; }
 .width95{ width: 95%; }
 .hidden { display:none!important; }
 .show{ display: block; }
 .flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 URL(../images/iinfo_icon.png) no-repeat 2% 50%; }
+.cachebox_debugContentCell{clear: none !important;}
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
@@ -226,6 +228,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #header_top_authorName { color:orange; font-weight:bold; }
 #categoriesChecks{ overflow: auto; max-height: 175px; border: 1px dotted #707171;}
 #quickPost{display: none;}
+#addCustomFieldButton{margin:0xp 10px 0px 10px}
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
