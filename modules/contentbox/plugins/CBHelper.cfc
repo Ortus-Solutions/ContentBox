@@ -121,17 +121,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	/************************************** Context Methods *********************************************/
 
-	// Determin if you are in the index view
+	// Determine if you are in the index view
 	boolean function isIndexView(){
 		var event = getRequestContext();
 		return (event.getCurrentEvent() eq "contentbox-ui:blog.index");
 	}
-	// Determin if you are in the entry view
+	// Determine if you are in the entry view
 	boolean function isEntryView(){
 		var event = getRequestContext();
 		return (event.getCurrentEvent() eq "contentbox-ui:blog.entry");
 	}
-	// Determin if you are in the page view
+	// Determine if you are in the page view
 	boolean function isPageView(){
 		var event = getRequestContext();
 		return (event.getCurrentEvent() eq "contentbox-ui:blog.page");
@@ -182,6 +182,13 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function getMissingPage(){
 		var event = getRequestContext();
 		return event.getValue(name="missingPage",private="true",default="");
+	}
+	// Get the current page's or blog entrie's custom fields
+	function getCurrentCustomFields(){
+		if( isPageView() ){
+			return getCurrentPage().getCustomFields();
+		}
+		return getCurrentEntry().getCustomFields();
 	}
 
 	/************************************** events *********************************************/
@@ -442,7 +449,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return replace(arrayToList( catList ), ",",", ","all");
 	}
 
-	// entry paging
+	/**
+	* Render out paging for blog entries
+	*/
 	function quickPaging(){
 		var prc = getRequestCollection(private=true);
 		if( NOT structKeyExists(prc,"pagingPlugin") ){
@@ -451,7 +460,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink);
 	}
 
-	/*
+	/**
 	* Render out entries in the home page by using our ColdBox collection rendering
 	* @template The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
 	*/
@@ -460,7 +469,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=entries,collectionAs="entry");
 	}
 
-	/*
+	/**
 	* Render out categories anywhere using ColdBox collection rendering
 	* @template The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
 	*/
@@ -468,8 +477,26 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var categories = getCurrentCategories();
 		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=categories,collectionAs="category");
 	}
+	
+	/**
+	* Render out custom fields for content
+	*/
+	function quickCustomFields(){
+		var customFields = getCurrentCustomFields();
+		var content = "";
+		
+		savecontent variable="content"{
+			writeOutput("<ul class='customFields'>");
+			for(var thisField in customFields){
+				writeOutput("<li><span class='customField-key'>#thisField.getKey()#:</span> #thisField.getValue()#</li>");
+			}
+			writeOutput("</ul>");
+		}
+		
+		return content;
+	}
 
-	/*
+	/**
 	* Render out comments anywhere using ColdBox collection rendering
 	* @template The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
 	*/

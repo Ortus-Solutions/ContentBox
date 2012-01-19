@@ -15,7 +15,10 @@ component {
 	
 	function configure(){
 		// contentbox settings
-		settings = {};
+		settings = {
+			codename = "John 12:44",
+			codenameLink = "http://www.youversion.com/bible/nkjv/matt/18/11"
+		};
 		
 		// interceptor settings
 		interceptorSettings = {

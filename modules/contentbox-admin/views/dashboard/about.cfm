@@ -33,7 +33,10 @@
 			
 			<!--- Logo --->
 			<div class="center">
-				<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo"/><br/><br/>
+				<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo"/><br/>
+				v.#getModuleSettings('contentbox').version# <br/>
+				(Codename: <a href="#getModuleSettings("contentbox").settings.codenameLink#" target="_blank">#getModuleSettings("contentbox").settings.codename#</a>)
+				<br/><br/>
 			</div>
 			
 			<p>
@@ -42,7 +45,15 @@
 				ContentBox is a professional open source project with tons of services, training, customizations and more.
 			</p>
 			
-			<!--- authors --->
+			<h2 class="border_grey">Links</h2>
+			<ul class="bulleted_list">
+				<li>Source Code: <a href="https://github.com/Ortus-Solutions/ContentBox" target="_blank">https://github.com/Ortus-Solutions/ContentBox</a></li>
+				<li>Code Tracker: <a href="http://coldbox.assembla.com/spaces/contentbox/" target="_blank">http://coldbox.assembla.com/spaces/contentbox/</a></li>
+				<li>Professional Services: <a href="http://www.ortussolutions.com" target="_blank">http://www.ortussolutions.com</a></li>
+				<li>ColdBox Platform: <a href="http://www.coldbox.org" target="_blank">http://www.coldbox.org</a></li>
+			</ul>
+			
+			<h2 class="border_grey">Components</h2>
 			<table name="settings" id="settings" class="tablesorter" width="98%">
 				<thead>
 					<tr>
@@ -53,7 +64,10 @@
 				
 				<tbody>
 					<tr>
-						<th>ContentBox Core</th>
+						<th>
+							ContentBox Core <br/>
+							(Codename: <a href="#getModuleSettings("contentbox").settings.codenameLink#" target="_blank">#getModuleSettings("contentbox").settings.codename#</a>)
+						</th>
 						<th class="center">v.#getModuleSettings('contentbox').version#</th>
 					</tr>
 					<tr>
