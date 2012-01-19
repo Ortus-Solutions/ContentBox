@@ -179,16 +179,35 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext");
 	}
 	// Get the missing page, if any
-	function getMissingPage(){
+	any function getMissingPage(){
 		var event = getRequestContext();
 		return event.getValue(name="missingPage",private="true",default="");
 	}
-	// Get the current page's or blog entrie's custom fields
-	function getCurrentCustomFields(){
+	// Get the current page's or blog entrie's custom fields as a struct
+	struct function getCurrentCustomFields(){
+		var fields = "";
 		if( isPageView() ){
-			return getCurrentPage().getCustomFields();
+			fields = getCurrentPage().getCustomFields();
 		}
-		return getCurrentEntry().getCustomFields();
+		else{
+			fields = getCurrentEntry().getCustomFields();
+		}
+		var results = {};
+		for(var thisField in fields){
+			results[ thisField.getKey() ] = thisField.getValue();
+		}
+		return results;
+	}
+	// Get a current page's or blog entrie's custom field by key, you can pass a default value if not found
+	any function getCustomField(required key, defaultValue){
+		var fields = getCurrentCustomFields();
+		if( structKeyExists( fields, arguments.key ) ){
+			return fields[arguments.key];
+		}
+		if( structKeyExists(arguments,"defaultValue") ){
+			return arguments.defaultValue;
+		} 
+		throw(message="No custom field with key: #arguments.key# found",detail="The keys are #structKeyList(fields)#",type="CBHelper.InvalidCustomField");
 	}
 
 	/************************************** events *********************************************/
@@ -488,14 +507,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		savecontent variable="content"{
 			writeOutput("<ul class='customFields'>");
 			for(var thisField in customFields){
-				writeOutput("<li><span class='customField-key'>#thisField.getKey()#:</span> #thisField.getValue()#</li>");
+				writeOutput("<li><span class='customField-key'>#thisField#:</span> #customFields[thisField]#</li>");
 			}
 			writeOutput("</ul>");
 		}
 		
 		return content;
 	}
-
+	
 	/**
 	* Render out comments anywhere using ColdBox collection rendering
 	* @template The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
