@@ -51,7 +51,7 @@ component implements="ISecurityService" singleton{
 			// Check if the rule requires permissions
 			if( len(rule.permissions) ){
 				for(var y=1; y lte listLen(rule.permissions); y++){
-					if( listGetAt(rule.permissions,y) eq author.checkPermission( rule.permissions ) ){
+					if( author.checkPermission( listGetAt(rule.permissions,y) ) ){
 						isAllowed = true;
 						break;
 					}

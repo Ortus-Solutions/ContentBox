@@ -39,7 +39,7 @@
 			#getPlugin("MessageBox").renderit()#
 		
 			<!--- fields --->
-			#html.startFieldset(legend="Incoming Event")#
+			#html.startFieldset(legend="Security")#
 				<!--- Usage --->
 				<div class="infoBar">
 					<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />
@@ -55,6 +55,9 @@
 				
 				#html.textField(name="secureList",label="*Secure List:",bind=prc.rule,required="required",maxlength="255",class="textfield",size="100",title="The list of regular expressions that if matched it will trigger security for this rule.")#
 				#html.textField(name="whiteList",label="White List:",bind=prc.rule,maxlength="255",class="textfield",size="100",title="The list of regular expressions that if matched it will allow them through for this rule.")#
+			
+				#html.textField(name="order",label="Firing Order Index:",bind=prc.rule,size="5")#
+			
 			#html.endFieldset()#
 			
 			#html.startFieldset(legend="Security Roles & Permissions")#

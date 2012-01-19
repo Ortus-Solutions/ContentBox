@@ -4,12 +4,9 @@
 	<thead>
 		<tr>
 			<th width="50">Match</th>
-			<th>Securelist</th>
-			<th>Whitelist</th>
-			<th>Redirect</th>
-			<th>Permissions</th>
-			<th>Roles</th>
-			<th width="55" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Order"/></th>
+			<th>Secured</th>
+			<th>Credentials</th>
+			<th width="65" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Order"/></th>
 			<th width="70" class="center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
@@ -21,19 +18,13 @@
 				#rule.getMatch()#
 			</td>
 			<td>
-				#rule.getSecureList()#
+				<strong>SecureList:</strong> #rule.getSecureList()#<br/>
+				<strong>WhiteList:</strong> #rule.getWhiteList()#<br/>
+				<strong>Redirect To:</strong>#rule.getRedirect()# (SSL: #yesNoFormat( rule.getUseSSL() )#)
 			</td>
 			<td>
-				#rule.getWhiteList()#
-			</td>
-			<td>
-				#rule.getRedirect()# (SSL: #yesNoFormat( rule.getUseSSL() )#)
-			</td>
-			<td>
-				#rule.getPermissions()#
-			</td>
-			<td>
-				#rule.getRoles()#
+				<strong>Permissions:</strong>#rule.getPermissions()#<br/>
+				<strong>Roles:</strong>#rule.getRoles()#
 			</td>
 			<td class="center">
 				#rule.getOrder()#

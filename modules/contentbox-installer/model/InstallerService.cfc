@@ -55,19 +55,15 @@ component accessors="true"{
 	}
 	
 	function createSecurityRules(required setup){
-		// Create internal rules
-		var props = {
-			whitelist 	= "^contentbox-admin:security\.",
-			secureList 	= "^contentbox-admin:.*",
-			match		= "event",
-			roles 		= "",
-			permissions	= "",
-			redirect	= "cbadmin/security/login",
-			useSSL		= false,
-			order		= 1
-		};
-		var rule = securityRuleService.new(properties=props);
-		securityRuleService.save( rule );
+		var securityRules = deserializeJSON(  fileRead( appPath & "modules/contentbox-installer/model/securityRules.json" ) );
+		// iterate over array
+		for(var thisRule in securityRules){
+			if( structKeyExists(thisRule,"ruleID") ){
+				structDelete(thisRule,"ruleID");
+			}
+			var oRule = securityRuleService.new(properties=thisRule);
+			securityRuleService.save( oRule );
+		}
 	}
 	
 	function processORMUpdate(){
