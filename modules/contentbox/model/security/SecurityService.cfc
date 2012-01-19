@@ -37,7 +37,31 @@ component implements="ISecurityService" singleton{
 		
 		// First check if user has been authenticated.
 		if( author.isLoaded() AND author.isLoggedIn() ){
-			isAllowed = true;
+			
+			// Check if the rule requires roles
+			if( len(rule.roles) ){
+				for(var x=1; x lte listLen(rule.roles); x++){
+					if( listGetAt(rule.roles,x) eq author.getRole().getRole() ){
+						isAllowed = true;
+						break;
+					}
+				}
+			}
+			
+			// Check if the rule requires permissions
+			if( len(rule.permissions) ){
+				for(var y=1; y lte listLen(rule.permissions); y++){
+					if( listGetAt(rule.permissions,y) eq author.checkPermission( rule.permissions ) ){
+						isAllowed = true;
+						break;
+					}
+				}
+			}
+			
+			// Check for empty rules and perms
+			if( !len(rule.roles) AND !len(rule.permissions) ){
+				isAllowed = true;
+			}
 		}
 		
 		return isAllowed;
