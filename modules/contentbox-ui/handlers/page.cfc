@@ -18,11 +18,15 @@ component extends="BaseContentHandler" singleton{
 		// incoming params
 		event.paramValue("pageSlug","");
 		
-		// Try to retrieve by slug
-		prc.page = pageService.findBySlug(rc.pageSlug);
+		// Try slug parsing for hiearchical URLs
+		var incomingURL  = "/" & event.getCurrentRoutedURL();
+		var incomingSlug = listLast(incomingURL,"/");
 		
-		// Check if loaded, else not found
-		if( prc.page.isLoaded() ){
+		// Try to get the page using the last slug.
+		prc.page = pageService.findBySlug( incomingSlug );
+		
+		// Check if loaded and also the ancestry is ok as per hiearchical URls
+		if( prc.page.isLoaded() AND (prc.page.getRecursiveSlug() & "/") eq incomingURL){
 			// Record hit
 			pageService.updateHits( prc.page );
 			// Retrieve Comments
@@ -37,7 +41,7 @@ component extends="BaseContentHandler" singleton{
 		}
 		else{
 			// missing page
-			prc.missingPage 	 = rc.pageSlug;
+			prc.missingPage 	 = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
 			
 			// announce event
