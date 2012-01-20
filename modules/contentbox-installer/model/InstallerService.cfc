@@ -207,12 +207,19 @@ component accessors="true"{
 			"cb_site_layout" = "default",
 			
 			// RSS Feeds
-			"cb_rss_cachingTimeout" = "60",
 			"cb_rss_maxEntries" = "10",
-			"cb_rss_caching" = true,
 			"cb_rss_maxComments" = "10",
-			"cb_rss_cachingTimeoutIdle" = "10",
-			"cb_rss_cacheName" = "Template"
+			"cb_rss_caching" = "true",
+			"cb_rss_cachingTimeout" = "60",
+			"cb_rss_cachingTimeoutIdle" = "15",
+			"cb_rss_cacheName" = "Template",
+			
+			// Content Caching
+			"cb_content_caching" = "true",
+			"cb_entry_caching" = "true",
+			"cb_content_cachingTimeout" = "60",
+			"cb_content_cachingTimeoutIdle" = "15",
+			"cb_content_cacheName" = "Template"
 		};
 		
 		// Create setting objects and save
