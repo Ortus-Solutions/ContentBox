@@ -77,7 +77,9 @@ component {
 			// CB UI Request Interceptor
 			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbUI" },
 			// Simple Security For pages and blog entries
-			{class="#moduleMapping#.interceptors.SimpleSecurity"}
+			{class="#moduleMapping#.interceptors.SimpleSecurity",name="SimpleSecurity@cb"},
+			// Global HTML interceptor for rendering HTML Points
+			{class="#moduleMapping#.interceptors.GlobalHTML",name="GlobalHTML@cb"}
 		];
 		
 	}
