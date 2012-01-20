@@ -4,6 +4,10 @@
 #html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
 #html.addAsset(prc.cbroot&"/includes/js/contentbox.page.editor.js")#
 #html.addAsset(prc.cbroot&"/includes/css/date.css")#
+<!--- Custom Javascript --->
+<script type="text/javascript">
+function getEditorSelectorURL(){ return '#event.buildLink(prc.xehWidgetSelector)#';}
+</script>
 </cfoutput>
 <cfscript>
 	function toCKDate(inDate){

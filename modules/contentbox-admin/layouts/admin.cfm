@@ -73,6 +73,7 @@
 							<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
 						</cfif>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
+						<option value="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</option>
 						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>						
 					</select>
 					

@@ -56,8 +56,9 @@ component extends="baseHandler"{
 		prc.content  = htmlService.get( event.getValue("contentID",0) );
 		
 		// exit handlers
-		prc.xehContentSave = "#prc.cbAdminEntryPoint#.customHTML.save";
-		prc.xehSlugify	  = "#prc.cbAdminEntryPoint#.customHTML.slugify";
+		prc.xehContentSave 		= "#prc.cbAdminEntryPoint#.customHTML.save";
+		prc.xehSlugify	  		= "#prc.cbAdminEntryPoint#.customHTML.slugify";
+		prc.xehWidgetSelector  	= "#prc.cbAdminEntryPoint#.widgets.editorselector";
 		
 		// view
 		event.setView(view="customHTML/editor");

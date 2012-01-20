@@ -18,11 +18,4 @@
 		&nbsp;<input type="submit" class="buttonred" value="Save" title="Save Comment">
 	</div>
 #html.endForm()#
-
-<script type="text/javascript">
-$(document).ready(function() {
-	// form validators
-	$("##commentEditForm").validator({grouped:true});
-});
-</script>
 </cfoutput>
