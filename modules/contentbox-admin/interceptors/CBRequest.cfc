@@ -48,17 +48,18 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehBlogEditor 	= "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehCategories	= "#prc.cbAdminEntryPoint#.categories";
 		
-		// Pages Tab
+		// Content Tab
 		prc.xehPages		= "#prc.cbAdminEntryPoint#.pages";
 		prc.xehPagesEditor	= "#prc.cbAdminEntryPoint#.pages.editor";
+		prc.xehCustomHTML	= "#prc.cbAdminEntryPoint#.customHTML";
+		prc.xehGlobalHTML	= "#prc.cbAdminEntryPoint#.globalHTML";
 		
 		// Comments Tab
 		prc.xehComments			= "#prc.cbAdminEntryPoint#.comments";
 		prc.xehCommentsettings	= "#prc.cbAdminEntryPoint#.comments.settings";
 		
-		// Site Tab
+		// Look and Feel Tab
 		prc.xehLayouts		= "#prc.cbAdminEntryPoint#.layouts";
-		prc.xehCustomHTML	= "#prc.cbAdminEntryPoint#.customHTML";
 		prc.xehWidgets		= "#prc.cbAdminEntryPoint#.widgets";
 		
 		// Authors Tab

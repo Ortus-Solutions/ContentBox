@@ -77,6 +77,8 @@ component {
 				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout","cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder",
 				// Settings events
 				"cbadmin_preSettingsSave","cbadmin_postSettingsSave","cbadmin_preSettingRemove","cbadmin_postSettingRemove","cbadmin_onSettingsNav","cbadmin_onSettingsContent",
+				// Global HTML Events
+				"cbadmin_preGlobalHTMLSave","cbadmin_postGlobalHTMLSave",
 				// Custom HTML Events
 				"cbadmin_preCustomHTMLSave", "cbadmin_postCustomHTMLSave","cbadmin_preCustomHTMLRemove", "cbadmin_postCustomHTMLRemove",
 				// Security Rules Events
