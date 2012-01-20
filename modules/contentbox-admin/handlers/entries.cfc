@@ -89,8 +89,9 @@ component extends="baseHandler"{
 			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={entryID=rc.entryID});
 		}
 		// exit handlers
-		prc.xehEntrySave = "#prc.cbAdminEntryPoint#.entries.save";
-		prc.xehSlugify	= "#prc.cbAdminEntryPoint#.entries.slugify";
+		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
+		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
+		prc.xehWidgetSelector	= "#prc.cbAdminEntryPoint#.widgets.editorSelector";
 		// Tab
 		prc.tabEntries_viewAll = true;
 		// view

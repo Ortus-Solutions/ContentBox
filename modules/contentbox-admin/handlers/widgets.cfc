@@ -17,15 +17,15 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehWidgetRemove 	= "#prc.cbAdminEntryPoint#.widgets.remove";
-		rc.xehWidgetUpload  = "#prc.cbAdminEntryPoint#.widgets.upload";
-		rc.xehWidgetDocs    = "#prc.cbAdminEntryPoint#.widgets.docs";
+		prc.xehWidgetRemove 	= "#prc.cbAdminEntryPoint#.widgets.remove";
+		prc.xehWidgetUpload  = "#prc.cbAdminEntryPoint#.widgets.upload";
+		prc.xehWidgetDocs    = "#prc.cbAdminEntryPoint#.widgets.docs";
 		
 		// Get all widgets
-		rc.widgets = widgetService.getWidgets();
+		prc.widgets = widgetService.getWidgets();
 		
 		// ForgeBox Entry URL
-		rc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
+		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
 		
 		// Tab
 		prc.tabSite_widgets = true;
@@ -35,11 +35,11 @@ component extends="baseHandler"{
 	
 	//docs
 	function docs(event,rc,prc){
-		rc.widgetName = widgetService.ripExtension( urlDecode(rc.widget) );
+		prc.widgetName = widgetService.ripExtension( urlDecode(rc.widget) );
 		// get widget plugin
-		rc.oWidget  = getMyPlugin(plugin="widgets.#rc.widgetName#",module="contentbox-ui");
+		prc.oWidget  = getMyPlugin(plugin="widgets.#prc.widgetName#",module="contentbox-ui");
 		// get its metadata
-		rc.metadata = getmetadata(rc.oWidget.renderit);
+		prc.metadata = getmetadata(prc.oWidget.renderit);
 		// presetn view
 		event.setView(view="widgets/docs",layout="ajax");
 	}
@@ -72,5 +72,13 @@ component extends="baseHandler"{
 		}
 		
 		setNextEvent(prc.xehWidgets);		
+	}
+	
+	// Editor Selector
+	function editorSelector(event,rc,prc){
+		// Get all widgets
+		prc.widgets = widgetService.getWidgets();
+		
+		event.setView(view="widgets/editorSelector",layout="ajax");
 	}
 }

@@ -20,14 +20,14 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* A widget that reads an RSS feed and displays the items
-	* @feedURL The rss feed URL
-	* @maxItems The maximum number of items to display, default is 5
-	* @showBody Show the body of the feed item or not, default is true
-	* @linkTarget The link target (HTML) for the RSS item link, defaults to _blank
- 	* @title The title to show before the dropdown or list, defaults to H2
-	* @titleLevel The H{level} to use, by default we use H2
+	* @feedURL.hint The rss feed URL
+	* @maxItems.hint The maximum number of items to display, default is 5
+	* @showBody.hint Show the body of the feed item or not, default is true
+	* @linkTarget.hint The link target (HTML) for the RSS item link, defaults to _blank
+ 	* @title.hint The title to show before the dropdown or list, defaults to H2
+	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(required feedURL,numeric maxItems=5,boolean showBody=true,linkTarget="_blank",title="",titleLevel="2"){
+	any function renderIt(required feedURL,numeric maxItems=5,boolean showBody=true,string linkTarget="_blank",string title="",string titleLevel="2"){
 		var rString		= "";
 		var feed 		= getPlugin('FeedReader').readFeed(feedURL=arguments.feedURL,maxItems=arguments.maxItems,itemsType="query");
 		

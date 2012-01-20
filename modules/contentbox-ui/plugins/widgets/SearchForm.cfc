@@ -20,11 +20,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* This widget creates a simple ContentBox search form
-	* @label The label to use, defaults to 'Search for:'
-	* @title The title to show before the dropdown or list, defaults to H2
-	* @titleLevel The H{level} to use, by default we use H2
+	* @label.hint The label to use, defaults to 'Search for:'
+	* @title.hint The title to show before the dropdown or list, defaults to H2
+	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(label="Search for",title="",titleLevel="2"){
+	any function renderIt(string label="Search for",string title="",string titleLevel="2"){
 		var rString	= "";
 		
 		// generate recent comments

@@ -20,10 +20,10 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* Execute a MessageBox render message to display awesome ColdBox MessageBoxes
-	* @type The MessageBox type to render: info, warning, error
-	* @message The message to render
+	* @type.hint The MessageBox type to render: info, warning, error
+	* @message.hint The message to render
 	*/
-	any function renderIt(required type="info",required any message){
+	any function renderIt(required string type="info",required string message){
 		return getPlugin("MessageBox").renderMessage(argumentCollection=arguments);
 	}
 	

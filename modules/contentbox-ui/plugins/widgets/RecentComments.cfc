@@ -20,12 +20,12 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* Show n recent comments
-	* @max The number of recent comments to show. By default it shows 5
-	* @maxChars The maximum character length to show for comment contents
-	* @title An optional title to display using an H2 tag.
-	* @titleLevel The H{level} to use, by default we use H2
+	* @ma.hint The number of recent comments to show. By default it shows 5
+	* @maxChars.hint The maximum character length to show for comment contents
+	* @title.hint An optional title to display using an H2 tag.
+	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(numeric max=5,numeric maxChars=80,title="",titleLevel="2"){
+	any function renderIt(numeric max=5,numeric maxChars=80,string title="",string titleLevel="2"){
 		var event 			= getRequestContext();
 		var cbSettings 		= event.getValue(name="cbSettings",private=true);
 		var commentResults 	= commentService.findApprovedComments(max=arguments.max);
