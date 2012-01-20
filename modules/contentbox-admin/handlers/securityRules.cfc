@@ -4,7 +4,8 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="ruleService"		inject="id:securityRuleService@cb";
+	property name="ruleService"				inject="id:securityRuleService@cb";
+	property name="securityInterceptor"		inject="id:securityInterceptor@cb";
 	
 	// index
 	function index(event,rc,prc){
@@ -13,6 +14,7 @@ component extends="baseHandler"{
 		prc.xehRemoveRule	= "#prc.cbAdminEntryPoint#.securityRules.remove";
 		prc.xehEditorRule	= "#prc.cbAdminEntryPoint#.securityRules.editor";
 		prc.xehRuleOrder	= "#prc.cbAdminEntryPoint#.securityRules.changeOrder";
+		prc.xehApplyRules	= "#prc.cbAdminEntryPoint#.securityRules.apply";
 		
 		// get content pieces
 		prc.rules = ruleService.getAll(sortOrder="order asc");
@@ -28,6 +30,13 @@ component extends="baseHandler"{
 		else{
 			event.setView("securityRules/index");
 		}
+	}
+	
+	// Apply the security rules
+	function apply(event,rc,prc){
+		securityInterceptor.loadRules();
+		getPlugin("MessageBox").info("Security Rules Applied!");
+		setNextEvent(prc.xehsecurityRules);
 	}
 	
 	// order change

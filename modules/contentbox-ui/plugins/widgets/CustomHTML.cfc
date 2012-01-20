@@ -20,10 +20,10 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* Renders Custom HTML content
-	* @slug The custom HTML slug to render
-	* @defaultValue The string to show if the custom HTML snippet does not exist
+	* @slug.hint The custom HTML slug to render
+	* @defaultValue.hint The string to show if the custom HTML snippet does not exist
 	*/
-	any function renderIt(required slug, defaultValue){
+	any function renderIt(required string slug, string defaultValue){
 		var content = customHTMLService.findWhere({slug=arguments.slug});
 		if( !isNull(content) ){
 			return content.renderContent();	

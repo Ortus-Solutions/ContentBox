@@ -20,12 +20,12 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* Show the blog categories
-	* @dropdown Display as a dropdown or a list, default is list
-	* @showPostCount Show post counts or not, default is true
-	* @title The title to show before the dropdown or list, defaults to H2
-	* @titleLevel The H{level} to use, by default we use H2
+	* @dropdown.hint Display as a dropdown or a list, default is list
+	* @showPostCount.hint Show post counts or not, default is true
+	* @title.hint The title to show before the dropdown or list, defaults to H2
+	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(boolean dropdown=false,boolean showPostCount=true,title="",titleLevel="2"){
+	any function renderIt(boolean dropdown=false,boolean showPostCount=true,string title="",string titleLevel="2"){
 		var categories 		= cb.getCurrentCategories();
 		var rString			= "";
 		

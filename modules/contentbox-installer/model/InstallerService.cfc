@@ -7,12 +7,14 @@ component accessors="true"{
 	property name="authorService" 		inject="authorService@cb";
 	property name="settingService" 		inject="settingService@cb";
 	property name="categoryService" 	inject="categoryService@cb";
+	property name="pageService"			inject="pageService@cb";
 	property name="entryService"		inject="entryService@cb";
 	property name="commentService"		inject="commentService@cb";
 	property name="roleService" 		inject="roleService@cb";
 	property name="permissionService" 	inject="permissionService@cb";
 	property name="securityRuleService" inject="securityRuleService@cb";
 	property name="appPath" 			inject="coldbox:setting:applicationPath";
+	property name="securityInterceptor" inject="securityInterceptor@cb";
 	
 	/**
 	* Constructor
@@ -44,29 +46,24 @@ component accessors="true"{
 		if( setup.getpopulateData() ){
 			createSampleData( setup, author );
 		}
-		
 		// Remove ORM update from Application.cfc
 		processORMUpdate();
-		
 		// ContentBox is now online, mark it:
 		settingService.activateCB();
+		// Reload Security Rules
+		securityInterceptor.loadRules();
 	}
 	
 	function createSecurityRules(required setup){
-		// Create internal rules
-		var props = {
-			whitelist 	= "^contentbox-admin:security\.",
-			secureList 	= "^contentbox-admin:.*",
-			match		= "event",
-			roles 		= "",
-			permissions	= "",
-			redirect	= "cbadmin/security/login",
-			useSSL		= false,
-			order		= 1
-			
-		};
-		var rule = securityRuleService.new(properties=props);
-		securityRuleService.save( rule );
+		var securityRules = deserializeJSON(  fileRead( appPath & "modules/contentbox-installer/model/securityRules.json" ) );
+		// iterate over array
+		for(var thisRule in securityRules){
+			if( structKeyExists(thisRule,"ruleID") ){
+				structDelete(thisRule,"ruleID");
+			}
+			var oRule = securityRuleService.new(properties=thisRule);
+			securityRuleService.save( oRule );
+		}
 	}
 	
 	function processORMUpdate(){
@@ -210,12 +207,19 @@ component accessors="true"{
 			"cb_site_layout" = "default",
 			
 			// RSS Feeds
-			"cb_rss_cachingTimeout" = "60",
 			"cb_rss_maxEntries" = "10",
-			"cb_rss_caching" = true,
 			"cb_rss_maxComments" = "10",
-			"cb_rss_cachingTimeoutIdle" = "10",
-			"cb_rss_cacheName" = "Template"
+			"cb_rss_caching" = "true",
+			"cb_rss_cachingTimeout" = "60",
+			"cb_rss_cachingTimeoutIdle" = "15",
+			"cb_rss_cacheName" = "Template",
+			
+			// Content Caching
+			"cb_content_caching" = "true",
+			"cb_entry_caching" = "true",
+			"cb_content_cachingTimeout" = "60",
+			"cb_content_cachingTimeoutIdle" = "15",
+			"cb_content_cacheName" = "Template"
 		};
 		
 		// Create setting objects and save
@@ -276,6 +280,22 @@ component accessors="true"{
 		
 		// save entry
 		entryService.saveEntry( entry );
+		
+		// create a page
+		var page = pageService.new(properties={
+			title = "About",
+			slug  = "about",
+			content = "Hey welcome to my about page for ContentBox, isn't this great!",
+			publishedDate = now(),
+			isPublished = true,
+			allowComments = false,
+			passwordProtection='',
+			HTMLKeywords = "about, contentbox,coldfusion,coldbox",
+			HTMLDescription = "The most amazing ContentBox page in the world",
+			layout = "pages"			
+		});
+		page.setAuthor( author );
+		pageService.savePage( page );
 	}
 	
 }

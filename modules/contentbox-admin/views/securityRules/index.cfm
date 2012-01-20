@@ -1,6 +1,28 @@
 ﻿<cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
+	<!--- Tools Box --->
+	<div class="small_box">
+		<div class="header">
+			<img src="#prc.cbroot#/includes/images/tools_icon.png" alt="info" width="24" height="24" />
+			Actions
+		</div>
+		<div class="body">
+			<p>
+				If you added new rules to your system, you MUST apply them in order for them to take
+				effect immediately.  If not, they will take effect on application or module restart.
+			</p>
+			<!--- Action Bar --->
+			<div class="actionBar center">
+				<a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt" 
+						   data-title="Really Apply Rules?"
+						   data-message="Please be aware that you could be locked out of application if your rules are not correct.">
+					<button class="buttonred" onclick="return false">Apply Rules</button>
+				</a>
+			</div>
+			
+		</div>
+	</div>	
 	<!--- Saerch Box --->
 	<div class="small_box">
 		<div class="header">

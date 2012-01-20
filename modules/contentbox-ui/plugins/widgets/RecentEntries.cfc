@@ -20,13 +20,13 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* Show n recent entries
-	* @max The number of recent comments to show. By default it shows 5
-	* @title An optional title to display using an H2 tag.
-	* @titleLevel The H{level} to use, by default we use H2
-	* @category The category slug to filter on
-	* @searchTerm The search term to filter on
+	* @max.hint The number of recent comments to show. By default it shows 5
+	* @title.hint An optional title to display using an H2 tag.
+	* @titleLevel.hint The H{level} to use, by default we use H2
+	* @category.hint The category slug to filter on
+	* @searchTerm.hint The search term to filter on
 	*/
-	any function renderIt(numeric max=5,title="",titleLevel="2",category="",searchTerm=""){
+	any function renderIt(numeric max=5,title="",string titleLevel="2",string category="",string searchTerm=""){
 		var event 			= getRequestContext();
 		var cbSettings 		= event.getValue(name="cbSettings",private=true);
 		var entryResults 	= entryService.findPublishedEntries(max=arguments.max,

@@ -23,7 +23,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/coldbox_icon.png" alt="settings" />
+			<img src="#prc.cbroot#/includes/images/ContentBox-Circle_32.png" alt="settings" />
 			Configure ContentBox
 		</div>
 		<!--- Body --->
@@ -40,6 +40,7 @@
 			<ul class="vertical_nav">
 				<li class="active"><a href="##general_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> General Options</a></li>
 				<li><a href="##dashboard_options"><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/> Dashboard Options</a></li>
+				<li><a href="##cache_options"><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/> Content Caching</a></li>
 				<li><a href="##gravatars"><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> Gravatars</a></li>
 				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
 				<li><a href="##rss_options"><img src="#prc.cbRoot#/includes/images/feed.png" alt="modifiers"/> RSS Options</a></li>
@@ -101,6 +102,48 @@
 								</cfloop>
 							</select>
 						</fieldset>	
+					</div>
+					<!--- Content Caching Options --->
+					<div>
+						<fieldset>
+							<legend><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/>  Content Caching</legend>
+									
+							<!--- Content Caching --->
+							#html.label(field="cb_content_caching",content="Activate Page rendered content caching:")#
+							<small>Page content will be cached once it has been rendered</small><br/>
+							#html.radioButton(name="cb_content_caching",checked=prc.cbSettings.cb_content_caching,value=true)# Yes 	
+							#html.radioButton(name="cb_content_caching",checked=not prc.cbSettings.cb_content_caching,value=false)# No 	
+							
+							<!--- Entry Caching --->
+							#html.label(field="cb_entry_caching",content="Activate Blog Entry rendered content caching:")#
+							<small>Blog entry content will be cached once it has been rendered</small><br/>
+							#html.radioButton(name="cb_entry_caching",checked=prc.cbSettings.cb_entry_caching,value=true)# Yes 	
+							#html.radioButton(name="cb_entry_caching",checked=not prc.cbSettings.cb_entry_caching,value=false)# No 	
+							
+							<!--- Content Cache Name --->
+							<label for="cb_content_cacheName">Content Cache Provider:</label>
+							<small>Choose the CacheBox provider to cache rendered content into.</small><br/>
+							#html.select(name="cb_content_cacheName",options=prc.cacheNames,selectedValue=prc.cbSettings.cb_content_cacheName)#
+							
+							<!--- Content Cache Timeouts --->
+							<label for="cb_content_cachingTimeout">Content Cache Timeouts:</label>
+							<small>The number of minutes a rendered content is cached.</small><br/>
+							<select name="cb_content_cachingTimeout" id="cb_content_cachingTimeout">
+								<cfloop from="5" to="100" step="5" index="i">
+									<option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeout>selected="selected"</cfif>>#i#</option>
+								</cfloop>
+							</select>	
+							
+							<!--- Content Last Access Timeouts --->
+							<label for="cb_rss_cachingTimeoutIdle">Content Cache Idle Timeouts:</label>
+							<small>The number of idle minutes allowed for cached rendered content to live. Usually this is less than the timeout you selected above</small><br/>
+							<select name="cb_content_cachingTimeoutIdle" id="cb_content_cachingTimeoutIdle">
+								<cfloop from="5" to="100" step="5" index="i">
+									<option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeoutIdle>selected="selected"</cfif>>#i#</option>
+								</cfloop>
+							</select>		
+							
+						</fieldset>
 					</div>
 					<!--- Gravatars --->
 					<div>

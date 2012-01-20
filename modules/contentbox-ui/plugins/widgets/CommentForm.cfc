@@ -20,9 +20,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* The main commenting form widget
-	* @content The content object to build the comment form for: page or entry
+	* @content.hint The content object to build the comment form for: page or entry
 	*/
-	any function renderIt(content){
+	any function renderIt(any content){
 		var event 		= getRequestContext();
 		var cbSettings 	= event.getValue(name="cbSettings",private=true);
 		var captcha		= "";

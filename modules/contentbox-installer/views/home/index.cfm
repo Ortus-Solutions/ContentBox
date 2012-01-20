@@ -85,6 +85,8 @@
 						<a href="http://www.iis.net/download/urlrewrite">IIS 7 rewrite module</a>.  
 						A fully working apache mod_rewrite <strong>.htaccess</strong> file
 						has been created and placed in the root of your installation.
+						A <strong>web.config</strong> for IIS 7 rewrite module has also been created in the 
+						following directory: <strong>modules/contentbox-installer/model/web.config</strong>.
 					</p>
 					<p>
 						If you select full URL rewrites below, then we will modify your application's routing table to remove the 

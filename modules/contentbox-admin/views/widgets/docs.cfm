@@ -1,13 +1,13 @@
 ﻿<cfoutput>
-<h2>'#rc.oWidget.getPluginName()#' Widget</h2>
+<h2>'#prc.oWidget.getPluginName()#' Widget</h2>
 <div>
 	<ul>
-		<li><strong>Version:</strong> #rc.oWidget.getpluginVersion()# </li>
-		<li><strong>ForgeBox Slug:</strong> #rc.oWidget.getForgeBoxSlug()# </li>
-		<li><strong>Description:</strong> #rc.oWidget.getPluginDescription()#</li>
-		<li><strong>Renderit Hint: </strong> <cfif structKeyExists(rc.metadata,"hint")>#rc.metadata.hint#<cfelse>N/A</cfif></li>
+		<li><strong>Version:</strong> #prc.oWidget.getpluginVersion()# </li>
+		<li><strong>ForgeBox Slug:</strong> #prc.oWidget.getForgeBoxSlug()# </li>
+		<li><strong>Description:</strong> #prc.oWidget.getPluginDescription()#</li>
+		<li><strong>Renderit Hint: </strong> <cfif structKeyExists(prc.metadata,"hint")>#prc.metadata.hint#<cfelse>N/A</cfif></li>
 		<li><strong>Renderit Arguments: </strong>
-			<cfif ArrayLen(rc.metadata.parameters)>
+			<cfif ArrayLen(prc.metadata.parameters)>
 				<table class="tablelisting" width="95%">
 					<tr>
 						<th>Argument</th>
@@ -16,7 +16,7 @@
 						<th>Default Value</th>
 						<th>Hint</th>
 					</tr>
-				<cfloop array="#rc.metadata.parameters#" index="i">
+				<cfloop array="#prc.metadata.parameters#" index="i">
 					<tr>
 						<td>#i.name#</td>
 						<td><cfif structKeyExists(i,"type")>#i.type#<cfelse>Any</cfif></td>

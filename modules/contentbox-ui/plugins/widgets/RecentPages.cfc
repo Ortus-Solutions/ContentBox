@@ -20,12 +20,12 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* Show n recent pages
-	* @max The number of recent pages to show. By default it shows 5
-	* @title An optional title to display using an H2 tag.
-	* @titleLevel The H{level} to use, by default we use H2
-	* @searchTerm The search term to filter on
+	* @max.hint The number of recent pages to show. By default it shows 5
+	* @title.hint An optional title to display using an H2 tag.
+	* @titleLevel.hint The H{level} to use, by default we use H2
+	* @searchTerm.hint The search term to filter on
 	*/
-	any function renderIt(numeric max=5,title="",titleLevel="2",searchTerm=""){
+	any function renderIt(numeric max=5,string title="",string titleLevel="2",string searchTerm=""){
 		var event 			= getRequestContext();
 		var cbSettings 		= event.getValue(name="cbSettings",private=true);
 		var pageResults 	= pageService.findPublishedPages(max=arguments.max,

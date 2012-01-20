@@ -8,7 +8,7 @@
 			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Widget Uploader
 		</div>
 		<div class="body">
-			#html.startForm(name="widgetUploadForm",action=rc.xehWidgetupload,multipart=true,novalidate="novalidate")#
+			#html.startForm(name="widgetUploadForm",action=prc.xehWidgetupload,multipart=true,novalidate="novalidate")#
 	
 				#html.fileField(name="filePlugin",label="Upload Widget: ", class="textfield",required="required")#		
 				
@@ -41,7 +41,7 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- CategoryForm --->
-			#html.startForm(name="widgetForm",action=rc.xehWidgetRemove)#
+			#html.startForm(name="widgetForm",action=prc.xehWidgetRemove)#
 			#html.hiddenField(name="widgetFile")#
 			
 			<!--- Content Bar --->
@@ -65,11 +65,11 @@
 					</tr>
 				</thead>				
 				<tbody>
-					<cfloop query="rc.widgets">
-					<cfset p = rc.widgets.plugin>
+					<cfloop query="prc.widgets">
+					<cfset p = prc.widgets.plugin>
 					<cfif isSimpleValue(p)>
 						<tr class="selected">
-							<td colspan="4">There is a problem creating widget: '#rc.widgets.name#', please check the application log files.</td>
+							<td colspan="4">There is a problem creating widget: '#prc.widgets.name#', please check the application log files.</td>
 						</tr>
 					<cfelse>
 					<tr>
@@ -81,19 +81,19 @@
 						<td>
 							#p.getPluginDescription()#<br/>
 							<cfif len( p.getForgeBoxSlug() )>
-							ForgeBox URL: <a href="#rc.forgeBoxEntryURL & "/" & p.getForgeBoxSlug()#" target="_blank">#p.getForgeBoxSlug()#</a>
+							ForgeBox URL: <a href="#prc.forgeBoxEntryURL & "/" & p.getForgeBoxSlug()#" target="_blank">#p.getForgeBoxSlug()#</a>
 							</cfif>
 						</td>
 						<td class="center">
 							<!--- Documentation Icon --->
-							<a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(rc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(rc.widgets.name)#'})"><img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" /></a>
+							<a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(prc.widgets.name)#'})"><img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" /></a>
 							&nbsp;
 							<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 							<!--- Update Check --->
 							<a title="Check For Updates" href="##"><img src="#prc.cbRoot#/includes/images/download_black.png" alt="download" /></a>
 							&nbsp;
 							<!--- Delete Command --->
-							<a title="Delete Widget" href="javascript:remove('#JSStringFormat(rc.widgets.name)#')" class="confirmIt" data-title="Delete Widget?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Widget" href="javascript:remove('#JSStringFormat(prc.widgets.name)#')" class="confirmIt" data-title="Delete Widget?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 							</cfif>
 						</td>
 					</tr>

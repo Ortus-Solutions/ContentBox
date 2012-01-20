@@ -15,7 +15,10 @@ component {
 	
 	function configure(){
 		// contentbox settings
-		settings = {};
+		settings = {
+			codename = "John 12:44",
+			codenameLink = "http://www.youversion.com/bible/nkjv/matt/18/11"
+		};
 		
 		// interceptor settings
 		interceptorSettings = {
@@ -28,12 +31,21 @@ component {
 				
 		// interceptors
 		interceptors = [
+			// ContentBox security
+			{class="coldbox.system.interceptors.Security",
+			 name="security@cb",
+			 properties={
+			 	 rulesSource 	= "model",
+			 	 rulesModel		= "securityRuleService@cb",
+			 	 rulesModelMethod = "getSecurityRules",
+			 	 validatorModel = "securityService@cb"} 
+			},
 			// CB RSS Cache Cleanup Ghost
 			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
 			// Notification service interceptor
 			{class="contentbox.model.system.NotificationService",name="NotificationService@cb" },
 			// Content Renderers, remember order is important.
-			{class="contentbox.model.content.renderers.WidgetRenderer"}		
+			{class="contentbox.model.content.renderers.WidgetRenderer"}
 		];
 		
 		// Security/System
@@ -43,6 +55,7 @@ component {
 		binder.map("permissionService@cb").to("contentbox.model.security.PermissionService");
 		binder.map("roleService@cb").to("contentbox.model.security.RoleService");
 		binder.map("securityRuleService@cb").to("contentbox.model.security.SecurityRuleService");
+		binder.map("securityInterceptor@cb").toDSL("coldbox:interceptor:security@cb");
 		// Entry services
 		binder.map("entryService@cb").to("contentbox.model.content.EntryService");
 		binder.map("categoryService@cb").to("contentbox.model.content.CategoryService");

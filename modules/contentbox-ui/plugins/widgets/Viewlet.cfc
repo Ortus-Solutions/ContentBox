@@ -20,13 +20,13 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* Execute an internal coldbox event viewlet
-	* @event The ColdBox event to execute
-	* @private Private event or not
-	* @args Event arguments to pass to the viewlet execution
-	* @title The title to show before the dropdown or list, defaults to H2
-	* @titleLevel The H{level} to use, by default we use H2
+	* @event.hint The ColdBox event to execute
+	* @private.hint Private event or not
+	* @args.hint Event arguments to pass to the viewlet execution
+	* @title.hint The title to show before the dropdown or list, defaults to H2
+	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(required event,boolean private=false,struct args=structnew(),title="",titleLevel="2"){
+	any function renderIt(required string event,boolean private=false,struct args=structnew(),string title="",string titleLevel="2"){
 		var rString			= "";
 		
 		// generate recent comments

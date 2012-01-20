@@ -35,31 +35,34 @@
 		<!--- Body Header --->
 		<div class="header">
 			<ul class="sub_nav">
-				<li title="Raw Settings"><a href="##" class="current">Raw Settings</a></li>
-				<li title="CacheBox Monitor"><a href="##">CacheBox Monitor</a></li>
+				<li title="Raw Settings"><a href="##raw" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Raw Settings</a></li>
+				<li title="WireBox"><a href="##wirebox"><img src="#prc.cbroot#/includes/images/eye.png" alt="icon" border="0"/> WireBox</a></li>
+				<li title="CacheBox Monitor"><a href="##cachebox"><img src="#prc.cbroot#/includes/images/database_black.png" alt="icon" border="0"/> CacheBox</a></li>
 			</ul>
-			<img src="#prc.cbroot#/includes/images/database.png" alt="sofa" width="30" height="30" />
-			ContentBox Raw Geek Settings
+			<img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" width="30" height="30" />
+			Awesome Geek Panel
 		</div>
 		<!--- Body --->
 		<div class="body">
+			<!--- MessageBox --->
+			#getPlugin("MessageBox").renderit()#
+				
 			<div class="panes">
+				
 				<!--- Raw Settings Pane --->
 				<div class="clearfix">
 					<p>Manage the raw settings at your own risk buddy!</p>
-					<!--- MessageBox --->
-					#getPlugin("MessageBox").renderit()#
 					
 					<!--- settingForm --->
-					#html.startForm(name="settingForm",action=rc.xehSettingRemove)#
+					#html.startForm(name="settingForm",action=prc.xehSettingRemove)#
 					<input type="hidden" name="settingID" id="settingID" value="" />
 					
 					<!--- content bar --->
 					<div class="contentBar">
 						<!--- Flush Cache Button --->
 						<div class="buttonBar">
-							<button class="button2" onclick="openRemoteModal('#event.buildLink(rc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
-							<button class="button2" onclick="return to('#event.buildLink(rc.xehFlushCache)#')" title="Flush the settings cache">Flush Settings Cache</button>
+							<button class="button2" onclick="openRemoteModal('#event.buildLink(prc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
+							<button class="button2" onclick="return to('#event.buildLink(prc.xehFlushCache)#')" title="Flush the settings cache">Flush Settings Cache</button>
 						</div>
 						
 						<!--- Filter Bar --->
@@ -72,7 +75,7 @@
 					</div>
 					
 					<!--- Paging --->
-					#rc.pagingPlugin.renderit(rc.settingsCount,rc.pagingLink)#
+					#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
 				
 					<!--- settings --->
 					<table name="settings" id="settings" class="tablesorter" width="98%">
@@ -85,7 +88,7 @@
 						</thead>
 						
 						<tbody>
-							<cfloop array="#rc.settings#" index="setting">
+							<cfloop array="#prc.settings#" index="setting">
 							<tr>
 								<td><a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting">#setting.getName()#</a></td>
 								<td>#htmlEditFormat(setting.getValue())#</td>
@@ -101,7 +104,59 @@
 					</table>
 				
 					<!--- Paging --->
-					#rc.pagingPlugin.renderit(rc.settingsCount,rc.pagingLink)#
+					#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
+					
+					#html.endForm()#
+				</div>
+				
+				<!--- WireBox Pane --->
+				<div>
+					<p>The following are all the objects that are currently in the singleton scope.</p>
+					
+					#html.startForm(name="singletonForm")#
+					
+					<!--- content bar --->
+					<div class="contentBar">
+						<!--- Flush Cache Button --->
+						<div class="buttonBar">
+							<button class="button2" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons">Clear All Singletons</button>
+						</div>
+						<!--- Filter Bar --->
+						<div class="filterBar">
+							<div>
+								#html.label(field="singletonsFilter",content="Quick Filter:",class="inline")#
+								#html.textField(name="singletonsFilter",size="30",class="textfield")#
+							</div>
+						</div>
+					</div>
+					
+					<!--- settings --->
+					<table name="singletons" id="singletons" class="tablesorter" width="98%">
+						<thead>
+							<tr>
+								<th width="250">ID</th>	
+								<th>Path</th>
+								<th width="50" class="center {sorter:false}">Actions</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							<cfloop collection="#prc.singletons#" item="target">
+							<tr>
+								<td><strong>#target#</strong></td>
+								<td>
+									#wirebox.getBinder().getMapping(target).getPath()#
+								</td>
+								<td class="center">
+									<a href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'})" title="Dump Mapping Memento"><img src="#prc.cbroot#/includes/images/eye.png" alt="icon" border="0"/></a>
+								</td>
+							</tr>
+							</cfloop>
+						</tbody>
+					</table>
+					
+					#html.endForm()#
+										
 				</div>
 				
 				<!--- CacheBox Pane --->
@@ -113,7 +168,7 @@
 				</div>
 			</div>
 					
-			#html.endForm()#			
+						
 		</div>	
 	</div>
 </div>
@@ -125,6 +180,11 @@ $(document).ready(function() {
 	$("##settings").tablesorter();
 	$("##settingFilter").keyup(function(){
 		$.uiTableFilter( $("##settings"), this.value );
+	});
+	// table sorting + filtering
+	$("##singletons").tablesorter({ sortList: [[0,0]] });
+	$("##singletonsFilter").keyup(function(){
+		$.uiTableFilter( $("##singletons"), this.value );
 	});
 	// form validator
 	$settingEditor.validator({position:'bottom left'});

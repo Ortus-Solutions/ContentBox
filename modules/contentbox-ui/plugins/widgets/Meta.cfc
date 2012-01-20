@@ -20,11 +20,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	
 	/**
 	* Show the ContentBox Meta Links
-	* @dropdown Display as a dropdown or a list, default is list
-	* @title The title to show before the dropdown or list, defaults to H2
-	* @titleLevel The H{level} to use, by default we use H2
+	* @dropdown.hint Display as a dropdown or a list, default is list
+	* @title.hint The title to show before the dropdown or list, defaults to H2
+	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(boolean dropdown=false, title="ContentBox",titleLevel="2"){
+	any function renderIt(boolean dropdown=false, string title="ContentBox",string titleLevel="2"){
 		var rString	= "";
 		
 		// build links accordingly to authentication

@@ -99,7 +99,22 @@ component mappedsuperclass="true" accessors="true"{
 	* Render content out
 	*/
 	any function renderContent(){
-	
+		var settings = settingService.getAllSettings(asStruct=true);
+		
+		// caching enabled?
+		if( (getType() eq "page" AND settings.cb_content_caching) OR 
+			(getType() eq "entry" AND settings.cb_entry_caching)
+		){
+			// Build Cache Key
+			var cacheKey = "cb-content-#getType()#-#getContentID()#";
+			// Get appropriate cache provider
+			var cache = cacheBox.getCache( settings.cb_content_cacheName );
+			// Try to get content?
+			var cachedContent = cache.get( cacheKey );
+			// Verify it exists, if it does, return it
+			if( !isNull( cachedContent ) ){ return cachedContent; }
+		}
+		
 		// Check if we need to translate
 		if( NOT len(renderedContent) ){
 			lock name="cb1.contentrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
@@ -118,7 +133,15 @@ component mappedsuperclass="true" accessors="true"{
 					renderedContent = b.toString();
 				}
 			}
-		}	
+		}
+		
+		// caching enabled?
+		if( (getType() eq "page" AND settings.cb_content_caching) OR 
+			(getType() eq "entry" AND settings.cb_entry_caching)
+		){
+			// Store content in cache	
+			cache.set(cacheKey, renderedContent, settings.cb_content_cachingTimeout, settings.cb_content_cachingTimeoutIdle);
+		}
 		
 		// renturn translated content
 		return renderedContent;
