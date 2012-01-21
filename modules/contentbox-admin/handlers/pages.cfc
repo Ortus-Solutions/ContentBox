@@ -105,8 +105,10 @@ component extends="baseHandler"{
 		}
 		
 		// exit handlers
-		prc.xehPageSave = "#prc.cbAdminEntryPoint#.pages.save";
-		prc.xehSlugify	= "#prc.cbAdminEntryPoint#.pages.slugify";
+		prc.xehPageSave 		= "#prc.cbAdminEntryPoint#.pages.save";
+		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.pages.slugify";
+		prc.xehWidgetSelector  	= "#prc.cbAdminEntryPoint#.widgets.editorselector";
+
 		// Tab
 		prc.tabContent_viewAll = true;
 		// view

@@ -100,7 +100,8 @@ component accessors="true"{
 			"CATEGORIES_ADMIN" = "Ability to manage categories, default is view only",
 			"ENTRIES_ADMIN" = "Ability to manage blog entries, default is view only",
 			"RELOAD_MODULES" = "Ability to reload modules",
-			"SECURITYRULES_ADMIN" = "Ability to manage the system's security rules, default is view only"
+			"SECURITYRULES_ADMIN" = "Ability to manage the system's security rules, default is view only",
+			"GLOBALHTML_ADMIN" = "Ability to manage the system's global HTML content used on layouts"
 		};
 		
 		var allperms = [];
@@ -128,6 +129,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["CATEGORIES_ADMIN"] );
 		oRole.addPermission( permissions["ENTRIES_ADMIN"] );
 		oRole.addPermission( permissions["LAYOUT_ADMIN"] );
+		oRole.addPermission( permissions["GLOBALHTML_ADMIN"] );
 		roleService.save( oRole );
 		
 		// Create Admin
@@ -219,7 +221,27 @@ component accessors="true"{
 			"cb_entry_caching" = "true",
 			"cb_content_cachingTimeout" = "60",
 			"cb_content_cachingTimeoutIdle" = "15",
-			"cb_content_cacheName" = "Template"
+			"cb_content_cacheName" = "Template",
+			
+			// Global HTML
+			"cb_html_beforeHeadEnd" = "",
+			"cb_html_afterBodyStart" = "",
+			"cb_html_beforeBodyEnd" = "",
+			"cb_html_beforeContent" = "",
+			"cb_html_afterContent" = "",
+			"cb_html_beforeSideBar" = "",
+			"cb_html_afterSideBar" = "",
+			"cb_html_afterFooter" = "",
+			"cb_html_preEntryDisplay" = "",
+			"cb_html_postEntryDisplay" = "",
+			"cb_html_preIndexDisplay" = "",
+			"cb_html_postIndexDisplay" = "",
+			"cb_html_preArchivesDisplay" = "",
+			"cb_html_postArchivesDisplay" = "",
+			"cb_html_preCommentForm" = "",
+			"cb_html_postCommentForm" = "",
+			"cb_html_prePageDisplay" = "",
+			"cb_html_postPageDisplay" = ""
 		};
 		
 		// Create setting objects and save

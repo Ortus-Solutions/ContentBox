@@ -59,8 +59,8 @@
 				<!--- publish date --->
 				#html.inputField(size="9",type="date",name="publishedDate",label="Publish Date",value=prc.entry.getPublishedDateForEditor(),class="textfield")#
 				@
-				#html.inputField(type="number",name="publishedHour",value=ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
-				#html.inputField(type="number",name="publishedMinute",value=ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
+				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
+				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
 			
 				<!--- Action Bar --->
 				<div class="actionBar">

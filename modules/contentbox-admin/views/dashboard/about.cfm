@@ -88,9 +88,4 @@
 		</div>	
 	</div>
 </div>
-<!--- Custom JS --->
-<script type="text/javascript">
-$(document).ready(function() {
-});
-</script>
 </cfoutput>

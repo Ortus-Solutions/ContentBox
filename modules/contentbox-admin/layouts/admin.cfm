@@ -1,6 +1,5 @@
 ﻿<cfoutput>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+#html.doctype()#
 <!--============================Head============================-->
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -73,6 +72,7 @@
 							<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
 						</cfif>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
+						<option value="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</option>
 						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>						
 					</select>
 					
@@ -153,6 +153,10 @@
 						<li>
 							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
 							   title="Easy custom HTML for your site">Custom HTML</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehGlobalHTML)#" <cfif event.getValue("tabContent_globalHTML",false,true)> class="current"</cfif>
+							   title="Easy global HTML for your layouts">Global HTML</a>
 						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_pagesTab")#

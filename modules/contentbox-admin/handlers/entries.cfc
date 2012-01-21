@@ -88,6 +88,8 @@ component extends="baseHandler"{
 			// Get Comments viewlet
 			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={entryID=rc.entryID});
 		}
+		// CK Editor Helper
+		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
 		// exit handlers
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
@@ -110,6 +112,12 @@ component extends="baseHandler"{
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
 		event.paramValue("customFieldKeys","");
 		event.paramValue("customFieldValues","");
+		event.paramValue("content","");
+		
+		// Quick content check
+		if( structKeyExists(rc,"quickcontent") ){
+			rc.content = rc.quickcontent;
+		}
 		
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }

@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-#html.startForm(name="importerForm",action=rc.xehImport)#		
+#html.startForm(name="importerForm",action=rc.xehImport,novalidate="novalidate")#		
 <!--============================Sidebar============================-->
 <div class="sidebar">
 	<!--- Saerch Box --->
@@ -61,7 +61,7 @@
 			#html.select(name="importer",options="Select Source,Mango,WordPress",style="width:200px")#
 			#html.label(field="defaultPassword",content="Default Author Password:")#
 			<small>Since ContentBox uses its own encryption algorithm, you cannot port passwords. Use the following
-			default password for all authors and then do password change requests.</small>
+			default password for all authors and then do password change requests.</small><br/>
 			#html.textField(name="defaultPassword",class="textfield",size="50",required="required")#
 		</fieldset>	
 			
@@ -69,16 +69,4 @@
 	</div>
 </div>		
 #html.endForm()#
-
-<script type="text/javascript">
-$(document).ready(function() {
-	$importForm = $("##importerForm");
-	// form validator
-	$importForm.validator({position:'top left',onSuccess:function(e,els){ activateLoaders(); }});	
-});
-function activateLoaders(){
-	$("##uploadBar").slideToggle();
-	$("##uploadBarLoader").slideToggle();
-}
-</script>
 </cfoutput>

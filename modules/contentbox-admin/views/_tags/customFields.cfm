@@ -32,6 +32,7 @@
 	#html.textField(name="CustomFieldValues",class="textfield inline",size="50")#
 	<button class="button dynamicRemove" onclick="return false;"><img src="#prc.cbroot#/includes/images/delete.png" alt="delete"/> Remove</button>
 </p>	
+
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
