@@ -12,14 +12,17 @@ component extends="baseHandler"{
 		var prc = event.getCollection(private=true);
 		// Tab control
 		prc.tabSite = true;
+		prc.tabSite_widgets = true;
 	}
 	
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		prc.xehWidgetRemove 	= "#prc.cbAdminEntryPoint#.widgets.remove";
-		prc.xehWidgetUpload  = "#prc.cbAdminEntryPoint#.widgets.upload";
-		prc.xehWidgetDocs    = "#prc.cbAdminEntryPoint#.widgets.docs";
+		prc.xehWidgetRemove	= "#prc.cbAdminEntryPoint#.widgets.remove";
+		prc.xehWidgetUpload = "#prc.cbAdminEntryPoint#.widgets.upload";
+		prc.xehWidgetDocs   = "#prc.cbAdminEntryPoint#.widgets.docs";
+		prc.xehWidgetEditor = "#prc.cbAdminEntryPoint#.widgets.edit";
+		prc.xehWidgetCreate = "#prc.cbAdminEntryPoint#.widgets.create";
 		
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
@@ -27,8 +30,6 @@ component extends="baseHandler"{
 		// ForgeBox Entry URL
 		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
 		
-		// Tab
-		prc.tabSite_widgets = true;
 		// view
 		event.setView("widgets/index");
 	}
@@ -80,5 +81,54 @@ component extends="baseHandler"{
 		prc.widgets = widgetService.getWidgets();
 		
 		event.setView(view="widgets/editorSelector",layout="ajax");
+	}
+	
+	// Create New Widget wizard
+	function create(event,rc,prc){
+		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.doCreate";
+		prc.widgetsPath = widgetService.getWidgetsPath();
+		event.setView(view="widgets/create",layout="ajax");
+	}
+	// Create the new widget
+	function doCreate(event,rc,prc){
+		// slugify name
+		rc.name = getPlugin("HTMLHelper").slugify( rc.name );
+		// get and populate widget
+		var oWidget = populateModel("Widget@cb");
+		var errors = oWidget.validate();
+		if( !arrayLen(errors) ){
+			// save the new widget
+			widgetService.createNewWidget( oWidget );
+			getPlugin("MessageBox").info("Widget Created! Now Code It!");
+			setNextEvent(event="#prc.cbAdminEntryPoint#.widgets.edit",queryString="widget=#oWidget.getName()#");
+		}
+		else{
+			getPlugin("MessageBox").error(messageArray=errors);
+			setNextEvent(prc.xehWidgets);
+		}
+	}
+	
+	// Editor
+	function edit(event,rc,prc){
+		// Exit handlers
+		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.save";
+		// Get Widget Code
+		prc.widgetCode = widgetService.getWidgetCode( rc.widget );
+		// view		
+		event.setView("widgets/edit");
+	}
+	
+	// Save Widget Code
+	function save(event,rc,prc){
+		// Save the widget code
+		widgetService.saveWidgetCode( rc.widget, rc.widgetCode );
+		// stay or relocate?
+		if( event.isAjax() ){
+			event.renderData(data=true,type="json");
+		}
+		else{
+			getPlugin("MessageBox").info("Widget Code Saved!");
+			setNextEvent(prc.xehWidgets);
+		}
 	}
 }

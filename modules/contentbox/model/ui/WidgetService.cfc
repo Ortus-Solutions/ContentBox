@@ -22,15 +22,48 @@
 	/**
 	* Get installed widgets as a list of names
 	*/
-	function getWidgetsList(){
+	string function getWidgetsList(){
 		var w = getWidgets();
 		return valueList(w.name);
 	}
 	
 	/**
+	* Get widget code
+	*/
+	string function getWidgetCode(required string name){
+		var widgetPath = getWidgetsPath() & "/#arguments.name#.cfc";
+		return fileRead( widgetPath );
+	}
+	
+	/**
+	* Save widget code
+	*/
+	WidgetService function saveWidgetCode(required string name, required string code){
+		var widgetPath = getWidgetsPath() & "/#arguments.name#.cfc";
+		fileWrite( widgetPath, arguments.code );
+		return this;
+	}
+	
+	/**
+	* Create new widget
+	*/
+	WidgetService function createNewWidget(required Widget widget){
+		// read in template
+		var templateCode = fileRead( getDirectoryFromPath( getMetadata(this).path ) & "templates/Widget.txt" );
+		// parsing
+		templateCode = replacenocase(templateCode,"@name@", widget.getName(),"all");
+		templateCode = replacenocase(templateCode,"@description@", widget.getDescription(),"all");
+		templateCode = replacenocase(templateCode,"@version@", widget.getVersion(),"all");
+		templateCode = replacenocase(templateCode,"@author@", widget.getAuthor(),"all");
+		templateCode = replacenocase(templateCode,"@authorURL@", widget.getAuthorURL(),"all");
+		// write it out
+		return saveWidgetCode( widget.getName(), templateCode );
+	}
+	
+	/**
 	* Get installed widgets
 	*/
-	function getWidgets(){
+	query function getWidgets(){
 		var widgets = directoryList(getWidgetsPath(),false,"query","*.cfc","name asc");
 		
 		// Add custom columns
@@ -67,7 +100,7 @@
 	* Remove widget
 	*/
 	boolean function removeWidget(required widgetFile){
-		var wPath = getWidgetsPath() & "/" & arguments.widgetFile;
+		var wPath = getWidgetsPath() & "/" & arguments.widgetFile & ".cfc";
 		if( fileExists( wPath) ){ fileDelete( wPath ); return true; }
 		return false;
 	}
@@ -75,13 +108,13 @@
 	/**
 	* Upload Widget
 	*/
-	function uploadWidget(required fileField){
+	struct function uploadWidget(required fileField){
 		var destination = getWidgetsPath();
 		return fileUpload(destination,arguments.fileField,"","overwrite");
 	}
 	
 	// rip extensions
-	function ripExtension(required filename){
+	string function ripExtension(required filename){
 		return reReplace(arguments.filename,"\.[^.]*$","");
 	}
 	
