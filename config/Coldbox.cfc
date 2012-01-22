@@ -105,6 +105,7 @@
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching = false;
+		wirebox.singletonreload = true;
 		
 		//Debugger Settings
 		debugger.showRCPanel = false;

@@ -102,7 +102,8 @@
 							<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#prc.widgets.name#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
 							&nbsp;
 							<!--- Delete Command --->
-							<a title="Delete Widget" href="javascript:remove('#JSStringFormat(prc.widgets.name)#')" class="confirmIt" data-title="Delete Widget?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Widget" href="javascript:remove('#JSStringFormat(prc.widgets.name)#')" class="confirmIt" 
+								data-title="Delete #prc.widgets.name#?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 							</cfif>
 						</td>
 					</tr>

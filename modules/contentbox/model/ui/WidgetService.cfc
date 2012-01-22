@@ -100,7 +100,7 @@
 	* Remove widget
 	*/
 	boolean function removeWidget(required widgetFile){
-		var wPath = getWidgetsPath() & "/" & arguments.widgetFile;
+		var wPath = getWidgetsPath() & "/" & arguments.widgetFile & ".cfc";
 		if( fileExists( wPath) ){ fileDelete( wPath ); return true; }
 		return false;
 	}
