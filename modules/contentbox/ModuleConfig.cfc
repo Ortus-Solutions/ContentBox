@@ -65,12 +65,13 @@ component {
 		binder.map("commentService@cb").to("contentbox.model.comments.CommentService");
 		// RSS services
 		binder.map("rssService@cb").to("contentbox.model.rss.RSSService");	
-		// UI services
+		// UI
 		binder.map("customFieldService@cb").toDSL("entityService:cbCustomField");	
 		binder.map("widgetService@cb").to("contentbox.model.ui.WidgetService");	
 		binder.map("layoutService@cb").to("contentbox.model.ui.LayoutService");
 		binder.map("customHTMLService@cb").to("contentbox.model.ui.CustomHTMLService");
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
+		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
 		// utils
 		binder.map("zipUtil@cb").to("coldbox.system.core.util.Zip");
 		binder.map("HQLHelper@cb").to("contentbox.model.util.HQLHelper");
