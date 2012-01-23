@@ -16,7 +16,7 @@
 		<input addproperty="contentbox.version" message="ContentBox Version" />
 	</target>
 	
-	<!--BUild-->
+	<!--Build-->
 	<target name="build" description="Build a new ContentBox distribution release" depends="init">
       	
 		<mkdir dir="${dir.build}"/>
