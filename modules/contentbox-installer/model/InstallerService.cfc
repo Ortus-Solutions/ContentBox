@@ -232,6 +232,7 @@ component accessors="true"{
 			// Content Caching
 			"cb_content_caching" = "true",
 			"cb_entry_caching" = "true",
+			"cb_customHTML_caching" = "true",
 			"cb_content_cachingTimeout" = "60",
 			"cb_content_cachingTimeoutIdle" = "15",
 			"cb_content_cacheName" = "Template",

@@ -96,6 +96,13 @@ component mappedsuperclass="true" accessors="true"{
 	}
 	
 	/**
+	* Build content cache keys according to sent content object
+	*/
+	string function buildContentCacheKey(){
+		return "cb-content-#getType()#-#getContentID()#";
+	}
+	
+	/**
 	* Render content out
 	*/
 	any function renderContent(){
@@ -106,7 +113,7 @@ component mappedsuperclass="true" accessors="true"{
 			(getType() eq "entry" AND settings.cb_entry_caching)
 		){
 			// Build Cache Key
-			var cacheKey = "cb-content-#getType()#-#getContentID()#";
+			var cacheKey = buildContentCacheKey();
 			// Get appropriate cache provider
 			var cache = cacheBox.getCache( settings.cb_content_cacheName );
 			// Try to get content?
