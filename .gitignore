@@ -6,8 +6,5 @@ _paidModules/**
 _modules/**
 logs/**
 web.config
-/coldbox
-/coldbox/**
-coldbox
 "Icon\r"
 WEB-INF/**

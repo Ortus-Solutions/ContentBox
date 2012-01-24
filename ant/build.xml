@@ -31,7 +31,6 @@
   				<exclude name=".git/**" />
   				<exclude name=".settings/**" />
       			<exclude name="ant/**" />
-      			<exclude name="coldbox/**" />
       			<exclude name="test/**" />
       			<exclude name="WEB-INF/**" />
       			<exclude name=".gitignore" />

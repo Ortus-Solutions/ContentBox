@@ -45,8 +45,8 @@ component extend="baseHandler"{
 											       isApproved=rc.fStatus);
 		rc.comments 	 	= commentResults.comments;
 		rc.commentsCount 	= commentResults.count;
-		rc.countApproved 	= commentService.countWhere(isApproved=true);
-		rc.countUnApproved 	= commentService.countWhere(isApproved=false);
+		rc.countApproved 	= commentService.getApprovedCommentCount();
+		rc.countUnApproved 	= commentService.getUnApprovedCommentCount();
 		
 		// exit Handlers
 		rc.xehCommentEditor 	= "#prc.cbAdminEntryPoint#.comments.editor";

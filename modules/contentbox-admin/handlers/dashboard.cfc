@@ -38,8 +38,8 @@ component extends="baseHandler"{
 		// Few counts
 		prc.entriesCount 			= entryService.count();
 		prc.commentsCount 			= commentService.count();
-		prc.commentsApprovedCount 	= commentService.countWhere(isApproved=true);
-		prc.commentsUnApprovedCount = prc.commentsCount-prc.commentsApprovedCount;		
+		prc.commentsApprovedCount 	= commentService.getApprovedCommentCount();
+		prc.commentsUnApprovedCount = commentService.getUnApprovedCommentCount();		
 		prc.categoriesCount 		= categoryService.count();
 		
 		// announce event

@@ -19,6 +19,22 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
+	* Get the total number of approved comments in the system
+	*/
+	numeric function getApprovedCommentCount(){
+		var args = { "isApproved" = true };
+		return countWhere(argumentCollection=args);
+	}
+	
+	/**
+	* Get the total number of unapproved comments in the system
+	*/
+	numeric function getUnApprovedCommentCount(){
+		var args = { "isApproved" = false };
+		return countWhere(argumentCollection=args);
+	}
+	
+	/**
 	* Comment listing for UI of approved comments, returns struct of results=[comments,count]
 	*/
 	function findApprovedComments(entryID,pageID,max=0,offset=0){
