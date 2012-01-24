@@ -159,9 +159,18 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception("cbadmin_postEntrySave",{entry=entry,isNew=isNew});
 		
-		// relocate
-		getPlugin("MessageBox").info("Entry Saved!");
-		setNextEvent(prc.xehEntries);
+		// Ajax?
+		if( event.isAjax() ){
+			var rData = {
+				entryID = entry.getEntryID()
+			};
+			event.renderData(type="json",data=rData);
+		}
+		else{
+			// relocate
+			getPlugin("MessageBox").info("Entry Saved!");
+			setNextEvent(prc.xehEntries);
+		}
 	}
 	
 	// remove

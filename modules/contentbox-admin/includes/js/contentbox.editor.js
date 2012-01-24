@@ -26,7 +26,7 @@ $(document).ready(function() {
 	// Date fields
 	$(":date").dateinput();
 	// form validator
-	$entryForm.validator({position:'center top'});
+	$entryForm.validator({position:'top right',grouped:true});
 	// blur slugify
 	var $title = $entryForm.find("#title");
 	$title.blur(function(){ 
@@ -44,4 +44,31 @@ function createPermalink(){
 }
 function toggleDraft(){
 	$("#isPublished").val('false');
+}
+function quickSave(){
+	// Draft it
+	$("#isPublished").val('false');
+	
+	// Validation first
+	if( !$entryForm.data("validator").checkValidity() ){
+		return false;
+	}
+	
+	// Activate Loader
+	var $uploader = $("#uploadBarLoader");
+	var $status = $("#uploadBarLoaderStatus");
+	$status.html("Saving...");
+	$uploader.slideToggle();
+	
+	// Post it
+	$.post(getEditorSaveURL(), $entryForm.serialize(),function(data){
+		// Save new id
+		$entryForm.find("#entryID").val( data.ENTRYID );
+		// finalize
+		$uploader.fadeOut(1500);
+		$status.html('Entry Saved!');
+		$("#isPublished").val('true');
+	},"json");
+	
+	return false;
 }
