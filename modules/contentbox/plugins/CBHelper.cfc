@@ -183,6 +183,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var event = getRequestContext();
 		return event.getValue(name="missingPage",private="true",default="");
 	}
+	// Get Home Page slug set up by the administrator.  If the page slug equals 'blog', then it means the blog is your home page
+	any function getHomePage(){
+		return setting("cb_site_homepage");
+	}
 	// Get the current page's or blog entrie's custom fields as a struct
 	struct function getCurrentCustomFields(){
 		var fields = "";
@@ -620,7 +624,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( !structKeyExists(arguments,"page") ){
 			arguments.page = getCurrentPage();
 		}
-		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-ui").visit( arguments.page, arguments.separator );
+		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-ui").visit( arguments.page, arguments.separator, getHomePage() );
 
 	}
 

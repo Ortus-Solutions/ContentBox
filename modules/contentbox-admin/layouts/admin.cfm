@@ -154,10 +154,6 @@
 							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
 							   title="Easy custom HTML for your site">Custom HTML</a>
 						</li>
-						<li>
-							<a href="#event.buildLink(prc.xehGlobalHTML)#" <cfif event.getValue("tabContent_globalHTML",false,true)> class="current"</cfif>
-							   title="Easy global HTML for your layouts">Global HTML</a>
-						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_pagesTab")#
 					</ul>
@@ -184,11 +180,15 @@
 					<ul>
 						<li>
 							<a href="#event.buildLink(prc.xehLayouts)#" <cfif event.getValue("tabSite_layouts",false,true)> class="current"</cfif>
-							   title="Manage Site Layouts">Manage Layouts</a>
+							   title="Manage Site Layouts">Layouts</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehWidgets)#" <cfif event.getValue("tabSite_widgets",false,true)> class="current"</cfif>
-							   title="Manager your UI widgets">Manage Widgets</a>
+							   title="Manager your UI widgets">Widgets</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehGlobalHTML)#" <cfif event.getValue("tabSite_globalHTML",false,true)> class="current"</cfif>
+							   title="Easy global HTML for your layouts">Global HTML</a>
 						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_siteTab")#

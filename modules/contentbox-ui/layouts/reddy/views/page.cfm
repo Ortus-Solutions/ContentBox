@@ -11,7 +11,10 @@
 	<!--- post --->
 	<div class="post" id="page_#prc.page.getPageID()#">
 		
+		<!--- breadcrumbs only if not home page. --->
+		<cfif prc.page.getSlug() NEQ cb.getHomePage()>
 		<div class="infoBar">> <a href="#cb.linkHome()#">Home</a> #cb.breadCrumbs()#</div>
+		</cfif>
 	
 		<!--- Title --->
 		<div class="post-title">

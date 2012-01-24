@@ -16,7 +16,7 @@
 		<input addproperty="contentbox.version" message="ContentBox Version" />
 	</target>
 	
-	<!--BUild-->
+	<!--Build-->
 	<target name="build" description="Build a new ContentBox distribution release" depends="init">
       	
 		<mkdir dir="${dir.build}"/>
@@ -31,7 +31,6 @@
   				<exclude name=".git/**" />
   				<exclude name=".settings/**" />
       			<exclude name="ant/**" />
-      			<exclude name="coldbox/**" />
       			<exclude name="test/**" />
       			<exclude name="WEB-INF/**" />
       			<exclude name=".gitignore" />

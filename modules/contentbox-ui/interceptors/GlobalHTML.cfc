@@ -48,7 +48,7 @@ component extends="coldbox.system.Interceptor"{
 		appendToBuffer( getSettings( event ).cb_html_postArchivesDisplay );
 	}
 	function cbui_preCommentForm(event,interceptData){
-		appendToBuffer( getSettings( event ).cb_html_cbui_preCommentForm );
+		appendToBuffer( getSettings( event ).cb_html_preCommentForm );
 	}
 	function cbui_postCommentForm(event,interceptData){
 		appendToBuffer( getSettings( event ).cb_html_postCommentForm );

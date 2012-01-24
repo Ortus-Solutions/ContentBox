@@ -41,14 +41,18 @@ component{
 		//dialect 			= "MySQLwithInnoDB",
 		// FILL OUT: FOR FIRST TIME INSTALLATION LEAVE AS IS, THEN CHANGE TO 'none' OR LEAVE AS IS FOR CONTINUOUS REPO UPDATES
 		dbcreate = "update",
-		secondarycacheenabled = true,
 		// FILL OUT: IF YOU WANT ANOTHER SECONDARY CACHE, PLEASE UPDATE HERE
+		secondarycacheenabled = true,
 		cacheprovider		= "ehCache",
+		// ORM SESSION MANAGEMENT SETTINGS, CHANGE AT YOUR OWN RISK
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
+		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK
 		eventHandling 		= true,
-		eventHandler		= "modules.contentbox.model.system.EventHandler"
+		eventHandler		= "modules.contentbox.model.system.EventHandler",
+		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
+		skipCFCWithError	= true
 	};
 	
 	// application start

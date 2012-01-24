@@ -45,3 +45,30 @@ function createPermalink(){
 function toggleDraft(){
 	$("#isPublished").val('false');
 }
+function quickSave(){
+	// Draft it
+	$("#isPublished").val('false');
+	
+	// Validation first
+	if( !$pageForm.data("validator").checkValidity() ){
+		return false;
+	}
+	
+	// Activate Loader
+	var $uploader = $("#uploadBarLoader");
+	var $status = $("#uploadBarLoaderStatus");
+	$status.html("Saving...");
+	$uploader.slideToggle();
+	
+	// Post it
+	$.post(getEditorSaveURL(), $pageForm.serialize(),function(data){
+		// Save new id
+		$pageForm.find("#pageID").val( data.PAGEID );
+		// finalize
+		$uploader.fadeOut(1500);
+		$status.html('Page Draft Saved!');
+		$("#isPublished").val('true');
+	},"json");
+	
+	return false;
+}
