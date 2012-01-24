@@ -20,6 +20,11 @@ component {
 			codenameLink = "http://www.youversion.com/bible/nkjv/matt/18/11"
 		};
 		
+		// Parent Affected Settings
+		parent = {
+			messagebox_style_override = true
+		};
+		
 		// interceptor settings
 		interceptorSettings = {
 			// ContentBox Custom Events

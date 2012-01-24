@@ -159,9 +159,18 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception("cbadmin_postPageSave",{page=page,isNew=isNew});
 		
-		// relocate
-		getPlugin("MessageBox").info("Page Saved!");
-		setNextEvent(prc.xehPages);
+		// Ajax?
+		if( event.isAjax() ){
+			var rData = {
+				pageID = page.getPageID()
+			};
+			event.renderData(type="json",data=rData);
+		}
+		else{
+			// relocate
+			getPlugin("MessageBox").info("Page Saved!");
+			setNextEvent(prc.xehPages);
+		}
 	}
 	
 	// remove

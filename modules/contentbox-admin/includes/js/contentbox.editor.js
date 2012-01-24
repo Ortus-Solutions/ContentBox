@@ -53,6 +53,10 @@ function quickSave(){
 	if( !$entryForm.data("validator").checkValidity() ){
 		return false;
 	}
+	if( !$entryForm.find("#content").val().length ){
+		alert("Please enter some content");
+		return false;
+	}
 	
 	// Activate Loader
 	var $uploader = $("#uploadBarLoader");
@@ -66,7 +70,7 @@ function quickSave(){
 		$entryForm.find("#entryID").val( data.ENTRYID );
 		// finalize
 		$uploader.fadeOut(1500);
-		$status.html('Entry Saved!');
+		$status.html('Entry Draft Saved!');
 		$("#isPublished").val('true');
 	},"json");
 	
