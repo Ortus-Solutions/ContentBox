@@ -299,13 +299,14 @@ Only one instance of a specific ColdBox application exists.
 		return structKeyExists(instance.configSettings, arguments.name);
 		</cfscript>
 	</cffunction>
-	<cffunction name="setSetting" access="public" returntype="void" hint="I set a Global Coldbox setting variable in the configstruct, if it exists it will be overrided. This only sets in the ConfigStruct" output="false">
+	<cffunction name="setSetting" access="public" returntype="any" hint="I set a Global Coldbox setting variable in the configstruct, if it exists it will be overrided. This only sets in the ConfigStruct" output="false">
 		<!--- ************************************************************* --->
 		<cfargument name="name"  type="any"   hint="The name of the setting" >
 		<cfargument name="value" type="any"   hint="The value of the setting (Can be simple or complex)">
 		<!--- ************************************************************* --->
 		<cfscript>
 		instance.configSettings['#arguments.name#'] = arguments.value;
+		return this;
 		</cfscript>
 	</cffunction>
 

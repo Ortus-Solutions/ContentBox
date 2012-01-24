@@ -26,4 +26,7 @@ component accessors="true" {
 		return results;
 	}
 	
+	function getUniqueHash(){
+		return hash( variables.toString(), "MD5" );
+	}
 }

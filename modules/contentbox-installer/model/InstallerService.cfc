@@ -15,6 +15,7 @@ component accessors="true"{
 	property name="securityRuleService" inject="securityRuleService@cb";
 	property name="appPath" 			inject="coldbox:setting:applicationPath";
 	property name="securityInterceptor" inject="securityInterceptor@cb";
+	property name="coldbox"				inject="coldbox";
 	
 	/**
 	* Constructor
@@ -47,7 +48,9 @@ component accessors="true"{
 			createSampleData( setup, author );
 		}
 		// Remove ORM update from Application.cfc
-		processORMUpdate();
+		processORMUpdate( setup );
+		// Process reinit and debug password security
+		processColdBoxPasswords( setup );
 		// ContentBox is now online, mark it:
 		settingService.activateCB();
 		// Reload Security Rules
@@ -66,11 +69,21 @@ component accessors="true"{
 		}
 	}
 	
-	function processORMUpdate(){
+	function processORMUpdate(required setup){
 		var appCFCPath = appPath & "Application.cfc";
 		var c = fileRead(appCFCPath);
 		c = replacenocase(c, '"update"','"none"');
 		fileWrite(appCFCPath, c);
+	}
+	
+	function processColdBoxPasswords(required setup){
+		var configPath = appPath & "config/Coldbox.cfc";
+		var c = fileRead(configPath);
+		var newPass = hash( now() & setup.getUniqueHash() ,"MD5");
+		c = replacenocase(c, "@fwPassword@", newPass,"all");
+		fileWrite(configPath, c);
+		coldbox.setSetting("debugPassword", newpass);
+		coldbox.setSetting("reinitPassword", newpass);
 	}
 	
 	function processRewrite(required setup){
