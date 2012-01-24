@@ -8,3 +8,4 @@ logs/**
 web.config
 "Icon\r"
 WEB-INF/**
+test/logs/**
