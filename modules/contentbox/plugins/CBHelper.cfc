@@ -624,7 +624,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( !structKeyExists(arguments,"page") ){
 			arguments.page = getCurrentPage();
 		}
-		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-ui").visit( arguments.page, arguments.separator, getHomePage() );
+		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-ui").visit( arguments.page, arguments.separator );
 
 	}
 
