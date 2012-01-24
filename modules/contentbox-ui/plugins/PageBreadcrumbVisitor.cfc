@@ -18,14 +18,17 @@ component singleton="true"{
 	}
 	
 	// visit
-	function visit(page,separator=">"){
+	function visit(required page,string separator=">",required string homePage){
 		var bc	= "";
-		
+		// recursive lookup
 		if( arguments.page.hasParent() ){
 			bc &= visit( arguments.page.getParent() );
 		}
 		
-		bc &= '#arguments.separator# <a href="#CBHelper.linkPage(arguments.page)#">#arguments.page.getTitle()#</a> ';
+		// check if page slug is home, to ignore it
+		if( arguments.page.getSlug() NEQ arguments.homePage ){
+			bc &= '#arguments.separator# <a href="#CBHelper.linkPage(arguments.page)#">#arguments.page.getTitle()#</a> ';
+		}
 		
 		return bc;
 	}
