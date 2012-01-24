@@ -52,7 +52,6 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehPages		= "#prc.cbAdminEntryPoint#.pages";
 		prc.xehPagesEditor	= "#prc.cbAdminEntryPoint#.pages.editor";
 		prc.xehCustomHTML	= "#prc.cbAdminEntryPoint#.customHTML";
-		prc.xehGlobalHTML	= "#prc.cbAdminEntryPoint#.globalHTML";
 		
 		// Comments Tab
 		prc.xehComments			= "#prc.cbAdminEntryPoint#.comments";
@@ -61,6 +60,7 @@ component extends="coldbox.system.Interceptor"{
 		// Look and Feel Tab
 		prc.xehLayouts		= "#prc.cbAdminEntryPoint#.layouts";
 		prc.xehWidgets		= "#prc.cbAdminEntryPoint#.widgets";
+		prc.xehGlobalHTML	= "#prc.cbAdminEntryPoint#.globalHTML";
 		
 		// Authors Tab
 		prc.xehAuthors		= "#prc.cbAdminEntryPoint#.authors";
