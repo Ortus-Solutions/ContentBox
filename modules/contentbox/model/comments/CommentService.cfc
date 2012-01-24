@@ -228,7 +228,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var mail = mailservice.newMail(to=outEmails,
 									   from=settings.cb_site_outgoingEmail,
 									   subject=subject,
-									   bodyTokens=bodyTokens);
+									   bodyTokens=bodyTokens,
+									   type="html");
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/#template#",module="contentbox") );
 		// send it out

@@ -144,7 +144,8 @@ component implements="ISecurityService" singleton{
 		var mail = mailservice.newMail(to=arguments.author.getEmail(),
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# Password Reset Issued",
-									   bodyTokens=bodyTokens);
+									   bodyTokens=bodyTokens,
+									   type="html");
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/password_reminder",module="contentbox") );
 		// send it out
