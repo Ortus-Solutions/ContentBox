@@ -30,7 +30,7 @@ component{
 	// THE LOCATION OF THE 'CONTENTBOX' MODULE MANDATORY
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	// THE LOCATION OF COLDBOX
-	this.mappings["/coldbox"] 	 = COLDBOX_APP_ROOT_PATH & "modules/contentbox/lib/coldbox_3.5.0";
+	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
 
 	// ORM SETTINGS
 	this.ormEnabled = true;
