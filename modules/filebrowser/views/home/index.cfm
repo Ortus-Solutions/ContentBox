@@ -81,7 +81,7 @@
 				<cfset validIDName = $validIDName( prc.qListing.name ) >
 				<!--- URL used for selection --->
 				<cfset plainURL = prc.currentroot & "/" & prc.qListing.name>
-				<cfset relURL = $getUrlRelativeToPath(prc.dirRoot,plainURL)>
+				<cfset relURL = $getUrlRelativeToPath(prc.webRootPath,plainURL)>
 
 				<!--- Directory or File --->
 				<cfif prc.qListing.type eq "Dir">
@@ -183,7 +183,7 @@ function fbDrilldown(inPath){
 		$fileLoaderBar.slideUp();
 	});
 }
-function fbSelect(sID,sURL){
+function fbSelect(sID,sPath){
 	// history cleanup
 	if (selectedHistory.length) {
 		$("##" + selectedHistory).removeClass("selected");
@@ -194,7 +194,7 @@ function fbSelect(sID,sURL){
 	$selectedItemType.val( $sItem.attr("data-type") );
 	$selectedItemID.val( $sItem.attr("id") );
 	// save selection
-	$selectedItem.val( sURL );
+	$selectedItem.val( sPath );
 	$selectedItemURL.val( $sItem.attr("data-relURL") );
 	// history set
 	selectedHistory = sID;

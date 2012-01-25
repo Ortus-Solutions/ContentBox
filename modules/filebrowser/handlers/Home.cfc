@@ -52,6 +52,8 @@ component output="false" hint="Main filebrowser module handler"{
 		rc.path = URLDecode( trim( antiSamy.clean( rc.path ) ) );
 		// Store directory root
 		prc.dirRoot 	= prc.settings.directoryRoot;
+		prc.webRootPath = getSetting("applicationpath");
+
 		// Get the current Root
 		if( !len(rc.path) ){
 			prc.currentRoot = prc.settings.directoryRoot;
@@ -61,6 +63,9 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 		prc.currentRoot = REReplace(prc.currentRoot,"(/|\\){1,}$","","all");
 		prc.currentRoot = REReplace(prc.currentRoot,"\\","/","all");
+
+		prc.webRootPath = REReplace(prc.webRootPath,"(/|\\){1,}$","","all");
+		prc.webRootPath = REReplace(prc.webRootPath,"\\","/","all");
 
 		// Do a safe current root
 		prc.safeCurrentRoot = URLEncodedFormat( prc.currentRoot );
