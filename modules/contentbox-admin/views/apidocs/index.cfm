@@ -10,7 +10,7 @@
 			#html.startForm(name="apiForm")#
 			#html.startFieldSet(legend="API Chooser: ")#
 				<p>Select the API to view: </p>
-				#html.select(name="apislug",options="Model,Plugins",selectedValue=rc.apislug)#
+				#html.select(name="apislug",options="Model,Plugins,Widgets",selectedValue=rc.apislug)#
 			#html.endFieldSet()#
 			#html.endform()#
 		

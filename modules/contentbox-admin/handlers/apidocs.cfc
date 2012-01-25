@@ -26,6 +26,10 @@ component extends="baseHandler"{
 				dirPath = "/contentbox/plugins";
 				break;
 			}
+			case "widgets" : {
+				dirPath = "/contentbox-ui/plugins/widgets";
+				break;
+			}
 			default: {
 				dirPath = "/contentbox/model";
 				break;
