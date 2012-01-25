@@ -7,6 +7,7 @@
 <!--- Custom Javascript --->
 <script type="text/javascript">
 function getEditorSelectorURL(){ return '#event.buildLink(prc.xehWidgetSelector)#';}
+function getEditorSaveURL(){ return '#event.buildLink(prc.xehPageSave)#'; }
 </script>
 </cfoutput>
 <cfscript>

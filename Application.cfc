@@ -29,6 +29,8 @@ component{
 	this.datasource = "contentbox";
 	// THE LOCATION OF THE 'CONTENTBOX' MODULE MANDATORY
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
+	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
+	this.mappings["/contentbox-admin"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-admin";
 	// THE LOCATION OF COLDBOX
 	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
 
@@ -41,14 +43,18 @@ component{
 		//dialect 			= "MySQLwithInnoDB",
 		// FILL OUT: FOR FIRST TIME INSTALLATION LEAVE AS IS, THEN CHANGE TO 'none' OR LEAVE AS IS FOR CONTINUOUS REPO UPDATES
 		dbcreate = "update",
-		secondarycacheenabled = true,
 		// FILL OUT: IF YOU WANT ANOTHER SECONDARY CACHE, PLEASE UPDATE HERE
+		secondarycacheenabled = true,
 		cacheprovider		= "ehCache",
+		// ORM SESSION MANAGEMENT SETTINGS, CHANGE AT YOUR OWN RISK
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
+		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK
 		eventHandling 		= true,
-		eventHandler		= "modules.contentbox.model.system.EventHandler"
+		eventHandler		= "modules.contentbox.model.system.EventHandler",
+		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
+		skipCFCWithError	= true
 	};
 	
 	// application start

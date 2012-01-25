@@ -12,7 +12,7 @@
 			#html.startForm(action=prc.xehPermissionSave,name="permissionEditor",novalidate="novalidate")#
 				#html.hiddenField(name="permissionID",value="")#
 				#html.textField(name="permission",label="Permission:",required="required",maxlength="255",size="30",class="textfield",title="The unique permission name")#
-				#html.textArea(name="description",label="Description:",cols="20",rows="3",class="textarea",title="A short permission description")#
+				#html.textArea(name="description",label="Description:",cols="20",rows="3",class="textarea",required="required",title="A short permission description")#
 				<div class="actionBar">
 					#html.resetButton(name="btnReset",value="Reset Form",class="button")#
 					#html.submitButton(value="Save Permission",class="buttonred")#

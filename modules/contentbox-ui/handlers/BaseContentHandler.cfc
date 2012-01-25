@@ -25,7 +25,7 @@ component{
 		// Home page determination either blog or a page
 		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog"){
 			event.overrideEvent("contentbox-ui:page.index");
-			rc.pageSlug = prc.cbSettings.cb_site_homepage;
+			prc.pageOverride = prc.cbSettings.cb_site_homepage;
 		}				
 	}
 	

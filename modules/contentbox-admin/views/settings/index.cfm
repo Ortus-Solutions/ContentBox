@@ -120,14 +120,20 @@
 							#html.radioButton(name="cb_entry_caching",checked=prc.cbSettings.cb_entry_caching,value=true)# Yes 	
 							#html.radioButton(name="cb_entry_caching",checked=not prc.cbSettings.cb_entry_caching,value=false)# No 	
 							
+							<!--- Custom HTML Caching --->
+							#html.label(field="cb_customHTML_caching",content="Activate Custom HTML rendered content caching:")#
+							<small>Custom HTML content will be cached once it has been rendered</small><br/>
+							#html.radioButton(name="cb_customHTML_caching",checked=prc.cbSettings.cb_customHTML_caching,value=true)# Yes 	
+							#html.radioButton(name="cb_customHTML_caching",checked=not prc.cbSettings.cb_customHTML_caching,value=false)# No 	
+							
 							<!--- Content Cache Name --->
 							<label for="cb_content_cacheName">Content Cache Provider:</label>
-							<small>Choose the CacheBox provider to cache rendered content into.</small><br/>
+							<small>Choose the CacheBox provider to cache rendered content (blog,page,customHTML) into.</small><br/>
 							#html.select(name="cb_content_cacheName",options=prc.cacheNames,selectedValue=prc.cbSettings.cb_content_cacheName)#
 							
 							<!--- Content Cache Timeouts --->
 							<label for="cb_content_cachingTimeout">Content Cache Timeouts:</label>
-							<small>The number of minutes a rendered content is cached.</small><br/>
+							<small>The number of minutes a rendered content (blog,page,customHTML) is cached for.</small><br/>
 							<select name="cb_content_cachingTimeout" id="cb_content_cachingTimeout">
 								<cfloop from="5" to="100" step="5" index="i">
 									<option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeout>selected="selected"</cfif>>#i#</option>
@@ -136,7 +142,7 @@
 							
 							<!--- Content Last Access Timeouts --->
 							<label for="cb_rss_cachingTimeoutIdle">Content Cache Idle Timeouts:</label>
-							<small>The number of idle minutes allowed for cached rendered content to live. Usually this is less than the timeout you selected above</small><br/>
+							<small>The number of idle minutes allowed for cached rendered content (blog,page,customHTML) to live if not used. Usually this is less than the timeout you selected above</small><br/>
 							<select name="cb_content_cachingTimeoutIdle" id="cb_content_cachingTimeoutIdle">
 								<cfloop from="5" to="100" step="5" index="i">
 									<option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeoutIdle>selected="selected"</cfif>>#i#</option>

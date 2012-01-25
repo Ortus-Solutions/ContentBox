@@ -30,7 +30,7 @@ $(document).ready(function() {
 	// Date fields
 	$(":date").dateinput();
 	// form validator
-	$entryForm.validator({position:'center top'});
+	$entryForm.validator({position:'top right',grouped:true});
 	// blur slugify
 	var $title = $entryForm.find("#title");
 	$title.blur(function(){ 
@@ -38,7 +38,14 @@ $(document).ready(function() {
 			createPermalink( $title.val() );
 		}
 	});
+	// Editor dirty checks
+	window.onbeforeunload = askLeaveConfirmation;
 });
+function askLeaveConfirmation(){
+	if ( $("#content").ckeditorGet().checkDirty() ){
+   		return "You have unsaved changes.";
+   	}    
+}
 function createPermalink(){
 	var slugger = $("#sluggerURL").val();
 	$slug = $("#slug").fadeOut();
@@ -48,4 +55,35 @@ function createPermalink(){
 }
 function toggleDraft(){
 	$("#isPublished").val('false');
+}
+function quickSave(){
+	// Draft it
+	$("#isPublished").val('false');
+	
+	// Validation first
+	if( !$entryForm.data("validator").checkValidity() ){
+		return false;
+	}
+	if( !$entryForm.find("#content").val().length ){
+		alert("Please enter some content");
+		return false;
+	}
+	
+	// Activate Loader
+	var $uploader = $("#uploadBarLoader");
+	var $status = $("#uploadBarLoaderStatus");
+	$status.html("Saving...");
+	$uploader.slideToggle();
+	
+	// Post it
+	$.post(getEditorSaveURL(), $entryForm.serialize(),function(data){
+		// Save new id
+		$entryForm.find("#entryID").val( data.ENTRYID );
+		// finalize
+		$uploader.fadeOut(1500);
+		$status.html('Entry Draft Saved!');
+		$("#isPublished").val('true');
+	},"json");
+	
+	return false;
 }

@@ -183,6 +183,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var event = getRequestContext();
 		return event.getValue(name="missingPage",private="true",default="");
 	}
+	// Get Home Page slug set up by the administrator.  If the page slug equals 'blog', then it means the blog is your home page
+	any function getHomePage(){
+		return setting("cb_site_homepage");
+	}
 	// Get the current page's or blog entrie's custom fields as a struct
 	struct function getCurrentCustomFields(){
 		var fields = "";
@@ -574,17 +578,24 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	/**
 	* Create a sub page menu for a given page or current page
-	* @page Optional page to create menu for, else look for current page
+	* @page Optional page to create menu for, else look for current page, this can be a page object or a page slug
 	* @excludes The list of pages to exclude from the menu
 	* @type The type of menu, valid choices are: ul,ol,li,none
 	* @separator Used if type eq none, to separate the list of href's
 	* @showNone Shows a 'No Sub Pages' message or not
 	*/
 	function subPageMenu(any page,excludes="",type="ul",separator="",boolean showNone=true){
-		// verify incoming page
+		// If page not passed, then use current
 		if( !structKeyExists(arguments,"page") ){
 			arguments.page = getCurrentPage();
 		}
+		
+		// Is page passed as slug or object
+		if( isSimpleValue(arguments.page) ){
+			// retrieve page by slug
+			arguments.page = pageService.findBySlug( arguments.page );
+		} 
+		
 		// get child pages
 		arguments.pageRecords = pageService.findPublishedPages(parent=page.getPageID(),showInMenu=true);
 		// build it out

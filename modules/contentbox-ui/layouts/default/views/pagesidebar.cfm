@@ -6,7 +6,7 @@
 <cfif prc.page.getNumberOfChildren()>
 <h4>Sub Pages</h4>
 <div class="bg"></div>
-#cb.subPageMenu(type="ul")#
+#cb.subPageMenu(page=prc.page.getParent(),type="ul")#
 </cfif>
 
 <h4>Description</h4>

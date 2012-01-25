@@ -27,7 +27,9 @@ Description :
 	this.datasource = "contentbox";
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
 	this.mappings["/contentbox-shell"] 	= replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test/","");
+	this.mappings["/contentbox-test"] 	= getDirectoryFromPath(getCurrentTemplatePath());
 	this.mappings["/contentbox"] 		= this.mappings["/contentbox-shell"] & "/modules/contentbox" ;
+	this.mappings["/coldbox"] 			= this.mappings["/contentbox-shell"] & "/coldbox" ;
 	
 	this.ormSettings = {
 		cfclocation=["/contentbox"],

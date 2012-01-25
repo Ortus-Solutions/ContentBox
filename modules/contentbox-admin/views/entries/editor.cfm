@@ -53,7 +53,12 @@
 			</cfif>
 			
 			<!--- Publish Info --->
-			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/calendar.png" alt="publish" width="16"/> Publishing')#
+			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/calendar.png" alt="publish" width="16"/> Publishing',
+				class="#prc.entry.getIsPublished()?'':'selected'#")#
+				
+				<!--- Published? --->
+				<cfif !prc.entry.getIsPublished()><div class="textRed">Entry is a draft!</div></cfif>
+				
 				<!--- is Published --->
 				#html.hiddenField(name="isPublished",value=true)#
 				<!--- publish date --->
@@ -64,8 +69,15 @@
 			
 				<!--- Action Bar --->
 				<div class="actionBar">
-					&nbsp;<input type="submit" class="button2" value="Save Draft" title="Save this masterpiece as a draft!" onclick="toggleDraft()">
-					&nbsp;<input type="submit" class="buttonred" value="Publish" title="Let's publish this masterpiece!">
+					&nbsp;<input type="submit" class="button2" value="Quick Save" title="Quickly save your work as a draft & continue working!" onclick="return quickSave()">
+					&nbsp;<input type="submit" class="button2" value="Save Draft" title="Save and close this masterpiece as a draft!" onclick="toggleDraft()">
+					&nbsp;<input type="submit" class="buttonred" value="Publish" title="Save, close and publish this masterpiece!">
+				</div>
+				
+				<!--- Loader --->
+				<div class="loaders" id="uploadBarLoader">
+					<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+					<div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
 				</div>
 			
 			#html.endFieldSet()#

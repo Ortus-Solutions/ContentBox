@@ -28,11 +28,20 @@ component singleton{
 	* Clean RSS caches asynchronously
 	*/
 	void function clearCaches(boolean comments=false,entrySlug=""){
+		var cacheKey = "";
+		
 		if( arguments.comments ){
-			cache.clearByKeySnippet(keySnippet="cb-feeds-comments-#arguments.entrySlug#",async=true);
+			cacheKey = "cb-feeds-comments-#arguments.entrySlug#";
+			cache.clearByKeySnippet(keySnippet=cacheKey,async=true);
 		}
 		else{
-			cache.clearByKeySnippet(keySnippet="cb-feeds-entries",async=true);
+			cacheKey = "cb-feeds-entries";
+			cache.clearByKeySnippet(keySnippet=cacheKey,async=true);
+		}
+		
+		// log
+		if( log.info() ){
+			log.info("Sent clear command using the following content key: #cacheKey# from provider: #cache.getName()#");
 		}
 	}
 	

@@ -3,8 +3,10 @@
 	<!--- ContentBoxEvent --->
 	#cb.event("cbui_prePageDisplay")#
 	
-	<!--- breadcrumbs --->
+	<!--- breadcrumbs only if not home page. --->
+	<cfif prc.page.getSlug() NEQ cb.getHomePage()>
 	<div class="infoBar">> <a href="#cb.linkHome()#">Home</a> #cb.breadCrumbs()#</div>
+	</cfif>
 	
 	<!--- top gap --->
 	<div class="post-top-gap"></div>

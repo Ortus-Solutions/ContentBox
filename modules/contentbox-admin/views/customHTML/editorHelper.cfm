@@ -11,6 +11,8 @@ $(document).ready(function() {
 	});
 	
 	activateCustomEditor();
+	// Editor dirty checks
+	window.onbeforeunload = askLeaveConfirmation;
 });
 function getEditorSelectorURL(){ return '#event.buildLink(prc.xehWidgetSelector)#';}
 function activateCustomEditor(){
@@ -33,6 +35,11 @@ function createPermalink(){
 	$.get(slugger,{slug:$contentEditForm.find("##title").val()},function(data){ 
 		$slug.fadeIn().val($.trim(data)); 		
 	} );
+}
+function askLeaveConfirmation(){
+	if ( $("##content").ckeditorGet().checkDirty() ){
+   		return "You have unsaved changes.";
+   	}    
 }
 </script>
 </cfoutput>

@@ -7,12 +7,11 @@
 		coldbox = {
 			//Application Setup
 			appName 				= "ContentBox",
-			eventName 				= "event",
 			
 			//Development Settings
 			debugMode				= false,
-			debugPassword			= "",
-			reinitPassword			= "",
+			debugPassword			= "@fwPassword@",
+			reinitPassword			= "@fwPassword@",
 			handlersIndexAutoReload = false,
 			
 			//Implicit Events
@@ -105,6 +104,9 @@
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching = false;
+		coldbox.reinitpassword = "";
+		coldbox.debugpassword = "";
+		wirebox.singletonreload = true;
 		
 		//Debugger Settings
 		debugger.showRCPanel = false;

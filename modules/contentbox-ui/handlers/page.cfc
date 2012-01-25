@@ -18,9 +18,19 @@ component extends="BaseContentHandler" singleton{
 		// incoming params
 		event.paramValue("pageSlug","");
 		
-		// Try slug parsing for hiearchical URLs
-		var incomingURL  = "/" & event.getCurrentRoutedURL();
-		var incomingSlug = listLast(incomingURL,"/");
+		var incomingSlug = "";
+		var incomingURL  = "";
+		
+		// Do we have an override page setup by the settings?
+		if( !structKeyExists(prc,"pageOverride") ){
+			// Try slug parsing for hiearchical URLs
+			incomingURL  = "/" & event.getCurrentRoutedURL();
+			incomingSlug = listLast(incomingURL,"/");
+		}
+		else{
+			incomingURL	 = "/" & prc.pageOverride & "/";
+			incomingslug = prc.pageOverride;
+		}
 		
 		// Try to get the page using the last slug.
 		prc.page = pageService.findBySlug( incomingSlug );

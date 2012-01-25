@@ -2,7 +2,8 @@
 * Visit page hierarchies and create breadcrumbs
 */
 component singleton="true"{
-	
+
+	// DI	
 	property name="CBHelper" inject="CBHelper@cb";
 	
 	PageBreadcrumbVisitor function init(){
@@ -18,14 +19,17 @@ component singleton="true"{
 	}
 	
 	// visit
-	function visit(page,separator=">"){
+	function visit(required page,string separator=">"){
 		var bc	= "";
-		
+		// recursive lookup
 		if( arguments.page.hasParent() ){
 			bc &= visit( arguments.page.getParent() );
 		}
 		
-		bc &= '#arguments.separator# <a href="#CBHelper.linkPage(arguments.page)#">#arguments.page.getTitle()#</a> ';
+		// check if page slug is home, to ignore it
+		if( arguments.page.getSlug() NEQ CBHelper.getHomePage() ){
+			bc &= '#arguments.separator# <a href="#CBHelper.linkPage(arguments.page)#">#arguments.page.getTitle()#</a> ';
+		}
 		
 		return bc;
 	}
