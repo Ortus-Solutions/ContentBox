@@ -23,7 +23,7 @@
 }
 #FileBrowser #loaderBar{
 	float:left;
-	margin: 7px 0px 0px 0px;	
+	margin: 5px 0px 0px 0px;	
 	display: none;
 }
 #FileBrowser #fileListing{
@@ -36,8 +36,8 @@
 #FileBrowser input[type=button]{
 	border: 1px solid #CCC; 
 	background: #FFFFFF url(../images/headerbg.gif) repeat-x bottom left; 
-	padding: 7px; 
-	font-size: 12px;
+	padding: 4px; 
+	font-size: 10px;
 	font-weight: bold; 
 	color: #333;
 	cursor: pointer;
@@ -64,8 +64,10 @@
     background-color: #f5f5f5;
     padding: 5px;
     font-weight:bold; 
-    text-align:right;
+    min-height: 20px;
 }
+#FileBrowser #statusText{float: left; margin:5px;font-size:12px;}
+#FileBrowser #statusButtons{text-align:right}
 #FileBrowser .folders, #FileBrowser .files{ cursor:pointer;margin: 0px;padding:2px; }
 #FileBrowser .folders.selected, #FileBrowser .files.selected{ background-color: #B3C6F9}
 #FileBrowser .divider{ align: center; vertical-align: bottom}

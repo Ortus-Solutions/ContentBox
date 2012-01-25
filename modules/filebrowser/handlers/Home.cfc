@@ -17,7 +17,7 @@ component output="false" hint="Main filebrowser module handler"{
 		event.paramValue("path","");
 		event.paramValue("callback","");
 		event.paramValue("cancelCallback","");
-
+		event.paramValue("filterType","");
 		// exit handlers
 		prc.xehBrowser 		= "filebrowser/";
 		prc.xehNewFolder 	= "filebrowser/createfolder";
@@ -46,7 +46,7 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 
 		// Inflate flash params
-		inflateFlashParams(event,rc,prc);
+		//inflateFlashParams(event,rc,prc);
 
 		// clean incoming path
 		rc.path = URLDecode( trim( antiSamy.clean( rc.path ) ) );
@@ -76,10 +76,12 @@ component output="false" hint="Main filebrowser module handler"{
 			setNextEvent(prc.xehBrowser);
 		}
 
-
 		// get directory listing.
-		prc.qListing = directoryList( prc.currentRoot, false, "query", prc.settings.extensionFilter, "asc");
+		prc.nameFilter = prc.settings.nameFilter;
+		if (rc.filterType == "Image") {prc.nameFilter = prc.settings.imgNameFilter;}
+		if (rc.filterType == "Flash") {prc.nameFilter = prc.settings.flashNameFilter;}
 
+		prc.qListing = directoryList( prc.currentRoot, false, "query", prc.settings.extensionFilter, "asc");
 		// set view or widget?
 		if( arguments.widget ){
 			return renderView(view="home/index",module="filebrowser");
@@ -332,9 +334,15 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 		// clean callback
 		rc.cancelCallback = antiSamy.clean( rc.cancelCallback );
+		// filterType
+		if( structKeyExists( flash.get( "fileBrowser", {} ), "filterType") ){
+			rc.filterType = flash.get("fileBrowser").filterType;
+		}
+		// clean callback
+		rc.filterType = antiSamy.clean( rc.filterType );
 
 		if(!flash.exists("filebrowser")){
-			var filebrowser = {callback=rc.callback,cancelCallback=rc.cancelCallback};
+			var filebrowser = {callback=rc.callback,cancelCallback=rc.cancelCallback,filterType=rc.filterType};
 			flash.put("filebrowser",filebrowser);
 		}
 
