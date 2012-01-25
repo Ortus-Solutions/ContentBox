@@ -21,7 +21,11 @@ $(document).ready(function() {
 	    { name: 'tools',       items : [ 'Maximize','cbWidgets' ] }
 	];
 	// Activate ckeditor
-	$content.ckeditor( function(){}, { toolbar:ckToolbar,height:300 } );
+	$content.ckeditor( function(){}, { 
+			toolbar:ckToolbar,height:300, 
+			filebrowserBrowseUrl : '/index.cfm/filebrowser/?callback=fbCKSelect' 
+			//filebrowserUploadUrl : '/index.cfm/filebrowser/' 
+		} );
 	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175 } );
 	// Date fields
 	$(":date").dateinput();
