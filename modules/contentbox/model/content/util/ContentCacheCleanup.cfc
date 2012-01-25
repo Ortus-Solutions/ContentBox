@@ -35,7 +35,7 @@ component extends="coldbox.system.Interceptor"{
 		cache.clearByKeySnippet(keySnippet=arguments.cacheKey,async=false);
 		
 		// log
-		if( log.info() ){
+		if( log.canInfo() ){
 			log.info("Sent clear command using the following content key: #arguments.cacheKey# from provider: #settings.cb_content_cacheName#");
 		}
 	}
