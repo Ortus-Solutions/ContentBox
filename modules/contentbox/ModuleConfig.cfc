@@ -47,6 +47,8 @@ component {
 			},
 			// CB RSS Cache Cleanup Ghost
 			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
+			// CB Content Cache Cleanup Ghost
+			{class="contentbox.model.content.util.ContentCacheCleanup",name="ContentCacheCleanup@cb" },
 			// Notification service interceptor
 			{class="contentbox.model.system.NotificationService",name="NotificationService@cb" },
 			// Content Renderers, remember order is important.
@@ -54,8 +56,9 @@ component {
 		];
 		
 		// Security/System
-		binder.map("securityService@cb").to("contentbox.model.security.SecurityService");
 		binder.map("settingService@cb").to("contentbox.model.system.SettingService");
+		binder.map("emailtemplateService@cb").to("contentbox.model.system.EmailTemplateService");
+		binder.map("securityService@cb").to("contentbox.model.security.SecurityService");
 		binder.map("authorService@cb").to("contentbox.model.security.AuthorService");
 		binder.map("permissionService@cb").to("contentbox.model.security.PermissionService");
 		binder.map("roleService@cb").to("contentbox.model.security.RoleService");
@@ -66,6 +69,8 @@ component {
 		binder.map("categoryService@cb").to("contentbox.model.content.CategoryService");
 		// Page services
 		binder.map("pageService@cb").to("contentbox.model.content.PageService");
+		// Content
+		binder.map("customHTMLService@cb").to("contentbox.model.content.CustomHTMLService");
 		// Commenting services
 		binder.map("commentService@cb").to("contentbox.model.comments.CommentService");
 		// RSS services
@@ -74,7 +79,6 @@ component {
 		binder.map("customFieldService@cb").toDSL("entityService:cbCustomField");	
 		binder.map("widgetService@cb").to("contentbox.model.ui.WidgetService");	
 		binder.map("layoutService@cb").to("contentbox.model.ui.LayoutService");
-		binder.map("customHTMLService@cb").to("contentbox.model.ui.CustomHTMLService");
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
 		// utils

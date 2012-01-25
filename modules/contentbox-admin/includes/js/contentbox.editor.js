@@ -34,7 +34,14 @@ $(document).ready(function() {
 			createPermalink( $title.val() );
 		}
 	});
+	// Editor dirty checks
+	window.onbeforeunload = askLeaveConfirmation;
 });
+function askLeaveConfirmation(){
+	if ( $("#content").ckeditorGet().checkDirty() ){
+   		return "You have unsaved changes.";
+   	}    
+}
 function createPermalink(){
 	var slugger = $("#sluggerURL").val();
 	$slug = $("#slug").fadeOut();

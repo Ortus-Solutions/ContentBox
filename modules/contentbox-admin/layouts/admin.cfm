@@ -71,6 +71,9 @@
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 							<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
 						</cfif>
+						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+							<option value="#event.buildLink(prc.xehAuthorEditor)#">Create New Author</option>
+						</cfif>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
 						<option value="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</option>
 						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>						
@@ -202,13 +205,14 @@
 							<a href="#event.buildLink(prc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
 							   title="View All Authors">View All</a>
 						</li>
-						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 						<li>
-							<a href="#event.buildLink(prc.xehAuthorEditor)#" 
-							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() NEQ event.getValue("authorID","")>class="current"</cfif>
-							   title="Create a new author">Create New</a>
+							<a href="#event.buildLink(prc.xehPermissions)#" <cfif event.getValue("tabAuthors_Permissions",false,true)> class="current"</cfif>
+							   title="Manage ContentBox Security Permissions">Permissions</a>
 						</li>
-						</cfif>
+						<li>
+							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabAuthors_Roles",false,true)> class="current"</cfif>
+							   title="Manage ContentBox Security Roles">Roles</a>
+						</li>
 						<li>
 							<a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
 							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() eq event.getValue("authorID","")>class="current"</cfif>
@@ -228,6 +232,10 @@
 							   title="Import your database from other blogs">Import</a>
 						</li>
 						</cfif>
+						<li>
+							<a href="#event.buildLink(prc.xehApiDocs)#" <cfif event.getValue("tabTools_apidocs",false,true)> class="current"</cfif>
+							   title="Inspect your ContentBox API">API Docs</a>
+						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_toolsTab")#
 					</ul>
@@ -242,16 +250,12 @@
 							   title="Manage ContentBox Global Configuration">Settings</a>
 						</li>
 						<li>
-							<a href="#event.buildLink(prc.xehPermissions)#" <cfif event.getValue("tabSystem_Permissions",false,true)> class="current"</cfif>
-							   title="Manage ContentBox Security Permissions">Permissions</a>
-						</li>
-						<li>
-							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabSystem_Roles",false,true)> class="current"</cfif>
-							   title="Manage ContentBox Security Roles">Roles</a>
-						</li>
-						<li>
 							<a href="#event.buildLink(prc.xehSecurityRules)#" <cfif event.getValue("tabSystem_SecurityRules",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Rules">Security Rules</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehEmailTemplates)#" <cfif event.getValue("tabSystem_emailtemplates",false,true)> class="current"</cfif>
+							   title="Manage ContentBox Email Templates">Email Templates</a>
 						</li>
 						<cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS")>
 						<li>

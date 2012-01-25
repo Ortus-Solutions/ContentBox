@@ -70,12 +70,32 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
+	
+	/**
+	* Build content cache keys according to sent content object
+	*/
+	string function buildContentCacheKey(){
+		return "cb-content-customHTML-#getContentID()#";
+	}
 		
 	/**
 	* Render content out
 	*/
 	any function renderContent(){
-	
+		var settings = settingService.getAllSettings(asStruct=true);
+		
+		// caching enabled?
+		if( settings.cb_customHTML_caching	){
+			// Build Cache Key
+			var cacheKey = buildContentCacheKey();
+			// Get appropriate cache provider
+			var cache = cacheBox.getCache( settings.cb_content_cacheName );
+			// Try to get content?
+			var cachedContent = cache.get( cacheKey );
+			// Verify it exists, if it does, return it
+			if( !isNull( cachedContent ) ){ return cachedContent; }
+		}
+		
 		// Check if we need to translate
 		if( NOT len(renderedContent) ){
 			lock name="contentbox.customHTMLRendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
@@ -95,6 +115,12 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 				}
 			}
 		}	
+		
+		// caching enabled?
+		if( settings.cb_customHTML_caching	){
+			// Store content in cache	
+			cache.set(cacheKey, renderedContent, settings.cb_content_cachingTimeout, settings.cb_content_cachingTimeoutIdle);
+		}
 		
 		// renturn translated content
 		return renderedContent;

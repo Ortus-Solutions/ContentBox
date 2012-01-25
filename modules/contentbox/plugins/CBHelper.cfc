@@ -578,17 +578,24 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	/**
 	* Create a sub page menu for a given page or current page
-	* @page Optional page to create menu for, else look for current page
+	* @page Optional page to create menu for, else look for current page, this can be a page object or a page slug
 	* @excludes The list of pages to exclude from the menu
 	* @type The type of menu, valid choices are: ul,ol,li,none
 	* @separator Used if type eq none, to separate the list of href's
 	* @showNone Shows a 'No Sub Pages' message or not
 	*/
 	function subPageMenu(any page,excludes="",type="ul",separator="",boolean showNone=true){
-		// verify incoming page
+		// If page not passed, then use current
 		if( !structKeyExists(arguments,"page") ){
 			arguments.page = getCurrentPage();
 		}
+		
+		// Is page passed as slug or object
+		if( isSimpleValue(arguments.page) ){
+			// retrieve page by slug
+			arguments.page = pageService.findBySlug( arguments.page );
+		} 
+		
 		// get child pages
 		arguments.pageRecords = pageService.findPublishedPages(parent=page.getPageID(),showInMenu=true);
 		// build it out
@@ -624,7 +631,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( !structKeyExists(arguments,"page") ){
 			arguments.page = getCurrentPage();
 		}
-		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-ui").visit( arguments.page, arguments.separator, getHomePage() );
+		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-ui").visit( arguments.page, arguments.separator );
 
 	}
 

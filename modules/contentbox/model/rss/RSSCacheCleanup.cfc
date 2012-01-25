@@ -4,7 +4,7 @@
 component extends="coldbox.system.Interceptor"{
 
 	// Listen when entries are saved
-	function cbadmin_onEntrySave(event,interceptData){
+	function cbadmin_postEntrySave(event,interceptData){
 		getModel("rssService@cb").clearCaches();
 	}
 	
