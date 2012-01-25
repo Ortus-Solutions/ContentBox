@@ -11,7 +11,7 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// Tab control
-		prc.tabSystem = true;
+		prc.tabAuthors = true;
 	}
 	
 	// index
@@ -22,7 +22,7 @@ component extends="baseHandler"{
 		// Get all permissions
 		prc.permissions = permissionService.list(sortOrder="permission",asQuery=false);
 		// Tab
-		prc.tabSystem_Permissions = true;
+		prc.tabAuthors_Permissions = true;
 		// view
 		event.setView("permissions/index");
 	}
