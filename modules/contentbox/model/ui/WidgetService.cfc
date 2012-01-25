@@ -71,7 +71,7 @@
 		QueryAddColumn(widgets,"plugin",[]);
 		
 		// cleanup and more stuff
-		for(x=1; x lte widgets.recordCount; x++){
+		for(var x=1; x lte widgets.recordCount; x++){
 			// filename
 			widgets.fileName[x] = widgets.name[x];
 			// name only

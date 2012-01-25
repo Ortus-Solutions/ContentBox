@@ -114,7 +114,8 @@ component accessors="true"{
 			"ENTRIES_ADMIN" = "Ability to manage blog entries, default is view only",
 			"RELOAD_MODULES" = "Ability to reload modules",
 			"SECURITYRULES_ADMIN" = "Ability to manage the system's security rules, default is view only",
-			"GLOBALHTML_ADMIN" = "Ability to manage the system's global HTML content used on layouts"
+			"GLOBALHTML_ADMIN" = "Ability to manage the system's global HTML content used on layouts",
+			"EMAIL_TEMPLATE_ADMIN" = "Ability to manage the system's email templates"
 		};
 		
 		var allperms = [];

@@ -56,8 +56,9 @@ component {
 		];
 		
 		// Security/System
-		binder.map("securityService@cb").to("contentbox.model.security.SecurityService");
 		binder.map("settingService@cb").to("contentbox.model.system.SettingService");
+		binder.map("emailtemplateService@cb").to("contentbox.model.system.EmailTemplateService");
+		binder.map("securityService@cb").to("contentbox.model.security.SecurityService");
 		binder.map("authorService@cb").to("contentbox.model.security.AuthorService");
 		binder.map("permissionService@cb").to("contentbox.model.security.PermissionService");
 		binder.map("roleService@cb").to("contentbox.model.security.RoleService");

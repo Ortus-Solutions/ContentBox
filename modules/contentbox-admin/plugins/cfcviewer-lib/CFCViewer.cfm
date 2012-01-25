@@ -27,48 +27,55 @@ Modification History:
 
 <!--- Start Content --->
 <div class="cfc_content">
-
-	<!--- Title --->
-	<div class="cfc_h1">CFC Viewer - #getDirPath()#</div>
 	
-	<!--- Package & Component Listing --->
-	<div class="cfc_componentlisting">
+	<!--- Only show when not filtering --->
+	<cfif NOT len( getCFCFilter() )>
 		
-		<!--- Packages --->
-		<div class="cfc_h3">Available Packages (#arrayLen(instance.aPacks)#)</div>
-		<div class="cfc_packagecontent">
-		<ul>
-			<li><a href="#buildRootLink()#">#getRootPath()#</a></li>
+		<!--- Title --->
+		<div class="cfc_h1">CFC Viewer - #getDirPath()#</div>
+		
+		<!--- Package & Component Listing --->
+		<div class="cfc_componentlisting">
+			<!--- Packages --->
+			<div class="cfc_h3">Available Packages (#arrayLen(instance.aPacks)#)</div>
+			<div class="cfc_packagecontent">
 			<ul>
-			<cfloop from="1" to="#ArrayLen(instance.aPacks)#" index="i">
-				<li><a href="#buildLink(instance.aPacks[i])#">#instance.aPacks[i]#</a></li>
-			</cfloop>
-			<cfif ArrayLen(instance.aPacks) eq 0>
-				<li><em>None Found</em></li>
-			</cfif>
+				<li><a href="#buildRootLink()#">#getRootPath()#</a></li>
+				<ul>
+				<cfloop from="1" to="#ArrayLen(instance.aPacks)#" index="i">
+					<li><a href="#buildLink(instance.aPacks[i])#">#instance.aPacks[i]#</a></li>
+				</cfloop>
+				<cfif ArrayLen(instance.aPacks) eq 0>
+					<li><em>None Found</em></li>
+				</cfif>
+				</ul>
 			</ul>
-		</ul>
+			</div>
+			
+			<!--- Components --->
+			<div class="cfc_h3">Package Components (#arrayLen(instance.aCFC)#)</div>
+			<div class="cfc_packagecontent">
+			<ul>
+				<cfloop from="1" to="#ArrayLen(instance.aCFC)#" index="i">
+					<li><a href="#getLinkBaseURL()####instance.aCFC[i]#">#instance.aCFC[i]#</a></li>
+				</cfloop>
+				<cfif ArrayLen(instance.aCFC) eq 0>
+					<li><em>None Found</em></li>
+				</cfif>
+			</ul>
+			</div>
 		</div>
+		<p>&nbsp;</p>
 		
-		<!--- Components --->
-		<div class="cfc_h3">Package Components (#arrayLen(instance.aCFC)#)</div>
-		<div class="cfc_packagecontent">
-		<ul>
-			<cfloop from="1" to="#ArrayLen(instance.aCFC)#" index="i">
-				<li><a href="#getLinkBaseURL()####instance.aCFC[i]#">#instance.aCFC[i]#</a></li>
-			</cfloop>
-			<cfif ArrayLen(instance.aCFC) eq 0>
-				<li><em>None Found</em></li>
-			</cfif>
-		</ul>
-		</div>
-	</div>
+	</cfif>
 	</cfoutput>
-
-	<p>&nbsp;</p>
 	
 	<!--- Loop Over cfcs --->
 	<cfloop from="1" to="#ArrayLen(getaCFC())#" index="j">
+		
+		<!--- Filtering --->
+		<cfif len( getCFCFilter() ) AND getCFCFilter() NEQ instance.aCFC[j]><cfcontinue></cfif>
+	
 		<!--- Get MD for CFC --->
 		<cfset md = getCFCMetaData(instance.aCFC[j])>
 		
@@ -110,6 +117,12 @@ Modification History:
 				<tr>
 					<td><strong>Hint</strong></td>
 					<td>#md.hint#</td>
+				</tr>
+				</cfif>
+				<cfif structKeyExists(md,"singleton")>
+				<tr>
+					<td><strong>Singleton</strong></td>
+					<td>True</td>
 				</tr>
 				</cfif>
 				<cfif md.cache.length()>
@@ -175,6 +188,7 @@ Modification History:
 								<td class="cfc_methodstitle" width="40" align="right" >Type</td>
 								<td class="cfc_methodstitle" width="40" align="right" >Required</td>
 								<td class="cfc_methodstitle" width="40" align="right" >Default</td>
+								<td class="cfc_methodstitle" width="40" align="right" >Inject</td>
 								<td class="cfc_methodstitle" >Hint</td>
 							</tr>
 							<cfloop from="1" to="#arrayLen(md.properties)#" index="x">
@@ -185,11 +199,13 @@ Modification History:
 								<cfparam name="thisProperty.Required" 	default="">
 								<cfparam name="thisProperty.Default" 	default="">
 								<cfparam name="thisProperty.hint" 		default="">
+								<cfparam name="thisProperty.inject" 	default="">
 							<tr valign="top" onmouseover="this.className='cfc_methodrowsOn'" onmouseout="this.className='cfc_methodrows'" class="cfc_methodrows">
 								<td align="right" class="cfc_methodcells"><strong>#thisProperty.name#</strong></td>
 								<td class="cfc_methodcells" align="right">#thisProperty.Type#</td>
 								<td class="cfc_methodcells" align="right">#thisProperty.Required#</td>
 								<td class="cfc_methodcells" align="right">#thisProperty.Default#</td>
+								<td class="cfc_methodcells" align="right">#thisProperty.Inject#</td>
 								<td class="cfc_methodcells">
 									#thisProperty.Hint#
 								</td>

@@ -16,8 +16,14 @@ component extends="baseHandler"{
 		// setup tab
 		prc.tabTools_apidocs = true;
 		event.paramValue("_cfcviewer_package","");
-		event.paramValue("print",false);
 		event.paramValue("apislug","model");
+		
+		// print existence check
+		if( structKeyExists(rc,"print") and !len(trim(rc.print)) ){
+			rc.print = true;
+		}
+		event.paramValue("print",false);
+		
 		
 		var dirPath = "";
 		
