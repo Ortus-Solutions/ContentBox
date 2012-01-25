@@ -228,6 +228,10 @@
 							   title="Import your database from other blogs">Import</a>
 						</li>
 						</cfif>
+						<li>
+							<a href="#event.buildLink(prc.xehApiDocs)#" <cfif event.getValue("tabTools_apidocs",false,true)> class="current"</cfif>
+							   title="Inspect your ContentBox API">API Docs</a>
+						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_toolsTab")#
 					</ul>

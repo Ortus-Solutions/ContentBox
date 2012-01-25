@@ -68,6 +68,7 @@ component extends="coldbox.system.Interceptor"{
 		
 		// Tools
 		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";
+		prc.xehApiDocs		= "#prc.cbAdminEntryPoint#.apidocs";
 		
 		// System
 		prc.xehSettings			= "#prc.cbAdminEntryPoint#.settings";
