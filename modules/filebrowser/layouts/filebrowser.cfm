@@ -7,9 +7,9 @@
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>#prc.settings.title#</title> 
+    <title>#prc.fbSettings.title#</title> 
 	<!--- JQuery --->
-	<cfset addAsset("#prc.modRoot#/includes/javascript/jquery-1.4.4.min.js")>
+	<cfset addAsset("#prc.fbModRoot#/includes/javascript/jquery-1.4.4.min.js")>
 </head>
 <body>#renderView()#</body>
 </html>

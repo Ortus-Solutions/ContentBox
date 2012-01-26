@@ -52,15 +52,17 @@ The arguments you can use are:
 			// Extension filtering that applies to file extensions to display, matches the filter argument to directoryList()
 			extensionFilter = "",
 			// Image Name filtering applies to both files and directories. This is also a regex.  Where the filterType=image.
-			imgNameFilter = "$.jpg|$.gif|$.png|^((?!\.).)*$",
+			imgNameFilter = "^((?!\.).)*$|.+\.(jpg|jpeg|bmp|gif|png)/? *",
 			// Flash Name filtering applies to both files and directories. This is also a regex.  Where the filterType=flash.
-			flashNameFilter = "$.swf|^((?!\.).)*$",
+			flashNameFilter = "^((?!\.).)*$|.+\.(swf|fla)/? *",
 			// Volume Chooser, display the volume navigator
 			volumeChooser = false,
 			// Load jQuery
 			loadJQuery = true,
 			// Load Select Callback hooks
 			loadSelectCallbacks = true,
+			// Quick View image width in pixels
+			quickViewWidth = 400,
 			// Uploadify Settings
 			uploadify = {
 				fileDesc = "All Files",
@@ -110,9 +112,6 @@ The arguments you can use are:
 		// Custom Declared Interceptors
 		interceptors = [
 		];
-
-		// Binder Mappings
-		// binder.map("Alias").to("#moduleMapping#.model.MyService");
 
 	}
 

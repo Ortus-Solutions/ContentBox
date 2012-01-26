@@ -6,6 +6,18 @@ function $getBackPath(inPath){
 	var lFolder = listLast( arguments.inPath,"/" );
 	return URLEncodedFormat( left( arguments.inPath, len(arguments.inPath) - len(lFolder) ) );
 }
+function validQuickView(ext){
+	if( listFindNoCase("png,jpg,jpeg,bmp,gif",ext) ){ return "true"; }
+	return "false";	
+}
+function getImageFile(ext){
+	switch(arguments.ext){
+		case "png": case "jpg" : case "jpeg" : case "gif" : case "bmp" : { return "Picture.png"; }
+		case "cfc": case "cfm" : case "cfml" : { return "coldfusion.png"; }
+		case "html" : case "htm" : case "aspx" : case "asp" : case "php" : case "rb" : case "py" : case "xml" :{ return "code.png"; }
+		default : return "file.png";
+	}
+}
 function $getUrlRelativeToPath(required basePath,required filePath, encodeURL=false) {
 	var URLOut="";
 	var strURLOut="/";
@@ -35,22 +47,58 @@ $(document).ready(function() {
 	$selectedItemType	= $fileBrowser.find("##selectedItemType");
 	$statusText 		= $fileBrowser.find("##statusText");
 	$selectButton		= $fileBrowser.find("##bt_select");
-	
+	$contextMenu		= $fileBrowser.find("##fbContextMenu");
+	$sorting			= $fileBrowser.find("##fbSorting");
+	$quickView			= $fileBrowser.find("##quickViewBar");
+	$quickViewContents	= $fileBrowser.find("##quickViewBarContents");
+	$quickViewCloseBtn	= $fileBrowser.find("##fbCloseButton");
 	//disable it
 	$selectButton.attr("disabled",true);
 	// history
 	fbSelectHistory = "";
+	// file context menus
+	$fileBrowser.find(".files").contextMenu({menu: 'fbContextMenu'}, fbContextActions);
+	$fileBrowser.find(".folders").contextMenu({menu: 'fbContextMenuDirectories'}, fbContextActions);
+	// Sorting
+	$sorting.change(function(){ fbRefresh(); });
+	$quickViewCloseBtn.click(function(){ fbCloseQuickView(); });
+	// Quick div filter
+	$fileBrowser.find("##fbQuickFilter").keyup(function(){
+		$.uiDivFilter( $(".filterDiv"), this.value);
+	})
+	
 });
+function fbCloseQuickView(){
+	$quickView.slideUp();
+	$quickViewContents.html('');
+}
+function fbContextActions(action,el,pos){
+	var $context = $(el);
+	fbSelect( $context.attr("id"), $context.attr("data-fullURL") );
+	switch(action){
+		case "quickview" : fbQuickView(); break;
+		case "rename" 	 : fbRename(); break;
+		<cfif prc.fbSettings.deleteStuff>
+		case "delete" 	 : fbDelete(); break;
+		</cfif>
+		<cfif prc.fbSettings.allowDownload>
+		case "download"  : fbDownload(); break;
+		</cfif>
+		<cfif len(rc.callback)>
+		case "select" 	 : fbSelect(); break;
+		</cfif>
+	}
+}
 function fbRefresh(){
 	$fileLoaderBar.slideDown();
-	$fileBrowser.parent().load( '#event.buildLink(prc.xehBrowser)#', {path:'#prc.safeCurrentRoot#'},function(){
+	$fileBrowser.parent().load( '#event.buildLink(prc.xehFBBrowser)#', {path:'#prc.fbSafeCurrentRoot#',sorting:$sorting.val()},function(){
 		$fileLoaderBar.slideUp();
 	});
 }
 function fbDrilldown(inPath){
 	if( inPath == null ){ inPath = ""; }
 	$fileLoaderBar.slideDown();
-	$fileBrowser.parent().load( '#event.buildLink(prc.xehBrowser)#', {path:inPath},function(){
+	$fileBrowser.parent().load( '#event.buildLink(prc.xehFBBrowser)#', {path:inPath},function(){
 		$fileLoaderBar.slideUp();
 	});
 }
@@ -74,11 +122,24 @@ function fbSelect(sID,sPath){
 	// enable selection button
 	$selectButton.attr("disabled",false);
 }
+function fbQuickView(){
+	// check selection
+	var sPath = $selectedItem.val();
+	if( !sPath.length ){ alert("Please select a file-folder first."); return; }
+	// get ID
+	var thisID 	= $selectedItemID.val();
+	var target 	= $("##"+thisID);
+	// only images
+	if( target.attr("data-quickview") == "false" ){ alert("Quick view only enabled for images"); return; }
+	// show it
+	var imgURL = "#event.buildLink(prc.xehFBDownload)#?path="+ escape( target.attr("data-fullURL") );
+	$quickView.slideDown();
+	$quickViewContents.html('<img src="'+imgURL+'" style="max-width:#prc.fbSettings.quickViewWidth#px"/>');
+}
 function fbRename(){
 	// check selection
 	var sPath = $selectedItem.val();
 	if( !sPath.length ){ alert("Please select a file-folder first."); return; }
-
 	// get ID
 	var thisID 		= $selectedItemID.val();
 	var target 		= $("##"+thisID);
@@ -87,19 +148,19 @@ function fbRename(){
 	// do renaming if prompt not empty
 	if( newName != null){
 		$fileLoaderBar.slideDown();
-		$.post('#event.buildLink(prc.xehRename)#',{name:newName,path:target.attr("data-fullURL")},function(data){
+		$.post('#event.buildLink(prc.xehFBRename)#',{name:newName,path:target.attr("data-fullURL")},function(data){
 			if( data.errors ){ alert(data.messages); }
 			fbRefresh();
 		},"json");
 	}
 }
 <!--- Create Folders --->
-<cfif prc.settings.createFolders>
+<cfif prc.fbSettings.createFolders>
 function fbNewFolder(){
 	var dName = prompt("Enter the new directory name?");
 	if( dName != null){
 		$fileLoaderBar.slideDown();
-		$.post('#event.buildLink(prc.xehNewFolder)#',{dName:dName,path:'#prc.safeCurrentRoot#'},function(data){
+		$.post('#event.buildLink(prc.xehFBNewFolder)#',{dName:dName,path:'#prc.fbSafeCurrentRoot#'},function(data){
 			if( data.errors ){ alert(data.messages); }
 			fbRefresh();
 		},"json");
@@ -107,13 +168,13 @@ function fbNewFolder(){
 }
 </cfif>
 <!--- Remove Stuff --->
-<cfif prc.settings.deleteStuff>
+<cfif prc.fbSettings.deleteStuff>
 function fbDelete(){
 	var sPath = $selectedItem.val();
 	if( !sPath.length ){ alert("Please select a file-folder first."); return; }
 	if( confirm("Are you sure you want to remove the selected file/folder? This is irreversible!") ){
 		$fileLoaderBar.slideDown();
-		$.post('#event.buildLink(prc.xehRemove)#',{path:sPath},function(data){
+		$.post('#event.buildLink(prc.xehFBRemove)#',{path:sPath},function(data){
 			if( data.errors ){ alert(data.messages); }
 			fbRefresh();
 		},"json");
@@ -121,19 +182,19 @@ function fbDelete(){
 }
 </cfif>
 <!--- Download --->
-<cfif prc.settings.allowDownload>
+<cfif prc.fbSettings.allowDownload>
 function fbDownload(){
 	var sPath = $selectedItem.val();
 	var sType = $selectedItemType.val();
 	if( !sPath.length || sType == "dir" ){ alert("Please select a file first."); return; }
 	// Trigger the download
-	$("##downloadIFrame").attr("src","#event.buildLink(prc.xehDownload)#?path="+ escape(sPath) );
+	$("##downloadIFrame").attr("src","#event.buildLink(prc.xehFBDownload)#?path="+ escape(sPath) );
 }
 </cfif>
 <!--- CallBack --->
 <cfif len(rc.callback)>
 function fbChoose(){
-	var sPath = $selectedItemURL.val();
+	var sPath = $selectedItem.val();
 	var sURL = $selectedItemURL.val();
 	var sType = $selectedItemType.val();
 	#rc.callback#( sPath,sURL,sType );
@@ -141,26 +202,26 @@ function fbChoose(){
 </cfif>
 </script>
 <!--- Uploads Scripts --->
-<cfif prc.settings.allowUploads>
+<cfif prc.fbSettings.allowUploads>
 <script type="text/javascript">
 $(document).ready(function() {
   $('##file_upload').uploadify({
-    'uploader'  : '#prc.modRoot#/includes/uploadify/uploadify.swf',
-    'cancelImg' : '#prc.modRoot#/includes/uploadify/cancel.png',
-   	'script'    : '#event.buildLink(prc.xehUpload)#?folder=#prc.safeCurrentRoot#&#$safe(session.URLToken)#',
+    'uploader'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
+    'cancelImg' : '#prc.fbModRoot#/includes/uploadify/cancel.png',
+   	'script'    : '#event.buildLink(prc.xehFBUpload)#?folder=#prc.fbSafeCurrentRoot#&#$safe(session.URLToken)#',
     'auto'      : true,
-	'multi'  	: #prc.settings.uploadify.multi#,
-	fileDesc	: '#prc.settings.uploadify.fileDesc#',
-    fileExt		: '#prc.settings.uploadify.fileExt#',
-	<cfif isNumeric( prc.settings.uploadify.sizeLimit )>
-	sizeLimit	: #prc.settings.uploadify.sizeLimit#,
+	'multi'  	: #prc.fbSettings.uploadify.multi#,
+	fileDesc	: '#prc.fbSettings.uploadify.fileDesc#',
+    fileExt		: '#prc.fbSettings.uploadify.fileExt#',
+	<cfif isNumeric( prc.fbSettings.uploadify.sizeLimit )>
+	sizeLimit	: #prc.fbSettings.uploadify.sizeLimit#,
 	</cfif>
 	onAllComplete: function(event, data){
 		//alert(data.filesUploaded + ' file(s) uploaded successfully!');
 		$("##uploadBar").slideUp();
 		fbRefresh();
 	}
-	<cfif len( prc.settings.uploadify.customJSONOptions )>#prc.settings.uploadify.customJSONOptions#</cfif>
+	<cfif len( prc.fbSettings.uploadify.customJSONOptions )>#prc.fbSettings.uploadify.customJSONOptions#</cfif>
 	});
 });
 function fbUpload(){

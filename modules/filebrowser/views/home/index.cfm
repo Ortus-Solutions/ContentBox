@@ -17,36 +17,44 @@
 		<!--- Your Current Location --->
 		<div id="titleBar">
 			#announceInterception("preTitleBar")#
-			<div id="title">#prc.settings.title#</div>
+			<div id="title">#prc.fbSettings.title#</div>
 
 			<!--- Refresh --->
-			<a href="javascript:fbRefresh()" title="Refresh Listing"><img src="#prc.modRoot#/includes/images/arrow_refresh.png"  border="0"></a>&nbsp;&nbsp;
+			<a href="javascript:fbRefresh()" title="Refresh Listing"><img src="#prc.fbModRoot#/includes/images/arrow_refresh.png"  border="0"></a>&nbsp;&nbsp;
 
 			<!--- Home --->
-			<a href="javascript:fbDrilldown()" title="Go Home"><img src="#prc.modRoot#/includes/images/home.png"  border="0"></a>&nbsp;&nbsp;
+			<a href="javascript:fbDrilldown()" title="Go Home"><img src="#prc.fbModRoot#/includes/images/home.png"  border="0"></a>&nbsp;&nbsp;
 
 			<!--- New Folder --->
-			<cfif prc.settings.createFolders>
-			<a href="javascript:fbNewFolder()" title="Create Folder"><img src="#prc.modRoot#/includes/images/folder_new.png" border="0"></a>&nbsp;&nbsp;
+			<cfif prc.fbSettings.createFolders>
+			<a href="javascript:fbNewFolder()" title="Create Folder"><img src="#prc.fbModRoot#/includes/images/folder_new.png" border="0"></a>&nbsp;&nbsp;
 			</cfif>
 
 			<!--- Rename --->
-			<a href="javascript:fbRename()" title="Rename File-Folder"><img src="#prc.modRoot#/includes/images/rename.png" border="0"></a>&nbsp;&nbsp;
+			<a href="javascript:fbRename()" title="Rename File-Folder"><img src="#prc.fbModRoot#/includes/images/rename.png" border="0"></a>&nbsp;&nbsp;
 
 			<!--- Delete --->
-			<cfif prc.settings.deleteStuff>
-			<a href="javascript:fbDelete()" title="Delete File-Folder"><img src="#prc.modRoot#/includes/images/cancel.png"  border="0"></a>&nbsp;&nbsp;
+			<cfif prc.fbSettings.deleteStuff>
+			<a href="javascript:fbDelete()" title="Delete File-Folder"><img src="#prc.fbModRoot#/includes/images/cancel.png"  border="0"></a>&nbsp;&nbsp;
 			</cfif>
 
 			<!--- Upload --->
-			<cfif prc.settings.allowUploads>
-			<a href="javascript:fbUpload()" title="Upload"><img src="#prc.modRoot#/includes/images/upload.png"  border="0"></a>&nbsp;&nbsp;
+			<cfif prc.fbSettings.allowUploads>
+			<a href="javascript:fbUpload()" title="Upload"><img src="#prc.fbModRoot#/includes/images/upload.png"  border="0"></a>&nbsp;&nbsp;
 			</cfif>
 
 			<!--- Download --->
-			<cfif prc.settings.allowDownload>
-			<a href="javascript:fbDownload()" title="Download File"><img src="#prc.modRoot#/includes/images/download.png"  border="0"></a>&nbsp;
+			<cfif prc.fbSettings.allowDownload>
+			<a href="javascript:fbDownload()" title="Download File"><img src="#prc.fbModRoot#/includes/images/download.png"  border="0"></a>&nbsp;
 			</cfif>
+
+			<!--- Sorting --->
+			#html.label(field="fbSorting",content="Sort By: ")#
+			#html.select(name="fbSorting",options="Name,Size,LastModified",selectedValue=prc.fbPreferences.sorting)#
+
+			<!--- Quick Filter --->
+			#html.label(field="fbQuickFilter",content="Quick Filter: ")#
+			#html.textField(name="fbQuickFilter",size="20")#
 
 			#announceInterception("postTitleBar")#
 		</div>
@@ -58,60 +66,70 @@
 			#announceInterception("postUploadBar")#
 		</div>
 
+		<!--- QuickViewBar --->
+		<div id="quickViewBar">
+			<img id="fbCloseButton" src="#prc.fbModRoot#/includes/images/x.png" alt="close"/>
+			#announceInterception("preQuickViewBar")#
+			<div id="quickViewBarContents"></div>
+			#announceInterception("postQuickViewBar")#
+		</div>
+
 		<!--- Show the File Listing --->
 		<div id="fileListing">
 			#announceInterception("preFileListing")#
-		    <!--- Messagebox --->
-		    #getPlugin("MessageBox").renderit()#
+			<!--- Messagebox --->
+			#getPlugin("MessageBox").renderit()#
 
-		    <!--- Display back links --->
-			<cfif prc.currentRoot NEQ prc.dirRoot>
-				<a href="javascript:fbDrilldown('#$getBackPath(prc.currentRoot)#')" title="Go Back"><img src="#prc.modRoot#/includes/images/folder.png" border="0"  alt="Folder"></a>
-				<a href="javascript:fbDrilldown('#$getBackPath(prc.currentRoot)#')" title="Go Back">..</a><br>
+			<!--- Display back links --->
+			<cfif prc.fbCurrentRoot NEQ prc.fbDirRoot>
+				<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="Go Back"><img src="#prc.fbModRoot#/includes/images/folder.png" border="0"  alt="Folder"></a>
+				<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="Go Back">..</a><br>
 			</cfif>
 
 			<!--- Display directories --->
-			<cfif prc.qListing.recordcount>
-			<cfloop query="prc.qListing">
+			<cfif prc.fbqListing.recordcount>
+			<cfloop query="prc.fbqListing">
 
 				<!--- Check Name Filter --->
-				<cfif NOT reFindNoCase(prc.nameFilter, prc.qListing.name)> <cfcontinue> </cfif>
+				<cfif NOT reFindNoCase(prc.fbNameFilter, prc.fbqListing.name)> <cfcontinue> </cfif>
 
 				<!--- ID Name of the div --->
-				<cfset validIDName = $validIDName( prc.qListing.name ) >
+				<cfset validIDName = $validIDName( prc.fbqListing.name ) >
 				<!--- URL used for selection --->
-				<cfset plainURL = prc.currentroot & "/" & prc.qListing.name>
-				<cfset relURL = $getUrlRelativeToPath(prc.webRootPath,plainURL)>
+				<cfset plainURL = prc.fbCurrentRoot & "/" & prc.fbqListing.name>
+				<cfset relURL = $getUrlRelativeToPath(prc.fbwebRootPath,plainURL)>
 
 				<!--- Directory or File --->
-				<cfif prc.qListing.type eq "Dir">
+				<cfif prc.fbqListing.type eq "Dir">
 					<!--- Folder --->
 					<div id="#validIDName#"
 						 onClick="fbSelect('#validIDName#','#JSStringFormat(plainURL)#')"
-						 class="folders"
+						 class="folders filterDiv"
 						 data-type="dir"
-						 data-name="#prc.qListing.Name#"
+						 data-name="#prc.fbqListing.Name#"
 						 data-fullURL="#plainURL#"
 						 data-relURL="#relURL#"
-						 data-lastModified="#prc.qListing.dateLastModified#"
-						 data-size="#numberFormat(prc.qListing.size/1024)#"
+						 data-lastModified="#prc.fbqListing.dateLastModified#"
+						 data-size="#numberFormat(prc.fbqListing.size/1024)#"
+						 data-quickview="false"
 						 onDblclick="fbDrilldown('#JSStringFormat(plainURL)#')">
-						<a href="javascript:fbDrilldown('#JSStringFormat(plainURL)#')"><img src="#prc.modRoot#/includes/images/folder.png" border="0"  alt="Folder"></a>
-						#prc.qListing.name#
+						<a href="javascript:fbDrilldown('#JSStringFormat(plainURL)#')"><img src="#prc.fbModRoot#/includes/images/folder.png" border="0"  alt="Folder"></a>
+						#prc.fbqListing.name#
 					</div>
-				<cfelseif prc.settings.showFiles>
+				<cfelseif prc.fbSettings.showFiles>
 					<!--- Display the DiV --->
 					<div id="#validIDName#"
-						 class="files"
+						 class="files filterDiv"
 						 data-type="file"
-						 data-name="#prc.qListing.Name#"
+						 data-name="#prc.fbqListing.Name#"
 						 data-fullURL="#plainURL#"
 						 data-relURL="#relURL#"
-						 data-lastModified="#prc.qListing.dateLastModified#"
-						 data-size="#numberFormat(prc.qListing.size/1024)#"
+						 data-lastModified="#prc.fbqListing.dateLastModified#"
+						 data-size="#numberFormat(prc.fbqListing.size/1024)#"
+						 data-quickview="#validQuickView( listLast(prc.fbQListing.name,".") )#"
 						 onClick="fbSelect('#validIDName#','#JSStringFormat(plainURL)#')">
-						<img src="#prc.modRoot#/includes/images/file.png" border="0"  alt="file">
-						#prc.qListing.name#
+						<img src="#prc.fbModRoot#/includes/images/#getImageFile(listLast(prc.fbQListing.name,"."))#" border="0"  alt="file">
+						#prc.fbqListing.name#
 					</div>
 				</cfif>
 			</cfloop>
@@ -124,7 +142,8 @@
 		<!--- Location Bar --->
 		<div id="locationBar">
 			#announceInterception("preLocationBar")#
-			#replace(prc.currentroot,"/",'<img class="divider" src="#prc.modRoot#/includes/images/bullet_go.png" alt="arrow" />&nbsp;',"all")#
+			#replace(prc.fbCurrentRoot,"/",'&nbsp;<img class="divider" src="#prc.fbModRoot#/includes/images/bullet_go.png" alt="arrow" />&nbsp;',"all")#
+			(#prc.fbqListing.recordCount# items)
 			#announceInterception("postLocationBar")#
 		</div>
 
@@ -134,14 +153,14 @@
 
 			<!--- Loader Bar --->
 			<div id="loaderBar">
-				<img src="#prc.modRoot#/includes/images/ajax-loader.gif" />
+				<img src="#prc.fbModRoot#/includes/images/ajax-loader.gif" />
 			</div>
 
 			<!--- Status Text --->
 			<div id="statusText"></div>
 
 			<!--- Download IFrame --->
-			<cfif prc.settings.allowDownload>
+			<cfif prc.fbSettings.allowDownload>
 			<iframe id="downloadIFrame" src="" style="display:none; visibility:hidden;"></iframe>
 			</cfif>
 
@@ -168,5 +187,44 @@
 
 	</div>
 	#html.endForm()#
+	<!--- ContextMenus --->
+	<ul id="fbContextMenu" class="contextMenu">
+		<li class="quickview">
+			<a href="##quickview">Quick View</a>
+		</li>
+		<cfif len(rc.callback)>
+		<li class="select">
+			<a href="##select">Select</a>
+		</li>
+		</cfif>
+		<li class="rename">
+			<a href="##rename">Rename</a>
+		</li>
+		<cfif prc.fbSettings.deleteStuff>
+		<li class="delete">
+			<a href="##delete">Delete</a>
+		</li>
+		</cfif>
+		<cfif prc.fbSettings.allowDownload>
+		<li class="download">
+			<a href="##download">Download</a>
+		</li>
+		</cfif>
+	</ul>
+	<ul id="fbContextMenuDirectories" class="contextMenu">
+		<cfif len(rc.callback)>
+		<li class="select">
+			<a href="##select">Select</a>
+		</li>
+		</cfif>
+		<li class="rename">
+			<a href="##rename">Rename</a>
+		</li>
+		<cfif prc.fbSettings.deleteStuff>
+		<li class="delete">
+			<a href="##delete">Delete</a>
+		</li>
+		</cfif>
+	</ul>
 </div>
 </cfoutput>
