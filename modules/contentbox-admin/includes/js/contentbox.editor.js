@@ -23,9 +23,9 @@ $(document).ready(function() {
 	// Activate ckeditor
 	$content.ckeditor( function(){}, { 
 			toolbar:ckToolbar,height:300, 
-			filebrowserBrowseUrl : '/index.cfm/contentbox-filebrowser/?callback=fbCKSelect',
-			filebrowserImageBrowseUrl : '/index.cfm/contentbox-filebrowser/?callback=fbCKSelect&filtertype=image',
-			filebrowserFlashBrowseUrl : '/index.cfm/contentbox-filebrowser/?callback=fbCKSelect&filtertype=flash',
+			filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/',
+			filebrowserImageBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/image/',
+			filebrowserFlashBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/flash/',
 			//filebrowserUploadUrl : '/index.cfm/filebrowser/' 
 		} );
 	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175 } );

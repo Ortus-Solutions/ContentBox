@@ -8,7 +8,7 @@ component output="false" hint="Main filebrowser module handler"{
 	function preHandler(event,currentAction){
 		var prc = event.getCollection(private=true);
 		// place root in prc and also module settings
-		prc.fbModRoot	 = event.getModuleRoot();
+		prc.fbModRoot	 = "/modules/contentbox-filebrowser";
 		// if the settings exist in flash, use those
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "settings") ){
 			prc.fbsettings = flash.get("fileBrowser").settings;
@@ -16,6 +16,7 @@ component output="false" hint="Main filebrowser module handler"{
 			// otherwise we duplicate the settings so we can do overrides a-la-carte
 			prc.fbSettings = duplicate( getModuleSettings("contentbox-filebrowser").settings );
 		}
+
 	}
 
 	function index(event,rc,prc,boolean widget=false,struct settings={}){
@@ -109,7 +110,7 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// set view or widget?
 		if( arguments.widget ){
-			return renderView(view="home/index",module="filebrowser");
+			return renderView(view="home/index",module="contentbox-filebrowser");
 		}
 		else{
 			event.setView(view="home/index",noLayout=event.isAjax());
