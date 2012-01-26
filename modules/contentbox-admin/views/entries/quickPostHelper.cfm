@@ -16,7 +16,14 @@ $(document).ready(function() {
 	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] }
 	];
 	// Activate ckeditor
-	$quickEntryContent.ckeditor( function(){}, { toolbar:ckToolbar,height:180 } );
+	$quickEntryContent.ckeditor( function(){}, {
+			toolbar:ckToolbar,
+			height:180,
+			filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/',
+			filebrowserImageBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/image/',
+			filebrowserFlashBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/flash/',
+			//filebrowserUploadUrl : '/index.cfm/filebrowser/'
+		} );
 	// form validator
 	$quickPostForm.validator({position:'top left'});
 });
