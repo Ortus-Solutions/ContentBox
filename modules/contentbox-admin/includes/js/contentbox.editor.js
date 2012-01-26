@@ -28,7 +28,7 @@ $(document).ready(function() {
 			filebrowserFlashBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/flash/',
 			//filebrowserUploadUrl : '/index.cfm/filebrowser/' 
 		} );
-	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175 } );
+	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175,filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/' } );
 	// Date fields
 	$(":date").dateinput();
 	// form validator
