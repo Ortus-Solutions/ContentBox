@@ -2,18 +2,18 @@
 <cfscript>
 	// Configure ColdBox Application
 	function configure(){
-	
+
 		// coldbox directives
 		coldbox = {
 			//Application Setup
 			appName 				= "ContentBox",
-			
+
 			//Development Settings
 			debugMode				= false,
 			debugPassword			= "@fwPassword@",
 			reinitPassword			= "@fwPassword@",
 			handlersIndexAutoReload = false,
-			
+
 			//Implicit Events
 			defaultEvent			= "General.index",
 			requestStartHandler		= "",
@@ -23,7 +23,7 @@
 			sessionStartHandler 	= "",
 			sessionEndHandler		= "",
 			missingTemplateHandler	= "",
-			
+
 			//Extension Points
 			UDFLibraryFile 				= "includes/helpers/ApplicationHelper.cfm",
 			coldboxExtensionsLocation 	= "",
@@ -33,29 +33,29 @@
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
 			requestContextDecorator 	= "",
-			
+
 			//Error/Exception Handling
 			exceptionHandler		= "",
 			onInvalidEvent			= "",
 			customErrorTemplate		= "",
-				
+
 			//Application Aspects
 			handlerCaching 			= true,
-			eventCaching			= true	
+			eventCaching			= true
 		};
-	
+
 		// custom settings
 		settings = {
-			
+
 		};
-		
+
 		// environment settings, create a detectEnvironment() method to detect it yourself.
 		// create a function with the name of the environment so it can be executed if that environment is detected
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
-			development = "^cf9.,^railo."
+			development = "^cf9.,^railo.,.local$"
 		};
-		
+
 		// Module Directives
 		modules = {
 			//Turn to false in production
@@ -63,9 +63,9 @@
 			// An array of modules names to load, empty means all of them
 			include = [],
 			// An array of modules names to NOT load, empty means none
-			exclude = [] 
+			exclude = []
 		};
-		
+
 		//LogBox DSL
 		logBox = {
 			// Define Appenders
@@ -75,14 +75,14 @@
 			// Root Logger
 			root = { levelmax="INFO", appenders="*" }
 			// Implicit Level Categories
-			//info = [ "coldbox.system" ] 
+			//info = [ "coldbox.system" ]
 		};
-		
+
 		//Layout Settings
 		layoutSettings = {
 			defaultLayout = "Layout.Main.cfm"
 		};
-		
+
 		// ORM
 		orm = {
 			// Enable Injection
@@ -90,15 +90,15 @@
 				enabled = true
 			}
 		};
-		
+
 		//Register interceptors as an array, we need order
 		interceptors = [
 			//SES
 			{class="coldbox.system.interceptors.SES"}
 		];
-		
+
 	}
-	
+
 	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
 	function development(){
 		//coldbox.debugmode=true;
@@ -107,10 +107,10 @@
 		coldbox.reinitpassword = "";
 		coldbox.debugpassword = "";
 		wirebox.singletonreload = true;
-		
+
 		//Debugger Settings
 		debugger.showRCPanel = false;
-		
+
 		// ses debugging
 		logbox.appenders.files={class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {
@@ -119,8 +119,8 @@
 		};
 		//logbox.debug = ["coldbox.system.interceptors.SES"];
 		//logbox.debug = [ "coldbox.system.aop" ];
-		
+
 	}
-	
+
 </cfscript>
 </cfcomponent>
