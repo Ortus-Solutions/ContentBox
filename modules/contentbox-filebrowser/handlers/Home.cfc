@@ -14,7 +14,7 @@ component output="false" hint="Main filebrowser module handler"{
 			prc.fbsettings = flash.get("fileBrowser").settings;
 		} else {
 			// otherwise we duplicate the settings so we can do overrides a-la-carte
-			prc.fbSettings = duplicate( getModuleSettings("filebrowser").settings );
+			prc.fbSettings = duplicate( getModuleSettings("contentbox-filebrowser").settings );
 		}
 	}
 
@@ -36,12 +36,12 @@ component output="false" hint="Main filebrowser module handler"{
 		detectSorting(event,rc,prc);
 
 		// exit handlers
-		prc.xehFBBrowser 	= "filebrowser/";
-		prc.xehFBNewFolder 	= "filebrowser/createfolder";
-		prc.xehFBRemove 	= "filebrowser/remove";
-		prc.xehFBDownload	= "filebrowser/download";
-		prc.xehFBUpload		= "filebrowser/upload";
-		prc.xehFBRename		= "filebrowser/rename";
+		prc.xehFBBrowser 	= "contentbox-filebrowser/";
+		prc.xehFBNewFolder 	= "contentbox-filebrowser/createfolder";
+		prc.xehFBRemove 	= "contentbox-filebrowser/remove";
+		prc.xehFBDownload	= "contentbox-filebrowser/download";
+		prc.xehFBUpload		= "contentbox-filebrowser/upload";
+		prc.xehFBRename		= "contentbox-filebrowser/rename";
 
 		// Load CSS and JS only if not in Ajax Mode
 		if( NOT event.isAjax() ){
