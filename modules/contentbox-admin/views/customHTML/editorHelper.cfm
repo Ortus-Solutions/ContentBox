@@ -3,7 +3,7 @@
 $(document).ready(function() {
 	$contentEditForm = $("##contentEditForm");
 	// form validators
-	$contentEditForm.validator({grouped:true,position:'top left'});
+	$contentEditForm.validator({grouped:true,position:'top left',onSucess:function(e,else){ needConfirmation = false; }});
 	// blur slugify
 	var $title = $contentEditForm.find("##title");
 	$title.blur(function(){
@@ -13,7 +13,9 @@ $(document).ready(function() {
 	activateCustomEditor();
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
+	needConfirmation = true;
 });
+// Widget URL
 function getEditorSelectorURL(){ return '#event.buildLink(prc.xehWidgetSelector)#';}
 function activateCustomEditor(){
 	// toolbar config
@@ -30,10 +32,9 @@ function activateCustomEditor(){
 	$contentEditForm.find("##content").ckeditor( function(){}, {
 			toolbar:ckToolbar,
 			height:250,
-			filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/',
-			filebrowserImageBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/image/',
-			filebrowserFlashBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/flash/',
-			//filebrowserUploadUrl : '/index.cfm/filebrowser/'
+			filebrowserBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURL)#',
+			filebrowserImageBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLIMage)#',
+			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#'
 		} );
 }
 function createPermalink(){
@@ -44,7 +45,7 @@ function createPermalink(){
 	} );
 }
 function askLeaveConfirmation(){
-	if ( $("##content").ckeditorGet().checkDirty() ){
+	if ( $("##content").ckeditorGet().checkDirty() && needConfirmation){
    		return "You have unsaved changes.";
    	}
 }

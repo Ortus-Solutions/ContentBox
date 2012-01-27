@@ -32,6 +32,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.cbAdminEntryPoint = getProperty("entryPoint");
 		// store site entry point
 		prc.cbEntryPoint = getModuleSettings("contentbox-ui").entryPoint;
+		// store filebrowser entry point
+		prc.cbFileBrowserEntryPoint = getModuleSettings("contentbox-filebrowser").entryPoint;
 		// Place user in prc
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global cb options on scope
@@ -82,6 +84,11 @@ component extends="coldbox.system.Interceptor"{
 		// Login/Logout
 		prc.xehDoLogout 	= "#prc.cbAdminEntryPoint#.security.doLogout";
 		prc.xehLogin 		= "#prc.cbAdminEntryPoint#.security.login";
+		
+		// CK Editor Integration Handlers
+		prc.xehCKFileBrowserURL			= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
+		prc.xehCKFileBrowserURLImage	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
+		prc.xehCKFileBrowserURLFlash	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		
 		/************************************** NAVIGATION TABS *********************************************/
 		event.paramValue(name="tabDashboard",value=false,private=true);

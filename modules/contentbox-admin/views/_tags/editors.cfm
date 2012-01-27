@@ -1,8 +1,12 @@
-$(document).ready(function() {
- 	// pointers
-	$content 	= $("#content");
-	$excerpt	= $("#excerpt");
-	$pageForm 	= $("#pageForm");
+<cfoutput>
+<!--- Load Assets --->
+#html.addAsset(prc.cbroot&"/includes/ckeditor/ckeditor.js")#
+#html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
+#html.addAsset(prc.cbroot&"/includes/css/date.css")#
+<!--- Custom Javascript --->
+<script type="text/javascript">
+// Setup the Editors
+function setupEditors($theForm){
 	// toolbar config
 	var ckToolbar =
 	[
@@ -20,69 +24,53 @@ $(document).ready(function() {
 	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
 	    { name: 'tools',       items : [ 'Maximize','cbWidgets' ] }
 	];
+	
 	// Activate ckeditor
 	$content.ckeditor( function(){}, { 
-			toolbar:ckToolbar,
-			height:300,
-			filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/',
-			filebrowserImageBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/image/',
-			filebrowserFlashBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/flash/',
-			//filebrowserUploadUrl : '/index.cfm/filebrowser/' 
+			toolbar:ckToolbar,height:300, 
+			filebrowserBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURL)#',
+			filebrowserImageBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLIMage)#',
+			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#'
 		} );
 	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175,filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/' } );
+	
 	// Date fields
 	$(":date").dateinput();
+	
 	// form validator
-	$pageForm.validator({position:'center top'});
+	$theForm.validator({position:'top right',grouped:true,onSuccess:function(e,els){ needConfirmation=false; }});
+	
 	// blur slugify
-	var $title = $pageForm.find("#title");
+	var $title = $theForm.find("##title");
 	$title.blur(function(){ 
-		if( $("#slug").size() ){
+		if( $theForm.find("##slug").size() ){
 			createPermalink( $title.val() );
 		}
 	});
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
-});
+	needConfirmation = true;
+}
+// Ask for leave confirmations
 function askLeaveConfirmation(){
-	if ( $("#content").ckeditorGet().checkDirty() ){
+	if ( $content.ckeditorGet().checkDirty() && needConfirmation ){
    		return "You have unsaved changes.";
    	}    
 }
+// Create Permalinks
 function createPermalink(){
-	var slugger = $("#sluggerURL").val();
-	$slug = $("#slug").fadeOut();
-	$.get(slugger,{slug:$("#title").val()},function(data){ 
+	var slugger = $("##sluggerURL").val();
+	$slug = $("##slug").fadeOut();
+	$.get(slugger,{slug:$("##title").val()},function(data){ 
 		$slug.fadeIn().val($.trim(data)); 		
 	} );
 }
+// Toggle drafts on for saving
 function toggleDraft(){
-	$("#isPublished").val('false');
+	needConfirmation = false;
+	$isPublished.val('false');
 }
-function quickSave(){
-	// Draft it
-	$("#isPublished").val('false');
-	
-	// Validation first
-	if( !$pageForm.data("validator").checkValidity() ){
-		return false;
-	}
-	
-	// Activate Loader
-	var $uploader = $("#uploadBarLoader");
-	var $status = $("#uploadBarLoaderStatus");
-	$status.html("Saving...");
-	$uploader.slideToggle();
-	
-	// Post it
-	$.post(getEditorSaveURL(), $pageForm.serialize(),function(data){
-		// Save new id
-		$pageForm.find("#pageID").val( data.PAGEID );
-		// finalize
-		$uploader.fadeOut(1500);
-		$status.html('Page Draft Saved!');
-		$("#isPublished").val('true');
-	},"json");
-	
-	return false;
-}
+// Widget Plugin Integration
+function getEditorSelectorURL(){ return '#event.buildLink(prc.xehWidgetSelector)#';}
+</script>
+</cfoutput>

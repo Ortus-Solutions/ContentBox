@@ -2,24 +2,46 @@
 <!--- Load Assets --->
 #html.addAsset(prc.cbroot&"/includes/ckeditor/ckeditor.js")#
 #html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
-#html.addAsset(prc.cbroot&"/includes/js/contentbox.page.editor.js")#
 #html.addAsset(prc.cbroot&"/includes/css/date.css")#
+<!--- Render Commong editor functions --->
+#renderView(view="_tags/editors")#
 <!--- Custom Javascript --->
 <script type="text/javascript">
-function getEditorSelectorURL(){ return '#event.buildLink(prc.xehWidgetSelector)#';}
-function getEditorSaveURL(){ return '#event.buildLink(prc.xehPageSave)#'; }
+$(document).ready(function() {
+ 	// Shared Pointers
+	$pageForm 		= $("##pageForm");
+	$excerpt		= $pageForm.find("##excerpt");
+	$content 		= $pageForm.find("##content");
+	$isPublished 	= $pageForm.find("##isPublished");
+	// setup editors
+	setupEditors( $pageForm );
+});
+function quickSave(){
+	// Draft it
+	$isPublished.val('false');
+	
+	// Validation first
+	if( !$pageForm.data("validator").checkValidity() ){
+		return false;
+	}
+	
+	// Activate Loader
+	var $uploader = $("##uploadBarLoader");
+	var $status = $("##uploadBarLoaderStatus");
+	$status.html("Saving...");
+	$uploader.slideToggle();
+	
+	// Post it
+	$.post('#event.buildLink(prc.xehPageSave)#', $pageForm.serialize(),function(data){
+		// Save new id
+		$pageForm.find("##pageID").val( data.PAGEID );
+		// finalize
+		$uploader.fadeOut(1500);
+		$status.html('Page Draft Saved!');
+		$isPublished.val('true');
+	},"json");
+	
+	return false;
+}
 </script>
 </cfoutput>
-<cfscript>
-	function toCKDate(inDate){
-		return dateFormat(arguments.inDate,"yyyy-mm-dd");
-	}
-	function ckHour(inDate){
-		if( isNull(inDate) ){ inDate = now(); }
-		return timeFormat(arguments.inDate,"HH");
-	}
-	function ckMinute(inDate){
-		if( isNull(inDate) ){ inDate = now(); }
-		return timeFormat(arguments.inDate,"mm");
-	}
-</cfscript>

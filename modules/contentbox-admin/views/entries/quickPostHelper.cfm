@@ -19,10 +19,9 @@ $(document).ready(function() {
 	$quickEntryContent.ckeditor( function(){}, {
 			toolbar:ckToolbar,
 			height:180,
-			filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/',
-			filebrowserImageBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/image/',
-			filebrowserFlashBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/flash/',
-			//filebrowserUploadUrl : '/index.cfm/filebrowser/'
+			filebrowserBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURL)#',
+			filebrowserImageBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLIMage)#',
+			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#'
 		} );
 	// form validator
 	$quickPostForm.validator({position:'top left'});
