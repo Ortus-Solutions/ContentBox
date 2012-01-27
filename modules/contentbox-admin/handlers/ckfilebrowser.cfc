@@ -1,5 +1,5 @@
 ﻿/**
-* FileBrowser widget control
+* FileBrowser widget control for CKEditor
 */
 component extends="baseHandler"{
 
