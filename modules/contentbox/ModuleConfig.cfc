@@ -21,9 +21,10 @@ component {
 		};
 		
 		// Parent Affected Settings
-		parent = {
+		parentSettings = {
 			messagebox_style_override	= true,
-			filebrowser_moduleName		= "contentbox-filebrowser"
+			// File Browser module name override
+			filebrowser_module_name		= "contentbox-filebrowser"
 		};
 		
 		// interceptor settings

@@ -157,6 +157,10 @@
 							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
 							   title="Easy custom HTML for your site">Custom HTML</a>
 						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehMediaManager)#" <cfif event.getValue("tabContent_mediaManager",false,true)> class="current"</cfif>
+							   title="Manager your ContentBox Media">Media Manager</a>
+						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_pagesTab")#
 					</ul>
