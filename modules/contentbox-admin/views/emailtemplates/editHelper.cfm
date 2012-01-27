@@ -7,7 +7,7 @@ $(document).ready(function() {
 	// load editable areas
 	editAreaLoader.init({
 		id : "templateCode",
-		syntax: "html",
+		syntax: "coldfusion",
 		start_highlight: true,
 		allow_resize : true,
 		allow_toggle : true,

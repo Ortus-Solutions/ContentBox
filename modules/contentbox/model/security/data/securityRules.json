@@ -10,6 +10,16 @@
         "useSSL": false
     },
     {
+        "securelist": "^contentbox-admin:emailtemplates\\..*",
+        "roles": "",
+        "permissions": "EMAIL_TEMPLATE_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "2",
+        "match": "event",
+        "useSSL": false
+    },
+    {
         "securelist": "^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)",
         "roles": "",
         "permissions": "WIDGET_ADMIN",

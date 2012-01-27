@@ -50,10 +50,8 @@
 							#prc.templates.datelastModified#
 						</td>
 						<td class="center">
-							<cfif prc.oAuthor.checkPermission("EMAIL_TEMPLATE_ADMIN")>
 							<!--- Editor --->
 							<a title="Edit Template" href="#event.buildLink(linkTo=prc.xehTemplateEditor,queryString='template=#URLEncodedFormat(prc.templates.name)#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
-							</cfif>
 						</td>
 					</tr>
 					</cfloop>

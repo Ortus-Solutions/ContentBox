@@ -58,15 +58,7 @@ component accessors="true"{
 	}
 	
 	function createSecurityRules(required setup){
-		var securityRules = deserializeJSON(  fileRead( appPath & "modules/contentbox-installer/model/securityRules.json" ) );
-		// iterate over array
-		for(var thisRule in securityRules){
-			if( structKeyExists(thisRule,"ruleID") ){
-				structDelete(thisRule,"ruleID");
-			}
-			var oRule = securityRuleService.new(properties=thisRule);
-			securityRuleService.save( oRule );
-		}
+		securityRuleService.resetRules();
 	}
 	
 	function processORMUpdate(required setup){
