@@ -29,7 +29,7 @@ The arguments you can use are:
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
 	// Module Entry Point
-	this.entryPoint			= "filebrowser";
+	this.entryPoint			= "cbFileBrowser";
 
 	function configure(){
 
@@ -37,8 +37,8 @@ The arguments you can use are:
 		settings = {
 			// The title name for usage inline and the layout
 			title = "ColdBox FileBrowser v#this.version#",
-			// the directory root path to start the visualizer on, absolute path
-			directoryRoot = expandPath("/#appMapping#"),
+			// the directory root path to start the visualizer on, absolute path, set it to contentbox default location
+			directoryRoot = expandPath("/contentbox/content"),
 			// Secure the visualization or creation of stuff above the directory root or not
 			traversalSecurity = true,
 			// Show files on the visualizer or not
@@ -78,7 +78,7 @@ The arguments you can use are:
 				customJSONOptions = ""
 			}
 		};
-
+		
 		// clean directory root
 		settings.directoryRoot = REReplace(settings.directoryRoot,"\\","/","all");
 		if (right(settings.directoryRoot,1) EQ "/") {

@@ -366,7 +366,7 @@ component output="false" hint="Main filebrowser module handler"{
 			return;
 		}
 
-		// download
+		// upload
 		try{
 			var results = fileUtils.uploadFile(fileField="FILEDATA",
 											   destination=rc.folder,
@@ -378,6 +378,7 @@ component output="false" hint="Main filebrowser module handler"{
 			}
 			data.errors = false;
 			data.messages = "File uploaded successfully!";
+			log.info(data.messages, results);
 		}
 		catch(Any e){
 			data.errors = true;

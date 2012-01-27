@@ -40,6 +40,14 @@ function $getUrlRelativeToPath(required basePath,required filePath, encodeURL=fa
 	URLOut=replacenocase(URLOut,"//","/","all");
 	return URLOut;
 }
+function $sessionDataToJSON(){
+	var data = session.URLToken;
+	var results = {};
+	for(var x=1; x lte listLen(data,"&"); x++){
+		results[ getToken(listGetAt(data,x,"&"),1,"=") ] = getToken( listGetAt(data,x,"&"), 2, "=");
+	}
+	return serializeJSON( results );
+}
 </cfscript>
 <cfoutput>
 <!--- Custom Javascript --->
@@ -215,6 +223,7 @@ $(document).ready(function() {
     'uploader'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
     'cancelImg' : '#prc.fbModRoot#/includes/uploadify/cancel.png',
    	'script'    : '#event.buildLink(prc.xehFBUpload)#?folder=#prc.fbSafeCurrentRoot#&#$safe(session.URLToken)#',
+	'scriptData': #$sessionDataToJSON()#,
     'auto'      : true,
 	'multi'  	: #prc.fbSettings.uploadify.multi#,
 	fileDesc	: '#prc.fbSettings.uploadify.fileDesc#',

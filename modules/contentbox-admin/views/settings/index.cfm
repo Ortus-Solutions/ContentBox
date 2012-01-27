@@ -41,6 +41,7 @@
 				<li class="active"><a href="##general_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> General Options</a></li>
 				<li><a href="##dashboard_options"><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/> Dashboard Options</a></li>
 				<li><a href="##cache_options"><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/> Content Caching</a></li>
+				<li><a href="##mediamanager"><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> Media Manager</a></li>
 				<li><a href="##gravatars"><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> Gravatars</a></li>
 				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
 				<li><a href="##rss_options"><img src="#prc.cbRoot#/includes/images/feed.png" alt="modifiers"/> RSS Options</a></li>
@@ -150,6 +151,30 @@
 							</select>		
 							
 						</fieldset>
+					</div>
+					<!--- Media Manager --->
+					<div>
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> <strong>Media Manager</strong></legend>
+							<p>From here you can control the media manager settings.</p>
+							
+							<!--- Location --->
+							#html.textField(name="cb_media_directoryRoot",label="Directory Root:",required="required",value=prc.cbSettings.cb_media_directoryRoot,class="textfield width98",title="The directory root of all your media files, make sure it is web accessible please")#
+							<!--- Create Folders --->
+							#html.label(field="cb_media_createFolders",content="Create Folders:")#
+							#html.radioButton(name="cb_media_createFolders",checked=prc.cbSettings.cb_media_createFolders,value=true)# Yes 	
+							#html.radioButton(name="cb_media_createFolders",checked=not prc.cbSettings.cb_media_createFolders,value=false)# No 	
+							
+							<!--- Delete --->
+							#html.label(field="cb_media_allowDelete",content="Allow Deletes:")#
+							#html.radioButton(name="cb_media_allowDelete",checked=prc.cbSettings.cb_media_allowDelete,value=true)# Yes 	
+							#html.radioButton(name="cb_media_allowDelete",checked=not prc.cbSettings.cb_media_allowDelete,value=false)# No 	
+							
+							<!--- Upload --->
+							#html.label(field="cb_media_createFolders",content="Create Folders:")#
+							#html.radioButton(name="cb_media_createFolders",checked=prc.cbSettings.cb_media_createFolders,value=true)# Yes 	
+							#html.radioButton(name="cb_media_createFolders",checked=not prc.cbSettings.cb_media_createFolders,value=false)# No 	
+							
 					</div>
 					<!--- Gravatars --->
 					<div>
