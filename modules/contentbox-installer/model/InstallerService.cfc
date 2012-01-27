@@ -115,7 +115,8 @@ component accessors="true"{
 			"RELOAD_MODULES" = "Ability to reload modules",
 			"SECURITYRULES_ADMIN" = "Ability to manage the system's security rules, default is view only",
 			"GLOBALHTML_ADMIN" = "Ability to manage the system's global HTML content used on layouts",
-			"EMAIL_TEMPLATE_ADMIN" = "Ability to manage the system's email templates"
+			"EMAIL_TEMPLATE_ADMIN" = "Ability to manage the system's email templates",
+			"MEDIAMANAGER_ADMIN" = "Ability to manage the system's media manager"
 		};
 		
 		var allperms = [];
@@ -144,6 +145,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["ENTRIES_ADMIN"] );
 		oRole.addPermission( permissions["LAYOUT_ADMIN"] );
 		oRole.addPermission( permissions["GLOBALHTML_ADMIN"] );
+		oRole.addPermission( permissions["MEDIAMANGER_ADMIN"] );
 		roleService.save( oRole );
 		
 		// Create Admin

@@ -36,8 +36,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// determine new or not
 		if( !arguments.entity.isLoaded() ){
-			// new, so add next max order
-			arguments.entity.setOrder( getNextMaxOrder() );
+			// new, so add next max order if not default
+			if( arguments.entity.getOrder() EQ 0 ){
+				arguments.entity.setOrder( getNextMaxOrder() );
+			}
 		}
 		
 		return save(argumentCollection=arguments);

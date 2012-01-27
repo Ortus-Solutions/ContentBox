@@ -4,7 +4,7 @@
 #html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
 #html.addAsset(prc.cbroot&"/includes/css/date.css")#
 <!--- Render Commong editor functions --->
-#renderView(view="_tags/editors")#
+#renderView(view="_tags/editors",prePostExempt=true)#
 <!--- Custom Javascript --->
 <script type="text/javascript">
 $(document).ready(function() {

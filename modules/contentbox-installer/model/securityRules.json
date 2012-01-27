@@ -1,14 +1,23 @@
 [
     {
-        "securelist": "^contentbox-admin:widgets\\.(remove|upload)",
+        "securelist": "^contentbox-admin:mediamanager\\..*",
+        "roles": "",
+        "permissions": "MEDIAMANAGER_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)",
         "roles": "",
         "permissions": "WIDGET_ADMIN",
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "2",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "8"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:tools\\.(importer|doImport)",
@@ -18,8 +27,7 @@
         "redirect": "cbadmin/security/login",
         "order": "3",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "9"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:(settings|permissions|roles|securityRules)\\..*",
@@ -29,8 +37,7 @@
         "redirect": "cbadmin/security/login",
         "order": "4",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "10"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:settings\\.save",
@@ -40,8 +47,7 @@
         "redirect": "cbadmin/security/login",
         "order": "5",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "11"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)",
@@ -51,8 +57,7 @@
         "redirect": "cbadmin/security/login",
         "order": "6",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "12"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)",
@@ -62,8 +67,7 @@
         "redirect": "cbadmin/security/login",
         "order": "7",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "13"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)",
@@ -73,8 +77,7 @@
         "redirect": "cbadmin/security/login",
         "order": "8",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "14"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:permissions\\.(remove|save)",
@@ -84,8 +87,7 @@
         "redirect": "cbadmin/security/login",
         "order": "9",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "15"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:dashboard\\.reload",
@@ -95,8 +97,7 @@
         "redirect": "cbadmin/security/login",
         "order": "10",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "16"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:pages\\.(changeOrder|remove|save|editor)",
@@ -106,8 +107,7 @@
         "redirect": "cbadmin/security/login",
         "order": "11",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "17"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:layouts\\.(remove|upload|rebuildRegistry|activate)",
@@ -117,8 +117,7 @@
         "redirect": "cbadmin/security/login",
         "order": "12",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "18"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:entries\\.(quickPost|remove|save|editor)",
@@ -128,8 +127,7 @@
         "redirect": "cbadmin/security/login",
         "order": "13",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "19"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:customHTML\\.(editor|remove|save)",
@@ -139,8 +137,7 @@
         "redirect": "cbadmin/security/login",
         "order": "14",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "20"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)",
@@ -150,8 +147,7 @@
         "redirect": "cbadmin/security/login",
         "order": "15",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "21"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:categories\\.(remove|save)",
@@ -161,8 +157,7 @@
         "redirect": "cbadmin/security/login",
         "order": "16",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "22"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:authors\\.(editor|passwordChange|remove|removePermission|save|savePermission)",
@@ -172,8 +167,7 @@
         "redirect": "cbadmin/security/login",
         "order": "17",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "23"
+        "useSSL": false
     },
     {
         "securelist": "^contentbox-admin:.*",
@@ -183,7 +177,16 @@
         "redirect": "cbadmin/security/login",
         "order": "18",
         "match": "event",
-        "useSSL": false,
-        "ruleID": "7"
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-filebrowser:.*",
+        "roles": "",
+        "permissions": "MEDIAMANAGER_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "19",
+        "match": "event",
+        "useSSL": false
     }
 ]
