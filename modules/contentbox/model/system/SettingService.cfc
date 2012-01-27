@@ -113,4 +113,28 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		return this;
 	}
 	
+	/**
+	* Build file browser settings structure
+	*/
+	struct function buildFileBrowserSettings(){
+		var cbSettings = getAllSettings(asStruct=true);
+		var settings = {
+			directoryRoot	= cbSettings.cb_media_directoryRoot,
+			createFolders	= cbSettings.cb_media_createFolders,
+			deleteStuff		= cbSettings.cb_media_allowDelete,
+			allowDownload	= cbSettings.cb_media_allowDownloads,
+			allowUploads	= cbSettings.cb_media_allowUploads,
+			acceptMimeTypes	= cbSettings.cb_media_acceptMimeTypes,
+			quickViewWidth	= cbSettings.cb_media_quickViewWidth,
+			uploadify = {
+				fileDesc 	= cbSettings.cb_media_uplodify_fileDesc,
+				fileExt 	= cbSettings.cb_media_uplodify_fileExt,
+				multi 		= cbSettings.cb_media_uploadify_allowMulti,
+				sizeLimit 	= cbSettings.cb_media_uploadify_sizeLimit,
+				customJSONOptions = cbSettings.cb_media_uploadify_customOptions
+			}
+		};
+		return settings;		
+	}
+	
 }

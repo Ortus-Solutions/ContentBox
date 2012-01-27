@@ -159,9 +159,12 @@
 							<p>From here you can control the media manager settings.</p>
 							
 							<!--- Location --->
-							#html.textField(name="cb_media_directoryRoot",label="Directory Root:",required="required",value=prc.cbSettings.cb_media_directoryRoot,class="textfield width98",title="The directory root of all your media files, make sure it is web accessible please")#
+							#html.label(field="",content="Directory Root: ")#
+							<small>The absolute path in your server that will be the root of your media manager. Make sure it is web accessible please.</small></br>
+							#html.textField(name="cb_media_directoryRoot",required="required",value=prc.cbSettings.cb_media_directoryRoot,class="textfield width98",title="The directory root of all your media files, make sure it is web accessible please")#
+						
 							<!--- Create Folders --->
-							#html.label(field="cb_media_createFolders",content="Create Folders:")#
+							#html.label(field="cb_media_createFolders",content="Allow Creation of Folders:")#
 							#html.radioButton(name="cb_media_createFolders",checked=prc.cbSettings.cb_media_createFolders,value=true)# Yes 	
 							#html.radioButton(name="cb_media_createFolders",checked=not prc.cbSettings.cb_media_createFolders,value=false)# No 	
 							
@@ -170,11 +173,46 @@
 							#html.radioButton(name="cb_media_allowDelete",checked=prc.cbSettings.cb_media_allowDelete,value=true)# Yes 	
 							#html.radioButton(name="cb_media_allowDelete",checked=not prc.cbSettings.cb_media_allowDelete,value=false)# No 	
 							
-							<!--- Upload --->
-							#html.label(field="cb_media_createFolders",content="Create Folders:")#
-							#html.radioButton(name="cb_media_createFolders",checked=prc.cbSettings.cb_media_createFolders,value=true)# Yes 	
-							#html.radioButton(name="cb_media_createFolders",checked=not prc.cbSettings.cb_media_createFolders,value=false)# No 	
+							<!--- Downloads --->
+							#html.label(field="cb_media_allowDownloads",content="Allow Downloads:")#
+							#html.radioButton(name="cb_media_allowDownloads",checked=prc.cbSettings.cb_media_allowDownloads,value=true)# Yes 	
+							#html.radioButton(name="cb_media_allowDownloads",checked=not prc.cbSettings.cb_media_allowDownloads,value=false)# No 	
 							
+							<!--- Uploads --->
+							#html.label(field="cb_media_allowUploads",content="Allow Uploads:")#
+							#html.radioButton(name="cb_media_allowUploads",checked=prc.cbSettings.cb_media_allowUploads,value=true)# Yes 	
+							#html.radioButton(name="cb_media_allowUploads",checked=not prc.cbSettings.cb_media_allowUploads,value=false)# No 	
+							
+							<!--- Mime Types --->
+							#html.label(field="cb_media_acceptMimeTypes",content="Accept Mime Types")#
+							<small>The allowed mime types the <em>CFFile Upload</em> will allow (<a href="http://help.adobe.com/en_US/ColdFusion/9.0/CFMLRef/WSc3ff6d0ea77859461172e0811cbec22c24-738f.html" target="_blank">See Reference</a>).</small></br>
+							#html.textField(name="cb_media_acceptMimeTypes",value=prc.cbSettings.cb_media_acceptMimeTypes,class="textfield width98",title="The accepted mime types of the CFFile upload action. Blank means all files are accepted.")#
+							
+							<!--- Quick View --->
+							#html.inputField(type="numeric",name="cb_media_quickViewWidth",label="Quick View Image Width: (pixels)",value=prc.cbSettings.cb_media_quickViewWidth,class="textfield width98",title="The width in pixels of the quick view dialog")#
+						
+						</fieldset>
+						<!--- Uplodify --->
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/upload.png" alt="modifiers"/> <strong>Uploadify Integration</strong></legend>
+							<p>From here you control the <a href="http://www.uploadify.com/" target="_blank">Uploadify</a> integration settings.</p>
+							
+							<!--- descrip[tion] --->
+							#html.textField(name="cb_media_uplodify_fileDesc",label="File Description Dialog:",required="required",value=prc.cbSettings.cb_media_uplodify_fileDesc,class="textfield width98",title="The text used in the selection dialog window")#
+							<!--- file extensions --->
+							#html.textField(name="cb_media_uplodify_fileExt",label="File Extensions To Show:",required="required",value=prc.cbSettings.cb_media_uplodify_fileExt,class="textfield width98",title="The extensions to show in the selection dialog window")#
+							<!--- multi --->
+							#html.label(field="cb_media_uploadify_allowMulti",content="Allow Multiple Uploads:")#
+							#html.radioButton(name="cb_media_uploadify_allowMulti",checked=prc.cbSettings.cb_media_uploadify_allowMulti,value=true)# Yes 	
+							#html.radioButton(name="cb_media_uploadify_allowMulti",checked=not prc.cbSettings.cb_media_uploadify_allowMulti,value=false)# No 	
+							<!--- size limit --->
+							#html.textField(name="cb_media_uploadify_sizeLimit",label="Size Limit in bytes (0=no limit):",required="required",value=prc.cbSettings.cb_media_uploadify_sizeLimit,class="textfield width98",title="The size limit of the uploads. 0 Means no limit")#
+							<!--- Custom JSON Options --->
+								
+							#html.label(field="cb_media_uploadify_customOptions",content="Custom JSON Options: ")#
+							<small>The following must be valid JSON name value pairs of custom <a href="http://www.uploadify.com/documentation/" target="_blank">uploadify settings</a>.</small><br/>
+							#html.textarea(name="cb_media_uploadify_customOptions",value=prc.cbSettings.cb_media_uploadify_customOptions,rows="2",title="Please remember this must be a valid JSON name value pairs")#
+						</fieldset>
 					</div>
 					<!--- Gravatars --->
 					<div>

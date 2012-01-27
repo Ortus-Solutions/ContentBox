@@ -4,45 +4,26 @@
 component extends="baseHandler"{
 
 	//DI
-	property name="CBHelper"			inject="id:CBHelper@cb";
+	property name="settingService"			inject="id:settingService@cb";
 
 	// pre handler
 	function preHandler(event,action,eventArguments){
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
-		// event to run
+		// widget runnable event
 		prc.xehFileBrowser = "contentbox-filebrowser:home.index";
 		// tabs
 		prc.tabContent = true;
 		prc.tabContent_mediaManager = true;
-		//settings
-		prc.cbFileBrowserSettings = {
-			directoryRoot=CBHelper.setting("cb_ck_directoryRoot",expandPath("/modules/contentbox/content")),
-			createFolders=CBHelper.setting("cb_ck_createFolders",true),
-			deleteStuff=CBHelper.setting("cb_ck_deleteStuff",true),
-			allowDownload=CBHelper.setting("cb_ck_allowDownload",true),
-			allowUploads=CBHelper.setting("cb_ck_allowUploads",true),
-			acceptMimeTypes=CBHelper.setting("cb_ck_acceptMimeTypes",""),
-			nameFilter=CBHelper.setting("cb_ck_nameFilter",".*"),
-			extensionFilter=CBHelper.setting("cb_ck_extensionFilter",""),
-			imgNameFilter=CBHelper.setting("cb_ck_imgNameFilter","^((?!\.).)*$|.+\.(jpg|jpeg|bmp|gif|png)/? *"),
-			flashNameFilter=CBHelper.setting("cb_ck_flashNameFilter","^((?!\.).)*$|.+\.(swf|fla)/? *"),
-			loadJQuery=CBHelper.setting("cb_ck_loadJQuery",false),
-			loadSelectCallbacks=CBHelper.setting("cb_ck_loadSelectCallbacks",true),
-			quickViewWidth=CBHelper.setting("cb_ck_quickViewWidth",400),
-			uploadify=CBHelper.setting("cb_ck_uploadify",{
-				fileDesc = "All Files",
-				fileExt	 = "*.*;",
-				multi 	 = true,
-				sizeLimit = 0,
-				customJSONOptions = ""
-			})
-		};
 	}
 
 	// index
 	function index(event,rc,prc){
+		// get settings according to contentbox
+		prc.cbFileBrowserSettings = settingService.buildFileBrowserSettings();
+		// build argument list for widget
 		prc.fbArgs = {widget=true,settings=prc.cbFileBrowserSettings};
+		// view
 		event.setView("mediamanager/index");
 	}
 
