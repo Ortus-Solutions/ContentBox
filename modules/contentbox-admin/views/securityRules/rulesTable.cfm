@@ -3,7 +3,6 @@
 <table name="rules" id="rules" class="tablesorter" width="98%">
 	<thead>
 		<tr>
-			<th width="50">Match</th>
 			<th>Secured</th>
 			<th>Credentials</th>
 			<th width="65" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Order"/></th>
@@ -15,9 +14,7 @@
 		<cfloop array="#prc.rules#" index="rule">
 		<tr>
 			<td>
-				#rule.getMatch()#
-			</td>
-			<td>
+				<strong>Match:</strong> #rule.getMatch()#<br/>
 				<strong>SecureList:</strong> #rule.getSecureList()#<br/>
 				<strong>WhiteList:</strong> #rule.getWhiteList()#<br/>
 				<strong>Redirect To:</strong>#rule.getRedirect()# (SSL: #yesNoFormat( rule.getUseSSL() )#)

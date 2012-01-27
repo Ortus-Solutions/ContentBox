@@ -14,6 +14,11 @@
 			</p>
 			<!--- Action Bar --->
 			<div class="actionBar center">
+				<a href="#event.buildLink(prc.xehResetRules)#" class="confirmIt" 
+						   data-title="Really Reset All Rules?"
+						   data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
+					<button class="buttonred" onclick="return false">Reset Rules</button>
+				</a>
 				<a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt" 
 						   data-title="Really Apply Rules?"
 						   data-message="Please be aware that you could be locked out of application if your rules are not correct.">

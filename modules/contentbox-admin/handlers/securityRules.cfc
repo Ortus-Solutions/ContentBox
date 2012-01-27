@@ -15,6 +15,7 @@ component extends="baseHandler"{
 		prc.xehEditorRule	= "#prc.cbAdminEntryPoint#.securityRules.editor";
 		prc.xehRuleOrder	= "#prc.cbAdminEntryPoint#.securityRules.changeOrder";
 		prc.xehApplyRules	= "#prc.cbAdminEntryPoint#.securityRules.apply";
+		prc.xehResetRules	= "#prc.cbAdminEntryPoint#.securityRules.reset";
 		
 		// get content pieces
 		prc.rules = ruleService.getAll(sortOrder="order asc");
@@ -30,6 +31,14 @@ component extends="baseHandler"{
 		else{
 			event.setView("securityRules/index");
 		}
+	}
+	
+	// Reset Rules
+	function reset(event,rc,prc){
+		ruleService.resetRules();
+		securityInterceptor.loadRules();
+		getPlugin("MessageBox").info("Security Rules Re-created and Re-applied!");
+		setNextEvent(prc.xehsecurityRules);
 	}
 	
 	// Apply the security rules

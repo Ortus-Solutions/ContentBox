@@ -7,6 +7,7 @@ component extends="baseHandler"{
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="authorService"		inject="id:authorService@cb";
+	property name="CBHelper"			inject="id:CBHelper@cb";
 	
 	// Public properties
 	this.preHandler_except = "pager";
@@ -79,6 +80,8 @@ component extends="baseHandler"{
 	
 	// editor
 	function editor(event,rc,prc){
+		// cb helper
+		prc.cbHelper = CBHelper;
 		// get all categories
 		prc.categories = categoryService.getAll(sortOrder="category");
 		// get new or persisted

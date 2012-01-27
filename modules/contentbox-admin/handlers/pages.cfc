@@ -7,6 +7,7 @@ component extends="baseHandler"{
 	property name="pageService"			inject="id:pageService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="layoutService"		inject="id:layoutService@cb";
+	property name="CBHelper"			inject="id:CBHelper@cb";
 	
 	// Public properties
 	this.preHandler_except = "pager";
@@ -83,6 +84,10 @@ component extends="baseHandler"{
 	
 	// editor
 	function editor(event,rc,prc){
+		// cb helper
+		prc.cbHelper = CBHelper;
+		// CK Editor Helper
+		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
 		// get new or persisted
 		prc.page  = pageService.get( event.getValue("pageID",0) );
 		// load comments viewlet if persisted

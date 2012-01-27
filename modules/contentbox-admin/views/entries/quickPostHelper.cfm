@@ -16,7 +16,13 @@ $(document).ready(function() {
 	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] }
 	];
 	// Activate ckeditor
-	$quickEntryContent.ckeditor( function(){}, { toolbar:ckToolbar,height:180 } );
+	$quickEntryContent.ckeditor( function(){}, {
+			toolbar:ckToolbar,
+			height:180,
+			filebrowserBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURL)#',
+			filebrowserImageBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLIMage)#',
+			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#'
+		} );
 	// form validator
 	$quickPostForm.validator({position:'top left'});
 });

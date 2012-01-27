@@ -36,8 +36,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// determine new or not
 		if( !arguments.entity.isLoaded() ){
-			// new, so add next max order
-			arguments.entity.setOrder( getNextMaxOrder() );
+			// new, so add next max order if not default
+			if( arguments.entity.getOrder() EQ 0 ){
+				arguments.entity.setOrder( getNextMaxOrder() );
+			}
 		}
 		
 		return save(argumentCollection=arguments);
@@ -49,4 +51,26 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	query function getSecurityRules(){
 		return list(sortOrder="order asc");
 	}
+	
+	/**
+	* Reset rules to factory shipping standards, this will remove all rules also
+	*/
+	SecurityRuleService function resetRules() transactional{
+		// Get rules path
+		var rulesPath = getDirectoryFromPath( getMetadata(this).path ) & "data/securityRules.json";
+		// remove all rules first
+		deleteAll();
+		// now re-create them
+		var securityRules = deserializeJSON(  fileRead( rulesPath ) );
+		// iterate over array
+		for(var thisRule in securityRules){
+			if( structKeyExists(thisRule,"ruleID") ){
+				structDelete(thisRule,"ruleID");
+			}
+			var oRule = new(properties=thisRule);
+			save( oRule );
+		}
+		return this;
+	}
+	
 }

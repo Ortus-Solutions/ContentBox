@@ -157,6 +157,12 @@
 							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
 							   title="Easy custom HTML for your site">Custom HTML</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("MEDIAMANAGER_ADMIN")>
+						<li>
+							<a href="#event.buildLink(prc.xehMediaManager)#" <cfif event.getValue("tabContent_mediaManager",false,true)> class="current"</cfif>
+							   title="Manager your ContentBox Media">Media Manager</a>
+						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_pagesTab")#
 					</ul>
@@ -253,10 +259,12 @@
 							<a href="#event.buildLink(prc.xehSecurityRules)#" <cfif event.getValue("tabSystem_SecurityRules",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Rules">Security Rules</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("EMAIL_TEMPLATE_ADMIN")>
 						<li>
 							<a href="#event.buildLink(prc.xehEmailTemplates)#" <cfif event.getValue("tabSystem_emailtemplates",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Email Templates">Email Templates</a>
 						</li>
+						</cfif>
 						<cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS")>
 						<li>
 							<a href="#event.buildLink(prc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>

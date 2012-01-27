@@ -64,13 +64,13 @@
 				<tbody>
 					<cfloop array="#prc.permissions#" index="permission">
 					<tr>
-						<td><a href="javascript:edit('#permission.getPermissionID()#','#permission.getPermission()#','#permission.getDescription()#')" 
+						<td><a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat(permission.getPermission())#','#jsstringFormat(permission.getDescription())#')" 
 							   title="Edit #permission.getPermission()#">#permission.getPermission()#</a></td>
 						<td>#permission.getDescription()#</td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 							<!--- Edit Command --->
-							<a href="javascript:edit('#permission.getPermissionID()#','#permission.getPermission()#','#permission.getDescription()#')" 
+							<a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat( permission.getPermission() )#','#jsstringFormat( permission.getDescription() )#')" 
 							   title="Edit #permission.getPermission()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
 							<!--- Delete Command --->
 							<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><img id="delete_#permission.getPermissionID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
