@@ -14,7 +14,7 @@ function $getBackPath(inPath){
 }
 function validQuickView(ext){
 	if( listFindNoCase("png,jpg,jpeg,bmp,gif",ext) ){ return "true"; }
-	return "false";	
+	return "false";
 }
 function getImageFile(ext){
 	switch(arguments.ext){
@@ -39,14 +39,6 @@ function $getUrlRelativeToPath(required basePath,required filePath, encodeURL=fa
 	}
 	URLOut=replacenocase(URLOut,"//","/","all");
 	return URLOut;
-}
-function $sessionDataToJSON(){
-	var data = session.URLToken;
-	var results = {};
-	for(var x=1; x lte listLen(data,"&"); x++){
-		results[ getToken(listGetAt(data,x,"&"),1,"=") ] = getToken( listGetAt(data,x,"&"), 2, "=");
-	}
-	return serializeJSON( results );
 }
 </cfscript>
 <cfoutput>
@@ -80,7 +72,7 @@ $(document).ready(function() {
 	$fileBrowser.find("##fbQuickFilter").keyup(function(){
 		$.uiDivFilter( $(".filterDiv"), this.value);
 	})
-	
+
 });
 function fbCloseQuickView(){
 	$quickView.slideUp();
@@ -222,8 +214,8 @@ $(document).ready(function() {
   $('##file_upload').uploadify({
     'uploader'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
     'cancelImg' : '#prc.fbModRoot#/includes/uploadify/cancel.png',
-   	'script'    : '#event.buildLink(prc.xehFBUpload)#?folder=#prc.fbSafeCurrentRoot#&#$safe(session.URLToken)#',
-	'scriptData': #$sessionDataToJSON()#,
+   	'script'    : '#event.buildLink(prc.xehFBUpload)#?#$safe(session.URLToken)#&folder=#prc.fbSafeCurrentRoot#',
+	'scriptData': {path: '#prc.fbSafeCurrentRoot#'},
     'auto'      : true,
 	'multi'  	: #prc.fbSettings.uploadify.multi#,
 	fileDesc	: '#prc.fbSettings.uploadify.fileDesc#',
