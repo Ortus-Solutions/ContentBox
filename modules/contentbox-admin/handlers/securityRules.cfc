@@ -14,7 +14,6 @@ component extends="baseHandler"{
 		prc.xehRemoveRule	= "#prc.cbAdminEntryPoint#.securityRules.remove";
 		prc.xehEditorRule	= "#prc.cbAdminEntryPoint#.securityRules.editor";
 		prc.xehRuleOrder	= "#prc.cbAdminEntryPoint#.securityRules.changeOrder";
-		prc.xehRuleOrderAll	= "#prc.cbAdminEntryPoint#.securityRules.changeOrderAll";
 		prc.xehApplyRules	= "#prc.cbAdminEntryPoint#.securityRules.apply";
 		prc.xehResetRules	= "#prc.cbAdminEntryPoint#.securityRules.reset";
 
@@ -49,20 +48,8 @@ component extends="baseHandler"{
 		setNextEvent(prc.xehsecurityRules);
 	}
 
-	// order change
-	function changeOrder(event,rc,prc){
-		var results = false;
-		var rule = ruleService.get(rc.ruleID);
-		if( !isNull( rule ) ){
-			rule.setOrder( rc.order );
-			ruleService.saveRule( rule );
-			results = true;
-		}
-		event.renderData(type="json",data=results);
-	}
-
 	// change order for all rules
-	function changeOrderAll(event,rc,prc){
+	function changeOrder(event,rc,prc){
 		event.paramValue("newRulesOrder","");
 		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "ruleid_", "", "all");
 		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&rules[]=", ",", "all");

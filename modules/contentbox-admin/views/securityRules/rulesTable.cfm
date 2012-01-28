@@ -25,14 +25,6 @@
 			</td>
 			<td class="center">
 				<div id="ruleid-#rule.getRuleID()#_order">#rule.getOrder()#</div>
-				<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
-				<!--- Order Up --->
-				<cfif ( rule.getOrder()-1 ) GTE 0 >
-					<a href="javascript:changeOrder('#rule.getRuleID()#', #rule.getOrder()-1#,'up')" title="Order Up"><img id="orderup_#rule.getRuleID()#" src="#prc.cbRoot#/includes/images/_up.gif" alt="order"/></a>
-				</cfif>
-				<!--- Increase Order Index--->
-				<a href="javascript:changeOrder('#rule.getRuleID()#',#rule.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#rule.getRuleID()#" src="#prc.cbRoot#/includes/images/_down.gif" alt="order"/></a>
-				</cfif>
 			</td>
 			<td class="center">
 				<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
