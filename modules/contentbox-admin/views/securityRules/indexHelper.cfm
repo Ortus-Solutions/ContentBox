@@ -7,6 +7,20 @@ $(document).ready(function() {
 	$ruleForm.find("##ruleFilter").keyup(function(){
 		$.uiTableFilter( $("##rules"), this.value );
 	});
+	<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
+	$ruleForm.find("##rules").tableDnD({
+		onDrop: function(table, row){
+			var newRulesOrder  =  $(table).tableDnDSerialize();
+			var rows = table.tBodies[0].rows;
+			$.post('#event.buildLink(prc.xehRuleOrderAll)#',{newRulesOrder:newRulesOrder},function(){
+				for (var i = 0; i < rows.length; i++) {
+					var oID = '##' + rows[i].id + '_order';
+					$(oID).html(i+1);
+				}
+			});
+		}
+	});
+	</cfif>
 });
 function remove(recordID){
 	if( recordID != null ){
@@ -22,8 +36,8 @@ function changeOrder(ruleID,order,direction){
 	$('##order'+direction+'_'+ruleID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// change order
 	$.post('#event.buildLink(prc.xehRuleOrder)#',{ruleID:ruleID,order:order},function(){
-		hideAllTooltips(); 
-		// reload table 
+		hideAllTooltips();
+		// reload table
 		$rulesTable.load('#event.buildLink(prc.xehSecurityRules)#',{ajax:true});
 		// activate
 		activateTooltips();

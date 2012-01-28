@@ -9,10 +9,10 @@
 			<th width="70" class="center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
-	
+
 	<tbody>
 		<cfloop array="#prc.rules#" index="rule">
-		<tr>
+		<tr id="ruleid-#rule.getRuleID()#">
 			<td>
 				<strong>Match:</strong> #rule.getMatch()#<br/>
 				<strong>SecureList:</strong> #rule.getSecureList()#<br/>
@@ -24,7 +24,7 @@
 				<strong>Roles:</strong>#rule.getRoles()#
 			</td>
 			<td class="center">
-				#rule.getOrder()#
+				<div id="ruleid-#rule.getRuleID()#_order">#rule.getOrder()#</div>
 				<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
 				<!--- Order Up --->
 				<cfif ( rule.getOrder()-1 ) GTE 0 >
