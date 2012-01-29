@@ -51,7 +51,6 @@ component extends="baseHandler"{
 	// change order for all rules
 	function changeOrder(event,rc,prc){
 		event.paramValue("newRulesOrder","");
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "ruleid_", "", "all");
 		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&rules[]=", ",", "all");
 		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "rules[]=,", "", "all");
 		for(var i=1;i lte listLen(rc.newRulesOrder);i++) {
