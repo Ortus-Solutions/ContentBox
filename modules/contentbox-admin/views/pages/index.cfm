@@ -57,8 +57,7 @@
 				<li title="Click Me!" onclick="exposeIt('##pages')">Right click on a row to activate quick look!</li>
 				<li title="Click Me!" onclick="exposeIt('##main_column')">Sorting is only done within your paging window</li>
 				<li title="Click Me!" onclick="exposeIt('##contentBar')">Quick Filtering is only for viewed results</li>
-				<li title="Click Me!" onclick="exposeIt('##th_order')">Order down means increase ordering index</li>
-				<li title="Click Me!" onclick="exposeIt('##th_order')">Order up means decrease ordering index</li>
+				<li>You can quickly order the pages by dragging the rows</li>
 			</ul>
 		</div>
 	</div>
@@ -211,43 +210,4 @@
 		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	$("##pages").tablesorter();
-	$("##pageFilter").keyup(function(){
-		$.uiTableFilter( $("##pages"), this.value );
-	});
-	// quick look
-	$("##pages").find("tr").bind("contextmenu",function(e) {
-	    if (e.which === 3) {
-	    	if($(this).attr('data-pageID') != null) {
-				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/pageID/' + $(this).attr('data-pageID'));
-				e.preventDefault();
-			}
-	    }
-	});
-	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-	$("##pages").tableDnD({
-		onDrop: function(table, row){
-			var newRulesOrder  =  $(table).tableDnDSerialize();
-			var rows = table.tBodies[0].rows;
-			$.post('#event.buildLink(prc.xehPageOrder)#',{newRulesOrder:newRulesOrder},function(){
-				for (var i = 0; i < rows.length; i++) {
-					var oID = '##' + rows[i].id + '_order';
-					$(oID).html(i+1);
-				}
-			});
-		}
-	});
-	</cfif>
-});
-function remove(pageID){
-	// img change
-	$('##delete_'+pageID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
-	$("##pageID").val( pageID );
-	$("##pageForm").submit();
-}
-</script>
-
 </cfoutput>
