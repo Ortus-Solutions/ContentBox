@@ -1,4 +1,4 @@
-﻿<cfcomponent output="false" hint="My App Configuration">
+<cfcomponent output="false" hint="My App Configuration">
 <cfscript>
 	// Configure ColdBox Application
 	function configure(){
@@ -117,7 +117,7 @@
 				filename = "ContentBox", filePath="../logs"
 			}
 		};
-		//logbox.debug = ["coldbox.system.interceptors.SES"];
+		//logbox.debug = ["coldbox.system.interceptors.Security"];
 		//logbox.debug = [ "coldbox.system.aop" ];
 
 	}

@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Our contentbox security service
 */
 component implements="ISecurityService" singleton{
@@ -11,6 +11,7 @@ component implements="ISecurityService" singleton{
 	property name="mailService"		inject="coldbox:plugin:MailService";
 	property name="renderer"		inject="coldbox:plugin:Renderer";
 	property name="CBHelper"		inject="id:CBHelper@cb";
+	property name="log"				inject="logbox:logger:{this}";
 	
 	/**
 	* Constructor
