@@ -250,7 +250,23 @@ component accessors="true"{
 			"cb_html_preCommentForm" = "",
 			"cb_html_postCommentForm" = "",
 			"cb_html_prePageDisplay" = "",
-			"cb_html_postPageDisplay" = ""
+			"cb_html_postPageDisplay" = "",
+			
+			// Media Manager
+			"cb_media_directoryRoot" = expandPath("/contentbox/content"),
+			"cb_media_createFolders" = "true",
+			"cb_media_allowDelete" = "true",
+			"cb_media_allowDownloads" = "true",
+			"cb_media_allowUploads" = "true",
+			"cb_media_acceptMimeTypes" = "",
+			"cb_media_quickViewWidth" = "400",
+			
+			// Uploadify Integration
+			"cb_media_uplodify_fileDesc" = "All Files",
+			"cb_media_uplodify_fileExt" = "*.*;",
+			"cb_media_uploadify_allowMulti" = "true",
+			"cb_media_uploadify_sizeLimit" = "0",
+			"cb_media_uploadify_customOptions" = ""
 		};
 		
 		// Create setting objects and save

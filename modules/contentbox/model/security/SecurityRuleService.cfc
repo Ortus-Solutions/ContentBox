@@ -55,7 +55,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* Reset rules to factory shipping standards, this will remove all rules also
 	*/
-	SecurityRuleService function resetRules() transactional{
+	any function resetRules() transactional{
 		// Get rules path
 		var rulesPath = getDirectoryFromPath( getMetadata(this).path ) & "data/securityRules.json";
 		// remove all rules first
