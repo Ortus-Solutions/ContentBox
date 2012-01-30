@@ -13,7 +13,7 @@
 <table name="pages_pager" id="pages_pager" class="tablelisting" width="100%">
 	<thead>
 		<tr>
-			<th>Page</th>	
+			<th>Page</th>
 			<th width="60" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Page Order"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
@@ -22,12 +22,12 @@
 			<th width="75" class="center">Actions</th>
 		</tr>
 	</thead>
-	
+
 	<tbody>
 		<cfset i = 0>
 		<cfloop array="#prc.pager_pages#" index="page">
 		<cfset i++>
-		<tr data-pageID="#page.getPageID()#">
+		<tr id="pageID-#page.getPageID()#" data-pageID="#page.getPageID()#">
 			<td>
 				<!--- Title --->
 				<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getTitle()#</a><br>
@@ -44,21 +44,13 @@
 					<img src="#prc.cbRoot#/includes/images/comments.png" alt="locked" title="Commenting is Open!"/>
 				<cfelse>
 					<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
-				</cfif>			
-			</td>
-			<td class="center">
-				#page.getOrder()#
-				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-				<!--- Order Up --->
-				<cfif ( page.getOrder()-1 ) GTE 0 >
-					<a href="javascript:changeOrder('#page.getPageID()#', #page.getOrder()-1#,'up')" title="Order Up"><img id="orderup_#page.getPageID()#" src="#prc.cbRoot#/includes/images/_up.gif" alt="order"/></a>
-				</cfif>
-				<!--- Increase Order Index--->
-				<a href="javascript:changeOrder('#page.getPageID()#',#page.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#page.getPageID()#" src="#prc.cbRoot#/includes/images/_down.gif" alt="order"/></a>
 				</cfif>
 			</td>
 			<td class="center">
-				#page.getNumberOfChildren()#	
+				<div id="pageID-#page.getPageID()#_order">#page.getOrder()#</div>
+			</td>
+			<td class="center">
+				#page.getNumberOfChildren()#
 			</td>
 			<td class="center">
 				<cfif page.getIsPublished()>
@@ -90,17 +82,39 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$pagesPager = $("##pages_pager"); 
+	$pagesPager = $("##pages_pager");
 	$pagesPager.find("tr:even").addClass("even");
 	// quick look
 	$pagesPager.find("tr").bind("contextmenu",function(e) {
-	    if (e.which === 3) {
-	    	if( $(this).attr('data-pageID') != null ){
+		if (e.which === 3) {
+			if( $(this).attr('data-pageID') != null ){
 				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/pageID/' + $(this).attr('data-pageID'));
 				e.preventDefault();
 			}
-	    }
+		}
 	});
+	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+	$("##pages_pager").tableDnD({
+		onDragClass: "selected",
+		onDragStart : function(table,row){
+			$(row).css("cursor","grab");
+			$(row).css("cursor","-moz-grabbing");
+			$(row).css("cursor","-webkit-grabbing");
+		},
+		onDrop: function(table, row){
+			$(row).css("cursor","progress");
+			var newRulesOrder  =  $(table).tableDnDSerialize();
+			var rows = table.tBodies[0].rows;
+			$.post('#event.buildLink(prc.xehPageOrder)#',{newRulesOrder:newRulesOrder,tableID:'pages_pager'},function(){
+				for (var i = 0; i < rows.length; i++) {
+					var oID = '##' + rows[i].id + '_order';
+					$(oID).html(i+1);
+				}
+				$(row).css("cursor","move");
+			});
+		}
+	});
+	</cfif>
 });
 function pagerLink(page){
 	$("##pagePagerLoader").fadeIn("fast");
@@ -116,9 +130,9 @@ function changeOrder(pageID,order,direction){
 	// img change
 	$('##order'+direction+'_'+pageID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// change order
-	$.post('#event.buildLink(prc.xehPageOrder)#',{pageID:pageID,order:order},function(){ 
+	$.post('#event.buildLink(prc.xehPageOrder)#',{pageID:pageID,order:order},function(){
 		hideAllTooltips();
-		pagerLink(#rc.page#); 
+		pagerLink(#rc.page#);
 	});
 }
 </cfif>

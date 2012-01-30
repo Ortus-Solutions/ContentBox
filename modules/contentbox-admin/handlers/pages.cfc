@@ -201,9 +201,10 @@ component extends="baseHandler"{
 
 	// change order for all pages
 	function changeOrder(event,rc,prc){
+		event.paramValue("tableID","pages");
 		event.paramValue("newRulesOrder","");
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&pages[]=", ",", "all");
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "pages[]=,", "", "all");
+		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&#rc.tableID#[]=", ",", "all");
+		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "#rc.tableID#[]=,", "", "all");
 		for(var i=1;i lte listLen(rc.newRulesOrder);i++) {
 			pageID = listGetAt(rc.newRulesOrder,i);
 			var page = pageService.get(pageID);
