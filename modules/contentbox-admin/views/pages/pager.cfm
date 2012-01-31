@@ -14,7 +14,7 @@
 	<thead>
 		<tr>
 			<th>Page</th>
-			<th width="60" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Page Order"/></th>
+			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="menu" title="Show in Menu"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
@@ -47,7 +47,11 @@
 				</cfif>
 			</td>
 			<td class="center">
-				<div id="pageID-#page.getPageID()#_order">#page.getOrder()#</div>
+				<cfif page.getShowInMenu()>
+					<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Shows in menu!" />
+				<cfelse>
+					<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Not in menu!" />
+				</cfif>
 			</td>
 			<td class="center">
 				#page.getNumberOfChildren()#
