@@ -1,7 +1,7 @@
 ﻿/**
 * A mapped super class used for contentbox content: entries and pages
 */
-component mappedsuperclass="true" accessors="true"{
+component persistent="true" entityname="cbContent" table="cb_content" discriminatorColumn="contentType"{
 	
 	// DI Injections
 	property name="cachebox" 			inject="cachebox" 					persistent="false";
@@ -13,6 +13,8 @@ component mappedsuperclass="true" accessors="true"{
 	property name="renderedContent" persistent="false";
 	
 	// Properties
+	property name="contentID" 			notnull="true"	fieldtype="id" generator="native" setter="false";
+	property name="contentType" 		notnull="true"	setter="false" update="false" insert="false" index="idx_discriminator";
 	property name="title"				notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"				notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="content"    			notnull="true"  ormtype="text" length="8000";
@@ -28,19 +30,29 @@ component mappedsuperclass="true" accessors="true"{
 	// M20 -> Author loaded as a proxy and fetched immediately
 	property name="author" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
 	
+	// O2M -> Comments
+	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
+			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan"; 
+	
+	// O2M -> CustomFields
+	property name="customFields" singularName="customField" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10"
+			  cfc="contentbox.model.content.CustomField" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan"; 
+	
 	// NON-persistent content type discriminator
 	property name="type" persistent="false" type="string" hint="Valid content types are page,entry";
 	
-	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
+	// Calculated Fields
+	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" default="0";
+	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID and comment.isApproved = 1" default="0";
 	
-	/*
-	* In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
+	/************************************** PUBLIC *********************************************/
+	
+	/**
+	* is loaded?
 	*/
-	public void function preInsert(){
-		setCreatedDate( now() );
+	boolean function isLoaded(){
+		return len( getContentID() );
 	}
-	
-	/* ----------------------------------------- PUBLIC -----------------------------------------  */
 	
 	/**
 	* Get display publishedDate

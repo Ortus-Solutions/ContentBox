@@ -92,7 +92,7 @@
 				#html.label(field="parentPage",content='Parent:')#
 				<select name="parentPage" id="parentPage" class="width98">
 					<option value="">No Parent</option>
-					#html.options(values=prc.pages,column="pageID",nameColumn="title",selectedValue=prc.parentPageID)#
+					#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
 				</select>
 				
 				<!--- layout --->
@@ -153,7 +153,7 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- id --->
-			#html.hiddenField(name="pageID",bind=prc.page)#
+			#html.hiddenField(name="contentID",bind=prc.page)#
 			#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 			
 			<!--- title --->

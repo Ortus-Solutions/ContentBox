@@ -37,7 +37,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	function updateHits(required entry){
 		// direct SQL as it is pretty standard SQL
-		var q = new Query(sql="UPDATE cb_entry SET hits = hits + 1 WHERE entryID = #arguments.entry.getEntryID()#").execute();
+		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.entry.getContentID()#").execute();
 	}
 	
 	/**
@@ -45,10 +45,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	function getIDBySlug(required entrySlug){
 		// direct SQL as it is pretty standard SQL
-		var q = new Query(sql="select entryID from cb_entry where slug = :slug");
+		var q = new Query(sql="select contentID from cb_content where slug = :slug");
 		q.addParam(name="slug",value=arguments.entrySlug);
 		
-		return q.execute().getResult().entryID;
+		return q.execute().getResult().contentID;
 	}
 	
 	/**

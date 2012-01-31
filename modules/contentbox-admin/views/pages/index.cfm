@@ -81,7 +81,7 @@
 
 			<!--- pageForm --->
 			#html.startForm(name="pageForm",action=prc.xehPageRemove)#
-			<input type="hidden" name="pageID" id="pageID" value="" />
+			<input type="hidden" name="contentID" id="contentID" value="" />
 
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
@@ -137,18 +137,18 @@
 
 				<tbody>
 					<cfloop array="#prc.pages#" index="page">
-					<tr id="pageID-#page.getPageID()#" data-pageID="#page.getPageID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
+					<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
 						<td class="middle">
 							<!--- Children Dig Deeper --->
 							<cfif page.getNumberOfChildren()>
-								<a href="#event.buildLink(prc.xehPages)#/parent/#page.getPageID()#" title="View Child Pages (#page.getNumberOfChildren()#)"><img src="#prc.cbRoot#/includes/images/plus.png" alt="child" border="0"/></a>
+								<a href="#event.buildLink(prc.xehPages)#/parent/#page.getContentID()#" title="View Child Pages (#page.getNumberOfChildren()#)"><img src="#prc.cbRoot#/includes/images/plus.png" alt="child" border="0"/></a>
 							<cfelse>
 								<img src="#prc.cbRoot#/includes/images/page.png" alt="child"/>
 							</cfif>
 						</td>
 						<td>
 							<!--- Title --->
-							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getTitle()#</a><br>
+							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit Page">#page.getTitle()#</a><br>
 							by #page.getAuthorName()#<br/>
 							<!--- password protect --->
 							<cfif page.isPasswordProtected()>
@@ -188,14 +188,14 @@
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Edit Command --->
-							<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
+							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Create Child --->
-							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getPageID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
+							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Delete Command --->
-							<a title="Delete Page" href="javascript:remove('#page.getPageID()#')" class="confirmIt"
-							  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><img id="delete_#page.getPageID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Page" href="javascript:remove('#page.getContentID()#')" class="confirmIt"
+							  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><img id="delete_#page.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 							&nbsp;
 							</cfif>
 							<!--- View in Site --->

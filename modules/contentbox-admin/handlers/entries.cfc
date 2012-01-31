@@ -41,9 +41,9 @@ component extends="baseHandler"{
 		// Append search to paging link?
 		if( len(rc.searchEntries) ){ prc.pagingLink&="&searchEntries=#rc.searchEntries#"; }
 		// Append filters to paging link?
-		if( rc.fAuthors neq "all"){ rc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
-		if( rc.fCategories neq "all"){ rc.pagingLink&="&fCategories=#rc.fCategories#"; }
-		if( rc.fStatus neq "any"){ rc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
+		if( rc.fCategories neq "all"){ prc.pagingLink&="&fCategories=#rc.fCategories#"; }
+		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
 		// is Filtering?
 		if( rc.fAuthors neq "all" OR rc.fCategories neq "all" or rc.fStatus neq "any"){ rc.isFiltering = true; }
 		
@@ -74,7 +74,7 @@ component extends="baseHandler"{
 	// Quick Look
 	function quickLook(event,rc,prc){
 		// get entry
-		prc.entry  = entryService.get( event.getValue("entryID",0) );
+		prc.entry  = entryService.get( event.getValue("contentID",0) );
 		event.setView(view="entries/quickLook",layout="ajax");
 	}
 	
@@ -85,11 +85,11 @@ component extends="baseHandler"{
 		// get all categories
 		prc.categories = categoryService.getAll(sortOrder="category");
 		// get new or persisted
-		prc.entry  = entryService.get( event.getValue("entryID",0) );
+		prc.entry  = entryService.get( event.getValue("contentID",0) );
 		// load comments viewlet if persisted
 		if( prc.entry.isLoaded() ){
 			// Get Comments viewlet
-			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={entryID=rc.entryID});
+			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={contentID=rc.contentID});
 		}
 		// CK Editor Helper
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
@@ -127,7 +127,7 @@ component extends="baseHandler"{
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
 		
 		// get new/persisted entry and populate it
-		var entry = populateModel( entryService.get(rc.entryID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		var entry = populateModel( entryService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		var isNew = (NOT entry.isLoaded());
 		
 		// Validate it
@@ -165,7 +165,7 @@ component extends="baseHandler"{
 		// Ajax?
 		if( event.isAjax() ){
 			var rData = {
-				entryID = entry.getEntryID()
+				contentID = entry.getContentID()
 			};
 			event.renderData(type="json",data=rData);
 		}
@@ -178,19 +178,19 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
-		var entry = entryService.get(rc.entryID);
+		var entry = entryService.get(rc.contentID);
 		if( isNull(entry) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Entry detected!");
 		}
 		else{
 			// GET id
-			var entryID = entry.getEntryID();
+			var contentID = entry.getContentID();
 			// announce event
 			announceInterception("cbadmin_preEntryRemove",{entry=entry});
 			// remove it
 			entryService.delete( entry );
 			// announce event
-			announceInterception("cbadmin_postEntryRemove",{entryID=entryID});
+			announceInterception("cbadmin_postEntryRemove",{contentID=contentID});
 			// messagebox
 			getPlugin("MessageBox").setMessage("info","Entry Removed!");
 		}

@@ -1,31 +1,16 @@
 ﻿/**
 * I am a blog entry entity that is amazing
 */
-component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25" extends="BaseContent" cachename="cbEntry" cacheuse="read-write"{
+component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25" cachename="cbEntry" cacheuse="read-write" extends="BaseContent" joinColumn="contentID" discriminatorValue="Entry"{
 	
 	// Properties
-	property name="entryID" fieldtype="id" generator="native" setter="false";
-	property name="excerpt" 			notnull="false" ormtype="text" default="" length="8000";
+	property name="excerpt" notnull="false" ormtype="text" default="" length="8000";
 	
 	// M2M -> Categories
 	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"  
-			  cfc="contentbox.model.content.Category" fkcolumn="FK_entryID" linktable="cb_entryCategories" inversejoincolumn="FK_categoryID"; 
+			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_entryCategories" inversejoincolumn="FK_categoryID"; 
 	
-	// O2M -> Comments
-	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
-			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_entryID" inverse="true" cascade="all-delete-orphan"; 
-	
-	// O2M -> CustomFields
-	property name="customFields" singularName="customField" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10"
-			  cfc="contentbox.model.content.CustomField" fkcolumn="FK_entryID" inverse="true" cascade="all-delete-orphan"; 
-	
-	// Calculated Fields
-	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_entryID=entryID";
-	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_entryID=entryID and comment.isApproved = 1";
-
-	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
-	
-	/* ----------------------------------------- PUBLIC -----------------------------------------  */
+	/************************************** CONSTRUCTOR *********************************************/
 	
 	/**
 	* constructor
@@ -35,15 +20,11 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		customFields	= [];
 		type 			= "entry";
 		renderedContent = "";
+		createdDate		= now();
 	}
 	
-	/**
-	* Get content id based on implementation
-	*/
-	any function getContentID(){
-		return getEntryID();
-	}
-	
+	/************************************** PUBLIC *********************************************/
+
 	/**
 	* has excerpt
 	*/
@@ -101,11 +82,4 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		return arrayToList( catList );
 	}
 	
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return len( getEntryID() );
-	}
-		
 }

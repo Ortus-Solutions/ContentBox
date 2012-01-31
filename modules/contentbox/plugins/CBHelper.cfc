@@ -360,8 +360,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @content The content object to link to
 	*/
 	function linkContent(content){
-		if( arguments.content.getType() eq "entry" ){ return linkEntry(arguments.content); }
-		if( arguments.content.getType() eq "page" ){ return linkPage(arguments.content); }
+		if( arguments.content.getContentType() eq "entry" ){ return linkEntry(arguments.content); }
+		if( arguments.content.getContentType() eq "page" ){ return linkPage(arguments.content); }
 	}
 
 	/**
@@ -388,11 +388,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	function linkComment(comment){
 		var xeh = "";
-		if( arguments.comment.hasPage() ){
-			xeh = linkPage( arguments.comment.getPage() );
+		if( arguments.comment.getRelatedContent().getContentType() eq 'page' ){
+			xeh = linkPage( arguments.comment.getRelatedContent() );
 		}
 		else{
-			xeh = linkEntry( arguments.comment.getEntry() );
+			xeh = linkEntry( arguments.comment.getRelatedContent() );
 		}
 		xeh &= "##comment_#arguments.comment.getCommentID()#";
 		return xeh;
@@ -404,7 +404,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	function linkComments(content){
 		var xeh = "";
-		if( arguments.content.getType() eq "page" ){
+		if( arguments.content.getContentType() eq "page" ){
 			xeh = linkPage( arguments.content );
 		}
 		else{
@@ -420,7 +420,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	function linkCommentPost(content){
 
-		if( arguments.content.getType() eq "page" ){
+		if( arguments.content.getContentType() eq "page" ){
 			var xeh = siteRoot() & sep() & "__pageCommentPost";
 			return getRequestContext().buildLink(linkTo=xeh);
 		}
@@ -597,7 +597,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		} 
 		
 		// get child pages
-		arguments.pageRecords = pageService.findPublishedPages(parent=page.getPageID(),showInMenu=true);
+		arguments.pageRecords = pageService.findPublishedPages(parent=page.getContentID(),showInMenu=true);
 		// build it out
 		return buildMenu(argumentCollection=arguments);
 	}
@@ -645,9 +645,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var b = createObject("java","java.lang.StringBuilder").init('');
 		// current page?
 		var prc = getRequestCollection(private=true);
-		var currentPageID = "";
+		var currentcontentID = "";
 		if( structKeyExists(prc,"page") and prc.page.isLoaded() ){
-			currentPageID = prc.page.getPageID();
+			currentcontentID = prc.page.getContentID();
 		}
 
 		// list start
@@ -655,7 +655,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		for(var x=1; x lte pageResults.count; x++ ){
 			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[x].getTitle() )){
 				// class = active?
-				if( currentPageID eq pageResults.pages[x].getPageID() ){ classText = ' class="active"'; }else{ classText = ''; }
+				if( currentcontentID eq pageResults.pages[x].getContentID() ){ classText = ' class="active"'; }else{ classText = ''; }
 				// list
 				if( arguments.type neq "none"){
 					b.append('<li#classText#><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a></li>');

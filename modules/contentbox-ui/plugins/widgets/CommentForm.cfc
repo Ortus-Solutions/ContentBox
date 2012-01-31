@@ -30,8 +30,8 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		var cID 		= "";
 		
 		// Determine ID
-		if( structKeyExists(arguments.content,"getPageID") ){  cID = arguments.content.getPageID(); }
-		if( structKeyExists(arguments.content,"getEntryID") ){ cID = arguments.content.getEntryID(); }
+		if( structKeyExists(arguments.content,"getcontentID") ){  cID = arguments.content.getContentID(); }
+		if( structKeyExists(arguments.content,"getcontentID") ){ cID = arguments.content.getContentID(); }
 		
 		// captcha?
 		if( cbSettings.cb_comments_captcha ){

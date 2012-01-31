@@ -33,17 +33,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Update an page's hits
 	*/
 	function updateHits(required page){
-		var q = new Query(sql="UPDATE cb_page SET hits = hits + 1 WHERE pageID = #arguments.page.getPageID()#").execute();
+		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.page.getContentID()#").execute();
 	}
 	
 	/**
 	* Get an id from a slug
 	*/
 	function getIDBySlug(required pageSlug){
-		var q = new Query(sql="select pageID from cb_page where slug = :slug");
+		var q = new Query(sql="select contentID from cb_content where slug = :slug");
 		q.addParam(name="slug",value=arguments.pageSlug);
 		
-		return q.execute().getResult().pageID;
+		return q.execute().getResult().contentID;
 	}
 	
 	/**
@@ -67,7 +67,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
 			if( len( trim(arguments.parent) ) ){
-				arrayAppend(criteria, restrictions.eq("parent.pageID", javaCast("int",arguments.parent)) );
+				arrayAppend(criteria, restrictions.eq("parent.contentID", javaCast("int",arguments.parent)) );
 			}
 			else{
 				arrayAppend(criteria, restrictions.isNull("parent") );
@@ -124,7 +124,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
 			if( len(arguments.parent) ){
-				arrayAppend(criteria, restrictions.eq("parent.pageID", javaCast("int",arguments.parent)) );
+				arrayAppend(criteria, restrictions.eq("parent.contentID", javaCast("int",arguments.parent)) );
 			}
 			else{
 				arrayAppend(criteria, restrictions.isNull("parent") );

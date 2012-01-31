@@ -137,7 +137,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["ENTRIES_ADMIN"] );
 		oRole.addPermission( permissions["LAYOUT_ADMIN"] );
 		oRole.addPermission( permissions["GLOBALHTML_ADMIN"] );
-		oRole.addPermission( permissions["MEDIAMANGER_ADMIN"] );
+		oRole.addPermission( permissions["MEDIAMANAGER_ADMIN"] );
 		roleService.save( oRole );
 		
 		// Create Admin
@@ -310,7 +310,7 @@ component accessors="true"{
 			authorURL = "www.gocontentbox.com",
 			isApproved = true
 		});
-		comment.setEntry( entry );
+		comment.setRelatedContent( entry );
 		entry.addComment( comment );
 		
 		// nasty comment
@@ -322,7 +322,7 @@ component accessors="true"{
 			authorURL = "www.gocontentbox.com",
 			isApproved = false
 		});
-		comment.setEntry( entry );
+		comment.setRelatedContent( entry );
 		entry.addComment( comment );
 		
 		// save entry

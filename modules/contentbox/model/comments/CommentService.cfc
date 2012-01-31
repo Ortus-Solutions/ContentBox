@@ -37,7 +37,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* Comment listing for UI of approved comments, returns struct of results=[comments,count]
 	*/
-	function findApprovedComments(entryID,pageID,max=0,offset=0){
+	function findApprovedComments(contentID,max=0,offset=0){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
@@ -47,14 +47,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// only approved comments
 		arrayAppend(criteria, restrictions.eq("isApproved", javaCast("boolean",1)) );
 		
-		// By Entry?
-		if( structKeyExists(arguments,"entryID") AND len(arguments.entryID) ){
-			arrayAppend(criteria, restrictions.eq("entry.entryID",javaCast("int", arguments.entryID)));			
-		}
-		
-		// By Page?
-		if( structKeyExists(arguments,"pageID") AND len(arguments.pageID) ){
-			arrayAppend(criteria, restrictions.eq("page.pageID",javaCast("int", arguments.pageID)));			
+		// By Content?
+		if( structKeyExists(arguments,"contentID") AND len(arguments.contentID) ){
+			arrayAppend(criteria, restrictions.eq("relatedContent.contentID",javaCast("int", arguments.contentID)));			
 		}
 		
 		// run criteria query and projections count
@@ -246,7 +241,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* comment search returns struct with keys [comments,count]
 	*/
-	struct function search(search="",isApproved,entryID,pageID,max=0,offset=0){
+	struct function search(search="",isApproved,contentID,max=0,offset=0){
 		var results = {};
 		// get Hibernate Restrictions class
 		var restrictions = getRestrictions();	
@@ -257,13 +252,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		if( structKeyExists(arguments,"isApproved") AND arguments.isApproved NEQ "any"){
 			arrayAppend(criteria, restrictions.eq("isApproved", javaCast("boolean",arguments.isApproved)) );
 		}		
-		// Entry Filter
-		if( structKeyExists(arguments,"entryID") AND arguments.entryID NEQ "all"){
-			arrayAppend(criteria, restrictions.eq("entry.entryID", javaCast("int",arguments.entryID)) );
-		}
-		// Page Filter
-		if( structKeyExists(arguments,"pageID") AND arguments.pageID NEQ "all"){
-			arrayAppend(criteria, restrictions.eq("page.pageID", javaCast("int",arguments.pageID)) );
+		// Content Filter
+		if( structKeyExists(arguments,"contentID") AND arguments.contentID NEQ "all"){
+			arrayAppend(criteria, restrictions.eq("relatedContent.contentID", javaCast("int",arguments.contentID)) );
 		}
 		// Search Criteria
 		if( len(arguments.search) ){

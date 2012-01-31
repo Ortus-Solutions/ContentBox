@@ -7,7 +7,7 @@
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
 	<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-		<button class="button2" onclick="return to('#event.buildLink(prc.xehEntryEditor)#/entryID/#prc.entry.getEntryID()#')"> Edit </button>
+		<button class="button2" onclick="return to('#event.buildLink(prc.xehEntryEditor)#/contentID/#prc.entry.getContentID()#')"> Edit </button>
 	</cfif>
 	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
 </div>

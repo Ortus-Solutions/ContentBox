@@ -1,5 +1,5 @@
 /**
-* I am a custom field metadata that can be attached to pages or blog entries
+* I am a custom field metadata that can be attached to base content in contentbox
 */
 component persistent="true" entityname="cbCustomField" table="cb_customfield"{
 	
@@ -8,11 +8,8 @@ component persistent="true" entityname="cbCustomField" table="cb_customfield"{
 	property name="key"			notnull="true"  ormtype="string" 	length="255";
 	property name="value"    	notnull="true"  ormtype="text" 		length="8000";
 	
-	// M20 -> Entry loaded as a proxy
-	property name="entry" notnull="false" cfc="contentbox.model.content.Entry" fieldtype="many-to-one" fkcolumn="FK_entryID" lazy="true" index="idx_entryCustomFields";
-	
-	// M20 -> Page loaded as a proxy
-	property name="page" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_pageID" lazy="true" index="idx_pageCustomFields";
+	// M20 -> Content loaded as a proxy
+	property name="relatedContent" notnull="false" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_contentID" lazy="true" index="idx_contentCustomFields";
 	
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
 	
@@ -22,15 +19,5 @@ component persistent="true" entityname="cbCustomField" table="cb_customfield"{
 	boolean function isLoaded(){
 		return len( getCustomFieldID() );
 	}
-	
-	/**
-	* setRelatedContent
-	*/
-	CustomField function setRelatedContent(required content){
-		if( arguments.content.getType() eq "entry" ){ setEntry( arguments.content ); }
-		else{ setPage( arguments.content ); }
-		return this;
-	}
-	
 	
 }

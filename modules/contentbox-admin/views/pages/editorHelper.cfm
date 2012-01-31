@@ -34,7 +34,7 @@ function quickSave(){
 	// Post it
 	$.post('#event.buildLink(prc.xehPageSave)#', $pageForm.serialize(),function(data){
 		// Save new id
-		$pageForm.find("##pageID").val( data.PAGEID );
+		$pageForm.find("##contentID").val( data.contentID );
 		// finalize
 		$uploader.fadeOut(1500);
 		$status.html('Page Draft Saved!');

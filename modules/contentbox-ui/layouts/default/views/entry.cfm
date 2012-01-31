@@ -8,7 +8,7 @@
 	<div class="post-top-gap"></div>
 	
 	<!--- post --->
-	<div class="post" id="post_#prc.entry.getEntryID()#">
+	<div class="post" id="post_#prc.entry.getContentID()#">
 		
 		<!--- Date --->
 		<div class="post-date" title="Posted on #prc.entry.getDisplayPublishedDate()#">

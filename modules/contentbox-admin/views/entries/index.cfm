@@ -90,7 +90,7 @@
 			
 			<!--- entryForm --->
 			#html.startForm(name="entryForm",action=prc.xehEntryRemove)#
-			<input type="hidden" name="entryID" id="entryID" value="" />
+			<input type="hidden" name="contentID" id="contentID" value="" />
 			
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
@@ -139,9 +139,9 @@
 				
 				<tbody>
 					<cfloop array="#prc.entries#" index="entry">
-					<tr data-entryID="#entry.getEntryID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
+					<tr data-contentID="#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
 						<td>
-							<a href="#event.buildLink(prc.xehBlogEditor)#/entryID/#entry.getEntryID()#" title="Edit Entry">#entry.getTitle()#</a><br/>
+							<a href="#event.buildLink(prc.xehBlogEditor)#/contentID/#entry.getContentID()#" title="Edit Entry">#entry.getTitle()#</a><br/>
 							<!--- password protect --->
 							<cfif entry.isPasswordProtected()>
 								<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Entry is password protected"/>
@@ -176,10 +176,10 @@
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 							<!--- Edit Command --->
-							<a href="#event.buildLink(prc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
+							<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Delete Command --->
-							<a title="Delete Entry" href="javascript:remove('#entry.getEntryID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getEntryID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Entry" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 							&nbsp;
 							</cfif>
 							<!--- View in Site --->

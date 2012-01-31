@@ -23,7 +23,7 @@ component singleton="true"{
 			bc &= visit( arguments.page.getParent() );
 		}
 		
-		bc &= '> <a href="#arguments.link#/parent/#arguments.page.getPageID()#">#arguments.page.getTitle()#</a>';
+		bc &= '> <a href="#arguments.link#/parent/#arguments.page.getContentID()#">#arguments.page.getTitle()#</a>';
 		
 		return bc;
 	}

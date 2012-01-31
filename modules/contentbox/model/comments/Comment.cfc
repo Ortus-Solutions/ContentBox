@@ -11,33 +11,21 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	property name="authorEmail"		length="255" 	notnull="true";
 	property name="authorURL"		length="255" 	notnull="false";
 	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_createdDate";
-	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" dbdefault="0" index="idx_entryComment,idx_approved,idx_pageComment";
+	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" dbdefault="0" index="idx_contentComment,idx_approved";
 	
-	// M20 -> Entry loaded as a proxy
-	property name="entry" notnull="false" cfc="contentbox.model.content.Entry" fieldtype="many-to-one" fkcolumn="FK_entryID" lazy="true" index="idx_entryComment";
+	// M20 -> Content loaded as a proxy
+	property name="relatedContent" notnull="false" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_contentID" lazy="true" index="idx_contentComment";
 	
-	// M20 -> Page loaded as a proxy
-	property name="page" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_pageID" lazy="true" index="idx_pageComment";
+	/************************************** CONSTRUCTOR *********************************************/
 	
-	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
-	
-	/*
-	* In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
+	/**
+	* constructor
 	*/
-	public void function preInsert(){
-		setCreatedDate( now() );
+	function init(){
+		createdDate		= now();
 	}
 	
 	/************************************** PUBLIC *********************************************/
-	
-	/**
-	* setRelatedContent
-	*/
-	Comment function setRelatedContent(content){
-		if( arguments.content.getType() eq "entry" ){ setEntry( arguments.content ); }
-		else{ setPage( arguments.content ); }
-		return this;
-	}
 	
 	/**
 	* Get formatted createdDate
@@ -51,8 +39,7 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	* Get parent slug from either the page it belongs or the entry it belongs to.
 	*/
 	function getParentSlug(){
-		if( hasEntry() ){ return getEntry().getSlug(); }
-		if( hasPage() ){ return getPage().getSlug(); }
+		if( hasRelatedContent() ){ return getRelatedContent().getSlug(); }
 		return "";
 	}
 	
@@ -60,8 +47,7 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	* Get parent title from either the page it belongs or the entry it belongs to.
 	*/
 	function getParentTitle(){
-		if( hasEntry() ){ return getEntry().getTitle(); }
-		if( hasPage() ){ return getPage().getTitle(); }
+		if( hasRelatedContent() ){ return getRelatedContent().getTitle(); }
 		return "";
 	}
 	
