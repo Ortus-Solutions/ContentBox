@@ -4,11 +4,11 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<!--- Robots --->
-	<meta name="robots" content="noindex,nofollow" />	
+	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>ContentBox Administrator - #prc.cbSettings.cb_site_name#</title> 
+    <title>ContentBox Administrator - #prc.cbSettings.cb_site_name#</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
@@ -23,11 +23,12 @@
 	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
 		<cfset addAsset("#css#.css")>
 	</cfloop>
-	        
+
 	<!--- JS --->
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/metadata.pack.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
+	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tablednd_0_5.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/tablesorter.min.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/contentbox.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
@@ -49,10 +50,10 @@
 	#announceInterception("cbadmin_afterBodyStart")#
 	<!--==================== Header =======================-->
 	<div id="header_bg">
-	
+
 		<!--============Header Wrapper============-->
 		<div class="wrapper">
-	       
+
 			<!--=======Top Header area======-->
 			<div id="header_top">
 				<span class="fr">
@@ -76,17 +77,17 @@
 						</cfif>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
 						<option value="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</option>
-						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>						
+						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>
 					</select>
-					
+
 					&nbsp;
-			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span> 
+			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span>
 					&nbsp;
-					
+
 					<!--- Log Out --->
 					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt"
 						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall" onclick="return false;">Log Out</button></a>
-					
+
 					<!--- cbadmin event --->
 					#announceInterception("cbadmin_onTopBar")#
 				</span>
@@ -96,23 +97,23 @@
 				#announceInterception("cbadmin_onTagline")#
 			</div>
 			<!--End Header top Area=-->
-	    
+
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
 				<img src="#prc.cbroot#/includes/images/ContentBox_125.gif" height="120" border="0" alt="logo"/>
 			</div>
-			
+
 			<div id="header_main" class="clearfix">
 	           	<h1>ContentBox Admin <span>v.#getModuleSettings('contentbox-admin').version#</span></h1>
 			</div>
 			<!--End Search field and logo Header Area-->
-	      
+
 			<!--=========Main Navigation=========-->
 			<ul id="main_nav">
 				<!--- cbadmin event --->
 				#announceInterception("cbadmin_beforeMainNav")#
 				<!--- Dashboard Nav --->
-				<li> 
+				<li>
 					<a href="##" title="ContentBox Dashboard" <cfif prc.tabDashboard>class="current"</cfif>>Dashboard</a>
 					<ul>
 						<li>
@@ -280,12 +281,12 @@
 				#announceInterception("cbadmin_afterMainNav")#
 			</ul>
 			<!--End Main Navigation-->
-	    
+
 	  	</div>
 	  <!--End Wrapper-->
 	</div>
 	<!--End Header-->
-	
+
 	<!--============================ Template Content Background ============================-->
 	<div id="content_bg" class="clearfix">
 		<!--============================ Main Content Area ============================-->
@@ -293,12 +294,12 @@
 			<!--- cbadmin event --->
 			#announceInterception("cbadmin_beforeContent")#
 			<!--- Main Content --->
-			#renderView()#		
+			#renderView()#
 			<!--- cbadmin event --->
 			#announceInterception("cbadmin_afterContent")#
 		</div>
 	</div>
-	
+
 	<!--============================Footer============================-->
 	<div id="footer">
 		<!--- cbadmin event --->
@@ -309,21 +310,21 @@
 		</div>
 	</div>
 	<!--End Footer-->
-	
+
 	<!--- ============================ confirm it modal dialog ============================ --->
-	<div id="confirmIt"> 
-		<div> 
-			<h2 id="confirmItTitle">Are you sure?</h2> 
-			<p id="confirmItMessage">Are you sure you want to perform this action?</p> 
+	<div id="confirmIt">
+		<div>
+			<h2 id="confirmItTitle">Are you sure?</h2>
+			<p id="confirmItMessage">Are you sure you want to perform this action?</p>
 			<hr />
 			<p class="textRight">
 				<button class="close button" 	data-action="cancel"> Cancel </button>
 				<button class="close buttonred" data-action="confirm"> Confirm </button>
 			</p>
-		</div> 
+		</div>
 	</div>
 	<!--- ============================ end Confirmit ============================ --->
-	
+
 	<!--- ============================ Remote Modal Window ============================ --->
 	<div id="remoteModal">
 		<div id="remoteModelContent">
@@ -331,12 +332,12 @@
 		</div>
 	</div>
 	<!--- ============================ end Confirmit ============================ --->
-	
+
 	<!--- ============================ QuickPost ============================ --->
 	#runEvent(event="contentbox-admin:entries.quickPost",prePostExempt=true)#
 	<!--- ============================ end QuickPost ============================ --->
-	
-	
+
+
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeBodyEnd")#
 </body>

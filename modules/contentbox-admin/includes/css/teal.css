@@ -154,6 +154,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .show{ display: block; }
 .flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 URL(../images/iinfo_icon.png) no-repeat 2% 50%; }
 .cachebox_debugContentCell{clear: none !important;}
+.grabCursors{cursor:grab !important;cursor:-moz-grab !important;cursor:-webkit-grab !important;}
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }

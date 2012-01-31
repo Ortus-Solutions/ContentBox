@@ -11,11 +11,11 @@
 			#html.startForm(name="authorSearchForm",action=prc.xehPageSearch)#
 				#html.textField(label="Search:",name="searchPages",class="textfield",size="16",title="Search all pages",value=event.getValue("searchPages",""))#
 				<input type="submit" value="Search" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehPages)#')">Clear</button>				
+				<button class="button" onclick="return to('#event.buildLink(prc.xehPages)#')">Clear</button>
 			#html.endForm()#
 		</div>
-	</div>	
-	
+	</div>
+
 	<!--- Filter Box --->
 	<div class="small_box">
 		<div class="header">
@@ -36,17 +36,17 @@
 			<select name="fStatus" id="fStatus" style="width:200px">
 				<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status</option>
 				<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Published</option>
-				<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Draft</option>				
+				<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Draft</option>
 			</select>
-				
+
 			<div class="actionBar">
 				<input type="submit" value="Apply Filters" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehPages)#')">Reset</button>				
-			</div>			
+				<button class="button" onclick="return to('#event.buildLink(prc.xehPages)#')">Reset</button>
+			</div>
 			#html.endForm()#
 		</div>
-	</div>	
-	
+	</div>
+
 	<!--- Help Box--->
 	<div class="small_box" id="help_tips">
 		<div class="header">
@@ -57,13 +57,12 @@
 				<li title="Click Me!" onclick="exposeIt('##pages')">Right click on a row to activate quick look!</li>
 				<li title="Click Me!" onclick="exposeIt('##main_column')">Sorting is only done within your paging window</li>
 				<li title="Click Me!" onclick="exposeIt('##contentBar')">Quick Filtering is only for viewed results</li>
-				<li title="Click Me!" onclick="exposeIt('##th_order')">Order down means increase ordering index</li>
-				<li title="Click Me!" onclick="exposeIt('##th_order')">Order up means decrease ordering index</li>
+				<li>You can quickly order the pages by dragging the rows</li>
 			</ul>
 		</div>
-	</div>		
+	</div>
 </div>
-<!--End sidebar-->	
+<!--End sidebar-->
 <!--============================Main Column============================-->
 <div class="main_column" id="main_column">
 	<div class="box">
@@ -76,14 +75,14 @@
 		</div>
 		<!--- Body --->
 		<div class="body">
-			
+
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
-			
+
 			<!--- pageForm --->
 			#html.startForm(name="pageForm",action=prc.xehPageRemove)#
 			<input type="hidden" name="pageID" id="pageID" value="" />
-			
+
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
 				<div class="infoBar">
@@ -91,17 +90,17 @@
 					Comments are currently disabled site-wide!
 				</div>
 			</cfif>
-			
+
 			<!--- Content Bar --->
 			<div class="contentBar" id="contentBar">
-				
+
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(prc.xehPageEditor)#');" title="Create new page">Create Page</button>
 				</div>
 				</cfif>
-				
+
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>
@@ -110,17 +109,17 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--- Paging --->
 			#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
-			
+
 			<!--- Location Bar --->
 			<cfif len(rc.parent)>
 			<div class="infoBar">
 			  <a href="#event.buildLink(prc.xehPages)#">Root</a> #getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-admin").visit(prc.page, event.buildLink(prc.xehPages))#
 			</div>
 			</cfif>
-			
+
 			<!--- pages --->
 			<table name="pages" id="pages" class="tablesorter" width="98%">
 				<thead>
@@ -135,10 +134,10 @@
 						<th width="95" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
-				
+
 				<tbody>
 					<cfloop array="#prc.pages#" index="page">
-					<tr data-pageID="#page.getPageID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
+					<tr id="pageID-#page.getPageID()#" data-pageID="#page.getPageID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
 						<td class="middle">
 							<!--- Children Dig Deeper --->
 							<cfif page.getNumberOfChildren()>
@@ -166,15 +165,7 @@
 							</cfif>
 						</td>
 						<td class="center">
-							#page.getOrder()#
-							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-							<!--- Order Up --->
-							<cfif ( page.getOrder()-1 ) GTE 0 >
-								<a href="javascript:changeOrder('#page.getPageID()#', #page.getOrder()-1#,'up')" title="Order Up"><img id="orderup_#page.getPageID()#" src="#prc.cbRoot#/includes/images/_up.gif" alt="order"/></a>
-							</cfif>
-							<!--- Increase Order Index--->
-							<a href="javascript:changeOrder('#page.getPageID()#',#page.getOrder()+1#,'down')" title="Order Down"><img id="orderdown_#page.getPageID()#" src="#prc.cbRoot#/includes/images/_down.gif" alt="order"/></a>
-							</cfif>
+							<div id="pageID-#page.getPageID()#_order">#page.getOrder()#</div>
 						</td>
 						<td class="center">
 							#page.getNumberOfChildren()#
@@ -199,7 +190,7 @@
 							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getPageID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Delete Command --->
-							<a title="Delete Page" href="javascript:remove('#page.getPageID()#')" class="confirmIt" 
+							<a title="Delete Page" href="javascript:remove('#page.getPageID()#')" class="confirmIt"
 							  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><img id="delete_#page.getPageID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 							&nbsp;
 							</cfif>
@@ -210,47 +201,13 @@
 					</cfloop>
 				</tbody>
 			</table>
-			
+
 			<!--- Paging --->
 			#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
-		
+
 			#html.endForm()#
 
-		</div>	
+		</div>
 	</div>
 </div>
-
-<script type="text/javascript">
-$(document).ready(function() {
-	$("##pages").tablesorter();
-	$("##pageFilter").keyup(function(){
-		$.uiTableFilter( $("##pages"), this.value );
-	});
-	// quick look
-	$("##pages").find("tr").bind("contextmenu",function(e) {
-	    if (e.which === 3) {
-	    	if($(this).attr('data-pageID') != null) {
-				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/pageID/' + $(this).attr('data-pageID'));
-				e.preventDefault();
-			}
-	    }
-	});
-
-});
-function remove(pageID){
-	// img change
-	$('##delete_'+pageID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
-	$("##pageID").val( pageID );
-	$("##pageForm").submit();
-}
-function changeOrder(pageID,order,direction){
-	// img change
-	$('##order'+direction+'_'+pageID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
-	// change order
-	$.post('#event.buildLink(prc.xehPageOrder)#',{pageid:pageID,order:order},function(){
-		location.reload(true);
-	});
-}
-</script>
-
 </cfoutput>

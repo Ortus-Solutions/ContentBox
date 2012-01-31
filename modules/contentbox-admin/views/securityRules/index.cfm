@@ -60,7 +60,8 @@
 		<!--- Usage --->
 		<div class="infoBar">
 			<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />
-			Please remember that the security rules are fired in the order shown. Be careful with security rules as with much power comes great responsibility!
+			Please remember that the security rules are fired in the order shown. You can drag and drop
+			the rows to the desired order of firing. Be careful with security rules as with much power comes great responsibility!
 		</div>
 		
 		<!--- entryForm --->

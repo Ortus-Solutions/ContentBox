@@ -79,8 +79,8 @@
     font-weight:bold; 
     min-height: 20px;
 }
-#FileBrowser #statusText{float: left; margin:5px;font-size:10px;}
+#FileBrowser #statusText{float: left; margin:0px;font-size:10px;}
 #FileBrowser #statusButtons{text-align:right}
 #FileBrowser .folders, #FileBrowser .files{ cursor:pointer;margin: 0px;padding:2px; }
 #FileBrowser .folders.selected, #FileBrowser .files.selected{ background-color: #B3C6F9}
-#FileBrowser .divider{ align: center; }
+#FileBrowser .divider{ align: center;}
