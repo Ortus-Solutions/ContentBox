@@ -25,7 +25,6 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	*/
 	function init(){
 		customFields	= [];
-		type 			= "page";
 		renderedContent = "";
 		createdDate		= now();
 	}

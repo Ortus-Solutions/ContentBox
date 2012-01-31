@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-A new comment has been posted and needs moderation on the page: <a href="@entryURL@">@entryTitle@<a/>. 
+A new comment has been posted and needs moderation on the page: <a href="@contentURL@">@contentTitle@<a/>. 
 	
 <br/><br/>
 

@@ -27,11 +27,6 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		var cbSettings 	= event.getValue(name="cbSettings",private=true);
 		var captcha		= "";
 		var commentForm = "";
-		var cID 		= "";
-		
-		// Determine ID
-		if( structKeyExists(arguments.content,"getcontentID") ){  cID = arguments.content.getContentID(); }
-		if( structKeyExists(arguments.content,"getcontentID") ){ cID = arguments.content.getContentID(); }
 		
 		// captcha?
 		if( cbSettings.cb_comments_captcha ){
@@ -52,8 +47,8 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 				
 				#getPlugin("MessageBox").renderit()#
 				
-				#html.hiddenField(name="contentID",value=cID)#
-				#html.hiddenField(name="contentType",value=arguments.content.getType())#
+				#html.hiddenField(name="contentID",value=arguments.content.getContentID())#
+				#html.hiddenField(name="contentType",value=arguments.content.getContentType())#
 				
 				#html.textField(name="author",label="Name: (required)",size="50",required="required",value=event.getValue("author",""))#
 				#html.inputField(name="authorEmail",type="email",label="Email: (required)",size="50",required="required",value=event.getValue("authorEmail",""))#

@@ -29,6 +29,26 @@ component{
 		}				
 	}
 	
+	/*
+	* Error Control
+	*/
+	function onError(event,faultAction,exception,eventArguments){
+		var rc 	= event.getCollection();
+		var prc = event.getCollection(private=true);
+		
+		// store exceptions
+		prc.faultAction = arguments.faultAction;
+		prc.exception   = arguments.exception;
+		
+		// announce event
+		announceInterception("cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments});
+			
+		// Set view to render
+		event.setView("#prc.cbLayout#/views/error");
+	}
+
+	/************************************** PRIVATE *********************************************/
+	
 	/**
 	* Validate incoming comment post
 	*/
@@ -69,7 +89,7 @@ component{
 		}
 		
 		// announce event
-		announceInterception("cbui_preCommentPost",{commentErrors=commentErrors,content=thisContent,contentType=thisContent.getType()});
+		announceInterception("cbui_preCommentPost",{commentErrors=commentErrors,content=thisContent,contentType=thisContent.getContentType()});
 		
 		return commentErrors;		
 	}
@@ -79,11 +99,14 @@ component{
 	*/
 	private function saveComment(thisContent){
 		// Get new comment to persist
-		var comment = populateModel( commentService.new() ).setRelatedContent( thisContent );
+		var comment = populateModel( commentService.new() );
+		// relate it to content
+		comment.setRelatedContent( thisContent );
+		// save it
 		var results = commentService.saveComment( comment );
 		
 		// announce event
-		announceInterception("cbui_onCommentPost",{comment=comment,content=thisContent,moderationResults=results,contentType=thisContent.getType()});
+		announceInterception("cbui_onCommentPost",{comment=comment,content=thisContent,moderationResults=results,contentType=thisContent.getContentType()});
 		
 		// Check if all good
 		if( results.moderated ){
@@ -98,24 +121,5 @@ component{
 			setNextEvent(URL=CBHelper.linkComment( comment ));		
 		}
 	}
-	
-	/*
-	* Error Control
-	*/
-	function onError(event,faultAction,exception,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
-		
-		// store exceptions
-		prc.faultAction = arguments.faultAction;
-		prc.exception   = arguments.exception;
-		
-		// announce event
-		announceInterception("cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments});
-			
-		// Set view to render
-		event.setView("#prc.cbLayout#/views/error");
-	}
-
 
 }

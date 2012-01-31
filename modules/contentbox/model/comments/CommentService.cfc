@@ -200,22 +200,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		bodyTokens["commentURL"] 	= CBHelper.linkComment( inComment );
 		bodyTokens["deleteURL"] 	= CBHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
 		bodyTokens["approveURL"] 	= CBHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
-		if( inComment.hasEntry() ){
-			bodyTokens["entryURL"] 		= CBHelper.linkEntry( inComment.getEntry() );
-		}
-		else{
-			bodyTokens["entryURL"] 		= CBHelper.linkPage( inComment.getPage() );
-		}
-		bodyTokens["entryTitle"] 	= inComment.getParentTitle();
+		bodyTokens["contentURL"] 	= CBHelper.linkContent( inComment.getRelatedContent() );
+		bodyTokens["contentTitle"] 	= inComment.getParentTitle();
 		
 		// Moderation Email? Comment is moderated?
 		if( inComment.getIsApproved() eq false AND inSettings.cb_comments_moderation_notify ){
-			subject  = "New comment needs moderation on post: #bodyTokens.entryTitle#";
+			subject  = "New comment needs moderation on post: #bodyTokens.contentTitle#";
 			template = "comment_moderation";
 		}
 		// Post Notification Email?
 		else if( inSettings.cb_comments_notify ){
-			subject  = "New comment on post: #bodyTokens.entryTitle#";
+			subject  = "New comment on post: #bodyTokens.contentTitle#";
 			template = "comment_new";
 		}
 		

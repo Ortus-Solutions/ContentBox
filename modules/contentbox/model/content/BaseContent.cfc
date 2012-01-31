@@ -9,12 +9,12 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	property name="interceptorService"	inject="coldbox:interceptorService" persistent="false";
 	property name="customFieldService"  inject="customFieldService@cb" 		persistent="false";
 	
-	// Non-Persistable
+	// Non-Persistable Properties
 	property name="renderedContent" persistent="false";
 	
 	// Properties
 	property name="contentID" 			notnull="true"	fieldtype="id" generator="native" setter="false";
-	property name="contentType" 		notnull="true"	setter="false" update="false" insert="false" index="idx_discriminator";
+	property name="contentType" 		notnull="true"	setter="false" update="false" insert="false" index="idx_discriminator,idx_published";
 	property name="title"				notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"				notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="content"    			notnull="true"  ormtype="text" length="8000";
@@ -37,9 +37,6 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	// O2M -> CustomFields
 	property name="customFields" singularName="customField" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10"
 			  cfc="contentbox.model.content.CustomField" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan"; 
-	
-	// NON-persistent content type discriminator
-	property name="type" persistent="false" type="string" hint="Valid content types are page,entry";
 	
 	// Calculated Fields
 	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" default="0";
@@ -111,7 +108,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	* Build content cache keys according to sent content object
 	*/
 	string function buildContentCacheKey(){
-		return "cb-content-#getType()#-#getContentID()#";
+		return "cb-content-#getContentType()#-#getContentID()#";
 	}
 	
 	/**
@@ -121,8 +118,8 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		var settings = settingService.getAllSettings(asStruct=true);
 		
 		// caching enabled?
-		if( (getType() eq "page" AND settings.cb_content_caching) OR 
-			(getType() eq "entry" AND settings.cb_entry_caching)
+		if( (getContentType() eq "page" AND settings.cb_content_caching) OR 
+			(getContentType() eq "entry" AND settings.cb_entry_caching)
 		){
 			// Build Cache Key
 			var cacheKey = buildContentCacheKey();
@@ -155,8 +152,8 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		
 		// caching enabled?
-		if( (getType() eq "page" AND settings.cb_content_caching) OR 
-			(getType() eq "entry" AND settings.cb_entry_caching)
+		if( (getContentType() eq "page" AND settings.cb_content_caching) OR 
+			(getContentType() eq "entry" AND settings.cb_entry_caching)
 		){
 			// Store content in cache	
 			cache.set(cacheKey, renderedContent, settings.cb_content_cachingTimeout, settings.cb_content_cachingTimeoutIdle);
@@ -183,7 +180,9 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 				if( arrayIsDefined(arguments.values, x) ){
 					args.value = arguments.values[x];
 				}
-				addCustomField( customFieldService.new(properties=args).setRelatedContent( this ) );
+				var thisField = customFieldService.new(properties=args);
+				thisField.setRelatedContent( this );
+				addCustomField( thisField );
 			}
 		}
 		return this;

@@ -89,7 +89,7 @@ component extends="BaseContentHandler" singleton{
 		// incoming params
 		event.paramValue("contentID","");
 		
-		// Try to retrieve page by slug
+		// Try to retrieve page by contentID
 		var page = pageService.get( rc.contentID );
 		
 		// If null, kick them out
