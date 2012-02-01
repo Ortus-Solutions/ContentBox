@@ -10,8 +10,8 @@
 
 			//Development Settings
 			debugMode				= false,
-			debugPassword			= "A50A1DB0D062A041F2BBE2C891B36508",
-			reinitPassword			= "A50A1DB0D062A041F2BBE2C891B36508",
+			debugPassword			= "@fwPassword@",
+			reinitPassword			= "@fwPassword@",
 			handlersIndexAutoReload = false,
 
 			//Implicit Events
