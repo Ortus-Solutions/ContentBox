@@ -119,7 +119,7 @@ component extends="BaseContentHandler" singleton{
 		// Check if loaded, else not found
 		if( prc.entry.isLoaded() ){
 			// Record hit
-			entryService.updateHits( prc.entry );
+			prc.entry.updateHits();
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults 	= commentService.findApprovedComments(contentID=prc.entry.getContentID());

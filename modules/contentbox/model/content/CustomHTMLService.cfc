@@ -17,35 +17,50 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
+	* Save a custom HTML snippet
+	*/
+	function saveCustomHTML(required customHTML){
+		var c = newCriteria();
+		
+		// Prepare for slug uniqueness
+		c.eq("slug", arguments.customHTML.getSlug() );
+		if( arguments.customHTML.isLoaded() ){ c.ne("contentID", arguments.customHTML.getContentID() ); }
+		
+		// Verify uniqueness of slug
+		if( c.count() GT 0){
+			// make slug unique
+			arguments.customHTML.setSlug( arguments.customHTML.getSlug() & "-#left(hash(now()),5)#");
+		}
+		
+		// send to saving.
+		save( arguments.customHTML );
+	}
+	
+	/**
 	* custom HTML search returns struct with keys [entries,count]
 	*/
 	struct function search(search="",max=0,offset=0){
 		var results = {};
-		// get Hibernate Restrictions class
-		var restrictions = getRestrictions();	
 		// criteria queries
-		var criteria = [];
+		var c = newCriteria();
 		
 		// Search Criteria
 		if( len(arguments.search) ){
 			// like disjunctions
-			var orCriteria = [];
- 			arrayAppend(orCriteria, restrictions.like("slug","%#arguments.search#%"));
- 			arrayAppend(orCriteria, restrictions.like("title","%#arguments.search#%"));
- 			arrayAppend(orCriteria, restrictions.like("content","%#arguments.search#%"));
-			// append disjunction to main criteria
-			arrayAppend( criteria, restrictions.disjunction( orCriteria ) );
+			c.or( c.restrictions.like("slug","%#arguments.search#%"),
+				  c.restrictions.like("title","%#arguments.search#%"),
+				  c.restrictions.like("content","%#arguments.search#%") );
 		}
 		
 		// run criteria query and projections count
-		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="title",asQuery=false);
-		results.count 	= criteriaCount(criteria=criteria);
+		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="title",asQuery=false);
+		results.count 	= c.count();
 		
 		return results;
 	}
 	
 	/**
-	* Retreieve a content piece by slug
+	* Retrieve a content piece by slug
 	* @slug The unique slug this content is tied to
 	*/
 	function findBySlug(required slug){

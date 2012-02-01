@@ -20,35 +20,33 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Save an entry
 	*/
 	function saveEntry(entry){
-		// verify that the slug does not exist yet?
-		if( !entry.isLoaded() ){
-			var args = {"slug" = arguments.entry.getSlug() };
-			if( countWhere(argumentCollection=args) GT 0){
-				// append date to slug
-				arguments.entry.setSlug( "#left(hash(now()),8)#-" & arguments.entry.getSlug() );
-			}
+		var c = newCriteria();
+		
+		// Prepare for slug uniqueness
+		c.eq("slug", arguments.entry.getSlug() );
+		if( arguments.entry.isLoaded() ){ c.ne("contentID", arguments.entry.getContentID() ); }
+		
+		// Verify uniqueness of slug
+		if( c.count() GT 0){
+			// make slug unique
+			arguments.entry.setSlug( arguments.entry.getSlug() & "-#left(hash(now()),5)#");
 		}
 		
+		// save entry
 		save( arguments.entry );
 	}
-	
-	/**
-	* Update an entry's hits
-	*/
-	function updateHits(required entry){
-		// direct SQL as it is pretty standard SQL
-		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.entry.getContentID()#").execute();
-	}
-	
+		
 	/**
 	* Get an id from a slug
 	*/
 	function getIDBySlug(required entrySlug){
-		// direct SQL as it is pretty standard SQL
-		var q = new Query(sql="select contentID from cb_content where slug = :slug");
-		q.addParam(name="slug",value=arguments.entrySlug);
-		
-		return q.execute().getResult().contentID;
+		var results = newCriteria()
+			.isEq("slug", arguments.entrySlug)
+			.withProjections(property="contentID")
+			.get();
+		// verify results
+		if( isNull( results ) ){ return "";}
+		return results;
 	}
 	
 	/**
@@ -56,56 +54,48 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	struct function search(search="",isPublished,category,author,max=0,offset=0){
 		var results = {};
-		// get Hibernate Restrictions class
-		var restrictions = getRestrictions();	
 		// criteria queries
-		var criteria = [];
+		var c = newCriteria();
 		
 		// isPublished filter
 		if( structKeyExists(arguments,"isPublished") AND arguments.isPublished NEQ "any"){
-			arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",arguments.isPublished)) );
+			c.eq("isPublished", javaCast("boolean",arguments.isPublished));
 		}		
 		// Author Filter
 		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
-			arrayAppend(criteria, restrictions.eq("author.authorID", javaCast("int",arguments.author)) );
+			c.eq("author.authorID", javaCast("int",arguments.author));
 		}
 		// Search Criteria
 		if( len(arguments.search) ){
 			// like disjunctions
-			var orCriteria = [];
- 			arrayAppend(orCriteria, restrictions.like("title","%#arguments.search#%"));
- 			arrayAppend(orCriteria, restrictions.like("content","%#arguments.search#%"));
-			// append disjunction to main criteria
-			arrayAppend( criteria, restrictions.disjunction( orCriteria ) );
+			c.or( c.restrictions.like("title","%#arguments.search#%"),
+				  c.restrictions.like("content","%#arguments.search#%") );
 		}
 		// Category Filter
 		if( structKeyExists(arguments,"category") AND arguments.category NEQ "all"){
-			
 			// Uncategorized?
 			if( arguments.category eq "none" ){
-				arrayAppend(criteria, restrictions.isEmpty("categories") );
+				c.isEmpty("categories");
 			}
 			// With categories
 			else{
-				// create association criteria, by passing a simple value the method will inflate.
-				arrayAppend(criteria, "categories");
-				// add the association criteria to the main search
-				arrayAppend(criteria, restrictions.in("categories.categoryID",JavaCast("java.lang.Integer[]",[arguments.category])));
+				// search the association
+				c.createAlias("categories","cats")
+					.isIn("cats.categoryID", JavaCast("java.lang.Integer[]",[arguments.category]) );
 			}			
 		}	
 		
 		// run criteria query and projections count
-		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
-		results.count 	= criteriaCount(criteria=criteria);
+		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
+		results.count 	= c.count();
 		
 		return results;
 	}
 	
 	// Entry Archive Report
 	function getArchiveReport(){
-		var results = {};
-		// we use HQL so we can be DB independent
-		var hql = "SELECT count(*), YEAR(publishedDate) as year, MONTH(publishedDate) as month
+		// we use HQL so we can be DB independent using the map() hql function thanks to John Wish, you rock!
+		var hql = "SELECT new map( count(*) as count, YEAR(publishedDate) as year, MONTH(publishedDate) as month )
 				   FROM cbEntry
 				  WHERE isPublished = true
 				    AND passwordProtection = ''
@@ -113,10 +103,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				  ORDER BY 2 DESC, 3 DESC";
 		
 		// run report
-		results = executeQuery(query=hql,asQuery=false);
-		
-		// build up a nicer structure
-		return HQLHelper.arrayReportToStruct(hqlData=results,columnNames=["count","year","month"] );		
+		return executeQuery(query=hql,asQuery=false);
 	}
 	
 	// Entry listing by Date
@@ -152,39 +139,29 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	// Entry listing for UI
 	function findPublishedEntries(max=0,offset=0,category="",searchTerm="",asQuery=false){
 		var results = {};
-		// get Hibernate Restrictions class
-		var restrictions = getRestrictions();	
-		// criteria queries
-		var criteria = [];
+		var c = newCriteria();
 		
 		// only published entries
-		arrayAppend(criteria, restrictions.eq("isPublished", javaCast("boolean",1)) );
-		arrayAppend(criteria, restrictions.lt("publishedDate", now() ));
-		
-		// only non-password entries
-		arrayAppend(criteria, restrictions.eq("passwordProtection","") );
+		c.isTrue("isPublished").isLt("publishedDate", now() )
+			// only non-password protected ones
+			.isEq("passwordProtection","");
 		
 		// Category Filter
 		if( len(arguments.category) ){
-			// create association criteria, by passing a simple value the method will inflate.
-			arrayAppend(criteria, "categories");
-			// add the association criteria to the main search
-			arrayAppend(criteria, restrictions.eq("categories.slug",arguments.category));			
+			// create association with categories by slug.
+			c.createAlias("categories","cats").isEq("cats.slug",arguments.category);
 		}	
 		
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
-			var orCriteria = [];
- 			arrayAppend(orCriteria, restrictions.like("title","%#arguments.searchTerm#%"));
- 			arrayAppend(orCriteria, restrictions.like("content","%#arguments.searchTerm#%"));
-			// append disjunction to main criteria
-			arrayAppend( criteria, restrictions.disjunction( orCriteria ) );
+			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
+				  c.restrictions.like("content","%#arguments.searchTerm#%")	);
 		}
 		
 		// run criteria query and projections count
-		results.entries = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
-		results.count 	= criteriaCount(criteria=criteria);
+		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
+		results.count 	= c.count();
 		
 		return results;
 	}
@@ -193,8 +170,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Find a published entry by slug
 	*/
 	function findBySlug(required slug){
-		
-		var entry = findWhere({isPublished=true,slug=arguments.slug});
+		var entry = newCriteria().isTrue("isPublished").isEq("slug",arguments.slug).get();
 		
 		// if not found, send and empty one
 		if( isNull(entry) ){ return new(); }

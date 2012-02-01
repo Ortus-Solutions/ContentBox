@@ -39,22 +39,19 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	function findApprovedComments(contentID,max=0,offset=0){
 		var results = {};
-		// get Hibernate Restrictions class
-		var restrictions = getRestrictions();	
-		// criteria queries
-		var criteria = [];
+		var c = newCriteria();
 		
 		// only approved comments
-		arrayAppend(criteria, restrictions.eq("isApproved", javaCast("boolean",1)) );
+		c.isTrue("isApproved");
 		
 		// By Content?
 		if( structKeyExists(arguments,"contentID") AND len(arguments.contentID) ){
-			arrayAppend(criteria, restrictions.eq("relatedContent.contentID",javaCast("int", arguments.contentID)));			
+			c.eq("relatedContent.contentID",javaCast("int", arguments.contentID));
 		}
 		
 		// run criteria query and projections count
-		results.comments = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="createdDate",asQuery=false);
-		results.count 	 = criteriaCount(criteria=criteria);
+		results.comments = c.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate",asQuery=false);
+		results.count 	 = c.count();
 		
 		return results;
 	}
@@ -238,33 +235,27 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	struct function search(search="",isApproved,contentID,max=0,offset=0){
 		var results = {};
-		// get Hibernate Restrictions class
-		var restrictions = getRestrictions();	
-		// criteria queries
-		var criteria = [];
+		var criteria = newCriteria();
 		
 		// isApproved filter
 		if( structKeyExists(arguments,"isApproved") AND arguments.isApproved NEQ "any"){
-			arrayAppend(criteria, restrictions.eq("isApproved", javaCast("boolean",arguments.isApproved)) );
+			criteria.eq("isApproved", javaCast("boolean",arguments.isApproved));
 		}		
 		// Content Filter
 		if( structKeyExists(arguments,"contentID") AND arguments.contentID NEQ "all"){
-			arrayAppend(criteria, restrictions.eq("relatedContent.contentID", javaCast("int",arguments.contentID)) );
+			criteria.eq("relatedContent.contentID", javaCast("int",arguments.contentID));
 		}
 		// Search Criteria
 		if( len(arguments.search) ){
-			// like disjunctions
-			var orCriteria = [];
- 			arrayAppend(orCriteria, restrictions.like("author","%#arguments.search#%"));
- 			arrayAppend(orCriteria, restrictions.like("authorEmail","%#arguments.search#%"));
- 			arrayAppend(orCriteria, restrictions.like("content","%#arguments.search#%"));
-			// append disjunction to main criteria
-			arrayAppend( criteria, restrictions.disjunction( orCriteria ) );
+			// OR disjunction on author, authorEmail and content.
+			criteria.or( criteria.restrictions.like("author","%#arguments.search#%"),
+					     criteria.restrictions.like("authorEmail","%#arguments.search#%"),
+					     criteria.restrictions.like("content","%#arguments.search#%") );
 		}
 		
 		// run criteria query and projections count
-		results.comments = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="createdDate DESC",asQuery=false);
-		results.count 	= criteriaCount(criteria=criteria);
+		results.comments = criteria.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate DESC",asQuery=false);
+		results.count 	 = criteria.count();
 		
 		return results;
 	}

@@ -38,7 +38,7 @@ component extends="BaseContentHandler" singleton{
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if( prc.page.isLoaded() AND (prc.page.getRecursiveSlug() & "/") eq incomingURL){
 			// Record hit
-			pageService.updateHits( prc.page );
+			prc.page.updateHits();
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID());

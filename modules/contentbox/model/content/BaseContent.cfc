@@ -187,5 +187,12 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return this;
 	}
-
+	
+	/**
+	* Update a content's hits
+	*/
+	any function updateHits(){
+		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #getContentID()#").execute();
+		return this;
+	}
 }

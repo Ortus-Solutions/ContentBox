@@ -3,7 +3,7 @@
 $(document).ready(function() {
 	$contentEditForm = $("##contentEditForm");
 	// form validators
-	$contentEditForm.validator({grouped:true,position:'top left',onSucess:function(e,else){ needConfirmation = false; }});
+	$contentEditForm.validator({grouped:true,position:'top left',onSuccess:function(e,els){ needConfirmation = false; }});
 	// blur slugify
 	var $title = $contentEditForm.find("##title");
 	$title.blur(function(){

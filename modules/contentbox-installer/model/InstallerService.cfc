@@ -10,6 +10,7 @@ component accessors="true"{
 	property name="pageService"			inject="pageService@cb";
 	property name="entryService"		inject="entryService@cb";
 	property name="commentService"		inject="commentService@cb";
+	property name="customHTMLService"	inject="customHTMLService@cb";
 	property name="roleService" 		inject="roleService@cb";
 	property name="permissionService" 	inject="permissionService@cb";
 	property name="securityRuleService" inject="securityRuleService@cb";
@@ -332,7 +333,7 @@ component accessors="true"{
 		var page = pageService.new(properties={
 			title = "About",
 			slug  = "about",
-			content = "Hey welcome to my about page for ContentBox, isn't this great!",
+			content = "<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{CustomHTML slug='contentbox'}}}</p>",
 			publishedDate = now(),
 			isPublished = true,
 			allowComments = false,
@@ -343,6 +344,19 @@ component accessors="true"{
 		});
 		page.setAuthor( author );
 		pageService.savePage( page );
+		
+		// create a custom HTML snippet.
+		var customHTML = customHTMLService.new(properties={
+			title = "ContactInfo",
+			slug = "contentbox",
+			description = "Our contact information",
+			content = '<p style="text-align: center;">
+	<a href="http://gocontentbox.org"><img alt="" src="/modules/contentbox/content/ContentBox_125.gif" style="width: 124px; height: 118px;" /></a></p>
+<p style="text-align: center;">
+	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>'
+		});
+		customHTMLService.saveCustomHTML( customHTML );
+		
 	}
 	
 }

@@ -17,7 +17,7 @@ Description :
 	<!--- APPLICATION CFC PROPERTIES --->
 	<cfset this.name = "ContentBoxTestingSuite" & hash(getCurrentTemplatePath())> 
 	<cfset this.sessionManagement = true>
-	<cfset this.sessionTimeout = createTimeSpan(0,0,30,0)>
+	<cfset this.sessionTimeout = createTimeSpan(0,0,0,30)>
 	<cfset this.setClientCookies = true>
 	
 	<cfscript>
@@ -32,18 +32,20 @@ Description :
 	this.mappings["/coldbox"] 			= this.mappings["/contentbox-shell"] & "/coldbox" ;
 	
 	this.ormSettings = {
-		cfclocation=["/contentbox"],
-		// FILL OUT: THE DIALECT OF YOUR DATABASE
-		dialect 			= "MySQLwithInnoDB",
+		cfclocation=["/contentbox-shell/modules"],
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
-		eventHandling 		= true
+		eventHandling 		= true,
+		skipCFCWithError	= true,
+		secondarycacheenabled = true,
+		cacheprovider		= "ehCache"
 	};
 	
 	public boolean function onRequestStart(String targetPage){
 		// ORM Reload
-		if( structKeyExists(url,"ormReload") ){ ormReload(); }
+		ormReload();
+		
 		return true;
 	}
 	</cfscript>
