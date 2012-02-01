@@ -140,7 +140,7 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- id --->
-			#html.hiddenField(name="entryID",bind=prc.entry)#
+			#html.hiddenField(name="contentID",bind=prc.entry)#
 			#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 			
 			<!--- title --->

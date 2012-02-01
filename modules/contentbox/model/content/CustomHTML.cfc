@@ -38,10 +38,10 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	}
 	
 	/**
-	* has excerpt
+	* is Loaded
 	*/
-	boolean function hasExcerpt(){
-		return len( getExcerpt() ) GT 0;
+	boolean function isLoaded(){
+		return len( getContentID() ) GT 0;
 	}
 	
 	/*

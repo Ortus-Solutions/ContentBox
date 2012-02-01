@@ -152,15 +152,11 @@ component extend="baseHandler"{
 	
 	// pager viewlet
 	// TODO: add link to pages
-	function pager(event,rc,prc,entryID="all",pageID="all",max=0,pagination=true){
+	function pager(event,rc,prc,contentID="all",max=0,pagination=true){
 		
-		// check if authorID exists in rc to do an override, maybe it's the paging call
-		if( event.valueExists("commentPager_entryID") ){
-			arguments.entryID = rc.commentPager_entryID;
-		}
-		// check if pageID exists in rc to do an override, maybe it's the paging call
-		if( event.valueExists("commentPager_pageID") ){
-			arguments.pageID = rc.commentPager_pageID;
+		// check if contentID exists in rc to do an override, maybe it's the paging call
+		if( event.valueExists("commentPager_contentID") ){
+			arguments.contentID = rc.commentPager_contentID;
 		}
 		// Check pagination incoming
 		if( event.valueExists("commentPager_pagination") ){
@@ -185,16 +181,14 @@ component extend="baseHandler"{
 		prc.commentPager_pagination		= arguments.pagination;
 		
 		// search entries with filters and all
-		var commentResults = commentService.search(entryID=arguments.entryID,
-												   pageID=arguments.pageID,
+		var commentResults = commentService.search(contentID=arguments.contentID,
 											       offset=prc.commentPager_paging.startRow-1,
 											       max=arguments.max);
 		prc.commentPager_comments 	     = commentResults.comments;
 		prc.commentPager_commentsCount   = commentResults.count;
 		
 		// incoming entry ID
-		prc.commentPager_entryID	= arguments.entryID;
-		prc.commentPager_pageID		= arguments.pageID;
+		prc.commentPager_contentID	= arguments.contentID;
 		
 		// view pager
 		return renderView(view="comments/pager",module="contentbox-admin");

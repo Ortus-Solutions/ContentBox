@@ -17,6 +17,6 @@ component persistent="true" entityname="cbCategory" table="cb_category"{
 	* is loaded?
 	*/
 	boolean function isLoaded(){
-		return len( getCommentID() );
+		return len( getCategoryID() );
 	}
 }

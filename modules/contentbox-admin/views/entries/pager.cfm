@@ -25,9 +25,9 @@
 	
 	<tbody>
 		<cfloop array="#prc.pager_entries#" index="entry">
-		<tr data-entryID="#entry.getEntryID()#">
+		<tr data-contentID="#entry.getContentID()#">
 			<td>
-				<a href="#event.buildLink(prc.xehEntryEditor)#/entryID/#entry.getentryID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
+				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
 				by <a href="mailto:#entry.getAuthor().getEmail()#">#entry.getAuthorName()#</a>				
 			</td>
 			<td>#entry.getCategoriesList()#</td>
@@ -49,7 +49,7 @@
 			<td class="center">
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<!--- Edit Command --->
-				<a href="#event.buildLink(prc.xehEntryEditor)#/entryID/#entry.getEntryID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
 				&nbsp;
 				</cfif>
 				<!--- View Command --->
@@ -67,9 +67,9 @@ $(document).ready(function() {
 	// quick look
 	$entriesPager.find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
-	    	if( $(this).attr('data-entryID') != null ){
+	    	if( $(this).attr('data-contentID') != null ){
 				e.preventDefault();
-				openRemoteModal('#event.buildLink(prc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
+				openRemoteModal('#event.buildLink(prc.xehEntryQuickLook)#/contentID/' + $(this).attr('data-contentID'));
 			}
 	    }
 	});

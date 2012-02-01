@@ -5,7 +5,7 @@
 		#html.startForm(action=prc.xehQPEntrySave,name="quickPostForm",novalidate="novalidate")#
 			<h2>Quick Post</h2>
 			<!--- Hidden Fields --->
-			#html.hiddenField(name="entryID",value="")#
+			#html.hiddenField(name="contentID",value="")#
 			#html.hiddenField(name="isPublished",value="true")#
 			
 			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/pen.png" alt="post" width="16"/> Post')#

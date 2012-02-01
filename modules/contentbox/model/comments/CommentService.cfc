@@ -37,29 +37,21 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* Comment listing for UI of approved comments, returns struct of results=[comments,count]
 	*/
-	function findApprovedComments(entryID,pageID,max=0,offset=0){
+	function findApprovedComments(contentID,max=0,offset=0){
 		var results = {};
-		// get Hibernate Restrictions class
-		var restrictions = getRestrictions();	
-		// criteria queries
-		var criteria = [];
+		var c = newCriteria();
 		
 		// only approved comments
-		arrayAppend(criteria, restrictions.eq("isApproved", javaCast("boolean",1)) );
+		c.isTrue("isApproved");
 		
-		// By Entry?
-		if( structKeyExists(arguments,"entryID") AND len(arguments.entryID) ){
-			arrayAppend(criteria, restrictions.eq("entry.entryID",javaCast("int", arguments.entryID)));			
-		}
-		
-		// By Page?
-		if( structKeyExists(arguments,"pageID") AND len(arguments.pageID) ){
-			arrayAppend(criteria, restrictions.eq("page.pageID",javaCast("int", arguments.pageID)));			
+		// By Content?
+		if( structKeyExists(arguments,"contentID") AND len(arguments.contentID) ){
+			c.eq("relatedContent.contentID",javaCast("int", arguments.contentID));
 		}
 		
 		// run criteria query and projections count
-		results.comments = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="createdDate",asQuery=false);
-		results.count 	 = criteriaCount(criteria=criteria);
+		results.comments = c.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate",asQuery=false);
+		results.count 	 = c.count();
 		
 		return results;
 	}
@@ -205,22 +197,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		bodyTokens["commentURL"] 	= CBHelper.linkComment( inComment );
 		bodyTokens["deleteURL"] 	= CBHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
 		bodyTokens["approveURL"] 	= CBHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
-		if( inComment.hasEntry() ){
-			bodyTokens["entryURL"] 		= CBHelper.linkEntry( inComment.getEntry() );
-		}
-		else{
-			bodyTokens["entryURL"] 		= CBHelper.linkPage( inComment.getPage() );
-		}
-		bodyTokens["entryTitle"] 	= inComment.getParentTitle();
+		bodyTokens["contentURL"] 	= CBHelper.linkContent( inComment.getRelatedContent() );
+		bodyTokens["contentTitle"] 	= inComment.getParentTitle();
 		
 		// Moderation Email? Comment is moderated?
 		if( inComment.getIsApproved() eq false AND inSettings.cb_comments_moderation_notify ){
-			subject  = "New comment needs moderation on post: #bodyTokens.entryTitle#";
+			subject  = "New comment needs moderation on post: #bodyTokens.contentTitle#";
 			template = "comment_moderation";
 		}
 		// Post Notification Email?
 		else if( inSettings.cb_comments_notify ){
-			subject  = "New comment on post: #bodyTokens.entryTitle#";
+			subject  = "New comment on post: #bodyTokens.contentTitle#";
 			template = "comment_new";
 		}
 		
@@ -246,39 +233,29 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* comment search returns struct with keys [comments,count]
 	*/
-	struct function search(search="",isApproved,entryID,pageID,max=0,offset=0){
+	struct function search(search="",isApproved,contentID,max=0,offset=0){
 		var results = {};
-		// get Hibernate Restrictions class
-		var restrictions = getRestrictions();	
-		// criteria queries
-		var criteria = [];
+		var criteria = newCriteria();
 		
 		// isApproved filter
 		if( structKeyExists(arguments,"isApproved") AND arguments.isApproved NEQ "any"){
-			arrayAppend(criteria, restrictions.eq("isApproved", javaCast("boolean",arguments.isApproved)) );
+			criteria.eq("isApproved", javaCast("boolean",arguments.isApproved));
 		}		
-		// Entry Filter
-		if( structKeyExists(arguments,"entryID") AND arguments.entryID NEQ "all"){
-			arrayAppend(criteria, restrictions.eq("entry.entryID", javaCast("int",arguments.entryID)) );
-		}
-		// Page Filter
-		if( structKeyExists(arguments,"pageID") AND arguments.pageID NEQ "all"){
-			arrayAppend(criteria, restrictions.eq("page.pageID", javaCast("int",arguments.pageID)) );
+		// Content Filter
+		if( structKeyExists(arguments,"contentID") AND arguments.contentID NEQ "all"){
+			criteria.eq("relatedContent.contentID", javaCast("int",arguments.contentID));
 		}
 		// Search Criteria
 		if( len(arguments.search) ){
-			// like disjunctions
-			var orCriteria = [];
- 			arrayAppend(orCriteria, restrictions.like("author","%#arguments.search#%"));
- 			arrayAppend(orCriteria, restrictions.like("authorEmail","%#arguments.search#%"));
- 			arrayAppend(orCriteria, restrictions.like("content","%#arguments.search#%"));
-			// append disjunction to main criteria
-			arrayAppend( criteria, restrictions.disjunction( orCriteria ) );
+			// OR disjunction on author, authorEmail and content.
+			criteria.or( criteria.restrictions.like("author","%#arguments.search#%"),
+					     criteria.restrictions.like("authorEmail","%#arguments.search#%"),
+					     criteria.restrictions.like("content","%#arguments.search#%") );
 		}
 		
 		// run criteria query and projections count
-		results.comments = criteriaQuery(criteria=criteria,offset=arguments.offset,max=arguments.max,sortOrder="createdDate DESC",asQuery=false);
-		results.count 	= criteriaCount(criteria=criteria);
+		results.comments = criteria.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate DESC",asQuery=false);
+		results.count 	 = criteria.count();
 		
 		return results;
 	}

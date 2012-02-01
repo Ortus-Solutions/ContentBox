@@ -76,7 +76,7 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception("cbadmin_preCustomHTMLSave",{content=oContent,contentID=rc.contentID});
 			// save content
-			htmlService.save( oContent );
+			htmlService.saveCustomHTML( oContent );
 			// announce event
 			announceInterception("cbadmin_postCustomHTMLSave",{content=oContent});
 			// Message

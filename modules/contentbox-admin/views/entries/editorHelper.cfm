@@ -38,7 +38,7 @@ function quickSave(){
 	// Post it
 	$.post('#event.buildLink(prc.xehEntrySave)#', $entryForm.serialize(),function(data){
 		// Save new id
-		$entryForm.find("##entryID").val( data.ENTRYID );
+		$entryForm.find("##contentID").val( data.contentID );
 		// finalize
 		$uploader.fadeOut(1500);
 		$status.html('Entry Draft Saved!');

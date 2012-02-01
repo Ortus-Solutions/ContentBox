@@ -8,16 +8,16 @@ $(document).ready(function() {
 	// quick look
 	$("##entries").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
-	    	if($(this).attr('data-entryID') != null) {
-				openRemoteModal('#event.buildLink(prc.xehEntryQuickLook)#/entryID/' + $(this).attr('data-entryID'));
+	    	if($(this).attr('data-contentID') != null) {
+				openRemoteModal('#event.buildLink(prc.xehEntryQuickLook)#/contentID/' + $(this).attr('data-contentID'));
 				e.preventDefault();
 			}
 	    }
 	});
 
 });
-function remove(entryID){
-	$("##entryID").val( entryID );
+function remove(contentID){
+	$("##contentID").val( contentID );
 	$("##entryForm").submit();
 }
 </script>

@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- post --->
-<div class="post" id="post_#entry.getEntryID()#">
+<div class="post" id="post_#entry.getContentID()#">
 	
 	<!--- Date --->
 	<div class="post-date" title="Posted on #entry.getDisplayPublishedDate()#">
