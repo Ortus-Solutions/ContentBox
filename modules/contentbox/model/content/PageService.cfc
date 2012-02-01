@@ -79,10 +79,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				  c.restrictions.like("content","%#arguments.search#%") );
 		}
 		
-		// run criteria query and projections count with passed in criteria so it does not interfere with sorting
-		results.count 	= c.count( c.getCriterias() );
+		// run criteria query and projections count
+		results.count 	= c.count();
 		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=false);
-		
 		return results;
 	}
 	
@@ -122,8 +121,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			sortOrder = "order asc";
 		}	
 		
-		// run criteria query and projections count, projections done first so they don't interfere with sort orders and scalar evaluations
-		results.count 	= c.count( c.getCriterias() );
+		// run criteria query and projections count
+		results.count 	= c.count();
 		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 		
 		return results;
