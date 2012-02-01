@@ -28,7 +28,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	property name="hits"				notnull="false" ormtype="long" default="0" dbdefault="0";
 
 	// M20 -> Author loaded as a proxy and fetched immediately
-	property name="author" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
+	property name="author" notnull="true" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
 	
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
