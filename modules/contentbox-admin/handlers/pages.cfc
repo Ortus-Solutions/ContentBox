@@ -78,7 +78,7 @@ component extends="baseHandler"{
 	// Quick Look
 	function quickLook(event,rc,prc){
 		// get entry
-		prc.page  = pageService.get( event.getValue("pageID",0) );
+		prc.page  = pageService.get( event.getValue("contentID",0) );
 		event.setView(view="pages/quickLook",layout="ajax");
 	}
 
@@ -89,13 +89,13 @@ component extends="baseHandler"{
 		// CK Editor Helper
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
 		// get new or persisted
-		prc.page  = pageService.get( event.getValue("pageID",0) );
+		prc.page  = pageService.get( event.getValue("contentID",0) );
 		// load comments viewlet if persisted
 		if( prc.page.isLoaded() ){
 			// Get Comments viewlet
-			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={pageID=rc.pageID});
+			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={contentID=rc.contentID});
 			// Get Child Pages Viewlet
-			prc.childPagesViewlet = pager(event=arguments.event,rc=arguments.rc,prc=arguments.prc,parent=prc.page.getPageID());
+			prc.childPagesViewlet = pager(event=arguments.event,rc=arguments.rc,prc=arguments.prc,parent=prc.page.getContentID());
 		}
 		// Get all pages for parent drop downs
 		prc.pages = pageService.list(sortOrder="title asc");
@@ -103,10 +103,10 @@ component extends="baseHandler"{
 		prc.themeRecord = layoutService.getActiveLayout();
 		prc.availableLayouts = REreplacenocase( prc.themeRecord.layouts,"blog,?","");
 		// Get parent from active page
-		prc.parentPageID = prc.page.getParentID();
+		prc.parentcontentID = prc.page.getParentID();
 		// Override the parent page if incoming
 		if( structKeyExistS(rc,"parentID") ){
-			prc.parentPageID = rc.parentID;
+			prc.parentcontentID = rc.parentID;
 		}
 
 		// exit handlers
@@ -137,7 +137,7 @@ component extends="baseHandler"{
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
 
 		// get new/persisted entry and populate it
-		var page 	= populateModel( pageService.get(rc.pageID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		var page 	= populateModel( pageService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		var isNew 	= (NOT page.isLoaded());
 
 		// Validate it
@@ -167,36 +167,43 @@ component extends="baseHandler"{
 		// Ajax?
 		if( event.isAjax() ){
 			var rData = {
-				pageID = page.getPageID()
+				contentID = page.getContentID()
 			};
 			event.renderData(type="json",data=rData);
 		}
 		else{
 			// relocate
 			getPlugin("MessageBox").info("Page Saved!");
-			setNextEvent(prc.xehPages);
+			if( page.hasParent() ){
+				setNextEvent(event=prc.xehPages,querystring="parent=#page.getParent().getContentID()#");
+			}
+			else{
+				setNextEvent(event=prc.xehPages);
+			}
 		}
 	}
 
 	// remove
 	function remove(event,rc,prc){
-		var page = pageService.get(rc.pageID);
+		event.paramValue("parent","");
+		var page = pageService.get(rc.contentID);
+		
 		if( isNull( page ) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Page detected!");
 		}
 		else{
 			// GET id
-			var pageID = page.getPageID();
+			var contentID = page.getContentID();
 			// announce event
 			announceInterception("cbadmin_prePageRemove",{page=page});
 			// remove it
 			pageService.delete( page );
 			// announce event
-			announceInterception("cbadmin_postPageRemove",{pageID=pageID});
+			announceInterception("cbadmin_postPageRemove",{contentID=contentID});
 			// messagebox
 			getPlugin("MessageBox").setMessage("info","Page Removed!");
 		}
-		setNextEvent( prc.xehPages );
+		setNextEvent(event=prc.xehPages,queryString="parent=#rc.parent#");
 	}
 
 	// change order for all pages
@@ -206,8 +213,8 @@ component extends="baseHandler"{
 		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&#rc.tableID#[]=", ",", "all");
 		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "#rc.tableID#[]=,", "", "all");
 		for(var i=1;i lte listLen(rc.newRulesOrder);i++) {
-			pageID = listGetAt(rc.newRulesOrder,i);
-			var page = pageService.get(pageID);
+			contentID = listGetAt(rc.newRulesOrder,i);
+			var page = pageService.get(contentID);
 			if( !isNull( page ) ){
 				page.setOrder( i );
 				pageService.savePage( page );

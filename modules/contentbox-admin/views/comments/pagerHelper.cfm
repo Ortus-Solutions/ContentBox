@@ -37,7 +37,7 @@ function commentPagerLink(page){
 	$("##commentsPagerLoader").fadeIn("fast");
 	$('##pagerComments')
 		.load('#event.buildLink(prc.xehCommentPager)#',
-			{commentPager_entryID:'#prc.commentPager_entryID#',commentPager_pageID:'#prc.commentPager_pageID#', page:page, commentPager_pagination: '#prc.commentPager_pagination#'},function() {
+			{commentPager_contentID:'#prc.commentPager_contentID#',commentPager_contentID:'#prc.commentPager_contentID#', page:page, commentPager_pagination: '#prc.commentPager_pagination#'},function() {
 			hideAllTooltips();
 			$("##commentsPagerLoader").fadeOut();
 			activateTooltips();

@@ -12,7 +12,7 @@
 	<div class="post-top-gap"></div>
 	
 	<!--- post --->
-	<div class="post" id="post_#prc.page.getPageID()#">
+	<div class="post" id="post_#prc.page.getContentID()#">
 		
 		<!--- Title --->
 		<div class="post-title">

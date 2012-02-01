@@ -23,7 +23,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="save-update" batchsize="10" orderby="publishedDate DESC";
 	
 	// M20 -> Role
-	property name="role" fieldtype="many-to-one" cfc="contentbox.model.security.Role" fkcolumn="FK_roleID" lazy="true";
+	property name="role" notnull="true" fieldtype="many-to-one" cfc="contentbox.model.security.Role" fkcolumn="FK_roleID" lazy="true";
 	
 	// M2M -> A-la-carte Author Permissions
 	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra"
@@ -31,8 +31,8 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 			 fkcolumn="FK_authorID" linktable="cb_authorPermissions" inversejoincolumn="FK_permissionID" orderby="permission"; 
 		
 	// Calculated properties
-	property name="numberOfEntries" formula="select count(*) from cb_entry entry where entry.FK_authorID=authorID" ;
-	property name="numberOfPages" 	formula="select count(*) from cb_page page where page.FK_authorID=authorID" ;
+	property name="numberOfEntries" formula="select count(*) from cb_content content where content.FK_authorID=authorID and content.contentType='entry'" ;
+	property name="numberOfPages" 	formula="select count(*) from cb_content content where content.FK_authorID=authorID and content.contentType='page'" ;
 	
 	// Non-persisted properties
 	property name="loggedIn"		persistent="false" default="false" type="boolean";

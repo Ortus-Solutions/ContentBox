@@ -1,52 +1,36 @@
 ﻿/**
 * I am a cms page entity that totally rocks
 */
-component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" extends="BaseContent" cachename="cbPage" cacheuse="read-write"{
+component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" cachename="cbPage" cacheuse="read-write" extends="BaseContent" joinColumn="contentID" discriminatorValue="Page"{
 	
 	// Properties
-	property name="pageID" fieldtype="id" generator="native" setter="false";
-	property name="layout"		notnull="false" length="200" default="";
-	property name="order"		notnull="false" ormtype="integer" default="0" dbdefault="0";
-	property name="showInMenu" 	notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
-	
-	// O2M -> Comments
-	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10" orderby="createdDate"
-			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_pageID" inverse="true" cascade="all-delete-orphan"; 
-	
-	// O2M -> CustomFields
-	property name="customFields" singularName="customField" fieldtype="one-to-many" type="array" lazy="extra" batchsize="10"
-			  cfc="contentbox.model.content.CustomField" fkcolumn="FK_pageID" inverse="true" cascade="all-delete-orphan"; 
+	property name="layout"			notnull="false" length="200" default="";
+	property name="order"			notnull="false" ormtype="integer" default="0" dbdefault="0";
+	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
 	
 	// M20 -> Parent Page loaded as a proxy
-	property name="parent" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
-	// O2M -> Sub Pages inverse
-	property name="childPages" singularName="childPage" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
-			  cfc="contentbox.model.content.Page" fkcolumn="FK_parentID" inverse="true" cascade="all"; 
-	
-	// Calculated Fields
-	property name="numberOfChildren" 			formula="select count(*) from cb_page page where page.FK_parentID=pageID" default="0";
-	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_pageID=pageID" default="0";
-	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_pageID=pageID and comment.isApproved = 1" default="0";
+	property name="parent" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
 
-	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
-	
-	/* ----------------------------------------- PUBLIC -----------------------------------------  */
+	// O2M -> Sub Pages Inverse
+	property name="childPages" singularName="childPage" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
+			  cfc="contentbox.model.content.Page" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
+
+	// Calculated Fields
+	property name="numberOfChildren" formula="select count(*) from cb_page page where page.FK_parentID=contentID" default="0";
+
+	/************************************** CONSTRUCTOR *********************************************/
 	
 	/**
 	* constructor
 	*/
 	function init(){
 		customFields	= [];
-		type 			= "page";
 		renderedContent = "";
+		allowComments 	= false;
+		createdDate		= now();
 	}
 	
-	/**
-	* Get content id based on implementation
-	*/
-	any function getContentID(){
-		return getPageID();
-	}
+	/************************************** PUBLIC *********************************************/
 	
 	/**
 	* Get the layout or if empty the default convention of "pages"
@@ -77,19 +61,12 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" e
 		
 		return errors;
 	}
-	
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return len( getPageID() );
-	}
-	
+
 	/**
 	* Get parent ID if set or empty if none
 	*/
 	function getParentID(){
-		if( hasParent() ){ return getParent().getPageID(); }
+		if( hasParent() ){ return getParent().getContentID(); }
 		return "";
 	}
 	

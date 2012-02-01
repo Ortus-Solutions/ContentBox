@@ -8,8 +8,8 @@ $(document).ready(function() {
 	// quick look
 	$("##pages").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
-	    	if($(this).attr('data-pageID') != null) {
-				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/pageID/' + $(this).attr('data-pageID'));
+	    	if($(this).attr('data-contentID') != null) {
+				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/contentID/' + $(this).attr('data-contentID'));
 				e.preventDefault();
 			}
 	    }
@@ -37,10 +37,10 @@ $(document).ready(function() {
 	});
 	</cfif>
 });
-function remove(pageID){
+function remove(contentID){
 	// img change
-	$('##delete_'+pageID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
-	$("##pageID").val( pageID );
+	$('##delete_'+contentID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+	$("##contentID").val( contentID );
 	$("##pageForm").submit();
 }
 </script>

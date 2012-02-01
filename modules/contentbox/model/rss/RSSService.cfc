@@ -40,7 +40,7 @@ component singleton{
 		}
 		
 		// log
-		if( log.info() ){
+		if( log.canInfo() ){
 			log.info("Sent clear command using the following content key: #cacheKey# from provider: #cache.getName()#");
 		}
 	}
@@ -144,7 +144,7 @@ component singleton{
 	*/	
 	function buildCommentFeed(entrySlug=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
-		var commentResults 	= commentService.findApprovedComments(entryID=entryService.getIDBySlug(arguments.entrySlug),max=settings.cb_rss_maxComments);
+		var commentResults 	= commentService.findApprovedComments(contentID=entryService.getIDBySlug(arguments.entrySlug),max=settings.cb_rss_maxComments);
 		var myArray 		= [];
 		var feedStruct 		= {};
 		var columnMap 		= {};

@@ -93,7 +93,13 @@ component accessors="true"{
 	}
 
 /************************************** PUBLIC *********************************************/	
-
+	
+	// setter override
+	any function setNativeCriteria(required any criteria){
+		variables.nativeCriteria = arguments.criteria;
+		return this;
+	}
+		
 	/**
 	* Add an ordering to the result set, you can add as many as you like
 	* @property The name of the property to order on
@@ -275,9 +281,14 @@ component accessors="true"{
 	/**
 	* Get the record count using hibernate projections for the given criterias
 	*/
-	numeric function count(required entityName, array criteria=ArrayNew(1)){
+	numeric function count(){
+		// else project on the local criterias
 		nativeCriteria.setProjection( this.projections.rowCount() );
-		return nativeCriteria.uniqueResult();
+		var results = nativeCriteria.uniqueResult();
+		// clear count like a ninja, so we can reuse this criteria object.
+		nativeCriteria.setProjection( javacast("null","") );
+		nativeCriteria.setResultTransformer( this.ROOT_ENTITY );
+		return results;
 	}
 	
 	/**

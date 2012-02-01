@@ -14,7 +14,7 @@
 	<thead>
 		<tr>
 			<th>Page</th>
-			<th width="60" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Page Order"/></th>
+			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="menu" title="Show in Menu"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
@@ -27,10 +27,10 @@
 		<cfset i = 0>
 		<cfloop array="#prc.pager_pages#" index="page">
 		<cfset i++>
-		<tr id="pageID-#page.getPageID()#" data-pageID="#page.getPageID()#">
+		<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#">
 			<td>
 				<!--- Title --->
-				<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit Page">#page.getTitle()#</a><br>
+				<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit Page">#page.getTitle()#</a><br>
 				by #page.getAuthorName()#<br/>
 				<!--- password protect --->
 				<cfif page.isPasswordProtected()>
@@ -47,7 +47,11 @@
 				</cfif>
 			</td>
 			<td class="center">
-				<div id="pageID-#page.getPageID()#_order">#page.getOrder()#</div>
+				<cfif page.getShowInMenu()>
+					<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Shows in menu!" />
+				<cfelse>
+					<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Not in menu!" />
+				</cfif>
 			</td>
 			<td class="center">
 				#page.getNumberOfChildren()#
@@ -66,10 +70,10 @@
 			<td class="center">
 				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<!--- Edit Command --->
-				<a href="#event.buildLink(prc.xehPageEditor)#/pageID/#page.getPageID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
+				<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
 				&nbsp;
 				<!--- Create Child --->
-				<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getPageID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
+				<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
 				&nbsp;
 				</cfif>
 				<!--- View in Site --->
@@ -87,8 +91,8 @@ $(document).ready(function() {
 	// quick look
 	$pagesPager.find("tr").bind("contextmenu",function(e) {
 		if (e.which === 3) {
-			if( $(this).attr('data-pageID') != null ){
-				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/pageID/' + $(this).attr('data-pageID'));
+			if( $(this).attr('data-contentID') != null ){
+				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/contentID/' + $(this).attr('data-contentID'));
 				e.preventDefault();
 			}
 		}
@@ -126,11 +130,11 @@ function pagerLink(page){
 	});
 }
 <cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-function changeOrder(pageID,order,direction){
+function changeOrder(contentID,order,direction){
 	// img change
-	$('##order'+direction+'_'+pageID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+	$('##order'+direction+'_'+contentID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// change order
-	$.post('#event.buildLink(prc.xehPageOrder)#',{pageID:pageID,order:order},function(){
+	$.post('#event.buildLink(prc.xehPageOrder)#',{contentID:contentID,order:order},function(){
 		hideAllTooltips();
 		pagerLink(#rc.page#);
 	});

@@ -111,7 +111,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				entry.setCategories( aCategories );
 				entitySave( entry );
 				log.info("Entry imported: #props.title#");
-				entryMap[ q.id[x] ] = entry.getEntryID();
+				entryMap[ q.id[x] ] = entry.getContentID();
 				slugMap[ entry.getSlug() ] = true;
 			}
 			log.info("Entries imported successfully!");

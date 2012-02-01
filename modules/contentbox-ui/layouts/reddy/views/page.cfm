@@ -9,7 +9,7 @@
 <div id="text" >
 	
 	<!--- post --->
-	<div class="post" id="page_#prc.page.getPageID()#">
+	<div class="post" id="page_#prc.page.getContentID()#">
 		
 		<!--- breadcrumbs only if not home page. --->
 		<cfif prc.page.getSlug() NEQ cb.getHomePage()>
