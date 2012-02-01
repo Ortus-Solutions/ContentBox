@@ -52,9 +52,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				  c.restrictions.like("content","%#arguments.search#%") );
 		}
 		
-		// run criteria query and projections count
+		// run criteria query and projections count with passed in criteria so it does not interfere with sorting
+		results.count 	= c.count( c.getCriterias() );
 		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="title",asQuery=false);
-		results.count 	= c.count();
 		
 		return results;
 	}
