@@ -9,14 +9,14 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
 	
 	// M20 -> Parent Page loaded as a proxy
-	property name="parent" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
-	
-	// O2M -> Sub Pages inverse
+	property name="parent" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
+
+	// O2M -> Sub Pages Inverse
 	property name="childPages" singularName="childPage" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
-			  cfc="contentbox.model.content.Page" fkcolumn="FK_parentID" inverse="true" cascade="all"; 
-	
+			  cfc="contentbox.model.content.Page" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
+
 	// Calculated Fields
-	property name="numberOfChildren" 			formula="select count(*) from cb_page page where page.FK_parentID=contentID" default="0";
+	property name="numberOfChildren" formula="select count(*) from cb_page page where page.FK_parentID=contentID" default="0";
 
 	/************************************** CONSTRUCTOR *********************************************/
 	

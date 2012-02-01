@@ -50,6 +50,7 @@ component{
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
+		//savemapping = true,
 		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK
 		eventHandling 		= true,
 		eventHandler		= "modules.contentbox.model.system.EventHandler",

@@ -80,9 +80,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		
 		// run criteria query and projections count
-		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=false);
 		results.count 	= c.count();
-		
+		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=false);
 		return results;
 	}
 	
@@ -123,8 +122,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}	
 		
 		// run criteria query and projections count
-		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 		results.count 	= c.count();
+		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 		
 		return results;
 	}

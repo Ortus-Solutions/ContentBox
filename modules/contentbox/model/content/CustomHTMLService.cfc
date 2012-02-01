@@ -53,8 +53,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		
 		// run criteria query and projections count
-		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="title",asQuery=false);
 		results.count 	= c.count();
+		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="title",asQuery=false);
 		
 		return results;
 	}
