@@ -11,12 +11,12 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	// M20 -> Parent Page loaded as a proxy
 	property name="parent" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
 	
-	// O2M -> Sub Pages inverse
-	property name="childPages" singularName="childPage" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
-			  cfc="contentbox.model.content.Page" fkcolumn="FK_parentID" inverse="true" cascade="all"; 
+	// O2M -> Sub Pages Inverse
+	property name="childPages" singularName="childPage" notnull="false" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
+			  cfc="contentbox.model.content.Page" fkcolumn="FK_parentID" inversejoincolumn="contentID" inverse="true" cascade="all-delete-orphan";
 	
 	// Calculated Fields
-	property name="numberOfChildren" 			formula="select count(*) from cb_page page where page.FK_parentID=contentID" default="0";
+	property name="numberOfChildren" formula="select count(*) from cb_page page where page.FK_parentID=contentID" default="0";
 
 	/************************************** CONSTRUCTOR *********************************************/
 	

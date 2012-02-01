@@ -82,6 +82,7 @@
 			<!--- pageForm --->
 			#html.startForm(name="pageForm",action=prc.xehPageRemove)#
 			<input type="hidden" name="contentID" id="contentID" value="" />
+			<input type="hidden" name="parent" id="parent" value="#rc.parent#" />
 
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
@@ -97,7 +98,7 @@
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return to('#event.buildLink(prc.xehPageEditor)#');" title="Create new page">Create Page</button>
+					<button class="button2" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#rc.parent#');" title="Create new page">Create Page</button>
 				</div>
 				</cfif>
 

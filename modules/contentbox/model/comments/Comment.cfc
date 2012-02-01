@@ -14,7 +14,7 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" dbdefault="0" index="idx_contentComment,idx_approved";
 	
 	// M20 -> Content loaded as a proxy
-	property name="relatedContent" notnull="false" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_contentID" lazy="true" index="idx_contentComment";
+	property name="relatedContent" notnull="true" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_contentID" lazy="true" index="idx_contentComment";
 	
 	/************************************** CONSTRUCTOR *********************************************/
 	

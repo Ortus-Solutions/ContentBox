@@ -23,7 +23,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="save-update" batchsize="10" orderby="publishedDate DESC";
 	
 	// M20 -> Role
-	property name="role" fieldtype="many-to-one" cfc="contentbox.model.security.Role" fkcolumn="FK_roleID" lazy="true";
+	property name="role" notnull="true" fieldtype="many-to-one" cfc="contentbox.model.security.Role" fkcolumn="FK_roleID" lazy="true";
 	
 	// M2M -> A-la-carte Author Permissions
 	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra"
