@@ -28,7 +28,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	any function renderIt(boolean dropdown=false,boolean showPostCount=true,string title="",string titleLevel="2"){
 		var archives 		= entryService.getArchiveReport();
 		var rString			= "";
-		
+
 		saveContent variable="rString"{
 			// title
 			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
@@ -69,9 +69,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<ul id="archives">');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.archives ); x++){
-				var thisDate = arguments.archives[x].year & "-" & arguments.archives[x].month & "-1";
-				writeOutput('<li class="archives"><a href="#cb.linkArchive(year=arguments.archives[x].year,month=arguments.archives[x].month)#">#dateFormat(thisDate,"mmmm yyyy")#');
-				if( arguments.showPostCount ){ writeOutput(" (#arguments.archives[x].count#)"); }
+				var thisDate = arguments.archives[x]["year"] & "-" & arguments.archives[x]["month"] & "-1";
+				writeOutput('<li class="archives"><a href="#cb.linkArchive(year=arguments.archives[x]['year'],month=arguments.archives[x]['month'])#">#dateFormat(thisDate,"mmmm yyyy")#');
+				if( arguments.showPostCount ){ writeOutput(" (#arguments.archives[x]['count']#)"); }
 				writeOutput('</a></li>');
 			}
 			// close ul
