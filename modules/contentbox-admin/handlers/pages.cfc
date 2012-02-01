@@ -174,7 +174,12 @@ component extends="baseHandler"{
 		else{
 			// relocate
 			getPlugin("MessageBox").info("Page Saved!");
-			setNextEvent(prc.xehPages);
+			if( page.hasParent() ){
+				setNextEvent(event=prc.xehPages,querystring="parent=#page.getParent().getContentID()#");
+			}
+			else{
+				setNextEvent(event=prc.xehPages);
+			}
 		}
 	}
 

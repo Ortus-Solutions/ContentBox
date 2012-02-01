@@ -4,9 +4,9 @@
 component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" cachename="cbPage" cacheuse="read-write" extends="BaseContent" joinColumn="contentID" discriminatorValue="Page"{
 	
 	// Properties
-	property name="layout"		notnull="false" length="200" default="";
-	property name="order"		notnull="false" ormtype="integer" default="0" dbdefault="0";
-	property name="showInMenu" 	notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
+	property name="layout"			notnull="false" length="200" default="";
+	property name="order"			notnull="false" ormtype="integer" default="0" dbdefault="0";
+	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
 	
 	// M20 -> Parent Page loaded as a proxy
 	property name="parent" notnull="false" cfc="contentbox.model.content.Page" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
@@ -26,6 +26,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	function init(){
 		customFields	= [];
 		renderedContent = "";
+		allowComments 	= false;
 		createdDate		= now();
 	}
 	
