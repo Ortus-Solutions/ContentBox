@@ -68,6 +68,7 @@ component extends="baseHandler"{
 		prc.xehPageSearch 	= "#prc.cbAdminEntryPoint#.pages";
 		prc.xehPageQuickLook= "#prc.cbAdminEntryPoint#.pages.quickLook";
 		prc.xehPageOrder 	= "#prc.cbAdminEntryPoint#.pages.changeOrder";
+		prc.xehPageHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 
 		// Tab
 		prc.tabContent_viewAll = true;
@@ -129,7 +130,7 @@ component extends="baseHandler"{
 		event.paramValue("allowComments",prc.cbSettings.cb_comments_enabled);
 		event.paramValue("isPublished",true);
 		event.paramValue("slug","");
-		event.paramValue("changelog","Initial Creation");
+		event.paramValue("changelog","");
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));

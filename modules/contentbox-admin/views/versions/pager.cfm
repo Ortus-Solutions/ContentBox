@@ -8,7 +8,7 @@
 	
 	<!--- History --->
 	<div class="buttonBar">
-		<button class="button2" onclick="return to('##');" title="Open History Panel">View Full History</button>
+		<button class="button2" onclick="return to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
 	</div>
 
 	<p>Here are the last #prc.versionsPager_max# content versions.</p>
@@ -28,7 +28,7 @@
 	</thead>
 	<tbody>
 	<cfloop array="#prc.versionsPager_versions#" index="thisVersion">
-		<tr data-versionID="#thisVersion.getContentVersionID()#">
+		<tr id="version_row_#thisVersion.getContentVersionID()#" data-versionID="#thisVersion.getContentVersionID()#">
 			<td>
 				<input type="radio" class="rb_oldversion" value="#thisVersion.getVersion()#" name="old_version" id="old_version" <cfif thisVersion.getVersion()>checked="checked"</cfif>>
 				<input type="radio" class="rb_version" value="#thisVersion.getVersion()#" name="version" id="version" <cfif thisVersion.getVersion()>checked="checked"</cfif>>
@@ -53,7 +53,9 @@
 					<a href="##" title="Rollback this version"><img src="#prc.cbRoot#/includes/images/arrow_merge.png" alt="rollback" border="0"/></a>
 					
 					<!--- DELETE VERSION --->
-					<a href="##" title="Remove this version"><img src="#prc.cbRoot#/includes/images/delete.png" alt="delete" border="0" /></a>
+					<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
+					   data-title="Remove Content Version"
+					   data-message="Do you really want to remove this content version?"><img id="version_delete_#thisVersion.getContentVersionID()#" src="#prc.cbRoot#/includes/images/delete.png" alt="delete" border="0" /></a>
 				</cfif>
 			</td>
 		</tr>
@@ -78,5 +80,18 @@ $(document).ready(function() {
 		}
 	});
 });
+function versionsPagerRemove(versionID){
+	$('##version_delete_'+versionID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+	// ajax remove change
+	$.post("#event.buildlink(linkTo=prc.xehVersionRemove)#",{versionID:versionID},function(data){
+		if( data ){
+			$('##version_row_'+versionID).fadeOut().remove();		
+		}
+		else{
+			alert("Weird error removing version. Please try again or check the logs.");
+			$('##version_delete_'+versionID).attr('src','#prc.cbRoot#/includes/images/delete.png');
+		}
+	},"json");	
+}
 </script>
 </cfoutput>
