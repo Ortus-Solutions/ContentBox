@@ -187,7 +187,7 @@ component extends="baseHandler"{
 	function remove(event,rc,prc){
 		event.paramValue("parent","");
 		var page = pageService.get(rc.contentID);
-		
+
 		if( isNull( page ) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Page detected!");
 		}
@@ -203,7 +203,11 @@ component extends="baseHandler"{
 			// messagebox
 			getPlugin("MessageBox").setMessage("info","Page Removed!");
 		}
-		setNextEvent(event=prc.xehPages,queryString="parent=#rc.parent#");
+		var qs = "";
+		if(len(rc.parent)) {
+			qs = "parent=#rc.parent#";
+		}
+		setNextEvent(event=prc.xehPages,queryString=qs);
 	}
 
 	// change order for all pages
