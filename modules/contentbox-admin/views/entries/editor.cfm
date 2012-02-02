@@ -34,6 +34,12 @@
 					</td>
 				</tr>
 				<tr>
+					<th class="textRight">Version:</th>
+					<td>
+						#prc.entry.getActiveContent().getVersion()#
+					</td>
+				</tr>
+				<tr>
 					<th class="textRight">Views:</th>
 					<td>
 						#prc.entry.getHits()#

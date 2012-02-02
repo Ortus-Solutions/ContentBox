@@ -263,6 +263,7 @@ component extends="baseHandler"{
 		prc.xehPageEditor		= "#prc.cbAdminEntryPoint#.pages.editor";
 		prc.xehPageQuickLook	= "#prc.cbAdminEntryPoint#.pages.quickLook";
 		prc.xehPageOrder		= "#prc.cbAdminEntryPoint#.pages.changeOrder";
+		prc.xehPageHistory		= "#prc.cbAdminEntryPoint#.versions.index";
 
 		// prepare paging plugin
 		prc.pagePager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
