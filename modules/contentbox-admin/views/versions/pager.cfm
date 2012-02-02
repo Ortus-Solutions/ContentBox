@@ -11,7 +11,7 @@
 		<button class="button2" onclick="return to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
 	</div>
 
-	<p>Here are the last #prc.versionsPager_max# content versions.</p>
+	<p>Here are the last #prc.versionsPager_max# content versions out of a total of #prc.versionsPager_count# versions.</p>
 	
 	#html.startForm(name="versionsPagerForm")#
 	
@@ -50,7 +50,9 @@
 				
 				<cfif not thisVersion.getIsActive()>
 					<!--- ROLLBACK BUTTON --->
-					<a href="##" title="Rollback this version"><img src="#prc.cbRoot#/includes/images/arrow_merge.png" alt="rollback" border="0"/></a>
+					<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
+					   class="confirmIt"
+					   data-message="Do you really want to rollback to this version?"><img id="version_rollback_#thisVersion.getContentVersionID()#"  src="#prc.cbRoot#/includes/images/arrow_merge.png" alt="rollback" border="0"/></a>
 					
 					<!--- DELETE VERSION --->
 					<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
@@ -90,6 +92,19 @@ function versionsPagerRemove(versionID){
 		else{
 			alert("Weird error removing version. Please try again or check the logs.");
 			$('##version_delete_'+versionID).attr('src','#prc.cbRoot#/includes/images/delete.png');
+		}
+	},"json");	
+}
+function versionsPagerRollback(versionID){
+	$('##version_rollback_'+versionID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+	// ajax rollback change
+	$.post("#event.buildlink(linkTo=prc.xehVersionRollback)#",{revertID:versionID},function(data){
+		if( data ){
+			location.reload();	
+		}
+		else{
+			alert("Weird error rolling back version. Please try again or check the logs.");
+			$('##version_rollback_'+versionID).attr('src','#prc.cbRoot#/includes/images/arrow_merge.png');
 		}
 	},"json");	
 }

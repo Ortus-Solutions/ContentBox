@@ -20,10 +20,16 @@ component extends="baseHandler"{
 		prc.versionsPager_count 	= results.count;
 		prc.versionsPager_versions 	= results.versions;
 		
+		// nice UI number
+		if( prc.versionsPager_max gt prc.versionsPager_count){
+			prc.versionsPager_max = prc.versionsPager_count;
+		}
+		
 		// exit handlers
 		prc.xehVersionQuickLook = "#prc.cbAdminEntryPoint#.versions.quickLook";
 		prc.xehVersionHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehVersionRemove 	= "#prc.cbAdminEntryPoint#.versions.remove";
+		prc.xehVersionRollback 	= "#prc.cbAdminEntryPoint#.versions.rollback";
 		
 		
 		// render out widget
@@ -52,6 +58,25 @@ component extends="baseHandler"{
 			// results
 			results = true;
 		}
+		// return in json
+		event.renderData(type="json",data=results);
+	}
+	
+	// rollback Version
+	function rollback(event,rc,prc){
+		var results = false;
+		event.paramValue("revertID","");
+		// get version
+		var oVersion = contentVersionService.get( rc.revertID );
+		if( !isNull( oVersion ) ){
+			// Try to revert this version
+			oVersion.getRelatedContent().addNewContentVersion(content=oVersion.getContent(),
+															  changelog="Reverting to version #oVersion.getVersion()#",
+															  author=prc.oAuthor);	
+			// save 
+			contentVersionService.save( oVersion );
+			results = true;
+		}		
 		// return in json
 		event.renderData(type="json",data=results);
 	}
