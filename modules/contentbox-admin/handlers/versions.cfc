@@ -30,7 +30,7 @@ component extends="baseHandler"{
 		prc.xehVersionHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehVersionRemove 	= "#prc.cbAdminEntryPoint#.versions.remove";
 		prc.xehVersionRollback 	= "#prc.cbAdminEntryPoint#.versions.rollback";
-		
+		prc.xehVersionDiff 		= "#prc.cbAdminEntryPoint#.versions.diff";
 		
 		// render out widget
 		return renderView(view="versions/pager",module="contentbox-admin");
@@ -79,6 +79,42 @@ component extends="baseHandler"{
 		}		
 		// return in json
 		event.renderData(type="json",data=results);
+	}
+	
+	function diff(event,rc,prc){
+		// Get diff plugin
+		prc.oDiff = getMyPlugin(plugin="Diff",module="contentbox");
+		
+		// exit handlers
+		prc.xehVersionDiff 	= "#prc.cbAdminEntryPoint#.versions.diff";
+		
+		// Get the Page content
+		prc.currentContent 	= contentVersionService.get( rc.version );
+		prc.oldContent 		= contentVersionService.get( rc.oldVersion );
+		prc.currentVersion  = prc.currentContent.getVersion();
+		prc.oldVersion		= prc.oldContent.getVersion();
+		
+		// Diff them
+		prc.leftA = listToArray(prc.currentContent.getContent(),chr(10));
+		prc.rightA = listToArray(prc.oldContent.getContent(),chr(10));
+		
+		try{
+			prc.diff 	 = prc.oDiff.diffArrays( prc.leftA, prc.rightA );
+			prc.parallel = prc.oDiff.parallelize( prc.diff, prc.leftA, prc.rightA);
+			}
+		catch(Any e){
+			prc.diff = "I did my best, but could not compare the two versions correctly, error comparing versions.";
+		}
+		// DIff css
+		prc.diffcss = {
+			"+" = "ins", 
+			"-" = "ins", 
+			"!" = "upd", 
+			"" = ""
+		};
+
+		// views
+		event.setView(view="versions/diff",layout="ajax");
 	}
 
 }

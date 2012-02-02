@@ -8,6 +8,7 @@
 	
 	<!--- History --->
 	<div class="buttonBar">
+		<button class="buttonred" onclick="return versionsPagerDiff();" title="Compare Content">Compare Versions</button>
 		<button class="button2" onclick="return to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
 	</div>
 
@@ -28,15 +29,20 @@
 	</thead>
 	<tbody>
 	<cfloop array="#prc.versionsPager_versions#" index="thisVersion">
+		<!--- get Active Version --->
+		<cfif thisVersion.getIsActive()><cfset activeVersion = thisVersion.getVersion()></cfif>
 		<tr id="version_row_#thisVersion.getContentVersionID()#" data-versionID="#thisVersion.getContentVersionID()#">
 			<td>
-				<input type="radio" class="rb_oldversion" value="#thisVersion.getVersion()#" name="old_version" id="old_version" <cfif thisVersion.getVersion()>checked="checked"</cfif>>
-				<input type="radio" class="rb_version" value="#thisVersion.getVersion()#" name="version" id="version" <cfif thisVersion.getVersion()>checked="checked"</cfif>>
-			</td>
-			
+				<!--- old version --->
+				<input type="radio" class="rb_oldversion" value="#thisVersion.getContentVersionID()#" 
+					   name="old_version" id="old_version" <cfif thisVersion.getVersion() eq (activeVersion-1)>checked="checked"</cfif>>
+				<!--- current version --->
+				<input type="radio" class="rb_version" value="#thisVersion.getContentVersionID()#" 
+					   name="version" id="version" <cfif thisVersion.getIsActive()>checked="checked"</cfif>>
+			</td>			
 			<td class="center">
-				<a href="javascript:openRemoteModal('#event.buildLink(prc.xehVersionQuickLook)#/versionID/#thisVersion.getContentVersionID()#')">#thisVersion.getContentVersionID()#</a>
-				</td>
+				<a href="javascript:openRemoteModal('#event.buildLink(prc.xehVersionQuickLook)#/versionID/#thisVersion.getContentVersionID()#')">#thisVersion.getVersion()#</a>
+			</td>
 			<td class="center">#thisVersion.getDisplayCreatedDate()#</td>
 			<td class="center"><a href="mailto:#thisVersion.getAuthorEmail()#">#thisVersion.getAuthorName()#</a></td>
 			<td>#thisVersion.getChangeLog()#</td>

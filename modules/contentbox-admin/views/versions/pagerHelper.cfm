@@ -2,6 +2,7 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
+	$versionsPagerForm = $("##versionsPagerForm");
 	$versionsPager = $("##versionsHistoryTable");
 	$versionsPager.find("tr:even").addClass("even");
 	// quick look
@@ -14,6 +15,13 @@ $(document).ready(function() {
 		}
 	});
 });
+function versionsPagerDiff(){
+	var oldVersion 	= $(".rb_oldversion:checked").val();
+	var cVersion 	= $(".rb_version:checked").val();
+	// open the diff window
+	openRemoteModal('#event.buildLink(prc.xehVersionDiff)#',{oldVersion:oldVersion,version:cVersion},'95%');
+	return false;
+}
 function versionsPagerRemove(versionID){
 	$('##version_delete_'+versionID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// ajax remove change
