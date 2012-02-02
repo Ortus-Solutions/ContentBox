@@ -18,7 +18,7 @@
 				<tr>
 					<th width="85" class="textRight">Created By:</th>
 					<td>
-						<a href="mailto:#prc.entry.getAuthor().getEmail()#">#prc.entry.getAuthorName()#</a>
+						<a href="mailto:#prc.entry.getAuthorEmail()#">#prc.entry.getAuthorName()#</a>
 					</td>
 				</tr>
 				<tr>
@@ -167,18 +167,32 @@
 		</div>	
 	</div>
 	
-	<!--- Entry Comments --->
-	<div class="box">	
-		<cfif structKeyExists(rc,"commentsViewlet")> 
+	<!---Loaded Panels--->
+	<cfif prc.entry.isLoaded()>
+		<!--- Versions --->
+		<div class="box">	
 			<div class="header">
-				<img src="#prc.cbroot#/includes/images/comments_32.png" alt="entry editor" width="30" height="30" />
-				Entry Comments
+				<img src="#prc.cbroot#/includes/images/clock.png" alt="editor" width="30" height="30" />
+				Versions
 			</div>
 			<div class="body">
-				#prc.commentsViewlet#
+				#prc.versionsViewlet#
 			</div>
-		</cfif>
-	</div>
+		</div>
+		
+		<!--- Entry Comments --->
+		<div class="box">	
+			<cfif structKeyExists(prc,"commentsViewlet")> 
+				<div class="header">
+					<img src="#prc.cbroot#/includes/images/comments_32.png" alt="editor" width="30" height="30" />
+					Comments
+				</div>
+				<div class="body">
+					#prc.commentsViewlet#
+				</div>
+			</cfif>
+		</div>
+	</cfif>
 	
 	<!--- Event --->
 	#announceInterception("cbadmin_entryEditorFooter")#

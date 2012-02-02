@@ -63,8 +63,10 @@ component extends="baseHandler"{
 		prc.entriesCount = entryResults.count;
 		
 		// exit handlers
-		prc.xehEntrySearch 	= "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntrySearch 	 = "#prc.cbAdminEntryPoint#.entries";
 		prc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
+		prc.xehEntryHistory  = "#prc.cbAdminEntryPoint#.versions.index";
+		
 		// Tab
 		prc.tabEntries_viewAll = true;
 		// view
@@ -88,8 +90,11 @@ component extends="baseHandler"{
 		prc.entry  = entryService.get( event.getValue("contentID",0) );
 		// load comments viewlet if persisted
 		if( prc.entry.isLoaded() ){
+			var args = {contentID=rc.contentID};
 			// Get Comments viewlet
-			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={contentID=rc.contentID});
+			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments=args);
+			// Get Versions Viewlet
+			prc.versionsViewlet = runEvent(event="contentbox-admin:versions.pager",eventArguments=args);
 		}
 		// CK Editor Helper
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
@@ -110,6 +115,7 @@ component extends="baseHandler"{
 		event.paramValue("newCategories","");
 		event.paramValue("isPublished",true);
 		event.paramValue("slug","");
+		event.paramValue("changelog","");
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
@@ -132,14 +138,17 @@ component extends="baseHandler"{
 		
 		// Validate it
 		var errors = entry.validate();
+		if( !len(trim(rc.content)) ){
+			arrayAppend(errors, "Please enter the content to save!");
+		}
 		if( arrayLen(errors) ){
 			getPlugin("MessageBox").warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
 		
-		// announce event
-		announceInterception("cbadmin_preEntrySave",{entry=entry,isNew=isNew});
+		// Register a new content in the page, versionized!
+		entry.addNewContentVersion(content=rc.content,changelog=rc.changelog,author=prc.oAuthor); 
 		
 		// Create new categories?
 		var categories = [];
@@ -148,13 +157,13 @@ component extends="baseHandler"{
 		}
 		// Inflate sent categories from collection
 		categories.addAll( categoryService.inflateCategories( rc ) );
-		
-		// attach author
-		entry.setAuthor( prc.oAuthor );
 		// detach categories and re-attach
 		entry.removeAllCategories().setCategories( categories );
 		// Inflate Custom Fields into the entry
 		entry.inflateCustomFields( rc.customFieldKeys, rc.customFieldValues );
+		
+		// announce event
+		announceInterception("cbadmin_preEntrySave",{entry=entry,isNew=isNew});
 				
 		// save entry
 		entryService.saveEntry( entry );
