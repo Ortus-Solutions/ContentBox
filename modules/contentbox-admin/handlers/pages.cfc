@@ -92,10 +92,13 @@ component extends="baseHandler"{
 		prc.page  = pageService.get( event.getValue("contentID",0) );
 		// load comments viewlet if persisted
 		if( prc.page.isLoaded() ){
+			var args = {contentID=rc.contentID};
 			// Get Comments viewlet
-			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments={contentID=rc.contentID});
+			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments=args);
 			// Get Child Pages Viewlet
 			prc.childPagesViewlet = pager(event=arguments.event,rc=arguments.rc,prc=arguments.prc,parent=prc.page.getContentID());
+			// Get Versions Viewlet
+			prc.versionsViewlet = runEvent(event="contentbox-admin:versions.pager",eventArguments=args);
 		}
 		// Get all pages for parent drop downs
 		prc.pages = pageService.list(sortOrder="title asc");
@@ -126,6 +129,7 @@ component extends="baseHandler"{
 		event.paramValue("allowComments",prc.cbSettings.cb_comments_enabled);
 		event.paramValue("isPublished",true);
 		event.paramValue("slug","");
+		event.paramValue("changelog","Initial Creation");
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
@@ -136,28 +140,31 @@ component extends="baseHandler"{
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
 
-		// get new/persisted entry and populate it
-		var page 	= populateModel( pageService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
-		var isNew 	= (NOT page.isLoaded());
-
-		// Validate it
+		// get new/persisted page and populate it with incoming data.
+		var page  = populateModel( pageService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		var isNew = (NOT page.isLoaded());
+		
+		// Validate Page And Incoming Data
 		var errors = page.validate();
+		if( !len(trim(rc.content)) ){
+			arrayAppend(errors, "Please enter the content to save!");
+		}
 		if( arrayLen(errors) ){
 			getPlugin("MessageBox").warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
-
-		// announce event
-		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
-
-		// attach author
-		page.setAuthor( prc.oAuthor );
+		
+		// Register a new content in the page, versionized!
+		page.addNewContentVersion(content=rc.content,changelog=rc.changelog,author=prc.oAuthor); 
 		// attach parent page
 		if( len(rc.parentPage) ){ page.setParent( pageService.get( rc.parentPage ) ); }
 		// Inflate Custom Fields into the page
 		page.inflateCustomFields( rc.customFieldKeys, rc.customFieldValues );
-
+		
+		// announce event
+		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
+		
 		// save entry
 		pageService.savePage( page );
 
@@ -203,7 +210,12 @@ component extends="baseHandler"{
 			// messagebox
 			getPlugin("MessageBox").setMessage("info","Page Removed!");
 		}
-		setNextEvent(event=prc.xehPages,queryString="parent=#rc.parent#");
+		if( len(rc.parent) ){
+			setNextEvent(event=prc.xehPages,queryString="parent=#rc.parent#");
+		}
+		else{
+			setNextEvent(event=prc.xehPages);
+		}
 	}
 
 	// change order for all pages
