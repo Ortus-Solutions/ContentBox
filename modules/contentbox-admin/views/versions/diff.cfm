@@ -50,7 +50,42 @@
 	
 
 	<cfif isSimpleValue(prc.diff)>
-		#getPlugin("MessageBox").renderMessage(type="error",message=prc.diff)#
+		<!--- Simple Comparisons --->
+		<table class="diff tablesorter">
+		<thead>
+			<tr>
+				<th colspan="2" class="center">Version #prc.oldVersion#</th>
+				<th colspan="2" class="center">Version #prc.currentVersion#</th>
+			</tr>
+		</thead>
+		<tbody>
+		<cfloop from="1" to="#prc.maxA#" index="x">
+			<!--- Checks --->
+			<cfset codeCSS = getCodeCSS(prc.rightA, prc.leftA, x)>
+			<tr>
+				<!--- Left --->
+				<td class="linenum"><cfif arrayIsDefined( prc.leftA, x )>#x#<cfelse>&nbsp;</cfif></td>
+				<td width="50%" class="code#codeCSS#">
+					<div class="diffContent">
+						<cfif arrayIsDefined( prc.leftA, x )>
+						#Replace(HTMLEditFormat( prc.leftA[x] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
+						</cfif>
+					</div>
+				</td>
+				
+				<!--- Right --->
+				<td class="linenum"><cfif arrayIsDefined( prc.rightA, x )>#x#<cfelse>&nbsp;</cfif></td>
+				<td width="50%" class="code#codeCSS#">
+					<div class="diffContent">
+						<cfif arrayIsDefined( prc.rightA, x )>
+						#Replace(HTMLEditFormat( prc.rightA[x] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
+						</cfif>
+					</div>
+				</td>
+			</tr>
+		</cfloop>
+		</tbody>
+		</table>
 	<cfelse>
 		<!--- Comparisons --->
 		<table class="diff tablesorter">

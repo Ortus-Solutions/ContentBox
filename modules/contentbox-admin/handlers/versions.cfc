@@ -95,20 +95,31 @@ component extends="baseHandler"{
 		prc.oldVersion		= prc.oldContent.getVersion();
 		
 		// Diff them
-		prc.leftA = listToArray(prc.currentContent.getContent(),chr(10));
-		prc.rightA = listToArray(prc.oldContent.getContent(),chr(10));
+		prc.leftA  = listToArray(prc.oldContent.getContent(),chr(10));
+		prc.rightA = listToArray(prc.currentContent.getContent(),chr(10));
+		prc.diff   = "";
 		
-		try{
-			prc.diff 	 = prc.oDiff.diffArrays( prc.leftA, prc.rightA );
-			prc.parallel = prc.oDiff.parallelize( prc.diff, prc.leftA, prc.rightA);
-			}
-		catch(Any e){
-			prc.diff = "I did my best, but could not compare the two versions correctly, error comparing versions.";
+		// Manual setup just in case
+		if( arrayLen( prc.leftA ) GT arrayLen(prc.rightA) ){
+			prc.maxA = arrayLen( prc.leftA );
 		}
+		else{
+			prc.maxA = arrayLen( prc.rightA );
+		}
+		
+		// Try to diff it
+		try{
+			//prc.diff 	 = prc.oDiff.diffArrays( prc.leftA, prc.rightA );
+			//prc.parallel = prc.oDiff.parallelize( prc.diff, prc.leftA,prc.rightA);
+		}
+		catch(Any e){
+			
+		}
+		
 		// DIff css
 		prc.diffcss = {
 			"+" = "ins", 
-			"-" = "ins", 
+			"-" = "del", 
 			"!" = "upd", 
 			"" = ""
 		};
