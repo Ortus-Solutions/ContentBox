@@ -28,7 +28,6 @@ component{
 		installerService.execute( populateModel("SetupBean@cbi") );
 		
 		// Take them to the finalized screen
-		getPlugin("MessageBox").info("Setup complete! Log in to your ContentBox installation now.");
 		setNextEvent("cbinstaller/finished");
 	}
 	

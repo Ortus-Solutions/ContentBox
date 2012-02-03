@@ -14,7 +14,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
-	* Get an id from a slug
+	* Get an id from a slug of a content object
 	*/
 	function getIDBySlug(required entrySlug){
 		var results = newCriteria()
@@ -27,16 +27,29 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
-	* Find a published page by slug
+	* Find a published content object by slug
 	*/
 	function findBySlug(required slug){
-		var page = newCriteria().isTrue("isPublished").isEq("slug",arguments.slug).get();
+		var content = newCriteria().isTrue("isPublished").isEq("slug",arguments.slug).get();
 		
 		// if not found, send and empty one
-		if( isNull(page) ){ return new(); }
+		if( isNull(content) ){ return new(); }
 		
-		return page;		
+		return content;		
 	}
 	
+	/**
+	* Delete a content object safely via hierarchies
+	*/
+	ContentService function deleteContent(required content){
+		// Check for dis-associations
+		if( arguments.content.hasParent() ){
+			arguments.content.getParent().removeChild( arguments.content );
+		}
+		// now delete it
+		delete( arguments.content );
+		// return service
+		return this;
+	}
 		
 }

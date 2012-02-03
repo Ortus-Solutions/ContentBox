@@ -209,8 +209,12 @@ component extends="baseHandler"{
 			var contentID = page.getContentID();
 			// announce event
 			announceInterception("cbadmin_prePageRemove",{page=page});
-			// remove it
-			pageService.delete( page );
+			// Diassociate it
+			if( page.hasParent() ){
+				page.getParent().removeChild( page );
+			}
+			// Delete it
+			pageService.deleteContent( page );
 			// announce event
 			announceInterception("cbadmin_postPageRemove",{contentID=contentID});
 			// messagebox
