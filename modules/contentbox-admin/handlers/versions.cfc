@@ -5,15 +5,47 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="contentVersionService"	inject="id:contentVersionService@cb";
+	property name="contentService"			inject="id:contentService@cb";
 	property name="authorService"			inject="id:authorService@cb";
 	property name="CBHelper"				inject="id:CBHelper@cb";
 
+	// version index
+	function index(event,rc,prc){
+		// param contentID
+		event.paramValue("contentID","");
+		
+		// Get Content
+		prc.content = contentService.get( rc.contentID );
+		// Select Appropriate Tab and buttons
+		if( prc.content.getContentType() eq "page" ){
+			prc.tabContent = true;
+			prc.tabContent_viewAll = true;
+			prc.xehBackTrack = "#prc.cbAdminEntryPoint#.pages";
+		}
+		else{
+			prc.tabEntries = true;
+			prc.tabEntries_viewAll = true;
+			prc.xehBackTrack = "#prc.cbAdminEntryPoint#.entries";
+		}
+		
+		
+		// Pager with all versions
+		prc.versionsPager = pager(event,rc,prc,rc.contentID,0,false);
+		
+		// view
+		event.setView(view="versions/index");
+	}
+	
 	// version pager
-	function pager(event,rc,prc,required contentID,numeric max=10){
+	function pager(event,rc,prc,required contentID,numeric max=10,boolean viewFullHistory=true){
 		
 		// Incoming
 		prc.versionsPager_max = arguments.max;
 		prc.versionsPager_contentID = arguments.contentID;
+		prc.versionsPager_viewFullHistory = arguments.viewFullHistory;
+		
+		// Get Content
+		prc.versionsPager_content = contentService.get( arguments.contentID );
 		
 		// Get the latest versions
 		var results = contentVersionService.findRelatedVersions(contentID=arguments.contentID,max=arguments.max);

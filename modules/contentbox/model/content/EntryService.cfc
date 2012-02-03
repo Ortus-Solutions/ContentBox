@@ -4,7 +4,7 @@
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	// DI
-	property name="HQLHelper" inject="id:HQLHelper@cb";
+	property name="contentService" inject="id:contentService@cb";
 	
 	/**
 	* Constructor

@@ -74,6 +74,7 @@ component {
 		// Content
 		binder.map("customHTMLService@cb").to("contentbox.model.content.CustomHTMLService");
 		binder.map("contentVersionService@cb").to("contentbox.model.content.ContentVersionService");
+		binder.map("contentService@cb").to("contentbox.model.content.ContentService");
 		// Commenting services
 		binder.map("commentService@cb").to("contentbox.model.comments.CommentService");
 		// RSS services

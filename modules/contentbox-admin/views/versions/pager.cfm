@@ -9,10 +9,13 @@
 	<!--- History --->
 	<div class="buttonBar">
 		<button class="buttonred" onclick="return versionsPagerDiff();" title="Compare Content">Compare Versions</button>
-		<button class="button2" onclick="return to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
+		<cfif prc.versionsPager_viewFullHistory>
+		<button class="button2" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
+		</cfif>
 	</div>
 
-	<p>Here are the last #prc.versionsPager_max# content versions out of a total of #prc.versionsPager_count# versions.</p>
+	<p>Here are the past versions of your content. You can compare previous versions and even right click on the rows to get a quick peek at the versioned
+	 content</p>
 	
 	#html.startForm(name="versionsPagerForm")#
 	
