@@ -1,7 +1,7 @@
 ﻿/**
 * Page service for contentbox
 */
-component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
+component extends="ContentService" singleton{
 	
 	// DI
 	property name="contentService" inject="id:contentService@cb";
@@ -34,19 +34,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// Save the page
 		save( arguments.page );
-	}
-	
-	/**
-	* Get an id from a slug
-	*/
-	function getIDBySlug(required entrySlug){
-		var results = newCriteria()
-			.isEq("slug", arguments.entrySlug)
-			.withProjections(property="contentID")
-			.get();
-		// verify results
-		if( isNull( results ) ){ return "";}
-		return results;
 	}
 	
 	/**
@@ -129,18 +116,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 		
 		return results;
-	}
-	
-	/**
-	* Find a published page by slug
-	*/
-	function findBySlug(required slug){
-		var page = newCriteria().isTrue("isPublished").isEq("slug",arguments.slug).get();
-		
-		// if not found, send and empty one
-		if( isNull(page) ){ return new(); }
-		
-		return page;		
 	}
 		
 }

@@ -1,10 +1,7 @@
 ﻿/**
 * Entry service for contentbox
 */
-component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
-	
-	// DI
-	property name="contentService" inject="id:contentService@cb";
+component extends="ContentService" singleton{
 	
 	/**
 	* Constructor
@@ -36,19 +33,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		save( arguments.entry );
 	}
 		
-	/**
-	* Get an id from a slug
-	*/
-	function getIDBySlug(required entrySlug){
-		var results = newCriteria()
-			.isEq("slug", arguments.entrySlug)
-			.withProjections(property="contentID")
-			.get();
-		// verify results
-		if( isNull( results ) ){ return "";}
-		return results;
-	}
-	
 	/**
 	* entry search returns struct with keys [entries,count]
 	*/
@@ -165,17 +149,5 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		return results;
 	}
-	
-	/**
-	* Find a published entry by slug
-	*/
-	function findBySlug(required slug){
-		var entry = newCriteria().isTrue("isPublished").isEq("slug",arguments.slug).get();
 		
-		// if not found, send and empty one
-		if( isNull(entry) ){ return new(); }
-		
-		return entry;		
-	}
-	
 }
