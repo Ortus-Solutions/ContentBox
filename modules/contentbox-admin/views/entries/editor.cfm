@@ -18,7 +18,7 @@
 				<tr>
 					<th width="85" class="textRight">Created By:</th>
 					<td>
-						<a href="mailto:#prc.entry.getAuthor().getEmail()#">#prc.entry.getAuthorName()#</a>
+						<a href="mailto:#prc.entry.getAuthorEmail()#">#prc.entry.getAuthorName()#</a>
 					</td>
 				</tr>
 				<tr>
@@ -31,6 +31,12 @@
 					<th class="textRight">Created On:</th>
 					<td>
 						#prc.entry.getDisplayCreatedDate()#
+					</td>
+				</tr>
+				<tr>
+					<th class="textRight">Version:</th>
+					<td>
+						#prc.entry.getActiveContent().getVersion()#
 					</td>
 				</tr>
 				<tr>
@@ -66,6 +72,9 @@
 				@
 				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
 				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
+				
+				<!--- Changelog --->
+				#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.")#
 			
 				<!--- Action Bar --->
 				<div class="actionBar">
@@ -167,18 +176,32 @@
 		</div>	
 	</div>
 	
-	<!--- Entry Comments --->
-	<div class="box">	
-		<cfif structKeyExists(rc,"commentsViewlet")> 
+	<!---Loaded Panels--->
+	<cfif prc.entry.isLoaded()>
+		<!--- Versions --->
+		<div class="box">	
 			<div class="header">
-				<img src="#prc.cbroot#/includes/images/comments_32.png" alt="entry editor" width="30" height="30" />
-				Entry Comments
+				<img src="#prc.cbroot#/includes/images/clock.png" alt="editor" width="30" height="30" />
+				Versions
 			</div>
 			<div class="body">
-				#prc.commentsViewlet#
+				#prc.versionsViewlet#
 			</div>
-		</cfif>
-	</div>
+		</div>
+		
+		<!--- Entry Comments --->
+		<div class="box">	
+			<cfif structKeyExists(prc,"commentsViewlet")> 
+				<div class="header">
+					<img src="#prc.cbroot#/includes/images/comments_32.png" alt="editor" width="30" height="30" />
+					Comments
+				</div>
+				<div class="body">
+					#prc.commentsViewlet#
+				</div>
+			</cfif>
+		</div>
+	</cfif>
 	
 	<!--- Event --->
 	#announceInterception("cbadmin_entryEditorFooter")#

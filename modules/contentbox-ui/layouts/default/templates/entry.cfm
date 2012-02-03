@@ -13,7 +13,7 @@
 		
 		<!--- content Author --->
 		<div class="post-content-author">
-			#cb.quickAvatar(author=entry.getAuthor(),size=30)# #entry.getAuthorName()#
+			#cb.quickAvatar(author=entry.getAuthorEmail(),size=30)# #entry.getAuthorName()#
 		</div>
 		
 		<!--- Title --->

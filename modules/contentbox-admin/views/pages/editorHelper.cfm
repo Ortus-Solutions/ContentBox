@@ -30,7 +30,7 @@ function quickSave(){
 	var $status = $("##uploadBarLoaderStatus");
 	$status.html("Saving...");
 	$uploader.slideToggle();
-	
+		
 	// Post it
 	$.post('#event.buildLink(prc.xehPageSave)#', $pageForm.serialize(),function(data){
 		// Save new id

@@ -56,8 +56,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		
 		// Required
 		if( !len(title) ){ arrayAppend(errors, "Title is required"); }
-		if( !len(content) ){ arrayAppend(errors, "Content is required"); }
-		//if( !len(layout) ){ arrayAppend(errors, "Layout is required"); }
+		if( !len(layout) ){ arrayAppend(errors, "Layout is required"); }
 		
 		return errors;
 	}
