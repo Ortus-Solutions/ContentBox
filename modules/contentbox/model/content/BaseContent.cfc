@@ -44,11 +44,11 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 			  cfc="contentbox.model.content.ContentVersion" fkcolumn="FK_contentID" where="isActive=1" ;
 
 	// M20 -> Parent Page loaded as a proxy
-	property name="parent" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
-	// O2M -> Sub Pages Inverse
+	property name="parent" notnull="false" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true" cascade="save-update";
+	
+	// O2M -> Sub Content Inverse
 	property name="children" singularName="child" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
-
 
 	// Calculated Fields
 	property name="numberOfVersions" 			formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" default="0";
