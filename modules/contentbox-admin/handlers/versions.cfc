@@ -69,12 +69,20 @@ component extends="baseHandler"{
 		// get version
 		var oVersion = contentVersionService.get( rc.revertID );
 		if( !isNull( oVersion ) ){
+			
+			// announce event
+			announceInterception("cbadmin_preContentVersionRollback",{contentVersion=oVersion});
+				
 			// Try to revert this version
 			oVersion.getRelatedContent().addNewContentVersion(content=oVersion.getContent(),
 															  changelog="Reverting to version #oVersion.getVersion()#",
 															  author=prc.oAuthor);	
 			// save 
 			contentVersionService.save( oVersion );
+			
+			// announce event
+			announceInterception("cbadmin_postContentVersionRollback",{contentVersion=oVersion});
+			
 			results = true;
 		}		
 		// return in json
