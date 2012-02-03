@@ -58,15 +58,19 @@
 				</cfif>
 				
 				<cfif not thisVersion.getIsActive()>
+					<cfif prc.oAuthor.checkPermission("VERSIONS_ROLLBACK")>
 					<!--- ROLLBACK BUTTON --->
 					<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
 					   class="confirmIt"
 					   data-message="Do you really want to rollback to this version?"><img id="version_rollback_#thisVersion.getContentVersionID()#"  src="#prc.cbRoot#/includes/images/arrow_merge.png" alt="rollback" border="0"/></a>
+					</cfif>
 					
+					<cfif prc.oAuthor.checkPermission("VERSIONS_DELETE")>
 					<!--- DELETE VERSION --->
 					<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
 					   data-title="Remove Content Version"
 					   data-message="Do you really want to remove this content version?"><img id="version_delete_#thisVersion.getContentVersionID()#" src="#prc.cbRoot#/includes/images/delete.png" alt="delete" border="0" /></a>
+					</cfif>
 				</cfif>
 			</td>
 		</tr>

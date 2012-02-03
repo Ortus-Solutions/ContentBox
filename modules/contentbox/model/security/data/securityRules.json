@@ -10,6 +10,26 @@
         "useSSL": false
     },
     {
+        "securelist": "^contentbox-admin:versions\\.(remove)",
+        "roles": "",
+        "permissions": "VERSIONS_DELETE",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:versions\\.(rollback)",
+        "roles": "",
+        "permissions": "VERSIONS_ROLLBACK",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    },
+    {
         "securelist": "^contentbox-admin:emailtemplates\\..*",
         "roles": "",
         "permissions": "EMAIL_TEMPLATE_ADMIN",
