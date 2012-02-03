@@ -47,74 +47,44 @@
 	   	<dt class="upd"/><dd>Modified</dd>
 	  </dl>
 	</div>
-	
 
-	<cfif isSimpleValue(prc.diff)>
-		<!--- Simple Comparisons --->
-		<table class="diff tablesorter">
-		<thead>
-			<tr>
-				<th colspan="2" class="center">Version #prc.oldVersion#</th>
-				<th colspan="2" class="center">Version #prc.currentVersion#</th>
-			</tr>
-		</thead>
-		<tbody>
-		<cfloop from="1" to="#prc.maxA#" index="x">
-			<!--- Checks --->
-			<cfset codeCSS = getCodeCSS(prc.rightA, prc.leftA, x)>
-			<tr>
-				<!--- Left --->
-				<td class="linenum"><cfif arrayIsDefined( prc.leftA, x )>#x#<cfelse>&nbsp;</cfif></td>
-				<td width="50%" class="code#codeCSS#">
-					<div class="diffContent">
-						<cfif arrayIsDefined( prc.leftA, x )>
-						#Replace(HTMLEditFormat( prc.leftA[x] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
-						</cfif>
-					</div>
-				</td>
-				
-				<!--- Right --->
-				<td class="linenum"><cfif arrayIsDefined( prc.rightA, x )>#x#<cfelse>&nbsp;</cfif></td>
-				<td width="50%" class="code#codeCSS#">
-					<div class="diffContent">
-						<cfif arrayIsDefined( prc.rightA, x )>
-						#Replace(HTMLEditFormat( prc.rightA[x] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
-						</cfif>
-					</div>
-				</td>
-			</tr>
-		</cfloop>
-		</tbody>
-		</table>
-	<cfelse>
-		<!--- Comparisons --->
-		<table class="diff tablesorter">
-		<thead>
-			<tr>
-				<th colspan="2" class="center">Version #prc.oldVersion#</th>
-				<th colspan="2" class="center">Version #prc.currentVersion#</th>
-			</tr>
-		</thead>
-		<tbody>
-		<cfloop query="prc.parallel">
-			<tr>
-				<td class="linenum"><cfif IsNumeric( prc.parallel.AtFirst )>#NumberFormat( prc.parallel.AtFirst )#<cfelse>&nbsp;</cfif></td>
-				
-				<td width="50%" class="code<cfif prc.parallel.Operation NEQ '+'> #prc.diffcss[ prc.parallel.Operation ]#<cfelse> insLight</cfif>">
-					<div class="diffContent">#Replace(HTMLEditFormat( prc.parallel.ValueFirst ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#</div>
-				</td>
-				
-				<td class="linenum"><cfif IsNumeric( prc.parallel.AtSecond )>#NumberFormat( prc.parallel.AtSecond )#<cfelse>&nbsp;</cfif></td>
-				
-				<td width="50%" class="code<cfif prc.parallel.Operation NEQ '-'> #prc.diffcss[ prc.parallel.Operation ]#<cfelse> delLight</cfif>">
-					<div class="diffContent">#Replace(HTMLEditFormat( prc.parallel.ValueSecond ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#</div>
-				</td>
-			</tr>
-		</cfloop>
-		</tbody>
-		</table>
-	</cfif>
-	
+	<!--- Simple Comparisons --->
+	<table class="diff tablesorter">
+	<thead>
+		<tr>
+			<th colspan="2" class="center">Version #prc.oldVersion#</th>
+			<th colspan="2" class="center">Version #prc.currentVersion#</th>
+		</tr>
+	</thead>
+	<tbody>
+	<cfloop from="1" to="#prc.maxA#" index="x">
+		<!--- Checks --->
+		<cfset codeCSS = getCodeCSS(prc.rightA, prc.leftA, x)>
+		<tr>
+			<!--- Left --->
+			<td class="linenum"><cfif arrayIsDefined( prc.leftA, x )>#x#<cfelse>&nbsp;</cfif></td>
+			<td width="50%" class="code#codeCSS#">
+				<div class="diffContent">
+					<cfif arrayIsDefined( prc.leftA, x )>
+					#Replace(HTMLEditFormat( prc.leftA[x] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
+					</cfif>
+				</div>
+			</td>
+			
+			<!--- Right --->
+			<td class="linenum"><cfif arrayIsDefined( prc.rightA, x )>#x#<cfelse>&nbsp;</cfif></td>
+			<td width="50%" class="code#codeCSS#">
+				<div class="diffContent">
+					<cfif arrayIsDefined( prc.rightA, x )>
+					#Replace(HTMLEditFormat( prc.rightA[x] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
+					</cfif>
+				</div>
+			</td>
+		</tr>
+	</cfloop>
+	</tbody>
+	</table>
+		
 </div>
 <hr/>
 <!--- Button Bar --->

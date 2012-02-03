@@ -123,6 +123,11 @@ component extends="baseHandler"{
 		event.paramValue("customFieldValues","");
 		event.paramValue("content","");
 		
+		// Quick save changelog
+		if( event.isAjax() ){
+			rc.changelog = "Quick save";	
+		}
+		
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent") ){
 			rc.content = rc.quickcontent;

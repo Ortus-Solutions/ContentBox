@@ -82,9 +82,6 @@ component extends="baseHandler"{
 	}
 	
 	function diff(event,rc,prc){
-		// Get diff plugin
-		prc.oDiff = getMyPlugin(plugin="Diff",module="contentbox");
-		
 		// exit handlers
 		prc.xehVersionDiff 	= "#prc.cbAdminEntryPoint#.versions.diff";
 		
@@ -107,23 +104,6 @@ component extends="baseHandler"{
 			prc.maxA = arrayLen( prc.rightA );
 		}
 		
-		// Try to diff it
-		try{
-			//prc.diff 	 = prc.oDiff.diffArrays( prc.leftA, prc.rightA );
-			//prc.parallel = prc.oDiff.parallelize( prc.diff, prc.leftA,prc.rightA);
-		}
-		catch(Any e){
-			
-		}
-		
-		// DIff css
-		prc.diffcss = {
-			"+" = "ins", 
-			"-" = "del", 
-			"!" = "upd", 
-			"" = ""
-		};
-
 		// views
 		event.setView(view="versions/diff",layout="ajax");
 	}

@@ -136,7 +136,12 @@ component extends="baseHandler"{
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
 		event.paramValue("customFieldKeys","");
 		event.paramValue("customFieldValues","");
-
+		
+		// Quick save changelog
+		if( event.isAjax() ){
+			rc.changelog = "Quick save";	
+		}
+		
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );

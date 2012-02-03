@@ -79,7 +79,7 @@ component output="false" hint="Main filebrowser module handler"{
 		// Store directory roots and web root
 		prc.fbDirRoot 		= prc.fbSettings.directoryRoot;
 		prc.fbWebRootPath 	= expandPath('/');
-
+		
 		// clean incoming path and decode it.
 		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
 		// Check if the incoming path does not exist so we default to the configuration directory root.
