@@ -132,7 +132,7 @@
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="hits" title="Hits"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/comments.png" alt="comments" title="Comments"/></th>
-						<th width="95" class="center {sorter:false}">Actions</th>
+						<th width="125" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
 
@@ -149,7 +149,7 @@
 						</td>
 						<td>
 							<!--- Title --->
-							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit Page">#page.getTitle()#</a><br>
+							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a><br>
 							by #page.getAuthorName()#<br/>
 							<!--- password protect --->
 							<cfif page.isPasswordProtected()>
@@ -190,6 +190,9 @@
 							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
+							&nbsp;
+							<!--- History Command --->
+							<a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#" title="Version History"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/></a>
 							&nbsp;
 							<!--- Create Child --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>

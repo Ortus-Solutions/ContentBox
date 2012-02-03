@@ -63,7 +63,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}		
 		// Author Filter
 		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
-			c.eq("author.authorID", javaCast("int",arguments.author));
+		//	c.eq("author.authorID", javaCast("int",arguments.author));
 		}
 		// Search Criteria
 		if( len(arguments.search) ){

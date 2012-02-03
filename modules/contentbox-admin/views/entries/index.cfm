@@ -127,13 +127,12 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Author</th>			
 						<th>Categories</th>
 						<th width="125">Dates</th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="hits"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/comments.png" alt="comments"/></th>
-						<th width="70" class="center {sorter:false}">Actions</th>
+						<th width="100" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
 				
@@ -142,6 +141,7 @@
 					<tr data-contentID="#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
 						<td>
 							<a href="#event.buildLink(prc.xehBlogEditor)#/contentID/#entry.getContentID()#" title="Edit Entry">#entry.getTitle()#</a><br/>
+							by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a></br>
 							<!--- password protect --->
 							<cfif entry.isPasswordProtected()>
 								<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Entry is password protected"/>
@@ -156,7 +156,6 @@
 								<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
 							</cfif>
 						</td>
-						<td>#entry.getAuthorName()#</td>
 						<td>#entry.getCategoriesList()#</td>
 						<td>
 							<strong title="Published Date">P:</strong> #entry.getDisplayPublishedDate()#<br/>
@@ -177,6 +176,9 @@
 							<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
+							&nbsp;
+							<!--- History Command --->
+							<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#" title="Version History"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/></a>
 							&nbsp;
 							<!--- Delete Command --->
 							<a title="Delete Entry" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>

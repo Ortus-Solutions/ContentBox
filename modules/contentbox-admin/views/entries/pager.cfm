@@ -19,7 +19,7 @@
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Entry Published"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/comments.png" alt="comments" title="Number of Comments"/></th>
-			<th width="50" class="center">Actions</th>
+			<th width="75" class="center">Actions</th>
 		</tr>
 	</thead>
 	
@@ -28,7 +28,7 @@
 		<tr data-contentID="#entry.getContentID()#">
 			<td>
 				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
-				by <a href="mailto:#entry.getAuthor().getEmail()#">#entry.getAuthorName()#</a>				
+				by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a>				
 			</td>
 			<td>#entry.getCategoriesList()#</td>
 			<td>
@@ -52,6 +52,9 @@
 				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
 				&nbsp;
 				</cfif>
+				<!--- History Command --->
+				<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#" title="Version History"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/></a>
+				&nbsp;
 				<!--- View Command --->
 				<a href="#prc.CBHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
 			</td>
@@ -59,30 +62,5 @@
 		</cfloop>
 	</tbody>
 </table>
-<!--- Custom JS --->
-<script type="text/javascript">
-$(document).ready(function() {
-	$entriesPager = $("##entries_pager");
-	$entriesPager.find("tr:even").addClass("even");
-	// quick look
-	$entriesPager.find("tr").bind("contextmenu",function(e) {
-	    if (e.which === 3) {
-	    	if( $(this).attr('data-contentID') != null ){
-				e.preventDefault();
-				openRemoteModal('#event.buildLink(prc.xehEntryQuickLook)#/contentID/' + $(this).attr('data-contentID'));
-			}
-	    }
-	});
-});
-function pagerLink(page){
-	$("##entryPagerLoader").fadeIn("fast");
-	$('##pagerEntries')
-		.load('#event.buildLink(prc.xehPager)#/pager_authorID/#prc.pager_authorID#/page/' + page, function() {
-			$("##entryPagerLoader").fadeOut();
-			hideAllTooltips();
-			activateTooltips();
-	});
-}
-</script>
 </div>
 </cfoutput>

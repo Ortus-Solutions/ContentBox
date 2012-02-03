@@ -21,7 +21,7 @@
 			
 			<!--- content Author --->
 			<div class="post-content-author">
-				#cb.quickAvatar(author=prc.entry.getAuthor(),size=30)# #prc.entry.getAuthorName()#
+				#cb.quickAvatar(author=prc.entry.getAuthorEmail(),size=30)# #prc.entry.getAuthorName()#
 			</div>
 			
 			<!--- Title --->
