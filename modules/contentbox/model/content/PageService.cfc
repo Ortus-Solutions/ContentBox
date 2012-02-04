@@ -66,8 +66,9 @@ component extends="ContentService" singleton{
 		// Search Criteria
 		if( len(arguments.search) ){
 			// like disjunctions
+			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.search#%"),
-				  c.restrictions.like("content","%#arguments.search#%") );
+				  c.restrictions.isEq("ac.content", "%#arguments.search#%") );
 		}
 		
 		// run criteria query and projections count
@@ -97,8 +98,9 @@ component extends="ContentService" singleton{
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
+			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.like("content","%#arguments.searchTerm#%") );
+				  c.restrictions.isEq("ac.content", "%#arguments.searchTerm#%") );
 		}
 		
 		// parent filter
