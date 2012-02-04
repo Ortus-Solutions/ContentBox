@@ -30,10 +30,11 @@ component implements="contentbox.model.importers.ICBImporter"{
 		var catMap 		= {};
 		var entryMap 	= {};
 		var pageMap		= {};
+		var slugMap 	= {};
+		var pageSlugMap = {};
 		
 		log.info("Starting import process: #arguments.toString()#");
 		
-	transaction action="begin"{
 		try{
 			
 			/************************************** CATEGORIES *********************************************/
@@ -48,7 +49,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				catMap[ q.id[x] ] = cat.getCategoryID();
 			}
 			log.info("Categories imported successfully!");
-			
+
 			/************************************** AUTHORS *********************************************/
 			
 			log.info("Starting to import Authors....");
@@ -62,6 +63,11 @@ component implements="contentbox.model.importers.ICBImporter"{
 						     firstName=listFirst(q.name[x]," "), lastName=trim(replacenocase(q.name[x], listFirst(q.name[x]," "), "" ))};
 				var author = authorService.new(properties=props);
 				author.setRole( defaultRole );
+				// duplicate usernames
+				if( authorService.usernameFound(props.username) ){
+					author.setUsername( props.username & "-#left( hash(now()), 5)#");
+				}
+				
 				entitySave( author );
 				log.info("Imported author: #props.firstName# #props.lastName#");
 				authorMap[ q.id[x] ] = author.getAuthorID();
@@ -89,11 +95,12 @@ component implements="contentbox.model.importers.ICBImporter"{
 					props.slug = htmlHelper.slugify(props.title);
 				}
 				// check if slug already in map
-				if( structKeyExists(slugMap, props.slug) ){
+				if( structKeyExists(pageSlugMap, props.slug) ){
 					// unique it
 					props.slug &= "-" & left(hash(now()),5);
 				}
-				
+				pageSlugMap[ props.slug ] = "found";
+								
 				var page = pageService.new(properties=props);
 				// Add content versionized!
 				page.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.author_id[x]] ));
@@ -110,6 +117,10 @@ component implements="contentbox.model.importers.ICBImporter"{
 					page.addCustomField( thisCustomField );
 					thisCustomField.setRelatedContent( page );
 				}
+				
+				// Save page and store in reference map
+				pageMap[ qPages.id[x] ] = page;	
+				entitySave( page );
 				
 				log.info("Starting to import Page Comments....");
 				// Import page comments
@@ -134,9 +145,6 @@ component implements="contentbox.model.importers.ICBImporter"{
 					page.setParent( pageMap[ qPages.parent_page_id[x] ] );
 				}
 				
-				// Save page and store in reference map
-				pageMap[ qPages.id[x] ] = page;	
-				entitySave( page );
 				log.info("Page imported: #props.title#");
 			}
 			
@@ -163,10 +171,11 @@ component implements="contentbox.model.importers.ICBImporter"{
 					props.slug = htmlHelper.slugify(props.title);
 				}
 				// check if slug already in map
-				if( structKeyExists(slugMap, props.slug) ){
+				if( structKeyExists(SlugMap, props.slug) ){
 					// unique it
 					props.slug &= "-" & left(hash(now()),5);
 				}
+				SlugMap[ props.slug ] = "found";
 				
 				var entry = entryService.new(properties=props);
 				// Add content versionized!
@@ -191,7 +200,10 @@ component implements="contentbox.model.importers.ICBImporter"{
 					var thisCustomField = customFieldService.new(properties=props);
 					entry.addCustomField( thisCustomField );
 					thisCustomField.setRelatedContent( entry );
-				}				
+				}	
+				
+				// Save entity
+				entitySave( entry );
 				
 				log.info("Starting to import Entry Comments....");
 				// Import page comments
@@ -210,24 +222,20 @@ component implements="contentbox.model.importers.ICBImporter"{
 				}
 				log.info("Comments imported successfully!");
 				
-				// Save entity
-				entitySave( entry );
-				log.info("Entry imported: #props.title#");
-				entryMap[ q.id[x] ] = entry.getContentID();
+				log.info("Entry imported: #entry.getTitle()#");
 			}
 			log.info("Entries imported successfully!");
-			
-			
-			
-			transaction action="commit"{}
 		}
 		// end of try
 		catch(any e){
 			log.error("Error importing blog: #e.message# #e.detail#",e);
-			transaction action="rollback"{}
+			writeDump(e);abort;
+			rethrow;
 		}
-	}
-	// end of transaction
+		
+		// Commit All entities
+		transaction action="commit"{}
+
 	}
 
 }
