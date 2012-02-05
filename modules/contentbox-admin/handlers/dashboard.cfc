@@ -4,8 +4,9 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="entryService" 	inject="id:entryService@cb";
-	property name="commentService" 	inject="id:commentService@cb";
+	property name="entryService" 		inject="id:entryService@cb";
+	property name="pageService" 		inject="id:pageService@cb";
+	property name="commentService" 		inject="id:commentService@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
 	
 	function preHandler(event,action,eventArguments){
@@ -37,10 +38,20 @@ component extends="baseHandler"{
 		
 		// Few counts
 		prc.entriesCount 			= entryService.count();
+		prc.pagesCount 				= pageService.count();
 		prc.commentsCount 			= commentService.count();
 		prc.commentsApprovedCount 	= commentService.getApprovedCommentCount();
 		prc.commentsUnApprovedCount = commentService.getUnApprovedCommentCount();		
 		prc.categoriesCount 		= categoryService.count();
+		
+		// Prepare Reload Options
+		prc.reloadOptions = [
+			{name="Entire Application",value="app"},
+			{name="ORM",value="orm"},
+			{name="ContentBox Admin",value="contentbox-admin"},
+			{name="ContentBox Site",value="contentbox-site"},
+			{name="ContentBox FileBrowser",value="contentbox-filebrowser"}
+		];
 		
 		// announce event
 		announceInterception("cbadmin_onDashboard");
@@ -57,10 +68,24 @@ component extends="baseHandler"{
 
 	// reload modules
 	function reload(event,rc,prc){
-		// reload the core module first
-		controller.getModuleService().reload( "contentbox" );
-		// reload requested module
-		controller.getModuleService().reload( rc.targetModule );
+		
+		switch(rc.targetModule){
+			// reload application
+			case "app" :{
+				applicationStop();
+				break;			
+			}
+			case "orm" :{
+				ormReload();
+				break;
+			}
+			default:{
+				// reload the core module first
+				controller.getModuleService().reload( "contentbox" );
+				// reload requested module
+				controller.getModuleService().reload( rc.targetModule );
+			}
+		}
 		// flash info
 		flash.put("moduleReloaded",rc.targetModule);
 		// relocate
