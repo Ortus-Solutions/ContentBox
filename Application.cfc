@@ -25,7 +25,7 @@ component{
 	// Application properties, modify as you see fit
 	this.name 				= "ContentBox-Shell-" & hash(getCurrentTemplatePath());
 	this.sessionManagement 	= true;
-	this.sessionTimeout 	= createTimeSpan(0,0,30,0);
+	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;
 
 	// Mapping Imports
@@ -82,6 +82,8 @@ component{
 
 		// ORM Reload: REMOVE IN PRODUCTION IF NEEDED
 		if( structKeyExists(url,"ormReload") ){ ormReload(); }
+		
+		//applicationstop();abort;
 
 		// Bootstrap Reinit
 		if( not structKeyExists(application,"cbBootstrap") or application.cbBootStrap.isfwReinit() ){

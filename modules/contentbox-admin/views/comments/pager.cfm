@@ -30,7 +30,7 @@
 				<cfif len(comment.getAuthorURL())>
 					<img src="#prc.cbRoot#/includes/images/link.png" alt="link" /> 
 					<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
-						#comment.getAuthorURL()#
+						#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 					</a>
 					<br />
 				</cfif>
