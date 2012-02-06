@@ -1,4 +1,6 @@
 ﻿/**
+You can use this template theme to start your own.
+
 A layout is composed of the following pieces
 
 /LayoutName
@@ -30,15 +32,15 @@ the following:
 */
 component{
 	// Layout Variables
-	this.name 			= "ContentBox Goodness";
-	this.description 	= "ContentBox Default Layout";
+	this.name 			= "Sample Template";
+	this.description 	= "A nice template to start with";
 	this.version		= "1.0";
 	this.author 		= "Ortus Solutions";
 	this.authorURL		= "http://www.ortussolutions.com";
 	// Screenshot URL, can be absolute or locally in your layout package.
-	this.screenShotURL	= "screenshot.png";
+	//this.screenShotURL	= "screenshot.png";
 	// ForgeBox slug if you want auto-update featuress
-	this.forgeBoxSlug	= "cblayouts-goodness";
+	//this.forgeBoxSlug	= "cblayouts-goodness";
 	// The custom interception points this layout announces, an array of event strings
-	this.customInterceptionPoints = arrayToList( ["cbui_beforeBottomBar","cbui_afterBottomBar"] );
+	//this.customInterceptionPoints = arrayToList( ["cbui_beforeBottomBar","cbui_afterBottomBar"] );
 }
