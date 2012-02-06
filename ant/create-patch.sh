@@ -1,8 +1,7 @@
 #!/bin/sh
 echo Creating ContentBox Release Updates Patch
-
-DIR=`pwd`
-# go back to root for diff
+SCRIPTDIR=`pwd`
+# go back to root for diff of project
 cd ..
 # check params
 if [ -z "$1" ]
@@ -25,9 +24,9 @@ then
 fi
 
 # create and tar up a release
-#git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | xargs tar -rf $DIR/contentbox_release_updates.tar
+#git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | xargs tar -rf $SCRIPTDIR/patches/$3/patch.tar
 # create and zip up a patch release
-git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | zip $DIR/contentbox_$3_updates.zip -@
+git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | zip $SCRIPTDIR/patches/$3/patch.zip -@
 # create delete filelisting patch
-git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 > $DIR/contentbox_$3_deletes.txt
+git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 > $SCRIPTDIR/patches/$3/deletes.txt
 
