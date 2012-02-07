@@ -102,7 +102,7 @@
 								</cfif>
 								
 								<!--- Action Bar --->
-								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 								<div class="actionBar">
 									<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
 									<input type="submit" value="Save" class="buttonred">
