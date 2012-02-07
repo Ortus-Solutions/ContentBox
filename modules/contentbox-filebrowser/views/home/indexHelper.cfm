@@ -37,7 +37,7 @@ function $getUrlRelativeToPath(required basePath,required filePath, encodeURL=fa
 		}
 		URLOut=strURLOut;
 	}
-	URLOut=replacenocase(URLOut,"//","/","all");
+	URLOut=replacenocase(URLOut,"//","","all");
 	return URLOut;
 }
 </cfscript>
