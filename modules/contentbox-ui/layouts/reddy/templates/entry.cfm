@@ -44,7 +44,14 @@
 			<img src="#cb.layoutRoot()#/includes/images/important.png" alt="warning" />
 			Comments are currently closed
 			<cfelse>
-			<a href="#cb.linkEntry(entry)###comments" title="View Comments"><img src="#cb.layoutRoot()#/includes/images/comments_32.png" alt="comments" border="0" /> #entry.getNumberOfApprovedComments()#</a>
+			
+				<cfif structKeyExists(args,"addComments") and args.addComments>
+					<button class="button2" onclick="toggleCommentForm()"> Add Comment </button>
+					<img src="#cb.layoutRoot()#/includes/images/comments_32.png" alt="comments" /> #prc.entry.getNumberOfApprovedComments()#
+				<cfelse>
+					<a href="#cb.linkComments(entry)#" title="View Comments"><img src="#cb.layoutRoot()#/includes/images/comments_32.png" alt="comments" border="0" /> #entry.getNumberOfApprovedComments()#</a>
+				</cfif>
+			
 			</cfif>
 		</div>
 		<br/>										

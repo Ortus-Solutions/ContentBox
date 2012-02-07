@@ -120,7 +120,7 @@ limitations under the License.
 					<!--- Also uses an args scope for nested layouts: see pageNoSidebar layout --->
 					<cfif structKeyExists(args,"sidebar") and args.sidebar>
 						<!--- Content --->
-						<div class="left">#renderView()#</div>
+						<div class="left">#cb.mainView()#</div>
 						<!--- Sidebar --->
 						<div class="right">#cb.quickView(view='_pagesidebar')#</div> 	
 					<cfelse>

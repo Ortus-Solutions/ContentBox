@@ -125,10 +125,10 @@ limitations under the License.
 					#cb.event("cbui_beforeContent")#
 					
 					<!--- Content --->
-					<div class="left">#renderView()#</div>
+					<div class="left">#cb.mainView()#</div>
 					
 					<!--- SideBar: That's right, I can render any layout views by using quickView() or coldbo'x render methods --->
-					<div class="right">#cb.quickView(view='sidebar')#</div> 
+					<div class="right">#cb.quickView(view='_sidebar')#</div> 
 					
 					<!--- Separator --->
 					<div class="clr"></div>

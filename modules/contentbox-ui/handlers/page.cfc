@@ -46,6 +46,10 @@ component extends="BaseContentHandler" singleton{
 			prc.commentsCount 	= commentResults.count;
 			// announce event
 			announceInterception("cbui_onPage",{page=prc.page,pageSlug=rc.pageSlug});
+			
+			// Verify chosen page layout exists?
+			verifyPageLayout( prc.page );
+			
 			// set skin view
 			event.setView(view="#prc.cbLayout#/views/page",layout="#prc.cbLayout#/layouts/#prc.page.getLayout()#");
 		}
@@ -65,7 +69,7 @@ component extends="BaseContentHandler" singleton{
 		}	
 		
 	}
-
+	
 	/**
 	* Display the RSS feeds
 	*/
@@ -111,5 +115,19 @@ component extends="BaseContentHandler" singleton{
 		// Valid commenting, so go and save
 		saveComment( page );		
 	}
+	
+	/************************************** PRIVATE *********************************************/
+	
+	/**
+	* Verify if a chosen page layout exists or not.
+	*/
+	private function verifyPageLayout(required page){
+		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.page.getLayout()#.cfm" ) ) ){
+			throw(message="The layout of the page: '#arguments.page.getLayout()#' does not exist in the current theme.",
+			      detail="Please verify your page layout settings"
+				  type="ContentBox.InvalidPageLayout");
+		}	
+	}
+
 
 }

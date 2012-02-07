@@ -125,6 +125,15 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return '';
 	}
+	
+	/**
+	* Shorthand Author from latest version or null if any yet
+	*/
+	string function getAuthor(){
+		if( hasActiveContent() ){
+			return getActiveContent().getAuthor();
+		}
+	}
 
 	/************************************** PUBLIC *********************************************/
 

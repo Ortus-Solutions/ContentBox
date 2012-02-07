@@ -16,12 +16,12 @@
 		#prc.exception.message# #prc.exception.detail#
 	</div>
 	
-	<!---
-	--->
+	<cfif getDebugMode()>
 	<div class="contentBar">
 		<strong>More Information:</strong> <br/>
 		#prc.exception.stackTrace#
 	</div>
+	</cfif>
 </div>
 
 <!--- Separator --->

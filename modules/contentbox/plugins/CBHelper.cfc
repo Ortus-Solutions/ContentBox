@@ -13,7 +13,6 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	function init(controller){
 		super.init( arguments.controller );
-
 		blogEntryPoint = "blog";
 	}
 
@@ -622,6 +621,13 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	function quickCommentForm(required content){
 		return widget("CommentForm",{content=arguments.content});
+	}
+	
+	/**
+	* Render the incoming event's main view, basically a proxy to ColdBox's renderView().
+	*/
+	function mainView(){
+		return renderView(view="");
 	}
 
 	/************************************** MENUS *********************************************/

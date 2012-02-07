@@ -21,23 +21,25 @@ which means you can use it in any way you want provided you keep the link to the
 	<meta name="generator" 	 content="ContentBox powered by ColdBox" />
 	<meta name="robots" 	 content="index,follow" />
 	
-	<!--- Meta per page or index --->
+	<!--- Meta Description By Entry or By Site --->
 	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLDescription())>
 		<meta name="description" content="#cb.getCurrentEntry().getHTMLDescription()#" />
 	<cfelse>
 		<meta name="description" content="#cb.siteDescription()#" />
 	</cfif>
+	<!--- Meta Keywords By Entry or By Site --->
 	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLKeywords())>
 		<meta name="keywords" 	 content="#cb.getCurrentEntry().getHTMLKeywords()#" />
 	<cfelse>
 		<meta name="keywords" 	 content="#cb.siteKeywords()#" />
 	</cfif>
 	
-	<!--- Base HREF For SES URLs based on ColdBox--->
-	<base href="#getSetting('htmlBaseURL')#/" />
+	<!--- Base HREF for SES enabled URLs --->
+	<base href="#cb.siteBaseURL()#/" />
 	
-	<!--- RSS Stuff --->
+	<!--- RSS Links --->
 	<link rel="alternate" type="application/rss+xml" title="Recent Updates" href="#cb.linkRSS()#" />	
+	<!--- RSS Discovery If In View Mode --->
 	<cfif cb.isEntryView()>
 		<link rel="alternate" type="application/rss+xml" title="Entry's Recent Comments" href="#cb.linkRSS(comments=true,entry=cb.getCurrentEntry())#" />
 	</cfif>
@@ -73,11 +75,9 @@ which means you can use it in any way you want provided you keep the link to the
 			#cb.siteDescription()#
 		</div>
 	</div>
-	<!--- end Header --->
 		
 	<!--- Main --->
-    <div id="main">#renderView()#</div>
-	<!--- main --->
+    <div id="main">#cb.mainView()#</div>
 	    
 	<!--- footer --->
 	<div id="footer">

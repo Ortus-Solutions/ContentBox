@@ -76,7 +76,7 @@ which means you can use it in any way you want provided you keep the link to the
 	<!--- end Header --->
 		
 	<!--- Main --->
-    <div id="main">#renderView()#</div>
+    <div id="main">#cb.mainView()#</div>
 	<!--- main --->
 	    
 	<!--- footer --->
