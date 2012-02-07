@@ -78,7 +78,7 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// Store directory roots and web root
 		prc.fbDirRoot 		= prc.fbSettings.directoryRoot;
-		prc.fbWebRootPath 	= expandPath('/');
+		prc.fbWebRootPath 	= expandPath("./");
 		
 		// clean incoming path and decode it.
 		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
@@ -93,7 +93,7 @@ component output="false" hint="Main filebrowser module handler"{
 		prc.fbwebRootPath = cleanIncomingPath(prc.fbwebRootPath);
 		// Do a safe current root for JS
 		prc.fbSafeCurrentRoot = URLEncodedFormat( prc.fbCurrentRoot );
-
+		
 		// traversal testing
 		if( NOT isTraversalSecure(prc, prc.fbCurrentRoot) ){
 			getPlugin("MessageBox").warn("Traversal security exception!");
