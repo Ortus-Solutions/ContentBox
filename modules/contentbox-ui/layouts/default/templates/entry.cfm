@@ -71,8 +71,8 @@ limitations under the License.
 			<img src="#cb.layoutRoot()#/includes/images/important.png" alt="warning" />
 			Comments are currently closed
 			<cfelse>
-				<!--- Verify we can add comments via incoming argument --->
-				<cfif structKeyExists(args,"addComments")>
+				<!--- Verify we can add comments via incoming arguments? --->
+				<cfif structKeyExists(args,"addComments") and args.addComments>
 					<button class="button2" onclick="toggleCommentForm()"> Add Comment </button>
 					<img src="#cb.layoutRoot()#/includes/images/comments_32.png" alt="comments" /> #prc.entry.getNumberOfApprovedComments()#
 				<cfelse>

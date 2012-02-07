@@ -93,12 +93,24 @@ component extends="baseHandler"{
 
 	// save user
 	function save(event,rc,prc){
+		var oAuthor = authorService.get(id=rc.authorID);
+		
+		// Validate credentials
+		if(  !prc.oAuthor.checkPermission("AUTHOR_ADMIN") AND oAuthor.getAuthorID() NEQ prc.oAuthor.getAuthorID() ){
+			// relocate
+			getPlugin("MessageBox").error("You do not have permissions to do this!");
+			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#rc.authorID#");
+			return;
+		}
+		
 		// get and populate author
-		var oAuthor		= populateModel( authorService.get(id=rc.authorID) );
+		populateModel( oAuthor );
 		var newAuthor 	= (NOT oAuthor.isLoaded());
 		 
     	// role assignment
-    	oAuthor.setRole( roleService.get( rc.roleID ) );
+    	if( prc.oAuthor.checkPermission("AUTHOR_ADMIN") ){
+    		oAuthor.setRole( roleService.get( rc.roleID ) );
+    	}
     	
     	// validate it
 		var errors = oAuthor.validate();
@@ -125,6 +137,14 @@ component extends="baseHandler"{
 	// change passord
 	function passwordChange(event,rc,prc){
 		var oAuthor = authorService.get(id=rc.authorID);
+		
+		// Validate credentials
+		if(  !prc.oAuthor.checkPermission("AUTHOR_ADMIN") AND oAuthor.getAuthorID() NEQ prc.oAuthor.getAuthorID() ){
+			// relocate
+			getPlugin("MessageBox").error("You do not have permissions to do this!");
+			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#rc.authorID#");
+			return;
+		}
 		
 		// validate passwords
 		if( compareNoCase(rc.password,rc.password_confirm) EQ 0){

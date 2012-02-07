@@ -36,7 +36,7 @@ limitations under the License.
 	
 	<!--- Comment Form: I can build it or I can quick it? --->
 	<div id="commentFormShell">
-	#cb.quickCommentForm(prc.entry)#
+		#cb.quickCommentForm(prc.entry)#
 	</div>
 	
 	<div class="clr"></div>

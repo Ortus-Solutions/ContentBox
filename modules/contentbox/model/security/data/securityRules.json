@@ -190,7 +190,7 @@
         "useSSL": false
     },
     {
-        "securelist": "^contentbox-admin:authors\\.(editor|passwordChange|remove|removePermission|save|savePermission)",
+        "securelist": "^contentbox-admin:authors\\.(remove|removePermission|savePermission)",
         "roles": "",
         "permissions": "AUTHOR_ADMIN",
         "whitelist": "",

@@ -90,9 +90,16 @@
 								<cfif NOT prc.author.isLoaded()>
 								#html.passwordField(name="password",bind=prc.author,label="*Password:",required="required",size="50",class="textfield")#
 								</cfif>
-								#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
-								#html.select(label="User Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role",bind=prc.author.getRole(),style="width:200px")#
 								
+								<!--- Active --->
+								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+								#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
+								<!--- Roles --->
+								#html.select(label="User Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role",bind=prc.author.getRole(),style="width:200px")#
+								<cfelse>
+									<label>Active User: </label> <span class="textRed">#prc.author.getIsActive()#</span><br/>
+									<label>User Role: </label> <span class="textRed">#prc.author.getRole().getRole()#</span><br/>
+								</cfif>
 								
 								<!--- Action Bar --->
 								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
@@ -116,7 +123,7 @@
 							#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield")#
 							
 							<!--- Action Bar --->
-							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 							<div class="actionBar">
 								<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or 
 								<input type="submit" value="Change Password" class="buttonred">

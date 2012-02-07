@@ -135,6 +135,19 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function getCategoryFilter(){
 		return getRequestContext().getValue("category","");
 	}
+	
+	// Get Year Filter
+	function getYearFilter(){
+		return getRequestContext().getValue("year","0");
+	}
+	// Get Month Filter
+	function getMonthFilter(){
+		return getRequestContext().getValue("month","0");
+	}
+	// Get Day Filter
+	function getDayFilter(){
+		return getRequestContext().getValue("day","0");
+	}
 
 	// Determine if you have a search term
 	boolean function searchTermExists(){
