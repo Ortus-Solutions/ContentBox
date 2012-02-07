@@ -30,9 +30,10 @@ function setupEditors($theForm){
 			toolbar:ckToolbar,height:300, 
 			filebrowserBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURL)#',
 			filebrowserImageBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLIMage)#',
-			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#'
+			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#',
+			baseHref : '#getSetting("htmlBaseURL")#/'
 		} );
-	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175,filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/' } );
+	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175,filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/',baseHref : '#getSetting("htmlBaseURL")#/' } );
 	
 	// Date fields
 	$(":date").dateinput();
