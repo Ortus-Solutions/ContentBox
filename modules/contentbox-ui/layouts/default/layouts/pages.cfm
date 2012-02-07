@@ -1,4 +1,29 @@
-﻿<cfoutput>
+﻿<!--- 
+/**
+********************************************************************************
+ContentBox - A Modular Content Platform
+Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+Apache License, Version 2.0
+
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0 
+
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
+limitations under the License.
+********************************************************************************
+*/
+--->
+<cfoutput>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -15,20 +40,21 @@
 	<meta name="generator" 	 content="ContentBox powered by ColdBox" />
 	<meta name="robots" 	 content="index,follow" />
 	
-	<!--- Meta per page or index --->
+	<!--- Meta Description By Page or By Site --->
 	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLDescription())>
 		<meta name="description" content="#cb.getCurrentEntry().getHTMLDescription()#" />
 	<cfelse>
 		<meta name="description" content="#cb.siteDescription()#" />
 	</cfif>
+	<!--- Meta Keywords By Page or By Site --->
 	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLKeywords())>
 		<meta name="keywords" 	 content="#cb.getCurrentEntry().getHTMLKeywords()#" />
 	<cfelse>
 		<meta name="keywords" 	 content="#cb.siteKeywords()#" />
 	</cfif>
 	
-	<!--- Base HREF For SES URLs based on ColdBox--->
-	<base href="#getSetting('htmlBaseURL')#/" />
+	<!--- Base HREF for SES enabled URLs --->
+	<base href="#cb.siteBaseURL()#/" />
 	
 	<!--- styles --->
 	<link href="#cb.layoutRoot()#/includes/css/style.css" rel="stylesheet" type="text/css" />
@@ -56,7 +82,7 @@
 					<div id="logoTitle">#cb.siteName()#</div>
 				</div>
 				
-				<!--- Search Box --->
+				<!--- Custom Search Box --->
 		      	<div class="search">
 			        <form id="searchForm" name="searchForm" method="post" action="#cb.linkSearch()#">
 			          <label>
@@ -90,11 +116,17 @@
 					<!--- ContentBoxEvent --->
 					#cb.event("cbui_beforeContent")#
 					
-					<!--- Content --->
-					<div class="left">#renderView()#</div>
-					
 					<!--- SideBar: That's right, I can render any layout views by using quickView() or coldbo'x render methods --->
-					<div class="right">#cb.quickView(view='pagesidebar')#</div> 	
+					<!--- Also uses an args scope for nested layouts: see pageNoSidebar layout --->
+					<cfif structKeyExists(args,"sidebar") and args.sidebar>
+						<!--- Content --->
+						<div class="left">#renderView()#</div>
+						<!--- Sidebar --->
+						<div class="right">#cb.quickView(view='_pagesidebar')#</div> 	
+					<cfelse>
+						<!--- Content --->
+						<div class="fullWidth">#renderView()#</div>
+					</cfif>
 					
 					<!--- Separator --->
 					<div class="clr"></div>
@@ -110,32 +142,27 @@
 	</div>
 	<!--- end main --->
 		
-		
 	<!--- bottom resize --->
 	<div class="FBG">
-  <div class="FBG_resize">
-    <div class="left">
-      <h2>Categories</h2>
-      <ul>
-        <cfloop array="#cb.getCurrentCategories()#" index="category">
-		<li><a href="#cb.linkCategory(category)#">#category.getCategory()# (#category.getNumberOfEntries()#)</a></li>
-		</cfloop>
-      </ul>
-    </div>
-    <div class="left">
-      #cb.widget("Meta")#
-    </div>
-    <div class="left">
-      <h2>RSS Feeds</h2>
-      <ul>
-        <li><a href="#cb.linkRSS()#">Recent Site Updates</a></li>
-        <li><a href="#cb.linkRSS(comments=true)#">Recent Site Comments</a></li>
-      </ul>
-    </div>
-    <div class="clr"></div>
-  </div>
-  <div class="clr"></div>
-</div>
+		<div class="FBG_resize">
+			<div class="left">
+			  <h2>Categories</h2>
+			  #cb.widget(name="Categories")#
+			</div>
+			<div class="left">
+			  #cb.widget("Meta")#
+			</div>
+			<div class="left">
+			  <h2>RSS Feeds</h2>
+			  <ul>
+			    <li><a href="#cb.linkRSS()#">Recent Site Updates</a></li>
+			    <li><a href="#cb.linkRSS(comments=true)#">Recent Site Comments</a></li>
+			  </ul>
+			</div>
+			<div class="clr"></div>
+		</div>
+		<div class="clr"></div>
+	</div>
 		
 	<!--- footer --->
 	<div class="footer">

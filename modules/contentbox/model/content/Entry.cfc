@@ -53,7 +53,7 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		
 		// Required
 		if( !len(title) ){ arrayAppend(errors, "Title is required"); }
-		if( !len(content) ){ arrayAppend(errors, "Content is required"); }
+		if( !len(slug) ){ arrayAppend(errors, "Slug is required"); }
 		
 		return errors;
 	}

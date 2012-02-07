@@ -60,6 +60,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var prc = getRequestCollection(private=true);
 		return prc.cbEntryPoint;
 	}
+	
+	// Get the site base SES URL
+	function siteBaseURL(){
+		return replacenocase( getRequestContext().getSESBaseURL(), "index.cfm", "");
+	}
 
 	// Get the admin site root location using the configured module's entry point
 	function adminRoot(){
@@ -120,7 +125,27 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 
 	/************************************** Context Methods *********************************************/
+	
+	// Determine if you have a category filter
+	boolean function categoryFilterExists(){
+		var rc = getRequestCollection();
+		return (structKeyExists(rc,"category") AND len(rc.category));
+	}
+	// Get Category Filter
+	function getCategoryFilter(){
+		return getRequestContext().getValue("category","");
+	}
 
+	// Determine if you have a search term
+	boolean function searchTermExists(){
+		var rc = getRequestCollection();
+		return (structKeyExists(rc,"q") AND len(rc.q));
+	}
+	// Get Search Term
+	function getSearchTerm(){
+		return getRequestContext().getValue("q","");
+	}
+	
 	// Determine if you are in the index view
 	boolean function isIndexView(){
 		var event = getRequestContext();
@@ -451,7 +476,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	/*
 	* Create entry category links to be display usually on an entry or entry list.
-	* @entry The entry to use to build its category links list.
+	* @entry.hint The entry to use to build its category links list.
 	*/
 	function quickCategoryLinks(required entry){
 		var e = arguments.entry;
@@ -485,24 +510,39 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	/**
 	* Render out entries in the home page by using our ColdBox collection rendering
-	* @template The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
+	* @template.hint The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
+	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'entry'
+	* @args.hint A structure of name-value pairs to pass to the template
 	*/
-	function quickEntries(template="entry"){
+	function quickEntries(template="entry",collectionAs="entry",args=structnew()){
 		var entries = getCurrentEntries();
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=entries,collectionAs="entry");
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
+	}
+	
+	/**
+	* Render out an entry using your pre-defined 'entry' template
+	* @template.hint The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
+	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'entry'
+	* @args.hint A structure of name-value pairs to pass to the template
+	*/
+	function quickEntry(template="entry",collectionAs="entry",args=structnew()){
+		var entries = [getCurrentEntry()];
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
 
 	/**
 	* Render out categories anywhere using ColdBox collection rendering
-	* @template The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
+	* @template.hint The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
+	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'category'
+	* @args.hint A structure of name-value pairs to pass to the template
 	*/
-	function quickCategories(template="category"){
+	function quickCategories(template="category",collectionAs="category",args=structnew()){
 		var categories = getCurrentCategories();
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=categories,collectionAs="category");
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=categories,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
 	
 	/**
-	* Render out custom fields for content
+	* Render out custom fields for the current content
 	*/
 	function quickCustomFields(){
 		var customFields = getCurrentCustomFields();
@@ -521,17 +561,19 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	
 	/**
 	* Render out comments anywhere using ColdBox collection rendering
-	* @template The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
+	* @template.hint The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
+	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'comment'
+	* @args.hint A structure of name-value pairs to pass to the template
 	*/
-	function quickComments(template="comment"){
+	function quickComments(template="comment",collectionAs="comment",args=structNew()){
 		var comments = getCurrentComments();
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=comments,collectionAs="comment");
+		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=comments,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
 
 	/**
 	* Renders out an author's avatar
-	* @author The author object to render an avatar from
-	* @size The size of the gravatar, by default we use 25 pixels
+	* @author.hint The author object to render an avatar from
+	* @size.hint The size of the gravatar, by default we use 25 pixels
 	*/
 	function quickAvatar(required author,numeric size=25){
 		var targetEmail = arguments.author;
@@ -545,18 +587,27 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	/**
 	* QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
-	* layout you are using. All the arguments are the same as renderView()'s methods
+	* layout theme you are using. All the arguments are the same as renderView()'s methods
 	*/
 	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module,args,collection,collectionAs,prepostExempt){
 		arguments.view = "#layoutName()#/views/#arguments.view#";
 		return renderView(argumentCollection=arguments);
 	}
+	
+	/**
+	* QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
+	* layout theme you are using. All the arguments are the same as renderLayout()'s methods
+	*/
+	function quickLayout(required layout,view="",module="",args=structNew(),viewModule="",prePostExempt=false){
+		arguments.layout = "#layoutName()#/layouts/#arguments.layout#";
+		return renderLayout(argumentCollection=arguments);
+	}
 
 	/**
 	* quickCommentForm will build a standard ContentBox Comment Form according to the CommentForm widget
-	* @content The content this comment form will be linked to, page or entry
+	* @content.hint The content this comment form will be linked to, page or entry
 	*/
-	function quickCommentForm(content){
+	function quickCommentForm(required content){
 		return widget("CommentForm",{content=arguments.content});
 	}
 
