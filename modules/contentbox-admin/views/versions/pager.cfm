@@ -9,10 +9,13 @@
 	<!--- History --->
 	<div class="buttonBar">
 		<button class="buttonred" onclick="return versionsPagerDiff();" title="Compare Content">Compare Versions</button>
-		<button class="button2" onclick="return to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
+		<cfif prc.versionsPager_viewFullHistory>
+		<button class="button2" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
+		</cfif>
 	</div>
 
-	<p>Here are the last #prc.versionsPager_max# content versions out of a total of #prc.versionsPager_count# versions.</p>
+	<p>Here are the past versions of your content. You can compare previous versions and even right click on the rows to get a quick peek at the versioned
+	 content</p>
 	
 	#html.startForm(name="versionsPagerForm")#
 	
@@ -55,15 +58,19 @@
 				</cfif>
 				
 				<cfif not thisVersion.getIsActive()>
+					<cfif prc.oAuthor.checkPermission("VERSIONS_ROLLBACK")>
 					<!--- ROLLBACK BUTTON --->
 					<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
 					   class="confirmIt"
 					   data-message="Do you really want to rollback to this version?"><img id="version_rollback_#thisVersion.getContentVersionID()#"  src="#prc.cbRoot#/includes/images/arrow_merge.png" alt="rollback" border="0"/></a>
+					</cfif>
 					
+					<cfif prc.oAuthor.checkPermission("VERSIONS_DELETE")>
 					<!--- DELETE VERSION --->
 					<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
 					   data-title="Remove Content Version"
 					   data-message="Do you really want to remove this content version?"><img id="version_delete_#thisVersion.getContentVersionID()#" src="#prc.cbRoot#/includes/images/delete.png" alt="delete" border="0" /></a>
+					</cfif>
 				</cfif>
 			</td>
 		</tr>

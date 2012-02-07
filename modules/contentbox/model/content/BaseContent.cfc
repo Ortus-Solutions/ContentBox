@@ -2,17 +2,17 @@
 * A mapped super class used for contentbox content: entries and pages
 */
 component persistent="true" entityname="cbContent" table="cb_content" discriminatorColumn="contentType"{
-	
+
 	// DI Injections
 	property name="cachebox" 				inject="cachebox" 					persistent="false";
 	property name="settingService"			inject="id:settingService@cb" 		persistent="false";
 	property name="interceptorService"		inject="coldbox:interceptorService" persistent="false";
 	property name="customFieldService" 	 	inject="customFieldService@cb" 		persistent="false";
 	property name="contentVersionService"	inject="contentVersionService@cb"	persistent="false";
-	
+
 	// Non-Persistable Properties
 	property name="renderedContent" persistent="false";
-	
+
 	// Properties
 	property name="contentID" 			notnull="true"	fieldtype="id" generator="native" setter="false";
 	property name="contentType" 		notnull="true"	setter="false" update="false" insert="false" index="idx_discriminator,idx_published";
@@ -29,27 +29,34 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
-			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan"; 
-	
+			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
+
 	// O2M -> CustomFields
 	property name="customFields" singularName="customField" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25"
-			  cfc="contentbox.model.content.CustomField" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan"; 
-	
+			  cfc="contentbox.model.content.CustomField" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
+
 	// O2M -> ContentVersions
 	property name="contentVersions" singularName="contentVersion" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25"
-			  cfc="contentbox.model.content.ContentVersion" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan"; 
-	
+			  cfc="contentbox.model.content.ContentVersion" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
+
 	// Active Content Pseudo-Collection
-	property name="activeContent" fieldtype="one-to-many" type="array" lazy="extra" cascade="save-update" inverse="true" 
-			  cfc="contentbox.model.content.ContentVersion" fkcolumn="FK_contentID" where="isActive=1" ; 
+	property name="activeContent" fieldtype="one-to-many" type="array" lazy="extra" cascade="save-update" inverse="true"
+			  cfc="contentbox.model.content.ContentVersion" fkcolumn="FK_contentID" where="isActive=1" ;
+
+	// M20 -> Parent Page loaded as a proxy
+	property name="parent" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
 	
+	// O2M -> Sub Content Inverse
+	property name="children" singularName="child" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
+			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
+
 	// Calculated Fields
 	property name="numberOfVersions" 			formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" default="0";
 	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" default="0";
 	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID and comment.isApproved = 1" default="0";
-	
+	property name="numberOfChildren"			formula="select count(*) from cb_content content where content.FK_parentID=contentID" default="0";
 	/************************************** VERIONING METHODS *********************************************/
-	
+
 	/**
 	* Add a new content version to save for this content object
 	*/
@@ -61,11 +68,11 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 				content		= arguments.content,
 				changelog 	= arguments.changelog
 			});
-			
+
 			// join them to author and related content
 			newVersion.setAuthor( arguments.author );
 			newVersion.setRelatedContent( this );
-			
+
 			// Set the right versions if we have already content
 			if( hasActiveContent() ){
 				// deactive the curent one
@@ -75,13 +82,13 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 			}
 			// Activate the version
 			newVersion.setIsActive( true );
-			
+
 			// Add it to the content so it can be saved.
 			addContentVersion( newVersion );
 		}
 		return this;
 	}
-	
+
 	// Retrieves the latest content string from the latest version un-translated
 	function getContent(){
 		// return active content if we have any
@@ -91,14 +98,14 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		// else return nothing.
 		return '';
 	}
-	
+
 	// Get the latest active content object, null if none has been assigned yet.
 	function getActiveContent(){
 		if( hasActiveContent() ){
 			return activeContent[1];
 		}
 	}
-	
+
 	/**
 	* Shorthand Author name from latest version
 	*/
@@ -108,7 +115,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return '';
 	}
-	
+
 	/**
 	* Shorthand Author email from latest version
 	*/
@@ -118,16 +125,16 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return '';
 	}
-	
+
 	/************************************** PUBLIC *********************************************/
-	
+
 	/**
 	* is loaded?
 	*/
 	boolean function isLoaded(){
 		return len( getContentID() );
 	}
-	
+
 	/**
 	* Get display publishedDate
 	*/
@@ -141,7 +148,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return fDate;
 	}
-	
+
 	/**
 	* Get display publishedDate
 	*/
@@ -149,7 +156,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		var publishedDate = getPublishedDate();
 		return dateFormat( publishedDate, "mm/dd/yyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
 	}
-	
+
 	/**
 	* Get formatted createdDate
 	*/
@@ -157,14 +164,14 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
-		
+
 	/**
 	* isPassword Protected
 	*/
 	boolean function isPasswordProtected(){
 		return len( getPasswordProtection() );
 	}
-	
+
 	/**
 	* addPublishedtime
 	*/
@@ -173,22 +180,22 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		setPublishedDate( getPublishedDate() & " " & time);
 		return this;
 	}
-	
+
 	/**
 	* Build content cache keys according to sent content object
 	*/
 	string function buildContentCacheKey(){
 		return "cb-content-#getContentType()#-#getContentID()#";
 	}
-	
+
 	/**
 	* Render content out
 	*/
 	any function renderContent(){
 		var settings = settingService.getAllSettings(asStruct=true);
-		
+
 		// caching enabled?
-		if( (getContentType() eq "page" AND settings.cb_content_caching) OR 
+		if( (getContentType() eq "page" AND settings.cb_content_caching) OR
 			(getContentType() eq "entry" AND settings.cb_entry_caching)
 		){
 			// Build Cache Key
@@ -200,47 +207,47 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 			// Verify it exists, if it does, return it
 			if( !isNull( cachedContent ) ){ return cachedContent; }
 		}
-		
+
 		// Check if we need to translate
 		if( NOT len(renderedContent) ){
 			lock name="contentbox.contentrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
 				if( NOT len(renderedContent) ){
 					// else render content out, prepare builder
 					var b = createObject("java","java.lang.StringBuilder").init( getContent() );
-					
+
 					// announce renderings with data, so content renderers can process them
 					var iData = {
 						builder = b,
 						content	= this
 					};
 					interceptorService.processState("cb_onContentRendering", iData);
-					
+
 					// save content
 					renderedContent = b.toString();
 				}
 			}
 		}
-		
+
 		// caching enabled?
-		if( (getContentType() eq "page" AND settings.cb_content_caching) OR 
+		if( (getContentType() eq "page" AND settings.cb_content_caching) OR
 			(getContentType() eq "entry" AND settings.cb_entry_caching)
 		){
-			// Store content in cache	
+			// Store content in cache
 			cache.set(cacheKey, renderedContent, settings.cb_content_cachingTimeout, settings.cb_content_cachingTimeoutIdle);
 		}
-		
+
 		// renturn translated content
 		return renderedContent;
 	}
-	
+
 	/**
 	* Inflate custom fields from a list of keys and values, it will remove original custom values as well.
 	*/
 	any function inflateCustomFields(required string keys, required string values){
-		
+
 		// remove original custom fields
 		getCustomFields().clear();
-		
+
 		// inflate custom fields
 		arguments.keys   = listToArray(arguments.keys,",");
 		arguments.values = listToArray(arguments.values,",");
@@ -257,7 +264,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return this;
 	}
-	
+
 	/**
 	* Update a content's hits
 	*/

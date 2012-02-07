@@ -4,7 +4,7 @@
 component extends="BaseContentHandler" singleton{
 
 	// DI
-	property name="entryService"		inject="id:entryService@cb";
+	property name="entryService" inject="id:entryService@cb";
 	
 	// pre Handler
 	function preHandler(event,action,eventArguments){

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0"?>
+<project name="contentbox.patches" default="build" basedir=".">
+
+	<!--Build Properties-->
+	<property name="dir.exports"		value="patches" />
+		
+	<!-- Build Labels -->
+	<tstamp prefix="start"/>
+		
+	<!-- Init -->
+	<target name="init" description="Init">
+		<!-- Version -->
+		<input addproperty="contentbox.version" message="ContentBox Version" />
+		<!-- Start Commit -->
+		<input addproperty="contentbox.startgit" message="Git Start Commit Hash" />
+		<!-- End Commit -->
+		<input addproperty="contentbox.endgit" message="Git End Commit Hash" />
+	</target>
+	
+	<!--Build-->
+	<target name="build" description="Build a new ContentBox patch release" depends="init">
+      	<!-- Create patch folder -->
+		<mkdir dir="${dir.exports}/${contentbox.version}"/>
+		<!-- Copy Update Template -->
+		<copy file="patches/Update.cfc" tofile="${dir.exports}/${contentbox.version}/Update.cfc" overwrite="true" />
+		<!-- Execute patch -->
+		<exec executable="./create-patch.sh">
+	    	<arg value="${contentbox.startgit}"/>
+	    	<arg value="${contentbox.endgit}"/>
+	   	 	<arg value="${contentbox.version}"/>
+	  	</exec>
+		
+    </target>
+	
+</project>

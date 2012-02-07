@@ -109,7 +109,9 @@ component accessors="true"{
 			"SECURITYRULES_ADMIN" = "Ability to manage the system's security rules, default is view only",
 			"GLOBALHTML_ADMIN" = "Ability to manage the system's global HTML content used on layouts",
 			"EMAIL_TEMPLATE_ADMIN" = "Ability to manage the system's email templates",
-			"MEDIAMANAGER_ADMIN" = "Ability to manage the system's media manager"
+			"MEDIAMANAGER_ADMIN" = "Ability to manage the system's media manager",
+			"VERSIONS_ROLLBACK" = "Ability to rollback content versions",
+			"VERSIONS_DELETE" = "Ability to delete past content versions"
 		};
 		
 		var allperms = [];
@@ -139,6 +141,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["LAYOUT_ADMIN"] );
 		oRole.addPermission( permissions["GLOBALHTML_ADMIN"] );
 		oRole.addPermission( permissions["MEDIAMANAGER_ADMIN"] );
+		oRole.addPermission( permissions["VERSIONS_ROLLBACK"] );
 		roleService.save( oRole );
 		
 		// Create Admin
@@ -286,13 +289,12 @@ component accessors="true"{
 	function createSampleData(required setup, required author){
 		
 		// create a few categories
-		//categoryService.createCategories("General, ColdFusion, ColdBox");
+		categoryService.createCategories("News, ColdFusion, ColdBox, ContentBox");
 		
 		// create some blog entries
 		var entry = entryService.new(properties={
 			title = "My first entry",
 			slug  = "my-first-entry",
-			content = "Hey everybody, this is my first blog entry made from ContentBox.  Isn't this amazing!'",
 			publishedDate = now(),
 			isPublished = true,
 			allowComments = true,
@@ -300,7 +302,10 @@ component accessors="true"{
 			HTMLKeywords = "cool,first entry, contentbox",
 			HTMLDescription = "The most amazing ContentBox blog entry in the world"
 		});
-		entry.setAuthor( author );
+		// version content
+		entry.addNewContentVersion(content="Hey everybody, this is my first blog entry made from ContentBox.  Isn't this amazing!'",
+								   changelog="Initial creation",
+								   author=author);
 		
 		// good comment
 		var comment = commentService.new(properties={
@@ -333,7 +338,6 @@ component accessors="true"{
 		var page = pageService.new(properties={
 			title = "About",
 			slug  = "about",
-			content = "<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{CustomHTML slug='contentbox'}}}</p>",
 			publishedDate = now(),
 			isPublished = true,
 			allowComments = false,
@@ -342,7 +346,9 @@ component accessors="true"{
 			HTMLDescription = "The most amazing ContentBox page in the world",
 			layout = "pages"			
 		});
-		page.setAuthor( author );
+		page.addNewContentVersion(content="<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{CustomHTML slug='contentbox'}}}</p>",
+								  changelog="First creation",
+								  author=author);
 		pageService.savePage( page );
 		
 		// create a custom HTML snippet.

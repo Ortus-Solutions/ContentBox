@@ -22,6 +22,7 @@ function versionsPagerDiff(){
 	openRemoteModal('#event.buildLink(prc.xehVersionDiff)#',{oldVersion:oldVersion,version:cVersion},'95%');
 	return false;
 }
+<cfif prc.oAuthor.checkPermission("VERSIONS_DELETE")>
 function versionsPagerRemove(versionID){
 	$('##version_delete_'+versionID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// ajax remove change
@@ -35,6 +36,8 @@ function versionsPagerRemove(versionID){
 		}
 	},"json");	
 }
+</cfif>
+<cfif prc.oAuthor.checkPermission("VERSIONS_ROLLBACK")>
 function versionsPagerRollback(versionID){
 	$('##version_rollback_'+versionID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
 	// ajax rollback change
@@ -48,5 +51,6 @@ function versionsPagerRollback(versionID){
 		}
 	},"json");	
 }
+</cfif>
 </script>
 </cfoutput>

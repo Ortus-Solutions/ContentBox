@@ -1,19 +1,31 @@
 /**
 ********************************************************************************
-Copyright 2005-2007 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldboxframework.com | www.luismajano.com | www.ortussolutions.com
+ContentBox - A Modular Content Platform
+Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
+Apache License, Version 2.0
 
-Author      :	Luis Majano
-Description :
-	This is the Application.cfc for usage withing the ColdBox Framework with some
-	extra funkyness for ContentBox
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0 
+
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
+limitations under the License.
+********************************************************************************
 */
 component{
 	// Application properties, modify as you see fit
 	this.name 				= "ContentBox-Shell-" & hash(getCurrentTemplatePath());
 	this.sessionManagement 	= true;
-	this.sessionTimeout 	= createTimeSpan(0,0,30,0);
+	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;
 
 	// Mapping Imports
@@ -70,6 +82,8 @@ component{
 
 		// ORM Reload: REMOVE IN PRODUCTION IF NEEDED
 		if( structKeyExists(url,"ormReload") ){ ormReload(); }
+		
+		//applicationstop();abort;
 
 		// Bootstrap Reinit
 		if( not structKeyExists(application,"cbBootstrap") or application.cbBootStrap.isfwReinit() ){

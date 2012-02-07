@@ -112,8 +112,8 @@
 							#html.startFieldset(legend="Change Password")#
 							#html.hiddenField(name="authorID",bind=prc.author)#
 							<!--- Fields --->
-							#html.textField(name="password",label="Password:",required="required",size="50",class="textfield")#
-							#html.textField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield")#
+							#html.passwordField(name="password",label="Password:",required="required",size="50",class="textfield")#
+							#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield")#
 							
 							<!--- Action Bar --->
 							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>

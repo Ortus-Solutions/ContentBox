@@ -21,7 +21,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 	/**
 	* Import from wordpress blog, returns the string console.
 	*/
-	function execute(required dsn,dsnUsername="",dsnPassword="",defaultPassword=""){
+	function execute(required dsn,dsnUsername="",dsnPassword="",defaultPassword="",required roleID){
 		var authorMap 	= {};
 		var catMap 		= {};
 		var entryMap 	= {};

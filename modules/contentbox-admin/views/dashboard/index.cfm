@@ -16,12 +16,10 @@
 			</cfif>
 			<!--- Reload button --->
 			<p class="actionBar">
-				<a href="#event.buildLink(prc.xehReloadModule&"/contentbox-admin")#" title="Reload Administrator Module" class="confirmIt">
-					<button class="button2">Reload Admin</button>
-				</a>
-				<a href="#event.buildLink(prc.xehReloadModule&"/contentbox-ui")#" title="Reload Site Module" class="confirmIt">
-					<button class="button2">Reload Site</button>
-				</a>
+				#html.startForm(name="reloadForm",action=prc.xehReloadModule)#
+				#html.select(label="Choose Module To Reload",name="targetModule",options=prc.reloadOptions)#
+				#html.submitButton(value="Issue Reload",class="buttonred")#
+				#html.endForm()#
 			</p>
 		</div>
 	</div>	

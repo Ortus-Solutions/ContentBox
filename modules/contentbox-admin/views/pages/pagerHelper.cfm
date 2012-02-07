@@ -57,5 +57,4 @@ function changeOrder(contentID,order,direction){
 }
 </cfif>
 </script>
-</div>
 </cfoutput>

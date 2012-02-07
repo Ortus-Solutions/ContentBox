@@ -101,6 +101,11 @@ component singleton{
 		var columnMap 		= {};
 		var qEntries		= entityToQuery( entryResults.entries );
 		
+		// max checks
+		if( settings.cb_rss_maxEntries lt entryResults.count ){
+			entryResults.count = settings.cb_rss_maxEntries;
+		}
+		
 		// Create the column maps
 		columnMap.title 		= "title";
 		columnMap.description 	= "content";
@@ -114,14 +119,16 @@ component singleton{
 		QueryAddColumn(qEntries, "linkComments", myArray);
 		QueryAddColumn(qEntries, "author", myArray);
 		QueryAddColumn(qEntries, "categories", myArray);
+		QueryAddColumn(qEntries, "content", myArray);
 		
 		// Attach permalinks
 		for(var i = 1; i lte entryResults.count; i++){
 			// build URL to entry
 			qEntries.link[i] 			= CBHelper.linkEntryWithSlug( qEntries.slug );
-			qEntries.author[i]			= "#entryResults.entries[i].getAuthor().getEmail()# (#entryResults.entries[i].getAuthorName()#)";
+			qEntries.author[i]			= "#entryResults.entries[i].getAuthorEmail()# (#entryResults.entries[i].getAuthorName()#)";
 			qEntries.linkComments[i]	= CBHelper.linkComments( entryResults.entries[i] );
 			qEntries.categories[i]		= entryResults.entries[i].getCategoriesList();
+			qEntries.content[i]			= entryResults.entries[i].getActiveContent().renderContent();
 		}
 		
 		// Generate feed items

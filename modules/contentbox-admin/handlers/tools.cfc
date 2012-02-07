@@ -2,7 +2,10 @@
 * Tools for ContentBox.
 */
 component extends="baseHandler"{
-
+	
+	// DI
+	property name="roleService" inject="id:roleService@cb";
+	
 	// pre handler
 	function preHandler(event,action,eventArguments){
 		var rc 	= event.getCollection();
@@ -17,6 +20,7 @@ component extends="baseHandler"{
 		rc.xehImport 	= "#prc.cbAdminEntryPoint#.tools.doImport";
 		// tab
 		prc.tabTools_import = true; 
+		prc.roles = roleService.list(sortOrder="role");
 		// view
 		event.setView("tools/importer");
 	}
@@ -27,6 +31,7 @@ component extends="baseHandler"{
 		event.paramValue("dsnUsername","");
 		event.paramValue("dsnPassword","");
 		event.paramValue("defaultPassword","");
+		event.paramValue("roleID","");
 		
 		// validate
 		if( !len(rc.dsn) or !len(rc.defaultPassword) ){
@@ -37,12 +42,13 @@ component extends="baseHandler"{
 		try{
 			// get importer
 			var importer = getModel("#rc.importer#Importer@cb");
-			importer.execute(dsn=rc.dsn,dsnUsername=rc.dsnUsername,dsnPassword=rc.dsnPassword,defaultPassword=rc.defaultPassword);
-			getPlugin("MessageBox").info("Blog imported successfully! Please check out your blog now!");
+			importer.execute(dsn=rc.dsn,dsnUsername=rc.dsnUsername,dsnPassword=rc.dsnPassword,defaultPassword=rc.defaultPassword,roleID=rc.roleID);
+			getPlugin("MessageBox").info("Content imported successfully! Please check out your ContentBox now!");
 		}
 		catch(any e){
 			getPlugin("MessageBox").error("Error importing from datasource: #e.message# #e.detail#");
 		}
+		
 		setNextEvent(prc.xehToolsImport);
 	}
 	

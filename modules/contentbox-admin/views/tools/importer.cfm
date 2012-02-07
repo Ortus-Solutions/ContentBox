@@ -38,7 +38,7 @@
 		#getPlugin("MessageBox").renderit()#
 		
 		<p>
-			From this import tool you can connect to other blog datasources and import your data into ContentBox. 
+			From this import tool you can connect to other content datasources and import your data into ContentBox. 
 			All importing messages are being logged, so please verify your application logs for information.
 		</p>
 		
@@ -56,13 +56,18 @@
 		
 		<!--- importer --->
 		<fieldset>
-		<legend><img src="#prc.cbRoot#/includes/images/source.png" alt="modifiers"/> <strong>Source Blog</strong></legend>
+		<legend><img src="#prc.cbRoot#/includes/images/source.png" alt="modifiers"/> <strong>Source Content</strong></legend>
 			#html.label(field="importer",content="Choose your importer source:")#
 			#html.select(name="importer",options="Select Source,Mango,WordPress",style="width:200px")#
+			
+			<!--- Default Password --->
 			#html.label(field="defaultPassword",content="Default Author Password:")#
 			<small>Since ContentBox uses its own encryption algorithm, you cannot port passwords. Use the following
 			default password for all authors and then do password change requests.</small><br/>
-			#html.textField(name="defaultPassword",class="textfield",size="50",required="required")#
+			#html.textField(name="defaultPassword",class="textfield",size="30",required="required")#
+			
+			<!--- Roles --->
+			#html.select(label="Default Author Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role")#
 		</fieldset>	
 			
 		</div>

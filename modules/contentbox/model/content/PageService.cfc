@@ -1,7 +1,10 @@
 ﻿/**
 * Page service for contentbox
 */
-component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
+component extends="ContentService" singleton{
+	
+	// DI
+	property name="contentService" inject="id:contentService@cb";
 	
 	/**
 	* Constructor
@@ -34,19 +37,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
-	* Get an id from a slug
-	*/
-	function getIDBySlug(required entrySlug){
-		var results = newCriteria()
-			.isEq("slug", arguments.entrySlug)
-			.withProjections(property="contentID")
-			.get();
-		// verify results
-		if( isNull( results ) ){ return "";}
-		return results;
-	}
-	
-	/**
 	* page search returns struct with keys [pages,count]
 	*/
 	struct function search(search="",isPublished,author,parent,max=0,offset=0,sortOrder="title asc"){
@@ -60,7 +50,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}	
 		// Author Filter
 		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
-		//	c.eq("author.authorID", javaCast("int",arguments.author));
+			c.createAlias("activeContent","ac")
+				.isEq("ac.author.authorID", javaCast("int",arguments.author) );
 		}
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
@@ -75,8 +66,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Search Criteria
 		if( len(arguments.search) ){
 			// like disjunctions
+			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.search#%"),
-				  c.restrictions.like("content","%#arguments.search#%") );
+				  c.restrictions.isEq("ac.content", "%#arguments.search#%") );
 		}
 		
 		// run criteria query and projections count
@@ -106,8 +98,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
+			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.like("content","%#arguments.searchTerm#%") );
+				  c.restrictions.isEq("ac.content", "%#arguments.searchTerm#%") );
 		}
 		
 		// parent filter
@@ -126,18 +119,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 		
 		return results;
-	}
-	
-	/**
-	* Find a published page by slug
-	*/
-	function findBySlug(required slug){
-		var page = newCriteria().isTrue("isPublished").isEq("slug",arguments.slug).get();
-		
-		// if not found, send and empty one
-		if( isNull(page) ){ return new(); }
-		
-		return page;		
 	}
 		
 }

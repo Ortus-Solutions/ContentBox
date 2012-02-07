@@ -202,7 +202,7 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception("cbadmin_preEntryRemove",{entry=entry});
 			// remove it
-			entryService.delete( entry );
+			entryService.deleteContent( entry );
 			// announce event
 			announceInterception("cbadmin_postEntryRemove",{contentID=contentID});
 			// messagebox
