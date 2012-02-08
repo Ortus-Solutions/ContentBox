@@ -2,17 +2,17 @@
 * A generic content service for content objects
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
-	
+
 	/**
 	* Constructor
 	*/
 	ContentService function init(entityName="cbContent"){
 		// init it
 		super.init(entityName=arguments.entityName);
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Get an id from a slug of a content object
 	*/
@@ -25,19 +25,23 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		if( isNull( results ) ){ return "";}
 		return results;
 	}
-	
+
 	/**
 	* Find a published content object by slug
 	*/
-	function findBySlug(required slug){
-		var content = newCriteria().isTrue("isPublished").isEq("slug",arguments.slug).get();
-		
+	function findBySlug(required slug, required showUnpublished=false){
+		var c = newCriteria();
+		if (!showUnpublished){
+			c.isTrue("isPublished");
+		}
+		content = c.isEq("slug",arguments.slug).get();
+
 		// if not found, send and empty one
 		if( isNull(content) ){ return new(); }
-		
-		return content;		
+
+		return content;
 	}
-	
+
 	/**
 	* Delete a content object safely via hierarchies
 	*/
@@ -51,5 +55,5 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// return service
 		return this;
 	}
-		
+
 }
