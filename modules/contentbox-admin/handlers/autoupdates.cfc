@@ -15,14 +15,13 @@ component extends="baseHandler"{
 		
 		// exit Handlers
 		prc.xehUpdateCheck		= "#prc.cbAdminEntryPoint#.autoupdates.check";
+		
 		// slugs
 		prc.updateSlugStable = getModuleSettings("contentbox").settings.updateSlug_stable;
 		prc.updateSlugBeta = getModuleSettings("contentbox").settings.updateSlug_beta;
 		
-		// check install logs
-		if( flash.exists("updateLog") ){ 
-			flash.keep("udpateLog");
-		}
+		// keep logs for review
+		flash.keep("udpateLog");
 		// clear Logs
 		if( event.valueExists("clearLogs") ){
 			flash.discard("updateLog");
