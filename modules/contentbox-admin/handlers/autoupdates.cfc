@@ -86,9 +86,15 @@ component extends="baseHandler"{
 		
 		try{
 			// Apply Update
-			var updateLog = getModel("UpdateService@cb").applyUpdate( rc.downloadURL, rc.version );
-			getPlugin("MessageBox").info("Update Applied! Welcome to version #rc.version#");
-			flash.put("updateLog", updateLog);
+			var updateResults = getModel("UpdateService@cb").applyUpdate( rc.downloadURL, rc.version );
+			if( updateResults.error ){
+				getPlugin("MessageBox").warn("Update Failed! Please check the logs for more information");
+			}
+			else{
+				getPlugin("MessageBox").info("Update Applied! Welcome to version #rc.version#");
+			}
+			flash.put("updateLog", updateResults.log);
+			
 		}
 		catch(Any e){
 			getPlugin("MessageBox").error("Error installing auto-update.<br> Diagnostics: #e.detail# #e.message#");

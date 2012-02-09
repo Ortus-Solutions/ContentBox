@@ -68,6 +68,9 @@ component accessors="true"{
 					// Post Install
 					updater.postInstallation();
 					
+					// Remove Updater
+					fileDelete( getPatchesLocation() & "/" & arguments.version & "/Update.cfc" );
+					
 					// end process
 					results.error = false;
 				}
@@ -104,6 +107,9 @@ component accessors="true"{
 		else{
 			log.append("No updated files to remove. <br/>");
 		}
+		
+		// remove deletes
+		fileDelete( arguments.path );
 	}
 	
 	// processUpdates
@@ -131,6 +137,9 @@ component accessors="true"{
 		zipUtil.extract(zipFilePath=arguments.path, extractPath=appPath, overwriteFiles="true");
 		// more logging
 		log.append("Patch Updates uncompressed.<br />");
+		
+		// remove patch
+		fileDelete( arguments.path );
 	}
 	
 	// Build an updater cfc
