@@ -51,30 +51,37 @@ component accessors="true"{
 		// download patch and extracted?
 		if( downloadPatch(arguments.downloadURL,log) ){
 			
-			// Construct Update.cfc from root
-			try{
-				var updater = buildUpdater();
-				
-				// do preInstallation
-				updater.preInstallation();
-				
-				// Do deletes first
-				processRemovals( getPatchesLocation() & "/deletes.txt", log );
-				// Do updates
-				processUpdates( getPatchesLocation() & "/patch.zip", log );
-				
-				// Post Install
-				updater.postInstallation();
-				
-				// Finally Remove Updater
-				fileDelete( getPatchesLocation() & "/Update.cfc" );
-				
-				// end process
-				results.error = false;
+			// Verify Patch integrity
+			if( !fileExists( getPatchesLocation() & "/Update.cfc" ) ){
+				log.append("Update.cfc not found in downloaded package, skipping patch update.");
 			}
-			catch(any e){
-				log.append("Error applying update: #e.message# #e.detail#");
+			else{
+				// Construct Update.cfc from root
+				try{
+					var updater = buildUpdater();
+					
+					// do preInstallation
+					updater.preInstallation();
+					
+					// Do deletes first
+					processRemovals( getPatchesLocation() & "/deletes.txt", log );
+					// Do updates
+					processUpdates( getPatchesLocation() & "/patch.zip", log );
+					
+					// Post Install
+					updater.postInstallation();
+					
+					// Finally Remove Updater
+					fileDelete( getPatchesLocation() & "/Update.cfc" );
+					
+					// end process
+					results.error = false;
+				}
+				catch(any e){
+					log.append("Error applying update: #e.message# #e.detail#");
+				}
 			}
+			
 			
 		}
 		
