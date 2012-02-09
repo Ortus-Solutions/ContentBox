@@ -158,6 +158,18 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return getRequestContext().getValue("q","");
 	}
 	
+	// Determine if you are in the blog
+	boolean function isBlogView(){
+		if( isIndexView() OR isEntryView() OR isArchivesView() ){
+			return true;
+		}
+		return false;
+	}
+	// Determine if you are in the archives view
+	boolean function isArchivesView(){
+		var event = getRequestContext();
+		return (event.getCurrentEvent() eq "contentbox-ui:blog.archives");
+	}
 	// Determine if you are in the index view
 	boolean function isIndexView(){
 		var event = getRequestContext();
@@ -168,10 +180,23 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var event = getRequestContext();
 		return (event.getCurrentEvent() eq "contentbox-ui:blog.entry");
 	}
-	// Determine if you are in the page view
-	boolean function isPageView(){
+	/**
+	* Determine if you are in the page view
+	* @page.hint Optional page slug to determine if you are in that page or not.
+	*/
+	boolean function isPageView(page=""){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.page");
+		if( event.getCurrentEvent() eq "contentbox-ui:blog.page" ){
+			// slug check
+			if( len(arguments.page) AND getCurrentPage().getSlug() eq arguments.page ){
+				return true;
+			}
+			else if( !len(arguments.page) ){
+				return true;
+			}
+			return false;			
+		}
+		return false;
 	}
 	// Get the index page entries, else throws exception
 	any function getCurrentEntries(){
