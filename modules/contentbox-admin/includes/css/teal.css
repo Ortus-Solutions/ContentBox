@@ -235,7 +235,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}
 /**============================== DIFF CSS ==============================**/
-.consoleLog{ border:2px solid #eaeaea;padding:5px;font-size:10px;font-family: courier;background-color:black;color:#66E10D}
+.consoleLog{ border:2px solid #eaeaea;padding:5px;font-size:11px;font-family: courier;background-color:black;color:#66E10D}
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/

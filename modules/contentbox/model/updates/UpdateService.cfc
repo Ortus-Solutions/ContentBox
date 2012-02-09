@@ -50,37 +50,32 @@ component accessors="true"{
 		
 		// download patch and extracted?
 		if( downloadPatch(arguments.downloadURL,log) ){
-			// Verify version exists
-			if( directoryExists( getPatchesLocation() & "/" & arguments.version ) ){
+			
+			// Construct Update.cfc from root
+			try{
+				var updater = buildUpdater();
 				
-				// Construct Update.cfc
-				try{
-					var updater = buildUpdater( arguments.version );
-					
-					// do preInstallation
-					updater.preInstallation();
-					
-					// Do deletes first
-					processRemovals( getPatchesLocation() & "/" & arguments.version & "/deletes.txt", log );
-					// Do updates
-					processUpdates( getPatchesLocation() & "/" & arguments.version & "/patch.zip", log );
-					
-					// Post Install
-					updater.postInstallation();
-					
-					// Remove Updater
-					fileDelete( getPatchesLocation() & "/" & arguments.version & "/Update.cfc" );
-					
-					// end process
-					results.error = false;
-				}
-				catch(any e){
-					log.append("Error applying update: #e.message# #e.detail#");
-				}
+				// do preInstallation
+				updater.preInstallation();
+				
+				// Do deletes first
+				processRemovals( getPatchesLocation() & "/deletes.txt", log );
+				// Do updates
+				processUpdates( getPatchesLocation() & "/patch.zip", log );
+				
+				// Post Install
+				updater.postInstallation();
+				
+				// Finally Remove Updater
+				fileDelete( getPatchesLocation() & "/Update.cfc" );
+				
+				// end process
+				results.error = false;
 			}
-			else{
-				log.append("The version folder #getPatchesLocation() & "/" & arguments.version# does not exist, ignoring patch");
+			catch(any e){
+				log.append("Error applying update: #e.message# #e.detail#");
 			}
+			
 		}
 		
 		// finalize the results
@@ -113,7 +108,7 @@ component accessors="true"{
 	}
 	
 	// processUpdates
-	function processUpdates(required path,required log){
+	function processUpdates(required path, required log){
 		
 		// Verify patch exists
 		if( !fileExists( arguments.path ) ){
@@ -143,8 +138,8 @@ component accessors="true"{
 	}
 	
 	// Build an updater cfc
-	IUpdate function buildUpdater(required string version){
-		var updater = wirebox.getInstance("contentbox.model.updates.patches.#arguments.version#.Update");
+	IUpdate function buildUpdater(){
+		var updater = wirebox.getInstance("contentbox.model.updates.patches.Update");
 		return updater;
 	}
 	

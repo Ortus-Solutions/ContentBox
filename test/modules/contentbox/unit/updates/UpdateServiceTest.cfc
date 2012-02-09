@@ -44,19 +44,18 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	function testBuildUpdater(){
 		 var source = expandPath("/contentbox-test/resources/patches/Update.cfc");
 		 var version = "1-0-0-0-1";
-		 var dest = expandPath("/contentbox/model/updates/patches/#version#/Update.cfc");
+		 var dest = expandPath("/contentbox/model/updates/patches/Update.cfc");
 		 
 		// copy updater
-		directoryCreate( getDirectoryFromPath( dest ) );
 		fileCopy( source, dest );
 		
 		try{
-			wirebox.$("getInstance", createObject("component","contentbox.model.updates.patches.#version#.Update") );
-			r = model.buildUpdater( version );
+			wirebox.$("getInstance", createObject("component","contentbox.model.updates.patches.Update") );
+			r = model.buildUpdater();
 			assertTrue( isObject(r) );
 		}
 		finally{
-			directoryDelete( getDirectoryFromPath( dest ), true );
+			fileDelete( dest );
 		}
 	}
 	
@@ -77,29 +76,44 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	}
 	
 	function testProcessRemovals(){
-		var source = expandPath("/contentbox-test/resources/patches/deletes_empty.txt");
+		var source = expandPath("/contentbox-test/resources/patches/archive/deletes_empty.txt");
+		var dest = expandPath("/contentbox-test/resources/patches/deletes_empty.txt");
 		var log = createObject("java","java.lang.StringBuilder").init('');
+		
+		fileCopy( source, dest );
 		
 		// test empty
-		model.processRemovals( source, log );
+		model.processRemovals( dest, log );
+		debug( log.toString() );
 		assertEquals( "No updated files to remove. <br/>", log.toString() );
+		assertFalse( fileExists( dest ) );
 		
 		// test with files
-		var source = expandPath("/contentbox-test/resources/patches/deletes.txt");
+		var source = expandPath("/contentbox-test/resources/patches/archive/deletes.txt");
+		var dest = expandPath("/contentbox-test/resources/patches/deletes.txt");
 		var log = createObject("java","java.lang.StringBuilder").init('');
 		var destination = expandPath("/contentbox-test/resources/patches/tmp/test.txt");
+		
+		fileCopy( source, dest );
 		fileWrite( destination, "file");
-		model.processRemovals( source, log );
+
+		model.processRemovals( dest, log );
+		assertFalse( fileExists( dest ) );
+		assertFalse( fileExists( destination ) );
 		debug( log.toString() );
 		
 	}
 	
 	function testProcessUpdates(){
+		var original = expandPath("/contentbox-test/resources/patches/archive/patch.zip");
 		var source = expandPath("/contentbox-test/resources/patches/patch.zip");
 		var log = createObject("java","java.lang.StringBuilder").init('');
 		
+		fileCopy( original, source );
+		
 		mockZip.$("list",queryNew("")).$("extract",true);
 		model.processUpdates( source, log );
+		assertFalse( fileExists( source ) );
 		debug( log.toString() );
 		
 		
