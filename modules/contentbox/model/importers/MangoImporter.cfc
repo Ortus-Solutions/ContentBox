@@ -25,14 +25,14 @@ component implements="contentbox.model.importers.ICBImporter"{
 	/**
 	* Import from mango blog, returns the string console.
 	*/
-	function execute(required dsn,dsnUsername="",dsnPassword="",defaultPassword="",required roleID){
+	function execute(required dsn,dsnUsername="",dsnPassword="",defaultPassword="",required roleID,tableprefix=""){
 		var authorMap 	= {};
 		var catMap 		= {};
 		var entryMap 	= {};
 		var pageMap		= {};
 		var slugMap 	= {};
 		var pageSlugMap = {};
-		
+
 		log.info("Starting import process: #arguments.toString()#");
 		
 		try{
@@ -40,7 +40,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 			/************************************** CATEGORIES *********************************************/
 			
 			var q = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-						      password=arguments.dsnPassword,sql="select * from mango_category").execute().getResult();
+						      password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#category").execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
 				var props 	= {category=q.title[x], slug=q.name[x]};
 				var cat 	= categoryService.new(properties=props);
@@ -57,7 +57,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 			var defaultRole = roleService.get( arguments.roleID );
 			// Import Authors
 			var q = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-						     password=arguments.dsnPassword,sql="select * from mango_author").execute().getResult();
+						     password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#author").execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
 				var props = {email=q.email[x], username=q.username[x], password=hash(defaultPassword, authorService.getHashType() ),isActive=1,
 						     firstName=listFirst(q.name[x]," "), lastName=trim(replacenocase(q.name[x], listFirst(q.name[x]," "), "" ))};
@@ -80,7 +80,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 			var qPages = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     password=arguments.dsnPassword,
 						     sql="select me.*, mp.parent_page_id, mp.hierarchy, mp.sort_order
-									from mango_entry me, mango_page mp
+									from #arguments.tablePrefix#entry me, #arguments.tablePrefix#page mp
 									where me.id = mp.id
 									order by mp.hierarchy").execute().getResult();
 			for(var x=1; x lte qPages.recordcount;x++){
@@ -103,12 +103,12 @@ component implements="contentbox.model.importers.ICBImporter"{
 								
 				var page = pageService.new(properties=props);
 				// Add content versionized!
-				page.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.author_id[x]] ));
+				page.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[qPages.author_id[x]] ));
 				
 				// Custom Fields
 				log.info("Starting to import Page Custom Fields....");
 				var qCustomFields = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-						     		    password=arguments.dsnPassword,sql="select * from mango_entry_custom_field as cf where cf.entry_id = '#qPages.id[x]#'").execute().getResult();
+						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#entry_custom_field as cf where cf.entry_id = '#qPages.id[x]#'").execute().getResult();
 				for(var y=1; y lte qCustomFields.recordcount; y++){
 					var props = {
 						key = qCustomFields.name[y], value = qCustomFields.field_value[y]
@@ -125,7 +125,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				log.info("Starting to import Page Comments....");
 				// Import page comments
 				var qComments = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-							       		  password=arguments.dsnPassword,sql="select * from mango_comment as mc where mc.entry_id = '#qPages.id[x]#'").execute().getResult();
+							       		  password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#comment as mc where mc.entry_id = '#qPages.id[x]#'").execute().getResult();
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
 						content = qComments.content[y], author = qComments.creator_name[y], authorIP = '127.0.0.1', authorEmail = qComments.creator_email[y], 
@@ -155,9 +155,9 @@ component implements="contentbox.model.importers.ICBImporter"{
 			var q = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     password=arguments.dsnPassword,
 						     sql="select me.*
-								from mango_entry me
+								from #arguments.tablePrefix#entry me
 								where me.id NOT IN(
-									select id from mango_page
+									select id from #arguments.tablePrefix#page
 								)
 								order by last_modified asc").execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
@@ -183,7 +183,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				
 				// entry categories
 				var qCategories = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-						     		    password=arguments.dsnPassword,sql="select * from mango_post_category as mp where mp.post_id = '#q.id[x]#'").execute().getResult();
+						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#post_category as mp where mp.post_id = '#q.id[x]#'").execute().getResult();
 				var aCategories = [];
 				for(var y=1; y lte qCategories.recordcount; y++){
 					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.category_id[y]] ) );
@@ -192,7 +192,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				
 				// Custom Fields
 				var qCustomFields = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-						     		    password=arguments.dsnPassword,sql="select * from mango_entry_custom_field as cf where cf.entry_id = '#q.id[x]#'").execute().getResult();
+						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#entry_custom_field as cf where cf.entry_id = '#q.id[x]#'").execute().getResult();
 				for(var y=1; y lte qCustomFields.recordcount; y++){
 					var props = {
 						key = qCustomFields.name[y], value = qCustomFields.field_value[y]
@@ -208,7 +208,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				log.info("Starting to import Entry Comments....");
 				// Import page comments
 				var qComments = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-							       		  password=arguments.dsnPassword,sql="select * from mango_comment as mc where mc.entry_id = '#q.id[x]#'").execute().getResult();
+							       		  password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#comment as mc where mc.entry_id = '#q.id[x]#'").execute().getResult();
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
 						content = qComments.content[y], author = qComments.creator_name[y], authorIP = '127.0.0.1', authorEmail = qComments.creator_email[y], 

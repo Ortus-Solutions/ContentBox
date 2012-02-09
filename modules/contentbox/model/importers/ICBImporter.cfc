@@ -3,6 +3,6 @@
 */
 interface{
 
-	function execute(required dsn,dsnUsername="",dsnPassword="",defaultPassword="",required roleID);
+	function execute(required dsn,dsnUsername="",dsnPassword="",defaultPassword="",required roleID,tableprefix="");
 
 }

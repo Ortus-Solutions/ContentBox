@@ -61,6 +61,11 @@
 			#html.select(name="importer",options="Select Source,Mango,WordPress",style="width:200px")#
 			
 			<!--- Default Password --->
+			#html.label(field="tableprefix",content="Table Prefix:")#
+			<small>The table prefix used by the source software.</small><br/>
+			#html.textField(name="tableprefix",class="textfield",size="30")#
+			
+			<!--- Default Password --->
 			#html.label(field="defaultPassword",content="Default Author Password:")#
 			<small>Since ContentBox uses its own encryption algorithm, you cannot port passwords. Use the following
 			default password for all authors and then do password change requests.</small><br/>

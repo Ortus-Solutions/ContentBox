@@ -31,6 +31,7 @@ component extends="baseHandler"{
 		event.paramValue("dsnUsername","");
 		event.paramValue("dsnPassword","");
 		event.paramValue("defaultPassword","");
+		event.paramValue("tableprefix","");
 		event.paramValue("roleID","");
 		
 		// validate
@@ -42,7 +43,7 @@ component extends="baseHandler"{
 		try{
 			// get importer
 			var importer = getModel("#rc.importer#Importer@cb");
-			importer.execute(dsn=rc.dsn,dsnUsername=rc.dsnUsername,dsnPassword=rc.dsnPassword,defaultPassword=rc.defaultPassword,roleID=rc.roleID);
+			importer.execute(argumentCollection=rc);
 			getPlugin("MessageBox").info("Content imported successfully! Please check out your ContentBox now!");
 		}
 		catch(any e){
