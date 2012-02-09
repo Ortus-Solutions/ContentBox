@@ -33,7 +33,20 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		// else throw exception
 		throw(message="Setting requested: #arguments.key# not found",detail="Settings keys are #structKeyList(prc.cbSettings)#",type="ContentBox.CBHelper.InvalidSetting");
 	}
-
+	
+	// get contentbox version
+	function getContentBoxVersion(){
+		return getModuleSettings("contentbox").version;
+	}	
+	// get contentbox codename
+	function getContentBoxCodeName(){
+		return getModuleSettings("contentbox").settings.codename;
+	}
+	// get contentbox codename URL
+	function getContentBoxCodeNameURL(){
+		return getModuleSettings("contentbox").settings.codenameLink;
+	}
+	
 	/**
 	* Get custom HTML content pieces by slug
 	* @slug The content slug to retrieve
@@ -186,7 +199,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	boolean function isPageView(page=""){
 		var event = getRequestContext();
-		if( event.getCurrentEvent() eq "contentbox-ui:blog.page" ){
+		if( event.getCurrentEvent() eq "contentbox-ui:page.index" ){
 			// slug check
 			if( len(arguments.page) AND getCurrentPage().getSlug() eq arguments.page ){
 				return true;
