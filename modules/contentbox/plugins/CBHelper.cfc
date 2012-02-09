@@ -417,6 +417,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @entry The entry to link to
 	*/
 	function linkEntry(entry){
+		if( isSimpleValue(arguments.entry) ){
+			return linkEntryWithSlug( arguments.entry );
+		}
 		var xeh = siteRoot() & sep() & "#blogEntryPoint#.#arguments.entry.getSlug()#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}

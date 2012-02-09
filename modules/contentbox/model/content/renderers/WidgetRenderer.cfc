@@ -21,7 +21,9 @@ component accessors="true"{
 	*/
 	void function cb_onCustomHTMLRendering(event,struct interceptData){
 		translateContent(builder=arguments.interceptData.builder,customHTML=arguments.interceptData.customHTML);
-	}		private function translateContent(required builder, content, customHTML){
+	}	
+
+	private function translateContent(required builder, content, customHTML){
 		// our mustaches pattern
 		var regex 		= "\{\{\{[^\}]*\}\}\}";
 		// match widgets in our incoming builder and build our targets array and len
@@ -54,8 +56,15 @@ component accessors="true"{
 					}
 				}
 				
-				// Render out the widget
-				widgetContent = widgetService.getWidget( widgetName ).renderit(argumentCollection=widgetArgs);
+				// Detect direct method call
+				if( find(".", widgetName) ){
+					widgetContent = evaluate("widgetService.getWidget( '#getToken(widgetName,1,".")#' ).#getToken(widgetName,2,".")#(argumentCollection=widgetArgs)");
+				}
+				else{
+					// Render out the widget
+					widgetContent = widgetService.getWidget( widgetName ).renderit(argumentCollection=widgetArgs);
+				}
+								
 				
 			}
 			catch(Any e){
