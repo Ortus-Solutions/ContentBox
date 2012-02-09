@@ -272,6 +272,12 @@
 							   title="Manage The Raw Settings Geek Style">Geek Settings</a>
 						</li>
 						</cfif>
+						<cfif prc.oAuthor.checkPermission("SYSTEM_UPDATES")>
+						<li>
+							<a href="#event.buildLink(prc.xehAutoUpdater)#" <cfif event.getValue("tabSystem_autoUpdates",false,true)> class="current"</cfif>
+							   title="Check for ContentBox Updates">Updates</a>
+						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_systemTab")#
 					</ul>

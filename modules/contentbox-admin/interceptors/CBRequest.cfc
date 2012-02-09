@@ -80,6 +80,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehSecurityRules	= "#prc.cbAdminEntryPoint#.securityrules";
 		prc.xehRawSettings		= "#prc.cbAdminEntryPoint#.settings.raw";
 		prc.xehEmailTemplates   = "#prc.cbAdminEntryPoint#.emailtemplates";
+		prc.xehAutoUpdater	    = "#prc.cbAdminEntryPoint#.autoupdates";
 		
 		// Login/Logout
 		prc.xehDoLogout 	= "#prc.cbAdminEntryPoint#.security.doLogout";

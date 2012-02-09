@@ -38,7 +38,11 @@ component {
 		// contentbox settings
 		settings = {
 			codename = "John 12:44",
-			codenameLink = "http://www.youversion.com/bible/nkjv/matt/18/11"
+			codenameLink = "http://www.youversion.com/bible/nkjv/matt/18/11",
+			// Auto Updates
+			updateSlug_stable 	= "contentbox-stable-updates",
+			updateSlug_beta 	= "contentbox-beta-updates",
+			updatesURL			= "http://www.coldbox.org/api/forgebox"
 		};
 		
 		// Parent Affected Settings
@@ -87,6 +91,9 @@ component {
 		binder.map("roleService@cb").to("contentbox.model.security.RoleService");
 		binder.map("securityRuleService@cb").to("contentbox.model.security.SecurityRuleService");
 		binder.map("securityInterceptor@cb").toDSL("coldbox:interceptor:security@cb");
+		// Updates
+		binder.map("ForgeBox@cb").to("contentbox.model.updates.ForgeBox");
+		binder.map("UpdateService@cb").to("contentbox.model.updates.UpdateService");
 		// Entry services
 		binder.map("entryService@cb").to("contentbox.model.content.EntryService");
 		binder.map("categoryService@cb").to("contentbox.model.content.CategoryService");

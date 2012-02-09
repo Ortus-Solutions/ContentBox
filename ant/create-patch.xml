@@ -10,7 +10,7 @@
 	<!-- Init -->
 	<target name="init" description="Init">
 		<!-- Version -->
-		<input addproperty="contentbox.version" message="ContentBox Version" />
+		<input addproperty="contentbox.version" message="ContentBox Version (no periods, use dashes)" />
 		<!-- Start Commit -->
 		<input addproperty="contentbox.startgit" message="Git Start Commit Hash" />
 		<!-- End Commit -->

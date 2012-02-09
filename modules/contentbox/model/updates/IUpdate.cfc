@@ -22,24 +22,12 @@ limitations under the License.
 ********************************************************************************
 This is an updater cfc for contentbox
 */
-component implements="contentbox.model.updates.IUpdate"{
-
-	function init(){
-		return this;
-	}
-
-	/**
-	* pre installation
-	*/
-	function preInstallation(){
-		
-	}
-	
-	/**
-	* post installation
-	*/
-	function postInstallation(){
-		
-	}
+interface{
+	// forced init
+	function init();
+	// before any installation
+	function preInstallation();
+	// after any installation
+	function postInstallation();
 
 }

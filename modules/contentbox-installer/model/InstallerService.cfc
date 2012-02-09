@@ -111,7 +111,8 @@ component accessors="true"{
 			"EMAIL_TEMPLATE_ADMIN" = "Ability to manage the system's email templates",
 			"MEDIAMANAGER_ADMIN" = "Ability to manage the system's media manager",
 			"VERSIONS_ROLLBACK" = "Ability to rollback content versions",
-			"VERSIONS_DELETE" = "Ability to delete past content versions"
+			"VERSIONS_DELETE" = "Ability to delete past content versions",
+			"SYSTEM_UPDATES" = "Ability to view and apply ContentBox updates"
 		};
 		
 		var allperms = [];
