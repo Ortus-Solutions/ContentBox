@@ -5,20 +5,20 @@ component extends="BaseContentHandler" singleton{
 
 	// DI
 	property name="entryService" inject="id:entryService@cb";
-	
+
 	// pre Handler
 	function preHandler(event,action,eventArguments){
 		// super call
 		super.preHandler(argumentCollection=arguments);
 	}
-	
+
 	/**
 	* The preview page
 	*/
 	function preview(event,rc,prc){
 		event.paramValue("h","");
 		event.paramValue("l","");
-		
+
 		var author = getModel("securityService@cb").getAuthorSession();
 		// valid Author?
 		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
@@ -44,12 +44,12 @@ component extends="BaseContentHandler" singleton{
 		event.paramValue("page",1);
 		event.paramValue("category","");
 		event.paramValue("q","");
-		
+
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 			= CBHelper.linkHome() & "?page=@page@";
-		
+
 		// Search Paging Link Override?
 		if( len(rc.q) ){
 			prc.pagingLink = CBHelper.linkHome() & "/search/#rc.q#/@page@?";
@@ -58,7 +58,7 @@ component extends="BaseContentHandler" singleton{
 		if( len(rc.category) ){
 			prc.pagingLink = CBHelper.linkHome() & "/category/#rc.category#/@page@?";
 		}
-		
+
 		// get published entries
 		var entryResults = entryService.findPublishedEntries(offset=prc.pagingBoundaries.startRow-1,
 											   				 max=prc.cbSettings.cb_paging_maxentries,
@@ -66,14 +66,14 @@ component extends="BaseContentHandler" singleton{
 											   				 searchTerm=rc.q);
 		prc.entries 		= entryResults.entries;
 		prc.entriesCount  	= entryResults.count;
-		
+
 		// announce event
 		announceInterception("cbui_onIndex",{entries=prc.entries,entriesCount=prc.entriesCount});
-		
+
 		// set skin view
 		event.setView("#prc.cbLayout#/views/index");
 	}
-	
+
 	/**
 	* The archives
 	*/
@@ -84,12 +84,12 @@ component extends="BaseContentHandler" singleton{
 		event.paramValue("year","0");
 		event.paramValue("month","0");
 		event.paramValue("day","0");
-		
+
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 			= CBHelper.linkHome() & event.getCurrentRoutedURL() & "?page=@page@";
-		
+
 		// get published entries
 		var entryResults = entryService.findPublishedEntriesByDate(year=rc.year,
 											   				  	   month=rc.month,
@@ -98,24 +98,29 @@ component extends="BaseContentHandler" singleton{
 											   					   max=prc.cbSettings.cb_paging_maxentries);
 		prc.entries 		= entryResults.entries;
 		prc.entriesCount  	= entryResults.count;
-		
+
 		// announce event
 		announceInterception("cbui_onArchives",{entries=prc.entries,entriesCount=prc.entriesCount});
-		
+
 		// set skin view
 		event.setView("#prc.cbLayout#/views/archives");
 	}
-	
+
 	/**
 	* An entry page
 	*/
 	function entry(event,rc,prc){
 		// incoming params
 		event.paramValue("entrySlug","");
-		
-		// Try to retrieve by slug
-		prc.entry = entryService.findBySlug(rc.entrySlug);
-		
+
+		// get the author
+		var author = getModel("securityService@cb").getAuthorSession();
+		var showUnpublished = false;
+		if( author.isLoaded() AND author.isLoggedIn() ){
+			var showUnpublished = true;
+		}
+		prc.entry = entryService.findBySlug(rc.entrySlug,showUnpublished);
+
 		// Check if loaded, else not found
 		if( prc.entry.isLoaded() ){
 			// Record hit
@@ -128,7 +133,7 @@ component extends="BaseContentHandler" singleton{
 			// announce event
 			announceInterception("cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug});
 			// set skin view
-			event.setView("#prc.cbLayout#/views/entry");	
+			event.setView("#prc.cbLayout#/views/entry");
 		}
 		else{
 			// announce event
@@ -139,9 +144,9 @@ component extends="BaseContentHandler" singleton{
 			event.setHTTPHeader("404","Entry not found");
 			// set skin not found
 			event.setView("#prc.cbLayout#/views/notfound");
-		}	
+		}
 	}
-	
+
 	/**
 	* Display the RSS feeds
 	*/
@@ -150,30 +155,30 @@ component extends="BaseContentHandler" singleton{
 		event.paramValue("category","");
 		event.paramValue("entrySlug","");
 		event.paramValue("commentRSS",false);
-		
+
 		// Build out the RSS feeds
 		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,entrySlug=rc.entrySlug);
-		
+
 		// Render out the feed xml
 		event.renderData(type="plain",data=feed,contentType="text/xml");
 	}
-	
+
 	/**
 	* Comment Form Post
 	*/
 	function commentPost(event,rc,prc){
 		// incoming params
 		event.paramValue("entrySlug","");
-		
+
 		// Try to retrieve entry by slug
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
-		
+
 		// If null, kick them out
 		if( isNull( thisEntry ) ){ setNextEvent( prc.cbEntryPoint ); }
-		
+
 		// validate incoming comment post
 		prc.commentErrors = validateCommentPost(event,rc,prc,thisEntry);
-		
+
 		// Validate if comment errors exist
 		if( arrayLen( prc.commentErrors ) ){
 			// MessageBox
@@ -182,11 +187,11 @@ component extends="BaseContentHandler" singleton{
 			rc.entrySlug = thisEntry.getSlug();
 			// Execute entry again, need to correct form
 			entry(argumentCollection=arguments);
-			return;	
+			return;
 		}
-		
+
 		// Valid commenting, so go and save
-		saveComment( thisEntry );		
+		saveComment( thisEntry );
 	}
 
 }
