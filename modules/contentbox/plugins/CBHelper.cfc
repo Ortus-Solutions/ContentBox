@@ -444,6 +444,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @page The page to link to
 	*/
 	function linkPage(page){
+		if( isSimpleValue(arguments.page) ){
+			return linkPageWithSlug( arguments.page );
+		}
 		var xeh = siteRoot() & "#replace(arguments.page.getRecursiveSlug(),"/","")#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
