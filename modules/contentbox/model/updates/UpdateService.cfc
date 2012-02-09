@@ -108,6 +108,13 @@ component accessors="true"{
 	
 	// processUpdates
 	function processUpdates(required path,required log){
+		
+		// Verify patch exists
+		if( !fileExists( arguments.path ) ){
+			log.append("Skipping patch extraction as no patch.zip found in update patch.");
+			return;
+		}
+		
 		// test zip has files?
 		try{
 			var listing = zipUtil.list( arguments.path );
