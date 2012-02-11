@@ -7,7 +7,7 @@ component extends="baseHandler"{
 	
 	function preHandler(event,action,eventArguments){
 		var prc = event.getCollection(private=true);
-		prc.tabSystem	  = true;
+		prc.tabDashboard	  = true;
 	}
 
 	// dashboard index
@@ -30,7 +30,7 @@ component extends="baseHandler"{
 		prc.installLog = flash.get("updateLog","");
 		
 		// Tab Manipulation
-		prc.tabSystem_autoUpdates = true;
+		prc.tabDashboard_updates = true;
 				
 		// auto updates
 		event.setView("autoupdates/index");

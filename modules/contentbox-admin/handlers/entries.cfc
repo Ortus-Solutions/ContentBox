@@ -21,7 +21,7 @@ component extends="baseHandler"{
 		prc.xehEntryEditor 	= "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehEntryRemove 	= "#prc.cbAdminEntryPoint#.entries.remove";
 		// Tab control
-		prc.tabEntries = true;
+		prc.tabContent = true;
 	}
 	
 	// index
@@ -68,7 +68,7 @@ component extends="baseHandler"{
 		prc.xehEntryHistory  = "#prc.cbAdminEntryPoint#.versions.index";
 		
 		// Tab
-		prc.tabEntries_viewAll = true;
+		prc.tabContent_entries = true;
 		// view
 		event.setView("entries/index");
 	}

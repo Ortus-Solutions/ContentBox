@@ -126,24 +126,14 @@
 						<li>
 							<a href="#event.buildLink(prc.xehAbout)#" <cfif event.getValue("tabDashboard_about",false,true)> class="current"</cfif>>About</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("SYSTEM_UPDATES")>
+						<li>
+							<a href="#event.buildLink(prc.xehAutoUpdater)#" <cfif event.getValue("tabDashboard_updates",false,true)> class="current"</cfif>
+							   title="Check for ContentBox Updates">Updates</a>
+						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_dashboardTab")#
-					</ul>
-				</li>
-				<!--- Entries Nav --->
-				<li>
-					<a href="##" title="Blog Entries" <cfif prc.tabEntries>class="current"</cfif>>Entries</a>
-					<ul>
-						<li>
-							<a href="#event.buildLink(prc.xehEntries)#" <cfif event.getValue("tabEntries_viewAll",false,true)> class="current"</cfif>
-							   title="View All Blog Entries">Inbox</a>
-						</li>
-						<li>
-							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabEntries_categories",false,true)> class="current"</cfif>
-							   title="Manage Blog Entry Categories">Categories</a>
-						</li>
-						<!--- cbadmin event --->
-						#announceInterception("cbadmin_entriesTab")#
 					</ul>
 				</li>
 				<!--- Content Nav --->
@@ -151,8 +141,16 @@
 					<a href="##" title="Site Content" <cfif prc.tabContent>class="current"</cfif>>Content</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabContent_viewAll",false,true)> class="current"</cfif>
-							   title="View All Blog Entries">Manage Pages</a>
+							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabContent_pages",false,true)> class="current"</cfif>
+							   title="View All Blog Entries">Pages</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehEntries)#" <cfif event.getValue("tabContent_entries",false,true)> class="current"</cfif>
+							   title="View All Blog Entries">Blog</a>
+						</li>
+						<li>
+							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabContent_categories",false,true)> class="current"</cfif>
+							   title="Manage Blog Entry Categories">Blog Categories</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
@@ -165,7 +163,7 @@
 						</li>
 						</cfif>
 						<!--- cbadmin event --->
-						#announceInterception("cbadmin_pagesTab")#
+						#announceInterception("cbadmin_contentTab")#
 					</ul>
 				</li>
 				<!--- Comments Nav --->
@@ -220,11 +218,6 @@
 							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabAuthors_Roles",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Roles">Roles</a>
 						</li>
-						<li>
-							<a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"
-							   <cfif event.getValue("tabAuthors_editor",false,true) AND prc.oAuthor.getAuthorID() eq event.getValue("authorID","")>class="current"</cfif>
-							   title="Manage your profile">My Profile</a>
-						</li>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_authorsTab")#
 					</ul>
@@ -270,12 +263,6 @@
 						<li>
 							<a href="#event.buildLink(prc.xehRawSettings)#" <cfif event.getValue("tabSystem_rawSettings",false,true)> class="current"</cfif>
 							   title="Manage The Raw Settings Geek Style">Geek Settings</a>
-						</li>
-						</cfif>
-						<cfif prc.oAuthor.checkPermission("SYSTEM_UPDATES")>
-						<li>
-							<a href="#event.buildLink(prc.xehAutoUpdater)#" <cfif event.getValue("tabSystem_autoUpdates",false,true)> class="current"</cfif>
-							   title="Check for ContentBox Updates">Updates</a>
 						</li>
 						</cfif>
 						<!--- cbadmin event --->

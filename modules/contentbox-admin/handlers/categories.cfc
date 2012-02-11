@@ -11,7 +11,7 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// Tab control
-		prc.tabEntries = true;
+		prc.tabContent = true;
 	}
 	
 	// index
@@ -22,8 +22,7 @@ component extends="baseHandler"{
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// Tab
-		prc.tabEntries			  = true;
-		prc.tabEntries_categories = true;
+		prc.tabContent_categories = true;
 		// view
 		event.setView("categories/index");
 	}

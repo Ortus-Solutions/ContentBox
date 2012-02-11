@@ -71,7 +71,7 @@ component extends="baseHandler"{
 		prc.xehPageHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 
 		// Tab
-		prc.tabContent_viewAll = true;
+		prc.tabContent_pages = true;
 		// view
 		event.setView("pages/index");
 	}

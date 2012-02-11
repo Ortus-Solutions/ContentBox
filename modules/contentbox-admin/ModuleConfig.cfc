@@ -51,7 +51,7 @@ component {
 				// Main Navigation
 				"cbadmin_beforeMainNav","cbadmin_afterMainNav",
 				// Main Tabs
-				"cbadmin_dashboardTab","cbadmin_entriesTab","cbadmin_pagesTab","cbadmin_commentsTab","cbadmin_authorsTab","cbadmin_systemTab","cbadmin_toolsTab", 
+				"cbadmin_dashboardTab","cbadmin_contentTab","cbadmin_commentsTab","cbadmin_authorsTab","cbadmin_systemTab","cbadmin_toolsTab", 
 				// Entry Events
 				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove", 
 				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarFooter",

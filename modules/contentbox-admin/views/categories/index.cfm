@@ -29,7 +29,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/category.png" alt="sofa" width="30" height="30" />
-			Categories
+			Blog Categories
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -56,7 +56,7 @@
 			<table name="categories" id="categories" class="tablesorter" width="98%">
 				<thead>
 					<tr>
-						<th>Name</th>
+						<th>Category Name</th>
 						<th>Slug</th>		
 						<th width="75" class="center">Entries</th>	
 						<th width="75" class="center {sorter:false}">Actions</th>
