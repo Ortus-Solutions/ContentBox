@@ -58,7 +58,6 @@ component extends="baseHandler"{
 		// exit handlers
 		prc.xehContentSave 		= "#prc.cbAdminEntryPoint#.customHTML.save";
 		prc.xehSlugify	  		= "#prc.cbAdminEntryPoint#.customHTML.slugify";
-		prc.xehWidgetSelector  	= "#prc.cbAdminEntryPoint#.widgets.editorselector";
 		
 		// view
 		event.setView(view="customHTML/editor");

@@ -15,8 +15,11 @@ $(document).ready(function() {
 	window.onbeforeunload = askLeaveConfirmation;
 	needConfirmation = true;
 });
-// Widget URL
-function getEditorSelectorURL(){ return '#event.buildLink(prc.xehWidgetSelector)#';}
+// Widget Plugin Integration
+function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
+// Page Selection Integration
+function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
+// activate custom editor
 function activateCustomEditor(){
 	// toolbar config
 	var ckToolbar =

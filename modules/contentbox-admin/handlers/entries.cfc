@@ -101,7 +101,6 @@ component extends="baseHandler"{
 		// exit handlers
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
-		prc.xehWidgetSelector	= "#prc.cbAdminEntryPoint#.widgets.editorSelector";
 		// Tab
 		prc.tabEntries_viewAll = true;
 		// view

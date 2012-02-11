@@ -1,6 +1,5 @@
 ﻿/*
 Copyright (c) 2012 Ortus Solutions, Corp. All rights reserved.
-getWidgetSelectorURL() is exposed by the dynamic editor being generated.
 openRemoteModal() is part of contentbox js
 */
 (function(){
@@ -8,17 +7,17 @@ openRemoteModal() is part of contentbox js
 	var a= {
 		exec:function(editor){
 			// Open the selector widget dialog.
-			openRemoteModal( getWidgetSelectorURL(), {editorName: editor.name} );
+			openRemoteModal( getPageSelectorURL(), {editorName: editor.name} );
 		}
 	},
 	//Section 2 : Create the button and add the functionality to it
-	b='cbWidgets';
+	b='cbLinks';
 	CKEDITOR.plugins.add(b,{
 		init:function(editor){
 			editor.addCommand(b,a);
-			editor.ui.addButton('cbWidgets',{
-				label:'Insert a ContentBox Widget',
-				icon: this.path + 'ContentBox-Circle_16.png',
+			editor.ui.addButton('cbLinks',{
+				label:'Link to a ContentBox Page',
+				icon: this.path + 'page.png',
 				command:b
 			});
 		}
