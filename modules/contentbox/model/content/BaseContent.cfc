@@ -55,6 +55,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" default="0";
 	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID and comment.isApproved = 1" default="0";
 	property name="numberOfChildren"			formula="select count(*) from cb_content content where content.FK_parentID=contentID" default="0";
+
 	/************************************** VERIONING METHODS *********************************************/
 
 	/**
@@ -137,6 +138,31 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 
 	/************************************** PUBLIC *********************************************/
 
+	/**
+	* Get parent ID if set or empty if none
+	*/
+	function getParentID(){
+		if( hasParent() ){ return getParent().getContentID(); }
+		return "";
+	}
+
+	/**
+	* Get parent name or empty if none
+	*/
+	function getParentName(){
+		if( hasParent() ){ return getParent().getTitle(); }
+		return "";
+	}
+
+	/**
+	* Get recursive slug paths to get ancestry
+	*/
+	function getRecursiveSlug(separator="/"){
+		var pPath = "";
+		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
+		return pPath & arguments.separator & getSlug();
+	}
+	
 	/**
 	* is loaded?
 	*/

@@ -79,6 +79,7 @@ component {
 			// Notification service interceptor
 			{class="contentbox.model.system.NotificationService",name="NotificationService@cb" },
 			// Content Renderers, remember order is important.
+			{class="contentbox.model.content.renderers.LinkRenderer"},
 			{class="contentbox.model.content.renderers.WidgetRenderer"}
 		];
 		

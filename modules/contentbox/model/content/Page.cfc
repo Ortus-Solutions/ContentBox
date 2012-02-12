@@ -51,29 +51,4 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		return errors;
 	}
 
-	/**
-	* Get parent ID if set or empty if none
-	*/
-	function getParentID(){
-		if( hasParent() ){ return getParent().getContentID(); }
-		return "";
-	}
-
-	/**
-	* Get parent name or empty if none
-	*/
-	function getParentName(){
-		if( hasParent() ){ return getParent().getTitle(); }
-		return "";
-	}
-
-	/**
-	* Get recursive slug paths to get ancestry
-	*/
-	function getRecursiveSlug(separator="/"){
-		var pPath = "";
-		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
-		return pPath & arguments.separator & getSlug();
-	}
-
 }

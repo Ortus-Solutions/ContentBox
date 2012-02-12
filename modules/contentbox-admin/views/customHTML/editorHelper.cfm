@@ -19,6 +19,8 @@ $(document).ready(function() {
 function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
 // Page Selection Integration
 function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
+// Entry Selection Integration
+function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector")#';}
 // activate custom editor
 function activateCustomEditor(){
 	// toolbar config
@@ -29,7 +31,7 @@ function activateCustomEditor(){
 	    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
 	    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
 	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] },
-		{ name: 'tools',       items : [ 'Maximize','cbWidgets' ] }
+		{ name: 'tools',       items : [ 'Maximize','ShowBlocks','-','cbWidgets','cbLinks','cbEntryLinks' ] }
 	];
 	// Activate ckeditor
 	$contentEditForm.find("##content").ckeditor( function(){}, {

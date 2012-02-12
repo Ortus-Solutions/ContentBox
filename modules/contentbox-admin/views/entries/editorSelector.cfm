@@ -1,10 +1,10 @@
 ﻿<cfoutput>
-<h2>Link To Page</h2>
+<h2>Link To A ContentBox Entry</h2>
 <div>
-#html.startForm(name="pageEditorSelectorForm")#
+#html.startForm(name="entryEditorSelectorForm")#
 
 	<!--- Loader --->
-	<div class="loaders floatRight" id="pageLoader">
+	<div class="loaders floatRight" id="entryLoader">
 		<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
 	</div>
 	
@@ -14,46 +14,46 @@
 		<!--- Filter Bar --->
 		<div class="filterBar">
 			<div>
-				#html.label(field="pageFilter",content="Quick Filter:",class="inline")#
-				#html.textField(name="pageFilter",size="30",class="textfield")#
+				#html.label(field="entryFilter",content="Quick Filter:",class="inline")#
+				#html.textField(name="entryFilter",size="30",class="textfield")#
 			</div>
 		</div>
 	</div>
 
 	<!--- Paging --->
-	#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
+	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
 	
-	<!--- pages --->
-	<table name="pages" id="pages" class="tablesorter" width="98%">
+	<!--- entries --->
+	<table name="entries" id="entries" class="tablesorter" width="98%">
 		<thead>
 			<tr>
 				<th width="15" class="center {sorter:false}"></th>
-				<th>Page Name</th>
+				<th>Entry Name</th>
 				<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 				<th width="40" class="center">Select</th>
 			</tr>
 		</thead>
 		<tbody>
-			<cfloop array="#prc.pages#" index="page">
-			<tr id="contentID-#page.getContentID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
+			<cfloop array="#prc.entries#" index="entry">
+			<tr id="contentID-#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
 				<td class="middle">
-					<img src="#prc.cbRoot#/includes/images/page.png" alt="child"/>
+					<img src="#prc.cbRoot#/includes/images/pen.png" alt="child"/>
 				</td>
 				<td>
 					<!--- Title --->
-					<strong>#page.getTitle()#</strong>
+					<strong>#entry.getTitle()#</strong>
 				</td>
 				<td class="center">
-					<cfif page.getIsPublished()>
-						<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Page Published!" />
+					<cfif entry.getIsPublished()>
+						<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Published!" />
 						<span class="hidden">published</span>
 					<cfelse>
-						<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Page Draft!" />
+						<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Draft!" />
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="button2" onclick="selectPage('#page.getRecursiveSlug()#')">Select</button>
+					<button class="button2" onclick="return selectCBEntry('#entry.getRecursiveSlug()#','#entry.getTitle()#')">Select</button>
 				</td>
 			</tr>
 			</cfloop>

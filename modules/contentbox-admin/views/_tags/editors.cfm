@@ -22,7 +22,7 @@ function setupEditors($theForm){
 	    '/',
 	    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
 	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
-	    { name: 'tools',       items : [ 'Maximize','cbWidgets','cbLinks' ] }
+	    { name: 'tools',       items : [ 'Maximize','ShowBlocks','-','cbWidgets','cbLinks','cbEntryLinks' ] }
 	];
 	
 	// Activate ckeditor
@@ -75,6 +75,7 @@ function toggleDraft(){
 function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
 // Page Selection Integration
 function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
-
+// Entry Selection Integration
+function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector")#';}
 </script>
 </cfoutput>

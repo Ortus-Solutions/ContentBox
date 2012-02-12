@@ -102,7 +102,7 @@ component extends="baseHandler"{
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
 		// Tab
-		prc.tabEntries_viewAll = true;
+		prc.tabContent_entries = true;
 		// view
 		event.setView("entries/editor");
 	}	
@@ -262,5 +262,30 @@ component extends="baseHandler"{
 		prc.xehQPEntrySave = "#prc.cbAdminEntryPoint#.entries.save";
 		// render it out
 		return renderView(view="entries/quickPost",module="contentbox-admin");		
+	}
+	
+	// editor selector
+	function editorSelector(event,rc,prc){
+		// paging default
+		event.paramValue("page",1);
+		
+		// exit handlers
+		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.entries.editorSelector";
+
+		// prepare paging plugin
+		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 	  		= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 		= "javascript:pagerLink(@page@)";
+
+		// search entries with filters and all
+		var entryResults = entryService.search(offset=prc.paging.startRow-1,
+											  max=prc.cbSettings.cb_paging_maxrows,
+											  sortOrder="createdDate asc");
+
+		prc.entries 		= entryResults.entries;
+		prc.entriesCount  	= entryResults.count;
+		prc.CBHelper 		= CBHelper;
+		
+		event.setView(view="entries/editorSelector",layout="ajax");
 	}
 }

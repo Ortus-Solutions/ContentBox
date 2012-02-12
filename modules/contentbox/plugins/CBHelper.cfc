@@ -429,6 +429,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @slug The entry slug to link to
 	*/
 	function linkEntryWithSlug(slug){
+		arguments.slug = reReplace( arguments.slug, "^/","" );		
 		var xeh = siteRoot() & sep() & "#blogEntryPoint#.#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
@@ -453,16 +454,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var xeh = siteRoot() & "#replace(arguments.page.getRecursiveSlug(),"/","")#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
-
+	
 	/**
 	* Link to a specific page using a slug only
 	* @slug The page slug to link to
 	*/
 	function linkPageWithSlug(slug){
+		arguments.slug = reReplace( arguments.slug, "^/","" );		
 		var xeh = siteRoot() & sep() & "#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
-
+	
 	/**
 	* Create a link to a specific comment in a page or in an entry
 	* @comment The comment to link to

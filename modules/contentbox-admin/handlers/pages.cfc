@@ -118,7 +118,7 @@ component extends="baseHandler"{
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.pages.slugify";
 
 		// Tab
-		prc.tabContent_viewAll = true;
+		prc.tabContent_pages = true;
 		// view
 		event.setView("pages/editor");
 	}
@@ -328,8 +328,9 @@ component extends="baseHandler"{
 
 		prc.pages 	  	= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
+		prc.CBHelper 	= CBHelper;
 		
-		event.setView(view="pages/editorselector",layout="ajax");
+		event.setView(view="pages/editorSelector",layout="ajax");
 	}
 
 }
