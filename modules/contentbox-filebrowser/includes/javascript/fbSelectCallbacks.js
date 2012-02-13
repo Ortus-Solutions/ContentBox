@@ -16,6 +16,10 @@
 function fbCKSelect(sPath,sURL,sType){
 	if( !sPath.length || sType == "dir" ){ alert("Please select a file first."); return; }
 	var funcNum = getUrlParam('CKEditorFuncNum');
+	var dialog = window.opener.CKEDITOR.dialog.getCurrent();
+	var protocol = dialog.getContentElement( 'info', 'protocol' );
+	if( protocol ) dialog.setValueOf('info', 'protocol', '');
+	
 	window.opener.CKEDITOR.tools.callFunction(funcNum, sURL);
 	window.close();
 }
