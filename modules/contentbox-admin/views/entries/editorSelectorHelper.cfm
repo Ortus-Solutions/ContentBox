@@ -15,7 +15,7 @@ function selectCBEntry(slug,title){
 	var link = editor.document.createElement( 'a' );
 	link.setAttribute( 'href', 'entry:['+slug+']');
 	link.setAttribute( 'title', title );
-	
+
 	// get selected text
 	var mySelection = editor.getSelection();
 	var selectedText = "";
@@ -39,6 +39,7 @@ function selectCBEntry(slug,title){
 	}
 	editor.insertElement( link );
 	closeRemoteModal();
+	return false;
 }
 
 function pagerLink(page){
