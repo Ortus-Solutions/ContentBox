@@ -2,6 +2,7 @@
 #html.startForm(name="contentEditForm",action=prc.xehContentSave,novalidate="novalidate")#
 <!--- contentid --->
 #html.hiddenField(name="contentID",bind=prc.content)#
+#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 	
 <!--============================Sidebar============================-->
 <div class="sidebar">

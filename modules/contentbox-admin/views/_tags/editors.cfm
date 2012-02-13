@@ -1,12 +1,10 @@
 <cfoutput>
-<!--- Load Assets --->
-#html.addAsset(prc.cbroot&"/includes/ckeditor/ckeditor.js")#
-#html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
-#html.addAsset(prc.cbroot&"/includes/css/date.css")#
 <!--- Custom Javascript --->
 <script type="text/javascript">
 // Setup the Editors
-function setupEditors($theForm){
+function setupEditors($theForm, withExcerpt){
+	// with excerpt
+	if( withExcerpt == null ){ withExcerpt = true; }
 	// toolbar config
 	var ckToolbar =
 	[
@@ -33,7 +31,15 @@ function setupEditors($theForm){
 			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#',
 			baseHref : '#getSetting("htmlBaseURL")#/'
 		} );
-	$excerpt.ckeditor( function(){}, { toolbar:'Basic',height:175,filebrowserBrowseUrl : '/index.cfm/cbadmin/ckfilebrowser/',baseHref : '#getSetting("htmlBaseURL")#/' } );
+	// Excerpts
+	if (withExcerpt) {
+		$excerpt.ckeditor(function(){}, {
+			toolbar: 'Basic',
+			height: 175,
+			filebrowserBrowseUrl: '/index.cfm/cbadmin/ckfilebrowser/',
+			baseHref: '#getSetting("htmlBaseURL")#/'
+		});
+	}
 	
 	// Date fields
 	$(":date").dateinput();

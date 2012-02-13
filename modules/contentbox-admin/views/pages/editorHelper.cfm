@@ -1,7 +1,5 @@
 ﻿<cfoutput>
 <!--- Load Assets --->
-#html.addAsset(prc.cbroot&"/includes/ckeditor/ckeditor.js")#
-#html.addAsset(prc.cbroot&"/includes/ckeditor/adapters/jquery.js")#
 #html.addAsset(prc.cbroot&"/includes/css/date.css")#
 <!--- Render Commong editor functions --->
 #renderView(view="_tags/editors",prePostExempt=true)#
