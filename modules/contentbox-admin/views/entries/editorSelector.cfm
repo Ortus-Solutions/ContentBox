@@ -53,7 +53,7 @@
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return selectCBEntry('#entry.getRecursiveSlug()#','#entry.getTitle()#')">Select</button>
+					<button class="button2" onclick="return selectCBContent('#entry.getRecursiveSlug()#','#entry.getTitle()#','entry')">Select</button>
 				</td>
 			</tr>
 			</cfloop>
