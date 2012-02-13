@@ -15,7 +15,7 @@ function selectCBPage(slug,title){
 	var link = editor.document.createElement( 'a' );
 	link.setAttribute( 'href', 'page:['+slug+']');
 	link.setAttribute( 'title', title );
-	
+
 	// get selected text
 	var mySelection = editor.getSelection();
 	var selectedText = "";
@@ -34,6 +34,7 @@ function selectCBPage(slug,title){
 	}
 	editor.insertElement( link );
 	closeRemoteModal();
+	return false;
 }
 
 function pagerLink(page){

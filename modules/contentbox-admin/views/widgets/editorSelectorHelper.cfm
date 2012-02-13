@@ -2,31 +2,31 @@
 	function renderWidgetArgs(udf,widgetName){
 		var md = getMetadata( arguments.udf );
 		var argForm = "";
-		
+
 		if( !arrayLen(md.parameters) ){ return argForm; }
-		
+
 		savecontent variable="argForm"{
-			
+
 			writeOutput( html.startForm(name="widgetArgsForm_#arguments.widgetName#") );
 			writeOutput( html.startFieldSet(legend="Widget Arguments") );
 			writeOutput("<p>Please fill out the arguments for this widget:</p>");
-			
+
 			for(var x=1; x lte arrayLen(md.parameters); x++){
 				var thisArg = md.parameters[x];
 				var requiredText = "";
 				var requiredValidator = "";
-				
+
 				if( !structKeyExists(thisArg,"required") ){ thisArg.required = false; }
 				if( !structKeyExists(thisArg,"hint") ){ thisArg.hint = ""; }
 				if( !structKeyExists(thisArg,"type") ){ thisArg.type = "any"; }
 				if( !structKeyExists(thisArg,"default") ){ thisArg.default = ""; }
-				
+
 				// required stuff
-				if( thisarg.required ){ 
-					requiredText = "<span class='textRed'>Required</span>"; 
+				if( thisarg.required ){
+					requiredText = "<span class='textRed'>Required</span>";
 					requiredValidator = "required";
 				}
-				
+
 				writeOutput( html.label(field=thisArg.name,content="#thisArg.name# (Type=#thisArg.type#) #requiredText#") );
 				if( len( thisArg.hint ) ){
 					writeOutput( "<small>#thisArg.hint#</small><br/>" );
@@ -43,7 +43,7 @@
 			writeOutput( html.endFieldSet() );
 			writeOutput( html.endForm() );
 		}
-		
+
 		return argForm;
 	}
 </cfscript>
@@ -61,11 +61,11 @@ function selectCBWidget(widget){
 }
 function insertCBWidget(widget){
 	var $widgetForm = $("##widgetArgsForm_"+widget);
-	
+
 	if( !$widgetForm.data("validator").checkValidity() ){
 		return;
 	}
-	
+
 	var args = $("##widgetArgsForm_"+widget).serializeArray();
 	var widgetContent = "{{{"+widget;
 	for(var i in args){
@@ -74,11 +74,11 @@ function insertCBWidget(widget){
 		}
 	}
 	widgetContent+="}}}";
-	sendEditorText( widgetContent );	
+	sendEditorText( widgetContent );
 }
 function sendEditorText(text){
 	$("###rc.editorName#").ckeditorGet().insertText( text );
 	closeRemoteModal();
-}
+}	return false;
 </script>
 </cfoutput>
