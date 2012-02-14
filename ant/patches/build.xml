@@ -12,7 +12,8 @@
       	
 		<!-- Zip Bundle -->
 		<zip destfile="${contentbox.version}.zip" basedir="${contentbox.version}"></zip>
-		
+		<!-- Remove Source -->
+		<delete dir="${contentbox.version}" verbose="true" />
     </target>
 	
 </project>
