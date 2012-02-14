@@ -75,27 +75,69 @@
 			<p>You can patch ContentBox in order to receive the latest bugfixes and enhancements from here.  We do encourage you
 			to make backups when doing auto-udpates.</p>
 			
-			<!--- Update Form --->
-			#html.startForm(name="updateCheckForm")#
-				#html.startFieldSet(legend="<img src='#prc.cbRoot#/includes/images/download_black.png' alt='updates'/> Check For Updates: ")#
-					<p>Select your update channel.</p>
-					
-					#html.radioButton(name="channel",id="stable",value=prc.updateSlugStable,checked="false",checked=true)#
-					<label for="stable" class="inline">Stable Release</label> : Official ContentBox releases.
-					<br/>
-					
-					#html.radioButton(name="channel",id="beta",value=prc.updateSlugBeta,checked="false")#
-					<label for="beta" class="inline">Bleeding Edge Release</label> : Beta releases can be done at your own risk as it is still in development.
-					
-					<br/><br/>
-					#html.button(value="Check For Updates",class="buttonred",onclick="return checkForUpdates()")#
 			
-				#html.endFieldSet()#
-			#html.endForm()#		
+			<!--- Accordion Snapshots --->
+			<div id="accordion">
+				<!--- Check For Updates --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/world.png" alt="info" /> Check For Updates </h2>
+				<div class="pane">
+					<!--- Update Form --->
+					#html.startForm(name="updateCheckForm",novalidate="novalidate")#
+						<p>Select your update channel so we can check if there are any new releases available for you.</p>
+						
+						#html.radioButton(name="channel",id="stable",value=prc.updateSlugStable,checked="false",checked=true)#
+						<label for="stable" class="inline">Stable Release</label> : Official ContentBox releases.
+						<br/>
+						
+						#html.radioButton(name="channel",id="beta",value=prc.updateSlugBeta,checked="false")#
+						<label for="beta" class="inline">Bleeding Edge Release</label> : Beta releases can be done at your own risk as it is still in development.
+						
+						<br/><br/>
+						#html.button(value="Check For Updates",class="buttonred",onclick="return checkForUpdates()")#
+					#html.endForm()#	
+				</div>
+				<!--- Apply By Download --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/download.png" alt="info" /> Download Update </h2>
+				<div class="pane">
+					<!--- Update Form --->
+					#html.startForm(name="updateNowForm",action=prc.xehInstallUpdate,novalidate="novalidate")#
+						<p>You can apply an update by selecting the download URL of the update archive.</p>
+						
+						#html.inputfield(type="url",required="required",name="downloadURL",label="Download URL:", class="textfield",size="75")#
+						
+						<br/><br/>
+						#html.submitButton(value="Install Update",class="buttonred")#
+					#html.endForm()#	
+				</div>
+				<!--- Apply By Upload --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/upload.png" alt="info" /> Upload Update </h2>
+				<div class="pane">
+					<!--- Upload Form --->
+					#html.startForm(name="uploadNowForm",action=prc.xehUploadUpdate,multipart=true,novalidate="novalidate")#
+						<p>You can also apply an update by uploading the update archive.</p>
+						
+						#html.fileField(name="filePatch",label="Upload Patch: ", class="textfield",required="required", size="50")#	
+						
+						<br/><br/>
+						#html.submitButton(value="Upload & Install Update",class="buttonred")#
+					#html.endForm()#	
+				</div>
+			</div>
+			<!--End Accordion-->	
 			
 			
 			<!--- Logs --->
 			<cfif len(prc.installLog)>
+				<hr/>
 				<h3>Installation Log</h3>
 				<div class="consoleLog">#prc.installLog#</div>
 				#html.button(value="Clear Log",class="button2",onclick="to ('#event.buildLink(prc.xehAutoUpdater)#/index/clearlogs/true')")#

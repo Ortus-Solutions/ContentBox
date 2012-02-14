@@ -24,6 +24,8 @@ This is an updater cfc for contentbox
 */
 component implements="contentbox.model.updates.IUpdate"{
 
+	property name="log" inject="logbox:logger:{this}";
+
 	function init(){
 		return this;
 	}
@@ -32,14 +34,14 @@ component implements="contentbox.model.updates.IUpdate"{
 	* pre installation
 	*/
 	function preInstallation(){
-		
+		log.info("Executing pre installation");
 	}
 	
 	/**
 	* post installation
 	*/
 	function postInstallation(){
-		
+		log.info("Executing post installation");
 	}
 
 }

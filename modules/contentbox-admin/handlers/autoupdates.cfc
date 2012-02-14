@@ -15,6 +15,8 @@ component extends="baseHandler"{
 		
 		// exit Handlers
 		prc.xehUpdateCheck		= "#prc.cbAdminEntryPoint#.autoupdates.check";
+		prc.xehInstallUpdate    = "#prc.cbAdminEntryPoint#.autoupdates.apply";
+		prc.xehUploadUpdate     = "#prc.cbAdminEntryPoint#.autoupdates.upload";
 		
 		// slugs
 		prc.updateSlugStable = getModuleSettings("contentbox").settings.updateSlug_stable;
@@ -85,12 +87,12 @@ component extends="baseHandler"{
 		
 		try{
 			// Apply Update
-			var updateResults = getModel("UpdateService@cb").applyUpdate( rc.downloadURL, rc.version );
+			var updateResults = getModel("UpdateService@cb").applyUpdateFromURL( rc.downloadURL );
 			if( updateResults.error ){
 				getPlugin("MessageBox").warn("Update Failed! Please check the logs for more information");
 			}
 			else{
-				getPlugin("MessageBox").info("Update Applied! Welcome to version #rc.version#");
+				getPlugin("MessageBox").info("Update Applied!");
 			}
 			flash.put("updateLog", updateResults.log);
 			
@@ -101,6 +103,35 @@ component extends="baseHandler"{
 		}
 		
 		setnextEvent(prc.xehAutoUpdater);
+	}
+	
+	// upload
+	function upload(event,rc,prc){
+		var fp = event.getTrimValue("filePatch","");
+		
+		// Verify
+		if( !len( fp ) ){
+			getPlugin("MessageBox").warn("Please choose an update file to upload!");
+		}
+		else{
+			// Upload File
+			try{
+				// Apply Update
+				var updateResults = getModel("UpdateService@cb").applyUpdateFromUpload( "filePatch" );
+				if( updateResults.error ){
+					getPlugin("MessageBox").warn("Update Failed! Please check the logs for more information");
+				}
+				else{
+					getPlugin("MessageBox").info("Update Applied!");
+				}
+				flash.put("updateLog", updateResults.log);
+			}
+			catch(Any e){
+				getPlugin("MessageBox").error("Error uploading update file: #e.detail# #e.message#");
+			}
+		}
+		
+		setnextEvent(prc.xehAutoUpdater);	
 	}
 	
 }

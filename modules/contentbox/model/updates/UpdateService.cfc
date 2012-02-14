@@ -42,47 +42,18 @@ component accessors="true"{
 	/************************************** PUBLIC *********************************************/
 	
 	
-	// Apply updates
-	function applyUpdate(required string downloadURL, required string version){
+	// Apply updates from a download URL
+	function applyUpdateFromURL(required string downloadURL){
 		var log 			= createObject("java","java.lang.StringBuilder").init("");
 		var results 		= {error=true,logInfo=""};
 		var fileName 		= getFileFromPath(arguments.downloadURL);
 		
 		// download patch and extracted?
 		if( downloadPatch(arguments.downloadURL,log) ){
-			
-			// Verify Patch integrity
-			if( !fileExists( getPatchesLocation() & "/Update.cfc" ) ){
-				log.append("Update.cfc not found in downloaded package, skipping patch update.");
+			// Apply Patch
+			if( applyUpdateOnDisk(log) ){
+				results.error = false;
 			}
-			else{
-				// Construct Update.cfc from root
-				try{
-					var updater = buildUpdater();
-					
-					// do preInstallation
-					updater.preInstallation();
-					
-					// Do deletes first
-					processRemovals( getPatchesLocation() & "/deletes.txt", log );
-					// Do updates
-					processUpdates( getPatchesLocation() & "/patch.zip", log );
-					
-					// Post Install
-					updater.postInstallation();
-					
-					// Finally Remove Updater
-					fileDelete( getPatchesLocation() & "/Update.cfc" );
-					
-					// end process
-					results.error = false;
-				}
-				catch(any e){
-					log.append("Error applying update: #e.message# #e.detail#");
-				}
-			}
-			
-			
 		}
 		
 		// finalize the results
@@ -90,9 +61,85 @@ component accessors="true"{
 		return results;	
 	}
 	
+	// Apply an update from an upload
+	function applyUpdateFromUpload(required fileField){
+		var log 			= createObject("java","java.lang.StringBuilder").init("");
+		var results 		= {error=true,logInfo=""};
+		
+		try{
+			// upload patch 
+			log.append("Starting upload of patch.<br/>");
+			var uploadResults = uploadUpdate( arguments.fileField );
+			log.append("Upload of patch completed, starting to uncompress it.<br/>");
+			
+			// extract patch
+			extractPatch( uploadResults.clientfile, log);
+			
+			// Apply Patch
+			if( applyUpdateOnDisk(log) ){
+				results.error = false;
+			}	
+		}
+		catch(any e){
+			log.append("Exception uploading patch: #e.message# #e.detail#<br/>");
+		}
+		
+		// finalize the results
+		results.log = log.toString();
+		return results;	
+	}
+	
+	// Apply an already downloaded update
+	private boolean function applyUpdateOnDisk(required log){
+		var results = false;
+		
+		// Verify Patch integrity
+		if( !fileExists( getPatchesLocation() & "/Update.cfc" ) ){
+			log.append("Update.cfc not found in downloaded package, skipping patch update.<br/>");
+		}
+		else{
+			try{
+				var updater = buildUpdater();
+				
+				// do preInstallation
+				updater.preInstallation();
+				log.append("Update.cfc - called preInstallation() method.<br/>");
+				
+				// Do deletes first
+				processRemovals( getPatchesLocation() & "/deletes.txt", log );
+				
+				// Do updates second
+				processUpdates( getPatchesLocation() & "/patch.zip", log );
+				
+				// Post Install
+				updater.postInstallation();
+				log.append("Update.cfc - called postInstallation() method.<br/>");
+				
+				results = true;
+			}
+			catch(any e){
+				log.append("Error applying update: #e.message# #e.detail#<br/>");
+			}
+			finally{
+				// Finally Remove Updater
+				if( fileExists( getPatchesLocation() & "/Update.cfc" ) ){
+					fileDelete( getPatchesLocation() & "/Update.cfc" );
+				}
+				// Removal of Mac stuff
+				if( directoryExists( getPatchesLocation() & "/__MACOSX" ) ){
+					directoryDelete( getPatchesLocation() & "/__MACOSX", true);
+				}
+			}
+		}
+		
+		return results;
+	}
+	
 	// processRemovals
 	function processRemovals(required path,required log){
 		var removalText = fileRead( arguments.path );
+		
+		log.append("Starting to process removals from: #arguments.path#<br/>");
 		
 		if( len(removalText) ){
 			var files = listToArray( removalText, chr(10) );
@@ -119,7 +166,7 @@ component accessors="true"{
 		
 		// Verify patch exists
 		if( !fileExists( arguments.path ) ){
-			log.append("Skipping patch extraction as no patch.zip found in update patch.");
+			log.append("Skipping patch extraction as no patch.zip found in update patch.<br/>");
 			return;
 		}
 		
@@ -134,7 +181,7 @@ component accessors="true"{
 		}
 		
 		// good zip file
-		log.append("Patch Zip archive detected, beginning to update ContentBox.<br />");
+		log.append("Patch Zip archive detected, beginning to expand update: #arguments.path#<br />");
 		// extract it
 		zipUtil.extract(zipFilePath=arguments.path, extractPath=appPath, overwriteFiles="true");
 		// more logging
@@ -172,30 +219,38 @@ component accessors="true"{
 		// log it
 		log.append("File #fileName# downloaded succesfully at #getPatchesLocation()#, checking type for extraction.<br />");
 		
+		// Uncompress Patch?
+		return extractPatch(filename,log);
+	}
+	
+	// extract a patch
+	boolean function extractPatch(required string filename, required log){
 		// Unzip File?
-		if ( listLast(filename,".") eq "zip" ){
+		if ( listLast(arguments.filename,".") eq "zip" ){
 			
 			// test zip has files?
 			try{
-				var listing = zipUtil.list( "#getPatchesLocation()#/#filename#" );
+				var listing = zipUtil.list( "#getPatchesLocation()#/#arguments.filename#" );
 			}
 			catch(Any e){
 				// bad zip file.
-				log.append("Error getting listing of zip archive, bad zip.<br />");
+				log.append("Error getting listing of zip archive (#getPatchesLocation()#/#arguments.filename#), bad zip.<br />");
+				fileDelete( getPatchesLocation() & "/" & arguments.filename );
 				return false;
 			}
 			
 			// good zip file
 			log.append("Zip archive detected, beginning to uncompress.<br />");
 			// extract it
-			zipUtil.extract(zipFilePath="#getPatchesLocation()#/#filename#", extractPath="#getPatchesLocation()#", overwriteFiles="true");
+			zipUtil.extract(zipFilePath="#getPatchesLocation()#/#arguments.filename#", extractPath="#getPatchesLocation()#", overwriteFiles="true");
 			// more logging
 			log.append("Patch Update uncompressed at #getPatchesLocation()#.<br />");
 			
 			return true;
 		}
 		else{
-			log.append("File #fileName# is not a zip file, so cannot extract it.");
+			log.append("File #arguments.fileName# is not a zip file, so cannot extract it.");
+			fileDelete( getPatchesLocation() & "/" & arguments.filename );
 			return false;
 		}
 	}
@@ -226,6 +281,15 @@ component accessors="true"{
 		}
 		
 		return false;
+	}
+	
+	
+	/**
+	* Upload Update
+	*/
+	struct function uploadUpdate(required fileField){
+		var destination = getPatchesLocation();
+		return fileUpload(destination, arguments.fileField, "application/zip", "overwrite");
 	}
 
 	/************************************** PRIVATE *********************************************/
