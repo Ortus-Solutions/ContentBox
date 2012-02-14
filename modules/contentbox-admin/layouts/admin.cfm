@@ -142,11 +142,11 @@
 					<ul>
 						<li>
 							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabContent_pages",false,true)> class="current"</cfif>
-							   title="View All Blog Entries">Pages</a>
+							   title="Manage Site Pages">Pages</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehEntries)#" <cfif event.getValue("tabContent_entries",false,true)> class="current"</cfif>
-							   title="View All Blog Entries">Blog</a>
+							   title="Manage Blog Entries">Blog</a>
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabContent_categories",false,true)> class="current"</cfif>
@@ -154,7 +154,7 @@
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
-							   title="Easy custom HTML for your site">Custom HTML</a>
+							   title="Manage Custom HTML Content Pieces">Custom HTML</a>
 						</li>
 						<cfif prc.oAuthor.checkPermission("MEDIAMANAGER_ADMIN")>
 						<li>
