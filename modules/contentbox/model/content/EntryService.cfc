@@ -143,7 +143,7 @@ component extends="ContentService" singleton{
 			// like disjunctions
 			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.isEq("ac.content", "%#arguments.searchTerm#%") );
+				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
 		}
 		
 		// run criteria query and projections count
