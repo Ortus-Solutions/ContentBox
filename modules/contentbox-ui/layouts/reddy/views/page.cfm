@@ -61,8 +61,8 @@
 	<!--- ContentBoxEvent --->
 	#cb.event("cbui_postPageDisplay")#
 	
-
-<!--- Custom JS --->
+<!--- Custom JS For Comments--->
+<cfif cb.isCommentsEnabled()>
 <script type="text/javascript">
 $(document).ready(function() {
  	// form validator
@@ -75,4 +75,5 @@ function toggleCommentForm(){
 	$("##commentForm").slideToggle();
 }
 </script>
+</cfif>
 </cfoutput>

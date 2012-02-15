@@ -116,7 +116,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @content The entry or page content to validate comments also with
 	*/
 	function isCommentsEnabled(content){
-		return ( arguments.content.getAllowComments() AND setting("cb_comments_enabled") );
+		if( structKeyExists(arguments,"content") ){
+			return ( arguments.content.getAllowComments() AND setting("cb_comments_enabled") );	
+		}
+		return ( setting("cb_comments_enabled") );
 	}
 	// determines if a comment form error has ocurred
 	function isCommentFormError(){
