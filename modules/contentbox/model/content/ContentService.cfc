@@ -32,7 +32,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	function findBySlug(required slug, required showUnpublished=false){
 		var c = newCriteria();
 		if (!showUnpublished){
-			c.isTrue("isPublished");
+			c.isTrue("isPublished")
+				.isLT("publishedDate", Now());
 		}
 		content = c.isEq("slug",arguments.slug).get();
 
