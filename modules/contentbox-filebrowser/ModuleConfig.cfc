@@ -23,7 +23,7 @@ The arguments you can use are:
 	this.author 			= "Ortus Solutions";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "A file-directory browser and selector";
-	this.version			= "1.3";
+	this.version			= "1.4";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -38,7 +38,7 @@ The arguments you can use are:
 			// The title name for usage inline and the layout
 			title = "ColdBox FileBrowser v#this.version#",
 			// the directory root path to start the visualizer on, absolute path, set it to contentbox default location
-			directoryRoot = expandPath("/contentbox/content"),
+			directoryRoot = expandPath("/contentbox"),
 			// Secure the visualization or creation of stuff above the directory root or not
 			traversalSecurity = true,
 			// Show files on the visualizer or not
@@ -112,7 +112,20 @@ The arguments you can use are:
 
 		// Custom Declared Points
 		interceptorSettings = {
-			customInterceptionPoints = "preTitleBar,postTitleBar,preLocationBar,postLocationBar,preBottomBar,postBottomBar,preFileListing,postFileListing"
+			customInterceptionPoints = arrayToList( [
+			"fb_preTitleBar", "fb_postTitleBar" ,"fb_preLocationBar" , "fb_postLocationBar", "fb_preBottomBar", "fb_postBottomBar", 
+			"fb_preFileListing","fb_postFileListing","fb_preUploadBar","fb_postUploadBar", "fb_preQuickViewBar", "fb_postQuickViewBar",
+			// folder creation
+			"fb_postFolderCreation","fb_preFolderCreation",
+			// removals
+			"fb_preFileRemoval", "fb_postFileRemoval",
+			// renameing
+			"fb_preFileRename", "fb_postFileRename",
+			// downloads
+			"fb_preFileDownload", "fb_postFileDownload",
+			// Uploads
+			"fb_preFileUpload", "fb_postFileUpload"
+			] )
 		};
 
 		// Custom Declared Interceptors

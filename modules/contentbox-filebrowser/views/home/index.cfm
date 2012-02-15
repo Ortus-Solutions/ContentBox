@@ -22,7 +22,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<!--- Your Current Location --->
 		<div id="titleBar">
-			#announceInterception("preTitleBar")#
+			#announceInterception("fb_preTitleBar")#
 			<div id="title">#prc.fbSettings.title#</div>
 
 			<!--- Refresh --->
@@ -65,27 +65,27 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			#html.label(field="fbQuickFilter",content="Quick Filter: ")#
 			#html.textField(name="fbQuickFilter",size="20")#
 
-			#announceInterception("postTitleBar")#
+			#announceInterception("fb_postTitleBar")#
 		</div>
 
 		<!--- UploadBar --->
 		<div id="uploadBar">
-			#announceInterception("preUploadBar")#
+			#announceInterception("fb_preUploadBar")#
 			<input id="file_upload" name="file_upload" type="file" />
-			#announceInterception("postUploadBar")#
+			#announceInterception("fb_postUploadBar")#
 		</div>
 
 		<!--- QuickViewBar --->
 		<div id="quickViewBar">
 			<img id="fbCloseButton" src="#prc.fbModRoot#/includes/images/x.png" alt="close"/>
-			#announceInterception("preQuickViewBar")#
+			#announceInterception("fb_preQuickViewBar")#
 			<div id="quickViewBarContents"></div>
-			#announceInterception("postQuickViewBar")#
+			#announceInterception("fb_postQuickViewBar")#
 		</div>
 
 		<!--- Show the File Listing --->
 		<div id="fileListing">
-			#announceInterception("preFileListing")#
+			#announceInterception("fb_preFileListing")#
 			<!--- Messagebox --->
 			#getPlugin("MessageBox").renderit()#
 
@@ -145,20 +145,20 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<cfelse>
 			<em>Empty Directory.</em>
 			</cfif>
-			#announceInterception("postFileListing")#
+			#announceInterception("fb_postFileListing")#
 		</div> <!--- end fileListing --->
 
 		<!--- Location Bar --->
 		<div id="locationBar">
-			#announceInterception("preLocationBar")#
+			#announceInterception("fb_preLocationBar")#
 			#replace(prc.fbCurrentRoot,"/",'&nbsp;<img class="divider" src="#prc.fbModRoot#/includes/images/bullet_go.png" alt="arrow" />&nbsp;',"all")#
 			(#prc.fbqListing.recordCount# items)
-			#announceInterception("postLocationBar")#
+			#announceInterception("fb_postLocationBar")#
 		</div>
 
 		<!--- The Bottom Bar --->
 		<div class="bottomBar">
-			#announceInterception("preBottomBar")#
+			#announceInterception("fb_preBottomBar")#
 
 			<!--- Loader Bar --->
 			<div id="loaderBar">
@@ -191,7 +191,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				</cfif>
 			</div>
 
-			#announceInterception("postBottomBar")#
+			#announceInterception("fb_postBottomBar")#
 		</div>
 
 	</div>
