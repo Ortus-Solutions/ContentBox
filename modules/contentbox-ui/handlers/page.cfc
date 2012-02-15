@@ -129,7 +129,7 @@ component extends="BaseContentHandler" singleton{
 	private function verifyPageLayout(required page){
 		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.page.getLayout()#.cfm" ) ) ){
 			throw(message="The layout of the page: '#arguments.page.getLayout()#' does not exist in the current theme.",
-			      detail="Please verify your page layout settings"
+			      detail="Please verify your page layout settings",
 				  type="ContentBox.InvalidPageLayout");
 		}
 	}
