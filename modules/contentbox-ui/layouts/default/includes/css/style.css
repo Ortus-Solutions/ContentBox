@@ -24,7 +24,7 @@ a:hover { text-decoration:underline;color:#c52100;}
 .search form .keywords { line-height:15px; height:15px; float:left; width:139px; background: url(../images/search_bg.gif) left top no-repeat; border:0; padding:6px 5px; margin:0; font:normal 12px Arial, Helvetica, sans-serif; color:#000;}
 .search form .button { float:left; margin:0; padding:0;}
 /* menu */	
-.menu { font-family: Arial, Helvetica, sans-serif; font-weight:bold; height:43px; padding:0; margin:0px 0px 10px 0px; width: 100%; background-color: black; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; -moz-box-shadow: 0 0 15px #ccc;-webkit-box-shadow: 0 0 15px #ccc;}
+.menu { font-family: Arial, Helvetica, sans-serif; font-weight:bold; height:43px; padding:0; margin:0px 0px 10px 0px; width: 100%; background-color: #2D2929;-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; -moz-box-shadow: 0 0 15px #ccc;-webkit-box-shadow: 0 0 15px #ccc;}
 .menu ul { text-align: left;  padding:3px 0 0 0; margin:0; list-style:none; border:0; float:left;}
 .menu ul li { float:left; margin:0; padding:0 5px; border:0;}
 .menu ul li a { float:left; margin:0; padding:12px 10px; color:#fff; text-decoration:none; text-transform:uppercase;}
@@ -59,7 +59,7 @@ a:hover { text-decoration:underline;color:#c52100;}
 .port_resize { width:265px; float:left; border:1px solid #efefef; margin:10px 5px 10px 0; padding:15px;}
 .serv_resize { border:1px solid #efefef; width:405px; float:left; margin:10px 10px 10px 0; padding:15px;}
 /*FBG*/
-.FBG { background: url(../images/fbg_bg.gif) top center no-repeat; margin:0; padding:0;}
+.FBG { margin:0; padding:0;}
 .FBG_resize { width:960px; margin:auto; text-align:center}
 .FBG_resize ul { list-style:none; margin:10px auto; padding:0;}
 .FBG_resize li { padding:0; margin:0;}

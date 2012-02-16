@@ -169,11 +169,6 @@ limitations under the License.
 		
 	<!--- footer --->
 	<div class="footer">
-		<div class="footer_resize">
-			<p class="leftt">Powered by <a href="http://www.ortussolutions.com">ContentBox<a/></p>
-			<p class="right">(DT) <a href="http://www.dreamtemplate.com" title="Awesome Templates!"><strong>Website Templates</strong></a></p>
-			<div class="clr"></div>
-		</div>
 		<!--- contentboxEvent --->
 		#cb.event("cbui_footer")#
 		<div class="clr"></div>
