@@ -12,7 +12,6 @@ component {
 	this.version			= "1.0";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
-	// Module Entry Point: The SES entry point for contentbox administrator : http://myapp/cbadmin
 	this.entryPoint			= "cbadmin";
 	
 	function configure(){
