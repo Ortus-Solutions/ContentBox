@@ -62,6 +62,8 @@ component {
 			{pattern="/blog/:entrySlug", handler="blog", action="entry"},
 			// Blog reserved route
 			{pattern="/blog", handler="blog", action="index" },
+			// search filter
+			{pattern="/__search/:q?/:page-numeric?", handler="page", action="search" },
 			// preview
 			{pattern="/__preview", handler="blog", action="preview" },
 			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
@@ -84,7 +86,7 @@ component {
 				// Layout HTML points: A layout must announce them via cb.event("cbui_footer",{renderer=this}) make sure you pass in the renderer
 				"cbui_beforeHeadEnd","cbui_afterBodyStart","cbui_beforeBodyEnd","cbui_footer","cbui_beforeContent","cbui_afterContent","cbui_beforeSideBar","cbui_afterSideBar",
 				// Code Interception points
-				"cbui_onPageNotFound","cbui_onEntryNotFound","cbui_onError","cbui_preRequest","cbui_postRequest","cbui_onRendererDecoration",
+				"cbui_onPageNotFound","cbui_onEntryNotFound","cbui_onError","cbui_preRequest","cbui_postRequest","cbui_onRendererDecoration","cbui_onContentSearch",
 				// Fixed Handler Points
 				"cbui_onIndex","cbui_onArchives","cbui_onEntry","cbui_onPage","cbui_preCommentPost","cbui_onCommentPost",
 				// Fixed HTML Points

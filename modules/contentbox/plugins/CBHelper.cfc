@@ -164,16 +164,6 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return getRequestContext().getValue("day","0");
 	}
 
-	// Determine if you have a search term
-	boolean function searchTermExists(){
-		var rc = getRequestCollection();
-		return (structKeyExists(rc,"q") AND len(rc.q));
-	}
-	// Get Search Term
-	function getSearchTerm(){
-		return getRequestContext().getValue("q","");
-	}
-	
 	// Determine if you are in the blog
 	boolean function isBlogView(){
 		if( isIndexView() OR isEntryView() OR isArchivesView() ){
@@ -290,6 +280,132 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 			return arguments.defaultValue;
 		} 
 		throw(message="No custom field with key: #arguments.key# found",detail="The keys are #structKeyList(fields)#",type="CBHelper.InvalidCustomField");
+	}
+	
+	/************************************** search *********************************************/
+	
+	// Determine if you are in the search view
+	boolean function isSearchView(){
+		var event = getRequestContext();
+		return (event.getCurrentEvent() eq "contentbox-ui:page.search");
+	}
+	
+	/**
+	* quickSearchForm will build a standard ContentBox Content Search Form according to the SearchForm widget
+	*/
+	function quickSearchForm(){
+		return widget("SearchForm",{type="content"});
+	}
+	
+	/**
+	* Render out paging for search content
+	*/
+	function quickSearchPaging(){
+		var prc = getRequestCollection(private=true);
+		if( NOT structKeyExists(prc,"pagingPlugin") ){
+			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext");
+		}
+		return prc.pagingPlugin.renderit( getSearchItemsCount(), prc.pagingLink);
+	}
+	
+	/**
+	* Utility function to help you highlight search terms in content
+	* @term.hint The search term
+	* @content.hint The content searched
+	*/
+	function highlightSearchTerm(required term, required content){
+		var match 	= findNoCase(arguments.term, arguments.content);
+		var end		= 0;
+		var excerpt = "";
+		
+		if( match lte 250 ){ match = 1; }
+		end = match + len(arguments.term) + 500;
+		
+		if( len(arguments.content) gt 500 ){
+			if( match gt 1 ){
+				excerpt = "..." & mid(arguments.content, match-250, end-match);
+			}
+			else{
+				excerpt = left(arguments.content, end);
+			}
+			if( len(arguments.content) gt end ){
+				excerpt = excerpt & "...";
+			}
+		}
+		else{
+			excerpt = arguments.content;
+		}
+		try{
+			excerpt = reReplaceNoCase(excerpt, "(#arguments.term#)", "<span class='highlight'>\1</span>","all");
+		}
+		catch(Any e){}
+		
+		// remove images
+		//excerpt = reReplaceNoCase(excerpt, '<img\s[^//>].*//?>',"[image]","all");
+		// remove links
+		excerpt = reReplaceNoCase(excerpt, '<a\b[^>]*>(.*?)</a>',"[link]","all");
+		
+		return excerpt;		
+	}
+	
+	/**
+	* Render out search results quickly
+	*/
+	function quickSearchResults(){
+		var results 	= "";
+		var searchTerm  = getSearchTerm();
+		var searchItems = getSearchItems();
+		var total	 	= getSearchItemsCount();
+		
+		savecontent variable="results"{
+			writeOutput('
+			<div class="searchResults">
+				<div class="searchResultsCount">
+					Found <strong>#total#</strong> results.
+				</div>
+				<ol>
+			');
+			
+			for(var item in searchItems ){
+				writeOutput('
+				<li>
+					<a href="#linkContent(item)#">#item.getTitle()#</a><br/>
+					#highlightSearchTerm( searchTerm, item.renderContent() )#
+				</li>
+				<cite>#linkContent(item)#</cite>
+				<br /><br />
+				');
+			};
+			
+			writeOutput("</ol></div>");
+		}
+		
+		return results;
+	}
+	
+	
+	
+	// get the curent search results array
+	array function getSearchItems(){
+		var event = getRequestContext();
+		return event.getValue(name="searchItems",private="true",default=[]);
+	}
+	
+	// how many items where found in the search
+	numeric function getSearchItemsCount(){
+		var event = getRequestContext();
+		return event.getValue(name="searchItemsCount",private="true",default=[]);
+	}
+	
+	// Determine if you have a search term
+	boolean function searchTermExists(){
+		var rc = getRequestCollection();
+		return (structKeyExists(rc,"q") AND len(rc.q));
+	}
+	
+	// Get Search Term
+	function getSearchTerm(){
+		return getRequestContext().getValue("q","");
 	}
 
 	/************************************** events *********************************************/
@@ -408,10 +524,18 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 
 	/**
-	* Link to the search page for this blog
+	* Link to the search route for this blog
 	*/
 	function linkSearch(){
 		var xeh = siteRoot() & sep() & "#blogEntryPoint#.search";
+		return getRequestContext().buildLink(linkto=xeh);
+	}
+	
+	/**
+	* Link to the content search route
+	*/
+	function linkContentSearch(){
+		var xeh = siteRoot() & sep() & "__search";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
 

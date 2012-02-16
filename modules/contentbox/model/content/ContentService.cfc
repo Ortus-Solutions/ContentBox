@@ -12,6 +12,31 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		return this;
 	}
+	
+	// Content ORM Search
+	function searchContent(searchTerm="",max=0,offset=0,asQuery=false){
+		var results = {};
+		var c = newCriteria();
+		
+		// only published content
+		c.isTrue("isPublished").isLt("publishedDate", now() )
+			// only non-password protected ones
+			.isEq("passwordProtection","");
+		
+		// Search Criteria
+		if( len(arguments.searchTerm) ){
+			// like disjunctions
+			c.createAlias("activeContent","ac");
+			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
+				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
+		}
+		
+		// run criteria query and projections count
+		results.count 	= c.count();
+		results.content = c.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
+		
+		return results;
+	}
 
 	/**
 	* Get an id from a slug of a content object

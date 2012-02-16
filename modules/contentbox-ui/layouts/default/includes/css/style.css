@@ -186,3 +186,6 @@ padding:10px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-
 .invalid{border:2px solid #ff9289;-moz-box-shadow:0 0 6px #ddd;-webkit-box-shadow:0 0 6px #ddd;padding:5px;z-index: 9999;}
 .error{	height:20px;background-color:#ffcfcb;border:1px solid #ff9289;font-size:12px;font-weight: bold;color:#000;padding:3px 10px;margin-left:-2px;z-index: 9999;-moz-border-radius:4px;-webkit-border-radius:4px;-moz-border-radius-bottomleft:0;-moz-border-radius-topleft:0;-webkit-order-bottom-left-radius:0;-webkit-border-top-left-radius:0;-moz-box-shadow:0 0 6px #ddd;-webkit-box-shadow:0 0 6px #ddd;}
 .error p{margin-top: 3px;}
+/** ============================== search results =============================== **/
+.highlight { background-color: yellow; font-weight:bold }
+cite {color: green; font-size:12px }

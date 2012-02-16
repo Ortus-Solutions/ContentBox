@@ -5,6 +5,7 @@ component extends="BaseContentHandler" singleton{
 
 	// DI
 	property name="pageService"			inject="id:pageService@cb";
+	property name="contentService"		inject="id:contentService@cb";
 
 	// pre Handler
 	function preHandler(event,action,eventArguments){
@@ -74,6 +75,43 @@ component extends="BaseContentHandler" singleton{
 		}
 
 	}
+	
+	/**
+	* Content Search
+	*/
+	function search(event,rc,prc){
+		// incoming params
+		event.paramValue("page",1);
+		event.paramValue("q","");
+
+		// Decode search term
+		rc.q = URLDecode(rc.q);
+
+		// prepare paging plugin
+		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat(rc.q)#/@page@";
+
+		// get published content
+		if( len(rc.q) ){
+			var searchResults = contentService.searchContent(offset=prc.pagingBoundaries.startRow-1,
+												   			 max=prc.cbSettings.cb_paging_maxentries,
+												   			 searchTerm=rc.q);
+			prc.searchItems 		= searchResults.content;
+			prc.searchItemsCount  	= searchResults.count;
+		}
+		else{
+			prc.searchItems = [];
+			prc.searchItemsCount = 0;
+		}
+		
+		// announce event
+		announceInterception("cbui_onContentSearch",{searchItems = prc.searchItems, searchItemsCount = prc.searchItemsCount, searchTerm = rc.q});
+
+		// set skin search
+		event.setView(view="#prc.cbLayout#/views/search",layout="#prc.cbLayout#/layouts/pages");
+	}
+
 
 	/**
 	* Display the RSS feeds
@@ -120,7 +158,7 @@ component extends="BaseContentHandler" singleton{
 		// Valid commenting, so go and save
 		saveComment( page );
 	}
-
+	
 	/************************************** PRIVATE *********************************************/
 
 	/**
