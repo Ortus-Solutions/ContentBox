@@ -332,7 +332,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* Create a link to your site blog
 	*/
 	function linkBlog(){
-		return getRequestContext().buildLink(linkto="#siteRoot()#/blog");
+		return getRequestContext().buildLink(linkto="#siteRoot()##sep()#blog");
 	}
 
 	/**
