@@ -115,13 +115,13 @@
 				<cfif prc.cbSettings.cb_comments_enabled>
 				<img src="#prc.cbRoot#/includes/images/comments_black.png" alt="comments" />
 				#html.label(field="allowComments",content="Allow Comments:",class="inline")#
-				#html.select(name="allowComments",options="Yes,No",bind=prc.page)#
+				#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()))#
 				<br/>
 				</cfif>
 				<!--- Show in Menu Builders --->
 				<img src="#prc.cbRoot#/includes/images/source.png" alt="showInMenu" />
 				#html.label(field="showInMenu",content="Show In Menu:",class="inline")#
-				#html.select(name="showInMenu",options="Yes,No",bind=prc.page)#
+				#html.select(name="showInMenu",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
 				<br/>
 				<!--- Password Protection --->
 				<label for="passwordProtection"><img src="#prc.cbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>

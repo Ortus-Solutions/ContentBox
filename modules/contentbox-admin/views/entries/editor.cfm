@@ -97,7 +97,7 @@
 				<cfif prc.cbSettings.cb_comments_enabled>
 				<img src="#prc.cbRoot#/includes/images/comments_black.png" alt="comments" />
 				#html.label(field="allowComments",content="Allow Comments:",class="inline")#
-				#html.select(name="allowComments",options="Yes,No",bind=prc.entry)#
+				#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.entry.getAllowComments()))#
 				<br/>
 				</cfif>
 				<!--- Password Protection --->
