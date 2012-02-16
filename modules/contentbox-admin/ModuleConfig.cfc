@@ -58,7 +58,7 @@ component {
 				"cbadmin_entryEditorFooter", "cbadmin_entryEditorInBody",
 				// Page Events
 				"cbadmin_prePageSave","cbadmin_postPageSave","cbadmin_prePageRemove","cbadmin_postPageRemove",
-				"cbadmin_pageEditorSidebar", "cbadmin_pageEditorSidebarFooter",
+				"cbadmin_pageEditorSidebar", "cbadmin_pageEditorSidebarAccordion", "cbadmin_pageEditorSidebarFooter",
 				"cbadmin_pageEditorFooter", "cbadmin_pageEditorInBody",
 				// Author Events
 				"cbadmin_preAuthorSave","cbadmin_postAuthorSave","cbadmin_onAuthorPasswordChange","cbadmin_preAuthorRemove","cbadmin_postAuthorRemove",

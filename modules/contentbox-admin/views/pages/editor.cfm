@@ -10,66 +10,23 @@
 			Page Details
 		</div>
 		<div class="body">
-			<cfif prc.page.isLoaded()>
-			<!--- Persisted Info --->
-			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/eye.png" alt="publish" width="16"/> Info')#
-			<table class="tablelisting" width="100%">
-				<tr>
-					<th width="85" class="textRight">Created By:</th>
-					<td>
-						<a href="mailto:#prc.page.getAuthorEmail()#">#prc.page.getAuthorName()#</a>
-					</td>
-				</tr>
-				<tr>
-					<th class="textRight">Published On:</th>
-					<td>
-						#prc.page.getDisplayPublishedDate()#
-					</td>
-				</tr>
-				<tr>
-					<th class="textRight">Page Version:</th>
-					<td>
-						#prc.page.getActiveContent().getVersion()#
-					</td>
-				</tr>
-				<tr>
-					<th class="textRight">Child Pages:</th>
-					<td>
-						#prc.page.getNumberOfChildren()#
-					</td>
-				</tr>	
-				<tr>
-					<th class="textRight">Views:</th>
-					<td>
-						#prc.page.getHits()#
-					</td>
-				</tr>	
-				<tr>
-					<th class="textRight">Comments:</th>
-					<td>
-						#prc.page.getNumberOfComments()#
-					</td>
-				</tr>					
-			</table>	
-			<div class="center">
-				<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;" title="Open page in site">Open In Site</button>
-			</div>
-			#html.endFieldset()#
-			</cfif>
 			
 			<!--- Publish Info --->
 			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/calendar.png" alt="publish" width="16"/> Publishing',class="#prc.page.getIsPublished()?'':'selected'#")#
-				
+			
 				<!--- Published? --->
-				<cfif !prc.page.getIsPublished()><div class="textRed">Page is a draft!</div></cfif>
+				<cfif prc.page.isLoaded()>
+				<label class="inline">Status: </label>
+				<cfif !prc.page.getIsPublished()><div class="textRed inline">Draft!</div><cfelse>Published</cfif>
+				</cfif>
 				
 				<!--- is Published --->
 				#html.hiddenField(name="isPublished",value=true)#
 				<!--- publish date --->
 				#html.inputField(size="9",type="date",name="publishedDate",label="Publish Date",value=prc.page.getPublishedDateForEditor(),class="textfield")#
 				@
-				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
-				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
+				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
+				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
 			
 				<!--- Changelog --->
 				#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.")#
@@ -77,7 +34,7 @@
 				<!--- Action Bar --->
 				<div class="actionBar">
 					&nbsp;<input type="submit" class="button2" value="Quick Save" title="Quickly save your work as a draft & continue working!" onclick="return quickSave()">
-					&nbsp;<input type="submit" class="button2" value="Save Draft" title="Save this masterpiece as a draft!" onclick="toggleDraft()">
+					&nbsp;<input type="submit" class="button2" value="&nbsp; Draft &nbsp;" title="Save this masterpiece as a draft!" onclick="toggleDraft()">
 					&nbsp;<input type="submit" class="buttonred" value="Publish" title="Let's publish this masterpiece!">
 				</div>
 				
@@ -89,50 +46,115 @@
 			
 			#html.endFieldSet()#
 			
-			<!--- Page Options --->
-			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers" width="16"/> Page Options')#
-				<!--- Parent Page --->
-				#html.label(field="parentPage",content='Parent:')#
-				<select name="parentPage" id="parentPage" class="width98">
-					<option value="">No Parent</option>
-					#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
-				</select>
-				
-				<!--- layout --->
-				#html.label(field="layout",content='Layout:')#
-				<select name="layout" id="layout" class="width98">
-					#html.options(values=prc.availableLayouts,selectedValue=prc.page.getLayoutWithDefault())#
-				</select>
-				
-				<!--- order --->
-				#html.inputfield(type="number",label="Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="textfield",size="5",maxlength="2",min="0",max="99")#
-			
-			#html.endFieldSet()#
-			
-			<!--- Page Modifiers --->
-			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/settings.png" alt="modifiers" width="16"/> Modifiers')#
-				<!--- Allow Comments --->
-				<cfif prc.cbSettings.cb_comments_enabled>
-				<img src="#prc.cbRoot#/includes/images/comments_black.png" alt="comments" />
-				#html.label(field="allowComments",content="Allow Comments:",class="inline")#
-				#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()))#
-				<br/>
+			<!--- Accordion --->
+			<div id="accordion">
+				<!--- Stats Panel --->
+				<cfif prc.page.isLoaded()>
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/eye.png" alt="info" /> Page Info </h2>
+				<div class="pane">
+					<table class="tablelisting" width="100%">
+						<tr>
+							<th width="85" class="textRight">Created By:</th>
+							<td>
+								<a href="mailto:#prc.page.getAuthorEmail()#">#prc.page.getAuthorName()#</a>
+							</td>
+						</tr>
+						<tr>
+							<th class="textRight">Published On:</th>
+							<td>
+								#prc.page.getDisplayPublishedDate()#
+							</td>
+						</tr>
+						<tr>
+							<th class="textRight">Page Version:</th>
+							<td>
+								#prc.page.getActiveContent().getVersion()#
+							</td>
+						</tr>
+						<tr>
+							<th class="textRight">Child Pages:</th>
+							<td>
+								#prc.page.getNumberOfChildren()#
+							</td>
+						</tr>	
+						<tr>
+							<th class="textRight">Views:</th>
+							<td>
+								#prc.page.getHits()#
+							</td>
+						</tr>	
+						<tr>
+							<th class="textRight">Comments:</th>
+							<td>
+								#prc.page.getNumberOfComments()#
+							</td>
+						</tr>					
+					</table>	
+				</div>
 				</cfif>
-				<!--- Show in Menu Builders --->
-				<img src="#prc.cbRoot#/includes/images/source.png" alt="showInMenu" />
-				#html.label(field="showInMenu",content="Show In Menu:",class="inline")#
-				#html.select(name="showInMenu",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
-				<br/>
-				<!--- Password Protection --->
-				<label for="passwordProtection"><img src="#prc.cbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>
-				#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="textfield",size="25",maxlength="100")#
-			#html.endFieldSet()#
+				<!--- Page Options Panel --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/page.png" alt="info" /> Page Options </h2>
+				<div class="pane">
+					<!--- Parent Page --->
+					#html.label(field="parentPage",content='Parent:')#
+					<select name="parentPage" id="parentPage" class="width98">
+						<option value="">No Parent</option>
+						#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
+					</select>
+					
+					<!--- layout --->
+					#html.label(field="layout",content='Layout:')#
+					<select name="layout" id="layout" class="width98">
+						#html.options(values=prc.availableLayouts,selectedValue=prc.page.getLayoutWithDefault())#
+					</select>
+					
+					<!--- order --->
+					#html.inputfield(type="number",label="Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="textfield",size="5",maxlength="2",min="0",max="99")#
+				</div>
+				
+				<!--- Page Modifiers Panel --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/settings_black.png" alt="info" /> Modifiers </h2>
+				<div class="pane">
+					<!--- Allow Comments --->
+					<cfif prc.cbSettings.cb_comments_enabled>
+					<img src="#prc.cbRoot#/includes/images/comments_black.png" alt="comments" />
+					#html.label(field="allowComments",content="Allow Comments:",class="inline")#
+					#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()))#
+					<br/>
+					</cfif>
+					<!--- Show in Menu Builders --->
+					<img src="#prc.cbRoot#/includes/images/source.png" alt="showInMenu" />
+					#html.label(field="showInMenu",content="Show In Menu:",class="inline")#
+					#html.select(name="showInMenu",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
+					<br/>
+					<!--- Password Protection --->
+					<label for="passwordProtection"><img src="#prc.cbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>
+					#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="textfield",size="25",maxlength="100")#
+				</div>
+				
+				<!--- HTML Modifiers Panel --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/world.png" alt="info" /> HTML Attributes </h2>
+				<div class="pane">
+					#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.page,class="textfield width95",maxlength="160")#
+					#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.page,class="textfield",maxlength="160")#
+				</div>
+				<!--- Event --->
+				#announceInterception("cbadmin_pageEditorSidebarAccordion")#
+			</div>
+			<!--- end accordion --->
 			
-			<!--- HTML Attributes --->
-			#html.startFieldSet(legend='<img src="#prc.cbRoot#/includes/images/world.png" alt="world" width="16"/> HTML Attributes')#
-				#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.page,class="textfield width95",maxlength="160")#
-				#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.page,class="textfield",maxlength="160")#
-			#html.endFieldSet()#
 			<!--- Event --->
 			#announceInterception("cbadmin_pageEditorSidebar")#
 		</div>
@@ -148,6 +170,12 @@
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/page_big.png" alt="editor" width="30" height="30" />
 			Page Editor
+			<!--- View Page In Site --->
+			<cfif prc.page.isLoaded()>
+			<div class="floatRight">
+				<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;" title="Open page in site">View Page In Site</button>
+			</div>
+			</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -164,7 +192,6 @@
 			<!--- slug --->
 			<label for="slug">Permalink: 
 				<img src='#prc.cbroot#/includes/images/link.png' alt='permalink' title="Convert title to permalink" onclick="createPermalink()"/>
-				<small> #event.buildLink('')#</small>
 			</label>
 			#html.textfield(name="slug",bind=prc.page,maxlength="100",class="textfield width98",title="The URL permalink for this page")#
 			
