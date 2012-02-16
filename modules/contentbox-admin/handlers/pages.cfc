@@ -165,8 +165,7 @@ component extends="baseHandler"{
 		// attach parent page
 		if( len(rc.parentPage) ){ page.setParent( pageService.get( rc.parentPage ) ); }
 		// Inflate Custom Fields into the page
-		page.inflateCustomFields( rc.customFieldKeys, rc.customFieldValues );
-		
+		page.inflateCustomFields( rc.customFieldsCount, rc );
 		// announce event
 		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
 		

@@ -276,27 +276,28 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	}
 
 	/**
-	* Inflate custom fields from a list of keys and values, it will remove original custom values as well.
+	* Inflate custom fields from the incoming count and memento structure
 	*/
-	any function inflateCustomFields(required string keys, required string values){
+	any function inflateCustomFields(required numeric fieldCount, required struct memento){
 
 		// remove original custom fields
 		getCustomFields().clear();
 
-		// inflate custom fields
-		arguments.keys   = listToArray(arguments.keys,",");
-		arguments.values = listToArray(arguments.values,",");
-		for(var x=1; x lte arrayLen(arguments.keys); x++){
-			if( len(trim(arguments.keys[x])) ){
-				var args = { key = arguments.keys[x], value="" };
-				if( arrayIsDefined(arguments.values, x) ){
-					args.value = arguments.values[x];
-				}
+		// inflate custom fields start at 0 as it is incoming javascript counting of arrays
+		for( var x=0; x lt arguments.fieldCount; x++ ){
+			// get custom field from incoming data
+			var args = {
+				key 	= arguments.memento["CustomFieldKeys_#x#"],
+				value 	= arguments.memento["CustomFieldValues_#x#"] 
+			};
+			// only add if key has value	
+			if( len(trim( args.key )) ){
 				var thisField = customFieldService.new(properties=args);
 				thisField.setRelatedContent( this );
 				addCustomField( thisField );
-			}
+			}			
 		}
+		
 		return this;
 	}
 
