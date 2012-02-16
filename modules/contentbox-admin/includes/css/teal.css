@@ -231,6 +231,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #categoriesChecks{ overflow: auto; max-height: 175px; border: 1px dotted #707171;}
 #quickPost{display: none;}
 #addCustomFieldButton{margin:0xp 10px 0px 10px}
+.editorTime { width: 40px;}
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}

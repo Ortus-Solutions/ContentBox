@@ -43,7 +43,7 @@ fieldset { padding:1em; }
 fieldset legend { font-weight:bold; }
 form label { font-size:1em; font-weight:bold; display:block; margin:3px 0; }
 form p small { font-size: 1em; display:block; }
-form input.textfield,form select,form textarea,form .wysiwyg { padding:6px; margin-right:5px; }
+form input.textfield,form select,form textarea,form .wysiwyg { padding:6px; margin-right:4px; }
 form input.small { width:40%; }
 form input.med { width:60%; }
 form input.large { width:95%; }

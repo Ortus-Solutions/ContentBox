@@ -70,8 +70,8 @@
 				<!--- publish date --->
 				#html.inputField(size="9",type="date",name="publishedDate",label="Publish Date",value=prc.entry.getPublishedDateForEditor(),class="textfield")#
 				@
-				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
-				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
+				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
+				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
 				
 				<!--- Changelog --->
 				#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.")#
@@ -79,7 +79,7 @@
 				<!--- Action Bar --->
 				<div class="actionBar">
 					&nbsp;<input type="submit" class="button2" value="Quick Save" title="Quickly save your work as a draft & continue working!" onclick="return quickSave()">
-					&nbsp;<input type="submit" class="button2" value="Save Draft" title="Save and close this masterpiece as a draft!" onclick="toggleDraft()">
+					&nbsp;<input type="submit" class="button2" value="&nbsp; Draft &nbsp;" title="Save and close this masterpiece as a draft!" onclick="toggleDraft()">
 					&nbsp;<input type="submit" class="buttonred" value="Publish" title="Save, close and publish this masterpiece!">
 				</div>
 				
