@@ -52,7 +52,10 @@ component implements="contentbox.model.updates.IUpdate"{
 		var settings = {
 			// Search Settings
 			"cb_search_adapter" = "contentbox.model.search.DBSearch",
-			"cb_search_maxResults" = "20"
+			"cb_search_maxResults" = "20",
+			// site settings
+			"cb_site_maintenance_message" = "<h1>This site is down for maintenance.<br /> Please check back again soon.</h1>",
+			"cb_site_maintenance" = "false"
 		};
 		
 		// Create setting objects and save

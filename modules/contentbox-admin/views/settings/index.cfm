@@ -75,6 +75,19 @@
 							</select> 	
 							
 						</fieldset>
+						<!--- Site Maintenance --->
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/logout.png" alt="modifiers"/> <strong>Site Maintenance</strong></legend>
+						 	<p>You can put your entire site in maintenance mode if you are doing upgrades or anything funky!</p>
+							<!--- Site maintenance --->
+							#html.label(field="cb_site_maintenance",content="Site Maintenance:")#
+							#html.radioButton(name="cb_site_maintenance",checked=prc.cbSettings.cb_site_maintenance,value=true)# Yes 	
+							#html.radioButton(name="cb_site_maintenance",checked=not prc.cbSettings.cb_site_maintenance,value=false)# No 	
+							<!--- Maintenance Message --->
+							#html.label(field="cb_site_maintenance_message",content="Offline Message: ")#
+							<small>The message to show users once the site is in maintenance mode, HTML is ok.</small><br/>
+							#html.textarea(name="cb_site_maintenance_message",value=prc.cbSettings.cb_site_maintenance_message,rows="3",title="Make it meaningful?")#
+						</fieldset>
 					</div>
 					<!--- Dashboard Options --->
 					<div>

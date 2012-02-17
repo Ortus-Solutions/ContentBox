@@ -16,6 +16,12 @@ component{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		
+		// Maintenance Mode?
+		if( prc.cbSettings.cb_site_maintenance ){
+			event.overrideEvent("contentbox-ui:page.maintenance");
+			return;
+		}
+		
 		// set blog layout
 		event.setLayout("#prc.cbLayout#/layouts/blog");
 		
@@ -28,6 +34,14 @@ component{
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
 		}				
 	}
+	
+	/**
+	* Go Into maintenance mode.
+	*/
+	function maintenance(event,rc,prc){
+		event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
+	}
+	
 	
 	/*
 	* Error Control
