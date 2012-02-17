@@ -210,14 +210,18 @@
 							<a href="#event.buildLink(prc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
 							   title="View All Authors">View All</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 						<li>
 							<a href="#event.buildLink(prc.xehPermissions)#" <cfif event.getValue("tabAuthors_Permissions",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Permissions">Permissions</a>
 						</li>
+						</cfif>
+						<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 						<li>
 							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabAuthors_Roles",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Roles">Roles</a>
 						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_authorsTab")#
 					</ul>
