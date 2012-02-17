@@ -74,6 +74,14 @@
 								#html.options(values=prc.pages,column="slug",nameColumn="title",selectedValue=prc.cbSettings.cb_site_homepage)#
 							</select> 	
 							
+							<!--- Disable Blog --->
+							#html.label(field="cb_site_disable_blog",content="Disable Blog:")#
+							<small>You can disable the Blog in this entire ContentBox. This does not delete data, it just disables blog features. Also
+								   remember to change the <strong>Home Page</strong> above to a real page and not the blog.</small><br/>
+							#html.radioButton(name="cb_site_disable_blog",checked=prc.cbSettings.cb_site_disable_blog,value=true)# Yes 	
+							#html.radioButton(name="cb_site_disable_blog",checked=not prc.cbSettings.cb_site_disable_blog,value=false)# No 	
+							
+							
 						</fieldset>
 						<!--- Site Maintenance --->
 						<fieldset>

@@ -22,6 +22,12 @@ component extends="baseHandler"{
 		prc.xehEntryRemove 	= "#prc.cbAdminEntryPoint#.entries.remove";
 		// Tab control
 		prc.tabContent = true;
+		
+		// Verify if disabled?
+		if( prc.cbSettings.cb_site_disable_blog ){
+			getPlugin("MessageBox").warn("The blog has been currently disabled. You can activate it again in your ContentBox settings panel");
+			setNextEvent(prc.xehDashboard);
+		}
 	}
 	
 	// index

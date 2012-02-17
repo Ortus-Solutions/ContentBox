@@ -185,6 +185,7 @@ component accessors="true"{
 			"cb_site_keywords" = setup.getSiteKeyWords(),
 			"cb_site_outgoingEmail" = setup.getSiteOutgoingEmail(),
 			"cb_site_homepage" = "cbBlog",
+			"cb_site_disable_blog" = "false",
 			
 			// Paging Defaults
 			"cb_paging_maxrows" = "20",
