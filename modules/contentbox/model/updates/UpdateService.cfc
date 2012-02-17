@@ -91,6 +91,12 @@ component accessors="true"{
 	
 	// processRemovals
 	function processRemovals(required path,required log){
+		
+		if( !fileExists( arguments.path ) ){
+			log.append("Skipping file removals as file does not exist: #arguments.path#<br/>");
+			return;
+		}
+		
 		var removalText = fileRead( arguments.path );
 		
 		log.append("Starting to process removals from: #arguments.path#<br/>");
