@@ -22,7 +22,7 @@
       	<!-- Create patch folder -->
 		<mkdir dir="${dir.exports}/${contentbox.version}"/>
 		<!-- Copy Update Template -->
-		<copy file="patches/Update.cfc" tofile="${dir.exports}/${contentbox.version}/Update.cfc" overwrite="true" />
+		<copy file="patches/Update.cfc" tofile="${dir.exports}/${contentbox.version}/Update.cfc" overwrite="false" />
 		<!-- Execute patch -->
 		<exec executable="./create-patch.sh">
 	    	<arg value="${contentbox.startgit}"/>

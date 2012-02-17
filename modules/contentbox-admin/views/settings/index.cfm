@@ -44,6 +44,7 @@
 				<li><a href="##mediamanager"><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> Media Manager</a></li>
 				<li><a href="##gravatars"><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> Gravatars</a></li>
 				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
+				<li><a href="##search_options"><img src="#prc.cbRoot#/includes/images/search_black.png" alt="modifiers"/> Search Options</a></li>
 				<li><a href="##rss_options"><img src="#prc.cbRoot#/includes/images/feed.png" alt="modifiers"/> RSS Options</a></li>
 				<li><a href="##paging_options"><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/> Paging Options</a></li>
 				<!--- cbadmin Event --->
@@ -258,6 +259,28 @@
 							#html.label(field="cb_notify_page",content="Send a notification when a page has been created or removed:")#
 							#html.radioButton(name="cb_notify_page",checked=prc.cbSettings.cb_notify_page,value=true)# Yes 	
 							#html.radioButton(name="cb_notify_page",checked=not prc.cbSettings.cb_notify_page,value=false)# No 		
+						</fieldset>
+					</div>
+					<!--- Search Options --->
+					<div>
+						<fieldset>
+							<legend><img src="#prc.cbRoot#/includes/images/search_black.png" alt="modifiers"/>  Search Options</legend>
+									
+							<!--- Max RSS Entries --->
+							<label for="cb_rss_maxEntries">Max Search Results:</label>
+							<small>The number of search results to show before paging kicks in.</small><br/>
+							<select name="cb_search_maxResults" id="cb_search_maxResults">
+								<cfloop from="5" to="50" step="5" index="i">
+									<option value="#i#" <cfif i eq prc.cbSettings.cb_search_maxResults>selected="selected"</cfif>>#i#</option>
+								</cfloop>
+							</select>
+							
+							<!--- Search Adapter --->
+							#html.label(field="cb_search_adapter",content="Search Adapter: ")#
+							<small>The ContentBox search engine adapter class (instantiation path) to use. You can create your own search engine adapters as 
+							long as they implement <em>contentbox.model.search.ISearchAdapter</em>.</small><br/>
+							#html.textField(name="cb_search_adapter",size="60",class="textfield",value=prc.cbSettings.cb_search_adapter,required="required",title="Please remember this must be a valid ColdFusion instantiation path")#	
+							
 						</fieldset>
 					</div>
 					<!--- RSS Options --->

@@ -271,7 +271,11 @@ component accessors="true"{
 			"cb_media_uplodify_fileExt" = "*.*;",
 			"cb_media_uploadify_allowMulti" = "true",
 			"cb_media_uploadify_sizeLimit" = "0",
-			"cb_media_uploadify_customOptions" = ""
+			"cb_media_uploadify_customOptions" = "",
+			
+			// Search Settings
+			"cb_search_adapter" = "contentbox.model.search.DBSearch",
+			"cb_search_maxResults" = "20"
 		};
 		
 		// Create setting objects and save

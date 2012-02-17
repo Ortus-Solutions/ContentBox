@@ -305,96 +305,19 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( NOT structKeyExists(prc,"pagingPlugin") ){
 			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext");
 		}
-		return prc.pagingPlugin.renderit( getSearchItemsCount(), prc.pagingLink);
+		return prc.pagingPlugin.renderit( getSearchResults().getTotal(), prc.pagingLink);
 	}
 	
-	/**
-	* Utility function to help you highlight search terms in content
-	* @term.hint The search term
-	* @content.hint The content searched
-	*/
-	function highlightSearchTerm(required term, required content){
-		var match 	= findNoCase(arguments.term, arguments.content);
-		var end		= 0;
-		var excerpt = "";
-		
-		if( match lte 250 ){ match = 1; }
-		end = match + len(arguments.term) + 500;
-		
-		if( len(arguments.content) gt 500 ){
-			if( match gt 1 ){
-				excerpt = "..." & mid(arguments.content, match-250, end-match);
-			}
-			else{
-				excerpt = left(arguments.content, end);
-			}
-			if( len(arguments.content) gt end ){
-				excerpt = excerpt & "...";
-			}
-		}
-		else{
-			excerpt = arguments.content;
-		}
-		try{
-			excerpt = reReplaceNoCase(excerpt, "(#arguments.term#)", "<span class='highlight'>\1</span>","all");
-		}
-		catch(Any e){}
-		
-		// remove images
-		//excerpt = reReplaceNoCase(excerpt, '<img\s[^//>].*//?>',"[image]","all");
-		// remove links
-		excerpt = reReplaceNoCase(excerpt, '<a\b[^>]*>(.*?)</a>',"[link]","all");
-		
-		return excerpt;		
-	}
-	
-	/**
-	* Render out search results quickly
-	*/
-	function quickSearchResults(){
-		var results 	= "";
-		var searchTerm  = getSearchTerm();
-		var searchItems = getSearchItems();
-		var total	 	= getSearchItemsCount();
-		
-		savecontent variable="results"{
-			writeOutput('
-			<div class="searchResults">
-				<div class="searchResultsCount">
-					Found <strong>#total#</strong> results.
-				</div>
-				<ol>
-			');
-			
-			for(var item in searchItems ){
-				writeOutput('
-				<li>
-					<a href="#linkContent(item)#">#item.getTitle()#</a><br/>
-					#highlightSearchTerm( searchTerm, item.renderContent() )#
-				</li>
-				<cite>#linkContent(item)#</cite>
-				<br /><br />
-				');
-			};
-			
-			writeOutput("</ol></div>");
-		}
-		
-		return results;
-	}
-	
-	
-	
-	// get the curent search results array
-	array function getSearchItems(){
+	// get the curent search results object
+	contentbox.model.search.SearchResults function getSearchResults(){
 		var event = getRequestContext();
-		return event.getValue(name="searchItems",private="true",default=[]);
+		return event.getValue(name="searchResults",private="true",default="");
 	}
 	
-	// how many items where found in the search
-	numeric function getSearchItemsCount(){
+	// get the curent search results HTML content
+	any function getSearchResultsContent(){
 		var event = getRequestContext();
-		return event.getValue(name="searchItemsCount",private="true",default=[]);
+		return event.getValue(name="searchResultsContent",private="true",default="");
 	}
 	
 	// Determine if you have a search term

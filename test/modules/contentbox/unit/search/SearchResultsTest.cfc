@@ -1,4 +1,4 @@
-/**
+﻿/**
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -21,26 +21,33 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 */
-component accessors="true"{
+component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model.search.SearchResults"{
 
-	/**
-	* Take some nasty HQL array reports to nicer array of struct reports
-	* @hqlData The nasty HQL query report
-	* @columnNames The name of the columns (array) to inflate the structure of columns into, make sure they match the report or KABOOM!
-	*/
-	array function arrayReportToStruct(required array hqlData,required array columnNames){
-		var newData = [];
-		// iterate rows
-		for(row in arguments.hqlData){
-			// get columns
-			var cols = arrayLen( row );
-			var newRow = {};
-			for(var x=1; x LTE cols; x++){
-				newRow[ arguments.columnNames[x] ] = row[x];
-			}
-			arrayAppend( newData, newRow );
-		}
-		return newData;
-	}			
-			
+	function setup(){
+		super.setup();
+		model.init();
+	}
+		
+	function testMemento(){
+		r = model.getmemento();
+		assertTrue( structCount( r ) );
+	}
+	
+	function testPopulate(){
+		r = {
+			results = [],
+			searchTime = getTickCount(),
+			total = 0,
+			metadata = {name="luis",value="awesome"},
+			error = false,
+			errorMessages = [],
+			searchTerm = "luis"
+		};
+		
+		model.populate( r );
+		m = model.getMemento();
+		assertEquals( r, m );
+		
+	}
+
 } 

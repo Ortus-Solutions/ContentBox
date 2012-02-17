@@ -1,4 +1,4 @@
-/**
+﻿/**
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -21,26 +21,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 */
-component accessors="true"{
+component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model.search.SearchService"{
 
-	/**
-	* Take some nasty HQL array reports to nicer array of struct reports
-	* @hqlData The nasty HQL query report
-	* @columnNames The name of the columns (array) to inflate the structure of columns into, make sure they match the report or KABOOM!
-	*/
-	array function arrayReportToStruct(required array hqlData,required array columnNames){
-		var newData = [];
-		// iterate rows
-		for(row in arguments.hqlData){
-			// get columns
-			var cols = arrayLen( row );
-			var newRow = {};
-			for(var x=1; x LTE cols; x++){
-				newRow[ arguments.columnNames[x] ] = row[x];
-			}
-			arrayAppend( newData, newRow );
-		}
-		return newData;
-	}			
-			
+	function setup(){
+		super.setup();
+		model.init();
+	}
+		
+	function testGetSearchAdapter(){
+		mockAdapter = getMockBox().createEmptyMock("contentbox.model.search.DBSearch");
+		mockWireBox.$("getInstance", mockAdapter );
+		mockSettings = getMockBox().createEmptyMock("contentbox.model.system.SettingService").$("getSetting","contentbox.model.search.DBSearch");
+		model.$property("wirebox","variables",mockWireBox);
+		model.$property("settingService","variables",mockSettings);
+		
+		a = model.getSearchAdapter();
+		assertEquals( mockAdapter, a );
+	}
+
 } 

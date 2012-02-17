@@ -1,10 +1,12 @@
 ﻿<cfoutput>
-
-	<!--- ContentBoxEvent --->
-	#cb.event("cbui_prePageDisplay")#
+<!--- ContentBoxEvent --->
+#cb.event("cbui_prePageDisplay")#
 	
-	<!--- top gap --->
-	<div class="post-top-gap"></div>
+<!--- SideBar --->
+<div id="sidebar">#cb.quickView(view='_pagesidebar')#</div>
+
+<!--- content --->
+<div id="text" >
 	
 	<!--- search Results --->
 	<div>

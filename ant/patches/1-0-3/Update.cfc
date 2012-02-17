@@ -20,27 +20,43 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
+This is an updater cfc for contentbox
 */
-component accessors="true"{
+component implements="contentbox.model.updates.IUpdate"{
+	
+	property name="settingService"			inject="id:settingService@cb";
+	
+	function init(){
+		return this;
+	}
 
 	/**
-	* Take some nasty HQL array reports to nicer array of struct reports
-	* @hqlData The nasty HQL query report
-	* @columnNames The name of the columns (array) to inflate the structure of columns into, make sure they match the report or KABOOM!
+	* pre installation
 	*/
-	array function arrayReportToStruct(required array hqlData,required array columnNames){
-		var newData = [];
-		// iterate rows
-		for(row in arguments.hqlData){
-			// get columns
-			var cols = arrayLen( row );
-			var newRow = {};
-			for(var x=1; x LTE cols; x++){
-				newRow[ arguments.columnNames[x] ] = row[x];
-			}
-			arrayAppend( newData, newRow );
+	function preInstallation(){
+		
+	}
+	
+	/**
+	* post installation
+	*/
+	function postInstallation(){
+		
+		// Create Search Settings
+		var settings = {
+			// Search Settings
+			"cb_search_adapter" = "contentbox.model.search.DBSearch",
+			"cb_search_maxResults" = "20"
+		};
+		
+		// Create setting objects and save
+		var aSettings = [];
+		for(var key in settings){
+			var props = {name=key,value=settings[key]};
+			arrayAppend( aSettings, settingService.new(properties=props) );
 		}
-		return newData;
-	}			
-			
-} 
+		// save search settings
+		settingService.saveAll( aSettings );		
+	}
+
+}

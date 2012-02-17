@@ -118,6 +118,9 @@ component {
 		binder.map("zipUtil@cb").to("coldbox.system.core.util.Zip");
 		binder.map("HQLHelper@cb").to("contentbox.model.util.HQLHelper");
 		binder.map("Validator@cb").to("coldbox.system.core.util.Validator");
+		// Search
+		binder.map("SearchResults@cb").to("contentbox.model.search.SearchResults");
+		binder.map("SearchService@cb").to("contentbox.model.search.SearchService");
 		// importers
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");

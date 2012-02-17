@@ -5,7 +5,7 @@ component extends="BaseContentHandler" singleton{
 
 	// DI
 	property name="pageService"			inject="id:pageService@cb";
-	property name="contentService"		inject="id:contentService@cb";
+	property name="searchService"		inject="id:SearchService@cb";
 
 	// pre Handler
 	function preHandler(event,action,eventArguments){
@@ -92,21 +92,21 @@ component extends="BaseContentHandler" singleton{
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat(rc.q)#/@page@";
 
-		// get published content
+		// get search results
 		if( len(rc.q) ){
-			var searchResults = contentService.searchContent(offset=prc.pagingBoundaries.startRow-1,
-												   			 max=prc.cbSettings.cb_paging_maxentries,
-												   			 searchTerm=rc.q);
-			prc.searchItems 		= searchResults.content;
-			prc.searchItemsCount  	= searchResults.count;
+			var searchAdapter = searchService.getSearchAdapter();
+			prc.searchResults = searchAdapter.search(offset=prc.pagingBoundaries.startRow-1,
+												     max=prc.cbSettings.cb_paging_maxentries,
+												   	 searchTerm=rc.q);
+			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		}
 		else{
-			prc.searchItems = [];
-			prc.searchItemsCount = 0;
+			prc.searchResults = getModel("SearchResults@cb");
+			prc.searchResultsContent = "Please enter a search term to search on.";
 		}
 		
 		// announce event
-		announceInterception("cbui_onContentSearch",{searchItems = prc.searchItems, searchItemsCount = prc.searchItemsCount, searchTerm = rc.q});
+		announceInterception("cbui_onContentSearch",{searchResults = prc.searchResults, searchResultsContent = prc.searchResultsContent});
 
 		// set skin search
 		event.setView(view="#prc.cbLayout#/views/search",layout="#prc.cbLayout#/layouts/pages");
