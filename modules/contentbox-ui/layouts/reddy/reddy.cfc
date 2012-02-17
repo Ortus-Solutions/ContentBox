@@ -17,6 +17,7 @@ A layout is composed of the following pieces
 	+ category.cfm (The template used to display an iteration of entry categories using coldbox collection rendering)
 	+ comment.cfm (The template used to display an iteration of entry or page comments using coldbox collection rendering)
 	+ entry.cfm (The template used to display an iteration of entries in the home page using coldbox collection rendering)
+/ widgets (A folder that can contain layout specific widgets which override core ContentBox widgets)
 
 Templates
 Templates are a single cfm template that is used by ContentBox to iterate over a collection (usually entries or categories or comments) and 

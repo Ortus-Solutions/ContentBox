@@ -577,6 +577,15 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @name The name of the installed widget to return
 	*/
 	function getWidget(required name){
+		var layoutWidgetPath = layoutRoot() & "/widgets/#arguments.name#.cfc";
+		
+		// layout widget overrides
+		if( fileExists( expandPath( layoutWidgetPath ) ) ){
+			var widgetCreationPath = replace( reReplace(layoutRoot(),"^/","")  ,"/",".","all") & ".widgets.#arguments.name#";
+			return controller.getPlugin(plugin=widgetCreationPath,customPlugin=true);
+		}
+		
+		// return core contentbox widget instead
 		return getMyPlugin(plugin="widgets.#arguments.name#",module="contentbox-ui");
 	}
 
