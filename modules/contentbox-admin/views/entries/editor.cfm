@@ -36,7 +36,9 @@
 				<div class="actionBar">
 					&nbsp;<input type="submit" class="button2" value="Quick Save" title="Quickly save your work as a draft & continue working!" onclick="return quickSave()">
 					&nbsp;<input type="submit" class="button2" value="&nbsp; Draft &nbsp;" title="Save and close this masterpiece as a draft!" onclick="toggleDraft()">
+					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 					&nbsp;<input type="submit" class="buttonred" value="Publish" title="Save, close and publish this masterpiece!">
+					</cfif>
 				</div>
 				
 				<!--- Loader --->

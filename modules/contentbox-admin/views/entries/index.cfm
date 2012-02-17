@@ -104,7 +104,7 @@
 			<div class="contentBar" id="contentBar">
 				
 				<!--- Create Butons --->
-				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(prc.xehEntryEditor)#');" title="Create new entry">Create Entry</button>
 				</div>
@@ -140,7 +140,12 @@
 					<cfloop array="#prc.entries#" index="entry">
 					<tr data-contentID="#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
 						<td>
-							<a href="#event.buildLink(prc.xehBlogEditor)#/contentID/#entry.getContentID()#" title="Edit Entry">#entry.getTitle()#</a><br/>
+							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+								<a href="#event.buildLink(prc.xehBlogEditor)#/contentID/#entry.getContentID()#" title="Edit Entry">#entry.getTitle()#</a>
+							<cfelse>
+								#entry.getTitle()#
+							</cfif>
+							<br/>
 							by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a></br>
 							<!--- password protect --->
 							<cfif entry.isPasswordProtected()>
@@ -173,13 +178,15 @@
 						<td class="center">#entry.getHits()#</td>
 						<td class="center">#entry.getNumberOfComments()#</td>
 						<td class="center">
-							<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
 							&nbsp;
+							</cfif>
 							<!--- History Command --->
 							<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#" title="Version History"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/></a>
 							&nbsp;
+							<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 							<!--- Delete Command --->
 							<a title="Delete Entry" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 							&nbsp;

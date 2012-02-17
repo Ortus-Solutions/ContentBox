@@ -136,6 +136,11 @@ component extends="baseHandler"{
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
 		
+		// Verify permission for publishing, else save as draft
+		if( !prc.oAuthor.checkPermission("ENTRIES_ADMIN") ){
+			rc.isPublished = "false";
+		}
+		
 		// get new/persisted entry and populate it
 		var entry = populateModel( entryService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		var isNew = (NOT entry.isLoaded());

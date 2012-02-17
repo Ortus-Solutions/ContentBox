@@ -66,10 +66,10 @@
 					<!--- Quick Links --->
 					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
 						<option value="null">Quick Links</option>
-						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
 							<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
 						</cfif>
-						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR")>
 							<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>

@@ -145,6 +145,11 @@ component extends="baseHandler"{
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
 
+		// Verify permission for publishing, else save as draft
+		if( !prc.oAuthor.checkPermission("PAGES_ADMIN") ){
+			rc.isPublished = "false";
+		}
+
 		// get new/persisted page and populate it with incoming data.
 		var page  = populateModel( pageService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		var isNew = (NOT page.isLoaded());

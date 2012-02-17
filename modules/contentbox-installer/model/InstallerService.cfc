@@ -103,8 +103,10 @@ component accessors="true"{
 			"COMMENTS_ADMIN" = "Ability to manage comments, default is view only",
 			"CUSTOMHTML_ADMIN" = "Ability to manage custom HTML, default is view only",
 			"PAGES_ADMIN" = "Ability to manage content pages, default is view only",
+			"PAGES_EDITOR" = "Ability to manage content pages but not publish pages",
 			"CATEGORIES_ADMIN" = "Ability to manage categories, default is view only",
 			"ENTRIES_ADMIN" = "Ability to manage blog entries, default is view only",
+			"ENTRIES_EDITOR" = "Ability to manage blog entries but not publish entries",
 			"RELOAD_MODULES" = "Ability to reload modules",
 			"SECURITYRULES_ADMIN" = "Ability to manage the system's security rules, default is view only",
 			"GLOBALHTML_ADMIN" = "Ability to manage the system's global HTML content used on layouts",
@@ -136,9 +138,9 @@ component accessors="true"{
 		// Add Editor Permissions
 		oRole.addPermission( permissions["COMMENTS_ADMIN"] );
 		oRole.addPermission( permissions["CUSTOMHTML_ADMIN"] );
-		oRole.addPermission( permissions["PAGES_ADMIN"] );
+		oRole.addPermission( permissions["PAGES_EDITOR"] );
 		oRole.addPermission( permissions["CATEGORIES_ADMIN"] );
-		oRole.addPermission( permissions["ENTRIES_ADMIN"] );
+		oRole.addPermission( permissions["ENTRIES_EDITOR"] );
 		oRole.addPermission( permissions["LAYOUT_ADMIN"] );
 		oRole.addPermission( permissions["GLOBALHTML_ADMIN"] );
 		oRole.addPermission( permissions["MEDIAMANAGER_ADMIN"] );
