@@ -19,11 +19,17 @@ component extends="baseHandler"{
 		prc.xehUploadUpdate     = "#prc.cbAdminEntryPoint#.autoupdates.upload";
 		
 		// slugs
-		prc.updateSlugStable = getModuleSettings("contentbox").settings.updateSlug_stable;
-		prc.updateSlugBeta = getModuleSettings("contentbox").settings.updateSlug_beta;
+		prc.updateSlugStable 	= getModuleSettings("contentbox").settings.updateSlug_stable;
+		prc.updateSlugBeta 		= getModuleSettings("contentbox").settings.updateSlug_beta;
 		
 		// keep logs for review
 		flash.keep("udpateLog");
+		// issue application stop
+		if( flash.exists("updateRestart") ){ 
+			applicationstop(); 
+			setnextEvent(prc.xehAutoUpdater);
+			return;
+		}
 		// clear Logs
 		if( event.valueExists("clearLogs") ){
 			flash.discard("updateLog");
@@ -95,7 +101,7 @@ component extends="baseHandler"{
 				getPlugin("MessageBox").info("Update Applied!");
 			}
 			flash.put("updateLog", updateResults.log);
-			
+			flash.put("updateRestart", (!updateResults.error) );			
 		}
 		catch(Any e){
 			getPlugin("MessageBox").error("Error installing auto-update.<br> Diagnostics: #e.detail# #e.message#");
@@ -125,6 +131,7 @@ component extends="baseHandler"{
 					getPlugin("MessageBox").info("Update Applied!");
 				}
 				flash.put("updateLog", updateResults.log);
+				flash.put("updateRestart", (!updateResults.error) );
 			}
 			catch(Any e){
 				getPlugin("MessageBox").error("Error uploading update file: #e.detail# #e.message#");
