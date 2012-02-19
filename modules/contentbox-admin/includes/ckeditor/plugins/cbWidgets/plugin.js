@@ -30,7 +30,8 @@ openRemoteModal() is part of contentbox js
 					label: 'Insert Widget',
 					command: b,
 					icon: this.path + 'ContentBox-Circle_16.png',
-					group: 'contentbox'
+					group: 'contentbox',
+					order:3
 				});
 			}
 			if (editor.contextMenu) {

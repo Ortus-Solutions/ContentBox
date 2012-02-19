@@ -30,7 +30,8 @@ openRemoteModal() is part of contentbox js
 					label: 'Insert CustomHTML',
 					command: b,
 					icon: this.path + 'html.png',
-					group: 'contentbox'
+					group: 'contentbox',
+					order:2
 				});
 			}
 			if (editor.contextMenu) {

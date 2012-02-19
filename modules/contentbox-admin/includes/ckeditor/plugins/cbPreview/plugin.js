@@ -29,7 +29,8 @@ openRemoteModal() is part of contentbox js
 					label: 'Quick Preview',
 					command: b,
 					icon: this.path + 'eye.png',
-					group: 'contentbox'
+					group: 'contentbox',
+					order: 6
 				});
 			}
 			if (editor.contextMenu) {

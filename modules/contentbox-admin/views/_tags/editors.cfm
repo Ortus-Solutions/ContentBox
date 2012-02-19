@@ -20,7 +20,7 @@ function setupEditors($theForm, withExcerpt){
 	    '/',
 	    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
 	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
-	    { name: 'contentbox',  items : [ 'cbWidgets','cbCustomHTML','cbLinks','cbEntryLinks', 'cbPreview' ] }
+	    { name: 'contentbox',  items : [ 'cbIpsumLorem','cbWidgets','cbCustomHTML','cbLinks','cbEntryLinks', 'cbPreview' ] }
 	];
 	
 	// Activate ckeditor

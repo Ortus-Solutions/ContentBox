@@ -29,7 +29,8 @@ openRemoteModal() is part of contentbox js
 					label: 'Link To Page',
 					command: b,
 					icon: this.path + 'page.png',
-					group: 'contentbox'
+					group: 'contentbox',
+					order:5
 				});
 			}
 			if (editor.contextMenu) {
