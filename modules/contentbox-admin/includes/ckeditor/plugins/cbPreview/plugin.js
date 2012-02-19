@@ -7,17 +7,17 @@ openRemoteModal() is part of contentbox js
 	var a= {
 		exec:function(editor){
 			// Open the selector widget dialog.
-			openRemoteModal( getPageSelectorURL(), {editorName: editor.name} );
+			openRemoteModal( getPreviewSelectorURL(), {content: editor.getData()} );
 		}
 	},
 	//Section 2 : Create the button and add the functionality to it
-	b='cbLinks';
+	b='cbPreview';
 	CKEDITOR.plugins.add(b,{
 		init:function(editor){
 			editor.addCommand(b,a);
-			editor.ui.addButton('cbLinks',{
-				label:'Link to a ContentBox Page',
-				icon: this.path + 'page.png',
+			editor.ui.addButton('cbPreview',{
+				label:'Quick Preview',
+				icon: this.path + 'eye.png',
 				command:b
 			});
 			// context menu
@@ -25,18 +25,19 @@ openRemoteModal() is part of contentbox js
 				// A group menu is required
 				editor.addMenuGroup('contentbox');
 				// Create a menu item
-				editor.addMenuItem('cbLinks', {
-					label: 'Link To Page',
+				editor.addMenuItem('cbQuickPreview', {
+					label: 'Quick Preview',
 					command: b,
-					icon: this.path + 'page.png',
+					icon: this.path + 'eye.png',
 					group: 'contentbox'
 				});
 			}
 			if (editor.contextMenu) {
 				editor.contextMenu.addListener(function(element, selection) {
-					return { cbLinks: CKEDITOR.TRISTATE_ON };
+					return { cbQuickPreview: CKEDITOR.TRISTATE_ON };
 				});
 			}
 		}
+		
 	});
 })();

@@ -103,12 +103,12 @@ function closeRemoteModal(){
  */
 function openRemoteModal(url,params,w,h){
 	$remoteModal.overlay({
-			mask: {
+		mask: {
 			color: '#fff',
 			loadSpeed: 200,
-			opacity: 0.6
-		},
+			opacity: 0.6 },
 		closeOnClick : true,
+		closeOnEsc : true,
 		onBeforeLoad : function(){
 			$remoteModalContent.load( $remoteModal.data("url"),$remoteModal.data("params") );
 		},

@@ -21,6 +21,23 @@ openRemoteModal() is part of contentbox js
 				icon: this.path + 'html.png',
 				command:b
 			});
+			// context menu
+			if (editor.addMenuItem) {
+				// A group menu is required
+				editor.addMenuGroup('contentbox');
+				// Create a menu item
+				editor.addMenuItem('cbCustomHTML', {
+					label: 'Insert CustomHTML',
+					command: b,
+					icon: this.path + 'html.png',
+					group: 'contentbox'
+				});
+			}
+			if (editor.contextMenu) {
+				editor.contextMenu.addListener(function(element, selection) {
+					return { cbCustomHTML: CKEDITOR.TRISTATE_ON };
+				});
+			}
 		}
 	});
 })();
