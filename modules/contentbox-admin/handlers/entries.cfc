@@ -1,4 +1,25 @@
 ﻿/**
+********************************************************************************
+ContentBox - A Modular Content Platform
+Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+Apache License, Version 2.0
+
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0 
+
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
+limitations under the License.
+********************************************************************************
 * Manage blog entries
 */
 component extends="baseHandler"{
@@ -22,6 +43,12 @@ component extends="baseHandler"{
 		prc.xehEntryRemove 	= "#prc.cbAdminEntryPoint#.entries.remove";
 		// Tab control
 		prc.tabContent = true;
+		
+		// Verify if disabled?
+		if( prc.cbSettings.cb_site_disable_blog ){
+			getPlugin("MessageBox").warn("The blog has been currently disabled. You can activate it again in your ContentBox settings panel");
+			setNextEvent(prc.xehDashboard);
+		}
 	}
 	
 	// index
@@ -135,6 +162,11 @@ component extends="baseHandler"{
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
+		
+		// Verify permission for publishing, else save as draft
+		if( !prc.oAuthor.checkPermission("ENTRIES_ADMIN") ){
+			rc.isPublished = "false";
+		}
 		
 		// get new/persisted entry and populate it
 		var entry = populateModel( entryService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);

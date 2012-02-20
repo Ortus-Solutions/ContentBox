@@ -4,7 +4,7 @@
 	#cb.event("cbui_prePageDisplay")#
 	
 	<!--- breadcrumbs only if not home page. --->
-	<cfif cb.getCurrentPage().getSlug() NEQ cb.getHomePage()>
+	<cfif cb.getCurrentPage().getSlug() NEQ cb.getHomePage() AND cb.getCustomField("breadcrumb",true)>
 	<div class="infoBar">> <a href="#cb.linkHome()#">Home</a> #cb.breadCrumbs()#</div>
 	</cfif>
 	

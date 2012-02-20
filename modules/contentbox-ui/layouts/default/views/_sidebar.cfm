@@ -27,7 +27,7 @@
 
 <h4>Entries Search</h4>
 <div class="bg"></div>
-#cb.widget("SearchForm")#
+#cb.widget(name="SearchForm",args={type="blog"})#
 <br/>
 
 <h4>Archives</h4>

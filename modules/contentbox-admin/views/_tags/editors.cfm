@@ -8,19 +8,19 @@ function setupEditors($theForm, withExcerpt){
 	// toolbar config
 	var ckToolbar =
 	[
-	    { name: 'document',    items : [ 'Source','-','Templates' ] },
+	    { name: 'document',    items : [ 'Source','-','Templates','Maximize','ShowBlocks' ] },
 	    { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
 	    { name: 'editing',     items : [ 'Find','Replace','-','SpellChecker', 'Scayt' ] },
-	    //{ name: 'forms',       items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
-	   	{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-	     '/',
-		{ name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
+	    { name: 'forms',       items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button','HiddenField' ] },
+	    '/',
+		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
+	    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
 	    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
 	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] },
 	    '/',
 	    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
 	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
-	    { name: 'tools',       items : [ 'Maximize','ShowBlocks','-','cbWidgets','cbLinks','cbEntryLinks' ] }
+	    { name: 'contentbox',  items : [ 'cbIpsumLorem','cbWidgets','cbCustomHTML','cbLinks','cbEntryLinks', 'cbPreview' ] }
 	];
 	
 	// Activate ckeditor
@@ -83,5 +83,9 @@ function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint 
 function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
 // Entry Selection Integration
 function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector")#';}
+// Custom HTML Selection Integration
+function getCustomHTMLSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".customHTML.editorselector")#';}
+// Preview Integration
+function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".content.preview")#';}
 </script>
 </cfoutput>

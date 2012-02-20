@@ -109,7 +109,7 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 #accordion h2.current .arrow_right { display:none; }
 #accordion h2.current .arrow_down { display:block; }
 /* Accordion pane */
-#accordion div.pane { display:none; padding:10px 20px; font-size:1em; }
+#accordion div.pane { display:none; padding:10px 10px; font-size:1em; }
 /**============================== Page Layout with Sidebar ==============================**/
 .sidebar { width: 300px; float:right; margin:0 0 0 25px; }
 .main_column { margin-right: 312px; }

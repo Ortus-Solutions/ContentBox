@@ -84,14 +84,7 @@ limitations under the License.
 				</div>
 				
 				<!--- Custom Search Box --->
-		      	<div class="search">
-			        <form id="searchForm" name="searchForm" method="post" action="#cb.linkSearch()#">
-			          <label>
-			          	<span><input name="q" type="text" class="keywords" id="textfield" maxlength="50" value="Search..." onclick="this.value=''"/></span>
-			            <input name="b" type="image" src="#cb.layoutRoot()#/includes/images/search.gif" class="button" />
-			          </label>
-			        </form>
-			    </div>
+		      	#cb.quickView("_search")#
 		      	
 				<!--- Spacer --->
 				<div class="clr"><br/></div>
@@ -167,11 +160,6 @@ limitations under the License.
 		
 	<!--- footer --->
 	<div class="footer">
-		<div class="footer_resize">
-			<p class="leftt">Powered by <a href="http://www.ortussolutions.com">ContentBox<a/></p>
-			<p class="right">(DT) <a href="http://www.dreamtemplate.com" title="Awesome Templates!"><strong>Website Templates</strong></a></p>
-			<div class="clr"></div>
-		</div>
 		<!--- ContentBoxEvent --->
 		#cb.event("cbui_footer")#
 		<div class="clr"></div>

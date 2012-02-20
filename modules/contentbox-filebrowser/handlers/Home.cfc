@@ -36,6 +36,9 @@ component output="false" hint="Main filebrowser module handler"{
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "settings") ){
 			mergeSettings(prc.fbSettings, flash.get("fileBrowser").settings);
 		}
+		
+		// keep flash backs for relocations.
+		flash.keep("filebrowser");
 	}
 
 	/**
@@ -79,7 +82,7 @@ component output="false" hint="Main filebrowser module handler"{
 		// Store directory roots and web root
 		prc.fbDirRoot 		= prc.fbSettings.directoryRoot;
 		prc.fbWebRootPath 	= expandPath("./");
-		
+
 		// clean incoming path and decode it.
 		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
 		// Check if the incoming path does not exist so we default to the configuration directory root.
@@ -93,7 +96,7 @@ component output="false" hint="Main filebrowser module handler"{
 		prc.fbwebRootPath = cleanIncomingPath(prc.fbwebRootPath);
 		// Do a safe current root for JS
 		prc.fbSafeCurrentRoot = URLEncodedFormat( prc.fbCurrentRoot );
-		
+
 		// traversal testing
 		if( NOT isTraversalSecure(prc, prc.fbCurrentRoot) ){
 			getPlugin("MessageBox").warn("Traversal security exception!");
@@ -137,10 +140,11 @@ component output="false" hint="Main filebrowser module handler"{
 			errors = false,
 			messages = ""
 		};
+		
 		// param value
 		event.paramValue("path","");
 		event.paramValue("dName","");
-
+		
 		// Verify credentials else return invalid
 		if( !prc.fbSettings.createFolders ){
 			data.errors = true;
@@ -169,9 +173,19 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// creation
 		try{
+			// Announce it
+			var iData = {
+				path = rc.path,
+				directoryName = rc.dName
+			};
+			announceInterception("fb_preFolderCreation",iData);
+		
 			fileUtils.directoryCreate( rc.path & "/" & rc.dName );
 			data.errors = false;
 			data.messages = "Folder '#rc.path#/#rc.dName#' created successfully!";
+			
+			// Announce it
+			announceInterception("fb_postFolderCreation",iData);
 		}
 		catch(Any e){
 			data.errors = true;
@@ -220,6 +234,12 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// removal
 		try{
+			// Announce it
+			var iData = {
+				path = rc.path
+			};
+			announceInterception("fb_preFileRemoval",iData);
+			
 			if( fileExists( rc.path ) ){
 				fileUtils.removeFile( rc.path );
 			}
@@ -228,6 +248,11 @@ component output="false" hint="Main filebrowser module handler"{
 			}
 			data.errors = false;
 			data.messages = "'#rc.path#' removed successfully!";
+			
+			// Announce it
+			iData.path = rc.path;
+			iData.directoryName = rc.dName;
+			announceInterception("fb_postFileRemoval",iData);
 		}
 		catch(Any e){
 			data.errors = true;
@@ -276,9 +301,18 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// download
 		try{
+			// Announce it
+			var iData = {
+				path = rc.path
+			};
+			announceInterception("fb_preFileDownload",iData);
+			
 			fileUtils.sendFile(file=rc.path);
 			data.errors = false;
 			data.messages = "'#rc.path#' sent successfully!";
+			
+			// Announce it
+			announceInterception("fb_postFileDownload",iData);
 		}
 		catch(Any e){
 			data.errors = true;
@@ -321,6 +355,13 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// rename
 		try{
+			// Announce it
+			var iData = {
+				original = rc.path,
+				newName = rc.name
+			};
+			announceInterception("fb_preFileRename",iData);
+			
 			if( fileExists( rc.path ) ){
 				fileUtils.renameFile( rc.path, rc.name );
 			}
@@ -329,6 +370,11 @@ component output="false" hint="Main filebrowser module handler"{
 			}
 			data.errors = false;
 			data.messages = "'#rc.path#' renamed successfully!";
+			
+			// Announce it
+			iData.path = rc.path;
+			announceInterception("fb_postFileRename",iData);
+			
 		}
 		catch(Any e){
 			data.errors = true;
@@ -366,17 +412,27 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// upload
 		try{
-			var results = fileUtils.uploadFile(fileField="FILEDATA",
+			// Announce it
+			var iData = {
+				fileField = "FILEDATA",
+				path = rc.path
+			};
+			announceInterception("fb_preFileUpload",iData);
+			
+			iData.results = fileUtils.uploadFile(fileField="FILEDATA",
 											   destination=rc.path,
 											   nameConflict="Overwrite",
 											   accept=prc.fbSettings.acceptMimeTypes);
 			// debug log file
 			if( log.canDebug() ){
-				log.debug("File Uploaded!", results);
+				log.debug("File Uploaded!", iData.results);
 			}
 			data.errors = false;
 			data.messages = "File uploaded successfully!";
-			log.info(data.messages, results);
+			log.info(data.messages, iData.results);
+			
+			// Announce it
+			announceInterception("fb_postFileUpload",iData);
 		}
 		catch(Any e){
 			data.errors = true;
@@ -509,9 +565,6 @@ component output="false" hint="Main filebrowser module handler"{
 		if(!flash.exists("filebrowser")){
 			var filebrowser = {callback=rc.callback, cancelCallback=rc.cancelCallback, filterType=rc.filterType, settings=prc.fbsettings};
 			flash.put("filebrowser",filebrowser);
-		}
-
-		// keep flash backs for relocations.
-		flash.keep("filebrowser");
+		}		
 	}
 }

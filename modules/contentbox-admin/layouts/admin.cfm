@@ -59,17 +59,17 @@
 				<span class="fr">
 					<!--- View Site --->
 					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank"><button class="buttonsmall">View Site</button></a>
-					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
 					<!--- Quick Post --->
 					<button class="buttonsmall" onclick="showQuickPost()">Quick Post</button>
 					</cfif>
 					<!--- Quick Links --->
 					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
 						<option value="null">Quick Links</option>
-						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
 							<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
 						</cfif>
-						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+						<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
 							<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
@@ -144,6 +144,7 @@
 							<a href="#event.buildLink(prc.xehPages)#" <cfif event.getValue("tabContent_pages",false,true)> class="current"</cfif>
 							   title="Manage Site Pages">Pages</a>
 						</li>
+						<cfif !prc.cbSettings.cb_site_disable_blog>
 						<li>
 							<a href="#event.buildLink(prc.xehEntries)#" <cfif event.getValue("tabContent_entries",false,true)> class="current"</cfif>
 							   title="Manage Blog Entries">Blog</a>
@@ -152,6 +153,7 @@
 							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabContent_categories",false,true)> class="current"</cfif>
 							   title="Manage Blog Entry Categories">Blog Categories</a>
 						</li>
+						</cfif>
 						<li>
 							<a href="#event.buildLink(prc.xehCustomHTML)#" <cfif event.getValue("tabContent_customHTML",false,true)> class="current"</cfif>
 							   title="Manage Custom HTML Content Pieces">Custom HTML</a>
@@ -210,14 +212,18 @@
 							<a href="#event.buildLink(prc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
 							   title="View All Authors">View All</a>
 						</li>
+						<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 						<li>
 							<a href="#event.buildLink(prc.xehPermissions)#" <cfif event.getValue("tabAuthors_Permissions",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Permissions">Permissions</a>
 						</li>
+						</cfif>
+						<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 						<li>
 							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabAuthors_Roles",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Roles">Roles</a>
 						</li>
+						</cfif>
 						<!--- cbadmin event --->
 						#announceInterception("cbadmin_authorsTab")#
 					</ul>

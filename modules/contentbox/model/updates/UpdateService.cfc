@@ -42,8 +42,8 @@ component accessors="true"{
 	/************************************** PUBLIC *********************************************/
 	
 	
-	// Apply updates from a download URL
-	function applyUpdateFromURL(required string downloadURL){
+	// Apply updates from a download URL, return results struct: [error,logInfo]
+	struct function applyUpdateFromURL(required string downloadURL){
 		var log 			= createObject("java","java.lang.StringBuilder").init("");
 		var results 		= {error=true,logInfo=""};
 		var fileName 		= getFileFromPath(arguments.downloadURL);
@@ -61,8 +61,8 @@ component accessors="true"{
 		return results;	
 	}
 	
-	// Apply an update from an upload
-	function applyUpdateFromUpload(required fileField){
+	// Apply updates from an upload, return results struct: [error,logInfo]
+	struct function applyUpdateFromUpload(required fileField){
 		var log 			= createObject("java","java.lang.StringBuilder").init("");
 		var results 		= {error=true,logInfo=""};
 		
@@ -89,54 +89,14 @@ component accessors="true"{
 		return results;	
 	}
 	
-	// Apply an already downloaded update
-	private boolean function applyUpdateOnDisk(required log){
-		var results = false;
-		
-		// Verify Patch integrity
-		if( !fileExists( getPatchesLocation() & "/Update.cfc" ) ){
-			log.append("Update.cfc not found in downloaded package, skipping patch update.<br/>");
-		}
-		else{
-			try{
-				var updater = buildUpdater();
-				
-				// do preInstallation
-				updater.preInstallation();
-				log.append("Update.cfc - called preInstallation() method.<br/>");
-				
-				// Do deletes first
-				processRemovals( getPatchesLocation() & "/deletes.txt", log );
-				
-				// Do updates second
-				processUpdates( getPatchesLocation() & "/patch.zip", log );
-				
-				// Post Install
-				updater.postInstallation();
-				log.append("Update.cfc - called postInstallation() method.<br/>");
-				
-				results = true;
-			}
-			catch(any e){
-				log.append("Error applying update: #e.message# #e.detail#<br/>");
-			}
-			finally{
-				// Finally Remove Updater
-				if( fileExists( getPatchesLocation() & "/Update.cfc" ) ){
-					fileDelete( getPatchesLocation() & "/Update.cfc" );
-				}
-				// Removal of Mac stuff
-				if( directoryExists( getPatchesLocation() & "/__MACOSX" ) ){
-					directoryDelete( getPatchesLocation() & "/__MACOSX", true);
-				}
-			}
-		}
-		
-		return results;
-	}
-	
 	// processRemovals
 	function processRemovals(required path,required log){
+		
+		if( !fileExists( arguments.path ) ){
+			log.append("Skipping file removals as file does not exist: #arguments.path#<br/>");
+			return;
+		}
+		
 		var removalText = fileRead( arguments.path );
 		
 		log.append("Starting to process removals from: #arguments.path#<br/>");
@@ -192,7 +152,7 @@ component accessors="true"{
 	}
 	
 	// Build an updater cfc
-	IUpdate function buildUpdater(){
+	contentbox.model.updates.IUpdate function buildUpdater(){
 		var updater = wirebox.getInstance("contentbox.model.updates.patches.Update");
 		return updater;
 	}
@@ -255,7 +215,9 @@ component accessors="true"{
 		}
 	}
 	
-	// Check for version updates
+	/**
+	* Check for version updates
+	*/
 	function isNewVersion(cVersion,nVersion){
 		var cMajor 		= getToken(arguments.cVersion,1,".");
 		var cMinor		= getToken(arguments.cVersion,2,".");
@@ -283,6 +245,25 @@ component accessors="true"{
 		return false;
 	}
 	
+	/**
+	* Activate ORM Update
+	*/
+	function activateORMUpdate(){
+		var appCFCPath = appPath & "Application.cfc";
+		var c = fileRead(appCFCPath);
+		c = replacenocase(c, 'dbcreate = "none"','dbcreate = "update"');
+		fileWrite(appCFCPath, c);
+	}
+	
+	/**
+	* Deactivate ORM Update
+	*/
+	function deactivateORMUpdate(){
+		var appCFCPath = appPath & "Application.cfc";
+		var c = fileRead(appCFCPath);
+		c = replacenocase(c, 'dbcreate = "update"','dbcreate = "none"');
+		fileWrite(appCFCPath, c);
+	}
 	
 	/**
 	* Upload Update
@@ -291,7 +272,53 @@ component accessors="true"{
 		var destination = getPatchesLocation();
 		return fileUpload(destination, arguments.fileField, "application/zip", "overwrite");
 	}
-
+	
 	/************************************** PRIVATE *********************************************/
+
+	// Apply an already downloaded update
+	private boolean function applyUpdateOnDisk(required log){
+		var results = false;
+		
+		// Verify Patch integrity
+		if( !fileExists( getPatchesLocation() & "/Update.cfc" ) ){
+			log.append("Update.cfc not found in downloaded package, skipping patch update.<br/>");
+		}
+		else{
+			try{
+				var updater = buildUpdater();
+				
+				// do preInstallation
+				updater.preInstallation();
+				log.append("Update.cfc - called preInstallation() method.<br/>");
+				
+				// Do deletes first
+				processRemovals( getPatchesLocation() & "/deletes.txt", log );
+				
+				// Do updates second
+				processUpdates( getPatchesLocation() & "/patch.zip", log );
+				
+				// Post Install
+				updater.postInstallation();
+				log.append("Update.cfc - called postInstallation() method.<br/>");
+				
+				results = true;
+			}
+			catch(any e){
+				log.append("Error applying update: #e.message# #e.detail#<br/>");
+			}
+			finally{
+				// Finally Remove Updater
+				if( fileExists( getPatchesLocation() & "/Update.cfc" ) ){
+					fileDelete( getPatchesLocation() & "/Update.cfc" );
+				}
+				// Removal of Mac stuff
+				if( directoryExists( getPatchesLocation() & "/__MACOSX" ) ){
+					directoryDelete( getPatchesLocation() & "/__MACOSX", true);
+				}
+			}
+		}
+		
+		return results;
+	}
 
 }

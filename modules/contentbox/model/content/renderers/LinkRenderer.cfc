@@ -30,7 +30,7 @@ component accessors="true"{
 
 	private function translateContent(required builder, content, customHTML){
 		// our mustaches pattern
-		var regex 		= "(page|entry)\:\[[^\]]*]";
+		var regex 		= "(page|entry|root)\:\[[^\]]*]";
 		// match contentbox links in our incoming builder and build our targets array and len
 		var targets 	= reMatch( regex, builder.toString() );
 		var targetLen 	= arrayLen( targets );

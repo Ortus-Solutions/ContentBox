@@ -92,6 +92,4 @@ component extends="baseHandler"{
 		setNextEvent(prc.xehDashboard);
 	}
 	
-	function template(event,rc,prc){ event.setView(view="dashboard/template",nolayout=true); }
-	
 }

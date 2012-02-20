@@ -3,10 +3,10 @@
 #cb.event("cbui_BeforeSideBar")#
 
 <!--- Page Navigation --->
-<cfif prc.page.getNumberOfChildren()>
+<cfif cb.isPageView() AND cb.getCurrentPage().getNumberOfChildren()>
 <h4>Sub Pages</h4>
 <div class="bg"></div>
-#cb.subPageMenu(page=prc.page.getParent(),type="ul")#
+#cb.subPageMenu(page=cb.getCurrentPage().getParent(),type="ul")#
 </cfif>
 
 <h4>Description</h4>
@@ -19,7 +19,7 @@
 <div class="bg"></div>
 #cb.widget('RecentPages')#
 
-<h4>Blog Entries Search</h4>
+<h4>Content Search</h4>
 <div class="bg"></div>
 #cb.widget("SearchForm")#
 <br/>

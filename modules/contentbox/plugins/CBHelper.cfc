@@ -164,16 +164,6 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		return getRequestContext().getValue("day","0");
 	}
 
-	// Determine if you have a search term
-	boolean function searchTermExists(){
-		var rc = getRequestCollection();
-		return (structKeyExists(rc,"q") AND len(rc.q));
-	}
-	// Get Search Term
-	function getSearchTerm(){
-		return getRequestContext().getValue("q","");
-	}
-	
 	// Determine if you are in the blog
 	boolean function isBlogView(){
 		if( isIndexView() OR isEntryView() OR isArchivesView() ){
@@ -291,6 +281,55 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		} 
 		throw(message="No custom field with key: #arguments.key# found",detail="The keys are #structKeyList(fields)#",type="CBHelper.InvalidCustomField");
 	}
+	
+	/************************************** search *********************************************/
+	
+	// Determine if you are in the search view
+	boolean function isSearchView(){
+		var event = getRequestContext();
+		return (event.getCurrentEvent() eq "contentbox-ui:page.search");
+	}
+	
+	/**
+	* quickSearchForm will build a standard ContentBox Content Search Form according to the SearchForm widget
+	*/
+	function quickSearchForm(){
+		return widget("SearchForm",{type="content"});
+	}
+	
+	/**
+	* Render out paging for search content
+	*/
+	function quickSearchPaging(){
+		var prc = getRequestCollection(private=true);
+		if( NOT structKeyExists(prc,"pagingPlugin") ){
+			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext");
+		}
+		return prc.pagingPlugin.renderit( getSearchResults().getTotal(), prc.pagingLink);
+	}
+	
+	// get the curent search results object
+	contentbox.model.search.SearchResults function getSearchResults(){
+		var event = getRequestContext();
+		return event.getValue(name="searchResults",private="true",default="");
+	}
+	
+	// get the curent search results HTML content
+	any function getSearchResultsContent(){
+		var event = getRequestContext();
+		return event.getValue(name="searchResultsContent",private="true",default="");
+	}
+	
+	// Determine if you have a search term
+	boolean function searchTermExists(){
+		var rc = getRequestCollection();
+		return (structKeyExists(rc,"q") AND len(rc.q));
+	}
+	
+	// Get Search Term
+	function getSearchTerm(){
+		return getRequestContext().getValue("q","");
+	}
 
 	/************************************** events *********************************************/
 
@@ -332,7 +371,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* Create a link to your site blog
 	*/
 	function linkBlog(){
-		return getRequestContext().buildLink(linkto="#siteRoot()#/blog");
+		return getRequestContext().buildLink(linkto="#siteRoot()##sep()#blog");
 	}
 
 	/**
@@ -408,10 +447,18 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 
 	/**
-	* Link to the search page for this blog
+	* Link to the search route for this blog
 	*/
 	function linkSearch(){
 		var xeh = siteRoot() & sep() & "#blogEntryPoint#.search";
+		return getRequestContext().buildLink(linkto=xeh);
+	}
+	
+	/**
+	* Link to the content search route
+	*/
+	function linkContentSearch(){
+		var xeh = siteRoot() & sep() & "__search";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
 
@@ -530,6 +577,15 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @name The name of the installed widget to return
 	*/
 	function getWidget(required name){
+		var layoutWidgetPath = layoutRoot() & "/widgets/#arguments.name#.cfc";
+		
+		// layout widget overrides
+		if( fileExists( expandPath( layoutWidgetPath ) ) ){
+			var widgetCreationPath = replace( reReplace(layoutRoot(),"^/","")  ,"/",".","all") & ".widgets.#arguments.name#";
+			return controller.getPlugin(plugin=widgetCreationPath,customPlugin=true);
+		}
+		
+		// return core contentbox widget instead
 		return getMyPlugin(plugin="widgets.#arguments.name#",module="contentbox-ui");
 	}
 

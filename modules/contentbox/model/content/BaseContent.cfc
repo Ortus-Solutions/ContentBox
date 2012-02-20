@@ -224,7 +224,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	}
 
 	/**
-	* Render content out
+	* Render content out using translations, caching, etc.
 	*/
 	any function renderContent(){
 		var settings = settingService.getAllSettings(asStruct=true);
@@ -247,18 +247,8 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		if( NOT len(renderedContent) ){
 			lock name="contentbox.contentrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
 				if( NOT len(renderedContent) ){
-					// else render content out, prepare builder
-					var b = createObject("java","java.lang.StringBuilder").init( getContent() );
-
-					// announce renderings with data, so content renderers can process them
-					var iData = {
-						builder = b,
-						content	= this
-					};
-					interceptorService.processState("cb_onContentRendering", iData);
-
 					// save content
-					renderedContent = b.toString();
+					renderedContent = renderContentSilent();
 				}
 			}
 		}
@@ -274,29 +264,49 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		// renturn translated content
 		return renderedContent;
 	}
+	
+	/**
+	* Renders the content silently so no caching, or extra fluff is done, just content translation rendering.
+	* @content.hint The content markup to translate, by default it uses the active content version's content
+	*/
+	any function renderContentSilent(any content=getContent()){
+		// render content out, prepare builder
+		var b = createObject("java","java.lang.StringBuilder").init( arguments.content );
+
+		// announce renderings with data, so content renderers can process them
+		var iData = {
+			builder = b,
+			content	= this
+		};
+		interceptorService.processState("cb_onContentRendering", iData);
+		
+		// return processed content
+		return b.toString();
+	}
 
 	/**
-	* Inflate custom fields from a list of keys and values, it will remove original custom values as well.
+	* Inflate custom fields from the incoming count and memento structure
 	*/
-	any function inflateCustomFields(required string keys, required string values){
+	any function inflateCustomFields(required numeric fieldCount, required struct memento){
 
 		// remove original custom fields
 		getCustomFields().clear();
 
-		// inflate custom fields
-		arguments.keys   = listToArray(arguments.keys,",");
-		arguments.values = listToArray(arguments.values,",");
-		for(var x=1; x lte arrayLen(arguments.keys); x++){
-			if( len(trim(arguments.keys[x])) ){
-				var args = { key = arguments.keys[x], value="" };
-				if( arrayIsDefined(arguments.values, x) ){
-					args.value = arguments.values[x];
-				}
+		// inflate custom fields start at 0 as it is incoming javascript counting of arrays
+		for( var x=0; x lt arguments.fieldCount; x++ ){
+			// get custom field from incoming data
+			var args = {
+				key 	= arguments.memento["CustomFieldKeys_#x#"],
+				value 	= arguments.memento["CustomFieldValues_#x#"] 
+			};
+			// only add if key has value	
+			if( len(trim( args.key )) ){
 				var thisField = customFieldService.new(properties=args);
 				thisField.setRelatedContent( this );
 				addCustomField( thisField );
-			}
+			}			
 		}
+		
 		return this;
 	}
 

@@ -130,7 +130,7 @@
         "useSSL": false
     },
     {
-        "securelist": "^contentbox-admin:pages\\.(changeOrder|remove|save|editor)",
+        "securelist": "^contentbox-admin:pages\\.(changeOrder|remove)",
         "roles": "",
         "permissions": "PAGES_ADMIN",
         "whitelist": "",
@@ -150,7 +150,7 @@
         "useSSL": false
     },
     {
-        "securelist": "^contentbox-admin:entries\\.(quickPost|remove|save|editor)",
+        "securelist": "^contentbox-admin:entries\\.(quickPost|remove)",
         "roles": "",
         "permissions": "ENTRIES_ADMIN",
         "whitelist": "",

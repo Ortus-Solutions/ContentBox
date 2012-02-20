@@ -90,7 +90,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 /* currently active header */
 #accordion h2.current { background-color:#fff; }
 /* Accordion pane */
-#accordion div.pane { color:#5e5e5e; background:url(../images/pane_bg.gif) repeat-x top; }
+#accordion div.pane { color:#5e5e5e; }
 /** ============================== Small Box ============================== **/
 .small_box { background:#fdfdfd; }
 .small_box .header { background:url(../images/small_box_header_bg.gif) repeat-x bottom; color:#004A7E; }
@@ -228,10 +228,10 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #loginContent { text-align:center; }
 #loginButtonbar {margin:10px}
 #header_top_authorName { color:orange; font-weight:bold; }
-#categoriesChecks{ overflow: auto; max-height: 175px; border: 1px dotted #707171;}
+#categoriesChecks{ overflow: auto; max-height: 250px; border: 1px dotted #707171;}
 #quickPost{display: none;}
 #addCustomFieldButton{margin:0xp 10px 0px 10px}
-.editorTime { width: 40px;}
+.editorTime{ width:35px; }
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}

@@ -96,7 +96,7 @@
 			<div class="contentBar" id="contentBar">
 
 				<!--- Create Butons --->
-				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") or prc.oAuthor.checkPermission("PAGES_EDITOR")>
 				<div class="buttonBar">
 					<button class="button2" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#rc.parent#');" title="Create new page">Create Page</button>
 				</div>
@@ -149,7 +149,12 @@
 						</td>
 						<td>
 							<!--- Title --->
-							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a><br>
+							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+								<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a>
+							<cfelse>
+								#page.getTitle()#
+							</cfif>							
+							<br>
 							by #page.getAuthorName()#<br/>
 							<!--- password protect --->
 							<cfif page.isPasswordProtected()>
@@ -187,16 +192,18 @@
 						<td class="center">#page.getHits()#</td>
 						<td class="center">#page.getNumberOfComments()#</td>
 						<td class="center">
-							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
-							&nbsp;
-							<!--- History Command --->
-							<a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#" title="Version History"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/></a>
 							&nbsp;
 							<!--- Create Child --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
 							&nbsp;
+							</cfif>
+							<!--- History Command --->
+							<a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#" title="Version History"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/></a>
+							&nbsp;
+							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Delete Command --->
 							<a title="Delete Page" href="javascript:remove('#page.getContentID()#')" class="confirmIt"
 							  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><img id="delete_#page.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>

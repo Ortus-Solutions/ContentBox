@@ -4,7 +4,7 @@
 
 <!--- Search Form --->
 <h2>Entry Search</h2>
-#cb.widget("SearchForm")#
+#cb.widget(name="SearchForm",args={type="blog"})#
 
 <!--- Categories --->
 <h2>Categories</h2>
