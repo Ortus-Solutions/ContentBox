@@ -53,7 +53,7 @@ component implements="ISecurityService" singleton{
 	/**
 	* User validator via security interceptor
 	*/
-	boolean function userValidator(required struct rule, messagebox, controller){
+	boolean function userValidator(required struct rule,any messagebox,any controller){
 		var isAllowed 	= false;
 		var author 		= getAuthorSession();
 		

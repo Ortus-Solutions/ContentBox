@@ -31,8 +31,8 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 			 fkcolumn="FK_authorID" linktable="cb_authorPermissions" inversejoincolumn="FK_permissionID" orderby="permission"; 
 		
 	// Calculated properties
-	property name="numberOfEntries" formula="select count(*) from cb_content content where content.FK_authorID=authorID and content.contentType='entry'" ;
-	property name="numberOfPages" 	formula="select count(*) from cb_content content where content.FK_authorID=authorID and content.contentType='page'" ;
+	property name="numberOfEntries" formula="select count(*) from cb_content as content where content.FK_authorID=authorID and content.contentType='entry'" ;
+	property name="numberOfPages" 	formula="select count(*) from cb_content as content where content.FK_authorID=authorID and content.contentType='page'" ;
 	
 	// Non-persisted properties
 	property name="loggedIn"		persistent="false" default="false" type="boolean";
