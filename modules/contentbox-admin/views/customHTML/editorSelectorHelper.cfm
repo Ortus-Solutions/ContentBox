@@ -21,6 +21,7 @@ function insertCustomHTML(customHTML){
 	var customContent = "{{{CustomHTML slug='"+customHTML+"'}}}";
 	$("###rc.editorName#").ckeditorGet().insertText( customContent );
 	closeRemoteModal();
+	return false;
 }
 </script>
 </cfoutput>
