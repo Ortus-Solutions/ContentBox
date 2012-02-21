@@ -336,7 +336,13 @@
 							<!--- Search Adapter --->
 							#html.label(field="cb_search_adapter",content="Search Adapter: ")#
 							<small>The ContentBox search engine adapter class (instantiation path) to use. You can create your own search engine adapters as 
-							long as they implement <em>contentbox.model.search.ISearchAdapter</em>.</small><br/>
+							long as they implement <em>contentbox.model.search.ISearchAdapter</em>. You can choose from our core adapters or 
+							enter your own CFC instantiation path below.</small><br/>
+							
+							<ul>
+								<li><a href="javascript:chooseAdapter('contentbox.model.search.DBSearch')">ORM Database Search (contentbox.model.search.DBSearch)</a></li>
+							</ul>
+
 							#html.textField(name="cb_search_adapter",size="60",class="textfield",value=prc.cbSettings.cb_search_adapter,required="required",title="Please remember this must be a valid ColdFusion instantiation path")#	
 							
 						</fieldset>
@@ -440,11 +446,4 @@
 	</div>
 </div>		
 #html.endForm()#
-
-<script type="text/javascript">
-$(document).ready(function() {
-	// form validators
-	$("##commentSettingsForm").validator({grouped:true});
-});
-</script>
 </cfoutput>
