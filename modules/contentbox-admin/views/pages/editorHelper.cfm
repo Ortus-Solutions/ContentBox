@@ -11,6 +11,7 @@ $(document).ready(function() {
 	$excerpt		= $pageForm.find("##excerpt");
 	$content 		= $pageForm.find("##content");
 	$isPublished 	= $pageForm.find("##isPublished");
+	$contentID		= $pageForm.find("##contentID");
 	// setup editors
 	setupEditors( $pageForm );
 });
@@ -32,7 +33,7 @@ function quickSave(){
 	// Post it
 	$.post('#event.buildLink(prc.xehPageSave)#', $pageForm.serialize(),function(data){
 		// Save new id
-		$pageForm.find("##contentID").val( data.contentID );
+		$contentID.val( data.CONTENTID );
 		// finalize
 		$uploader.fadeOut(1500);
 		$status.html('Page Draft Saved!');

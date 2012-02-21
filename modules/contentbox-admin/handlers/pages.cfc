@@ -181,7 +181,7 @@ component extends="baseHandler"{
 		// Ajax?
 		if( event.isAjax() ){
 			var rData = {
-				contentID = page.getContentID()
+				"CONTENTID" = page.getContentID()
 			};
 			event.renderData(type="json",data=rData);
 		}
