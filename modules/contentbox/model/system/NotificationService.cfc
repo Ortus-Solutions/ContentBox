@@ -60,7 +60,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# - Author Created - #bodyTokens.authorName#",
 									   bodyTokens=bodyTokens,
-									   type="html");
+									   type="html",
+									   server=settings.cb_site_mail_server,
+									   username=settings.cb_site_mail_username,
+									   password=settings.cb_site_mail_password,
+									   port=settings.cb_site_mail_smtp,
+									   useTLS=settings.cb_site_mail_tls,
+									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/author_new",module="contentbox") );
@@ -94,7 +100,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# - Author Removed - #bodyTokens.authorName#",
 									   bodyTokens=bodyTokens,
-									   type="html");
+									   type="html",
+									   server=settings.cb_site_mail_server,
+									   username=settings.cb_site_mail_username,
+									   password=settings.cb_site_mail_password,
+									   port=settings.cb_site_mail_smtp,
+									   useTLS=settings.cb_site_mail_tls,
+									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/author_remove",module="contentbox") );
@@ -137,7 +149,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# - Blog Entry Created - #bodyTokens.entryTitle#",
 									   bodyTokens=bodyTokens,
-									   type="html");
+									   type="html",
+									   server=settings.cb_site_mail_server,
+									   username=settings.cb_site_mail_username,
+									   password=settings.cb_site_mail_password,
+									   port=settings.cb_site_mail_smtp,
+									   useTLS=settings.cb_site_mail_tls,
+									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/entry_new",module="contentbox") );
@@ -180,7 +198,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# - Entry Removed - #bodyTokens.entryTitle#",
 									   bodyTokens=bodyTokens,
-									   type="html");
+									   type="html",
+									   server=settings.cb_site_mail_server,
+									   username=settings.cb_site_mail_username,
+									   password=settings.cb_site_mail_password,
+									   port=settings.cb_site_mail_smtp,
+									   useTLS=settings.cb_site_mail_tls,
+									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/entry_remove",module="contentbox") );
@@ -218,7 +242,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# - Page Created - #bodyTokens.pageTitle#",
 									   bodyTokens=bodyTokens,
-									   type="html");
+									   type="html",
+									   server=settings.cb_site_mail_server,
+									   username=settings.cb_site_mail_username,
+									   password=settings.cb_site_mail_password,
+									   port=settings.cb_site_mail_smtp,
+									   useTLS=settings.cb_site_mail_tls,
+									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/page_new",module="contentbox") );
@@ -256,7 +286,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# - Page Removed - #bodyTokens.pageTitle#",
 									   bodyTokens=bodyTokens,
-									   type="html");
+									   type="html",
+									   server=settings.cb_site_mail_server,
+									   username=settings.cb_site_mail_username,
+									   password=settings.cb_site_mail_password,
+									   port=settings.cb_site_mail_smtp,
+									   useTLS=settings.cb_site_mail_tls,
+									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/page_remove",module="contentbox") );

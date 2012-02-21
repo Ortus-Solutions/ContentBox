@@ -216,7 +216,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 									   from=settings.cb_site_outgoingEmail,
 									   subject=subject,
 									   bodyTokens=bodyTokens,
-									   type="html");
+									   type="html",
+									   server=settings.cb_site_mail_server,
+									   username=settings.cb_site_mail_username,
+									   password=settings.cb_site_mail_password,
+									   port=settings.cb_site_mail_smtp,
+									   useTLS=settings.cb_site_mail_tls,
+									   useSSL=settings.cb_site_mail_ssl);
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/#template#",module="contentbox") );
 		// send it out
