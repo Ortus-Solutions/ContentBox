@@ -133,8 +133,6 @@ component extends="baseHandler"{
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
-		event.paramValue("customFieldKeys","");
-		event.paramValue("customFieldValues","");
 		
 		// Quick save changelog
 		if( event.isAjax() ){

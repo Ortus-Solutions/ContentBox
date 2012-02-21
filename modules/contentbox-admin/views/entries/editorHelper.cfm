@@ -11,6 +11,7 @@ $(document).ready(function() {
 	$excerpt		= $entryForm.find("##excerpt");
 	$content 		= $entryForm.find("##content");
 	$isPublished 	= $entryForm.find("##isPublished");
+	$contentID		= $entryForm.find("##contentID");
 	// setup editors
 	setupEditors( $entryForm );
 });
@@ -22,7 +23,7 @@ function quickSave(){
 	if( !$entryForm.data("validator").checkValidity() ){
 		return false;
 	}
-	if( !$entryForm.find("##content").val().length ){
+	if( !$content.val().length ){
 		alert("Please enter some content");
 		return false;
 	}
@@ -35,8 +36,8 @@ function quickSave(){
 	
 	// Post it
 	$.post('#event.buildLink(prc.xehEntrySave)#', $entryForm.serialize(),function(data){
-		// Save new id
-		$entryForm.find("##contentID").val( data.contentID );
+		// Save newly saved or persisted id
+		$contentID.val( data.CONTENTID );
 		// finalize
 		$uploader.fadeOut(1500);
 		$status.html('Entry Draft Saved!');

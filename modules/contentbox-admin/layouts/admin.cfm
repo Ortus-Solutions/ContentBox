@@ -104,7 +104,7 @@
 			</div>
 
 			<div id="header_main" class="clearfix">
-	           	<h1>ContentBox Admin <span>v.#getModuleSettings('contentbox-admin').version#</span></h1>
+	           	<h1>ContentBox Admin <span>v.#getModuleSettings('contentbox').version#</span></h1>
 			</div>
 			<!--End Search field and logo Header Area-->
 
