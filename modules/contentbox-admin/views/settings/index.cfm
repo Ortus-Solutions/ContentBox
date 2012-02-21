@@ -262,10 +262,13 @@
 						<fieldset>
 						<legend><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Notifications</strong></legend>
 							<!--- Site Email --->
-							#html.textField(name="cb_site_email",label="Administrator Email:",value=prc.cbSettings.cb_site_email,class="textfield width98",title="The email that receives all notifications")#
+							#html.label(field="cb_site_email",content="Administrator Email:")#	
+							<small>The email that receives all notifications</small><br/>
+							#html.textField(name="cb_site_email",value=prc.cbSettings.cb_site_email,class="textfield width98",required="required",title="The email that receives all notifications")#
 							<!--- Outgoing Email --->
-							#html.textField(name="cb_site_outgoingEmail",label="Outgoing Email:",value=prc.cbSettings.cb_site_outgoingEmail,class="textfield width98",title="The email that sends all email notifications out")#
-							
+							#html.label(field="cb_site_outgoingEmail",content="Outgoing Email:")#	
+							<small>The email address that sends all emails out of ContentBox.</small><br/>
+							#html.textField(name="cb_site_outgoingEmail",required="required",value=prc.cbSettings.cb_site_outgoingEmail,class="textfield width98",title="The email that sends all email notifications out")#
 							<!--- Notification on Author Create --->
 							#html.label(field="cb_notify_author",content="Send a notification when an author has been created or removed:")#
 							#html.radioButton(name="cb_notify_author",checked=prc.cbSettings.cb_notify_author,value=true)# Yes 	
@@ -281,6 +284,40 @@
 							#html.radioButton(name="cb_notify_page",checked=prc.cbSettings.cb_notify_page,value=true)# Yes 	
 							#html.radioButton(name="cb_notify_page",checked=not prc.cbSettings.cb_notify_page,value=false)# No 		
 						</fieldset>
+						<!--- Mail Server Settings --->
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Mail Server</strong></legend>
+							<p>By default ContentBox will use the mail settings in your application server.  You can override those settings by completing
+							   the settings below</p>
+							<!--- Mail Server --->
+							#html.label(field="cb_site_mail_server",content="Mail Server:")#
+							<small>Optional mail server to use or it defaults to the settings in the ColdFusion Administrator</small><br/>
+							#html.textField(name="cb_site_mail_server",value=prc.cbSettings.cb_site_mail_server,class="textfield width98",title="The complete mail server URL to use.")#
+							<!--- Mail Username --->
+							#html.label(field="cb_site_mail_username",content="Mail Server Username:")#
+							<small>Optional mail server username or it defaults to the settings in the ColdFusion Administrator</small><br/>
+							#html.textField(name="cb_site_mail_username",value=prc.cbSettings.cb_site_mail_username,class="textfield width98",title="The optional mail server username to use.")#
+							<!--- Mail Password --->
+							#html.label(field="cb_site_mail_password",content="Mail Server Password:")#
+							<small>Optional mail server password to use or it defaults to the settings in the ColdFusion Administrator</small><br/>
+							#html.passwordField(name="cb_site_mail_password",value=prc.cbSettings.cb_site_mail_password,class="textfield width98",title="The optional mail server password to use.")#
+							<!--- SMTP Port --->
+							#html.label(field="cb_site_mail_smtp",content="Mail SMTP Port:")#
+							<small>The SMTP mail port to use, defaults to port 25.</small><br/>
+							#html.inputfield(type="numeric",name="cb_site_mail_smtp",value=prc.cbSettings.cb_site_mail_smtp,class="textfield",size="5",title="The mail SMPT port to use.")#
+							<!--- TLS --->
+							#html.label(field="cb_site_mail_tls",content="Use TLS:")#
+							<small>Whether to use TLS when sending mail or not.</small><br/>
+							#html.radioButton(name="cb_site_mail_tls",checked=prc.cbSettings.cb_site_mail_tls,value=true)# Yes 	
+							#html.radioButton(name="cb_site_mail_tls",checked=not prc.cbSettings.cb_site_mail_tls,value=false)# No 
+							<!--- SSL --->
+							#html.label(field="cb_site_mail_ssl",content="Use SSL:")#
+							<small>Whether to use SSL when sending mail or not.</small><br/>
+							#html.radioButton(name="cb_site_mail_ssl",checked=prc.cbSettings.cb_site_mail_ssl,value=true)# Yes 	
+							#html.radioButton(name="cb_site_mail_ssl",checked=not prc.cbSettings.cb_site_mail_ssl,value=false)# No 
+						</fieldset>
+						
+						
 					</div>
 					<!--- Search Options --->
 					<div>

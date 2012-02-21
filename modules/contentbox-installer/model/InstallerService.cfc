@@ -216,6 +216,14 @@ component accessors="true"{
 			"cb_comments_moderation_blockedlist" = "",
 			"cb_comments_captcha" = "true",
 			
+			// Mail Settings
+			"cb_site_mail_server" = setup.getcb_site_mail_server(),
+			"cb_site_mail_username" = setup.getcb_site_mail_username(),
+			"cb_site_mail_password" = setup.getcb_site_mail_password(),
+			"cb_site_mail_smtp" = setup.getcb_site_mail_smtp(),
+			"cb_site_mail_tls" = setup.getcb_site_mail_tls(),
+			"cb_site_mail_ssl" = setup.getcb_site_mail_ssl(),
+			
 			// Notifications
 			"cb_notify_author" = "true",
 			"cb_notify_entry"  = "true",

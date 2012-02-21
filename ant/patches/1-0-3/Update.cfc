@@ -56,7 +56,14 @@ component implements="contentbox.model.updates.IUpdate"{
 			// site settings
 			"cb_site_maintenance_message" = "<h1>This site is down for maintenance.<br /> Please check back again soon.</h1>",
 			"cb_site_maintenance" = "false",
-			"cb_site_disable_blog" = "false"
+			"cb_site_disable_blog" = "false",
+			// Mail Settings
+			"cb_site_mail_server" = "",
+			"cb_site_mail_username" = "",
+			"cb_site_mail_password" = "",
+			"cb_site_mail_smtp" = "25",
+			"cb_site_mail_tls" = "false",
+			"cb_site_mail_ssl" = "false"
 		};
 		
 		// Create setting objects and save
