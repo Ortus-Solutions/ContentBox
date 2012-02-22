@@ -36,9 +36,6 @@ component output="false" hint="Main filebrowser module handler"{
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "settings") ){
 			mergeSettings(prc.fbSettings, flash.get("fileBrowser").settings);
 		}
-		
-		// keep flash backs for relocations.
-		flash.keep("filebrowser");
 	}
 
 	/**
@@ -561,7 +558,7 @@ component output="false" hint="Main filebrowser module handler"{
 
 		if(!flash.exists("filebrowser")){
 			var filebrowser = {callback=rc.callback, cancelCallback=rc.cancelCallback, filterType=rc.filterType, settings=prc.fbsettings};
-			flash.put("filebrowser",filebrowser);
+			flash.put(name="filebrowser",value=filebrowser,autoPurge=false);
 		}		
 	}
 }
