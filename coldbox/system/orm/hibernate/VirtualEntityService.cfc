@@ -21,14 +21,13 @@ component extends="VirtualEntityService"
 UserService function init(){
     // setup properties
     setEntityName('User');
-    setQueryCacheRegion( 'ORMService.defaultCache' );
+    setQueryCacheRegion( "#arguments.entityName#.defaultVSCache" );
     setUseQueryCaching( false );
 	setEventHandling( false );
 	setDefaultAsQuery( true );
     return this;
 }
 
------------------------------------------------------------------------>
 */
 component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"{
 
@@ -42,22 +41,19 @@ component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"
 	*/
 	property name="datasource" type="string";
 
+	/************************************** CONSTRUCTOR *********************************************/
 
-/* ----------------------------------- DEPENDENCIES ------------------------------ */
-
-
-
-/* ----------------------------------- CONSTRUCTOR ------------------------------ */
-
-	/**
-	* Constructor
-	*/
 	VirtualEntityService function init(required string entityname, 
 										string queryCacheRegion, 
 										boolean useQueryCaching,
 										boolean eventHandling,
 										boolean useTransactions,
-										boolean defaultAsQuery){
+										boolean defaultAsQuery,
+										string datasource){
+		// create cache region
+		if( !structKeyExists(arguments,"queryCacheRegion") ){
+			arguments.queryCacheRegion = "#arguments.entityName#.defaultVSCache";
+		}
 
 		// init parent
 		super.init(argumentCollection=arguments);
@@ -66,13 +62,18 @@ component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"
 		setEntityName( arguments.entityName );
 		
 		// Set the datasource of the local entity to be used in this virtual entity service
-		setDatasource( orm.getEntityDatasource( arguments.entityName ) );
+		// Only if not passed
+		if( !StructKeyExists(arguments, "datasource") ){
+			setDatasource( orm.getEntityDatasource( arguments.entityName ) );
+		}
+		else{
+			setDatasource( arguments.datasource );
+		}
 		
 		return this;
 	}
 
-
-/* ----------------------------------- PUBLIC ------------------------------ */
+	/************************************** PUBLIC *********************************************/
 
 	any function executeQuery(required string query,
 							   any params=structnew(),
