@@ -250,8 +250,6 @@ component output="false" hint="Main filebrowser module handler"{
 			data.messages = "'#rc.path#' removed successfully!";
 			
 			// Announce it
-			iData.path = rc.path;
-			iData.directoryName = rc.dName;
 			announceInterception("fb_postFileRemoval",iData);
 		}
 		catch(Any e){
@@ -372,7 +370,6 @@ component output="false" hint="Main filebrowser module handler"{
 			data.messages = "'#rc.path#' renamed successfully!";
 			
 			// Announce it
-			iData.path = rc.path;
 			announceInterception("fb_postFileRename",iData);
 			
 		}
