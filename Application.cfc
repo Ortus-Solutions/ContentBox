@@ -40,9 +40,11 @@ component{
 	// FILL OUT: THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";
 	// THE LOCATION OF THE 'CONTENTBOX' MODULE MANDATORY
+	this.mappings["/contentbox-root"] = COLDBOX_APP_ROOT_PATH;
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
 	this.mappings["/contentbox-admin"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-admin";
+	this.mappings["/contentbox-modules"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-modules";
 	// THE LOCATION OF COLDBOX
 	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
 
