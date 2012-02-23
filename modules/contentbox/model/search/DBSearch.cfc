@@ -103,7 +103,8 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 					<a href="#cb.linkContent(item)#">#item.getTitle()#</a><br/>
 					#highlightSearchTerm( searchTerm, item.renderContent() )#
 				</li>
-				<cite>#item.getContentType()# -> #cb.linkContent(item)#</cite>
+				<cite>#item.getContentType()# -> #cb.linkContent(item)#</cite><br/>
+				<cite>Categories: #item.getCategoriesList()#</cite>
 				<br /><br />
 				');
 			};

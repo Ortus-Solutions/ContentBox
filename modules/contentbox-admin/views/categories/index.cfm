@@ -58,7 +58,8 @@
 					<tr>
 						<th>Category Name</th>
 						<th>Slug</th>		
-						<th width="75" class="center">Content</th>	
+						<th width="75" class="center">Pages</th>
+						<th width="75" class="center">Entries</th>	
 						<th width="75" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
@@ -67,6 +68,7 @@
 					<tr>
 						<td><a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
 						<td>#category.getSlug()#</td>
+						<td class="center">#category.getNumberOfPages()#</td>
 						<td class="center">#category.getnumberOfEntries()#</td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
