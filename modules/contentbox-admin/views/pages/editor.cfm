@@ -116,8 +116,12 @@
 						#html.options(values=prc.availableLayouts,selectedValue=prc.page.getLayoutWithDefault())#
 					</select>
 					
-					<!--- order --->
-					#html.inputfield(type="number",label="Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="textfield",size="5",maxlength="2",min="0",max="99")#
+					<!--- Show in Menu Builders --->
+					#html.select(name="showInMenu",label="Show In Menus:",class="width98",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
+					
+					<!--- menu order --->
+					#html.inputfield(type="number",label="Menu Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="textfield",size="5",maxlength="2",min="0",max="99")#
+					
 				</div>
 				
 				<!--- Page Modifiers Panel --->
@@ -133,11 +137,6 @@
 					#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()))#
 					<br/>
 					</cfif>
-					<!--- Show in Menu Builders --->
-					<img src="#prc.cbRoot#/includes/images/source.png" alt="showInMenu" />
-					#html.label(field="showInMenu",content="Show In Menu:",class="inline")#
-					#html.select(name="showInMenu",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
-					<br/>
 					<!--- Password Protection --->
 					<label for="passwordProtection"><img src="#prc.cbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>
 					#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="textfield",size="25",maxlength="100")#
