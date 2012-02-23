@@ -48,7 +48,7 @@ component{
 	this.mappings["/contentbox-modules"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-modules";
 	// THE LOCATION OF COLDBOX
 	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
-
+	
 	// CONTENTBOX ORM SETTINGS
 	this.ormEnabled = true;
 	this.ormSettings = {

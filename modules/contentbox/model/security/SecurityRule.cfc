@@ -34,7 +34,7 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule"{
 	property name="match"		ormtype="string"  notnull="false" 	default="" length="50";
 	
 	// Constructor
-	function init(){
+	SecurityRule function init(){
 		setMatch('event');
 		return this;
 	}

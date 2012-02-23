@@ -48,6 +48,12 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		
 		c = model.findApprovedComments(contentID=1);
 		assertTrue( c.count gt 0 );
+		
+		c = model.findApprovedComments(contentType="invalid");
+		assertTrue( c.count eq 0 );
+		
+		c = model.findApprovedComments(contentType="Entry");
+		assertTrue( c.count gt 0 );
 	}
 	
 	function testsearch(){

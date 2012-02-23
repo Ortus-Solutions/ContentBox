@@ -1,28 +1,53 @@
 ﻿/**
-* RSS Service for this application
+********************************************************************************
+ContentBox - A Modular Content Platform
+Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+Apache License, Version 2.0
+
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0 
+
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
+limitations under the License.
+********************************************************************************
+* RSS Services for this application
 */
 component singleton{
 
-	// Dependecnies
-	property name="settingService"		inject="id:settingService@cb";
+	// Dependencies
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
+	property name="contentService"		inject="id:contentService@cb";
 	property name="commentService"		inject="id:commentService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="feedGenerator" 		inject="coldbox:plugin:FeedGenerator";
 	property name="log"					inject="logbox:logger:{this}";
-	property name="cachebox"			inject="cachebox";
 	
-
-	function init(){
-		return this;
-	}
-	
-	// Startup the service
-	function onDIComplete(){
-		var settings	= settingService.getAllSettings(asStruct=true);
+	/**
+ 	* Constructor
+ 	* @settingService.inject id:settingService@cb
+ 	* @cacheBox.inject cachebox
+	*/
+	function init(required settingService, required cacheBox){
+		// Dependencies
+		variables.settingService = arguments.settingService;
+		variables.cacheBox 		 = arguments.cacheBox;
+		// Get all settings
+		var settings = settingService.getAllSettings(asStruct=true);
 		// setup the user selected cache provider
 		cache = cacheBox.getCache( settings.cb_rss_cacheName );
+		
+		return this;
 	}
 	
 	/**
@@ -51,6 +76,80 @@ component singleton{
 	*/
 	void function clearAllCaches(){
 		cache.clearByKeySnippet(keySnippet="cb-feeds",async=false);
+	}
+	
+	/**
+	* Build RSS feeds for contentbox blog entries
+	*/
+	function getEntriesRSS(boolean comments=false, string category="", string slug=""){
+		var settings	= settingService.getAllSettings(asStruct=true);
+		var rssFeed  	= "";
+		var cacheKey  	= "";
+		
+		// Comments cache Key
+		if( arguments.comments ){
+			cacheKey 	= "cb-feeds-entries-comments-#arguments.slug#";
+		}
+		// Entries cache Key
+		else{
+			cacheKey 	= "cb-feeds-entries-#hash(arguments.category)#";
+		}
+		
+		// Retrieve via caching? and caching active
+		if( settings.cb_rss_caching ){
+			var rssFeed = cache.get( cacheKey );
+			if( !isNull(rssFeed) ){ return rssFeed; }
+		}
+		
+		// Building comment feed or entry feed
+		switch(arguments.comments){
+			case true : { rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
+			default   : { rssfeed = buildEntryFeed(argumentCollection=arguments); break; }
+		}
+		
+		// Cache it with settings
+		if( settings.cb_rss_caching ){
+			cache.set(cacheKey, rssFeed, settings.cb_rss_cachingTimeout, settings.cb_rss_cachingTimeoutIdle);
+		}
+
+		return rssFeed;	
+	}
+	
+	/**
+	* Build RSS feeds for contentbox pages
+	*/
+	function getPagesRSS(boolean comments=false, string category="", string slug=""){
+		var settings	= settingService.getAllSettings(asStruct=true);
+		var rssFeed  	= "";
+		var cacheKey  	= "";
+		
+		// Comments cache Key
+		if( arguments.comments ){
+			cacheKey 	= "cb-feeds-pages-comments-#arguments.slug#";
+		}
+		// Entries cache Key
+		else{
+			cacheKey 	= "cb-feeds-pages-#hash(arguments.category)#";
+		}
+		
+		// Retrieve via caching? and caching active
+		if( settings.cb_rss_caching ){
+			var rssFeed = cache.get( cacheKey );
+			if( !isNull(rssFeed) ){ return rssFeed; }
+		}
+		
+		// Building comment feed or page feed
+		switch(arguments.comments){
+			case true : { rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
+			default   : { rssfeed = buildPageFeed(argumentCollection=arguments); break; }
+		}
+		
+		// Cache it with settings
+		if( settings.cb_rss_caching ){
+			cache.set(cacheKey, rssFeed, settings.cb_rss_cachingTimeout, settings.cb_rss_cachingTimeoutIdle);
+		}
+
+		return rssFeed;	
 	}
 	
 	/**
@@ -94,7 +193,7 @@ component singleton{
 	* Build entries feeds
 	* @category The category to filter on if needed
 	*/	
-	function buildEntryFeed(category=""){
+	private function buildEntryFeed(category=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var entryResults 	= entryService.findPublishedEntries(category=arguments.category,max=settings.cb_rss_maxEntries);
 		var myArray 		= [];
@@ -150,7 +249,7 @@ component singleton{
 	* Build pages feeds
 	* @category The category to filter on if needed
 	*/	
-	function buildPageFeed(category=""){
+	private function buildPageFeed(category=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var pageResults 	= pageService.findPublishedPages(category=arguments.category,max=settings.cb_rss_maxEntries);
 		var myArray 		= [];
@@ -203,12 +302,13 @@ component singleton{
 	}
 
 	/**
-	* Build comment feeds
-	* @entrySlug The entry slug to filter on
+	* Build comment feeds according to filtering elements
+	* @slug.hint The content slug to filter on
+	* @contentType.hint The content type discriminator to filter on
 	*/	
-	function buildCommentFeed(entrySlug=""){
+	private function buildCommentFeed(string slug="", string contentType=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
-		var commentResults 	= commentService.findApprovedComments(contentID=entryService.getIDBySlug(arguments.entrySlug),max=settings.cb_rss_maxComments);
+		var commentResults 	= commentService.findApprovedComments(contentID=contentService.getIDBySlug(arguments.slug),contentType=arguments.contentType,max=settings.cb_rss_maxComments);
 		var myArray 		= [];
 		var feedStruct 		= {};
 		var columnMap 		= {};
@@ -226,7 +326,6 @@ component singleton{
 		QueryAddColumn(qComments, "title", myArray);
 		QueryAddColumn(qComments, "linkComments", myArray);
 		QueryAddColumn(qComments, "rssAuthor", myArray);
-		
 		
 		// Attach permalinks
 		for(var i = 1; i lte commentResults.count; i++){

@@ -36,8 +36,12 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* Comment listing for UI of approved comments, returns struct of results=[comments,count]
+	* @contentID.hint The content ID to filter on
+	* @contentType.hint The content type discriminator to filter on
+	* @max.hint The maximum number of records to return, 0 means all
+	* @offset.hint The offset in the paging, 0 means 0
 	*/
-	function findApprovedComments(contentID,max=0,offset=0){
+	function findApprovedComments(contentID,contentType,max=0,offset=0){
 		var results = {};
 		var c = newCriteria();
 		
@@ -47,6 +51,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// By Content?
 		if( structKeyExists(arguments,"contentID") AND len(arguments.contentID) ){
 			c.eq("relatedContent.contentID",javaCast("int", arguments.contentID));
+		}
+		// By Content Type Discriminator: class is a special hibernate deal
+		if( structKeyExists(arguments,"contentType") AND len(arguments.contentType) ){
+			c.createCriteria("relatedContent")
+				.isEq("class", arguments.contentType);
 		}
 		
 		// run criteria query and projections count

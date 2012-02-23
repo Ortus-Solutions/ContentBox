@@ -21,7 +21,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 */
-component extends="coldbox.system.testing.BaseTestCase" appMapping='/contentbox-shell'{
+component extends="coldbox.system.testing.BaseTestCase" appMapping='/contentbox-root'{
 
 	function setup(){
 		super.setup();
