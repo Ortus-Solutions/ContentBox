@@ -8,7 +8,8 @@ component extends="baseHandler"{
 	property name="authorService"		inject="id:authorService@cb";
 	property name="layoutService"		inject="id:layoutService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
-
+	property name="categoryService"		inject="id:categoryService@cb";
+	
 	// Public properties
 	this.preHandler_except = "pager";
 
@@ -31,6 +32,7 @@ component extends="baseHandler"{
 		event.paramValue("searchPages","");
 		event.paramValue("fAuthors","all");
 		event.paramValue("fStatus","any");
+		event.paramValue("fCategories","all");
 		event.paramValue("isFiltering",false,true);
 		event.paramValue("parent","");
 
@@ -42,18 +44,22 @@ component extends="baseHandler"{
 		if( len(rc.searchPages) ){ prc.pagingLink&="&searchPages=#rc.searchPages#"; }
 		// Append filters to paging link?
 		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
+		if( rc.fCategories neq "all"){ prc.pagingLink&="&fCategories=#rc.fCategories#"; }
 		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
 		// is Filtering?
 		if( rc.fAuthors neq "all" OR rc.fStatus neq "any"){ prc.isFiltering = true; }
 
 		// get all authors
 		prc.authors    = authorService.getAll(sortOrder="lastName");
-
+		// get all categories
+		prc.categories = categoryService.getAll(sortOrder="category");
+		
 		// search entries with filters and all
 		var pageResults = pageService.search(search=rc.searchPages,
 											 offset=prc.paging.startRow-1,
 											 max=prc.cbSettings.cb_paging_maxrows,
 											 isPublished=rc.fStatus,
+											 category=rc.fCategories,
 											 author=rc.fAuthors,
 											 parent=rc.parent);
 		prc.pages 		= pageResults.pages;
@@ -91,6 +97,8 @@ component extends="baseHandler"{
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
 		// get new or persisted
 		prc.page  = pageService.get( event.getValue("contentID",0) );
+		// get all categories
+		prc.categories = categoryService.getAll(sortOrder="category");
 		// load comments viewlet if persisted
 		if( prc.page.isLoaded() ){
 			var args = {contentID=rc.contentID};
@@ -127,6 +135,7 @@ component extends="baseHandler"{
 	function save(event,rc,prc){
 		// params
 		event.paramValue("allowComments",prc.cbSettings.cb_comments_enabled);
+		event.paramValue("newCategories","");
 		event.paramValue("isPublished",true);
 		event.paramValue("slug","");
 		event.paramValue("changelog","");
@@ -167,6 +176,15 @@ component extends="baseHandler"{
 		page.addNewContentVersion(content=rc.content,changelog=rc.changelog,author=prc.oAuthor); 
 		// attach parent page
 		if( len(rc.parentPage) ){ page.setParent( pageService.get( rc.parentPage ) ); }
+		// Create new categories?
+		var categories = [];
+		if( len(trim(rc.newCategories)) ){
+			categories = categoryService.createCategories( trim(rc.newCategories) );
+		}
+		// Inflate sent categories from collection
+		categories.addAll( categoryService.inflateCategories( rc ) );
+		// detach categories and re-attach
+		page.removeAllCategories().setCategories( categories );
 		// Inflate Custom Fields into the page
 		page.inflateCustomFields( rc.customFieldsCount, rc );
 		// announce event

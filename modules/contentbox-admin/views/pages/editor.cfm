@@ -143,6 +143,24 @@
 					#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="textfield",size="25",maxlength="100")#
 				</div>
 				
+				<!--- Categories --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/category_black.png" alt="info" /> Categories </h2>
+				<div class="pane">
+					<!--- Display categories --->
+					<div id="categoriesChecks">
+					<cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
+						#html.checkbox(name="category_#x#",value="#prc.categories[x].getCategoryID()#",checked=prc.page.hasCategories( prc.categories[x] ))#
+						#html.label(field="category_#x#",content="#prc.categories[x].getCategory()#",class="inline")#<br/>
+					</cfloop>
+					</div>
+					
+					<!--- New Categories --->
+					#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="textfield")#
+				</div>
+				
 				<!--- HTML Modifiers Panel --->
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 

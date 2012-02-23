@@ -9,7 +9,7 @@ component persistent="true" entityname="cbCategory" table="cb_category"{
 	property name="slug"			notnull="true"  length="200" unique="true" index="idx_slug";
 	
 	// Calculated properties
-	property name="numberOfEntries" formula="select count(*) from cb_entryCategories as entryCats where entryCats.FK_categoryID=categoryID" ;
+	property name="numberOfEntries" formula="select count(*) from cb_contentCategories as entryCats where entryCats.FK_categoryID=categoryID" ;
 	
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
 	

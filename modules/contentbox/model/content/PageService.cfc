@@ -60,7 +60,7 @@ component extends="ContentService" singleton{
 	/**
 	* page search returns struct with keys [pages,count]
 	*/
-	struct function search(search="",isPublished,author,parent,max=0,offset=0,sortOrder="title asc"){
+	struct function search(search="",isPublished,author,parent,category,max=0,offset=0,sortOrder="title asc"){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
@@ -83,6 +83,19 @@ component extends="ContentService" singleton{
 				c.isNull("parent");
 			}
 			sortOrder = "order asc";
+		}
+		// Category Filter
+		if( structKeyExists(arguments,"category") AND arguments.category NEQ "all"){
+			// Uncategorized?
+			if( arguments.category eq "none" ){
+				c.isEmpty("categories");
+			}
+			// With categories
+			else{
+				// search the association
+				c.createAlias("categories","cats")
+					.isIn("cats.categoryID", JavaCast("java.lang.Integer[]",[arguments.category]) );
+			}			
 		}	
 		// Search Criteria
 		if( len(arguments.search) ){

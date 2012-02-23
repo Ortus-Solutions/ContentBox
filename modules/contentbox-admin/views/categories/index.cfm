@@ -29,7 +29,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/category.png" alt="sofa" width="30" height="30" />
-			Blog Categories
+			Content Categories
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -58,7 +58,7 @@
 					<tr>
 						<th>Category Name</th>
 						<th>Slug</th>		
-						<th width="75" class="center">Entries</th>	
+						<th width="75" class="center">Content</th>	
 						<th width="75" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
