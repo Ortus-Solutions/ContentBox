@@ -6,6 +6,7 @@ component singleton{
 	// Dependecnies
 	property name="settingService"		inject="id:settingService@cb";
 	property name="entryService"		inject="id:entryService@cb";
+	property name="pageService"			inject="id:pageService@cb";
 	property name="commentService"		inject="id:commentService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="feedGenerator" 		inject="coldbox:plugin:FeedGenerator";
@@ -53,7 +54,7 @@ component singleton{
 	}
 	
 	/**
-	* Build RSS feeds for contentbox, with added caching.
+	* Build RSS feeds for contentbox blog entries, with added caching.
 	*/
 	function getRSS(boolean comments=false,category="",entrySlug=""){
 		var settings	= settingService.getAllSettings(asStruct=true);
@@ -144,10 +145,66 @@ component singleton{
 		
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
+	
+	/**
+	* Build pages feeds
+	* @category The category to filter on if needed
+	*/	
+	function buildPageFeed(category=""){
+		var settings		= settingService.getAllSettings(asStruct=true);
+		var pageResults 	= pageService.findPublishedPages(category=arguments.category,max=settings.cb_rss_maxEntries);
+		var myArray 		= [];
+		var feedStruct 		= {};
+		var columnMap 		= {};
+		var qPages			= entityToQuery( pageResults.pages );
+		
+		// max checks
+		if( settings.cb_rss_maxEntries lt pageResults.count ){
+			pageResults.count = settings.cb_rss_maxEntries;
+		}
+		
+		// Create the column maps
+		columnMap.title 		= "title";
+		columnMap.description 	= "content";
+		columnMap.pubDate 		= "publishedDate";
+		columnMap.link 			= "link";
+		columnMap.author		= "author";
+		columnMap.category_tag	= "categories";
+		
+		// Add necessary columns to query
+		QueryAddColumn(qPages, "link", myArray);
+		QueryAddColumn(qPages, "linkComments", myArray);
+		QueryAddColumn(qPages, "author", myArray);
+		QueryAddColumn(qPages, "categories", myArray);
+		QueryAddColumn(qPages, "content", myArray);
+		
+		// Attach permalinks
+		for(var i = 1; i lte entryResults.count; i++){
+			// build URL to entry
+			qPages.link[i] 			= CBHelper.linkPage( qPages.slug );
+			qPages.author[i]		= "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
+			qPages.linkComments[i]	= CBHelper.linkComments( pageResults.pages[i] );
+			qPages.categories[i]	= pageResults.pages[i].getCategoriesList();
+			qPages.content[i]		= pageResults.pages[i].getActiveContent().renderContent();
+		}
+		
+		// Generate feed items
+		feedStruct.title 		= CBHelper.siteName() & " Pages RSS Feed by ContentBox";
+		feedStruct.generator	= "ContentBox by ColdBox Platform";
+		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
+		feedStruct.description	= CBHelper.siteDescription();
+		feedStruct.webmaster	= settings.cb_site_email;
+		feedStruct.pubDate 		= now();
+		feedStruct.lastbuilddate = now();
+		feedStruct.link 		= CBHelper.linkHome();
+		feedStruct.items 		= qPages;
+		
+		return feedGenerator.createFeed(feedStruct,columnMap);
+	}
 
 	/**
 	* Build comment feeds
-	* @entrySlug The category to filter on if needed
+	* @entrySlug The entry slug to filter on
 	*/	
 	function buildCommentFeed(entrySlug=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
