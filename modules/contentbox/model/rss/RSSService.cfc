@@ -80,6 +80,9 @@ component singleton{
 	
 	/**
 	* Build RSS feeds for contentbox blog entries
+	* @comments.hint Retrieve either the content or comment feed, defaults to false
+	* @category.hint Filter the content feed with categories
+	* @slug.hint Filter the content feed or comment feed by slug.
 	*/
 	function getEntriesRSS(boolean comments=false, string category="", string slug=""){
 		var settings	= settingService.getAllSettings(asStruct=true);
@@ -103,7 +106,7 @@ component singleton{
 		
 		// Building comment feed or entry feed
 		switch(arguments.comments){
-			case true : { rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
+			case true : { arguments.contentType = "Entry"; rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
 			default   : { rssfeed = buildEntryFeed(argumentCollection=arguments); break; }
 		}
 		
@@ -117,6 +120,9 @@ component singleton{
 	
 	/**
 	* Build RSS feeds for contentbox pages
+	* @comments.hint Retrieve either the content or comment feed, defaults to false
+	* @category.hint Filter the content feed with categories
+	* @slug.hint Filter the content feed or comment feed by slug.
 	*/
 	function getPagesRSS(boolean comments=false, string category="", string slug=""){
 		var settings	= settingService.getAllSettings(asStruct=true);
@@ -140,7 +146,7 @@ component singleton{
 		
 		// Building comment feed or page feed
 		switch(arguments.comments){
-			case true : { rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
+			case true : { arguments.contentType = "Page"; rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
 			default   : { rssfeed = buildPageFeed(argumentCollection=arguments); break; }
 		}
 		
@@ -153,20 +159,22 @@ component singleton{
 	}
 	
 	/**
-	* Build RSS feeds for contentbox blog entries, with added caching.
+	* Build RSS feeds for contentbox content objects
+	* @comments.hint Retrieve the comments RSS feed or content feed, defaults to false
+	* @category.hint Filter the content feed with categories
 	*/
-	function getRSS(boolean comments=false,category="",entrySlug=""){
+	function getRSS(boolean comments=false, category=""){
 		var settings	= settingService.getAllSettings(asStruct=true);
 		var rssFeed  	= "";
 		var cacheKey  	= "";
 		
 		// Comments cache Key
 		if( arguments.comments ){
-			cacheKey 	= "cb-feeds-comments-#arguments.entrySlug#";
+			cacheKey 	= "cb-feeds-content-comments-#arguments.entrySlug#";
 		}
 		// Entries cache Key
 		else{
-			cacheKey 	= "cb-feeds-entries-#hash(arguments.category)#";
+			cacheKey 	= "cb-feeds-content-#hash(arguments.category)#";
 		}
 		
 		// Retrieve via caching? and caching active
@@ -178,7 +186,7 @@ component singleton{
 		// Building comment feed or entry feed
 		switch(arguments.comments){
 			case true : { rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
-			default   : { rssfeed = buildEntryFeed(argumentCollection=arguments); break; }
+			default   : { rssfeed = buildContentFeed(argumentCollection=arguments); break; }
 		}
 		
 		// Cache it with settings
@@ -228,7 +236,7 @@ component singleton{
 			qEntries.author[i]			= "#entryResults.entries[i].getAuthorEmail()# (#entryResults.entries[i].getAuthorName()#)";
 			qEntries.linkComments[i]	= CBHelper.linkComments( entryResults.entries[i] );
 			qEntries.categories[i]		= entryResults.entries[i].getCategoriesList();
-			qEntries.content[i]			= entryResults.entries[i].getActiveContent().renderContent();
+			qEntries.content[i]			= xmlFormat( entryResults.entries[i].getActiveContent().renderContent() );
 		}
 		
 		// Generate feed items
@@ -284,7 +292,7 @@ component singleton{
 			qPages.author[i]		= "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
 			qPages.linkComments[i]	= CBHelper.linkComments( pageResults.pages[i] );
 			qPages.categories[i]	= pageResults.pages[i].getCategoriesList();
-			qPages.content[i]		= pageResults.pages[i].getActiveContent().renderContent();
+			qPages.content[i]		= xmlFormat( pageResults.pages[i].getActiveContent().renderContent() );
 		}
 		
 		// Generate feed items
@@ -297,6 +305,62 @@ component singleton{
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
 		feedStruct.items 		= qPages;
+		
+		return feedGenerator.createFeed(feedStruct,columnMap);
+	}
+	
+	/**
+	* Build content feeds
+	* @category The category to filter on if needed
+	*/	
+	private function buildContentFeed(category=""){
+		var settings		= settingService.getAllSettings(asStruct=true);
+		var contentResults 	= contentService.findPublishedContent(category=arguments.category,max=settings.cb_rss_maxEntries);
+		var myArray 		= [];
+		var feedStruct 		= {};
+		var columnMap 		= {};
+		var qContent		= entityToQuery( contentResults.content );
+		
+		// max checks
+		if( settings.cb_rss_maxEntries lt contentResults.count ){
+			contentResults.count = settings.cb_rss_maxEntries;
+		}
+		
+		// Create the column maps
+		columnMap.title 		= "title";
+		columnMap.description 	= "content";
+		columnMap.pubDate 		= "publishedDate";
+		columnMap.link 			= "link";
+		columnMap.author		= "author";
+		columnMap.category_tag	= "categories";
+		
+		// Add necessary columns to query
+		QueryAddColumn(qContent, "link", myArray);
+		QueryAddColumn(qContent, "linkComments", myArray);
+		QueryAddColumn(qContent, "author", myArray);
+		QueryAddColumn(qContent, "categories", myArray);
+		QueryAddColumn(qContent, "content", myArray);
+		
+		// Attach permalinks
+		for(var i = 1; i lte contentResults.count; i++){
+			// build URL to entry
+			qContent.link[i] 			= CBHelper.linkContent( contentResults.content[i] );
+			qContent.author[i]			= "#contentResults.content[i].getAuthorEmail()# (#contentResults.content[i].getAuthorName()#)";
+			qContent.linkComments[i]	= CBHelper.linkComments( contentResults.content[i] );
+			qContent.categories[i]		= contentResults.content[i].getCategoriesList();
+			qContent.content[i]			= xmlFormat( contentResults.content[i].getActiveContent().renderContent() );
+		}
+		
+		// Generate feed items
+		feedStruct.title 		= CBHelper.siteName() & " Content RSS Feed by ContentBox";
+		feedStruct.generator	= "ContentBox by ColdBox Platform";
+		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
+		feedStruct.description	= CBHelper.siteDescription();
+		feedStruct.webmaster	= settings.cb_site_email;
+		feedStruct.pubDate 		= now();
+		feedStruct.lastbuilddate = now();
+		feedStruct.link 		= CBHelper.linkHome();
+		feedStruct.items 		= qContent;
 		
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
@@ -333,6 +397,7 @@ component singleton{
 			qComments.title[i] 			= "Comment by #qComments.author[i]# on #commentResults.comments[i].getParentTitle()#";
 			qComments.rssAuthor[i]		= "#qComments.authorEmail# (#qComments.author#)";
 			qComments.linkComments[i]	= CBHelper.linkComment( commentResults.comments[i] );
+			qComments.content[i]		= xmlFormat( qComments.content[i] );
 		}
 		
 		// Generate feed items

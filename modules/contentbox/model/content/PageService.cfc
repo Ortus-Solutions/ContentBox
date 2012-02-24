@@ -112,7 +112,7 @@ component extends="ContentService" singleton{
 	}
 	
 	// Page listing for UI
-	function findPublishedPages(max=0,offset=0,searchTerm="",asQuery=false,parent,boolean showInMenu){
+	function findPublishedPages(max=0,offset=0,searchTerm="",category="",asQuery=false,parent,boolean showInMenu){
 		var results = {};
 		var c = newCriteria();
 		// sorting
@@ -128,6 +128,12 @@ component extends="ContentService" singleton{
 		if( structKeyExists(arguments,"showInMenu") ){
 			c.isTrue("showInMenu");
 		}
+		
+		// Category Filter
+		if( len(arguments.category) ){
+			// create association with categories by slug.
+			c.createAlias("categories","cats").isEq("cats.slug",arguments.category);
+		}	
 		
 		// Search Criteria
 		if( len(arguments.searchTerm) ){

@@ -73,4 +73,23 @@ component extends="coldbox.system.testing.BaseTestCase"{
 		assertTrue( isXML( r ) );
 	}
 	
+	function testBuildContentFeed(){
+		getRequestContext().setValue("CBENTRYPOINT","http://localhost",true);
+		// mock cb
+		mockCBHelper.$("siteName","Unit Test")
+			.$("siteDescription","Unit Test")
+			.$("linkHome","http://localhost")
+			.$("linkComments","http://localhost##comments")
+			.$("linkContent","http://localhost");
+		// All Data
+		makePublic( service, "buildContentFeed" );
+		r = service.buildContentFeed();
+		assertTrue( isXML(r) );
+		
+		
+		// Category
+		r = service.buildContentFeed(category='ContentBox');
+		assertTrue( isXML( r ) );
+	}
+	
 } 
