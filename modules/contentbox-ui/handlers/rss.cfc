@@ -46,9 +46,11 @@ component extends="BaseContentHandler" singleton{
 	function pages(event,rc,prc){
 		// params
 		event.paramValue("category","");
+		event.paramValue("commentRSS",false);
+		event.paramValue("slug","");
 
 		// Build out the site RSS feeds
-		var feed = RSSService.getRSS(category=rc.category,contentType="Page");
+		var feed = RSSService.getRSS(category=rc.category,slug=rc.slug,comments=rc.commentRSS,contentType="Page");
 
 		// Render out the feed xml
 		event.renderData(type="plain",data=feed,contentType="text/xml");

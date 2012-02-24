@@ -62,13 +62,13 @@ component singleton{
 		
 		// compose cache key
 		if( arguments.comments ){
-			cacheKey = "cb-feeds-content-comments-#arguments.slug#";
+			cacheKey = "cb-feeds-content-comments-";
 		}
 		else{
 			cacheKey = "cb-feeds-content";
 		}
 		// clear by snippet
-		cache.clearByKeySnippet(keySnippet=cacheKey,async=true);
+		cache.clearByKeySnippet(keySnippet=cacheKey,async=false);
 		// log
 		if( log.canInfo() ){
 			log.info("Sent clear command using the following content key: #cacheKey# from provider: #cache.getName()#");
