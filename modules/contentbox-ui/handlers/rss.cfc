@@ -20,25 +20,38 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
-* This interceptor monitors new comments and new entries to clear RSS cache entries
+* Handles RSS Feeds
 */
-component extends="coldbox.system.Interceptor"{
+component extends="BaseContentHandler" singleton{
 
-	// DI
-	property name="rssService" inject="rssService@cb";
+	/**
+	* Display the RSS feeds for the ContentBox
+	*/
+	function index(event,rc,prc){
+		// params
+		event.paramValue("category","");
+		event.paramValue("contentSlug","");
+		event.paramValue("commentRSS",false);
 
-	// Listen when entries are saved
-	function cbadmin_postEntrySave(event,interceptData){
-		rssService.clearCaches();
-	}
-	
-	// Listen when entries are removed
-	function cbadmin_postEntryRemove(event,interceptData){
-		rssService.clearCaches();
+		// Build out the site RSS feeds
+		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,slug=rc.contentSlug);
+
+		// Render out the feed xml
+		event.renderData(type="plain",data=feed,contentType="text/xml");
 	}
 
-	// Listen when comments are made
-	function cbui_onCommentPost(event,interceptData){
-		rssService.clearCaches(comments=true,slug=arguments.interceptData.comment.getRelatedContent().getSlug());
+	/**
+	* Display the RSS feeds for the pages
+	*/
+	function pages(event,rc,prc){
+		// params
+		event.paramValue("category","");
+
+		// Build out the site RSS feeds
+		var feed = RSSService.getRSS(category=rc.category,contentType="Page");
+
+		// Render out the feed xml
+		event.renderData(type="plain",data=feed,contentType="text/xml");
 	}
+
 }

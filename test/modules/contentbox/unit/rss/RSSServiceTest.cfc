@@ -33,21 +33,24 @@ component extends="coldbox.system.testing.BaseTestCase"{
 		service.$property("CBHelper","variables",mockCBHelper );
 	}
 	
-	function testGetEntriesRSS(){
+	function testGetRSS(){
 		// mocks
 		mockSettings = {
 			cb_rss_caching = false
 		};
 		mockSettingsService.$("getAllSettings", mockSettings);
 		mockFeed = {};
-		service.$("buildEntryFeed", mockFeed);
+		service.$("buildEntryFeed", mockFeed)
+			.$("buildCommentFeed", mockFeed)
+			.$("buildContentFeed", mockFeed)
+			.$("buildPageFeed", mockFeed);
+	
 		// Get all entries RSS
-		service.getEntriesRSS();
-		assertTrue( service.$once("buildEntryFeed") );
+		service.getRSS();
+		assertTrue( service.$once("buildContentFeed") );
 		
 		// Comments
-		service.$("buildCommentFeed", mockFeed);
-		service.getEntriesRSS(comments=true);
+		service.getRSS(comments=true);
 		assertTrue( service.$once("buildCommentFeed") );
 		
 	} 
@@ -89,6 +92,42 @@ component extends="coldbox.system.testing.BaseTestCase"{
 		
 		// Category
 		r = service.buildContentFeed(category='ContentBox');
+		assertTrue( isXML( r ) );
+	}
+	
+	function testBuildEntryFeed(){
+		getRequestContext().setValue("CBENTRYPOINT","http://localhost",true);
+		// mock cb
+		mockCBHelper.$("siteName","Unit Test")
+			.$("siteDescription","Unit Test")
+			.$("linkHome","http://localhost")
+			.$("linkComments","http://localhost##comments")
+			.$("linkEntry","http://localhost");
+		// All Data
+		makePublic( service, "buildEntryFeed" );
+		r = service.buildEntryFeed();
+		assertTrue( isXML(r) );
+		
+		// Category
+		r = service.buildEntryFeed(category='ContentBox');
+		assertTrue( isXML( r ) );
+	}
+	
+	function testbuildPageFeed(){
+		getRequestContext().setValue("CBENTRYPOINT","http://localhost",true);
+		// mock cb
+		mockCBHelper.$("siteName","Unit Test")
+			.$("siteDescription","Unit Test")
+			.$("linkHome","http://localhost")
+			.$("linkComments","http://localhost##comments")
+			.$("linkPage","http://localhost");
+		// All Data
+		makePublic( service, "buildPageFeed" );
+		r = service.buildPageFeed();
+		assertTrue( isXML(r) );
+		
+		// Category
+		r = service.buildPageFeed(category='ContentBox');
 		assertTrue( isXML( r ) );
 	}
 	

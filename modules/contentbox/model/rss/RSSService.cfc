@@ -24,7 +24,7 @@ limitations under the License.
 */
 component singleton{
 
-	// Dependencies
+	// DI
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
 	property name="contentService"		inject="id:contentService@cb";
@@ -38,7 +38,7 @@ component singleton{
  	* @settingService.inject id:settingService@cb
  	* @cacheBox.inject cachebox
 	*/
-	function init(required settingService, required cacheBox){
+	RSSService function init(required settingService, required cacheBox){
 		// Dependencies
 		variables.settingService = arguments.settingService;
 		variables.cacheBox 		 = arguments.cacheBox;
@@ -50,131 +50,59 @@ component singleton{
 		return this;
 	}
 	
+	/************************************** PUBLIC *********************************************/
+	
 	/**
 	* Clean RSS caches asynchronously
+	* @comments.hint Clear comment caches or not, defaults to false
+	* @slug.hint The content slug to clear on
 	*/
-	void function clearCaches(boolean comments=false,entrySlug=""){
+	RSSService function clearCaches(boolean comments=false, string slug=""){
 		var cacheKey = "";
 		
+		// compose cache key
 		if( arguments.comments ){
-			cacheKey = "cb-feeds-comments-#arguments.entrySlug#";
-			cache.clearByKeySnippet(keySnippet=cacheKey,async=true);
+			cacheKey = "cb-feeds-content-comments-#arguments.slug#";
 		}
 		else{
-			cacheKey = "cb-feeds-entries";
-			cache.clearByKeySnippet(keySnippet=cacheKey,async=true);
+			cacheKey = "cb-feeds-content";
 		}
-		
+		// clear by snippet
+		cache.clearByKeySnippet(keySnippet=cacheKey,async=true);
 		// log
 		if( log.canInfo() ){
 			log.info("Sent clear command using the following content key: #cacheKey# from provider: #cache.getName()#");
 		}
+		return this;
 	}
 	
 	/**
 	* Clean All RSS caches NOW BABY, NOW!
 	*/
-	void function clearAllCaches(){
+	RSSService function clearAllCaches(){
 		cache.clearByKeySnippet(keySnippet="cb-feeds",async=false);
-	}
-	
-	/**
-	* Build RSS feeds for contentbox blog entries
-	* @comments.hint Retrieve either the content or comment feed, defaults to false
-	* @category.hint Filter the content feed with categories
-	* @slug.hint Filter the content feed or comment feed by slug.
-	*/
-	function getEntriesRSS(boolean comments=false, string category="", string slug=""){
-		var settings	= settingService.getAllSettings(asStruct=true);
-		var rssFeed  	= "";
-		var cacheKey  	= "";
-		
-		// Comments cache Key
-		if( arguments.comments ){
-			cacheKey 	= "cb-feeds-entries-comments-#arguments.slug#";
-		}
-		// Entries cache Key
-		else{
-			cacheKey 	= "cb-feeds-entries-#hash(arguments.category)#";
-		}
-		
-		// Retrieve via caching? and caching active
-		if( settings.cb_rss_caching ){
-			var rssFeed = cache.get( cacheKey );
-			if( !isNull(rssFeed) ){ return rssFeed; }
-		}
-		
-		// Building comment feed or entry feed
-		switch(arguments.comments){
-			case true : { arguments.contentType = "Entry"; rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
-			default   : { rssfeed = buildEntryFeed(argumentCollection=arguments); break; }
-		}
-		
-		// Cache it with settings
-		if( settings.cb_rss_caching ){
-			cache.set(cacheKey, rssFeed, settings.cb_rss_cachingTimeout, settings.cb_rss_cachingTimeoutIdle);
-		}
-
-		return rssFeed;	
-	}
-	
-	/**
-	* Build RSS feeds for contentbox pages
-	* @comments.hint Retrieve either the content or comment feed, defaults to false
-	* @category.hint Filter the content feed with categories
-	* @slug.hint Filter the content feed or comment feed by slug.
-	*/
-	function getPagesRSS(boolean comments=false, string category="", string slug=""){
-		var settings	= settingService.getAllSettings(asStruct=true);
-		var rssFeed  	= "";
-		var cacheKey  	= "";
-		
-		// Comments cache Key
-		if( arguments.comments ){
-			cacheKey 	= "cb-feeds-pages-comments-#arguments.slug#";
-		}
-		// Entries cache Key
-		else{
-			cacheKey 	= "cb-feeds-pages-#hash(arguments.category)#";
-		}
-		
-		// Retrieve via caching? and caching active
-		if( settings.cb_rss_caching ){
-			var rssFeed = cache.get( cacheKey );
-			if( !isNull(rssFeed) ){ return rssFeed; }
-		}
-		
-		// Building comment feed or page feed
-		switch(arguments.comments){
-			case true : { arguments.contentType = "Page"; rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
-			default   : { rssfeed = buildPageFeed(argumentCollection=arguments); break; }
-		}
-		
-		// Cache it with settings
-		if( settings.cb_rss_caching ){
-			cache.set(cacheKey, rssFeed, settings.cb_rss_cachingTimeout, settings.cb_rss_cachingTimeoutIdle);
-		}
-
-		return rssFeed;	
+		return this;
 	}
 	
 	/**
 	* Build RSS feeds for contentbox content objects
+	* @slug.hint The page or entry slug to filter on.
 	* @comments.hint Retrieve the comments RSS feed or content feed, defaults to false
 	* @category.hint Filter the content feed with categories
+	* @contentType.hint The contentType to build an RSS feed on. Empty is for the site. Available content types are [page,entry]
 	*/
-	function getRSS(boolean comments=false, category=""){
+	function getRSS(string slug="", boolean comments=false, category="", contentType=""){
 		var settings	= settingService.getAllSettings(asStruct=true);
 		var rssFeed  	= "";
 		var cacheKey  	= "";
 		
 		// Comments cache Key
 		if( arguments.comments ){
-			cacheKey 	= "cb-feeds-content-comments-#arguments.entrySlug#";
+			cacheKey 	= "cb-feeds-content-comments-#arguments.slug#";
 		}
 		// Entries cache Key
 		else{
-			cacheKey 	= "cb-feeds-content-#hash(arguments.category)#";
+			cacheKey 	= "cb-feeds-content-#hash(arguments.category & arguments.contentType)#";
 		}
 		
 		// Retrieve via caching? and caching active
@@ -183,11 +111,45 @@ component singleton{
 			if( !isNull(rssFeed) ){ return rssFeed; }
 		}
 		
-		// Building comment feed or entry feed
-		switch(arguments.comments){
-			case true : { rssfeed = buildCommentFeed(argumentCollection=arguments); break;}
-			default   : { rssfeed = buildContentFeed(argumentCollection=arguments); break; }
-		}
+		// Content Type
+		switch(arguments.contentType){
+			// Pages
+			case "page" : {
+				// Building comment feed or content feed
+				if( arguments.comments ){
+					arguments.contentType = "Page"; 
+					rssfeed = buildCommentFeed(argumentCollection=arguments);
+				}
+				else{
+					rssfeed = buildPageFeed(argumentCollection=arguments);
+				}
+				break;
+			}
+			// Blog
+			case "entry" : {
+				// Building comment feed or content feed
+				if( arguments.comments ){
+					arguments.contentType = "Entry";
+					rssfeed = buildCommentFeed(argumentCollection=arguments);
+				}
+				else{
+					rssfeed = buildEntryFeed(argumentCollection=arguments);
+				}
+				break;
+			}
+			// Default Site
+			default : {
+				// Building comment feed or content feed
+				if( arguments.comments ){
+					rssfeed = buildCommentFeed(argumentCollection=arguments);
+				}
+				else{
+					rssfeed = buildContentFeed(argumentCollection=arguments);
+				}
+				break;
+			}
+			
+		} // end content type switch
 		
 		// Cache it with settings
 		if( settings.cb_rss_caching ){
@@ -196,6 +158,8 @@ component singleton{
 
 		return rssFeed;		
 	}
+	
+	/************************************** PRIVATE *********************************************/
 	
 	/**
 	* Build entries feeds
@@ -232,7 +196,7 @@ component singleton{
 		// Attach permalinks
 		for(var i = 1; i lte entryResults.count; i++){
 			// build URL to entry
-			qEntries.link[i] 			= CBHelper.linkEntryWithSlug( qEntries.slug );
+			qEntries.link[i] 			= CBHelper.linkEntry( qEntries.slug );
 			qEntries.author[i]			= "#entryResults.entries[i].getAuthorEmail()# (#entryResults.entries[i].getAuthorName()#)";
 			qEntries.linkComments[i]	= CBHelper.linkComments( entryResults.entries[i] );
 			qEntries.categories[i]		= entryResults.entries[i].getCategoriesList();
@@ -240,7 +204,7 @@ component singleton{
 		}
 		
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " RSS Feed by ContentBox";
+		feedStruct.title 		= CBHelper.siteName() & " Blog RSS Feed by ContentBox";
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
@@ -286,7 +250,7 @@ component singleton{
 		QueryAddColumn(qPages, "content", myArray);
 		
 		// Attach permalinks
-		for(var i = 1; i lte entryResults.count; i++){
+		for(var i = 1; i lte pageResults.count; i++){
 			// build URL to entry
 			qPages.link[i] 			= CBHelper.linkPage( qPages.slug );
 			qPages.author[i]		= "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
@@ -296,7 +260,7 @@ component singleton{
 		}
 		
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " Pages RSS Feed by ContentBox";
+		feedStruct.title 		= CBHelper.siteName() & " Page RSS Feed by ContentBox";
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
