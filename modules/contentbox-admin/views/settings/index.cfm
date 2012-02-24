@@ -71,7 +71,9 @@
 							<small>Choose the latest blog entries or a static page.</small><br/>
 							<select name="cb_site_homepage" id="cb_site_homepage" class="width98">
 								<option value="cbBlog" <cfif prc.cbSettings.cb_site_homepage eq "cbBlog">selected="selected"</cfif>>Latest Blog Entries</option>
-								#html.options(values=prc.pages,column="slug",nameColumn="title",selectedValue=prc.cbSettings.cb_site_homepage)#
+								<cfloop array="#prc.pages#" index="thisPage" >
+								<option value="#thispage.getRecursiveSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getRecursiveSlug()>selected="selected"</cfif>>#thisPage.getTitle()#</option>
+								</cfloop>
 							</select> 	
 							
 							<!--- Disable Blog --->
