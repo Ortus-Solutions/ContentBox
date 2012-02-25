@@ -37,9 +37,10 @@ component{
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
 
-	// FILL OUT: THE DATASOURCE FOR CONTENTBOX MANDATORY
+	// THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";
-	// THE LOCATION OF THE 'CONTENTBOX' MODULE MANDATORY
+	
+	// LOCATION MAPPINGS
 	this.mappings["/contentbox-root"] = COLDBOX_APP_ROOT_PATH;
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
@@ -47,30 +48,31 @@ component{
 	this.mappings["/contentbox-modules"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-modules";
 	// THE LOCATION OF COLDBOX
 	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
-
-	// ORM SETTINGS
+	
+	// CONTENTBOX ORM SETTINGS
 	this.ormEnabled = true;
 	this.ormSettings = {
-		// FILL OUT: ADD MORE LOCATIONS AS YOU SEE FIT
+		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation=["model","modules"],
-		// FILL OUT: THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
+		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate = "update",
-		// FILL OUT: IF YOU WANT ANOTHER SECONDARY CACHE, PLEASE UPDATE HERE
+		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
 		secondarycacheenabled = true,
 		cacheprovider		= "ehCache",
-		// ORM SESSION MANAGEMENT SETTINGS, CHANGE AT YOUR OWN RISK
+		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
-		//savemapping = true,
 		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK
 		eventHandling 		= true,
 		eventHandler		= "modules.contentbox.model.system.EventHandler",
 		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
 		skipCFCWithError	= true
 	};
+	
+	/************************************** METHODS *********************************************/
 	
 	// application start
 	public boolean function onApplicationStart(){
@@ -82,9 +84,7 @@ component{
 	// request start
 	public boolean function onRequestStart(String targetPage){
 
-		// ORM Reload: REMOVE IN PRODUCTION IF NEEDED
-		if( structKeyExists(url,"ormReload") ){ ormReload(); }
-		
+		//if( structKeyExists(url,"ormReload") ){ ormReload(); }
 		//applicationstop();abort;
 
 		// Bootstrap Reinit

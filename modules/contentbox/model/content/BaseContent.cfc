@@ -50,6 +50,10 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	property name="children" singularName="child" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
 
+	// M2M -> Categories
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"  
+			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID"; 
+	
 	// Calculated Fields
 	property name="numberOfVersions" 			formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" default="0";
 	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" default="0";
@@ -317,4 +321,28 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #getContentID()#").execute();
 		return this;
 	}
+	
+	/*
+	* I remove all category associations
+	*/
+	any function removeAllCategories(){
+		if ( hasCategories() ){
+			variables.categories = [];
+		}
+		return this;
+	}
+	
+	/**
+	* get flat categories list
+	*/
+	function getCategoriesList(){
+		if( NOT hasCategories() ){ return "Uncategorized"; }
+		var cats 	= getCategories();
+		var catList = [];
+		for(var x=1; x lte arrayLen(cats); x++){
+			arrayAppend( catList , cats[x].getCategory() );
+		}
+		return replace(arrayToList( catList ), ",",", ","all");
+	}
+	
 }

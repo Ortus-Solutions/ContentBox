@@ -60,7 +60,7 @@ component extends="ContentService" singleton{
 	/**
 	* page search returns struct with keys [pages,count]
 	*/
-	struct function search(search="",isPublished,author,parent,max=0,offset=0,sortOrder="title asc"){
+	struct function search(search="",isPublished,author,parent,category,max=0,offset=0,sortOrder="title asc"){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
@@ -83,6 +83,19 @@ component extends="ContentService" singleton{
 				c.isNull("parent");
 			}
 			sortOrder = "order asc";
+		}
+		// Category Filter
+		if( structKeyExists(arguments,"category") AND arguments.category NEQ "all"){
+			// Uncategorized?
+			if( arguments.category eq "none" ){
+				c.isEmpty("categories");
+			}
+			// With categories
+			else{
+				// search the association
+				c.createAlias("categories","cats")
+					.isIn("cats.categoryID", JavaCast("java.lang.Integer[]",[arguments.category]) );
+			}			
 		}	
 		// Search Criteria
 		if( len(arguments.search) ){
@@ -99,7 +112,7 @@ component extends="ContentService" singleton{
 	}
 	
 	// Page listing for UI
-	function findPublishedPages(max=0,offset=0,searchTerm="",asQuery=false,parent,boolean showInMenu){
+	function findPublishedPages(max=0,offset=0,searchTerm="",category="",asQuery=false,parent,boolean showInMenu){
 		var results = {};
 		var c = newCriteria();
 		// sorting
@@ -115,6 +128,12 @@ component extends="ContentService" singleton{
 		if( structKeyExists(arguments,"showInMenu") ){
 			c.isTrue("showInMenu");
 		}
+		
+		// Category Filter
+		if( len(arguments.category) ){
+			// create association with categories by slug.
+			c.createAlias("categories","cats").isEq("cats.slug",arguments.category);
+		}	
 		
 		// Search Criteria
 		if( len(arguments.searchTerm) ){

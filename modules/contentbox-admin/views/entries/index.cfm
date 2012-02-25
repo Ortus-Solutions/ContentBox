@@ -127,7 +127,7 @@
 				<thead>
 					<tr>
 						<th>Name</th>
-						<th>Categories</th>
+						<th width="150">Categories</th>
 						<th width="125">Dates</th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="hits"/></th>

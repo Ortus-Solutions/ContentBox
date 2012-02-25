@@ -36,17 +36,21 @@ limitations under the License.
 	// FILL OUT: THE DATASOURCE OF CONTENTBOX
 	this.datasource = "contentbox";
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
-	this.mappings["/contentbox-shell"] 	= replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test/","");
+	this.mappings["/contentbox-root"]   = replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test/","");
 	this.mappings["/contentbox-test"] 	= getDirectoryFromPath(getCurrentTemplatePath());
-	this.mappings["/contentbox"] 		= this.mappings["/contentbox-shell"] & "/modules/contentbox" ;
-	this.mappings["/coldbox"] 			= this.mappings["/contentbox-shell"] & "/coldbox" ;
+	this.mappings["/contentbox"] 		= this.mappings["/contentbox-root"] & "/modules/contentbox" ;
+	this.mappings["/contentbox-ui"] 	= this.mappings["/contentbox-root"] & "modules/contentbox-ui";
+	this.mappings["/contentbox-admin"] 	= this.mappings["/contentbox-root"] & "modules/contentbox-admin";
+	this.mappings["/contentbox-modules"] = this.mappings["/contentbox-root"] & "modules/contentbox-modules";
+	this.mappings["/coldbox"] 			= this.mappings["/contentbox-root"] & "/coldbox" ;
 	
 	this.ormSettings = {
-		cfclocation=["/contentbox-shell/modules"],
+		cfclocation=["/contentbox-root/modules"],
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		eventHandling 		= true,
+		eventHandler		= "contentbox.model.system.EventHandler",
 		skipCFCWithError	= true,
 		secondarycacheenabled = true,
 		cacheprovider		= "ehCache"

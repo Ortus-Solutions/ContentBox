@@ -20,29 +20,40 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
+* Handles RSS Feeds
 */
-component extends="coldbox.system.testing.BaseTestCase" appMapping='/contentbox-root'{
+component extends="BaseContentHandler" singleton{
 
-	function setup(){
-		super.setup();
-		installer = getModel("InstallerService@cbi");
-		resourcesPath = expandPath("/contentbox-test/resources") & "/";
+	/**
+	* Display the RSS feeds for the ContentBox
+	*/
+	function index(event,rc,prc){
+		// params
+		event.paramValue("category","");
+		event.paramValue("contentSlug","");
+		event.paramValue("commentRSS",false);
+
+		// Build out the site RSS feeds
+		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,slug=rc.contentSlug);
+
+		// Render out the feed xml
+		event.renderData(type="plain",data=feed,contentType="text/xml");
 	}
-	
-	function testprocessColdBoxPasswords(){
-		setup = getModel("SetupBean@cbi");
-		var original = fileRead(resourcesPath & "config/Coldbox.cfc");
-		
-		try{
-			installer.setAppPath( resourcesPath );
-			installer.processColdBoxPasswords( setup );
-			var updated = fileRead(resourcesPath & "config/Coldbox.cfc");
-			assertFalse( findnocase(updated,"@fwPassword@") );
-		}
-		catch(any e){}
-		finally{
-			fileWrite(resourcesPath & "config/Coldbox.cfc", original);
-		}
+
+	/**
+	* Display the RSS feeds for the pages
+	*/
+	function pages(event,rc,prc){
+		// params
+		event.paramValue("category","");
+		event.paramValue("commentRSS",false);
+		event.paramValue("slug","");
+
+		// Build out the site RSS feeds
+		var feed = RSSService.getRSS(category=rc.category,slug=rc.slug,comments=rc.commentRSS,contentType="Page");
+
+		// Render out the feed xml
+		event.renderData(type="plain",data=feed,contentType="text/xml");
 	}
-	
-} 
+
+}

@@ -81,5 +81,57 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// return service
 		return this;
 	}
+	
+	/**
+	* Find published content objects
+	*/
+	function findPublishedContent(max=0,offset=0,searchTerm="",category="",asQuery=false,parent,boolean showInMenu){
+		var results = {};
+		var c = newCriteria();
+		// sorting
+		var sortOrder = "publishedDate DESC";
+		
+		// only published pages
+		c.isTrue("isPublished")
+			.isLT("publishedDate", Now())
+			// only non-password pages
+			.isEq("passwordProtection","");
+			
+		// Show only pages with showInMenu criteria?
+		if( structKeyExists(arguments,"showInMenu") ){
+			c.isTrue("showInMenu");
+		}
+		
+		// Category Filter
+		if( len(arguments.category) ){
+			// create association with categories by slug.
+			c.createAlias("categories","cats").isEq("cats.slug",arguments.category);
+		}	
+		
+		// Search Criteria
+		if( len(arguments.searchTerm) ){
+			// like disjunctions
+			c.createAlias("activeContent","ac");
+			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
+				  c.restrictions.isEq("ac.content", "%#arguments.searchTerm#%") );
+		}
+		
+		// parent filter
+		if( structKeyExists(arguments,"parent") ){
+			if( len( trim(arguments.parent) ) ){
+				c.eq("parent.contentID", javaCast("int",arguments.parent) );
+			}
+			else{
+				c.isNull("parent");
+			}
+			sortOrder = "order asc";
+		}	
+		
+		// run criteria query and projections count
+		results.count 	= c.count();
+		results.content = c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
+		
+		return results;
+	}
 
 }

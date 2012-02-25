@@ -31,7 +31,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		// init service
 		model.$property("zipUtil","variables",mockZip);
 		model.$property("wirebox","variables",wirebox);
-		model.$property("appPath","variables", expandPath("/contentbox-shell") );
+		model.$property("appPath","variables", expandPath("/contentbox-root") );
 		model.init();
 	}
 	

@@ -46,6 +46,8 @@ component implements="contentbox.model.updates.IUpdate"{
 	*/
 	function postInstallation(){
 		
+		ORMReload();
+		
 		/************************************** CREATE NEW SETTINGS *********************************************/
 		
 		// Create Search Settings
@@ -83,7 +85,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// update security rules
 		securityRuleService.resetRules();
-		
+			
 	}
 	
 	function updatePermissions(){

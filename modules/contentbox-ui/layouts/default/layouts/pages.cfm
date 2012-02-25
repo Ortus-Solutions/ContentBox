@@ -57,6 +57,18 @@ limitations under the License.
 	<!--- Base HREF for SES enabled URLs --->
 	<base href="#cb.siteBaseURL()#/" />
 	
+	<!--- RSS Links --->
+	<link rel="alternate" type="application/rss+xml" title="Recent Blog Updates" href="#cb.linkRSS()#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Blog Comment Updates" href="#cb.linkRSS(comments=true)#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Page Updates" href="#cb.linkPageRSS()#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="#cb.linkPageRSS(comments=true)#" />	
+	<link rel="alternate" type="application/rss+xml" title="Recent Content Updates" href="#cb.linkSiteRSS()#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Content Comment Updates" href="#cb.linkSiteRSS(comments=true)#" />	
+	<!--- RSS Discovery If In View Mode --->
+	<cfif cb.isPageView()>
+		<link rel="alternate" type="application/rss+xml" title="Pages's Recent Comments" href="#cb.linkPageRSS(comments=true,page=cb.getCurrentPage())#" />
+	</cfif>
+	
 	<!--- styles --->
 	<link href="#cb.layoutRoot()#/includes/css/style.css" rel="stylesheet" type="text/css" />
 	
@@ -149,8 +161,12 @@ limitations under the License.
 			<div class="left">
 			  <h2>RSS Feeds</h2>
 			  <ul>
-			    <li><a href="#cb.linkRSS()#">Recent Site Updates</a></li>
-			    <li><a href="#cb.linkRSS(comments=true)#">Recent Site Comments</a></li>
+			    <li><a href="#cb.linkSiteRSS()#">Recent Content Updates</a></li>
+			    <li><a href="#cb.linkSiteRSS(comments=true)#">Recent Content Comments</a></li>
+				<li><a href="#cb.linkRSS()#">Recent Blog Updates</a></li>
+				<li><a href="#cb.linkRSS(comments=true)#">Recent Blog Comments</a></li>
+				<li><a href="#cb.linkPageRSS()#">Recent Page Updates</a></li>
+				<li><a href="#cb.linkPageRSS(comments=true)#">Recent Page Comments</a></li>
 			  </ul>
 			</div>
 			<div class="clr"></div>

@@ -68,6 +68,20 @@ component {
 			{pattern="/__preview", handler="blog", action="preview" },
 			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
 			{pattern="/__pageCommentPost", handler="page", action="commentPost"},
+			
+			/************************************** RSS FEEDS *********************************************/
+			
+			// Global Page RSS feeds with filtering
+			{pattern="/__rss/pages/category/:category?", handler="rss", action="pages" },
+			{pattern="/__rss/pages/comments/:slug?", handler="rss", action="pages", commentRSS=true },
+			{pattern="/__rss/pages/", handler="rss", action="pages"},
+			// Site Global RSS feeds Filtered by Categories
+			{pattern="/__rss/category/:category", handler="rss", action="index" },
+			// Global Site RSS Comments Feed With an extra content slug
+			{pattern="/__rss/comments", handler="rss", action="index", commentRSS=true},
+			// Global Site RSS Content Feed
+			{pattern="/__rss", handler="rss", action="index" },
+			
 			{pattern="/:pageSlug", handler="page", action="index"},
 			// Home Pattern  xc
 			{pattern="/", handler="blog", action="index" }

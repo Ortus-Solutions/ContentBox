@@ -1,4 +1,25 @@
 ﻿/**
+********************************************************************************
+ContentBox - A Modular Content Platform
+Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+Apache License, Version 2.0
+
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
+
+http://www.apache.org/licenses/LICENSE-2.0 
+
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
+limitations under the License.
+********************************************************************************
 * This is the ContentBox UI helper class that is injected by the CBRequest interceptor
 */
 component extends="coldbox.system.Plugin" accessors="true" singleton{
@@ -420,6 +441,78 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		}
 
 		// build link to regular RSS feed
+		return getRequestContext().buildLink(linkto=xehRSS);
+	}
+	
+	/**
+	* Link to the ContentBox Site RSS Feeds
+	* @category.hint The category to filter on
+	* @comments.hint Do comments RSS feeds
+	* @slug.hint The content slug to filter on when using comments
+	*/
+	function linkSiteRSS(any category, boolean comments=false, string slug){
+		var xehRSS = siteRoot() & sep() & "__rss";
+
+		// do we have a category?
+		if( structKeyExists(arguments,"category") ){
+			
+			if( isSimpleValue(arguments.category) ){
+				xehRSS &= "/category/#arguments.category#";
+			}
+			else{
+				xehRSS &= "/category/#arguments.category.getSlug()#";
+			}
+			
+			return getRequestContext().buildLink(linkto=xehRSS);
+		}
+
+		// comments feed?
+		if( arguments.comments ){
+			xehRSS &= "/comments";
+			// do we have content filter
+			if( structKeyExists(arguments,"slug") ){
+				xehRSS &= "/#arguments.slug#";
+			}
+			return getRequestContext().buildLink(linkto=xehRSS);
+		}
+
+		// build link to regular ContentBox RSS feed
+		return getRequestContext().buildLink(linkto=xehRSS);
+	}
+	
+	/**
+	* Link to the ContentBox Page RSS Feeds
+	* @category.hint The category to filter on
+	* @comments.hint Page comments or not, defaults to false
+	* @page.hint The page you want to filter on
+	*/
+	function linkPageRSS(any category, boolean comments=false, page){
+		var xehRSS = siteRoot() & sep() & "__rss/pages";
+
+		// do we have a category?
+		if( structKeyExists(arguments,"category") ){
+			
+			if( isSimpleValue(arguments.category) ){
+				xehRSS &= "/category/#arguments.category#";
+			}
+			else{
+				xehRSS &= "/category/#arguments.category.getSlug()#";
+			}
+			
+			return getRequestContext().buildLink(linkto=xehRSS);
+		}
+		
+		// comments feed?
+		if( arguments.comments ){
+			xehRSS &= "/comments";
+			// do we have content filter
+			if( structKeyExists(arguments,"page") ){
+				xehRSS &= "/#arguments.page.getSlug()#";
+			}
+			return getRequestContext().buildLink(linkto=xehRSS);
+		}
+
+		// build link to regular ContentBox RSS feed
 		return getRequestContext().buildLink(linkto=xehRSS);
 	}
 

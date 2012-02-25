@@ -31,6 +31,15 @@
 				<option value="#author.getAuthorID()#" <cfif rc.fAuthors eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
 				</cfloop>
 			</select>
+			<!--- Categories --->
+			<label for="fCategories">Categories: </label>
+			<select name="fCategories" id="fCategories" style="width:200px">
+				<option value="all" <cfif rc.fCategories eq "all">selected="selected"</cfif>>All Categories</option>
+				<option value="none" <cfif rc.fCategories eq "none">selected="selected"</cfif>>Uncategorized</option>
+				<cfloop array="#prc.categories#" index="category">
+				<option value="#category.getCategoryID()#" <cfif rc.fCategories eq category.getCategoryID()>selected="selected"</cfif>>#category.getCategory()#</option>
+				</cfloop>
+			</select>
 			<!--- Status --->
 			<label for="fStatus">Page Status: </label>
 			<select name="fStatus" id="fStatus" style="width:200px">
@@ -127,6 +136,7 @@
 					<tr>
 						<th width="15" class="center {sorter:false}"></th>
 						<th>Name</th>
+						<th width="150">Categories</th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="menu" title="Show in Menu"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
@@ -170,6 +180,7 @@
 								<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
 							</cfif>
 						</td>
+						<td>#page.getCategoriesList()#</td>
 						<td class="center">
 							<cfif page.getShowInMenu()>
 								<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Shows in menu!" />

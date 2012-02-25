@@ -151,7 +151,7 @@
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabContent_categories",false,true)> class="current"</cfif>
-							   title="Manage Blog Entry Categories">Blog Categories</a>
+							   title="Manage Content Categories">Categories</a>
 						</li>
 						</cfif>
 						<li>

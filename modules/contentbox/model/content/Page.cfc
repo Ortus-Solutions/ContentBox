@@ -7,7 +7,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	property name="layout"			notnull="false" length="200" default="";
 	property name="order"			notnull="false" ormtype="integer" default="0" dbdefault="0";
 	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
-
+	
 	/************************************** CONSTRUCTOR *********************************************/
 
 	/**
