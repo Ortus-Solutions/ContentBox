@@ -399,16 +399,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* Create a link to the current page/entry you are on
 	*/
 	function linkSelf(){
-		//check if we are a page or entry view
-		if ( isEntryView() ){
-			return linkEntry( getCurrentEntry() );
-		}
-
-		if ( isIndexView() ) {
-			return linkHome();
-		}
-
-		return linkPage( getCurrentPage() );
+		return "#cgi.script_name##cgi.path_info#";
 	}
 
 	/**
