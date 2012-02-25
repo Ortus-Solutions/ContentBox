@@ -24,21 +24,18 @@ limitations under the License.
 */
 component extends="coldbox.system.Interceptor"{
 
-	// DI
-	property name="rssService" inject="rssService@cb";
-
-	// Listen when entries are saved
+		// Listen when entries are saved
 	function cbadmin_postEntrySave(event,interceptData){
-		rssService.clearCaches();
+		getModel("rssService@cb").clearCaches();
 	}
 	
 	// Listen when entries are removed
 	function cbadmin_postEntryRemove(event,interceptData){
-		rssService.clearCaches();
+		getModel("rssService@cb").clearCaches();
 	}
 
 	// Listen when comments are made
 	function cbui_onCommentPost(event,interceptData){
-		rssService.clearCaches(comments=true,slug=arguments.interceptData.comment.getRelatedContent().getSlug());
+		getModel("rssService@cb").clearCaches(comments=true,slug=arguments.interceptData.comment.getRelatedContent().getSlug());
 	}
 }

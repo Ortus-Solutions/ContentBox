@@ -50,8 +50,8 @@ component extends="BaseContentHandler" singleton{
 			incomingSlug = listLast(incomingURL,"/");
 		}
 		else{
-			incomingURL	 = "/" & prc.pageOverride & "/";
-			incomingslug = prc.pageOverride;
+			incomingURL	 = prc.pageOverride & "/";
+			incomingslug = listLast(incomingURL,"/");
 		}
 		// get the author
 		var author = getModel("securityService@cb").getAuthorSession();
