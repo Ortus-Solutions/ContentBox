@@ -250,9 +250,6 @@ id , name , mail
 				// Check if doing cbInit()
 				if( structKeyExists(plugin, "$cbInit") ){ plugin.$cbInit( mockController ); }
 			}
-			else{
-				plugin.init( mockController );
-			}
 			
 			return plugin;
 		</cfscript>
