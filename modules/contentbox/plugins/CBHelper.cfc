@@ -6,18 +6,18 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 * This is the ContentBox UI helper class that is injected by the CBRequest interceptor
@@ -54,11 +54,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		// else throw exception
 		throw(message="Setting requested: #arguments.key# not found",detail="Settings keys are #structKeyList(prc.cbSettings)#",type="ContentBox.CBHelper.InvalidSetting");
 	}
-	
+
 	// get contentbox version
 	function getContentBoxVersion(){
 		return getModuleSettings("contentbox").version;
-	}	
+	}
 	// get contentbox codename
 	function getContentBoxCodeName(){
 		return getModuleSettings("contentbox").settings.codename;
@@ -67,7 +67,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function getContentBoxCodeNameURL(){
 		return getModuleSettings("contentbox").settings.codenameLink;
 	}
-	
+
 	/**
 	* Get custom HTML content pieces by slug
 	* @slug The content slug to retrieve
@@ -93,7 +93,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var prc = getRequestCollection(private=true);
 		return prc.cbEntryPoint;
 	}
-	
+
 	// Get the site base SES URL
 	function siteBaseURL(){
 		return replacenocase( getRequestContext().getSESBaseURL(), "index.cfm", "");
@@ -131,14 +131,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function siteEmail(){ return setting("cb_site_email"); }
 	// Retrieve the site outgoing email
 	function siteOutgoingEmail(){ return setting("cb_site_outgoingEmail"); }
-	
+
 	/**
 	* Determines if site comments are enabled and if the entry accepts comments
 	* @content The entry or page content to validate comments also with
 	*/
 	function isCommentsEnabled(content){
 		if( structKeyExists(arguments,"content") ){
-			return ( arguments.content.getAllowComments() AND setting("cb_comments_enabled") );	
+			return ( arguments.content.getAllowComments() AND setting("cb_comments_enabled") );
 		}
 		return ( setting("cb_comments_enabled") );
 	}
@@ -161,7 +161,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 
 	/************************************** Context Methods *********************************************/
-	
+
 	// Determine if you have a category filter
 	boolean function categoryFilterExists(){
 		var rc = getRequestCollection();
@@ -171,7 +171,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function getCategoryFilter(){
 		return getRequestContext().getValue("category","");
 	}
-	
+
 	// Get Year Filter
 	function getYearFilter(){
 		return getRequestContext().getValue("year","0");
@@ -221,7 +221,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 			else if( !len(arguments.page) ){
 				return true;
 			}
-			return false;			
+			return false;
 		}
 		return false;
 	}
@@ -299,25 +299,25 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		}
 		if( structKeyExists(arguments,"defaultValue") ){
 			return arguments.defaultValue;
-		} 
+		}
 		throw(message="No custom field with key: #arguments.key# found",detail="The keys are #structKeyList(fields)#",type="CBHelper.InvalidCustomField");
 	}
-	
+
 	/************************************** search *********************************************/
-	
+
 	// Determine if you are in the search view
 	boolean function isSearchView(){
 		var event = getRequestContext();
 		return (event.getCurrentEvent() eq "contentbox-ui:page.search");
 	}
-	
+
 	/**
 	* quickSearchForm will build a standard ContentBox Content Search Form according to the SearchForm widget
 	*/
 	function quickSearchForm(){
 		return widget("SearchForm",{type="content"});
 	}
-	
+
 	/**
 	* Render out paging for search content
 	*/
@@ -328,25 +328,25 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		}
 		return prc.pagingPlugin.renderit( getSearchResults().getTotal(), prc.pagingLink);
 	}
-	
+
 	// get the curent search results object
 	contentbox.model.search.SearchResults function getSearchResults(){
 		var event = getRequestContext();
 		return event.getValue(name="searchResults",private="true",default="");
 	}
-	
+
 	// get the curent search results HTML content
 	any function getSearchResultsContent(){
 		var event = getRequestContext();
 		return event.getValue(name="searchResultsContent",private="true",default="");
 	}
-	
+
 	// Determine if you have a search term
 	boolean function searchTermExists(){
 		var rc = getRequestCollection();
 		return (structKeyExists(rc,"q") AND len(rc.q));
 	}
-	
+
 	// Get Search Term
 	function getSearchTerm(){
 		return getRequestContext().getValue("q","");
@@ -404,6 +404,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 			return linkEntry( getCurrentEntry() );
 		}
 
+		if ( isIndexView() ) {
+			return linkHome();
+		}
+
 		return linkPage( getCurrentPage() );
 	}
 
@@ -443,7 +447,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		// build link to regular RSS feed
 		return getRequestContext().buildLink(linkto=xehRSS);
 	}
-	
+
 	/**
 	* Link to the ContentBox Site RSS Feeds
 	* @category.hint The category to filter on
@@ -455,14 +459,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 		// do we have a category?
 		if( structKeyExists(arguments,"category") ){
-			
+
 			if( isSimpleValue(arguments.category) ){
 				xehRSS &= "/category/#arguments.category#";
 			}
 			else{
 				xehRSS &= "/category/#arguments.category.getSlug()#";
 			}
-			
+
 			return getRequestContext().buildLink(linkto=xehRSS);
 		}
 
@@ -479,7 +483,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		// build link to regular ContentBox RSS feed
 		return getRequestContext().buildLink(linkto=xehRSS);
 	}
-	
+
 	/**
 	* Link to the ContentBox Page RSS Feeds
 	* @category.hint The category to filter on
@@ -491,17 +495,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 		// do we have a category?
 		if( structKeyExists(arguments,"category") ){
-			
+
 			if( isSimpleValue(arguments.category) ){
 				xehRSS &= "/category/#arguments.category#";
 			}
 			else{
 				xehRSS &= "/category/#arguments.category.getSlug()#";
 			}
-			
+
 			return getRequestContext().buildLink(linkto=xehRSS);
 		}
-		
+
 		// comments feed?
 		if( arguments.comments ){
 			xehRSS &= "/comments";
@@ -546,7 +550,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var xeh = siteRoot() & sep() & "#blogEntryPoint#.search";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
-	
+
 	/**
 	* Link to the content search route
 	*/
@@ -572,7 +576,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	* @slug The entry slug to link to
 	*/
 	function linkEntryWithSlug(slug){
-		arguments.slug = reReplace( arguments.slug, "^/","" );		
+		arguments.slug = reReplace( arguments.slug, "^/","" );
 		var xeh = siteRoot() & sep() & "#blogEntryPoint#.#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
@@ -597,17 +601,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var xeh = siteRoot() & "#replace(arguments.page.getRecursiveSlug(),"/","")#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
-	
+
 	/**
 	* Link to a specific page using a slug only
 	* @slug The page slug to link to
 	*/
 	function linkPageWithSlug(slug){
-		arguments.slug = reReplace( arguments.slug, "^/","" );		
+		arguments.slug = reReplace( arguments.slug, "^/","" );
 		var xeh = siteRoot() & sep() & "#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
-	
+
 	/**
 	* Create a link to a specific comment in a page or in an entry
 	* @comment The comment to link to
@@ -671,13 +675,13 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	function getWidget(required name){
 		var layoutWidgetPath = layoutRoot() & "/widgets/#arguments.name#.cfc";
-		
+
 		// layout widget overrides
 		if( fileExists( expandPath( layoutWidgetPath ) ) ){
 			var widgetCreationPath = replace( reReplace(layoutRoot(),"^/","")  ,"/",".","all") & ".widgets.#arguments.name#";
 			return controller.getPlugin(plugin=widgetCreationPath,customPlugin=true);
 		}
-		
+
 		// return core contentbox widget instead
 		return getMyPlugin(plugin="widgets.#arguments.name#",module="contentbox-ui");
 	}
@@ -728,7 +732,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var entries = getCurrentEntries();
 		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
-	
+
 	/**
 	* Render out an entry using your pre-defined 'entry' template
 	* @template.hint The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
@@ -750,14 +754,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		var categories = getCurrentCategories();
 		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=categories,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
-	
+
 	/**
 	* Render out custom fields for the current content
 	*/
 	function quickCustomFields(){
 		var customFields = getCurrentCustomFields();
 		var content = "";
-		
+
 		savecontent variable="content"{
 			writeOutput("<ul class='customFields'>");
 			for(var thisField in customFields){
@@ -765,10 +769,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 			}
 			writeOutput("</ul>");
 		}
-		
+
 		return content;
 	}
-	
+
 	/**
 	* Render out comments anywhere using ColdBox collection rendering
 	* @template.hint The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
@@ -803,7 +807,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		arguments.view = "#layoutName()#/views/#arguments.view#";
 		return renderView(argumentCollection=arguments);
 	}
-	
+
 	/**
 	* QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
 	* layout theme you are using. All the arguments are the same as renderLayout()'s methods
@@ -820,7 +824,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function quickCommentForm(required content){
 		return widget("CommentForm",{content=arguments.content});
 	}
-	
+
 	/**
 	* Render the incoming event's main view, basically a proxy to ColdBox's renderView().
 	*/
@@ -857,13 +861,13 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( !structKeyExists(arguments,"page") ){
 			arguments.page = getCurrentPage();
 		}
-		
+
 		// Is page passed as slug or object
 		if( isSimpleValue(arguments.page) ){
 			// retrieve page by slug
 			arguments.page = pageService.findBySlug( arguments.page );
-		} 
-		
+		}
+
 		// get child pages
 		arguments.pageRecords = pageService.findPublishedPages(parent=page.getContentID(),showInMenu=true);
 		// build it out
