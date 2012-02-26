@@ -125,7 +125,7 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/settings_black.png" alt="info" /> Cache Settings </h2>
+					<img src="#prc.cbroot#/includes/images/database_black.png" alt="info" /> Cache Settings </h2>
 				<div class="pane">
 
 					<!--- Cache Settings --->
