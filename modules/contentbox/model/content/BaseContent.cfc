@@ -14,18 +14,21 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	property name="renderedContent" persistent="false";
 
 	// Properties
-	property name="contentID" 			notnull="true"	fieldtype="id" generator="native" setter="false";
-	property name="contentType" 		notnull="true"	setter="false" update="false" insert="false" index="idx_discriminator,idx_published";
-	property name="title"				notnull="true"  length="200" default="" index="idx_search";
-	property name="slug"				notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
-	property name="createdDate" 		notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
-	property name="publishedDate"		notnull="false" ormtype="timestamp" idx="idx_publishedDate";
-	property name="isPublished" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
-	property name="allowComments" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1";
-	property name="passwordProtection" 	notnull="false" length="100" default="" index="idx_published";
-	property name="HTMLKeywords"		notnull="false" length="160" default="";
-	property name="HTMLDescription"		notnull="false" length="160" default="";
-	property name="hits"				notnull="false" ormtype="long" default="0" dbdefault="0";
+	property name="contentID" 				notnull="true"	fieldtype="id" generator="native" setter="false";
+	property name="contentType" 			notnull="true"	setter="false" update="false" insert="false" index="idx_discriminator,idx_published";
+	property name="title"					notnull="true"  length="200" default="" index="idx_search";
+	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
+	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
+	property name="publishedDate"			notnull="false" ormtype="timestamp" idx="idx_publishedDate";
+	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
+	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
+	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
+	property name="HTMLKeywords"			notnull="false" length="160" default="";
+	property name="HTMLDescription"			notnull="false" length="160" default="";
+	property name="hits"					notnull="false" ormtype="long" default="0" dbdefault="0";
+	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
+	property name="cacheTimeout"			notnull="true"  ormtype="integer" default="120" dbdefault="120" index="idx_cachetimeout";
+	property name="cacheLastAccessTimeout"	notnull="true"  ormtype="integer" default="30" dbdefault="30" index="idx_cachelastaccesstimeout";
 
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
@@ -45,15 +48,15 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 
 	// M20 -> Parent Page loaded as a proxy
 	property name="parent" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
-	
+
 	// O2M -> Sub Content Inverse
 	property name="children" singularName="child" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
 
 	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"  
-			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID"; 
-	
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"
+			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID";
+
 	// Calculated Fields
 	property name="numberOfVersions" 			formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" default="0";
 	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" default="0";
@@ -130,7 +133,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return '';
 	}
-	
+
 	/**
 	* Shorthand Author from latest version or null if any yet
 	*/
@@ -166,7 +169,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
 		return pPath & arguments.separator & getSlug();
 	}
-	
+
 	/**
 	* is loaded?
 	*/
@@ -235,7 +238,8 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 
 		// caching enabled?
 		if( (getContentType() eq "page" AND settings.cb_content_caching) OR
-			(getContentType() eq "entry" AND settings.cb_entry_caching)
+			(getContentType() eq "entry" AND settings.cb_entry_caching) AND
+			(getCache() eq true)
 		){
 			// Build Cache Key
 			var cacheKey = buildContentCacheKey();
@@ -259,16 +263,17 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 
 		// caching enabled?
 		if( (getContentType() eq "page" AND settings.cb_content_caching) OR
-			(getContentType() eq "entry" AND settings.cb_entry_caching)
+			(getContentType() eq "entry" AND settings.cb_entry_caching) AND
+			(getCache() eq true)
 		){
 			// Store content in cache
-			cache.set(cacheKey, renderedContent, settings.cb_content_cachingTimeout, settings.cb_content_cachingTimeoutIdle);
+			cache.set(cacheKey, renderedContent, getCacheTimeout(), getCacheLastAccessTimeout());
 		}
 
 		// renturn translated content
 		return renderedContent;
 	}
-	
+
 	/**
 	* Renders the content silently so no caching, or extra fluff is done, just content translation rendering.
 	* @content.hint The content markup to translate, by default it uses the active content version's content
@@ -283,7 +288,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 			content	= this
 		};
 		interceptorService.processState("cb_onContentRendering", iData);
-		
+
 		// return processed content
 		return b.toString();
 	}
@@ -301,16 +306,16 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 			// get custom field from incoming data
 			var args = {
 				key 	= arguments.memento["CustomFieldKeys_#x#"],
-				value 	= arguments.memento["CustomFieldValues_#x#"] 
+				value 	= arguments.memento["CustomFieldValues_#x#"]
 			};
-			// only add if key has value	
+			// only add if key has value
 			if( len(trim( args.key )) ){
 				var thisField = customFieldService.new(properties=args);
 				thisField.setRelatedContent( this );
 				addCustomField( thisField );
-			}			
+			}
 		}
-		
+
 		return this;
 	}
 
@@ -321,7 +326,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #getContentID()#").execute();
 		return this;
 	}
-	
+
 	/*
 	* I remove all category associations
 	*/
@@ -331,7 +336,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return this;
 	}
-	
+
 	/**
 	* get flat categories list
 	*/
@@ -344,5 +349,5 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return replace(arrayToList( catList ), ",",", ","all");
 	}
-	
+
 }
