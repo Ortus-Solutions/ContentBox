@@ -60,7 +60,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			c.isTrue("isPublished")
 				.isLT("publishedDate", Now());
 		}
-		content = c.isEq("slug",arguments.slug).get();
+		var content = c.isEq("slug",arguments.slug).get();
 
 		// if not found, send and empty one
 		if( isNull(content) ){ return new(); }

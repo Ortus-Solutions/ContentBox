@@ -27,8 +27,8 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	property name="HTMLDescription"			notnull="false" length="160" default="";
 	property name="hits"					notnull="false" ormtype="long" default="0" dbdefault="0";
 	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
-	property name="cacheTimeout"			notnull="true"  ormtype="integer" default="120" dbdefault="120" index="idx_cachetimeout";
-	property name="cacheLastAccessTimeout"	notnull="true"  ormtype="integer" default="30" dbdefault="30" index="idx_cachelastaccesstimeout";
+	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
+	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
 
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
@@ -229,7 +229,21 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	string function buildContentCacheKey(){
 		return "cb-content-#getContentType()#-#getContentID()#";
 	}
-
+	
+	/**
+	* Verify we can do content caching on this content object using global and local rules
+	*/
+	boolean function canCacheContent(){
+		var settings = settingService.getAllSettings(asStruct=true);
+		
+		// check global caching first	
+		if( (getContentType() eq "page" AND settings.cb_content_caching) OR (getContentType() eq "entry" AND settings.cb_entry_caching)	){ 
+			// check override?
+			return ( getCache() ? true : false ); 
+		}
+		return false;
+	}
+	
 	/**
 	* Render content out using translations, caching, etc.
 	*/
@@ -237,10 +251,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		var settings = settingService.getAllSettings(asStruct=true);
 
 		// caching enabled?
-		if( (getContentType() eq "page" AND settings.cb_content_caching) OR
-			(getContentType() eq "entry" AND settings.cb_entry_caching) AND
-			(getCache() eq true)
-		){
+		if( canCacheContent() ){
 			// Build Cache Key
 			var cacheKey = buildContentCacheKey();
 			// Get appropriate cache provider
@@ -262,12 +273,12 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 
 		// caching enabled?
-		if( (getContentType() eq "page" AND settings.cb_content_caching) OR
-			(getContentType() eq "entry" AND settings.cb_entry_caching) AND
-			(getCache() eq true)
-		){
-			// Store content in cache
-			cache.set(cacheKey, renderedContent, getCacheTimeout(), getCacheLastAccessTimeout());
+		if( canCacheContent() ){
+			// Store content in cache, of local timeouts are 0 then use global timeouts.
+			cache.set(cacheKey, 
+					  renderedContent,
+					  (getCacheTimeout() eq 0 ? settings.cb_content_cachingTimeout : getCacheTimeout()),
+					  (getCacheLastAccessTimeout() eq 0 ? settings.cb_content_cachingTimeoutIdle : getCacheLastAccessTimeout()) );
 		}
 
 		// renturn translated content

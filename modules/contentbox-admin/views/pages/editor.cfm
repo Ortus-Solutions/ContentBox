@@ -101,7 +101,7 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/page.png" alt="info" /> Page Options </h2>
+					<img src="#prc.cbroot#/includes/images/page.png" alt="info" /> Display Options </h2>
 				<div class="pane">
 					<!--- Parent Page --->
 					#html.label(field="parentPage",content='Parent:')#
@@ -149,14 +149,11 @@
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
 					<img src="#prc.cbroot#/includes/images/database_black.png" alt="info" /> Cache Settings </h2>
 				<div class="pane">
-
 					<!--- Cache Settings --->
 					#html.label(field="cache",content="Cache Content:",class="inline")#
-					#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCache()))#
-					#html.label(field="cache",content="Cache Timeoutes:",class="inline")#<br>
-					#html.textfield(name="cacheTimeout",bind=prc.page,title="Enter the number of minutes to cache your content",class="textfield",size="25",maxlength="100")#
-					#html.textfield(name="cacheLastAccessTimeout",bind=prc.page,title="Enter the number of minutes for an idle timeout for your content",class="textfield",size="25",maxlength="100")#
-
+					#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCache()))#<br/>
+					#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.page,title="Enter the number of minutes to cache your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
+					#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.page,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
 				</div>
 
 				<!--- Categories --->

@@ -130,11 +130,10 @@
 
 					<!--- Cache Settings --->
 					#html.label(field="cache",content="Cache Content:",class="inline")#
-					#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.entry.getCache()))#
-					#html.label(field="cache",content="Cache Timeoutes:",class="inline")#<br>
-					#html.textfield(name="cacheTimeout",bind=prc.entry,title="Enter the number of minutes to cache your content",class="textfield",size="25",maxlength="100")#
-					#html.textfield(name="cacheLastAccessTimeout",bind=prc.entry,title="Enter the number of minutes for an idle timeout for your content",class="textfield",size="25",maxlength="100")#
-
+					#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.entry.getCache()))#<br/>
+					#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.entry,title="Enter the number of minutes to cache your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
+					#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.entry,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
+				
 				</div>
 
 				<!--- Categories --->
