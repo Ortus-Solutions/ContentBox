@@ -99,7 +99,15 @@ Modification History:
 	<!--- Register the Aspects --->
 	<cffunction name="registerAspects" access="public" returntype="void" hint="I Register the current Application's Aspects" output="false" >
 		<cfscript>
-		var javaLoader = "";
+		var javaLoader 			= "";
+		var validationManager 	= "";
+		var validationData 		= controller.getSetting("validation");
+		
+		// if engine allows it, load shared constraints to validation engine
+		if( controller.getCFMLEngine().isValidationSupported() ){
+			validationManager = controller.getWireBox().getInstance( validationData.manager );
+			validationManager.setSharedConstraints( validationData.sharedConstraints );
+		}
 		
 		// Init JavaLoader with paths if set as settings.
 		if( controller.settingExists("javaloader_libpath") ){

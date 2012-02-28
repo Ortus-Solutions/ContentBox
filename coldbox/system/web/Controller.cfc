@@ -55,7 +55,7 @@ Only one instance of a specific ColdBox application exists.
 			services.PluginService 		= CreateObject("component","coldbox.system.web.services.PluginService").init(this);
 			services.ModuleService 		= CreateObject("component", "coldbox.system.web.services.ModuleService").init(this);
 			services.InterceptorService = CreateObject("component", "coldbox.system.web.services.InterceptorService").init(this);
-
+			
 			// CacheBox Instance
 			instance.cacheBox 	= createObject("component","coldbox.system.cache.CacheFactory");
 			// WireBox Instance
