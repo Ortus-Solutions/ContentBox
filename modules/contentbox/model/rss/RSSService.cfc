@@ -79,8 +79,8 @@ component singleton{
 	/**
 	* Clean All RSS caches NOW BABY, NOW!
 	*/
-	RSSService function clearAllCaches(){
-		cache.clearByKeySnippet(keySnippet="cb-feeds",async=false);
+	RSSService function clearAllCaches(boolean async=false){
+		cache.clearByKeySnippet(keySnippet="cb-feeds",async=arguments.async);
 		return this;
 	}
 	

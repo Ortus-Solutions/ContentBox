@@ -24,9 +24,6 @@ limitations under the License.
 */
 component extends="ContentService" singleton{
 	
-	// DI
-	property name="contentService" inject="id:contentService@cb";
-	
 	/**
 	* Constructor
 	*/

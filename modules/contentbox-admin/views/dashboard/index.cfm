@@ -11,13 +11,13 @@
 		<div class="body">
 			<cfif flash.exists("moduleReloaded")>
 				<div class="flickerMessages">
-					Module <strong>#flash.get("moduleReloaded")#</strong> was reloaded!
+					'#flash.get("moduleReloaded")#' Executed!
 				</div>
 			</cfif>
 			<!--- Reload button --->
 			<p class="actionBar">
 				#html.startForm(name="reloadForm",action=prc.xehReloadModule)#
-				#html.select(label="Choose Module To Reload",name="targetModule",options=prc.reloadOptions)#
+				#html.select(label="Choose Command To Execute:",name="targetModule",options=prc.reloadOptions)#
 				#html.submitButton(value="Issue Reload",class="buttonred")#
 				#html.endForm()#
 			</p>

@@ -46,11 +46,13 @@ component extends="baseHandler"{
 		
 		// Prepare Reload Options
 		prc.reloadOptions = [
-			{name="Entire Application",value="app"},
-			{name="ORM",value="orm"},
-			{name="ContentBox Admin",value="contentbox-admin"},
-			{name="ContentBox Site",value="contentbox-site"},
-			{name="ContentBox FileBrowser",value="contentbox-filebrowser"}
+			{name="Reload Application",value="app"},
+			{name="Reload ORM",value="orm"},
+			{name="Reload Admin",value="contentbox-admin"},
+			{name="Reload Site",value="contentbox-site"},
+			{name="Reload FileBrowser",value="contentbox-filebrowser"},
+			{name="Clear RSS Caches",value="rss-purge"},
+			{name="Clear Content Caches",value="content-purge"}
 		];
 		
 		// announce event
@@ -72,18 +74,25 @@ component extends="baseHandler"{
 		switch(rc.targetModule){
 			// reload application
 			case "app" :{
-				applicationStop();
-				break;			
+				applicationStop();break;			
 			}
 			case "orm" :{
-				ormReload();
-				break;
+				ormReload();break;
 			}
-			default:{
+			case "rss-purge":{
+				getModel("RSSService@cb").clearAllCaches(async=false); break;
+			}
+			case "content-purge":{
+				getModel("ContentService@cb").clearAllCaches(async=false); break;
+			}
+			case "contentbox-admin": case "contentbox-site" : case "contentbox-filebrowser" : {
 				// reload the core module first
 				controller.getModuleService().reload( "contentbox" );
 				// reload requested module
 				controller.getModuleService().reload( rc.targetModule );
+			}
+			default:{
+				setNextEvent(prc.xehDashboard);
 			}
 		}
 		// flash info
