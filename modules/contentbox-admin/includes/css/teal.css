@@ -220,6 +220,8 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #bottomCenteredBar { margin:20px 0 0; text-align:right; }
 #bottomCenteredLoader { margin:10px 0 0; text-align:center; display:none; }
 /**============================== UNIQUE CSS ==============================**/
+.futurePublished{ background-color: #c7e0f9 !important; }
+.expired{ background-color: #fcc699 !important; }
 .loaders { margin:10px; display:none; text-align:center; }
 .tipList { list-style-image: url("../images/light_bulb.png"); cursor: pointer;}
 .tipList li{ padding: 5px 0px 0px 0px; }

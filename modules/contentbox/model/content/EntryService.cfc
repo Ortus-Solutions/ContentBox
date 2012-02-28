@@ -128,7 +128,9 @@ component extends="ContentService" singleton{
 		var c = newCriteria();
 		
 		// only published entries
-		c.isTrue("isPublished").isLt("publishedDate", now() )
+		c.isTrue("isPublished")
+			.isLt("publishedDate", now() )
+			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
 			// only non-password protected ones
 			.isEq("passwordProtection","");
 		

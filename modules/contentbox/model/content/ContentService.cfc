@@ -41,8 +41,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var c = newCriteria();
 		
 		// only published content
-		c.isTrue("isPublished").isLt("publishedDate", now() )
-			// only non-password protected ones
+		c.isTrue("isPublished")
+			.isLt("publishedDate", now() )
+			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
 			.isEq("passwordProtection","");
 		
 		// Search Criteria
@@ -81,10 +82,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	function findBySlug(required slug, required showUnpublished=false){
 		var c = newCriteria();
+		// Override usually for admins
 		if (!showUnpublished){
 			c.isTrue("isPublished")
-				.isLT("publishedDate", Now());
+				.isLT("publishedDate", now())
+				.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) );
 		}
+		// By criteria now
 		var content = c.isEq("slug",arguments.slug).get();
 
 		// if not found, send and empty one
@@ -127,6 +131,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// only published pages
 		c.isTrue("isPublished")
 			.isLT("publishedDate", Now())
+			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
 			// only non-password pages
 			.isEq("passwordProtection","");
 			

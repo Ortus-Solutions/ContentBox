@@ -138,7 +138,14 @@
 				
 				<tbody>
 					<cfloop array="#prc.entries#" index="entry">
-					<tr data-contentID="#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
+					<tr data-contentID="#entry.getContentID()#" 
+						<cfif entry.isExpired()>
+							class="expired"
+						<cfelseif entry.isPublishedInFuture()>
+							class="futurePublished"
+						<cfelseif !entry.isContentPublished()>
+							class="selected"
+						</cfif>>
 						<td>
 							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 								<a href="#event.buildLink(prc.xehBlogEditor)#/contentID/#entry.getContentID()#" title="Edit Entry">#entry.getTitle()#</a>
@@ -146,7 +153,7 @@
 								#entry.getTitle()#
 							</cfif>
 							<br/>
-							by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a></br>
+							Last edit by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a></br>
 							<!--- password protect --->
 							<cfif entry.isPasswordProtected()>
 								<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Entry is password protected"/>
@@ -164,12 +171,19 @@
 						<td>#entry.getCategoriesList()#</td>
 						<td>
 							<strong title="Published Date">P:</strong> #entry.getDisplayPublishedDate()#<br/>
+							<strong title="Expire Date">E:</strong> #entry.getDisplayExpireDate()#<br/>
 							<strong title="Created Date">C:</strong> #entry.getDisplayCreatedDate()#
 						</td>
 						<td class="center">
-							<cfif entry.getIsPublished()>
+							<cfif entry.isExpired()>
+								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Entry has expired!" />
+								<span class="hidden">expired</span>
+							<cfelseif entry.isPublishedInFuture()>
+								<img src="#prc.cbRoot#/includes/images/information.png" alt="published" title="Entry Publishes in the future!" />
+								<span class="hidden">published in future</span>
+							<cfelseif entry.isContentPublished()>
 								<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Entry Published!" />
-								<span class="hidden">published</span>
+								<span class="hidden">published in future</span>
 							<cfelse>
 								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Entry Draft!" />
 								<span class="hidden">draft</span>

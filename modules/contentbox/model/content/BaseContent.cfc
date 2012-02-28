@@ -20,6 +20,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
 	property name="publishedDate"			notnull="false" ormtype="timestamp" idx="idx_publishedDate";
+	property name="expireDate"				notnull="false" ormtype="timestamp" default="" idx="idx_expireDate";
 	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
 	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
@@ -169,6 +170,27 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
 		return pPath & arguments.separator & getSlug();
 	}
+	
+	/**
+	* Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
+	*/
+	boolean function isExpired(){
+		return ( isContentPublished() AND !isNull(expireDate) AND expireDate lte now() ) ? true : false;
+	}
+	
+	/**
+	* Bit that denotes if the content has been published or not
+	*/
+	boolean function isContentPublished(){
+		return ( getIsPublished() AND getPublishedDate() LTE now() ) ? true : false;
+	}
+	
+	/**
+	* Bit that denotes if the content has been published or not in the future
+	*/
+	boolean function isPublishedInFuture(){
+		return ( getIsPublished() AND getPublishedDate() GT now() ) ? true : false;
+	}
 
 	/**
 	* is loaded?
@@ -183,6 +205,20 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	string function getPublishedDateForEditor(boolean showTime=false){
 		var pDate = getPublishedDate();
 		if( isNull(pDate) ){ pDate = now(); }
+		// get formatted date
+		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
+		if( arguments.showTime ){
+			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt");
+		}
+		return fDate;
+	}
+		
+	/**
+	* Get display expireDate
+	*/
+	string function getExpireDateForEditor(boolean showTime=false){
+		var pDate = getExpireDate();
+		if( isNull(pDate) ){ pDate = ""; }
 		// get formatted date
 		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
 		if( arguments.showTime ){
@@ -205,6 +241,14 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+	}
+	
+	/**
+	* Get formatted expireDate
+	*/
+	string function getDisplayExpireDate(){
+		if( isNull(expireDate) ){ return "N/A"; }
+		return dateFormat( expireDate, "mm/dd/yyy" ) & " " & timeFormat(expireDate, "hh:mm:ss tt");
 	}
 
 	/**

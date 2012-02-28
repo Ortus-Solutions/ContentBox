@@ -28,6 +28,12 @@
 				@
 				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield")#
 				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield")#
+				
+				<!--- expire date --->
+				#html.inputField(size="9",type="date",name="expireDate",label="Expire Date",value=prc.entry.getExpireDateForEditor(),class="textfield")#
+				@
+				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
+				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
 
 				<!--- Changelog --->
 				#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.")#

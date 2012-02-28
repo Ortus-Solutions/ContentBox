@@ -118,6 +118,7 @@ component extends="ContentService" singleton{
 		// only published pages
 		c.isTrue("isPublished")
 			.isLT("publishedDate", Now())
+			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
 			// only non-password pages
 			.isEq("passwordProtection","");
 			

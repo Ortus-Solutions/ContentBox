@@ -69,8 +69,10 @@ component implements="contentbox.model.updates.IUpdate"{
 		ALTER TABLE `cb_content` ADD COLUMN `cache` BIT NULL DEFAULT b'1';
 		ALTER TABLE `cb_content` ADD COLUMN `cacheTimeout` INT NOT NULL DEFAULT 0;
 		ALTER TABLE `cb_content` ADD COLUMN `cacheLastAccessTimeout` INT NOT NULL DEFAULT 0;
+		ALTER TABLE `cb_content` ADD COLUMN `expireDate` datetime DEFAULT NULL,
 		
 		// Create indexes for those new columns
+		CREATE INDEX `idx_expireDate` ON `cb_content`(`expireDate`);
 		CREATE INDEX `idx_cache` ON `cb_content`(`cache`);
 		CREATE INDEX `idx_cachetimeout` ON `cb_content`(`cacheTimeout`);
 		CREATE INDEX `idx_cachelastaccesstimeout` ON `cb_content`(`cacheLastAccessTimeout`);

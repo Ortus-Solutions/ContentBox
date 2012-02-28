@@ -141,14 +141,20 @@
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="hits" title="Hits"/></th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/comments.png" alt="comments" title="Comments"/></th>
 						<th width="125" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
 
 				<tbody>
 					<cfloop array="#prc.pages#" index="page">
-					<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
+					<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#" 
+						<cfif page.isExpired()>
+							class="expired"
+						<cfelseif page.isPublishedInFuture()>
+							class="futurePublished"
+						<cfelseif !page.isContentPublished()>
+							class="selected"
+						</cfif>>
 						<td class="middle">
 							<!--- Children Dig Deeper --->
 							<cfif page.getNumberOfChildren()>
@@ -165,7 +171,7 @@
 								#page.getTitle()#
 							</cfif>							
 							<br>
-							by #page.getAuthorName()#<br/>
+							Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a></br>
 							<!--- password protect --->
 							<cfif page.isPasswordProtected()>
 								<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>
@@ -192,16 +198,21 @@
 							#page.getNumberOfChildren()#
 						</td>
 						<td class="center">
-							<cfif page.getIsPublished()>
+							<cfif page.isExpired()>
+								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Page has expired!" />
+								<span class="hidden">expired</span>
+							<cfelseif page.isPublishedInFuture()>
+								<img src="#prc.cbRoot#/includes/images/information.png" alt="published" title="Page Publishes in the future!" />
+								<span class="hidden">published in future</span>
+							<cfelseif page.isContentPublished()>
 								<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Page Published!" />
-								<span class="hidden">published</span>
+								<span class="hidden">published in future</span>
 							<cfelse>
 								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Page Draft!" />
 								<span class="hidden">draft</span>
 							</cfif>
 						</td>
 						<td class="center">#page.getHits()#</td>
-						<td class="center">#page.getNumberOfComments()#</td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Edit Command --->
