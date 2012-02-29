@@ -148,7 +148,7 @@ component implements="contentbox.model.updates.IUpdate"{
 					arrayAppend( aSettings, settingService.new(properties=props) );
 				}
 				// save search settings
-				settingService.saveAll(entities=aSettings,transactional=false);
+				settingService.saveAll( aSettings );
 
 				// update permissions
 				updatePermissions();
@@ -181,7 +181,7 @@ component implements="contentbox.model.updates.IUpdate"{
 				arrayAppend(allPerms, permissions[ key ] );
 			}
 		}
-		permissionService.saveAll(entities=allPerms,transactional=false);
+		permissionService.saveAll( allPerms );
 	}
 
 	function updateEditor(){
@@ -200,7 +200,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		oRole.addPermission( permissionService.findWhere({permission="ENTRIES_EDITOR"}) );
 
 		// save role
-		roleService.save(entity=oRole,transactional=false);
+		roleService.save( oRole );
 
 		return oRole;
 	}

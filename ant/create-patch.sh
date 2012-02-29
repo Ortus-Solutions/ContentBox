@@ -29,4 +29,3 @@ fi
 git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | zip $SCRIPTDIR/patches/$3/patch.zip -@
 # create delete filelisting patch
 git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 > $SCRIPTDIR/patches/$3/deletes.txt
-
