@@ -204,28 +204,28 @@
 						#announceInterception("cbadmin_siteTab")#
 					</ul>
 				</li>
-				<!--- Authors Nav --->
+				<!--- Users Nav --->
 				<li>
-					<a href="##" title="Authors" <cfif prc.tabAuthors>class="current"</cfif>>Authors</a>
+					<a href="##" title="Users" <cfif prc.tabUsers>class="current"</cfif>>Users</a>
 					<ul>
 						<li>
-							<a href="#event.buildLink(prc.xehAuthors)#" <cfif event.getValue("tabAuthors_viewAll",false,true)>class="current"</cfif>
-							   title="View All Authors">View All</a>
+							<a href="#event.buildLink(prc.xehAuthors)#" <cfif event.getValue("tabUsers_viewAll",false,true)>class="current"</cfif>
+							   title="View All Users">View All</a>
 						</li>
 						<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 						<li>
-							<a href="#event.buildLink(prc.xehPermissions)#" <cfif event.getValue("tabAuthors_Permissions",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehPermissions)#" <cfif event.getValue("tabUsers_Permissions",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Permissions">Permissions</a>
 						</li>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 						<li>
-							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabAuthors_Roles",false,true)> class="current"</cfif>
+							<a href="#event.buildLink(prc.xehRoles)#" <cfif event.getValue("tabUsers_Roles",false,true)> class="current"</cfif>
 							   title="Manage ContentBox Security Roles">Roles</a>
 						</li>
 						</cfif>
 						<!--- cbadmin event --->
-						#announceInterception("cbadmin_authorsTab")#
+						#announceInterception("cbadmin_usersTab")#
 					</ul>
 				</li>
 				<!--- Tools Nav --->

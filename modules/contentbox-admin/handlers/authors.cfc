@@ -14,7 +14,7 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// Tab control
-		prc.tabAuthors = true;
+		prc.tabUsers = true;
 	}
 	
 	// index
@@ -42,7 +42,7 @@ component extends="baseHandler"{
 		}
 		
 		// View all tab
-		prc.tabAuthors_viewAll = true;
+		prc.tabUsers_viewAll = true;
 		
 		// View
 		event.setView("authors/index");
@@ -85,7 +85,7 @@ component extends="baseHandler"{
 		}
 		
 		// Editor
-		prc.tabAuthors_editor = true;
+		prc.tabUsers_editor = true;
 		
 		// view
 		event.setView("authors/editor");

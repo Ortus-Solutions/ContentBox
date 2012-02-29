@@ -96,7 +96,7 @@ component extends="coldbox.system.Interceptor"{
 		event.paramValue(name="tabEntries",value=false,private=true);
 		event.paramValue(name="tabContent",value=false,private=true);
 		event.paramValue(name="tabComments",value=false,private=true);
-		event.paramValue(name="tabAuthors",value=false,private=true);
+		event.paramValue(name="tabUsers",value=false,private=true);
 		event.paramValue(name="tabSite",value=false,private=true);
 		event.paramValue(name="tabTools",value=false,private=true);
 		event.paramValue(name="tabSystem",value=false,private=true);		
