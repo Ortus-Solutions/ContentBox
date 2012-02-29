@@ -38,7 +38,6 @@ Description :
 				case "ocm" 				: { return getOCMDSL(argumentCollection=arguments);}
 				case "webservice" 		: { return getWebserviceDSL(argumentCollection=arguments);}
 				case "javaloader" 		: { return getJavaLoaderDSL(argumentCollection=arguments);}
-				case "entityService" 	: { return getEntityServiceDSL(argumentCollection=arguments);} 
 				case "coldbox" 			: { return getColdboxDSL(argumentCollection=arguments); }
 			}
 		</cfscript>    	
@@ -86,23 +85,6 @@ Description :
 		</cfscript>
 	</cffunction>
 	
-	<!--- getEntityServiceDSL --->
-	<cffunction name="getEntityServiceDSL" access="private" returntype="any" hint="Get a virtual entity service object" output="false" >
-		<cfargument name="definition" 	required="true" type="any" hint="The dependency definition structure">
-		<cfargument name="targetObject" required="false" hint="The target object we are building the DSL dependency for. If empty, means we are just requesting building"/>
-		<cfscript>
-			var entityName  = getToken(arguments.definition.dsl,2,":");
-
-			// Do we have an entity name? If we do create virtual entity service
-			if( len(entityName) ){
-				return createObject("component","coldbox.system.orm.hibernate.VirtualEntityService").init( entityName );
-			}
-
-			// else Return Base ORM Service
-			return createObject("component","coldbox.system.orm.hibernate.BaseORMService").init();
-		</cfscript>
-	</cffunction>
-	
 	<!--- getColdboxDSL --->
 	<cffunction name="getColdboxDSL" access="private" returntype="any" hint="Get dependencies using the coldbox dependency DSL" output="false" >
 		<cfargument name="definition" 	required="true" type="any" hint="The dependency definition structure">
@@ -132,6 +114,7 @@ Description :
 				case 2: {
 					thisLocationKey = getToken(thisType,2,":");
 					switch( thisLocationKey ){
+						case "flash"		 		: { return instance.coldbox.getRequestService().getFlashScope(); }
 						case "fwconfigbean" 		: { return createObject("component","coldbox.system.core.collections.ConfigBean").init( instance.coldbox.getColdboxSettings() ); }
 						case "configbean" 			: { return createObject("component","coldbox.system.core.collections.ConfigBean").init( instance.coldbox.getConfigSettings() ); }
 						case "mailsettingsbean"		: { return createObject("component","coldbox.system.core.mail.MailSettingsBean").init(argumentCollection=instance.coldbox.getSetting("mailSettings"));	}
@@ -143,6 +126,7 @@ Description :
 						case "interceptorService"	: { return instance.coldbox.getinterceptorService(); }
 						case "cacheManager"			: { return instance.coldbox.getColdboxOCM(); }
 						case "moduleService"		: { return instance.coldbox.getModuleService(); }
+						case "validationManager"	: { return instance.injector.getInstance( controller.getSetting("validation").manager ); }
 					} // end of services
 					
 					break;

@@ -23,7 +23,7 @@ component extends="coldbox.system.Interceptor"{
 		}
 		
 		// store module root
-		prc.cbRoot = event.getModuleRoot();
+		prc.cbRoot = event.getModuleRoot('contentbox-ui');
 		// store module entry point
 		prc.cbEntryPoint = getProperty("entryPoint");
 		// store site entry point

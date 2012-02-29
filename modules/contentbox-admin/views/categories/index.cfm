@@ -29,7 +29,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/category.png" alt="sofa" width="30" height="30" />
-			Blog Categories
+			Content Categories
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -58,6 +58,7 @@
 					<tr>
 						<th>Category Name</th>
 						<th>Slug</th>		
+						<th width="75" class="center">Pages</th>
 						<th width="75" class="center">Entries</th>	
 						<th width="75" class="center {sorter:false}">Actions</th>
 					</tr>
@@ -67,6 +68,7 @@
 					<tr>
 						<td><a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
 						<td>#category.getSlug()#</td>
+						<td class="center">#category.getNumberOfPages()#</td>
 						<td class="center">#category.getnumberOfEntries()#</td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>

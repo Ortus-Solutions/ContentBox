@@ -21,14 +21,13 @@ component extends="VirtualEntityService"
 UserService function init(){
     // setup properties
     setEntityName('User');
-    setQueryCacheRegion( 'ORMService.defaultCache' );
+    setQueryCacheRegion( "#arguments.entityName#.defaultVSCache" );
     setUseQueryCaching( false );
 	setEventHandling( false );
 	setDefaultAsQuery( true );
     return this;
 }
 
------------------------------------------------------------------------>
 */
 component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"{
 
@@ -42,22 +41,19 @@ component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"
 	*/
 	property name="datasource" type="string";
 
+	/************************************** CONSTRUCTOR *********************************************/
 
-/* ----------------------------------- DEPENDENCIES ------------------------------ */
-
-
-
-/* ----------------------------------- CONSTRUCTOR ------------------------------ */
-
-	/**
-	* Constructor
-	*/
 	VirtualEntityService function init(required string entityname, 
 										string queryCacheRegion, 
 										boolean useQueryCaching,
 										boolean eventHandling,
 										boolean useTransactions,
-										boolean defaultAsQuery){
+										boolean defaultAsQuery,
+										string datasource){
+		// create cache region
+		if( !structKeyExists(arguments,"queryCacheRegion") ){
+			arguments.queryCacheRegion = "#arguments.entityName#.defaultVSCache";
+		}
 
 		// init parent
 		super.init(argumentCollection=arguments);
@@ -66,13 +62,18 @@ component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"
 		setEntityName( arguments.entityName );
 		
 		// Set the datasource of the local entity to be used in this virtual entity service
-		setDatasource( orm.getEntityDatasource( arguments.entityName ) );
+		// Only if not passed
+		if( !StructKeyExists(arguments, "datasource") ){
+			setDatasource( orm.getEntityDatasource( arguments.entityName ) );
+		}
+		else{
+			setDatasource( arguments.datasource );
+		}
 		
 		return this;
 	}
 
-
-/* ----------------------------------- PUBLIC ------------------------------ */
+	/************************************** PUBLIC *********************************************/
 
 	any function executeQuery(required string query,
 							   any params=structnew(),
@@ -108,7 +109,7 @@ component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"
 		return super.findAllWhere(this.getEntityName(), arguments.criteria, arguments.sortOrder);
 	}
 
-	any function new(){
+	any function new(struct properties=structnew()){
 		arguments.entityName = this.getEntityName();
 		return super.new(argumentCollection=arguments);
 	}
@@ -118,12 +119,12 @@ component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"
 		return super.exists(argumentCollection=arguments);
 	}
 
-	any function get(required any id) {
+	any function get(required any id,boolean returnNew=true) {
 		arguments.entityName = this.getEntityName();
 		return super.get(argumentCollection=arguments);
 	}
 
-	array function getAll(any id) {
+	array function getAll(any id,string sortOrder="") {
 		arguments.entityName = this.getEntityName();
 		return super.getAll(argumentCollection=arguments);
 	}
@@ -143,7 +144,7 @@ component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"
 		return super.deleteByQuery(argumentCollection=arguments);
 	}
 
-	numeric function deleteWhere(){
+	numeric function deleteWhere(boolean transactional=getUseTransactions()){
 		arguments.entityName = this.getEntityName();
 		return super.deleteWhere(argumentCollection=arguments);
 	}
@@ -163,17 +164,16 @@ component extends="coldbox.system.orm.hibernate.BaseORMService" accessors="true"
 		super.evict(argumentCollection=arguments);
 	}
 	
-	void function clear(){
-		arguments.datasource = this.getDatasource();
+	void function clear(string datasource=this.getDatasource()){
 		return super.clear(argumentCollection=arguments);
 	}
 	
-	boolean function isSessionDirty(){
+	boolean function isSessionDirty(string datasource=this.getDatasource()){
 		arguments.datasource = this.getDatasource();
 		return super.isSessionDirty(argumentCollection=arguments);
 	}
 	
-	struct function getSessionStatistics(){
+	struct function getSessionStatistics(string datasource=this.getDatasource()){
 		arguments.datasource = this.getDatasource();
 		return super.getSessionStatistics(argumentCollection=arguments);
 	}

@@ -25,7 +25,7 @@ component extends="coldbox.system.Interceptor"{
 		}
 		
 		// store module root	
-		prc.cbRoot = event.getModuleRoot();
+		prc.cbRoot = event.getModuleRoot('contentbox-admin');
 		// cb helper
 		prc.CBHelper = getMyPlugin(plugin="CBHelper",module="contentbox");
 		// store admin module entry point

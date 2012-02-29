@@ -46,6 +46,41 @@ component implements="contentbox.model.updates.IUpdate"{
 	*/
 	function postInstallation(){
 		
+		/**
+		Migrate Database
+		
+		// create new cb_contentCategories
+		CREATE TABLE `cb_contentCategories` (
+		  `FK_contentID` int(11) NOT NULL,
+		  `FK_categoryID` int(11) NOT NULL,
+		  KEY `FKD96A0F95F10ECD0` (`FK_categoryID`),
+		  KEY `FKD96A0F9591F58374` (`FK_contentID`),
+		  CONSTRAINT `FKD96A0F9591F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`),
+		  CONSTRAINT `FKD96A0F95F10ECD0` FOREIGN KEY (`FK_categoryID`) REFERENCES `cb_category` (`categoryID`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		
+		// Migrate previous blog categories into new content categories
+		insert into `cb_entryCategories` select * `from cb_entryCategories`
+		
+		// Drop the table now
+		drop table `cb_entryCategories`
+		
+		// Create new columns base content
+		ALTER TABLE `cb_content` ADD COLUMN `cache` BIT NULL DEFAULT b'1';
+		ALTER TABLE `cb_content` ADD COLUMN `cacheTimeout` INT NOT NULL DEFAULT 0;
+		ALTER TABLE `cb_content` ADD COLUMN `cacheLastAccessTimeout` INT NOT NULL DEFAULT 0;
+		ALTER TABLE `cb_content` ADD COLUMN `expireDate` datetime DEFAULT NULL,
+		
+		// Create indexes for those new columns
+		CREATE INDEX `idx_expireDate` ON `cb_content`(`expireDate`);
+		CREATE INDEX `idx_cache` ON `cb_content`(`cache`);
+		CREATE INDEX `idx_cachetimeout` ON `cb_content`(`cacheTimeout`);
+		CREATE INDEX `idx_cachelastaccesstimeout` ON `cb_content`(`cacheLastAccessTimeout`);
+		
+		*/
+		
+		ORMReload();
+		
 		/************************************** CREATE NEW SETTINGS *********************************************/
 		
 		// Create Search Settings
@@ -56,7 +91,14 @@ component implements="contentbox.model.updates.IUpdate"{
 			// site settings
 			"cb_site_maintenance_message" = "<h1>This site is down for maintenance.<br /> Please check back again soon.</h1>",
 			"cb_site_maintenance" = "false",
-			"cb_site_disable_blog" = "false"
+			"cb_site_disable_blog" = "false",
+			// Mail Settings
+			"cb_site_mail_server" = "",
+			"cb_site_mail_username" = "",
+			"cb_site_mail_password" = "",
+			"cb_site_mail_smtp" = "25",
+			"cb_site_mail_tls" = "false",
+			"cb_site_mail_ssl" = "false"
 		};
 		
 		// Create setting objects and save
@@ -76,7 +118,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// update security rules
 		securityRuleService.resetRules();
-		
+			
 	}
 	
 	function updatePermissions(){

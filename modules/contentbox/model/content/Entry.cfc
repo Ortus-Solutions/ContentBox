@@ -6,10 +6,6 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 	// Properties
 	property name="excerpt" notnull="false" ormtype="text" default="" length="8000";
 	
-	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"  
-			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_entryCategories" inversejoincolumn="FK_categoryID"; 
-	
 	/************************************** CONSTRUCTOR *********************************************/
 	
 	/**
@@ -56,29 +52,6 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		if( !len(slug) ){ arrayAppend(errors, "Slug is required"); }
 		
 		return errors;
-	}
-	
-	/*
-	* I remove all category associations
-	*/
-	any function removeAllCategories(){
-		if ( hasCategories() ){
-			variables.categories = [];
-		}
-		return this;
-	}
-	
-	/**
-	* get flat categories list
-	*/
-	function getCategoriesList(){
-		if( NOT hasCategories() ){ return "Uncategorized"; }
-		var cats 	= getCategories();
-		var catList = [];
-		for(var x=1; x lte arrayLen(cats); x++){
-			arrayAppend( catList , cats[x].getCategory() & " " );
-		}
-		return arrayToList( catList );
 	}
 	
 }

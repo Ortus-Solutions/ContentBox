@@ -36,10 +36,16 @@ which means you can use it in any way you want provided you keep the link to the
 	<!--- Base HREF For SES URLs based on ColdBox--->
 	<base href="#getSetting('htmlBaseURL')#/" />
 	
-	<!--- RSS Stuff --->
-	<link rel="alternate" type="application/rss+xml" title="Recent Updates" href="#cb.linkRSS()#" />	
-	<cfif cb.isEntryView()>
-		<link rel="alternate" type="application/rss+xml" title="Entry's Recent Comments" href="#cb.linkRSS(comments=true,entry=cb.getCurrentEntry())#" />
+	<!--- RSS Links --->
+	<link rel="alternate" type="application/rss+xml" title="Recent Blog Updates" href="#cb.linkRSS()#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Blog Comment Updates" href="#cb.linkRSS(comments=true)#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Page Updates" href="#cb.linkPageRSS()#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="#cb.linkPageRSS(comments=true)#" />	
+	<link rel="alternate" type="application/rss+xml" title="Recent Content Updates" href="#cb.linkSiteRSS()#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Content Comment Updates" href="#cb.linkSiteRSS(comments=true)#" />	
+	<!--- RSS Discovery If In View Mode --->
+	<cfif cb.isPageView()>
+		<link rel="alternate" type="application/rss+xml" title="Pages's Recent Comments" href="#cb.linkPageRSS(comments=true,page=cb.getCurrentPage())#" />
 	</cfif>
 	
 	<!--- styles --->

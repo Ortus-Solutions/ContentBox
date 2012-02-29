@@ -104,7 +104,7 @@
 			</div>
 
 			<div id="header_main" class="clearfix">
-	           	<h1>ContentBox Admin <span>v.#getModuleSettings('contentbox-admin').version#</span></h1>
+	           	<h1>ContentBox Admin <span>v.#getModuleSettings('contentbox').version#</span></h1>
 			</div>
 			<!--End Search field and logo Header Area-->
 
@@ -151,7 +151,7 @@
 						</li>
 						<li>
 							<a href="#event.buildLink(prc.xehCategories)#" <cfif event.getValue("tabContent_categories",false,true)> class="current"</cfif>
-							   title="Manage Blog Entry Categories">Blog Categories</a>
+							   title="Manage Content Categories">Categories</a>
 						</li>
 						</cfif>
 						<li>

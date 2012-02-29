@@ -145,8 +145,6 @@ component extends="baseHandler"{
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
-		event.paramValue("customFieldKeys","");
-		event.paramValue("customFieldValues","");
 		event.paramValue("content","");
 		
 		// Quick save changelog
@@ -195,22 +193,19 @@ component extends="baseHandler"{
 		categories.addAll( categoryService.inflateCategories( rc ) );
 		// detach categories and re-attach
 		entry.removeAllCategories().setCategories( categories );
-		// Inflate Custom Fields into the entry
-		entry.inflateCustomFields( rc.customFieldKeys, rc.customFieldValues );
-		
+		// Inflate Custom Fields into the page
+		entry.inflateCustomFields( rc.customFieldsCount, rc );
 		// announce event
 		announceInterception("cbadmin_preEntrySave",{entry=entry,isNew=isNew});
-				
 		// save entry
 		entryService.saveEntry( entry );
-		
 		// announce event
 		announceInterception("cbadmin_postEntrySave",{entry=entry,isNew=isNew});
 		
 		// Ajax?
 		if( event.isAjax() ){
 			var rData = {
-				contentID = entry.getContentID()
+				"CONTENTID" = entry.getContentID()
 			};
 			event.renderData(type="json",data=rData);
 		}

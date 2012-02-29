@@ -27,7 +27,7 @@ interface{
 	/**
 	* User validator via security interceptor
 	*/
-	boolean function userValidator(required struct rule, messagebox, controller);
+	boolean function userValidator(required struct rule,any messagebox,any controller);
 	
 	/**
 	* Get an author from session, or returns a new empty author entity
