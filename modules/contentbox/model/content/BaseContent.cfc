@@ -55,7 +55,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
 
 	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category"
 			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID";
 
 	// Calculated Fields
@@ -170,21 +170,21 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
 		return pPath & arguments.separator & getSlug();
 	}
-	
+
 	/**
 	* Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
 	*/
 	boolean function isExpired(){
 		return ( isContentPublished() AND !isNull(expireDate) AND expireDate lte now() ) ? true : false;
 	}
-	
+
 	/**
 	* Bit that denotes if the content has been published or not
 	*/
 	boolean function isContentPublished(){
 		return ( getIsPublished() AND getPublishedDate() LTE now() ) ? true : false;
 	}
-	
+
 	/**
 	* Bit that denotes if the content has been published or not in the future
 	*/
@@ -212,7 +212,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		}
 		return fDate;
 	}
-		
+
 	/**
 	* Get display expireDate
 	*/
@@ -242,7 +242,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
-	
+
 	/**
 	* Get formatted expireDate
 	*/
@@ -273,21 +273,21 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 	string function buildContentCacheKey(){
 		return "cb-content-#getContentType()#-#getContentID()#";
 	}
-	
+
 	/**
 	* Verify we can do content caching on this content object using global and local rules
 	*/
 	boolean function canCacheContent(){
 		var settings = settingService.getAllSettings(asStruct=true);
-		
-		// check global caching first	
-		if( (getContentType() eq "page" AND settings.cb_content_caching) OR (getContentType() eq "entry" AND settings.cb_entry_caching)	){ 
+
+		// check global caching first
+		if( (getContentType() eq "page" AND settings.cb_content_caching) OR (getContentType() eq "entry" AND settings.cb_entry_caching)	){
 			// check override?
-			return ( getCache() ? true : false ); 
+			return ( getCache() ? true : false );
 		}
 		return false;
 	}
-	
+
 	/**
 	* Render content out using translations, caching, etc.
 	*/
@@ -319,7 +319,7 @@ component persistent="true" entityname="cbContent" table="cb_content" discrimina
 		// caching enabled?
 		if( canCacheContent() ){
 			// Store content in cache, of local timeouts are 0 then use global timeouts.
-			cache.set(cacheKey, 
+			cache.set(cacheKey,
 					  renderedContent,
 					  (getCacheTimeout() eq 0 ? settings.cb_content_cachingTimeout : getCacheTimeout()),
 					  (getCacheLastAccessTimeout() eq 0 ? settings.cb_content_cachingTimeoutIdle : getCacheLastAccessTimeout()) );
