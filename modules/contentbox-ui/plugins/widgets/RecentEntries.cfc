@@ -2,22 +2,21 @@
 * A cool basic widget that shows N recent entries
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
-	
+
 	RecentEntries function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("RecentEntries");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows N recent entries");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
-		setForgeBoxSlug("cbwidget-recententries");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Show n recent entries
 	* @max.hint The number of recent comments to show. By default it shows 5
@@ -33,12 +32,12 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 											   					category=arguments.category,
 											   				 	searchTerm=arguments.searchTerm);
 		var rString			= "";
-		
+
 		// iteration cap
 		if( entryResults.count lt arguments.max){
 			arguments.max = entryResults.count;
 		}
-		
+
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
@@ -52,8 +51,8 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			// close ul
 			writeOutput("</ul>");
 		}
-		
+
 		return rString;
 	}
-	
+
 }

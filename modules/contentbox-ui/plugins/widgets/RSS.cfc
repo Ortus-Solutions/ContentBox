@@ -2,22 +2,21 @@
 * A widget that reads an RSS feed and displays the items
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
-	
+
 	RSS function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("RSS");
 		setPluginVersion("1.0");
 		setPluginDescription("A widget that reads an RSS feed and displays the items");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
-		setForgeBoxSlug("cbwidget-rss");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* A widget that reads an RSS feed and displays the items
 	* @feedURL.hint The rss feed URL
@@ -30,7 +29,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	any function renderIt(required feedURL,numeric maxItems=5,boolean showBody=true,string linkTarget="_blank",string title="",string titleLevel="2"){
 		var rString		= "";
 		var feed 		= getPlugin('FeedReader').readFeed(feedURL=arguments.feedURL,maxItems=arguments.maxItems,itemsType="query");
-		
+
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
@@ -38,10 +37,10 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			// build RSS feed
 			writeOutput( buildList(feed.items,arguments.showBody,arguments.linkTarget) );
 		}
-		
+
 		return rString;
 	}
-	
+
 	private function buildList(required entries,required showBody,required linkTarget){
 		var rString = "";
 		// generate Items
@@ -60,5 +59,5 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		}
 		return rString;
 	}
-	
+
 }

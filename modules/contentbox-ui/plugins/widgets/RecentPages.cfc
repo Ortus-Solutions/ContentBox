@@ -2,22 +2,21 @@
 * A cool basic widget that shows N recent pages
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
-	
+
 	RecentPages function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("RecentPages");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows N recent pages");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
-		setForgeBoxSlug("cbwidget-recentpages");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Show n recent pages
 	* @max.hint The number of recent pages to show. By default it shows 5
@@ -31,12 +30,12 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		var pageResults 	= pageService.findPublishedPages(max=arguments.max,
 											   				 searchTerm=arguments.searchTerm);
 		var rString			= "";
-		
+
 		// iteration cap
 		if( pageResults.count lt arguments.max){
 			arguments.max = pageResults.count;
 		}
-		
+
 		// generate recent pages
 		saveContent variable="rString"{
 			// title
@@ -50,8 +49,8 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			// close ul
 			writeOutput("</ul>");
 		}
-		
+
 		return rString;
 	}
-	
+
 }

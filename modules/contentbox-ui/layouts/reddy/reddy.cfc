@@ -20,7 +20,7 @@ A layout is composed of the following pieces
 / widgets (A folder that can contain layout specific widgets which override core ContentBox widgets)
 
 Templates
-Templates are a single cfm template that is used by ContentBox to iterate over a collection (usually entries or categories or comments) and 
+Templates are a single cfm template that is used by ContentBox to iterate over a collection (usually entries or categories or comments) and
 render out all of them in uniformity.  Please refer to ColdBox Collection Rendering for more information.  Each template recevies
 the following:
 
@@ -38,5 +38,5 @@ component{
 	// Screenshot URL, can be absolute or locally in your layout package.
 	this.screenShotURL	= "screenshot.png";
 	// ForgeBox slug if you want auto-update featuress
-	this.forgeBoxSlug	= "cblayouts-reddy";
+	//this.forgeBoxSlug	= "cblayouts-reddy";
 }

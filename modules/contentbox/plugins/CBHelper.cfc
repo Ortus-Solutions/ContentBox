@@ -213,7 +213,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	*/
 	boolean function isPageView(page=""){
 		var event = getRequestContext();
-		if( event.getCurrentEvent() eq "contentbox-ui:page.index" AND event.valueExists("page",true) ){
+		if( findNoCase("contentbox-ui:page", event.getCurrentEvent() ) AND event.valueExists("page",true) ){
 			// slug check
 			if( len(arguments.page) AND getCurrentPage().getSlug() eq arguments.page ){
 				return true;

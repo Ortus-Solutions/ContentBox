@@ -2,22 +2,21 @@
 * A cool basic widget that shows some ContentBox meta links
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
-	
+
 	Meta function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("Meta");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows some ContentBox meta links");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
-		setForgeBoxSlug("cbwidget-meta");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Show the ContentBox Meta Links
 	* @dropdown.hint Display as a dropdown or a list, default is list
@@ -26,7 +25,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	*/
 	any function renderIt(boolean dropdown=false, string title="ContentBox",string titleLevel="2"){
 		var rString	= "";
-		
+
 		// build links accordingly to authentication
 		if( securityService.getAuthorSession().isLoggedIn() ){
 			var links = [
@@ -42,25 +41,25 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		arrayAppend(links, {link=cb.linkRSS(), title="Entries RSS"} );
 		arrayAppend(links, {link=cb.linkRSS(comments=true), title="Comments RSS"} );
 		arrayAppend(links, {link="http://www.gocontentbox.org", title="ContentBox"} );
-		
+
 		saveContent variable="rString"{
 			// title
 			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
 			// Build Type
 			if( arguments.dropdown ){
-				writeoutput( buildDropDown( links ) );	
+				writeoutput( buildDropDown( links ) );
 			}
 			else{
 				writeoutput( buildList( links ) );
 			}
 		}
-		
+
 		return rString;
 	}
-	
+
 	private function buildDropDown(links){
 		var rString = "";
-		
+
 		saveContent variable="rString"{
 			writeOutput('<select name="meta" id="meta" onchange="window.location=this.value")><option value="##">ContentBox Links</option>');
 			// iterate and create
@@ -72,10 +71,10 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		}
 		return rString;
 	}
-	
+
 	private function buildList(links){
 		var rString = "";
-		
+
 		saveContent variable="rString"{
 			writeOutput('<ul id="meta">');
 			// iterate and create
@@ -87,5 +86,5 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		}
 		return rString;
 	}
-	
+
 }

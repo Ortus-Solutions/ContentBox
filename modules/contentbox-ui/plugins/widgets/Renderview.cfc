@@ -2,22 +2,21 @@
 * Renders any view in your ColdBox application
 */
 component extends="contentbox.model.ui.BaseWidget"{
-	
+
 	function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("renderview");
 		setPluginVersion("1.0");
 		setPluginDescription("Renders any view in your ColdBox application");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		//setForgeBoxSlug("");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Render the widget out
 	* @view.hint The named path of the view to render
@@ -34,5 +33,5 @@ component extends="contentbox.model.ui.BaseWidget"{
 		}
 		return renderView(argumentCollection=arguments);
 	}
-	
+
 }
