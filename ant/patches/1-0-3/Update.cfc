@@ -98,7 +98,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 		// Migrate previous blog categories into new content categories
-		insert into `cb_entryCategories` select * `from cb_entryCategories`
+		insert into cb_contentCategories select * from cb_entryCategories
 
 		// Drop the table now
 		drop table `cb_entryCategories`
