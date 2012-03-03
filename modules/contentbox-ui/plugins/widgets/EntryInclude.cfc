@@ -2,22 +2,21 @@
 * A widget that can render out ContentBox blog entries inline
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
-	
+
 	EntryInclude function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("EntryInclude");
 		setPluginVersion("1.0");
 		setPluginDescription("A widget that can render out ContentBox blog entries inline");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
-		setForgeBoxSlug("cbwidget-entryinclude");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Renders a ContentBox page by slug name
 	* @slug.hint The page slug to render
@@ -25,17 +24,17 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	*/
 	any function renderIt(required string slug, string defaultValue){
 		var entry = entryService.findWhere({slug=arguments.slug});
-		
+
 		if( !isNull(entry) ){
-			return entry.renderContent();	
+			return entry.renderContent();
 		}
-		
+
 		// default value
 		if( structKeyExists(arguments, "defaultValue") ){
 			return arguments.defaultValue;
 		}
-		
+
 		throw(message="The content slug '#arguments.slug#' does not exist",type="CustomHTMLWidget.InvalidEntrySlug");
 	}
-	
+
 }

@@ -2,22 +2,21 @@
 * This widget creates a simple ContentBox search form
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
-	
+
 	SearchForm function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("SearchForm");
 		setPluginVersion("1.0");
 		setPluginDescription("This widget creates a simple ContentBox search form");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
-		setForgeBoxSlug("cbwidget-searchform");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* This widget creates a simple ContentBox search form
 	* @type.hint The type of search form: content or blog, default is content
@@ -37,7 +36,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		if( arguments.type eq "blog" ){
 			action = cb.linkSearch();
 		}
-		
+
 		// generate recent comments
 		saveContent variable="rString"{
 			writeOutput('
@@ -47,8 +46,8 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			#html.endForm()#
 			');
 		}
-		
+
 		return rString;
 	}
-	
+
 }

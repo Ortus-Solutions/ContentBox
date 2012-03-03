@@ -4,44 +4,44 @@
 	<!--- Search Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/search.png" alt="info" width="24" height="24" />Author Search
+			<img src="#prc.cbroot#/includes/images/search.png" alt="info" width="24" height="24" />User Search
 		</div>
 		<div class="body">
 			<!--- Search Form --->
 			#html.startForm(name="authorSearchForm",action=prc.xehAuthorsearch)#
 				#html.textField(label="Search:",name="searchAuthor",class="textfield",size="16",title="Search authors by name, username or email",value=event.getValue("searchAuthor",""))#
 				<input type="submit" class="buttonred" value="Search" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Clear</button>				
-			#html.endForm()#			
+				<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Clear</button>
+			#html.endForm()#
 		</div>
-	</div>		
+	</div>
 </div>
-<!--End sidebar-->	
+<!--End sidebar-->
 <!--============================Main Column============================-->
 <div class="main_column">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" title="I am a geek and I love it!"/>
-			Author Management
+			User Management
 		</div>
 		<!--- Body --->
 		<div class="body">
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
-			
+
 			<!--- AuthorForm --->
 			#html.startForm(name="authorForm",action=rc.xehAuthorRemove)#
 			<input type="hidden" name="authorID" id="authorID" value="" />
-			
+
 			<div class="contentBar">
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')" title="Create new author">Create Author</button>
+					<button class="button2" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')" title="Create new user">Create User</button>
 				</div>
 				</cfif>
-				
+
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>
@@ -50,10 +50,10 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--- Paging --->
 			#rc.pagingPlugin.renderit(rc.authorCount,rc.pagingLink)#
-		
+
 			<!--- authors --->
 			<table name="authors" id="authors" class="tablesorter" width="98%">
 				<thead>
@@ -67,7 +67,7 @@
 						<th width="65" class="center {sorter: false}">Actions</th>
 					</tr>
 				</thead>
-				
+
 				<tbody>
 					<cfloop array="#rc.authors#" index="author">
 					<tr<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()> class="selected"</cfif>>
@@ -103,12 +103,12 @@
 					</cfloop>
 				</tbody>
 			</table>
-			
+
 			<!--- Paging --->
 			#rc.pagingPlugin.renderit(rc.authorCount,rc.pagingLink)#
-		
+
 			#html.endForm()#
-		
+
 		</div>	<!--- body --->
 	</div> <!--- main box --->
 </div> <!--- main column --->

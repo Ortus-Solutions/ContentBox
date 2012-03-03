@@ -13,7 +13,7 @@
 <table name="entries_pager" id="entries_pager" class="tablelisting" width="100%">
 	<thead>
 		<tr>
-			<th>Title</th>	
+			<th>Title</th>
 			<th>Categories</th>
 			<th width="125">Dates</th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Entry Published"/></th>
@@ -22,13 +22,20 @@
 			<th width="75" class="center">Actions</th>
 		</tr>
 	</thead>
-	
+
 	<tbody>
 		<cfloop array="#prc.pager_entries#" index="entry">
-		<tr data-contentID="#entry.getContentID()#">
+		<tr data-contentID="#entry.getContentID()#"
+			<cfif entry.isExpired()>
+				class="expired"
+			<cfelseif entry.isPublishedInFuture()>
+				class="futurePublished"
+			<cfelseif !entry.isContentPublished()>
+				class="selected"
+			</cfif>>
 			<td>
 				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
-				by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a>				
+				by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a>
 			</td>
 			<td>#entry.getCategoriesList()#</td>
 			<td>
@@ -36,9 +43,15 @@
 				<strong title="Created Date">C:</strong> #entry.getDisplayCreatedDate()#
 			</td>
 			<td class="center">
-				<cfif entry.getIsPublished()>
+				<cfif entry.isExpired()>
+					<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Entry has expired!" />
+					<span class="hidden">expired</span>
+				<cfelseif entry.isPublishedInFuture()>
+					<img src="#prc.cbRoot#/includes/images/information.png" alt="published" title="Entry Publishes in the future!" />
+					<span class="hidden">published in future</span>
+				<cfelseif entry.isContentPublished()>
 					<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Entry Published!" />
-					<span class="hidden">published</span>
+					<span class="hidden">published in future</span>
 				<cfelse>
 					<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Entry Draft!" />
 					<span class="hidden">draft</span>

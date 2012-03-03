@@ -15,12 +15,15 @@
 		<input addproperty="contentbox.startgit" message="Git Start Commit Hash" />
 		<!-- End Commit -->
 		<input addproperty="contentbox.endgit" message="Git End Commit Hash" />
+		<!-- Manual Excludes -->
+		<input addproperty="patch.excludes" message="Manual Excludes Pattern" />
 	</target>
 	
 	<!--Build-->
 	<target name="build" description="Build a new ContentBox patch release" depends="init">
       	<!-- Create patch folder -->
 		<mkdir dir="${dir.exports}/${contentbox.version}"/>
+		<mkdir dir="${dir.exports}/${contentbox.version}/patch"/>
 		<!-- Copy Update Template -->
 		<copy file="patches/Update.cfc" tofile="${dir.exports}/${contentbox.version}/Update.cfc" overwrite="false" />
 		<!-- Execute patch -->
@@ -29,7 +32,20 @@
 	    	<arg value="${contentbox.endgit}"/>
 	   	 	<arg value="${contentbox.version}"/>
 	  	</exec>
-		
+		<!--Unzip Patch -->
+		<unzip src="${dir.exports}/${contentbox.version}/patch.zip" dest="${dir.exports}/${contentbox.version}/patch" overwrite="true">
+			<patternset>
+		        <exclude name="ant/"/>
+				<exclude name="test/"/>
+				<exclude name="${patch.excludes}"/>
+		    </patternset>
+		</unzip>
+		<!-- Delete Patch -->
+		<delete file="${dir.exports}/${contentbox.version}/patch.zip" />
+		<!-- Zip it back up -->
+		<zip basedir="${dir.exports}/${contentbox.version}/patch" destfile="${dir.exports}/${contentbox.version}/patch.zip"/>
+		<!-- Delete Folder -->
+		<delete dir="${dir.exports}/${contentbox.version}/patch" />				
     </target>
 	
 </project>

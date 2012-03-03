@@ -12,7 +12,7 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// Tab control
-		prc.tabAuthors = true;
+		prc.tabUsers = true;
 	}
 	
 	// index
@@ -24,7 +24,7 @@ component extends="baseHandler"{
 		// Get all roles
 		prc.roles = roleService.list(sortOrder="role",asQuery=false);
 		// Tab
-		prc.tabAuthors_roles = true;
+		prc.tabUsers_roles = true;
 		// view
 		event.setView("roles/index");
 	}

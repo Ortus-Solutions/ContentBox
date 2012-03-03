@@ -9,13 +9,13 @@
 		</div>
 		<div class="body">
 			#html.startForm(name="widgetUploadForm",action=prc.xehWidgetupload,multipart=true,novalidate="novalidate")#
-	
-				#html.fileField(name="filePlugin",label="Upload Widget: ", class="textfield",required="required")#		
-				
+
+				#html.fileField(name="filePlugin",label="Upload Widget: ", class="textfield",required="required")#
+
 				<div class="actionBar" id="uploadBar">
 					#html.submitButton(value="Upload & Install",class="buttonred")#
 				</div>
-				
+
 				<!--- Loader --->
 				<div class="loaders" id="uploadBarLoader">
 					<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
@@ -23,9 +23,9 @@
 			#html.endForm()#
 		</div>
 		</cfif>
-	</div>		
+	</div>
 </div>
-<!--End sidebar-->	
+<!--End sidebar-->
 <!--============================Main Column============================-->
 <div class="main_column">
 	<div class="box">
@@ -36,22 +36,22 @@
 		</div>
 		<!--- Body --->
 		<div class="body">
-			
+
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
-			
+
 			<!--- CategoryForm --->
 			#html.startForm(name="widgetForm",action=prc.xehWidgetRemove)#
 			#html.hiddenField(name="widgetFile")#
-			
+
 			<!--- Content Bar --->
 			<div class="contentBar">
 				<!--- Create Widget --->
 				<div class="buttonBar">
-					<button class="button2" onclick="openRemoteModal('#event.buildLink(prc.xehWidgetCreate)#');return false" 
+					<button class="button2" onclick="openRemoteModal('#event.buildLink(prc.xehWidgetCreate)#');return false"
 							title="Create a spanking new Widget">Create New Widget</button>
 				</div>
-				
+
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>
@@ -60,7 +60,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<!--- widgets --->
 			<table name="widgets" id="widgets" class="tablesorter" width="98%">
 				<thead>
@@ -69,7 +69,7 @@
 						<th>Description</th>
 						<th width="100" class="center {sorter:false}">Actions</th>
 					</tr>
-				</thead>				
+				</thead>
 				<tbody>
 					<cfloop query="prc.widgets">
 					<cfset p = prc.widgets.plugin>
@@ -81,8 +81,8 @@
 					<tr>
 						<td>
 							<strong>#p.getPluginName()#</strong><br/>
-							Version #p.getPluginVersion()# 
-							By <a href="#p.getPluginAuthor()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>							
+							Version #p.getPluginVersion()#
+							By <a href="#p.getPluginAuthor()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>
 						</td>
 						<td>
 							#p.getPluginDescription()#<br/>
@@ -95,14 +95,17 @@
 							<a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(prc.widgets.name)#'})"><img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" /></a>
 							&nbsp;
 							<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
+
+							<cfif len(p.getForgeBoxSlug())>
 							<!--- Update Check --->
 							<a title="Check For Updates" href="##"><img src="#prc.cbRoot#/includes/images/download_black.png" alt="download" /></a>
 							&nbsp;
+							</cfif>
 							<!--- Editor --->
 							<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#prc.widgets.name#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
 							&nbsp;
 							<!--- Delete Command --->
-							<a title="Delete Widget" href="javascript:remove('#JSStringFormat(prc.widgets.name)#')" class="confirmIt" 
+							<a title="Delete Widget" href="javascript:remove('#JSStringFormat(prc.widgets.name)#')" class="confirmIt"
 								data-title="Delete #prc.widgets.name#?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 							</cfif>
 						</td>
@@ -111,7 +114,7 @@
 					</cfloop>
 				</tbody>
 			</table>
-			
+
 			<!--- help bars --->
 			<div class="infoBar">
 				<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />Use the CB Helper in your layouts by using:
@@ -122,8 +125,8 @@
 				 ##cb.getWidget("name")##
 			</div>
 			#html.endForm()#
-		
-		</div>	
+
+		</div>
 	</div>
 </div>
 </cfoutput>

@@ -2,22 +2,21 @@
 * A cool basic widget that shows our blog archives
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
-	
+
 	Archives function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("Archives");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows our blog archives");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
-		setForgeBoxSlug("cbwidget-archives");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Show the blog archives
 	* @dropdown.hint Display as a dropdown or a list, default is list
@@ -34,19 +33,19 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
 			// Build Type
 			if( arguments.dropdown ){
-				writeoutput(buildDropDown(archives,arguments.showPostCount));	
+				writeoutput(buildDropDown(archives,arguments.showPostCount));
 			}
 			else{
 				writeoutput(buildList(archives,arguments.showPostCount));
 			}
 		}
-		
+
 		return rString;
 	}
-	
+
 	private function buildDropDown(archives,showPostCount){
 		var rString = "";
-		
+
 		saveContent variable="rString"{
 			writeOutput('<select name="archives" id="archives" onchange="window.location=this.value")><option value="##">Select Archive</option>');
 			// iterate and create
@@ -61,10 +60,10 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		}
 		return rString;
 	}
-	
+
 	private function buildList(archives,showPostCount){
 		var rString = "";
-		
+
 		saveContent variable="rString"{
 			writeOutput('<ul id="archives">');
 			// iterate and create
@@ -79,5 +78,5 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		}
 		return rString;
 	}
-	
+
 }

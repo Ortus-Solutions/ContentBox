@@ -2,22 +2,21 @@
 * A cool basic widget that shows our blog categories
 */
 component extends="contentbox.model.ui.BaseWidget" singleton{
-	
+
 	Categories function init(controller){
 		// super init
 		super.init(controller);
-		
+
 		// Widget Properties
 		setPluginName("Categories");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows our blog categories");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("www.ortussolutions.com");
-		setForgeBoxSlug("cbwidget-categories");
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Show the blog categories
 	* @dropdown.hint Display as a dropdown or a list, default is list
@@ -28,23 +27,23 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	any function renderIt(boolean dropdown=false,boolean showPostCount=true,string title="",string titleLevel="2"){
 		var categories 		= cb.getCurrentCategories();
 		var rString			= "";
-		
+
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
 			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
 			// Build Type
 			if( arguments.dropdown ){
-				writeoutput(buildDropDown(categories,arguments.showPostCount));	
+				writeoutput(buildDropDown(categories,arguments.showPostCount));
 			}
 			else{
 				writeoutput(buildList(categories,arguments.showPostCount));
 			}
 		}
-		
+
 		return rString;
 	}
-	
+
 	private function buildDropDown(categories,showPostCount){
 		var rString = "";
 		// generate recent comments
@@ -61,7 +60,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		}
 		return rString;
 	}
-	
+
 	private function buildList(categories,showPostCount){
 		var rString = "";
 		// generate recent comments
@@ -78,5 +77,5 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		}
 		return rString;
 	}
-	
+
 }
