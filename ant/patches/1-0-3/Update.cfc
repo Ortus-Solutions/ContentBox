@@ -28,7 +28,6 @@ End Commit Hash: 78df717
 Update Your Application.cfc Manually:
 
 // LOCATION MAPPINGS
-this.mappings["/contentbox-root"] = COLDBOX_APP_ROOT_PATH;
 this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
 this.mappings["/contentbox-admin"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-admin";
