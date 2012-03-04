@@ -239,6 +239,16 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #FileBrowser #fileListing{min-height: 350px !important ;}
 /**============================== DIFF CSS ==============================**/
 .consoleLog{ border:2px solid #eaeaea;padding:5px;font-size:11px;font-family: courier;background-color:black;color:#66E10D}
+/**============================== FORGEBOX CSS ==============================**/
+#forgebox-entrysidebar { width:180px; float:right; }
+#forgebox-entrycontent { width:515px; }
+.forgeBox-entrybox { margin:10px; border:1px solid #CCC; background:#FFFFFF url(../images/divbg.gif) repeat-x bottom left; padding:10px; -moz-border-radius:10px; -webkit-border-radius:10px; -khtml-border-radius:10px; }
+.forgebox-rating { float:right; margin-right:5px; }
+.forgebox-infobox { top:20px !important; border:10px solid #666; padding:10px; background-color:#fff; width: 95%; min-height: 70%;-moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;width:90%}
+.forgebox-infobox a.close { background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
+.forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
+
+.forgebox-download { float:right; clear:right; }
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/

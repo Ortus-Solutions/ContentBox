@@ -51,7 +51,7 @@ $(document).ready(function() {
 	});
 	
 	//Tabs in box header 
-	$("ul.sub_nav").tabs("div.panes > div", {effect: 'slide'});
+	$("ul.sub_nav").tabs("div.panes > div", {effect: 'fade'});
 	//Vertical Navigation	
 	$("ul.vertical_nav").tabs("div.panes_vertical> div", {effect: 'fade'});
 	//Accordion

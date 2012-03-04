@@ -4,6 +4,7 @@
 $(document).ready(function() {
 	$uploadForm = $("##layoutUploadForm");
 	$layoutForm = $("##layoutForm");
+	$forgebox   = $("##forgeboxPane");
 	// table sorting + filtering
 	$("##layouts").tablesorter();
 	$("##layoutFilter").keyup(function(){
@@ -19,6 +20,9 @@ function activateLoaders(){
 function remove(layoutName){
 	$layoutForm.find("##layoutName").val( layoutName );
 	$layoutForm.submit();
+}
+function loadForgeBox(){
+	$forgebox.load('#event.buildLink(prc.xehForgeBox)#',{typeslug:'contentbox-layouts'});
 }
 </script>
 </cfoutput>

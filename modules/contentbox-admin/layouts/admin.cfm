@@ -28,6 +28,7 @@
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/metadata.pack.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
+	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.uidivfilter.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tablednd_0_5.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/tablesorter.min.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/contentbox.js"></script>
@@ -35,7 +36,7 @@
 	<script type="text/javascript" src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
 	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
-		<cfset addAsset("#prc.cbroot#/includes/javascript/#js#.js")>
+		<cfset addAsset("#prc.cbroot#/includes/js/#js#.js")>
 	</cfloop>
 	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
 		<cfset addAsset("#js#.js")>

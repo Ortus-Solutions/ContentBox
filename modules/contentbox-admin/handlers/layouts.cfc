@@ -17,18 +17,19 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
-		rc.xehLayoutRemove 	= "#prc.cbAdminEntryPoint#.layouts.remove";
-		rc.xehLayoutUpload  = "#prc.cbAdminEntryPoint#.layouts.upload";
-		rc.xehFlushRegistry = "#prc.cbAdminEntryPoint#.layouts.rebuildRegistry";
-		rc.xehActivate		= "#prc.cbAdminEntryPoint#.layouts.activate";
-		rc.xehPreview		= "#prc.cbEntryPoint#.__preview";
+		prc.xehLayoutRemove 	= "#prc.cbAdminEntryPoint#.layouts.remove";
+		prc.xehLayoutUpload  = "#prc.cbAdminEntryPoint#.layouts.upload";
+		prc.xehFlushRegistry = "#prc.cbAdminEntryPoint#.layouts.rebuildRegistry";
+		prc.xehActivate		= "#prc.cbAdminEntryPoint#.layouts.activate";
+		prc.xehPreview		= "#prc.cbEntryPoint#.__preview";
+		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
 		
 		// Get all layouts
-		rc.layouts = layoutService.getLayouts();
-		rc.layoutsPath = layoutService.getLayoutsPath();
+		prc.layouts = layoutService.getLayouts();
+		prc.layoutsPath = layoutService.getLayoutsPath();
 		
 		// ForgeBox Entry URL
-		rc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
+		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
 		
 		// Tab
 		prc.tabSite_layouts = true;
