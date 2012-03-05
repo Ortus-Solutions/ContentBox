@@ -55,6 +55,7 @@ component extends="baseHandler"{
 
 		// Get Extension Version
 		prc.contentboxVersion = getModuleSettings('contentbox').version;
+		prc.updateFound = false;
 
 		// Check for forgebox item
 		var forgeBox = getModel("ForgeBox@cb");
