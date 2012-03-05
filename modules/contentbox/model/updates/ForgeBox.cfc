@@ -120,6 +120,11 @@ limitations under the License.
 		<cfset var fileName		= getFileFromPath(arguments.downloadURL)>
 		<cfset var results 		= {error=true,logInfo=""}>
 		
+		<!--- Append zip, if not found --->
+		<cfif listLast(filename,".") neq "zip">
+			<cfset filename &=".zip">
+		</cfif>
+		
 		<cftry>
 			<!--- Download File --->
 			<cfhttp url="#arguments.downloadURL#"
@@ -140,6 +145,7 @@ limitations under the License.
 		<cfif getFileInfo(destination & "/" & fileName).size LTE 0>	
 			<cfset log.append("<strong>Cannot install file as it has a file size of 0.</strong>")>
 			<cfset results.logInfo = log.toString()>
+			<cfset fileDelete( destination & "/" & fileName )>
 			<cfreturn results>
 		</cfif>
 		
@@ -151,6 +157,9 @@ limitations under the License.
 			<cfzip action="unzip" file="#destination#/#filename#" destination="#destination#" overwrite="true">
 			<cfset log.append("Archive uncompressed and installed at #destination#. Performing cleanup.<br />")>
 			<cfset fileDelete(destination & "/" & filename)>
+		<cfelse>
+			<cfset log.append("File is not a zip, skipping and removing<br/>")>
+			<cfset fileDelete( destination & "/" & fileName )>
 		</cfif>
 		
 		<cfset log.append("Entry: #filename# sucessfully installed at #destination#.<br />")>
