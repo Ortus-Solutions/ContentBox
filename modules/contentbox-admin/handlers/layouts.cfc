@@ -30,6 +30,10 @@ component extends="baseHandler"{
 		
 		// ForgeBox Entry URL
 		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
+		// ForgeBox Stuff
+		prc.forgeBoxSlug = "contentbox-layouts";
+		prc.forgeBoxInstallDir = URLEncodedFormat(layoutService.getLayoutsPath());
+		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink(prc.xehLayouts) );
 		
 		// Tab
 		prc.tabSite_layouts = true;

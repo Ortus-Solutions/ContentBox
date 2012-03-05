@@ -153,7 +153,12 @@
 				<!--- end managePane --->
 
 				<!--- ForgeBox --->
-				<div id="forgeboxPane"></div>
+				<div id="forgeboxPane">
+					<div class="center">
+						<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/><br/>
+						Please wait, connecting to ForgeBox...
+					</div>
+				</div>
 			</div>
 			<!--- end panes div --->
 		</div>	

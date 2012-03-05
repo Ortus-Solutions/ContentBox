@@ -1,6 +1,9 @@
 ﻿<cfoutput>
 <script type="text/javascript">
 $(document).ready(function() {
+	// pointers
+	$forgeBoxInstall = $("##forgeBoxInstall"); 
+	$downloadURL = $forgeBoxInstall.find("##downloadURL");
 	// Div Filter
 	$("##entryFilter").keyup(function(){
 		$.uiDivFilter( $(".forgeBox-entrybox"), this.value );
@@ -20,6 +23,11 @@ function openForgeboxModal(id){
 	});
 	// open the modal
 	$("##"+id).data("overlay").load();
+}
+function installEntry(id, downloadURL){
+	$("##"+id).html('<div class="center"><img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/><br/>Please wait, installing from ForgeBox...</div>');
+	$downloadURL.val( downloadURL );
+	$forgeBoxInstall.submit();
 }
 </script>
 </cfoutput>

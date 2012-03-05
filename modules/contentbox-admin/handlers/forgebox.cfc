@@ -10,13 +10,26 @@ component extends="baseHandler"{
 	function index(event,rc,prc){
 		// order by
 		event.paramValue("orderBy","POPULAR");
+		
 		// exit Handlers
-		prc.xehLayoutRemove 	= "#prc.cbAdminEntryPoint#.layouts.remove";
+		prc.xeh 	= "#prc.cbAdminEntryPoint#.layouts.remove";
+		prc.xehForgeBoxInstall  = "#prc.cbAdminEntryPoint#.forgebox.install";
+		
 		// get entries
-		prc.entries = forgebox.getEntries(orderBy=forgebox.ORDER[rc.orderBy],typeSlug=rc.typeslug);
+		try{
+			prc.entries = forgebox.getEntries(orderBy=forgebox.ORDER[rc.orderBy],typeSlug=rc.typeslug);
+			prc.errors = false;
+		}
+		catch(Any e){
+			prc.errors = true;
+			log.error("Error installing from ForgeBox: #e.message# #e.detal#",e);
+			getPlugin("MessageBox").error("Error connecting to ForgeBox: #e.message# #e.detail#");
+		}
+		
 		// Add Assets
 		addAsset("#prc.cbroot#/includes/js/ratings/jquery.ratings.pack.js");
 		addAsset("#prc.cbroot#/includes/js/ratings/jquery.ratings.css");
+		
 		// Entries title
 		switch(rc.orderBy){
 			case "new" : { prc.entriesTitle = "Cool New Stuff!"; break; }
@@ -27,4 +40,18 @@ component extends="baseHandler"{
 		event.setView(view="forgebox/index",layout="ajax");
 	}
 	
+	function install(event,rc,prc){
+		// get entries
+		var results = forgebox.install(rc.downloadURL, rc.installDir);
+		if( results.error ){
+			log.error("Error installing from ForgeBox: #results.logInfo#",results.logInfo);
+			getPlugin("MessageBox").error("Error installing from ForgeBox: #results.logInfo#");
+		}
+		else{
+			getPlugin("MessageBox").info("Entry installed from ForgeBox: #results.logInfo#");
+		}
+		
+		// return to caller
+		setNextEvent(rc.returnURL);
+	}
 }

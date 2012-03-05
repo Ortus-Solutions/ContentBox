@@ -22,7 +22,8 @@ function remove(layoutName){
 	$layoutForm.submit();
 }
 function loadForgeBox(){
-	$forgebox.load('#event.buildLink(prc.xehForgeBox)#',{typeslug:'contentbox-layouts'});
+	$forgebox.load('#event.buildLink(prc.xehForgeBox)#',
+		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#'});
 }
 </script>
 </cfoutput>

@@ -125,7 +125,9 @@ limitations under the License.
 			<cfhttp url="#arguments.downloadURL#"
 					method="GET"
 					file="#fileName#"
-					path="#destination#">
+					path="#destination#"
+					timeout="30"
+					throwOnError="true">
 		
 			<cfcatch type="any">
 				<cfset log.append("<strong>Error downloading file: #cfcatch.message# #cfcatch.detail#</strong><br />")>
@@ -166,7 +168,7 @@ limitations under the License.
 		<cfargument name="body" 			type="any" 		required="false" default="" hint="The body content of the request if passed."/>
 		<cfargument name="headers" 			type="struct" 	required="false" default="#structNew()#" hint="An struct of HTTP headers to send"/>
 		<cfargument name="parameters"		type="struct" 	required="false" default="#structNew()#" hint="An struct of HTTP URL parameters to send in the request"/>
-		<cfargument name="timeout" 			type="numeric" 	required="false" default="20" hint="The default call timeout"/>
+		<cfargument name="timeout" 			type="numeric" 	required="false" default="30" hint="The default call timeout"/>
 		<cfscript>
 			var results = {error=false,response={},message="",responseheader={},rawResponse=""};
 			var HTTPResults = "";
@@ -184,7 +186,8 @@ limitations under the License.
 				url="#getAPIURL()#/json/#arguments.resource#" 
 				charset="utf-8" 
 				result="HTTPResults" 
-				timeout="#arguments.timeout#">
+				timeout="#arguments.timeout#"
+				throwOnError="true">
 			
 			<!--- Headers --->
 			<cfloop collection="#arguments.headers#" item="param">
