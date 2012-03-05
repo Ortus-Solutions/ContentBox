@@ -50,12 +50,12 @@ component extends="baseHandler"{
 		if( results.error ){
 			log.error("Error installing from ForgeBox: #results.logInfo#",results.logInfo);
 			getPlugin("MessageBox").error("Error installing from ForgeBox: #results.logInfo#");
-			flash.put("forgeboxInstallLog", results.logInfo);
 		}
 		else{
-			getPlugin("MessageBox").info("Entry installed from ForgeBox: #results.logInfo#");
+			getPlugin("MessageBox").info("Entry installed from ForgeBox!");
 		}
-		
+		// flash results
+		flash.put("forgeboxInstallLog", results.logInfo);
 		// return to caller
 		setNextEvent(URL=rc.returnURL);
 	}

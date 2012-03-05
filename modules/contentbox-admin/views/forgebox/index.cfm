@@ -11,7 +11,13 @@
 	<h2>
 		#prc.entriesTitle# (#prc.entries.recordcount# record(s) found)
 	</h2>
-	
+	<!--- Instructions --->
+	<p>
+		Please note that not all contributed entries have a zip prepared for download. 
+		So always verify your download URL first. You can also browse all of our online 
+		<a href="http://www.coldbox.org/forgebox">ForgeBox Code Repository</a> to download
+		items manually.
+	</p>
 	<!--- Filter Bar --->
 	<div class="contentBar">
 		<div class="filterBar">
@@ -34,7 +40,9 @@
 		</div>
 		<!--- Info --->
 		<h3>#prc.entries.title# v#prc.entries.version#</h3>
+		<a href="#prc.entries.downloadURL#" title="Download URL" target="_blank"><img src="#prc.cbRoot#/includes/images/download_black.png" border="0"/> #prc.entries.downloadURL#</a>
 		<p>#prc.entries.summary#</p>
+		
 		<!--- Description --->
 		<cfif len(prc.entries.description)>
 			<a href="javascript:openForgeboxModal('entry_description_#prc.entries.entryID#')">> Read Description</a>
