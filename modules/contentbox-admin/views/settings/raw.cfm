@@ -40,7 +40,7 @@
 				<li title="CacheBox Monitor"><a href="##cachebox"><img src="#prc.cbroot#/includes/images/database_black.png" alt="icon" border="0"/> CacheBox</a></li>
 			</ul>
 			<img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" width="30" height="30" />
-			Geek Panel (Environment=#getSetting('Environment')#)
+			Geek Panel (#getSetting('Environment')#)
 		</div>
 		<!--- Body --->
 		<div class="body">
