@@ -23,12 +23,17 @@ component extends="baseHandler"{
 		prc.xehWidgetDocs   = "#prc.cbAdminEntryPoint#.widgets.docs";
 		prc.xehWidgetEditor = "#prc.cbAdminEntryPoint#.widgets.edit";
 		prc.xehWidgetCreate = "#prc.cbAdminEntryPoint#.widgets.create";
+		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
 		
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
 		
 		// ForgeBox Entry URL
 		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
+		// ForgeBox Stuff
+		prc.forgeBoxSlug = "contentbox-widgets";
+		prc.forgeBoxInstallDir = URLEncodedFormat( widgetService.getWidgetsPath() );
+		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink(prc.xehWidgets) );
 		
 		// view
 		event.setView("widgets/index");

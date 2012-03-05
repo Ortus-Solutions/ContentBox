@@ -4,6 +4,7 @@
 $(document).ready(function() {
 	$uploadForm = $("##widgetUploadForm");
 	$widgetForm = $("##widgetForm");
+	$forgebox   = $("##forgeboxPane");
 	// table sorting + filtering
 	$("##widgets").tablesorter();
 	$("##widgetFilter").keyup(function(){
@@ -19,6 +20,10 @@ function activateLoaders(){
 function remove(widgetFile){
 	$widgetForm.find("##widgetFile").val( widgetFile );
 	$widgetForm.submit();
+}
+function loadForgeBox(){
+	$forgebox.load('#event.buildLink(prc.xehForgeBox)#',
+		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#'});
 }
 </script>
 </cfoutput>
