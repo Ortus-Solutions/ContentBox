@@ -21,9 +21,10 @@ function remove(layoutName){
 	$layoutForm.find("##layoutName").val( layoutName );
 	$layoutForm.submit();
 }
-function loadForgeBox(){
+function loadForgeBox(orderBY){
+	if( orderBY == null ){ orderBY = "popular"; }
 	$forgebox.load('#event.buildLink(prc.xehForgeBox)#',
-		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#'});
+		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#', orderBY:orderBY});
 }
 </script>
 </cfoutput>

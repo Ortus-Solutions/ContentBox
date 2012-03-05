@@ -7,9 +7,15 @@
 <cfif prc.errors>
 #getPlugin("MessageBox").renderit()#
 <cfelse>
+	<div class="floatRight infoBar">
+		<label class="inline">Sort By: </label>
+		<a href="javascript:loadForgeBox('popular')">Popularity</a> |
+		<a href="javascript:loadForgeBox('recent')">Recently Updated</a> |
+		<a href="javascript:loadForgeBox('new')">New Stuff</a>
+	</div>
 	<!--- Title --->
 	<h2>
-		#prc.entriesTitle# (#prc.entries.recordcount# record(s) found)
+		#prc.entriesTitle# - #prc.entries.recordcount# record(s)
 	</h2>
 	<!--- Instructions --->
 	<p>
@@ -70,9 +76,13 @@
 		<br/>
 		<!--- Download & Install --->
 		<div class="forgebox-download">
+			<cfif findnocase("zip", prc.entries.downloadURL)>
 			<a href="javascript:installEntry('entry_#prc.entries.entryID#','#prc.entries.downloadURL#')"
 			   onclick="return confirm('Really install it?')"
 			   title="Install Entry"><img src="#prc.cbRoot#/includes/images/entry-link.png" alt="Download" border="0" /></a>
+			<cfelse>
+			<div class="infoBar"><img src="#prc.cbroot#/includes/images/warning_icon.png"/> No zip detected, manual install only!</div>
+			</cfif>	
 		</div>
 		<!--- Info --->
 		<p>
