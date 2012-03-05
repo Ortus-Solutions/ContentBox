@@ -41,17 +41,22 @@ component extends="baseHandler"{
 	}
 	
 	function install(event,rc,prc){
+		rc.downloadURL 	= urldecode( rc.downloadURL );
+		rc.installDir  	= urldecode( rc.installDir );
+		rc.returnURL 	= urldecode( rc.returnURL );
+		
 		// get entries
-		var results = forgebox.install(urldecode(rc.downloadURL), urldecode(rc.installDir));
+		var results = forgebox.install(rc.downloadURL,rc.installDir);
 		if( results.error ){
 			log.error("Error installing from ForgeBox: #results.logInfo#",results.logInfo);
 			getPlugin("MessageBox").error("Error installing from ForgeBox: #results.logInfo#");
+			flash.put("forgeboxInstallLog", results.logInfo);
 		}
 		else{
 			getPlugin("MessageBox").info("Entry installed from ForgeBox: #results.logInfo#");
 		}
 		
 		// return to caller
-		setNextEvent(rc.returnURL);
+		setNextEvent(URL=rc.returnURL);
 	}
 }

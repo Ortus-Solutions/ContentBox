@@ -8,7 +8,7 @@ component extends="contentbox.model.ui.BaseWidget"{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("renderview");
+		setPluginName("Renderview");
 		setPluginVersion("1.0");
 		setPluginDescription("Renders any view in your ColdBox application");
 		setPluginAuthor("Ortus Solutions");

@@ -46,6 +46,12 @@
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
 			
+			<!--- Logs --->
+			<cfif flash.exists("forgeboxInstallLog")>
+				<h3>Installation Log</h3>
+				<div class="consoleLog">#flash.get("forgeboxInstallLog")#</div>
+			</cfif>
+			
 			<div class="panes">
 				<div id="managePane">
 				<!--- CategoryForm --->
