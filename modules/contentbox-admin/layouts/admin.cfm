@@ -101,14 +101,9 @@
 
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
-				<img src="#prc.cbroot#/includes/images/ContentBox_125.gif" height="120" border="0" alt="logo"/>
-			</div>
-
-			<div id="header_main" class="clearfix">
-	           	<h1>ContentBox Admin <span>v.#getModuleSettings('contentbox').version#</span></h1>
+				<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo"/>
 			</div>
 			<!--End Search field and logo Header Area-->
-
 			<!--=========Main Navigation=========-->
 			<ul id="main_nav">
 				<!--- cbadmin event --->

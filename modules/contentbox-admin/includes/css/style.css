@@ -56,7 +56,7 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 /**============================== Buttons ==============================**/
 .button,.button2,.buttonred { padding:4px 7px 7px; cursor:pointer; font-weight:bold; margin-right:3px; text-decoration:none; -webkit-border-radius:5px; -khtml-border-radius:5px; }
 /**============================== Header ==============================**/
-#header_bg { height:194px; }
+#header_bg { height:126px; }
 #header_top { font-size:1.2em; padding-top:8px; height:10px; }
 #header_top a { text-decoration:none; margin-right: 5px; }
 #header_top a:hover { text-decoration:underline; }
@@ -65,13 +65,13 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 .search_field { font-style:italic; width:220px; padding:5px 30px 5px 5px; float:right; right:-20px; position:relative; z-index:2; margin:0; }
 .search_icon { float:right; position:relative; top:5px; right:5px; z-index:3; }
 /**============================== Main Navigation ==============================**/
-#main_nav { font-size:1.4em; list-style:none; margin:10px 0 0; text-transform:uppercase; }
+#main_nav { font-size:1.4em; list-style:none; margin:39px 0 0; text-transform:uppercase; }
 #main_nav a { text-decoration:none; }
 #main_nav li { display:inline; float:left; }
 #main_nav li a { display:block; padding:8px 18px 10px; margin:0; }
 #main_nav li a.current { margin:0; display:inline-block; }
 /**============================== Sub Navigation ==============================**/
-#main_nav li ul { position:absolute; left:0; top:155px; height:28px; }
+#main_nav li ul { position:absolute; left:0; top:87px; height:28px; }
 #main_nav li ul li { text-transform:capitalize; list-style:none; float:left; font-size:.85em; margin-right:0; height:25px; }
 #main_nav li ul li a { text-decoration:none; }
 #main_nav li ul li a:hover { text-decoration:underline; }

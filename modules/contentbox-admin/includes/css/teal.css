@@ -48,7 +48,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 #header_top { color:#ffffff; font-size:13px; }
 #header_top a { color:#fff; }
 #header_main { height:80px; }
-#header_main h1 { font-family:Serif, Georgia; font-weight:bold; font-size:6em; margin:15px 0 0; }
+#header_main h1 { font-family:Serif, Georgia; font-weight:bold; font-size:4em; margin:24px 0 0; }
 #header_main h1 span { font-size:18px; }
 /********* Logo *********/
 #logo { float:right; clear:both; margin:5px 0 0; }
