@@ -42,7 +42,7 @@ component extends="baseHandler"{
 	
 	function install(event,rc,prc){
 		// get entries
-		var results = forgebox.install(rc.downloadURL, rc.installDir);
+		var results = forgebox.install(urldecode(rc.downloadURL), urldecode(rc.installDir));
 		if( results.error ){
 			log.error("Error installing from ForgeBox: #results.logInfo#",results.logInfo);
 			getPlugin("MessageBox").error("Error installing from ForgeBox: #results.logInfo#");
