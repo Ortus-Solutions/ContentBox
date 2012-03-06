@@ -1,0 +1,513 @@
+/*
+
+	corporattica // free CSS template
+
+	=================================
+	
+	Author: Luka Cvrk
+
+	Solucija - Awesome web templates
+	www.solucija.com
+	
+	---------------------------------
+*/
+@charset "utf-8";
+/* reset */
+*{
+	margin:0;
+	padding:0;
+	outline:0;
+}
+img {
+	border: 0; 
+}
+.clear { 
+	clear: both; 
+}
+.line {
+	clear: both;
+	padding: 15px 0 0;
+	margin: 0 0 25px;
+	border-bottom: 1px solid #ddd;
+}
+body { 
+	font: .8em Arial, Verdana, Tahoma, Sans-Serif; 
+	background: #f4f4f4;
+	color: #555; 
+}
+/* typography and links */
+a { 
+	text-decoration: none;
+	color: #333;
+}
+a:hover{ 
+	text-decoration: underline;
+}
+p  { 
+	margin: 0 0 17px; 
+	line-height: 1.6em; 
+}
+
+/* headings */
+h1, h2, h3, h4, h5 {
+	font-weight: normal;
+}
+#header h1 { 
+	float: left; 
+	font-size: 2.1em; 
+	color: #fff;
+	letter-spacing: -1.4px;	
+	margin: 0 0 30px 0;
+	padding: 34px 0 0 10px;
+}
+h1 a { 
+	color: #fff; 
+}
+h1 a:hover { 
+	text-decoration: none; 
+}
+h2 { 
+	margin: 0 0 15px; 
+	font-size: 1.9em; 
+	color: #000; 
+}
+h2.inner { 
+	border-bottom: 1px solid #ddd; 
+	margin: 0 0 25px; 
+	padding: 0 0 10px; 
+}
+h3 { 
+	margin: 0 0 7px;  
+	font-size: 1.3em; 
+	clear: both; 
+	color: #000; 
+	line-height: 1.3em; 
+}
+h4 { 
+	margin: 0 0 10px; 
+	font-size: 1.2em; 
+	color: #000; 
+}
+h5 {
+	font-size: 1em;
+	color: #eee; 
+	margin: 0 0 14px;
+}
+
+#bg { 
+	background: url(../images/bg.jpg) no-repeat center top; 
+	height: 80px;
+}
+
+/* content holder */
+.wrap { 
+	margin: 0 auto; 
+	width: 960px;
+}
+
+/* menu */
+#mainmenu { 
+	float: right; 
+	padding: 39px 0 0; 
+}
+#menu ul { 
+	float: right; 
+}
+#menu li { 
+	display: inline; 
+	float: left; 
+	margin: 0 0 0 18px; 
+}
+#menu li a { 
+	display: block; 
+	color: #999; 
+	padding: 7px; 
+	font-size: 1.1em; 
+	border: 1px solid transparent; 
+}
+#menu a:hover, #menu li.active a { 
+	border-color: #444;  
+}
+#menu li ul { 
+	top: 98px;
+	background: url(../images/dot.png); 
+	padding: 3px;
+	font-size: .92em; 
+	position: absolute; 
+	display: none; 
+	z-index: 100; 	
+}
+#menu li ul li { 
+	float: none; 
+	display: inline; 
+	margin: 0; 
+	padding: 0; 
+	clear: left;
+}
+
+#menu li ul li a { 
+	color: #fff;
+	margin: 4px; 
+	white-space: nowrap;
+	padding: 8px;	
+}
+#menu li ul li a:hover {
+	background: #2C2D2F;
+	border-color: #2C2D2F;
+}
+
+/* pitch slideshow */
+#pitch { 
+	clear: both; 
+	height: 296px; 
+	background: url(../images/shadow.png) no-repeat left bottom;
+	margin: 0 0 25px;
+}
+#slideshow {
+    position:relative;
+    height: 310px;
+}
+#slideshow img {
+	float: left;
+}
+#slideshow div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 8;
+}
+#slideshow div.active {
+    z-index: 10;
+}
+#slideshow div.last-active {
+    z-index: 9;
+}
+
+#zoom { 
+	z-index: 11; 
+}
+
+/* pitch overlay */
+.overlay {
+	clear: both;
+	float: left; 
+	z-index: 100;
+	position: relative; 
+	margin: 100px 0 0; 
+}
+.overlay h2{ 
+	color: #fff; 
+	font-size: 2em;
+	background: url(../images/dot.png);
+	padding: 16px;
+	margin: 0;
+	float: left;
+	width: 300px;
+}
+.overlay p {
+	clear: both;
+	background: #fff;
+	padding: 16px;
+	width: 300px;
+}
+
+#slideshow:hover .arrow {
+	background: url(../images/dot.png);
+}
+
+.arrow { 
+	float: right;
+	position: relative;
+	width: 65px;
+	height: 63px;
+	margin: -180px 0 0;
+	z-index: 100;
+}
+
+.arrow a { 
+	float: left;
+	background: url(../images/pitcharrow.gif) no-repeat center center; 
+	width: 15px;
+	height: 24px;
+	padding: 19px 25px;
+}
+
+
+/* inner pitch */
+#inner-pitch {
+	clear: both;
+}
+#inner-pitch .overlay {
+	margin: 0;
+	width: 920px;
+}
+
+/* main content */
+#main { 
+	clear: left; 
+	float: left; 
+	width: 680px;
+	border-right: 1px dotted #ddd;
+	padding: 0 30px 0 0;
+	margin: 0 0 30px;
+}
+
+#intro { 
+	padding: 0 0 20px; 
+	margin: 0 0 25px;
+	border-bottom: 1px dotted #ddd; 
+}
+
+/* holder for page content */
+#page { 
+	
+}
+.justify { 
+	text-align: justify; 
+}
+
+/* images align */
+.left { 
+	float: left; 
+	margin: 0 15px 5px 0; 
+}
+.right { 
+	float: right; 
+	margin: 0 0 5px 15px; 
+}
+
+/* tables */
+.table { 
+	border-collapse: collapse;
+	width: 100%;
+	margin: 0 0 30px;	
+}
+.table td {
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
+}
+.table thead td {
+	font-weight: bold;
+	border-bottom: 3px double #ddd;
+	border-top: 1px solid #ddd;
+	background: #fff;
+}
+.table .odd td { background: #fff; }
+
+/* blog posts */
+.blog-post  { 
+	border-bottom: 1px solid #ddd; 
+	margin: 0 0 30px; 
+}
+.blog-date { 
+	float: left; 
+	width: 40px; 
+	text-align: right; 
+	font-size: .9em; 
+	padding: 4px 0 0;
+}
+.blog-date span { 
+	font-size: 1.8em; 
+}
+.blog-body { 
+	float: right; 
+	width: 590px; 
+	border-left: 1px solid #ddd;
+	padding: 0 0 0 30px;
+}
+
+/* lists */
+#page ul, #page ol, #side ul, #side ol{ 
+	margin: 0 0 25px 18px; 
+}
+#page li , #side li{ 
+	padding: 3px 0; 
+	list-style: square; 
+}
+
+/* boxes */
+.half, .third { 
+	float: left; 
+	width: 292px; 
+	background: #fff; 
+	padding: 15px; 
+	margin: 0 30px 30px 0; 
+}
+.third {
+	width: 175px;
+}
+
+.last { 
+	margin-right: 0; 
+}
+
+/* home page bits */
+#bits {
+	clear: both;
+	margin: 0 0 25px; 
+}
+
+.bit {
+	float: left;
+	width: 203px;
+	padding: 0 35px 0 0;
+}
+.bit h4 {
+	margin: 0 0 18px;
+}
+.bit img { margin: 0 0 8px; }
+
+.bit p {
+	font-size: .9em;
+}
+.bit.last { padding-right: 0; }
+.more { margin: 0; }
+
+
+/* sidebar */
+#side { 
+	float: right; 
+	width: 240px; 
+	font-size: .9em;
+}
+#side h4 {
+	margin: 0 0 23px;
+	font-size: 1.3em;
+}
+
+.news { 
+	border-bottom: 1px dotted #ddd;
+	margin: 0 0 11px;
+ 
+}
+.news h5 { 
+	margin: 0 0 5px; 
+	font-size: 1.2em;
+}
+.news p {
+	margin: 0 0 11px;
+}
+
+#quote {
+	margin: 0 0 30px;
+	padding: 20px 0 0 0;
+	font-size: .94em;
+}
+
+/* side menu */
+.side-menu li { 
+	list-style: none; 
+	padding: 10px 4px; 
+	border-bottom: 1px solid #ddd; 
+}
+
+
+/* forms */
+fieldset {
+	border: 0;
+}
+label { 
+	display: block;
+	color: #444;
+	padding: 0 0 2px;
+}
+input, textarea {
+	padding: 5px;
+	border: 0;
+	border: 1px solid #ddd;
+	margin: 0 0 3px;
+}
+textarea {
+	width: 400px;
+	height: 120px;
+	display: block;
+}
+input[type=submit], button {
+	cursor: pointer;
+	color: #fff;
+	padding: 7px 10px;
+	border: 0;
+	font-weight: bold;
+	background: #999;
+}
+/* footer */
+#footer { 
+	clear: both; 
+	color: #999; 
+	background: url(../images/footertile.jpg) repeat-x;
+	font-size: .9em;
+}
+#footerbg {
+	padding: 35px 0 15px 0;
+	background: url(../images/footer.jpg) no-repeat center top;
+}
+#footer p { 
+	margin: 0 0 12px;
+	padding: 6px 0;
+}
+#footer_menu {
+	float: right;
+	padding: 4px 0 0;
+}
+#footer a { 
+	color: #999; 
+	margin: 0 5px 0 0; 
+	padding: 6px 10px;
+	background: url(../images/dot.png) no-repeat left center; 
+	border: 1px solid transparent;
+}
+#footer a:hover {
+	border-color: #555;
+}
+#fleft {
+	clear: both;
+	padding: 25px 0 0;
+	font-size: .94em;
+}
+
+#copy { 
+	color: #777; font-size: 1.5em; 
+}
+#copy span { 
+	color: #999; 
+}
+/**============================== ColdBox MessageBox ==============================**/
+.cbox_messagebox { font-weight:bold; margin:10px; }
+.cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
+.cbox_messagebox_warning { background:#FFF2CF url(../images/warning_icon.png) no-repeat scroll .5em 50%; color:#bc6c34; border:1px solid #bc6c34; margin:.3em auto; padding:0 1em 0 3.5em; }
+.cbox_messagebox_error { background:#FFFFE0 url(../images/error_icon.png) no-repeat scroll .5em 50%; color:#b22723; border:1px solid #ff0606; margin:.3em auto; padding:0 1em 0 3.5em; }
+/**============================== category template ==============================**/
+.categoryList a{ margin: 0px !important;}
+.categoryList {margin: 5px 5px 5px 5px;}
+.categoryList img{ float: none; margin: 0px; vertical-align: middle }
+/**============================== blog template ==============================**/
+.post-cat {background: url(../images/category_black.png) no-repeat;padding-left: 20px;padding-top:1px;float:left;margin: 0px 0px 0px 5px;}
+.comment{color: #222222;margin-bottom: 18px;margin-left: 5px;}
+.comment h4{font-weight: bold;margin:0;padding: 10px;}
+.comment h4 a{}
+.comment p{color: #666666;font-size: 12px; padding: 0;}
+.commentContent{clear:both; margin: 15px 0px 15px 10px;}
+.commentPicture{ height: 60px; margin:0px 0px 10px 0px; font: 12px Arial,Helvetica,sans-serif; color: #565656;
+padding:5px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;}
+.commentPicture img{vertical-align:middle; margin: 5px; float: left !important;}
+.commentPicture p{float:left; padding: 8px 0px 0px 5px;}
+#commentFormShell{margin: 50px auto 0px auto;width: 500px;}
+#pageComments{clear: both;margin: 40px 0px 0px 0px;border-top: 1px solid #E5E5E5;padding: 40px 0px 0px 0px;}
+/**============================== Global template ==============================**/
+img{vertical-align:middle}
+.gravatar { float: none !important; vertical-align:middle !important;}
+.infoBar { background-color: #eaeaea; padding: 13px;margin: 10px 0px 20px 0px;-moz-box-shadow:0 0 5px orange; -webkit-box-shadow:0 0 5px orange; -moz-border-radius:6px; -webkit-border-radius:6px;border:1px solid #ccc;font-weight: bold;}
+.breadcrumbs{ margin: 0px 0px 20px 0px;}
+.breadcrumbs a{color: #AD3939}
+.breadcrumbs a:hover{ text-decoration: underline}
+.buttonBar { float:  right; margin:13px 5px 0px 0px;}
+/** ============================== PAGING TABS =============================== **/
+.pagingTabs { font-size: 11px; text-align:center; margin: 0px 20px 0px 0px;}
+.pagingTabs a { color:#000; padding:2px 4px; background-color:#fff; border:1px solid #ccc; margin-left:2px; }
+.pagingTabs a:hover { color:#000; background-color:#FCF9C3; border:1px solid black; }
+.pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }
+.pagingTabsCarrousel { margin-top:10px; }
+/** ============================== search results =============================== **/
+.highlight { background-color: yellow; font-weight:bold }
+cite {color: green; font-size:12px }
+.searchResultsCount{margin:0px 0px 20px 0px;}
