@@ -112,7 +112,6 @@ limitations under the License.
 		<!-- footer -->
 		#cb.quickView("_footer")#
 		<!-- /footer -->
-
 	</div>
 	<!--- ContentBoxEvent --->
 	#cb.event("cbui_beforeBodyEnd")#

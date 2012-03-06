@@ -2,37 +2,37 @@
 * Entry service for contentbox
 */
 component extends="ContentService" singleton{
-	
+
 	/**
 	* Constructor
 	*/
 	EntryService function init(){
 		// init it
-		super.init(entityName="cbEntry");
-		
+		super.init(entityName="cbEntry",useQueryCaching=true);
+
 		return this;
 	}
-	
+
 	/**
 	* Save an entry
 	*/
 	function saveEntry(entry){
 		var c = newCriteria();
-		
+
 		// Prepare for slug uniqueness
 		c.eq("slug", arguments.entry.getSlug() );
 		if( arguments.entry.isLoaded() ){ c.ne("contentID", arguments.entry.getContentID() ); }
-		
+
 		// Verify uniqueness of slug
 		if( c.count() GT 0){
 			// make slug unique
 			arguments.entry.setSlug( arguments.entry.getSlug() & "-#left(hash(now()),5)#");
 		}
-		
+
 		// save entry
 		save( arguments.entry );
 	}
-		
+
 	/**
 	* entry search returns struct with keys [entries,count]
 	*/
@@ -40,11 +40,11 @@ component extends="ContentService" singleton{
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
-		
+
 		// isPublished filter
 		if( structKeyExists(arguments,"isPublished") AND arguments.isPublished NEQ "any"){
 			c.eq("isPublished", javaCast("boolean",arguments.isPublished));
-		}		
+		}
 		// Author Filter
 		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
 			c.createAlias("activeContent","ac")
@@ -68,16 +68,16 @@ component extends="ContentService" singleton{
 				// search the association
 				c.createAlias("categories","cats")
 					.isIn("cats.categoryID", JavaCast("java.lang.Integer[]",[arguments.category]) );
-			}			
-		}	
-		
+			}
+		}
+
 		// run criteria query and projections count
 		results.count 	= c.count();
 		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
-		
+
 		return results;
 	}
-	
+
 	// Entry Archive Report
 	function getArchiveReport(){
 		// we use HQL so we can be DB independent using the map() hql function thanks to John Wish, you rock!
@@ -87,11 +87,11 @@ component extends="ContentService" singleton{
 				    AND passwordProtection = ''
 				  GROUP BY YEAR(publishedDate), MONTH(publishedDate)
 				  ORDER BY 2 DESC, 3 DESC";
-		
+
 		// run report
 		return executeQuery(query=hql,asQuery=false);
 	}
-	
+
 	// Entry listing by Date
 	function findPublishedEntriesByDate(numeric year=0,numeric month=0, numeric day=0,max=0,offset=0,asQuery=false){
 		var results = {};
@@ -99,7 +99,7 @@ component extends="ContentService" singleton{
 				  WHERE isPublished = true
 				    AND passwordProtection = ''";
 		var params = {};
-		
+
 		// year lookup mandatory
 		if( arguments.year NEQ 0 ){
 			params["year"] = arguments.year;
@@ -118,28 +118,28 @@ component extends="ContentService" singleton{
 		// find
 		results.entries = executeQuery(query=hql,params=params,max=arguments.max,offset=arguments.offset,asQuery=arguments.asQuery);
 		results.count 	= executeQuery(query="select count(*) #hql#",params=params,max=1,asQuery=false)[1];
-		
+
 		return results;
 	}
-	
+
 	// Entry listing for UI
 	function findPublishedEntries(max=0,offset=0,category="",searchTerm="",asQuery=false){
 		var results = {};
 		var c = newCriteria();
-		
+
 		// only published entries
 		c.isTrue("isPublished")
 			.isLt("publishedDate", now() )
 			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
 			// only non-password protected ones
 			.isEq("passwordProtection","");
-		
+
 		// Category Filter
 		if( len(arguments.category) ){
 			// create association with categories by slug.
 			c.createAlias("categories","cats").isEq("cats.slug",arguments.category);
-		}	
-		
+		}
+
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
@@ -147,12 +147,12 @@ component extends="ContentService" singleton{
 			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
 				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
 		}
-		
+
 		// run criteria query and projections count
 		results.count 	= c.count();
 		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
-		
+
 		return results;
 	}
-		
+
 }

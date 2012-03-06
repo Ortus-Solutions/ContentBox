@@ -6,30 +6,30 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 * Setting Service for contentbox
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton{
-	
+
 	// DI properties
 	property name="cache" inject="cachebox:default";
-	
+
 	// Properties
 	property name="settingsCacheKey" type="string";
-	 
+
 	/**
 	* Constructor
 	*/
@@ -40,16 +40,16 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		setSettingsCacheKey("cb-settings");
 		return this;
 	}
-	
+
 	/**
 	* Check if contentbox has been installed by checking if there are no settings and no cb_active ONLY
 	*/
 	boolean function isCBReady(){
 		var args = { "name" = "cb_active" };
-		if( count() AND countWhere(argumentCollection=args) ){ return true; }
+		if( countWhere(argumentCollection=args) ){ return true; }
 		return false;
 	}
-	
+
 	/**
 	* Mark cb as ready to serve
 	*/
@@ -58,7 +58,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		save( s );
 		return this;
 	}
-	
+
 	/**
 	* Get a setting
 	*/
@@ -74,22 +74,22 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			  detail="Registered settings are: #structKeyList(s)#",
 			  type="contentbox.SettingService.SettingNotFound");
 	}
-	
+
 	/**
 	* Get all settings
 	*/
 	function getAllSettings(asStruct=false){
 		// retrieve from cache
 		var settings = cache.get( settingsCacheKey );
-	
+
 		// found in cache?
 		if( isNull(settings) ){
 			// not found, so query db
-			var settings = list(sortOrder="name");	
+			var settings = list(sortOrder="name");
 			// cache them for an hour
 			cache.set(settingsCacheKey,settings,60);
 		}
-		
+
 		// convert to struct
 		if( arguments.asStruct ){
 			var s = {};
@@ -98,17 +98,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			}
 			return s;
 		}
-		
+
 		return settings;
 	}
-	
+
 	/**
 	* flush settings cache
 	*/
 	function flushSettingsCache(){
 		cache.clear( settingsCacheKey );
 	}
-	
+
 	/**
 	* Bulk saving of options using a memento structure of options
 	*/
@@ -116,7 +116,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var settings 	= getAllSettings(asStruct=true);
 		var oOption  	= "";
 		var newOptions 	= [];
-		
+
 		// iterate over settings
 		for(var key in settings){
 			// save only sent in setting keys
@@ -124,16 +124,16 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 				oOption = findWhere({name=key});
 				oOption.setValue( memento[key] );
 				arrayAppend( newOptions, oOption );
-			}						
+			}
 		}
-		
+
 		// save new settings and flush cache
 		saveAll( newOptions );
 		flushSettingsCache();
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Build file browser settings structure
 	*/
@@ -155,7 +155,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 				customJSONOptions = cbSettings.cb_media_uploadify_customOptions
 			}
 		};
-		return settings;		
+		return settings;
 	}
-	
+
 }
