@@ -114,6 +114,7 @@ component {
 		binder.map("layoutService@cb").to("contentbox.model.ui.LayoutService");
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
+		binder.map("AdminMenuService@cb").to("contentbox.model.ui.AdminMenuService");
 		// Modules
 		binder.map("moduleService@cb").to("contentbox.model.modules.ModuleService");
 		// utils
