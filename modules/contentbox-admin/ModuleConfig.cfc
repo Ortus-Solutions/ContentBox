@@ -57,7 +57,7 @@ component {
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
 			{pattern="/comments/page/:page",handler="comments"},
 			{pattern="/customHTML/page/:page",handler="customHTML"},
-			{pattern="/module/:moduleEntryPoint/:moduleEvent", handler="modules", action="execute" },
+			{pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
 			{pattern="/:handler/:action?"}
 		];
 

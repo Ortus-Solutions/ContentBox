@@ -17,7 +17,8 @@ component extends="baseHandler"{
 	// proxy a call to a module, all module calls are supposed to return content
 	function execute(){
 		event.paramValue("moduleEntryPoint","");
-		event.paramValue("moduleEvent","");
+		event.paramValue("moduleHandler","");
+		event.paramValue("moduleAction","index");
 
 		// get module by moduleEntryPoint
 		var module = moduleService.findWhere({entryPoint=rc.moduleEntryPoint});
@@ -29,15 +30,15 @@ component extends="baseHandler"{
 			getPlugin("MessageBox").warn("The requested module: #rc.moduleEntryPoint# is not active!");
 			setNextEvent(prc.xehModules);
 		}
-		if( !len(rc.moduleEvent) ){
-			getPlugin("MessageBox").warn("The requested module: #rc.moduleEntryPoint# is valid but the incoming module event is empty!");
+		if( !len(rc.moduleHandler) ){
+			getPlugin("MessageBox").warn("The requested module: #rc.moduleEntryPoint# is valid but the incoming module handler is empty!");
 			setNextEvent(prc.xehModules);
 		}
 
 		// store incoming module event so modules can use it
-		prc.contentbox_moduleEvent = rc.moduleEvent;
+		prc.contentbox_moduleEvent = rc.moduleHandler & "." & rc.moduleAction;
 		// execute module event
-		var results = runEvent(event="#module.getname()#:#rc.moduleEvent#");
+		var results = runEvent(event="#module.getname()#:#prc.contentbox_moduleEvent#");
 		// return results if returned
 		if( !isNull( results ) ){ return results; }
 		// stash the module view, so it renders in the admin layout
