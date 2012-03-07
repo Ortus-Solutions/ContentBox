@@ -6,24 +6,24 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 * ContentBox main module configuration
 */
 component {
-	
+
 	// Module Properties
 	this.title 				= "ContentBox Core";
 	this.author 			= "Ortus Solutions, Corp";
@@ -33,7 +33,7 @@ component {
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
-	
+
 	function configure(){
 		// contentbox settings
 		settings = {
@@ -44,14 +44,14 @@ component {
 			updateSlug_beta 	= "contentbox-beta-updates",
 			updatesURL			= "http://www.coldbox.org/api/forgebox"
 		};
-		
+
 		// Parent Affected Settings
 		parentSettings = {
 			messagebox_style_override	= true,
 			// File Browser module name override
 			filebrowser_module_name		= "contentbox-filebrowser"
 		};
-		
+
 		// interceptor settings
 		interceptorSettings = {
 			// ContentBox Custom Events
@@ -60,7 +60,7 @@ component {
 				"cb_onContentRendering","cb_onCustomHTMLRendering"
 			])
 		};
-				
+
 		// interceptors
 		interceptors = [
 			// ContentBox security
@@ -70,7 +70,7 @@ component {
 			 	 rulesSource 	= "model",
 			 	 rulesModel		= "securityRuleService@cb",
 			 	 rulesModelMethod = "getSecurityRules",
-			 	 validatorModel = "securityService@cb"} 
+			 	 validatorModel = "securityService@cb"}
 			},
 			// CB RSS Cache Cleanup Ghost
 			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
@@ -82,7 +82,7 @@ component {
 			{class="contentbox.model.content.renderers.LinkRenderer"},
 			{class="contentbox.model.content.renderers.WidgetRenderer"}
 		];
-		
+
 		// Security/System
 		binder.map("settingService@cb").to("contentbox.model.system.SettingService");
 		binder.map("emailtemplateService@cb").to("contentbox.model.system.EmailTemplateService");
@@ -107,13 +107,15 @@ component {
 		// Commenting services
 		binder.map("commentService@cb").to("contentbox.model.comments.CommentService");
 		// RSS services
-		binder.map("rssService@cb").to("contentbox.model.rss.RSSService");	
+		binder.map("rssService@cb").to("contentbox.model.rss.RSSService");
 		// UI
-		binder.map("customFieldService@cb").toDSL("entityService:cbCustomField");	
-		binder.map("widgetService@cb").to("contentbox.model.ui.WidgetService");	
+		binder.map("customFieldService@cb").toDSL("entityService:cbCustomField");
+		binder.map("widgetService@cb").to("contentbox.model.ui.WidgetService");
 		binder.map("layoutService@cb").to("contentbox.model.ui.LayoutService");
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
+		// Modules
+		binder.map("moduleService@cb").to("contentbox.model.modules.ModuleService");
 		// utils
 		binder.map("zipUtil@cb").to("coldbox.system.core.util.Zip");
 		binder.map("HQLHelper@cb").to("contentbox.model.util.HQLHelper");
@@ -124,37 +126,39 @@ component {
 		// importers
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
-		
+
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
 	}
-	
+
 	/**
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		// Startup the ContentBox modules, if any
+		controller.getWireBox().getInstance("moduleService@cb").startup();
 	}
-	
+
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
 	}
-	
+
 	/************************************** PRIVATE *********************************************/
-	
+
 	/**
 	* load hibernatate transactions via AOP
 	*/
 	private function loadHibernateTransactions(binder){
 		// map the hibernate transaction for contentbox
 		binder.mapAspect(aspect="CBHibernateTransaction",autoBinding=false)
-			.to("coldbox.system.aop.aspects.HibernateTransaction");	
-			
+			.to("coldbox.system.aop.aspects.HibernateTransaction");
+
 		// bind the aspect
 		binder.bindAspect(classes=binder.match().regex("contentbox.*"),
 									methods=binder.match().annotatedWith("transactional"),
 									aspects="CBHibernateTransaction");
 	}
-	
+
 }

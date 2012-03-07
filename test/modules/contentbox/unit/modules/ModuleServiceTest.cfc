@@ -1,4 +1,4 @@
-﻿/**
+/**
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -21,28 +21,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 */
-component extends="coldbox.system.testing.BaseTestCase" appMapping='/root'{
+component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model.modules.ModuleService"{
 
 	function setup(){
 		super.setup();
-		installer = getModel("InstallerService@cbi");
-		resourcesPath = expandPath("/contentbox-test/resources") & "/";
+		model.init();
 	}
 
-	function testprocessColdBoxPasswords(){
-		setup = getModel("SetupBean@cbi");
-		var original = fileRead(resourcesPath & "config/Coldbox.cfc");
+	function testPopulateModule(){
+		module = entityNew("cbModule");
+		mock = getMockBox().createStub();
+		mock.title = mock.description = mock.author = mock.webURL = mock.forgeboxslug = mock.entryPoint = "unit";
+		mock.version = "1.0.0";
 
-		try{
-			installer.setAppPath( resourcesPath );
-			installer.processColdBoxPasswords( setup );
-			var updated = fileRead(resourcesPath & "config/Coldbox.cfc");
-			assertFalse( findnocase(updated,"@fwPassword@") );
-		}
-		catch(any e){}
-		finally{
-			fileWrite(resourcesPath & "config/Coldbox.cfc", original);
-		}
+		model.populateModule( module, mock );
+		assertEquals( "1.0.0", module.getVersion() );
+		assertEquals( "unit", module.getAuthor() );
+	}
+
+	function testFindModules(){
+		r = model.findModules();
+		assertTrue( isStruct(r) );
 	}
 
 }

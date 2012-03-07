@@ -6,18 +6,18 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 */
@@ -39,20 +39,19 @@ component{
 
 	// THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";
-	
+
 	// LOCATION MAPPINGS
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
 	this.mappings["/contentbox-admin"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-admin";
-	this.mappings["/contentbox-modules"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-modules";
 	// THE LOCATION OF COLDBOX
 	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
-	
+
 	// CONTENTBOX ORM SETTINGS
 	this.ormEnabled = true;
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
-		cfclocation=["model","/contentbox/model","/contentbox-modules"],
+		cfclocation=["model","/contentbox/model","/contentbox/modules"],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
@@ -70,16 +69,16 @@ component{
 		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
 		skipCFCWithError	= true
 	};
-	
+
 	/************************************** METHODS *********************************************/
-	
+
 	// application start
 	public boolean function onApplicationStart(){
 		application.cbBootstrap = new Coldbox(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH,COLDBOX_APP_KEY);
 		application.cbBootstrap.loadColdbox();
 		return true;
 	}
-	
+
 	// request start
 	public boolean function onRequestStart(String targetPage){
 

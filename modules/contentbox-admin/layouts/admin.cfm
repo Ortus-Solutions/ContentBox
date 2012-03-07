@@ -200,6 +200,18 @@
 						#announceInterception("cbadmin_siteTab")#
 					</ul>
 				</li>
+				<!--- Modules --->
+				<li>
+					<a href="##" title="Modules" <cfif prc.tabModules>class="current"</cfif>>Modules</a>
+					<ul>
+						<li>
+							<a href="#event.buildLink(prc.xehModules)#" <cfif event.getValue("tabModules_manage",false,true)> class="current"</cfif>
+							   title="Manage Modules">Manage</a>
+						</li>
+						<!--- cbadmin event --->
+						#announceInterception("cbadmin_modulesTab")#
+					</ul>
+				</li>
 				<!--- Users Nav --->
 				<li>
 					<a href="##" title="Users" <cfif prc.tabUsers>class="current"</cfif>>Users</a>
