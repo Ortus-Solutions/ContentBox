@@ -1,9 +1,9 @@
 ﻿<cfoutput>
 <!--============================Sidebar============================-->
 <div class="sidebar">
-	<!--- Info Box --->
+	<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
+	<!--- Upload Box --->
 	<div class="small_box">
-		<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Module Uploader
 		</div>
@@ -22,11 +22,9 @@
 				</div>
 			#html.endForm()#
 		</div>
-		</cfif>
 	</div>
-	<!--- Info Box --->
+	<!--- Actions Box --->
 	<div class="small_box">
-		<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Module Admin Actions
 		</div>
@@ -34,8 +32,8 @@
 			<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivates, Wipes and Re-Registers All Modules"><button class="button2">Reset Modules</button></a>
 			<a href="#event.buildLink(prc.xehModuleRescan)#" title="Rescans the Modules for new registrations"><button class="button2">Rescan Modules</button></a>
 		</div>
-		</cfif>
 	</div>
+	</cfif>
 </div>
 <!--End sidebar-->
 <!--============================Main Column============================-->
@@ -46,8 +44,10 @@
 			<ul class="sub_nav">
 				<!--- Manage --->
 				<li title="Manage Modules"><a href="##manage" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Manage</a></li>
+				<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
 				<!--- Install --->
 				<li title="Install New Modules"><a href="##install" onclick="loadForgeBox()"><img src="#prc.cbroot#/includes/images/download.png" alt="icon" border="0"/> ForgeBox</a></li>
+				</cfif>
 			</ul>
 			<img src="#prc.cbroot#/includes/images/ContentBox-Circle_32.png" alt="modules"/>
 			Modules
@@ -115,7 +115,7 @@
 								</cfif>
 							</td>
 							<td class="center">
-								<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
+							<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
 
 								<cfif len(module.getForgeBoxSlug())>
 								<!--- Update Check --->
@@ -134,7 +134,7 @@
 									<a title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
 										data-title="Delete #module.getName()#?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 									</cfif>
-								</cfif>
+							</cfif>
 							</td>
 						</tr>
 						</cfloop>
@@ -145,6 +145,7 @@
 				</div>
 				<!--- end manage pane --->
 
+				<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
 				<!--- ForgeBox --->
 				<div id="forgeboxPane">
 					<div class="center">
@@ -152,6 +153,8 @@
 						Please wait, connecting to ForgeBox...
 					</div>
 				</div>
+				</cfif>
+
 			<!--- end panes --->
 		</div>
 		<!--- end body --->

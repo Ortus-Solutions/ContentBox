@@ -122,14 +122,18 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	ModuleService function deactivateModule(required name){
 		var module = findWhere({name=arguments.name});
 		module.setIsActive( false );
-		// Call deactivate on module
-		var config = coldboxModuleService.getModuleConfigCache()[arguments.name];
-		if( structKeyExists(config,"onDeactivate") ){
-			config.onDeactivate();
+		// Call deactivate on module if it exists
+		var configCache = coldboxModuleService.getModuleConfigCache();
+		if( structKeyExists(configCache, arguments.name) ){
+			var config = configCache[arguments.name];
+			// Call deactivate if it exists
+			if( structKeyExists(config,"onDeactivate") ){
+				config.onDeactivate();
+			}
+			// deactivate from ColdBox
+			coldboxModuleService.unload( arguments.name );
+			structDelete( coldboxModuleService.getModuleRegistry(), arguments.name );
 		}
-		// deactivate from ColdBox
-		coldboxModuleService.unload( arguments.name );
-		structDelete( coldboxModuleService.getModuleRegistry(), arguments.name );
 		// save deactivated module
 		save( module );
 

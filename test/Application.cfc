@@ -47,7 +47,7 @@ limitations under the License.
 	this.mappings["/coldbox"] 			= rootPath & "/coldbox" ;
 
 	this.ormSettings = {
-		cfclocation=["/contentbox"],
+		cfclocation=["../modules/contentbox"],
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
