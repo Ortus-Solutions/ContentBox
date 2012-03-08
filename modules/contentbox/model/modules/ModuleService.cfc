@@ -132,11 +132,19 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			}
 			// deactivate from ColdBox
 			coldboxModuleService.unload( arguments.name );
-			structDelete( coldboxModuleService.getModuleRegistry(), arguments.name );
+			detachColdBoxModuleRegistration( arguments.name );
 		}
 		// save deactivated module
 		save( module );
 
+		return this;
+	}
+
+	 private ModuleService function detachColdBoxModuleRegistration(required name){
+		// Verify in module registry
+		if( structKeyExists(coldboxModuleService.getModuleRegistry(), arguments.name) ){
+			structDelete( coldboxModuleService.getModuleRegistry(), arguments.name );
+		}
 		return this;
 	}
 
@@ -146,7 +154,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	ModuleService function activateModule(required name){
 		var module = findWhere({name=arguments.name});
 		module.setIsActive( true );
-
+		// detach from coldbox just in case
+		detachColdBoxModuleRegistration( arguments.name );
 		// Activate module in ColdBox
 		coldboxModuleService.registerAndActivateModule(arguments.name, modulesInvocationPath);
 		// Get loaded configuration object

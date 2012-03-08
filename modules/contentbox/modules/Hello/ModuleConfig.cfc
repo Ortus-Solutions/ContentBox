@@ -42,82 +42,102 @@ Optional Methods
 - onUnload() 	: If found, it is fired once the module is unloaded
 
 */
-	
+
 	// Module Properties
-	this.title 				= "Hello";
-	this.author 			= "Luis Majano";
-	this.webURL 			= "http://";
-	this.description 		= "hello";
+	this.title 				= "HelloContentBox";
+	this.author 			= "Ortus Solutions, Corp";
+	this.webURL 			= "http://www.ortussolutions.com";
+	this.description 		= "This is an awesome hello world module";
 	this.version			= "1.0";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
 	// Module Entry Point
-	this.entryPoint			= "Hello";
-	
+	this.entryPoint			= "HelloContentBox";
+
 	function configure(){
-		
+
 		// parent settings
 		parentSettings = {
-		
+
 		};
-	
+
 		// module settings - stored in modules.name.settings
 		settings = {
-		
+
 		};
-		
+
 		// Layout Settings
 		layoutSettings = {
 			defaultLayout = ""
 		};
-		
+
 		// datasources
 		datasources = {
-		
+
 		};
-		
+
 		// web services
 		webservices = {
-		
+
 		};
-		
+
 		// SES Routes
 		routes = [
 			// Module Entry Point
 			{pattern="/", handler="home",action="index"},
 			// Convention Route
-			{pattern="/:handler/:action?"}		
-		];		
-		
+			{pattern="/:handler/:action?"}
+		];
+
 		// Custom Declared Points
 		interceptorSettings = {
 			customInterceptionPoints = ""
 		};
-		
+
 		// Custom Declared Interceptors
 		interceptors = [
 		];
-		
+
 		// Binder Mappings
 		// binder.map("Alias").to("#moduleMapping#.model.MyService");
-		
+
 	}
-	
+
 	/**
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		
+		// Let's add ourselves to the main menu in the Modules section
+		var menuService = controller.getWireBox().getInstance("AdminMenuService@cb");
+		// Add Menu Contribution
+		menuService.addSubMenu(topMenu=menuService.MODULES,name="HelloContentBox",label="Hello ContentBox",href="#menuService.buildModuleLink('helloContentBox','home')#");
 	}
-	
+
+	/**
+	* Fired when the module is activated by ContentBox
+	*/
+	function onActivate(){
+
+	}
+
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-		
+		// Let's remove ourselves to the main menu in the Modules section
+		var menuService = controller.getWireBox().getInstance("AdminMenuService@cb");
+		// Remove Menu Contribution
+		menuService.removeSubMenu(topMenu=menuService.MODULES,name="HelloContentBox");
 	}
-	
+
+	/**
+	* Fired when the module is deactivated by ContentBox
+	*/
+	function onDeactivate(){
+
+	}
+
 </cfscript>
 </cfcomponent>
