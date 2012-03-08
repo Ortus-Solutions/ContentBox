@@ -41,6 +41,6 @@ component accessors="true" {
 	}
 
 	function getUniqueHash(){
-		return hash( serializeJSON(variables), "MD5" );
+		return hash( variables.toString(), "MD5" );
 	}
 }
