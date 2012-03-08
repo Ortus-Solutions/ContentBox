@@ -6,6 +6,7 @@ component extends="coldbox.system.Interceptor"{
 	// DI
 	property name="securityService" inject="id:securityService@cb";
 	property name="settingService"  inject="id:settingService@cb";
+	property name="adminMenuService"  inject="id:adminMenuService@cb";
 
 	/**
 	* Configure CB Request
@@ -38,6 +39,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global cb options on scope
 		prc.cbSettings = settingService.getAllSettings(asStruct=true);
+		// store admin menu service
+		prc.adminMenuService = adminMenuService;
 
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 

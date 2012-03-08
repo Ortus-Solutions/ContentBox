@@ -105,7 +105,7 @@
 			</div>
 			<!--End Search field and logo Header Area-->
 			<!--=========Main Navigation=========-->
-			#getModel("adminMenuService@cb").generateMenu()#
+			#prc.adminMenuService.generateMenu()#
 			<!--End Main Navigation-->
 
 	  	</div>

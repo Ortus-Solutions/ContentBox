@@ -25,7 +25,6 @@ limitations under the License.
 component accessors="true" singleton{
 
 	// The structure that keeps the menus
-	property name="generatedMenu"	type="string";
 	property name="menu"			type="array";
 	property name="topMenuMap"		type="struct";
 	// The request service
@@ -45,10 +44,9 @@ component accessors="true" singleton{
 	/**
 	* Constructor
 	* @requestService.inject coldbox:requestService
+	* @coldbox.inject coldbox
 	*/
 	AdminMenuService function init(required requestService){
-		// generated menu
-		generatedMenu = "";
 		// init menu array
 		menu = [];
 		// init top menu structure holders
@@ -59,7 +57,6 @@ component accessors="true" singleton{
 		variables.requestService = arguments.requestService;
 		// create default top menus
 		createDefaultMenu();
-
 		return this;
 	}
 
@@ -67,7 +64,7 @@ component accessors="true" singleton{
 	* Create the default ContentBox menu
 	*/
 	AdminMenuService function createDefaultMenu(){
-		var event 	= requestService.getContext();
+		var event 	= requestService.getContext().setIsSES( true );
 		var prc 	= {};
 
 		// Global Admin Exit Handlers
@@ -169,7 +166,9 @@ component accessors="true" singleton{
 	*/
 	function buildModuleLink(required string module, required string linkTo, queryString="", boolean ssl=false){
 		var event 	= requestService.getContext();
-		return event.buildLink(linkto="#this.ADMIN_ENTRYPOINT#.#arguments.module#.#arguments.linkTo#",queryString=arguments.queryString,ssl=arguments.ssl);
+		return event.buildLink(linkto="#this.ADMIN_ENTRYPOINT#.module.#arguments.module#.#arguments.linkTo#",
+							   queryString=arguments.queryString,
+							   ssl=arguments.ssl);
 	}
 
 	/**
@@ -198,7 +197,7 @@ component accessors="true" singleton{
 		// store in menu container
 		arrayAppend( menu, topMenuMap[arguments.name] );
 		// return it
-		return clearGeneratedMenu();
+		return this;
 	}
 
 	/**
@@ -219,7 +218,7 @@ component accessors="true" singleton{
 		// store in top menu
 		arrayAppend( topMenuMap[ arguments.topMenu ].submenu, arguments );
 		// return
-		return clearGeneratedMenu();
+		return this;
 	}
 
 	/**
@@ -237,7 +236,7 @@ component accessors="true" singleton{
 		}
 
 		// return
-		return clearGeneratedMenu();
+		return this;
 	}
 
 	/**
@@ -255,7 +254,7 @@ component accessors="true" singleton{
 		}
 
 		// return
-		return clearGeneratedMenu();
+		return this;
 	}
 
 
@@ -263,11 +262,6 @@ component accessors="true" singleton{
 	*  Generate menu from cache or newly generated menu
 	*/
 	any function generateMenu(){
-
-		// check if generated already
-		if( len( generatedMenu ) ){ return generatedMenu; }
-
-		// Not generated, generate it
 		var event 	= requestService.getContext();
 		var prc		= event.getCollection(private=true);
 		var genMenu = "";
@@ -275,18 +269,8 @@ component accessors="true" singleton{
 		savecontent variable="genMenu"{
 			include "templates/adminMenu.cfm";
 		}
-		// store it
-		generatedMenu = genMenu;
 		// return it
 		return genMenu;
-	}
-
-	/**
-	* Clear the generated menu HTML
-	*/
-	AdminMenuService function clearGeneratedMenu(){
-		generatedMenu = "";
-		return this;
 	}
 
 }
