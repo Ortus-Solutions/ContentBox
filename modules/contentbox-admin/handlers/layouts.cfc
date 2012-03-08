@@ -11,7 +11,7 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// Tab control
-		prc.tabSite = true;
+		prc.tabLookAndFeel = true;
 	}
 	
 	// index
@@ -36,7 +36,7 @@ component extends="baseHandler"{
 		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink(prc.xehLayouts) );
 		
 		// Tab
-		prc.tabSite_layouts = true;
+		prc.tabLookAndFeel_layouts = true;
 		// view
 		event.setView("layouts/index");
 	}

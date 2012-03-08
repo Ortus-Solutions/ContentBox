@@ -11,8 +11,8 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// Tab control
-		prc.tabSite = true;
-		prc.tabSite_widgets = true;
+		prc.tabLookAndFeel = true;
+		prc.tabLookAndFeel_widgets = true;
 	}
 	
 	// index

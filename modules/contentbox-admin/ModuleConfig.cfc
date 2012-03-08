@@ -69,10 +69,6 @@ component {
 				"cbadmin_beforeHeadEnd","cbadmin_afterBodyStart","cbadmin_beforeBodyEnd","cbadmin_footer","cbadmin_beforeContent","cbadmin_afterContent","cbadmin_onTagLine", "cbadmin_onTopBar",
 				// Login Layout HTML points
 				"cbadmin_beforeLoginHeadEnd","cbadmin_afterLoginBodyStart","cbadmin_beforeLoginBodyEnd","cbadmin_loginFooter","cbadmin_beforeLoginContent","cbadmin_afterLoginContent",
-				// Main Navigation
-				"cbadmin_beforeMainNav","cbadmin_afterMainNav",
-				// Main Tabs
-				"cbadmin_dashboardTab","cbadmin_contentTab","cbadmin_commentsTab","cbadmin_usersTab","cbadmin_systemTab","cbadmin_toolsTab",
 				// Entry Events
 				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove",
 				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarFooter",
@@ -105,9 +101,7 @@ component {
 				// Security Rules Events
 				"cbadmin_preSecurityRulesSave", "cbadmin_postSecurityRulesSave", "cbadmin_preSecurityRulesRemove", "cbadmin_postSecurityRulesRemove",
 				// Version Control
-				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback",
-				// Modules
-				"cbadmin_modulesTab"
+				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback"
 			])
 		};
 

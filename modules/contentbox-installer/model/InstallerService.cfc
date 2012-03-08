@@ -2,7 +2,7 @@
 * Installs ContentBox
 */
 component accessors="true"{
-	
+
 	// DI
 	property name="authorService" 		inject="authorService@cb";
 	property name="settingService" 		inject="settingService@cb";
@@ -17,7 +17,7 @@ component accessors="true"{
 	property name="appPath" 			inject="coldbox:setting:applicationPath";
 	property name="securityInterceptor" inject="securityInterceptor@cb";
 	property name="coldbox"				inject="coldbox";
-	
+
 	/**
 	* Constructor
 	*/
@@ -25,17 +25,17 @@ component accessors="true"{
 		permissions = {};
 		return this;
 	}
-	
+
 	/**
 	* Execute the installer
 	*/
 	function execute(required setup) transactional{
-		
+
 		// process rerwite
 		if( setup.getFullRewrite() ){
 			processRewrite( setup );
 		}
-		
+
 		// create roles
 		var adminRole = createRoles( setup );
 		// create Author
@@ -57,18 +57,18 @@ component accessors="true"{
 		// Reload Security Rules
 		securityInterceptor.loadRules();
 	}
-	
+
 	function createSecurityRules(required setup){
 		securityRuleService.resetRules();
 	}
-	
+
 	function processORMUpdate(required setup){
 		var appCFCPath = appPath & "Application.cfc";
 		var c = fileRead(appCFCPath);
 		c = replacenocase(c, '"update"','"none"');
 		fileWrite(appCFCPath, c);
 	}
-	
+
 	function processColdBoxPasswords(required setup){
 		var configPath = appPath & "config/Coldbox.cfc";
 		var c = fileRead(configPath);
@@ -78,14 +78,14 @@ component accessors="true"{
 		coldbox.setSetting("debugPassword", newpass);
 		coldbox.setSetting("reinitPassword", newpass);
 	}
-	
+
 	function processRewrite(required setup){
 		var routesPath = appPath & "config/Routes.cfm";
 		var c = fileRead(routesPath);
 		c = replacenocase(c, "index.cfm","","all");
 		fileWrite(routesPath, c);
 	}
-		
+
 	/**
 	* Create permissions
 	*/
@@ -114,25 +114,26 @@ component accessors="true"{
 			"MEDIAMANAGER_ADMIN" = "Ability to manage the system's media manager",
 			"VERSIONS_ROLLBACK" = "Ability to rollback content versions",
 			"VERSIONS_DELETE" = "Ability to delete past content versions",
-			"SYSTEM_UPDATES" = "Ability to view and apply ContentBox updates"
+			"SYSTEM_UPDATES" = "Ability to view and apply ContentBox updates",
+			"MODULES_ADMIN" = "Ability to manage ContentBox Modules"
 		};
-		
+
 		var allperms = [];
 		for(var key in perms){
 			var props = {permission=key, description=perms[key]};
 			permissions[ key ] = permissionService.new(properties=props);
-			arrayAppend(allPerms, permissions[ key ] );			
+			arrayAppend(allPerms, permissions[ key ] );
 		}
 		permissionService.saveAll( allPerms );
 	}
-	
+
 	/**
 	* Create roles and return the admin
 	*/
 	function createRoles(required setup ){
 		// Create Permissions
 		createPermissions( setup );
-		
+
 		// Create Editor
 		var oRole = roleService.new(properties={role="Editor",description="A ContentBox editor"});
 		// Add Editor Permissions
@@ -146,7 +147,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["MEDIAMANAGER_ADMIN"] );
 		oRole.addPermission( permissions["VERSIONS_ROLLBACK"] );
 		roleService.save( oRole );
-		
+
 		// Create Admin
 		var oRole = roleService.new(properties={role="Administrator",description="A ContentBox Administrator"});
 		// Add All Permissions To Admin
@@ -154,10 +155,10 @@ component accessors="true"{
 			oRole.addPermission( permissions[key] );
 		}
 		roleService.save( oRole );
-		
+
 		return oRole;
 	}
-	
+
 	/**
 	* Create author
 	*/
@@ -166,15 +167,15 @@ component accessors="true"{
 		oAuthor.setIsActive( true );
 		oAuthor.setRole( adminRole );
 		authorService.saveAuthor( oAuthor );
-		
+
 		return oAuthor;
 	}
-	
+
 	/**
 	* Create settings
 	*/
 	function createSettings(required setup){
-		
+
 		// Create Settings
 		var settings = {
 			// User Input Settings
@@ -186,22 +187,22 @@ component accessors="true"{
 			"cb_site_outgoingEmail" = setup.getSiteOutgoingEmail(),
 			"cb_site_homepage" = "cbBlog",
 			"cb_site_disable_blog" = "false",
-			
+
 			// Paging Defaults
 			"cb_paging_maxrows" = "20",
 			"cb_paging_bandgap" = "5",
 			"cb_paging_maxentries" = "10",
 			"cb_paging_maxRSSComments" = "10",
-			
+
 			// Gravatar
 			"cb_gravatar_display" = "true",
 			"cb_gravatar_rating" = "PG",
-			
+
 			// Dashboard Settings
 			"cb_dashboard_recentEntries" = "5",
 			"cb_dashboard_recentPages" = "5",
 			"cb_dashboard_recentComments" = "5",
-			
+
 			// Comment Settings
 			"cb_comments_whoisURL" = "http://whois.arin.net/ui/query.do?q",
 			"cb_comments_maxDisplayChars" = "500",
@@ -215,7 +216,7 @@ component accessors="true"{
 			"cb_comments_moderation_blacklist" = "",
 			"cb_comments_moderation_blockedlist" = "",
 			"cb_comments_captcha" = "true",
-			
+
 			// Mail Settings
 			"cb_site_mail_server" = setup.getcb_site_mail_server(),
 			"cb_site_mail_username" = setup.getcb_site_mail_username(),
@@ -223,15 +224,15 @@ component accessors="true"{
 			"cb_site_mail_smtp" = setup.getcb_site_mail_smtp(),
 			"cb_site_mail_tls" = setup.getcb_site_mail_tls(),
 			"cb_site_mail_ssl" = setup.getcb_site_mail_ssl(),
-			
+
 			// Notifications
 			"cb_notify_author" = "true",
 			"cb_notify_entry"  = "true",
 			"cb_notify_page"   = "true",
-			
+
 			// Site Layout
 			"cb_site_layout" = "default",
-			
+
 			// RSS Feeds
 			"cb_rss_maxEntries" = "10",
 			"cb_rss_maxComments" = "10",
@@ -239,7 +240,7 @@ component accessors="true"{
 			"cb_rss_cachingTimeout" = "60",
 			"cb_rss_cachingTimeoutIdle" = "15",
 			"cb_rss_cacheName" = "Template",
-			
+
 			// Content Caching
 			"cb_content_caching" = "true",
 			"cb_entry_caching" = "true",
@@ -247,7 +248,7 @@ component accessors="true"{
 			"cb_content_cachingTimeout" = "60",
 			"cb_content_cachingTimeoutIdle" = "15",
 			"cb_content_cacheName" = "Template",
-			
+
 			// Global HTML
 			"cb_html_beforeHeadEnd" = "",
 			"cb_html_afterBodyStart" = "",
@@ -267,7 +268,7 @@ component accessors="true"{
 			"cb_html_postCommentForm" = "",
 			"cb_html_prePageDisplay" = "",
 			"cb_html_postPageDisplay" = "",
-			
+
 			// Media Manager
 			"cb_media_directoryRoot" = expandPath("/contentbox/content"),
 			"cb_media_createFolders" = "true",
@@ -276,41 +277,41 @@ component accessors="true"{
 			"cb_media_allowUploads" = "true",
 			"cb_media_acceptMimeTypes" = "",
 			"cb_media_quickViewWidth" = "400",
-			
+
 			// Uploadify Integration
 			"cb_media_uplodify_fileDesc" = "All Files",
 			"cb_media_uplodify_fileExt" = "*.*;",
 			"cb_media_uploadify_allowMulti" = "true",
 			"cb_media_uploadify_sizeLimit" = "0",
 			"cb_media_uploadify_customOptions" = "",
-			
+
 			// Search Settings
 			"cb_search_adapter" = "contentbox.model.search.DBSearch",
 			"cb_search_maxResults" = "20",
-			
+
 			// Site Maintenance
 			"cb_site_maintenance_message" = "<h1>This site is down for maintenance.<br /> Please check back again soon.</h1>",
 			"cb_site_maintenance" = "false"
 		};
-		
+
 		// Create setting objects and save
 		var aSettings = [];
 		for(var key in settings){
 			var props = {name=key,value=settings[key]};
 			arrayAppend( aSettings, settingService.new(properties=props) );
 		}
-		
+
 		settingService.saveAll( aSettings );
 	}
-	
+
 	/**
 	* Create Sample Data
 	*/
 	function createSampleData(required setup, required author){
-		
+
 		// create a few categories
 		categoryService.createCategories("News, ColdFusion, ColdBox, ContentBox");
-		
+
 		// create some blog entries
 		var entry = entryService.new(properties={
 			title = "My first entry",
@@ -326,7 +327,7 @@ component accessors="true"{
 		entry.addNewContentVersion(content="Hey everybody, this is my first blog entry made from ContentBox.  Isn't this amazing!'",
 								   changelog="Initial creation",
 								   author=author);
-		
+
 		// good comment
 		var comment = commentService.new(properties={
 			content = "What an amazing blog entry, congratulations!",
@@ -338,7 +339,7 @@ component accessors="true"{
 		});
 		comment.setRelatedContent( entry );
 		entry.addComment( comment );
-		
+
 		// nasty comment
 		var comment = commentService.new(properties={
 			content = "I am some bad words and bad comment not approved",
@@ -350,10 +351,10 @@ component accessors="true"{
 		});
 		comment.setRelatedContent( entry );
 		entry.addComment( comment );
-		
+
 		// save entry
 		entryService.saveEntry( entry );
-		
+
 		// create a page
 		var page = pageService.new(properties={
 			title = "About",
@@ -364,13 +365,13 @@ component accessors="true"{
 			passwordProtection='',
 			HTMLKeywords = "about, contentbox,coldfusion,coldbox",
 			HTMLDescription = "The most amazing ContentBox page in the world",
-			layout = "pages"			
+			layout = "pages"
 		});
 		page.addNewContentVersion(content="<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{CustomHTML slug='contentbox'}}}</p>",
 								  changelog="First creation",
 								  author=author);
 		pageService.savePage( page );
-		
+
 		// create a custom HTML snippet.
 		var customHTML = customHTMLService.new(properties={
 			title = "ContactInfo",
@@ -382,7 +383,7 @@ component accessors="true"{
 	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>'
 		});
 		customHTMLService.saveCustomHTML( customHTML );
-		
+
 	}
-	
+
 }

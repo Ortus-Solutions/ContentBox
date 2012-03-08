@@ -95,6 +95,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehCKFileBrowserURLFlash	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 
 		/************************************** NAVIGATION TABS *********************************************/
+
 		event.paramValue(name="tabDashboard",value=false,private=true);
 		event.paramValue(name="tabEntries",value=false,private=true);
 		event.paramValue(name="tabContent",value=false,private=true);
@@ -104,6 +105,7 @@ component extends="coldbox.system.Interceptor"{
 		event.paramValue(name="tabModules",value=false,private=true);
 		event.paramValue(name="tabTools",value=false,private=true);
 		event.paramValue(name="tabSystem",value=false,private=true);
+
 	}
 
 }

@@ -1,5 +1,15 @@
 [
     {
+        "securelist": "^contentbox-admin:modules\\..*",
+        "roles": "",
+        "permissions": "MODULES_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    },
+    {
         "securelist": "^contentbox-admin:mediamanager\\..*",
         "roles": "",
         "permissions": "MEDIAMANAGER_ADMIN",

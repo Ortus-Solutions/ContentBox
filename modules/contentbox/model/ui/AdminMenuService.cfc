@@ -25,7 +25,9 @@ limitations under the License.
 component accessors="true" singleton{
 
 	// The structure that keeps the menus
+	property name="generatedMenu"	type="string";
 	property name="menu"			type="array";
+	property name="topMenuMap"			type="struct";
 	// The request service
 	property name="requestService"	type="any";
 
@@ -45,8 +47,12 @@ component accessors="true" singleton{
 	* @requestService.inject coldbox:requestService
 	*/
 	AdminMenuService function init(required requestService){
-		// init menu
+		// generated menu
+		generatedMenu = "";
+		// init menu array
 		menu = [];
+		// init top menu structure holders
+		topMenuMap = {};
 		// top menu pointer
 		thisTopMenu = "";
 		// store request service
@@ -57,27 +63,31 @@ component accessors="true" singleton{
 		return this;
 	}
 
+	/**
+	* Create the default ContentBox menu
+	*/
 	AdminMenuService function createDefaultMenu(){
 		var event 	= requestService.getContext();
 		var prc		= event.getCollection(private=true);
 
 		// Dashboard
 		addTopMenu(name=this.DASHBOARD,label="Dashboard")
-			.addSubMenu(name="home",label="Home",href="#event.buildLink(prc.xehDashboard)#")
-			.addSubMenu(name="profile",label="My Profile",href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#")
-			.addSubMenu(name="About",label="About",href="#event.buildLink(prc.xehAbout)#")
-			.addSubMenu(name="Updates",label="Updates",href="#event.buildLink(prc.xehAutoUpdater)#",permissions="SYSTEM_UPDATES");
+			.addSubMenu(name="home",label="Home",href="#event.buildLink(prc.xehDashboard)#",title="Dashboard Home!")
+			.addSubMenu(name="profile",label="My Profile",href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#",title="Manage Your Profile")
+			.addSubMenu(name="about",label="About",href="#event.buildLink(prc.xehAbout)#",title="About ContentBox")
+			.addSubMenu(name="updates",label="Updates",href="#event.buildLink(prc.xehAutoUpdater)#",title="ContentBox Auto Updates",permissions="SYSTEM_UPDATES");
 
 		// Content
 		addTopMenu(name=this.CONTENT,label="Content")
-			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#",title="Manage Site Pages")
-			.addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#",title="Manage Content Categories")
-			.addSubMenu(name="customHTML",label="Custom HTML",href="#event.buildLink(prc.xehCustomHTML)#",title="Manage Custom HTML Content Pieces")
-			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",title="Manage ContentBox Media",permisions="MEDIAMANAGER_ADMIN");
+			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#",title="Manage Site Pages");
 		// Blog Disabled
 		if( !prc.cbSettings.cb_site_disable_blog ){
 			addSubMenu(topMenu=this.CONTENT,name="Blog",label="Blog",href="#event.buildLink(prc.xehEntries)#",title="Manage Blog Entries");
 		}
+		// More Content
+		addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#",title="Manage Content Categories")
+			.addSubMenu(name="customHTML",label="Custom HTML",href="#event.buildLink(prc.xehCustomHTML)#",title="Manage Custom HTML Content Pieces")
+			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",title="Manage ContentBox Media",permissions="MEDIAMANAGER_ADMIN");
 
 		// Comments
 		addTopMenu(name=this.COMMENTS,label="Comments")
@@ -91,7 +101,7 @@ component accessors="true" singleton{
 			.addSubMenu(name="globalHTML",label="Global HTML",href="#event.buildLink(prc.xehGlobalHTML)#",title="Easy global HTML for your layouts");
 
 		// Modules
-		addTopMenu(name=this.MODULES,label="Modules")
+		addTopMenu(name=this.MODULES,label="Modules",permissions="MODULES_ADMIN")
 			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehModules)#",title="Manage Modules");
 
 		// User
@@ -109,7 +119,7 @@ component accessors="true" singleton{
 		addTopMenu(name=this.SYSTEM,label="System",permissions="SYSTEM_TAB")
 			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehSettings)#",title="Manage ContentBox Global Configuration")
 			.addSubMenu(name="SecurityRules",label="Security Rules",href="#event.buildLink(prc.xehSecurityRules)#",title="Manage ContentBox Security Rules")
-			.addSubMenu(name="EmailTemplates",label="Email Templates",href="#event.buildLink(prc.xehRoles)#",title="Manage ContentBox Email Templates",permissions="EMAIL_TEMPLATE_ADMIN")
+			.addSubMenu(name="EmailTemplates",label="Email Templates",href="#event.buildLink(prc.xehEmailTemplates)#",title="Manage ContentBox Email Templates",permissions="EMAIL_TEMPLATE_ADMIN")
 			.addSubMenu(name="GeekSettings",label="Geek Settings",href="#event.buildLink(prc.xehRawSettings)#",title="Manage The Raw Settings Geek Style",permissions="SYSTEM_RAW_SETTINGS");
 
 		return this;
@@ -124,16 +134,21 @@ component accessors="true" singleton{
 	* @target.hint The target to execute the link in, default is same page.
 	* @permissions.hint The list of permissions needed to view this menu
 	*/
-	AdminMenuService function addTopMenu(required name, required label, title="", href="", target="", permissions=""){
+	AdminMenuService function addTopMenu(required name, required label, title="", href="##", target="", permissions=""){
+		// stash pointer
 		thisTopMenu = arguments.name;
-
-
-		return this;
+		// store new top menu
+		topMenuMap[ arguments.name ] = { submenu = [] };
+		structAppend( topMenuMap[ arguments.name ], arguments, true );
+		// store in menu container
+		arrayAppend( menu, topMenuMap[arguments.name] );
+		// return it
+		return clearGeneratedMenu();
 	}
 
 	/**
 	* Add a sub level menu
-	* @topMenu.hint The top menu name to add this sub level menu to or if concatenated then it uses that one.
+	* @topMenu.hint The optional top menu name to add this sub level menu to or if concatenated then it uses that one.
 	* @name.hint The unique name for this sub level menu
 	* @label.hint The label for the menu item
 	* @title.hint The optional title element
@@ -141,12 +156,44 @@ component accessors="true" singleton{
 	* @target.hint The target to execute the link in, default is same page.
 	* @permissions.hint The list of permissions needed to view this menu
 	*/
-	AdminMenuService function addSubMenu(topMenu, required name, required label, title="", href="", target="", permissions=""){
+	AdminMenuService function addSubMenu(topMenu, required name, required label, title="", href="##", target="", permissions=""){
 		// Check if thisTopMenu set?
 		if( !len(thisTopMenu) AND !structKeyExists(arguments,"topMenu") ){ throw("No top menu passed or concatenated with"); }
-		// check this
+		// check this pointer
 		if( len(thisTopMenu) AND !structKeyExists(arguments,"topMenu")){ arguments.topmenu = thisTopMenu; }
+		// store in top menu
+		arrayAppend( topMenuMap[ arguments.topMenu ].submenu, arguments );
+		// return
+		return clearGeneratedMenu();
+	}
 
+	/**
+	*  Generate menu from cache or newly generated menu
+	*/
+	any function generateMenu(){
+
+		// check if generated already
+		if( len( generatedMenu ) ){ return generatedMenu; }
+
+		// Not generated, generate it
+		var event 	= requestService.getContext();
+		var prc		= event.getCollection(private=true);
+		var genMenu = "";
+
+		savecontent variable="genMenu"{
+			include "templates/adminMenu.cfm";
+		}
+		// store it
+		generatedMenu = genMenu;
+		// return it
+		return genMenu;
+	}
+
+	/**
+	* Clear the generated menu HTML
+	*/
+	AdminMenuService function clearGeneratedMenu(){
+		generatedMenu = "";
 		return this;
 	}
 

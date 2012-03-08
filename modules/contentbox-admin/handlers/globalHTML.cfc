@@ -15,8 +15,8 @@ component extends="baseHandler"{
 		prc.xehSaveHTML = "#prc.cbAdminEntryPoint#.globalHTML.save";
 		
 		// tab
-		prc.tabSite				= true;
-		prc.tabSite_globalHTML	= true; 
+		prc.tabLookAndFeel				= true;
+		prc.tabLookAndFeel_globalHTML	= true; 
 		
 		// view
 		event.setView("globalHTML/index");

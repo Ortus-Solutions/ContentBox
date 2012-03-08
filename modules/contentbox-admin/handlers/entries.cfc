@@ -95,7 +95,7 @@ component extends="baseHandler"{
 		prc.xehEntryHistory  = "#prc.cbAdminEntryPoint#.versions.index";
 		
 		// Tab
-		prc.tabContent_entries = true;
+		prc.tabContent_blog = true;
 		// view
 		event.setView("entries/index");
 	}
@@ -129,7 +129,7 @@ component extends="baseHandler"{
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
 		// Tab
-		prc.tabContent_entries = true;
+		prc.tabContent_blog = true;
 		// view
 		event.setView("entries/editor");
 	}	

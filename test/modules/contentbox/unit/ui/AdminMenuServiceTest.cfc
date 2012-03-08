@@ -15,8 +15,10 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		model.init(mockRequestService);
 	}
 
-	function test(){
-
+	function testgenerateMenu(){
+		r = model.generateMenu();
+		debug( r );
+		assertTrue( len(r) );
 	}
 
 	private function setupRequest(mockContext){
@@ -28,7 +30,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		};
 
 
-		prc.oAuthor = getMockBox().createMock("contentbox.model.security.Author");
+		prc.oAuthor = getMockBox().createMock("contentbox.model.security.Author").$("checkPermission",true);
 		prc.cbAdminEntryPoint = "cbadmin";
 
 		// Global Admin Exit Handlers
