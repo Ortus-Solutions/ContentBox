@@ -44,14 +44,14 @@ component{
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
 	this.mappings["/contentbox-admin"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-admin";
-	// THE LOCATION OF COLDBOX
-	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
+	// THE LOCATION OF EMBEDDED COLDBOX
+	this.mappings["/coldbox"] 	 = COLDBOX_APP_ROOT_PATH & "coldbox";
 
 	// CONTENTBOX ORM SETTINGS
 	this.ormEnabled = true;
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
-		cfclocation=["model","/contentbox/model","/contentbox/modules"],
+		cfclocation=["model","modules/contentbox/model","modules/contentbox/modules"],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
