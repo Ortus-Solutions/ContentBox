@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * I am a ContentBox Module
 */
-component persistent="true" entityname="cbModule" table="cb_module"{
+component persistent="true" entityname="cbModule" table="cb_module" cachename="cbModule" cacheuse="read-write" {
 
 	// PROPERTIES
 	property name="moduleID" fieldtype="id" generator="native" setter="false";
