@@ -82,7 +82,7 @@ component{
 	// request start
 	public boolean function onRequestStart(String targetPage){
 
-		//if( structKeyExists(url,"ormReload") ){ ormReload(); }
+		if( structKeyExists(url,"ormReload") ){ ormReload(); }
 		//applicationstop();abort;
 
 		// Bootstrap Reinit

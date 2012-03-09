@@ -55,6 +55,34 @@ component implements="contentbox.model.updates.IUpdate"{
 		/**
 		Migrate Database FIRST
 
+		// Modules Content
+		CREATE TABLE `cb_module` (
+		  `moduleID` int(11) NOT NULL AUTO_INCREMENT,
+		  `name` varchar(255) NOT NULL,
+		  `title` varchar(255) DEFAULT NULL,
+		  `version` varchar(255) DEFAULT NULL,
+		  `entryPoint` varchar(255) DEFAULT NULL,
+		  `author` varchar(255) DEFAULT NULL,
+		  `webURL` longtext,
+		  `forgeBoxSlug` varchar(255) DEFAULT NULL,
+		  `description` longtext,
+		  `isActive` bit(1) NOT NULL DEFAULT b'0',
+		  PRIMARY KEY (`moduleID`),
+		  KEY `idx_active` (`isActive`),
+		  KEY `idx_entryPoint` (`entryPoint`),
+		  KEY `idx_moduleName` (`name`)
+		) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+		// Create new columns custom HTML
+		ALTER TABLE cb_customHTML ADD COLUMN cache BIT NULL DEFAULT b'1';
+		ALTER TABLE cb_customHTML ADD COLUMN cacheTimeout INT NOT NULL DEFAULT 0;
+		ALTER TABLE cb_customHTML ADD COLUMN cacheLastAccessTimeout INT NOT NULL DEFAULT 0;
+
+		// Create indexes for those new columns
+		CREATE INDEX idx_cache ON cb_customHTML(cache);
+		CREATE INDEX idx_cachetimeout ON cb_customHTML(cacheTimeout);
+		CREATE INDEX idx_cachelastaccesstimeout ON cb_customHTML(cacheLastAccessTimeout);
+
 
 
 		*/
