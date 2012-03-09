@@ -67,8 +67,8 @@ component extends="BaseContentHandler" singleton{
 		index(event,rc,prc);
 
 		// verify if caching is possible by testing the page, also, page with comments are not cached.
-		if( prc.page.isLoaded() AND !prc.page.getAllowComments() AND prc.page.canCacheContent() ){
-			var data = controller.getPlugin("Renderer").renderLayout(module=event.getCurrentLayoutModule(),viewModule=event.getCurrentViewModule());
+		if( prc.page.isLoaded() AND !prc.page.getAllowComments() AND prc.page.getCacheLayout() ){
+			var data = controller.getPlugin("Renderer").renderLayout();
 			cache.set(cachekey,
 					  data,
 					  (prc.page.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : prc.page.getCacheTimeout()),

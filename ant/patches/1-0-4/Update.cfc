@@ -73,6 +73,10 @@ component implements="contentbox.model.updates.IUpdate"{
 		  KEY `idx_moduleName` (`name`)
 		) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
+		// Cache layout bits
+		ALTER TABLE cb_content ADD COLUMN cacheLayout BIT NULL DEFAULT b'1';
+		CREATE INDEX idx_cachelayout ON cb_content(cacheLayout);
+
 		// Create new columns custom HTML
 		ALTER TABLE cb_customHTML ADD COLUMN cache BIT NULL DEFAULT b'1';
 		ALTER TABLE cb_customHTML ADD COLUMN cacheTimeout INT NOT NULL DEFAULT 0;
