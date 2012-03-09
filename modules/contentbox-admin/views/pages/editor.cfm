@@ -27,7 +27,7 @@
 				@
 				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
 				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
-				
+
 				<!--- expire date --->
 				#html.inputField(size="9",type="date",name="expireDate",label="Expire Date",value=prc.page.getExpireDateForEditor(),class="textfield")#
 				@
@@ -209,12 +209,15 @@
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/page_big.png" alt="editor" width="30" height="30" />
 			Page Editor
-			<!--- View Page In Site --->
-			<cfif prc.page.isLoaded()>
+
 			<div class="floatRight">
-				<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;" title="Open page in site">View Page In Site</button>
+				<!--- View Page In Site --->
+					<button class="button2" onclick="return to('#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#')" title="Back To Page Listing">Back To Listing</button>
+				<cfif prc.page.isLoaded()>
+					<!--- View Page In Site --->
+					<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;" title="Open page in site">View Page In Site</button>
+				</cfif>
 			</div>
-			</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">

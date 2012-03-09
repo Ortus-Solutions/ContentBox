@@ -53,7 +53,7 @@ component {
 			{pattern="/dashboard/reload/:targetModule", handler="dashboard", action="reload" },
 			{pattern="/authors/page/:page",handler="authors"},
 			{pattern="/entries/page/:page",handler="entries"},
-			{pattern="/pages/parent/:parent",handler="pages"},
+			{pattern="/pages/parent/:parent?",handler="pages"},
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
 			{pattern="/comments/page/:page",handler="comments"},
 			{pattern="/customHTML/page/:page",handler="customHTML"},
