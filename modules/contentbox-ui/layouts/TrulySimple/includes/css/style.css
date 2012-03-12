@@ -286,6 +286,4 @@ textarea { border:1px solid #e8e8e8; margin:10px 0; padding:2px; background:#f8f
 p.response { text-align:center; color:#2c2c2c; font:bold 11px Arial, Helvetica, sans-serif; line-height:1.8em; width:auto;}
 p.clr, .clr { clear:both; padding:0; margin:0;}
 li.bg, .bg { clear:both; border-bottom:1px solid #dedede; padding:0px 0 0 0; margin:0 0 10px 0; background:none; list-style:none;}
-/** ============================== search results =============================== **/
-.highlight { background-color: yellow; font-weight:bold }
-cite {color: green; font-size:12px }
+

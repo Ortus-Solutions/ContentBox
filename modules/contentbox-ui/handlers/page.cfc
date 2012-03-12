@@ -27,54 +27,10 @@ component extends="BaseContentHandler" singleton{
 	// DI
 	property name="pageService"			inject="id:pageService@cb";
 	property name="searchService"		inject="id:SearchService@cb";
-	property name="securityService"		inject="id:securityService@cb";
-
 
 	// pre Handler
 	function preHandler(event,action,eventArguments){
 		super.preHandler(argumentCollection=arguments);
-	}
-
-	/**
-	* Around index to enable the caching aspects
-	*/
-	function aroundIndex(event,eventArguments){
-		var rc = event.getCollection();
-		var prc = event.getCollection(private=true);
-
-		// if not caching, just return
-		if( !prc.cbSettings.cb_content_caching ){
-			index(event,rc,prc);
-			return;
-		}
-
-		// Get appropriate cache provider
-		var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-		// Do we have an override page setup by the settings?
-		if( !structKeyExists(prc,"pageOverride") ){
-			// Try slug parsing for hiearchical URLs
-			cacheKey = "cb-content-pagewraper-#hash( '/' & event.getCurrentRoutedURL() )#";
-		}
-		else{
-			cacheKey = "cb-content-pagewraper-#hash(prc.pageOverride)#";
-		}
-
-		// verify page wrapper
-		var data = cache.get( cacheKey );
-		if( !isNull(data) ){ return data; }
-
-		// execute index
-		index(event,rc,prc);
-
-		// verify if caching is possible by testing the page, also, page with comments are not cached.
-		if( prc.page.isLoaded() AND !prc.page.getAllowComments() AND prc.page.getCacheLayout() ){
-			var data = controller.getPlugin("Renderer").renderLayout();
-			cache.set(cachekey,
-					  data,
-					  (prc.page.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : prc.page.getCacheTimeout()),
-					  (prc.page.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : prc.page.getCacheLastAccessTimeout()) );
-			return data;
-		}
 	}
 
 	/**
@@ -99,7 +55,7 @@ component extends="BaseContentHandler" singleton{
 		}
 
 		// get the author and do publish unpublished tests
-		var author = securityService.getAuthorSession();
+		var author = getModel("securityService@cb").getAuthorSession();
 		var showUnpublished = false;
 		if( author.isLoaded() AND author.isLoggedIn() ){
 			var showUnpublished = true;
@@ -231,7 +187,7 @@ component extends="BaseContentHandler" singleton{
 	/**
 	* Verify if a chosen page layout exists or not.
 	*/
-	private function verifyPageLayout(page){
+	private function verifyPageLayout(required page){
 		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.page.getLayout()#.cfm" ) ) ){
 			throw(message="The layout of the page: '#arguments.page.getLayout()#' does not exist in the current theme.",
 			      detail="Please verify your page layout settings",

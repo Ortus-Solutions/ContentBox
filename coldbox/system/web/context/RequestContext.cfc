@@ -648,13 +648,12 @@ Description :
 		<cfargument name="xmlListDelimiter" type="string"   required="false" default="," hint="XML Only: The delimiter in the list. Comma by default">
 		<cfargument name="xmlRootName"      type="string"   required="false" default="" hint="XML Only: The name of the initial root element of the XML packet">
 		<!--- ************************************************************* --->
-		<cfargument name="pdfArgs"      type="struct"   required="false" default="#structNew()#" hint="All the PDF arguments to pass along to the CFDocument tag.">
 		<cfscript>
 			var rd = structnew();
 
 			// Validate rendering type
-			if( not reFindnocase("^(JSON|JSONP|JSONT|WDDX|XML|PLAIN|HTML|TEXT|PDF)$",arguments.type) ){
-				$throw("Invalid rendering type","The type you sent #arguments.type# is not a valid rendering type. Valid types are JSON,JSONP,JSONT,XML,WDDX,TEXT,PLAIN,PDF","RequestContext.InvalidRenderTypeException");
+			if( not reFindnocase("^(JSON|JSONP|JSONT|WDDX|XML|PLAIN|HTML|TEXT)$",arguments.type) ){
+				$throw("Invalid rendering type","The type you sent #arguments.type# is not a valid rendering type. Valid types are JSON,JSONP,JSONT,XML,WDDX and PLAIN","RequestContext.InvalidRenderTypeException");
 			}
 
 			// Default Values for incoming variables
@@ -662,7 +661,6 @@ Description :
 			rd.data = arguments.data;
 			rd.encoding = arguments.encoding;
 			rd.contentType = "text/html";
-			rd.isBinary = false;
 
 			// HTTP status
 			rd.statusCode = arguments.statusCode;
@@ -678,9 +676,6 @@ Description :
 			rd.jsonQueryFormat 	= arguments.jsonQueryFormat;
 			rd.jsonCallBack 	= arguments.jsonCallBack;
 
-			// PDF properties
-			rd.pdfArgs = arguments.pdfArgs;
-
 			// Automatic Content Types by marshalling type
 			switch( rd.type ){
 				case "JSON" : case "JSONP" : {
@@ -695,11 +690,6 @@ Description :
 				}
 				case "XML" : case "WDDX" : { rd.contentType = "text/xml"; break; }
 				case "TEXT" : { rd.contentType = "text/plain"; break; }
-				case "PDF" : {
-					rd.contentType = "application/pdf";
-					rd.isBinary = true;
-					break;
-				}
 			}
 
 			// If contenttype passed, then override it?

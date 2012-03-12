@@ -23,7 +23,7 @@ limitations under the License.
 */
 component{
 	// Application properties, modify as you see fit
-	this.name 				= "ContentBox-Shell-" & hash(getCurrentTemplatePath());
+	this.name 				= "ContentBox-Shell-11-" & hash(getCurrentTemplatePath());
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;
@@ -44,18 +44,19 @@ component{
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
 	this.mappings["/contentbox-admin"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-admin";
-	// THE LOCATION OF EMBEDDED COLDBOX
-	this.mappings["/coldbox"] 	 = COLDBOX_APP_ROOT_PATH & "coldbox";
+	this.mappings["/contentbox-modules"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-modules";
+	// THE LOCATION OF COLDBOX
+	this.mappings["/coldbox"] 	 = expandPath("/coldbox");
 
 	// CONTENTBOX ORM SETTINGS
 	this.ormEnabled = true;
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
-		cfclocation=["model","modules/contentbox/model","modules/contentbox/modules"],
+		cfclocation=["model","/contentbox/model","/contentbox-modules"],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
-		dbcreate = "update",
+		dbcreate = "none",
 		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
 		secondarycacheenabled = true,
 		cacheprovider		= "ehCache",
@@ -82,7 +83,7 @@ component{
 	// request start
 	public boolean function onRequestStart(String targetPage){
 
-		if( structKeyExists(url,"ormReload") ){ ormReload(); }
+		//if( structKeyExists(url,"ormReload") ){ ormReload(); }
 		//applicationstop();abort;
 
 		// Bootstrap Reinit

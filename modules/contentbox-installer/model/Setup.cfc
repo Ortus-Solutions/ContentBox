@@ -12,8 +12,8 @@ component accessors="true" {
 	property name="cb_site_mail_password";
 	property name="cb_site_mail_smtp";
 	property name="cb_site_mail_tls";
-	property name="cb_site_mail_ssl";
-
+	property name="cb_site_mail_ssl";	
+	
 	// Constructor
 	function init(){
 		siteKeywords = "";
@@ -25,10 +25,10 @@ component accessors="true" {
 		cb_site_mail_smtp = "25";
 		cb_site_mail_tls = "false";
 		cb_site_mail_ssl = "false";
-
+		
 		return this;
 	}
-
+	
 	function getUserData(){
 		var results = {
 			firstname = firstname,
@@ -39,7 +39,7 @@ component accessors="true" {
 		};
 		return results;
 	}
-
+	
 	function getUniqueHash(){
 		return hash( variables.toString(), "MD5" );
 	}

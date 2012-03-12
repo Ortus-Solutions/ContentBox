@@ -114,9 +114,6 @@ component {
 		binder.map("layoutService@cb").to("contentbox.model.ui.LayoutService");
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
-		binder.map("AdminMenuService@cb").to("contentbox.model.ui.AdminMenuService");
-		// Modules
-		binder.map("moduleService@cb").to("contentbox.model.modules.ModuleService");
 		// utils
 		binder.map("zipUtil@cb").to("coldbox.system.core.util.Zip");
 		binder.map("HQLHelper@cb").to("contentbox.model.util.HQLHelper");
@@ -127,6 +124,7 @@ component {
 		// importers
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
+		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.blogcfcImporter");
 
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
@@ -136,8 +134,6 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Startup the ContentBox modules, if any
-		controller.getWireBox().getInstance("moduleService@cb").startup();
 	}
 
 	/**

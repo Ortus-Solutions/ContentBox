@@ -59,9 +59,9 @@ component extends="coldbox.system.Interceptor"{
 	function cbui_postPageDisplay(event,interceptData){
 		appendToBuffer( getSettings( event ).cb_html_postPageDisplay );
 	}
-
-	private function getSettings(event){
-		return event.getValue(name="cbSettings",private=true);
+	
+	private function getSettings(required event){
+		return event.getValue(name="cbSettings",private=true); 
 	}
 
 }

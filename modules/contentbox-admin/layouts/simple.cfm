@@ -4,22 +4,22 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<!--- Robots --->
-	<meta name="robots" content="noindex,nofollow" />
+	<meta name="robots" content="noindex,nofollow" />	
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>ContentBox Administrator - Login</title>
+    <title>ContentBox Administrator - Login</title> 
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
 	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet" type="text/css"/>
 	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet" type="text/css"/>
 	<link href="#prc.cbroot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
-
+            
 	<!--- JS --->
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/contentbox.js"></script>
-
+	
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginHeadEnd")#
 </head>
@@ -29,36 +29,38 @@
 	#announceInterception("cbadmin_afterLoginBodyStart")#
 	<!--==================== Header =======================-->
 	<div id="header_bg">
-
+	
 		<!--============Header Wrapper============-->
 		<div class="wrapper">
-
+	       
 			<!--=======Top Header area======-->
 			<div id="header_top">
 				<span class="fr"><br/>
 				<!--- cbadmin event --->
 				#announceInterception("cbadmin_onTopBar")#
 				</span>
-			  	<!--- cbadmin event --->
+			  	<!--- site tag line --->
+				#prc.cbSettings.cb_site_name# - #prc.cbSettings.cb_site_tagline#
+				<!--- cbadmin event --->
 				#announceInterception("cbadmin_onTagline")#
 			</div>
 			<!--End Header top Area=-->
-
+	    
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
-				<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo" title="ContentBox by ColdBox!"/>
+				<img src="#prc.cbroot#/includes/images/ContentBox_125.gif" height="120" border="0" alt="logo" title="ContentBox by ColdBox!"/>
 			</div>
-
+			
 			<div id="header_main" class="clearfix">
-	           	<h1>ContentBox Admin</h1>
+	           	<h1>ContentBox Admin <span>v.#getModuleSettings('contentbox-admin').version#</span></h1>
 			</div>
 			<!--End Search field and logo Header Area-->
-
+	      	
 	  	</div>
 	  <!--End Wrapper-->
 	</div>
 	<!--End Header-->
-
+	
 	<!--============================ Template Content Background ============================-->
 	<div id="content_bg" class="clearfix">
 		<!--============================ Main Content Area ============================-->
@@ -66,12 +68,12 @@
 			<!--- cbadmin event --->
 			#announceInterception("cbadmin_beforeLoginContent")#
 			<!--- Main Content --->
-			#renderView()#
+			#renderView()#		
 			<!--- cbadmin event --->
 			#announceInterception("cbadmin_afterLoginContent")#
 		</div>
 	</div>
-
+	
 	<!--============================Footer============================-->
 	<div id="footer">
 		<!--- cbadmin event --->
@@ -82,7 +84,7 @@
 		</div>
 	</div>
 	<!--End Footer-->
-
+	
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginBodyEnd")#
 </body>

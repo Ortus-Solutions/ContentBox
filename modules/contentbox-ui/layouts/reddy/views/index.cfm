@@ -7,7 +7,7 @@
 
 <!--- content --->
 <div id="text" >
-	
+
 	<!--- Are we filtering by category? --->
 	<cfif cb.categoryFilterExists()>
 		<div class="buttonBar">
@@ -18,7 +18,7 @@
 		</div>
 		<br/>
 	</cfif>
-	
+
 	<!--- Are we searching --->
 	<cfif cb.searchTermExists()>
 		<div class="buttonBar">
@@ -29,18 +29,18 @@
 		</div>
 		<br/>
 	</cfif>
-	
-	<!--- 
+
+	<!---
 		Display Entries using ContentBox collection template rendering
 		The default convention for the template is "entry.cfm" you can change it via the quickEntries() 'template' argument.
 		I could have done it manually, but why?
 	 --->
 	#cb.quickEntries()#
-	
+
 	<!--- Paging via ContentBox via quick HTML, again I could have done it manually, but why? --->
 	<div class="contentBar">#cb.quickPaging()#</div>
-	
+
 </div>
 <!--- ContentBoxEvent --->
-#cb.event("cbui_postIndexDisplay")#	
+#cb.event("cbui_postIndexDisplay")#
 </cfoutput>
