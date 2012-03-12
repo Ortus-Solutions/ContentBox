@@ -195,17 +195,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	// Determine if you are in the archives view
 	boolean function isArchivesView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.archives" AND event.valueExists("page",true) );
+		return (event.getCurrentEvent() eq "contentbox-ui:blog.archives" AND event.valueExists("entry",true) );
 	}
 	// Determine if you are in the index view
 	boolean function isIndexView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.index" AND event.valueExists("page",true) );
+		return (event.getCurrentEvent() eq "contentbox-ui:blog.index");
 	}
 	// Determine if you are in the entry view
 	boolean function isEntryView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.entry" AND event.valueExists("page",true) );
+		return (event.getCurrentEvent() eq "contentbox-ui:blog.entry" AND event.valueExists("entry",true) );
 	}
 	/**
 	* Determine if you are in the page view
