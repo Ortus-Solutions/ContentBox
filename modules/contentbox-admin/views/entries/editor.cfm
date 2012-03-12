@@ -28,7 +28,7 @@
 				@
 				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
 				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
-				
+
 				<!--- expire date --->
 				#html.inputField(size="9",type="date",name="expireDate",label="Expire Date",value=prc.entry.getExpireDateForEditor(),class="textfield")#
 				@
@@ -135,11 +135,13 @@
 				<div class="pane">
 
 					<!--- Cache Settings --->
-					#html.label(field="cache",content="Cache Content:",class="inline")#
+					#html.label(field="cache",content="Cache Entry Content: (fast)")#
+					<small>Caches content translation only</small><Br/>
 					#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.entry.getCache()))#<br/>
+
 					#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.entry,title="Enter the number of minutes to cache your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
 					#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.entry,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
-				
+
 				</div>
 
 				<!--- Categories --->

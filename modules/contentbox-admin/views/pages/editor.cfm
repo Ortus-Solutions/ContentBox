@@ -160,9 +160,9 @@
 					<small>Caches content translation only</small><Br/>
 					#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCache()))#<br/>
 
-					#html.label(field="cache",content="Cache Page Layout: (faster)")#
+					#html.label(field="cacheLayout",content="Cache Page Layout: (faster)")#
 					<small>Caches all generated page+layout HTML</small><br/>
-					#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCacheLayout()))#<br/>
+					#html.select(name="cacheLayout",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCacheLayout()))#<br/>
 
 					#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.page,title="Enter the number of minutes to cache your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
 					#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.page,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
