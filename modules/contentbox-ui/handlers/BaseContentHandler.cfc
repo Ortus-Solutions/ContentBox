@@ -47,7 +47,7 @@ component{
 		event.setLayout("#prc.cbLayout#/layouts/blog");
 
 		// Get all categories
-		prc.categories = categoryService.list(sortOrder="category desc",asQuery=false);
+		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 
 		// Home page determination either blog or a page
 		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog"){
