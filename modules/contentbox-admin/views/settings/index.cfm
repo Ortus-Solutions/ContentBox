@@ -326,8 +326,8 @@
 						<fieldset>
 							<legend><img src="#prc.cbRoot#/includes/images/search_black.png" alt="modifiers"/>  Search Options</legend>
 
-							<!--- Max Search Results --->
-							<label for="cb_search_maxResults">Max Search Results:</label>
+							<!--- Max RSS Entries --->
+							<label for="cb_rss_maxEntries">Max Search Results:</label>
 							<small>The number of search results to show before paging kicks in.</small><br/>
 							<select name="cb_search_maxResults" id="cb_search_maxResults">
 								<cfloop from="5" to="50" step="5" index="i">
@@ -355,8 +355,8 @@
 							<legend><img src="#prc.cbRoot#/includes/images/feed.png" alt="modifiers"/>  RSS Options</legend>
 
 							<!--- Max RSS Entries --->
-							<label for="cb_rss_maxEntries">Max RSS Content Items:</label>
-							<small>The number of recent content items to show on the syndication feeds.</small><br/>
+							<label for="cb_rss_maxEntries">Max RSS Blog Entries:</label>
+							<small>The number of recent entries to show on the syndication feeds.</small><br/>
 							<select name="cb_rss_maxEntries" id="cb_rss_maxEntries">
 								<cfloop from="5" to="50" step="5" index="i">
 									<option value="#i#" <cfif i eq prc.cbSettings.cb_rss_maxEntries>selected="selected"</cfif>>#i#</option>
@@ -364,7 +364,7 @@
 							</select>
 
 							<!--- Max RSS Comments --->
-							<label for="cb_rss_maxComments">Max RSS Content Comments:</label>
+							<label for="cb_rss_maxComments">Max RSS Blog Comments:</label>
 							<small>The number of recent comments to show on the syndication feeds.</small><br/>
 							<select name="cb_rss_maxComments" id="cb_rss_maxComments">
 								<cfloop from="5" to="50" step="5" index="i">

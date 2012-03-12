@@ -1,0 +1,145 @@
+
+
+
+
+input, textarea {
+    -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.075) inset;
+}
+input, textarea, select, .uneditable-input {
+    border-radius: 0px 0px 0px 0px;
+}
+button, input, select, textarea {
+    vertical-align: inherit;
+}
+
+li {
+    line-height: 18px;
+    padding-bottom: 10px;
+}
+
+
+body {
+	background: #FFFFFF url(../images/bg.png) repeat-x;
+	color: #334366;
+	font-family: Arial, Tahoma, Verdana;
+	font-size: 13px;
+	margin: 0 auto 0;
+	line-height: 20px;
+}
+
+#header {
+    height: 120px;
+    width: 960px;
+
+	background: url("../images/bg-center.jpg") no-repeat scroll center top transparent;
+    margin: 0 auto;
+}
+
+#header #title-area {
+    background: url("../images/logo.png") no-repeat scroll center top transparent;
+}
+
+#title-area, #title-area #title, #title-area #title a {
+    display: block;
+    float: left;
+    height: 120px;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -9999px;
+    width: 320px;
+}
+
+#inner {
+    margin: 20px 0;
+    width: 960px;
+}
+
+.searchform {
+    margin: 0;
+}
+
+/***** Primary & Secondary Sidebars ********************/
+#sidebar {
+	background: url(../images/sidebar-bg.png) repeat-y left;
+	width: 280px;
+	float: right;
+	display: inline;
+	padding: 0 0 0 20px;
+	}
+	
+body.sidebar-content #sidebar, body.sidebar-sidebar-content #sidebar {
+	background: url(../images/sidebar-bg-left.png) repeat-y right;
+	padding-left: 0px;
+	padding-right: 20px;
+	}
+
+#sidebar-alt {
+	width: 150px;
+	float: left;
+	display: inline;
+	margin: 33px 0 0 0;
+	}
+
+#sidebar-top {
+	background: url(../images/sidebar-top.png) no-repeat left;
+	width: 300px;
+	height: 33px;
+	margin: 0 0 0 -20px;
+	}
+
+#sidebar-bottom {
+	background: url(../images/sidebar-bottom.png) no-repeat left;
+	width: 300px;
+	height: 33px;
+	margin: 0 0 0 -20px;
+	}
+	
+#sidebar h4, #sidebar-alt h4 {
+    border-bottom: 1px dotted #DBDEE4;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px 0;
+}
+
+#sidebar .searchform {
+    padding: 5px 0 0;
+}
+
+#sidebar .widget, #sidebar-alt .widget {
+    margin: 0 0 15px;
+    padding: 0 0 10px;
+}
+
+/***** Search Form(s) ********************/
+
+.searchform {
+	margin: 0;
+	}
+
+#header .searchform {
+	float: right;
+	padding: 0px 0 0 0;
+	}
+	
+#sidebar .searchform {
+	padding: 10px 0 0 0px;
+	}
+	
+#nav .searchform {
+	float: right;
+	padding: 0;
+	}
+	
+	
+.s {
+    background: none repeat scroll 0 0 #FFFFFF !important;
+    border: 1px solid #DBDEE4;
+    color: #6C7996;
+    font-family: Arial,Tahoma,Verdana;
+    font-size: 11px;
+    margin: 5px 2px 0 0;
+    padding: 6px 10px 5px;
+    width: 170px;
+}

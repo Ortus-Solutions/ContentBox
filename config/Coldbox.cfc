@@ -1,4 +1,4 @@
-<!---
+<!--- 
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -6,18 +6,18 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+you may not use this file except in compliance with the License. 
+You may obtain a copy of the License at 
 
-http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0 
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
+Unless required by applicable law or agreed to in writing, software 
+distributed under the License is distributed on an "AS IS" BASIS, 
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
  --->
@@ -33,8 +33,8 @@ limitations under the License.
 
 			//Development Settings
 			debugMode				= false,
-			debugPassword			= "@fwPassword@",
-			reinitPassword			= "@fwPassword@",
+			debugPassword			= "9D326E1FD9A22143B1745C08D4E6B0EF",
+			reinitPassword			= "9D326E1FD9A22143B1745C08D4E6B0EF",
 			handlersIndexAutoReload = false,
 
 			//Implicit Events
@@ -129,7 +129,7 @@ limitations under the License.
 		coldbox.handlerCaching = false;
 		coldbox.reinitpassword = "";
 		coldbox.debugpassword = "";
-		//wirebox.singletonreload = true;
+		wirebox.singletonreload = true;
 
 		//Debugger Settings
 		debugger.showRCPanel = false;
