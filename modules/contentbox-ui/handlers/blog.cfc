@@ -6,18 +6,18 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 * Handler For ContentBox blog pages
@@ -37,7 +37,7 @@ component extends="BaseContentHandler" singleton{
 			event.overrideEvent("contentbox-ui:blog.disabled");
 		}
 	}
-	
+
 	function disabled(event,rc,prc){
 		// missing page, the blog as it does not exist
 		prc.missingPage 	 = event.getCurrentRoutedURL();
@@ -70,7 +70,7 @@ component extends="BaseContentHandler" singleton{
 			index(argumentCollection=arguments);
 		}
 		else{
-			setNextEvent(URL=CBHelper.linkHome());
+			setNextEvent(URL=CBHelper.linkBlog());
 		}
 	}
 
@@ -86,15 +86,15 @@ component extends="BaseContentHandler" singleton{
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 			= CBHelper.linkHome() & "?page=@page@";
+		prc.pagingLink 			= CBHelper.linkBlog() & "?page=@page@";
 
 		// Search Paging Link Override?
 		if( len(rc.q) ){
-			prc.pagingLink = CBHelper.linkHome() & "/search/#rc.q#/@page@?";
+			prc.pagingLink = CBHelper.linkBlog() & "/search/#rc.q#/@page@?";
 		}
 		// Category Filter Link Override
 		if( len(rc.category) ){
-			prc.pagingLink = CBHelper.linkHome() & "/category/#rc.category#/@page@?";
+			prc.pagingLink = CBHelper.linkBlog() & "/category/#rc.category#/@page@?";
 		}
 
 		// get published entries
@@ -126,7 +126,7 @@ component extends="BaseContentHandler" singleton{
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 			= CBHelper.linkHome() & event.getCurrentRoutedURL() & "?page=@page@";
+		prc.pagingLink 			= CBHelper.linkBlog() & event.getCurrentRoutedURL() & "?page=@page@";
 
 		// get published entries
 		var entryResults = entryService.findPublishedEntriesByDate(year=rc.year,
