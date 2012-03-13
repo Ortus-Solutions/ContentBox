@@ -35,6 +35,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="permissionService" 		inject="permissionService@cb";
 	property name="roleService" 			inject="roleService@cb";
 	property name="securityRuleService"		inject="securityRuleService@cb";
+	property name="pageService"				inject="pageService@cb";
 
 	function init(){
 		return this;
@@ -103,6 +104,17 @@ component implements="contentbox.model.updates.IUpdate"{
 				updateAdmin();
 				// update security rules
 				securityRuleService.resetRules();
+				// Update all page slugs to new format
+				var allPages = pageService.getAll(sortOrder="parent");
+				var slugMap = {};
+				for(var thisPage in allPages){
+					slugMap[ thisPage.getContentID() ] = reReplaceNoCase(thisPage.getRecursiveSlug(), "^\/","");
+				}
+				for(var thisSlug in slugMap){
+					var newPage = pageService.get( thisSlug );
+					newPage.setSlug( slugMap[thisSlug] );
+					pageService.save( newPage );
+				}
 			}
 		}
 		catch(Any e){

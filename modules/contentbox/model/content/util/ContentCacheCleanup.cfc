@@ -35,7 +35,7 @@ component extends="coldbox.system.Interceptor"{
 		cache.clearByKeySnippet(keySnippet=arguments.cacheKey,async=false);
 
 		if( structKeyExists(arguments,"content") and arguments.content.getContentType() eq "page"){
-			cache.clearByKeySnippet(keySnippet="cb-content-pagewraper-#hash( arguments.content.getRecursiveSlug() & "/" )#",async=false);
+			cache.clearByKeySnippet(keySnippet="cb-content-pagewraper-#arguments.content.getSlug()#",async=false);
 		}
 
 		// log

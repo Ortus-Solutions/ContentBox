@@ -240,8 +240,9 @@
 			<!--- slug --->
 			<label for="slug">Permalink:
 				<img src='#prc.cbroot#/includes/images/link.png' alt='permalink' title="Convert title to permalink" onclick="createPermalink()"/>
+				<cfif prc.page.hasParent()> <small>/#prc.page.getParent().getSlug()#/</small></cfif>
 			</label>
-			#html.textfield(name="slug",bind=prc.page,maxlength="100",class="textfield width98",title="The URL permalink for this page")#
+			#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width98",title="The URL permalink for this page")#
 
 			<!--- content --->
 			#html.textarea(label="Content:",name="content",bind=prc.page,rows="25")#

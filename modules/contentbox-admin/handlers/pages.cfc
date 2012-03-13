@@ -176,7 +176,11 @@ component extends="baseHandler"{
 		// Register a new content in the page, versionized!
 		page.addNewContentVersion(content=rc.content,changelog=rc.changelog,author=prc.oAuthor);
 		// attach parent page
-		if( len(rc.parentPage) ){ page.setParent( pageService.get( rc.parentPage ) ); }
+		if( len(rc.parentPage) ){
+			page.setParent( pageService.get( rc.parentPage ) );
+			// update slug
+			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
+		}
 		// Create new categories?
 		var categories = [];
 		if( len(trim(rc.newCategories)) ){
@@ -233,8 +237,13 @@ component extends="baseHandler"{
 		}
 		// get a clone
 		var clone = pageService.new({title=rc.title,slug=getPlugin("HTMLHelper").slugify( rc.title )});
+		// attach to the original's parent.
+		if( original.hasParent() ){
+			clone.setParent( original.getParent() );
+			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
+		}
 		// prepare descendants for cloning, might take a while if lots of children to copy.
-		clone.prepareForClone(author=prc.oAuthor,original=original);
+		clone.prepareForClone(author=prc.oAuthor,original=original,originalService=pageService);
 		// clone this sucker now!
 		pageService.savePage( clone );
 		// relocate
@@ -246,7 +255,6 @@ component extends="baseHandler"{
 			setNextEvent(event=prc.xehPages);
 		}
 	}
-
 
 	// remove
 	function remove(event,rc,prc){
