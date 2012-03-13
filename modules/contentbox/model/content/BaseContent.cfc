@@ -100,6 +100,17 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		return this;
 	}
 
+	/**
+	* Get recursive slug paths to get ancestry, DEPRECATED.
+	* @deprecated
+	*/
+	function getRecursiveSlug(separator="/"){
+		var pPath = "";
+		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
+		return pPath & arguments.separator & getSlug();
+	}
+
+
 	// Retrieves the latest content string from the latest version un-translated
 	function getContent(){
 		// return active content if we have any
