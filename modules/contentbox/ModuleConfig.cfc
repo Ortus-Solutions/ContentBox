@@ -34,7 +34,7 @@ component {
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
 
-	function configure(){
+	function configure() {
 		// contentbox settings
 		settings = {
 			codename = "John 12:44",
