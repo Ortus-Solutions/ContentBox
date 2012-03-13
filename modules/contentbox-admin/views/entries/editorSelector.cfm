@@ -7,7 +7,7 @@
 	<div class="loaders floatRight" id="entryLoader">
 		<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
 	</div>
-	
+
 	<!--- Content Bar --->
 	<div class="contentBar" id="contentBar">
 
@@ -22,7 +22,7 @@
 
 	<!--- Paging --->
 	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
-	
+
 	<!--- entries --->
 	<table name="entries" id="entries" class="tablesorter" width="98%">
 		<thead>
@@ -53,13 +53,13 @@
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return selectCBContent('#entry.getRecursiveSlug()#','#entry.getTitle()#','entry')">Select</button>
+					<button class="button2" onclick="return selectCBContent('#entry.getSlug()#','#entry.getTitle()#','entry')">Select</button>
 				</td>
 			</tr>
 			</cfloop>
 		</tbody>
 	</table>
-			
+
 #html.endForm()#
 </div>
 <hr/>

@@ -216,9 +216,6 @@
 						<td class="center">#page.getHits()#</td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
-							<!--- Edit Command --->
-							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
-							&nbsp;
 							<!--- Clone Command --->
 							<a href="javascript:clonePage('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')" title="Clone Page Including Descendants"><img src="#prc.cbroot#/includes/images/clone.png" alt="edit" border="0"/></a>
 							&nbsp;

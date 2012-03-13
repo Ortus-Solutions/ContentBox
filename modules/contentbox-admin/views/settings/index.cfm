@@ -72,7 +72,7 @@
 							<select name="cb_site_homepage" id="cb_site_homepage" class="width98">
 								<option value="cbBlog" <cfif prc.cbSettings.cb_site_homepage eq "cbBlog">selected="selected"</cfif>>Latest Blog Entries</option>
 								<cfloop array="#prc.pages#" index="thisPage" >
-								<option value="#thispage.getRecursiveSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getRecursiveSlug()>selected="selected"</cfif>>#thisPage.getTitle()#</option>
+								<option value="#thispage.getSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getSlug()>selected="selected"</cfif>>#thisPage.getTitle()#</option>
 								</cfloop>
 							</select>
 

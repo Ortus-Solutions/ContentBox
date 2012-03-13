@@ -159,7 +159,9 @@ component extends="baseHandler"{
 		}
 
 		// get new/persisted page and populate it with incoming data.
-		var page  = populateModel( pageService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		var page 			= pageService.get(rc.contentID);
+		var originalSlug 	= page.getSlug();
+		populateModel( page ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		var isNew = (NOT page.isLoaded());
 
 		// Validate Page And Incoming Data
@@ -176,7 +178,11 @@ component extends="baseHandler"{
 		// Register a new content in the page, versionized!
 		page.addNewContentVersion(content=rc.content,changelog=rc.changelog,author=prc.oAuthor);
 		// attach parent page
-		if( len(rc.parentPage) ){ page.setParent( pageService.get( rc.parentPage ) ); }
+		if( len(rc.parentPage) ){
+			page.setParent( pageService.get( rc.parentPage ) );
+			// update slug
+			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
+		}
 		// Create new categories?
 		var categories = [];
 		if( len(trim(rc.newCategories)) ){
@@ -192,7 +198,7 @@ component extends="baseHandler"{
 		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
 
 		// save entry
-		pageService.savePage( page );
+		pageService.savePage( page, originalSlug );
 
 		// announce event
 		announceInterception("cbadmin_postPageSave",{page=page,isNew=isNew});
@@ -233,8 +239,13 @@ component extends="baseHandler"{
 		}
 		// get a clone
 		var clone = pageService.new({title=rc.title,slug=getPlugin("HTMLHelper").slugify( rc.title )});
+		// attach to the original's parent.
+		if( original.hasParent() ){
+			clone.setParent( original.getParent() );
+			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
+		}
 		// prepare descendants for cloning, might take a while if lots of children to copy.
-		clone.prepareForClone(author=prc.oAuthor,original=original);
+		clone.prepareForClone(author=prc.oAuthor,original=original,originalService=pageService);
 		// clone this sucker now!
 		pageService.savePage( clone );
 		// relocate
@@ -246,7 +257,6 @@ component extends="baseHandler"{
 			setNextEvent(event=prc.xehPages);
 		}
 	}
-
 
 	// remove
 	function remove(event,rc,prc){

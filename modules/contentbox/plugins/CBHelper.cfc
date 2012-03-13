@@ -596,7 +596,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 		if( isSimpleValue(arguments.page) ){
 			return linkPageWithSlug( arguments.page );
 		}
-		var xeh = siteRoot() & "#replace(arguments.page.getRecursiveSlug(),"/","")#";
+		var xeh = siteRoot() & arguments.page.getSlug();
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 

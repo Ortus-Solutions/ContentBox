@@ -165,15 +165,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 
 	/**
-	* Get recursive slug paths to get ancestry
-	*/
-	function getRecursiveSlug(separator="/"){
-		var pPath = "";
-		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
-		return pPath & arguments.separator & getSlug();
-	}
-
-	/**
 	* Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
 	*/
 	boolean function isExpired(){
@@ -204,8 +195,10 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* Wipe primary key, and descendant keys, and prepare for cloning
 	* @author.hint The author doing the cloning
+	* @original.hint The original content object that will be cloned into this content object
+	* @originalService.hint The ContentBox content service object
 	*/
-	BaseContent function prepareForClone(required any author, required any original){
+	BaseContent function prepareForClone(required any author, required any original, required originalService){
 		// set not published
 		isPublished = false;
 		// reset creation date
@@ -228,8 +221,25 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		// safe clone categories
 		categories = duplicate( arguments.original.getCategories() );
-
-		// evict original entity
+		// now clone children
+		if( original.hasChild() ){
+			var allChildren = original.getChildren();
+			// iterate and copy
+			for(var thisChild in allChildren){
+				var newChild = originalService.new();
+				// attach to new parent copy
+				newChild.setParent( this );
+				// Setup the Page Title
+				newChild.setTitle( thisChild.getTitle() );
+				// Create the new hierarchical slug
+				newChild.setSlug( this.getSlug() & "/" & listLast( thisChild.getSlug(), "/" ) );
+				// now deep clone until no more child is left behind.
+				newChild.prepareForClone(author=arguments.author,original=thisChild,originalService=originalService);
+				// now attach it
+				addChild( newChild );
+			}
+		}
+		// evict original entity, just in case
 		contentService.evictEntity( arguments.original );
 
 		return this;

@@ -53,15 +53,20 @@ component extends="BaseContentHandler" singleton{
 		// Do we have an override page setup by the settings?
 		if( !structKeyExists(prc,"pageOverride") ){
 			// Try slug parsing for hiearchical URLs
-			cacheKey = "cb-content-pagewraper-#hash( '/' & event.getCurrentRoutedURL() )#";
+			cacheKey = "cb-content-pagewraper-#left(event.getCurrentRoutedURL(),255)#";
 		}
 		else{
-			cacheKey = "cb-content-pagewraper-#hash(prc.pageOverride)#";
+			cacheKey = "cb-content-pagewraper-#prc.pageOverride#";
 		}
 
 		// verify page wrapper
 		var data = cache.get( cacheKey );
-		if( !isNull(data) ){ return data; }
+		if( !isNull(data) ){
+			// set cache header
+			event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information");
+			// return cache content
+			return data;
+		}
 
 		// execute index
 		index(event,rc,prc);
@@ -83,33 +88,26 @@ component extends="BaseContentHandler" singleton{
 	function index(event,rc,prc){
 		// incoming params
 		event.paramValue("pageSlug","");
-
-		var incomingSlug = "";
 		var incomingURL  = "";
-
 		// Do we have an override page setup by the settings?
 		if( !structKeyExists(prc,"pageOverride") ){
 			// Try slug parsing for hiearchical URLs
-			incomingURL  = "/" & event.getCurrentRoutedURL();
-			incomingSlug = listLast(incomingURL,"/");
+			incomingURL  = rereplaceNoCase(event.getCurrentRoutedURL(), "\/$","");
 		}
 		else{
-			incomingURL	 = prc.pageOverride & "/";
-			incomingslug = listLast(incomingURL,"/");
+			incomingURL	 = prc.pageOverride;
 		}
-
 		// get the author and do publish unpublished tests
 		var author = securityService.getAuthorSession();
 		var showUnpublished = false;
 		if( author.isLoaded() AND author.isLoggedIn() ){
 			var showUnpublished = true;
 		}
-
-		// Try to get the page using the last slug.
-		prc.page = pageService.findBySlug( incomingSlug, showUnpublished );
+		// Try to get the page using the incoming URI
+		prc.page = pageService.findBySlug( incomingURL, showUnpublished );
 
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
-		if( prc.page.isLoaded() AND (prc.page.getRecursiveSlug() & "/") eq incomingURL){
+		if( prc.page.isLoaded() ){
 			// Record hit
 			prc.page.updateHits();
 			// Retrieve Comments
@@ -217,7 +215,7 @@ component extends="BaseContentHandler" singleton{
 			// MessageBox
 			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
 			// put slug in request
-			prc.pageOverride = page.getRecursiveSlug();
+			prc.pageOverride = page.getSlug();
 			// Execute entry again, need to correct form
 			return index(argumentCollection=arguments);
 		}
