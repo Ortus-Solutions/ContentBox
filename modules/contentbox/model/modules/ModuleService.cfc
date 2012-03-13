@@ -217,8 +217,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 					thisModule = registerNewModule( moduleName );
 				}
 				// If we get here, the module is loaded in the database now
-				if( thisModule.getIsActive() ){
-					// load only active modules via ColdBox
+				if( thisModule.getIsActive() AND not structKeyExists(coldboxModuleService.getModuleRegistry(), moduleName)){
+					// load only active modules via ColdBox if they are not loaded already
 					coldboxModuleService.registerAndActivateModule(moduleName, modulesInvocationPath);
 				}
 			}
