@@ -132,7 +132,6 @@ component implements="contentbox.model.importers.ICBImporter" {
 					arrayAppend(aCategories, categoryService.get(catMap[qCategories.categoryId[y]]));
 				}
 				entry.setCategories(aCategories);
-
 				entitySave(entry);
 
 				log.info("Starting to import Entry Comments....");

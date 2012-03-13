@@ -133,13 +133,13 @@ component {
 	/**
 	* Fired when the module is registered and activated.
 	*/
-	function onLoad(){
+	function onLoad() {
 	}
 
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
-	function onUnload(){
+	function onUnload() {
 	}
 
 	/************************************** PRIVATE *********************************************/
@@ -147,7 +147,7 @@ component {
 	/**
 	* load hibernatate transactions via AOP
 	*/
-	private function loadHibernateTransactions(binder){
+	private function loadHibernateTransactions(binder) {
 		// map the hibernate transaction for contentbox
 		binder.mapAspect(aspect="CBHibernateTransaction",autoBinding=false)
 			.to("coldbox.system.aop.aspects.HibernateTransaction");
