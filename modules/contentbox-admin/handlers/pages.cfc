@@ -159,7 +159,9 @@ component extends="baseHandler"{
 		}
 
 		// get new/persisted page and populate it with incoming data.
-		var page  = populateModel( pageService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
+		var page 			= pageService.get(rc.contentID);
+		var originalSlug 	= page.getSlug();
+		populateModel( page ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		var isNew = (NOT page.isLoaded());
 
 		// Validate Page And Incoming Data
@@ -196,7 +198,7 @@ component extends="baseHandler"{
 		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
 
 		// save entry
-		pageService.savePage( page );
+		pageService.savePage( page, originalSlug );
 
 		// announce event
 		announceInterception("cbadmin_postPageSave",{page=page,isNew=isNew});

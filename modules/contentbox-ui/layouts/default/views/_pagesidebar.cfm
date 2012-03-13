@@ -6,7 +6,7 @@
 <cfif cb.isPageView() AND cb.getCurrentPage().getNumberOfChildren()>
 <h4>Sub Pages</h4>
 <div class="bg"></div>
-#cb.subPageMenu(page=cb.getCurrentPage().getParent(),type="ul")#
+#cb.subPageMenu(page=cb.getCurrentPage(),type="ul")#
 </cfif>
 
 <h4>Description</h4>

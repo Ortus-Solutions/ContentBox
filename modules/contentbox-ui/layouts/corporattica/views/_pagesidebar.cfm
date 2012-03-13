@@ -14,7 +14,7 @@
 <div class="news">
 <h4>Sub Pages</h4>
 <div class="bg"></div>
-#cb.subPageMenu(page=cb.getCurrentPage().getParent(),type="ul")#
+#cb.subPageMenu(page=cb.getCurrentPage(),type="ul")#
 </div>
 </cfif>
 

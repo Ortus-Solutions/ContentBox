@@ -129,7 +129,7 @@ limitations under the License.
 		coldbox.handlerCaching = false;
 		coldbox.reinitpassword = "";
 		coldbox.debugpassword = "";
-		//wirebox.singletonreload = true;
+		wirebox.singletonreload = true;
 
 		//Debugger Settings
 		debugger.showRCPanel = false;
