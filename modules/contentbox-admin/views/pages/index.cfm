@@ -66,6 +66,7 @@
 				<li title="Click Me!" onclick="exposeIt('##pages')">Right click on a row to activate quick look!</li>
 				<li title="Click Me!" onclick="exposeIt('##main_column')">Sorting is only done within your paging window</li>
 				<li title="Click Me!" onclick="exposeIt('##contentBar')">Quick Filtering is only for viewed results</li>
+				<li>Cloning does not copy comments or version history</li>
 				<li>You can quickly order the pages by dragging the rows</li>
 			</ul>
 		</div>
@@ -147,7 +148,7 @@
 
 				<tbody>
 					<cfloop array="#prc.pages#" index="page">
-					<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#" 
+					<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#"
 						<cfif page.isExpired()>
 							class="expired"
 						<cfelseif page.isPublishedInFuture()>
@@ -169,7 +170,7 @@
 								<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a>
 							<cfelse>
 								#page.getTitle()#
-							</cfif>							
+							</cfif>
 							<br>
 							Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a></br>
 							<!--- password protect --->
@@ -217,6 +218,9 @@
 							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Edit Command --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
+							&nbsp;
+							<!--- Clone Command --->
+							<a href="javascript:clonePage('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')" title="Clone Page Including Descendants"><img src="#prc.cbroot#/includes/images/clone.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Create Child --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>

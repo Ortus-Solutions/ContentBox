@@ -43,5 +43,11 @@ function remove(contentID){
 	$("##contentID").val( contentID );
 	$("##pageForm").submit();
 }
+function clonePage(contentID, title){
+	var newTitle = prompt("Please Enter The New Page Title", title);
+	if (newTitle != null) {
+		to("#event.buildLink(prc.xehPageClone)#?title=" + title + "&contentID=" + contentID);
+	}
+}
 </script>
 </cfoutput>

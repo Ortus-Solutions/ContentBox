@@ -8,6 +8,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="settingService"			inject="id:settingService@cb" 		persistent="false";
 	property name="interceptorService"		inject="coldbox:interceptorService" persistent="false";
 	property name="customFieldService" 	 	inject="customFieldService@cb" 		persistent="false";
+	property name="contentService"			inject="contentService@cb"			persistent="false";
 	property name="contentVersionService"	inject="contentVersionService@cb"	persistent="false";
 
 	// Non-Persistable Properties
@@ -198,6 +199,40 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	boolean function isLoaded(){
 		return len( getContentID() );
+	}
+
+	/**
+	* Wipe primary key, and descendant keys, and prepare for cloning
+	* @author.hint The author doing the cloning
+	*/
+	BaseContent function prepareForClone(required any author, required any original){
+		// set not published
+		isPublished = false;
+		// reset creation date
+		createdDate = now();
+		publishedDate = now();
+		// reset hits
+		hits = 0;
+		// remove all comments
+		comments = [];
+		// get latest content versioning
+		var latestContent = arguments.original.getActiveContent().getContent();
+		// reset versioning, and start with one
+		addNewContentVersion(content=latestContent,changelog="Page Cloned!",author=arguments.author);
+		// safe clone custom fields
+		var newFields = arguments.original.getCustomFields();
+		for(var thisField in newFields){
+			var newField = customFieldService.new({key=thisField.getKey(),value=thisField.getValue()});
+			newField.setRelatedContent( this );
+			addCustomField( newField );
+		}
+		// safe clone categories
+		categories = duplicate( arguments.original.getCategories() );
+
+		// evict original entity
+		contentService.evictEntity( arguments.original );
+
+		return this;
 	}
 
 	/**

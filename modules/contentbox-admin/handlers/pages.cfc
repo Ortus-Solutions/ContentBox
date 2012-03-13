@@ -9,7 +9,7 @@ component extends="baseHandler"{
 	property name="layoutService"		inject="id:layoutService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
-	
+
 	// Public properties
 	this.preHandler_except = "pager";
 
@@ -53,7 +53,7 @@ component extends="baseHandler"{
 		prc.authors    = authorService.getAll(sortOrder="lastName");
 		// get all categories
 		prc.categories = categoryService.getAll(sortOrder="category");
-		
+
 		// search entries with filters and all
 		var pageResults = pageService.search(search=rc.searchPages,
 											 offset=prc.paging.startRow-1,
@@ -75,6 +75,7 @@ component extends="baseHandler"{
 		prc.xehPageQuickLook= "#prc.cbAdminEntryPoint#.pages.quickLook";
 		prc.xehPageOrder 	= "#prc.cbAdminEntryPoint#.pages.changeOrder";
 		prc.xehPageHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehPageClone 	= "#prc.cbAdminEntryPoint#.pages.clone";
 
 		// Tab
 		prc.tabContent_pages = true;
@@ -142,12 +143,12 @@ component extends="baseHandler"{
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
-		
+
 		// Quick save changelog
 		if( event.isAjax() ){
-			rc.changelog = "Quick save";	
+			rc.changelog = "Quick save";
 		}
-		
+
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
@@ -160,7 +161,7 @@ component extends="baseHandler"{
 		// get new/persisted page and populate it with incoming data.
 		var page  = populateModel( pageService.get(rc.contentID) ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
 		var isNew = (NOT page.isLoaded());
-		
+
 		// Validate Page And Incoming Data
 		var errors = page.validate();
 		if( !len(trim(rc.content)) ){
@@ -171,9 +172,9 @@ component extends="baseHandler"{
 			editor(argumentCollection=arguments);
 			return;
 		}
-		
+
 		// Register a new content in the page, versionized!
-		page.addNewContentVersion(content=rc.content,changelog=rc.changelog,author=prc.oAuthor); 
+		page.addNewContentVersion(content=rc.content,changelog=rc.changelog,author=prc.oAuthor);
 		// attach parent page
 		if( len(rc.parentPage) ){ page.setParent( pageService.get( rc.parentPage ) ); }
 		// Create new categories?
@@ -189,7 +190,7 @@ component extends="baseHandler"{
 		page.inflateCustomFields( rc.customFieldsCount, rc );
 		// announce event
 		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
-		
+
 		// save entry
 		pageService.savePage( page );
 
@@ -215,11 +216,43 @@ component extends="baseHandler"{
 		}
 	}
 
+	function clone(event,rc,prc){
+		// validation
+		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
+			getPlugin("MessageBox").warn("Can't clone the unclonable, meaning no contentID or title passed.");
+			setNextEvent(event=prc.xehPages);
+			return;
+		}
+		// decode the incoming title
+		rc.title = urldecode( rc.title );
+		// get the page to clone
+		var original = pageService.get( rc.contentID );
+		// Verify new Title, else do a new copy of it
+		if( rc.title eq original.getTitle() ){
+			rc.title = "Copy of #rc.title#";
+		}
+		// get a clone
+		var clone = pageService.new({title=rc.title,slug=getPlugin("HTMLHelper").slugify( rc.title )});
+		// prepare descendants for cloning, might take a while if lots of children to copy.
+		clone.prepareForClone(author=prc.oAuthor,original=original);
+		// clone this sucker now!
+		pageService.savePage( clone );
+		// relocate
+		getPlugin("MessageBox").info("Page Cloned, isn't that cool!");
+		if( clone.hasParent() ){
+			setNextEvent(event=prc.xehPages,querystring="parent=#clone.getParent().getContentID()#");
+		}
+		else{
+			setNextEvent(event=prc.xehPages);
+		}
+	}
+
+
 	// remove
 	function remove(event,rc,prc){
 		event.paramValue("parent","");
 		var page = pageService.get(rc.contentID);
-		
+
 		if( isNull( page ) ){
 			getPlugin("MessageBox").setMessage("warning","Invalid Page detected!");
 		}
@@ -327,12 +360,12 @@ component extends="baseHandler"{
 	function slugify(event,rc,prc){
 		event.renderData(data=getPlugin("HTMLHelper").slugify( rc.slug ),type="plain");
 	}
-	
+
 	// editor selector
 	function editorSelector(event,rc,prc){
 		// paging default
 		event.paramValue("page",1);
-		
+
 		// exit handlers
 		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.pages.editorSelector";
 
@@ -349,7 +382,7 @@ component extends="baseHandler"{
 		prc.pages 	  	= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
 		prc.CBHelper 	= CBHelper;
-		
+
 		event.setView(view="pages/editorSelector",layout="ajax");
 	}
 
