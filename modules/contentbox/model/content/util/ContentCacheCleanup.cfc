@@ -19,6 +19,12 @@ component extends="coldbox.system.Interceptor"{
 		doCacheCleanup( page.buildContentCacheKey(), page);
 	}
 
+	// Listen when pages are removed
+	function cbadmin_prePageRemove(event,interceptData){
+		var page 	 = arguments.interceptData.page;
+		doCacheCleanup( page.buildContentCacheKey(), page);
+	}
+
 	// Listen when custom HTML is saved
 	function cbadmin_postCustomHTMLSave(event,interceptData){
 		var content		= arguments.interceptData.content;
@@ -33,9 +39,10 @@ component extends="coldbox.system.Interceptor"{
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
 		// clear by keysnippets
 		cache.clearByKeySnippet(keySnippet=arguments.cacheKey,async=false);
-
-		if( structKeyExists(arguments,"content") and arguments.content.getContentType() eq "page"){
-			cache.clearByKeySnippet(keySnippet="cb-content-pagewraper-#arguments.content.getSlug()#",async=false);
+		// Page specific caching cleanup
+		if( structKeyExists(arguments,"content") and arguments.content.getContentType() eq "Page"){
+			// Remove ancestry caching
+			cache.clearByKeySnippet(keySnippet="cb-content-pagewraper-#replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#",async=false);
 		}
 
 		// log
