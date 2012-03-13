@@ -195,17 +195,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	// Determine if you are in the archives view
 	boolean function isArchivesView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.archives" AND event.valueExists("entry",true) );
+		return (event.getCurrentEvent() eq "contentbox-ui:blog.archives" AND event.valueExists("page",true) );
 	}
 	// Determine if you are in the index view
 	boolean function isIndexView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.index");
+		return (event.getCurrentEvent() eq "contentbox-ui:blog.index" AND event.valueExists("page",true) );
 	}
 	// Determine if you are in the entry view
 	boolean function isEntryView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.entry" AND event.valueExists("entry",true) );
+		return (event.getCurrentEvent() eq "contentbox-ui:blog.entry" AND event.valueExists("page",true) );
 	}
 	/**
 	* Determine if you are in the page view
@@ -358,13 +358,6 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function event(required state,struct data=structNew()) output="true"{announceInterception(arguments.state,arguments.data);}
 
 	/************************************** link methods *********************************************/
-
-	/**
-	* Build out ContentBox module links
-	*/
-	function buildModuleLink(required string module, required string linkTo, queryString="", boolean ssl=false){
-		return getRequestContext().buildLink(linkto=adminRoot() & ".#arguments.module#.#arguments.linkTo#",queryString=arguments.queryString,ssl=arguments.ssl);
-	}
 
 	/**
 	* Link to the admin

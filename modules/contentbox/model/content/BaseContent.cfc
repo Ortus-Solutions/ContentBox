@@ -1,7 +1,7 @@
 ﻿/**
 * A mapped super class used for contentbox content: entries and pages
 */
-component persistent="true" entityname="cbContent" table="cb_content" cachename="cbContent" cacheuse="read-write" discriminatorColumn="contentType"{
+component persistent="true" entityname="cbContent" table="cb_content" discriminatorColumn="contentType"{
 
 	// DI Injections
 	property name="cachebox" 				inject="cachebox" 					persistent="false";
@@ -28,7 +28,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="HTMLDescription"			notnull="false" length="160" default="";
 	property name="hits"					notnull="false" ormtype="long" default="0" dbdefault="0";
 	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
-	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cachelayout";
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
 

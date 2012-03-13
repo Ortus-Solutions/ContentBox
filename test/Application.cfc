@@ -36,18 +36,16 @@ limitations under the License.
 	// FILL OUT: THE DATASOURCE OF CONTENTBOX
 	this.datasource = "contentbox";
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
-	rootPath = replacenocase(replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test\",""),"test/","");
-
-	this.mappings["/root"]   = rootPath;
+	this.mappings["/contentbox-root"]   = replacenocase(replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test\",""),"test/","");
 	this.mappings["/contentbox-test"] 	= getDirectoryFromPath(getCurrentTemplatePath());
-	this.mappings["/contentbox"] 		= rootPath & "/modules/contentbox" ;
-	this.mappings["/contentbox-ui"] 	= rootPath & "modules/contentbox-ui";
-	this.mappings["/contentbox-admin"] 	= rootPath & "modules/contentbox-admin";
-	this.mappings["/contentbox-modules"] = rootPath & "modules/contentbox-modules";
-	this.mappings["/coldbox"] 			= rootPath & "/coldbox" ;
+	this.mappings["/contentbox"] 		= this.mappings["/contentbox-root"] & "/modules/contentbox" ;
+	this.mappings["/contentbox-ui"] 	= this.mappings["/contentbox-root"] & "modules/contentbox-ui";
+	this.mappings["/contentbox-admin"] 	= this.mappings["/contentbox-root"] & "modules/contentbox-admin";
+	this.mappings["/contentbox-modules"] = this.mappings["/contentbox-root"] & "modules/contentbox-modules";
+	this.mappings["/coldbox"] 			= this.mappings["/contentbox-root"] & "/coldbox" ;
 
 	this.ormSettings = {
-		cfclocation=["../modules/contentbox"],
+		cfclocation=["/contentbox-root/modules"],
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,

@@ -7,17 +7,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	property name="settingService"		inject="id:settingService@cb";
 	property name="cacheBox"			inject="cachebox";
 	property name="log"					inject="logbox:logger:{this}";
-
+	
 	/**
 	* Constructor
 	*/
 	ContentService function init(entityName="cbContent"){
 		// init it
-		super.init(entityName=arguments.entityName,useQueryCaching=true);
+		super.init(entityName=arguments.entityName);
 
 		return this;
 	}
-
+	
 	/**
 	* Clear all content caches
 	* @async.hint Run it asynchronously or not, defaults to false
@@ -28,7 +28,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
 		cache.clearByKeySnippet(keySnippet="cb-content",async=arguments.async);
 	}
-
+	
 	/**
 	* Searches published content with cool paramters, remember published content only
 	* @searchTerm.hint The search term to search
@@ -39,13 +39,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	function searchContent(searchTerm="",max=0,offset=0,asQuery=false){
 		var results = {};
 		var c = newCriteria();
-
+		
 		// only published content
 		c.isTrue("isPublished")
 			.isLt("publishedDate", now() )
 			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
 			.isEq("passwordProtection","");
-
+		
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
@@ -53,11 +53,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
 				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
 		}
-
+		
 		// run criteria query and projections count
 		results.count 	= c.count();
 		results.content = c.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
-
+		
 		return results;
 	}
 
@@ -111,7 +111,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// return service
 		return this;
 	}
-
+	
 	/**
 	* Find published content objects
 	* @max.hint The maximum number of records to paginate
@@ -127,25 +127,25 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var c = newCriteria();
 		// sorting
 		var sortOrder = "publishedDate DESC";
-
+		
 		// only published pages
 		c.isTrue("isPublished")
 			.isLT("publishedDate", Now())
 			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
 			// only non-password pages
 			.isEq("passwordProtection","");
-
+			
 		// Show only pages with showInMenu criteria?
 		if( structKeyExists(arguments,"showInMenu") ){
 			c.isTrue("showInMenu");
 		}
-
+		
 		// Category Filter
 		if( len(arguments.category) ){
 			// create association with categories by slug.
 			c.createAlias("categories","cats").isEq("cats.slug",arguments.category);
-		}
-
+		}	
+		
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
@@ -153,7 +153,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
 				  c.restrictions.isEq("ac.content", "%#arguments.searchTerm#%") );
 		}
-
+		
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
 			if( len( trim(arguments.parent) ) ){
@@ -163,12 +163,12 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				c.isNull("parent");
 			}
 			sortOrder = "order asc";
-		}
-
+		}	
+		
 		// run criteria query and projections count
 		results.count 	= c.count();
 		results.content = c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
-
+		
 		return results;
 	}
 

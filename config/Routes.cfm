@@ -1,4 +1,4 @@
-﻿<!--- 
+<!--- 
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -33,14 +33,14 @@ limitations under the License.
 	// If enabled, the interceptor will throw a 406 exception that an invalid format was detected or just ignore it
 	// setThrowOnInvalidExtension(true);
 
-	// TO ENABLE FULL REWRITES REMOVE THE "INDEX.CFM" FROM THE LINES BELOW
+	// TO ENABLE FULL REWRITES REMOVE THE "" FROM THE LINES BELOW
 
 	// Base URL
 	if( len(getSetting('AppMapping') ) lte 1){
-		setBaseURL("http://#cgi.HTTP_HOST#/index.cfm");
+		setBaseURL("http://#cgi.HTTP_HOST#/");
 	}
 	else{
-		setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#/index.cfm");
+		setBaseURL("http://#cgi.HTTP_HOST#/#getSetting('AppMapping')#/");
 	}
 	
 	// Your Application Routes

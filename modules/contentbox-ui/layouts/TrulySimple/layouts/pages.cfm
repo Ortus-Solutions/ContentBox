@@ -31,8 +31,8 @@ limitations under the License.
 <head>
    <!--- Site Title --->
 	<title>
-		<cfif cb.isPageView()>
-			#cb.getCurrentPage().getTitle()#
+		<cfif cb.isEntryView()>
+			#cb.getCurrentEntry().getTitle()#
 		<cfelse>
 			#cb.siteName()# - #cb.siteTagLine()#
 		</cfif>
@@ -42,14 +42,14 @@ limitations under the License.
 	<meta name="generator" 	 content="ContentBox powered by ColdBox" />
 	<meta name="robots" 	 content="index,follow" />
 	<!--- Meta Description By Page or By Site --->
-	<cfif cb.isPageView() AND len(cb.getCurrentPage().getHTMLDescription())>
-		<meta name="description" content="#cb.getCurrentPage().getHTMLDescription()#" />
+	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLDescription())>
+		<meta name="description" content="#cb.getCurrentEntry().getHTMLDescription()#" />
 	<cfelse>
 		<meta name="description" content="#cb.siteDescription()#" />
 	</cfif>
 	<!--- Meta Keywords By Page or By Site --->
-	<cfif cb.isPageView() AND len(cb.getCurrentPage().getHTMLKeywords())>
-		<meta name="keywords" 	 content="#cb.getCurrentPage().getHTMLKeywords()#" />
+	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLKeywords())>
+		<meta name="keywords" 	 content="#cb.getCurrentEntry().getHTMLKeywords()#" />
 	<cfelse>
 		<meta name="keywords" 	 content="#cb.siteKeywords()#" />
 	</cfif>

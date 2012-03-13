@@ -2,7 +2,7 @@
 * Service to handle comment operations.
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
-
+	
 	// DI
 	property name="mailService"		inject="coldbox:plugin:MailService";
 	property name="renderer" 		inject="coldbox:plugin:Renderer";
@@ -14,10 +14,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Constructor
 	*/
 	public CommentService function init(){
-		super.init(entityName="cbComment",useQueryCaching="true");
+		super.init(entityName="cbComment");
 		return this;
 	}
-
+	
 	/**
 	* Get the total number of approved comments in the system
 	*/
@@ -25,7 +25,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var args = { "isApproved" = true };
 		return countWhere(argumentCollection=args);
 	}
-
+	
 	/**
 	* Get the total number of unapproved comments in the system
 	*/
@@ -33,7 +33,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var args = { "isApproved" = false };
 		return countWhere(argumentCollection=args);
 	}
-
+	
 	/**
 	* Comment listing for UI of approved comments, returns struct of results=[comments,count]
 	* @contentID.hint The content ID to filter on
@@ -44,10 +44,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	function findApprovedComments(contentID,contentType,max=0,offset=0){
 		var results = {};
 		var c = newCriteria();
-
+		
 		// only approved comments
 		c.isTrue("isApproved");
-
+		
 		// By Content?
 		if( structKeyExists(arguments,"contentID") AND len(arguments.contentID) ){
 			c.eq("relatedContent.contentID",javaCast("int", arguments.contentID));
@@ -57,14 +57,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			c.createCriteria("relatedContent")
 				.isEq("class", arguments.contentType);
 		}
-
+		
 		// run criteria query and projections count
 		results.count 	 = c.count();
-		results.comments = c.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate desc",asQuery=false);
-
+		results.comments = c.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate",asQuery=false);
+		
 		return results;
 	}
-
+	
 	/**
 	* Save a comment according to our rules and process it. Returns a structure of information
 	* results = [moderated:boolean,messages:array]
@@ -77,21 +77,21 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var inSettings = settingService.getAllSettings(asStruct=true);
 		// results
 		var results = {moderated=true,messages=[]};
-
+		
 		// Log the IP Address
 		inComment.setAuthorIP( cgi.remote_addr );
 		// Default moderation
 		inComment.setIsApproved( false );
-
+		
 		// Check if activating URL's on Comment Content
 		if( inSettings.cb_comments_urltranslations ){
 			inComment.setContent( activateURLs( inComment.getContent() ) );
 		}
-
+		
 		// Run moderation rules
 		if( runModerationRules(inComment,inSettings) ){
 			// send for saving, finally phew!
-			save( inComment );
+			save( inComment );	
 			// Send Notification or Moderation Email?
 			sendNotificationEmails( inComment, inSettings );
 			// Return results
@@ -101,20 +101,20 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		else{
 			// Messages
 			arrayAppend(results.messages,"Geez! Comment was blocked!");
-
+			
 			// discard it from session
 			evictEntity( inComment );
 			// log it
 			if( log.canWarn() ){
 				log.warn("Incoming comment was blocked!",inComment.getMemento());
 			}
-		}
-
+		}	
+		
 		return results;
 	}
-
+	
 	/**
-	* Run moderation rules on an incoming comment and set of contentbox settings. If this method returns a false then the comment is moderated
+	* Run moderation rules on an incoming comment and set of contentbox settings. If this method returns a false then the comment is moderated 
 	* and can continue to be saved. If returns false, then it is blocked and must NOT be saved.
 	* @comment Comment to moderate check
 	* @settings The contentbox settings to moderate against
@@ -122,35 +122,35 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	private boolean function runModerationRules(comment,settings){
 		// Comment reference
 		var inComment 	= arguments.comment;
-		var inSettings 	= arguments.settings;
+		var inSettings 	= arguments.settings; 
 		var results		= true;
-
+		
 		// Not moderation, just approve and return
-		if( NOT settings.cb_comments_moderation ){
+		if( NOT settings.cb_comments_moderation ){ 
 			inComment.setIsApproved( true );
 			return true;
 		}
-
+		
 		// Check if user has already an approved comment. If they do, then approve them
 		if( inSettings.cb_comments_moderation_whitelist AND userHasPreviousAcceptedComment( inComment.getAuthorEmail() ) ){
 			inComment.setIsApproved( true );
 			return true;
 		}
-
+		
 		// Execute moderation queries
 		if( len(inSettings.cb_comments_moderation_blacklist) AND anyKeywordMatch(inComment,inSettings.cb_comments_moderation_blacklist) ){
 			inComment.setIsApproved( false );
 		}
-
+				
 		// Execute blocking queries
 		if( len(inSettings.cb_comments_moderation_blockedlist) AND anyKeywordMatch(inComment,inSettings.cb_comments_moderation_blockedlist) ){
 			inComment.setIsApproved( false );
 			results = false;
-		}
-
-		return results;
+		}	
+		
+		return results;		
 	}
-
+	
 	/**
 	* Regex matching of a list of entries against a comment and matching keyword list
 	*/
@@ -158,21 +158,21 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var inComment 	= arguments.comment;
 		var del 		= chr(13) & chr(10);
 		var inList 		= listToArray(arguments.matchList,del);
-
+		
 		for(var x=1; x lte arrayLen(inList); x++){
-
+			
 			// Verify each keword via regex
-			if( refindNoCase( inList[x], inComment.getContent() ) OR
-				refindNoCase( inList[x], inComment.getAuthor() ) OR
+			if( refindNoCase( inList[x], inComment.getContent() ) OR 
+				refindNoCase( inList[x], inComment.getAuthor() ) OR 
 				refindNoCase( inList[x], inComment.getAuthorIP() ) ){
 				return true;
 			}
-
-		}
-
-		return false;
+			
+		}		
+		
+		return false;		
 	}
-
+		
 	/**
 	* Check if the user has already a comment in the system
 	* @email The email address to check.
@@ -181,7 +181,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var args = {"authorEmail" = arguments.email, "isApproved" = true};
 		return ( countWhere(argumentCollection=args) GT 0 );
 	}
-
+	
 	/**
 	* Send a notification email for comments
 	* @comment Comment to moderate check
@@ -190,16 +190,16 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	private void function sendNotificationEmails(comment,settings){
 		// Comment reference
 		var inComment 	= arguments.comment;
-		var inSettings 	= arguments.settings;
+		var inSettings 	= arguments.settings; 
 		var outEmails	= inSettings.cb_site_email;
 		var subject		= "";
 		var template	= "";
-
+		
 		// More notification emails
 		if( len(inSettings.cb_comments_notifyemails) ){
 			outEmails &= "," & inSettings.cb_comments_notifyemails;
 		}
-
+		
 		// get mail payload
 		var bodyTokens = inComment.getMemento();
 		bodyTokens["whoisURL"] 		= inSettings.cb_comments_whoisURL;
@@ -208,7 +208,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		bodyTokens["approveURL"] 	= CBHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
 		bodyTokens["contentURL"] 	= CBHelper.linkContent( inComment.getRelatedContent() );
 		bodyTokens["contentTitle"] 	= inComment.getParentTitle();
-
+		
 		// Moderation Email? Comment is moderated?
 		if( inComment.getIsApproved() eq false AND inSettings.cb_comments_moderation_notify ){
 			subject  = "New comment needs moderation on post: #bodyTokens.contentTitle#";
@@ -219,7 +219,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			subject  = "New comment on post: #bodyTokens.contentTitle#";
 			template = "comment_new";
 		}
-
+		
 		// Send it baby!
 		var mail = mailservice.newMail(to=outEmails,
 									   from=settings.cb_site_outgoingEmail,
@@ -235,27 +235,27 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// generate content for email from template
 		mail.setBody( renderer.renderView(view="email_templates/#template#",module="contentbox") );
 		// send it out
-		mailService.send( mail );
+		mailService.send( mail );		
 	}
-
+	
 	/**
 	* Activate URL's from text
 	*/
 	private function activateURLs(required text){
 		return REReplaceNoCase(arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href=""\1\3"">\1\3</a> ", "ALL");
 	}
-
+	
 	/**
 	* comment search returns struct with keys [comments,count]
 	*/
 	struct function search(search="",isApproved,contentID,max=0,offset=0){
 		var results = {};
 		var criteria = newCriteria();
-
+		
 		// isApproved filter
 		if( structKeyExists(arguments,"isApproved") AND arguments.isApproved NEQ "any"){
 			criteria.eq("isApproved", javaCast("boolean",arguments.isApproved));
-		}
+		}		
 		// Content Filter
 		if( structKeyExists(arguments,"contentID") AND arguments.contentID NEQ "all"){
 			criteria.eq("relatedContent.contentID", javaCast("int",arguments.contentID));
@@ -267,11 +267,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 					     criteria.restrictions.like("authorEmail","%#arguments.search#%"),
 					     criteria.restrictions.like("content","%#arguments.search#%") );
 		}
-
+		
 		// run criteria query and projections count
 		results.count 	 = criteria.count();
 		results.comments = criteria.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate DESC",asQuery=false);
-
+		
 		return results;
 	}
 
@@ -279,15 +279,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Bulk Updates
 	* @commentID The list or array of ID's to bulk update
 	* @status The status either 'approve' or 'moderate'
-	*/
+	*/ 
 	any function bulkStatus(any commentID,status){
 		var approve = false;
-
+		
 		// approve flag
 		if( arguments.status eq "approve" ){
 			approve = true;
 		}
-
+		
 		// Get all by id
 		var comments = getAll(id=arguments.commentID);
 		for(var x=1; x lte arrayLen(comments); x++){
@@ -295,8 +295,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		// transaction the save of all the comments
 		saveAll( comments );
-
-		return this;
+		
+		return this;		
 	}
 
 }

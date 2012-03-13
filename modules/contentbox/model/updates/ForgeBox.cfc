@@ -120,19 +120,12 @@ limitations under the License.
 		<cfset var fileName		= getFileFromPath(arguments.downloadURL)>
 		<cfset var results 		= {error=true,logInfo=""}>
 		
-		<!--- Append zip, if not found --->
-		<cfif listLast(filename,".") neq "zip">
-			<cfset filename &=".zip">
-		</cfif>
-		
 		<cftry>
 			<!--- Download File --->
 			<cfhttp url="#arguments.downloadURL#"
 					method="GET"
 					file="#fileName#"
-					path="#destination#"
-					timeout="30"
-					throwOnError="true">
+					path="#destination#">
 		
 			<cfcatch type="any">
 				<cfset log.append("<strong>Error downloading file: #cfcatch.message# #cfcatch.detail#</strong><br />")>
@@ -145,7 +138,6 @@ limitations under the License.
 		<cfif getFileInfo(destination & "/" & fileName).size LTE 0>	
 			<cfset log.append("<strong>Cannot install file as it has a file size of 0.</strong>")>
 			<cfset results.logInfo = log.toString()>
-			<cfset fileDelete( destination & "/" & fileName )>
 			<cfreturn results>
 		</cfif>
 		
@@ -157,9 +149,6 @@ limitations under the License.
 			<cfzip action="unzip" file="#destination#/#filename#" destination="#destination#" overwrite="true">
 			<cfset log.append("Archive uncompressed and installed at #destination#. Performing cleanup.<br />")>
 			<cfset fileDelete(destination & "/" & filename)>
-		<cfelse>
-			<cfset log.append("File is not a zip, skipping and removing<br/>")>
-			<cfset fileDelete( destination & "/" & fileName )>
 		</cfif>
 		
 		<cfset log.append("Entry: #filename# sucessfully installed at #destination#.<br />")>
@@ -177,7 +166,7 @@ limitations under the License.
 		<cfargument name="body" 			type="any" 		required="false" default="" hint="The body content of the request if passed."/>
 		<cfargument name="headers" 			type="struct" 	required="false" default="#structNew()#" hint="An struct of HTTP headers to send"/>
 		<cfargument name="parameters"		type="struct" 	required="false" default="#structNew()#" hint="An struct of HTTP URL parameters to send in the request"/>
-		<cfargument name="timeout" 			type="numeric" 	required="false" default="30" hint="The default call timeout"/>
+		<cfargument name="timeout" 			type="numeric" 	required="false" default="20" hint="The default call timeout"/>
 		<cfscript>
 			var results = {error=false,response={},message="",responseheader={},rawResponse=""};
 			var HTTPResults = "";
@@ -195,8 +184,7 @@ limitations under the License.
 				url="#getAPIURL()#/json/#arguments.resource#" 
 				charset="utf-8" 
 				result="HTTPResults" 
-				timeout="#arguments.timeout#"
-				throwOnError="true">
+				timeout="#arguments.timeout#">
 			
 			<!--- Headers --->
 			<cfloop collection="#arguments.headers#" item="param">

@@ -27,7 +27,7 @@
 				@
 				#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
 				#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
-
+				
 				<!--- expire date --->
 				#html.inputField(size="9",type="date",name="expireDate",label="Expire Date",value=prc.page.getExpireDateForEditor(),class="textfield")#
 				@
@@ -156,14 +156,8 @@
 					<img src="#prc.cbroot#/includes/images/database_black.png" alt="info" /> Cache Settings </h2>
 				<div class="pane">
 					<!--- Cache Settings --->
-					#html.label(field="cache",content="Cache Page Content: (fast)")#
-					<small>Caches content translation only</small><Br/>
+					#html.label(field="cache",content="Cache Content:",class="inline")#
 					#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCache()))#<br/>
-
-					#html.label(field="cacheLayout",content="Cache Page Layout: (faster)")#
-					<small>Caches all generated page+layout HTML</small><br/>
-					#html.select(name="cacheLayout",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCacheLayout()))#<br/>
-
 					#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.page,title="Enter the number of minutes to cache your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
 					#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.page,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
 				</div>
@@ -215,15 +209,12 @@
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/page_big.png" alt="editor" width="30" height="30" />
 			Page Editor
-
+			<!--- View Page In Site --->
+			<cfif prc.page.isLoaded()>
 			<div class="floatRight">
-				<!--- View Page In Site --->
-					<button class="button2" onclick="return to('#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#')" title="Back To Page Listing">Back To Listing</button>
-				<cfif prc.page.isLoaded()>
-					<!--- View Page In Site --->
-					<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;" title="Open page in site">View Page In Site</button>
-				</cfif>
+				<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;" title="Open page in site">View Page In Site</button>
 			</div>
+			</cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">

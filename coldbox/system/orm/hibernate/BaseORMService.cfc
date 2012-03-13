@@ -192,11 +192,7 @@ component accessors="true"{
 		// Null Checks
 		if( isNull(results) ){
 			if( arguments.asQuery ){ return queryNew(""); }
-			if (arguments.unique) {
-				return;
-			} else {
-				return [];
-			}
+			return [];
 		}
 		
 		// Objects or Query?
@@ -1065,31 +1061,28 @@ component accessors="true"{
 
 		// Sort Order Case
 		if( Len(Trim(arguments.sortOrder)) ){
-			var sortTypes = listToArray(arguments.sortOrder);
-			for(var sortType in sortTypes) {
-				var sortField = Trim(ListFirst(sortType," "));
-				var sortDir = "ASC";
-				var Order = CreateObject("java","org.hibernate.criterion.Order");
+			var sortField = Trim(ListFirst(arguments.sortOrder," "));
+			var sortDir = "ASC";
+			var Order = CreateObject("java","org.hibernate.criterion.Order");
 
-				if(ListLen(sortType," ") GTE 2){
-					sortDir = ListGetAt(sortType,2," ");
-				}
-
-				switch(UCase(sortDir)) {
-					case "DESC":
-						var orderBy = Order.desc(sortField);
-						break;
-					default:
-						var orderBy = Order.asc(sortField);
-						break;
-				}
-				// ignore case
-				if(arguments.ignoreCase){
-					orderBy.ignoreCase();
-				}
-				// add order to query
-				qry.addOrder(orderBy);
+			if(ListLen(arguments.sortOrder," ") GTE 2){
+				sortDir = ListGetAt(arguments.sortOrder,2," ");
 			}
+
+			switch(UCase(sortDir)) {
+				case "DESC":
+					var orderBy = Order.desc(sortField);
+					break;
+				default:
+					var orderBy = Order.asc(sortField);
+					break;
+			}
+			// ignore case
+			if(arguments.ignoreCase){
+				orderBy.ignoreCase();
+			}
+			// add order to query
+			qry.addOrder(orderBy);
 		}
 
 		// Get listing
