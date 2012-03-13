@@ -58,7 +58,7 @@
 		<fieldset>
 			<legend><img src="#prc.cbRoot#/includes/images/source.png" alt="modifiers"/> <strong>Source Content</strong></legend>
 				#html.label(field="importer",content="Choose your importer source:")#
-				#html.select(name="importer",options="Select Source,Mango,WordPress.BlogCFC",style="width:200px")#
+				#html.select(name="importer",options="Select Source,Mango,WordPress,BlogCFC",style="width:200px")#
 
 				<!--- Default Password --->
 				#html.label(field="tableprefix",content="Table Prefix:")#
