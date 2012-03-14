@@ -37,6 +37,8 @@
 			<patternset>
 		        <exclude name="ant/"/>
 				<exclude name="test/"/>
+				<exclude name="config/"/>
+				<exclude name="Application.cfc"/>
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
