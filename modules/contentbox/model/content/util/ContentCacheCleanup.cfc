@@ -42,7 +42,7 @@ component extends="coldbox.system.Interceptor"{
 		// Page specific caching cleanup
 		if( structKeyExists(arguments,"content") and arguments.content.getContentType() eq "Page"){
 			// Remove ancestry caching
-			cache.clearByKeySnippet(keySnippet="cb-content-pagewraper-#replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#",async=false);
+			cache.clearByKeySnippet(keySnippet="cb-content-pagewrapper-#replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#",async=false);
 		}
 
 		// log

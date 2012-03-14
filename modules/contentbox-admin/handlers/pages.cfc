@@ -302,8 +302,16 @@ component extends="baseHandler"{
 			if( !isNull( page ) ){
 				page.setOrder( i );
 				pageService.savePage( page );
+				pageService.clearPageWrapper( page.getSlug() );
 			}
 		}
+
+		// Do we have a parent?
+		if( !isNull( page ) AND page.hasParent() ){
+			pageService.clearPageWrapperCaches(slug=page.getParent().getSlug());
+		}
+
+		// render data back
 		event.renderData(type="json",data='true');
 	}
 
