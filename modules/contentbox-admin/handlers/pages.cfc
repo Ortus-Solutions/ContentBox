@@ -302,8 +302,16 @@ component extends="baseHandler"{
 			if( !isNull( page ) ){
 				page.setOrder( i );
 				pageService.savePage( page );
+				pageService.clearPageWrapper( page.getSlug() );
 			}
 		}
+
+		// Do we have a parent?
+		if( !isNull( page ) AND page.hasParent() ){
+			pageService.clearPageWrapperCaches(slug=page.getParent().getSlug());
+		}
+
+		// render data back
 		event.renderData(type="json",data='true');
 	}
 
@@ -387,7 +395,7 @@ component extends="baseHandler"{
 		// search entries with filters and all
 		var pageResults = pageService.search(offset=prc.paging.startRow-1,
 											 max=prc.cbSettings.cb_paging_maxrows,
-											 sortOrder="title asc");
+											 sortOrder="slug asc");
 
 		prc.pages 	  	= pageResults.pages;
 		prc.pagesCount  = pageResults.count;

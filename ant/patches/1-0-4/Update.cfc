@@ -22,8 +22,8 @@ limitations under the License.
 ********************************************************************************
 This is an updater cfc for contentbox to version 1.0.4
 
-Start Commit Hash:
-End Commit Hash:
+Start Commit Hash: 79c11db
+End Commit Hash: 996f2c3
 
 
 

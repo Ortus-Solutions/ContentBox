@@ -41,7 +41,7 @@
 				</td>
 				<td>
 					<!--- Title --->
-					<strong>#page.getTitle()#</strong>
+					<strong>#page.getSlug()#</strong>
 				</td>
 				<td class="center">
 					<cfif page.getIsPublished()>

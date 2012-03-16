@@ -53,10 +53,10 @@ component extends="BaseContentHandler" singleton{
 		// Do we have an override page setup by the settings?
 		if( !structKeyExists(prc,"pageOverride") ){
 			// Try slug parsing for hiearchical URLs
-			cacheKey = "cb-content-pagewraper-#left(event.getCurrentRoutedURL(),255)#";
+			cacheKey = "cb-content-pagewrapper-#left(event.getCurrentRoutedURL(),255)#";
 		}
 		else{
-			cacheKey = "cb-content-pagewraper-#prc.pageOverride#";
+			cacheKey = "cb-content-pagewrapper-#prc.pageOverride#";
 		}
 
 		// verify page wrapper
@@ -112,7 +112,7 @@ component extends="BaseContentHandler" singleton{
 			prc.page.updateHits();
 			// Retrieve Comments
 			// TODO: paging
-			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID());
+			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID(),sortOrder="asc");
 			prc.comments 		= commentResults.comments;
 			prc.commentsCount 	= commentResults.count;
 			// announce event

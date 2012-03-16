@@ -25,7 +25,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
 	any function renderIt(boolean dropdown=false,boolean showPostCount=true,string title="",string titleLevel="2"){
-		var categories 		= cb.getCurrentCategories();
+		var categories 		= categoryService.list(sortOrder="category",asQuery=false);
 		var rString			= "";
 
 		// generate recent comments
