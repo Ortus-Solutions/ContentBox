@@ -93,7 +93,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 				}
 
 				var importedBody = q.Body[x] & q.moreBody[x];
-//				interceptorService.processState("preImportEntry", {post = importedBody});
+				interceptorService.processState("preImportEntry", {post = importedBody});
 
 				if(findNoCase("<code>", importedBody) and findNoCase("</code>", importedBody)) {
 					var counter = findNoCase("<code>", importedBody);
@@ -102,7 +102,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 						if(arrayLen(codeblock.len) gte 6) {
 							var codeportion = mid(importedBody, codeblock.pos[4], codeblock.len[4]);
 							if (len(trim(codeportion))) {
-								var result = "<pre><p>[code]</p>#trim(htmlEditFormat(codeportion))#<p>[code]</p></pre><br/>";
+								var result = "<pre class=""code"">#htmlEditFormat(codeportion)#<br /></pre>";
 							}
 							var newbody = mid(importedBody, 1, codeblock.len[2]) & result & mid(importedBody, codeblock.pos[6], codeblock.len[6]);
 							importedBody = newBody;
@@ -113,7 +113,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 					}
 				}
 
-//				interceptorService.processState("postImportEntry", {post = importedBody});
+				interceptorService.processState("postImportEntry", {post = importedBody});
 
 				var props = {title=q.title[x], slug=q.alias[x], content = importedBody,
 				                  excerpt = q.Body[x], publishedDate = q.posted[x], createdDate = q.posted[x],
