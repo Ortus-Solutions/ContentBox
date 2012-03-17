@@ -14,6 +14,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 	property name="customFieldService" 	inject="id:customFieldService@cb";
 	property name="log"					inject="logbox:logger:{this}";
 	property name="htmlHelper"			inject="coldbox:plugin:HTMLHelper";
+	property name="interceptorService"			inject="coldbox:interceptorService";
 
 	/**
 	* Constructor
@@ -91,31 +92,36 @@ component implements="contentbox.model.importers.ICBImporter" {
 					commentSatus = false;
 				}
 
-				if(findNoCase("<code>",q.moreBody[x]) and findNoCase("</code>",q.moreBody[x])) {
-					var counter = findNoCase("<code>", q.moreBody[x]);
+				var importedBody = q.Body[x] & q.moreBody[x];
+//				interceptorService.processState("preImportEntry", {post = importedBody});
+
+				if(findNoCase("<code>", importedBody) and findNoCase("</code>", importedBody)) {
+					var counter = findNoCase("<code>", importedBody);
 					while(counter gte 1) {
-						var codeblock = reFindNoCase("(?s)(.*)(<code>)(.*)(</code>)(.*)",q.moreBody[x],1,1);
+						var codeblock = reFindNoCase("(?s)(.*)(<code>)(.*)(</code>)(.*)", importedBody,1,1);
 						if(arrayLen(codeblock.len) gte 6) {
-							var codeportion = mid(q.moreBody[x], codeblock.pos[4], codeblock.len[4]);
+							var codeportion = mid(importedBody, codeblock.pos[4], codeblock.len[4]);
 							if (len(trim(codeportion))) {
-								var result = "<pre class='codePrint'>#trim(htmlEditFormat(codeportion))#</pre><br/>";
+								var result = "<pre><p>[code]</p>#trim(htmlEditFormat(codeportion))#<p>[code]</p></pre><br/>";
 							}
-							var newbody = mid(q.moreBody[x], 1, codeblock.len[2]) & result & mid(q.moreBody[x],codeblock.pos[6],codeblock.len[6]);
-							q.moreBody[x] = newBody;
-							counter = findNoCase("<code>", q.moreBody[x],counter);
+							var newbody = mid(importedBody, 1, codeblock.len[2]) & result & mid(importedBody, codeblock.pos[6], codeblock.len[6]);
+							importedBody = newBody;
+							counter = findNoCase("<code>", importedBody, counter);
 						} else {
 							counter = 0;
 						}
 					}
 				}
 
-				var props = {title=q.title[x], slug=q.alias[x], content=q.moreBody[x],
-				                  excerpt=q.Body[x], publishedDate=q.posted[x], createdDate=q.posted[x],
-				                  isPublished=published,allowComments=commentStatus, hits=q.views[x]
+//				interceptorService.processState("postImportEntry", {post = importedBody});
+
+				var props = {title=q.title[x], slug=q.alias[x], content = importedBody,
+				                  excerpt = q.Body[x], publishedDate = q.posted[x], createdDate = q.posted[x],
+				                  isPublished = published, allowComments = commentStatus, hits = q.views[x]
 							};
 
-				var entry = entryService.new(properties=props);
-				entry.addNewContentVersion(content=props.content, changelog="Imported content", author=authorService.get( authorMap[q.username[x]] ));
+				var entry = entryService.new(properties = props);
+				entry.addNewContentVersion(content = props.content, changelog = "Imported content", author = authorService.get( authorMap[q.username[x]] ));
 
 				// entry categories
 				var thisSQL = "
