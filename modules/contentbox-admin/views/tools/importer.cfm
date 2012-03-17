@@ -50,8 +50,8 @@
 				make sure this datasource exists in the ColdFusion administrator.
 			</p>
 			#html.textField(name="dsn",label="Datasource Name:",class="textfield",size="50",required="required")#
-			#html.textField(name="dsnUsername",label="Datasource Password: (Optional)",class="textfield",size="50")#
-			#html.textField(name="dsnPassword",label="Datasource Username: (Optional)",class="textfield",size="50")#
+			#html.textField(name="dsnUsername",label="Datasource Usernam: (Optional)",class="textfield",size="50")#
+			#html.textField(name="dsnPassword",label="Datasource Password: (Optional)",class="textfield",size="50")#
 		</fieldset>
 
 		<!--- importer --->
