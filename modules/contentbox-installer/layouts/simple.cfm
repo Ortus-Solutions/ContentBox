@@ -15,7 +15,6 @@
 	<!--- StyleSheets --->
 	<link href="#prc.assetRoot#/includes/css/style.css"	rel="stylesheet" type="text/css"/>
 	<link href="#prc.assetRoot#/includes/css/teal.css" 	rel="stylesheet" type="text/css"/>
-	<link href="#prc.assetRoot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
 
 	<!--- JS --->
 	<script type="text/javascript" src="#prc.assetRoot#/includes/js/jquery.tools.min.js"></script>
