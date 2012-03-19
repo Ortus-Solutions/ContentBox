@@ -234,6 +234,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #quickPost{display: none;}
 #addCustomFieldButton{margin:0xp 10px 0px 10px}
 .editorTime{ width:35px; }
+#contentEditorChanger{float: right; margin: 5px 10px 5px 0px;}
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}
@@ -247,7 +248,6 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 .forgebox-infobox { top:20px !important; border:10px solid #666; padding:10px; background-color:#fff; width: 95%; min-height: 70%;-moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;width:90%}
 .forgebox-infobox a.close { background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
 .forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
-
 .forgebox-download { float:right; clear:right; }
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
