@@ -4,7 +4,6 @@
 
 component implements="contentbox.model.importers.ICBImporter" {
 
-	// DI
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
@@ -13,38 +12,39 @@ component implements="contentbox.model.importers.ICBImporter" {
 	property name="commentService"		inject="id:commentService@cb";
 	property name="customFieldService" 	inject="id:customFieldService@cb";
 	property name="log"					inject="logbox:logger:{this}";
-	property name="htmlHelper"			inject="coldbox:plugin:HTMLHelper";
-	property name="interceptorService"			inject="coldbox:interceptorService";
+	property name="interceptorService"	inject="coldbox:interceptorService";
+	property name="settingService" 		inject="id:settingService@cb";
 
-	/**
-	* Constructor
-	*/
+	//------------------------------------------------------------------------------------------------
+	// Constructor
+	//------------------------------------------------------------------------------------------------
 	blogcfcImporter function init() {
 		return this;
 	}
 
-	/**
-	* Import from blogcfc blog, returns the string console.
-	*/
-	function execute(required dsn,dsnUsername="",dsnPassword="",defaultPassword="",required roleID,tableprefix=""){
+	//------------------------------------------------------------------------------------------------
+	// Import from blogcfc blog, returns the string console.
+	//------------------------------------------------------------------------------------------------
+	function execute(required dsn, dsnUsername = "", dsnPassword = "", defaultPassword = "", required roleID, tableprefix = "") {
 		var authorMap = {};
 		var catMap = {};
 		var entryMap = {};
 		var slugMap = {};
+		var defaultAuthor = {};
 
 		log.info("Starting import process: #arguments.toString()#");
 
 		try {
 			// Import categories
-			var q = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
+			var qCategories = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
 			                  password=arguments.dsnPassword,
 			                  sql="select categoryid, categoryname, categoryalias, blog FROM tblBlogCategories").execute().getResult();
-			for(var x = 1; x lte q.recordcount; x++) {
-				var props = {category=q.categoryName[x], slug=q.categoryAlias[x]};
+			for(var x = 1; x lte qCategories.recordcount; x++) {
+				var props = {category=qCategories.categoryName[x], slug=qCategories.categoryAlias[x]};
 				var cat = categoryService.new(properties=props);
 				entitySave(cat);
 				log.info("Imported category: #props.category#");
-				catMap[q.categoryId[x]] = cat.getCategoryID();
+				catMap[qCategories.categoryId[x]] = cat.getCategoryID();
 			}
 			log.info("Categories imported successfully!");
 
@@ -53,15 +53,15 @@ component implements="contentbox.model.importers.ICBImporter" {
 			var defaultRole = roleService.get( arguments.roleID );
 
 			// Import Authors
-			var q = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
+			var qAuthors = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
 			                  password=arguments.dsnPassword,sql="select username, password, name from tblUsers").execute().getResult();
-			for(var x = 1; x lte q.recordcount; x++) {
-				var props = {email=q.username[x], username=q.username[x],
+			for(var x = 1; x lte qAuthors.recordcount; x++) {
+				var props = {email=qAuthors.username[x], username=qAuthors.username[x],
 				                  password=hash(defaultPassword, authorService.getHashType()),isActive=1,
-				                  firstName=listFirst(q.name[x], " "),
-				                  lastName=trim(replacenocase(q.name[x], listFirst(q.name[x], " "), ""))};
+				                  firstName=listFirst(qAuthors.name[x], " "),
+				                  lastName=trim(replacenocase(qAuthors.name[x], listFirst(qAuthors.name[x], " "), ""))};
 
-				var author = authorService.findWhere({username=q.username[x]});
+				var author = authorService.findWhere({username=qAuthors.username[x]});
 				if( isNull(author) ) {
 					author = authorService.new(properties=props);
 				}
@@ -69,9 +69,39 @@ component implements="contentbox.model.importers.ICBImporter" {
 				author.setRole( defaultRole );
 				entitySave(author);
 				log.info("Imported author: #props.firstName# #props.lastName#");
-				authorMap[q.username[x]] = author.getAuthorID();
+				authorMap[qAuthors.username[x]] = author.getAuthorID();
+
+				// Save first author found from blogCFC as the default author.
+				if(x == 1) {
+					defaultAuthor = author;
+				}
 			}
 			log.info("Authors imported successfully!");
+
+			log.info("Starting to import Pages....");
+
+			var qPages = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
+						     password=arguments.dsnPassword,
+						     sql="select id, blog, title, alias, body from tblblogpages").execute().getResult();
+			for(var x=1; x lte qPages.recordcount;x++){
+				var props = {
+					title = qPages.title[x],
+					slug = qPages.alias[x],
+					content = qPages.body[x],
+					publishedDate = now(),
+					createdDate = now(),
+					isPublished = true,
+					allowComments = false,
+					layout="pages"
+				};
+				var page = pageService.new(properties = props);
+
+				// blogCFC has no concept of authored pages, so we grab the first author we find from blogCFC
+				// This may need revising later.
+				page.addNewContentVersion(content = props.content, changelog = "Imported content", author = defaultAuthor);
+				entitySave( page );
+			}
+			log.info("Page imported: #props.title#");
 
 			log.info("Starting to import Entries....");
 			// Import Entries
@@ -94,25 +124,8 @@ component implements="contentbox.model.importers.ICBImporter" {
 
 				var importedBody = q.Body[x] & q.moreBody[x];
 				interceptorService.processState("preImportEntry", {post = importedBody});
-
-				if(findNoCase("<code>", importedBody) and findNoCase("</code>", importedBody)) {
-					var counter = findNoCase("<code>", importedBody);
-					while(counter gte 1) {
-						var codeblock = reFindNoCase("(?s)(.*)(<code>)(.*)(</code>)(.*)", importedBody,1,1);
-						if(arrayLen(codeblock.len) gte 6) {
-							var codeportion = mid(importedBody, codeblock.pos[4], codeblock.len[4]);
-							if (len(trim(codeportion))) {
-								var result = "<pre class=""code"">#htmlEditFormat(codeportion)#<br /></pre>";
-							}
-							var newbody = mid(importedBody, 1, codeblock.len[2]) & result & mid(importedBody, codeblock.pos[6], codeblock.len[6]);
-							importedBody = newBody;
-							counter = findNoCase("<code>", importedBody, counter);
-						} else {
-							counter = 0;
-						}
-					}
-				}
-
+				importedBody = findImages(importedBody);
+				importedBody = convertContent(importedBody);
 				interceptorService.processState("postImportEntry", {post = importedBody});
 
 				var props = {title=q.title[x], slug=q.alias[x], content = importedBody,
@@ -168,6 +181,91 @@ component implements="contentbox.model.importers.ICBImporter" {
 			rethrow;
 		}
 		transaction action="commit" {}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	// Convert blogCFC code blocks to a more uniform approach
+	//------------------------------------------------------------------------------------------------
+	private string function convertContent(required string content) {
+		if(findNoCase("<code>", arguments.content) and findNoCase("</code>", arguments.content)) {
+			var counter = findNoCase("<code>", arguments.content);
+			while(counter gte 1) {
+				var codeblock = reFindNoCase("(?s)(.*)(<code>)(.*)(</code>)(.*)", arguments.content, 1, 1);
+				if(arrayLen(codeblock.len) gte 6) {
+					var codeportion = mid(arguments.content, codeblock.pos[4], codeblock.len[4]);
+					if (len(trim(codeportion))) {
+						var result = "<p>[code]#htmlCodeFormat(codeportion)#[/code]</p>";
+					}
+					var newbody = mid(arguments.content, 1, codeblock.len[2]) & result & mid(arguments.content, codeblock.pos[6], codeblock.len[6]);
+					arguments.content = newBody;
+					counter = findNoCase("<code>", arguments.content, counter);
+				} else {
+					counter = 0;
+				}
+			}
+		}
+		return arguments.content;
+	}
+
+	//------------------------------------------------------------------------------------------------
+	// find all images in a given entry and save them to the media manager
+	//------------------------------------------------------------------------------------------------
+	private string function findImages(required string content) {
+		var images = reMatchNoCase("(?i)src=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content);
+		var images1 = reMatchNoCase("(?i)href=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content);
+		var pattern = createObject("java", "java.util.regex.Pattern");
+		var exp = '(?<=\=\")([^"])+(?=\")';
+		var mediaPath = settingService.getSetting('cb_media_directoryRoot');
+		var newUrl = '/modules/contentbox/content/blogImages/';
+
+		// Create a directory in the Media Manager for all the blog entry images
+		if(!directoryExists(mediaPath & '\blogImages')) {
+			log.info("Creating BlogImages folder for Media Manager....");
+			directoryCreate(mediaPath & '\blogImages');
+		}
+
+		if(arrayLen(images)) {
+			var imagePaths = [];
+			for (var item in images) {
+				var matcher = pattern.compile(exp).matcher(item);
+				while(matcher.find()) {
+					var urlObj = matcher.group();
+					var fileName = listLast(matcher.group(),'/');
+
+					var httpService = new http();
+					httpService.setMethod("get");
+					httpService.setUrl(urlObj);
+					httpService.setTimeOut(45);
+					httpService.setGetAsBinary("yes");
+					var result = httpService.send().getPrefix();
+					fileWrite(mediaPath & '\blogImages\' & fileName, result.fileContent );
+					arguments.content = ReplaceNoCase(arguments.content, urlObj, newUrl & fileName);
+				}
+			}
+		}
+
+		if(arrayLen(images1)) {
+
+			var imagePaths = [];
+			for (var item in images1) {
+				var matcher = pattern.compile(exp).matcher(item);
+				while(matcher.find()) {
+					var urlObj = matcher.group();
+					var fileName = listLast(matcher.group(),'/');
+
+					var httpService = new http();
+					httpService.setMethod("get");
+					httpService.setUrl(urlObj);
+					httpService.setTimeOut(45);
+					httpService.setGetAsBinary("yes");
+					var result = httpService.send().getPrefix();
+					fileWrite(mediaPath & '\blogImages\' & fileName, result.fileContent );
+					arguments.content = ReplaceNoCase(arguments.content, urlObj, newUrl & fileName);
+				}
+			}
+		}
+
+		return arguments.content;
 	}
 
 }
