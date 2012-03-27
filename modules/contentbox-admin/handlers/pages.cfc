@@ -395,7 +395,7 @@ component extends="baseHandler"{
 		// search entries with filters and all
 		var pageResults = pageService.search(offset=prc.paging.startRow-1,
 											 max=prc.cbSettings.cb_paging_maxrows,
-											 sortOrder="title asc");
+											 sortOrder="slug asc");
 
 		prc.pages 	  	= pageResults.pages;
 		prc.pagesCount  = pageResults.count;

@@ -61,8 +61,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @contentType.hint The content type discriminator to filter on
 	* @max.hint The maximum number of records to return, 0 means all
 	* @offset.hint The offset in the paging, 0 means 0
+	* @sortOrder.hint Sort the comments asc or desc, by default it is desc
 	*/
-	function findApprovedComments(contentID,contentType,max=0,offset=0){
+	function findApprovedComments(contentID,contentType,max=0,offset=0,sortOrder="desc"){
 		var results = {};
 		var c = newCriteria();
 
@@ -81,7 +82,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		// run criteria query and projections count
 		results.count 	 = c.count();
-		results.comments = c.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate desc",asQuery=false);
+		results.comments = c.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate #arguments.sortOrder#",asQuery=false);
 
 		return results;
 	}

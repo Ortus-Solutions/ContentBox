@@ -361,6 +361,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	/**
 	* Build out ContentBox module links
+	* @module.hint The module to link this URL to
+	* @linkTo.hint The handler action combination to link to
+	* @queryString.hint The query string to append in SES format
+	* @ssl.hint Create the link in SSL or not
 	*/
 	function buildModuleLink(required string module, required string linkTo, queryString="", boolean ssl=false){
 		return getRequestContext().buildLink(linkto=adminRoot() & ".module.#arguments.module#.#arguments.linkTo#",queryString=arguments.queryString,ssl=arguments.ssl);

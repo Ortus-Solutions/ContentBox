@@ -112,7 +112,7 @@ component extends="BaseContentHandler" singleton{
 			prc.page.updateHits();
 			// Retrieve Comments
 			// TODO: paging
-			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID());
+			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID(),sortOrder="asc");
 			prc.comments 		= commentResults.comments;
 			prc.commentsCount 	= commentResults.count;
 			// announce event

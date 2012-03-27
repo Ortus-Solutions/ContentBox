@@ -30,8 +30,16 @@ component persistent="true" entityname="cbCategory" table="cb_category"{
 	property name="slug"			notnull="true"  length="200" unique="true" index="idx_slug";
 
 	// Calculated properties
-	property name="numberOfEntries" formula="select count(*) from cb_contentCategories as contentCategories, cb_entry as entry where contentCategories.FK_categoryID=categoryID and contentCategories.FK_contentID = entry.contentID" ;
-	property name="numberOfPages" formula="select count(*) from cb_contentCategories as contentCategories, cb_page as page where contentCategories.FK_categoryID=categoryID and contentCategories.FK_contentID = page.contentID" ;
+	property name="numberOfEntries" formula="select count(*) from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
+											 where contentCategories.FK_categoryID=categoryID
+											   and contentCategories.FK_contentID = entry.contentID
+											   and entry.contentID = content.contentID
+											   and content.isPublished = 1" ;
+	property name="numberOfPages" 	formula="select count(*) from cb_contentCategories as contentCategories, cb_page as page, cb_content as content
+											 where contentCategories.FK_categoryID=categoryID
+											   and contentCategories.FK_contentID = page.contentID
+											   and page.contentID = content.contentID
+											   and content.isPublished = 1" ;
 
 	/* ----------------------------------------- PUBLIC -----------------------------------------  */
 

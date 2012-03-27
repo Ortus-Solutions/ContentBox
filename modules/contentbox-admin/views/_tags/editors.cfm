@@ -22,10 +22,10 @@ function setupEditors($theForm, withExcerpt){
 	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
 	    { name: 'contentbox',  items : [ 'cbIpsumLorem','cbWidgets','cbCustomHTML','cbLinks','cbEntryLinks', 'cbPreview' ] }
 	];
-	
+
 	// Activate ckeditor
-	$content.ckeditor( function(){}, { 
-			toolbar:ckToolbar,height:300, 
+	$content.ckeditor( function(){}, {
+			toolbar:ckToolbar,height:300,
 			filebrowserBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURL)#',
 			filebrowserImageBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLIMage)#',
 			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#',
@@ -40,16 +40,16 @@ function setupEditors($theForm, withExcerpt){
 			baseHref: '#getSetting("htmlBaseURL")#/'
 		});
 	}
-	
+
 	// Date fields
 	$(":date").dateinput();
-	
+
 	// form validator
 	$theForm.validator({position:'top right',grouped:true,onSuccess:function(e,els){ needConfirmation=false; }});
-	
+
 	// blur slugify
 	var $title = $theForm.find("##title");
-	$title.blur(function(){ 
+	$title.blur(function(){
 		if( $theForm.find("##slug").size() ){
 			createPermalink( $title.val() );
 		}
@@ -62,14 +62,14 @@ function setupEditors($theForm, withExcerpt){
 function askLeaveConfirmation(){
 	if ( $content.ckeditorGet().checkDirty() && needConfirmation ){
    		return "You have unsaved changes.";
-   	}    
+   	}
 }
 // Create Permalinks
 function createPermalink(){
 	var slugger = $("##sluggerURL").val();
 	$slug = $("##slug").fadeOut();
-	$.get(slugger,{slug:$("##title").val()},function(data){ 
-		$slug.fadeIn().val($.trim(data)); 		
+	$.get(slugger,{slug:$("##title").val()},function(data){
+		$slug.fadeIn().val($.trim(data));
 	} );
 }
 // Toggle drafts on for saving

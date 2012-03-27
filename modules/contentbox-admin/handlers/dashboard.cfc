@@ -49,7 +49,7 @@ component extends="baseHandler"{
 			{name="Reload Application",value="app"},
 			{name="Reload ORM",value="orm"},
 			{name="Reload Admin",value="contentbox-admin"},
-			{name="Reload Site",value="contentbox-site"},
+			{name="Reload Site",value="contentbox-ui"},
 			{name="Reload FileBrowser",value="contentbox-filebrowser"},
 			{name="Clear RSS Caches",value="rss-purge"},
 			{name="Clear Content Caches",value="content-purge"}
@@ -85,7 +85,7 @@ component extends="baseHandler"{
 			case "content-purge":{
 				getModel("ContentService@cb").clearAllCaches(async=false); break;
 			}
-			case "contentbox-admin": case "contentbox-site" : case "contentbox-filebrowser" : {
+			case "contentbox-admin": case "contentbox-ui" : case "contentbox-filebrowser" : {
 				// reload the core module first
 				controller.getModuleService().reload( "contentbox" );
 				// reload requested module
