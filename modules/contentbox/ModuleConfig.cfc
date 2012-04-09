@@ -127,6 +127,7 @@ component {
 		// importers
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
+		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.BlogCFCImporter");
 
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
