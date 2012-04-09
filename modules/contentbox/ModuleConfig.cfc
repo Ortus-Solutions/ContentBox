@@ -34,7 +34,7 @@ component {
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
 
-	function configure(){
+	function configure() {
 		// contentbox settings
 		settings = {
 			codename = "John 12:44",
@@ -127,6 +127,7 @@ component {
 		// importers
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
+		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.blogcfcImporter");
 
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
