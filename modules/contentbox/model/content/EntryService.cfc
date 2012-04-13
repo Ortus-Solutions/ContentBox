@@ -136,6 +136,7 @@ component extends="ContentService" singleton{
 			params["day"] = arguments.day;
 			hql &= " AND DAY(publishedDate) = :day";
 		}
+		hql &= " ORDER BY publishedDate DESC";
 		// find
 		results.entries = executeQuery(query=hql,params=params,max=arguments.max,offset=arguments.offset,asQuery=arguments.asQuery);
 		results.count 	= executeQuery(query="select count(*) #hql#",params=params,max=1,asQuery=false)[1];
