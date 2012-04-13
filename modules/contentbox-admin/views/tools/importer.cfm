@@ -50,15 +50,15 @@
 				make sure this datasource exists in the ColdFusion administrator.
 			</p>
 			#html.textField(name="dsn",label="Datasource Name:",class="textfield",size="50",required="required")#
-			#html.textField(name="dsnUsername",label="Datasource Password: (Optional)",class="textfield",size="50")#
-			#html.textField(name="dsnPassword",label="Datasource Username: (Optional)",class="textfield",size="50")#
+			#html.textField(name="dsnUsername",label="Datasource Username: (Optional)",class="textfield",size="50")#
+			#html.textField(name="dsnPassword",label="Datasource Password: (Optional)",class="textfield",size="50")#
 		</fieldset>	
 		
 		<!--- importer --->
 		<fieldset>
 		<legend><img src="#prc.cbRoot#/includes/images/source.png" alt="modifiers"/> <strong>Source Content</strong></legend>
 			#html.label(field="importer",content="Choose your importer source:")#
-			#html.select(name="importer",options="Select Source,Mango,WordPress",style="width:200px")#
+			#html.select(name="importer",options="Select Source,Mango,WordPress,BlogCFC",style="width:200px")#
 			
 			<!--- Default Password --->
 			#html.label(field="tableprefix",content="Table Prefix:")#

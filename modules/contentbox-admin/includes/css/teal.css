@@ -234,6 +234,8 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #quickPost{display: none;}
 #addCustomFieldButton{margin:0xp 10px 0px 10px}
 .editorTime{ width:35px; }
+#contentEditorChanger{float: right; margin: 5px 5px 0px 0px; padding: 3px;}
+#contentLabel{margin:2px 0px 10px 0px;}
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}
@@ -247,8 +249,43 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 .forgebox-infobox { top:20px !important; border:10px solid #666; padding:10px; background-color:#fff; width: 95%; min-height: 70%;-moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;width:90%}
 .forgebox-infobox a.close { background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
 .forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
-
 .forgebox-download { float:right; clear:right; }
+/**============================== INVALID CSS ==============================**/
+fieldset, .button, .button2, .buttonred, .buttonsmall, .small_box, .box, .body_vertical_nav,.tooltip, .tooltip.bottom,div.info, div.warning, div.error  { -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+/**Active tab in Navigation**/
+#main_nav li a.current { border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; }
+/** Shadow in boxes **/
+.box, .small_box { -moz-box-shadow: 0px 0px 10px #808080; -webkit-box-shadow: 0px 0px 10px #808080; }
+/** Headers of boxes **/
+.small_box .header, .box .header { border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; }
+.visualize .visualize-info { opacity: .8; }
+div.wysiwyg ul.panel li a { opacity: 0.85;}
+div.wysiwyg ul.panel li a:hover, div.wysiwyg ul.panel li a.active { opacity: 1.00;}
+.paging_full_numbers span.paginate_button,  .paging_full_numbers span.paginate_active { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius:5px;}
+/************** Error styles ***************/ 
+form input.error, form select.error, form textarea.error, form .wysiwyg.error, form input.error:focus, form select.error:focus, form textarea.error:focus, form .wysiwyg.error:focus { border: 1px solid #ff8388; }
+.invalid{border:2px solid #ff9289;-moz-box-shadow:0 0 6px #ddd;-webkit-box-shadow:0 0 6px #ddd;padding:5px;z-index: 9999;}
+.error{
+	/* supply height to ensure consistent positioning for every browser */
+	height:20px;
+	background-color:#ffcfcb;
+	border:1px solid #ff9289;
+	font-size:12px;
+	font-weight: bold;
+	color:#000;
+	padding:3px 10px;
+	margin-left:-2px;
+	z-index: 9999;
+	/* CSS3 spicing for mozilla and webkit */
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius-bottomleft:0;
+	-moz-border-radius-topleft:0;
+	-webkit-border-bottom-left-radius:0;
+	-webkit-border-top-left-radius:0;
+	-moz-box-shadow:0 0 6px #ddd;
+	-webkit-box-shadow:0 0 6px #ddd;
+}
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/
 /**==================             End of Theme                     ==================**/
 /**++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++**/

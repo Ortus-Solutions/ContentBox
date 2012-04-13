@@ -14,8 +14,7 @@
 	<!--- StyleSheets --->
 	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet" type="text/css"/>
 	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet" type="text/css"/>
-	<link href="#prc.cbroot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
-    <link href="#prc.cbroot#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.cbroot#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>

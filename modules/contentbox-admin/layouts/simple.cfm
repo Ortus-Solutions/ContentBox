@@ -14,7 +14,6 @@
 	<!--- StyleSheets --->
 	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet" type="text/css"/>
 	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet" type="text/css"/>
-	<link href="#prc.cbroot#/includes/css/invalid.css" 	rel="stylesheet" type="text/css"/>
 
 	<!--- JS --->
 	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
