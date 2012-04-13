@@ -126,8 +126,8 @@ component extends="BaseContentHandler" singleton{
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 			= CBHelper.linkBlog() & event.getCurrentRoutedURL() & "?page=@page@";
-
+		prc.pagingLink 			= event.getCurrentRoutedURL() & "?page=@page@";
+		
 		// get published entries
 		var entryResults = entryService.findPublishedEntriesByDate(year=rc.year,
 											   				  	   month=rc.month,
