@@ -200,7 +200,12 @@ component singleton{
 			qEntries.author[i]			= "#entryResults.entries[i].getAuthorEmail()# (#entryResults.entries[i].getAuthorName()#)";
 			qEntries.linkComments[i]	= CBHelper.linkComments( entryResults.entries[i] );
 			qEntries.categories[i]		= entryResults.entries[i].getCategoriesList();
-			qEntries.content[i]			= xmlFormat( entryResults.entries[i].getActiveContent().renderContent() );
+			if( entryResults.entries[i].hasExcerpt() ){
+				qEntries.content[i]			= xmlFormat( entryResults.entries[i].renderExcerpt() );
+			}
+			else{
+				qEntries.content[i]			= xmlFormat( entryResults.entries[i].getActiveContent().renderContent() );
+			}
 		}
 		
 		// Generate feed items
