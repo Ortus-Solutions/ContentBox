@@ -55,12 +55,12 @@ component{
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
-		dbcreate = "update",
+		dbcreate = "none",
 		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
 		secondarycacheenabled = true,
 		cacheprovider		= "ehCache",
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
-		logSQL 				= true,
+		logSQL 				= false,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK

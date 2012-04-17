@@ -231,7 +231,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	*/
 	ModuleService function uploadModule(required fileField){
 		var destination = getModulesPath();
-		var results = fileUpload(destination,arguments.fileField,"application/zip","overwrite");
+		var results = fileUpload(destination,arguments.fileField,"application/octet-stream","overwrite");
 		// extract it
 		zipUtil.extract(zipFilePath="#destination#/#results.clientFile#", extractPath="#destination#");
 		// rescan
