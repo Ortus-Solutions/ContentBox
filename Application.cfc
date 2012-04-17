@@ -23,7 +23,7 @@ limitations under the License.
 */
 component{
 	// Application properties, modify as you see fit
-	this.name 				= "ContentBox-Shell-11-" & hash(getCurrentTemplatePath());
+	this.name 				= "ContentBox-Shell-" & hash(getCurrentTemplatePath());
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;
