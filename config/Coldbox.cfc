@@ -33,8 +33,8 @@ limitations under the License.
 
 			//Development Settings
 			debugMode				= false,
-			debugPassword			= "@fwPassword@",
-			reinitPassword			= "@fwPassword@",
+			debugPassword			= "C9C2DDAD2C5C0431FA520AE13AC520B5",
+			reinitPassword			= "C9C2DDAD2C5C0431FA520AE13AC520B5",
 			handlersIndexAutoReload = false,
 
 			//Implicit Events
@@ -93,10 +93,15 @@ limitations under the License.
 		logBox = {
 			// Define Appenders
 			appenders = {
-				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" }
+//				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" }
+				coldboxTracer = {
+					class="coldbox.system.logging.appenders.AsyncRollingFileAppender",
+					properties={filePath='./logs', fileName='SpringField', autoExpand=true, fileMaxSize=2000, fileMaxArchives=2}
+				}
 			},
 			// Root Logger
-			root = { levelmax="INFO", appenders="*" }
+//			root = { levelmax="INFO", appenders="*" }
+			root = { levelMin=logBoxConfig.logLevels.FATAL, levelMax=logBoxConfig.logLevels.DEBUG, appenders="*"}
 			// Implicit Level Categories
 			//info = [ "coldbox.system" ]
 		};

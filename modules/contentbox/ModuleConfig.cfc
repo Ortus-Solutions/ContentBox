@@ -29,12 +29,12 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "An enterprise modular content platform";
-	this.version			= "1.0.4";
+	this.version			= "1.0.5";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
 
-	function configure() {
+	function configure(){
 		// contentbox settings
 		settings = {
 			codename = "John 12:44",
@@ -127,7 +127,7 @@ component {
 		// importers
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
-		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.blogcfcImporter");
+		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.BlogCFCImporter");
 
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
