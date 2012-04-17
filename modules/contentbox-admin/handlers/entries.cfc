@@ -142,6 +142,7 @@ component extends="baseHandler"{
 		event.paramValue("isPublished",true);
 		event.paramValue("slug","");
 		event.paramValue("changelog","");
+		event.paramValue("customFieldsCount",0);
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));

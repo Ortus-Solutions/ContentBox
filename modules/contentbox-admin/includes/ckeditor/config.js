@@ -7,4 +7,8 @@ CKEDITOR.editorConfig = function( config ){
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
 	config.extraPlugins = 'cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbPreview,cbIpsumLorem'; 
+	config.tabSpaces = 4;
+	config.enableTabKeyTools = true;
+	config.entities = false;
+	config.docType = '<!DOCTYPE html>';
 };
