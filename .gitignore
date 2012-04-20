@@ -5,7 +5,7 @@ settings.xml
 _paidModules/**
 _modules/**
 logs/**
-web.config
+/web.config
 "Icon\r"
 WEB-INF/**
 test/logs/**
