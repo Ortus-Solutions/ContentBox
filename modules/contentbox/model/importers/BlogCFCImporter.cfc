@@ -1,7 +1,7 @@
 /**
 * Import a blogcfc database into contentbox
 */
-component implements="contentbox.model.importers.ICBImporter"{
+component implements="contentbox.model.importers.ICBImporter" {
 
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
@@ -14,16 +14,16 @@ component implements="contentbox.model.importers.ICBImporter"{
 	property name="interceptorService"	inject="coldbox:interceptorService";
 	property name="settingService" 		inject="id:settingService@cb";
 
-	/**
-	* Constructor
-	*/
-	BlogCFCImporter function init() {
+	//------------------------------------------------------------------------------------------------
+	// Constructor
+	//------------------------------------------------------------------------------------------------
+	blogcfcImporter function init() {
 		return this;
 	}
 
-	/**
-	* Import from blogcfc blog, returns the string console.
-	*/
+	//------------------------------------------------------------------------------------------------
+	// Import from blogcfc blog, returns the string console.
+	//------------------------------------------------------------------------------------------------
 	function execute(required dsn, dsnUsername = "", dsnPassword = "", defaultPassword = "", required roleID, tableprefix = "") {
 		var authorMap = {};
 		var catMap = {};
@@ -82,7 +82,8 @@ component implements="contentbox.model.importers.ICBImporter"{
 			var qPages = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     password=arguments.dsnPassword,
 						     sql="select id, blog, title, alias, body from tblblogpages").execute().getResult();
-			for(var x=1; x lte qPages.recordcount;x++){
+
+			for(var x = 1; x lte qPages.recordcount; x++) {
 				var props = {
 					title = qPages.title[x],
 					slug = qPages.alias[x],
@@ -100,7 +101,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				page.addNewContentVersion(content = props.content, changelog = "Imported content", author = defaultAuthor);
 				entitySave( page );
 			}
-			log.info("Page imported: #props.title#");
+			log.info("Pages imported");
 
 			log.info("Starting to import Entries....");
 			// Import Entries
@@ -193,7 +194,8 @@ component implements="contentbox.model.importers.ICBImporter"{
 				if(arrayLen(codeblock.len) gte 6) {
 					var codeportion = mid(arguments.content, codeblock.pos[4], codeblock.len[4]);
 					if (len(trim(codeportion))) {
-						var result = "<p>[code]#htmlCodeFormat(codeportion)#[/code]</p>";
+						var result = "[code]#codeportion#[/code]";
+						result = htmlCodeFormat(result);
 					}
 					var newbody = mid(arguments.content, 1, codeblock.len[2]) & result & mid(arguments.content, codeblock.pos[6], codeblock.len[6]);
 					arguments.content = newBody;
