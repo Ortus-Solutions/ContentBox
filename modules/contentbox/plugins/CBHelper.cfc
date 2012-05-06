@@ -371,6 +371,21 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	}
 
 	/**
+	* SetNextEvent For ContentBox Modules
+	* @module.hint The module to link this URL to
+	* @event.hint The handler action combination to link to
+	* @queryString.hint The query string to append in SES format
+	* @ssl.hint Create the link in SSL or not
+	*/
+	function setNextModuleEvent(required string module, string event,
+							   queryString="", boolean addToken = false,
+							   persist, struct persistStruct, boolean ssl=false,
+							   boolean postProcessExempt=false, numeric statusCode){
+		arguments.event = adminRoot() & ".module.#arguments.module#.#arguments.event#";
+		return super.setNextEvent(argumentCollection=arguments);
+	}
+
+	/**
 	* Link to the admin
 	* event An optional event to link to
 	*/
