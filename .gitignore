@@ -1,11 +1,11 @@
-﻿.DS_Store
+.DS_Store
 .settings/**
 settings.xml
 .project
 _paidModules/**
-_modules/**
 logs/**
 /web.config
 "Icon\r"
 WEB-INF/**
 test/logs/**
+HTMLCompressor
