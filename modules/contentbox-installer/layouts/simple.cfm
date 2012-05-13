@@ -1,24 +1,24 @@
 ﻿<cfoutput>
-<!DOCTYPE html>
+#html.doctype()#
 <html>
 <!--============================Head============================-->
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<!--- utf --->
+	<meta charset="utf-8"/>
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
-	<!--- SES --->
+	<!--- SES HTML Base --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
     <title>ContentBox Installer</title>
 	<!--- Favicon --->
 	<link href="#prc.assetRoot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.assetRoot#/includes/css/style.css"	rel="stylesheet" type="text/css"/>
-	<link href="#prc.assetRoot#/includes/css/teal.css" 	rel="stylesheet" type="text/css"/>
-
+	<link href="#prc.assetRoot#/includes/css/style.css"	rel="stylesheet"/>
+	<link href="#prc.assetRoot#/includes/css/teal.css" 	rel="stylesheet"/>
 	<!--- JS --->
-	<script type="text/javascript" src="#prc.assetRoot#/includes/js/jquery.tools.min.js"></script>
-	<script type="text/javascript" src="#prc.assetRoot#/includes/js/contentbox.js"></script>
+	<script src="#prc.assetRoot#/includes/js/jquery.tools.min.js"></script>
+	<script src="#prc.assetRoot#/includes/js/contentbox.js"></script>
 </head>
 <!--============================Body============================-->
 <body>

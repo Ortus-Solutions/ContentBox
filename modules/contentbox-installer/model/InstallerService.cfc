@@ -72,7 +72,7 @@ component accessors="true"{
 	function processColdBoxPasswords(required setup){
 		var configPath = appPath & "config/Coldbox.cfc";
 		var c = fileRead(configPath);
-		var newPass = hash( now() & setup.getUniqueHash() ,"MD5");
+		var newPass = hash( now() & setup.getUserData().toString() ,"MD5");
 		c = replacenocase(c, "@fwPassword@", newPass,"all");
 		fileWrite(configPath, c);
 		coldbox.setSetting("debugPassword", newpass);
@@ -80,10 +80,24 @@ component accessors="true"{
 	}
 
 	function processRewrite(required setup){
+		// rewrite on routes.
 		var routesPath = appPath & "config/Routes.cfm";
 		var c = fileRead(routesPath);
 		c = replacenocase(c, "index.cfm","","all");
 		fileWrite(routesPath, c);
+		// determine engine and setup the appropriate file
+		switch( arguments.setup.getRewrite_Engine() ){
+			case "mod_rewrite" :{
+				// do nothing, .htaccess already on root
+				break;
+			}
+			case "iis7" : {
+				var webConfigPath = getDirectoryFromPath( getMetadata(this).path ) & "web.config";
+				// move web.config to root
+				fileCopy( webConfigPath, appPath & "web.config" );
+				break;
+			}
+		}
 	}
 
 	/**
