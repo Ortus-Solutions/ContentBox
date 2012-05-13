@@ -2,7 +2,7 @@
 #html.doctype()#
 <!--============================Head============================-->
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8"/>
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
@@ -12,13 +12,11 @@
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet" type="text/css"/>
-	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet" type="text/css"/>
-
+	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet"/>
 	<!--- JS --->
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/contentbox.js"></script>
-
+	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
+	<script src="#prc.cbroot#/includes/js/contentbox.js"></script>
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginHeadEnd")#
 </head>
@@ -85,6 +83,5 @@
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginBodyEnd")#
 </body>
-<!--End Body-->
 </html>
 </cfoutput>
