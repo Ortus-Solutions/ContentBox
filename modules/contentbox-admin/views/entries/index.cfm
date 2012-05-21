@@ -90,7 +90,8 @@
 			
 			<!--- entryForm --->
 			#html.startForm(name="entryForm",action=prc.xehEntryRemove)#
-			<input type="hidden" name="contentID" id="contentID" value="" />
+			#html.hiddenField(name="contentStatus",value="")#
+			#html.hiddenField(name="contentID",value="")#
 			
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
@@ -106,7 +107,9 @@
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return to('#event.buildLink(prc.xehEntryEditor)#');" title="Create new entry">Create Entry</button>
+					<button class="button2" onclick="return bulkChangeStatus('publish')" title="Bulk Publish Content">Publish</button>
+					<button class="button2" onclick="return bulkChangeStatus('draft')" title="Bulk Draft Content">Draft</button>
+					<button class="buttonred" onclick="return to('#event.buildLink(linkTo=prc.xehEntryEditor)#');">Create Entry</button>
 				</div>
 				</cfif>
 				
@@ -126,6 +129,7 @@
 			<table name="entries" id="entries" class="tablesorter" width="98%">
 				<thead>
 					<tr>
+						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 						<th>Name</th>
 						<th width="150">Categories</th>
 						<th width="125">Dates</th>
@@ -146,6 +150,10 @@
 						<cfelseif !entry.isContentPublished()>
 							class="selected"
 						</cfif>>
+						<!--- check box --->
+						<td>
+							<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
+						</td>
 						<td>
 							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 								<a href="#event.buildLink(prc.xehBlogEditor)#/contentID/#entry.getContentID()#" title="Edit Entry">#entry.getTitle()#</a>

@@ -91,8 +91,9 @@
 
 			<!--- pageForm --->
 			#html.startForm(name="pageForm",action=prc.xehPageRemove)#
-			<input type="hidden" name="contentID" id="contentID" value="" />
-			<input type="hidden" name="parent" id="parent" value="#rc.parent#" />
+			#html.hiddenField(name="contentStatus",value="")#
+			#html.hiddenField(name="contentID",value="")#
+			#html.hiddenField(name="parent",value=rc.parent)#
 
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
@@ -108,7 +109,9 @@
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") or prc.oAuthor.checkPermission("PAGES_EDITOR")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#rc.parent#');" title="Create new page">Create Page</button>
+					<button class="button2" onclick="return bulkChangeStatus('publish')" title="Bulk Publish Content">Publish</button>
+					<button class="button2" onclick="return bulkChangeStatus('draft')" title="Bulk Draft Content">Draft</button>
+					<button class="buttonred" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#rc.parent#');">Create Page</button>
 				</div>
 				</cfif>
 
@@ -135,7 +138,7 @@
 			<table name="pages" id="pages" class="tablesorter" width="98%">
 				<thead>
 					<tr>
-						<th width="15" class="center {sorter:false}"></th>
+						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 						<th>Name</th>
 						<th width="150">Categories</th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="menu" title="Show in Menu"/></th>
@@ -156,15 +159,17 @@
 						<cfelseif !page.isContentPublished()>
 							class="selected"
 						</cfif>>
-						<td class="middle">
-							<!--- Children Dig Deeper --->
-							<cfif page.getNumberOfChildren()>
-								<a href="#event.buildLink(prc.xehPages)#/parent/#page.getContentID()#" title="View Child Pages (#page.getNumberOfChildren()#)"><img src="#prc.cbRoot#/includes/images/plus.png" alt="child" border="0"/></a>
-							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/page.png" alt="child"/>
-							</cfif>
+						<!--- check box --->
+						<td>
+							<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
 						</td>
 						<td>
+							<!--- Children Dig Deeper --->
+							<cfif page.getNumberOfChildren()>
+								<a href="#event.buildLink(prc.xehPages)#/parent/#page.getContentID()#" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><img src="#prc.cbRoot#/includes/images/plus.png" alt="child" border="0"/></a>
+							<cfelse>
+								<img src="#prc.cbRoot#/includes/images/page.png" alt="page"/>
+							</cfif>
 							<!--- Title --->
 							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 								<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a>

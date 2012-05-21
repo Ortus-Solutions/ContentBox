@@ -93,6 +93,7 @@ component extends="baseHandler"{
 		prc.xehEntrySearch 	 = "#prc.cbAdminEntryPoint#.entries";
 		prc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
 		prc.xehEntryHistory  = "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.entries.bulkstatus";
 		
 		// Tab
 		prc.tabContent_blog = true;
@@ -105,6 +106,27 @@ component extends="baseHandler"{
 		// get entry
 		prc.entry  = entryService.get( event.getValue("contentID",0) );
 		event.setView(view="entries/quickLook",layout="ajax");
+	}
+	
+	// Bulk Status Change
+	function bulkStatus(event,rc,prc){
+		event.paramValue("contentID","");
+		event.paramValue("contentStatus","draft");
+		
+		// check if id list has length
+		if( len( rc.contentID ) ){
+			entryService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
+			// announce event
+			announceInterception("cbadmin_onEntryStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus});
+			// Message
+			getPlugin("MessageBox").info("#listLen(rc.contentID)# Entries where set to '#rc.contentStatus#'");
+		}
+		else{
+			getPlugin("MessageBox").warn("No entries selected!");
+		}
+		
+		// relocate back
+		setNextEvent(event=prc.xehEntries);
 	}
 	
 	// editor

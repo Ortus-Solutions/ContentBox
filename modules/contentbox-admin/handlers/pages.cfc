@@ -76,7 +76,8 @@ component extends="baseHandler"{
 		prc.xehPageOrder 	= "#prc.cbAdminEntryPoint#.pages.changeOrder";
 		prc.xehPageHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehPageClone 	= "#prc.cbAdminEntryPoint#.pages.clone";
-
+		prc.xehPageBulkStatus 	= "#prc.cbAdminEntryPoint#.pages.bulkstatus";
+		
 		// Tab
 		prc.tabContent_pages = true;
 		// view
@@ -252,6 +253,32 @@ component extends="baseHandler"{
 		getPlugin("MessageBox").info("Page Cloned, isn't that cool!");
 		if( clone.hasParent() ){
 			setNextEvent(event=prc.xehPages,querystring="parent=#clone.getParent().getContentID()#");
+		}
+		else{
+			setNextEvent(event=prc.xehPages);
+		}
+	}
+	
+	// Bulk Status Change
+	function bulkStatus(event,rc,prc){
+		event.paramValue("parent","");
+		event.paramValue("contentID","");
+		event.paramValue("contentStatus","draft");
+		
+		// check if id list has length
+		if( len( rc.contentID ) ){
+			pageService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
+			// announce event
+			announceInterception("cbadmin_onPageStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus});
+			// Message
+			getPlugin("MessageBox").info("#listLen(rc.contentID)# Pages(s) where set to '#rc.contentStatus#'");
+		}
+		else{
+			getPlugin("MessageBox").warn("No pages selected!");
+		}
+		// relocate back
+		if( len(rc.parent) ){
+			setNextEvent(event=prc.xehPages,queryString="parent=#rc.parent#");
 		}
 		else{
 			setNextEvent(event=prc.xehPages);
