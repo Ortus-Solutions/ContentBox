@@ -93,7 +93,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		q.addParam(name="categoryID",value=arguments.categoryID,cfsqltype="numeric");
 		q.execute();
 		// delete category now
-		return deleteById( arguments.categoryID );
+		var deleteResults = deleteById(id=arguments.categoryID,transactional=false);
+		// evict queries
+		ORMEvictQueries( getQueryCacheRegion() );
+		// return results
+		return deleteResults;
 	}
 
 }
