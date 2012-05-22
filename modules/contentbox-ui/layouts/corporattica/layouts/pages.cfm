@@ -55,7 +55,7 @@ limitations under the License.
 	</cfif>
 
 	<!--- Base HREF for SES enabled URLs --->
-	<base href="#cb.siteBaseURL()#/" />
+	<base href="#cb.siteBaseURL()#" />
 
 	<!--- RSS Links --->
 	<link rel="alternate" type="application/rss+xml" title="Recent Blog Updates" href="#cb.linkRSS()#" />
