@@ -16,7 +16,7 @@
 	<div class="infoBar">
 		Year: '#cb.getYearFilter()#'
 		<cfif cb.getMonthFilter() NEQ 0>- Month: '#cb.getMonthFilter()#'</cfif>
-		<cfif cb.getDayFilter() NEQ 0>- Day: '#cb.getMonthFilter()#'</cfif>
+		<cfif cb.getDayFilter() NEQ 0>- Day: '#cb.getDayFilter()#'</cfif>
 	</div>
 	<br/>
 </cfif>
