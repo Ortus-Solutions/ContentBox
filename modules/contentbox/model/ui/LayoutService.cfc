@@ -96,7 +96,14 @@ component accessors="true" singleton{
 	* Activate the current layout in the settings
 	*/
 	function activateLayout(required layoutName) transactional{
+		// Get the current layout setting
 		var layout = settingService.findWhere({name="cb_site_layout"});
+		// Call deactivation event
+		var iData = {
+			layoutName = layout.getValue(),
+			layoutRecord = getLayoutRecord( layout.getValue() )
+		};
+		interceptorService.processState("cbadmin_onLayoutDeactivation", iData);
 		// setup the new layout value
 		layout.setValue( arguments.layoutName );
 		// save the layout setting
@@ -105,6 +112,12 @@ component accessors="true" singleton{
 		startupActiveLayout();
 		// flush the settings
 		settingService.flushSettingsCache();
+		// Call Activation
+		var iData = {
+			layoutName = arguments.layoutName,
+			layoutRecord = getLayoutRecord( arguments.layoutName )
+		};
+		interceptorService.processState("cbadmin_onLayoutActivation", iData);
 		return this;
 	}
 	
