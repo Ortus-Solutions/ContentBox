@@ -30,12 +30,12 @@ component extends="BaseContentHandler" singleton{
 	// pre Handler
 	function preHandler(event,action,eventArguments){
 		var prc = event.getCollection(private=true);
-		// super call
-		super.preHandler(argumentCollection=arguments);
 		// Check if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
 			event.overrideEvent("contentbox-ui:blog.disabled");
 		}
+		// super call
+		super.preHandler(argumentCollection=arguments);
 	}
 
 	function disabled(event,rc,prc){

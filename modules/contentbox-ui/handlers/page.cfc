@@ -41,7 +41,7 @@ component extends="BaseContentHandler" singleton{
 	function aroundIndex(event,eventArguments){
 		var rc = event.getCollection();
 		var prc = event.getCollection(private=true);
-
+		
 		// if not caching, just return
 		if( !prc.cbSettings.cb_content_caching ){
 			index(event,rc,prc);
@@ -105,7 +105,6 @@ component extends="BaseContentHandler" singleton{
 		}
 		// Try to get the page using the incoming URI
 		prc.page = pageService.findBySlug( incomingURL, showUnpublished );
-
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if( prc.page.isLoaded() ){
 			// Record hit
