@@ -100,6 +100,9 @@
 									<label>Active User: </label> <span class="textRed">#prc.author.getIsActive()#</span><br/>
 									<label>User Role: </label> <span class="textRed">#prc.author.getRole().getRole()#</span><br/>
 								</cfif>
+								
+								<!--- Biography --->
+								#html.textarea(name="biography",label="Biography or Notes About The User:",bind=prc.author,rows="10")#
 
 								<!--- Action Bar --->
 								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>

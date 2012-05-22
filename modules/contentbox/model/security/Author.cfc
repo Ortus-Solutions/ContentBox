@@ -13,7 +13,8 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" dbdefault="0" index="idx_login,idx_active";
 	property name="lastLogin" 	ormtype="timestamp" notnull="false";
 	property name="createdDate" ormtype="timestamp" notnull="true" update="false";
-
+	property name="biography"   ormtype="text" 		notnull="false" length="8000" default="";
+	
 	// O2M -> Entries
 	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="contentbox.model.content.Entry"
 			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="save-update" batchsize="10" orderby="publishedDate DESC";
