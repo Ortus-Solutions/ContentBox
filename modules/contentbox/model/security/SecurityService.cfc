@@ -30,7 +30,7 @@ component implements="ISecurityService" singleton{
 	property name="sessionStorage" 	inject="coldbox:plugin:SessionStorage";
 	property name="cookieStorage" 	inject="coldbox:plugin:CookieStorage";
 	property name="mailService"		inject="coldbox:plugin:MailService";
-	property name="renderer"		inject="coldbox:plugin:Renderer";
+	property name="renderer"		inject="provider:ColdBoxRenderer";
 	property name="CBHelper"		inject="id:CBHelper@cb";
 	property name="log"				inject="logbox:logger:{this}";
 	
@@ -175,7 +175,7 @@ component implements="ISecurityService" singleton{
 									   useTLS=settings.cb_site_mail_tls,
 									   useSSL=settings.cb_site_mail_ssl);
 		// generate content for email from template
-		mail.setBody( renderer.renderView(view="email_templates/password_reminder",module="contentbox") );
+		mail.setBody( renderer.get().renderView(view="email_templates/password_reminder",module="contentbox") );
 		// send it out
 		mailService.send( mail );
 		
