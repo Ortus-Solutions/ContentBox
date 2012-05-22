@@ -129,7 +129,7 @@
 		#announceInterception("cbadmin_footer")#
 		<div class="wrapper">
 		Copyright (C) #dateformat(now(),"yyyy")# <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>  . All Rights Reserved.<br/>
-		<a href="http://www.ortussolutions.com">Need Professional ColdFusion/ColdBox Support, Architecture, Design, or Development?</a>
+		<a href="http://www.ortussolutions.com">Need Professional ColdFusion-ContentBox-ColdBox Support, Architecture, Design, or Development?</a>
 		</div>
 	</div>
 	<!--End Footer-->
