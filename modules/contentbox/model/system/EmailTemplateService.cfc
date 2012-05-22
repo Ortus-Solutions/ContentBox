@@ -40,7 +40,7 @@ component accessors="true" singleton{
 	* onDIComplete
 	*/
 	function onDIComplete(){
-		setTemplatesPath( moduleSettings["contentbox"].path & "/views/email_templates" );
+		setTemplatesPath( moduleSettings["contentbox"].path & "/email_templates" );
 	}
 	
 	/**

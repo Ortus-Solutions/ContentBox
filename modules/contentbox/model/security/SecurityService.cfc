@@ -175,7 +175,7 @@ component implements="ISecurityService" singleton{
 									   useTLS=settings.cb_site_mail_tls,
 									   useSSL=settings.cb_site_mail_ssl);
 		// generate content for email from template
-		mail.setBody( renderer.get().renderView(view="email_templates/password_reminder",module="contentbox") );
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder") );
 		// send it out
 		mailService.send( mail );
 		

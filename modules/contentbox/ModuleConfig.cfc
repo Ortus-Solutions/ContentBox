@@ -44,9 +44,16 @@ component {
 			updateSlug_beta 	= "contentbox-beta-updates",
 			updatesURL			= "http://www.coldbox.org/api/forgebox"
 		};
+		
+		// CB Module Conventions
+		conventions = {
+			layoutsLocation = "layouts",
+			viewsLocation 	= "layouts"
+		};
 
 		// Parent Affected Settings
 		parentSettings = {
+			// override messagebox styles
 			messagebox_style_override	= true,
 			// File Browser module name override
 			filebrowser_module_name		= "contentbox-filebrowser"
@@ -128,7 +135,9 @@ component {
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
 		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.BlogCFCImporter");
-
+		// ColdBox Integrations
+		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
+		
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
 	}
