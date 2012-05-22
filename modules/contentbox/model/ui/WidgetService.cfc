@@ -21,7 +21,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 */
-component accessors="true" singleton{
+component accessors="true" singleton threadSafe{
 	// Dependecnies
 	property name="settingService"		inject="id:settingService@cb";
 	property name="moduleSettings"		inject="coldbox:setting:modules";
@@ -39,7 +39,7 @@ component accessors="true" singleton{
 	* onDIComplete
 	*/
 	function onDIComplete(){
-		setWidgetsPath( moduleSettings["contentbox-ui"].PluginsPhysicalPath & "/widgets" );
+		setWidgetsPath( moduleSettings["contentbox"].path & "/widgets" );
 	}
 
 	/**
@@ -116,7 +116,7 @@ component accessors="true" singleton{
 	* Get a widget by name
 	*/
 	any function getWidget(required name){
-		return coldbox.getPlugin(plugin="widgets." & arguments.name,module="contentbox-ui",custom=true);
+		return coldbox.getPlugin(plugin="contentbox.widgets." & arguments.name, customPlugin=true);
 	}
 	
 	/**
