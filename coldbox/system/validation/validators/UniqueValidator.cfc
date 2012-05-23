@@ -3,14 +3,16 @@
 Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
-This validator checks if a field has value and not null
+Validates if the field has a unique value in the database, this only applies to ORM objects
 */
 component accessors="true" implements="coldbox.system.validation.validators.IValidator" singleton{
 
 	property name="name";
+	property name="ORMService";
 
-	RequiredValidator function init(){
-		name = "Required";
+	UniqueValidator function init(){
+		name 		= "Unique";
+		ORMService 	= new coldbox.system.orm.hibernate.BaseORMService();
 		return this;
 	}
 
@@ -23,28 +25,42 @@ component accessors="true" implements="coldbox.system.validation.validators.IVal
 	* @validationData.hint The validation data the validator was created with
 	*/
 	boolean function validate(required coldbox.system.validation.result.IValidationResult validationResult, required any target, required string field, any targetValue, string validationData){
-		// check
-		if( !isBoolean(arguments.validationData) ){
-			throw(message="The Required validator data needs to be boolean and you sent in: #arguments.validationData#",type="RequiredValidator.InvalidValidationData");
-		}
-		// return true if not required, nothing needed to check
+
+		// return true if not unique, nothing needed to check
 		if( !arguments.validationData ){ return true; }
 
 		// null checks
-		if( isNull(arguments.targetValue) ){
+		if( isNull( arguments.targetValue ) ){
 			var args = {message="The '#arguments.field#' value is null",field=arguments.field,validationType=getName(),validationData=arguments.validationData};
 			validationResult.addError( validationResult.newError(argumentCollection=args) );
 			return false;
 		}
 
-		// Simple Tests
-		if( isSimpleValue(arguments.targetValue) AND len(trim( arguments.targetValue )) ){
-			return true;
+		// Only validate simple values and if they have length, else ignore.
+		if( isSimpleValue( arguments.targetValue ) AND len( trim( arguments.targetValue ) ) ){
+			// process entity setups.
+			var entityName 		= ORMService.getEntityGivenName( arguments.target );
+			var identityField 	= ORMService.getKey( entityName );
+			var identityValue 	= evaluate( "arguments.target.get#identityField#()" );
+
+			// create criteria for uniqueness
+			var c = ORMService.newCriteria( entityName )
+				.isEq( field, arguments.targetValue );
+
+			// validate with ID? then add to restrictions
+			if( !isNull( identityValue ) ){
+				c.ne( identityField, identityValue );
+			}
+
+			// validate uniqueness
+			if( c.count() GT 0 ){
+				var args = {message="The '#arguments.field#' value is not unique in the database",field=arguments.field,validationType=getName(),validationData=arguments.validationData};
+				validationResult.addError( validationResult.newError(argumentCollection=args) );
+				return false;
+			}
 		}
 
-		var args = {message="The '#arguments.field#' value is required",field=arguments.field,validationType=getName(),validationData=arguments.validationData};
-		validationResult.addError( validationResult.newError(argumentCollection=args) );
-		return false;
+		return true;
 	}
 
 	/**
