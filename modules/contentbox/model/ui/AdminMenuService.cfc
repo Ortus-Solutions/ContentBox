@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * Manages the admin menu services
 */
-component accessors="true" singleton{
+component accessors="true" threadSafe singleton{
 
 	// The structure that keeps the menus
 	property name="menu"			type="array";
@@ -46,7 +46,7 @@ component accessors="true" singleton{
 	* @requestService.inject coldbox:requestService
 	* @coldbox.inject coldbox
 	*/
-	AdminMenuService function init(required requestService){
+	AdminMenuService function init(required requestService, required coldbox){
 		// init menu array
 		menu = [];
 		// init top menu structure holders
@@ -55,6 +55,8 @@ component accessors="true" singleton{
 		thisTopMenu = "";
 		// store request service
 		variables.requestService = arguments.requestService;
+		// store coldbox
+		variables.coldbox = arguments.coldbox;
 		// create default top menus
 		createDefaultMenu();
 		return this;
@@ -64,7 +66,6 @@ component accessors="true" singleton{
 	* Create the default ContentBox menu
 	*/
 	AdminMenuService function createDefaultMenu(){
-		var event 	= requestService.getContext().setIsSES( true );
 		var prc 	= {};
 
 		// Global Admin Exit Handlers
