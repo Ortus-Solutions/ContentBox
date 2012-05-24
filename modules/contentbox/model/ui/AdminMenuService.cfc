@@ -66,6 +66,7 @@ component accessors="true" threadSafe singleton{
 	* Create the default ContentBox menu
 	*/
 	AdminMenuService function createDefaultMenu(){
+		var event 	= requestService.getContext();
 		var prc 	= {};
 
 		// Global Admin Exit Handlers
