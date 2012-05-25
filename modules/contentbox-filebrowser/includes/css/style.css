@@ -44,6 +44,7 @@
 #FileBrowser #fileListing{
     line-height:15px;
     min-height: 200px;
+    max-height: 400px;
 	padding: 5px;
     overflow: auto;
 }

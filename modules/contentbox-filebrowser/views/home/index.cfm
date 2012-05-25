@@ -53,10 +53,10 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<cfif prc.fbSettings.allowDownload>
 			<a href="javascript:fbDownload()" title="Download File"><img src="#prc.fbModRoot#/includes/images/download.png"  border="0"></a>&nbsp;&nbsp;
 			</cfif>
-			
+
 			<!--- Quick View --->
 			<a href="javascript:fbQuickView()" title="QuickView"><img src="#prc.fbModRoot#/includes/images/camera.png"  border="0"></a>&nbsp;&nbsp;
-			
+
 			<!--- Sorting --->
 			#html.label(field="fbSorting",content="Sort By: ")#
 			#html.select(name="fbSorting",options="Name,Size,LastModified",selectedValue=prc.fbPreferences.sorting)#
@@ -136,7 +136,10 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 						 data-lastModified="#prc.fbqListing.dateLastModified#"
 						 data-size="#numberFormat(prc.fbqListing.size/1024)#"
 						 data-quickview="#validQuickView( listLast(prc.fbQListing.name,".") )#"
-						 onClick="fbSelect('#validIDName#','#JSStringFormat(plainURL)#')">
+						 onClick="fbSelect('#validIDName#','#JSStringFormat(plainURL)#')"
+						 <cfif len( rc.callback )>
+						 onDblclick="fbChoose()"
+						 </cfif> >
 						<img src="#prc.fbModRoot#/includes/images/#getImageFile(listLast(prc.fbQListing.name,"."))#" border="0"  alt="file">
 						#prc.fbqListing.name#
 					</div>
