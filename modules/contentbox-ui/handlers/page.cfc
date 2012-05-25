@@ -73,7 +73,8 @@ component extends="BaseContentHandler" singleton{
 
 		// verify if caching is possible by testing the page, also, page with comments are not cached.
 		if( prc.page.isLoaded() AND !prc.page.getAllowComments() AND prc.page.getCacheLayout() ){
-			var data = controller.getPlugin("Renderer").renderLayout();
+			var data = controller.getPlugin("Renderer")
+				.renderLayout(module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule());
 			cache.set(cachekey,
 					  data,
 					  (prc.page.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : prc.page.getCacheTimeout()),
@@ -86,6 +87,7 @@ component extends="BaseContentHandler" singleton{
 	* Present pages
 	*/
 	function index(event,rc,prc){
+		
 		// incoming params
 		event.paramValue("pageSlug","");
 		var incomingURL  = "";
@@ -119,9 +121,10 @@ component extends="BaseContentHandler" singleton{
 
 			// Verify chosen page layout exists?
 			verifyPageLayout( prc.page );
-
 			// set skin view
-			event.setView(view="#prc.cbLayout#/views/page",layout="#prc.cbLayout#/layouts/#prc.page.getLayout()#");
+			event.setLayout(name="#prc.cbLayout#/layouts/#prc.page.getLayout()#", module="contentbox")
+				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
+			
 		}
 		else{
 			// missing page
@@ -135,9 +138,9 @@ component extends="BaseContentHandler" singleton{
 			event.setHTTPHeader("404","Page not found");
 
 			// set skin not found
-			event.setView(view="#prc.cbLayout#/views/notfound",layout="#prc.cbLayout#/layouts/pages");
+			event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
+				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");
 		}
-
 	}
 
 	/**
@@ -173,7 +176,8 @@ component extends="BaseContentHandler" singleton{
 		announceInterception("cbui_onContentSearch",{searchResults = prc.searchResults, searchResultsContent = prc.searchResultsContent});
 
 		// set skin search
-		event.setView(view="#prc.cbLayout#/views/search",layout="#prc.cbLayout#/layouts/pages");
+		event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
+			.setView(view="#prc.cbLayout#/views/search",module="contentbox");
 	}
 
 

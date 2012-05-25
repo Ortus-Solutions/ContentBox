@@ -51,9 +51,9 @@ component accessors="true" singleton{
 	*/
 	void function onDIComplete(){
 		// setup location paths
-		setLayoutsPath( moduleSettings["contentbox-ui"].path & "/layouts" );
-		setLayoutsIncludePath( moduleSettings["contentbox-ui"].mapping & "/layouts" );
-		setLayoutsInvocationPath( moduleSettings["contentbox-ui"].invocationPath & ".layouts" );
+		setLayoutsPath( moduleSettings["contentbox"].path & "/layouts" );
+		setLayoutsIncludePath( moduleSettings["contentbox"].mapping & "/layouts" );
+		setLayoutsInvocationPath( moduleSettings["contentbox"].invocationPath & ".layouts" );
 		// Register all layouts
 		buildLayoutRegistry();
 		// Startup Active Layout

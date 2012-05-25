@@ -87,12 +87,6 @@ component {
 			{pattern="/", handler="blog", action="index" }
 		];	
 		
-		// CB UI Module Conventions
-		conventions = {
-			layoutsLocation = "layouts",
-			viewsLocation 	= "layouts"
-		};
-		
 		// CB UI Event driven programming extensions
 		interceptorSettings = {
 			// ContentBox UI Custom Events, you can add your own if you like to!

@@ -43,9 +43,6 @@ component{
 			return;
 		}
 
-		// set blog layout
-		event.setLayout("#prc.cbLayout#/layouts/blog");
-
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 
@@ -70,16 +67,17 @@ component{
 	function onError(event,faultAction,exception,eventArguments){
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
-
+		
 		// store exceptions
 		prc.faultAction = arguments.faultAction;
 		prc.exception   = arguments.exception;
 
 		// announce event
 		announceInterception("cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments});
-
+		
 		// Set view to render
-		event.setView(view="#prc.cbLayout#/views/error",layout="#prc.cbLayout#/layouts/pages");
+		event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
+			.setView(view="#prc.cbLayout#/views/error", module="contentbox");
 	}
 
 	/************************************** PRIVATE *********************************************/

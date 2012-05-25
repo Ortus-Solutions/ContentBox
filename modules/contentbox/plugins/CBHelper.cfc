@@ -83,7 +83,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/************************************** root methods *********************************************/
 
-	// Get the location of your layout in the application, great for assets, cfincludes, etc
+	// Get the location of your currently defined layout in the application, great for assets, cfincludes, etc
 	function layoutRoot(){
 		var prc = getRequestCollection(private=true);
 		return prc.cbLayoutRoot;

@@ -51,7 +51,7 @@
 						</td>
 						<td class="center">
 							<!--- Editor --->
-							<a title="Edit Template" href="#event.buildLink(linkTo=prc.xehTemplateEditor,queryString='template=#URLEncodedFormat(prc.templates.name)#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
+							<a title="Edit Template" href="#event.buildLink(linkTo=prc.xehTemplateEditor,queryString='template=#URLEncodedFormat( listFirst( prc.templates.name, ".") )#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
 						</td>
 					</tr>
 					</cfloop>
