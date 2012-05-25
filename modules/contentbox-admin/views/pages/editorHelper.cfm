@@ -15,21 +15,27 @@ $(document).ready(function() {
 	// setup editors
 	setupEditors( $pageForm );
 });
+function publishNow(){
+	var fullDate = new Date();
+	$("##publishedDate").val( getToday() );
+	$("##publishedHour").val( fullDate.getHours() );
+	$("##publishedMinute").val( fullDate.getMinutes() );
+}
 function quickSave(){
 	// Draft it
 	$isPublished.val('false');
-	
+
 	// Validation first
 	if( !$pageForm.data("validator").checkValidity() ){
 		return false;
 	}
-	
+
 	// Activate Loader
 	var $uploader = $("##uploadBarLoader");
 	var $status = $("##uploadBarLoaderStatus");
 	$status.html("Saving...");
 	$uploader.slideToggle();
-		
+
 	// Post it
 	$.post('#event.buildLink(prc.xehPageSave)#', $pageForm.serialize(),function(data){
 		// Save new id
@@ -39,7 +45,7 @@ function quickSave(){
 		$status.html('Page Draft Saved!');
 		$isPublished.val('true');
 	},"json");
-	
+
 	return false;
 }
 </script>

@@ -77,7 +77,7 @@ component extends="baseHandler"{
 		prc.xehPageHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehPageClone 	= "#prc.cbAdminEntryPoint#.pages.clone";
 		prc.xehPageBulkStatus 	= "#prc.cbAdminEntryPoint#.pages.bulkstatus";
-		
+
 		// Tab
 		prc.tabContent_pages = true;
 		// view
@@ -160,10 +160,12 @@ component extends="baseHandler"{
 		}
 
 		// get new/persisted page and populate it with incoming data.
-		var page 			= pageService.get(rc.contentID);
+		var page 			= pageService.get( rc.contentID );
 		var originalSlug 	= page.getSlug();
-		populateModel( page ).addPublishedtime(rc.publishedHour,rc.publishedMinute);
-		var isNew = (NOT page.isLoaded());
+		populateModel( page )
+			.addPublishedtime( rc.publishedHour, rc.publishedMinute )
+			.addExpiredTime( rc.expireHour, rc.expireMinute );
+		var isNew = ( NOT page.isLoaded() );
 
 		// Validate Page And Incoming Data
 		var errors = page.validate();
@@ -258,13 +260,13 @@ component extends="baseHandler"{
 			setNextEvent(event=prc.xehPages);
 		}
 	}
-	
+
 	// Bulk Status Change
 	function bulkStatus(event,rc,prc){
 		event.paramValue("parent","");
 		event.paramValue("contentID","");
 		event.paramValue("contentStatus","draft");
-		
+
 		// check if id list has length
 		if( len( rc.contentID ) ){
 			pageService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
