@@ -70,6 +70,14 @@ component implements="contentbox.model.updates.IUpdate"{
 				var oldTemplates = coldbox.getSetting("modules")["contentbox"].path & "/views";
 				directoryDelete( oldTemplates, true );
 
+				// Process patches migrations
+				var srcUpdates 	= coldbox.getSetting("modules")["contentbox"].path & "/model/updates/patches";
+				var destUpdates = coldbox.getSetting("modules")["contentbox"].path & "/updates";
+				directoryCreate( destUpdates );
+				fileUtils.directoryCopy(source=srcUpdates, destination=destUpdates);
+				directoryDelete( srcUpdates, true );
+
+
 			}
 		}
 		catch(Any e){
