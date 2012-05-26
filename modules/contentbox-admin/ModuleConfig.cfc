@@ -57,6 +57,7 @@ component {
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
 			{pattern="/comments/page/:page",handler="comments"},
 			{pattern="/customHTML/page/:page",handler="customHTML"},
+			{pattern="/mediamanager/library/:library", handler="mediamanager", action="index"},
 			{pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
 			{pattern="/:handler/:action?"}
 		];
@@ -74,7 +75,7 @@ component {
 				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarFooter",
 				"cbadmin_entryEditorFooter", "cbadmin_entryEditorInBody",
 				// Page Events
-				"cbadmin_prePageSave","cbadmin_postPageSave","cbadmin_prePageRemove","cbadmin_postPageRemove", "cbadmin_onPageStatusUpdate", 
+				"cbadmin_prePageSave","cbadmin_postPageSave","cbadmin_prePageRemove","cbadmin_postPageRemove", "cbadmin_onPageStatusUpdate",
 				"cbadmin_pageEditorSidebar", "cbadmin_pageEditorSidebarAccordion", "cbadmin_pageEditorSidebarFooter",
 				"cbadmin_pageEditorFooter", "cbadmin_pageEditorInBody",
 				// Author Events

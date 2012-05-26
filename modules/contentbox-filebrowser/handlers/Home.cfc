@@ -68,7 +68,7 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 
 		// Detect sorting changes
-		detectSorting(event,rc,prc);
+		detectPreferences(event,rc,prc);
 
 		// load Assets for filebrowser
 		loadAssets(event,rc,prc);
@@ -137,11 +137,11 @@ component output="false" hint="Main filebrowser module handler"{
 			errors = false,
 			messages = ""
 		};
-		
+
 		// param value
 		event.paramValue("path","");
 		event.paramValue("dName","");
-		
+
 		// Verify credentials else return invalid
 		if( !prc.fbSettings.createFolders ){
 			data.errors = true;
@@ -176,11 +176,11 @@ component output="false" hint="Main filebrowser module handler"{
 				directoryName = rc.dName
 			};
 			announceInterception("fb_preFolderCreation",iData);
-		
+
 			fileUtils.directoryCreate( rc.path & "/" & rc.dName );
 			data.errors = false;
 			data.messages = "Folder '#rc.path#/#rc.dName#' created successfully!";
-			
+
 			// Announce it
 			announceInterception("fb_postFolderCreation",iData);
 		}
@@ -236,7 +236,7 @@ component output="false" hint="Main filebrowser module handler"{
 				path = rc.path
 			};
 			announceInterception("fb_preFileRemoval",iData);
-			
+
 			if( fileExists( rc.path ) ){
 				fileUtils.removeFile( rc.path );
 			}
@@ -245,7 +245,7 @@ component output="false" hint="Main filebrowser module handler"{
 			}
 			data.errors = false;
 			data.messages = "'#rc.path#' removed successfully!";
-			
+
 			// Announce it
 			announceInterception("fb_postFileRemoval",iData);
 		}
@@ -301,11 +301,11 @@ component output="false" hint="Main filebrowser module handler"{
 				path = rc.path
 			};
 			announceInterception("fb_preFileDownload",iData);
-			
+
 			fileUtils.sendFile(file=rc.path);
 			data.errors = false;
 			data.messages = "'#rc.path#' sent successfully!";
-			
+
 			// Announce it
 			announceInterception("fb_postFileDownload",iData);
 		}
@@ -356,7 +356,7 @@ component output="false" hint="Main filebrowser module handler"{
 				newName = rc.name
 			};
 			announceInterception("fb_preFileRename",iData);
-			
+
 			if( fileExists( rc.path ) ){
 				fileUtils.renameFile( rc.path, rc.name );
 			}
@@ -365,10 +365,10 @@ component output="false" hint="Main filebrowser module handler"{
 			}
 			data.errors = false;
 			data.messages = "'#rc.path#' renamed successfully!";
-			
+
 			// Announce it
 			announceInterception("fb_postFileRename",iData);
-			
+
 		}
 		catch(Any e){
 			data.errors = true;
@@ -412,7 +412,7 @@ component output="false" hint="Main filebrowser module handler"{
 				path = rc.path
 			};
 			announceInterception("fb_preFileUpload",iData);
-			
+
 			iData.results = fileUtils.uploadFile(fileField="FILEDATA",
 											   destination=rc.path,
 											   nameConflict="Overwrite",
@@ -424,7 +424,7 @@ component output="false" hint="Main filebrowser module handler"{
 			data.errors = false;
 			data.messages = "File uploaded successfully!";
 			log.info(data.messages, iData.results);
-			
+
 			// Announce it
 			announceInterception("fb_postFileUpload",iData);
 		}
@@ -489,7 +489,7 @@ component output="false" hint="Main filebrowser module handler"{
 		// not found or not JSON setup defaults
 		if( !len(prefs) OR NOT isJSON(prefs) ){
 			prefs = {
-				sorting = "name"
+				sorting = "name", listingType = "listing"
 			};
 			cookieStorage.setVar("fileBrowserPrefs",serializeJSON(prefs));
 		}
@@ -501,14 +501,21 @@ component output="false" hint="Main filebrowser module handler"{
 	}
 
 	/**
-	* Detect Sorting
+	* Detect Preferences: Sorting and List Types
 	*/
-	private function detectSorting(event,rc,prc){
+	private function detectPreferences(event,rc,prc){
 		if( structKeyExists(rc,"sorting") AND reFindNoCase("^(name|size|lastModified)$",rc.sorting) ){
 			var prefs = getPreferences();
 			if( prefs.sorting NEQ rc.sorting ){
 				prefs.sorting = rc.sorting;
-				cookieStorage.setVar("fileBrowserPrefs",serializeJSON(prefs));
+				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
+			}
+		}
+		if( structKeyExists(rc,"listType") AND reFindNoCase("^(listing|grid)$", rc.listType) ){
+			var prefs = getPreferences();
+			if( NOT structKeyExists(prefs, "listType") OR prefs.listType NEQ rc.listType ){
+				prefs.listType = rc.listType;
+				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 		}
 	}
@@ -559,6 +566,6 @@ component output="false" hint="Main filebrowser module handler"{
 		if(!flash.exists("filebrowser")){
 			var filebrowser = {callback=rc.callback, cancelCallback=rc.cancelCallback, filterType=rc.filterType, settings=prc.fbsettings};
 			flash.put(name="filebrowser",value=filebrowser,autoPurge=false);
-		}		
+		}
 	}
 }

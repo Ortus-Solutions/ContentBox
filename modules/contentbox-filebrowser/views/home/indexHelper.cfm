@@ -18,6 +18,10 @@ function validQuickView(ext){
 }
 function getImageFile(ext){
 	switch(arguments.ext){
+		case "doc" : case "docx" : case "pages" : { return "word.png"; }
+		case "ppt" : case "pptx" : case "keynote" : { return "ppt.png"; }
+		case "xls" : case "xlsx" : case "numbers" : { return "xls.png"; }
+		case "pdf" : { return "pdf.png"; }
 		case "png": case "jpg" : case "jpeg" : case "gif" : case "bmp" : { return "Picture.png"; }
 		case "cfc": case "cfm" : case "cfml" : { return "coldfusion.png"; }
 		case "html" : case "htm" : case "aspx" : case "asp" : case "php" : case "rb" : case "py" : case "xml" :{ return "code.png"; }
@@ -55,6 +59,7 @@ $(document).ready(function() {
 	$selectButton		= $fileBrowser.find("##bt_select");
 	$contextMenu		= $fileBrowser.find("##fbContextMenu");
 	$sorting			= $fileBrowser.find("##fbSorting");
+	$listType			= $fileBrowser.find("##listType");
 	$quickView			= $fileBrowser.find("##quickViewBar");
 	$quickViewContents	= $fileBrowser.find("##quickViewBarContents");
 	$quickViewCloseBtn	= $fileBrowser.find("##fbCloseButton");
@@ -95,11 +100,17 @@ function fbContextActions(action,el,pos){
 		</cfif>
 	}
 }
+function fbListTypeChange(listType){
+	$listType.val( listType );
+	fbRefresh();
+}
 function fbRefresh(){
 	$fileLoaderBar.slideDown();
-	$fileBrowser.parent().load( '#event.buildLink(prc.xehFBBrowser)#', {path:'#prc.fbSafeCurrentRoot#',sorting:$sorting.val()},function(){
-		$fileLoaderBar.slideUp();
-	});
+	$fileBrowser.parent().load( '#event.buildLink(prc.xehFBBrowser)#',
+		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val() },
+		function(){
+			$fileLoaderBar.slideUp();
+		});
 }
 function fbDrilldown(inPath){
 	if( inPath == null ){ inPath = ""; }
