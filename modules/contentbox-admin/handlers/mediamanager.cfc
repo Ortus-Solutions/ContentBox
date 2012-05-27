@@ -36,7 +36,7 @@ component extends="baseHandler"{
 			}
 			case "updates" : {
 				prc.cbFileBrowserSettings.title = "Updates Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel("UpdateService@cb").patchesLocation(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel("UpdateService@cb").getPatchesLocation(); break;
 			}
 			case "widgets" : {
 				prc.cbFileBrowserSettings.title = "Widgets Library";
