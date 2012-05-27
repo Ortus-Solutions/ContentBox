@@ -486,17 +486,25 @@ component output="false" hint="Main filebrowser module handler"{
 	private function getPreferences(){
 		// Get preferences
 		var prefs = cookieStorage.getVar("fileBrowserPrefs","");
+		
 		// not found or not JSON setup defaults
 		if( !len(prefs) OR NOT isJSON(prefs) ){
 			prefs = {
-				sorting = "name", listingType = "listing"
+				sorting = "name", listType = "listing"
 			};
 			cookieStorage.setVar("fileBrowserPrefs",serializeJSON(prefs));
 		}
 		else{
 			prefs = deserializeJSON( prefs );
+			if( !structKeyExists(prefs, "sorting") ){
+				prefs.sorting = "name";
+				cookieStorage.setVar("fileBrowserPrefs",serializeJSON(prefs));
+			}
+			if( !structKeyExists(prefs, "listType") ){
+				prefs.listType = "listing";
+				cookieStorage.setVar("fileBrowserPrefs",serializeJSON(prefs));
+			}
 		}
-
 		return prefs;
 	}
 
