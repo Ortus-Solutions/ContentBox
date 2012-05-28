@@ -20,7 +20,7 @@ component extends="baseHandler"{
 		// Exit Handler
 		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.settings.save";
 		// pages
-		prc.pages = pageService.search(sortOrder="parent asc, title asc").pages;
+		prc.pages = pageService.search(sortOrder="slug asc",isPublished=true).pages;
 		// tab
 		prc.tabSystem_Settings = true;
 		// caches

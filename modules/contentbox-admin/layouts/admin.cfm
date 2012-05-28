@@ -2,7 +2,7 @@
 #html.doctype()#
 <!--============================Head============================-->
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8" />
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
@@ -12,9 +12,9 @@
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet" type="text/css"/>
-	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet" type="text/css"/>
-	<link href="#prc.cbroot#/includes/css/sort.css"	 	rel="stylesheet" type="text/css"/>
+	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/sort.css"	 	rel="stylesheet"/>
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
@@ -22,17 +22,16 @@
 	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
 		<cfset addAsset("#css#.css")>
 	</cfloop>
-
 	<!--- JS --->
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/metadata.pack.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.uidivfilter.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/jquery.tablednd_0_5.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/tablesorter.min.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/js/contentbox.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
+	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
+	<script src="#prc.cbroot#/includes/js/metadata.pack.js"></script>
+	<script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
+	<script src="#prc.cbroot#/includes/js/jquery.uidivfilter.js"></script>
+	<script src="#prc.cbroot#/includes/js/jquery.tablednd_0_5.js"></script>
+	<script src="#prc.cbroot#/includes/js/tablesorter.min.js"></script>
+	<script src="#prc.cbroot#/includes/js/contentbox.js"></script>
+	<script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
+	<script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
 	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
 		<cfset addAsset("#prc.cbroot#/includes/js/#js#.js")>
@@ -40,7 +39,6 @@
 	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
 		<cfset addAsset("#js#.js")>
 	</cfloop>
-
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeHeadEnd")#
 </head>
@@ -131,7 +129,7 @@
 		#announceInterception("cbadmin_footer")#
 		<div class="wrapper">
 		Copyright (C) #dateformat(now(),"yyyy")# <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>  . All Rights Reserved.<br/>
-		<a href="http://www.ortussolutions.com">Need Professional ColdFusion/ColdBox Support, Architecture, Design, or Development?</a>
+		<a href="http://www.ortussolutions.com">Need Professional ColdFusion-ContentBox-ColdBox Support, Architecture, Design, or Development?</a>
 		</div>
 	</div>
 	<!--End Footer-->
@@ -166,6 +164,5 @@
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeBodyEnd")#
 </body>
-<!--End Body-->
 </html>
 </cfoutput>

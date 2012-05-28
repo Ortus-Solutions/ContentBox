@@ -30,12 +30,12 @@ component extends="BaseContentHandler" singleton{
 	// pre Handler
 	function preHandler(event,action,eventArguments){
 		var prc = event.getCollection(private=true);
-		// super call
-		super.preHandler(argumentCollection=arguments);
 		// Check if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
 			event.overrideEvent("contentbox-ui:blog.disabled");
 		}
+		// super call
+		super.preHandler(argumentCollection=arguments);
 	}
 
 	function disabled(event,rc,prc){
@@ -47,7 +47,8 @@ component extends="BaseContentHandler" singleton{
 		event.setHTTPHeader("404","Page not found");
 
 		// set skin not found
-		event.setView(view="#prc.cbLayout#/views/notfound",layout="#prc.cbLayout#/layouts/pages");
+		event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
+			.setView(view="#prc.cbLayout#/views/notfound",module="contentbox");
 	}
 
 	/**
@@ -109,7 +110,9 @@ component extends="BaseContentHandler" singleton{
 		announceInterception("cbui_onIndex",{entries=prc.entries,entriesCount=prc.entriesCount});
 
 		// set skin view
-		event.setView("#prc.cbLayout#/views/index");
+		event.setLayout(name="#prc.cbLayout#/layouts/blog", module="contentbox")
+			.setView(view="#prc.cbLayout#/views/index",module="contentbox");
+		
 	}
 
 	/**
@@ -141,7 +144,8 @@ component extends="BaseContentHandler" singleton{
 		announceInterception("cbui_onArchives",{entries=prc.entries,entriesCount=prc.entriesCount});
 
 		// set skin view
-		event.setView("#prc.cbLayout#/views/archives");
+		event.setLayout(name="#prc.cbLayout#/layouts/blog", module="contentbox")
+			.setView(view="#prc.cbLayout#/views/archives",module="contentbox");
 	}
 
 	/**
@@ -171,7 +175,8 @@ component extends="BaseContentHandler" singleton{
 			// announce event
 			announceInterception("cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug});
 			// set skin view
-			event.setView("#prc.cbLayout#/views/entry");
+			event.setLayout(name="#prc.cbLayout#/layouts/blog", module="contentbox")
+				.setView(view="#prc.cbLayout#/views/entry",module="contentbox");
 		}
 		else{
 			// announce event
@@ -181,7 +186,8 @@ component extends="BaseContentHandler" singleton{
 			// set 404 headers
 			event.setHTTPHeader("404","Entry not found");
 			// set skin not found
-			event.setView("#prc.cbLayout#/views/notfound");
+			event.setLayout(name="#prc.cbLayout#/layouts/blog", module="contentbox")
+				.setView(view="#prc.cbLayout#/views/notfound",module="contentbox");
 		}
 	}
 

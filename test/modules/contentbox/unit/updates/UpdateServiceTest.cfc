@@ -25,32 +25,38 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 	function setup(){
 		super.setup();
-		mockZip = getMockBox().createEmptyMock("coldbox.system.core.util.Zip");
+		mockZip = getMockBox().createMock("coldbox.system.core.util.Zip").init();
 		wirebox = getMockBox().createEmptyMock("coldbox.system.ioc.Injector");
 
+		mockConfig = {
+			path = expandPath("/contentbox")
+		};
+
 		// init service
-		model.$property("zipUtil","variables",mockZip);
-		model.$property("wirebox","variables",wirebox);
-		model.$property("appPath","variables", expandPath("/root") );
+		model.$property("zipUtil","variables",mockZip)
+			.$property("wirebox","variables",wirebox)
+			.$property("appPath","variables", expandPath("/root") )
+			.$property("moduleConfig", "variables", mockConfig);
 		model.init();
+		model.onDIComplete();
 	}
 
 	function testPath(){
 		path = model.getPatchesLocation();
-		assertEquals( expandPath("/contentbox/model/updates/patches"), path );
+		assertEquals( expandPath("/contentbox/updates"), path );
 		debug(path);
 	}
 
 	function testBuildUpdater(){
 		 var source = expandPath("/contentbox-test/resources/patches/Update.cfc");
 		 var version = "1-0-0-0-1";
-		 var dest = expandPath("/contentbox/model/updates/patches/Update.cfc");
+		 var dest = expandPath("/contentbox/updates/Update.cfc");
 
 		// copy updater
 		fileCopy( source, dest );
 
 		try{
-			wirebox.$("getInstance", createObject("component","contentbox.model.updates.patches.Update") );
+			wirebox.$("getInstance", createObject("component","contentbox.updates.Update") );
 			r = model.buildUpdater();
 			assertTrue( isObject(r) );
 		}
@@ -62,16 +68,20 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	function testdownloadPatch(){
 		model.setPatchesLocation( expandPath("/contentbox-test/resources/patches/test") );
 		log = createObject("java","java.lang.StringBuilder").init('');
-		mockZip.$("extract",true).$("listing",queryNew(""));
+		mockZip.$("extract",true);
 
 		// good patch
-		model.downloadPatch("http://cf9contentbox.jfetmac/test/resources/patches/test.zip",log);
+		r = model.downloadPatch("http://cf9contentbox.jfetmac/test/resources/patches/test.zip",log);
+		//debug( log.toString() );
 		assertTrue( fileExists( expandPath("/contentbox-test/resources/patches/test/test.zip") ) );
 		fileDelete( expandPath("/contentbox-test/resources/patches/test/test.zip") );
 
 		// Bad Patch
 		r = model.downloadPatch("http://cf9contentbox.jfetmac/test/resources/patches/invalid.zip",log);
+		//debug( log.toString() );
 		assertFalse( r );
+		assertFalse( fileExists( expandPath("/contentbox-test/resources/patches/test/invalid.zip") ) );
+
 
 	}
 
@@ -85,7 +95,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		// test empty
 		model.processRemovals( dest, log );
 		debug( log.toString() );
-		assertEquals( "No updated files to remove. <br/>", log.toString() );
+		assertTrue( findNoCase("No updated files to remove. <br/>", log.toString() ) );
 		assertFalse( fileExists( dest ) );
 
 		// test with files
@@ -111,7 +121,8 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 		fileCopy( original, source );
 
-		mockZip.$("list",queryNew("")).$("extract",true);
+		mockZip.$("extract",true);
+
 		model.processUpdates( source, log );
 		assertFalse( fileExists( source ) );
 		debug( log.toString() );

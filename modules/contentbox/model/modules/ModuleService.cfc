@@ -121,6 +121,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	*/
 	ModuleService function deactivateModule(required name){
 		var module = findWhere({name=arguments.name});
+		// deactivate record
 		module.setIsActive( false );
 		// Call deactivate on module if it exists
 		var configCache = coldboxModuleService.getModuleConfigCache();
@@ -134,13 +135,16 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			coldboxModuleService.unload( arguments.name );
 			detachColdBoxModuleRegistration( arguments.name );
 		}
-		// save deactivated module
+		// save deactivated module status
 		save( module );
 
 		return this;
 	}
 
-	 private ModuleService function detachColdBoxModuleRegistration(required name){
+	/**
+	* Detach coldbox module configuration registrations
+	*/
+	private ModuleService function detachColdBoxModuleRegistration(required name){
 		// Verify in module registry
 		if( structKeyExists(coldboxModuleService.getModuleRegistry(), arguments.name) ){
 			structDelete( coldboxModuleService.getModuleRegistry(), arguments.name );
@@ -153,6 +157,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	*/
 	ModuleService function activateModule(required name){
 		var module = findWhere({name=arguments.name});
+		// Set module as active
 		module.setIsActive( true );
 		// detach from coldbox just in case
 		detachColdBoxModuleRegistration( arguments.name );
@@ -162,13 +167,24 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var config = coldboxModuleService.getModuleConfigCache()[arguments.name];
 		// Repopulate module, just in case
 		populateModule( module, config );
-		// save activated module
-		save( module );
 		// Call activate now if found
 		if( structKeyExists(config,"onActivate") ){
-			config.onActivate();
+			try{
+				config.onActivate();
+			}
+			catch(Any e){
+				// deactivate module, it did not activate correctly
+				module.setIsActive( false );
+				// deactivate from ColdBox as it did not activate correctly
+				coldboxModuleService.unload( arguments.name );
+				detachColdBoxModuleRegistration( arguments.name );
+				// Now throw the exception
+				rethrow;
+			}
 		}
-
+		// save module status
+		save( module );
+		
 		return this;
 	}
 

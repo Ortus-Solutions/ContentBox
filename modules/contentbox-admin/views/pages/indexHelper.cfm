@@ -1,12 +1,16 @@
 ﻿<cfoutput>
 <script type="text/javascript">
 $(document).ready(function() {
+	// global ids
+	$pageForm = $("##pageForm");
+	$pages	  = $("##pages");
+	// sorting and filtering
 	$("##pages").tablesorter();
 	$("##pageFilter").keyup(function(){
-		$.uiTableFilter( $("##pages"), this.value );
+		$.uiTableFilter( $pages, this.value );
 	});
 	// quick look
-	$("##pages").find("tr").bind("contextmenu",function(e) {
+	$pages.find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if($(this).attr('data-contentID') != null) {
 				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/contentID/' + $(this).attr('data-contentID'));
@@ -15,7 +19,7 @@ $(document).ready(function() {
 	    }
 	});
 	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-	$("##pages").tableDnD({
+	$pages.tableDnD({
 		onDragClass: "selected",
 		onDragStart : function(table,row){
 			$(row).css("cursor","grab");
@@ -38,16 +42,26 @@ $(document).ready(function() {
 	</cfif>
 });
 function remove(contentID){
-	// img change
-	$('##delete_'+contentID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
-	$("##contentID").val( contentID );
-	$("##pageForm").submit();
+	if( contentID != null ){
+		$('##delete_'+contentID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+		checkByValue('contentID',contentID);		
+	}
+	$pageForm.submit();
 }
 function clonePage(contentID, title){
 	var newTitle = prompt("Please Enter The New Page Title", title);
 	if (newTitle != null) {
-		to("#event.buildLink(prc.xehPageClone)#?title=" + title + "&contentID=" + contentID);
+		to("#event.buildLink(prc.xehPageClone)#?title=" + newTitle + "&contentID=" + contentID);
 	}
+}
+function bulkChangeStatus(status, contentID){
+	$pageForm.attr("action","#event.buildlink(linkTo=prc.xehPageBulkStatus)#");
+	$pageForm.find("##contentStatus").val( status );
+	if( contentID != null ){
+		$('##status_'+recordID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+		checkByValue('contentID',contentID);	
+	}
+	$pageForm.submit();
 }
 </script>
 </cfoutput>

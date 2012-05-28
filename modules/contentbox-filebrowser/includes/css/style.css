@@ -44,6 +44,7 @@
 #FileBrowser #fileListing{
     line-height:15px;
     min-height: 200px;
+    max-height: 400px;
 	padding: 5px;
     overflow: auto;
 }
@@ -84,3 +85,6 @@
 #FileBrowser .folders, #FileBrowser .files{ cursor:pointer;margin: 0px;padding:2px; }
 #FileBrowser .folders.selected, #FileBrowser .files.selected{ background-color: #B3C6F9}
 #FileBrowser .divider{ align: center;}
+#FileBrowser .listTypeOn{ padding: 2px; background-color: orange;}
+#FileBrowser .fbItemBoxPreview{margin: 10px auto auto 0px;text-align: center; cursor: pointer}
+#FileBrowser .fbItemBox{float:left; margin:5px; width: 150px; height: 150px; border: 1px solid #ccc}

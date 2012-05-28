@@ -231,5 +231,31 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		return results;
 	}
+	
+	/**
+	* Bulk Publish Status Updates
+	* @contentID The list or array of ID's to bulk update
+	* @status The status either 'publish' or 'draft'
+	*/
+	any function bulkPublishStatus(required contentID, required status){
+		var publish = false;
+
+		// publish flag
+		if( arguments.status eq "publish" ){
+			publish = true;
+		}
+
+		// Get all by id
+		var contentObjects = getAll(id=arguments.contentID);
+		for(var x=1; x lte arrayLen( contentObjects ); x++){
+			contentObjects[x].setpublishedDate( now() );
+			contentObjects[x].setisPublished( publish );
+		}
+		
+		// transaction the save of all the content objects
+		saveAll( contentObjects );
+
+		return this;
+	}
 
 }

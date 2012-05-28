@@ -28,7 +28,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	property name="settingService"	inject="id:settingService@cb";
 	property name="securityService"	inject="id:securityService@cb";
 	property name="mailService"		inject="coldbox:plugin:MailService";
-	property name="renderer"		inject="coldbox:plugin:Renderer";
+	property name="renderer"		inject="provider:ColdBoxRenderer";
 	property name="CBHelper"		inject="id:CBHelper@cb";
 	
 	function configure(){}
@@ -69,7 +69,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.renderView(view="email_templates/author_new",module="contentbox") );
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/author_new") );
 		
 		// send it out
 		mailService.send( mail );
@@ -109,7 +109,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.renderView(view="email_templates/author_remove",module="contentbox") );
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/author_remove") );
 		
 		// send it out
 		mailService.send( mail );
@@ -158,7 +158,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.renderView(view="email_templates/entry_new",module="contentbox") );
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/entry_new") );
 		
 		// send it out
 		mailService.send( mail );
@@ -207,7 +207,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.renderView(view="email_templates/entry_remove",module="contentbox") );
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/entry_remove") );
 		
 		// send it out
 		mailService.send( mail );
@@ -251,7 +251,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.renderView(view="email_templates/page_new",module="contentbox") );
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/page_new") );
 		
 		// send it out
 		mailService.send( mail );
@@ -295,7 +295,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.renderView(view="email_templates/page_remove",module="contentbox") );
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/page_remove") );
 		
 		// send it out
 		mailService.send( mail );

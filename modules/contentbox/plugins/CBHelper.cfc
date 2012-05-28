@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * This is the ContentBox UI helper class that is injected by the CBRequest interceptor
 */
-component extends="coldbox.system.Plugin" accessors="true" singleton{
+component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// DI
 	property name="categoryService"		inject="id:categoryService@cb";
@@ -31,6 +31,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	property name="authorService"		inject="id:authorService@cb";
 	property name="commentService"		inject="id:commentService@cb";
 	property name="customHTMLService"	inject="id:customHTMLService@cb";
+	property name="widgetService"		inject="id:widgetService@cb";
 
 	function init(controller){
 		super.init( arguments.controller );
@@ -82,7 +83,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 
 	/************************************** root methods *********************************************/
 
-	// Get the location of your layout in the application, great for assets, cfincludes, etc
+	// Get the location of your currently defined layout in the application, great for assets, cfincludes, etc
 	function layoutRoot(){
 		var prc = getRequestCollection(private=true);
 		return prc.cbLayoutRoot;
@@ -693,14 +694,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton{
 	function getWidget(required name){
 		var layoutWidgetPath = layoutRoot() & "/widgets/#arguments.name#.cfc";
 
-		// layout widget overrides
+		// layout widgets overrides
 		if( fileExists( expandPath( layoutWidgetPath ) ) ){
 			var widgetCreationPath = replace( reReplace(layoutRoot(),"^/","")  ,"/",".","all") & ".widgets.#arguments.name#";
 			return controller.getPlugin(plugin=widgetCreationPath,customPlugin=true);
 		}
 
 		// return core contentbox widget instead
-		return getMyPlugin(plugin="widgets.#arguments.name#",module="contentbox-ui");
+		return widgetService.getWidget( arguments.name );
 	}
 
 	/************************************** quick HTML *********************************************/

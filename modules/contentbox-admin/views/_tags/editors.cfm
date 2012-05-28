@@ -8,7 +8,7 @@ function setupEditors($theForm, withExcerpt){
 	// toolbar config
 	var ckToolbar =
 	[
-	    { name: 'document',    items : [ 'Source','-','Templates','Maximize','ShowBlocks' ] },
+	    { name: 'document',    items : [ 'Source','-','Maximize','ShowBlocks' ] },
 	    { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
 	    { name: 'editing',     items : [ 'Find','Replace','-','SpellChecker', 'Scayt' ] },
 	    { name: 'forms',       items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button','HiddenField' ] },
@@ -16,10 +16,10 @@ function setupEditors($theForm, withExcerpt){
 		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
 	    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
 	    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
-	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] },
 	    '/',
-	    { name: 'styles',      items : [ 'Styles','Format','Font','FontSize' ] },
+	    { name: 'styles',      items : [ 'Styles','Format' ] },
 	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
+		{ name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] },
 	    { name: 'contentbox',  items : [ 'cbIpsumLorem','cbWidgets','cbCustomHTML','cbLinks','cbEntryLinks', 'cbPreview' ] }
 	];
 
@@ -45,8 +45,13 @@ function setupEditors($theForm, withExcerpt){
 	$(":date").dateinput();
 
 	// form validator
-	$theForm.validator({position:'top right',grouped:true,onSuccess:function(e,els){ needConfirmation=false; }});
-
+	$theForm.validator({position:'top left',grouped:true,onSuccess:function(e,els){ needConfirmation=false; }});
+	// Custom content unique validator
+	$.tools.validator.fn($content, function(el, value) {
+		if( value.length ){ return true; }
+		alert("Please enter some content!");
+		return false;
+	});
 	// blur slugify
 	var $title = $theForm.find("##title");
 	$title.blur(function(){

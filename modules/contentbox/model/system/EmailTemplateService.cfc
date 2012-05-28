@@ -40,21 +40,21 @@ component accessors="true" singleton{
 	* onDIComplete
 	*/
 	function onDIComplete(){
-		setTemplatesPath( moduleSettings["contentbox"].path & "/views/email_templates" );
+		setTemplatesPath( moduleSettings["contentbox"].path & "/email_templates" );
 	}
 	
 	/**
 	* Check if template exists
 	*/
 	boolean function templateExists(required string name){
-		return fileExists( getTemplatesPath() & "/#arguments.name#" );
+		return fileExists( getTemplatesPath() & "/#arguments.name#.cfm" );
 	}
 
 	/**
 	* Get template code
 	*/
 	string function getTemplateCode(required string name){
-		var templatePath = getTemplatesPath() & "/#arguments.name#";
+		var templatePath = getTemplatesPath() & "/#arguments.name#.cfm";
 		return fileRead( templatePath );
 	}
 	
@@ -62,7 +62,7 @@ component accessors="true" singleton{
 	* Save template code
 	*/
 	EmailTemplateService function saveTemplateCode(required string name, required string code){
-		var templatePath = getTemplatesPath() & "/#arguments.name#";
+		var templatePath = getTemplatesPath() & "/#arguments.name#.cfm";
 		fileWrite( templatePath, arguments.code );
 		return this;
 	}

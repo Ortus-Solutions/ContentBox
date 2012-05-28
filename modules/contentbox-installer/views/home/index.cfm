@@ -117,11 +117,8 @@
 						<strong>index.cfm</strong> from your URL's you will need to configure a web server rewrite engine like
 						<a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">Apache mod_rewrite</a>, 
 						<a href="http://www.tuckey.org/urlrewrite/">tuckey URL Rewrite filter</a> or 
-						<a href="http://www.iis.net/download/urlrewrite">IIS 7 rewrite module</a>.  
-						A fully working apache mod_rewrite <strong>.htaccess</strong> file
-						has been created and placed in the root of your installation.
-						A <strong>web.config</strong> for IIS 7 rewrite module has also been created in the 
-						following directory: <strong>modules/contentbox-installer/model/web.config</strong>.
+						<a href="http://www.iis.net/download/urlrewrite">IIS 7 rewrite module</a>.
+						We can configure <em>mod_rewrite</em> and <em>IIS 7 rewriting</em> for you automatically.
 					</p>
 					<p>
 						If you select full URL rewrites below, then we will modify your application's routing table to remove the 
@@ -141,11 +138,12 @@
 					<br/><br/>
 					<!--- Populate With Sample Data --->
 					#html.label(field="fullrewrite",content="Enable Full URL Rewrites:")#
-					#html.radioButton(name="fullrewrite",value=true)# Yes 	
+					#html.radioButton(name="fullrewrite",value=true)# Yes 
+					#html.select(options="mod_rewrite,iis7",name="rewrite_engine")#
+					<br/>
 					#html.radioButton(name="fullrewrite",checked=true,value=false)# No 	
 					
 					#html.endFieldSet()#
-					
 					
 					<!--- Action Bar --->
 					<div class="actionBar">

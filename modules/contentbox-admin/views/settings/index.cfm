@@ -68,11 +68,11 @@
 							#html.textarea(name="cb_site_keywords",label="Site Keywords:",value=prc.cbSettings.cb_site_keywords,rows="3",title="A comma delimited list of keywords to be used in the HTML keywords meta tag")#
 							<!--- HomePage --->
 							<label for="cb_site_homepage">Home Page Displays:</label>
-							<small>Choose the latest blog entries or a static page.</small><br/>
+							<small>Choose the latest blog entries or a ContentBox page.</small><br/>
 							<select name="cb_site_homepage" id="cb_site_homepage" class="width98">
 								<option value="cbBlog" <cfif prc.cbSettings.cb_site_homepage eq "cbBlog">selected="selected"</cfif>>Latest Blog Entries</option>
 								<cfloop array="#prc.pages#" index="thisPage" >
-								<option value="#thispage.getSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getSlug()>selected="selected"</cfif>>#thisPage.getTitle()#</option>
+								<option value="#thispage.getSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getSlug()>selected="selected"</cfif>>#thisPage.getSlug()#</option>
 								</cfloop>
 							</select>
 

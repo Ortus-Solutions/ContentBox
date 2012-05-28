@@ -50,6 +50,7 @@ component extends="baseHandler"{
 		contentService.clearAllCaches();
 		// messages
 		getPlugin("MessageBox").info("#rc.layoutName# Activated!");
+		// Relocate
 		setNextEvent(prc.xehLayouts);
 	}
 

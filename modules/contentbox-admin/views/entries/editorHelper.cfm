@@ -15,10 +15,16 @@ $(document).ready(function() {
 	// setup editors
 	setupEditors( $entryForm );
 });
+function publishNow(){
+	var fullDate = new Date();
+	$("##publishedDate").val( getToday() );
+	$("##publishedHour").val( fullDate.getHours() );
+	$("##publishedMinute").val( fullDate.getMinutes() );
+}
 function quickSave(){
 	// Draft it
 	$isPublished.val('false');
-	
+
 	// Validation first
 	if( !$entryForm.data("validator").checkValidity() ){
 		return false;
@@ -27,13 +33,13 @@ function quickSave(){
 		alert("Please enter some content");
 		return false;
 	}
-	
+
 	// Activate Loader
 	var $uploader = $("##uploadBarLoader");
 	var $status = $("##uploadBarLoaderStatus");
 	$status.html("Saving...");
 	$uploader.slideToggle();
-	
+
 	// Post it
 	$.post('#event.buildLink(prc.xehEntrySave)#', $entryForm.serialize(),function(data){
 		// Save newly saved or persisted id
@@ -43,7 +49,7 @@ function quickSave(){
 		$status.html('Entry Draft Saved!');
 		$isPublished.val('true');
 	},"json");
-	
+
 	return false;
 }
 </script>

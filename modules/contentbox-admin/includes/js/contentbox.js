@@ -207,3 +207,22 @@ function checkByValue(id,recordID){
 		else{ this.checked = false; }
 	});	
 }
+/**
+ * Get today's date in us or rest of the world format
+ * @param {boolean} us defaults to true
+ */
+function getToday(us){
+	// default us to true
+	us = ( us == null ? true : us );
+	var fullDate = new Date()
+	var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
+	var theYear = String( fullDate.getFullYear() );
+	var theLen  = theYear.length;
+	theYear = theYear.substring( theLen, theLen - 2 );
+	if( us ){
+		return twoDigitMonth + "/" + fullDate.getDate() + "/" + theYear;
+	}
+	else{
+		return fullDate.getDate() + "/" + twoDigitMonth + "/" + theYear;	
+	}
+}
