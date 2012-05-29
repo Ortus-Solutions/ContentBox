@@ -208,10 +208,11 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* @author.hint The author doing the cloning
 	* @original.hint The original content object that will be cloned into this content object
 	* @originalService.hint The ContentBox content service object
+	* @publish.hint Publish pages or leave as drafts
 	*/
-	BaseContent function prepareForClone(required any author, required any original, required originalService){
+	BaseContent function prepareForClone(required any author, required any original, required originalService, required boolean publish){
 		// set not published
-		isPublished = false;
+		isPublished = arguments.publish;
 		// reset creation date
 		createdDate = now();
 		publishedDate = now();
@@ -245,7 +246,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 				// Create the new hierarchical slug
 				newChild.setSlug( this.getSlug() & "/" & listLast( thisChild.getSlug(), "/" ) );
 				// now deep clone until no more child is left behind.
-				newChild.prepareForClone(author=arguments.author,original=thisChild,originalService=originalService);
+				newChild.prepareForClone(author=arguments.author, original=thisChild, originalService=originalService, publish=arguments.publish);
 				// now attach it
 				addChild( newChild );
 			}
@@ -318,7 +319,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* add published timestamp to property
 	*/
-	any function addPublishedTime(hour,minute){
+	any function addPublishedTime(required hour, required minute){
+		if( !isDate( getPublishedDate() ) ){ return; }
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
 		setPublishedDate( getPublishedDate() & " " & time);
 		return this;
@@ -327,7 +329,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* add expired timestamp to property
 	*/
-	any function addExpiredTime(hour,minute){
+	any function addExpiredTime(required hour, required minute){
+		if( !isDate( getExpireDate() ) ){ return; }	
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
 		setExpireData( getExpireDate() & " " & time);
 		return this;
