@@ -204,13 +204,16 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 
 	/**
-	* Wipe primary key, and descendant keys, and prepare for cloning
+	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
 	* @author.hint The author doing the cloning
 	* @original.hint The original content object that will be cloned into this content object
 	* @originalService.hint The ContentBox content service object
 	* @publish.hint Publish pages or leave as drafts
 	*/
-	BaseContent function prepareForClone(required any author, required any original, required originalService, required boolean publish){
+	BaseContent function prepareForClone(required any author, 
+										 required any original, 
+										 required originalService, 
+										 required boolean publish){
 		// set not published
 		isPublished = arguments.publish;
 		// reset creation date

@@ -160,7 +160,6 @@
 	#runEvent(event="contentbox-admin:entries.quickPost",prePostExempt=true)#
 	<!--- ============================ end QuickPost ============================ --->
 
-
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeBodyEnd")#
 </body>

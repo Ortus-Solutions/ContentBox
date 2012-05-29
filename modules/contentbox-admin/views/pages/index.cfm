@@ -222,7 +222,7 @@
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Clone Command --->
-							<a href="javascript:clonePage('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')" title="Clone Page Including Descendants"><img src="#prc.cbroot#/includes/images/clone.png" alt="edit" border="0"/></a>
+							<a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')" title="Clone Page Including Descendants"><img src="#prc.cbroot#/includes/images/clone.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Create Child --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
@@ -249,8 +249,27 @@
 			#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
 
 			#html.endForm()#
-
 		</div>
 	</div>
 </div>
+<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+<div id="cloneDialog" class="modal">
+	<div id="modalContent">
+	<h2>Page Cloning</h2>
+	#html.startForm(name="cloneForm", action=prc.xehPageClone)#
+		#html.hiddenField(name="contentID")#
+		#html.textfield(name="title", label="Please enter the new page title:", class="textfield", required="required", size="40")#
+		<label for="pageStatus">Publish all pages in hierarchy?</label>
+		<small>By default all cloned pages are published as drafts.</small><br>
+		#html.select(options="true,false", name="pageStatus", selectedValue="false")#
+		<hr/>
+		<!--- Button Bar --->
+		<div id="bottomCenteredBar" class="textRight">
+			<button class="button2" id="cloneButton"> Clone </button>
+			<button class="buttonred" id="closeButton"> Cancel </button>
+		</div>
+	#html.endForm()#
+	</div>
+</div>
+</cfif>
 </cfoutput>

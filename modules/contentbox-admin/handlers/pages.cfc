@@ -248,7 +248,7 @@ component extends="baseHandler"{
 			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
 		}
 		// prepare descendants for cloning, might take a while if lots of children to copy.
-		clone.prepareForClone(author=prc.oAuthor,original=original,originalService=pageService);
+		clone.prepareForClone(author=prc.oAuthor, original=original, originalService=pageService, publish=rc.pageStatus);
 		// clone this sucker now!
 		pageService.savePage( clone );
 		// relocate

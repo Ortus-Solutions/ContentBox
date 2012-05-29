@@ -4,6 +4,7 @@ $(document).ready(function() {
 	// global ids
 	$pageForm = $("##pageForm");
 	$pages	  = $("##pages");
+	$cloneDialog = $("##cloneDialog");
 	// sorting and filtering
 	$("##pages").tablesorter();
 	$("##pageFilter").keyup(function(){
@@ -48,11 +49,23 @@ function remove(contentID){
 	}
 	$pageForm.submit();
 }
-function clonePage(contentID, title){
-	var newTitle = prompt("Please Enter The New Page Title", title);
-	if (newTitle != null) {
-		to("#event.buildLink(prc.xehPageClone)#?title=" + newTitle + "&contentID=" + contentID);
-	}
+function openCloneDialog(contentID, title){
+	// local id's
+	var $cloneForm = $("##cloneForm");
+	// open modal for cloning options
+	openModal( $cloneDialog, 500 );
+	// form validator and data
+	$cloneForm.validator({position:'top left'});
+	$cloneForm.find("##contentID").val( contentID );
+	$cloneForm.find("##title").val( title ).focus();
+	// close button
+	$cloneForm.find("##closeButton").click(function(e){
+		closeModal( $cloneDialog ); return false;
+	});
+	// clone button
+	$cloneForm.find("##cloneButton").click(function(e){
+		$cloneForm.submit();
+	});
 }
 function bulkChangeStatus(status, contentID){
 	$pageForm.attr("action","#event.buildlink(linkTo=prc.xehPageBulkStatus)#");
