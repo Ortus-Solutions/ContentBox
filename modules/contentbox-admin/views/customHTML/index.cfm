@@ -31,17 +31,11 @@
 		<!--- messageBox --->
 		#getPlugin("MessageBox").renderit()#
 		
+		<!--- Info --->
 		<p>
-			These custom HTML options can be used in any layout to easily add any type of HTML assets, snippets, custom css, js, you name it!
-			Just call it with the appropriate slug in your ContentBox layout and you are ready to roll with custom HTML in your layouts.
+			Custom HTML can be used in any layout or content to easily add any type of HTML assets, snippets, custom css, js, 
+			you name it!
 		</p>
-		
-		<!--- Usage --->
-		<div class="infoBar">
-			<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />
-			To render the Custom HTML snippets use the following in your layouts -> 
-			 <em>##cb.customHTML(slug)##</em>;
-		</div>
 		
 		<!--- entryForm --->
 		#html.startForm(name="contentForm",action=prc.xehRemoveHTML)#

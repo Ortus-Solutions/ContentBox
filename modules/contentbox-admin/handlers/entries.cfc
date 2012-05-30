@@ -191,7 +191,7 @@ component extends="baseHandler"{
 
 		// get new/persisted entry and populate it
 		var entry = populateModel( entryService.get( rc.contentID ) )
-			.addPublishedtime(rc.publishedHour,rc.publishedMinute)
+			.addPublishedtime(rc.publishedHour, rc.publishedMinute)
 			.addExpiredTime( rc.expireHour, rc.expireMinute );
 		var isNew = ( NOT entry.isLoaded() );
 

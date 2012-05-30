@@ -204,25 +204,35 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 
 	/**
-	* Wipe primary key, and descendant keys, and prepare for cloning
+	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
 	* @author.hint The author doing the cloning
 	* @original.hint The original content object that will be cloned into this content object
 	* @originalService.hint The ContentBox content service object
+	* @publish.hint Publish pages or leave as drafts
+	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
+	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
 	*/
-	BaseContent function prepareForClone(required any author, required any original, required originalService){
+	BaseContent function prepareForClone(required any author, 
+										 required any original, 
+										 required any originalService, 
+										 required boolean publish,
+										 required any originalSlugRoot,
+										 required any newSlugRoot){
 		// set not published
-		isPublished = false;
+		setIsPublished( arguments.publish);
 		// reset creation date
-		createdDate = now();
-		publishedDate = now();
+		setCreatedDate( now() );
+		setPublishedDate( now() );
 		// reset hits
 		hits = 0;
 		// remove all comments
 		comments = [];
 		// get latest content versioning
 		var latestContent = arguments.original.getActiveContent().getContent();
+		// Original slug updates on all content
+		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page\:\[#arguments.newSlugRoot#\/", "all");
 		// reset versioning, and start with one
-		addNewContentVersion(content=latestContent,changelog="Page Cloned!",author=arguments.author);
+		addNewContentVersion(content=latestContent, changelog="Page Cloned!", author=arguments.author);
 		// safe clone custom fields
 		var newFields = arguments.original.getCustomFields();
 		for(var thisField in newFields){
@@ -245,7 +255,12 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 				// Create the new hierarchical slug
 				newChild.setSlug( this.getSlug() & "/" & listLast( thisChild.getSlug(), "/" ) );
 				// now deep clone until no more child is left behind.
-				newChild.prepareForClone(author=arguments.author,original=thisChild,originalService=originalService);
+				newChild.prepareForClone(author=arguments.author, 
+										 original=thisChild, 
+										 originalService=originalService, 
+										 publish=arguments.publish,
+										 originalSlugRoot=arguments.originalSlugRoot,
+										 newSlugRoot=arguments.newSlugRoot);
 				// now attach it
 				addChild( newChild );
 			}
@@ -318,7 +333,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* add published timestamp to property
 	*/
-	any function addPublishedTime(hour,minute){
+	any function addPublishedTime(required hour, required minute){
+		if( !isDate( getPublishedDate() ) ){ return; }
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
 		setPublishedDate( getPublishedDate() & " " & time);
 		return this;
@@ -327,7 +343,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* add expired timestamp to property
 	*/
-	any function addExpiredTime(hour,minute){
+	any function addExpiredTime(required hour, required minute){
+		if( !isDate( getExpireDate() ) ){ return; }	
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
 		setExpireData( getExpireDate() & " " & time);
 		return this;

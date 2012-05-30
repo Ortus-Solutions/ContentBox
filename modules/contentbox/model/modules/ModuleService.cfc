@@ -243,16 +243,45 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	}
 
 	/**
-	* Upload Module
+	* Upload Module, returns structure with [error:boolean, logInfo=string]
 	*/
-	ModuleService function uploadModule(required fileField){
-		var destination = getModulesPath();
-		var results = fileUpload(destination,arguments.fileField,"application/zip","overwrite");
-		// extract it
-		zipUtil.extract(zipFilePath="#destination#/#results.clientFile#", extractPath="#destination#");
-		// rescan
-		startup();
-		return this;
+	struct function uploadModule(required fileField){
+		var destination 	= getModulesPath();
+		var installLog 		= createObject("java","java.lang.StringBuilder").init("");
+		var results 		= {error=true, logInfo=""};
+
+		// Upload the module zip
+		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream", "overwrite");
+		
+		// Unzip File?
+		if ( listLast(fileResults.clientFile, ".") eq "zip" ){
+			// test zip has files?
+			try{
+				var listing = zipUtil.list( "#destination#/#fileResults.clientFile#" );
+			}
+			catch(Any e){
+				// bad zip file.
+				installLog.append("Error getting listing of zip archive (#destination#/#fileResults.clientFile#), bad zip, file will be removed.<br />");
+				fileDelete( destination & "/" & fileResults.clientFile );
+				// flatten messages;
+				results.logInfo = installLog.toString();
+				return results;
+			}
+			// extract it
+			zipUtil.extract(zipFilePath="#destination#/#fileResults.clientFile#", extractPath="#destination#");
+			// rescan and startup the modules
+			startup();
+			// sucess
+			results.error = false;
+		}
+		else{
+			installLog.append("File #fileResults.clientFile# is not a zip file, so cannot extract it or use it, file will be removed.<br/>");
+			fileDelete( destination & "/" & fileResults.clientFile );
+		}
+		// flatten messages;
+		results.logInfo = installLog.toString();
+		// return results		
+		return results;
 	}
 
 	private query function getModulesOnDisk(){

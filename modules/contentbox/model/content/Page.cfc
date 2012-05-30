@@ -39,6 +39,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		renderedContent = "";
 		allowComments 	= false;
 		createdDate		= now();
+		layout 			= "pages";
 	}
 
 	/************************************** PUBLIC *********************************************/
@@ -51,6 +52,24 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		return "pages";
 	}
 
+	/**
+	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
+	* @author.hint The author doing the cloning
+	* @original.hint The original content object that will be cloned into this content object
+	* @originalService.hint The ContentBox content service object
+	* @publish.hint Publish pages or leave as drafts
+	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
+	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
+	*/
+	BaseContent function prepareForClone(required any author, 
+										 required any original, 
+										 required any originalService, 
+										 required boolean publish,
+										 required any originalSlugRoot,
+										 required any newSlugRoot){
+		setLayout( original.getLayout() );
+		return super.prepareForClone(argumentCollection=arguments);
+	}
 
 	/*
 	* Validate page, returns an array of error or no messages

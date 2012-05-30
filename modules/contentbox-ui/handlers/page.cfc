@@ -118,7 +118,6 @@ component extends="BaseContentHandler" singleton{
 			prc.commentsCount 	= commentResults.count;
 			// announce event
 			announceInterception("cbui_onPage",{page=prc.page});
-
 			// Verify chosen page layout exists?
 			verifyPageLayout( prc.page );
 			// set skin view

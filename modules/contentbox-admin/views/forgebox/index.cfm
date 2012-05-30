@@ -76,10 +76,10 @@
 		<br/>
 		<!--- Download & Install --->
 		<div class="forgebox-download">
-			<cfif findnocase("zip", prc.entries.downloadURL)>
+			<cfif findnocase(".zip", prc.entries.downloadURL)>
 			<a href="javascript:installEntry('entry_#prc.entries.entryID#','#prc.entries.downloadURL#')"
-			   onclick="return confirm('Really install it?')"
-			   title="Install Entry"><img src="#prc.cbRoot#/includes/images/entry-link.png" alt="Download" border="0" /></a>
+			   onclick="return confirm('Really install it?')">
+			   	<button class="button2" onclick="return false;">Download & Install</button></a>
 			<cfelse>
 			<div class="infoBar"><img src="#prc.cbroot#/includes/images/warning_icon.png"/> No zip detected, manual install only!</div>
 			</cfif>	

@@ -123,9 +123,17 @@ component extends="baseHandler"{
 		else{
 			// Upload File
 			try{
-				moduleService.uploadModule("fileModule");
-				// Info
-				getPlugin("MessageBox").setMessage(type="info", message="Module Installed Successfully");
+				var results = moduleService.uploadModule("fileModule");
+				if( results.error ){
+					flash.put("forgeboxInstallLog", results.logInfo );
+					getPlugin("MessageBox").error("Error installing module, please check out the log information.");	
+				}
+				else{
+					getPlugin("MessageBox").info("Module Installed Successfully in your 'modules' folder.");
+					flash.put("forgeboxInstallLog", "Please verify if the module was
+					registered successfully by looking below in your modules listing.  Some modules need some manual installations so please verify the file structure in your 
+					media manager modules library.  If the module does not appear below, then it was not a valid module installation and some manual work is needed.");
+				}
 			}
 			catch(Any e){
 				getPlugin("MessageBox").error("Error Installing Module: #e.detail# #e.message#");
