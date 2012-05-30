@@ -8,7 +8,7 @@
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>ContentBox Administrator - #prc.cbSettings.cb_site_name#</title>
+    <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
