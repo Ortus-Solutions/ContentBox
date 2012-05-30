@@ -169,17 +169,17 @@ component extends="baseHandler"{
 
 		// Validate Page And Incoming Data
 		var errors = page.validate();
-		if( !len(trim(rc.content)) ){
+		if( !len( trim( rc.content ) ) ){
 			arrayAppend(errors, "Please enter the content to save!");
 		}
-		if( arrayLen(errors) ){
+		if( arrayLen( errors ) ){
 			getPlugin("MessageBox").warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
 
 		// Register a new content in the page, versionized!
-		page.addNewContentVersion(content=rc.content,changelog=rc.changelog,author=prc.oAuthor);
+		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
 		// attach parent page
 		if( len(rc.parentPage) ){
 			page.setParent( pageService.get( rc.parentPage ) );
@@ -248,7 +248,12 @@ component extends="baseHandler"{
 			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
 		}
 		// prepare descendants for cloning, might take a while if lots of children to copy.
-		clone.prepareForClone(author=prc.oAuthor, original=original, originalService=pageService, publish=rc.pageStatus);
+		clone.prepareForClone(author=prc.oAuthor, 
+							  original=original, 
+							  originalService=pageService, 
+							  publish=rc.pageStatus, 
+							  originalSlugRoot=original.getSlug(),
+							  newSlugRoot=clone.getSlug());
 		// clone this sucker now!
 		pageService.savePage( clone );
 		// relocate
