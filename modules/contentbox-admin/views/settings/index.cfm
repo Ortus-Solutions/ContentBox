@@ -40,7 +40,7 @@
 			<ul class="vertical_nav">
 				<li class="active"><a href="##general_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> General Options</a></li>
 				<li><a href="##dashboard_options"><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/> Dashboard Options</a></li>
-				<li><a href="##cache_options"><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/> Content Caching</a></li>
+				<li><a href="##c"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Content Options</a></li>
 				<li><a href="##mediamanager"><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> Media Manager</a></li>
 				<li><a href="##gravatars"><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> Gravatars</a></li>
 				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
@@ -128,10 +128,23 @@
 							</select>
 						</fieldset>
 					</div>
-					<!--- Content Caching Options --->
+					<!--- Content Options --->
 					<div>
 						<fieldset>
-							<legend><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/>  Content Caching</legend>
+							<legend><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/>  General Options</legend>
+
+							<!--- Content Max Versions --->
+							<label for="cb_versions_max_history">Content Max Versions To Keep:</label>
+							<small>The number of versions to keep before older versions are removed.</small><br/>
+							<select name="cb_versions_max_history" id="cb_versions_max_history">
+								<cfloop from="10" to="1000" step="10" index="i">
+									<option value="#i#" <cfif i eq prc.cbSettings.cb_versions_max_history>selected="selected"</cfif>>#i#</option>
+								</cfloop>
+								<option value="">Unlimited</option>
+							</select>
+						</fieldset>
+						<fieldset>
+							<legend><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/>  Caching Options</legend>
 
 							<!--- Content Caching --->
 							#html.label(field="cb_content_caching",content="Activate Page rendered content caching:")#
@@ -173,7 +186,6 @@
 									<option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeoutIdle>selected="selected"</cfif>>#i#</option>
 								</cfloop>
 							</select>
-
 						</fieldset>
 					</div>
 					<!--- Media Manager --->

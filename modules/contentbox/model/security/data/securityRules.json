@@ -212,7 +212,7 @@
     {
         "securelist": "^contentbox-admin:.*",
         "roles": "",
-        "permissions": "",
+        "permissions": "CONTENTBOX_ADMIN",
         "whitelist": "^contentbox-admin:security\\.",
         "redirect": "cbadmin/security/login",
         "order": "18",

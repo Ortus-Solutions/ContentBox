@@ -105,6 +105,14 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		try{
 			transaction{
+				// update new settings
+				updateSettings();
+				// update permissions
+				updatePermissions();
+				// update roles
+				updateRoles();
+				// update security rules
+				securityRuleService.resetRules();
 
 			}
 		}
@@ -114,6 +122,62 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 	}
 
+	function updateSettings(){
+		// Create New Settings
+		var settings = {
+			"cb_versions_max_history" = "50"
+		};
+
+		// Create setting objects and save
+		var aSettings = [];
+		for(var key in settings){
+			var props = {name=key,value=settings[key]};
+
+			if( isNull( settingService.findWhere({name=props.name}) ) ){
+				arrayAppend( aSettings, settingService.new(properties=props) );
+			}
+		}
+
+		if( arrayLen( aSettings ) ){
+			// save search settings
+			settingService.saveAll(entities=aSettings,transactional=false);
+		}
+	}
+
+	function updatePermissions(){
+		var perms = {
+			"CONTENTBOX_ADMIN" = "Access to the enter the ContentBox administrator console"
+		};
+
+		var allperms = [];
+		for(var key in perms){
+			var props = {permission=key, description=perms[key]};
+
+			if( isNull( permissionService.findWhere({permission=props.permission}) ) ){
+				permissions[ key ] = permissionService.new(properties=props);
+				arrayAppend(allPerms, permissions[ key ] );
+			}
+		}
+		permissionService.saveAll(entities=allPerms,transactional=false);
+	}
+
+	function updateRoles(){
+		// update core roles
+		var oRole = roleService.findWhere({role="Administrator"});
+		// Add in new permissions
+		oRole.addPermission( permissionService.findWhere({permission="CONTENTBOX_ADMIN"}) );
+		// save role
+		roleService.save(entity=oRole,transactional=false);
+
+		// update core roles
+		oRole = roleService.findWhere({role="Editor"});
+		// Add in new permissions
+		oRole.addPermission( permissionService.findWhere({permission="CONTENTBOX_ADMIN"}) );
+		// save role
+		roleService.save(entity=oRole,transactional=false);
+
+		return oRole;
+	}
 
 
 }

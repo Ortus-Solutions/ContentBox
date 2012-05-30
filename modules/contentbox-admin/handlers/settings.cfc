@@ -64,7 +64,7 @@ component extends="baseHandler"{
 		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
 
 		// Get all settings
-		prc.settings = settingsService.list(sortOrder="name",asQuery=false,offset=prc.paging.startRow-1,max=prc.cbSettings.cb_paging_maxrows);
+		prc.settings = settingsService.list(sortOrder="name asc", asQuery=false, offset=prc.paging.startRow-1, max=prc.cbSettings.cb_paging_maxrows);
 		prc.settingsCount = settingsService.count();
 
 		// Get Singletons
