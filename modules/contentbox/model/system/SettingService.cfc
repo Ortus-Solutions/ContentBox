@@ -62,7 +62,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	/**
 	* Get a setting
 	*/
-	function getSetting(required name,defaultValue){
+	function getSetting(required name, defaultValue){
 		var s = getAllSettings(asStruct=true);
 		if( structKeyExists(s,arguments.name) ){
 			return s[arguments.name];

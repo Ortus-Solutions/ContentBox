@@ -84,20 +84,39 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			newVersion.setAuthor( arguments.author );
 			newVersion.setRelatedContent( this );
 
-			// Set the right versions if we have already content
+			// Do we already have an active version?
 			if( hasActiveContent() ){
-				// deactive the curent one
+				// deactive the curent version
 				var activeVersion = getActiveContent();
 				activeVersion.setIsActive( false );
+				// increase the new version number
 				newVersion.setVersion( activeVersion.getVersion() + 1 );
+				// cap checks
+				maxContentVersionChecks();
 			}
-			// Activate the version
+			// Activate the new version
 			newVersion.setIsActive( true );
 
-			// Add it to the content so it can be saved.
+			// Add it to the content so it can be saved as part of this content object
 			addContentVersion( newVersion );
 		}
 		return this;
+	}
+
+	private function maxContentVersionChecks(){
+		if( !len( settingService.getSetting( "cb_versions_max_history" ) )  ){ return; }
+
+		// How many versions do we have?
+		var versionCounts = contentVersionService.newCriteria().isEq("relatedContent.contentID", getContentID() ).count();
+		// Have we passed the limit?
+		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
+			var oldestVersion = contentVersionService.newCriteria()
+				.isEq("relatedContent.contentID", getContentID() )
+				.withProjections(min="version", id="true")
+				.get();
+			// delete by primary key ID
+			contentVersionService.deleteByID( oldestVersion[2] );
+		}
 	}
 
 	/**
@@ -212,9 +231,9 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
 	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
 	*/
-	BaseContent function prepareForClone(required any author, 
-										 required any original, 
-										 required any originalService, 
+	BaseContent function prepareForClone(required any author,
+										 required any original,
+										 required any originalService,
 										 required boolean publish,
 										 required any originalSlugRoot,
 										 required any newSlugRoot){
@@ -255,9 +274,9 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 				// Create the new hierarchical slug
 				newChild.setSlug( this.getSlug() & "/" & listLast( thisChild.getSlug(), "/" ) );
 				// now deep clone until no more child is left behind.
-				newChild.prepareForClone(author=arguments.author, 
-										 original=thisChild, 
-										 originalService=originalService, 
+				newChild.prepareForClone(author=arguments.author,
+										 original=thisChild,
+										 originalService=originalService,
 										 publish=arguments.publish,
 										 originalSlugRoot=arguments.originalSlugRoot,
 										 newSlugRoot=arguments.newSlugRoot);
@@ -344,7 +363,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* add expired timestamp to property
 	*/
 	any function addExpiredTime(required hour, required minute){
-		if( !isDate( getExpireDate() ) ){ return; }	
+		if( !isDate( getExpireDate() ) ){ return; }
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
 		setExpireData( getExpireDate() & " " & time);
 		return this;

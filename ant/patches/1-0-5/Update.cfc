@@ -125,7 +125,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	function updateSettings(){
 		// Create New Settings
 		var settings = {
-			"cb_versions_max_history" = "50"
+			"cb_versions_max_history" = ""
 		};
 
 		// Create setting objects and save
