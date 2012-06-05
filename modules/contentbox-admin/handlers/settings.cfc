@@ -49,6 +49,7 @@ component extends="baseHandler"{
 	function raw(event,rc,prc){
 		// params
 		event.paramValue("page",1);
+		event.paramValue("viewall",false);
 
 		// exit Handlers
 		prc.xehSettingRemove 	= "#prc.cbAdminEntryPoint#.settings.remove";
@@ -64,7 +65,12 @@ component extends="baseHandler"{
 		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
 
 		// Get all settings
-		prc.settings = settingsService.list(sortOrder="name asc", asQuery=false, offset=prc.paging.startRow-1, max=prc.cbSettings.cb_paging_maxrows);
+		var args = {
+			sortOrder = "name asc", asQuery = false,
+			offset = prc.paging.startRow-1, max = prc.cbSettings.cb_paging_maxrows
+		};
+		if( rc.viewAll ){ args.offset = args.max = 0; }
+		prc.settings = settingsService.list(argumentCollection=args);
 		prc.settingsCount = settingsService.count();
 
 		// Get Singletons
