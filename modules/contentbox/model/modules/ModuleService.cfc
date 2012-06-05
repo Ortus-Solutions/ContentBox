@@ -184,7 +184,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		}
 		// save module status
 		save( module );
-		
+
 		return this;
 	}
 
@@ -252,7 +252,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 
 		// Upload the module zip
 		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream", "overwrite");
-		
+
 		// Unzip File?
 		if ( listLast(fileResults.clientFile, ".") eq "zip" ){
 			// test zip has files?
@@ -269,6 +269,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			}
 			// extract it
 			zipUtil.extract(zipFilePath="#destination#/#fileResults.clientFile#", extractPath="#destination#");
+			// Removal of Mac stuff
+			if( directoryExists( destination & "/__MACOSX" ) ){
+				directoryDelete( destination & "/__MACOSX", true);
+			}
 			// rescan and startup the modules
 			startup();
 			// sucess
@@ -280,7 +284,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		}
 		// flatten messages;
 		results.logInfo = installLog.toString();
-		// return results		
+		// return results
 		return results;
 	}
 

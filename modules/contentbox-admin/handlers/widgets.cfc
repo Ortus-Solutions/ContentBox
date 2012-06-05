@@ -5,7 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="widgetService"	inject="id:widgetService@cb";
-	
+
 	// pre handler
 	function preHandler(event,action,eventArguments){
 		var rc 	= event.getCollection();
@@ -14,7 +14,7 @@ component extends="baseHandler"{
 		prc.tabLookAndFeel = true;
 		prc.tabLookAndFeel_widgets = true;
 	}
-	
+
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
@@ -24,32 +24,32 @@ component extends="baseHandler"{
 		prc.xehWidgetEditor = "#prc.cbAdminEntryPoint#.widgets.edit";
 		prc.xehWidgetCreate = "#prc.cbAdminEntryPoint#.widgets.create";
 		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
-		
+
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
-		
+
 		// ForgeBox Entry URL
 		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
 		// ForgeBox Stuff
 		prc.forgeBoxSlug = "contentbox-widgets";
 		prc.forgeBoxInstallDir = URLEncodedFormat( widgetService.getWidgetsPath() );
 		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink(prc.xehWidgets) );
-		
+
 		// view
 		event.setView("widgets/index");
 	}
-	
+
 	//docs
 	function docs(event,rc,prc){
-		prc.widgetName = widgetService.ripExtension( urlDecode(rc.widget) );
+		prc.widgetName = widgetService.ripExtension( urlDecode( rc.widget ) );
 		// get widget plugin
-		prc.oWidget  = getMyPlugin(plugin="widgets.#prc.widgetName#",module="contentbox-ui");
+		prc.oWidget  = widgetService.getWidget( prc.widgetName );
 		// get its metadata
-		prc.metadata = getmetadata(prc.oWidget.renderit);
+		prc.metadata = getmetadata( prc.oWidget.renderit );
 		// presetn view
 		event.setView(view="widgets/docs",layout="ajax");
 	}
-	
+
 	//Remove
 	function remove(event,rc,prc){
 		widgetService.removeWidget( rc.widgetFile );
@@ -60,7 +60,7 @@ component extends="baseHandler"{
 	//upload
 	function upload(event,rc,prc){
 		var fp = event.getTrimValue("filePlugin","");
-		
+
 		// Verify
 		if( len( fp ) eq 0){
 			getPlugin("MessageBox").setMessage(type="warning", message="Please choose a file to upload");
@@ -76,18 +76,18 @@ component extends="baseHandler"{
 				getPlugin("MessageBox").error("Error uploading file: #e.detail# #e.message#");
 			}
 		}
-		
-		setNextEvent(prc.xehWidgets);		
+
+		setNextEvent(prc.xehWidgets);
 	}
-	
+
 	// Editor Selector
 	function editorSelector(event,rc,prc){
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
-		
+
 		event.setView(view="widgets/editorSelector",layout="ajax");
 	}
-	
+
 	// Create New Widget wizard
 	function create(event,rc,prc){
 		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.doCreate";
@@ -112,17 +112,17 @@ component extends="baseHandler"{
 			setNextEvent(prc.xehWidgets);
 		}
 	}
-	
+
 	// Editor
 	function edit(event,rc,prc){
 		// Exit handlers
 		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.save";
 		// Get Widget Code
 		prc.widgetCode = widgetService.getWidgetCode( rc.widget );
-		// view		
+		// view
 		event.setView("widgets/edit");
 	}
-	
+
 	// Save Widget Code
 	function save(event,rc,prc){
 		// Save the widget code
