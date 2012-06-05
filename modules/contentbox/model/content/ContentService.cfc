@@ -96,7 +96,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @offset.hint The offset in the pagination
 	* @asQuery.hint Return as query or array of objects, defaults to array of objects
 	*/
-	function searchContent(searchTerm="",max=0,offset=0,asQuery=false){
+	function searchContent(searchTerm="", max=0, offset=0, asQuery=false){
 		var results = {};
 		var c = newCriteria();
 
@@ -107,17 +107,19 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			.isEq("passwordProtection","");
 
 		// Search Criteria
-		if( len(arguments.searchTerm) ){
+		if( len( arguments.searchTerm ) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac");
-			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
+			c.createAlias("activeContent","ac")
+				.$or( c.restrictions.like("title","%#arguments.searchTerm#%"),
+				  	  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count();
-		results.content = c.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
-
+		results.count = c.count();
+		results.content = c.list(offset=arguments.offset, max=arguments.max, sortOrder="publishedDate DESC", asQuery=arguments.asQuery);
+	
+		
+		
 		return results;
 	}
 

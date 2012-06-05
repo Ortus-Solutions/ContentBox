@@ -327,7 +327,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		if( NOT structKeyExists(prc,"pagingPlugin") ){
 			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext");
 		}
-		return prc.pagingPlugin.renderit( getSearchResults().getTotal(), prc.pagingLink);
+		return prc.pagingPlugin.renderit(foundRows=getSearchResults().getTotal(), link=prc.pagingLink, pagingMaxRows=setting("cb_search_maxResults"));
 	}
 
 	// get the curent search results object

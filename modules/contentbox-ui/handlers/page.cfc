@@ -151,18 +151,17 @@ component extends="BaseContentHandler" singleton{
 		event.paramValue("q","");
 
 		// Decode search term
-		rc.q = URLDecode(rc.q);
+		rc.q = URLDecode( rc.q );
 
 		// prepare paging plugin
-		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
-		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
+		prc.pagingPlugin 		= getMyPlugin(plugin="Paging", module="contentbox");
+		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries(pagingMaxRows=prc.cbSettings.cb_search_maxResults);
 		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat(rc.q)#/@page@";
-
 		// get search results
 		if( len(rc.q) ){
 			var searchAdapter = searchService.getSearchAdapter();
 			prc.searchResults = searchAdapter.search(offset=prc.pagingBoundaries.startRow-1,
-												     max=prc.cbSettings.cb_paging_maxentries,
+												     max=prc.cbSettings.cb_search_maxResults,
 												   	 searchTerm=rc.q);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		}
