@@ -46,7 +46,7 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 		var sTime = getTickCount();
 
 		try{
-			var results = contentService.searchContent(offset=arguments.offset,max=arguments.max,searchTerm=arguments.searchTerm);
+			var results = contentService.searchContent(offset=arguments.offset, max=arguments.max, searchTerm=arguments.searchTerm);
 			var args = {
 				results = results.content,
 				total = results.count,
@@ -54,11 +54,11 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 				searchTerm = arguments.searchTerm,
 				error = false
 			};
-			searchResults.populate(args);
+			searchResults.populate( args );
 		}
 		catch(Any e){
-			searchResults.setError(true);
-			searchResults.setErrorMessages(["Error executing content search: #e.detail# #e.message#"]);
+			searchResults.setError( true );
+			searchResults.setErrorMessages( ["Error executing content search: #e.detail# #e.message#"] );
 		}
 
 		return searchResults;
@@ -94,7 +94,7 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 				<div class="searchResultsCount">
 					Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!
 				</div>
-				<ol>
+				<ul>
 			');
 
 			for(var item in searchItems ){
@@ -109,7 +109,7 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 				');
 			};
 
-			writeOutput("</ol></div>");
+			writeOutput("</ul></div>");
 		}
 
 		return results;

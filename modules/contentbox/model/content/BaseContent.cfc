@@ -353,7 +353,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* add published timestamp to property
 	*/
 	any function addPublishedTime(required hour, required minute){
-		if( !isDate( getPublishedDate() ) ){ return; }
+		if( !isDate( getPublishedDate() ) ){ return this; }
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
 		setPublishedDate( getPublishedDate() & " " & time);
 		return this;
@@ -363,7 +363,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* add expired timestamp to property
 	*/
 	any function addExpiredTime(required hour, required minute){
-		if( !isDate( getExpireDate() ) ){ return; }
+		if( !isDate( getExpireDate() ) ){ return this; }
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
 		setExpireData( getExpireDate() & " " & time);
 		return this;

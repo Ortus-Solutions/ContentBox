@@ -86,7 +86,7 @@ component extends="BaseContentHandler" singleton{
 
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
-		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries();
+		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries(pagingMaxRows=prc.cbSettings.cb_paging_maxentries);
 		prc.pagingLink 			= CBHelper.linkBlog() & "?page=@page@";
 
 		// Search Paging Link Override?

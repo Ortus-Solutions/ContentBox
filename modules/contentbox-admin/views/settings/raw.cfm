@@ -73,10 +73,16 @@
 							</div>
 						</div>
 					</div>
-
+					
+					<cfif !rc.viewAll>
+					<!--- View all --->
+					<div class="floatRight">
+						<button class="buttonred" onclick="return to('#event.buildLink(prc.xehRawSettings)#/viewall/true')">View All</button>
+					</div>
 					<!--- Paging --->
 					#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
-
+					</cfif>
+					
 					<!--- settings --->
 					<table name="settings" id="settings" class="tablesorter" width="98%">
 						<thead>
@@ -110,8 +116,10 @@
 					</table>
 
 					<!--- Paging --->
+					<cfif !rc.viewAll>
 					#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
-
+					</cfif>
+					
 					#html.endForm()#
 				</div>
 
