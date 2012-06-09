@@ -259,5 +259,25 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		return this;
 	}
+	
+	/**
+	* Get the top visited content entries
+	* @max.hint The maximum to retrieve, defaults to 5 entries
+	*/
+	array function getTopVisitedContent(max=5){
+		var c = newCriteria()
+			.list(max=arguments.max, sortOrder="hits desc", asQuery=false);
+		return c;
+	}
+	
+	/**
+	* Get the top commented content entries
+	* @max.hint The maximum to retrieve, defaults to 5 entries
+	*/
+	array function getTopCommentedContent(max=5){
+		var c = newCriteria()
+			.list(max=arguments.max, sortOrder="numberOfComments desc", asQuery=false);
+		return c;
+	}
 
 }

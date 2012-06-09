@@ -98,7 +98,9 @@
 
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
-				<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo"/>
+				<a href="#event.buildLink(prc.xehAbout)#">
+					<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo"/>
+				</a>
 			</div>
 			<!--End Search field and logo Header Area-->
 			<!--=========Main Navigation=========-->

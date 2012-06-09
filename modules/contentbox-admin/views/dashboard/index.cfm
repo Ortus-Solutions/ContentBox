@@ -33,11 +33,64 @@
 		<div class="body">
 			<!--- Accordion Snapshots --->
 			<div id="accordion" class="clearfix">
+				<!--- Top Content Snapshot --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/chart.png" alt="info" /> Top Visited Content 
+				</h2>
+				<div class="pane">
+					<table class="tablesorter" width="100%">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th width="40" class="center">Hits</th>
+							</tr>
+						</thead>
+						<tbody>
+							<cfloop array="#prc.topContent#" index="topContent">
+								<tr>
+									<td>
+										<a href="#prc.CBHelper.linkPage(topContent)#">#topContent.getTitle()#</a>
+									</td>
+									<td class="center">#topContent.getHits()#</td>
+								</tr>
+							</cfloop>
+						</tbody>
+					</table>
+				</div>
+				<!--- Top Commented Snapshot --->
+				<h2> 
+					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
+					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
+					<img src="#prc.cbroot#/includes/images/chart.png" alt="info" /> Top Commented Content 
+				</h2>
+				<div class="pane">
+					<table class="tablesorter" width="100%">
+						<thead>
+							<tr>
+								<th>Title</th>
+								<th width="40" class="center">Comments</th>
+							</tr>
+						</thead>
+						<tbody>
+							<cfloop array="#prc.topCommented#" index="topCommented">
+								<tr>
+									<td>
+										<a href="#prc.CBHelper.linkPage(topCommented)#">#topCommented.getTitle()#</a>
+									</td>
+									<td class="center">#topCommented.getNumberOfComments()#</td>
+								</tr>
+							</cfloop>
+						</tbody>
+					</table>
+				</div>
 				<!--- Discussion Snapshot --->
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-					<img src="#prc.cbroot#/includes/images/comments_black.png" alt="info" /> Discussions </h2>
+					<img src="#prc.cbroot#/includes/images/comments_black.png" alt="info" /> Discussions 
+				</h2>
 				<div class="pane">
 					<ul>
 						<li><a title="View Comments" href="#event.buildLink(prc.xehComments)#">#prc.commentsCount# Comments</a> </li>
