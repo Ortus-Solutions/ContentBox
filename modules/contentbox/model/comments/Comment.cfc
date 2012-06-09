@@ -49,6 +49,13 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	/************************************** PUBLIC *********************************************/
 
 	/**
+	* Get Display Content
+	*/
+	string function getDisplayContent(){
+		return reReplace( getContent(), "\r\n?" , "<br/>", "all" );
+	}
+
+	/**
 	* Get formatted createdDate
 	*/
 	string function getDisplayCreatedDate(){
