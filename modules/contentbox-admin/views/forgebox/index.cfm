@@ -19,8 +19,11 @@
 	</h2>
 	<!--- Instructions --->
 	<p>
-		Please note that not all contributed entries have a zip prepared for download. 
-		So always verify your download URL first. You can also browse all of our online 
+		Please note that not all contributed entries can be automatically installed for you. 
+		A button much like this <button class="button2" onclick="return false;">Download & Install</button>
+		will appear if an item can be automatically installed for you.  If not, you will 
+		have to download the entry manually and upload it to install it.
+		 You can also browse all of our online 
 		<a href="http://www.coldbox.org/forgebox">ForgeBox Code Repository</a> to download
 		items manually.
 	</p>
