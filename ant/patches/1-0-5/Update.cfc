@@ -76,8 +76,6 @@ component implements="contentbox.model.updates.IUpdate"{
 				directoryCreate( destUpdates );
 				fileUtils.directoryCopy(source=srcUpdates, destination=destUpdates);
 				directoryDelete( srcUpdates, true );
-
-
 			}
 		}
 		catch(Any e){
