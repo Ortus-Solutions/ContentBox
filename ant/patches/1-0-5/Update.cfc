@@ -51,7 +51,9 @@ component implements="contentbox.model.updates.IUpdate"{
 				// Copy widgets to new location
 				var srcWidgets 	= coldbox.getSetting("modules")["contentbox-ui"].PluginsPhysicalPath & "/widgets";
 				var destWidgets = coldbox.getSetting("modules")["contentbox"].path & "/widgets";
-				directoryCreate( destWidgets );
+				if( !directoryExists( destWidgets ) ){
+					directoryCreate( destWidgets );
+				}
 				fileUtils.directoryCopy(source=srcWidgets, destination=destWidgets);
 				// Remove old widgets
 				directoryDelete( srcWidgets, true );
@@ -59,7 +61,9 @@ component implements="contentbox.model.updates.IUpdate"{
 				// Copy layouts to new location
 				var srcLayouts 	= coldbox.getSetting("modules")["contentbox-ui"].path & "/layouts";
 				var destLayouts = coldbox.getSetting("modules")["contentbox"].path & "/layouts";
-				directoryCreate( destLayouts );
+				if( !directoryExists( destLayouts ) ){
+					directoryCreate( destLayouts );
+				}
 				fileUtils.directoryCopy(source=srcLayouts, destination=destLayouts);
 				// Remove old layouts
 				directoryDelete( srcLayouts, true );
@@ -67,13 +71,6 @@ component implements="contentbox.model.updates.IUpdate"{
 				// Remove email templates
 				var oldTemplates = coldbox.getSetting("modules")["contentbox"].path & "/views";
 				directoryDelete( oldTemplates, true );
-
-				// Process patches migrations
-				var srcUpdates 	= coldbox.getSetting("modules")["contentbox"].path & "/model/updates/patches";
-				var destUpdates = coldbox.getSetting("modules")["contentbox"].path & "/updates";
-				directoryCreate( destUpdates );
-				fileUtils.directoryCopy(source=srcUpdates, destination=destUpdates);
-				directoryDelete( srcUpdates, true );
 			}
 		}
 		catch(Any e){
@@ -95,12 +92,20 @@ component implements="contentbox.model.updates.IUpdate"{
 		ALTER TABLE cb_author ADD COLUMN biography text NULL;
 		*/
 
-		ORMReload();
-
 		/************************************** CREATE NEW SETTINGS *********************************************/
 
 		try{
 			transaction{
+
+				// Process patches migrations
+				var srcUpdates 	= coldbox.getSetting("modules")["contentbox"].path & "/model/updates/patches";
+				var destUpdates = coldbox.getSetting("modules")["contentbox"].path & "/updates";
+				if( !directoryExists( destUpdates ) ){
+					directoryCreate( destUpdates );
+				}
+				fileUtils.directoryCopy(source=srcUpdates, destination=destUpdates);
+				directoryDelete( srcUpdates, true );
+
 				// update new settings
 				updateSettings();
 				// update permissions
