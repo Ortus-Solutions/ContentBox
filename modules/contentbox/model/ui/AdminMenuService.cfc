@@ -39,7 +39,7 @@ component accessors="true" threadSafe singleton{
 	this.USERS			= "users";
 	this.TOOLS			= "tools";
 	this.SYSTEM			= "system";
-	this.ADMIN_ENTRYPOINT = "cbadmin";
+	this.ADMIN_ENTRYPOINT = "";
 
 	/**
 	* Constructor
@@ -57,6 +57,8 @@ component accessors="true" threadSafe singleton{
 		variables.requestService = arguments.requestService;
 		// store coldbox
 		variables.coldbox = arguments.coldbox;
+		// Store admin entry point
+		this.ADMIN_ENTRYPOINT = arguments.coldbox.getSetting("modules")["contentbox-admin"].entryPoint;
 		// create default top menus
 		createDefaultMenu();
 		return this;

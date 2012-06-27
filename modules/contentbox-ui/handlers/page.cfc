@@ -41,7 +41,7 @@ component extends="BaseContentHandler" singleton{
 	function aroundIndex(event,eventArguments){
 		var rc = event.getCollection();
 		var prc = event.getCollection(private=true);
-		
+
 		// if not caching, just return
 		if( !prc.cbSettings.cb_content_caching ){
 			index(event,rc,prc);
@@ -87,7 +87,7 @@ component extends="BaseContentHandler" singleton{
 	* Present pages
 	*/
 	function index(event,rc,prc){
-		
+
 		// incoming params
 		event.paramValue("pageSlug","");
 		var incomingURL  = "";
@@ -98,6 +98,10 @@ component extends="BaseContentHandler" singleton{
 		}
 		else{
 			incomingURL	 = prc.pageOverride;
+		}
+		// Entry point cleanup
+		if( len( prc.cbEntryPoint ) ){
+			incomingURL = replacenocase( incomingURL, prc.cbEntryPoint & "/", "" );
 		}
 		// get the author and do publish unpublished tests
 		var author = securityService.getAuthorSession();
@@ -123,7 +127,7 @@ component extends="BaseContentHandler" singleton{
 			// set skin view
 			event.setLayout(name="#prc.cbLayout#/layouts/#prc.page.getLayout()#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
-			
+
 		}
 		else{
 			// missing page

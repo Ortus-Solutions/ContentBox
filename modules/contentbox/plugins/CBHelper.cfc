@@ -433,7 +433,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* Get the site URL separator
 	*/
 	private function sep(){
-		if( len(siteRoot()) ){ return "."; }
+		if( len( siteRoot() ) ){ return "."; }
 		return "";
 	}
 
@@ -616,7 +616,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		if( isSimpleValue(arguments.page) ){
 			return linkPageWithSlug( arguments.page );
 		}
-		var xeh = siteRoot() & arguments.page.getSlug();
+		var xeh = siteRoot() & sep() & arguments.page.getSlug();
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 
