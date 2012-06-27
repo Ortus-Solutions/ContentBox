@@ -6,18 +6,18 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 * RSS Services for this application
@@ -32,7 +32,7 @@ component singleton{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="feedGenerator" 		inject="coldbox:plugin:FeedGenerator";
 	property name="log"					inject="logbox:logger:{this}";
-	
+
 	/**
  	* Constructor
  	* @settingService.inject id:settingService@cb
@@ -46,12 +46,12 @@ component singleton{
 		var settings = settingService.getAllSettings(asStruct=true);
 		// setup the user selected cache provider
 		cache = cacheBox.getCache( settings.cb_rss_cacheName );
-		
+
 		return this;
 	}
-	
+
 	/************************************** PUBLIC *********************************************/
-	
+
 	/**
 	* Clean RSS caches asynchronously
 	* @comments.hint Clear comment caches or not, defaults to false
@@ -59,7 +59,7 @@ component singleton{
 	*/
 	RSSService function clearCaches(boolean comments=false, string slug=""){
 		var cacheKey = "";
-		
+
 		// compose cache key
 		if( arguments.comments ){
 			cacheKey = "cb-feeds-content-comments-";
@@ -75,7 +75,7 @@ component singleton{
 		}
 		return this;
 	}
-	
+
 	/**
 	* Clean All RSS caches NOW BABY, NOW!
 	*/
@@ -83,7 +83,7 @@ component singleton{
 		cache.clearByKeySnippet(keySnippet="cb-feeds",async=arguments.async);
 		return this;
 	}
-	
+
 	/**
 	* Build RSS feeds for contentbox content objects
 	* @slug.hint The page or entry slug to filter on.
@@ -95,7 +95,7 @@ component singleton{
 		var settings	= settingService.getAllSettings(asStruct=true);
 		var rssFeed  	= "";
 		var cacheKey  	= "";
-		
+
 		// Comments cache Key
 		if( arguments.comments ){
 			cacheKey 	= "cb-feeds-content-comments-#arguments.slug#";
@@ -104,20 +104,20 @@ component singleton{
 		else{
 			cacheKey 	= "cb-feeds-content-#hash(arguments.category & arguments.contentType)#";
 		}
-		
+
 		// Retrieve via caching? and caching active
 		if( settings.cb_rss_caching ){
 			var rssFeed = cache.get( cacheKey );
 			if( !isNull(rssFeed) ){ return rssFeed; }
 		}
-		
+
 		// Content Type
 		switch(arguments.contentType){
 			// Pages
 			case "page" : {
 				// Building comment feed or content feed
 				if( arguments.comments ){
-					arguments.contentType = "Page"; 
+					arguments.contentType = "Page";
 					rssfeed = buildCommentFeed(argumentCollection=arguments);
 				}
 				else{
@@ -148,23 +148,23 @@ component singleton{
 				}
 				break;
 			}
-			
+
 		} // end content type switch
-		
+
 		// Cache it with settings
 		if( settings.cb_rss_caching ){
 			cache.set(cacheKey, rssFeed, settings.cb_rss_cachingTimeout, settings.cb_rss_cachingTimeoutIdle);
 		}
 
-		return rssFeed;		
+		return rssFeed;
 	}
-	
+
 	/************************************** PRIVATE *********************************************/
-	
+
 	/**
 	* Build entries feeds
 	* @category The category to filter on if needed
-	*/	
+	*/
 	private function buildEntryFeed(category=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var entryResults 	= entryService.findPublishedEntries(category=arguments.category,max=settings.cb_rss_maxEntries);
@@ -172,12 +172,12 @@ component singleton{
 		var feedStruct 		= {};
 		var columnMap 		= {};
 		var qEntries		= entityToQuery( entryResults.entries );
-		
+
 		// max checks
 		if( settings.cb_rss_maxEntries lt entryResults.count ){
 			entryResults.count = settings.cb_rss_maxEntries;
 		}
-		
+
 		// Create the column maps
 		columnMap.title 		= "title";
 		columnMap.description 	= "content";
@@ -185,47 +185,51 @@ component singleton{
 		columnMap.link 			= "link";
 		columnMap.author		= "author";
 		columnMap.category_tag	= "categories";
-		
+
 		// Add necessary columns to query
 		QueryAddColumn(qEntries, "link", myArray);
 		QueryAddColumn(qEntries, "linkComments", myArray);
 		QueryAddColumn(qEntries, "author", myArray);
 		QueryAddColumn(qEntries, "categories", myArray);
 		QueryAddColumn(qEntries, "content", myArray);
-		
+		QueryAddColumn(qEntries, "guid_permalink", myArray);
+		QueryAddColumn(qEntries, "guid_string", myArray);
+
 		// Attach permalinks
 		for(var i = 1; i lte entryResults.count; i++){
 			// build URL to entry
-			qEntries.link[i] 			= CBHelper.linkEntry( qEntries.slug );
+			qEntries.link[i] 			= CBHelper.linkEntry( qEntries.slug[i] );
+			qEntries.guid_permalink[i]	= false;
+			qEntries.guid_string[i]		= CBHelper.linkEntry( qEntries.slug[i] );;
 			qEntries.author[i]			= "#entryResults.entries[i].getAuthorEmail()# (#entryResults.entries[i].getAuthorName()#)";
 			qEntries.linkComments[i]	= CBHelper.linkComments( entryResults.entries[i] );
 			qEntries.categories[i]		= entryResults.entries[i].getCategoriesList();
 			if( entryResults.entries[i].hasExcerpt() ){
-				qEntries.content[i]			= xmlFormat( entryResults.entries[i].renderExcerpt() );
+				qEntries.content[i]	= entryResults.entries[i].renderExcerpt();
 			}
 			else{
-				qEntries.content[i]			= xmlFormat( entryResults.entries[i].getActiveContent().renderContent() );
+				qEntries.content[i]	= entryResults.entries[i].getActiveContent().renderContent();
 			}
 		}
-		
+
 		// Generate feed items
 		feedStruct.title 		= CBHelper.siteName() & " Blog RSS Feed by ContentBox";
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= settings.cb_site_email;
+		feedStruct.webmaster	= settings.cb_site_email & " (Site Administrator)";
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
 		feedStruct.items 		= qEntries;
-		
+
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
-	
+
 	/**
 	* Build pages feeds
 	* @category The category to filter on if needed
-	*/	
+	*/
 	private function buildPageFeed(category=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var pageResults 	= pageService.findPublishedPages(category=arguments.category,max=settings.cb_rss_maxEntries);
@@ -233,12 +237,12 @@ component singleton{
 		var feedStruct 		= {};
 		var columnMap 		= {};
 		var qPages			= entityToQuery( pageResults.pages );
-		
+
 		// max checks
 		if( settings.cb_rss_maxEntries lt pageResults.count ){
 			pageResults.count = settings.cb_rss_maxEntries;
 		}
-		
+
 		// Create the column maps
 		columnMap.title 		= "title";
 		columnMap.description 	= "content";
@@ -246,42 +250,46 @@ component singleton{
 		columnMap.link 			= "link";
 		columnMap.author		= "author";
 		columnMap.category_tag	= "categories";
-		
+
 		// Add necessary columns to query
 		QueryAddColumn(qPages, "link", myArray);
 		QueryAddColumn(qPages, "linkComments", myArray);
 		QueryAddColumn(qPages, "author", myArray);
 		QueryAddColumn(qPages, "categories", myArray);
 		QueryAddColumn(qPages, "content", myArray);
-		
+		QueryAddColumn(qPages, "guid_permalink", myArray);
+		QueryAddColumn(qPages, "guid_string", myArray);
+
 		// Attach permalinks
 		for(var i = 1; i lte pageResults.count; i++){
 			// build URL to entry
-			qPages.link[i] 			= CBHelper.linkPage( qPages.slug );
-			qPages.author[i]		= "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
-			qPages.linkComments[i]	= CBHelper.linkComments( pageResults.pages[i] );
-			qPages.categories[i]	= pageResults.pages[i].getCategoriesList();
-			qPages.content[i]		= xmlFormat( pageResults.pages[i].getActiveContent().renderContent() );
+			qPages.link[i] 				= CBHelper.linkPage( qPages.slug );
+			qPages.author[i]			= "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
+			qPages.linkComments[i]		= CBHelper.linkComments( pageResults.pages[i] );
+			qPages.categories[i]		= pageResults.pages[i].getCategoriesList();
+			qPages.content[i]			= pageResults.pages[i].getActiveContent().renderContent();
+			qPages.guid_permalink[i] 	= false;
+			qPages.guid_string[i] 		= CBHelper.linkPage( qPages.slug );
 		}
-		
+
 		// Generate feed items
 		feedStruct.title 		= CBHelper.siteName() & " Page RSS Feed by ContentBox";
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= settings.cb_site_email;
+		feedStruct.webmaster	= settings.cb_site_email & " (Site Administrator)";
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
 		feedStruct.items 		= qPages;
-		
+
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
-	
+
 	/**
 	* Build content feeds
 	* @category The category to filter on if needed
-	*/	
+	*/
 	private function buildContentFeed(category=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var contentResults 	= contentService.findPublishedContent(category=arguments.category,max=settings.cb_rss_maxEntries);
@@ -289,12 +297,12 @@ component singleton{
 		var feedStruct 		= {};
 		var columnMap 		= {};
 		var qContent		= entityToQuery( contentResults.content );
-		
+
 		// max checks
 		if( settings.cb_rss_maxEntries lt contentResults.count ){
 			contentResults.count = settings.cb_rss_maxEntries;
 		}
-		
+
 		// Create the column maps
 		columnMap.title 		= "title";
 		columnMap.description 	= "content";
@@ -302,14 +310,16 @@ component singleton{
 		columnMap.link 			= "link";
 		columnMap.author		= "author";
 		columnMap.category_tag	= "categories";
-		
+
 		// Add necessary columns to query
 		QueryAddColumn(qContent, "link", myArray);
 		QueryAddColumn(qContent, "linkComments", myArray);
 		QueryAddColumn(qContent, "author", myArray);
 		QueryAddColumn(qContent, "categories", myArray);
 		QueryAddColumn(qContent, "content", myArray);
-		
+		QueryAddColumn(qContent, "guid_permalink", myArray);
+		QueryAddColumn(qContent, "guid_string", myArray);
+
 		// Attach permalinks
 		for(var i = 1; i lte contentResults.count; i++){
 			// build URL to entry
@@ -317,20 +327,23 @@ component singleton{
 			qContent.author[i]			= "#contentResults.content[i].getAuthorEmail()# (#contentResults.content[i].getAuthorName()#)";
 			qContent.linkComments[i]	= CBHelper.linkComments( contentResults.content[i] );
 			qContent.categories[i]		= contentResults.content[i].getCategoriesList();
-			qContent.content[i]			= xmlFormat( contentResults.content[i].getActiveContent().renderContent() );
+			qContent.content[i]			= contentResults.content[i].getActiveContent().renderContent();
+			qContent.guid_permalink[i] 	= false;
+			qContent.guid_string[i] 	= CBHelper.linkContent( contentResults.content[i] );
+
 		}
-		
+
 		// Generate feed items
 		feedStruct.title 		= CBHelper.siteName() & " Content RSS Feed by ContentBox";
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= settings.cb_site_email;
+		feedStruct.webmaster	= settings.cb_site_email & " (Site Administrator)";
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
 		feedStruct.items 		= qContent;
-		
+
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
 
@@ -338,7 +351,7 @@ component singleton{
 	* Build comment feeds according to filtering elements
 	* @slug.hint The content slug to filter on
 	* @contentType.hint The content type discriminator to filter on
-	*/	
+	*/
 	private function buildCommentFeed(string slug="", string contentType=""){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var commentResults 	= commentService.findApprovedComments(contentID=contentService.getIDBySlug(arguments.slug),contentType=arguments.contentType,max=settings.cb_rss_maxComments);
@@ -346,7 +359,7 @@ component singleton{
 		var feedStruct 		= {};
 		var columnMap 		= {};
 		var qComments		= entityToQuery( commentResults.comments );
-		
+
 		// Create the column maps
 		columnMap.title 		= "title";
 		columnMap.description 	= "content";
@@ -354,32 +367,36 @@ component singleton{
 		columnMap.link 			= "link";
 		columnMap.author		= "rssAuthor";
 		columnMap.category_tag	= "categories";
-		
+
 		// Add necessary columns to query
 		QueryAddColumn(qComments, "title", myArray);
 		QueryAddColumn(qComments, "linkComments", myArray);
 		QueryAddColumn(qComments, "rssAuthor", myArray);
-		
+		QueryAddColumn(qComments, "guid_permalink", myArray);
+		QueryAddColumn(qComments, "guid_string", myArray);
+
 		// Attach permalinks
 		for(var i = 1; i lte commentResults.count; i++){
 			// build URL to entry
 			qComments.title[i] 			= "Comment by #qComments.author[i]# on #commentResults.comments[i].getParentTitle()#";
 			qComments.rssAuthor[i]		= "#qComments.authorEmail# (#qComments.author#)";
 			qComments.linkComments[i]	= CBHelper.linkComment( commentResults.comments[i] );
-			qComments.content[i]		= xmlFormat( qComments.content[i] );
+			qComments.content[i]		= qComments.content[i];
+			qComments.guid_permalink[i]	= false;
+			qComments.guid_string[i]	= CBHelper.linkComment( commentResults.comments[i] );
 		}
-		
+
 		// Generate feed items
 		feedStruct.title 		= CBHelper.siteName() & " Comments RSS Feed by ContentBox";
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= settings.cb_site_email;
+		feedStruct.webmaster	= settings.cb_site_email & " (Site Administrator)";
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
 		feedStruct.items 		= qComments;
-		
+
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
 
