@@ -22,6 +22,10 @@ component extends="baseHandler"{
 
 		// get module by moduleEntryPoint
 		var module = moduleService.findWhere({entryPoint=rc.moduleEntryPoint});
+		if( isNull( module ) ){
+			getPlugin("MessageBox").warn("No modules where found with the following entryPoint: #rc.moduleEntryPoint#. Please make sure your module has an entry point.");
+			setNextEvent(prc.xehModules);
+		}
 		if( !module.isLoaded() ){
 			getPlugin("MessageBox").warn("The requested module: #rc.moduleEntryPoint# is not valid!");
 			setNextEvent(prc.xehModules);
@@ -126,12 +130,12 @@ component extends="baseHandler"{
 				var results = moduleService.uploadModule("fileModule");
 				if( results.error ){
 					flash.put("forgeboxInstallLog", results.logInfo );
-					getPlugin("MessageBox").error("Error installing module, please check out the log information.");	
+					getPlugin("MessageBox").error("Error installing module, please check out the log information.");
 				}
 				else{
 					getPlugin("MessageBox").info("Module Installed Successfully in your 'modules' folder.");
 					flash.put("forgeboxInstallLog", "Please verify if the module was
-					registered successfully by looking below in your modules listing.  Some modules need some manual installations so please verify the file structure in your 
+					registered successfully by looking below in your modules listing.  Some modules need some manual installations so please verify the file structure in your
 					media manager modules library.  If the module does not appear below, then it was not a valid module installation and some manual work is needed.");
 				}
 			}
