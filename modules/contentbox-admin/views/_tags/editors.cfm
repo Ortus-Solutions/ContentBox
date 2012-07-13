@@ -1,4 +1,26 @@
 <cfoutput>
+<cfsavecontent variable="toolbarJSON">
+[
+    { "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
+    { "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
+    { "name": "editing",     "items" : [ "Find","Replace","-","SpellChecker", "Scayt" ] },
+    { "name": "forms",       "items" : [ "Form", "Checkbox", "Radio", "TextField", "Textarea", "Select", "Button","HiddenField" ] },
+    "/",
+	{ "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat" ] },
+    { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","-","Blockquote","CreateDiv","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","BidiLtr","BidiRtl" ] },
+    { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
+    "/",
+    { "name": "styles",      "items" : [ "Styles","Format" ] },
+    { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
+	{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
+    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks", "cbPreview" ] }
+]</cfsavecontent>
+<cfset iData = { toolbar = deserializeJSON( toolbarJSON ) }>
+<cfset announceInterception("cbadmin_ckeditorToolbar", iData)>
+<!---Extra Plugins --->
+<cfset iData2 = { extraPlugins = listToArray( "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbPreview,cbIpsumLorem" ) }>
+<cfset announceInterception("cbadmin_ckeditorExtraPlugins", iData2)>
+
 <!--- Custom Javascript --->
 <script type="text/javascript">
 // Setup the Editors
@@ -6,26 +28,14 @@ function setupEditors($theForm, withExcerpt){
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
 	// toolbar config
-	var ckToolbar =
-	[
-	    { name: 'document',    items : [ 'Source','-','Maximize','ShowBlocks' ] },
-	    { name: 'clipboard',   items : [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ] },
-	    { name: 'editing',     items : [ 'Find','Replace','-','SpellChecker', 'Scayt' ] },
-	    { name: 'forms',       items : [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button','HiddenField' ] },
-	    '/',
-		{ name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ] },
-	    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
-	    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
-	    '/',
-	    { name: 'styles',      items : [ 'Styles','Format' ] },
-	    { name: 'colors',      items : [ 'TextColor','BGColor' ] },
-		{ name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] },
-	    { name: 'contentbox',  items : [ 'cbIpsumLorem','cbWidgets','cbCustomHTML','cbLinks','cbEntryLinks', 'cbPreview' ] }
-	];
-
+	var ckToolbar = $.parseJSON('#serializeJSON( iData.toolbar )#');
 	// Activate ckeditor
 	$content.ckeditor( function(){}, {
-			toolbar:ckToolbar,height:300,
+			<cfif arrayLen( iData2.extraPlugins )>
+			extraPlugins : '#arrayToList( iData2.extraPlugins )#',
+			</cfif>
+			toolbar: ckToolbar,
+			height:300,
 			filebrowserBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURL)#',
 			filebrowserImageBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLIMage)#',
 			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#',
@@ -92,5 +102,18 @@ function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint &
 function getCustomHTMLSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".customHTML.editorselector")#';}
 // Preview Integration
 function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".content.preview")#';}
+// Module Link Building
+function getModuleURL(module, event, queryString){
+	var returnURL = "";
+	$.ajax({
+		url : '#event.buildLink(prc.cbAdminEntryPoint & ".modules.buildModuleLink")#',
+		data : {module: module, moduleEvent: event, moduleQS: queryString},
+		async : false,
+		success : function(data){
+			returnURL = data;
+		}
+	});
+	return $.trim( returnURL );
+}
 </script>
 </cfoutput>

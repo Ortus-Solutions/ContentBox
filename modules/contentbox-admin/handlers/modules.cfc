@@ -5,6 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="moduleService"	inject="id:moduleService@cb";
+	property name="cb" 				inject="cbHelper@cb";
 
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -12,6 +13,13 @@ component extends="baseHandler"{
 		var prc = event.getCollection(private=true);
 		// Tab control
 		prc.tabModules = true;
+	}
+
+	// Build Module Links
+	function buildModuleLink(event,rc,prc){
+		return cb.buildModuleLink(module=event.getValue("module",""),
+								  linkTo=event.getValue("moduleEvent",""),
+								  queryString=event.getValue("moduleQS",""));
 	}
 
 	// proxy a call to a module, all module calls are supposed to return content
