@@ -10,3 +10,4 @@ WEB-INF/**
 test/logs/**
 modules/contentbox/modules/HTMLCompressor
 modules/contentbox/modules/PasteBin
+modules/_gsdata_
