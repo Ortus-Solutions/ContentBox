@@ -94,6 +94,38 @@ function closeRemoteModal(){
 	$remoteModalContent.html('').html($remoteModalLoading);
 }
 /**
+* Close a local modal window
+* @param div The jquery div object that represents the dialog.
+*/
+function closeModal(div){
+	$(".error").hide();
+	div.data("overlay").close();
+}
+/**
+ * Open a new local modal window.
+ * @param div The jquery object of the div to extract the HTML from.
+ * @param w The width of the modal
+ * @param h The height of the modal
+ * @return
+ */
+function openModal(div, w, h){
+	div.overlay({
+		mask: {
+			color: '#fff',
+			loadSpeed: 200,
+			opacity: 0.6 },
+		closeOnClick : true,
+		closeOnEsc : true,
+		onClose: function(){ closeModal( div ); }
+	});
+	div.find("a.close").attr("title","Close Window");
+	// width/height
+	if( w ){ div.css("width",w); }
+	if( h ){ div.css("height",h); }
+	// open the remote modal
+	div.data("overlay").load();
+}
+/**
  * Open a new remote modal window Ajax style.
  * @param url The URL ajax destination
  * @param data The data packet to send

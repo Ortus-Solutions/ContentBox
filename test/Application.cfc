@@ -52,7 +52,7 @@ limitations under the License.
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		eventHandling 		= true,
-		eventHandler		= "contentbox.model.system.EventHandler",
+		//eventHandler		= "coldbox.system.orm.hibernate.WBEventHandler",
 		skipCFCWithError	= true,
 		secondarycacheenabled = true,
 		cacheprovider		= "ehCache"

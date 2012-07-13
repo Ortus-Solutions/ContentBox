@@ -19,8 +19,11 @@
 	</h2>
 	<!--- Instructions --->
 	<p>
-		Please note that not all contributed entries have a zip prepared for download. 
-		So always verify your download URL first. You can also browse all of our online 
+		Please note that not all contributed entries can be automatically installed for you. 
+		A button much like this <button class="button2" onclick="return false;">Download & Install</button>
+		will appear if an item can be automatically installed for you.  If not, you will 
+		have to download the entry manually and upload it to install it.
+		 You can also browse all of our online 
 		<a href="http://www.coldbox.org/forgebox">ForgeBox Code Repository</a> to download
 		items manually.
 	</p>
@@ -76,10 +79,10 @@
 		<br/>
 		<!--- Download & Install --->
 		<div class="forgebox-download">
-			<cfif findnocase("zip", prc.entries.downloadURL)>
+			<cfif findnocase(".zip", prc.entries.downloadURL)>
 			<a href="javascript:installEntry('entry_#prc.entries.entryID#','#prc.entries.downloadURL#')"
-			   onclick="return confirm('Really install it?')"
-			   title="Install Entry"><img src="#prc.cbRoot#/includes/images/entry-link.png" alt="Download" border="0" /></a>
+			   onclick="return confirm('Really install it?')">
+			   	<button class="button2" onclick="return false;">Download & Install</button></a>
 			<cfelse>
 			<div class="infoBar"><img src="#prc.cbroot#/includes/images/warning_icon.png"/> No zip detected, manual install only!</div>
 			</cfif>	

@@ -3,6 +3,8 @@
 */
 component extends="baseHandler"{
 
+	property name="widgetService" inject="widgetService@cb";
+
 	// pre handler
 	function preHandler(event,action,eventArguments){
 		var rc 	= event.getCollection();
@@ -10,30 +12,30 @@ component extends="baseHandler"{
 		// Tab control
 		prc.tabTools = true;
 	}
-	
+
 	// index
 	function index(event,rc,prc){
 		// setup tab
 		prc.tabTools_apidocs = true;
 		event.paramValue("_cfcviewer_package","");
 		event.paramValue("apislug","model");
-		
+
 		// print existence check
 		if( structKeyExists(rc,"print") and !len(trim(rc.print)) ){
 			rc.print = true;
 		}
 		event.paramValue("print",false);
-		
-		
+
+
 		var dirPath = "";
-		
+
 		switch(rc.apislug){
 			case "plugins" : {
 				dirPath = "/contentbox/plugins";
 				break;
 			}
 			case "widgets" : {
-				dirPath = "/contentbox-ui/plugins/widgets";
+				dirPath = "/contentbox/widgets";
 				break;
 			}
 			default: {
@@ -41,7 +43,7 @@ component extends="baseHandler"{
 				break;
 			}
 		}
-		
+
 		// self link
 		prc.selfLink = event.buildLink(prc.xehApiDocs)&"/index/apislug/#rc.apislug#?";
 		if(rc.print){
@@ -52,7 +54,7 @@ component extends="baseHandler"{
 			.setup(dirpath=dirPath,
 				   dirLink=prc.selfLink,
 				   linkBaseURL=prc.selfLink&"_cfcviewer_package=#rc._cfcviewer_package#");
-		
+
 		// view or print
 		if( rc.print ){
 			event.renderData(data=prc.cfcViewer.renderIt(),type="html");
@@ -60,6 +62,6 @@ component extends="baseHandler"{
 		else{
 			event.setView(view="apidocs/index");
 		}
-	}	
-	
+	}
+
 }

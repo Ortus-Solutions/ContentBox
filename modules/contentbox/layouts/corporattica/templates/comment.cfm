@@ -18,7 +18,7 @@
 
 	<!--- Content --->
 	<div class="commentContent">
-		<p>#comment.getContent()#</p>
+		<p>#comment.getDisplayContent()#</p>
 	</div>
 </div>
 </cfoutput>

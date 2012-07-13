@@ -240,7 +240,11 @@ component accessors="true" threadSafe singleton{
 			// check if zip file
 			if( fInfo.serverFileExt eq "zip" ){
 				// expand it
-				zipUtil.extract(zipFilePath=fFilePath,extractPath=destination,useFolderName=true);
+				zipUtil.extract(zipFilePath=fFilePath, extractPath=destination, useFolderName=true);
+				// Removal of Mac stuff
+				if( directoryExists( destination & "/__MACOSX" ) ){
+					directoryDelete( destination & "/__MACOSX", true);
+				}
 			}
 		}
 		catch(Any e){

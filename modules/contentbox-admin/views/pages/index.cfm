@@ -222,7 +222,7 @@
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Clone Command --->
-							<a href="javascript:clonePage('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')" title="Clone Page Including Descendants"><img src="#prc.cbroot#/includes/images/clone.png" alt="edit" border="0"/></a>
+							<a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')" title="Clone Page Including Descendants"><img src="#prc.cbroot#/includes/images/clone.png" alt="edit" border="0"/></a>
 							&nbsp;
 							<!--- Create Child --->
 							<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/></a>
@@ -249,8 +249,35 @@
 			#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
 
 			#html.endForm()#
-
 		</div>
 	</div>
 </div>
+<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+<div id="cloneDialog" class="modal">
+	<div id="modalContent">
+		<h2>Page Cloning</h2>
+		<p>By default, all internal page links are updated for you as part of the cloning process.</p>
+		#html.startForm(name="cloneForm", action=prc.xehPageClone)#
+			#html.hiddenField(name="contentID")#
+			#html.textfield(name="title", label="Please enter the new page title:", class="textfield", required="required", size="50")#
+			<label for="pageStatus">Publish all pages in hierarchy?</label>
+			<small>By default all cloned pages are published as drafts.</small><br>
+			#html.select(options="true,false", name="pageStatus", selectedValue="false")#
+			
+			<div class="infoBar">Please note that cloning is an expensive process, so please be patient when cloning big hierarchical content trees.</div>
+			<hr/>
+			<!--- Button Bar --->
+			<div id="bottomCenteredBar" class="textRight">
+				<button class="button2" id="cloneButton"> Clone </button>
+				<button class="buttonred" id="closeButton"> Cancel </button>
+			</div>
+			<!--- Loader --->
+			<div class="center loaders" id="clonerBarLoader">
+				<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+				<br>Please wait, doing some hardcore cloning action...
+			</div>
+		#html.endForm()#
+	</div>
+</div>
+</cfif>
 </cfoutput>

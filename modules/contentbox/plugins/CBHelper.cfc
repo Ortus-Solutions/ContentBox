@@ -327,7 +327,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		if( NOT structKeyExists(prc,"pagingPlugin") ){
 			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext");
 		}
-		return prc.pagingPlugin.renderit( getSearchResults().getTotal(), prc.pagingLink);
+		return prc.pagingPlugin.renderit(foundRows=getSearchResults().getTotal(), link=prc.pagingLink, pagingMaxRows=setting("cb_search_maxResults"));
 	}
 
 	// get the curent search results object
@@ -433,7 +433,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* Get the site URL separator
 	*/
 	private function sep(){
-		if( len(siteRoot()) ){ return "."; }
+		if( len( siteRoot() ) ){ return "."; }
 		return "";
 	}
 
@@ -616,7 +616,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		if( isSimpleValue(arguments.page) ){
 			return linkPageWithSlug( arguments.page );
 		}
-		var xeh = siteRoot() & arguments.page.getSlug();
+		var xeh = siteRoot() & sep() & arguments.page.getSlug();
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 
@@ -730,14 +730,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Render out paging for blog entries
+	* Render out paging for blog entries only
 	*/
 	function quickPaging(){
 		var prc = getRequestCollection(private=true);
 		if( NOT structKeyExists(prc,"pagingPlugin") ){
 			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the main entries index page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext");
 		}
-		return prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink);
+		return prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, pagingMaxRows=setting("cb_paging_maxentries"));
 	}
 
 	/**

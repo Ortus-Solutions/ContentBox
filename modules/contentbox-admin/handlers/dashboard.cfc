@@ -6,6 +6,7 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="entryService" 		inject="id:entryService@cb";
 	property name="pageService" 		inject="id:pageService@cb";
+	property name="contentService" 		inject="id:contentService@cb";
 	property name="commentService" 		inject="id:commentService@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
 
@@ -43,7 +44,11 @@ component extends="baseHandler"{
 		prc.commentsApprovedCount 	= commentService.getApprovedCommentCount();
 		prc.commentsUnApprovedCount = commentService.getUnApprovedCommentCount();
 		prc.categoriesCount 		= categoryService.count();
-
+		
+		// Few Reports
+		prc.topContent 		= contentService.getTopVisitedContent();
+		prc.topCommented 	= contentService.getTopCommentedContent();
+		
 		// Prepare Reload Options
 		prc.reloadOptions = [
 			{name="Reload Application",value="app"},

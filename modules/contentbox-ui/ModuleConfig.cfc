@@ -6,24 +6,24 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 * ContentBox UI module configuration
 */
 component {
-	
+
 	// Module Properties
 	this.title 				= "contentbox-ui";
 	this.author 			= "Ortus Solutions, Corp";
@@ -32,18 +32,18 @@ component {
 	this.version			= "1.0";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
-	
+
 	// YOUR SES URL ENTRY POINT FOR CONTENTBOX, IF EMPTY IT WILL TAKE OVER THE ENTIRE APPLICATION
 	// IF YOU WANT TO SECTION OFF CONTENTBOX THEN FILL OUT AN SES ENTRY POINT LIKE /site OR /content
 	// BY DEFAULT IT TAKES OVER THE ENTIRE APPLICATION
 	this.entryPoint			= "";
-	
+
 	function configure(){
-		
+
 		// PARENT APPLICATION ROUTING IF IN TAKE OVER MODE. YOU CAN CUSTOMIZE THIS IF YOU LIKE.
 		// THIS MEANS THAT IF YOU WANT TO EXECUTE PARENT EVENTS YOU NEED TO PREFIX THEM WITH '/parent'
 		parentSESPrefix = "/parent";
-		
+
 		// CB UI SES Routing
 		routes = [
 			// Blog Archives
@@ -68,9 +68,9 @@ component {
 			{pattern="/__preview", handler="blog", action="preview" },
 			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
 			{pattern="/__pageCommentPost", handler="page", action="commentPost"},
-			
+
 			/************************************** RSS FEEDS *********************************************/
-			
+
 			// Global Page RSS feeds with filtering
 			{pattern="/__rss/pages/category/:category?", handler="rss", action="pages" },
 			{pattern="/__rss/pages/comments/:slug?", handler="rss", action="pages", commentRSS=true },
@@ -81,12 +81,12 @@ component {
 			{pattern="/__rss/comments", handler="rss", action="index", commentRSS=true},
 			// Global Site RSS Content Feed
 			{pattern="/__rss", handler="rss", action="index" },
-			
+
 			{pattern="/:pageSlug", handler="page", action="index"},
 			// Home Pattern  xc
 			{pattern="/", handler="blog", action="index" }
-		];	
-		
+		];
+
 		// CB UI Event driven programming extensions
 		interceptorSettings = {
 			// ContentBox UI Custom Events, you can add your own if you like to!
@@ -102,7 +102,7 @@ component {
 				"cbui_prePageDisplay","cbui_postPageDisplay","cbui_preArchivesDisplay","cbui_postArchivesDisplay"
 			])
 		};
-		
+
 		// CB UI Interceptors
 		interceptors = [
 			// CB UI Request Interceptor
@@ -112,25 +112,25 @@ component {
 			// Global HTML interceptor for rendering HTML Points
 			{class="#moduleMapping#.interceptors.GlobalHTML",name="GlobalHTML@cb"}
 		];
-		
+
 	}
-	
+
 	/**
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
 		// Startup the ContentBox layout service and activate the current layout
 		controller.getWireBox().getInstance("layoutService@cb").startupActiveLayout();
-		
+
 		// Treat the blog as the Main Application?
 		if( !len(this.entryPoint) ){
 			// generate the ses entry point
 			var ses 		 = controller.getInterceptorService().getInterceptor('SES',true);
-			
+
 			// get parent routes so we can re-mix them later
 			var parentRoutes 		= ses.getRoutes();
 			var newRoutes			= [];
-			
+
 			// iterate and only keep module routing
 			for(var x=1; x lte arrayLen(parentRoutes); x++){
 				if( parentRoutes[x].pattern NEQ ":handler/" AND
@@ -139,11 +139,11 @@ component {
 				}
 			}
 			// override new cleaned routes
-			ses.setRoutes( newRoutes );			
-			
+			ses.setRoutes( newRoutes );
+
 			// Add parent routing
 			ses.addRoute(pattern="#variables.parentSESPrefix#/:handler/:action?");
-			
+
 			// Add routes manually to take over parent routes
 			for(var x=1; x LTE arrayLen( variables.routes ); x++){
 				// append module location to it so the route is now system wide
@@ -155,10 +155,10 @@ component {
 				// add it as main application route.
 				ses.addRoute(argumentCollection=args);
 			}
-			
+
 			// change the default event
 			controller.setSetting("DefaultEvent","contentbox-ui:blog");
 		}
 	}
-		
+
 }

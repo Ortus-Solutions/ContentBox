@@ -96,7 +96,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @offset.hint The offset in the pagination
 	* @asQuery.hint Return as query or array of objects, defaults to array of objects
 	*/
-	function searchContent(searchTerm="",max=0,offset=0,asQuery=false){
+	function searchContent(searchTerm="", max=0, offset=0, asQuery=false){
 		var results = {};
 		var c = newCriteria();
 
@@ -107,17 +107,19 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			.isEq("passwordProtection","");
 
 		// Search Criteria
-		if( len(arguments.searchTerm) ){
+		if( len( arguments.searchTerm ) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac");
-			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
+			c.createAlias("activeContent","ac")
+				.$or( c.restrictions.like("title","%#arguments.searchTerm#%"),
+				  	  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count();
-		results.content = c.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
-
+		results.count = c.count();
+		results.content = c.list(offset=arguments.offset, max=arguments.max, sortOrder="publishedDate DESC", asQuery=arguments.asQuery);
+	
+		
+		
 		return results;
 	}
 
@@ -256,6 +258,26 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		saveAll( contentObjects );
 
 		return this;
+	}
+	
+	/**
+	* Get the top visited content entries
+	* @max.hint The maximum to retrieve, defaults to 5 entries
+	*/
+	array function getTopVisitedContent(max=5){
+		var c = newCriteria()
+			.list(max=arguments.max, sortOrder="hits desc", asQuery=false);
+		return c;
+	}
+	
+	/**
+	* Get the top commented content entries
+	* @max.hint The maximum to retrieve, defaults to 5 entries
+	*/
+	array function getTopCommentedContent(max=5){
+		var c = newCriteria()
+			.list(max=arguments.max, sortOrder="numberOfComments desc", asQuery=false);
+		return c;
 	}
 
 }

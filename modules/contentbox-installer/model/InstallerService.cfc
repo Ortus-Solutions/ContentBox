@@ -129,7 +129,8 @@ component accessors="true"{
 			"VERSIONS_ROLLBACK" = "Ability to rollback content versions",
 			"VERSIONS_DELETE" = "Ability to delete past content versions",
 			"SYSTEM_UPDATES" = "Ability to view and apply ContentBox updates",
-			"MODULES_ADMIN" = "Ability to manage ContentBox Modules"
+			"MODULES_ADMIN" = "Ability to manage ContentBox Modules",
+			"CONTENTBOX_ADMIN" = "Access to the enter the ContentBox administrator console"
 		};
 
 		var allperms = [];
@@ -160,6 +161,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["GLOBALHTML_ADMIN"] );
 		oRole.addPermission( permissions["MEDIAMANAGER_ADMIN"] );
 		oRole.addPermission( permissions["VERSIONS_ROLLBACK"] );
+		oRole.addPermission( permissions["CONTENTBOX_ADMIN"] );
 		roleService.save( oRole );
 
 		// Create Admin
@@ -305,7 +307,10 @@ component accessors="true"{
 
 			// Site Maintenance
 			"cb_site_maintenance_message" = "<h1>This site is down for maintenance.<br /> Please check back again soon.</h1>",
-			"cb_site_maintenance" = "false"
+			"cb_site_maintenance" = "false",
+
+			// Versioning
+			"cb_versions_max_history" = ""
 		};
 
 		// Create setting objects and save

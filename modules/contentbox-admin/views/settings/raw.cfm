@@ -12,23 +12,23 @@
 			#html.startForm(action=prc.xehSettingsave,name="settingEditor",novalidate="novalidate")#
 				<input type="hidden" name="settingID" id="settingID" value="" />
 				<input type="hidden" name="page" id="page" value="#rc.page#" />
-				
+
 				<label for="name">Setting:</label>
 				<input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="textfield"/>
-				
+
 				<label for="value">Value:</label>
 				<textarea name="value" id="value" rows="4"></textarea>
-				
+
 				<div class="actionBar">
 					#html.resetButton(name="btnReset",value="Reset",class="button")#
 					#html.submitButton(name="btnSave",value="Save",class="buttonred")#
 				</div>
 			#html.endForm()#
 		</div>
-	</div>		
-			
+	</div>
+
 </div>
-<!--End sidebar-->	
+<!--End sidebar-->
 <!--============================Main Column============================-->
 <div class="main_column">
 	<div class="box">
@@ -46,17 +46,17 @@
 		<div class="body">
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
-				
+
 			<div class="panes">
-				
+
 				<!--- Raw Settings Pane --->
 				<div class="clearfix">
 					<p>Manage the raw settings at your own risk buddy!</p>
-					
+
 					<!--- settingForm --->
 					#html.startForm(name="settingForm",action=prc.xehSettingRemove)#
 					<input type="hidden" name="settingID" id="settingID" value="" />
-					
+
 					<!--- content bar --->
 					<div class="contentBar">
 						<!--- Flush Cache Button --->
@@ -64,7 +64,7 @@
 							<button class="button2" onclick="openRemoteModal('#event.buildLink(prc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
 							<button class="button2" onclick="return to('#event.buildLink(prc.xehFlushCache)#')" title="Flush the settings cache">Flush Settings Cache</button>
 						</div>
-						
+
 						<!--- Filter Bar --->
 						<div class="filterBar">
 							<div>
@@ -74,24 +74,36 @@
 						</div>
 					</div>
 					
+					<cfif !rc.viewAll>
+					<!--- View all --->
+					<div class="floatRight">
+						<button class="buttonred" onclick="return to('#event.buildLink(prc.xehRawSettings)#/viewall/true')">View All</button>
+					</div>
 					<!--- Paging --->
 					#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
-				
+					</cfif>
+					
 					<!--- settings --->
 					<table name="settings" id="settings" class="tablesorter" width="98%">
 						<thead>
 							<tr>
 								<th width="250">Name</th>
-								<th>Value</th>			
+								<th>Value</th>
 								<th width="125" class="center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
-						
+
 						<tbody>
 							<cfloop array="#prc.settings#" index="setting">
 							<tr>
 								<td><a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting">#setting.getName()#</a></td>
-								<td>#htmlEditFormat(setting.getValue())#</td>
+								<td>
+									<cfif len( setting.getValue() ) gt 90 >
+										#html.textarea(value=setting.getValue(), rows="5", cols="5")#
+									<cfelse>
+										#htmlEditFormat( setting.getValue() )#
+									</cfif>
+								</td>
 								<td class="center">
 									<!--- Edit Command --->
 									<a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
@@ -102,19 +114,21 @@
 							</cfloop>
 						</tbody>
 					</table>
-				
+
 					<!--- Paging --->
+					<cfif !rc.viewAll>
 					#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
+					</cfif>
 					
 					#html.endForm()#
 				</div>
-				
+
 				<!--- WireBox Pane --->
 				<div>
 					<p>The following are all the objects that are currently in the singleton scope.</p>
-					
+
 					#html.startForm(name="singletonForm")#
-					
+
 					<!--- content bar --->
 					<div class="contentBar">
 						<!--- Flush Cache Button --->
@@ -129,17 +143,17 @@
 							</div>
 						</div>
 					</div>
-					
+
 					<!--- settings --->
 					<table name="singletons" id="singletons" class="tablesorter" width="98%">
 						<thead>
 							<tr>
-								<th width="250">ID</th>	
+								<th width="250">ID</th>
 								<th>Path</th>
 								<th width="50" class="center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
-						
+
 						<tbody>
 							<cfloop collection="#prc.singletons#" item="target">
 							<tr>
@@ -154,22 +168,22 @@
 							</cfloop>
 						</tbody>
 					</table>
-					
+
 					#html.endForm()#
-										
+
 				</div>
-				
+
 				<!--- CacheBox Pane --->
 				<div>
 					<cfimport prefix="cachebox" taglib="/coldbox/system/cache/report">
-					<cachebox:monitor cacheFactory="#controller.getCacheBox()#" 
+					<cachebox:monitor cacheFactory="#controller.getCacheBox()#"
 									  baseURL="#event.buildLink(prc.xehRawSettings)#"
 									  enableMonitor=false/>
 				</div>
 			</div>
-					
-						
-		</div>	
+
+
+		</div>
 	</div>
 </div>
 </cfoutput>

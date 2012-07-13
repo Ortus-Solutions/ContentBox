@@ -8,7 +8,7 @@
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>ContentBox Administrator - #prc.cbSettings.cb_site_name#</title>
+    <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
@@ -98,7 +98,9 @@
 
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
-				<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo"/>
+				<a href="#event.buildLink(prc.xehAbout)#">
+					<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo"/>
+				</a>
 			</div>
 			<!--End Search field and logo Header Area-->
 			<!--=========Main Navigation=========-->
@@ -159,7 +161,6 @@
 	<!--- ============================ QuickPost ============================ --->
 	#runEvent(event="contentbox-admin:entries.quickPost",prePostExempt=true)#
 	<!--- ============================ end QuickPost ============================ --->
-
 
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeBodyEnd")#

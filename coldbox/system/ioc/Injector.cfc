@@ -48,7 +48,7 @@ Description :
 				// Scope Storages
 				scopeStorage = createObject("component","coldbox.system.core.collections.ScopeStorage").init(),
 				// Version
-				version  = "1.3.1",
+				version  = "1.4.0",
 				// The Configuration Binder object
 				binder   = "",
 				// ColdBox Application Link
@@ -325,18 +325,29 @@ Description :
     </cffunction>
 
 	<!--- registerNewInstance --->
-    <cffunction name="registerNewInstance" output="false" access="public" returntype="any" hint="Register a new requested mapping object instance thread safely and returns the binder configured for this instance">
+    <cffunction name="registerNewInstance" output="false" access="public" returntype="any" hint="Register a new requested mapping object instance thread safely and returns the mapping configured for this instance">
     	<cfargument name="name" 		required="true" hint="The name of the mapping to register"/>
 		<cfargument name="instancePath" required="true" hint="The path of the mapping to register">
 
+		<cfset var mapping = "">
+
     	<!--- Register new instance mapping --->
     	<cflock name="Injector.RegisterNewInstance.#hash(arguments.instancePath)#" type="exclusive" timeout="20" throwontimeout="true">
-    		<!--- double lock for concurrency --->
-    		<cfif NOT instance.binder.mappingExists( arguments.name )>
-    			<cfset instance.binder.map( arguments.name ).to( arguments.instancePath )>
-    		</cfif>
+    		<cfscript>
+				if( NOT instance.binder.mappingExists( arguments.name ) ){
+					// create a new mapping to be registered within the binder
+					mapping = createObject("component","coldbox.system.ioc.config.Mapping")
+						.init( arguments.name )
+						.setType( instance.binder.TYPES.CFC )
+						.setPath( arguments.instancePath );
+					// Now register it
+					instance.binder.setMapping( arguments.name, mapping );
+					// return it
+					return mapping;
+				}
+			</cfscript>
 		</cflock>
-		<cfreturn instance.binder.with( arguments.name )>
+		<cfreturn instance.binder.getMapping( arguments.name )>
     </cffunction>
 
 	<!--- containsInstance --->

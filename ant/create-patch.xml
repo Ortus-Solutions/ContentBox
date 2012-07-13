@@ -39,6 +39,8 @@
 				<exclude name="test/"/>
 				<exclude name="config/"/>
 				<exclude name="Application.cfc"/>
+				<exclude name="favicon.ico"/>
+				<exclude name=".htaccess"/>
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
