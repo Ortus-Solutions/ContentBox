@@ -967,13 +967,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 				if( currentcontentID eq pageResults.pages[x].getContentID() ){ arrayAppend( classText, arguments.activeClass); }
 				// class = parent nesting?
 				if( doNesting ){ arrayAppend(classText, arguments.parentClass); }
-				// Flatten it
-				classText = arrayToList(classText, " ");
 
 				// list
 				if( arguments.type neq "none"){
 					// Start Embedded List
-					b.append('<li class="#classText#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
+					b.append('<li class="#arrayToList(classText, " ")#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
 					// Nested Levels?
 					if( doNesting ){
 						// If type is "li" then guess to do a nested ul list
@@ -988,7 +986,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 					b.append('</li>');
 				}
 				else{
-					b.append('<a href="#linkPage(pageResults.pages[x])#" class="#classText#">#pageResults.pages[x].getTitle()#</a>#arguments.separator#');
+					b.append('<a href="#linkPage(pageResults.pages[x])#" class="#arrayToList(classText, " ")#">#pageResults.pages[x].getTitle()#</a>#arguments.separator#');
 				}
 			}
 		}
