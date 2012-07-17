@@ -33,10 +33,7 @@ component{
 	property name="validator"			inject="id:Validator@cb";
 
 	// pre Handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
-
+	function preHandler(event,rc,prc,action,eventArguments){
 		// Maintenance Mode?
 		if( prc.cbSettings.cb_site_maintenance ){
 			event.overrideEvent("contentbox-ui:page.maintenance");
@@ -60,21 +57,20 @@ component{
 		event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
 	}
 
-
 	/*
 	* Error Control
 	*/
 	function onError(event,faultAction,exception,eventArguments){
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
-		
+
 		// store exceptions
 		prc.faultAction = arguments.faultAction;
 		prc.exception   = arguments.exception;
 
 		// announce event
 		announceInterception("cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments});
-		
+
 		// Set view to render
 		event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
 			.setView(view="#prc.cbLayout#/views/error", module="contentbox");
