@@ -959,6 +959,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 		// Iterate through pages and create sub menus
 		for(var x=1; x lte pageResults.count; x++ ){
+			// need to reset this or all links after an active one appear as active
+			classtext = [];
 			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[x].getTitle() )){
 				// Do we need to nest?
 				var doNesting = ( arguments.currentLevel lt arguments.levels AND pageResults.pages[x].hasChild() );
