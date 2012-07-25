@@ -163,13 +163,13 @@ component {
 	*/
 	private function loadHibernateTransactions(binder){
 		// map the hibernate transaction for contentbox
-		binder.mapAspect(aspect="CBHibernateTransaction",autoBinding=false)
-			.to("coldbox.system.aop.aspects.HibernateTransaction");
+		binder.mapAspect(aspect="CFTransaction",autoBinding=false)
+			.to("coldbox.system.aop.aspects.CFTransaction");
 
 		// bind the aspect
 		binder.bindAspect(classes=binder.match().regex("contentbox.*"),
 									methods=binder.match().annotatedWith("transactional"),
-									aspects="CBHibernateTransaction");
+									aspects="CFTransaction");
 	}
 
 }

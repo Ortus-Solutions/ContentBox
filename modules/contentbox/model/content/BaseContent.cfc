@@ -16,7 +16,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	// Properties
 	property name="contentID" 				notnull="true"	fieldtype="id" generator="native" setter="false";
-	property name="contentType" 			notnull="true"	setter="false" update="false" insert="false" index="idx_discriminator,idx_published";
+	property name="contentType" 			setter="false" update="false" insert="false" index="idx_discriminator,idx_published" default="" dbdefault="";
 	property name="title"					notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
