@@ -101,7 +101,7 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 				writeOutput('
 				<li>
 					<a href="#cb.linkContent(item)#">#item.getTitle()#</a><br/>
-					#highlightSearchTerm( searchTerm, item.renderContent() )#
+					#stripHTML( highlightSearchTerm( searchTerm, item.renderContent() ) )#
 				</li>
 				<cite>#item.getContentType()# -> #cb.linkContent(item)#</cite><br/>
 				<cite>Categories: #item.getCategoriesList()#</cite>
@@ -115,6 +115,12 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 		return results;
 	}
 
+	/**
+	* utility to strip HTML
+	*/
+	private function stripHTML(stringTarget){
+		return HTMLEditFormat( REReplaceNoCase(arguments.stringTarget,"<[^>]*>","","ALL") );
+	}
 
 	/**
 	* Utility function to help you highlight search terms in content
@@ -143,8 +149,6 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 		else{
 			excerpt = arguments.content;
 		}
-
-		excerpt = htmlEditFormat( excerpt );
 
 		try{
 			excerpt = reReplaceNoCase(excerpt, "(#arguments.term#)", "<span class='highlight'>\1</span>","all");

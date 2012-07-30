@@ -8,4 +8,7 @@ logs/**
 "Icon\r"
 WEB-INF/**
 test/logs/**
-HTMLCompressor
+modules/contentbox/modules/HTMLCompressor
+modules/contentbox/modules/PasteBin
+modules/contentbox/modules/google-prettify
+modules/_gsdata_

@@ -29,7 +29,6 @@ component extends="BaseContentHandler" singleton{
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
 
-
 	// pre Handler
 	function preHandler(event,action,eventArguments){
 		super.preHandler(argumentCollection=arguments);
@@ -38,9 +37,7 @@ component extends="BaseContentHandler" singleton{
 	/**
 	* Around index to enable the caching aspects
 	*/
-	function aroundIndex(event,eventArguments){
-		var rc = event.getCollection();
-		var prc = event.getCollection(private=true);
+	function aroundIndex(event,rc,prc,eventArguments){
 
 		// if not caching, just return
 		if( !prc.cbSettings.cb_content_caching ){
@@ -56,7 +53,7 @@ component extends="BaseContentHandler" singleton{
 			cacheKey = "cb-content-pagewrapper-#left(event.getCurrentRoutedURL(),255)#";
 		}
 		else{
-			cacheKey = "cb-content-pagewrapper-#prc.pageOverride#";
+			cacheKey = "cb-content-pagewrapper-#prc.pageOverride#/";
 		}
 
 		// verify page wrapper

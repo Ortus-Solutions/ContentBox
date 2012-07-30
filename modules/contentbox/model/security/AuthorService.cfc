@@ -41,13 +41,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	/**
 	* Save an author with extra pizazz!
 	*/
-	function saveAuthor(author,passwordChange=false){
+	function saveAuthor(author, boolean passwordChange=false, boolean transactional=true){
 		// hash password if new author
 		if( !arguments.author.isLoaded() OR arguments.passwordChange ){
 			arguments.author.setPassword( hash(arguments.author.getPassword(), getHashType()) );
 		}
 		// save the author
-		save( author );
+		save(entity=author, transactional=arguments.transactional);
 	}
 	
 	/**

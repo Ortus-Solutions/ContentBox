@@ -80,7 +80,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Get rules path
 		var rulesPath = getDirectoryFromPath( getMetadata(this).path ) & "data/securityRules.json";
 		// remove all rules first
-		var q = new query(sql="delete from cb_securityRule").execute();
+		//var q = new query(sql="delete from cb_securityRule").execute();
+		deleteAll(transactional=false);
 		// now re-create them
 		var securityRules = deserializeJSON(  fileRead( rulesPath ) );
 		// iterate over array
@@ -89,7 +90,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				structDelete(thisRule,"ruleID");
 			}
 			var oRule = new(properties=thisRule);
-			save( oRule );
+			save(entity=oRule, transactional=false);
 		}
 		return this;
 	}

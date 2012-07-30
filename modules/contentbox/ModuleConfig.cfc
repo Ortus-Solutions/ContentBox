@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "An enterprise modular content platform";
-	this.version			= "1.0.5";
+	this.version			= "1.0.6";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
@@ -44,7 +44,7 @@ component {
 			updateSlug_beta 	= "contentbox-beta-updates",
 			updatesURL			= "http://www.coldbox.org/api/forgebox"
 		};
-		
+
 		// CB Module Conventions
 		conventions = {
 			layoutsLocation = "layouts",
@@ -137,7 +137,7 @@ component {
 		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.BlogCFCImporter");
 		// ColdBox Integrations
 		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
-		
+
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
 	}
@@ -163,13 +163,13 @@ component {
 	*/
 	private function loadHibernateTransactions(binder){
 		// map the hibernate transaction for contentbox
-		binder.mapAspect(aspect="CBHibernateTransaction",autoBinding=false)
-			.to("coldbox.system.aop.aspects.HibernateTransaction");
+		binder.mapAspect(aspect="CFTransaction",autoBinding=false)
+			.to("coldbox.system.aop.aspects.CFTransaction");
 
 		// bind the aspect
 		binder.bindAspect(classes=binder.match().regex("contentbox.*"),
 									methods=binder.match().annotatedWith("transactional"),
-									aspects="CBHibernateTransaction");
+									aspects="CFTransaction");
 	}
 
 }

@@ -139,7 +139,7 @@ component accessors="true"{
 			permissions[ key ] = permissionService.new(properties=props);
 			arrayAppend(allPerms, permissions[ key ] );
 		}
-		permissionService.saveAll( allPerms );
+		permissionService.saveAll(entities=allPerms, transactional=false);
 	}
 
 	/**
@@ -162,7 +162,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["MEDIAMANAGER_ADMIN"] );
 		oRole.addPermission( permissions["VERSIONS_ROLLBACK"] );
 		oRole.addPermission( permissions["CONTENTBOX_ADMIN"] );
-		roleService.save( oRole );
+		roleService.save(entity=oRole, transactional=false);
 
 		// Create Admin
 		var oRole = roleService.new(properties={role="Administrator",description="A ContentBox Administrator"});
@@ -170,7 +170,7 @@ component accessors="true"{
 		for(var key in permissions){
 			oRole.addPermission( permissions[key] );
 		}
-		roleService.save( oRole );
+		roleService.save(entity=oRole, transactional=false);
 
 		return oRole;
 	}
@@ -320,7 +320,7 @@ component accessors="true"{
 			arrayAppend( aSettings, settingService.new(properties=props) );
 		}
 
-		settingService.saveAll( aSettings );
+		settingService.saveAll(entities=aSettings, transactional=false);
 	}
 
 	/**

@@ -37,7 +37,7 @@ component extends="ContentService" singleton{
 	/**
 	* Save an entry
 	*/
-	function saveEntry(entry){
+	function saveEntry(entry, boolean transactional=true){
 		var c = newCriteria();
 
 		// Prepare for slug uniqueness
@@ -51,7 +51,7 @@ component extends="ContentService" singleton{
 		}
 
 		// save entry
-		save( arguments.entry );
+		save(entity=arguments.entry, transactional=arguments.transactional);
 	}
 
 	/**
