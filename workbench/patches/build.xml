@@ -1,0 +1,17 @@
+﻿<?xml version="1.0"?>
+<project name="contentbox.packagepatch" default="build" basedir=".">
+
+	<!-- Init -->
+	<target name="init" description="Init">
+		<!-- Version -->
+		<input addproperty="contentbox.version" message="ContentBox Version To Package" />
+	</target>
+	
+	<!--Build-->
+	<target name="build" description="Build a new ContentBox distribution release" depends="init">
+      	
+		<!-- Zip Bundle -->
+		<zip destfile="${contentbox.version}.zip" basedir="${contentbox.version}"></zip>
+    </target>
+	
+</project>
