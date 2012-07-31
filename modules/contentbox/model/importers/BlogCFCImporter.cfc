@@ -216,7 +216,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 		var images1 = reMatchNoCase("(?i)href=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content);
 		var pattern = createObject("java", "java.util.regex.Pattern");
 		var exp = '(?<=\=\")([^"])+(?=\")';
-		var mediaPath = settingService.getSetting('cb_media_directoryRoot');
+		var mediaPath = expandPath( settingService.getSetting('cb_media_directoryRoot') );
 		var newUrl = '/modules/contentbox/content/blogImages/';
 
 		// Create a directory in the Media Manager for all the blog entry images
