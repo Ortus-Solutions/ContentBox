@@ -1,4 +1,0 @@
-ant/patches/Update 2.cfc
-ant/patches/Update.cfc.zip
-coldbox/coldbox-buildID-201202291042
-modules/contentbox-admin/plugins/ForgeBox.cfc
