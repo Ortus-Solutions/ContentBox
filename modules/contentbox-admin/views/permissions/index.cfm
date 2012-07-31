@@ -53,7 +53,7 @@
 			</div>
 			
 			<!--- permissions --->
-			<table name="permissions" id="categoryFilter" class="tablesorter" width="98%">
+			<table name="permissions" id="permissions" class="tablesorter" width="98%">
 				<thead>
 					<tr>
 						<th>Permission</th>
