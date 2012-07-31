@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
-<project name="contentbox.packagepatch" default="build" basedir=".">
+<project name="contentbox.package-patch" default="build" basedir=".">
 
 	<!-- Init -->
 	<target name="init" description="Init">
