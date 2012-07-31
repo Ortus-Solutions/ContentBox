@@ -140,7 +140,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	struct function buildFileBrowserSettings(){
 		var cbSettings = getAllSettings(asStruct=true);
 		var settings = {
-			directoryRoot	= cbSettings.cb_media_directoryRoot,
+			directoryRoot	= expandPath( cbSettings.cb_media_directoryRoot ),
 			createFolders	= cbSettings.cb_media_createFolders,
 			deleteStuff		= cbSettings.cb_media_allowDelete,
 			allowDownload	= cbSettings.cb_media_allowDownloads,

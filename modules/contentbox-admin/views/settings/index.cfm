@@ -196,7 +196,7 @@
 
 							<!--- Location --->
 							#html.label(field="",content="Directory Root: ")#
-							<small>The absolute path in your server that will be the root of your media manager. Make sure it is web accessible please.</small></br>
+							<small>The relative path in your server that will be the expanded root of your media manager. Make sure it is web accessible please.</small></br>
 							#html.textField(name="cb_media_directoryRoot",required="required",value=prc.cbSettings.cb_media_directoryRoot,class="textfield width98",title="The directory root of all your media files, make sure it is web accessible please")#
 
 							<!--- Create Folders --->
