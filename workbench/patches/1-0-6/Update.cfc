@@ -22,8 +22,8 @@ limitations under the License.
 ********************************************************************************
 This is an updater cfc for contentbox to version 1.0.6
 
-Start Commit Hash: 
-End Commit Hash: 
+Start Commit Hash: d4f587c
+End Commit Hash: 8fde0be
 
 */
 component implements="contentbox.model.updates.IUpdate"{

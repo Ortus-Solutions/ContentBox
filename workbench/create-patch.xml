@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
-<project name="contentbox.patches" default="build" basedir=".">
+<project name="contentbox.create-patch" default="build" basedir=".">
 
 	<!--Build Properties-->
 	<property name="dir.exports"		value="patches" />
