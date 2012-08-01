@@ -28,6 +28,7 @@ function installEntry(id, downloadURL){
 	$("##"+id).html('<div class="center"><img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/><br/>Please wait, installing from ForgeBox...</div>');
 	$downloadURL.val( downloadURL );
 	$forgeBoxInstall.submit();
+	return true;
 }
 </script>
 </cfoutput>
