@@ -35,7 +35,7 @@
 		<!--Unzip Patch -->
 		<unzip src="${dir.exports}/${contentbox.version}/patch.zip" dest="${dir.exports}/${contentbox.version}/patch" overwrite="true">
 			<patternset>
-		        <exclude name="ant/"/>
+		        <exclude name="workbench/"/>
 				<exclude name="test/"/>
 				<exclude name="config/"/>
 				<exclude name="Application.cfc"/>
