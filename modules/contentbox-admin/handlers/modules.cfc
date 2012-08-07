@@ -23,7 +23,7 @@ component extends="baseHandler"{
 	}
 
 	// proxy a call to a module, all module calls are supposed to return content
-	function execute(){
+	function execute(event,rc,prc){
 		event.paramValue("moduleEntryPoint","");
 		event.paramValue("moduleHandler","");
 		event.paramValue("moduleAction","index");
