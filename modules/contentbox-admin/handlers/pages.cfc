@@ -9,7 +9,8 @@ component extends="baseHandler"{
 	property name="layoutService"		inject="id:layoutService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
-
+	property name="editorService"		inject="id:editorService@cb";
+	
 	// Public properties
 	this.preHandler_except = "pager";
 
@@ -97,6 +98,9 @@ component extends="baseHandler"{
 		prc.cbHelper = CBHelper;
 		// CK Editor Helper
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
+		// Get All registered editors
+		prc.editors = editorService.getRegisteredEditors();
+		arrayPrePend( prc.editors, "Change Editor");
 		// get new or persisted
 		prc.page  = pageService.get( event.getValue("contentID",0) );
 		// get all categories
@@ -350,7 +354,7 @@ component extends="baseHandler"{
 	}
 
 	// pager viewlet
-	function pager(event,rc,prc,authorID="all",parent="",max=0,pagination=true,latest=false){
+	function pager(event,rc,prc,authorID="all",parent,max=0,pagination=true,latest=false,sorting=true){
 
 		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pager_authorID") ){
@@ -363,6 +367,10 @@ component extends="baseHandler"{
 		// check if pagination exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pagePager_pagination") ){
 			arguments.pagination = rc.pagePager_pagination;
+		}
+		// Check for sorting
+		if( event.valueExists("pagePager_sorting") ){
+			arguments.sorting = rc.pagePager_sorting;
 		}
 
 		// Max rows incoming or take default for pagination.
@@ -390,7 +398,7 @@ component extends="baseHandler"{
 
 		// search entries with filters and all
 		var pageResults = pageService.search(author=arguments.authorID,
-											 parent=arguments.parent,
+											 parent=( structKeyExists(arguments, "parent") ? arguments.parent : javaCast("null","") ),
 											 offset=prc.pagePager_paging.startRow-1,
 											 max=arguments.max,
 											 sortOrder=sortOrder);
@@ -398,12 +406,15 @@ component extends="baseHandler"{
 		prc.pager_pages 	  = pageResults.pages;
 		prc.pager_pagesCount  = pageResults.count;
 
-		// author in RC
+		// author info
 		prc.pagePager_authorID	= arguments.authorID;
-
-		// parent in RC
-		prc.pagePager_parentID = arguments.parent;
-
+		// Sorting
+		prc.pagePager_sorting = arguments.sorting;
+		// parent 
+		event.paramValue("pagePager_parentID","",true);
+		if( structKeyExists( arguments, "parent" ) ){
+			prc.pagePager_parentID = arguments.parent;
+		}
 		// view pager
 		return renderView(view="pages/pager",module="contentbox-admin");
 	}

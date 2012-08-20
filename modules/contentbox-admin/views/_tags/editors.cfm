@@ -23,6 +23,30 @@
 
 <!--- Custom Javascript --->
 <script type="text/javascript">
+function switchEditor(editorType){
+	// editor type
+	if( editorType == "Change Editor" ){return;}
+	// destroy currently active editor?
+	switch( $currentEditor ){
+		case "EditArea" :{
+			destroyEditArea();break;
+		}
+		case "CKEditor" :{
+			destroyCKEditor();break;
+		}
+		case "None": { break; }
+	}
+	//activate new selection now
+	switch( editorType ){
+		case "EditArea" :{
+			activateEditArea();break;
+		}
+		case "CKEditor" :{
+			activateCKEditor();break;
+		}
+		case "None" :{ $currentEditor = "None";break;}
+	}
+}
 // Setup the Editors
 function setupEditors($theForm, withExcerpt){
 	// with excerpt

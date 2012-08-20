@@ -31,7 +31,7 @@ component extends="baseHandler"{
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentEntries,pagination=false};
 		prc.entriesViewlet = runEvent(event="contentbox-admin:entries.pager",eventArguments=eArgs);
 		// Get Pages viewlet
-		var eArgs = {max=prc.cbSettings.cb_dashboard_recentPages,pagination=false,latest=true};
+		var eArgs = {max=prc.cbSettings.cb_dashboard_recentPages,pagination=false, latest=true, sorting=false};
 		prc.pagesViewlet = runEvent(event="contentbox-admin:pages.pager",eventArguments=eArgs);
 		// Get Comments viewlet
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentComments,pagination=false};

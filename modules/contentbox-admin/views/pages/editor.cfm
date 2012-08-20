@@ -244,7 +244,9 @@
 			</label>
 			#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width98",title="The URL permalink for this page")#
 
-			<!--- content --->
+			<!--- editor selector --->
+			#html.select(name="contentEditorChanger",options=prc.editors,onchange="switchEditor(this.value)")#
+			<!--- content area --->
 			#html.textarea(label="Content:",name="content",bind=prc.page,rows="25")#
 
 			<!--- Custom Fields --->

@@ -13,7 +13,8 @@ $(document).ready(function() {
 			}
 		}
 	});
-	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+	<!---If admin and also if sorting is enabled --->
+	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") AND prc.pagePager_sorting>
 	$("##pages_pager").tableDnD({
 		onDragClass: "selected",
 		onDragStart : function(table,row){
@@ -39,7 +40,8 @@ $(document).ready(function() {
 function pagerLink(page){
 	$("##pagePagerLoader").fadeIn("fast");
 	$('##pagerPages')
-		.load('#event.buildLink(prc.xehPagePager)#?pagePager_pagination=#prc.pagePager_pagination#&pager_authorID=#prc.pagePager_authorID#&pager_parentID=#prc.pagePager_parentID#&page=' + page, function() {
+		.load('#event.buildLink(prc.xehPagePager)#?pagePager_pagination=#prc.pagePager_pagination#&pager_authorID=#prc.pagePager_authorID#&pager_parentID=#prc.pagePager_parentID#&pagePager_sorting=#prc.pagePager_sorting#&page=' + page, 
+		function() {
 			$("##pagePagerLoader").fadeOut();
 			hideAllTooltips();
 			activateTooltips();
