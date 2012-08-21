@@ -101,12 +101,12 @@ component{
 		}
 		else{
 			// announce event
-			announceInterception("cbadmin_onInvalidPasswordReminder",{errors=errors,author=oAuthor});
+			announceInterception("cbadmin_onInvalidPasswordReminder",{errors=errors,email=rc.email});
 			// messagebox
 			getPlugin("MessageBox").error(messageArray=errors);
 		}
 		// Re Route
-		setNextEvent("#prc.cbAdminEntryPoint#.security.login");
+		setNextEvent("#prc.cbAdminEntryPoint#.security.lostPassword");
 	}
 	
 }
