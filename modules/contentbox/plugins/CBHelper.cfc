@@ -820,10 +820,20 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/**
 	* QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
 	* layout theme you are using. All the arguments are the same as renderView()'s methods
+	* @view.hint The name of a view to render inside of this layout
+	* @cache.hint Cache the resulting rendering or not. Defaults to false
+	* @cacheTimeout.hint The timeout in minutes this rendered view should be cached for
+	* @cacheLastAccessTimeout.hint The idle timeout in minutes this rendered view should be cached for
+	* @cacheSuffix.hint A key suffix to add to the cached view element
+	* @module.hint The name of the module to render the view from
+	* @args.hint The argument collection to pass to the view
+	* @collection.hint Render the view as a collection item rendering with this provided collection
+	* @collectionAs.hint The name of the collection alias variable. If not passed it defaults to the name of the view
+	* @prePostExempt.hint Fire pre/post interceptors or ignore them.  By default they fire.
 	*/
 	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module,args,collection,collectionAs,prepostExempt){
 		arguments.view = "#layoutName()#/views/#arguments.view#";
-		if( !len( arguments.module ) ){
+		if( !structKeyExists( arguments, "module" ) OR !len( arguments.module ) ){
 			arguments.module = "contentbox";
 		}
 		return renderView(argumentCollection=arguments);
@@ -832,6 +842,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/**
 	* QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
 	* layout theme you are using. All the arguments are the same as renderLayout()'s methods
+	* @layout.hint The name of the layout in your theme to render
+	* @view.hint The name of a view to render inside of this layout
+	* @module.hint The name of the module to render the layout from
+	* @args.hint The argument collection to pass to the layout
+	* @viewModule.hint The name of the module the view should come from
+	* @prePostExempt.hint Fire pre/post interceptors or ignore them.  By default they fire.
 	*/
 	function quickLayout(required layout,view="",module="",args=structNew(),viewModule="",prePostExempt=false){
 		arguments.layout = "#layoutName()#/layouts/#arguments.layout#";
