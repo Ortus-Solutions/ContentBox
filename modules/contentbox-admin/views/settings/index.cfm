@@ -140,7 +140,7 @@
 								<cfloop from="10" to="1000" step="10" index="i">
 									<option value="#i#" <cfif i eq prc.cbSettings.cb_versions_max_history>selected="selected"</cfif>>#i#</option>
 								</cfloop>
-								<option value="">Unlimited</option>
+								<option value="" <cfif prc.cbSettings.cb_versions_max_history eq "">selected="selected"</cfif>>Unlimited</option>
 							</select>
 						</fieldset>
 						<fieldset>
