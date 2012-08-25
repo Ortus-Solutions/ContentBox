@@ -823,6 +823,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module,args,collection,collectionAs,prepostExempt){
 		arguments.view = "#layoutName()#/views/#arguments.view#";
+		if( !len( arguments.module ) ){
+			arguments.module = "contentbox";
+		}
 		return renderView(argumentCollection=arguments);
 	}
 
@@ -832,6 +835,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function quickLayout(required layout,view="",module="",args=structNew(),viewModule="",prePostExempt=false){
 		arguments.layout = "#layoutName()#/layouts/#arguments.layout#";
+		if( !len( arguments.module ) ){
+			arguments.module = "contentbox";
+		}
 		return renderLayout(argumentCollection=arguments);
 	}
 
