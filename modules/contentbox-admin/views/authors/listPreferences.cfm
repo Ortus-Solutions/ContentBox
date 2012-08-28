@@ -6,7 +6,7 @@
 	
 	<!---Editor of Choice --->
 	<label for="preference.editor">Favorite Editor:</label>
-	#html.select(name="preference.editor", options=prc.editors, class="width98")#
+	#html.select(name="preference.editor", options=prc.editors, class="width98", selectedValue=prc.oAuthor.getPreference("editor", ""))#
 	
 	<!--- Admin Event --->
 	#announceInterception("cbadmin_UserPreferencePanel")#

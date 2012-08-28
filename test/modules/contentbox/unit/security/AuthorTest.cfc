@@ -40,20 +40,20 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 			editor = "textarea", test = "nada"
 		};
 		model.setPreferences( pref );
-		assertTrue( isJSON( model.getPreferences() ) );
-		assertEquals( pref, model.getAllPreferences() );
+		assertTrue( isJSON( model.getPreferences() ) , "JSON Preferences Failed");
+		assertEquals( pref, model.getAllPreferences() , "JSON Inflation of Preferences Failed");
 	}
 	
 	function testGetPreference(){
 		// with default
 		v = model.getPreference("invalid", "test");
-		assertEquals( "test", v , "with default value" );
+		assertEquals( "test", v , "Failed with default value" );
 		// existent
 		var pref = {
 			editor = "textarea", test = "nada"
 		};
 		model.setPreferences( pref );
-		assertEquals( "textarea", model.getPreference("editor") );
+		assertEquals( "textarea", model.getPreference("editor"), "Failed existing preference" );
 		// invalid
 		expectException("User.PreferenceNotFound");
 		model.getPreference("invalid");
