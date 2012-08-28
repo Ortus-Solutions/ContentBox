@@ -67,6 +67,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	function init(){
 		setPermissionList( '' );
 		setLoggedIn( false );
+		setPreferences( {} );
 		return this;
 	}
 
@@ -152,7 +153,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	*/
 	struct function getAllPreferences(){
 		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5"{
-			return ( isJSON( preferences ) ? deserializeJSON( preferences ) : structnew() );
+			return ( !isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structnew() );
 		}
 	}
 	
@@ -186,6 +187,5 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		// store in lock mode
 		return setPreferences( allPreferences );
 	}
-	
 	
 }
