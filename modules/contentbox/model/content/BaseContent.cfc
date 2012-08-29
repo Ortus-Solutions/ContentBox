@@ -365,7 +365,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	any function addExpiredTime(required hour, required minute){
 		if( !isDate( getExpireDate() ) ){ return this; }
 		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
-		setExpireData( getExpireDate() & " " & time);
+		setExpireDate( getExpireDate() & " " & time);
 		return this;
 	}
 
