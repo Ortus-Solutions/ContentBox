@@ -61,4 +61,18 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		
 	} 
 	
+	function testAddExpiredTime(){
+		// Test 1: empty
+		model.setExpireDate( '' );
+		model.addExpiredTime( "11", "00" );
+		assertEquals( '', model.getExpireDate() );
+		
+		// Test 2: Valid
+		cDate = dateFormat(now(), "mm/dd/yyyy" );
+		model.setExpireDate( cDate );
+		model.addExpiredTime( "11", "00" );
+		assertEquals( cDate & ' ' & timeFormat( "11:00", "hh:MM:SS tt" ), model.getExpireDate() );
+		
+	}
+	
 } 
