@@ -286,7 +286,7 @@ component accessors="true"{
 			"cb_html_postPageDisplay" = "",
 
 			// Media Manager
-			"cb_media_directoryRoot" = expandPath("/contentbox/content"),
+			"cb_media_directoryRoot" = "/contentbox/content",
 			"cb_media_createFolders" = "true",
 			"cb_media_allowDelete" = "true",
 			"cb_media_allowDownloads" = "true",
