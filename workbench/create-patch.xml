@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
-<project name="contentbox.patches" default="build" basedir=".">
+<project name="contentbox.create-patch" default="build" basedir=".">
 
 	<!--Build Properties-->
 	<property name="dir.exports"		value="patches" />
@@ -35,7 +35,7 @@
 		<!--Unzip Patch -->
 		<unzip src="${dir.exports}/${contentbox.version}/patch.zip" dest="${dir.exports}/${contentbox.version}/patch" overwrite="true">
 			<patternset>
-		        <exclude name="ant/"/>
+		        <exclude name="workbench/"/>
 				<exclude name="test/"/>
 				<exclude name="config/"/>
 				<exclude name="Application.cfc"/>

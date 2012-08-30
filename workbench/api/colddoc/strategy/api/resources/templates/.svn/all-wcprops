@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/colddoc/!svn/ver/52/colddoc/trunk/strategy/api/resources/templates
+END
+overview-frame.html
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/colddoc/!svn/ver/36/colddoc/trunk/strategy/api/resources/templates/overview-frame.html
+END
+class.html
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/colddoc/!svn/ver/52/colddoc/trunk/strategy/api/resources/templates/class.html
+END
+package-frame.html
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/colddoc/!svn/ver/46/colddoc/trunk/strategy/api/resources/templates/package-frame.html
+END
+allclasses-frame.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/colddoc/!svn/ver/46/colddoc/trunk/strategy/api/resources/templates/allclasses-frame.html
+END
+overview-summary.html
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/colddoc/!svn/ver/36/colddoc/trunk/strategy/api/resources/templates/overview-summary.html
+END
+index.html
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/colddoc/!svn/ver/36/colddoc/trunk/strategy/api/resources/templates/index.html
+END
+package-summary.html
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/colddoc/!svn/ver/51/colddoc/trunk/strategy/api/resources/templates/package-summary.html
+END

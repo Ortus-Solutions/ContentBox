@@ -4,7 +4,8 @@
 	<!--Build Properties-->
 	<property name="dir.userlocation"	value="/Users/lmajano" />
 	<property name="dir.exports"		value="${dir.userlocation}/exports" />
-	<property name="dir.build" 			value="${dir.exports}/contentbox" />
+	<property name="dir.build" 			value="${dir.exports}/gocontentbox" />
+	<property name="colddoc.http"		value="http://cf9contentbox.jfetmac/workbench/api/contentbox.cfm?version=" />
 		
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>
@@ -18,19 +19,19 @@
 	
 	<!--Build-->
 	<target name="build" description="Build a new ContentBox distribution release" depends="init">
-      	
+      	<!-- Create build directory -->
 		<mkdir dir="${dir.build}"/>
 		
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/${build.label}">Built on ${start.TODAY}</concat>
 		
-		<!-- Copy src -->	
+		<!-- Copy Source -->	
       	<copy todir="${dir.build}">
       		<fileset dir=".">
       			<exclude name="_paidModules**" />
   				<exclude name=".git/**" />
   				<exclude name=".settings/**" />
-      			<exclude name="ant/**" />
+      			<exclude name="workbench/**" />
       			<exclude name="test/**" />
       			<exclude name="WEB-INF/**" />
       			<exclude name=".gitignore" />
@@ -39,7 +40,16 @@
       			<exclude name=".project" />
       		</fileset>
         </copy>
-			
+		
+		<!-- Execute API Docs -->
+		<get dest="${dir.build}/colddoc.html" src="${colddoc.http}${contentbox.version}" verbose="true"/>
+		<delete file="${dir.build}/colddoc.html" />
+		
+		<!-- Move API archive into distribution -->
+		<move todir="${dir.build}">
+			<fileset file="workbench/api/exports/ContentBox-API-${contentbox.version}.zip" />
+		</move>
+		
 		<!-- Zip Bundle -->
 		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}"></zip>
 		

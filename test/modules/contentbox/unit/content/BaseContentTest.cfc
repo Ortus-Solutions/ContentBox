@@ -61,4 +61,38 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		
 	} 
 	
+	function testAddExpiredTime(){
+		// Test 1: empty
+		model.setExpireDate( '' );
+		model.addExpiredTime( "11", "00" );
+		assertEquals( '', model.getExpireDate() );
+		
+		// Test 2: Valid
+		cDate = dateFormat(now(), "mm/dd/yyyy" );
+		model.setExpireDate( cDate );
+		model.addExpiredTime( "11", "00" );
+		assertEquals( cDate & ' ' & timeFormat( "11:00", "hh:MM:SS tt" ), model.getExpireDate() );
+		
+	}
+	
+	function testaddPublishedTime(){
+		// Test 1: empty
+		model.setPublishedDate( '' );
+		model.addPublishedTime( "11", "00" );
+		assertEquals( '', model.getPublishedDate() );
+		
+		// Test 2: Valid
+		cDate = dateFormat(now(), "mm/dd/yyyy" );
+		model.setPublishedDate( cDate );
+		model.addPublishedTime( "11", "00" );
+		assertEquals( cDate & ' ' & timeFormat( "11:00", "hh:MM:SS tt" ), model.getPublishedDate() );
+	}
+	
+	function testbuildContentCacheKey(){
+		model.$( 'getContentType', 'unit' );
+		model.$( 'getContentID', '1234' );
+		key = model.buildContentCacheKey();
+		assertEquals( "cb-content-unit-1234", key );
+	}
+	
 } 

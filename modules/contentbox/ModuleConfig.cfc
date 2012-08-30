@@ -38,7 +38,7 @@ component {
 		// contentbox settings
 		settings = {
 			codename = "John 12:44",
-			codenameLink = "http://www.youversion.com/bible/nkjv/matt/18/11",
+			codenameLink = "http://www.youversion.com/bible/john.12.44.nkjv",
 			// Auto Updates
 			updateSlug_stable 	= "contentbox-stable-updates",
 			updateSlug_beta 	= "contentbox-beta-updates",
