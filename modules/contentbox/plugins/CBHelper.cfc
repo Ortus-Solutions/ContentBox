@@ -831,11 +831,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @collectionAs.hint The name of the collection alias variable. If not passed it defaults to the name of the view
 	* @prePostExempt.hint Fire pre/post interceptors or ignore them.  By default they fire.
 	*/
-	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module,args,collection,collectionAs,prepostExempt){
+	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module="contentbox",args,collection,collectionAs,prepostExempt){
 		arguments.view = "#layoutName()#/views/#arguments.view#";
-		if( !structKeyExists( arguments, "module" ) OR !len( arguments.module ) ){
-			arguments.module = "contentbox";
-		}
 		return renderView(argumentCollection=arguments);
 	}
 
@@ -849,11 +846,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @viewModule.hint The name of the module the view should come from
 	* @prePostExempt.hint Fire pre/post interceptors or ignore them.  By default they fire.
 	*/
-	function quickLayout(required layout,view="",module="",args=structNew(),viewModule="",prePostExempt=false){
+	function quickLayout(required layout,view="",module="contentbox",args=structNew(),viewModule="",prePostExempt=false){
 		arguments.layout = "#layoutName()#/layouts/#arguments.layout#";
-		if( !len( arguments.module ) ){
-			arguments.module = "contentbox";
-		}
 		return renderLayout(argumentCollection=arguments);
 	}
 
