@@ -135,6 +135,7 @@ component {
 		binder.map("mangoImporter@cb").to("contentbox.model.importers.MangoImporter");
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
 		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.BlogCFCImporter");
+		binder.map("machblogImporter@cb").to("contentbox.model.importers.MachBlogImporter");
 		// ColdBox Integrations
 		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
 
