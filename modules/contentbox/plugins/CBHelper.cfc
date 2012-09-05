@@ -820,18 +820,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/**
 	* QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
 	* layout theme you are using. All the arguments are the same as renderView()'s methods
-	* @view.hint The name of a view to render inside of this layout
-	* @cache.hint Cache the resulting rendering or not. Defaults to false
-	* @cacheTimeout.hint The timeout in minutes this rendered view should be cached for
-	* @cacheLastAccessTimeout.hint The idle timeout in minutes this rendered view should be cached for
-	* @cacheSuffix.hint A key suffix to add to the cached view element
-	* @module.hint The name of the module to render the view from
-	* @args.hint The argument collection to pass to the view
-	* @collection.hint Render the view as a collection item rendering with this provided collection
-	* @collectionAs.hint The name of the collection alias variable. If not passed it defaults to the name of the view
-	* @prePostExempt.hint Fire pre/post interceptors or ignore them.  By default they fire.
 	*/
-	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module="contentbox",args,collection,collectionAs,prepostExempt){
+	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module,args,collection,collectionAs,prepostExempt){
 		arguments.view = "#layoutName()#/views/#arguments.view#";
 		return renderView(argumentCollection=arguments);
 	}
@@ -839,14 +829,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/**
 	* QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
 	* layout theme you are using. All the arguments are the same as renderLayout()'s methods
-	* @layout.hint The name of the layout in your theme to render
-	* @view.hint The name of a view to render inside of this layout
-	* @module.hint The name of the module to render the layout from
-	* @args.hint The argument collection to pass to the layout
-	* @viewModule.hint The name of the module the view should come from
-	* @prePostExempt.hint Fire pre/post interceptors or ignore them.  By default they fire.
 	*/
-	function quickLayout(required layout,view="",module="contentbox",args=structNew(),viewModule="",prePostExempt=false){
+	function quickLayout(required layout,view="",module="",args=structNew(),viewModule="",prePostExempt=false){
 		arguments.layout = "#layoutName()#/layouts/#arguments.layout#";
 		return renderLayout(argumentCollection=arguments);
 	}
@@ -897,8 +881,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @levels.hint The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
 	* @parentClass.hint The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
 	* @activeClass.hint The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
+	* @activeShowChildren.hint If true, then we will show the children of the active menu element, else we just show the active element
 	*/
-	function subPageMenu(any page, excludes="", type="ul", separator="", boolean showNone=true, levels="1", parentClass="parent", activeClass="active"){
+	function subPageMenu(any page, excludes="", type="ul", separator="", boolean showNone=true, levels="1", parentClass="parent", activeClass="active", activeShowChildren=false){
 		// If page not passed, then use current
 		if( !structKeyExists(arguments,"page") ){
 			arguments.page = getCurrentPage();
@@ -951,7 +936,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/************************************** PRIVATE *********************************************/
 
-	private function buildMenu(pageRecords, excludes="", type="ul", separator="", boolean showNone=true, levels="1", numeric currentLevel="1", parentClass="parent", activeClass="active"){
+	private function buildMenu(pageRecords, excludes="", type="ul", separator="", boolean showNone=true, levels="1", numeric currentLevel="1", parentClass="parent", activeClass="active", activeShowChildren=false){
 		// check type?
 		if( !reFindNoCase("^(ul|ol|li|none)$", arguments.type) ){ arguments.type="ul"; }
 		var pageResults = arguments.pageRecords;
@@ -979,10 +964,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			classtext = [];
 			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[x].getTitle() )){
 				// Do we need to nest?
-				var doNesting = ( arguments.currentLevel lt arguments.levels AND pageResults.pages[x].hasChild() );
-
-				// class = active?
-				if( currentcontentID eq pageResults.pages[x].getContentID() ){ arrayAppend( classText, arguments.activeClass); }
+				var doNesting 		= ( arguments.currentLevel lt arguments.levels AND pageResults.pages[x].hasChild() );
+				// Is element active
+				var isElementActive = ( currentcontentID eq pageResults.pages[x].getContentID() );
+				// class = active? Then add to class text
+				if( isElementActive ){ arrayAppend( classText, arguments.activeClass); }
 				// class = parent nesting?
 				if( doNesting ){ arrayAppend(classText, arguments.parentClass); }
 
@@ -1000,6 +986,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 											levels=arguments.levels,
 											currentLevel=arguments.currentLevel+1) );
 					}
+					// Do we nest active and activeShowChildren flag is activated?
+					else if( activeShowChildren AND isElementActive AND pageResults.pages[x].hasChild() ){ 
+						// If type is "li" then guess to do a nested ul list
+						b.append( buildMenu(pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
+											excludes=arguments.excludes,
+											type=( arguments.type eq "li" ? "ul" : arguments.type ),
+											showNone=arguments.showNone,
+											levels=1,
+											currentLevel=arguments.currentLevel+1) );
+					}
+					
 					// Close it
 					b.append('</li>');
 				}
