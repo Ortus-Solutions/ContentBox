@@ -123,8 +123,9 @@ component {
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
 		binder.map("AdminMenuService@cb").to("contentbox.model.ui.AdminMenuService");
 		// Editors
-		binder.map("EditorService@cb").to("contentbox.model.ui.editors.EditorService");
+		binder.map("EditorService@cb").to("contentbox.model.ui.editors.EditorService").asEagerInit();
 		binder.map("TextareaEditor@cb").to("contentbox.model.ui.editors.TextareaEditor");
+		binder.map("CKEditor@cb").to("contentbox.model.ui.editors.CKEditor");
 		// Modules
 		binder.map("moduleService@cb").to("contentbox.model.modules.ModuleService");
 		// utils

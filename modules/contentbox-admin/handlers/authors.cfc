@@ -111,6 +111,25 @@ component extends="baseHandler"{
 		// render out view
 		return renderView(view="authors/listPreferences", module="contentbox-admin");
 	}
+	
+	// change user editor preferences
+	function changeEditor(event,rc,prc){
+		var results = { error=false, messages="" };
+		try{
+			// store the new author preference	
+			prc.oAuthor.setPreference(name="editor", value=rc.editor);
+			// save Author preference
+			authorService.saveAuthor( prc.oAuthor );
+			results.messages = "Editor changed to #rc.editor#";
+		}
+		catch(Any e){
+			log.error("Error saving preferences.", e);
+			results.error = true;
+			results.messages = e.detail & e.message;
+		}
+		// return preference saved
+		event.renderData(type="json", data=results);
+	}
 
 	// save user
 	function savePreferences(event,rc,prc){
