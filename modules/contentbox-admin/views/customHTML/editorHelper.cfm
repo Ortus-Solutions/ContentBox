@@ -7,7 +7,7 @@ $(document).ready(function() {
 	$contentEditForm = $("##contentEditForm");
 	$content 		 = $contentEditForm.find("##content");
 	// setup editors
-	setupEditors( $contentEditForm, false);
+	setupEditors( $contentEditForm, false );
 });
 </script>
 </cfoutput>

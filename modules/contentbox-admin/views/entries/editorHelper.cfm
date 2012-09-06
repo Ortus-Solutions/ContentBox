@@ -12,8 +12,8 @@ $(document).ready(function() {
 	$content 		= $entryForm.find("##content");
 	$isPublished 	= $entryForm.find("##isPublished");
 	$contentID		= $entryForm.find("##contentID");
-	// setup editors
-	setupEditors( $entryForm );
+	// setup editors via _tags/editors.cfm by passing the form container
+	setupEditors( $entryForm, true );
 });
 // quick save for blog entries
 function quickSave(){
