@@ -126,6 +126,7 @@ component {
 		binder.map("EditorService@cb").to("contentbox.model.ui.editors.EditorService").asEagerInit();
 		binder.map("TextareaEditor@cb").to("contentbox.model.ui.editors.TextareaEditor");
 		binder.map("CKEditor@cb").to("contentbox.model.ui.editors.CKEditor");
+		binder.map("EditAreaEditor@cb").to("contentbox.model.ui.editors.EditAreaEditor");
 		// Modules
 		binder.map("moduleService@cb").to("contentbox.model.modules.ModuleService");
 		// utils
