@@ -37,7 +37,7 @@
 				</cfif>>
 				<td>
 					<!--- Title --->
-					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit Page">#page.getTitle()#</a><br>
+					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#">#page.getSlug()#</a><br>
 					by #page.getAuthorName()#<br/>
 					<!--- password protect --->
 					<cfif page.isPasswordProtected()>

@@ -244,9 +244,30 @@
 			</label>
 			#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width98",title="The URL permalink for this page")#
 
-			<!--- content --->
-			#html.textarea(label="Content:",name="content",bind=prc.page,rows="25")#
-
+			<!---ContentToolBar --->
+			<div id="contentToolBar">
+				
+				<!--- editor selector --->
+				<label for="contentEditorChanger" class="inline">Editor: </label>
+				#html.select(name="contentEditorChanger", 
+							 options=prc.editors,
+							 column="name",
+							 nameColumn="displayName",
+							 selectedValue=prc.defaultEditor,
+							 onchange="switchEditor(this.value)")#
+				
+				<!---Right References Panel --->
+				<div class="floatRight">
+					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehAPIDocs&"/index/apislug/plugins/print/?_cfcviewer_cfc=CBHelper")#')" 
+					   class="button" title="Get some quick CBHelper API Goodness!">
+						<img src="#prc.cbRoot#/includes/images/help_small.png" alt="print" border="0"> CBHelper Docs
+					</a>
+				</div>
+			</div>
+			
+			<!---Content TextArea --->
+			#html.textarea(name="content", bind=prc.page, rows="25", class="width98")#
+			
 			<!--- Custom Fields --->
 			<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
 			<cfset mArgs = {fieldType="Page", customFields=prc.page.getCustomFields()}>

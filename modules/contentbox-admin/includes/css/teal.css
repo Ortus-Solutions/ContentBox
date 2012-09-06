@@ -13,7 +13,7 @@ h3 { color:#161616; }
 h4 { color:#373737; }
 h5 { color:#727272; }
 h6 { color:#373737; }
-hr { color:#c0c0c0; border-bottom-color:#c0c0c0; }
+hr { color:#c0c0c0; border-bottomcontentToolBar-color:#c0c0c0; }
 blockquote { color:#000; background-image:url(../images/blockquote_bg.gif); }
 /** ============================== Form Styling ============================== **/
 fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
@@ -235,7 +235,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #quickPost{display: none;}
 #addCustomFieldButton{margin:0xp 10px 0px 10px}
 .editorTime{ width:35px; }
-#contentEditorChanger{float: right; margin: 5px 5px 0px 0px; padding: 3px;}
+#contentToolBar{ margin: 5px 0px 0px 0px; padding: 3px;}
 #contentLabel{margin:2px 0px 10px 0px;}
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}

@@ -14,6 +14,8 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	property name="lastLogin" 	ormtype="timestamp" notnull="false";
 	property name="createdDate" ormtype="timestamp" notnull="true" update="false";
 	property name="biography"   ormtype="text" 		notnull="false" length="8000" default="";
+	// Preferences are stored as JSON
+	property name="preferences" ormtype="text" 		notnull="false" length="8000" default="";
 	
 	// O2M -> Entries
 	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="contentbox.model.content.Entry"
@@ -38,6 +40,15 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	// Non-persisted properties
 	property name="loggedIn"		persistent="false" default="false" type="boolean";
 	property name="permissionList" 	persistent="false";
+	
+	// Validation Constraints
+	this.constraints ={
+		"firstName" = {required=true, size="1..100"},
+		"lastName" 	= {required=true, size="1..100"},
+		"email" 	= {required=true, size="1..255", type="email"},
+		"username" 	= {required=true, size="1..100", unique="true"},
+		"password"	= {required=true, size="1..100"}
+	};
 
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 
@@ -56,6 +67,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	function init(){
 		setPermissionList( '' );
 		setLoggedIn( false );
+		setPreferences( {} );
 		return this;
 	}
 
@@ -74,28 +86,6 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		}
 
 		return false;
-	}
-
-	/*
-	* Validate entry, returns an array of error or no messages
-	*/
-	array function validate(){
-		var errors = [];
-
-		// limits
-		firstName 	= left(firstName,100);
-		lastName 	= left(lastName,100);
-		email 		= left(email,255);
-		username 	= left(username,100);
-		password 	= left(password,100);
-
-		// Required
-		if( !len(firstName) ){ arrayAppend(errors, "First Name is required"); }
-		if( !len(lastName) ){ arrayAppend(errors, "Last Name is required"); }
-		if( !len(email) ){ arrayAppend(errors, "Email is required"); }
-		if( !len(username) ){ arrayAppend(errors, "Username is required"); }
-
-		return errors;
 	}
 
 	/**
@@ -123,6 +113,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	*/
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
+		if( isNull( createdDate ) ){ return ""; }
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
 
@@ -139,4 +130,62 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	boolean function isLoaded(){
 		return len( getAuthorID() );
 	}
+	
+	/************************************** PREFERENCE FUNCTIONS *********************************************/
+	
+	/**
+	* Store a preferences structure or JSON data in the user prefernces
+	* @preferences.hint A struct of data or a JSON packet to store
+	*/
+	Author function setPreferences(required any preferences){
+		lock name="user.#getAuthorID()#.preferences" type="exclusive" throwontimeout="true" timeout="5"{
+			if( isStruct( arguments.preferences ) ){
+				arguments.preferences = serializeJSON( arguments.preferences );
+			}
+			// store as JSON
+			variables.preferences = arguments.preferences;
+		}
+		return this;
+	}
+	
+	/**
+	* Get all user preferences in inflated format
+	*/
+	struct function getAllPreferences(){
+		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5"{
+			return ( !isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structnew() );
+		}
+	}
+	
+	/**
+	* Get a preference, you can pass a default value if preference does not exist
+	*/
+	any function getPreference(required name, defaultValue){
+		// get preference
+		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5"{
+			var allPreferences = getAllPreferences();
+			if( structKeyExists( allPreferences, arguments.name ) ){
+				return allPreferences[ arguments.name ];
+			}
+		}
+		// default values
+		if( structKeyExists( arguments, "defaultValue" ) ){
+			return arguments.defaultValue;
+		}
+		// exception
+		throw(message="The preference you requested (#arguments.name#) does not exist",
+			  type="User.PreferenceNotFound",
+			  detail="Valid preferences are #structKeyList( allPreferences )#");
+	}
+	
+	/**
+	* Set a preference in the user preferences
+	*/
+	Author function setPreference(required name, required value){
+		var allPreferences = getAllPreferences();
+		allPreferences[ arguments.name ] = arguments.value;
+		// store in lock mode
+		return setPreferences( allPreferences );
+	}
+	
 }

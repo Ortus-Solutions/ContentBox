@@ -92,7 +92,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehDoLogout 	= "#prc.cbAdminEntryPoint#.security.doLogout";
 		prc.xehLogin 		= "#prc.cbAdminEntryPoint#.security.login";
 
-		// CK Editor Integration Handlers
+		// CK Editor Integration Handlers For usage with the Quick Post
 		prc.xehCKFileBrowserURL			= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLImage	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLFlash	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";

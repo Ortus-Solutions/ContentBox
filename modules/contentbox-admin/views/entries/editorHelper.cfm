@@ -6,21 +6,16 @@
 <!--- Custom Javascript --->
 <script type="text/javascript">
 $(document).ready(function() {
- 	// pointers
+ 	// Editor Pointers
 	$entryForm 		= $("##entryForm");
 	$excerpt		= $entryForm.find("##excerpt");
 	$content 		= $entryForm.find("##content");
 	$isPublished 	= $entryForm.find("##isPublished");
 	$contentID		= $entryForm.find("##contentID");
-	// setup editors
-	setupEditors( $entryForm );
+	// setup editors via _tags/editors.cfm by passing the form container
+	setupEditors( $entryForm, true );
 });
-function publishNow(){
-	var fullDate = new Date();
-	$("##publishedDate").val( getToday() );
-	$("##publishedHour").val( fullDate.getHours() );
-	$("##publishedMinute").val( fullDate.getMinutes() );
-}
+// quick save for blog entries
 function quickSave(){
 	// Draft it
 	$isPublished.val('false');
@@ -35,18 +30,15 @@ function quickSave(){
 	}
 
 	// Activate Loader
-	var $uploader = $("##uploadBarLoader");
-	var $status = $("##uploadBarLoaderStatus");
-	$status.html("Saving...");
-	$uploader.slideToggle();
-
+	toggleLoaderBar();
+	
 	// Post it
 	$.post('#event.buildLink(prc.xehEntrySave)#', $entryForm.serialize(),function(data){
 		// Save newly saved or persisted id
 		$contentID.val( data.CONTENTID );
 		// finalize
-		$uploader.fadeOut(1500);
-		$status.html('Entry Draft Saved!');
+		$uploaderBarLoader.fadeOut(1500);
+		$uploaderBarStatus.html('Entry Draft Saved!');
 		$isPublished.val('true');
 	},"json");
 

@@ -217,11 +217,32 @@
 				<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
 			</label>
 			#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
-
+			
+			<!---ContentToolBar --->
+			<div id="contentToolBar">
+				
+				<!--- editor selector --->
+				<label for="contentEditorChanger" class="inline">Editor: </label>
+				#html.select(name="contentEditorChanger", 
+							 options=prc.editors,
+							 column="name",
+							 nameColumn="displayName",
+							 selectedValue=prc.defaultEditor,
+							 onchange="switchEditor(this.value)")#
+				
+				<!---Right References Panel --->
+				<div class="floatRight">
+					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehAPIDocs&"/index/apislug/plugins/print/?_cfcviewer_cfc=CBHelper")#')" 
+					   class="button" title="Get some quick CBHelper API Goodness!">
+						<img src="#prc.cbRoot#/includes/images/help_small.png" alt="print" border="0"> CBHelper Docs
+					</a>
+				</div>
+			</div>
+			
 			<!--- content --->
-			#html.textarea(label="Content:",name="content",bind=prc.entry,rows="25")#
+			#html.textarea(label="Content:", name="content", bind=prc.entry, rows="25", class="width98")#
 			<!--- excerpt --->
-			#html.textarea(label="Excerpt:",name="excerpt",bind=prc.entry)#
+			#html.textarea(label="Excerpt:", name="excerpt", bind=prc.entry, rows="10", class="width98")#
 
 			<!--- Custom Fields --->
 			<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
