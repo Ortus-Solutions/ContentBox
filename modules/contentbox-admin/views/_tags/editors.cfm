@@ -1,84 +1,38 @@
 <cfoutput>
-<cfsavecontent variable="toolbarJSON">
-[
-    { "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
-    { "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
-    { "name": "editing",     "items" : [ "Find","Replace","-","SpellChecker", "Scayt" ] },
-    { "name": "forms",       "items" : [ "Form", "Checkbox", "Radio", "TextField", "Textarea", "Select", "Button","HiddenField" ] },
-    "/",
-	{ "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat" ] },
-    { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","-","Blockquote","CreateDiv","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","BidiLtr","BidiRtl" ] },
-    { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
-    "/",
-    { "name": "styles",      "items" : [ "Styles","Format" ] },
-    { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
-	{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
-    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks", "cbPreview" ] }
-]</cfsavecontent>
-<cfset iData = { toolbar = deserializeJSON( toolbarJSON ) }>
-<cfset announceInterception("cbadmin_ckeditorToolbar", iData)>
-<!---Extra Plugins --->
-<cfset iData2 = { extraPlugins = listToArray( "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbPreview,cbIpsumLorem" ) }>
-<cfset announceInterception("cbadmin_ckeditorExtraPlugins", iData2)>
-
-<!--- Custom Javascript --->
+<!--- Editor Javascript --->
 <script type="text/javascript">
-function switchEditor(editorType){
-	// editor type
-	if( editorType == "Change Editor" ){return;}
-	// destroy currently active editor?
-	switch( $currentEditor ){
-		case "EditArea" :{
-			destroyEditArea();break;
-		}
-		case "CKEditor" :{
-			destroyCKEditor();break;
-		}
-		case "None": { break; }
-	}
-	//activate new selection now
-	switch( editorType ){
-		case "EditArea" :{
-			activateEditArea();break;
-		}
-		case "CKEditor" :{
-			activateCKEditor();break;
-		}
-		case "None" :{ $currentEditor = "None";break;}
-	}
+// Load Custom Editor Assets, Functions, etc.
+#prc.oEditorDriver.loadAssets()#
+
+// Set the actual publishing date to now
+function publishNow(){
+	var fullDate = new Date();
+	$("##publishedDate").val( getToday() );
+	$("##publishedHour").val( fullDate.getHours() );
+	$("##publishedMinute").val( fullDate.getMinutes() );
 }
-// Setup the Editors
+
+/**
+ * Setup the editors. 
+ * TODO: Move this to a more OOish approach, don't like it.
+ * @param $theForm The form container for the content
+ * @param withExcerpt Using excerpt or not
+ */
 function setupEditors($theForm, withExcerpt){
+	// Setup global editor elements
+	$uploaderBarLoader 	= $("##uploadBarLoader");
+	$uploaderBarStatus 	= $("##uploadBarLoaderStatus");
+	
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
-	// toolbar config
-	var ckToolbar = $.parseJSON('#serializeJSON( iData.toolbar )#');
-	// Activate ckeditor
-	$content.ckeditor( function(){}, {
-			<cfif arrayLen( iData2.extraPlugins )>
-			extraPlugins : '#arrayToList( iData2.extraPlugins )#',
-			</cfif>
-			toolbar: ckToolbar,
-			height:300,
-			filebrowserBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURL)#',
-			filebrowserImageBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLIMage)#',
-			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#',
-			baseHref : '#getSetting("htmlBaseURL")#/'
-		} );
-	// Excerpts
-	if (withExcerpt) {
-		$excerpt.ckeditor(function(){}, {
-			toolbar: 'Basic',
-			height: 175,
-			filebrowserBrowseUrl: '/index.cfm/cbadmin/ckfilebrowser/',
-			baseHref: '#getSetting("htmlBaseURL")#/'
-		});
-	}
+	
+	// Startup the choosen editor
+	#prc.oEditorDriver.startup()#
 
-	// Date fields
+	// Activate Date fields
 	$(":date").dateinput();
 
-	// form validator
+	// Activate Form Validator
 	$theForm.validator({position:'top left',grouped:true,onSuccess:function(e,els){ needConfirmation=false; }});
 	// Custom content unique validator
 	$.tools.validator.fn($content, function(el, value) {
@@ -86,7 +40,7 @@ function setupEditors($theForm, withExcerpt){
 		alert("Please enter some content!");
 		return false;
 	});
-	// blur slugify
+	// Activate blur slugify on titles
 	var $title = $theForm.find("##title");
 	$title.blur(function(){
 		if( $theForm.find("##slug").size() ){
@@ -97,12 +51,30 @@ function setupEditors($theForm, withExcerpt){
 	window.onbeforeunload = askLeaveConfirmation;
 	needConfirmation = true;
 }
+
+// Switch Editors
+function switchEditor(editorType){
+	// destroy the editor
+	#prc.oEditorDriver.shutdown()#
+	// Call change user editor preference
+	$.ajax({
+		url : '#event.buildLink(prc.xehAuthorEditorSave)#',
+		data : {editor: $("##contentEditorChanger").val()},
+		async : false,
+		success : function(data){
+			// Once changed, reload the page.
+			location.reload();
+		}
+	});
+}
+
 // Ask for leave confirmations
 function askLeaveConfirmation(){
-	if ( $content.ckeditorGet().checkDirty() && needConfirmation ){
+	if ( checkIsDirty() && needConfirmation ){
    		return "You have unsaved changes.";
    	}
 }
+
 // Create Permalinks
 function createPermalink(){
 	var slugger = $("##sluggerURL").val();
@@ -111,11 +83,13 @@ function createPermalink(){
 		$slug.fadeIn().val($.trim(data));
 	} );
 }
+
 // Toggle drafts on for saving
 function toggleDraft(){
 	needConfirmation = false;
 	$isPublished.val('false');
 }
+
 // Widget Plugin Integration
 function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
 // Page Selection Integration
@@ -138,6 +112,12 @@ function getModuleURL(module, event, queryString){
 		}
 	});
 	return $.trim( returnURL );
+}
+// Toggle upload/saving bar
+function toggleLoaderBar(){
+	// Activate Loader
+	$uploaderBarStatus.html("Saving...");
+	$uploaderBarLoader.slideToggle();
 }
 </script>
 </cfoutput>

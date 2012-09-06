@@ -40,11 +40,21 @@ component accessors="true" threadSafe singleton{
 		
 		// store factory
 		variables.wirebox = arguments.wirebox;
+		// store default editor
+		DEFAULT_EDITOR = "ckeditor";
 		
 		// register core editors
+		registerEditor( arguments.wirebox.getInstance("CKEditor@cb") );
 		registerEditor( arguments.wirebox.getInstance("TextareaEditor@cb") );
 		
 		return this;
+	}
+	
+	/**
+	* Get the default system editor
+	*/
+	function getDefaultEditor(){
+		return DEFAULT_EDITOR;
 	}
 
 	/**
@@ -68,6 +78,18 @@ component accessors="true" threadSafe singleton{
 	*/
 	array function getRegisteredEditors(){
 		return listToArray( listSort( structKeyList( editors ), "textnocase" ) );
+	}
+	
+	/**
+	* Get an array of registered editor names in alphabetical order with their display names
+	*/
+	array function getRegisteredEditorsMap(){
+		var aEditors = getRegisteredEditors();
+		var result = [];
+		for( var thisEditor in aEditors ){
+			arrayAppend( result, { name=thisEditor, displayName=editors[ thisEditor ].getDisplayName() } );
+		}
+		return result;
 	}
 	
 	/**

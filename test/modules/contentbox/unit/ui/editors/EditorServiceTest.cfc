@@ -36,5 +36,14 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		assertFalse( structKeyExists( model.getEditors(), "mock-editor") );
 	}
 	
+	function testGetRegisteredEditorsMap(){
+		model.getEditors()["test"] = getMockBox().createStub(implements="contentbox.model.ui.editors.IEditor");
+		model.getEditors()["Awesome"] = getMockBox().createStub(implements="contentbox.model.ui.editors.IEditor");
+		a = model.getRegisteredEditorsMap();
+		debug(a);
+		assertEquals( "Awesome", a[1].name );
+		assertEquals( "mock-editor", a[2].name );
+		assertEquals( "test", a[3].name );
+	}
 
 }

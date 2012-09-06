@@ -24,6 +24,8 @@ limitations under the License.
 */
 component implements="modules.contentbox.model.ui.editors.IEditor" singleton{
 
+	property name="log" inject="logbox:logger:{this}";
+
 	function init(){
 		return this;
 	}
@@ -43,17 +45,36 @@ component implements="modules.contentbox.model.ui.editors.IEditor" singleton{
 	};
 	
 	/**
+	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc. 
+	* return the appropriate JavaScript
+	*/
+	function loadAssets(){
+		var js = "";
+		
+		savecontent variable="js"{
+			writeOutput("
+			function checkIsDirty(){
+				return false;
+			}
+			");
+		}
+		
+		return js;
+	};
+	
+	/**
 	* Startup the editor(s) on a page
 	*/
 	function startup(){
-		
+		log.info( getName() & " editor started up.");
 	}
 	
 	/**
 	* Shutdown the editor(s) on a page
 	*/
 	function shutdown(){
-		
+		log.info( getName() & " editor shutdown.");
 	}
+
 
 } 

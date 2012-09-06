@@ -94,18 +94,26 @@ component extends="baseHandler"{
 
 	// editor
 	function editor(event,rc,prc){
-		// cb helper
+		// cb helper reference
 		prc.cbHelper = CBHelper;
+		
 		// CK Editor Helper
+		// TODO: Change this
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
-		// Get All registered editors
-		prc.editors = editorService.getRegisteredEditors();
-		arrayPrePend( prc.editors, "Change Editor");
-		// get new or persisted
-		prc.page  = pageService.get( event.getValue("contentID",0) );
-		// get all categories
+		
+		// Get All registered editors so we can display them
+		prc.editors = editorService.getRegisteredEditorsMap();
+		// Get User's default editor
+		prc.defaultEditor = prc.oAuthor.getPreference("editor", editorService.getDefaultEditor() );
+		// Get the editor driver object
+		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
+		
+		// get all categories for display purposes
 		prc.categories = categoryService.getAll(sortOrder="category");
-		// load comments viewlet if persisted
+		
+		// get new page or persisted
+		prc.page  = pageService.get( event.getValue("contentID",0) );
+		// load comments,versions and child pages viewlets if persisted
 		if( prc.page.isLoaded() ){
 			var args = {contentID=rc.contentID};
 			// Get Comments viewlet
@@ -115,14 +123,14 @@ component extends="baseHandler"{
 			// Get Versions Viewlet
 			prc.versionsViewlet = runEvent(event="contentbox-admin:versions.pager",eventArguments=args);
 		}
-		// Get all pages for parent drop downs
+		// Get all page names for parent drop downs
 		prc.pages = pageService.getAllFlatPages();
 		// Get active layout record and available page only layouts
 		prc.themeRecord = layoutService.getActiveLayout();
 		prc.availableLayouts = REreplacenocase( prc.themeRecord.layouts,"blog,?","");
 		// Get parent from active page
 		prc.parentcontentID = prc.page.getParentID();
-		// Override the parent page if incoming
+		// Override the parent page if incoming via URL
 		if( structKeyExistS(rc,"parentID") ){
 			prc.parentcontentID = rc.parentID;
 		}
@@ -130,9 +138,11 @@ component extends="baseHandler"{
 		// exit handlers
 		prc.xehPageSave 		= "#prc.cbAdminEntryPoint#.pages.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.pages.slugify";
+		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 
-		// Tab
+		// Turn Tab On
 		prc.tabContent_pages = true;
+		
 		// view
 		event.setView("pages/editor");
 	}
