@@ -28,6 +28,7 @@ component extends="baseHandler"{
 	property name="settingsService"		inject="id:settingService@cb";
 	property name="htmlService"			inject="id:customHTMLService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
+	property name="editorService"		inject="id:editorService@cb";
 	
 	// index
 	function index(event,rc,prc){
@@ -77,10 +78,18 @@ component extends="baseHandler"{
 		// get new or persisted
 		prc.content  = htmlService.get( event.getValue("contentID",0) );
 		
+		// Get All registered editors so we can display them
+		prc.editors = editorService.getRegisteredEditorsMap();
+		// Get User's default editor
+		prc.defaultEditor = prc.oAuthor.getPreference("editor", editorService.getDefaultEditor() );
+		// Get the editor driver object
+		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
+		
 		// exit handlers
 		prc.xehContentSave 		= "#prc.cbAdminEntryPoint#.customHTML.save";
 		prc.xehSlugify	  		= "#prc.cbAdminEntryPoint#.customHTML.slugify";
-		
+		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
+
 		// view
 		event.setView(view="customHTML/editor");
 	}

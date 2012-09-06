@@ -67,9 +67,30 @@
 			#html.textField(name="title",label="Title:",bind=prc.content,required="required",maxlength="200",class="textfield width98",size="50",title="A human friendly name for the content piece")#
 			#html.textField(name="slug",label="Slug:",bind=prc.content,required="required",maxlength="200",class="textfield width98",size="50",title="The slug used to retrieve this content piece")#
 			#html.textarea(name="description",label="Short Description:",bind=prc.content,rows=3,class="width98",title="A short description for metadata purposes")#
-
+			
+			<!---ContentToolBar --->
+			<div id="contentToolBar">
+				
+				<!--- editor selector --->
+				<label for="contentEditorChanger" class="inline">Editor: </label>
+				#html.select(name="contentEditorChanger", 
+							 options=prc.editors,
+							 column="name",
+							 nameColumn="displayName",
+							 selectedValue=prc.defaultEditor,
+							 onchange="switchEditor(this.value)")#
+				
+				<!---Right References Panel --->
+				<div class="floatRight">
+					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehAPIDocs&"/index/apislug/plugins/print/?_cfcviewer_cfc=CBHelper")#')" 
+					   class="button" title="Get some quick CBHelper API Goodness!">
+						<img src="#prc.cbRoot#/includes/images/help_small.png" alt="print" border="0"> CBHelper Docs
+					</a>
+				</div>
+			</div>
+			
 			<!--- content --->
-			#html.textarea(name="content",label="Content (HTML,JS,plain,or whatever):",bind=prc.content,required="required")#
+			#html.textarea(name="content", bind=prc.content, required="required", rows="25", class="width98")#
 		</div>
 	</div>
 </div>

@@ -65,12 +65,13 @@
 			<div class="body_vertical_nav clearfix">
 				<!--- User Navigation Bar --->
 				<ul class="vertical_nav">
-					<li class="active"><a href="##userDetails"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> User Details</a></li>
+					<li class="active"><a href="##userDetails"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> Details</a></li>
 					<cfif prc.author.isLoaded()>
 					<li><a href="##password"><img src="#prc.cbRoot#/includes/images/credit-card.png" alt="modifiers"/> Change Password</a></li>
+					<li><a href="##preferences"><img src="#prc.cbRoot#/includes/images/eye.png" alt="modifiers"/> Preferences</a></li>
 					<li><a href="##permissions" onclick="loadPermissions()"><img src="#prc.cbRoot#/includes/images/lock.png" alt="modifiers"/> Permissions</a></li>
-					<li><a href="##entries"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Author Entries</a></li>
-					<li><a href="##pages"><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/> Author Pages</a></li>
+					<li><a href="##entries"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> User Entries</a></li>
+					<li><a href="##pages"><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/> User Pages</a></li>
 					</cfif>
 				</ul>
 				<!--- Tab Content --->
@@ -107,8 +108,7 @@
 								<!--- Action Bar --->
 								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 								<div class="actionBar">
-									<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or
-									<input type="submit" value="Save" class="buttonred">
+									<input type="submit" value="Save Details" class="buttonred">
 								</div>
 								</cfif>
 								#html.endFieldSet()#
@@ -128,7 +128,6 @@
 							<!--- Action Bar --->
 							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 							<div class="actionBar">
-								<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Cancel</button> or
 								<input type="submit" value="Change Password" class="buttonred">
 							</div>
 							</cfif>
@@ -136,13 +135,16 @@
 							#html.endFieldSet()#
 						#html.endForm()#
 						</div>
+						
+						<!--- Preferences --->
+						<div>#prc.preferencesViewlet#</div>
 
 						<!--- Permissions --->
 						<div id="permissionsTab"></div>
 
 						<!--- My Entries --->
 						<div>
-						#html.startFieldset(legend="Author Entries")#
+						#html.startFieldset(legend="User Entries")#
 							<!--- Entries Pager Viewlet --->
 							#prc.entryViewlet#
 						#html.endFieldSet()#
@@ -150,7 +152,7 @@
 
 						<!--- My Pages --->
 						<div>
-						#html.startFieldset(legend="Author Pages")#
+						#html.startFieldset(legend="User Pages")#
 							<!--- Pages Pager Viewlet --->
 							#prc.pageViewlet#
 						#html.endFieldSet()#

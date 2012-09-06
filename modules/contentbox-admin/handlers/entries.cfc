@@ -29,6 +29,7 @@ component extends="baseHandler"{
 	property name="entryService"		inject="id:entryService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
+	property name="editorService"		inject="id:editorService@cb";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -147,9 +148,19 @@ component extends="baseHandler"{
 		}
 		// CK Editor Helper
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
+		
+		// Get All registered editors so we can display them
+		prc.editors = editorService.getRegisteredEditorsMap();
+		// Get User's default editor
+		prc.defaultEditor = prc.oAuthor.getPreference("editor", editorService.getDefaultEditor() );
+		// Get the editor driver object
+		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
+		
 		// exit handlers
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
+		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
+
 		// Tab
 		prc.tabContent_blog = true;
 		// view

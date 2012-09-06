@@ -117,50 +117,50 @@ component accessors="true" threadSafe singleton{
 
 		// Dashboard
 		addTopMenu(name=this.DASHBOARD,label="Dashboard")
-			.addSubMenu(name="home",label="Home",href="#event.buildLink(prc.xehDashboard)#",title="Dashboard Home!")
-			.addSubMenu(name="about",label="About",href="#event.buildLink(prc.xehAbout)#",title="About ContentBox")
-			.addSubMenu(name="updates",label="Updates",href="#event.buildLink(prc.xehAutoUpdater)#",title="ContentBox Auto Updates",permissions="SYSTEM_UPDATES");
+			.addSubMenu(name="home",label="Home",href="#event.buildLink(prc.xehDashboard)#")
+			.addSubMenu(name="about",label="About",href="#event.buildLink(prc.xehAbout)#")
+			.addSubMenu(name="updates",label="Updates",href="#event.buildLink(prc.xehAutoUpdater)#",permissions="SYSTEM_UPDATES");
 
 		// Content
 		addTopMenu(name=this.CONTENT,label="Content")
-			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#",title="Manage Site Pages")
-			.addSubMenu(topMenu=this.CONTENT,name="Blog",label="Blog",href="#event.buildLink(prc.xehEntries)#",title="Manage Blog Entries")
-			.addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#",title="Manage Content Categories")
-			.addSubMenu(name="customHTML",label="Custom HTML",href="#event.buildLink(prc.xehCustomHTML)#",title="Manage Custom HTML Content Pieces")
-			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",title="Manage ContentBox Media",permissions="MEDIAMANAGER_ADMIN");
+			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#")
+			.addSubMenu(topMenu=this.CONTENT,name="Blog",label="Blog",href="#event.buildLink(prc.xehEntries)#")
+			.addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#")
+			.addSubMenu(name="customHTML",label="Custom HTML",href="#event.buildLink(prc.xehCustomHTML)#")
+			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",permissions="MEDIAMANAGER_ADMIN");
 
 		// Comments
 		addTopMenu(name=this.COMMENTS,label="Comments")
-			.addSubMenu(name="Inbox",label="Inbox",href="#event.buildLink(prc.xehComments)#",title="View All Incoming Comments")
-			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehCommentsettings)#",title="Configure the ContentBox Commenting System");
+			.addSubMenu(name="Inbox",label="Inbox",href="#event.buildLink(prc.xehComments)#")
+			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehCommentsettings)#");
 
 		// Look and Feel
 		addTopMenu(name=this.LOOK_FEEL,label="Look & Feel")
-			.addSubMenu(name="Layouts",label="Layouts",href="#event.buildLink(prc.xehLayouts)#",title="Manage Site Layouts")
-			.addSubMenu(name="Widgets",label="Widgets",href="#event.buildLink(prc.xehWidgets)#",title="Manager your UI widgets")
-			.addSubMenu(name="globalHTML",label="Global HTML",href="#event.buildLink(prc.xehGlobalHTML)#",title="Easy global HTML for your layouts");
+			.addSubMenu(name="Layouts",label="Layouts",href="#event.buildLink(prc.xehLayouts)#")
+			.addSubMenu(name="Widgets",label="Widgets",href="#event.buildLink(prc.xehWidgets)#")
+			.addSubMenu(name="globalHTML",label="Global HTML",href="#event.buildLink(prc.xehGlobalHTML)#");
 
 		// Modules
 		addTopMenu(name=this.MODULES,label="Modules",permissions="MODULES_ADMIN")
-			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehModules)#",title="Manage Modules");
+			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehModules)#");
 
 		// User
 		addTopMenu(name=this.USERS,label="Users")
-			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehAuthors)#",title="Manage Site Users")
-			.addSubMenu(name="Permissions",label="Permissions",href="#event.buildLink(prc.xehPermissions)#",title="Manage ContentBox Security Permissions",permissions="PERMISSIONS_ADMIN")
-			.addSubMenu(name="Roles",label="Roles",href="#event.buildLink(prc.xehRoles)#",title="Manage ContentBox Security Roles",permissions="ROLES_ADMIN");
+			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehAuthors)#")
+			.addSubMenu(name="Permissions",label="Permissions",href="#event.buildLink(prc.xehPermissions)#", permissions="PERMISSIONS_ADMIN")
+			.addSubMenu(name="Roles",label="Roles",href="#event.buildLink(prc.xehRoles)#", permissions="ROLES_ADMIN");
 
 		// Tools
 		addTopMenu(name=this.TOOLS,label="Tools")
-			.addSubMenu(name="Import",label="Import",href="#event.buildLink(prc.xehToolsImport)#",title="Import your database from other systems",permissions="TOOLS_IMPORT")
-			.addSubMenu(name="APIDocs",label="API Docs",href="#event.buildLink(prc.xehApiDocs)#",title="Inspect your ContentBox API");
+			.addSubMenu(name="Import",label="Import",href="#event.buildLink(prc.xehToolsImport)#", permissions="TOOLS_IMPORT")
+			.addSubMenu(name="APIDocs",label="API Docs",href="#event.buildLink(prc.xehApiDocs)#");
 
 		// SYSTEM
 		addTopMenu(name=this.SYSTEM,label="System",permissions="SYSTEM_TAB")
-			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehSettings)#",title="Manage ContentBox Global Configuration")
-			.addSubMenu(name="SecurityRules",label="Security Rules",href="#event.buildLink(prc.xehSecurityRules)#",title="Manage ContentBox Security Rules")
-			.addSubMenu(name="EmailTemplates",label="Email Templates",href="#event.buildLink(prc.xehEmailTemplates)#",title="Manage ContentBox Email Templates",permissions="EMAIL_TEMPLATE_ADMIN")
-			.addSubMenu(name="GeekSettings",label="Geek Settings",href="#event.buildLink(prc.xehRawSettings)#",title="Manage The Raw Settings Geek Style",permissions="SYSTEM_RAW_SETTINGS");
+			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehSettings)#")
+			.addSubMenu(name="SecurityRules",label="Security Rules",href="#event.buildLink(prc.xehSecurityRules)#")
+			.addSubMenu(name="EmailTemplates",label="Email Templates",href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN")
+			.addSubMenu(name="GeekSettings",label="Geek Settings",href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS");
 
 		return this;
 	}
