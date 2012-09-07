@@ -249,8 +249,8 @@ component accessors="true" threadSafe singleton{
 	*/
 	AdminMenuService function removeTopMenu(required topMenu){
 
-		for(var x=1; x lte arrayLen(menu); x++ ){
-			if( menu[x] eq topMenuMap[arguments.topMenu] ){
+		for(var x=1; x lte arrayLen( menu ); x++ ){
+			if( menu[ x ].name eq topMenuMap[ arguments.topMenu ] ){
 				arrayDeleteAt( menu, x );
 				structDelete(topMenuMap, arguments.topMenu);
 				break;
