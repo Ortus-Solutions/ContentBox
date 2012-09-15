@@ -100,6 +100,9 @@ component extends="BaseContentHandler" singleton{
 			prc.page.setLayout( rc.layout );
 			prc.page.setTitle( rc.title );
 			prc.page.setSlug( rc.slug );
+			prc.page.setPublishedDate( now() );
+			prc.page.setAllowComments( false );
+			prc.comments = [];
 			prc.page.addNewContentVersion(content=URLDecode( rc.content ), author=author)
 				.setActiveContent( prc.page.getContentVersions() );
 			// set skin view

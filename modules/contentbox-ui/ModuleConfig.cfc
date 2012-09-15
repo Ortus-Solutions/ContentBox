@@ -72,6 +72,8 @@ component {
 			{pattern="/__search/:q?/:page-numeric?", handler="page", action="search" },
 			// layout preview
 			{pattern="/__preview", handler="blog", action="preview" },
+			// entry preview
+			{pattern="/__entry_preview", handler="blog", action="preview" },
 			// page preview
 			{pattern="/__page_preview", handler="page", action="preview" },
 			

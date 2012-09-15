@@ -52,13 +52,38 @@ component extends="BaseContentHandler" singleton{
 	}
 
 	/**
-	* The preview page
+	* Preview entry page
 	*/
 	function preview(event,rc,prc){
-		event.paramValue("h","");
-		event.paramValue("l","");
-
+		// Param incoming data
+		event.paramValue("content", "");
+		event.paramValue("title", "");
+		event.paramValue("slug", "");
+		event.paramValue("h", "");
+		
+		// get current author, only authors can preview
 		var author = getModel("securityService@cb").getAuthorSession();
+		// valid Author?
+		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash( author.getAuthorID() ), rc.h) EQ 0){
+			// Construct the preview entry according to passed arguments
+			prc.entry = entryService.new();
+			prc.entry.setTitle( rc.title );
+			prc.entry.setSlug( rc.slug );
+			prc.entry.setPublishedDate( now() );
+			prc.entry.setAllowComments( false );
+			prc.comments = [];
+			prc.entry.addNewContentVersion(content=URLDecode( rc.content ), author=author)
+				.setActiveContent( prc.entry.getContentVersions() );
+			// set skin view
+			event.setLayout(name="#prc.cbLayout#/layouts/blog", module="contentbox")
+				.setView(view="#prc.cbLayout#/views/entry", module="contentbox");
+		}
+		// Not an author, kick them out.
+		else{
+			setNextEvent(URL=CBHelper.linkBlog());
+		}
+
+		/*var author = getModel("securityService@cb").getAuthorSession();
 		// valid Author?
 		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
 			// Override layouts
@@ -72,7 +97,7 @@ component extends="BaseContentHandler" singleton{
 		}
 		else{
 			setNextEvent(URL=CBHelper.linkBlog());
-		}
+		}*/
 	}
 
 	/**
