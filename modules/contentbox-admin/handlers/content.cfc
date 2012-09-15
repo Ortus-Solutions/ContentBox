@@ -9,11 +9,20 @@ component extends="baseHandler"{
 
 	// content preview
 	function preview(event,rc,prc){
+		// param incoming data
+		event.paramValue("layout","pages");
 		event.paramValue("content","");
+		event.paramValue("title","");
+		event.paramValue("slug","");
 		
-		// get new content object
-		prc.preview = contentService.new().renderContentSilent( rc.content );
-		
+		// get the rendered content
+		//prc.previewContent = contentService.new().renderContentSilent( rc.content );
+		prc.previewContent = rc.content;
+		// iframe src
+		prc.xehPreview = CBHelper.linkPage("__page_preview");
+		// author security hash
+		prc.h = hash( prc.oAuthor.getAuthorID() );
+		// view
 		event.setView(view="content/preview",layout="ajax");
 	}
 
