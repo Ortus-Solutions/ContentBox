@@ -46,6 +46,9 @@ component {
 
 		// CB UI SES Routing
 		routes = [
+		
+			/************************************** BLOG ROUTES *********************************************/
+			
 			// Blog Archives
 			{pattern="/blog/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives"},
 			// Blog RSS feeds
@@ -62,14 +65,17 @@ component {
 			{pattern="/blog/:entrySlug", handler="blog", action="entry"},
 			// Blog reserved route
 			{pattern="/blog", handler="blog", action="index" },
+			
+			/************************************** COMMAND ROUTES *********************************************/
+			
 			// search filter
 			{pattern="/__search/:q?/:page-numeric?", handler="page", action="search" },
-			// preview
+			// layout preview
 			{pattern="/__preview", handler="blog", action="preview" },
-			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
-			{pattern="/__pageCommentPost", handler="page", action="commentPost"},
-
-			/************************************** RSS FEEDS *********************************************/
+			// page preview
+			{pattern="/__page_preview", handler="page", action="preview" },
+			
+			/************************************** RSS ROUTES *********************************************/
 
 			// Global Page RSS feeds with filtering
 			{pattern="/__rss/pages/category/:category?", handler="rss", action="pages" },
@@ -82,8 +88,13 @@ component {
 			// Global Site RSS Content Feed
 			{pattern="/__rss", handler="rss", action="index" },
 
+			/************************************** CATCH ALL PAGE ROUTE *********************************************/
+	
+			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
+			{pattern="/__pageCommentPost", handler="page", action="commentPost"},
+			// Catch All Page Routing
 			{pattern="/:pageSlug", handler="page", action="index"},
-			// Home Pattern  xc
+			// Home Pattern
 			{pattern="/", handler="blog", action="index" }
 		];
 
