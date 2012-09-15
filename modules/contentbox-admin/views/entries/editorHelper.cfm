@@ -12,6 +12,7 @@ $(document).ready(function() {
 	$content 		= $entryForm.find("##content");
 	$isPublished 	= $entryForm.find("##isPublished");
 	$contentID		= $entryForm.find("##contentID");
+	$contentType	= "#prc.entry.getContentType()#";
 	// setup editors via _tags/editors.cfm by passing the form container
 	setupEditors( $entryForm, true );
 });

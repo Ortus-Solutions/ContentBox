@@ -6,12 +6,13 @@ openRemoteModal() is part of contentbox js
 	//Section 1 : Code to execute when the toolbar button is pressed
 	var a= {
 		exec:function(editor){
-			// Open the preview
+			// Open the preview window for content
 			openRemoteModal( getPreviewSelectorURL(), 
 							 { content: editor.getData(), 
 							   layout: $("#layout").val(),
 							   title: $("#title").val(),
-							   slug: $("#slug").val() },
+							   slug: $("#slug").val(),
+							   contentType : $contentType },
 							 "95%",
 							 "90%");
 		}

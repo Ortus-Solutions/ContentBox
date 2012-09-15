@@ -6,7 +6,7 @@
 	 --->
 	#html.startForm(name="previewForm", action=prc.xehPreview, target="previewFrame", class="hidden")#
 		#html.hiddenField(name="h", value=prc.h)#
-		#html.hiddenField(name="content", value=urlEncodedFormat( prc.previewContent ))#
+		#html.hiddenField(name="content", value=urlEncodedFormat( rc.content ))#
 		#html.hiddenField(name="layout", value=rc.layout)#
 		#html.hiddenField(name="title", value=rc.title)#
 		#html.hiddenField(name="slug", value=rc.slug)#
