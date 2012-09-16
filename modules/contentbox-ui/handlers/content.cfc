@@ -27,6 +27,7 @@ component{
 	// DI
 	property name="authorService"		inject="id:authorService@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
+	property name="contentService"		inject="id:contentService@cb";
 	property name="commentService"		inject="id:commentService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="rssService"			inject="id:rssService@cb";
@@ -47,6 +48,27 @@ component{
 		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog"){
 			event.overrideEvent("contentbox-ui:page.index");
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
+		}
+	}
+	
+	/**
+	* Preview content page
+	*/
+	function preview(event,rc,prc){
+		// Param incoming data
+		event.paramValue("content", "");
+		event.paramValue("contentType", "");
+		event.paramValue("layout", "");
+		event.paramValue("title", "");
+		event.paramValue("slug", "");
+		event.paramValue("h", "");
+		
+		// get current author, only authors can preview
+		prc.author = getModel("securityService@cb").getAuthorSession();
+		// valid Author?
+		if( !prc.author.isLoaded() OR !prc.author.isLoggedIn() OR compareNoCase( hash( prc.author.getAuthorID() ), rc.h) NEQ 0){
+			// Not an author, kick them out.
+			setNextEvent(URL=CBHelper.linkHome());
 		}
 	}
 

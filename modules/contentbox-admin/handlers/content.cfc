@@ -18,8 +18,15 @@ component extends="baseHandler"{
 		
 		// Determine Type
 		switch( rc.contentType ){
-			case "page" : { prc.xehPreview = CBHelper.linkPage("__page_preview"); break; }
-			case "entry" : { prc.xehPreview = CBHelper.linkPage("__entry_preview"); break; }
+			case "page" 	: { 
+				prc.xehPreview = CBHelper.linkPage("__page_preview"); 
+				break; 
+			}
+			case "entry" : { 
+				prc.xehPreview = CBHelper.linkPage("__entry_preview"); 
+				rc.layout = "blog";
+				break; 
+			}
 		}
 		// author security hash
 		prc.h = hash( prc.oAuthor.getAuthorID() );
