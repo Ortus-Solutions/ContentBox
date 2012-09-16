@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * The main ContentBox engine handler
 */
-component extends="BaseContentHandler" singleton{
+component extends="content" singleton{
 
 	// DI
 	property name="pageService"			inject="id:pageService@cb";
@@ -79,40 +79,29 @@ component extends="BaseContentHandler" singleton{
 			return data;
 		}
 	}
-
+	
 	/**
-	* Present Page preview
+	* Preview a page
 	*/
 	function preview(event,rc,prc){
-		// Param incoming data
-		event.paramValue("content", "");
-		event.paramValue("layout", "");
-		event.paramValue("title", "");
-		event.paramValue("slug", "");
-		event.paramValue("h", "");
+		// Run parent preview
+		super.preview(argumentCollection=arguments);
+		// Concrete Overrides Below
 		
-		// get current author, only authors can preview
-		var author = getModel("securityService@cb").getAuthorSession();
-		// valid Author?
-		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash( author.getAuthorID() ), rc.h) EQ 0){
-			// Construct the preview page according to passed arguments
-			prc.page = pageService.new();
-			prc.page.setLayout( rc.layout );
-			prc.page.setTitle( rc.title );
-			prc.page.setSlug( rc.slug );
-			prc.page.setPublishedDate( now() );
-			prc.page.setAllowComments( false );
-			prc.comments = [];
-			prc.page.addNewContentVersion(content=URLDecode( rc.content ), author=author)
-				.setActiveContent( prc.page.getContentVersions() );
-			// set skin view
-			event.setLayout(name="#prc.cbLayout#/layouts/#rc.layout#", module="contentbox")
-				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
-		}
-		// Not an author, kick them out.
-		else{
-			setNextEvent(URL=CBHelper.linkHome());
-		}
+		// Construct the preview entry according to passed arguments
+		prc.page = pageService.new();
+		prc.page.setTitle( rc.title );
+		prc.page.setSlug( rc.slug );
+		prc.page.setPublishedDate( now() );
+		prc.page.setAllowComments( false );
+		// Comments need to be empty
+		prc.comments = [];
+		// Create preview version
+		prc.page.addNewContentVersion(content=URLDecode( rc.content ), author=prc.author)
+			.setActiveContent( prc.page.getContentVersions() );
+		// set skin view
+		event.setLayout(name="#prc.cbLayout#/layouts/#rc.layout#", module="contentbox")
+			.setView(view="#prc.cbLayout#/views/page", module="contentbox");
 	}
 
 	/**
