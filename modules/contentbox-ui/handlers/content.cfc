@@ -52,6 +52,48 @@ component{
 	}
 	
 	/**
+	* Preview the site
+	*/
+	function previewSite(event,rc,prc){
+		// Param incoming data
+		event.paramValue("l", "");
+		event.paramValue("h", "");
+		
+		var author = getModel("securityService@cb").getAuthorSession();
+		// valid Author?
+		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
+			
+			// Place layout on scope
+			prc.cbLayout = rc.l;
+			// Place layout root location
+			prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & rc.l;
+			// Home page determination either blog or a page
+			if( prc.cbSettings.cb_site_homepage NEQ "cbBlog"){
+				// Override event and incoming page.
+				event.overrideEvent("contentbox-ui:page.index");
+				prc.pageOverride = prc.cbSettings.cb_site_homepage;
+				// run it
+				var eArgs = {noCache=true};
+				runEvent(event="contentbox-ui:page.index", eventArguments=eArgs);
+				// Override the layout
+				event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox");
+			}
+			else{
+				// Override layout and event so we can display it
+				event.setLayout("#rc.l#/layouts/blog")
+					.overrideEvent("contentbox-ui:blog.index");
+				// run it
+				runEvent("contentbox-ui:blog.index");
+			}
+			
+		}
+		else{
+			// 	Invalid Credentials
+			setNextEvent(URL=CBHelper.linkBlog());
+		}
+	}
+	
+	/**
 	* Preview content page
 	*/
 	function preview(event,rc,prc){

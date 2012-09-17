@@ -40,9 +40,8 @@ component extends="content" singleton{
 	function aroundIndex(event,rc,prc,eventArguments){
 
 		// if not caching, just return
-		if( !prc.cbSettings.cb_content_caching ){
-			index(event,rc,prc);
-			return;
+		if( !prc.cbSettings.cb_content_caching OR structKeyExists(eventArguments, "noCache") ){
+			return index(event,rc,prc);
 		}
 
 		// Get appropriate cache provider
