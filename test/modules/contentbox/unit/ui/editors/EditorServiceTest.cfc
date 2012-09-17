@@ -5,13 +5,17 @@
 */
 component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model.ui.editors.EditorService"{
 
-	void function setup(){
+	function setup(){
 		super.setup();
 		
 		mockWireBox.$("getInstance", new MockEditor() );
 		
 		// init the model object
 		model.init( mockWireBox );
+	}
+	
+	function teardown(){
+		
 	}
 	
 	function testGetRegisteredEditors(){
@@ -23,6 +27,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		assertEquals( "mock-editor", a[2] );
 		assertEquals( "test", a[3] );
 	}
+	
 	
 	function testregisterEditor(){
 		editor = getMockBox().prepareMock( new MockEditor() );

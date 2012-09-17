@@ -22,13 +22,13 @@ limitations under the License.
 ********************************************************************************
 * The main ContentBox engine handler
 */
-component extends="BaseContentHandler" singleton{
+component extends="content" singleton{
 
 	// DI
 	property name="pageService"			inject="id:pageService@cb";
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
-
+	
 	// pre Handler
 	function preHandler(event,action,eventArguments){
 		super.preHandler(argumentCollection=arguments);
@@ -40,9 +40,8 @@ component extends="BaseContentHandler" singleton{
 	function aroundIndex(event,rc,prc,eventArguments){
 
 		// if not caching, just return
-		if( !prc.cbSettings.cb_content_caching ){
-			index(event,rc,prc);
-			return;
+		if( !prc.cbSettings.cb_content_caching OR structKeyExists(eventArguments, "noCache") ){
+			return index(event,rc,prc);
 		}
 
 		// Get appropriate cache provider
@@ -78,6 +77,30 @@ component extends="BaseContentHandler" singleton{
 					  (prc.page.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : prc.page.getCacheLastAccessTimeout()) );
 			return data;
 		}
+	}
+	
+	/**
+	* Preview a page
+	*/
+	function preview(event,rc,prc){
+		// Run parent preview
+		super.preview(argumentCollection=arguments);
+		// Concrete Overrides Below
+		
+		// Construct the preview entry according to passed arguments
+		prc.page = pageService.new();
+		prc.page.setTitle( rc.title );
+		prc.page.setSlug( rc.slug );
+		prc.page.setPublishedDate( now() );
+		prc.page.setAllowComments( false );
+		// Comments need to be empty
+		prc.comments = [];
+		// Create preview version
+		prc.page.addNewContentVersion(content=URLDecode( rc.content ), author=prc.author)
+			.setActiveContent( prc.page.getContentVersions() );
+		// set skin view
+		event.setLayout(name="#prc.cbLayout#/layouts/#rc.layout#", module="contentbox")
+			.setView(view="#prc.cbLayout#/views/page", module="contentbox");
 	}
 
 	/**

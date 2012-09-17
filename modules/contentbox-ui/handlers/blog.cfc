@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * Handler For ContentBox blog pages
 */
-component extends="BaseContentHandler" singleton{
+component extends="content" singleton{
 
 	// DI
 	property name="entryService" inject="id:entryService@cb";
@@ -50,29 +50,29 @@ component extends="BaseContentHandler" singleton{
 		event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
 			.setView(view="#prc.cbLayout#/views/notfound",module="contentbox");
 	}
-
+	
 	/**
-	* The preview page
+	* Preview a blog entry
 	*/
 	function preview(event,rc,prc){
-		event.paramValue("h","");
-		event.paramValue("l","");
-
-		var author = getModel("securityService@cb").getAuthorSession();
-		// valid Author?
-		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
-			// Override layouts
-			event.setLayout("#rc.l#/layouts/blog").overrideEvent("contentbox-ui:blog.index");
-			// Place layout on scope
-			prc.cbLayout = rc.l;
-			// Place layout root location
-			prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & rc.l;
-			// preview it
-			index(argumentCollection=arguments);
-		}
-		else{
-			setNextEvent(URL=CBHelper.linkBlog());
-		}
+		// Run parent preview
+		super.preview(argumentCollection=arguments);
+		// Concrete Overrides Below
+		
+		// Construct the preview entry according to passed arguments
+		prc.entry = entryService.new();
+		prc.entry.setTitle( rc.title );
+		prc.entry.setSlug( rc.slug );
+		prc.entry.setPublishedDate( now() );
+		prc.entry.setAllowComments( false );
+		// Comments need to be empty
+		prc.comments = [];
+		// Create preview version
+		prc.entry.addNewContentVersion(content=URLDecode( rc.content ), author=prc.author)
+			.setActiveContent( prc.entry.getContentVersions() );
+		// set skin view
+		event.setLayout(name="#prc.cbLayout#/layouts/#rc.layout#", module="contentbox")
+			.setView(view="#prc.cbLayout#/views/entry", module="contentbox");
 	}
 
 	/**
