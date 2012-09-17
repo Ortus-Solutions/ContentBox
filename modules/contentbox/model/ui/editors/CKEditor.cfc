@@ -65,6 +65,16 @@ component implements="modules.contentbox.model.ui.editors.IEditor" accessors="tr
 		    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks", "cbPreview" ] }
 		    ]');
 		};
+		savecontent variable="TOOLBAR_EXCERPT_JSON"{
+			writeOutput('[
+		    { "name": "document",    "items" : [ "Source","ShowBlocks" ] },
+		    { "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript"] },
+		    { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","CreateDiv"] },
+		    { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
+		    { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
+		    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks", "cbPreview" ] }
+		    ]');
+		};
 		
 		// Register our extra plugins
 		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbPreview,cbIpsumLorem";
@@ -94,7 +104,7 @@ component implements="modules.contentbox.model.ui.editors.IEditor" accessors="tr
 	*/
 	function startup(){
 		// prepare toolbar announcement on startup
-		var iData = { toolbar = deserializeJSON( TOOLBAR_JSON ) };
+		var iData = { toolbar = deserializeJSON( TOOLBAR_JSON ), excerptToolbar = deserializeJSON( TOOLBAR_EXCERPT_JSON ) };
 		// Announce the editor toolbar is about to be processed
 		interceptorService.processState("cbadmin_ckeditorToolbar", iData);
 		// Load extra plugins according to our version
@@ -152,6 +162,7 @@ component implements="modules.contentbox.model.ui.editors.IEditor" accessors="tr
 			writeOutput("
 			// toolbar Configuration
 			var ckToolbar = $.parseJSON( '#serializeJSON( arguments.iData.toolbar )#' );
+			var ckExcerptToolbar = $.parseJSON( '#serializeJSON( arguments.iData.excerptToolbar )#' );
 			
 			// Activate ckeditor on content object
 			$content.ckeditor( function(){}, {
@@ -167,7 +178,7 @@ component implements="modules.contentbox.model.ui.editors.IEditor" accessors="tr
 			// Active Excerpts
 			if (withExcerpt) {
 				$excerpt.ckeditor(function(){}, {
-					toolbar: 'Basic',
+					toolbar: ckExcerptToolbar,
 					height: 175,
 					filebrowserBrowseUrl: '#event.buildLink( xehCKFileBrowserURL )#',
 					baseHref: '#HTML_BASE_URL#/'
