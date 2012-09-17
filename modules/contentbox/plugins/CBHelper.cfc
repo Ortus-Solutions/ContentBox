@@ -821,7 +821,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
 	* layout theme you are using. All the arguments are the same as renderView()'s methods
 	*/
-	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module,args,collection,collectionAs,prepostExempt){
+	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module="contentbox",args,collection,collectionAs,prepostExempt){
 		arguments.view = "#layoutName()#/views/#arguments.view#";
 		return renderView(argumentCollection=arguments);
 	}
@@ -830,7 +830,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
 	* layout theme you are using. All the arguments are the same as renderLayout()'s methods
 	*/
-	function quickLayout(required layout,view="",module="",args=structNew(),viewModule="",prePostExempt=false){
+	function quickLayout(required layout,view="",module="contentbox",args=structNew(),viewModule="",prePostExempt=false){
 		arguments.layout = "#layoutName()#/layouts/#arguments.layout#";
 		return renderLayout(argumentCollection=arguments);
 	}

@@ -27,6 +27,7 @@ component{
 	// DI
 	property name="authorService"		inject="id:authorService@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
+	property name="contentService"		inject="id:contentService@cb";
 	property name="commentService"		inject="id:commentService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="rssService"			inject="id:rssService@cb";
@@ -47,6 +48,69 @@ component{
 		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog"){
 			event.overrideEvent("contentbox-ui:page.index");
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
+		}
+	}
+	
+	/**
+	* Preview the site
+	*/
+	function previewSite(event,rc,prc){
+		// Param incoming data
+		event.paramValue("l", "");
+		event.paramValue("h", "");
+		
+		var author = getModel("securityService@cb").getAuthorSession();
+		// valid Author?
+		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
+			
+			// Place layout on scope
+			prc.cbLayout = rc.l;
+			// Place layout root location
+			prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & rc.l;
+			// Home page determination either blog or a page
+			if( prc.cbSettings.cb_site_homepage NEQ "cbBlog"){
+				// Override event and incoming page.
+				event.overrideEvent("contentbox-ui:page.index");
+				prc.pageOverride = prc.cbSettings.cb_site_homepage;
+				// run it
+				var eArgs = {noCache=true};
+				runEvent(event="contentbox-ui:page.index", eventArguments=eArgs);
+				// Override the layout
+				event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox");
+			}
+			else{
+				// Override layout and event so we can display it
+				event.setLayout("#rc.l#/layouts/blog")
+					.overrideEvent("contentbox-ui:blog.index");
+				// run it
+				runEvent("contentbox-ui:blog.index");
+			}
+			
+		}
+		else{
+			// 	Invalid Credentials
+			setNextEvent(URL=CBHelper.linkBlog());
+		}
+	}
+	
+	/**
+	* Preview content page
+	*/
+	function preview(event,rc,prc){
+		// Param incoming data
+		event.paramValue("content", "");
+		event.paramValue("contentType", "");
+		event.paramValue("layout", "");
+		event.paramValue("title", "");
+		event.paramValue("slug", "");
+		event.paramValue("h", "");
+		
+		// get current author, only authors can preview
+		prc.author = getModel("securityService@cb").getAuthorSession();
+		// valid Author?
+		if( !prc.author.isLoaded() OR !prc.author.isLoggedIn() OR compareNoCase( hash( prc.author.getAuthorID() ), rc.h) NEQ 0){
+			// Not an author, kick them out.
+			setNextEvent(URL=CBHelper.linkHome());
 		}
 	}
 
