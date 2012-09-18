@@ -75,15 +75,25 @@
 								<option value="#thispage.getSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getSlug()>selected="selected"</cfif>>#thisPage.getSlug()#</option>
 								</cfloop>
 							</select>
-
+						</fieldset>
+						<!---Blog Entries --->
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/pen.png" alt="modifiers"/> <strong>Blog Options</strong></legend>
 							<!--- Disable Blog --->
 							#html.label(field="cb_site_disable_blog",content="Disable Blog:")#
 							<small>You can disable the Blog in this entire ContentBox. This does not delete data, it just disables blog features. Also
 								   remember to change the <strong>Home Page</strong> above to a real page and not the blog.</small><br/>
 							#html.radioButton(name="cb_site_disable_blog",checked=prc.cbSettings.cb_site_disable_blog,value=true)# Yes
 							#html.radioButton(name="cb_site_disable_blog",checked=not prc.cbSettings.cb_site_disable_blog,value=false)# No
-
-
+							
+							
+							<!--- Entry Point --->
+							#html.label(field="cb_site_blog_entrypoint",content="Blog Entry Point:")#
+							<small>Choose the entry point in the URL to trigger the blog engine. The usual defaul entry point pattern is 
+							<strong>blog</strong>. Do not use symbols or slashes (/ \)<br/></small>
+								
+							<em>#prc.cb.linkHome()#</em> #html.textField(name="cb_site_blog_entrypoint", value=prc.cbSettings.cb_site_blog_entrypoint, class="textfield")#
+							
 						</fieldset>
 						<!--- Site Maintenance --->
 						<fieldset>
