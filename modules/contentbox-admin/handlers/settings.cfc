@@ -6,7 +6,8 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="settingsService"		inject="id:settingService@cb";
 	property name="pageService"			inject="id:pageService@cb";
-
+	property name="CBHelper"			inject="id:CBHelper@cb";
+	
 	// pre handler
 	function preHandler(event,action,eventArguments){
 		var rc 	= event.getCollection();
@@ -23,6 +24,8 @@ component extends="baseHandler"{
 		prc.pages = pageService.search(sortOrder="slug asc",isPublished=true).pages;
 		// tab
 		prc.tabSystem_Settings = true;
+		// cb helper
+		prc.cb = CBHelper;
 		// caches
 		prc.cacheNames = cachebox.getCacheNames();
 		// view
@@ -33,13 +36,19 @@ component extends="baseHandler"{
 	function save(event,rc,prc){
 		// announce event
 		announceInterception("cbadmin_preSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc});
-
 		// bulk save the options
 		settingsService.bulkSave(rc);
-
+		// Do blog entry point change
+		var ses = getInterceptor("SES");
+		var routes = ses.getRoutes();
+		for( var key in routes ){
+			if( key.namespaceRouting eq "blog" ){
+				key.pattern = key.regexpattern = replace(  rc[ "cb_site_blog_entrypoint" ] , "/", "-", "all" ) & "/";
+			}
+		}
+		ses.setRoutes( routes );
 		// announce event
 		announceInterception("cbadmin_postSettingsSave");
-
 		// relocate back to editor
 		getPlugin("MessageBox").info("All ContentBox settings updated! Yeeehaww!");
 		setNextEvent(prc.xehSettings);

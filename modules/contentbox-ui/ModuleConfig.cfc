@@ -50,21 +50,21 @@ component {
 			/************************************** BLOG ROUTES *********************************************/
 			
 			// Blog Archives
-			{pattern="/blog/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives"},
+			{pattern="/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives", namespace="blog"},
 			// Blog RSS feeds
-			{pattern="/blog/rss/category/:category", handler="blog", action="rss" },
-			{pattern="/blog/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true},
-			{pattern="/blog/rss/", handler="blog", action="rss" },
+			{pattern="/rss/category/:category", handler="blog", action="rss" , namespace="blog"},
+			{pattern="/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true, namespace="blog"},
+			{pattern="/rss/", handler="blog", action="rss" , namespace="blog"},
 			// category filter
-			{pattern="/blog/category/:category/:page-numeric?", handler="blog", action="index" },
+			{pattern="/category/:category/:page-numeric?", handler="blog", action="index" , namespace="blog"},
 			// search filter
-			{pattern="/blog/search/:q?/:page-numeric?", handler="blog", action="index" },
+			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" , namespace="blog"},
 			// Blog comment post
-			{pattern="/blog/:entrySlug/commentPost", handler="blog", action="commentPost" },
+			{pattern="/:entrySlug/commentPost", handler="blog", action="commentPost" , namespace="blog"},
 			// blog permalink
-			{pattern="/blog/:entrySlug", handler="blog", action="entry"},
+			{pattern="/:entrySlug", handler="blog", action="entry", namespace="blog"},
 			// Blog reserved route
-			{pattern="/blog", handler="blog", action="index" },
+			{pattern="/", handler="blog", action="index", namespace="blog"},
 			
 			/************************************** COMMAND ROUTES *********************************************/
 			
@@ -134,12 +134,22 @@ component {
 	function onLoad(){
 		// Startup the ContentBox layout service and activate the current layout
 		controller.getWireBox().getInstance("layoutService@cb").startupActiveLayout();
-
+		// Get ses handle
+		var ses = controller.getInterceptorService().getInterceptor('SES',true);
+		
+		// Add Dynamic Blog Namespace
+		var settingService = controller.getWireBox().getInstance("settingService@cb");
+		var blogEntryPoint = settingService.findWhere({name="cb_site_blog_entrypoint"});
+		if( !isNull( blogEntryPoint ) ){
+			ses.addNamespace(pattern="/#blogEntryPoint.getValue()#", namespace="blog", append=false);
+		}
+		else{
+			ses.addNamespace(pattern="/blog", namespace="blog", append=false);
+		}
+		
 		// Treat the blog as the Main Application?
 		if( !len(this.entryPoint) ){
-			// generate the ses entry point
-			var ses 		 = controller.getInterceptorService().getInterceptor('SES',true);
-
+			
 			// get parent routes so we can re-mix them later
 			var parentRoutes 		= ses.getRoutes();
 			var newRoutes			= [];
@@ -156,7 +166,7 @@ component {
 
 			// Add parent routing
 			ses.addRoute(pattern="#variables.parentSESPrefix#/:handler/:action?");
-
+			
 			// Add routes manually to take over parent routes
 			for(var x=1; x LTE arrayLen( variables.routes ); x++){
 				// append module location to it so the route is now system wide
@@ -168,7 +178,6 @@ component {
 				// add it as main application route.
 				ses.addRoute(argumentCollection=args);
 			}
-
 			// change the default event
 			controller.setSetting("DefaultEvent","contentbox-ui:blog");
 		}
