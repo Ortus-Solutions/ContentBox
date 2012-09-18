@@ -203,6 +203,7 @@ component accessors="true"{
 			"cb_site_outgoingEmail" = setup.getSiteOutgoingEmail(),
 			"cb_site_homepage" = "cbBlog",
 			"cb_site_disable_blog" = "false",
+			"cb_site_blog_entrypoint" = "blog",
 
 			// Paging Defaults
 			"cb_paging_maxrows" = "20",
