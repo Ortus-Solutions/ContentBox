@@ -35,12 +35,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	function init(controller){
 		super.init( arguments.controller );
-		blogEntryPoint = "blog";
 	}
 
 	/************************************** settings *********************************************/
 
-	// get contentbox settings
+	// get contentbox setting value by key or by default value
 	function setting(required key,value){
 		var prc = getRequestCollection(private=true);
 
@@ -67,6 +66,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	// get contentbox codename URL
 	function getContentBoxCodeNameURL(){
 		return getModuleSettings("contentbox").settings.codenameLink;
+	}
+	// get blog entry point
+	function getBlogEntryPoint(){
+		return setting("cb_site_blog_entrypoint", "blog");
 	}
 
 	/**
@@ -273,7 +276,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		var event = getRequestContext();
 		return event.getValue(name="missingPage",private="true",default="");
 	}
-	// Get Home Page slug set up by the administrator.  If the page slug equals 'blog', then it means the blog is your home page
+	// Get Home Page slug set up by the administrator.
 	any function getHomePage(){
 		return setting("cb_site_homepage");
 	}
@@ -419,7 +422,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* Create a link to your site blog
 	*/
 	function linkBlog(){
-		return getRequestContext().buildLink(linkto="#siteRoot()##sep()#blog");
+		return getRequestContext().buildLink(linkto="#siteRoot()##sep()##getBlogEntryPoint()#");
 	}
 
 	/**
@@ -444,7 +447,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @entry You can optionally pass the entry to filter the comment's RSS feed
 	*/
 	function linkRSS(category,comments=false,entry){
-		var xehRSS = siteRoot() & sep() & "#blogEntryPoint#.rss";
+		var xehRSS = siteRoot() & sep() & "#getBlogEntryPoint()#.rss";
 
 		// do we have a category?
 		if( structKeyExists(arguments,"category") ){
@@ -543,7 +546,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @category The category object to link to
 	*/
 	function linkCategory(category){
-		var xeh = siteRoot() & sep() & "#blogEntryPoint#.category/#arguments.category.getSlug()#";
+		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.category.getSlug()#";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
 
@@ -554,7 +557,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @day The day of the archive
 	*/
 	function linkArchive(year,month,day){
-		var xeh = siteRoot() & sep() & "#blogEntryPoint#.archives";
+		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.archives";
 		if( structKeyExists(arguments,"year") ){ xeh &= "/#arguments.year#"; }
 		if( structKeyExists(arguments,"month") ){ xeh &= "/#arguments.month#"; }
 		if( structKeyExists(arguments,"day") ){ xeh &= "/#arguments.day#"; }
@@ -565,7 +568,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* Link to the search route for this blog
 	*/
 	function linkSearch(){
-		var xeh = siteRoot() & sep() & "#blogEntryPoint#.search";
+		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.search";
 		return getRequestContext().buildLink(linkto=xeh);
 	}
 
@@ -585,7 +588,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		if( isSimpleValue(arguments.entry) ){
 			return linkEntryWithSlug( arguments.entry );
 		}
-		var xeh = siteRoot() & sep() & "#blogEntryPoint#.#arguments.entry.getSlug()#";
+		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.entry.getSlug()#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 
@@ -595,7 +598,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function linkEntryWithSlug(slug){
 		arguments.slug = reReplace( arguments.slug, "^/","" );
-		var xeh = siteRoot() & sep() & "#blogEntryPoint#.#arguments.slug#";
+		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh);
 	}
 
