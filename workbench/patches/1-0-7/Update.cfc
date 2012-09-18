@@ -54,6 +54,9 @@ component implements="contentbox.model.updates.IUpdate"{
 				// User Preferences
 				ALTER TABLE cb_author ADD COLUMN preferences longtext NULL;
 				*/
+				
+				// update settings
+				updateSettings();
 			}
 		}
 		catch(Any e){
@@ -67,14 +70,8 @@ component implements="contentbox.model.updates.IUpdate"{
 	* post installation
 	*/
 	function postInstallation(){
-
-		
-
-		/************************************** CREATE NEW SETTINGS *********************************************/
-
 		try{
 			transaction{
-
 				
 
 			}
@@ -83,6 +80,13 @@ component implements="contentbox.model.updates.IUpdate"{
 			ORMClearSession();
 			rethrow;
 		}
+	}
+	
+	function updateSettings(){
+		// Create New setting
+		var blogSetting = settingService.findWhere({name="cb_site_blog_entrypoint"});
+		blogSetting.setValue( "blog" );
+		settingService.save(entity=blogSetting, transactional=false);
 	}
 
 
