@@ -54,6 +54,9 @@ component implements="contentbox.model.updates.IUpdate"{
 				// User Preferences
 				ALTER TABLE cb_author ADD COLUMN preferences longtext NULL;
 				*/
+				var q = new Query(datasource=getDatasource());
+				q.setSQL( "ALTER TABLE cb_author ADD COLUMN preferences #getLongTextColumn()# NULL;" );
+				q.execute();
 				
 				// update settings
 				updateSettings();
@@ -72,7 +75,6 @@ component implements="contentbox.model.updates.IUpdate"{
 	function postInstallation(){
 		try{
 			transaction{
-				
 
 			}
 		}
@@ -88,6 +90,35 @@ component implements="contentbox.model.updates.IUpdate"{
 		blogSetting.setValue( "blog" );
 		settingService.save(entity=blogSetting, transactional=false);
 	}
+	
+	private function getLongTextColumn(){
+		var dbType = getDatabaseType();
+		
+		switch( dbType ){
+			case "PostgreSQL" : {
+				return "text";
+			}
+			case "MySQL" : {
+				return "longtext";
+			}
+			case "Microsoft SQL Server" : {
+				return "ntext";
+			}
+			case "Oracle" :{
+				return "clob";
+			}
+			default : {
+				return "text";
+			}
+		}
+	}
 
+	private function getDatabaseType(){
+		return new dbinfo(datasource=getDatasource()).version().database_productName;
+	}
+	
+	private function getDatasource(){
+		return new coldbox.system.orm.hibernate.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+	}
 
 }
