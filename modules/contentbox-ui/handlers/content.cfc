@@ -45,7 +45,8 @@ component{
 		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 
 		// Home page determination either blog or a page
-		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog"){
+		// Blog routes are in the blog namespace
+		if( event.getCurrentRoutedNamespace() eq "" AND prc.cbSettings.cb_site_homepage neq "cbBlog"){
 			event.overrideEvent("contentbox-ui:page.index");
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
 		}
