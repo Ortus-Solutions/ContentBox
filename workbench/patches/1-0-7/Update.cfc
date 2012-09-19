@@ -114,9 +114,16 @@ component implements="contentbox.model.updates.IUpdate"{
 	private function updateSettings(){
 		// Create New setting
 		var blogSetting = settingService.findWhere({name="cb_site_blog_entrypoint"});
-		blogSetting.setValue( "blog" );
-		settingService.save(entity=blogSetting, transactional=false);
-		log.info("Added blog entry point setting");
+		if( isNull(blogSetting) ){
+			blogSetting = settingService.new();
+			blogSetting.setValue( "blog" );
+			blogSetting.setName( "cb_site_blog_entrypoint" );
+			settingService.save(entity=blogSetting, transactional=false);
+			log.info("Added blog entry point setting");
+		}
+		else{
+			log.info("Skipped blog entry point setting, already there");
+		}
 	}
 	
 	private function getLongTextColumn(){
