@@ -34,6 +34,8 @@
       			<exclude name="workbench/**" />
       			<exclude name="test/**" />
       			<exclude name="WEB-INF/**" />
+      			<exclude name="modules/_gsdata_/**" />
+      			<exclude name="mxunit/**" />
       			<exclude name=".gitignore" />
       			<exclude name=".DS_Store" />
       			<exclude name="settings.xml" />
