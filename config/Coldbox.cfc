@@ -135,13 +135,14 @@ limitations under the License.
 		debugger.showRCPanel = false;
 
 		// ses debugging
-		logbox.appenders.files={class="coldbox.system.logging.appenders.RollingFileAppender",
+		logbox.appenders.files={class="coldbox.system.logging.appenders.AsyncRollingFileAppender",
 			properties = {
 				filename = "ContentBox", filePath="../logs"
 			}
 		};
 		//logbox.debug = ["coldbox.system.interceptors.Security"];
 		//logbox.debug = [ "coldbox.system.aop" ];
+		logbox.debug = ["root"];
 
 	}
 

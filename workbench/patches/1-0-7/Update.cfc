@@ -36,6 +36,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="pageService"				inject="pageService@cb";
 	property name="coldbox"					inject="coldbox";
 	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
+	property name="log"						inject="logbox:logger:{this}";
 
 	function init(){
 		return this;
@@ -54,16 +55,20 @@ component implements="contentbox.model.updates.IUpdate"{
 				// User Preferences
 				ALTER TABLE cb_author ADD COLUMN preferences longtext NULL;
 				*/
-				var q = new Query(datasource=getDatasource());
-				q.setSQL( "ALTER TABLE cb_author ADD COLUMN preferences #getLongTextColumn()# NULL;" );
-				q.execute();
+				log.info("About to beggin 1.0.7 patching");
+				
+				// Update User Preferences
+				updateUserPreferences();
 				
 				// update settings
 				updateSettings();
+				
+				log.info("Finalized 1.0.7 patching");
 			}
 		}
 		catch(Any e){
 			ORMClearSession();
+			log.error("Error doing 1.0.7 patch preInstallation. #e.message# #e.detail#", e);
 			rethrow;
 		}
 
@@ -80,15 +85,38 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		catch(Any e){
 			ORMClearSession();
+			log.error("Error doing 1.0.7 patch postInstallation. #e.message# #e.detail#", e);
 			rethrow;
 		}
 	}
 	
-	function updateSettings(){
+	private function updateUserPreferences(){
+		// Ensure column exists?
+		var colFound = false;
+		var cols = new dbInfo(datasource=getDatasource(), table="cb_author").columns();
+		for( var x=1; x lte cols.recordcount; x++ ){
+			if( cols[ "column_name"][x] eq "preferences"){
+				colFound = true;
+			}
+		}
+		if( !colFound ){
+			var q = new Query(datasource=getDatasource());
+			q.setSQL( "ALTER TABLE cb_author ADD COLUMN preferences #getLongTextColumn()# NULL;" );
+			q.execute();
+			
+			log.info("Added column for user preferences");
+		}
+		else{
+			log.info("Column for user preferences already in DB, skipping.");
+		}
+	}
+	
+	private function updateSettings(){
 		// Create New setting
 		var blogSetting = settingService.findWhere({name="cb_site_blog_entrypoint"});
 		blogSetting.setValue( "blog" );
 		settingService.save(entity=blogSetting, transactional=false);
+		log.info("Added blog entry point setting");
 	}
 	
 	private function getLongTextColumn(){
@@ -118,7 +146,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 	
 	private function getDatasource(){
-		return new coldbox.system.orm.hibernate.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
 	}
 
 }
