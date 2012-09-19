@@ -53,6 +53,16 @@
 		<!-- Zip Bundle -->
 		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}"></zip>
 		
+		<!-- Refactor Source For Express Edition -->
+		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
+		  <fileset dir="${dir.build}/modules/contentbox/model">
+		  	<include name="**/*.cfc" />
+		  </fileset>
+		</replaceregexp>
+		
+		<!-- Zip Express -->
+		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" basedir="${dir.build}"></zip>
+		
     </target>
 	
 </project>
