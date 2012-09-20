@@ -1,5 +1,5 @@
 ﻿********************************************************************************
-ContentBox - A Modular Content Platform
+ContentBox Modular CMS - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
 www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
