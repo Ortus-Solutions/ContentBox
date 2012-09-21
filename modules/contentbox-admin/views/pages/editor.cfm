@@ -233,6 +233,7 @@
 
 			<!--- id --->
 			#html.hiddenField(name="contentID",bind=prc.page)#
+			#html.hiddenField(name="contentType",bind=prc.page)#
 			#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 
 			<!--- title --->

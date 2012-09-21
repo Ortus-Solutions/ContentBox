@@ -12,7 +12,6 @@ $(document).ready(function() {
 	$content 		= $pageForm.find("##content");
 	$isPublished 	= $pageForm.find("##isPublished");
 	$contentID		= $pageForm.find("##contentID");
-	$contentType	= "#prc.page.getContentType()#";
 	// setup editors via _tags/editors.cfm by passing the form container
 	setupEditors( $pageForm, false );
 });
