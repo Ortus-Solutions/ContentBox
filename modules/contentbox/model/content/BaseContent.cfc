@@ -250,7 +250,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		var latestContent = arguments.original.getActiveContent().getContent();
 		// Original slug updates on all content
 		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all");
-		writeDump(latestContent);abort;
 		// reset versioning, and start with one
 		addNewContentVersion(content=latestContent, changelog="Page Cloned!", author=arguments.author);
 		// safe clone custom fields
