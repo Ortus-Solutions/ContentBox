@@ -53,7 +53,7 @@ function openCloneDialog(contentID, title){
 	// local id's
 	var $cloneForm = $("##cloneForm");
 	// open modal for cloning options
-	openModal( $cloneDialog, 500 );
+	openModal( $cloneDialog, 500, 500 );
 	// form validator and data
 	$cloneForm.validator({
 		position:'top left', 
