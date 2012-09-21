@@ -101,7 +101,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		if( !colFound ){
 			var q = new Query(datasource=getDatasource());
-			q.setSQL( "ALTER TABLE cb_author ADD COLUMN preferences #getLongTextColumn()# NULL;" );
+			q.setSQL( "ALTER TABLE cb_author ADD preferences #getLongTextColumn()# NULL;" );
 			q.execute();
 			
 			log.info("Added column for user preferences");
