@@ -26,6 +26,9 @@ component extends="content" singleton{
 
 	// DI
 	property name="entryService" inject="id:entryService@cb";
+	
+	// Pre Handler Exceptions
+	this.preHandler_except = "preview";
 
 	// pre Handler
 	function preHandler(event,action,eventArguments){

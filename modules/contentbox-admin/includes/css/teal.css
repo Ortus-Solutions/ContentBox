@@ -126,7 +126,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 #confirmIt hr, #remoteModelContent hr, #quickPost hr, .modal hr { border-bottom-color:#C0C0C0; color:#C0C0C0; border-bottom:1px solid; border-style:none none solid; height:1px; margin:2em 0; }
 #confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close { background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
 /** ============================== Modals ============================== **/
-#remoteModelContent, #quickPostContent, #modalContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:98%; max-height:750px; overflow-y:auto; }
+#remoteModelContent, #quickPostContent, #modalContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:98%;overflow-y:auto; }
 /** ============================== PAGING TABS =============================== **/
 .pagingTabs { font-size:.8em; text-align:left; }
 .pagingTabs a { color:#000; padding:2px 4px; background-color:#fff; border:1px solid #ccc; margin-left:2px; }

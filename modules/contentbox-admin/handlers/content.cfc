@@ -33,7 +33,6 @@ component extends="baseHandler"{
 				return;
 			}
 		}
-		
 		// author security hash
 		prc.h = hash( prc.oAuthor.getAuthorID() );
 		// full preview view

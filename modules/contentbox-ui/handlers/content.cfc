@@ -33,6 +33,9 @@ component{
 	property name="rssService"			inject="id:rssService@cb";
 	property name="validator"			inject="id:Validator@cb";
 
+	// Pre Handler Exceptions
+	this.preHandler_except = "previewSite";
+	
 	// pre Handler
 	function preHandler(event,rc,prc,action,eventArguments){
 		// Maintenance Mode?
@@ -49,6 +52,27 @@ component{
 		if( event.getCurrentRoutedNamespace() eq "" AND prc.cbSettings.cb_site_homepage neq "cbBlog"){
 			event.overrideEvent("contentbox-ui:page.index");
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
+		}
+	}
+	
+	/**
+	* Preview content page super event. Only called internally
+	*/
+	private function preview(event,rc,prc){
+		// Param incoming data
+		event.paramValue("content", "");
+		event.paramValue("contentType", "");
+		event.paramValue("layout", "");
+		event.paramValue("title", "");
+		event.paramValue("slug", "");
+		event.paramValue("h", "");
+		
+		// get current author, only authors can preview
+		prc.author = getModel("securityService@cb").getAuthorSession();
+		// valid Author?
+		if( !prc.author.isLoaded() OR !prc.author.isLoggedIn() OR compareNoCase( hash( prc.author.getAuthorID() ), rc.h) NEQ 0){
+			// Not an author, kick them out.
+			setNextEvent(URL=CBHelper.linkHome());
 		}
 	}
 	
@@ -94,27 +118,6 @@ component{
 		}
 	}
 	
-	/**
-	* Preview content page
-	*/
-	function preview(event,rc,prc){
-		// Param incoming data
-		event.paramValue("content", "");
-		event.paramValue("contentType", "");
-		event.paramValue("layout", "");
-		event.paramValue("title", "");
-		event.paramValue("slug", "");
-		event.paramValue("h", "");
-		
-		// get current author, only authors can preview
-		prc.author = getModel("securityService@cb").getAuthorSession();
-		// valid Author?
-		if( !prc.author.isLoaded() OR !prc.author.isLoggedIn() OR compareNoCase( hash( prc.author.getAuthorID() ), rc.h) NEQ 0){
-			// Not an author, kick them out.
-			setNextEvent(URL=CBHelper.linkHome());
-		}
-	}
-
 	/**
 	* Go Into maintenance mode.
 	*/

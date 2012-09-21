@@ -29,6 +29,9 @@ component extends="content" singleton{
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
 	
+	// Pre Handler Exceptions
+	this.preHandler_except = "preview";
+	
 	// pre Handler
 	function preHandler(event,action,eventArguments){
 		super.preHandler(argumentCollection=arguments);
