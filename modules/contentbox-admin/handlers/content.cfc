@@ -12,25 +12,31 @@ component extends="baseHandler"{
 		// param incoming data
 		event.paramValue("layout","pages");
 		event.paramValue("content","");
-		event.paramValue("contentType","page");
+		event.paramValue("contentType","");
 		event.paramValue("title","");
 		event.paramValue("slug","");
 		
 		// Determine Type
 		switch( rc.contentType ){
-			case "page" 	: { 
+			case "Page" 	: { 
 				prc.xehPreview = CBHelper.linkPage("__page_preview"); 
 				break; 
 			}
-			case "entry" : { 
+			case "Entry" : { 
 				prc.xehPreview = CBHelper.linkPage("__entry_preview"); 
 				rc.layout = "blog";
 				break; 
 			}
+			case "CustomHTML" : {
+				prc.preview = contentService.new().renderContentSilent( rc.content );
+				event.setView(view="content/simplePreview",layout="ajax");
+				return;
+			}
 		}
+		
 		// author security hash
 		prc.h = hash( prc.oAuthor.getAuthorID() );
-		// view
+		// full preview view
 		event.setView(view="content/preview",layout="ajax");
 	}
 

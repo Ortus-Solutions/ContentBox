@@ -12,7 +12,7 @@ openRemoteModal() is part of contentbox js
 							   layout: $("#layout").val(),
 							   title: $("#title").val(),
 							   slug: $("#slug").val(),
-							   contentType : $contentType },
+							   contentType : $("#contentType").val() },
 							 "95%",
 							 "90%");
 		}
