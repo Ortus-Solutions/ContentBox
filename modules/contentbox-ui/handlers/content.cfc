@@ -49,7 +49,7 @@ component{
 
 		// Home page determination either blog or a page
 		// Blog routes are in the blog namespace
-		if( event.getCurrentRoutedNamespace() eq "" AND prc.cbSettings.cb_site_homepage neq "cbBlog"){
+		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog" AND event.getCurrentRoutedNamespace() neq "blog"){
 			event.overrideEvent("contentbox-ui:page.index");
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
 		}
