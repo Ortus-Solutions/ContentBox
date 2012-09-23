@@ -46,28 +46,7 @@ component {
 
 		// CB UI SES Routing
 		routes = [
-		
-			/************************************** BLOG ROUTES *********************************************/
-			
-			// Blog Archives
-			{pattern="/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives", namespace="blog"},
-			// Blog RSS feeds
-			{pattern="/rss/category/:category", handler="blog", action="rss" , namespace="blog"},
-			{pattern="/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true, namespace="blog"},
-			{pattern="/rss/", handler="blog", action="rss" , namespace="blog"},
-			// category filter
-			{pattern="/category/:category/:page-numeric?", handler="blog", action="index" , namespace="blog"},
-			// search filter
-			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" , namespace="blog"},
-			// Blog comment post
-			{pattern="/:entrySlug/commentPost", handler="blog", action="commentPost" , namespace="blog"},
-			// blog permalink
-			{pattern="/:entrySlug", handler="blog", action="entry", namespace="blog"},
-			// Blog reserved route
-			{pattern="/", handler="blog", action="index", namespace="blog"},
-			
 			/************************************** COMMAND ROUTES *********************************************/
-			
 			// search filter
 			{pattern="/__search/:q?/:page-numeric?", handler="page", action="search" },
 			// layout preview
@@ -98,6 +77,27 @@ component {
 			{pattern="/:pageSlug", handler="page", action="index"},
 			// Home Pattern
 			{pattern="/", handler="blog", action="index" }
+		];
+		
+		/************************************** BLOG ROUTES NAMESPACE *********************************************/
+		
+		blogRoutes = [
+			// Blog Archives
+			{pattern="/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives", namespace="blog"},
+			// Blog RSS feeds
+			{pattern="/rss/category/:category", handler="blog", action="rss" , namespace="blog"},
+			{pattern="/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true, namespace="blog"},
+			{pattern="/rss/", handler="blog", action="rss" , namespace="blog"},
+			// category filter
+			{pattern="/category/:category/:page-numeric?", handler="blog", action="index" , namespace="blog"},
+			// search filter
+			{pattern="/search/:q?/:page-numeric?", handler="blog", action="index" , namespace="blog"},
+			// Blog comment post
+			{pattern="/:entrySlug/commentPost", handler="blog", action="commentPost" , namespace="blog"},
+			// blog permalink
+			{pattern="/:entrySlug", handler="blog", action="entry", namespace="blog"},
+			// Blog reserved route
+			{pattern="/", handler="blog", action="index", namespace="blog"}
 		];
 
 		// CB UI Event driven programming extensions
@@ -138,14 +138,7 @@ component {
 		var ses = controller.getInterceptorService().getInterceptor('SES',true);
 		
 		// Add Dynamic Blog Namespace
-		var settingService = controller.getWireBox().getInstance("settingService@cb");
-		var blogEntryPoint = settingService.findWhere({name="cb_site_blog_entrypoint"});
-		if( !isNull( blogEntryPoint ) ){
-			ses.addNamespace(pattern="/#blogEntryPoint.getValue()#", namespace="blog", append=false);
-		}
-		else{
-			ses.addNamespace(pattern="/blog", namespace="blog", append=false);
-		}
+		registerBlogNamespace();
 		
 		// Treat the blog as the Main Application?
 		if( !len(this.entryPoint) ){
@@ -178,8 +171,37 @@ component {
 				// add it as main application route.
 				ses.addRoute(argumentCollection=args);
 			}
-			// change the default event
+			// change the default event of the entire app
 			controller.setSetting("DefaultEvent","contentbox-ui:blog");
+		}		
+	}
+	
+	/**
+	* Register blog namespace routes
+	*/
+	private function registerBlogNamespace(){
+		// Get ses handle
+		var ses = controller.getInterceptorService().getInterceptor('SES',true);
+		// Get setting service
+		var settingService = controller.getWireBox().getInstance("settingService@cb");
+		// Get blog entry point from DB
+		var blogEntryPoint = settingService.findWhere({name="cb_site_blog_entrypoint"});
+		if( !isNull( blogEntryPoint ) ){
+			ses.addNamespace(pattern="#this.entryPoint#/#blogEntryPoint.getValue()#", namespace="blog", append=false);
+		}
+		else{
+			ses.addNamespace(pattern="#this.entryPoint#/blog", namespace="blog", append=false);
+		}
+		
+		// Register namespace routes
+		for(var x=1; x LTE arrayLen( variables.blogRoutes ); x++){
+			var args = duplicate( variables.blogRoutes[ x ] );
+			// Check if handler defined
+			if( structKeyExists(args,"handler") ){
+				args.handler = "contentbox-ui:#args.handler#";
+			}
+			// Add the namespace routes
+			ses.addRoute(argumentCollection=args);
 		}
 	}
 
