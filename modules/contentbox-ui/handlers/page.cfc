@@ -110,7 +110,6 @@ component extends="content" singleton{
 	* Present pages
 	*/
 	function index(event,rc,prc){
-
 		// incoming params
 		event.paramValue("pageSlug","");
 		var incomingURL  = "";
@@ -122,6 +121,7 @@ component extends="content" singleton{
 		else{
 			incomingURL	 = prc.pageOverride;
 		}
+		
 		// Entry point cleanup
 		if( len( prc.cbEntryPoint ) ){
 			incomingURL = replacenocase( incomingURL, prc.cbEntryPoint & "/", "" );
