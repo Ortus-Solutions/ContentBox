@@ -20,10 +20,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
-This is an updater cfc for contentbox to version 1.0.5
+This is an updater cfc for contentbox to version 1.0.8 with some
+cummulative fixes from the erroneous 1.0.7 release
 
 Start Commit Hash: 779c3f3
-End Commit Hash: 3b9db0f
+End Commit Hash: c196e76
 
 */
 component implements="contentbox.model.updates.IUpdate"{
