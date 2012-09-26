@@ -71,9 +71,9 @@ component accessors="true"{
 			// Loop findings of same {{{}}} instances to replace
 			while( rLocation gt -1 ){
 				// Replace it
-				builder.replace( rLocation, rLocation+rLen, linkContent);
+				builder.replace( javaCast("int", rLocation), javaCast("int", rLocation+rLen), linkContent);
 				// look again
-				rLocation = builder.indexOf( targets[x], rLocation );
+				rLocation = builder.indexOf( targets[x], javaCast("int", rLocation) );
 			}
 			
 		}
