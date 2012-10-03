@@ -40,6 +40,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		allowComments 	= false;
 		createdDate		= now();
 		layout 			= "pages";
+		contentType		= "Page";
 	}
 
 	/************************************** PUBLIC *********************************************/

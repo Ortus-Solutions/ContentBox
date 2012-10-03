@@ -37,6 +37,7 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		customFields	= [];
 		renderedContent = "";
 		createdDate		= now();
+		contentType		= "Entry";
 	}
 
 	/************************************** PUBLIC *********************************************/
