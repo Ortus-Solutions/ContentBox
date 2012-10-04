@@ -71,7 +71,7 @@ component extends="content" singleton{
 		index(event,rc,prc);
 
 		// verify if caching is possible by testing the page, also, page with comments are not cached.
-		if( prc.page.isLoaded() AND !prc.page.getAllowComments() AND prc.page.getCacheLayout() ){
+		if( prc.page.isLoaded() AND !prc.page.getAllowComments() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() ){
 			var data = controller.getPlugin("Renderer")
 				.renderLayout(module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule());
 			cache.set(cachekey,
