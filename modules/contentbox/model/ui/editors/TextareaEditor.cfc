@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * Simple textarea editor
 */
-component implements="modules.contentbox.model.ui.editors.IEditor" singleton{
+component implements="contentbox.model.ui.editors.IEditor" singleton{
 
 	property name="log" inject="logbox:logger:{this}";
 
@@ -55,6 +55,9 @@ component implements="modules.contentbox.model.ui.editors.IEditor" singleton{
 			writeOutput("
 			function checkIsDirty(){
 				return false;
+			}
+			function getEditorContent(){
+				return $('##content').val();
 			}
 			");
 		}

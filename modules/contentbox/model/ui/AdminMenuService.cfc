@@ -126,19 +126,19 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#")
 			.addSubMenu(topMenu=this.CONTENT,name="Blog",label="Blog",href="#event.buildLink(prc.xehEntries)#")
 			.addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#")
-			.addSubMenu(name="customHTML",label="Custom HTML",href="#event.buildLink(prc.xehCustomHTML)#")
+			.addSubMenu(name="customHTML",label="Custom HTML",href="#event.buildLink(prc.xehCustomHTML)#",permissions="CUSTOMHTML_ADMIN")
 			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",permissions="MEDIAMANAGER_ADMIN");
 
 		// Comments
 		addTopMenu(name=this.COMMENTS,label="Comments")
 			.addSubMenu(name="Inbox",label="Inbox",href="#event.buildLink(prc.xehComments)#")
-			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehCommentsettings)#");
+			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehCommentsettings)#",permissions="COMMENTS_ADMIN");
 
 		// Look and Feel
 		addTopMenu(name=this.LOOK_FEEL,label="Look & Feel")
-			.addSubMenu(name="Layouts",label="Layouts",href="#event.buildLink(prc.xehLayouts)#")
-			.addSubMenu(name="Widgets",label="Widgets",href="#event.buildLink(prc.xehWidgets)#")
-			.addSubMenu(name="globalHTML",label="Global HTML",href="#event.buildLink(prc.xehGlobalHTML)#");
+			.addSubMenu(name="Layouts",label="Layouts",href="#event.buildLink(prc.xehLayouts)#",permissions="LAYOUT_ADMIN")
+			.addSubMenu(name="Widgets",label="Widgets",href="#event.buildLink(prc.xehWidgets)#",permissions="WIDGET_ADMIN")
+			.addSubMenu(name="globalHTML",label="Global HTML",href="#event.buildLink(prc.xehGlobalHTML)#",permissions="GLOBALHTML_ADMIN");
 
 		// Modules
 		addTopMenu(name=this.MODULES,label="Modules",permissions="MODULES_ADMIN")
@@ -158,7 +158,7 @@ component accessors="true" threadSafe singleton{
 		// SYSTEM
 		addTopMenu(name=this.SYSTEM,label="System",permissions="SYSTEM_TAB")
 			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehSettings)#")
-			.addSubMenu(name="SecurityRules",label="Security Rules",href="#event.buildLink(prc.xehSecurityRules)#")
+			.addSubMenu(name="SecurityRules",label="Security Rules",href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN")
 			.addSubMenu(name="EmailTemplates",label="Email Templates",href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN")
 			.addSubMenu(name="GeekSettings",label="Geek Settings",href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS");
 
