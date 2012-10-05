@@ -93,7 +93,7 @@
 			#html.startForm(name="pageForm",action=prc.xehPageRemove)#
 			#html.hiddenField(name="contentStatus",value="")#
 			#html.hiddenField(name="contentID",value="")#
-			#html.hiddenField(name="parent",value=rc.parent)#
+			#html.hiddenField(name="parent",value=event.getValue("parent",""))#
 
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
@@ -111,7 +111,7 @@
 				<div class="buttonBar">
 					<button class="button2" onclick="return bulkChangeStatus('publish')" title="Bulk Publish Content">Publish</button>
 					<button class="button2" onclick="return bulkChangeStatus('draft')" title="Bulk Draft Content">Draft</button>
-					<button class="buttonred" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#rc.parent#');">Create Page</button>
+					<button class="buttonred" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#event.getValue('parent','')#');">Create Page</button>
 				</div>
 				</cfif>
 
@@ -128,7 +128,7 @@
 			#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
 
 			<!--- Location Bar --->
-			<cfif len(rc.parent)>
+			<cfif structKeyExists(rc, "parent")>
 			<div class="infoBar">
 			  <a href="#event.buildLink(prc.xehPages)#">Root</a> #getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-admin").visit(prc.page, event.buildLink(prc.xehPages))#
 			</div>

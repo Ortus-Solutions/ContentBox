@@ -76,7 +76,7 @@ component extends="ContentService" singleton{
 			// like disjunctions
 			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.search#%"),
-				  c.restrictions.isEq("ac.content", "%#arguments.search#%") );
+				  c.restrictions.like("ac.content", "%#arguments.search#%") );
 		}
 		// Category Filter
 		if( structKeyExists(arguments,"category") AND arguments.category NEQ "all"){

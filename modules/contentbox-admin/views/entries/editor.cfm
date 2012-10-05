@@ -233,15 +233,14 @@
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
-					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehAPIDocs&"/index/apislug/plugins/print/?_cfcviewer_cfc=CBHelper")#')" 
-					   class="button" title="Get some quick CBHelper API Goodness!">
-						<img src="#prc.cbRoot#/includes/images/help_small.png" alt="print" border="0"> CBHelper Docs
+					<a href="javascript:previewContent()" class="button">
+						<img src="#prc.cbRoot#/includes/images/eye.png" alt="print" border="0"> Preview
 					</a>
 				</div>
 			</div>
 			
 			<!--- content --->
-			#html.textarea(label="Content:", name="content", bind=prc.entry, rows="25", class="width98")#
+			#html.textarea(name="content", bind=prc.entry, rows="25", class="width98")#
 			<!--- excerpt --->
 			#html.textarea(label="Excerpt:", name="excerpt", bind=prc.entry, rows="10", class="width98")#
 
