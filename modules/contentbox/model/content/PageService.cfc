@@ -68,6 +68,7 @@ component extends="ContentService" singleton{
 
 	/**
 	* page search returns struct with keys [pages,count]
+	* @parent.hint If empty, then looks for empty parent nodes. If you do not want to attach it, send as null
 	*/
 	struct function search(search="",isPublished,author,parent,category,max=0,offset=0,sortOrder="title asc"){
 		var results = {};
@@ -82,6 +83,13 @@ component extends="ContentService" singleton{
 		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
 			c.createAlias("activeContent","ac")
 				.isEq("ac.author.authorID", javaCast("int",arguments.author) );
+		}
+		// Search Criteria	
+		if( len(arguments.search) ){
+			// like disjunctions
+			c.createAlias("activeContent","ac");
+			c.or( c.restrictions.like("title","%#arguments.search#%"),
+				  c.restrictions.like("ac.content", "%#arguments.search#%") );
 		}
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
@@ -106,17 +114,10 @@ component extends="ContentService" singleton{
 					.isIn("cats.categoryID", JavaCast("java.lang.Integer[]",[arguments.category]) );
 			}
 		}
-		// Search Criteria
-		if( len(arguments.search) ){
-			// like disjunctions
-			c.createAlias("activeContent","ac");
-			c.or( c.restrictions.like("title","%#arguments.search#%"),
-				  c.restrictions.isEq("ac.content", "%#arguments.search#%") );
-		}
-
+		
 		// run criteria query and projections count
 		results.count 	= c.count();
-		results.pages 	= c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=false);
+		results.pages 	= c.list(offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false);
 		return results;
 	}
 
@@ -150,7 +151,7 @@ component extends="ContentService" singleton{
 			// like disjunctions
 			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.isEq("ac.content", "%#arguments.searchTerm#%") );
+				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
 		}
 
 		// parent filter
