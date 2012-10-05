@@ -2,6 +2,13 @@
 <h2>ContentBox Editor Widget Selector</h2>
 <div>
 	<p>Which ContentBox widget would you like to insert in to your editor:</p>
+	<!--- Filter Bar --->
+	<div class="filterBar">
+		<div>
+			#html.label(field="widgetFilter",content="Quick Filter:",class="inline")#
+			#html.textField(name="widgetFilter",size="30",class="textfield")#
+		</div>
+	</div>
 	<!--- widgets --->
 	<table name="widgets" id="widgets" class="tablesorter" width="98%">
 		<thead>

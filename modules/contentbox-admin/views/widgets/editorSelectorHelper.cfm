@@ -50,6 +50,12 @@
 <cfoutput>
 <!--- Custom Javascript --->
 <script type="text/javascript">
+$(document).ready(function() {
+	// Widget Filter
+	$("##widgetFilter").keyup(function(){
+		$.uiTableFilter( $("##widgets"), this.value );
+	});
+});
 function selectCBWidget(widget){
 	var argDiv = $("##widgetArgs_"+widget).slideToggle();
 	// check if we have arguments, else just insert
