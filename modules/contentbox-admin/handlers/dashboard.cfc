@@ -22,7 +22,6 @@ component extends="baseHandler"{
 		prc.xehEntryEditor		= "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehEntrySave		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehRemoveComment	= "#prc.cbAdminEntryPoint#.comments.remove";
-		prc.xehReloadModule		= "#prc.cbAdminEntryPoint#.dashboard.reload";
 
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
@@ -49,17 +48,6 @@ component extends="baseHandler"{
 		prc.topContent 		= contentService.getTopVisitedContent();
 		prc.topCommented 	= contentService.getTopCommentedContent();
 		
-		// Prepare Reload Options
-		prc.reloadOptions = [
-			{name="Reload Application",value="app"},
-			{name="Reload ORM",value="orm"},
-			{name="Reload Admin",value="contentbox-admin"},
-			{name="Reload Site",value="contentbox-ui"},
-			{name="Reload FileBrowser",value="contentbox-filebrowser"},
-			{name="Clear RSS Caches",value="rss-purge"},
-			{name="Clear Content Caches",value="content-purge"}
-		];
-
 		// announce event
 		announceInterception("cbadmin_onDashboard");
 
@@ -102,8 +90,13 @@ component extends="baseHandler"{
 		}
 		// flash info
 		flash.put("moduleReloaded",rc.targetModule);
-		// relocate
-		setNextEvent(prc.xehDashboard);
+		if( event.isAjax() ){
+			return "true";
+		}
+		else{
+			// relocate
+			setNextEvent(prc.xehDashboard);
+		}
 	}
 
 }

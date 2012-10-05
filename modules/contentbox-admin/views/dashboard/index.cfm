@@ -16,8 +16,8 @@
 			</cfif>
 			<!--- Reload button --->
 			<p class="actionBar">
-				#html.startForm(name="reloadForm",action=prc.xehReloadModule)#
-				#html.select(label="Choose Command To Execute:",name="targetModule",options=prc.reloadOptions)#
+				#html.startForm(name="reloadForm",action=prc.xehAdminAction)#
+				#html.select(label="Choose Command To Execute:",name="targetModule",options=prc.xehAdminActionData)#
 				#html.submitButton(value="Issue Reload",class="buttonred")#
 				#html.endForm()#
 			</p>

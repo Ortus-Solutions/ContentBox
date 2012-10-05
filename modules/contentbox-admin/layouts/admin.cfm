@@ -61,6 +61,17 @@
 					<!--- Quick Post --->
 					<button class="buttonsmall" onclick="showQuickPost()">Quick Post</button>
 					</cfif>
+					<!--- Admin Actions --->
+					<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
+					<span id="adminActionBar">
+						<span id="adminActionLoaderBar" style="display:none"><img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/></span>
+						<span id="adminActionLoaderStatus"></span>
+						<select name="adminActions" id="adminActions" onchange="adminAction(this.value, '#event.buildLink(prc.xehAdminAction)#')">
+							<option value="null">Admin Actions</option>
+							#html.options(values=prc.xehAdminActionData)#
+						</select>
+					</span>
+					</cfif>
 					<!--- Quick Links --->
 					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
 						<option value="null">Quick Links</option>
@@ -95,7 +106,7 @@
 				#announceInterception("cbadmin_onTagline")#
 			</div>
 			<!--End Header top Area=-->
-
+		
 			<!--=========Header Area including search field and logo=========-->
 			<div id="logo">
 				<a href="#event.buildLink(prc.xehAbout)#">

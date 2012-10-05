@@ -96,7 +96,18 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehCKFileBrowserURL			= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLImage	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLFlash	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
-
+		
+		// Prepare Admin Actions
+		prc.xehAdminActionData = [
+			{name="Reload Application",value="app"},
+			{name="Reload ORM",value="orm"},
+			{name="Reload Admin",value="contentbox-admin"},
+			{name="Reload Site",value="contentbox-ui"},
+			{name="Reload FileBrowser",value="contentbox-filebrowser"},
+			{name="Clear RSS Caches",value="rss-purge"},
+			{name="Clear Content Caches",value="content-purge"}
+		];
+		prc.xehAdminAction	= "#prc.cbAdminEntryPoint#.dashboard.reload";
 
 	}
 
