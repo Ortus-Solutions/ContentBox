@@ -62,7 +62,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		    { "name": "styles",      "items" : [ "Styles","Format" ] },
 		    { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
 			{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
-		    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks", "cbPreview" ] }
+		    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
 		    ]');
 		};
 		savecontent variable="TOOLBAR_EXCERPT_JSON"{
@@ -72,12 +72,12 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		    { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","CreateDiv"] },
 		    { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
 		    { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
-		    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks", "cbPreview" ] }
+		    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
 		    ]');
 		};
 		
 		// Register our extra plugins
-		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbPreview,cbIpsumLorem";
+		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem";
 		
 		// Register our events
 		interceptorService.appendInterceptionPoints("cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins");
@@ -127,6 +127,9 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			writeOutput("
 			function checkIsDirty(){
 				return $content.ckeditorGet().checkDirty();
+			}
+			function getEditorContent(){
+				return $content.ckeditorGet().getData();
 			}
 			");
 		}

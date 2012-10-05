@@ -37,7 +37,7 @@ interface{
 	/**
 	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc. 
 	* return the appropriate JavaScript.
-	* Each editor must implement the following JS functions: checkIsDirty()
+	* Each editor must implement the following JS functions: checkIsDirty(), getEditorContent()
 	*/
 	function loadAssets();
 	

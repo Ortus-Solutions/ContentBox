@@ -122,6 +122,9 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			function checkIsDirty(){
 				return false;
 			}
+			function getEditorContent(){
+				return editAreaLoader.getValue('content');
+			}
 			");
 		}
 		
