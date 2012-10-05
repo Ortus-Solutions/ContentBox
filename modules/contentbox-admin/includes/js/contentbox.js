@@ -65,6 +65,19 @@ function quickLinks( inURL ){
 	if( inURL != 'null' )
 		window.location = inURL;
 }
+function adminAction( action, actionURL ){
+	if( action != 'null' ){
+		$("#adminActions").hide();
+		$("#adminActionLoaderBar").fadeIn();
+		// Run Action Dispatch
+		$.post( actionURL , {targetModule: action}, function(data){
+			$("#adminActionLoaderBar").hide();
+			$("#adminActionLoaderStatus").fadeIn().html("<strong>Action Ran, Booya!</strong>").delay( 1500 ).fadeOut();
+			$('#adminActions option:first-child').attr("selected", "selected");
+			$("#adminActions").delay( 2000 ).fadeIn();
+		} );
+	}
+}
 function exposeIt(vID){
 	$(vID).expose();
 }
