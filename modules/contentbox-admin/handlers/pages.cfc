@@ -41,8 +41,12 @@ component extends="baseHandler"{
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
 		prc.paging 		 = prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 	 = event.buildLink('#prc.xehPages#?page=@page@');
-		// Append search to paging link?
-		if( len(rc.searchPages) ){ prc.pagingLink&="&searchPages=#rc.searchPages#"; }
+		// Doing a page search?
+		if( len(rc.searchPages) ){ 
+			prc.pagingLink&="&searchPages=#rc.searchPages#";
+			// remove parent for searches, we go site wide 
+			structDelete(rc, "parent");
+		}
 		// Append filters to paging link?
 		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
 		if( rc.fCategories neq "all"){ prc.pagingLink&="&fCategories=#rc.fCategories#"; }
@@ -62,12 +66,12 @@ component extends="baseHandler"{
 											 isPublished=rc.fStatus,
 											 category=rc.fCategories,
 											 author=rc.fAuthors,
-											 parent=rc.parent);
+											 parent=( !isNull( rc.parent ) ? rc.parent : javaCast("null","") ));
 		prc.pages 		= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
 
 		// Do we have a parent?
-		if( len(rc.parent) ){
+		if( structKeyExists(rc, "parent") ){
 			prc.page = pageService.get( rc.parent );
 		}
 
