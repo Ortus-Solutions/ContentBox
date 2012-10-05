@@ -60,7 +60,7 @@ component{
 		secondarycacheenabled = true,
 		cacheprovider		= "ehCache",
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
-		logSQL 				= true,
+		logSQL 				= false,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK
