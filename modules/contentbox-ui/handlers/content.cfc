@@ -66,7 +66,8 @@ component{
 		event.paramValue("title", "");
 		event.paramValue("slug", "");
 		event.paramValue("h", "");
-		
+		// Get all categories
+		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// get current author, only authors can preview
 		prc.author = getModel("securityService@cb").getAuthorSession();
 		// valid Author?

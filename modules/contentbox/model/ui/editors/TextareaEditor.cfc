@@ -56,6 +56,9 @@ component implements="contentbox.model.ui.editors.IEditor" singleton{
 			function checkIsDirty(){
 				return false;
 			}
+			function getEditorContent(){
+				return $('##content').val();
+			}
 			");
 		}
 		

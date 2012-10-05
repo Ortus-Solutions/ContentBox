@@ -4,6 +4,18 @@
 // Load Custom Editor Assets, Functions, etc.
 #prc.oEditorDriver.loadAssets()#
 
+// Quick preview for content
+function previewContent(){
+	// Open the preview window for content
+	openRemoteModal( getPreviewSelectorURL(), 
+					 { content: getEditorContent(), 
+					   layout: $("##layout").val(),
+					   title: $("##title").val(),
+					   slug: $("##slug").val(),
+					   contentType : $("##contentType").val() },
+					 "95%",
+					 "90%");
+}
 // Set the actual publishing date to now
 function publishNow(){
 	var fullDate = new Date();
@@ -11,7 +23,6 @@ function publishNow(){
 	$("##publishedHour").val( fullDate.getHours() );
 	$("##publishedMinute").val( fullDate.getMinutes() );
 }
-
 /**
  * Setup the editors. 
  * TODO: Move this to a more OOish approach, don't like it.
