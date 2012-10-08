@@ -30,7 +30,7 @@
 				// Update APP DSN Now!
 				request.cfHelper.updateAPP( dsnCreateName );
 				// Relocate to installer now
-				location("../../index.cfm");
+				location("../../index.cfm?cbInstaller=true");
 			}
 			else{
 				// Mark Errors
