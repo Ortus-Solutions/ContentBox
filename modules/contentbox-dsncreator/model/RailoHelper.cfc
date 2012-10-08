@@ -56,6 +56,174 @@ limitations under the License.
     	</cfscript>    
     </cffunction>
     
+    <!--- createDSN --->    
+    <cffunction name="createDSN" output="false" access="public" returntype="any" hint="Create the DSN, returns struct: {error:boolean, messages:string}">    
+    	<cfargument name="cfmlPassword" 	required=true>
+		<cfargument name="dsnName" 			required="true">
+    	<cfargument name="dbType" 			required="true">
+    	<cfargument name="dbHost" 			required="true">
+    	<cfargument name="dbName" 			required="true">
+		<cfargument name="dbUsername" 		required="false" default="">
+		<cfargument name="dbPassword" 		required="false" default="">
+		
+		<cfset var results = { error = false, messages = "" }>
+		
+		<cftry>
+			<!---Get Datasources --->
+			<cfadmin 
+				action="getDatasources"
+				type="web"
+				password="#arguments.cfmlPassword#"
+				returnVariable="local.datasources">
+			<!---Verify it --->
+			<cfif ListFindNoCase( ValueList( local.datasources.name ), arguments.dsnName )>
+				<cfthrow type="DuplicateDSNException" message="Datsource #arguments.dsnName# already exists!">
+			</cfif>
+			
+			<cfswitch expression="#arguments.dbType#">
+				<cfcase value="mssql">
+					<cfset local.dsnString = "jdbc:sqlserver://{host}:{port}">
+					<cfset local.dbPort = "1433">
+					<cfset local.className = "com.microsoft.jdbc.sqlserver.SQLServerDriver">
+				</cfcase>
+				<cfcase value="mysql">
+					<cfset local.dsnString = "jdbc:mysql://{host}:{port}/{database}">
+					<cfset local.dbPort = "3306">
+					<cfset local.className = "org.gjt.mm.mysql.Driver">
+				</cfcase>
+				<cfcase value="oracle">
+					<cfset local.dsnString = "jdbc:oracle:{drivertype}:@{host}:{port}:{database}">
+					<cfset local.dbPort = "1521">
+					<cfset local.className = "oracle.jdbc.driver.OracleDriver">
+				</cfcase>
+				<cfcase value="postgresql">
+					<cfset local.dsnString = "jdbc:postgresql://{host}:{port}/{database}">
+					<cfset local.dbPort = "5432">
+					<cfset local.className = "org.postgresql.Driver">
+				</cfcase>
+				<cfcase value="h2">
+					<cfset local.dsnString = "jdbc:h2:{path}{database};MODE={mode}">
+					<cfset local.dbPort = "">
+					<cfset local.className = "org.h2.Driver">
+				</cfcase>
+			</cfswitch>
+			
+			<!---Create Datasource --->
+			<cfadmin 
+				action="updateDatasource"
+				type="web"
+				password="#arguments.cfmlPassword#"
+				name = "#arguments.dsnName#"
+				dsn = "#local.dsnString#"
+				host = "#arguments.dbHost#"
+				database = "#arguments.dbName#"
+				dbusername = "#arguments.dbUsername#"
+				dbpassword = "#arguments.dbPassword#"
+				classname = "#local.className#"
+				port = "#local.dbPort#"
+				connectionLimit = -1
+				connectionTimeout = 1
+				blob = "true"
+				clob = "true"
+				allowed_select = "true"
+				allowed_insert = "true"
+				allowed_update = "true"
+				allowed_delete = "true"
+				allowed_alter = "true"
+				allowed_drop = "true"
+				allowed_revoke = "true"
+				allowed_create = "true"
+				allowed_grant = "true"
+				custom="#structNew()#">
+		
+			<!---Verify it --->
+			<cftry>
+				<cfadmin 
+					action="verifyDatasource"
+					type="web"
+					password="#arguments.cfmlPassword#"
+					name="#arguments.dsnName#"
+					dbusername = "#arguments.dbUsername#"
+					dbpassword = "#arguments.dbPassword#">
+				<cfcatch>
+					<!--- Roll back --->
+					<cfadmin 
+						action="removeDatasource"
+						type="web"
+						password="#arguments.cfmlPassword#"
+						name="#arguments.dsnName#">
+					<cfset results.error = true>
+					<cfset results.messages = "Datasource could not be verified, please check your settings.">
+				</cfcatch>
+			</cftry>
+			
+			<cfset results.error = false>
+			<cfset results.messages = "DSN created and verified">
+	
+			<cfcatch type="any">
+				<cfset results.error = true>
+				<cfset results.messages = "Error creating DSN: #e.message# #e.detail#">
+			</cfcatch>
+		</cftry>
+		
+		<cfreturn results>
+		<cfscript>
+    		
+				// Create DSN data struct
+				var data = {
+					name = arguments.dsnName,
+					host = arguments.dbHost,
+					database = arguments.dbName,
+					username = arguments.dbUsername,
+					password = arguments.dbPassword
+				};
+				// Create DSN
+				switch( arguments.dbType ){
+					case "mssql" : {
+						oDSNManager.setMSSQL(argumentCollection=data);
+						break;
+					}
+					case "mysql" : {
+						oDSNManager.setMySQL5(argumentCollection=data);
+						break;
+					}
+					case "postgresql" : {
+						oDSNManager.setPostgreSQL(argumentCollection=data);
+						break;
+					}
+					case "derby" : { 
+						data.isnewdb = true;
+						oDSNManager.setDerbyEmbedded(argumentCollection=data);
+						break;
+					}
+					case "oracle" : {
+						oDSNManager.setOracle(argumentCollection=data);
+						break;
+					}
+				}
+				
+				// Verify It
+				var isVerified = oDSNManager.verifyDsn( arguments.dsnName );
+				// Check if it verified
+				if( NOT isVerified ){
+					oDSNManager.deleteDatasource( arguments.dsnName );
+					results.error = true;
+					results.messages = "Datasource could not be verified, please check your settings.";
+				}
+				else{
+					results.error = false;
+					results.messages = "DSN created and verified";
+				}
+			}
+			catch(Any e){
+				results.error = true;
+				results.messages = "Error creating DSN: #e.message# #e.detail#";
+			}
+			
+			return results;
+    	</cfscript>    
+    </cffunction>
+    
     <!------------------------------------------- PRIVATE ------------------------------------------>
     
     <!--- isValidRailoPassword --->    
