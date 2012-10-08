@@ -55,22 +55,22 @@ limitations under the License.
     <cffunction name="updateAPP" output="false" access="public" returntype="any" hint="Update the application's DSN and data">    
     	<cfargument name="dsnName" required="true"/>
     	<cfscript>	    
-			// Just use the name we got passed
-			var appCFCPath = expandPath( "/appShell/Application-ContentBox.cfc" );
-			var appCFCPathOriginal = expandPath( "/appShell/Application.cfc" );
-			var indexCFM = expandPath( "/appShell/index.cfm" );
+			var appCFCPath = expandPath( "/appShell/Application.cfc" );
+			var c = fileRead( appCFCPath );
 			
 			// Update DSN
-			var c = fileRead( appCFCPath );
 			c = replacenocase( c, 'this.datasource = "contentbox"','this.datasource = "#arguments.dsnName#"' );
+			// Update relocations
+			c = replacenocase( c, 'location("modules/contentbox-dsncreator")','//location("modules/contentbox-dsncreator")' );
 			
 			// CF9 stupid cached dsn
 			if( listFirst( server.coldfusion.productVersion ) eq 9 ){
 				var cf9OnErrorPath = getDirectoryFromPath( getMetadata( this ).path ) & "cf9-OnError.txt";
 				c = replacenocase( c, '//@cf9-onError@', fileRead( cf9OnErrorPath ) );
 			}
+			
 			// Write out new Application.cfc
-			fileWrite( appCFCPathOriginal, c );
+			fileWrite( appCFCPath, c );
 			
     	</cfscript>    
     </cffunction>
