@@ -32,12 +32,16 @@ component{
 	this.mappings["/appShell"] 		= request.APP_ROOT_PATH;
 	this.mappings["/contentbox"] 	= request.APP_ROOT_PATH & "modules/contentbox";
 	
-	// CF/Railo Helper
-	if( server.coldfusion.productName eq "ColdFusion Server" ){
-		request.cfHelper = new model.CFHelper(); 
-	}
-	else{
-		request.cfHelper = new model.RailoHelper();
-	}
+	public boolean function onRequestStart(String targetPage){
 
+		// CF/Railo Helper
+		if( server.coldfusion.productName eq "ColdFusion Server" ){
+			request.cfHelper = new model.CFHelper(); 
+		}
+		else{
+			request.cfHelper = new model.RailoHelper();
+		}
+		
+		return true;
+	}
 }

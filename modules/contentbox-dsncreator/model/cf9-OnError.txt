@@ -1,0 +1,13 @@
+public void function onError(exception, eventName){
+	
+	// STUPID ColdFusion 9 hibernate cached connection error.
+	// THIS CAN BE REMOVED ONCE INSTALLER COMPLETES
+	if( structKeyExists(URL, "cbInstaller") AND
+		arguments.exception.type eq "coldfusion.orm.hibernate.HibernateConfiguration$ConnectionException" AND
+		arguments.exception.detail eq "java.sql.SQLException: Datasource not found." ){
+		location("index.cfm");
+	}
+	else{
+		throw( arguments.exception );
+	}
+}

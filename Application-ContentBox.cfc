@@ -114,4 +114,6 @@ component{
 	public boolean function onMissingTemplate(template){
 		return application.cbBootstrap.onMissingTemplate(argumentCollection=arguments);
 	}
+	
+	//@cf9-onError@
 }

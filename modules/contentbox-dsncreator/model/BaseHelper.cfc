@@ -24,7 +24,7 @@ limitations under the License.
 <cfcomponent output="false" hint="ContentBox DSN Base helper">
 	
 	<!--- Constructor --->
-	<cffunction name="init" output="false" returntype="BaseHelper" hint="constructor">
+	<cffunction name="init" output="false" returntype="BaseHelper" hint="constructor" access="public">
 		<cfscript>
 			return this;
 		</cfscript>
@@ -60,8 +60,16 @@ limitations under the License.
 			var appCFCPathOriginal = expandPath( "/appShell/Application.cfc" );
 			var indexCFM = expandPath( "/appShell/index.cfm" );
 			
+			// Update DSN
 			var c = fileRead( appCFCPath );
 			c = replacenocase( c, 'this.datasource = "contentbox"','this.datasource = "#arguments.dsnName#"' );
+			
+			// CF9 stupid cached dsn
+			if( listFirst( server.coldfusion.productVersion ) eq 9 ){
+				var cf9OnErrorPath = getDirectoryFromPath( getMetadata( this ).path ) & "cf9-OnError.txt";
+				c = replacenocase( c, '//@cf9-onError@', fileRead( cf9OnErrorPath ) );
+			}
+			// Write out new Application.cfc
 			fileWrite( appCFCPathOriginal, c );
 			
     	</cfscript>    

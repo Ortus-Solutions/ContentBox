@@ -36,12 +36,12 @@
 			<!--- DSN Exists Panel --->
 			<fieldset id="dsnPanelExists" style="display: none">
 				<legend>Created Datasource Information:</legend>
-				<form name="dsnForm" id="dsnForm" action="index.cfm" method="post" novalidate="novalidate">
+				<form name="dsnUseForm" id="dsnUseForm" action="index.cfm" method="post" novalidate="novalidate">
 					<input type="hidden" name="action" id="action" value="process" />
 					<input type="hidden" name="dsnCreated" value="true" />
 					<p>Please fill in the name of the datasource connection setup in your CFML engine.</p>
 					<label>Datasource Name: 
-						<input type="text" required="required" name="dsnName" id="dsnName" class="textfield" size="40"/>
+						<input type="text" name="dsnName" id="dsnName" class="textfield" size="40"/>
 					</label>
 					
 					<div class="actionBar">
