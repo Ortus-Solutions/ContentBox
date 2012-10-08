@@ -70,9 +70,10 @@
 					<label for="dbType">Database Type:</label>
 					<small>Below are the current supported database types:<br/></small>
 					<select name="dbType" id="dbType" class="textfield">
-						<option value="derby">Apache Derby</option>
+						<!---<option value="derby">Apache Derby</option>--->
 						<option value="mssql">Microsft SQL Server</option>
 						<option value="mysql">MySQL</option>
+						<!---<option value="oracle">Oracle</option>--->
 						<option value="postgresql">PostgreSQL</option>
 					</select>
 					
