@@ -36,10 +36,7 @@ component{
 	COLDBOX_APP_MAPPING		= "";
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
-
-	// THE DATASOURCE FOR CONTENTBOX MANDATORY
-	this.datasource = "contentbox";
-
+	
 	// LOCATION MAPPINGS
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
@@ -47,6 +44,8 @@ component{
 	// THE LOCATION OF EMBEDDED COLDBOX
 	this.mappings["/coldbox"] 	 = COLDBOX_APP_ROOT_PATH & "coldbox";
 
+	// THE DATASOURCE FOR CONTENTBOX MANDATORY
+	this.datasource = "contentbox";
 	// CONTENTBOX ORM SETTINGS
 	this.ormEnabled = true;
 	this.ormSettings = {
