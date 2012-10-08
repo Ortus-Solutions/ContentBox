@@ -2,7 +2,12 @@
 <script language="javascript">
 $(document).ready(function() {
 	// form validators
-	$("##dsnForm").validator({grouped:true, position:"center right"});
+	$("##dsnForm").validator({grouped:true, 
+		position:"center right",
+		onSuccess: function(e, els){
+				$("##actionBarLoader").fadeIn();
+			}
+		});
 });
 function showDSNPanel(created){
 	if( created ){
