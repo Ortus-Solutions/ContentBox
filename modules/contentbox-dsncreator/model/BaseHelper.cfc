@@ -51,14 +51,15 @@ limitations under the License.
 		<cfreturn results>
     </cffunction>
     
-    <!--- updateAppDSN --->    
-    <cffunction name="updateAppDSN" output="false" access="public" returntype="any" hint="Update the application's DSN">    
+    <!--- updateAPP --->    
+    <cffunction name="updateAPP" output="false" access="public" returntype="any" hint="Update the application's DSN and data">    
     	<cfargument name="dsnName" required="true"/>
     	<cfscript>	    
 			// Just use the name we got passed
 			var appCFCPath = expandPath( "/appShell/Application.cfc" );
 			var c = fileRead( appCFCPath );
 			c = replacenocase( c, 'this.datasource = "contentbox"','this.datasource = "#arguments.dsnName#"' );
+			c = replacenocase( c, 'location("modules/contentbox-dsncreator")', '//location("modules/contentbox-dsncreator")' );
 			fileWrite( appCFCPath, c );
     	</cfscript>    
     </cffunction>

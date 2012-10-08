@@ -12,7 +12,7 @@
 		// Process or create?
 		if( dsnCreated ){
 			// Update datasource
-			request.cfHelper.updateAppDSN( dsnName );
+			request.cfHelper.updateAPP( dsnName );
 			// Relocate to installer now
 			location("../../index.cfm");
 		}
@@ -28,7 +28,7 @@
 			// Check for errors?
 			if( !results.error ){
 				// Update APP DSN Now!
-				request.cfHelper.updateAppDSN( dsnCreateName );
+				request.cfHelper.updateAPP( dsnCreateName );
 				// Relocate to installer now
 				location("../../index.cfm");
 			}

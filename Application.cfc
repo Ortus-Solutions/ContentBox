@@ -22,6 +22,8 @@ limitations under the License.
 ********************************************************************************
 */
 component{
+	// This fires only once per installation. You can remove it if you like.
+	location("modules/contentbox-dsncreator");
 	// Application properties, modify as you see fit
 	this.name 				= "ContentBox-Shell-" & hash(getCurrentTemplatePath());
 	this.sessionManagement 	= true;
