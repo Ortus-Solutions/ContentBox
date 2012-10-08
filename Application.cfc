@@ -25,7 +25,7 @@ component{
 	// This fires only once per installation. You can remove it if you like.
 	location("modules/contentbox-dsncreator");
 	// Application properties, modify as you see fit
-	this.name 				= "ContentBox-Shell-" & hash(getCurrentTemplatePath());
+	this.name 				= "ContentBox-Shell-@cbHash@";
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;

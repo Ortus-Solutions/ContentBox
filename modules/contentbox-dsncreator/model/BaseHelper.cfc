@@ -60,6 +60,7 @@ limitations under the License.
 			var c = fileRead( appCFCPath );
 			c = replacenocase( c, 'this.datasource = "contentbox"','this.datasource = "#arguments.dsnName#"' );
 			c = replacenocase( c, 'location("modules/contentbox-dsncreator")', '//location("modules/contentbox-dsncreator")' );
+			c = replacenocase( c, '@cbHash@', hash( appCFCPath ) );
 			fileWrite( appCFCPath, c );
     	</cfscript>    
     </cffunction>
