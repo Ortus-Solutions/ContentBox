@@ -56,12 +56,14 @@ limitations under the License.
     	<cfargument name="dsnName" required="true"/>
     	<cfscript>	    
 			// Just use the name we got passed
-			var appCFCPath = expandPath( "/appShell/Application.cfc" );
+			var appCFCPath = expandPath( "/appShell/Application-ContentBox.cfc" );
+			var appCFCPathOriginal = expandPath( "/appShell/Application.cfc" );
+			var indexCFM = expandPath( "/appShell/index.cfm" );
+			
 			var c = fileRead( appCFCPath );
 			c = replacenocase( c, 'this.datasource = "contentbox"','this.datasource = "#arguments.dsnName#"' );
-			c = replacenocase( c, 'location("modules/contentbox-dsncreator")', '//location("modules/contentbox-dsncreator")' );
-			c = replacenocase( c, '@cbHash@', hash( appCFCPath ) );
-			fileWrite( appCFCPath, c );
+			fileWrite( appCFCPathOriginal, c );
+			
     	</cfscript>    
     </cffunction>
      

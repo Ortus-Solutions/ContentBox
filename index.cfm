@@ -1,4 +1,4 @@
-﻿<!--- 
+<!--- 
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
