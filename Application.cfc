@@ -118,16 +118,5 @@ component{
 		return application.cbBootstrap.onMissingTemplate(argumentCollection=arguments);
 	}
 	
-	public void function onError(exception, eventName){
-	
-	// STUPID ColdFusion 9 hibernate cached connection error.
-	// THIS CAN BE REMOVED ONCE INSTALLER COMPLETES
-	if( structKeyExists(URL, "cbInstaller") AND
-		findNoCase( "Datasource not found", arguments.exception.detail ) ){
-		include "modules/contentbox-dsncreator/views/cf9-refresher.cfm";
-	}
-	else{
-		throw( arguments.exception );
-	}
-}
+	//@cf9-onError@
 }
