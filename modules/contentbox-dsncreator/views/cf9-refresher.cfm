@@ -1,5 +1,6 @@
 <cfoutput>
 <cfsetting showdebugoutput="false">
+<cfset assetRoot = "../../contentbox-admin">
 <!DOCTYPE html>
 <html>
 <!--============================Head============================-->
@@ -20,6 +21,9 @@
 	<h1>Creating Datasource...</h1>
 	<p>
 		Please wait as we configure the system for operation (About 8-10 seconds), be patient now!
+	</p>
+	<p>
+		<img src="#assetRoot#/includes/images/ajax-loader-blue.gif" alt="loader" />
 	</p>
 </body>
 <!--End Body-->
