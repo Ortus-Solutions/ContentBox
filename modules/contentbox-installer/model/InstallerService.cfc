@@ -130,7 +130,8 @@ component accessors="true"{
 			"VERSIONS_DELETE" = "Ability to delete past content versions",
 			"SYSTEM_UPDATES" = "Ability to view and apply ContentBox updates",
 			"MODULES_ADMIN" = "Ability to manage ContentBox Modules",
-			"CONTENTBOX_ADMIN" = "Access to the enter the ContentBox administrator console"
+			"CONTENTBOX_ADMIN" = "Access to the enter the ContentBox administrator console",
+			"FORGEBOX_ADMIN" = "Ability to manage ForgeBox installations and connectivity."
 		};
 
 		var allperms = [];

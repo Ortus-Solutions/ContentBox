@@ -35,7 +35,9 @@
 				<!--- Manage --->
 				<li title="Manage Widgets"><a href="##manage" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Manage</a></li>
 				<!--- Install --->
+				<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
 				<li title="Install New Widgets"><a href="##install" onclick="loadForgeBox()"><img src="#prc.cbroot#/includes/images/download.png" alt="icon" border="0"/> ForgeBox</a></li>
+				</cfif>
 			</ul>
 			<img src="#prc.cbroot#/includes/images/widgets.png" alt="widgets"/>
 			Widgets
@@ -110,11 +112,6 @@
 								&nbsp;
 								<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 	
-								<cfif len(p.getForgeBoxSlug())>
-								<!--- Update Check --->
-								<a title="Check For Updates" href="##"><img src="#prc.cbRoot#/includes/images/download_black.png" alt="download" /></a>
-								&nbsp;
-								</cfif>
 								<!--- Editor --->
 								<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#prc.widgets.name#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
 								&nbsp;
