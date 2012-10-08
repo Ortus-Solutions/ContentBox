@@ -16,11 +16,11 @@ function showDSNPanel(created){
 }
 function verifyDSN(){
 	$.ajax({
-		url:'verify.cfm',
+		url:'handlers/verifyDSN.cfm',
 		data: { dsnName : $("##dsnName").val() },
 		async:false,
 		success: function(data){
-			if( data.ERROR ){
+			if( data.ERROR || !data.EXISTS ){
 				alert("Error verifying datasource: " + data.MESSAGES );
 			}
 			else{
@@ -32,22 +32,53 @@ function verifyDSN(){
 		dataType:"json"
 	});
 }
-function verifyCFML(){
+function verifyData(){
+	
+	if( !$("##dsnCreateName").val().length ){
+		alert( "Please enter a datsource name" );
+		return;
+	}
+	
+	var cfVerified = false;
+	// Verify CFML Password First
 	$.ajax({
-		url:'verifyCFML.cfm',
+		url:'handlers/verifyCFML.cfm',
 		data: { cfmlPassword : $("##cfpassword").val() },
 		async:false,
 		success: function(data){
 			if( data.ERROR ){
 				alert("Error verifying CFML Administrator password: " + data.MESSAGES );
+				cfVerified = false;
 			}
 			else{
-				$("##verifyCFMLButton").fadeOut();
-				$("##createDSNButton").fadeIn();
+				cfVerified = true;
 			}
 		},
 		dataType:"json"
 	});
+	
+	if( cfVerified ){
+		// Verify DSN Does NOT exists
+		$.ajax({
+			url:'handlers/verifyDSN.cfm',
+			data: { dsnName : $("##dsnCreateName").val() },
+			async:false,
+			success: function(data){
+				if( data.EXISTS ){
+					alert("Datasource " + $("##dsnCreateName").val() + " already exists. Please try another name.");
+				}
+				else{
+					// Lock password and dsn name
+					$("##cfpassword").attr("readonly",true);
+					$("##dsnCreateName").attr("readonly",true);
+					// Show creation dialog
+					$("##verifyDataButton").fadeOut();
+					$("##createDSNButton").fadeIn();
+				}
+			},
+			dataType:"json"
+		});
+	}
 }
 </script>
 </cfoutput>

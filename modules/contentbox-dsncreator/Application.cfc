@@ -23,14 +23,21 @@ limitations under the License.
 */
 component{
 	// Application properties, modify as you see fit
-	this.name = "CBDSNCreator" & hash(getCurrentTemplatePath());
-	this.setClientCookies 	= true;
+	this.name = "CBDSNCreator" & hash( getCurrentTemplatePath() );
 
-	APP_ROOT_PATH = expandPath("../");
-	
 	// LOCATION MAPPINGS
-	this.mappings["/contentbox"] = APP_ROOT_PATH & "modules/contentbox";
-	this.mappings["/contentbox-ui"] = APP_ROOT_PATH & "modules/contentbox-ui";
-	this.mappings["/contentbox-admin"] = APP_ROOT_PATH & "modules/contentbox-admin";
+	request.APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
+	request.APP_ROOT_PATH = replacenocase( replace( request.APP_ROOT_PATH, "\", "/", "all"), "modules/contentbox-dsncreator/", "");
+	
+	this.mappings["/appShell"] 		= request.APP_ROOT_PATH;
+	this.mappings["/contentbox"] 	= request.APP_ROOT_PATH & "modules/contentbox";
+	
+	// CF/Railo Helper
+	if( server.coldfusion.productName eq "ColdFusion Server" ){
+		request.cfHelper = new model.CFHelper(); 
+	}
+	else{
+		request.cfHelper = new model.RailoHelper();
+	}
 
 }

@@ -1,5 +1,6 @@
 ﻿<cfoutput>
-<cfset assetRoot = "../contentbox-admin">
+<!--- Process Handler --->
+<cfinclude template="handlers/process.cfm">
 <!DOCTYPE html>
 <html>
 <!--============================Head============================-->
