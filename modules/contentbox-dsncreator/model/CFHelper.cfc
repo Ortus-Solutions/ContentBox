@@ -118,6 +118,7 @@ limitations under the License.
 					results.messages = "Datasource could not be verified, please check your settings.";
 				}
 				else{
+					results.error = false;
 					results.messages = "DSN created and verified";
 				}
 			}
