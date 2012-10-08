@@ -1,17 +1,33 @@
 <cfoutput>
-<form name="dsnForm" id="dsnForm" action="create.cfm" method="post" novalidat="novalidate">
+<form name="dsnForm" id="dsnForm" action="handlers/create.cfm" method="post" novalidat="novalidate">
+<input type="hidden" name="action" id="action" value="process" />
 <div class="box clear">
 	<div class="header">
 		<img src="#assetRoot#/includes/images/help.png" alt="help" width="30" height="30" /> Datasource Wizard
 	</div>
 	<div class="body clearfix">
 		<div>
+			<!--- Errors --->
+			<cfif len( errors )>
+				<div class="cbox_messagebox_error">
+					<p class="cbox_messagebox">
+						<strong>Oops! Something went wrong!</strong><br/>
+						#errors#
+					</p>
+				</div>
+			</cfif>
+			
 			<h1>Welcome To ContentBox!</h1>
 			<p>
 				You are one step closer to releasing your content out of its box! The first step in our installer is to make sure
 				we can connect to your database of choice.  So if you have not created an empty database for ContenBox yet, please go do
 				that now.  The next step is for ContentBox to create or use a datasource connection to the database from our CFML engine.
 			</p>
+			
+			<!--- Info Panel --->
+			<div class="infoBar">
+				<strong>Once the installer finalizes, we recommend you remove this module from disk: #expandPath("/appShell/modules/contentbox-dsncreator")#</strong>
+			</div>
 			
 			<fieldset>
 				<legend>Datasource Created?</legend>
@@ -51,6 +67,15 @@
 				<small>The name of the datasource connection we will create for you.<br/></small>
 				<input type="text" class="textfield" size="40" name="dsnCreateName" id="dsnCreateName" required="required" />
 				
+				<label for="dbType">Database Type:</label>
+				<small>Below are the current supported database types:<br/></small>
+				<select name="dbType" id="dbType" class="textfield">
+					<option value="derby">Apache Derby</option>
+					<option value="mssql">Microsft SQL Server</option>
+					<option value="mysql">MySQL</option>
+					<option value="postgresql">PostgreSQL</option>
+				</select>
+				
 				<label for="dbServer">Database Server:</label>
 				<small>Your database host address (localhost, 127.0.0.1 or ip address)<br/></small>
 				<input type="text" class="textfield" size="40" name="dbServer" id="dbServer" required="required" />
@@ -68,7 +93,7 @@
 				<input type="password" class="textfield" size="40" name="dbPassword" id="dbPassword" required="required" />
 				
 				<div class="actionBar">	
-					<input name="verifyCFMLButton" id="verifyCFMLButton" type="button" class="button" value="Verify CFML Password" onclick="verifyCFML()" />
+					<input name="verifyDataButton" id="verifyDataButton" type="button" class="button" value="Verify Data" onclick="verifyData()" />
 					<input name="createDSNButton" id="createDSNButton" type="submit" class="button2" value="Create Datasource" style="display: none" />
 				</div>
 			</fieldset>

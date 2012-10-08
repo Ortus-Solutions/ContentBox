@@ -1,0 +1,68 @@
+<!--- 
+********************************************************************************
+ContentBox - A Modular Content Platform
+Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+Apache License, Version 2.0
+
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+********************************************************************************
+--->
+<cfcomponent output="false" hint="ContentBox DSN Base helper">
+	
+	<!--- Constructor --->
+	<cffunction name="init" output="false" returntype="BaseHelper" hint="constructor">
+		<cfscript>
+			return this;
+		</cfscript>
+	</cffunction> 
+	
+	<!--- verifyDSN --->    
+    <cffunction name="verifyDSN" output="false" access="public" returntype="struct" hint="Verify the DSN exists, returns struct: {error:boolean, exists:boolean, messages:string}">    
+    	<cfargument name="dsnName" required="true"/>
+    	
+    	<cfset var results = { error = false, exists = false, messages = "" }>
+    	<cftry>
+			
+			<cfdbinfo type="version" name="dbResults" datasource="#arguments.dsnName#">
+			<cfset results.messages = "Datasource verified">
+			<cfset results.exists = true>
+			
+			<cfcatch type="any">
+				<cfset results.error = true>
+				<cfset results.exists = false>
+				<cfset results.messages = "#cfcatch.message# #cfcatch.detail#">
+			</cfcatch>
+		</cftry>
+		
+		<cfreturn results>
+    </cffunction>
+    
+    <!--- updateAppDSN --->    
+    <cffunction name="updateAppDSN" output="false" access="public" returntype="any" hint="Update the application's DSN">    
+    	<cfargument name="dsnName" required="true"/>
+    	<cfscript>	    
+			// Just use the name we got passed
+			var appCFCPath = expandPath( "/appShell/Application.cfc" );
+			var c = fileRead( appCFCPath );
+			c = replacenocase( c, 'this.datasource = "contentbox"','this.datasource = "#arguments.dsnName#"' );
+			fileWrite( appCFCPath, c );
+    	</cfscript>    
+    </cffunction>
+     
+    <!------------------------------------------- PRIVATE ------------------------------------------>
+			
+</cfcomponent>

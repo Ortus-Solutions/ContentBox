@@ -21,7 +21,12 @@
 						you remember the credentials you created!
 					</p>
 					
-					<br/>
+					<!--- Info Panel --->
+					<div class="infoBar">
+						<strong>We recommend you remove this module from disk, unless you plan to use it in the future: <br/>
+						<em>/{installed_location}/modules/contentbox-installer</em></strong>
+					</div>
+					
 					<h2>
 						I am excited, are you? Let's get started!
 					</h2>
