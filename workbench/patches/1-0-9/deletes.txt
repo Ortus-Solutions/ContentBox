@@ -1,0 +1,2 @@
+modules/contentbox-admin/includes/ckeditor/plugins/cbPreview/eye.png
+modules/contentbox-admin/includes/ckeditor/plugins/cbPreview/plugin.js
