@@ -96,6 +96,7 @@
 					<div class="actionBar">	
 						<input name="verifyDataButton" id="verifyDataButton" type="button" class="button" value="Verify Data" onclick="verifyData()" />
 						<input name="createDSNButton" id="createDSNButton" type="submit" class="button2" value="Create Datasource" style="display: none" />
+						<div id="actionBarLoader" style="display:none"><img src="#assetRoot#/includes/images/ajax-loader-blue.gif" /> Creating, Please Wait...</div>
 					</div>
 				</form>
 			</fieldset>
