@@ -44,7 +44,7 @@
 			<ul class="sub_nav">
 				<!--- Manage --->
 				<li title="Manage Modules"><a href="##manage" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Manage</a></li>
-				<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
+				<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
 				<!--- Install --->
 				<li title="Install New Modules"><a href="##install" onclick="loadForgeBox()"><img src="#prc.cbroot#/includes/images/download.png" alt="icon" border="0"/> ForgeBox</a></li>
 				</cfif>

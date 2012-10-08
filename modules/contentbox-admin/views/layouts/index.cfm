@@ -46,7 +46,9 @@
 				<!--- Manage Themes --->
 				<li title="Manage Layout Themes"><a href="##manage" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Manage</a></li>
 				<!--- Install Themes --->
+				<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
 				<li title="Install New Themes"><a href="##install" onclick="loadForgeBox()"><img src="#prc.cbroot#/includes/images/download.png" alt="icon" border="0"/> ForgeBox</a></li>
+				</cfif>
 			</ul>
 			<img src="#prc.cbroot#/includes/images/layouts.png" alt="layouts"/>
 			Layout Themes
