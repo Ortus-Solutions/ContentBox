@@ -17,13 +17,15 @@ component singleton="true"{
 	
 	// visit
 	function visit(page,link){
-		var bc 		= "";
+		var bc = "";
 		
 		if( arguments.page.hasParent() ){
 			bc &= visit( arguments.page.getParent(), arguments.link );
 		}
 		
-		bc &= '> <a href="#arguments.link#/parent/#arguments.page.getContentID()#">#arguments.page.getTitle()#</a>';
+		if( len( arguments.page.getTitle() ) ){
+			bc &= '> <a href="#arguments.link#/parent/#arguments.page.getContentID()#">#arguments.page.getTitle()#</a>';
+		}
 		
 		return bc;
 	}
