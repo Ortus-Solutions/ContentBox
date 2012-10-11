@@ -128,9 +128,11 @@
 			#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
 
 			<!--- Location Bar --->
-			<cfif structKeyExists(rc, "parent")>
+			<cfif structKeyExists(rc, "parent") AND len( rc.parent )>
 			<div class="infoBar">
-			  <a href="#event.buildLink(prc.xehPages)#">Root</a> #getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-admin").visit(prc.page, event.buildLink(prc.xehPages))#
+			  <a href="#event.buildLink(prc.xehPages)#">
+			  	<img src="#prc.cbRoot#/includes/images/home.png" alt="root" title="Home"/>
+			  </a> #getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-admin").visit(prc.page, event.buildLink(prc.xehPages))#
 			</div>
 			</cfif>
 
