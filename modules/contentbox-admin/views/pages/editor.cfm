@@ -104,6 +104,7 @@
 				</div>
 				</cfif>
 				<!--- Page Options Panel --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_DISPLAY_OPTIONS")>
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -129,8 +130,12 @@
 					#html.inputfield(type="number",label="Menu Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="textfield",size="5",maxlength="2",min="0",max="99")#
 
 				</div>
+				<cfelse>
+					#html.hiddenField(name="parentPage", value=prc.parentcontentID)#
+				</cfif>
 
 				<!--- Page Modifiers Panel --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -148,8 +153,10 @@
 					#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="textfield",size="25",maxlength="100")#
 					<br>
 				</div>
-
+				</cfif>
+				
 				<!--- Page Cache Panel --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -167,8 +174,10 @@
 					#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.page,title="Enter the number of minutes to cache your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
 					#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.page,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
 				</div>
-
+				</cfif>
+				
 				<!--- Categories --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -185,8 +194,10 @@
 					<!--- New Categories --->
 					#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="textfield")#
 				</div>
-
+				</cfif>
+				
 				<!--- HTML Modifiers Panel --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -195,6 +206,8 @@
 					#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.page,class="textfield width95",maxlength="160")#
 					#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.page,class="textfield",maxlength="160")#
 				</div>
+				</cfif>
+				
 				<!--- Event --->
 				#announceInterception("cbadmin_pageEditorSidebarAccordion")#
 			</div>

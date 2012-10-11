@@ -131,7 +131,12 @@ component accessors="true"{
 			"SYSTEM_UPDATES" = "Ability to view and apply ContentBox updates",
 			"MODULES_ADMIN" = "Ability to manage ContentBox Modules",
 			"CONTENTBOX_ADMIN" = "Access to the enter the ContentBox administrator console",
-			"FORGEBOX_ADMIN" = "Ability to manage ForgeBox installations and connectivity."
+			"FORGEBOX_ADMIN" = "Ability to manage ForgeBox installations and connectivity.",
+			"EDITORS_DISPLAY_OPTIONS" = "Ability to view the content display options panel",
+			"EDITORS_MODIFIERS" = "Ability to view the content modifiers panel",
+			"EDITORS_CACHING" = "Ability to view the content caching panel",
+			"EDITORS_CATEGORIES" = "Ability to view the content categories panel",
+			"EDITORS_HTML_ATTRIBUTES" = "Ability to view the content HTML attributes panel"
 		};
 
 		var allperms = [];
@@ -163,6 +168,11 @@ component accessors="true"{
 		oRole.addPermission( permissions["MEDIAMANAGER_ADMIN"] );
 		oRole.addPermission( permissions["VERSIONS_ROLLBACK"] );
 		oRole.addPermission( permissions["CONTENTBOX_ADMIN"] );
+		oRole.addPermission( permissions["EDITORS_DISPLAY_OPTIONS"] );
+		oRole.addPermission( permissions["EDITORS_MODIFIERS"] );
+		oRole.addPermission( permissions["EDITORS_CACHING"] );
+		oRole.addPermission( permissions["EDITORS_CATEGORIES"] );
+		oRole.addPermission( permissions["EDITORS_HTML_ATTRIBUTES"] );
 		roleService.save(entity=oRole, transactional=false);
 
 		// Create Admin

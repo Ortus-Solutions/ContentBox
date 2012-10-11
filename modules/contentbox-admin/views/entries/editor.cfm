@@ -107,6 +107,7 @@
 				</cfif>
 
 				<!--- Entry Modifiers --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -126,8 +127,10 @@
 					#html.textfield(name="passwordProtection",bind=prc.entry,title="Password protect your entry, leave empty for none",class="textfield",size="25",maxlength="100")#
 
 				</div>
+				</cfif>
 
 				<!--- Entry Cache Panel --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -143,8 +146,10 @@
 					#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.entry,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="textfield",size="10",maxlength="100")#
 
 				</div>
+				</cfif>
 
 				<!--- Categories --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>	
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -161,8 +166,10 @@
 					<!--- New Categories --->
 					#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="textfield")#
 				</div>
+				</cfif>
 
 				<!--- HTML --->
+				<cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>	
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
@@ -171,6 +178,7 @@
 					#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.entry,class="textfield width95",maxlength="160")#
 					#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.entry,class="textfield",maxlength="160")#
 				</div>
+				</cfif>
 
 				<!--- Event --->
 				#announceInterception("cbadmin_entryEditorSidebarAccordion")#
