@@ -1,4 +1,4 @@
-<!--- 
+<!---
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -22,26 +22,26 @@ limitations under the License.
 ********************************************************************************
 --->
 <cfcomponent output="false" hint="ContentBox DSN creator helper" extends="BaseHelper">
-	
+
 	<!--- Constructor --->
 	<cffunction name="init" output="false" returntype="RailoHelper" hint="constructor" access="public">
 		<cfscript>
 			super.init();
 			return this;
 		</cfscript>
-	</cffunction> 
-	
-    <!--- verifyCFMLAdmin --->    
-    <cffunction name="verifyCFMLAdmin" output="false" access="public" returntype="struct" hint="Verify if the cf admin password validates. Returns struct: {error:boolean, messages:string}">    
+	</cffunction>
+
+    <!--- verifyCFMLAdmin --->
+    <cffunction name="verifyCFMLAdmin" output="false" access="public" returntype="struct" hint="Verify if the cf admin password validates. Returns struct: {error:boolean, messages:string}">
     	<cfargument name="cfmlPassword" required=true>
     	<cfscript>
 			var results = { error = false, messages = "" };
     		try{
     			var isValid = isValidRailoPassword( arguments.cfmlPassword );
-    			
+
     			if( isValid ){
     				results.messages = "CFML Password Verified!";
-    			}	
+    			}
     			else{
     				results.error = true;
     				results.messages = "Invalid CFML Password!";
@@ -51,13 +51,13 @@ limitations under the License.
     			results.error = true;
     			results.messages = "Error validating password: #e.message# #e.detail#";
     		}
-    		
+
     		return results;
-    	</cfscript>    
+    	</cfscript>
     </cffunction>
-    
-    <!--- createDSN --->    
-    <cffunction name="createDSN" output="false" access="public" returntype="any" hint="Create the DSN, returns struct: {error:boolean, messages:string}">    
+
+    <!--- createDSN --->
+    <cffunction name="createDSN" output="false" access="public" returntype="any" hint="Create the DSN, returns struct: {error:boolean, messages:string}">
     	<cfargument name="cfmlPassword" 	required=true>
 		<cfargument name="dsnName" 			required="true">
     	<cfargument name="dbType" 			required="true">
@@ -65,12 +65,12 @@ limitations under the License.
     	<cfargument name="dbName" 			required="true">
 		<cfargument name="dbUsername" 		required="false" default="">
 		<cfargument name="dbPassword" 		required="false" default="">
-		
+
 		<cfset var results = { error = false, messages = "" }>
-		
+
 		<cftry>
 			<!---Get Datasources --->
-			<cfadmin 
+			<cfadmin
 				action="getDatasources"
 				type="web"
 				password="#arguments.cfmlPassword#"
@@ -79,7 +79,7 @@ limitations under the License.
 			<cfif ListFindNoCase( ValueList( local.datasources.name ), arguments.dsnName )>
 				<cfthrow type="DuplicateDSNException" message="Datsource #arguments.dsnName# already exists!">
 			</cfif>
-			
+
 			<cfswitch expression="#arguments.dbType#">
 				<cfcase value="mssql">
 					<cfset local.dsnString = "jdbc:sqlserver://{host}:{port}">
@@ -107,13 +107,14 @@ limitations under the License.
 					<cfset local.className = "org.h2.Driver">
 				</cfcase>
 			</cfswitch>
-			
+
 			<!---Create Datasource --->
-			<cfadmin 
+			<cfadmin
 				action="updateDatasource"
 				type="web"
 				password="#arguments.cfmlPassword#"
 				name = "#arguments.dsnName#"
+				newname = "#arguments.dsnName#"
 				dsn = "#local.dsnString#"
 				host = "#arguments.dbHost#"
 				database = "#arguments.dbName#"
@@ -135,10 +136,10 @@ limitations under the License.
 				allowed_create = "true"
 				allowed_grant = "true"
 				custom="#structNew()#">
-		
+
 			<!---Verify it --->
 			<cftry>
-				<cfadmin 
+				<cfadmin
 					action="verifyDatasource"
 					type="web"
 					password="#arguments.cfmlPassword#"
@@ -147,7 +148,7 @@ limitations under the License.
 					dbpassword = "#arguments.dbPassword#">
 				<cfcatch>
 					<!--- Roll back --->
-					<cfadmin 
+					<cfadmin
 						action="removeDatasource"
 						type="web"
 						password="#arguments.cfmlPassword#"
@@ -156,19 +157,19 @@ limitations under the License.
 					<cfset results.messages = "Datasource could not be verified, please check your settings.">
 				</cfcatch>
 			</cftry>
-			
+
 			<cfset results.error = false>
 			<cfset results.messages = "DSN created and verified">
-	
+
 			<cfcatch type="any">
 				<cfset results.error = true>
-				<cfset results.messages = "Error creating DSN: #e.message# #e.detail#">
+				<cfset results.messages = "Error creating DSN: #cfcatch.message# #cfcatch.detail#">
 			</cfcatch>
 		</cftry>
-		
+
 		<cfreturn results>
 		<cfscript>
-    		
+    		try{
 				// Create DSN data struct
 				var data = {
 					name = arguments.dsnName,
@@ -191,7 +192,7 @@ limitations under the License.
 						oDSNManager.setPostgreSQL(argumentCollection=data);
 						break;
 					}
-					case "derby" : { 
+					case "derby" : {
 						data.isnewdb = true;
 						oDSNManager.setDerbyEmbedded(argumentCollection=data);
 						break;
@@ -201,7 +202,7 @@ limitations under the License.
 						break;
 					}
 				}
-				
+
 				// Verify It
 				var isVerified = oDSNManager.verifyDsn( arguments.dsnName );
 				// Check if it verified
@@ -219,28 +220,28 @@ limitations under the License.
 				results.error = true;
 				results.messages = "Error creating DSN: #e.message# #e.detail#";
 			}
-			
+
 			return results;
-    	</cfscript>    
+    	</cfscript>
     </cffunction>
-    
+
     <!------------------------------------------- PRIVATE ------------------------------------------>
-    
-    <!--- isValidRailoPassword --->    
-    <cffunction name="isValidRailoPassword" output="false" access="private" returntype="boolean" hint="Validates Railo Admin password">    
+
+    <!--- isValidRailoPassword --->
+    <cffunction name="isValidRailoPassword" output="false" access="private" returntype="boolean" hint="Validates Railo Admin password">
     	<cfargument name="cfmlPassword" required=true>
-    	
+
     	<cftry>
 	    	<cfadmin
 			    action="connect"
 			    type="web"
 			    password="#arguments.cfmlPassword#">
-			<cfreturn true>   
+			<cfreturn true>
 			<cfcatch type="any">
 				<cfreturn false>
 			</cfcatch>
 		</cftry>
     </cffunction>
 
-	
+
 </cfcomponent>
