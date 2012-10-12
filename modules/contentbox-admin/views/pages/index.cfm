@@ -144,10 +144,9 @@
 						<th>Name</th>
 						<th width="150">Categories</th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="menu" title="Show in Menu"/></th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="hits" title="Hits"/></th>
-						<th width="50" class="center {sorter:false}">Actions</th>
+						<th width="100" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
 
@@ -178,26 +177,9 @@
 							<cfelse>
 								#page.getTitle()#
 							</cfif>
-							<br>
-							Last edit by <a href="mailto:#page.getAuthorEmail()#" title="#page.getAuthorEmail()#">#page.getAuthorName()#</a></br>
-							<!--- password protect --->
-							<cfif page.isPasswordProtected()>
-								<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>
-							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/lock_off.png" alt="locked" title="Page is public"/>
+							<cfif page.getNumberOfChildren()>
+							(#page.getNumberOfChildren()#)
 							</cfif>
-							&nbsp;
-							<!--- comments icon --->
-							<cfif page.getallowComments()>
-								<img src="#prc.cbRoot#/includes/images/comments.png" alt="locked" title="Commenting is Open!"/>
-							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
-							</cfif>
-							<!---Layouts --->
-							&nbsp;
-							<img src="#prc.cbRoot#/includes/images/layouts_small.png" alt="page layout" title="Layout: #page.getLayout()#"/>
-							&nbsp;
-							<img src="#prc.cbRoot#/includes/images/iPad.png" alt="mobile layout" title="Mobile Layout: #page.getMobileLayout()#"/>
 						</td>
 						<td>#page.getCategoriesList()#</td>
 						<td class="center">
@@ -206,9 +188,6 @@
 							<cfelse>
 								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Not in menu!" />
 							</cfif>
-						</td>
-						<td class="center">
-							#page.getNumberOfChildren()#
 						</td>
 						<td class="center">
 							<cfif page.isExpired()>
@@ -227,10 +206,38 @@
 						</td>
 						<td class="center">#page.getHits()#</td>
 						<td class="center">
+							<!---Info Panel --->
+							<button class="button" onclick="return toggleInfoPanel('#page.getContentID()#')" title="Page Info" ><img src="#prc.cbroot#/includes/images/gravatar.png" /></button>
+							<!---Info Panel --->
+							<div id="infoPanel_#page.getContentID()#" class="contentInfoPanel">
+								<img src="#prc.cbRoot#/includes/images/calendar_small.png" alt="calendar"/>  
+								Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on 
+								#page.getActiveContent().getDisplayCreatedDate()#
+								</br>
+								<!--- password protect --->
+								<cfif page.isPasswordProtected()>
+									<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked"/> Password Protected
+								<cfelse>
+									<img src="#prc.cbRoot#/includes/images/lock_off.png" alt="locked"/> Public Page
+								</cfif>
+								<br/>
+								<!--- comments icon --->
+								<cfif page.getallowComments()>
+									<img src="#prc.cbRoot#/includes/images/comments.png" alt="locked"/> Open Comments
+								<cfelse>
+									<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked"/> Closed Comments
+								</cfif>
+								<!---Layouts --->
+								<br/>
+								<img src="#prc.cbRoot#/includes/images/layouts_small.png" alt="page layout"/> Layout: <strong>#page.getLayout()#</strong>
+								<br/>
+								<img src="#prc.cbRoot#/includes/images/iPad.png" alt="mobile layout"/> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
+							</div>
+							
 							<!---Page Actions --->
-							<button class="button" onclick="return showActions('#page.getContentID()#')" title="Page Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
+							<button class="button" onclick="return toggleActionsPanel('#page.getContentID()#')" title="Page Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
 							<!---Page Actions Panel --->
-							<div id="pageActions_#page.getContentID()#" class="pageActions">
+							<div id="pageActions_#page.getContentID()#" class="actionsPanel">
 								<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 								<!--- Clone Command --->
 								<a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><img src="#prc.cbroot#/includes/images/clone.png" alt="edit" border="0"/> Clone Page</a>
