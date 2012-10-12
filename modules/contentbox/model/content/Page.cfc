@@ -26,6 +26,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 
 	// Properties
 	property name="layout"			notnull="false" length="200" default="";
+	property name="mobileLayout"	notnull="false" length="200" default="";
 	property name="order"			notnull="false" ormtype="integer" default="0" dbdefault="0";
 	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
 
@@ -40,6 +41,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		allowComments 	= false;
 		createdDate		= now();
 		layout 			= "pages";
+		mobileLayout	= "";
 		contentType		= "Page";
 		
 		// INHERITANCE LAYOUT STATIC
@@ -57,7 +59,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	}
 	
 	/**
-	* Get layout with layout inheritance, if none found return convention of "pages"
+	* Get layout with layout inheritance, if none found return normal saved layout
 	*/
 	function getLayoutWithInheritance(){
 		var thisLayout = getLayout();
@@ -67,6 +69,19 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		}
 		// Else return the layout
 		return thisLayout;
+	}
+	
+	/**
+	* Get mobile layout with layout inheritance, if none found return normal saved layout
+	*/
+	function getMobileLayoutWithInheritance(){
+		var thisLayout = ( isNull( mobileLayout ) ? '' : mobileLayout );
+		// check for inheritance and parent?
+		if( thisLayout eq LAYOUT_INHERITANCE_KEY AND hasParent() ){
+			return getParent().getMobileLayoutWithInheritance();
+		}
+		// Is the mobile layout none, then return the normal layout
+		return ( !len( thisLayout ) ? getLayoutWithInheritance() : thisLayout );
 	}
 
 	/**

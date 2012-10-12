@@ -123,6 +123,14 @@
 						<option value="-inherit-" <cfif prc.page.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
 						#html.options(values=prc.availableLayouts, selectedValue=prc.page.getLayoutWithDefault())#
 					</select>
+					
+					<!--- mobile layout --->
+					#html.label(field="mobileLayout",content='Mobile Layout:')#
+					<select name="mobileLayout" id="mobileLayout" class="width98">
+						<option value="" <cfif prc.page.getMobileLayout() eq "">selected="selected"</cfif>>-None-</option>
+						<option value="-inherit-" <cfif prc.page.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+						#html.options(values=prc.availableLayouts, selectedValue=prc.page.getMobileLayout())#
+					</select>
 
 					<!--- Show in Menu Builders --->
 					#html.select(name="showInMenu",label="Show In Menus:",class="width98",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
