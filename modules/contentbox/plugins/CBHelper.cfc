@@ -32,6 +32,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	property name="commentService"		inject="id:commentService@cb";
 	property name="customHTMLService"	inject="id:customHTMLService@cb";
 	property name="widgetService"		inject="id:widgetService@cb";
+	property name="mobileDetector"		inject="id:mobileDetector@cb";
 
 	function init(controller){
 		super.init( arguments.controller );
@@ -935,6 +936,15 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-ui").visit( arguments.page, arguments.separator );
 
+	}
+	
+	/************************************** UTILITIES *********************************************/
+	
+	/**
+	* Detects if the incoming request is from a mobile device or NOT.
+	*/
+	boolean function isMobile(){
+		return mobileDetector.isMobile();
 	}
 
 	/************************************** PRIVATE *********************************************/
