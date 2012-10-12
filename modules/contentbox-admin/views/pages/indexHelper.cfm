@@ -42,8 +42,12 @@ $(document).ready(function() {
 	});
 	</cfif>
 });
-function showActions(contentID){
+function toggleActionsPanel(contentID){
 	$("##pageActions_" + contentID).slideToggle();
+	return false;
+}
+function toggleInfoPanel(contentID){
+	$("##infoPanel_" + contentID).slideToggle();
 	return false;
 }
 function remove(contentID){

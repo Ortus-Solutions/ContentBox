@@ -132,7 +132,6 @@
 						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 						<th>Name</th>
 						<th width="150">Categories</th>
-						<th width="125">Dates</th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="hits"/></th>
 						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/comments.png" alt="comments"/></th>
@@ -160,28 +159,8 @@
 							<cfelse>
 								#entry.getTitle()#
 							</cfif>
-							<br/>
-							Last edit by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a></br>
-							<!--- password protect --->
-							<cfif entry.isPasswordProtected()>
-								<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Entry is password protected"/>
-							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/lock_off.png" alt="locked" title="Entry is public"/>
-							</cfif>
-							&nbsp;
-							<!--- comments icon --->
-							<cfif entry.getallowComments()>
-								<img src="#prc.cbRoot#/includes/images/comments.png" alt="locked" title="Commenting is Open!"/>
-							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
-							</cfif>
 						</td>
 						<td>#entry.getCategoriesList()#</td>
-						<td>
-							<strong title="Published Date">P:</strong> #entry.getDisplayPublishedDate()#<br/>
-							<strong title="Expire Date">E:</strong> #entry.getDisplayExpireDate()#<br/>
-							<strong title="Created Date">C:</strong> #entry.getDisplayCreatedDate()#
-						</td>
 						<td class="center">
 							<cfif entry.isExpired()>
 								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Entry has expired!" />
@@ -200,22 +179,51 @@
 						<td class="center">#entry.getHits()#</td>
 						<td class="center">#entry.getNumberOfComments()#</td>
 						<td class="center">
-							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-							<!--- Edit Command --->
-							<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/></a>
-							&nbsp;
-							</cfif>
-							<!--- History Command --->
-							<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#" title="Version History"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/></a>
-							&nbsp;
-							<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-							<!--- Delete Command --->
-							<a title="Delete Entry" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
-							&nbsp;
-							</cfif>
-							<!--- View in Site --->
-							<a href="#prc.CBHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
-						</td>
+							<!---Info Panel --->
+							<button class="button" onclick="return toggleInfoPanel('#entry.getContentID()#')" title="Entry Info" ><img src="#prc.cbroot#/includes/images/gravatar.png" /></button>
+							<!---Info Panel --->
+							<div id="infoPanel_#entry.getContentID()#" class="contentInfoPanel">
+								<img src="#prc.cbRoot#/includes/images/calendar_small.png" alt="calendar"/>  
+								Last edit by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on 
+								#entry.getActiveContent().getDisplayCreatedDate()#
+								</br>
+								<!--- password protect --->
+								<cfif entry.isPasswordProtected()>
+									<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked"/> Password Protected
+								<cfelse>
+									<img src="#prc.cbRoot#/includes/images/lock_off.png" alt="locked"/> Public Entry
+								</cfif>
+								<br/>
+								<!--- comments icon --->
+								<cfif entry.getallowComments()>
+									<img src="#prc.cbRoot#/includes/images/comments.png" alt="locked"/> Open Comments
+								<cfelse>
+									<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked"/> Closed Comments
+								</cfif>
+							</div>
+							
+							<!---Entry Actions --->
+							<button class="button" onclick="return toggleActionsPanel('#entry.getContentID()#')" title="Entry Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
+							<!---Entry Actions Panel --->
+							<div id="entryActions_#entry.getContentID()#" class="actionsPanel">
+								<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+								<!--- Edit Command --->
+								<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/> Edit Entry</a>
+								<br/>
+								</cfif>
+								<!--- History Command --->
+								<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/> Entry History</a>
+								<br/>
+								<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+								<!--- Delete Command --->
+								<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/> Delete Entry</a>
+								<br/>
+								</cfif>
+								<!--- View in Site --->
+								<a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/> View Entry</a>
+							</div>
+							
+							</td>
 					</tr>
 					</cfloop>
 				</tbody>

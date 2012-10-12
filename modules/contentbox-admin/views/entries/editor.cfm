@@ -203,7 +203,7 @@
 			Entry Editor
 			<cfif prc.entry.isLoaded()>
 			<div class="floatRight">
-				<button class="button2" onclick="window.open('#prc.CBHelper.linkEntry(prc.entry)#');return false;" title="Open entry in site">View Entry In Site</button>
+				<button class="button2" onclick="window.open('#prc.CBHelper.linkEntry(prc.entry)#');return false;">View Entry In Site</button>
 			</div>
 			</cfif>
 		</div>
