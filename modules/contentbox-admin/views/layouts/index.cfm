@@ -114,7 +114,7 @@
 								<a href="#prc.layouts.authorURL#" title="#prc.layouts.AuthorURL#" target="_blank">#prc.layouts.Author#</a>
 								<br/>
 								<!--- Button Bar --->
-								<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
+								<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN") AND prc.cbSettings.cb_site_layout NEQ prc.layouts.name>
 									<button class="button2"   onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;"  title="Preview this layout">Preview</button>
 									<button class="buttonred" onclick="return to('#event.buildLink(prc.xehActivate)#?layoutname=#prc.layouts.name#')" title="Activate this layout">Activate</button>
 								</cfif>		
@@ -142,9 +142,6 @@
 							</td>
 							<td class="center">
 								<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
-								<!--- Update Check --->
-								<a title="Check For Updates" href="##"><img src="#prc.cbRoot#/includes/images/download_black.png" alt="download" /></a>
-								&nbsp;
 								<!--- Delete Command --->
 								<a title="Delete layout" href="javascript:remove('#JSStringFormat(prc.layouts.name)#')" 
 								   class="confirmIt" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>

@@ -27,6 +27,11 @@ the following:
 * _counter (A variable created for you that tells you in which record we are currently looping on)
 * _items (A variable created for you that tells you how many records exist in the collection)
 * {templateName} The name of the object you will use to display: entry, comment, category
+
+Layout Local CallBack Functions:
+onActivation()
+onDelete()
+onDeactivation()
 */
 component{
 	// Layout Variables
