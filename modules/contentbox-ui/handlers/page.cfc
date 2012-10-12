@@ -149,7 +149,7 @@ component extends="content" singleton{
 			// Verify chosen page layout exists?
 			verifyPageLayout( prc.page );
 			// set skin view
-			event.setLayout(name="#prc.cbLayout#/layouts/#prc.page.getLayout()#", module="contentbox")
+			event.setLayout(name="#prc.cbLayout#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
 
 		}
@@ -259,8 +259,8 @@ component extends="content" singleton{
 	* Verify if a chosen page layout exists or not.
 	*/
 	private function verifyPageLayout(page){
-		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.page.getLayout()#.cfm" ) ) ){
-			throw(message="The layout of the page: '#arguments.page.getLayout()#' does not exist in the current theme.",
+		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.page.getLayoutWithInheritance()#.cfm" ) ) ){
+			throw(message="The layout of the page: '#arguments.page.getLayoutWithInheritance()#' does not exist in the current theme.",
 			      detail="Please verify your page layout settings",
 				  type="ContentBox.InvalidPageLayout");
 		}

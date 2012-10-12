@@ -120,7 +120,8 @@
 					<!--- layout --->
 					#html.label(field="layout",content='Layout:')#
 					<select name="layout" id="layout" class="width98">
-						#html.options(values=prc.availableLayouts,selectedValue=prc.page.getLayoutWithDefault())#
+						<option value="-inherit-" <cfif prc.page.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+						#html.options(values=prc.availableLayouts, selectedValue=prc.page.getLayoutWithDefault())#
 					</select>
 
 					<!--- Show in Menu Builders --->

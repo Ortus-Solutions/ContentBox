@@ -41,6 +41,9 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		createdDate		= now();
 		layout 			= "pages";
 		contentType		= "Page";
+		
+		// INHERITANCE LAYOUT STATIC
+		LAYOUT_INHERITANCE_KEY = "-inherit-";
 	}
 
 	/************************************** PUBLIC *********************************************/
@@ -51,6 +54,19 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	function getLayoutWithDefault(){
 		if( len(getLayout()) ){ return getLayout(); }
 		return "pages";
+	}
+	
+	/**
+	* Get layout with layout inheritance, if none found return convention of "pages"
+	*/
+	function getLayoutWithInheritance(){
+		var thisLayout = getLayout();
+		// check for inheritance and parent?
+		if( thisLayout eq LAYOUT_INHERITANCE_KEY AND hasParent() ){
+			return getParent().getLayoutWithInheritance();
+		}
+		// Else return the layout
+		return thisLayout;
 	}
 
 	/**
