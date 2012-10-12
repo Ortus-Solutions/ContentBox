@@ -110,7 +110,19 @@
 						syntax_trace.push(end);
 						this.syntax[lang]["comments"][i]=this.load_syntax[lang]['COMMENT_MULTI'][i];
 					}			
-				}		
+				}	
+				// (/\*(.|[\r\n])*?\*/)
+				if(this.load_syntax[lang]['COMMENT_MULTI2']){
+					for(var i in this.load_syntax[lang]['COMMENT_MULTI2']){
+						if(typeof(this.load_syntax[lang]['COMMENT_MULTI2'][i])=="function") continue;							
+						var start=this.get_escaped_regexp(i);
+						var end=this.get_escaped_regexp(this.load_syntax[lang]['COMMENT_MULTI2'][i]);
+						quote_tab[quote_tab.length]="("+start+"(.|\\n|\\r)*?("+end+"|$))";
+						syntax_trace.push(start);
+						syntax_trace.push(end);
+						this.syntax[lang]["comments"][i]=this.load_syntax[lang]['COMMENT_MULTI2'][i];
+					}			
+				}	
 				if(quote_tab.length>0)
 					this.syntax[lang]["comment_or_quote_reg_exp"]= new RegExp("("+quote_tab.join("|")+")","gi");
 				

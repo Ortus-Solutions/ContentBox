@@ -5,8 +5,11 @@
 		<li><strong>Version:</strong> #prc.oWidget.getpluginVersion()# </li>
 		<li><strong>ForgeBox Slug:</strong> #prc.oWidget.getForgeBoxSlug()# </li>
 		<li><strong>Description:</strong> #prc.oWidget.getPluginDescription()#</li>
-		<li><strong>Renderit Hint: </strong> <cfif structKeyExists(prc.metadata,"hint")>#prc.metadata.hint#<cfelse>N/A</cfif></li>
-		<li><strong>Renderit Arguments: </strong>
+	</ul>
+	<h3>renderit()</h3>
+	<ul>
+		<li><strong>Hint: </strong> <cfif structKeyExists(prc.metadata,"hint")>#prc.metadata.hint#<cfelse>N/A</cfif></li>
+		<li><strong>Arguments: </strong>
 			<cfif ArrayLen(prc.metadata.parameters)>
 				<table class="tablelisting" width="95%">
 					<tr>
