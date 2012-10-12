@@ -28,6 +28,7 @@ component extends="content" singleton{
 	property name="pageService"			inject="id:pageService@cb";
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
+	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -43,7 +44,9 @@ component extends="content" singleton{
 	function aroundIndex(event,rc,prc,eventArguments){
 
 		// if not caching, just return
-		if( !prc.cbSettings.cb_content_caching OR structKeyExists(eventArguments, "noCache") ){
+		if( !prc.cbSettings.cb_content_caching OR 
+			structKeyExists(eventArguments, "noCache") OR
+			event.valueExists("cbCache") ){
 			return index(event,rc,prc);
 		}
 
@@ -144,12 +147,16 @@ component extends="content" singleton{
 			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID(),sortOrder="asc");
 			prc.comments 		= commentResults.comments;
 			prc.commentsCount 	= commentResults.count;
+			// Detect Mobile Device
+			var isMobileDevice = mobileDetector.isMobile();
 			// announce event
-			announceInterception("cbui_onPage",{page=prc.page});
-			// Verify chosen page layout exists?
+			announceInterception("cbui_onPage",{page=prc.page, isMobile=isMobileDevice});
+			// Verify chosen page layout exists in theme, just in case they moved theme so we can produce a good error message
 			verifyPageLayout( prc.page );
+			// Use the mobile or standard layout
+			var thisLayout = ( isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance() );
 			// set skin view
-			event.setLayout(name="#prc.cbLayout#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox")
+			event.setLayout(name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
 
 		}

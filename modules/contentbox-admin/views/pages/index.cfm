@@ -179,7 +179,7 @@
 								#page.getTitle()#
 							</cfif>
 							<br>
-							Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a></br>
+							Last edit by <a href="mailto:#page.getAuthorEmail()#" title="#page.getAuthorEmail()#">#page.getAuthorName()#</a></br>
 							<!--- password protect --->
 							<cfif page.isPasswordProtected()>
 								<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>
@@ -193,6 +193,11 @@
 							<cfelse>
 								<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
 							</cfif>
+							<!---Layouts --->
+							&nbsp;
+							<img src="#prc.cbRoot#/includes/images/layouts_small.png" alt="page layout" title="Layout: #page.getLayout()#"/>
+							&nbsp;
+							<img src="#prc.cbRoot#/includes/images/iPad.png" alt="mobile layout" title="Mobile Layout: #page.getMobileLayout()#"/>
 						</td>
 						<td>#page.getCategoriesList()#</td>
 						<td class="center">
@@ -207,10 +212,10 @@
 						</td>
 						<td class="center">
 							<cfif page.isExpired()>
-								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Page has expired!" />
+								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Page has expired on ( (#page.getDisplayExpireDate()#))" />
 								<span class="hidden">expired</span>
 							<cfelseif page.isPublishedInFuture()>
-								<img src="#prc.cbRoot#/includes/images/information.png" alt="published" title="Page Publishes in the future!" />
+								<img src="#prc.cbRoot#/includes/images/information.png" alt="published" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)" />
 								<span class="hidden">published in future</span>
 							<cfelseif page.isContentPublished()>
 								<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Page Published!" />

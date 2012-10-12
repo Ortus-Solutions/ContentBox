@@ -52,7 +52,8 @@ component implements="contentbox.model.updates.IUpdate"{
 			transaction{
 
 				log.info("About to beggin #version# patching");
-				
+				// update mobile layout column
+				updateMobileLayout();
 				// update settings
 				updatePermissions();
 				// update AdminR Role
@@ -136,5 +137,54 @@ component implements="contentbox.model.updates.IUpdate"{
 		permissionService.saveAll(entities=allPerms,transactional=false);
 	}
 
-
+	private function updateMobileLayout(){
+		// Ensure column exists?
+		var colFound = false;
+		var cols = new dbInfo(datasource=getDatasource(), table="cb_page").columns();
+		for( var x=1; x lte cols.recordcount; x++ ){
+			if( cols[ "column_name"][x] eq "mobileLayout"){
+				colFound = true;
+			}
+		}
+		if( !colFound ){
+			var q = new Query(datasource=getDatasource());
+			q.setSQL( "ALTER TABLE cb_page ADD mobileLayout #getVarcharType()# NULL;" );
+			q.execute();
+			
+			log.info("Added column for page mobile layouts");
+		}
+		else{
+			log.info("Column for page mobile layouts already in DB, skipping.");
+		}
+	}
+	
+	private function getVarcharType(){
+		var dbType = getDatabaseType();
+		
+		switch( dbType ){
+			case "PostgreSQL" : {
+				return "varchar";
+			}
+			case "MySQL" : {
+				return "varchar";
+			}
+			case "Microsoft SQL Server" : {
+				return "varchar";
+			}
+			case "Oracle" :{
+				return "varchar2";
+			}
+			default : {
+				return "varchar";
+			}
+		}
+	}
+	
+	private function getDatabaseType(){
+		return new dbinfo(datasource=getDatasource()).version().database_productName;
+	}
+	
+	private function getDatasource(){
+		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+	}
 }
