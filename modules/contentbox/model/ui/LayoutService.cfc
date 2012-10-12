@@ -28,18 +28,25 @@ component accessors="true" threadSafe singleton{
 	property name="interceptorService"	inject="coldbox:interceptorService";
 	property name="zipUtil"				inject="zipUtil@cb";
 	property name="log"					inject="logbox:logger:{this}";
+	property name="wirebox"				inject="wirebox";
 
-	// Local properties
+	// The location in disk of the layouts
 	property name="layoutsPath";
+	// The include path for the layouts
 	property name="layoutsIncludePath";
+	// The instantiation path for the layouts
 	property name="layoutsInvocationPath";
+	// The layout registry of records
 	property name="layoutRegistry";
+	// The layout CFC registry
+	property name="layoutCFCRegistry";
 
 	/**
 	* Constructor
 	*/
 	LayoutService function init(){
 		setLayoutRegistry('');
+		setLayoutCFCRegistry({});
 		setLayoutsPath('');
 		setLayoutsIncludePath('');
 		setLayoutsInvocationPath('');
@@ -65,8 +72,20 @@ component accessors="true" threadSafe singleton{
 	function startupActiveLayout(){
 		var layout = settingService.findWhere({name="cb_site_layout"});
 		if( !isNull(layout) ){
-			// register layout interception points
-			interceptorService.appendInterceptionPoints( getLayoutRecord( layout.getName() ).customInterceptionPoints );
+			// Register layout description as an interceptor with custom points
+			interceptorService.registerInterceptor(interceptorObject=layoutCFCRegistry[ layout.getValue() ],
+												   interceptorName="cblayout-#layout.getValue()#",
+												   customPoints=getLayoutRecord( layout.getName() ).customInterceptionPoints);
+			// Call Activation Events
+			var iData = {
+				layoutName = layout.getValue(),
+				layoutRecord = getLayoutRecord( layout.getValue() )
+			};
+			interceptorService.processState("cbadmin_onLayoutActivation", iData);
+			// Call Layout Callback
+			if( structKeyExists( layoutCFCRegistry[ layout.getValue() ], "onActivation" ) ){
+				layoutCFCRegistry[ layout.getValue() ].onActivation();
+			}
 		}
 	}
 
@@ -104,20 +123,21 @@ component accessors="true" threadSafe singleton{
 			layoutRecord = getLayoutRecord( layout.getValue() )
 		};
 		interceptorService.processState("cbadmin_onLayoutDeactivation", iData);
+		// Call Layout Callback
+		if( structKeyExists(layoutCFCRegistry[ layout.getValue() ], "onDeactivation") ){
+			layoutCFCRegistry[ layout.getValue() ].onDeactivation();
+		}
+		// Unregister Layout Descriptor Interceptor
+		interceptorService.unregister(interceptorName="cblayout-#layout.getValue()#");
+		
 		// setup the new layout value
 		layout.setValue( arguments.layoutName );
-		// save the layout setting
+		// save the new layout setting
 		settingService.save( layout );
 		// register layout interception points as we just activated it
 		startupActiveLayout();
 		// flush the settings
 		settingService.flushSettingsCache();
-		// Call Activation
-		var iData = {
-			layoutName = arguments.layoutName,
-			layoutRecord = getLayoutRecord( arguments.layoutName )
-		};
-		interceptorService.processState("cbadmin_onLayoutActivation", iData);
 		return this;
 	}
 
@@ -137,7 +157,7 @@ component accessors="true" threadSafe singleton{
 	query function buildLayoutRegistry(){
 		var rawLayouts 	= directoryList(getLayoutsPath(),false,"query");
 		// filter layout folders only
-		var rawLayouts 	= new Query(dbtype="query",sql="SELECT directory,name from rawLayouts WHERE type = 'Dir'",rawlayouts=rawlayouts).execute().getResult();
+		var rawLayouts 	= new Query(dbtype="query", sql="SELECT directory,name from rawLayouts WHERE type = 'Dir'", rawlayouts=rawlayouts).execute().getResult();
 
 		// Add Columns
 		QueryAddColumn(rawLayouts,"layoutName",[]);
@@ -161,8 +181,8 @@ component accessors="true" threadSafe singleton{
 				rawLayouts.isValid[x] = false;
 				continue;
 			}
-			// construct layout descriptor
-			var config 		= createObject("component", getLayoutsInvocationPath() & ".#layoutName#.#layoutName#");
+			// construct layout descriptor via WireBox
+			var config = wirebox.getInstance( getLayoutsInvocationPath() & ".#layoutName#.#layoutName#" );
 
 			// Add custom descriptions
 			rawLayouts.isValid[x] = true;
@@ -171,19 +191,21 @@ component accessors="true" threadSafe singleton{
 			rawLayouts.version[x] = config.version;
 			rawLayouts.author[x] = config.author;
 			rawLayouts.authorURL[x] = config.authorURL;
-
+			// Screenshot
 			if( structKeyExists(config, "screenShotURL") ){
 				rawLayouts.screenShotURL[x] = getLayoutsIncludePath() & "/#layoutName#/" & config.screenShotURL;
 			}
 			else{
 				rawLayouts.screenShotURL[x] = "";
 			}
+			// ForgeBox slug
 			if( structKeyExists(config, "forgeBoxSlug") ){
 				rawLayouts.forgeBoxSlug[x] = config.forgeBoxSlug;
 			}
 			else{
 				rawLayouts.forgeBoxSlug[x] = "";
 			}
+			// Custom Interception Point
 			if( structKeyExists(config, "customInterceptionPoints") ){
 				rawLayouts.customInterceptionPoints[x] = config.customInterceptionPoints;
 			}
@@ -191,14 +213,16 @@ component accessors="true" threadSafe singleton{
 				rawLayouts.customInterceptionPoints[x] = "";
 			}
 
-			// layouts
-			var thisLayouts = directoryList(getLayoutsPath() & "/#layoutName#/layouts",false,"query","*.cfm","name asc");
-			rawLayouts.layouts[x] = replacenocase(valueList(thisLayouts.name),".cfm","","all");
+			// Theme layouts
+			var thisLayouts = directoryList( getLayoutsPath() & "/#layoutName#/layouts", false, "query", "*.cfm", "name asc" );
+			rawLayouts.layouts[x] = replacenocase( valueList(thisLayouts.name), ".cfm", "", "all" );
+			
+			// Store layout configuration CFC
+			layoutCFCRegistry[ layoutName ] = config;
 		}
 
 		var rawLayouts 	= new Query(dbtype="query",sql="SELECT * from rawLayouts WHERE isValid='true'",rawlayouts=rawlayouts).execute().getResult();
-
-		// store it
+		// store raw layouts
 		setLayoutRegistry( rawLayouts );
 
 		return rawLayouts;
@@ -208,8 +232,14 @@ component accessors="true" threadSafe singleton{
 	* Remove layout
 	*/
 	boolean function removeLayout(required layoutName){
+		// verify name
 		if( !len(arguments.layoutName) ){return false;}
-
+		// Call onDelete on Layout
+		if( structKeyExists( layoutCFCRegistry[ arguments.layoutName ], "onDelete") ){
+			layoutCFCRegistry[ arguments.layoutName ].onDelete();
+		}
+		structDelete( layoutCFCRegistry, arguments.layoutName );
+		// verify location
 		var lPath = getLayoutsPath() & "/" & arguments.layoutName;
 		if( directoryExists( lPath ) ){ directoryDelete( lPath,true ); return true; }
 		return false;
