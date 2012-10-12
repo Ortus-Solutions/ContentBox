@@ -42,6 +42,10 @@ $(document).ready(function() {
 	});
 	</cfif>
 });
+function showActions(contentID){
+	$("##pageActions_" + contentID).slideToggle();
+	return false;
+}
 function remove(contentID){
 	if( contentID != null ){
 		$('##delete_'+contentID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
