@@ -15,7 +15,6 @@
 		<tr>
 			<th>Title</th>
 			<th>Categories</th>
-			<th width="125">Dates</th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Entry Published"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
 			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/comments.png" alt="comments" title="Number of Comments"/></th>
@@ -35,13 +34,9 @@
 			</cfif>>
 			<td>
 				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
-				by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a>
+				by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on #entry.getActiveContent().getDisplayCreatedDate()#
 			</td>
 			<td>#entry.getCategoriesList()#</td>
-			<td>
-				<strong title="Published Date">P:</strong> #entry.getDisplayPublishedDate()#<br/>
-				<strong title="Created Date">C:</strong> #entry.getDisplayCreatedDate()#
-			</td>
 			<td class="center">
 				<cfif entry.isExpired()>
 					<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Entry has expired!" />

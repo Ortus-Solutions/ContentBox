@@ -16,7 +16,6 @@
 			<tr>
 				<th>Page</th>
 				<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="menu" title="Show in Menu"/></th>
-				<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/parent_color_small.png" alt="order" title="Child Pages"/></th>
 				<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
 				<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
 				<th width="100" class="center">Actions</th>
@@ -38,20 +37,7 @@
 				<td>
 					<!--- Title --->
 					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#">#page.getSlug()#</a><br>
-					by #page.getAuthorName()#<br/>
-					<!--- password protect --->
-					<cfif page.isPasswordProtected()>
-						<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked" title="Page is password protected"/>
-					<cfelse>
-						<img src="#prc.cbRoot#/includes/images/lock_off.png" alt="locked" title="Page is public"/>
-					</cfif>
-					&nbsp;
-					<!--- comments icon --->
-					<cfif page.getallowComments()>
-						<img src="#prc.cbRoot#/includes/images/comments.png" alt="locked" title="Commenting is Open!"/>
-					<cfelse>
-						<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked" title="Commenting is Closed!"/>
-					</cfif>
+					by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on #page.getActiveContent().getDisplayCreatedDate()#
 				</td>
 				<td class="center">
 					<cfif page.getShowInMenu()>
@@ -59,9 +45,6 @@
 					<cfelse>
 						<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Not in menu!" />
 					</cfif>
-				</td>
-				<td class="center">
-					#page.getNumberOfChildren()#
 				</td>
 				<td class="center">
 					<cfif page.isExpired()>
