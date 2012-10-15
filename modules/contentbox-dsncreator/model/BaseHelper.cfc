@@ -34,7 +34,7 @@ limitations under the License.
     <cffunction name="verifyDSN" output="false" access="public" returntype="struct" hint="Verify the DSN exists, returns struct: {error:boolean, exists:boolean, messages:string}">    
     	<cfargument name="dsnName" required="true"/>
     	
-    	<cfset var results = { error = false, exists = false, messages = "" }>
+    	<cfset var results = { "ERROR" = false, "EXISTS" = false, "MESSAGES" = "" }>
     	<cftry>
 			
 			<cfdbinfo type="version" name="dbResults" datasource="#arguments.dsnName#">

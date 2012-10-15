@@ -35,7 +35,7 @@ limitations under the License.
     <cffunction name="verifyCFMLAdmin" output="false" access="public" returntype="struct" hint="Verify if the cf admin password validates. Returns struct: {error:boolean, messages:string}">
     	<cfargument name="cfmlPassword" required=true>
     	<cfscript>
-			var results = { error = false, messages = "" };
+			var results = { "ERROR" = false, "MESSAGES" = "" };
     		try{
     			var isValid = isValidRailoPassword( arguments.cfmlPassword );
 
@@ -66,7 +66,7 @@ limitations under the License.
 		<cfargument name="dbUsername" 		required="false" default="">
 		<cfargument name="dbPassword" 		required="false" default="">
 
-		<cfset var results = { error = false, messages = "" }>
+		<cfset var results = { "ERROR" = false, "MESSAGES" = "" }>
 
 		<cftry>
 			<!---Get Datasources --->
