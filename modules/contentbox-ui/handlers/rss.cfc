@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * Handles RSS Feeds
 */
-component extends="BaseContentHandler" singleton{
+component extends="content" singleton{
 
 	/**
 	* Display the RSS feeds for the ContentBox
