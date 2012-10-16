@@ -11,7 +11,7 @@ Description :
 ----------------------------------------------------------------------->
 <cfcomponent name="coldbox" hint="This is the base component used to provide Application.cfc support" output="false" serializable="false">
 
-<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
+	<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
 	<!--- Constructor --->
 	<cfparam name="variables.COLDBOX_CONFIG_FILE" 	default="" type="string">
@@ -163,7 +163,7 @@ Description :
 		<cfset var refResults 		= structnew()>
 		<cfset var debugPanel		= "">
 		<cfset var interceptorService = "">
-
+		
 		<!--- Start Application Requests --->
 		<cflock type="readonly" name="#instance.appHash#" timeout="#instance.lockTimeout#" throwontimeout="true">
 			<cfset cbController = application[locateAppKey()]>
@@ -305,15 +305,12 @@ Description :
 
 					<!--- Render Data? --->
 					<cfif isStruct(renderData) and not structisEmpty(renderData)>
-						<cfset renderDataSetup(argumentCollection=renderData)>
 						<cfset event.showDebugPanel(false)>
-						<!--- Binary --->
-						<cfif renderData.isBinary>
-							<cfcontent type="#renderData.contentType#" variable="#renderedContent#" />
-						<!--- Non Binary --->
-						<cfelse>
-							<cfoutput>#renderedContent#</cfoutput>
-						</cfif>
+						<cfset renderDataSetup(argumentCollection=renderData)><!---
+						Binary 
+						---><cfif renderData.isBinary><cfcontent type="#renderData.contentType#" variable="#renderedContent#" /><!---
+						Non Binary
+						---><cfelse><cfoutput>#renderedContent#</cfoutput></cfif>
 					<!--- Normal HTML --->
 					<cfelse>
 						<cfoutput>#renderedContent#</cfoutput>
