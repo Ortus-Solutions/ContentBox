@@ -170,7 +170,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* Shorthand Author from latest version or null if any yet
 	*/
-	string function getAuthor(){
+	any function getAuthor(){
 		if( hasActiveContent() ){
 			return getActiveContent().getAuthor();
 		}
