@@ -8,6 +8,14 @@
 	<label for="preference.editor">Favorite Editor:</label>
 	#html.select(name="preference.editor", options=prc.editors, class="width98", selectedValue=prc.oAuthor.getPreference("editor", ""))#
 	
+	<!---Social Preferences --->
+	<label for="preference.twitter">Twitter Profile:</label>
+	#html.textfield(name="preference.twitter", class="textfield width98", value=prc.oAuthor.getPreference("twitter", ""))#
+	<label for="preference.facebook">Facebook Profile:</label>
+	#html.textfield(name="preference.facebook", class="textfield width98", value=prc.oAuthor.getPreference("facebook", ""))#
+	<label for="preference.google">Google+ Profile:</label>
+	#html.textfield(name="preference.google", class="textfield width98", value=prc.oAuthor.getPreference("google", ""))#
+	
 	<!--- Admin Event --->
 	#announceInterception("cbadmin_UserPreferencePanel")#
 	
