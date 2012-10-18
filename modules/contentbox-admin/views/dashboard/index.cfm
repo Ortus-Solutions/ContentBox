@@ -2,6 +2,9 @@
 <!--============================Sidebar============================-->
 <div class="sidebar">
 	
+	<!--- Event --->
+	#announceInterception("cbadmin_preDashboardSideBar")#
+	
 	<!--- Admin Actions --->
 	<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
 	<div class="small_box">
@@ -145,6 +148,9 @@
 		</div>
 	</div>	
 	
+	<!--- Event --->
+	#announceInterception("cbadmin_postDashboardSideBar")#
+	
 </div>
 <!--End sidebar-->	
 <!--============================Main Column============================-->
@@ -160,6 +166,8 @@
 			<!--- Messagebox --->
 			#getPlugin("MessageBox").renderit()#
 			
+			<!--- Event --->
+			#announceInterception("cbadmin_preDashboardContent")#
 			
 			<!--- Latest Entries --->
 			#html.anchor(name="recentEntries")#
@@ -207,6 +215,9 @@
 				</cfif>			
 				#prc.commentsViewlet#
 			</div>
+			
+			<!--- Event --->
+			#announceInterception("cbadmin_postDashboardContent")#
 			
 		</div>	
 	</div>
