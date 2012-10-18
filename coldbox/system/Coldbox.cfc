@@ -11,7 +11,7 @@ Description :
 ----------------------------------------------------------------------->
 <cfcomponent name="coldbox" hint="This is the base component used to provide Application.cfc support" output="false" serializable="false">
 
-	<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
+<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
 
 	<!--- Constructor --->
 	<cfparam name="variables.COLDBOX_CONFIG_FILE" 	default="" type="string">
@@ -62,16 +62,16 @@ Description :
 		<cfscript>
 			var appKey = locateAppKey();
 			// Cleanup of old code
-			if( structkeyExists(application,appKey) ){
-				structDelete(application,appKey);
+			if( structkeyExists( application, appKey ) ){
+				structDelete( application, appKey );
 			}
 			// Create Brand New Controller
-			application[appKey] = CreateObject("component","coldbox.system.web.Controller").init(COLDBOX_APP_ROOT_PATH);
+			application[ appKey ] = CreateObject("component","coldbox.system.web.Controller").init( COLDBOX_APP_ROOT_PATH, appKey );
 			// Setup the Framework And Application
-			application[appKey].getLoaderService().loadApplication(COLDBOX_CONFIG_FILE,COLDBOX_APP_MAPPING);
+			application[ appKey ].getLoaderService().loadApplication( COLDBOX_CONFIG_FILE, COLDBOX_APP_MAPPING );
 			// Application Start Handler
-			if ( len(application[appKey].getSetting("ApplicationStartHandler")) ){
-				application[appKey].runEvent(application[appKey].getSetting("ApplicationStartHandler"),true);
+			if ( len( application[ appKey ].getSetting("ApplicationStartHandler")) ){
+				application[ appKey ].runEvent( application[ appKey ].getSetting("ApplicationStartHandler"), true );
 			}
 		</cfscript>
 	</cffunction>
@@ -163,7 +163,7 @@ Description :
 		<cfset var refResults 		= structnew()>
 		<cfset var debugPanel		= "">
 		<cfset var interceptorService = "">
-		
+
 		<!--- Start Application Requests --->
 		<cflock type="readonly" name="#instance.appHash#" timeout="#instance.lockTimeout#" throwontimeout="true">
 			<cfset cbController = application[locateAppKey()]>
