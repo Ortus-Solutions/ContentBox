@@ -205,7 +205,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Category Filter
 		if( len(arguments.category) ){
 			// create association with categories by slug.
-			c.createAlias("categories","cats").isEq("cats.slug",arguments.category);
+			c.createAlias("categories","cats").isIn( "cats.slug", listToArray( arguments.category ) );
 		}
 
 		// Search Criteria
@@ -228,8 +228,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count();
-		results.content = c.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
+		results.count 	= c.count("contentID");
+		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+							.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 
 		return results;
 	}
