@@ -24,7 +24,7 @@ limitations under the License.
 component{
 	// THIS LOADS THE DSN CREATOR WHEN INSTALLING CONTENTBOX FOR THE FIRST TIME
 	// THIS CAN BE REMOVED AFTER INSTALLATION
-	//location("modules/contentbox-dsncreator");
+	location("modules/contentbox-dsncreator");
 	// Application properties, modify as you see fit
 	this.name 				= "ContentBox-Shell-" & hash( getCurrentTemplatePath() );
 	this.sessionManagement 	= true;
