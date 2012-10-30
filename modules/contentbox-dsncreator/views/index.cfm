@@ -87,11 +87,11 @@
 					
 					<label for="dbUsername">Database Username:</label>
 					<small>The name of the database user that will use the connection.<br/></small>
-					<input type="text" class="textfield" size="40" name="dbUsername" id="dbUsername" required="required" />
+					<input type="text" class="textfield" size="40" name="dbUsername" id="dbUsername" />
 					
 					<label for="dbUsername">Database Password:</label>
 					<small>The password of the database user that will use the connection.<br/></small>
-					<input type="password" class="textfield" size="40" name="dbPassword" id="dbPassword" required="required" />
+					<input type="password" class="textfield" size="40" name="dbPassword" id="dbPassword" />
 					
 					<div class="actionBar">	
 						<input name="verifyDataButton" id="verifyDataButton" type="button" class="button" value="Verify Data" onclick="verifyData()" />
