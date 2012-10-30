@@ -28,7 +28,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/database.png" alt="settings" />
+			<img src="#prc.cbroot#/includes/images/Database.png" alt="settings" />
 			Import Databases Into ContentBox
 		</div>
 		<!--- Body --->
