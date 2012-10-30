@@ -405,7 +405,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			// Try to get content?
 			var cachedContent = cache.get( cacheKey );
 			// Verify it exists, if it does, return it
-			if( !isNull( cachedContent ) ){ return cachedContent; }
+			if( !isNull( cachedContent ) AND len( cachedContent ) ){ return cachedContent; }
 		}
 
 		// Check if we need to translate
