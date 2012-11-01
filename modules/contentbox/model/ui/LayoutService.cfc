@@ -29,6 +29,7 @@ component accessors="true" threadSafe singleton{
 	property name="zipUtil"				inject="zipUtil@cb";
 	property name="log"					inject="logbox:logger:{this}";
 	property name="wirebox"				inject="wirebox";
+	property name="html"				inject="coldbox:plugin:HTMLHelper";
 
 	// The location in disk of the layouts
 	property name="layoutsPath";
@@ -70,21 +71,69 @@ component accessors="true" threadSafe singleton{
 	* Startup Active Layout procedures
 	*/
 	function startupActiveLayout(){
+		// get layout setting.
 		var layout = settingService.findWhere({name="cb_site_layout"});
 		if( !isNull(layout) ){
+			// Get layout record
+			var oLayout = layoutCFCRegistry[ layout.getValue() ];
 			// Register layout description as an interceptor with custom points
-			interceptorService.registerInterceptor(interceptorObject=layoutCFCRegistry[ layout.getValue() ],
+			interceptorService.registerInterceptor(interceptorObject=oLayout,
 												   interceptorName="cblayout-#layout.getValue()#",
-												   customPoints=getLayoutRecord( layout.getName() ).customInterceptionPoints);
-			// Call Activation Events
+												   customPoints=getLayoutRecord( layout.getValue() ).customInterceptionPoints);
+			// Register layout settings?
+			if( structKeyExists( oLayout, "settings") ){
+				registerLayoutSettings(name=layout.getValue(), settings=oLayout.settings );
+			}
+			
+			// Prepare layout activation event
 			var iData = {
 				layoutName = layout.getValue(),
 				layoutRecord = getLayoutRecord( layout.getValue() )
 			};
 			interceptorService.processState("cbadmin_onLayoutActivation", iData);
-			// Call Layout Callback
+			
+			// Call Layout Callback: onActivation
 			if( structKeyExists( layoutCFCRegistry[ layout.getValue() ], "onActivation" ) ){
 				layoutCFCRegistry[ layout.getValue() ].onActivation();
+			}
+		}
+	}
+	
+	// save layout settings
+	public function saveLayoutSettings(required name, required struct settings) transactional{
+		var oLayout = layoutCFCRegistry[ arguments.name ];
+		// iterate and save layout settings
+		for( var thisSetting in oLayout.settings ){
+			// retrieve it first
+			var oSetting = settingService.findWhere( { name="cb_layout_#arguments.name#_#thisSetting.name#" } );
+			oSetting.setValue( settings[ thisSetting.name ] );
+			settingService.save( oSetting );
+		}
+	}
+	
+	// Register layout settings
+	private function registerLayoutSettings(required name, required array settings) transactional{
+		// iterate and register layout settings
+		for( var thisSetting in arguments.settings ){
+			// try to retrieve it first
+			var oSetting = settingService.findWhere( { name="cb_layout_#arguments.name#_#thisSetting.name#" } );
+			// If not found, then register it
+			if( isNull( oSetting ) ){
+				var args = { name="cb_layout_#arguments.name#_#thisSetting.name#", value=thisSetting.defaultValue };
+				settingService.save( settingService.new(properties=args) );
+			}
+		}
+	}
+	
+	// Unregister layout settings
+	private function unregisterLayoutSettings(required array settings) transactional{
+		// iterate and register layout settings
+		for( var thisSetting in arguments.settings ){
+			// try to retrieve it first
+			var oSetting = settingService.findWhere( { name="cb_layout_#arguments.name#_#thisSetting.name#" } );
+			// If not found, then register it
+			if( !isNull( oSetting ) ){
+				settingService.delete( oSetting );
 			}
 		}
 	}
@@ -123,7 +172,7 @@ component accessors="true" threadSafe singleton{
 			layoutRecord = getLayoutRecord( layout.getValue() )
 		};
 		interceptorService.processState("cbadmin_onLayoutDeactivation", iData);
-		// Call Layout Callback
+		// Call Layout Callback: onDeactivation
 		if( structKeyExists(layoutCFCRegistry[ layout.getValue() ], "onDeactivation") ){
 			layoutCFCRegistry[ layout.getValue() ].onDeactivation();
 		}
@@ -170,6 +219,8 @@ component accessors="true" threadSafe singleton{
 		QueryAddColumn(rawLayouts,"forgeBoxSlug",[]);
 		QueryAddColumn(rawLayouts,"customInterceptionPoints",[]);
 		QueryAddColumn(rawLayouts,"layouts",[]);
+		QueryAddColumn(rawLayouts,"settings",[]);
+		QueryAddColumn(rawLayouts,"widgets",[]);
 
 		// Register each layout CFC
 		for(var x=1; x lte rawLayouts.recordCount; x++){
@@ -212,10 +263,20 @@ component accessors="true" threadSafe singleton{
 			else{
 				rawLayouts.customInterceptionPoints[x] = "";
 			}
-
+			// Settings
+			if( structKeyExists(config, "settings") ){
+				rawLayouts.settings[x] = serializeJSON( config.settings );
+			}
+			else{
+				rawLayouts.settings[x] = "";
+			}
+			// Theme Widgets
+			var thisWidgets = directoryList( getLayoutsPath() & "/#layoutName#/widgets", false, "query", "*.cfc", "name asc" );
+			rawLayouts.widgets[x] = replacenocase( valueList( thisWidgets.name ), ".cfm", "", "all" );
+			
 			// Theme layouts
 			var thisLayouts = directoryList( getLayoutsPath() & "/#layoutName#/layouts", false, "query", "*.cfm", "name asc" );
-			rawLayouts.layouts[x] = replacenocase( valueList(thisLayouts.name), ".cfm", "", "all" );
+			rawLayouts.layouts[x] = replacenocase( valueList( thisLayouts.name ), ".cfm", "", "all" );
 			
 			// Store layout configuration CFC
 			layoutCFCRegistry[ layoutName ] = config;
@@ -233,13 +294,18 @@ component accessors="true" threadSafe singleton{
 	*/
 	boolean function removeLayout(required layoutName){
 		// verify name
-		if( !len(arguments.layoutName) ){return false;}
+		if( !len( arguments.layoutName ) ){ return false; }
 		// Call onDelete on Layout
 		if( structKeyExists( layoutCFCRegistry[ arguments.layoutName ], "onDelete") ){
 			layoutCFCRegistry[ arguments.layoutName ].onDelete();
 		}
+		// Remove settings
+		if( structKeyExists( layoutCFCRegistry[ arguments.layoutName ], "settings" ) ){
+			unregisterLayoutSettings( name=arguments.layoutName, settings=layoutCFCRegistry[ arguments.layoutName ].settings );
+		}
+		// Remove from registry
 		structDelete( layoutCFCRegistry, arguments.layoutName );
-		// verify location
+		// verify location and remove it
 		var lPath = getLayoutsPath() & "/" & arguments.layoutName;
 		if( directoryExists( lPath ) ){ directoryDelete( lPath,true ); return true; }
 		return false;
@@ -288,6 +354,84 @@ component accessors="true" threadSafe singleton{
 		}
 
 		return results;
+	}
+	
+	function getSettingsConstraints(required layoutName){
+		// Get layout registry
+		var oLayout = layoutCFCRegistry[ arguments.layoutName ];
+		// Verify it has settings, else return empty struct
+		if( !structKeyExists( oLayout, "settings" ) OR !arrayLen( oLayout.settings ) ){ return {}; }
+		
+		var constraints = {};
+		
+		// iterate and build
+		for( var thisSetting in oLayout.settings ){
+			// Check if required
+			if( structKeyExists( thisSetting, "required" ) ){ 
+				constraints[ thisSetting.name ] = {
+					required = true
+				};
+			}
+		}
+		
+		return constraints;
+	}
+	
+	function buildSettingsForm(required activeLayout){
+		// Get layout registry
+		var oLayout = layoutCFCRegistry[ arguments.activeLayout.name ];
+		var settingForm = "";
+		
+		// Build Form by iteration over items
+		if( !structKeyExists( oLayout, "settings" ) OR !arrayLen( oLayout.settings ) ){ return settingForm; }
+
+		savecontent variable="settingForm"{
+
+			for(var x=1; x lte arrayLen( oLayout.settings ); x++){
+				var thisSetting = oLayout.settings[ x ];
+				var requiredText = "";
+				var requiredValidator = "";
+				// get actual setting value which should be guaranteed to exist
+				var oSetting = settingService.findWhere( { name="cb_layout_#arguments.activeLayout.name#_#thisSetting.name#" } );
+				thisSetting.defaultValue = oSetting.getValue();
+				
+				// Default values for settings
+				if( !structKeyExists(thisSetting,"required") ){ thisSetting.required = false; }
+				if( !structKeyExists(thisSetting,"label") ){ thisSetting.label = thisSetting.name; }
+				if( !structKeyExists(thisSetting,"type") ){ thisSetting.type = "text"; }
+				if( !structKeyExists(thisSetting,"title") ){ thisSetting.title = ""; }
+
+				// required stuff
+				if( thisSetting.required ){
+					requiredText = "<span class='textRed'>*Required</span>";
+					requiredValidator = "required";
+				}
+				// write out label
+				writeOutput( html.label(field=thisSetting.name, content="#thisSetting.label# #requiredText#") );
+				
+				// write out control
+				switch( thisSetting.type ){
+					case "boolean" : {
+						writeOutput( html.select(name=thisSetting.name, options="true,false", selectedValue=thisSetting.defaultValue, title=thisSetting.title) );
+						break;
+					}
+					case "select" : {
+						writeOutput( html.select(name=thisSetting.name, options=thisSetting.options, selectedValue=thisSetting.defaultValue, title=thisSetting.title) );
+						break;
+					}
+					case "textarea" : {
+						writeOutput( html.textarea(name=thisSetting.name, required=requiredValidator, title=thisSetting.title, value=thisSetting.defaultValue) );
+						break;
+					}
+					default:{
+						writeOutput( html.textfield(name=thisSetting.name, size="55", class="textfield", required=requiredValidator, title=thisSetting.title, value=thisSetting.defaultValue) );
+					}
+				}
+				
+			}
+		}
+		
+		return settingForm;
 	}
 
 }
