@@ -24,10 +24,13 @@ component extends="baseHandler"{
 		prc.xehActivate		= "#prc.cbAdminEntryPoint#.layouts.activate";
 		prc.xehPreview		= "#prc.cbEntryPoint#.__preview";
 		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
+		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.layouts.saveSettings";
 
 		// Get all layouts
-		prc.layouts = layoutService.getLayouts();
-		prc.layoutsPath = layoutService.getLayoutsPath();
+		prc.layouts 		= layoutService.getLayouts();
+		prc.layoutsPath 	= layoutService.getLayoutsPath();
+		prc.activeLayout 	= layoutService.getActiveLayout();
+		prc.layoutService	= layoutService;
 
 		// ForgeBox Entry URL
 		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
@@ -40,6 +43,22 @@ component extends="baseHandler"{
 		prc.tabLookAndFeel_layouts = true;
 		// view
 		event.setView("layouts/index");
+	}
+	
+	// save Settings
+	function saveSettings(event,rc,prc){
+		var vResults = validateModel( target=rc, constraints=layoutService.getSettingsConstraints( rc.layoutname ) );
+		// Validate results
+		if( vResults.hasErrors() ){
+			getPlugin("MessageBox").error(messageArray=vResults.getAllErrors());
+			return index(argumentCollection=arguments);
+		}
+		
+		// Results validated, save settings
+		layoutService.saveLayoutSettings( name=rc.layoutName, settings=rc );
+		getPlugin("MessageBox").info(message="Layout settings saved!");
+		// Relocate
+		setNextEvent(event=prc.xehLayouts);
 	}
 
 	// activate layout
@@ -58,7 +77,7 @@ component extends="baseHandler"{
 	function rebuildRegistry(event,rc,prc){
 		layoutService.buildLayoutRegistry();
 		getPlugin("MessageBox").info("Layouts re-scanned and registered!");
-		setNextEvent(prc.xehLayouts);
+		setNextEvent(event=prc.xehLayouts, queryString="##manage");
 	}
 
 	//Remove

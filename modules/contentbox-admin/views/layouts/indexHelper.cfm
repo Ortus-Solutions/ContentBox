@@ -26,5 +26,9 @@ function loadForgeBox(orderBY){
 	$forgebox.load('#event.buildLink(prc.xehForgeBox)#',
 		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#', orderBY:orderBY});
 }
+function toggleUploader(){
+	$("##uploaderBar").slideToggle();
+	return false;
+}
 </script>
 </cfoutput>
