@@ -22,8 +22,8 @@ limitations under the License.
 ********************************************************************************
 Update for 1.1.0 release
 
-Start Commit Hash: 2397a39
-End Commit Hash: c4c67e7
+Start Commit Hash: c4c67e7bdd9fb8c49a763b8192b38c66ae42b9c8
+End Commit Hash: 329e3d9b173593562e1c92586c458d7faf52088d
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -148,7 +148,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		if( !colFound ){
 			var q = new Query(datasource=getDatasource());
-			q.setSQL( "ALTER TABLE cb_page ADD mobileLayout #getVarcharType()# NULL;" );
+			q.setSQL( "ALTER TABLE cb_page ADD mobileLayout #getVarcharType()#(200) NULL;" );
 			q.execute();
 			
 			log.info("Added column for page mobile layouts");

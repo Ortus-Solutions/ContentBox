@@ -271,8 +271,13 @@ component accessors="true" threadSafe singleton{
 				rawLayouts.settings[x] = "";
 			}
 			// Theme Widgets
-			var thisWidgets = directoryList( getLayoutsPath() & "/#layoutName#/widgets", false, "query", "*.cfc", "name asc" );
-			rawLayouts.widgets[x] = replacenocase( valueList( thisWidgets.name ), ".cfm", "", "all" );
+			if( directoryExists( getLayoutsPath() & "/#layoutName#/widgets" ) ){
+				var thisWidgets = directoryList( getLayoutsPath() & "/#layoutName#/widgets", false, "query", "*.cfc", "name asc" );
+				rawLayouts.widgets[x] = replacenocase( valueList( thisWidgets.name ), ".cfm", "", "all" );
+			}
+			else{
+				rawLayouts.widgets[x] = "";
+			}
 			
 			// Theme layouts
 			var thisLayouts = directoryList( getLayoutsPath() & "/#layoutName#/layouts", false, "query", "*.cfm", "name asc" );
