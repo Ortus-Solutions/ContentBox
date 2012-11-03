@@ -48,7 +48,7 @@ Description :
 				// Scope Storages
 				scopeStorage = createObject("component","coldbox.system.core.collections.ScopeStorage").init(),
 				// Version
-				version  = "1.5.0",
+				version  = "1.6.0",
 				// The Configuration Binder object
 				binder   = "",
 				// ColdBox Application Link
@@ -214,7 +214,7 @@ Description :
 
 			// Get by DSL?
 			if( structKeyExists(arguments,"dsl") ){
-				return instance.builder.buildSimpleDSL( arguments.dsl, arguments.name );
+				return instance.builder.buildSimpleDSL( arguments.dsl, "ExplicitCall" );
 			}
 
 			// Check if Mapping Exists?
