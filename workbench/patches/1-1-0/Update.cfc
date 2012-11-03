@@ -23,7 +23,7 @@ limitations under the License.
 Update for 1.1.0 release
 
 Start Commit Hash: c4c67e7bdd9fb8c49a763b8192b38c66ae42b9c8
-End Commit Hash: 329e3d9b173593562e1c92586c458d7faf52088d
+End Commit Hash: 122837f54e84f5c96d5c6921f9550ab928ae2433
 
 */
 component implements="contentbox.model.updates.IUpdate"{
