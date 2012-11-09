@@ -43,6 +43,15 @@
 					<img src="#prc.cbroot#/includes/images/chart.png" alt="info" /> Top Visited Content 
 				</h2>
 				<div class="pane">
+					
+					<cfchart chartwidth="265" format="png" tipstyle="none" >
+						<cfchartseries type="bar" colorlist="##B22222,##FF69B4,##FF8C00, ##1E90FF,##ADFF2F" datalabelstyle="value">
+							<cfloop array="#prc.topContent#" index="topContent">
+								<cfchartdata item="#topContent.getTitle()#"  value="#topContent.getHits()#">
+							</cfloop>
+						</cfchartseries>
+					</cfchart>
+					
 					<table class="tablesorter" width="100%">
 						<thead>
 							<tr>
@@ -54,7 +63,7 @@
 							<cfloop array="#prc.topContent#" index="topContent">
 								<tr>
 									<td>
-										<a href="#prc.CBHelper.linkPage(topContent)#">#topContent.getTitle()#</a>
+										<a href="#prc.CBHelper.linkContent( topContent )#">#topContent.getTitle()#</a>
 									</td>
 									<td class="center">#topContent.getHits()#</td>
 								</tr>
@@ -69,6 +78,15 @@
 					<img src="#prc.cbroot#/includes/images/chart.png" alt="info" /> Top Commented Content 
 				</h2>
 				<div class="pane">
+					
+					<cfchart chartwidth="265" format="png" tipstyle="none" >
+						<cfchartseries type="bar" colorlist="##B22222,##FF69B4,##FF8C00, ##1E90FF,##ADFF2F" datalabelstyle="value">
+							<cfloop array="#prc.topCommented#" index="topCommented">
+								<cfchartdata item="#topCommented.getTitle()#"  value="#topCommented.getNumberOfComments()#">
+							</cfloop>
+						</cfchartseries>
+					</cfchart>
+					
 					<table class="tablesorter" width="100%">
 						<thead>
 							<tr>
@@ -80,7 +98,7 @@
 							<cfloop array="#prc.topCommented#" index="topCommented">
 								<tr>
 									<td>
-										<a href="#prc.CBHelper.linkPage(topCommented)#">#topCommented.getTitle()#</a>
+										<a href="#prc.CBHelper.linkContent( topCommented )#">#topCommented.getTitle()#</a>
 									</td>
 									<td class="center">#topCommented.getNumberOfComments()#</td>
 								</tr>
