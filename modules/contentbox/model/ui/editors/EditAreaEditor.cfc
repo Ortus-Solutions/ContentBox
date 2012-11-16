@@ -62,17 +62,13 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 	* Startup the editor(s) on a page
 	*/
 	function startup(){
-		var js = "";
-		
+		var js = "
 		/**
 		 We build the compiled JS with the knowledge of some inline variables we have context to
 		 $excerpt - The excerpt jquery object
 		 $content - The content jquery object
 		 withExcerpt - an argument telling us if an excerpt is available to render or not
 		*/
-		
-		savecontent variable="js"{
-			writeOutput("
 			// load editable area
 			editAreaLoader.init({
 				id : 'content',
@@ -98,8 +94,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 					toolbar: 'charmap, search, go_to_line, fullscreen, |, undo, redo, |, select_font,|, syntax_selection,|, change_smooth_selection, highlight, reset_highlight, word_wrap, |, help'
 				});
 			}
-			");
-		}
+			";
 		
 		return js;
 	}
@@ -113,7 +108,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		var event = requestService.getContext();
 		var cbRoot = event.getValue(name="cbRoot", private=true);
 		
-		// Loaad JS assets
+		// Load JS assets
 		html.addAsset("#cbRoot#/includes/editarea/edit_area_full.js");
 		
 		// Required JS Functions
