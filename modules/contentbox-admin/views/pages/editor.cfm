@@ -212,9 +212,12 @@
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
 					<img src="#prc.cbroot#/includes/images/world.png" alt="info" /> HTML Attributes </h2>
 				<div class="pane">
-					#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.page,class="textfield width95",maxlength="160")#
-					#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.page,class="textfield",maxlength="160")#
-				</div>
+					#html.textField(name="HTMLMetatags.keywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",value=prc.page.getHTMLMetatag("keywords", ""),class="textfield width95",maxlength="160")#
+					#html.textArea(name="HTMLMetatags.description",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",value=prc.page.getHTMLMetatag("description", ""),class="textfield",maxlength="160")#
+					#html.textField(name="HTMLMetatags.PropertyTitle",label="Property Title: (Max 100 characters, best 70)",title="Property Title (Used for social media sharing)",value=prc.page.getHTMLMetatag("propertytitle", ""),class="textfield width95",maxlength="100")#
+					#html.textArea(name="HTMLMetatags.PropertyDescription",label="Property Description: (Max 160 characters)",title="Property Description (Used for social media sharing)",value=prc.page.getHTMLMetatag("propertydescription", ""),class="textfield",maxlength="160")#
+					#html.textField(name="HTMLMetatags.PropertyImage",label="Property Image: (URL,Max 200 characters)",title="Property Image URL (Used for social media sharing)",value=prc.page.getHTMLMetatag("propertyimage", ""),class="textfield width95",maxlength="200")#
+					</div>
 				</cfif>
 				
 				<!--- Event --->

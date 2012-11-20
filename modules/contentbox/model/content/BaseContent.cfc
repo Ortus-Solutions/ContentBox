@@ -25,8 +25,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
 	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
-	property name="HTMLKeywords"			notnull="false" length="160" default="";
-	property name="HTMLDescription"			notnull="false" length="160" default="";
+	property name="HTMLMetatags"			notnull="false" ormtype="text" length="8000" default="";	
 	property name="hits"					notnull="false" ormtype="long" default="0" dbdefault="0";
 	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
 	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cachelayout";
@@ -526,5 +525,71 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		return replace(arrayToList( catList ), ",",", ","all");
 	}
+	
+	/************************************** META FUNCTIONS *********************************************/
+	
+	/**
+	* Store a preferences structure or JSON data in the user prefernces
+	* @preferences.hint A struct of data or a JSON packet to store
+	*/
+	BaseContent function setHTMLMetatags(required any metatags){
+			if( isStruct( arguments.metatags ) ){
+				arguments.metatags = serializeJSON( arguments.metatags );
+			}
+			// store as JSON
+			variables.HTMLMetatags = arguments.metatags;
+		return this;
+	}
+	
+	/**
+	* Get all user preferences in inflated format
+	*/
+	struct function getAllMetatags(){
+			return ( !isNull( HTMLMetatags ) AND isJSON( HTMLMetatags ) ? deserializeJSON( HTMLMetatags ) : structnew() );
+	}
+	
+	/**
+	* Get a preference, you can pass a default value if preference does not exist
+	*/
+	any function getHTMLMetatag(required name, defaultValue){
+		// get metatag
+			var HTMLMetatags = getAllMetatags();
+			if( structKeyExists( HTMLMetatags, arguments.name ) ){
+				return HTMLMetatags[ arguments.name ];
+			}
+		// default values
+		if( structKeyExists( arguments, "defaultValue" ) ){
+			return arguments.defaultValue;
+		}
+		// exception
+		throw(message="The metatag you requested (#arguments.name#) does not exist",
+			  type="BaseContent.MetatagNotFound",
+			  detail="Valid Metatags are #structKeyList( HTMLMetatags )#");
+	}
+	
+	/**
+	* Set a preference in the user preferences
+	*/
+	BaseContent function setHTMLMetatag(required name, required value){
+		var HTMLMetatags = getAllMetatags();
+		HTMLMetatags[ arguments.name ] = arguments.value;
+		return setHTMLMetatags( HTMLMetatags );
+	}
+
+
+	/*
+	* deprecated, use now: getMetatag('HTMLKeywords','')
+	*/
+	string function getHTMLKeywords(){
+		return getHTMLMetatag('Keywords','');
+	}
+
+	/*
+	* deprecated, use now: getHTMLDescription('HTMLKeywords','')
+	*/
+	string function getHTMLDescription(){
+		return getHTMLMetatag('Description','');
+	}		
+
 
 }
