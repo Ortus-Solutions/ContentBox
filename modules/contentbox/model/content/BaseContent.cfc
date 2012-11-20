@@ -578,14 +578,14 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 
 	/*
-	* deprecated, use now: getMetatag('HTMLKeywords','')
+	* deprecated, use now: getHTMLMetatag('HTMLKeywords','')
 	*/
 	string function getHTMLKeywords(){
 		return getHTMLMetatag('Keywords','');
 	}
 
 	/*
-	* deprecated, use now: getHTMLDescription('HTMLKeywords','')
+	* deprecated, use now: getHTMLMetatag('HTMLKeywords','')
 	*/
 	string function getHTMLDescription(){
 		return getHTMLMetatag('Description','');
