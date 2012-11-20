@@ -29,29 +29,35 @@ limitations under the License.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<!--- Site Title --->
-	<title>
-		<cfif cb.isEntryView()>
-			#cb.getCurrentEntry().getTitle()#
-		<cfelse>
-			#cb.siteName()# - #cb.siteTagLine()#
-		</cfif>
-	</title>
-	<!--- Met Tags --->
+	<title><cfif cb.isPageView()>#cb.getCurrentPage().getTitle()#<cfelse>#cb.siteName()# - #cb.siteTagLine()#</cfif></title>
+	<!--- Meta Tags --->
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="generator" 	 content="ContentBox powered by ColdBox" />
 	<meta name="robots" 	 content="index,follow" />
-	
-	<!--- Meta Description By Page or By Site --->
-	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLDescription())>
-		<meta name="description" content="#cb.getCurrentEntry().getHTMLDescription()#" />
-	<cfelse>
+
+	<!--- Meta Description By Entry or By Site --->
+	<cfif cb.isPageView() AND len(cb.getCurrentPage().getHTMLMetatag('description',''))>
+		<meta name="description" content="#cb.getCurrentPage().getHTMLMetatag('description','')#" />
+	<cfelseif len(cb.siteDescription())>
 		<meta name="description" content="#cb.siteDescription()#" />
 	</cfif>
-	<!--- Meta Keywords By Page or By Site --->
-	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLKeywords())>
-		<meta name="keywords" 	 content="#cb.getCurrentEntry().getHTMLKeywords()#" />
-	<cfelse>
+	<!--- Meta Keywords By Entry or By Site --->
+	<cfif cb.isPageView() AND len(cb.getCurrentPage().getHTMLMetatag('keywords',''))>
+		<meta name="keywords" 	 content="#cb.getCurrentPage().getHTMLMetatag('keywords','')#" />
+	<cfelseif len(cb.siteKeywords())>
 		<meta name="keywords" 	 content="#cb.siteKeywords()#" />
+	</cfif>		
+
+	<cfif cb.isPageView() AND len(cb.getCurrentPage().getHTMLMetatag('PropertyDescription',''))>
+		<!--- Facebook and Twitter Metadata --->
+		<meta property="og:title" content="#cb.getCurrentPage().getHTMLMetatag('PropertyTitle','')#" />
+		<meta property="og:description" content="#cb.getCurrentPage().getHTMLMetatag('PropertyDescription','')#" />
+		<meta property="og:image" content="#cb.getCurrentPage().getHTMLMetatag('PropertyImage','')#" />
+		
+		<!--- Google+ Metadata --->
+		<meta itemprop="name" content="#cb.getCurrentPage().getHTMLMetatag('PropertyTitle','')#">
+		<meta itemprop="description" content="#cb.getCurrentPage().getHTMLMetatag('PropertyDescription','')#">
+		<meta itemprop="image" content="#cb.getCurrentPage().getHTMLMetatag('PropertyImage','')#" />
 	</cfif>
 	
 	<!--- Base HREF for SES enabled URLs --->

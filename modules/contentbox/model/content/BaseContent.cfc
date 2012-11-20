@@ -25,8 +25,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
 	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
-	property name="HTMLKeywords"			notnull="false" length="160" default="";
-	property name="HTMLDescription"			notnull="false" length="160" default="";
+	property name="HTMLMetatags"			notnull="false" ormtype="text" length="8000" default="";	
 	property name="hits"					notnull="false" ormtype="long" default="0" dbdefault="0";
 	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
 	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cachelayout";
@@ -109,6 +108,25 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// How many versions do we have?
 		var versionCounts = contentVersionService.newCriteria().isEq("relatedContent.contentID", getContentID() ).count();
 		// Have we passed the limit?
+		/*
+			Fix by Matthias Richter / Akitogo GmbH, Frankfurt am Main, Germany
+			New: - list() instead of get()
+				 - offset: value-2, cause versionCounts+1 if if-clause and without the active one
+				 - exclude the active one 
+		*/
+		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
+			var oldestVersion = contentVersionService.newCriteria()
+				.isEq("relatedContent.contentID", getContentID() )
+				.isEq("isActive", JavaCast("boolean",false) )
+				.withProjections(id="true")
+				.list(sortOrder="createdDate DESC",offset=settingService.getSetting( "cb_versions_max_history" )-2);
+			// delete by primary key ID
+			contentVersionService.deleteByID( arraytoList(oldestVersion) );
+		}
+		
+		/*
+		var versionCounts = contentVersionService.newCriteria().isEq("relatedContent.contentID", getContentID() ).count();
+		// Have we passed the limit?
 		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
 			var oldestVersion = contentVersionService.newCriteria()
 				.isEq("relatedContent.contentID", getContentID() )
@@ -117,6 +135,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			// delete by primary key ID
 			contentVersionService.deleteByID( oldestVersion[2] );
 		}
+		*/
 	}
 
 	/**
@@ -506,5 +525,71 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		return replace(arrayToList( catList ), ",",", ","all");
 	}
+	
+	/************************************** META FUNCTIONS *********************************************/
+	
+	/**
+	* Store a preferences structure or JSON data in the user prefernces
+	* @preferences.hint A struct of data or a JSON packet to store
+	*/
+	BaseContent function setHTMLMetatags(required any metatags){
+			if( isStruct( arguments.metatags ) ){
+				arguments.metatags = serializeJSON( arguments.metatags );
+			}
+			// store as JSON
+			variables.HTMLMetatags = arguments.metatags;
+		return this;
+	}
+	
+	/**
+	* Get all user preferences in inflated format
+	*/
+	struct function getAllMetatags(){
+			return ( !isNull( HTMLMetatags ) AND isJSON( HTMLMetatags ) ? deserializeJSON( HTMLMetatags ) : structnew() );
+	}
+	
+	/**
+	* Get a preference, you can pass a default value if preference does not exist
+	*/
+	any function getHTMLMetatag(required name, defaultValue){
+		// get metatag
+			var HTMLMetatags = getAllMetatags();
+			if( structKeyExists( HTMLMetatags, arguments.name ) ){
+				return HTMLMetatags[ arguments.name ];
+			}
+		// default values
+		if( structKeyExists( arguments, "defaultValue" ) ){
+			return arguments.defaultValue;
+		}
+		// exception
+		throw(message="The metatag you requested (#arguments.name#) does not exist",
+			  type="BaseContent.MetatagNotFound",
+			  detail="Valid Metatags are #structKeyList( HTMLMetatags )#");
+	}
+	
+	/**
+	* Set a preference in the user preferences
+	*/
+	BaseContent function setHTMLMetatag(required name, required value){
+		var HTMLMetatags = getAllMetatags();
+		HTMLMetatags[ arguments.name ] = arguments.value;
+		return setHTMLMetatags( HTMLMetatags );
+	}
+
+
+	/*
+	* deprecated, use now: getHTMLMetatag('HTMLKeywords','')
+	*/
+	string function getHTMLKeywords(){
+		return getHTMLMetatag('Keywords','');
+	}
+
+	/*
+	* deprecated, use now: getHTMLMetatag('HTMLKeywords','')
+	*/
+	string function getHTMLDescription(){
+		return getHTMLMetatag('Description','');
+	}		
+
 
 }

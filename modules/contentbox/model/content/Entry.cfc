@@ -63,8 +63,12 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		var errors = [];
 
 		// limits
-		HTMLKeyWords 		= left(HTMLKeywords,160);
-		HTMLDescription 	= left(HTMLDescription,160);
+		setHTMLMetatag('Keywords', left(getHTMLMetatag('Keywords',''),160));
+		setHTMLMetatag('Description', left(getHTMLMetatag('Description',''),160));
+		setHTMLMetatag('PropertyTitle', left(getHTMLMetatag('PropertyTitle',''),100));
+		setHTMLMetatag('PropertyDescription', left(getHTMLMetatag('PropertyDescription',''),160));
+		setHTMLMetatag('PropertyImage', left(getHTMLMetatag('PropertyImage',''),200));
+
 		passwordProtection 	= left(passwordProtection,100);
 		title				= left(title,200);
 		slug				= left(slug,200);
