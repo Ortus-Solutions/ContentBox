@@ -109,6 +109,25 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// How many versions do we have?
 		var versionCounts = contentVersionService.newCriteria().isEq("relatedContent.contentID", getContentID() ).count();
 		// Have we passed the limit?
+		/*
+			Fix by Matthias Richter / Akitogo GmbH, Frankfurt am Main, Germany
+			New: - list() instead of get()
+				 - offset: value-2, cause versionCounts+1 if if-clause and without the active one
+				 - exclude the active one 
+		*/
+		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
+			var oldestVersion = contentVersionService.newCriteria()
+				.isEq("relatedContent.contentID", getContentID() )
+				.isEq("isActive", JavaCast("boolean",false) )
+				.withProjections(id="true")
+				.list(sortOrder="createdDate DESC",offset=settingService.getSetting( "cb_versions_max_history" )-2);
+			// delete by primary key ID
+			contentVersionService.deleteByID( arraytoList(oldestVersion) );
+		}
+		
+		/*
+		var versionCounts = contentVersionService.newCriteria().isEq("relatedContent.contentID", getContentID() ).count();
+		// Have we passed the limit?
 		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
 			var oldestVersion = contentVersionService.newCriteria()
 				.isEq("relatedContent.contentID", getContentID() )
@@ -117,6 +136,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			// delete by primary key ID
 			contentVersionService.deleteByID( oldestVersion[2] );
 		}
+		*/
 	}
 
 	/**
