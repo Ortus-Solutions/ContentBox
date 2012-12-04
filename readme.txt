@@ -22,6 +22,21 @@ Created & copyright by Luis Majano (Ortus Solutions, Corp - www.ortussolutions.c
 Powered by ColdBox (www.coldbox.org)
 
 ********************************************************************************
+VERSIONING
+********************************************************************************
+ContentBox is maintained under the Semantic Versioning guidelines as much as possible.
+
+Releases will be numbered with the following format:
+
+<major>.<minor>.<patch>
+
+And constructed with the following guidelines:
+
+* Breaking backward compatibility bumps the major (and resets the minor and patch)
+* New additions without breaking backward compatibility bumps the minor (and resets the patch)
+* Bug fixes and misc changes bumps the patch
+
+********************************************************************************
 CONTENTBOX LICENSE
 ********************************************************************************
 ContentBox and ColdBox are open source and bound to the Apache License, Version 2.0. If you use ContentBox, 

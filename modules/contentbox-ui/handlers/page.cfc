@@ -204,13 +204,13 @@ component extends="content" singleton{
 			prc.searchResults = getModel("SearchResults@cb");
 			prc.searchResultsContent = "Please enter a search term to search on.";
 		}
-
-		// announce event
-		announceInterception("cbui_onContentSearch",{searchResults = prc.searchResults, searchResultsContent = prc.searchResultsContent});
-
+		
 		// set skin search
 		event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
 			.setView(view="#prc.cbLayout#/views/search",module="contentbox");
+			
+		// announce event
+		announceInterception("cbui_onContentSearch",{searchResults = prc.searchResults, searchResultsContent = prc.searchResultsContent});
 	}
 
 
