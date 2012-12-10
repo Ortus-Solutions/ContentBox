@@ -198,12 +198,14 @@ component extends="baseHandler"{
 
 		// Register a new content in the page, versionized!
 		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
-		// attach parent page
-		if( len(rc.parentPage) ){
+		
+		// attach a parent page if it exists and not the same
+		if( len( rc.parentPage ) AND page.getContentID() NEQ rc.parentPage ){
 			page.setParent( pageService.get( rc.parentPage ) );
 			// update slug
 			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
 		}
+		
 		// Create new categories?
 		var categories = [];
 		if( len(trim(rc.newCategories)) ){
