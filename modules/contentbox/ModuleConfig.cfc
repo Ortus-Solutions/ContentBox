@@ -123,7 +123,7 @@ component {
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
 		binder.map("AdminMenuService@cb").to("contentbox.model.ui.AdminMenuService");
 		// Editors
-		binder.map("EditorService@cb").to("contentbox.model.ui.editors.EditorService").asEagerInit();
+		binder.map("EditorService@cb").to("contentbox.model.ui.editors.EditorService");
 		binder.map("TextareaEditor@cb").to("contentbox.model.ui.editors.TextareaEditor");
 		binder.map("CKEditor@cb").to("contentbox.model.ui.editors.CKEditor");
 		binder.map("EditAreaEditor@cb").to("contentbox.model.ui.editors.EditAreaEditor");
@@ -153,6 +153,8 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		// Startup the Editor Service
+		controller.getWireBox().getInstance("EditorService@cb");
 		// Startup the ContentBox modules, if any
 		controller.getWireBox().getInstance("moduleService@cb").startup();
 	}
