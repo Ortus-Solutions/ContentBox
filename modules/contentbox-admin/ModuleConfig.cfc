@@ -105,9 +105,7 @@ component {
 				// Layout Themes
 				"cbadmin_onLayoutActivation", "cbadmin_onLayoutDeactivation",
 				// Version Control
-				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback",
-				// CKEditor Control
-				"cbadmin_ckeditorExtraPlugins", "cbadmin_ckeditorToolbar"
+				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback"
 			])
 		};
 
