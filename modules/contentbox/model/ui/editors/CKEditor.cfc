@@ -28,6 +28,8 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 	property name="TOOLBAR_JSON";
 	// The extra plugins we have created for CKEditor
 	property name="extraPlugins";
+	// The extra configuration for CKEditor
+	property name="extraConfig";
 	
 	// DI
 	property name="log" inject="logbox:logger:{this}";
@@ -52,7 +54,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			writeOutput('[
 		    { "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
 		    { "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
-		    { "name": "editing",     "items" : [ "Find","Replace","-","SpellChecker", "Scayt" ] },
+		    { "name": "editing",     "items" : [ "Find","Replace","SpellChecker"] },
 		    { "name": "forms",       "items" : [ "Form", "Checkbox", "Radio", "TextField", "Textarea", "Select", "Button","HiddenField" ] },
 		    "/",
 			{ "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat" ] },
@@ -61,7 +63,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		    "/",
 		    { "name": "styles",      "items" : [ "Styles","Format" ] },
 		    { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
-			{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
+			{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe"] },
 		    { "name": "contentbox",  "items" : [ "cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
 		    ]');
 		};
@@ -77,10 +79,12 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		};
 		
 		// Register our extra plugins
-		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem";
+		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc";
+		// Extra Configuration
+		extraConfig = "";
 		
 		// Register our events
-		interceptorService.appendInterceptionPoints("cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins");
+		interceptorService.appendInterceptionPoints("cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig");
 		
 		return this;
 	}
@@ -111,9 +115,13 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		var iData2 = { extraPlugins = listToArray( extraPlugins) };
 		// Announce extra plugins to see if user implements more.
 		interceptorService.processState("cbadmin_ckeditorExtraPlugins", iData2);
+		// Load extra configuration
+		var iData3 = { extraConfig = "" };
+		// Announce extra configuration
+		interceptorService.processState("cbadmin_ckeditorExtraConfig", iData3);
 		
 		// Now prepare our JavaScript and load it. No need to send assets to the head as CKEditor comes pre-bundled
-		return compileJS(iData, iData2);
+		return compileJS(iData, iData2, iData3);
 	}
 	
 	/**
@@ -138,7 +146,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 	};
 	
 	
-	private function compileJS(iData, iData2){
+	private function compileJS(iData, iData2, iData3){
 		var js = "";
 		var event = requestService.getContext();
 		var cbAdminEntryPoint = event.getValue(name="cbAdminEntryPoint", private=true);
@@ -151,7 +159,13 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		// Determine Extra Plugins code
 		var extraPlugins = "";
 		if( arrayLen( arguments.iData2.extraPlugins ) ){
-			extraPlugins = "extraPlugins : '#arrayToList( iData2.extraPlugins )#',";
+			extraPlugins = "extraPlugins : '#arrayToList( arguments.iData2.extraPlugins )#',";
+		}
+		
+		// Determin Extra Configuration
+		var extraConfig = "";
+		if( len( arguments.iData3.extraConfig ) ){
+			extraConfig = "#arguments.iData3.extraConfig#,";
 		}
 		
 		/**
@@ -170,7 +184,9 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			// Activate ckeditor on content object
 			$content.ckeditor( function(){}, {
 					#extraPlugins#
+					#extraConfig#
 					toolbar: ckToolbar,
+					toolbarCanCollapse: true,
 					height:300,
 					filebrowserBrowseUrl : '#event.buildLink( xehCKFileBrowserURL )#',
 					filebrowserImageBrowseUrl : '#event.buildLink( xehCKFileBrowserURLIMage )#',
@@ -181,7 +197,9 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			// Active Excerpts
 			if (withExcerpt) {
 				$excerpt.ckeditor(function(){}, {
+					#extraConfig#
 					toolbar: ckExcerptToolbar,
+					toolbarCanCollapse: true,
 					height: 175,
 					filebrowserBrowseUrl: '#event.buildLink( xehCKFileBrowserURL )#',
 					baseHref: '#HTML_BASE_URL#/'
