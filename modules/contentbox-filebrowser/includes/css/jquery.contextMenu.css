@@ -45,5 +45,6 @@
 .contextMenu li.rename a { background-image: url(../images/rename.png); }
 .contextMenu li.delete a { background-image: url(../images/cancel.png); }
 .contextMenu li.download a { background-image: url(../images/download.png); }
+.contextMenu li.link a { background-image: url(../images/link.png); }
 .contextMenu li.quickview a { background-image: url(../images/camera.png); }
 .contextMenu li.select a { background-image: url(../images/select.png); }

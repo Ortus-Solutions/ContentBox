@@ -98,6 +98,7 @@ function fbContextActions(action,el,pos){
 		<cfif len(rc.callback)>
 		case "select" 	 : fbChoose(); break;
 		</cfif>
+		case "url"	 : fbUrl(); break;
 	}
 }
 function fbListTypeChange(listType){
@@ -171,6 +172,16 @@ function fbRename(){
 		},"json");
 	}
 }
+function fbUrl(){
+	// check selection
+	var sPath = $selectedItem.val();
+	if( !sPath.length ){ alert("Please select a file first."); return; }
+	// get ID
+	var thisID 		= $selectedItemID.val();
+	var target 		= $("##"+thisID);
+	// prompt the URL
+	var newName  = prompt("Url:", "#event.buildLink('')#" + target.attr("data-relurl") );
+}
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>
 function fbNewFolder(){
@@ -223,18 +234,18 @@ function fbChoose(){
 <script type="text/javascript">
 $(document).ready(function() {
   $('##file_upload').uploadify({
-    'uploader'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
-    'cancelImg' : '#prc.fbModRoot#/includes/uploadify/cancel.png',
-   	'script'    : '#event.buildLink(prc.xehFBUpload)#?#$safe(session.URLToken)#&folder=#prc.fbSafeCurrentRoot#',
-	'scriptData': {path: '#prc.fbSafeCurrentRoot#'},
+    'swf'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
+    //'cancelImg' : '#prc.fbModRoot#/includes/uploadify/uploadify-cancel.png',
+   	'uploader'    : '#event.buildLink(prc.xehFBUpload)#?#$safe(session.URLToken)#&folder=#prc.fbSafeCurrentRoot#',
+	'formData': {path: '#prc.fbSafeCurrentRoot#'},
     'auto'      : true,
 	'multi'  	: #prc.fbSettings.uploadify.multi#,
-	fileDesc	: '#prc.fbSettings.uploadify.fileDesc#',
-    fileExt		: '#prc.fbSettings.uploadify.fileExt#',
+	'fileTypeDesc'	: '#prc.fbSettings.uploadify.fileDesc#',
+    'fileTypeExts'		: '#prc.fbSettings.uploadify.fileExt#',
 	<cfif isNumeric( prc.fbSettings.uploadify.sizeLimit )>
-	sizeLimit	: #prc.fbSettings.uploadify.sizeLimit#,
+	'fileSizeLimit'	: #prc.fbSettings.uploadify.sizeLimit#,
 	</cfif>
-	onAllComplete: function(event, data){
+	'onQueueComplete': function(queueData){
 		//alert(data.filesUploaded + ' file(s) uploaded successfully!');
 		$("##uploadBar").slideUp();
 		fbRefresh();
