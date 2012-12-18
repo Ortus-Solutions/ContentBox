@@ -471,8 +471,7 @@ component output="false" hint="Main filebrowser module handler"{
 			// uploadify if uploads enabled
 			if( prc.fbSettings.allowUploads ){
 				addAsset("#prc.fbModRoot#/includes/uploadify/uploadify.css");
-				addAsset("#prc.fbModRoot#/includes/uploadify/swfobject.js");
-				addAsset("#prc.fbModRoot#/includes/uploadify/jquery.uploadify.v2.1.4.min.js");
+				addAsset("#prc.fbModRoot#/includes/uploadify/jquery.uploadify-3.1.min.js");
 			}
 			if( prc.fbSettings.loadSelectCallbacks ){
 				addAsset("#prc.fbModRoot#/includes/javascript/fbSelectCallbacks.js");
