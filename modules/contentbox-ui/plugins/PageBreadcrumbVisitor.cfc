@@ -23,7 +23,7 @@ component singleton="true"{
 		var bc	= "";
 		// recursive lookup
 		if( arguments.page.hasParent() ){
-			bc &= visit( arguments.page.getParent() );
+			bc &= visit( arguments.page.getParent(),arguments.separator );
 		}
 		
 		// check if page slug is home, to ignore it
