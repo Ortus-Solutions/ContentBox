@@ -1,4 +1,4 @@
-﻿/**
+/**
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -859,7 +859,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/**
 	* Render out a quick menu for root level pages
 	* @excludes.hint The list of pages to exclude from the menu
-	* @type.hint The type of menu, valid choices are: ul,ol,li,none
+	* @type.hint The type of menu, valid choices are: ul,ol,li,data,none
 	* @separator.hint Used if type eq none, to separate the list of href's
 	* @levels.hint The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
 	* @parentClass.hint The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
@@ -937,9 +937,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		return getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-ui").visit( arguments.page, arguments.separator );
 
 	}
-	
+
 	/************************************** UTILITIES *********************************************/
-	
+
 	/**
 	* Detects if the incoming request is from a mobile device or NOT.
 	*/
@@ -951,7 +951,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	private function buildMenu(pageRecords, excludes="", type="ul", separator="", boolean showNone=true, levels="1", numeric currentLevel="1", parentClass="parent", activeClass="active", activeShowChildren=false){
 		// check type?
-		if( !reFindNoCase("^(ul|ol|li|none)$", arguments.type) ){ arguments.type="ul"; }
+		if( !reFindNoCase("^(ul|ol|li|data|none)$", arguments.type) ){ arguments.type="ul"; }
 		var pageResults = arguments.pageRecords;
 		// buffer
 		var b = createObject("java","java.lang.StringBuilder").init('');
@@ -967,8 +967,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 
 		// list start
-		if( !listFindNoCase("li,none", arguments.type) ){
+		if( !listFindNoCase("li,none,data", arguments.type) ){
 			b.append('<#arguments.type# class="submenu">');
+		}
+
+		if( arguments.type eq "data" ){
+			var dataMenu = [];
 		}
 
 		// Iterate through pages and create sub menus
@@ -986,7 +990,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 				if( doNesting ){ arrayAppend(classText, arguments.parentClass); }
 
 				// list
-				if( arguments.type neq "none"){
+				if( arguments.type neq "none" and arguments.type neq "data" ){
 					// Start Embedded List
 					b.append('<li class="#arrayToList(classText, " ")#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
 					// Nested Levels?
@@ -1000,7 +1004,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 											currentLevel=arguments.currentLevel+1) );
 					}
 					// Do we nest active and activeShowChildren flag is activated?
-					else if( activeShowChildren AND isElementActive AND pageResults.pages[x].hasChild() ){ 
+					else if( activeShowChildren AND isElementActive AND pageResults.pages[x].hasChild() ){
 						// If type is "li" then guess to do a nested ul list
 						b.append( buildMenu(pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
 											excludes=arguments.excludes,
@@ -1009,15 +1013,44 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 											levels=1,
 											currentLevel=arguments.currentLevel+1) );
 					}
-					
+
 					// Close it
 					b.append('</li>');
+				} else if ( arguments.type eq "data" )
+				{
+					var pageData = {
+						title = pageResults.pages[x].getTitle(),
+						link = linkPage(pageResults.pages[x])
+					};
+					if( doNesting ){
+						pageData.subPageMenu = buildMenu(pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
+							excludes=arguments.excludes,
+							type = arguments.type,
+							showNone=arguments.showNone,
+							levels=arguments.levels,
+							currentLevel=arguments.currentLevel+1);
+					}
+					// Do we nest active and activeShowChildren flag is activated?
+					else if( activeShowChildren AND isElementActive AND pageResults.pages[x].hasChild() ){
+						pageData.subPageMenu = buildMenu(pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
+							excludes=arguments.excludes,
+							type = arguments.type,
+							showNone=arguments.showNone,
+							levels=1,
+							currentLevel=arguments.currentLevel+1);
+					}
+					arrayAppend(dataMenu,pageData);
 				}
 				else{
 					b.append('<a href="#linkPage(pageResults.pages[x])#" class="#arrayToList(classText, " ")#">#pageResults.pages[x].getTitle()#</a>#arguments.separator#');
 				}
 			}
 		}
+
+		if( arguments.type eq "data" ){
+			return dataMenu;
+		}
+
 		// None?
 		if( pageResults.count eq 0 and arguments.showNone ){ b.append("<li>No Sub Pages</li>"); }
 
