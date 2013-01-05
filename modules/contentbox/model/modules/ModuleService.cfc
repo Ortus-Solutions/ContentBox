@@ -35,6 +35,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	// Local properties
 	property name="modulesPath" type="string";
 	property name="modulesInvocationPath" type="string";
+	property name="moduleWidgetCache" type="struct";
 
 	/**
 	* Constructor
@@ -44,6 +45,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		super.init(entityName="cbModule");
 		modulesPath = "";
 		modulesInvocationPath = "";
+		moduleWidgetCache = {};
 		return this;
 	}
 
@@ -97,7 +99,26 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 
 		return results;
 	}
-
+	
+	/**
+	 * gets path for requested widget from modules' widget cache
+	 * @widgetName {String}
+	 * returns String
+	 */
+	string function getModuleWidgetPath( required string widgetName ) {
+		var path = "";
+		// get widgets for module
+		var cache = getModuleWidgetCache();
+		// if widget name is in module widget cache, return its path
+		if( structKeyExists( cache, arguments.widgetName ) ) {
+			path = cache[ arguments.widgetName ];
+		}
+		else {
+			log.error("Could not find #arguments.widgetname# widget in the module.");	
+		}
+		return path;
+	}
+	
 	/**
 	* Register a new module and return the module representation, this does not activate, just registers
 	*/
@@ -239,6 +260,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 				}
 			}
 		}
+		// build widget cache
+		buildModuleWidgetsCache();
 		return this;
 	}
 
@@ -286,6 +309,39 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		results.logInfo = installLog.toString();
 		// return results
 		return results;
+	}
+
+	/**
+     * Iterates over all registered, active modules and sets any found widgets into a cache in moduleservice
+     * return null
+     */
+	private void function buildModuleWidgetsCache() {
+		// get all active modules
+		var activeModules = findModules( isActive=true );
+		var cache = {};
+		// loop over active modules
+		for( var module in activeModules.modules ) {
+			// check that module widgets folder exists on disk
+			if( directoryExists( modulesPath & "/" & module.getEntryPoint() & "/widgets" ) ) {
+				var directory = directoryList( modulesPath & "/" & module.getEntryPoint() & "/widgets", false, "query" );
+				// make sure there are widgets in the directory
+				if( directory.recordCount ) {
+					var moduleWidgets = [];
+					// loop over widgets
+    				for( var i=1; i<=directory.recordCount; i++ ) {
+    					// set widget properties in cache
+    					var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
+    					var widget = {
+    						name = widgetName,
+    						path = modulesInvocationPath & ".#module.getEntryPoint()#.widgets.#widgetName#"
+    					};
+    					cache[ widgetName & "@" & module.getEntryPoint() ] = modulesInvocationPath & ".#module.getEntryPoint()#.widgets.#widgetName#";
+    				}
+    				
+    			}
+			}
+		}
+		setModuleWidgetCache( cache );
 	}
 
 	private query function getModulesOnDisk(){

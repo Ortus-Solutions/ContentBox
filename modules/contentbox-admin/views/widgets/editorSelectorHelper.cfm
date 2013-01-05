@@ -57,23 +57,29 @@ $(document).ready(function() {
 	});
 });
 function selectCBWidget(widget){
-	var argDiv = $("##widgetArgs_"+widget).slideToggle();
+    var selector = widget.replace(/(~|@)/g, '\\$1');
+	var argDiv = $("##widgetArgs_"+selector).slideToggle();
 	// check if we have arguments, else just insert
 	if( !argDiv.html().length ){
 		sendEditorText("{{{"+widget+"}}}");
 	}
 	// apply form validator
-	$("##widgetArgsForm_"+widget).validator({position:'center right'});
+	$("##widgetArgsForm_"+selector).validator({position:'center right'});
 }
 function insertCBWidget(widget){
-	var $widgetForm = $("##widgetArgsForm_"+widget);
+    // conditional selector for different kinds of widgets
+    var selector = widget.replace(/(~|@)/g, '\\$1');
+    // choose form based on selector
+	var $widgetForm = $("##widgetArgsForm_"+selector);
 
 	if( !$widgetForm.data("validator").checkValidity() ){
 		return;
 	}
-
-	var args = $("##widgetArgsForm_"+widget).serializeArray();
-	var widgetContent = "{{{"+widget+":";
+    // add selector to args form
+	var args = $("##widgetArgsForm_"+selector).serializeArray();
+	var widgetContent = "{{{"+widget;
+    // build out content
+    widgetContent +=":";
 	for(var i in args){
 		if( args[i].value.length ){
 			widgetContent += args[i].name+"='"+args[i].value+"'";
