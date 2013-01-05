@@ -31,7 +31,8 @@ component accessors="true"{
 		var targetLen 	= arrayLen( targets );
 		var tagString	= "";
 		var widgetContent	= "";
-
+		var isModuleWidget = false;
+		var moduleName = "";
 		// Loop over found mustaches {{{Widget}}}
 		for(var x=1; x lte targetLen; x++){
 
@@ -51,7 +52,17 @@ component accessors="true"{
 				// Parse arguments separated by commas
 				tagString = replace(tagString,"',","' ","all");
 				tagString = replace(tagString,'",', '" ',"all");
-
+				isModuleWidget = findNoCase( "@", tagString ) ? true : false;
+				isLayoutWidget = findNoCase( "~", tagString ) ? true : false;
+				if( isModuleWidget ) {
+					var startPos = find( "@", tagString )+1;
+					var endPos = find( " ", tagString, 1 );
+					moduleName = mid( tagString, startPos, endPos-startPos );
+					tagString = reReplace( tagString, "@.* ", " ", "one" );
+				}
+				if( isLayoutWidget ) {
+					tagString = reReplace( tagString, "~", "", "one" );
+				}
 				// Parse it now as XML
 				var tagXML 		= xmlParse( tagString );
 				var widgetName 	= tagXML.XMLRoot.XMLName;
@@ -69,8 +80,20 @@ component accessors="true"{
 					widgetContent = evaluate("widgetService.getWidget( '#getToken(widgetName,1,".")#' ).#getToken(widgetName,2,".")#(argumentCollection=widgetArgs)");
 				}
 				else{
-					// Render out the widget
-					widgetContent = widgetService.getWidget( widgetName ).renderit(argumentCollection=widgetArgs);
+					if( isModuleWidget ) {
+						// Render out the module widget
+						widgetContent = widgetService.getWidget( name=widgetName & "@" & moduleName, type="module" ).renderit( argumentCollection=widgetArgs );
+					}
+					else {
+						if( isLayoutWidget ) {
+							// Render out the layout widget
+							widgetContent = widgetService.getWidget( name=widgetName, type="layout" ).renderit(argumentCollection=widgetArgs);
+						}
+						else {
+							// Render out the core widget
+							widgetContent = widgetService.getWidget( widgetName ).renderit(argumentCollection=widgetArgs);
+						}
+					}
 				}
 
 
