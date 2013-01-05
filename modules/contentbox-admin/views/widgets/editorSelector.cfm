@@ -15,15 +15,28 @@
 			<tr>
 				<th>Widget</th>
 				<th>Description</th>
+				<th>Type</th>
 				<th width="75" class="center {sorter:false}">Actions</th>
 			</tr>
 		</thead>				
 		<tbody>
 			<cfloop query="prc.widgets">
-			<cfset p = prc.widgets.plugin>
+				<cfscript>
+					p = prc.widgets.plugin;
+					widgetName = prc.widgets.name;
+					widgetSelector = prc.widgets.name;
+					switch( prc.widgets.widgettype ) {
+						case 'module':
+                        	widgetName &= "@" & prc.widgets.module;
+                        	break;
+                       	case 'layout':
+                       		widgetName = "~" & widgetName;
+                       		break;
+					}
+				</cfscript>					
 			<cfif isSimpleValue(p)>
 				<tr class="selected">
-					<td colspan="4">There is a problem creating widget: '#prc.widgets.name#', please check the application log files.</td>
+					<td colspan="4">There is a problem creating widget: '#widgetName#', please check the application log files.</td>
 				</tr>
 			<cfelse>
 			<tr>
@@ -33,11 +46,14 @@
 				<td>
 					#p.getPluginDescription()#
 					<!--- Widget Argument Form --->
-					<div id="widgetArgs_#prc.widgets.name#" style="display:none">#renderWidgetArgs(p.renderit,prc.widgets.name)#</div>
+					<div id="widgetArgs_#widgetName#" style="display:none">#renderWidgetArgs(p.renderit,widgetName)#</div>
 					
 				</td>
+                <td>
+                	<strong>#prc.widgets.widgettype#</strong>    
+                </td>
 				<td class="center">
-					<button class="button" onclick="selectCBWidget('#prc.widgets.name#')">Select</button>
+					<button class="button" onclick="selectCBWidget('#widgetName#')">Select</button>
 				</td>
 			</tr>
 			</cfif>

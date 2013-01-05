@@ -83,15 +83,17 @@
 						<tr>
 							<th>Widget</th>
 							<th>Description</th>
+                            <th>Type</th>
 							<th width="100" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						<cfloop query="prc.widgets">
+						<cfset fullWidgetName = prc.widgets.widgetType eq "module" ? prc.widgets.name & "@" & prc.widgets.module : prc.widgets.name>
 						<cfset p = prc.widgets.plugin>
 						<cfif isSimpleValue(p)>
 							<tr class="selected">
-								<td colspan="4">There is a problem creating widget: '#prc.widgets.name#', please check the application log files.</td>
+								<td colspan="4">There is a problem creating widget: '#fullWidgetName#', please check the application log files.</td>
 							</tr>
 						<cfelse>
 						<tr>
@@ -106,19 +108,23 @@
 								ForgeBox URL: <a href="#prc.forgeBoxEntryURL & "/" & p.getForgeBoxSlug()#" target="_blank">#p.getForgeBoxSlug()#</a>
 								</cfif>
 							</td>
+                            <td>#prc.widgets.widgettype#</td>
 							<td class="center">
 								<!--- Documentation Icon --->
-								<a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(prc.widgets.name)#'})"><img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" /></a>
+								<a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(fullWidgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})"><img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" /></a>
 								&nbsp;
 								<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 	
 								<!--- Editor --->
-								<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#prc.widgets.name#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
+								<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#fullWidgetName#&type=#prc.widgets.widgettype#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
 								&nbsp;
-								<!--- Delete Command --->
-								<a title="Delete Widget" href="javascript:remove('#JSStringFormat(prc.widgets.name)#')" class="confirmIt"
-									data-title="Delete #prc.widgets.name#?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+                                <!---only allow deletion of core widgets--->
+								<cfif prc.widgets.widgettype eq "core">
+    								<!--- Delete Command --->
+    								<a title="Delete Widget" href="javascript:remove('#JSStringFormat(fullWidgetName)#')" class="confirmIt"
+    									data-title="Delete #fullWidgetName#?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
 								</cfif>
+                                </cfif>
 							</td>
 						</tr>
 						</cfif>
