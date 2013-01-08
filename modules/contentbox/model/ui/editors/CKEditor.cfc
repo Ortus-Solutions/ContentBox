@@ -28,8 +28,6 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 	property name="TOOLBAR_JSON";
 	// The extra plugins we have created for CKEditor
 	property name="extraPlugins";
-	// The extra configuration for CKEditor
-	property name="extraConfig";
 	
 	// DI
 	property name="log" inject="logbox:logger:{this}";
@@ -80,8 +78,6 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		
 		// Register our extra plugins
 		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc";
-		// Extra Configuration
-		extraConfig = "";
 		
 		// Register our events
 		interceptorService.appendInterceptionPoints("cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig");
@@ -119,7 +115,6 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		var iData3 = { extraConfig = "" };
 		// Announce extra configuration
 		interceptorService.processState("cbadmin_ckeditorExtraConfig", iData3);
-		
 		// Now prepare our JavaScript and load it. No need to send assets to the head as CKEditor comes pre-bundled
 		return compileJS(iData, iData2, iData3);
 	}
@@ -161,7 +156,6 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		if( arrayLen( arguments.iData2.extraPlugins ) ){
 			extraPlugins = "extraPlugins : '#arrayToList( arguments.iData2.extraPlugins )#',";
 		}
-		
 		// Determin Extra Configuration
 		var extraConfig = "";
 		if( len( arguments.iData3.extraConfig ) ){
