@@ -49,7 +49,8 @@ component accessors="true"{
 			createSampleData( setup, author );
 		}
 		// Remove ORM update from Application.cfc
-		processORMUpdate( setup );
+		// Commented out for better update procedures.
+		// processORMUpdate( setup );
 		// Process reinit and debug password security
 		processColdBoxPasswords( setup );
 		// ContentBox is now online, mark it:
