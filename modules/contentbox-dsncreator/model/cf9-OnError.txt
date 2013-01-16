@@ -7,6 +7,6 @@ public void function onError(exception, eventName){
 		include "modules/contentbox-dsncreator/views/cf9-refresher.cfm";
 	}
 	else{
-		throw( arguments.exception );
+		throw( object=arguments.exception );
 	}
 }
