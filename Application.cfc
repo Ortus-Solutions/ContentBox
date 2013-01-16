@@ -53,7 +53,7 @@ component{
 	this.ormEnabled = true;
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
-		cfclocation=["model","modules/contentbox/model","modules/contentbox/modules"],
+		cfclocation=["model","modules"],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
