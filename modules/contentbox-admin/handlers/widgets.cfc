@@ -42,8 +42,9 @@ component extends="baseHandler"{
 	//docs
 	function docs(event,rc,prc){
 		prc.widgetName = widgetService.ripExtension( urlDecode( rc.widget ) );
+		prc.widgetType = urlDecode( rc.type );
 		// get widget plugin
-		prc.oWidget  = widgetService.getWidget( prc.widgetName );
+		prc.oWidget  = widgetService.getWidget( prc.widgetName, prc.widgetType );
 		// get its metadata
 		prc.metadata = getmetadata( prc.oWidget.renderit );
 		// presetn view
@@ -118,7 +119,7 @@ component extends="baseHandler"{
 		// Exit handlers
 		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.save";
 		// Get Widget Code
-		prc.widgetCode = widgetService.getWidgetCode( rc.widget );
+		prc.widgetCode = widgetService.getWidgetCode( rc.widget, rc.type );
 		// view
 		event.setView("widgets/edit");
 	}
@@ -126,7 +127,7 @@ component extends="baseHandler"{
 	// Save Widget Code
 	function save(event,rc,prc){
 		// Save the widget code
-		widgetService.saveWidgetCode( rc.widget, rc.widgetCode );
+		widgetService.saveWidgetCode( rc.widget, rc.widgetCode, rc.type );
 		// stay or relocate?
 		if( event.isAjax() ){
 			event.renderData(data=true,type="json");

@@ -1,6 +1,7 @@
 ﻿<cfoutput>
 #html.startForm(name="widgetEditForm",action=prc.xehWidgetSave,novalidate="novalidate")#
 #html.hiddenField(name="widget",value=rc.widget)#
+#html.hiddenField(name="type",value=rc.type)#
 <!--============================Sidebar============================-->
 <div class="sidebar">
 	<!--- Info Box --->
