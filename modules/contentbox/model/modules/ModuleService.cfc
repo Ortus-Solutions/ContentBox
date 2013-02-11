@@ -241,7 +241,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	* Startup the modules
 	*/
 	ModuleService function startup(){
-		var qModules = getModulesOnDisk();
+		// Get Core Modules From Disk
+		var qModules = getModulesOnDisk( modulesPath );
 		// Register each module as it is found on disk
 		for(var x=1; x lte qModules.recordCount; x++){
 			// Only look at directories
@@ -321,30 +322,33 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var cache = {};
 		// loop over active modules
 		for( var module in activeModules.modules ) {
-			// check that module widgets folder exists on disk
-			if( directoryExists( modulesPath & "/" & module.getEntryPoint() & "/widgets" ) ) {
-				var directory = directoryList( modulesPath & "/" & module.getEntryPoint() & "/widgets", false, "query" );
+			// Widgets path
+			var thisWidgetsPath = modulesPath & "/" & module.getName() & "/widgets";
+			// check that module widgets folder exists on disk, if so, iterate and register
+			if( directoryExists( thisWidgetsPath ) ) {
+				var directory = directoryList( thisWidgetsPath, false, "query" );
 				// make sure there are widgets in the directory
 				if( directory.recordCount ) {
 					var moduleWidgets = [];
 					// loop over widgets
-    				for( var i=1; i<=directory.recordCount; i++ ) {
+    				for( var i=1; i <= directory.recordCount; i++ ) {
     					// set widget properties in cache
     					var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
     					var widget = {
     						name = widgetName,
-    						path = modulesInvocationPath & ".#module.getEntryPoint()#.widgets.#widgetName#"
+    						path = modulesInvocationPath & ".#module.getName()#.widgets.#widgetName#"
     					};
-    					cache[ widgetName & "@" & module.getEntryPoint() ] = modulesInvocationPath & ".#module.getEntryPoint()#.widgets.#widgetName#";
+    					cache[ widgetName & "@" & module.getName() ] = widget.path;
     				}
     				
     			}
 			}
 		}
-		setModuleWidgetCache( cache );
+		// Store constructed cache
+		moduleWidgetCache = cache;
 	}
 
-	private query function getModulesOnDisk(){
-		return directoryList( modulesPath,false,"query","","name asc");
+	private query function getModulesOnDisk(required path){
+		return directoryList( arguments.path, false, "query", "", "name asc");
 	}
 }
