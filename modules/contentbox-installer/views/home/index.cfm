@@ -118,28 +118,32 @@
 						<a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">Apache mod_rewrite</a>, 
 						<a href="http://www.tuckey.org/urlrewrite/">tuckey URL Rewrite filter</a> or 
 						<a href="http://www.iis.net/download/urlrewrite">IIS 7 rewrite module</a>.
-						We can configure <em>mod_rewrite</em> and <em>IIS 7 rewriting</em> for you automatically.
+						We can configure <em>Apache mod_rewrite, IIS 7 and ContentBox Express</em> for you automatically by creating the appropriate files in 
+						the application web root.
 					</p>
-					<p>
-						If you select full URL rewrites below, then we will modify your application's routing table to remove the 
-						<strong>index.cfm</strong> from the URLs (<em>config/routes.cfm</em>).  You can also select not to have full URL rewrites and your URLs
-						will contain an <strong>index.cfm</strong> in them. 
-
-					</p>
-					<strong>Full URL Rewrite:</strong>
-					<code>
-						http://myapp/about-us
-					</code>
-					<br/>
-					<strong>Default URL Rewrite</strong>
-					<code>
-						http://myapp/index.cfm/about-us
-					</code>
-					<br/><br/>
+					
+					<div class="infoBar">
+						<p>
+							If you select full URL rewrites below, then we will modify your application's routing table to remove the 
+							<strong>index.cfm</strong> from the URLs (<em>config/routes.cfm</em>).  You can also select not to have full URL rewrites and your URLs
+							will contain an <strong>index.cfm</strong> in them. 
+	
+						</p>
+						<strong>Full URL Rewrite:</strong>
+						<code>
+							http://myapp/about-us
+						</code>
+						<br/>
+						<strong>Default URL Rewrite</strong>
+						<code>
+							http://myapp/index.cfm/about-us
+						</code>
+					</div>
+					
 					<!--- Populate With Sample Data --->
 					#html.label(field="fullrewrite",content="Enable Full URL Rewrites:")#
 					#html.radioButton(name="fullrewrite",value=true)# Yes 
-					#html.select(options="mod_rewrite,iis7",name="rewrite_engine")#
+					#html.select(options="contentbox_express,mod_rewrite,iis7",name="rewrite_engine")#
 					<br/>
 					#html.radioButton(name="fullrewrite",checked=true,value=false)# No 	
 					

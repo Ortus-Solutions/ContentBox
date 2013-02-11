@@ -26,7 +26,8 @@ component{
 		}
 		// start installation
 		installerService.execute( populateModel("SetupBean@cbi") );
-		
+		// start up fresh in next request
+		applicationStop();
 		// Take them to the finalized screen
 		setNextEvent("cbinstaller/finished");
 	}
