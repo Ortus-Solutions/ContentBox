@@ -25,6 +25,8 @@ component accessors="true" singleton threadSafe{
 	// Dependecnies
 	property name="settingService"		inject="id:settingService@cb";
 	property name="moduleSettings"		inject="coldbox:setting:modules";
+	property name="moduleService"		inject="ModuleService@cb";
+	property name="layoutService"		inject="LayoutService@cb";
 	property name="coldbox"				inject="coldbox";
 	property name="log"					inject="logbox:logger:{this}";
 	
@@ -52,17 +54,24 @@ component accessors="true" singleton threadSafe{
 	
 	/**
 	* Get widget code
+	* @name {String}
+	* @type {String}
+	* return String
 	*/
-	string function getWidgetCode(required string name){
-		var widgetPath = getWidgetsPath() & "/#arguments.name#.cfc";
+	string function getWidgetCode(required string name, required string type){
+		var widgetPath = getWidgetFilePath( argumentCollection=arguments );
 		return fileRead( widgetPath );
 	}
 	
 	/**
 	* Save widget code
+	* @name {String}
+	* @code {String}
+	* @type {String}
+	* return WidgetService
 	*/
-	WidgetService function saveWidgetCode(required string name, required string code){
-		var widgetPath = getWidgetsPath() & "/#arguments.name#.cfc";
+	WidgetService function saveWidgetCode(required string name, required string code, required string type){
+		var widgetPath = getWidgetFilePath( argumentCollection=arguments );
 		fileWrite( widgetPath, arguments.code );
 		return this;
 	}
@@ -87,13 +96,20 @@ component accessors="true" singleton threadSafe{
 	* Get installed widgets
 	*/
 	query function getWidgets(){
+		// get core widgets
 		var widgets = directoryList(getWidgetsPath(),false,"query","*.cfc","name asc");
-		
+		// get module widgets
+		var moduleWidgets = ModuleService.getModuleWidgetCache();
+		// get layout widgets
+		var layoutWidgets = LayoutService.getLayoutWidgetCache();
 		// Add custom columns
 		QueryAddColumn(widgets,"filename",[]);
 		QueryAddColumn(widgets,"plugin",[]);
-		
+		QueryAddColumn(widgets,"widgettype",[]);
+		QueryAddColumn(widgets,"module",[]);
 		// cleanup and more stuff
+		
+		// add core widgets
 		for(var x=1; x lte widgets.recordCount; x++){
 			// filename
 			widgets.fileName[x] = widgets.name[x];
@@ -101,11 +117,45 @@ component accessors="true" singleton threadSafe{
 			widgets.name[x] = ripExtension( widgets.name[x] );
 			// try to create the plugin
 			widgets.plugin[x] = "";
+			// set the type
+			widgets.widgettype[x] = "Core";
 			try{
-				widgets.plugin[x] = getWidget( widgets.name[x] );
+				widgets.plugin[x] = getWidget( widgets.name[x], widgets.widgettype[x] );
 			}
 			catch(any e){
 				log.error("Error creating widget plugin: #widgets.name[x]#",e);
+			}
+		}
+		// add module widgets
+		for( var widget in moduleWidgets ) {
+			var widgetName = listGetAt( widget, 1, "@" );
+			var moduleName = listGetAt( widget, 2, "@" );
+			queryAddRow( widgets );
+			querySetCell( widgets, "filename", widgetName );
+			querySetCell( widgets, "name", widgetName );
+			querySetCell( widgets, "widgettype", "Module" );
+			querySetCell( widgets, "module", moduleName );
+			
+			try{
+				querySetCell( widgets, "plugin", getWidget( name=widget, type="module" ) );
+			}
+			catch(any e){
+				log.error("Error creating module widget plugin: #widgetsName#",e);
+			}
+		}
+		
+		// add layout widgets
+		for( var widget in layoutWidgets ) {
+			queryAddRow( widgets );
+			querySetCell( widgets, "filename", widget );
+			querySetCell( widgets, "name", widget );
+			querySetCell( widgets, "widgettype", "Layout" );
+			
+			try{
+				querySetCell( widgets, "plugin", getWidget( name=widget, type="layout" ) );
+			}
+			catch(any e){
+				log.error("Error creating layout widget plugin: #widget#",e);
 			}
 		}
 		
@@ -115,8 +165,48 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Get a widget by name
 	*/
-	any function getWidget(required name){
-		return coldbox.getPlugin(plugin="contentbox.widgets." & arguments.name, customPlugin=true);
+	any function getWidget( required name, required string type="core" ){
+		var path = "";
+		switch( type ) {
+			case "layout":
+				var path = LayoutService.getLayoutWidgetPath( arguments.name );
+				break;
+			case "module":
+				var path = ModuleService.getModuleWidgetPath( arguments.name );
+				break;
+			case "core":
+				var path = "contentbox.widgets." & arguments.name;
+				break;
+		}
+		if( len( path ) ) {
+			return coldbox.getPlugin(plugin=path, customPlugin=true);
+		}
+	}
+	
+	/**
+	 * Gets widget file path by name and type
+	 * @name {String}
+	 * @type {String}
+	 * return String
+	 */
+	string function getWidgetFilePath( required string name, required string type ) {
+		var widgetPath = "";
+		// switch on widget type (core, layout, module )
+		switch( type ) {
+			case "layout":
+				var layout = LayoutService.getActiveLayout();
+				widgetPath = "#layout.directory#/#layout.layoutname#/widgets/#arguments.name#.cfc";
+				break;
+			case "module":
+				var widgetname = listGetAt( arguments.name, 1, '@' );
+				var modulename = listGetAt( arguments.name, 2, '@' );
+				widgetPath = moduleSettings[ "contentbox" ].path & "/modules/#modulename#/widgets/#widgetname#.cfc";
+				break;
+			case "core":
+				widgetPath = getWidgetsPath() & "/#arguments.name#.cfc";
+				break;
+		}
+		return widgetPath;
 	}
 	
 	/**
