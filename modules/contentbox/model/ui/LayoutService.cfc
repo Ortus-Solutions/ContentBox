@@ -77,11 +77,9 @@ component accessors="true" threadSafe singleton{
 	 */
 	string function getLayoutWidgetPath( required string widgetName ) {
 		var path = "";
-		// get layout widgets
-		var cache = getLayoutWidgetCache();
 		// if requested widget exists in the cache, return the path
-		if( structKeyExists( cache, arguments.widgetName ) ) {
-			path = cache[ arguments.widgetName ];
+		if( structKeyExists( layoutWidgetCache, arguments.widgetName ) ) {
+			path = layoutWidgetCache[ arguments.widgetName ];
 		}
 		else {
 			log.error("Could not find #arguments.widgetname# widget in the layout.");	
@@ -112,15 +110,15 @@ component accessors="true" threadSafe singleton{
 				layoutName = layout.getValue(),
 				layoutRecord = getLayoutRecord( layout.getValue() )
 			};
-			var cache = {};
-			// build widget cache
-			for( var i=1; i<=listLen( iData.layoutRecord.widgets ); i++ ) {
+			
+			// build widget cache for active layout
+			for( var i=1; i <= listLen( iData.layoutRecord.widgets ); i++ ) {
 				var widgetName = replaceNoCase( listGetAt( iData.layoutRecord.widgets, i ), ".cfc", "", "one" );
 				var widgetPath = "#getLayoutsInvocationPath()#.#layout.getValue()#.widgets.#widgetName#";
-				cache[ widgetName ] = widgetPath;
+				layoutWidgetCache[ widgetName ] = widgetPath;
 			}
-			// save widget cache
-			setLayoutWidgetCache( cache );
+
+			// Announce layout activation
 			interceptorService.processState("cbadmin_onLayoutActivation", iData);
 			
 			// Call Layout Callback: onActivation
