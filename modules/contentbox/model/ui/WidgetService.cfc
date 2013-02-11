@@ -195,7 +195,7 @@ component accessors="true" singleton threadSafe{
 		switch( type ) {
 			case "layout":
 				var layout = LayoutService.getActiveLayout();
-				widgetPath = "#layout.directory#/#layout.layoutname#/widgets/#arguments.name#.cfc";
+				widgetPath = "#layout.directory#/#layout.name#/widgets/#arguments.name#.cfc";
 				break;
 			case "module":
 				var widgetname = listGetAt( arguments.name, 1, '@' );
