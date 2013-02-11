@@ -81,15 +81,20 @@ component accessors="true"{
 	}
 
 	function processRewrite(required setup){
-		// rewrite on routes.
+		// rewrite on routes.cfm
 		var routesPath = appPath & "config/Routes.cfm";
 		var c = fileRead(routesPath);
 		c = replacenocase(c, "index.cfm","","all");
 		fileWrite(routesPath, c);
-		// determine engine and setup the appropriate file
+		
+		// determine engine and setup the appropriate file for the rewrite engine
 		switch( arguments.setup.getRewrite_Engine() ){
 			case "mod_rewrite" :{
 				// do nothing, .htaccess already on root
+				break;
+			}
+			case "contentbox_express" :{
+				// do nothing, tuckey already setup at the servlet level
 				break;
 			}
 			case "iis7" : {
