@@ -32,6 +32,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	property name="commentService"		inject="id:commentService@cb";
 	property name="customHTMLService"	inject="id:customHTMLService@cb";
 	property name="widgetService"		inject="id:widgetService@cb";
+	property name="moduleService"		inject="id:moduleService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 
 	function init(controller){
@@ -704,6 +705,18 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			return controller.getPlugin(plugin=widgetCreationPath,customPlugin=true);
 		}
 
+		// module widgets
+		// if "@" is used in widget name, assume it's a module widget
+		if( findNoCase( "@", arguments.name ) ) {
+			// get module widgets
+			var cache = moduleService.getModuleWidgetCache();
+			// check if requested widget exists in widget cache
+			if( structKeyExists( cache, arguments.name ) && len( cache[ arguments.name ] ) ) {
+				// if exists, use it as the requested plugin
+				return controller.getPlugin( plugin=cache[ arguments.name ], customPlugin=true );
+			}
+		}
+		
 		// return core contentbox widget instead
 		return widgetService.getWidget( arguments.name );
 	}

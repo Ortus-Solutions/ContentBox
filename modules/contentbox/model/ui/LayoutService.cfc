@@ -41,6 +41,8 @@ component accessors="true" threadSafe singleton{
 	property name="layoutRegistry";
 	// The layout CFC registry
 	property name="layoutCFCRegistry";
+	// The cache of widgets for the active layout
+	property name="layoutWidgetCache" type="struct";
 
 	/**
 	* Constructor
@@ -51,6 +53,7 @@ component accessors="true" threadSafe singleton{
 		setLayoutsPath('');
 		setLayoutsIncludePath('');
 		setLayoutsInvocationPath('');
+		setLayoutWidgetCache({});
 		return this;
 	}
 
@@ -65,6 +68,23 @@ component accessors="true" threadSafe singleton{
 		// Register all layouts
 		buildLayoutRegistry();
 		// Startup Active Layout
+	}
+
+	/**
+	 * Returns path for the requested widget from layout service's layout cache
+	 * @widgetName {String}}
+	 * return String
+	 */
+	string function getLayoutWidgetPath( required string widgetName ) {
+		var path = "";
+		// if requested widget exists in the cache, return the path
+		if( structKeyExists( layoutWidgetCache, arguments.widgetName ) ) {
+			path = layoutWidgetCache[ arguments.widgetName ];
+		}
+		else {
+			log.error("Could not find #arguments.widgetname# widget in the currently active layout.");	
+		}
+		return path;
 	}
 
 	/**
@@ -90,6 +110,15 @@ component accessors="true" threadSafe singleton{
 				layoutName = layout.getValue(),
 				layoutRecord = getLayoutRecord( layout.getValue() )
 			};
+			
+			// build widget cache for active layout
+			for( var i=1; i <= listLen( iData.layoutRecord.widgets ); i++ ) {
+				var widgetName = replaceNoCase( listGetAt( iData.layoutRecord.widgets, i ), ".cfc", "", "one" );
+				var widgetPath = "#getLayoutsInvocationPath()#.#layout.getValue()#.widgets.#widgetName#";
+				layoutWidgetCache[ widgetName ] = widgetPath;
+			}
+
+			// Announce layout activation
 			interceptorService.processState("cbadmin_onLayoutActivation", iData);
 			
 			// Call Layout Callback: onActivation
