@@ -83,7 +83,7 @@
 						<tr>
 							<th>Widget</th>
 							<th>Description</th>
-                            <th>Type</th>
+                            <th width="45">Type</th>
 							<th width="100" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
@@ -98,7 +98,7 @@
 						<cfelse>
 						<tr>
 							<td>
-								<strong>#p.getPluginName()#</strong><br/>
+								<strong>#fullWidgetName#</strong><br/>
 								Version #p.getPluginVersion()#
 								By <a href="#p.getPluginAuthor()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>
 							</td>
