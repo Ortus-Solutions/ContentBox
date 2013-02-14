@@ -41,7 +41,7 @@
 			<cfelse>
 			<tr>
 				<td>
-					<strong>#p.getPluginName()#</strong>
+					<strong>#p.getPluginName()##( prc.widgets.widgetType eq "module" ? "@" & prc.widgets.module : '' )#</strong>
 				</td>
 				<td>
 					#p.getPluginDescription()#

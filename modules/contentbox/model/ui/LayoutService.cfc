@@ -82,7 +82,7 @@ component accessors="true" threadSafe singleton{
 			path = layoutWidgetCache[ arguments.widgetName ];
 		}
 		else {
-			log.error("Could not find #arguments.widgetname# widget in the layout.");	
+			log.error("Could not find #arguments.widgetname# widget in the currently active layout.");	
 		}
 		return path;
 	}

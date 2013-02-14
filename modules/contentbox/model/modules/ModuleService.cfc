@@ -107,11 +107,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	 */
 	string function getModuleWidgetPath( required string widgetName ) {
 		var path = "";
-		// get widgets for module
-		var cache = getModuleWidgetCache();
 		// if widget name is in module widget cache, return its path
-		if( structKeyExists( cache, arguments.widgetName ) ) {
-			path = cache[ arguments.widgetName ];
+		if( structKeyExists( moduleWidgetCache, arguments.widgetName ) ) {
+			path = moduleWidgetCache[ arguments.widgetName ];
 		}
 		else {
 			log.error("Could not find #arguments.widgetname# widget in the module.");	

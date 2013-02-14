@@ -97,11 +97,12 @@ component accessors="true" singleton threadSafe{
 	*/
 	query function getWidgets(){
 		// get core widgets
-		var widgets = directoryList(getWidgetsPath(),false,"query","*.cfc","name asc");
+		var widgets = directoryList( widgetsPath, false, "query", "*.cfc", "name asc" );
 		// get module widgets
-		var moduleWidgets = ModuleService.getModuleWidgetCache();
+		var moduleWidgets = moduleService.getModuleWidgetCache();
 		// get layout widgets
-		var layoutWidgets = LayoutService.getLayoutWidgetCache();
+		var layoutWidgets = layoutService.getLayoutWidgetCache();
+		
 		// Add custom columns
 		QueryAddColumn(widgets,"filename",[]);
 		QueryAddColumn(widgets,"plugin",[]);
@@ -169,10 +170,10 @@ component accessors="true" singleton threadSafe{
 		var path = "";
 		switch( type ) {
 			case "layout":
-				var path = LayoutService.getLayoutWidgetPath( arguments.name );
+				var path = layoutService.getLayoutWidgetPath( arguments.name );
 				break;
 			case "module":
-				var path = ModuleService.getModuleWidgetPath( arguments.name );
+				var path = moduleService.getModuleWidgetPath( arguments.name );
 				break;
 			case "core":
 				var path = "contentbox.widgets." & arguments.name;
