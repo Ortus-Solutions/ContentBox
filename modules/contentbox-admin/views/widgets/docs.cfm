@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-<h2>'#prc.oWidget.getPluginName()#' Widget</h2>
+<h2>'#prc.widgetName#' - #prc.widgetType# Widget</h2>
 <div>
 	<ul>
 		<li><strong>Version:</strong> #prc.oWidget.getpluginVersion()# </li>
