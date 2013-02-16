@@ -72,7 +72,7 @@ component {
 				"cbadmin_beforeLoginHeadEnd","cbadmin_afterLoginBodyStart","cbadmin_beforeLoginBodyEnd","cbadmin_loginFooter","cbadmin_beforeLoginContent","cbadmin_afterLoginContent",
 				// Entry Events
 				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove", "cbadmin_onEntryStatusUpdate",
-				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarFooter",
+				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarAccordion", "cbadmin_entryEditorSidebarFooter",
 				"cbadmin_entryEditorFooter", "cbadmin_entryEditorInBody",
 				// Page Events
 				"cbadmin_prePageSave","cbadmin_postPageSave","cbadmin_prePageRemove","cbadmin_postPageRemove", "cbadmin_onPageStatusUpdate",
