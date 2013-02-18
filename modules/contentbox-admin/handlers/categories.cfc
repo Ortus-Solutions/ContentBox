@@ -29,19 +29,29 @@ component extends="baseHandler"{
 
 	// save
 	function save(event,rc,prc){
-		// slugify if not passed
-		if( NOT len(rc.slug) ){ rc.slug = rc.category; }
-		rc.slug = getPlugin("HTMLHelper").slugify(rc.category);
+		// slugify if not passed, and allow passed slugs to be saved as-is
+		if( NOT len(rc.slug) ){ 
+			rc.slug = getPlugin("HTMLHelper").slugify(rc.category); 
+		}
 		// populate and get category
 		var oCategory = populateModel( categoryService.get(id=rc.categoryID) );
     	// announce event
 		announceInterception("cbadmin_preCategorySave",{category=oCategory,categoryID=rc.categoryID});
-		// save category
-		categoryService.save( oCategory );
-		// announce event
-		announceInterception("cbadmin_postCategorySave",{category=oCategory});
-		// messagebox
-		getPlugin("MessageBox").setMessage("info","Category saved!");
+		// check if category already exists
+		var isSaveableCategory = rc.categoryID!="" || isNull( categoryService.findWhere( criteria={ slug=rc.category } ) ) ? true : false;
+		// if non-existent
+		if( isSaveableCategory ) {
+			// save category
+			categoryService.save( oCategory );
+			// announce event
+			announceInterception("cbadmin_postCategorySave",{category=oCategory});
+			// messagebox
+			getPlugin("MessageBox").setMessage("info","Category saved!");
+		}
+		else {
+			// messagebox
+			getPlugin("MessageBox").setMessage("warning","Category '#rc.category#' already exists!");	
+		}
 		// relocate
 		setNextEvent(prc.xehCategories);
 	}
