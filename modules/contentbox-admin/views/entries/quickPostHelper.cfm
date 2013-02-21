@@ -13,7 +13,7 @@ $(document).ready(function() {
 	    { name: 'basicstyles', items : [ 'Bold','Italic','Underline','Strike','-','TextColor','BGColor'] },
 	    { name: 'paragraph',   items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },
 	    { name: 'links',       items : [ 'Link','Unlink','Anchor' ] },
-	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar' ] }
+	    { name: 'insert',      items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar', 'MediaEmbed', 'InsertPre' ] }
 	];
 	// Activate ckeditor
 	$quickEntryContent.ckeditor( function(){}, {
