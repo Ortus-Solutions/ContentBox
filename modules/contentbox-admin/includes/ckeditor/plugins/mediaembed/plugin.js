@@ -16,7 +16,7 @@
         init: function( editor )
         {
            var me = this;
-           CKEDITOR.dialog.add( 'MediaEmbedDialog', function (instance)
+           CKEDITOR.dialog.add( 'MediaEmbedDialog', function ( editor )
            {
               return {
                  title : 'Embed Media',
@@ -31,22 +31,25 @@
                                 id : 'embedArea',
                                 type : 'textarea',
                                 label : 'Paste Embed Code Here (YouTube, Vimeo, Etc.)',
+                                validate : CKEDITOR.dialog.validate.notEmpty( 'The embed field cannot be empty.' ),
                                 'autofocus':'autofocus',
-                                setup: function(element){},
-                                commit: function(element){}
+                                required : true,
+                                commit: function( data ){
+                                	data.embedArea = this.getValue();
+                                }
                               }]
                           }
                        ],
                   onOk: function() {
-                        for (var i = 0; i < window.frames.length; i++) {
-                            if (window.frames[i].name == 'iframeMediaEmbed') {
-                                var content = window.frames[i].document.getElementById("embed").value;
-                            }
-                        }
-                        // console.log(this.getContentElement( 'iframe', 'embedArea' ).getValue());
-                        div = editor.document.createElement('div');
-                        div.setHtml(this.getContentElement('iframe', 'embedArea').getValue());
-                        editor.insertElement(div);
+                	  var dialog = this,
+                	  	data = {},
+                	  	div = editor.document.createElement( 'div' );
+                	  // bind the data
+                	  this.commitContent( data );
+                	  // set the iframe content
+                	  div.setHtml( data.embedArea );
+                	  // insert back into editor
+                      editor.insertElement( div );
                   }
               };
            } ); // end dialog function
