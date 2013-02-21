@@ -72,7 +72,10 @@ component extends="baseHandler"{
 
 		//tab
 		prc.tabModules_manage = true;
-
+	
+		// Rescan modules
+		if( event.valueExists("rescan") ){ moduleService.startup(); }
+	
 		// Get all modules
 		var modules = moduleService.findModules();
 		prc.modules = modules.modules;
@@ -83,7 +86,7 @@ component extends="baseHandler"{
 		// ForgeBox Stuff
 		prc.forgeBoxSlug = "contentbox-modules";
 		prc.forgeBoxInstallDir = URLEncodedFormat( moduleService.getModulesPath() );
-		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink(prc.xehModules) );
+		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink( linkto=prc.xehModules, querystring="rescan=true" ) );
 
 		// view
 		event.setView("modules/index");
@@ -141,6 +144,7 @@ component extends="baseHandler"{
 					getPlugin("MessageBox").error("Error installing module, please check out the log information.");
 				}
 				else{
+					// Messagebox
 					getPlugin("MessageBox").info("Module Installed Successfully in your 'modules' folder.");
 					flash.put("forgeboxInstallLog", "Please verify if the module was
 					registered successfully by looking below in your modules listing.  Some modules need some manual installations so please verify the file structure in your
