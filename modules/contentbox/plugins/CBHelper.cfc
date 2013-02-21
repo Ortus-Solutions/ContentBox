@@ -882,8 +882,6 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		arguments.showNone = false;
 		// get root pages
 		arguments.pageRecords = pageService.findPublishedPages(parent="",showInMenu=true);
-		// Levels = *, then create big enough integer
-		if( arguments.levels eq "*" ){ arguments.levels = "999999"; }
 		// build it out
 		return buildMenu(argumentCollection=arguments);
 	}
@@ -963,6 +961,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/************************************** PRIVATE *********************************************/
 
 	private function buildMenu(pageRecords, excludes="", type="ul", separator="", boolean showNone=true, levels="1", numeric currentLevel="1", parentClass="parent", activeClass="active", activeShowChildren=false){
+		// Levels = *, then create big enough integer
+		if( arguments.levels eq "*" ){ arguments.levels = "999999"; }
 		// check type?
 		if( !reFindNoCase("^(ul|ol|li|data|none)$", arguments.type) ){ arguments.type="ul"; }
 		var pageResults = arguments.pageRecords;
