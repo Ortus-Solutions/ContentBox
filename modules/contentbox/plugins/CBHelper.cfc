@@ -122,6 +122,16 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		var prc = getRequestCollection(private=true);
 		return prc.cbWidgetRoot;
 	}
+	
+	/**
+	* Get a layout setting
+	* @key.hint The name of the layout setting
+	* @value.hint The default value if the layout setting does not exist
+	*/
+	function layoutSetting(required key, value){
+		arguments.key = "cb_layout_#layoutName()#_#arguments.key#";
+		return setting(argumentCollection=arguments);
+	}
 
 	/************************************** site properties *********************************************/
 
