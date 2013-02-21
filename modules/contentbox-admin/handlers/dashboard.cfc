@@ -68,7 +68,7 @@ component extends="baseHandler"{
 			switch(rc.targetModule){
 				// reload application
 				case "app" :{
-					applicsationStop();break;
+					applicationStop();break;
 				}
 				case "orm" :{
 					ormReload();break;
@@ -107,7 +107,7 @@ component extends="baseHandler"{
 			log.error( "Error running admin reload module action: #e.message# #e.detail#", e );
 			// Ajax requests
 			if( event.isAjax() ){
-				var data = { error = true, executed = false };
+				var data = { error = true, executed = false, messages = e.message & e.detail };
 				event.renderData( type="json", data=data );
 			}
 			else{
