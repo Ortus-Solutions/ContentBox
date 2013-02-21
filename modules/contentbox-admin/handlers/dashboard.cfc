@@ -64,39 +64,62 @@ component extends="baseHandler"{
 	// reload modules
 	function reload(event,rc,prc){
 
-		switch(rc.targetModule){
-			// reload application
-			case "app" :{
-				applicationStop();break;
+		try{
+			switch(rc.targetModule){
+				// reload application
+				case "app" :{
+					applicsationStop();break;
+				}
+				case "orm" :{
+					ormReload();break;
+				}
+				case "rss-purge":{
+					getModel("RSSService@cb").clearAllCaches(async=false); break;
+				}
+				case "content-purge":{
+					getModel("ContentService@cb").clearAllCaches(async=false); break;
+				}
+				case "contentbox-admin": case "contentbox-ui" : case "contentbox-filebrowser" : {
+					// reload the core module first
+					controller.getModuleService().reload( "contentbox" );
+					// reload requested module
+					controller.getModuleService().reload( rc.targetModule );
+				}
+				default:{
+					setNextEvent( prc.xehDashboard );
+				}
 			}
-			case "orm" :{
-				ormReload();break;
+			
+			// flash info for UI purposes
+			flash.put( "moduleReloaded", rc.targetModule );
+			
+			// Ajax requests
+			if( event.isAjax() ){
+				event.renderData( type="json", data={ error = false, executed = true } );
 			}
-			case "rss-purge":{
-				getModel("RSSService@cb").clearAllCaches(async=false); break;
-			}
-			case "content-purge":{
-				getModel("ContentService@cb").clearAllCaches(async=false); break;
-			}
-			case "contentbox-admin": case "contentbox-ui" : case "contentbox-filebrowser" : {
-				// reload the core module first
-				controller.getModuleService().reload( "contentbox" );
-				// reload requested module
-				controller.getModuleService().reload( rc.targetModule );
-			}
-			default:{
-				setNextEvent(prc.xehDashboard);
+			else{
+				// relocate back to dashboard
+				setNextEvent( prc.xehDashboard );
 			}
 		}
-		// flash info
-		flash.put("moduleReloaded",rc.targetModule);
-		if( event.isAjax() ){
-			return "true";
+		catch(Any e){
+			// Log Exception
+			log.error( "Error running admin reload module action: #e.message# #e.detail#", e );
+			// Ajax requests
+			if( event.isAjax() ){
+				var data = { error = true, executed = false };
+				event.renderData( type="json", data=data );
+			}
+			else{
+				// MessageBox
+				getPlugin("MessageBox").error( "Error running admin reload module action: #e.message# #e.detail#" );
+				// relocate back to dashboard
+				setNextEvent( prc.xehDashboard );
+			}
 		}
-		else{
-			// relocate
-			setNextEvent(prc.xehDashboard);
-		}
+		
+		
+		
 	}
 
 }
