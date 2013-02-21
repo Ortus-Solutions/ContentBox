@@ -288,7 +288,7 @@
 			</div>
 			
 			<!---Content TextArea --->
-			#html.textarea(name="content", bind=prc.page, rows="25", class="width98")#
+			#html.textarea(name="content", value=htmleditFormat( prc.page.getContent() ), rows="25", class="width98")#
 			
 			<!--- Custom Fields --->
 			<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
