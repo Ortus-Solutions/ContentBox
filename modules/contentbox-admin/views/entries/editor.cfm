@@ -248,7 +248,7 @@
 			</div>
 			
 			<!--- content --->
-			#html.textarea(name="content", bind=prc.entry, rows="25", class="width98")#
+			#html.textarea(name="content", value=htmlEditFormat( prc.entry.getContent() ), rows="25", class="width98")#
 			<!--- excerpt --->
 			#html.textarea(label="Excerpt:", name="excerpt", bind=prc.entry, rows="10", class="width98")#
 
