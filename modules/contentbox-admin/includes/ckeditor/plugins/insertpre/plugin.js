@@ -29,7 +29,7 @@ CKEDITOR.plugins.add( 'insertpre',
 					element = element.getAscendant( 'pre', true );
 				}
 				// No element or not a pre
-				if ( element && element.getName() == 'pre' || element.hasClass( 'prettyprint' ) )
+				if ( element && element.getName() == 'pre' && element.hasClass( 'prettyprint' ) )
 				{
 					evt.data.dialog = 'insertpre';
 			        editor.getSelection().selectElement( element );
