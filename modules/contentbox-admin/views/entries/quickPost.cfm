@@ -11,7 +11,7 @@
 			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/pen.png" alt="post" width="16"/> Post')#
 				<!--- title --->
 				#html.textfield(name="title",maxlength="100",required="required",title="The title for this entry",class="textfield width98",
-				value="Title Here",onclick="if( this.value='Title Here' ){ this.value = '';}")#
+								value="Title Here", onclick="if( this.value == 'Title Here' ){ this.value = '';}")#
 				<!--- content --->
 				#html.textarea(name="quickcontent",required="required")#
 			#html.endFieldSet()#
