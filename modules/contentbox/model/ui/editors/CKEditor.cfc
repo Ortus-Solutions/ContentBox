@@ -61,7 +61,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		    "/",
 		    { "name": "styles",      "items" : [ "Styles","Format" ] },
 		    { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
-			{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe"] },
+			{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
 		    { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
 		    ]');
 		};
@@ -77,7 +77,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 		};
 		
 		// Register our extra plugins
-		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed";
+		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre";
 		
 		// Register our events
 		interceptorService.appendInterceptionPoints("cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig");
