@@ -71,8 +71,12 @@ function adminAction( action, actionURL ){
 		$("#adminActionLoaderBar").fadeIn();
 		// Run Action Dispatch
 		$.post( actionURL , {targetModule: action}, function(data){
+			var message = "<strong>Action Ran, Booya!</strong>";
+			if( data.ERROR ){
+				message = "<strong>Error running action, check logs!</strong>";
+			}
 			$("#adminActionLoaderBar").hide();
-			$("#adminActionLoaderStatus").fadeIn().html("<strong>Action Ran, Booya!</strong>").delay( 1500 ).fadeOut();
+			$("#adminActionLoaderStatus").fadeIn().html( message ).delay( 1500 ).fadeOut();
 			$('#adminActions option:first-child').attr("selected", "selected");
 			$("#adminActions").delay( 2000 ).fadeIn();
 		} );
