@@ -151,6 +151,7 @@
 					
 					<!--- Action Bar --->
 					<div class="actionBar">
+						<div id="errorBar"></div>						
 						#html.submitButton(name="submit",value="Start Installation!",class="buttonred",title="Let's get this party started!")#
 					</div>
 					
