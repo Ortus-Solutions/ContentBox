@@ -274,7 +274,7 @@ component extends="baseHandler"{
 	}
 
 	// pager viewlet
-	function pager(event,rc,prc,authorID="all",max=0,pagination=true){
+	function pager(event,rc,prc,authorID="all",max=0,pagination=true,latest=false){
 
 		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pager_authorID") ){
@@ -297,11 +297,16 @@ component extends="baseHandler"{
 		prc.pager_paging 	  	= prc.pager_pagingPlugin.getBoundaries();
 		prc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pager_pagination	= arguments.pagination;
-
+		
+		// Sorting
+		var sortOrder = "publishedDate DESC";
+		if( arguments.latest ){ sortOrder = "modifiedDate desc"; }
+		
 		// search entries with filters and all
 		var entryResults = entryService.search(author=arguments.authorID,
 											   offset=prc.pager_paging.startRow-1,
-											   max=arguments.max);
+											   max=arguments.max,
+											   sortOrder=sortOrder);
 		prc.pager_entries 	    = entryResults.entries;
 		prc.pager_entriesCount  = entryResults.count;
 
