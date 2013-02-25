@@ -74,20 +74,30 @@ component extends="ContentService" singleton{
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
-
+		// stub out activeContent alias based on potential conditions...
+		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
+		if(
+			( structKeyExists(arguments,"author") AND arguments.author NEQ "all" ) ||
+			( len(arguments.search) ) ||
+			( findNoCase( "modifiedDate", arguments.sortOrder ) )
+		) {
+			c.createAlias( "activeContent", "ac" );
+		}
+		// create sort order for aliased property
+		if( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
+			sortOrder = replaceNoCase( arguments.sortOrder, "modifiedDate", "ac.createdDate" );
+		}
 		// isPublished filter
 		if( structKeyExists(arguments,"isPublished") AND arguments.isPublished NEQ "any"){
 			c.eq("isPublished", javaCast("boolean",arguments.isPublished));
 		}
 		// Author Filter
 		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
-			c.createAlias("activeContent","ac")
-				.isEq("ac.author.authorID", javaCast("int",arguments.author) );
+			c.isEq("ac.author.authorID", javaCast("int",arguments.author) );
 		}
 		// Search Criteria	
 		if( len(arguments.search) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.search#%"),
 				  c.restrictions.like("ac.content", "%#arguments.search#%") );
 		}

@@ -57,24 +57,34 @@ component extends="ContentService" singleton{
 	/**
 	* entry search returns struct with keys [entries,count]
 	*/
-	struct function search(search="",isPublished,category,author,max=0,offset=0){
+	struct function search(search="",isPublished,category,author,max=0,offset=0,sortOrder="publishedDate DESC"){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
-
+		// stub out activeContent alias based on potential conditions...
+		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
+		if(
+			( structKeyExists(arguments,"author") AND arguments.author NEQ "all" ) ||
+			( len(arguments.search) ) ||
+			( findNoCase( "modifiedDate", arguments.sortOrder ) )
+		) {
+			c.createAlias( "activeContent", "ac" );
+		}
+		// create sort order for aliased property
+		if( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
+			sortOrder = replaceNoCase( arguments.sortOrder, "modifiedDate", "ac.createdDate" );
+		}
 		// isPublished filter
 		if( structKeyExists(arguments,"isPublished") AND arguments.isPublished NEQ "any"){
 			c.eq("isPublished", javaCast("boolean",arguments.isPublished));
 		}
 		// Author Filter
 		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
-			c.createAlias("activeContent","ac")
-				.isEq("ac.author.authorID", javaCast("int",arguments.author) );
+			c.isEq("ac.author.authorID", javaCast("int",arguments.author) );
 		}
 		// Search Criteria
 		if( len(arguments.search) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac");
 			c.or( c.restrictions.like("title","%#arguments.search#%"),
 				  c.restrictions.like("ac.content", "%#arguments.search#%") );
 		}
@@ -95,7 +105,7 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count("contentID");
 		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=false);
+							.list(offset=arguments.offset,max=arguments.max,sortOrder=arguments.sortOrder,asQuery=false);
 
 		return results;
 	}
