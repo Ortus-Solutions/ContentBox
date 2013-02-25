@@ -410,7 +410,7 @@ component extends="baseHandler"{
 
 		// Sorting
 		var sortOrder = "title asc";
-		if( arguments.latest ){ sortOrder = "publishedDate desc"; }
+		if( arguments.latest ){ sortOrder = "modifiedDate desc"; }
 
 		// search entries with filters and all
 		var pageResults = pageService.search(author=arguments.authorID,
