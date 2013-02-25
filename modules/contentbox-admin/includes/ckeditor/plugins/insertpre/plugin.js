@@ -5,7 +5,15 @@
 // Default style
 if (typeof(CKEDITOR.config.insertpre_style) == 'undefined')
 	CKEDITOR.config.insertpre_style = 'background-color:#C6E1FF;border:1px solid #DDD;padding:10px;';
-
+var format=function( code ) {
+	code=code.replace(/<br>/g,"\n");
+	code=code.replace(/&amp;/g,"&");
+	code=code.replace(/&lt;/g,"<");
+	code=code.replace(/&gt;/g,">");
+	code=code.replace(/&quot;/g,'"');
+    code=code.replace(/&nbsp;/g,' ');
+	return code;
+};
 CKEDITOR.plugins.add( 'insertpre',
 	{
 		requires: 'dialog',
@@ -93,9 +101,7 @@ CKEDITOR.plugins.add( 'insertpre',
 										// If there is loaded HTML already then... do some div stuff, not sure why.
 										if ( html )
 										{
-											var div = document.createElement( 'div' );
-											div.innerHTML = html;
-											this.setValue( div.firstChild.nodeValue );
+											this.setValue( format( html ) );
 										}
 									},
 									commit : function( element )
@@ -110,7 +116,7 @@ CKEDITOR.plugins.add( 'insertpre',
 									label : editor.lang.insertpre.codeclass,
 									required : false,
 									setup : function( element ){
-										this.setValue( $.trim( element.getAttribute( "class" ).replace( "prettyprint", "" ) ) );
+										this.setValue( element.getAttribute( "class" ) ? $.trim( element.getAttribute( "class" ).replace( "prettyprint", "" ) ) : '' );
 									},
 									commit : function( element )
 									{

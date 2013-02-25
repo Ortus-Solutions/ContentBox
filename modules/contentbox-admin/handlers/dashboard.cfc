@@ -27,7 +27,7 @@ component extends="baseHandler"{
 		prc.tabDashboard_home = true;
 
 		// Get entries viewlet: Stupid cf9 and its local scope blown on argument literals
-		var eArgs = {max=prc.cbSettings.cb_dashboard_recentEntries,pagination=false};
+		var eArgs = {max=prc.cbSettings.cb_dashboard_recentEntries,pagination=false, latest=true};
 		prc.entriesViewlet = runEvent(event="contentbox-admin:entries.pager",eventArguments=eArgs);
 		// Get Pages viewlet
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentPages,pagination=false, latest=true, sorting=false};
