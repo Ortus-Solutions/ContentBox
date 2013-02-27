@@ -77,9 +77,7 @@ component extends="coldbox.system.Interceptor"{
 	*/
 	function afterPluginCreation(event,interceptData){
 		var prc = event.getCollection(private=true);
-		// Only for contentbox-ui
-		if( !event.getCurrentModule() eq "contentbox-ui" ){ return; }
-
+		
 		// check for renderer
 		if( isInstanceOf(arguments.interceptData.oPlugin,"coldbox.system.plugins.Renderer") ){
 			// decorate it
