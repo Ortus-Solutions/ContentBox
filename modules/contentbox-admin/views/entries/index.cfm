@@ -180,7 +180,7 @@
 						<td class="center">#entry.getNumberOfComments()#</td>
 						<td class="center">
 							<!---Info Panel --->
-							<button class="button" onclick="return toggleInfoPanel('#entry.getContentID()#')" title="Entry Info" ><img src="#prc.cbroot#/includes/images/gravatar.png" /></button>
+							<button class="button infoPanelButton" title="Entry Info" ><img src="#prc.cbroot#/includes/images/gravatar.png" /></button>
 							<!---Info Panel --->
 							<div id="infoPanel_#entry.getContentID()#" class="contentInfoPanel">
 								<img src="#prc.cbRoot#/includes/images/calendar_small.png" alt="calendar"/>  
@@ -203,7 +203,7 @@
 							</div>
 							
 							<!---Entry Actions --->
-							<button class="button" onclick="return toggleActionsPanel('#entry.getContentID()#')" title="Entry Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
+							<button class="button actionsPanelButton" title="Entry Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
 							<!---Entry Actions Panel --->
 							<div id="entryActions_#entry.getContentID()#" class="actionsPanel">
 								<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
