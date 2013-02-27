@@ -207,7 +207,7 @@
 						<td class="center">#page.getHits()#</td>
 						<td class="center">
 							<!---Info Panel --->
-							<button class="button" onclick="return toggleInfoPanel('#page.getContentID()#')" title="Page Info" ><img src="#prc.cbroot#/includes/images/gravatar.png" /></button>
+							<button class="button infoPanelButton" title="Page Info" ><img src="#prc.cbroot#/includes/images/gravatar.png" /></button>
 							<!---Info Panel --->
 							<div id="infoPanel_#page.getContentID()#" class="contentInfoPanel">
 								<img src="#prc.cbRoot#/includes/images/calendar_small.png" alt="calendar"/>  
@@ -235,7 +235,7 @@
 							</div>
 							
 							<!---Page Actions --->
-							<button class="button" onclick="return toggleActionsPanel('#page.getContentID()#')" title="Page Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
+							<button class="button actionsPanelButton" title="Page Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
 							<!---Page Actions Panel --->
 							<div id="pageActions_#page.getContentID()#" class="actionsPanel">
 								<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
