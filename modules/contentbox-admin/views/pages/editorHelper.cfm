@@ -27,7 +27,8 @@ function quickSave(){
 
 	// Activate Loader
 	toggleLoaderBar();
-
+	// Save current content, just in case
+	$("##content").val( getEditorContent() );
 	// Post it
 	$.post('#event.buildLink(prc.xehPageSave)#', $pageForm.serialize(),function(data){
 		// Save new id
