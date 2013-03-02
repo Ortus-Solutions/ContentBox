@@ -606,7 +606,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function linkEntry(required entry, boolean ssl=false){
 		if( isSimpleValue(arguments.entry) ){
-			return linkEntryWithSlug( arguments.entry );
+			return linkEntryWithSlug( arguments.entry, arguments.ssl );
 		}
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.entry.getSlug()#";
 		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
@@ -640,7 +640,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function linkPage(required page, boolean ssl=false){
 		if( isSimpleValue(arguments.page) ){
-			return linkPageWithSlug( arguments.page );
+			return linkPageWithSlug( arguments.page, arguments.ssl );
 		}
 		var xeh = siteRoot() & sep() & arguments.page.getSlug();
 		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
