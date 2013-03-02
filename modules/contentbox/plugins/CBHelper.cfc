@@ -457,14 +457,15 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @category You can optionally pass the category to filter on
 	* @comments A boolean flag that determines if you want the comments RSS feed
 	* @entry You can optionally pass the entry to filter the comment's RSS feed
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkRSS(category,comments=false,entry){
+	function linkRSS(category,comments=false,entry, boolean ssl=false){
 		var xehRSS = siteRoot() & sep() & "#getBlogEntryPoint()#.rss";
 
 		// do we have a category?
 		if( structKeyExists(arguments,"category") ){
 			xehRSS &= ".category.#arguments.category.getSlug()#";
-			return getRequestContext().buildLink(linkto=xehRSS);
+			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 		}
 
 		// comments feed?
@@ -474,11 +475,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			if( structKeyExists(arguments,"entry") ){
 				xehRSS &= ".#arguments.entry.getSlug()#";
 			}
-			return getRequestContext().buildLink(linkto=xehRSS);
+			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 		}
 
 		// build link to regular RSS feed
-		return getRequestContext().buildLink(linkto=xehRSS);
+		return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 	}
 
 	/**
@@ -486,8 +487,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @category.hint The category to filter on
 	* @comments.hint Do comments RSS feeds
 	* @slug.hint The content slug to filter on when using comments
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkSiteRSS(any category, boolean comments=false, string slug){
+	function linkSiteRSS(any category, boolean comments=false, string slug, boolean ssl=false){
 		var xehRSS = siteRoot() & sep() & "__rss";
 
 		// do we have a category?
@@ -500,7 +502,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 				xehRSS &= "/category/#arguments.category.getSlug()#";
 			}
 
-			return getRequestContext().buildLink(linkto=xehRSS);
+			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 		}
 
 		// comments feed?
@@ -510,11 +512,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			if( structKeyExists(arguments,"slug") ){
 				xehRSS &= "/#arguments.slug#";
 			}
-			return getRequestContext().buildLink(linkto=xehRSS);
+			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 		}
 
 		// build link to regular ContentBox RSS feed
-		return getRequestContext().buildLink(linkto=xehRSS);
+		return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 	}
 
 	/**
@@ -522,8 +524,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @category.hint The category to filter on
 	* @comments.hint Page comments or not, defaults to false
 	* @page.hint The page you want to filter on
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkPageRSS(any category, boolean comments=false, page){
+	function linkPageRSS(any category, boolean comments=false, page, boolean ssl=false){
 		var xehRSS = siteRoot() & sep() & "__rss/pages";
 
 		// do we have a category?
@@ -536,7 +539,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 				xehRSS &= "/category/#arguments.category.getSlug()#";
 			}
 
-			return getRequestContext().buildLink(linkto=xehRSS);
+			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 		}
 
 		// comments feed?
@@ -546,20 +549,21 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			if( structKeyExists(arguments,"page") ){
 				xehRSS &= "/#arguments.page.getSlug()#";
 			}
-			return getRequestContext().buildLink(linkto=xehRSS);
+			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 		}
 
 		// build link to regular ContentBox RSS feed
-		return getRequestContext().buildLink(linkto=xehRSS);
+		return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 	}
 
 	/**
 	* Link to a specific filtered category view of blog entries
 	* @category The category object to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkCategory(category){
+	function linkCategory(required category, boolean ssl=false){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.category.getSlug()#";
-		return getRequestContext().buildLink(linkto=xeh);
+		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
 
 	/**
@@ -567,95 +571,104 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @year The year of the archive
 	* @month The month of the archive
 	* @day The day of the archive
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkArchive(year,month,day){
+	function linkArchive(year, month, day, boolean ssl=false){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.archives";
 		if( structKeyExists(arguments,"year") ){ xeh &= "/#arguments.year#"; }
 		if( structKeyExists(arguments,"month") ){ xeh &= "/#arguments.month#"; }
 		if( structKeyExists(arguments,"day") ){ xeh &= "/#arguments.day#"; }
-		return getRequestContext().buildLink(linkto=xeh);
+		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
 
 	/**
 	* Link to the search route for this blog
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkSearch(){
+	function linkSearch(boolean ssl=false){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.search";
-		return getRequestContext().buildLink(linkto=xeh);
+		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
 
 	/**
 	* Link to the content search route
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkContentSearch(){
+	function linkContentSearch(boolean ssl=false){
 		var xeh = siteRoot() & sep() & "__search";
-		return getRequestContext().buildLink(linkto=xeh);
+		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
 
 	/**
 	* Link to a specific blog entry's page
 	* @entry The entry to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkEntry(entry){
+	function linkEntry(required entry, boolean ssl=false){
 		if( isSimpleValue(arguments.entry) ){
 			return linkEntryWithSlug( arguments.entry );
 		}
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.entry.getSlug()#";
-		return getRequestContext().buildLink(linkTo=xeh);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
 	}
 
 	/**
 	* Link to a specific entry's page using a slug only
 	* @slug The entry slug to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkEntryWithSlug(slug){
+	function linkEntryWithSlug(required slug, boolean ssl=false){
 		arguments.slug = reReplace( arguments.slug, "^/","" );
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.slug#";
-		return getRequestContext().buildLink(linkTo=xeh);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
 	}
 
 	/**
 	* Link to a specific content object
-	* @content The content object to link to
+	* @content.hint The content object to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkContent(content){
-		if( arguments.content.getContentType() eq "entry" ){ return linkEntry(arguments.content); }
-		if( arguments.content.getContentType() eq "page" ){ return linkPage(arguments.content); }
+	function linkContent(required content, boolean ssl=false){
+		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl ); }
+		if( arguments.content.getContentType() eq "page" ){ return linkPage( arguments.content, arguments.ssl); }
 	}
 
 	/**
 	* Link to a specific page
-	* @page The page to link to
+	* @page.hint The page to link to. This can be a simple value or a page object
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkPage(page){
+	function linkPage(required page, boolean ssl=false){
 		if( isSimpleValue(arguments.page) ){
 			return linkPageWithSlug( arguments.page );
 		}
 		var xeh = siteRoot() & sep() & arguments.page.getSlug();
-		return getRequestContext().buildLink(linkTo=xeh);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
 	}
 
 	/**
 	* Link to a specific page using a slug only
-	* @slug The page slug to link to
+	* @slug.hint The page slug to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkPageWithSlug(slug){
+	function linkPageWithSlug(required slug, boolean ssl=false){
 		arguments.slug = reReplace( arguments.slug, "^/","" );
 		var xeh = siteRoot() & sep() & "#arguments.slug#";
-		return getRequestContext().buildLink(linkTo=xeh);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
 	}
 
 	/**
 	* Create a link to a specific comment in a page or in an entry
 	* @comment The comment to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkComment(comment){
+	function linkComment(required comment, boolean ssl=false){
 		var xeh = "";
 		if( arguments.comment.getRelatedContent().getContentType() eq 'page' ){
-			xeh = linkPage( arguments.comment.getRelatedContent() );
+			xeh = linkPage( arguments.comment.getRelatedContent(), arguments.ssl );
 		}
 		else{
-			xeh = linkEntry( arguments.comment.getRelatedContent() );
+			xeh = linkEntry( arguments.comment.getRelatedContent(), arguments.ssl );
 		}
 		xeh &= "##comment_#arguments.comment.getCommentID()#";
 		return xeh;
@@ -663,15 +676,16 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/**
 	* Create a link to an entry's or page's comments section
-	* @content The entry or page to link to its comments
+	* @content.hint The entry or page to link to its comments
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkComments(content){
+	function linkComments(required content, boolean ssl=false){
 		var xeh = "";
 		if( arguments.content.getContentType() eq "page" ){
-			xeh = linkPage( arguments.content );
+			xeh = linkPage( arguments.content, arguments.ssl );
 		}
 		else{
-			xeh = linkEntry( arguments.content );
+			xeh = linkEntry( arguments.content, arguments.ssl );
 		}
 		xeh &= "##comments";
 		return xeh;
@@ -679,16 +693,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the commenting post action, this is where comments are submitted to
-	* @content The entry or page to link to its comments
+	* @content.hint The entry or page to link to its comments
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkCommentPost(content){
+	function linkCommentPost(required content, boolean ssl=false){
 
 		if( arguments.content.getContentType() eq "page" ){
 			var xeh = siteRoot() & sep() & "__pageCommentPost";
-			return getRequestContext().buildLink(linkTo=xeh);
+			return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
 		}
 
-		return linkEntry( arguments.content ) & "/commentPost";
+		return linkEntry( arguments.content, arguments.ssl ) & "/commentPost";
 	}
 
 	/************************************** widget functions *********************************************/
