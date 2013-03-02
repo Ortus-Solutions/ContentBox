@@ -24,13 +24,13 @@ component accessors="true"{
 	}	
 
 	private function determineSlug(required tagString){
-		var slug = reReplaceNoCase(arguments.tagString,"(page|entry)\:\[","");
+		var slug = reReplaceNoCase(arguments.tagString,"(page|entry|pagessl|entryssl)\:\[","");
 		return reReplaceNoCase(slug,"\]$","");
 	}
 
 	private function translateContent(required builder, content, customHTML){
 		// our mustaches pattern
-		var regex 		= "(page|entry|root)\:\[[^\]]*]";
+		var regex 		= "(page|pagessl|entry|entryssl|root)\:\[[^\]]*]";
 		// match contentbox links in our incoming builder and build our targets array and len
 		var targets 	= reMatch( regex, builder.toString() );
 		var targetLen 	= arrayLen( targets );
@@ -50,10 +50,11 @@ component accessors="true"{
 				
 				var linkType = getToken( tagString, 1, ":" );
 				switch( linkType ){
-					case "page" 	: { linkContent = cb.linkPage( determineSlug(tagString) ); break; }
-					case "entry" 	: { linkContent = cb.linkEntry( determineSlug(tagString) ); break; }
+					case "page" 	: { linkContent = cb.linkPage( page=determineSlug( tagString ) ); break; }
+					case "pagessl" 	: { linkContent = cb.linkPage( page=determineSlug( tagString ), ssl=true ); break; }
+					case "entry" 	: { linkContent = cb.linkEntry( entry=determineSlug( tagString ) ); break; }
+					case "entryssl" : { linkContent = cb.linkEntry( entry=determineSlug( tagString ), ssl=true ); break; }
 					case "root"  	: { linkContent = cb.layoutRoot(); break; }
-					
 				}
 				
 			}

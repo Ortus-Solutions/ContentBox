@@ -30,7 +30,7 @@
 				<th width="15" class="center {sorter:false}"></th>
 				<th>Page Name</th>
 				<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
-				<th width="40" class="center">Select</th>
+				<th width="120" class="center">Select</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -53,7 +53,8 @@
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return selectCBContent('#page.getSlug()#','#page.getTitle()#','page')">Select</button>
+					<button class="button2" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )">ssl</button>
+					<button class="button2" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )">link</button>
 				</td>
 			</tr>
 			</cfloop>
