@@ -221,6 +221,10 @@ component accessors="true"{
 			"cb_site_homepage" = "cbBlog",
 			"cb_site_disable_blog" = "false",
 			"cb_site_blog_entrypoint" = "blog",
+			"cb_site_ssl" = "false",
+			
+			// Admin settings
+			"cb_admin_ssl" = "false",
 
 			// Paging Defaults
 			"cb_paging_maxrows" = "20",
