@@ -75,6 +75,19 @@
 								<option value="#thispage.getSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getSlug()>selected="selected"</cfif>>#thisPage.getSlug()#</option>
 								</cfloop>
 							</select>
+							
+							<!--- Site SSL --->
+							#html.label(field="cb_site_ssl",content="Site Force SSL (Secure Sockets Layer):")#
+							<small>You can enable SSL encryption for the entire site. This will make sure all requests to the site module use SSL.</small><br/>
+							#html.radioButton(name="cb_site_ssl",checked=prc.cbSettings.cb_site_ssl,value=true)# Yes
+							#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
+							
+							<!--- Admin SSL --->
+							#html.label(field="cb_admin_ssl",content="Admin Force SSL (Secure Sockets Layer):")#
+							<small>You can enable SSL encryption for the administrator module. This will make sure all requests to the admin use SSL.</small><br/>
+							#html.radioButton(name="cb_admin_ssl",checked=prc.cbSettings.cb_admin_ssl,value=true)# Yes
+							#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
+							
 						</fieldset>
 						<!---Blog Entries --->
 						<fieldset>
@@ -85,7 +98,6 @@
 								   remember to change the <strong>Home Page</strong> above to a real page and not the blog.</small><br/>
 							#html.radioButton(name="cb_site_disable_blog",checked=prc.cbSettings.cb_site_disable_blog,value=true)# Yes
 							#html.radioButton(name="cb_site_disable_blog",checked=not prc.cbSettings.cb_site_disable_blog,value=false)# No
-							
 							
 							<!--- Entry Point --->
 							#html.label(field="cb_site_blog_entrypoint",content="Blog Entry Point:")#

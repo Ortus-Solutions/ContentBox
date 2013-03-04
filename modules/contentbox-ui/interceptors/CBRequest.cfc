@@ -59,6 +59,12 @@ component extends="coldbox.system.Interceptor"{
 		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
 		// announce event
 		announceInterception("cbui_preRequest");
+		
+		/************************************** FORCE SSL *********************************************/
+		
+		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
+			setNextEvent(event=event.getCurrentRoutedURL(), ssl=true);
+		}
 	}
 
 	/**

@@ -53,6 +53,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 				log.info("About to beggin #version# patching");
 				
+				updateSettings();
 				
 				log.info("Finalized #version# patching");
 			}
@@ -81,25 +82,35 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 	}
 	
-	private function updateModule(){
-		// Ensure column exists?
-		var colFound = false;
-		var cols = new dbInfo(datasource=getDatasource(), table="cb_module").columns();
-		for( var x=1; x lte cols.recordcount; x++ ){
-			if( cols[ "column_name" ][ x ] eq "coreModule" ){
-				colFound = true;
-			}
-		}
-		if( !colFound ){
-			var q = new Query(datasource=getDatasource());
-			q.setSQL( "ALTER TABLE cb_module ADD coreModule BIT NULL DEFAULT 0;" );
-			q.execute();
-			
-			log.info("Added column for module core type");
+	/************************************** PRIVATE *********************************************/
+	
+	private function updateSettings(){
+		// Create New setting
+		var setting = settingService.findWhere({name="cb_admin_ssl"});
+		if( isNull( setting ) ){
+			setting = settingService.new();
+			setting.setValue( "false" );
+			setting.setName( "cb_admin_ssl" );
+			settingService.save(entity=setting, transactional=false);
+			log.info("Added cb_admin_ssl setting");
 		}
 		else{
-			log.info("Column for module core in DB, skipping.");
+			log.info("Skipped cb_admin_ssl setting, already there");
 		}
+		
+		var setting = settingService.findWhere({name="cb_site_ssl"});
+		if( isNull( setting ) ){
+			setting = settingService.new();
+			setting.setValue( "false" );
+			setting.setName( "cb_site_ssl" );
+			settingService.save(entity=setting, transactional=false);
+			log.info("Added cb_site_ssl setting");
+		}
+		else{
+			log.info("Skipped cb_site_ssl setting, already there");
+		}
+		
+		
 	}
 	
 	private function getVarcharType(){
