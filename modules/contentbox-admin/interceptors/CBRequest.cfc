@@ -41,7 +41,13 @@ component extends="coldbox.system.Interceptor"{
 		prc.cbSettings = settingService.getAllSettings(asStruct=true);
 		// store admin menu service
 		prc.adminMenuService = adminMenuService;
-
+		
+		/************************************** FORCE SSL *********************************************/
+		
+		if( prc.cbSettings.cb_admin_ssl and !event.isSSL() ){
+			setNextEvent(event=event.getCurrentRoutedURL(), ssl=true);
+		}
+		
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 
 		// Global Admin Exit Handlers
