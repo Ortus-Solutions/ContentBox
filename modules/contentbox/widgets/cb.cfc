@@ -12,8 +12,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginVersion("1.0");
 		setPluginDescription("A proxy to our CBHelper object");
 		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("www.ortussolutions.com");
-
+		setPluginAuthorURL("http://www.ortussolutions.com");
+		setIcon( "repair_add.png" );
+		setCategory( "Utilities" );
 		return this;
 	}
 

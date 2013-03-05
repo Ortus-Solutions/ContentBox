@@ -8,12 +8,13 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("CustomHTML");
+		setPluginName("Custom HTML");
 		setPluginVersion("1.0");
 		setPluginDescription("A widget that renders Custom HTML in ContentBox");
 		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("www.ortussolutions.com");
-
+		setPluginAuthorURL("http://www.ortussolutions.com");
+		setIcon( "window_text.png" );
+		setCategory( "Content" );
 		return this;
 	}
 

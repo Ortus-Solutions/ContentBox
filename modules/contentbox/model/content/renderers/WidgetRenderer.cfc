@@ -12,18 +12,93 @@ component accessors="true"{
 	/**
 	* Execute on content translations for pages and blog entries
 	*/
-	void function cb_onContentRendering(event,struct interceptData){
-		translateContent(builder=arguments.interceptData.builder,content=arguments.interceptData.content);
+	void function cb_onContentRendering( event, struct interceptData ){
+		translateContent( builder=arguments.interceptData.builder, content=arguments.interceptData.content );
 	}
 
 	/**
 	* Execute on content translations for custom HTML
 	*/
-	void function cb_onCustomHTMLRendering(event,struct interceptData){
+	void function cb_onCustomHTMLRendering( event, struct interceptData ){
 		translateContent(builder=arguments.interceptData.builder,customHTML=arguments.interceptData.customHTML);
 	}
-
-	private function translateContent(required builder, content, customHTML){
+	
+	/**
+    * Executes custom parsing rules on content
+    * @builder {java.lang.StringBuilder}
+    * @content {String}
+    * @customHTML {String}
+    */
+	private function translateContent( required builder, content, customHTML ){
+		parseTagWidgets( argumentCollection=arguments );
+		parseTripleMustacheWidgets( argumentCollection=arguments );
+	}
+	
+	/**
+    * Parses content to find <widget>...</widget> tags, and renders the associated widget
+    * @builder {java.lang.StringBuilder}
+    */
+	private void function parseTagWidgets( required builder ) {
+		// widget tag syntax
+		var regex   = "<widget\b[^>]*>(.*?)</widget>";
+		// match widgets in our incoming builder and build our targets array and len
+		var targets 	= reMatch( regex, builder.toString() );
+		var targetLen 	= arrayLen( targets );
+		var isModuleWidget = false;
+		var attributes = "";
+		// Loop over found mustaches {{{Widget}}}
+		for( var x=1; x lte targetLen; x++ ){
+			attributes = xmlParse( targets[ x ] ).widget.XmlAttributes;
+			try{
+				widgetName = attributes.widgetname;
+				widgetType = attributes.widgettype;
+				isModuleWidget = widgetType=="Module";
+				isLayoutWidget = widgetType=="Layout";
+				// Detect direct method call
+				if( find(".", widgetName) ){
+					widgetContent = evaluate("widgetService.getWidget( '#getToken(widgetName,1,".")#' ).#getToken(widgetName,2,".")#(argumentCollection=attributes)");
+				}
+				else{
+					if( isModuleWidget ) {
+						// Render out the module widget
+						widgetContent = widgetService.getWidget( name=widgetName, type="module" ).renderit( argumentCollection=attributes );
+					}
+					else {
+						if( isLayoutWidget ) {
+							// Render out the layout widget
+							widgetContent = widgetService.getWidget( name=widgetName, type="layout" ).renderit( argumentCollection=attributes );
+						}
+						else {
+							// Render out the core widget
+							widgetContent = widgetService.getWidget( widgetName ).renderit( argumentCollection=attributes );
+						}
+					}
+				}
+			}
+			catch( Any e ){
+				widgetContent = "Error translating widget: #e.message# #e.detail#";
+				log.error("Error translating widget on target: #targets[x]#", e);
+			}
+			// PROCESS REPLACING
+			
+			// get location of target
+			var rLocation 	= builder.indexOf( targets[x] );
+			var rLen 		= len( targets[x] );
+			// Loop findings of same {{{}}} instances to replace
+			while( rLocation gt -1 ){
+				// Replace it
+				builder.replace( javaCast("int", rLocation), JavaCast("int", rLocation+rLen), widgetContent);
+				// look again
+				rLocation = builder.indexOf( targets[x], javaCast("int", rLocation) );
+			}
+		}
+	}
+	
+	/**
+    * Parses content to find {{{...}}} syntax, and renders the associated widget
+    * @builder {java.lang.StringBuilder}
+    */
+	private void function parseTripleMustacheWidgets( required builder ) {
 		// our mustaches pattern
 		var regex 		= "\{\{\{[^\}]*\}\}\}";
 		// match widgets in our incoming builder and build our targets array and len
@@ -35,7 +110,6 @@ component accessors="true"{
 		var moduleName = "";
 		// Loop over found mustaches {{{Widget}}}
 		for(var x=1; x lte targetLen; x++){
-
 			// convert mustache to tag
 			tagString = replace(targets[x],"{{{","<");
 			tagString = replace(tagString,"}}}","/>");
@@ -67,14 +141,12 @@ component accessors="true"{
 				var tagXML 		= xmlParse( tagString );
 				var widgetName 	= tagXML.XMLRoot.XMLName;
 				var widgetArgs  = {};
-
 				// Create Arg Collection From Attributes, if any
 				if( structKeyExists( tagXML[ widgetName ], "XMLAttributes") ){
 					for(key in tagXML[ widgetName ].XMLAttributes){
 						widgetArgs[key] = trim( tagXML[ widgetName ].XMLAttributes[ key ] );
 					}
 				}
-
 				// Detect direct method call
 				if( find(".", widgetName) ){
 					widgetContent = evaluate("widgetService.getWidget( '#getToken(widgetName,1,".")#' ).#getToken(widgetName,2,".")#(argumentCollection=widgetArgs)");
@@ -95,20 +167,16 @@ component accessors="true"{
 						}
 					}
 				}
-
-
 			}
 			catch(Any e){
 				widgetContent = "Error translating widget: #e.message# #e.detail#";
 				log.error("Error translating widget on target: #targets[x]#", e);
 			}
-
 			// PROCESS REPLACING
-
+			
 			// get location of target
 			var rLocation 	= builder.indexOf( targets[x] );
 			var rLen 		= len( targets[x] );
-
 			// Loop findings of same {{{}}} instances to replace
 			while( rLocation gt -1 ){
 				// Replace it
@@ -116,8 +184,6 @@ component accessors="true"{
 				// look again
 				rLocation = builder.indexOf( targets[x], javaCast("int", rLocation) );
 			}
-
 		}
 	}
-
 }

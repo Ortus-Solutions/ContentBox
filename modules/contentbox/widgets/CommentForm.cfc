@@ -8,12 +8,13 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("CommentForm");
+		setPluginName("Comment Form");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic commenting form for ContentBox");
 		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("www.ortussolutions.com");
-
+		setPluginAuthorURL("http://www.ortussolutions.com");
+		setIcon( "comment_add.png" );
+		setCategory( "Utilities" );
 		return this;
 	}
 

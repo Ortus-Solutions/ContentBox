@@ -12,8 +12,8 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows some ContentBox meta links");
 		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("www.ortussolutions.com");
-
+		setPluginAuthorURL("http://www.ortussolutions.com");
+		setIcon( "window_text.png" );
 		return this;
 	}
 
