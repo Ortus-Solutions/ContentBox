@@ -29,6 +29,8 @@ component accessors="true"{
 	property name="description";
 	property name="author";
 	property name="authorURL";
+	property name="category";
+	property name="icon";
 	
 	Widget function init(){
 		name = '';
@@ -36,6 +38,8 @@ component accessors="true"{
 		description='';
 		author='';
 		authorURL='';
+		category="";
+		icon="";
 		return this;
 	}
 	
