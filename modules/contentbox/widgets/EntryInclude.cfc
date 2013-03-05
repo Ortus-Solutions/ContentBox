@@ -12,8 +12,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginVersion("1.0");
 		setPluginDescription("A widget that can render out ContentBox blog entries inline");
 		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("www.ortussolutions.com");
-
+		setPluginAuthorURL("http://www.ortussolutions.com");
+		setIcon( "notebook.png" );
+		setCategory( "Content" );
 		return this;
 	}
 

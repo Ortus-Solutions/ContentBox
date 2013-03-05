@@ -39,6 +39,8 @@ component extends="coldbox.system.Plugin" accessors="true"{
 	
 	// Local Properties
 	property name="forgeBoxSlug" type="string" default="";
+	property name="category" type="string" default="";
+	property name="icon" type="string" default="";
 
 	/**
 	* This is the main renderit method you will need to implement in concrete widgets

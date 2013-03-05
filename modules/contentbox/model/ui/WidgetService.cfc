@@ -91,7 +91,18 @@ component accessors="true" singleton threadSafe{
 		// write it out
 		return saveWidgetCode( widget.getName(), templateCode );
 	}
-	
+	/**
+	 * Get unique, sorted widget categories from main widget query
+	 * @widgets {Query} the widgets query from which to retrieve categories
+	 * returns Query
+	 */
+	public query function getWidgetCategories( required query widgets ) {
+		var q = new query();
+			q.setDbType( 'query' );
+			q.setAttributes( QoQ=arguments.widgets );
+			q.setSQL( 'select distinct category from QoQ order by category ASC' );
+		return q.execute().getResult();
+	}
 	/**
 	* Get installed widgets
 	*/
@@ -108,6 +119,8 @@ component accessors="true" singleton threadSafe{
 		QueryAddColumn(widgets,"plugin",[]);
 		QueryAddColumn(widgets,"widgettype",[]);
 		QueryAddColumn(widgets,"module",[]);
+		QueryAddColumn(widgets,"category",[]);
+		QueryAddColumn(widgets,"icon",[]);
 		// cleanup and more stuff
 		
 		// add core widgets
@@ -122,6 +135,8 @@ component accessors="true" singleton threadSafe{
 			widgets.widgettype[x] = "Core";
 			try{
 				widgets.plugin[x] = getWidget( widgets.name[x], widgets.widgettype[x] );
+				widgets.category[x] = widgets.plugin[x].getCategory()!="" ? widgets.plugin[x].getCategory() : "Miscellaneous";
+				widgets.icon[x] = widgets.plugin[x].getIcon()!="" ? widgets.plugin[x].getIcon() : "";
 			}
 			catch(any e){
 				log.error("Error creating widget plugin: #widgets.name[x]#",e);
@@ -138,7 +153,12 @@ component accessors="true" singleton threadSafe{
 			querySetCell( widgets, "module", moduleName );
 			
 			try{
-				querySetCell( widgets, "plugin", getWidget( name=widget, type="module" ) );
+				var mplugin = getWidget( name=widget, type="module" );
+				var category = mplugin.getCategory() != "" ? mplugin.getCategory() : "Module";
+				var icon = mplugin.getIcon() != "" ? mplugin.getIcon() : "";
+				querySetCell( widgets, "plugin", mplugin );
+				querySetCell( widgets, "category", category );
+				querySetCell( widgets, "icon", icon );
 			}
 			catch(any e){
 				log.error("Error creating module widget plugin: #widgetsName#",e);
@@ -153,7 +173,12 @@ component accessors="true" singleton threadSafe{
 			querySetCell( widgets, "widgettype", "Layout" );
 			
 			try{
-				querySetCell( widgets, "plugin", getWidget( name=widget, type="layout" ) );
+				var lplugin = getWidget( name=widget, type="layout" );
+				var category = lplugin.getCategory() != "" ? lplugin.getCategory() : "Layout";
+				var icon = lplugin.getIcon() != "" ? lplugin.getIcon() : "";
+				querySetCell( widgets, "plugin", lplugin );
+				querySetCell( widgets, "category", category );
+				querySetCell( widgets, "icon", icon );
 			}
 			catch(any e){
 				log.error("Error creating layout widget plugin: #widget#",e);
