@@ -93,11 +93,11 @@
 </div>
 <div class="widget-footer">
     <div class="widget-footer-left">
-        <a id="widget-button-back" style="display:none;" href="javascript:void(0);">Back to Widgets</a>&nbsp;
+        <a id="widget-button-back" style="display:none;" href="javascript:void(0);" class="button2">Back to Widgets</a>&nbsp;
     </div>
     <div class="widget-footer-right">
         <button class="buttonred" style="display:none;" id="widget-button-insert">Insert Widget</button>
-        <a id="widget-button-cancel" href="javascript:void(0);" onclick="closeRemoteModal()">Cancel</a>
+        <a id="widget-button-cancel" href="javascript:void(0);" class="button" onclick="closeRemoteModal()">Cancel</a>
     </div>
 </div>
 </cfoutput>

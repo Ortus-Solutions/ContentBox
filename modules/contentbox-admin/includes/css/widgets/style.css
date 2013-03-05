@@ -33,7 +33,7 @@
 .widget-type {font-size:80%;position:absolute;right:0px;margin-right:10px;color:#999;text-shadow:1px 1px 1px rgb(255, 255, 255);}
 .widget-teaser {line-height: 1.4em;}
 .widget-filter {position: absolute;right: 30px;top: 5px;font-size: 50%;font-weight: bold;}
-.widget-footer {margin-left:-10px;position:absolute;height:30px;bottom:0px;background-color:#ededed;border-top:solid 1px #dadada;width:100%;}
+.widget-footer {margin-left:-10px;position:absolute;height:40px;bottom:0px;background-color:#ededed;border-top:solid 1px #dadada;width:100%;}
 .widget-preview {width: 650px;border-right: solid 1px #dadada;height: 480px;position: fixed;padding: 0 15px;}
 /*.widget-preview-toolbar {font-size: 15px;padding: 3px 10px;background: #efefef;border-bottom: #dadada solid 1px;margin:0 -15px 15px;}*/
 .widget-preview-toolbar {font-size: 15px;padding: 3px 10px;background: #efefef;border-bottom: #dadada solid 1px;margin:0 -15px}
@@ -41,8 +41,8 @@
 /*.widget-preview-content {overflow: scroll;height: 440px;}*/
 .widget-preview-content {padding-top:10px;padding-bottom:20px;margin: 0 -15px 0 0;overflow-y: scroll;height:400px;}
 .widget-arguments {width: 300px;margin-left: 680px;height:440px;overflow-y:scroll; padding:10px;}
-.widget-footer-left {width: 48%;float: left;padding: 0 10px;}
-.widget-footer-right {width: 48%;float: left;text-align: right;padding: 0 10px;}
+.widget-footer-left {width: 48%;float: left;padding: 5px 10px;}
+.widget-footer-right {width: 48%;float: left;text-align: right;padding: 5px 10px;}
 .widget-no-preview {padding: 10px;background: #efefef;border: dashed 1px #dadada;font-weight: bold;margin-right: 15px;}
 .widget-preview-content .widget-no-preview {margin-top:10px;}
 #confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close {z-index:99999;}
