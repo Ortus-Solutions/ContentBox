@@ -13,7 +13,7 @@ component extends="contentbox.model.ui.BaseWidget"{
 		setPluginDescription("Renders any view in your ColdBox application");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-
+		setIcon( "book.png" );
 		return this;
 	}
 
