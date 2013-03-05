@@ -75,7 +75,7 @@
                         #p.getPluginName()#
                         <span class="widget-type">#prc.widgets.widgettype#</span>
                     </div>
-                    <img id="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
+                    <img class="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
                     <div class="widget-teaser">#p.getPluginDescription()#</div>
                     <div class="widget-arguments-holder" name="#widgetName#" category="#category#" style="display:none;">
                         <div class="widget-teaser">#p.getPluginDescription()#</div>
