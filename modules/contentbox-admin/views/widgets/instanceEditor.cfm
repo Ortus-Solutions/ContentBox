@@ -54,7 +54,7 @@
     </div>
     <div class="widget-footer-right">
         <button class="buttonred" id="widget-button-update">Update Widget</button>
-        <a id="widget-button-cancel" href="javascript:void(0);" onclick="closeRemoteModal()">Cancel</a>
+        <a id="widget-button-cancel" href="javascript:void(0);" onclick="closeRemoteModal()" class="button">Cancel</a>
     </div>
 </div>
 </cfoutput>
