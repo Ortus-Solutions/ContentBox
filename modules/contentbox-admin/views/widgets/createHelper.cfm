@@ -2,9 +2,16 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$widgetForm = $("##widgetForm");
+	$widgetCreateForm = $("##widgetCreateForm");
 	// form validator
-	$widgetForm.validator({position:'center right'});	
+	$widgetCreateForm.validator({position:'center right'});	
 });
+function toggleIconSelector(){
+	$widgetCreateForm.find("##widget-icon-selector").slideToggle();
+}
+function chooseIcon(iconPath){
+	$widgetCreateForm.find("##icon").val( iconPath );
+	toggleIconSelector();
+}
 </script>
 </cfoutput>

@@ -31,7 +31,9 @@ component accessors="true" singleton threadSafe{
 	property name="log"					inject="logbox:logger:{this}";
 	
 	// Local properties
-	property name="widgetsPath" type="string";
+	property name="widgetsPath" 			type="string";
+	property name="widgetsIconsPath" 		type="string";
+	property name="widgetsIconsIncludePath" type="string";
 	
 	WidgetService function init(){
 		return this;
@@ -41,7 +43,17 @@ component accessors="true" singleton threadSafe{
 	* onDIComplete
 	*/
 	function onDIComplete(){
-		setWidgetsPath( moduleSettings["contentbox"].path & "/widgets" );
+		widgetsPath 			= moduleSettings["contentbox"].path & "/widgets";
+		widgetsIconsPath 		= moduleSettings["contentbox-admin"].path & "/includes/images/widgets";
+		widgetsIconsPath 		= moduleSettings["contentbox-admin"].path & "/includes/images/widgets";
+		widgetsIconsIncludePath = moduleSettings["contentbox-admin"].mapping & "/includes/images/widgets";
+	}
+	
+	/**
+	* Get a list of widget icons available in the system
+	*/
+	array function getWidgetIcons(){
+		return directoryList( widgetsIconsPath, false, "name", "*.png" );
 	}
 
 	/**
@@ -77,19 +89,21 @@ component accessors="true" singleton threadSafe{
 	}
 	
 	/**
-	* Create new widget
+	* Create new core widget
 	*/
 	WidgetService function createNewWidget(required Widget widget){
 		// read in template
-		var templateCode = fileRead( getDirectoryFromPath( getMetadata(this).path ) & "templates/Widget.txt" );
+		var templateCode = fileRead( getDirectoryFromPath( getMetadata( this ).path ) & "templates/Widget.txt" );
 		// parsing
 		templateCode = replacenocase(templateCode,"@name@", widget.getName(),"all");
 		templateCode = replacenocase(templateCode,"@description@", widget.getDescription(),"all");
 		templateCode = replacenocase(templateCode,"@version@", widget.getVersion(),"all");
 		templateCode = replacenocase(templateCode,"@author@", widget.getAuthor(),"all");
 		templateCode = replacenocase(templateCode,"@authorURL@", widget.getAuthorURL(),"all");
+		templateCode = replacenocase(templateCode,"@category@", widget.getCategory(),"all");
+		templateCode = replacenocase(templateCode,"@icon@", widget.getIcon(),"all");
 		// write it out
-		return saveWidgetCode( widget.getName(), templateCode );
+		return saveWidgetCode( widget.getName(), templateCode, "core" );
 	}
 	/**
 	 * Get unique, sorted widget categories from main widget query
@@ -135,7 +149,7 @@ component accessors="true" singleton threadSafe{
 			widgets.widgettype[x] = "Core";
 			try{
 				widgets.plugin[x] = getWidget( widgets.name[x], widgets.widgettype[x] );
-				widgets.category[x] = widgets.plugin[x].getCategory()!="" ? widgets.plugin[x].getCategory() : "Miscellaneous";
+				widgets.category[x] = widgets.plugin[x].getCategory() != "" ? widgets.plugin[x].getCategory() : "Miscellaneous";
 				widgets.icon[x] = widgets.plugin[x].getIcon()!="" ? widgets.plugin[x].getIcon() : "";
 			}
 			catch(any e){
