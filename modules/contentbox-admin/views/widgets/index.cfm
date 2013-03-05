@@ -24,6 +24,28 @@
 		</div>
 		</cfif>
 	</div>
+	
+	<!--- Help Box --->
+	<div class="small_box">
+		<div class="header">
+			<img src="#prc.cbroot#/includes/images/help.png" alt="info" width="24" height="24" />Widget Help
+		</div>
+		<div class="body">
+			<p>Render widgets in your layouts and views by using the CB Helper method <em>widget()</em>:</p>
+			<div class="infoBar">
+				##cb.widget("name",{arg1=val,arg2=val})##
+			</div>
+			<p>Render module widgets by appending the module name <em>@module</em>:</p>
+			<div class="infoBar">
+				##cb.widget("name@module",{arg1=val,arg2=val})##
+			</div>
+			<p>Get an instance of a widget in your layouts and views using the CB helper method <em>getWidget()</em></p>
+			<div class="infoBar">
+				 ##cb.getWidget("name")##
+				 ##cb.getWidget("name@module")##
+			</div>
+		</div>
+	</div>
 </div>
 <!--End sidebar-->
 <!--============================Main Column============================-->
@@ -87,8 +109,11 @@
                         	<li><a href="##">#prc.categories.category#</a></li>
             			</cfloop>
                     </ul>
+					<!--- ContentBars --->
                     <div class="widget-store full">
+                    	<!--- Category Total Bar --->
                         <div id="widget-total-bar" class="widget-total-bar">Category: <strong>All</strong> (#prc.widgets.recordcount# Widgets)</div>
+						<!--- Widgets --->
                         <cfloop query="prc.widgets">
                 			<cfscript>
                 				p = prc.widgets.plugin;
@@ -104,9 +129,11 @@
                                    		widgetName = "~" & widgetName;
                                    		break;
                 				}
+                				// If widget has icon, then use it
                 				if( prc.widgets.icon != "" ) {
                 					iconName = prc.widgets.icon;
                 				}
+                				// Else give it global icons via category it is in or default to a puzzle
                 				else {
                     				switch( prc.widgets.category ) {
                     					case "Content":
@@ -146,12 +173,14 @@
 										    <img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" />
                                         </a>
                                         <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
+											&nbsp;
 											<!--- Editor --->
 											<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#prc.widgets.name#&type=#prc.widgets.widgettype#')#">
 											    <img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" />
 											</a>
                             				<!---only allow deletion of core widgets--->
 											<cfif prc.widgets.widgettype eq "core">
+												&nbsp;
 												<!--- Delete Command --->
 												<a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt" data-title="Delete #widgetName#?">
 													<img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/>
@@ -166,15 +195,6 @@
                     </div>
                 </div>
 				
-				<!--- help bars --->
-				<div class="infoBar">
-					<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />Use the CB Helper in your layouts by using:
-					 ##cb.widget("name",{arg1=val,arg2=val})##
-				</div>
-				<div class="infoBar">
-					<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />Get a widget in your layouts by using:
-					 ##cb.getWidget("name")##
-				</div>
 				#html.endForm()#
 				</div>
 				<!--- end manage pane --->
