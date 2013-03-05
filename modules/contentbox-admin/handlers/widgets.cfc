@@ -27,6 +27,7 @@ component extends="baseHandler"{
 
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
+		prc.categories = widgetService.getWidgetCategories( prc.widgets );
 
 		// ForgeBox Entry URL
 		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
@@ -85,8 +86,40 @@ component extends="baseHandler"{
 	function editorSelector(event,rc,prc){
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
-
+		prc.categories = widgetService.getWidgetCategories( prc.widgets );
 		event.setView(view="widgets/editorSelector",layout="ajax");
+	}
+	
+	// Preview Widget
+	function preview( event, rc, prc ) {
+		// get widget
+		var widget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
+		try {
+			event.renderData( data=widget.renderIt( argumentCollection=rc ), type="html" );
+		}
+		catch ( any e ) {
+			event.renderData( data="", type="html" );
+		}
+	}
+
+	// Edit Widget Instance
+	function editInstance( event, rc, prc ) {
+		// get widget
+		var widget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
+		prc.widget = {
+			name = rc.widgetName,
+        	widgetType = rc.widgetType,
+        	plugin = widget,
+        	module = find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
+        	category = !isNull( widget.getCategory() ) ? 
+        					widget.getCategory() : 
+        					rc.widgetType=="Core" ?
+                            	"Miscellaneous" :
+                                rc.widgetType,
+        	icon = !isNull( widget.getIcon() ) ? widget.getIcon() : ""
+		};
+		prc.vals = rc;
+		event.setView(view="widgets/instanceEditor",layout="ajax");
 	}
 
 	// Create New Widget wizard

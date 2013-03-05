@@ -78,60 +78,94 @@
 				</div>
 	
 				<!--- widgets --->
-				<table name="widgets" id="widgets" class="tablesorter" width="98%">
-					<thead>
-						<tr>
-							<th>Widget</th>
-							<th>Description</th>
-                            <th width="45">Type</th>
-							<th width="100" class="center {sorter:false}">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						<cfloop query="prc.widgets">
-						<cfset fullWidgetName = prc.widgets.widgetType eq "module" ? prc.widgets.name & "@" & prc.widgets.module : prc.widgets.name>
-						<cfset p = prc.widgets.plugin>
-						<cfif isSimpleValue(p)>
-							<tr class="selected">
-								<td colspan="4">There is a problem creating widget: '#fullWidgetName#', please check the application log files.</td>
-							</tr>
-						<cfelse>
-						<tr>
-							<td>
-								<strong>#fullWidgetName#</strong><br/>
-								Version #p.getPluginVersion()#
-								By <a href="#p.getPluginAuthor()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>
-							</td>
-							<td>
-								#p.getPluginDescription()#<br/>
-								<cfif len( p.getForgeBoxSlug() )>
-								ForgeBox URL: <a href="#prc.forgeBoxEntryURL & "/" & p.getForgeBoxSlug()#" target="_blank">#p.getForgeBoxSlug()#</a>
-								</cfif>
-							</td>
-                            <td>#prc.widgets.widgettype#</td>
-							<td class="center">
-								<!--- Documentation Icon --->
-								<a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(fullWidgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})"><img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" /></a>
-								&nbsp;
-								<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
-	
-								<!--- Editor --->
-								<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#fullWidgetName#&type=#prc.widgets.widgettype#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
-								&nbsp;
-                                <!---only allow deletion of core widgets--->
-								<cfif prc.widgets.widgettype eq "core">
-    								<!--- Delete Command --->
-    								<a title="Delete Widget" href="javascript:remove('#JSStringFormat(fullWidgetName)#')" class="confirmIt"
-    									data-title="Delete #fullWidgetName#?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
-								</cfif>
-                                </cfif>
-							</td>
-						</tr>
-						</cfif>
-						</cfloop>
-					</tbody>
-				</table>
-	
+				<!--- Vertical Nav --->
+				<div class="body_vertical_nav clearfix widgets">
+					<!--- Navigation Bar --->
+					<ul class="vertical_nav" id="widget-sidebar">
+                        <li class="active"><a href="##" class="current">All</a></li>
+            			<cfloop query="prc.categories">
+                        	<li><a href="##">#prc.categories.category#</a></li>
+            			</cfloop>
+                    </ul>
+                    <div class="widget-store full">
+                        <div id="widget-total-bar" class="widget-total-bar">Category: <strong>All</strong> (#prc.widgets.recordcount# Widgets)</div>
+                        <cfloop query="prc.widgets">
+                			<cfscript>
+                				p = prc.widgets.plugin;
+                				widgetName = prc.widgets.name;
+                				widgetSelector = prc.widgets.name;
+                				category = prc.widgets.category;
+                				
+                				switch( prc.widgets.widgettype ) {
+                					case 'module':
+                                    	widgetName &= "@" & prc.widgets.module;
+                                    	break;
+                                   	case 'layout':
+                                   		widgetName = "~" & widgetName;
+                                   		break;
+                				}
+                				if( prc.widgets.icon != "" ) {
+                					iconName = prc.widgets.icon;
+                				}
+                				else {
+                    				switch( prc.widgets.category ) {
+                    					case "Content":
+                    						iconName = "page_writing.png";
+                    						break;
+                    					case "Utilities":
+                    						iconName = "tune.png";
+                    						break;
+                    					case "Module":
+                    						iconName = "box.png";
+                    						break;
+                    					case "Layout":
+                    						iconName = "layout_squares_small.png";
+                    						break;
+                    					default:
+                    						iconName = "puzzle.png";
+                    						break;
+                    				}	
+                				}
+                			</cfscript>					
+            				<div class="widget-content full" name="#widgetName#" category="#category#">
+                                <div class="widget-title">
+                                    #p.getPluginName()#
+                                    <span class="widget-type">#prc.widgets.widgettype#</span>
+                                </div>
+                                <img id="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
+                                <div class="widget-teaser">#p.getPluginDescription()#</div>
+                                <div class="widget-arguments-holder" name="#widgetName#" category="#category#" style="display:none;">
+                                    <div class="widget-teaser">#p.getPluginDescription()#</div>
+                                </div>
+                                <div class="widget-actions">
+                                    Version #p.getPluginVersion()#
+									By <a href="#p.getPluginAuthorURL()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>
+                                    <span class="widget-type">
+										<!---read docs--->
+                                        <a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(prc.widgets.name)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
+										    <img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" />
+                                        </a>
+                                        <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
+											<!--- Editor --->
+											<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#prc.widgets.name#&type=#prc.widgets.widgettype#')#">
+											    <img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" />
+											</a>
+                            				<!---only allow deletion of core widgets--->
+											<cfif prc.widgets.widgettype eq "core">
+												<!--- Delete Command --->
+												<a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt" data-title="Delete #widgetName#?">
+													<img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/>
+                                                </a>
+											</cfif>
+                            			</cfif>
+									</span>
+                                </div>    
+                            </div>
+                		</cfloop>
+                		<div class="widget-no-preview" style="display:none;">Sorry, no widgets matched your search!</div>
+                    </div>
+                </div>
+				
 				<!--- help bars --->
 				<div class="infoBar">
 					<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />Use the CB Helper in your layouts by using:

@@ -91,3 +91,49 @@ img:hover {
 	opacity: .9;
 	filter: alpha(opacity = 90);
 }
+widget {
+    width: 85%;
+    padding:5px;
+    border: solid 1px #dadada;
+    border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-bottom-color: #b3b3b3;
+    border-radius: 2px;
+    display:block;
+    cursor:pointer;
+    *background-color: #e6e6e6;
+    background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    background-repeat: repeat-x;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all .2s ease;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
+}
+widget:hover {
+    background-color: #e6e6e6;
+    *background-color: #d1d1d1;
+    transform: scale(1.01);
+    -webkit-transform: scale( 1.01 );
+    -moz-transform: scale( 1.01 );
+}
+widget:hover widgetinfobar {
+    color: #666;
+}
+widgetinfobar {
+    color: #999;
+    font-size: 9pt;
+    display:block;
+    min-height:20px;
+    line-height:20px;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+}
+widgetinfobar::selection {
+    background-color: rgba(255, 255, 255, 0);
+}
+widgetinfobar::-moz-selection {
+    background-color: rgba(255, 255, 255, 1);
+}

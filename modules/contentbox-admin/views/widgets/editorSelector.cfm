@@ -1,69 +1,103 @@
 ﻿<cfoutput>
-<h2>ContentBox Editor Widget Selector</h2>
-<div>
-	<p>Which ContentBox widget would you like to insert in to your editor:</p>
-	<!--- Filter Bar --->
-	<div class="filterBar">
-		<div>
-			#html.label(field="widgetFilter",content="Quick Filter:",class="inline")#
-			#html.textField(name="widgetFilter",size="30",class="textfield")#
-		</div>
+<h2 style="position:relative;">
+    <span id="widget-title-bar">Select a Widget</span>
+    <div class="widget-filter" id="widget-filter">
+        #html.label(field="widgetFilter",content="Quick Filter:",class="inline")#
+		#html.textField(name="widgetFilter",size="30",class="textfield")#
+    </div>
+</h2>
+<div class="widget-detail" id="widget-detail" style="display:none;">
+	<div class="widget-preview">
+	    <div class="widget-preview-toolbar">
+	        Preview
+            <a href="javascript:void(0);" class="widget-preview-refresh">Refresh</a>
+	    </div>
+        <div id="widget-preview-content" class="widget-preview-content"></div>
 	</div>
-	<!--- widgets --->
-	<table name="widgets" id="widgets" class="tablesorter" width="98%">
-		<thead>
-			<tr>
-				<th>Widget</th>
-				<th>Description</th>
-				<th>Type</th>
-				<th width="75" class="center {sorter:false}">Actions</th>
-			</tr>
-		</thead>				
-		<tbody>
-			<cfloop query="prc.widgets">
-				<cfscript>
-					p = prc.widgets.plugin;
-					widgetName = prc.widgets.name;
-					widgetSelector = prc.widgets.name;
-					switch( prc.widgets.widgettype ) {
-						case 'module':
-                        	widgetName &= "@" & prc.widgets.module;
-                        	break;
-                       	case 'layout':
-                       		widgetName = "~" & widgetName;
-                       		break;
-					}
-				</cfscript>					
-			<cfif isSimpleValue(p)>
-				<tr class="selected">
-					<td colspan="4">There is a problem creating widget: '#widgetName#', please check the application log files.</td>
-				</tr>
-			<cfelse>
-			<tr>
-				<td>
-					<strong>#p.getPluginName()##( prc.widgets.widgetType eq "module" ? "@" & prc.widgets.module : '' )#</strong>
-				</td>
-				<td>
-					#p.getPluginDescription()#
-					<!--- Widget Argument Form --->
-					<div id="widgetArgs_#widgetName#" style="display:none">#renderWidgetArgs(p.renderit,widgetName)#</div>
-					
-				</td>
-                <td>
-                	<strong>#prc.widgets.widgettype#</strong>    
-                </td>
-				<td class="center">
-					<button class="button" onclick="selectCBWidget('#widgetName#')">Select</button>
-				</td>
-			</tr>
-			</cfif>
-			</cfloop>
-		</tbody>
-	</table>
+	<div class="widget-arguments" id="widget-arguments"></div>    
 </div>
-<hr/>
-<!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Cancel </button>
+<div class="widget-container body_vertical_nav clearfix" id="widget-container">
+    <div class="vertical_nav" id="widget-sidebar">
+        <ul>
+            <li class="active"><a href="##" class="current">All</a></li>
+			<cfloop query="prc.categories">
+            	<li><a href="##">#prc.categories.category#</a></li>
+			</cfloop>
+        </ul>
+    </div>
+    <div class="widget-store">
+        <div id="widget-total-bar" class="widget-total-bar">Category: <strong>All</strong> (#prc.widgets.recordcount# Widgets)</div>
+        <cfloop query="prc.widgets">
+			<cfscript>
+				p = prc.widgets.plugin;
+				widgetName = prc.widgets.name;
+				widgetSelector = prc.widgets.name;
+				category = prc.widgets.category;
+				
+				switch( prc.widgets.widgettype ) {
+					case 'module':
+                    	widgetName &= "@" & prc.widgets.module;
+                    	break;
+                   	case 'layout':
+                   		widgetName = "~" & widgetName;
+                   		break;
+				}
+				if( prc.widgets.icon != "" ) {
+					iconName = prc.widgets.icon;
+				}
+				else {
+    				switch( prc.widgets.category ) {
+    					case "Content":
+    						iconName = "page_writing.png";
+    						break;
+    					case "Utilities":
+    						iconName = "tune.png";
+    						break;
+    					case "Module":
+    						iconName = "box.png";
+    						break;
+    					case "Layout":
+    						iconName = "layout_squares_small.png";
+    						break;
+    					default:
+    						iconName = "puzzle.png";
+    						break;
+    				}	
+				}
+			</cfscript>					
+			<cfif isSimpleValue(p)>
+				<!---<tr class="selected">
+					<td colspan="4">There is a problem creating widget: '#widgetName#', please check the application log files.</td>
+				</tr>--->
+			<cfelse>
+				<div class="widget-content" name="#widgetName#" category="#category#">
+                    <div class="widget-title">
+                        #p.getPluginName()#
+                        <span class="widget-type">#prc.widgets.widgettype#</span>
+                    </div>
+                    <img id="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
+                    <div class="widget-teaser">#p.getPluginDescription()#</div>
+                    <div class="widget-arguments-holder" name="#widgetName#" category="#category#" style="display:none;">
+                        <div class="widget-teaser">#p.getPluginDescription()#</div>
+                        <div class="widget-args">
+                            <div id="widgetArgs_#widgetName#">
+                            	#renderWidgetArgs( p.renderit, widgetName, prc.widgets.widgetType, p.getPluginName() )#
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+			</cfif>
+		</cfloop>
+		<div class="widget-no-preview" style="display:none;">Sorry, no widgets matched your search!</div>
+    </div>
+</div>
+<div class="widget-footer">
+    <div class="widget-footer-left">
+        <a id="widget-button-back" style="display:none;" href="javascript:void(0);">Back to Widgets</a>&nbsp;
+    </div>
+    <div class="widget-footer-right">
+        <button class="buttonred" style="display:none;" id="widget-button-insert">Insert Widget</button>
+        <a id="widget-button-cancel" href="javascript:void(0);" onclick="closeRemoteModal()">Cancel</a>
+    </div>
 </div>
 </cfoutput>

@@ -13,7 +13,8 @@ component extends="contentbox.model.ui.BaseWidget"{
 		setPluginDescription("Issues 302 relocations once it is executed");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-
+		setCategory( "Utilities" );
+		setIcon( "replay.png" );
 		return this;
 	}
 
