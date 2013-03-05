@@ -12,8 +12,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginVersion("1.0");
 		setPluginDescription("A widget that executes the ColdBox MessageBox Plugin to render something out.");
 		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("www.ortussolutions.com");
-
+		setPluginAuthorURL("http://www.ortussolutions.com");
+		setCategory( "Utilities" );
+		setIcon( "quote.png" );
 		return this;
 	}
 

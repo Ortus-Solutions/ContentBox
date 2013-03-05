@@ -77,12 +77,13 @@ component accessors="true" threadSafe singleton{
 	 */
 	string function getLayoutWidgetPath( required string widgetName ) {
 		var path = "";
+		var parsedName =  replaceNoCase( arguments.widgetName, "~", "", "one" );
 		// if requested widget exists in the cache, return the path
-		if( structKeyExists( layoutWidgetCache, arguments.widgetName ) ) {
-			path = layoutWidgetCache[ arguments.widgetName ];
+		if( structKeyExists( layoutWidgetCache, parsedName ) ) {
+			path = layoutWidgetCache[ parsedName ];
 		}
 		else {
-			log.error("Could not find #arguments.widgetname# widget in the currently active layout.");	
+			log.error("Could not find #parsedName# widget in the currently active layout.");	
 		}
 		return path;
 	}
