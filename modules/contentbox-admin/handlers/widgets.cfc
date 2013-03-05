@@ -124,8 +124,15 @@ component extends="baseHandler"{
 
 	// Create New Widget wizard
 	function create(event,rc,prc){
+		// exit handler
 		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.doCreate";
+		// widget path
 		prc.widgetsPath = widgetService.getWidgetsPath();
+		// widget icons
+		prc.widgetIcons = widgetService.getWidgetIcons();
+		// widget icon path
+		prc.widgetIconsIncludePath = widgetService.getwidgetsIconsIncludePath();
+		// view
 		event.setView(view="widgets/create",layout="ajax");
 	}
 	// Create the new widget
@@ -139,7 +146,7 @@ component extends="baseHandler"{
 			// save the new widget
 			widgetService.createNewWidget( oWidget );
 			getPlugin("MessageBox").info("Widget Created! Now Code It!");
-			setNextEvent(event="#prc.cbAdminEntryPoint#.widgets.edit",queryString="widget=#oWidget.getName()#");
+			setNextEvent(event="#prc.cbAdminEntryPoint#.widgets.edit",queryString="widget=#oWidget.getName()#&type=core");
 		}
 		else{
 			getPlugin("MessageBox").error(messageArray=errors);
@@ -149,6 +156,8 @@ component extends="baseHandler"{
 
 	// Editor
 	function edit(event,rc,prc){
+		// param values
+		event.paramValue( "type", "core" );
 		// Exit handlers
 		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.save";
 		// Get Widget Code
