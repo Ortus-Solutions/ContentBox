@@ -35,11 +35,11 @@ component accessors="true"{
 	Widget function init(){
 		name = '';
 		version = '';
-		description='';
-		author='';
-		authorURL='';
-		category="";
-		icon="";
+		description = '';
+		author = '';
+		authorURL = '';
+		category = "";
+		icon = "";
 		return this;
 	}
 	

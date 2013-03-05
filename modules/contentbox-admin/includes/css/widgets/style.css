@@ -17,8 +17,13 @@
     -webkit-transition: all .2s ease;
     -moz-transition: all .2s ease;
 }
-.widget-content.full img.widget-icon {margin-bottom:10px;}
-.widget-content img.widget-icon:hover {
+.widget-content.full img.widget-icon{margin-bottom:10px;}
+.widget-icon-selector{ display: none; clear: both}
+.widget-icon-selector img.widget-icon {margin: 5px; float:left;margin-right:10px;
+    transition: all .2s ease;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;}
+.widget-content img.widget-icon:hover, .widget-icon-selector img.widget-icon:hover {
     transform: scale(1.01);
     -webkit-transform: scale( 1.08 );
     -moz-transform: scale( 1.08 );

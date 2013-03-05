@@ -8,12 +8,14 @@ component extends="contentbox.model.ui.BaseWidget"{
 		super.init(controller);
 		
 		// Widget Properties
-		setPluginName("@name@");
-		setPluginVersion("@version@");
-		setPluginDescription("@description@");
-		setPluginAuthor("@author@");
-		setPluginAuthorURL("@authorURL@");
-		//setForgeBoxSlug("");
+		setPluginName( "@name@" );
+		setPluginVersion( "@version@" );
+		setPluginDescription( "@description@" );
+		setPluginAuthor( "@author@" );
+		setPluginAuthorURL( "@authorURL@" );
+		//setForgeBoxSlug( "" );
+		setCategory( "@category@" );
+		setIcon( "@icon@" );
 		
 		return this;
 	}
