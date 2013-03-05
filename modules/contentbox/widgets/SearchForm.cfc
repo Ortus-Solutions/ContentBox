@@ -8,7 +8,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("Search Form");
+		setPluginName("SearchForm");
 		setPluginVersion("1.0");
 		setPluginDescription("This widget creates a simple ContentBox search form");
 		setPluginAuthor("Ortus Solutions");

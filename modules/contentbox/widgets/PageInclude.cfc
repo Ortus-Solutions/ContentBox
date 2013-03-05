@@ -8,7 +8,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("Page Include");
+		setPluginName("PageInclude");
 		setPluginVersion("1.0");
 		setPluginDescription("A widget that can render out ContentBox pages inline");
 		setPluginAuthor("Ortus Solutions");

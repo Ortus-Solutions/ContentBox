@@ -8,7 +8,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("Entry Include");
+		setPluginName("EntryInclude");
 		setPluginVersion("1.0");
 		setPluginDescription("A widget that can render out ContentBox blog entries inline");
 		setPluginAuthor("Ortus Solutions");
