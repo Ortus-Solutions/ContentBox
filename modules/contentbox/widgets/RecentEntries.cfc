@@ -8,7 +8,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("Recent Entries");
+		setPluginName("RecentEntries");
 		setPluginVersion("1.0");
 		setPluginDescription("A cool basic widget that shows N recent entries");
 		setPluginAuthor("Ortus Solutions");
