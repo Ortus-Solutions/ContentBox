@@ -212,6 +212,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	*/
 	ModuleService function deleteModule(required name){
 		var args = {"name" = arguments.name};
+		var configPath = modulesInvocationPath & ".#name#.ModuleConfig";
+		
+		// Try to do an onDelete() callback.
+		var config = createObject("component", configPath);
+		if( structKeyExists( config, "onDelete" ) ){
+			config.onDelete();
+		}
+		
+		// Now delete it		
 		deleteWhere(argumentCollection=args);
 		if( directoryExists( modulesPath & "/#arguments.name#" ) ){
 			directoryDelete( modulesPath & "/#arguments.name#", true );
