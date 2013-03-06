@@ -3,7 +3,12 @@
 $(document).ready(function() {
 	$importForm = $("##importerForm");
 	// form validator
-	$importForm.validator({position:'center right',onSuccess:function(e,els){ activateLoaders(); }});	
+	$importForm.validator({position:'center right'});	
+	$importForm.submit(function(){
+		if ($importForm.data("validator").checkValidity()) {
+			activateLoaders();
+		}
+	});
 });
 function activateLoaders(){
 	$("##uploadBar").slideToggle();
