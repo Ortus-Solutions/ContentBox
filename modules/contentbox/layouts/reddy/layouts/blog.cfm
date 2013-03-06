@@ -25,7 +25,7 @@ which means you can use it in any way you want provided you keep the link to the
 	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLDescription())>
 		<meta name="description" content="#cb.getCurrentEntry().getHTMLDescription()#" />
 	<cfelse>
-		<meta name="description" content="#cb.siteDescription()#" />
+		<meta name="description" content="#HTMLEditFormat( cb.siteDescription() )#" />
 	</cfif>
 	<!--- Meta Keywords By Entry or By Site --->
 	<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLKeywords())>
