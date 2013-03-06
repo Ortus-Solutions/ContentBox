@@ -45,7 +45,7 @@ limitations under the License.
 	<cfif cb.isPageView() AND len(cb.getCurrentPage().getHTMLDescription())>
 		<meta name="description" content="#cb.getCurrentPage().getHTMLDescription()#" />
 	<cfelse>
-		<meta name="description" content="#cb.siteDescription()#" />
+		<meta name="description" content="#HTMLEditFormat( cb.siteDescription() )#" />
 	</cfif>
 	<!--- Meta Keywords By Page or By Site --->
 	<cfif cb.isPageView() AND len(cb.getCurrentPage().getHTMLKeywords())>
