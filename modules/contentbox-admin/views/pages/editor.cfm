@@ -240,10 +240,10 @@
 
 			<div class="floatRight">
 				<!--- View Page In Site --->
-				<button class="button2" onclick="return to('#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#')">Back To Listing</button>
+				<button class="button2" onclick="return to('#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#')">Cancel</button>
 				<cfif prc.page.isLoaded()>
 					<!--- View Page In Site --->
-					<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;">View Page In Site</button>
+					<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;">View In Site</button>
 				</cfif>
 			</div>
 		</div>
