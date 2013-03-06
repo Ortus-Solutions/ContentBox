@@ -14,7 +14,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
 		setIcon( "notebook.png" );
-		setCategory( "Content" );
+		setCategory( "Blog" );
 		return this;
 	}
 

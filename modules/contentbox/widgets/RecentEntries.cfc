@@ -10,11 +10,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("RecentEntries");
 		setPluginVersion("1.0");
-		setPluginDescription("A cool basic widget that shows N recent entries");
+		setPluginDescription("A cool basic widget that shows N recent blog entries.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
 		setIcon( "list.png" );
-		setCategory( "Content" );
+		setCategory( "Blog" );
 		return this;
 	}
 

@@ -10,7 +10,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("CustomHTML");
 		setPluginVersion("1.0");
-		setPluginDescription("A widget that renders Custom HTML in ContentBox");
+		setPluginDescription("A widget that renders Custom HTML content anywhere you like.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
 		setIcon( "window_text.png" );

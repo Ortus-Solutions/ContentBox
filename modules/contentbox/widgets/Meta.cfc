@@ -10,10 +10,10 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("Meta");
 		setPluginVersion("1.0");
-		setPluginDescription("A cool basic widget that shows some ContentBox meta links");
+		setPluginDescription("A cool basic widget that shows some ContentBox meta links anywhere you like.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "window_text.png" );
+		setIcon( "settings.png" );
 		return this;
 	}
 
