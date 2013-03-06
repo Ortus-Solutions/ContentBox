@@ -10,10 +10,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("RSS");
 		setPluginVersion("1.0");
-		setPluginDescription("A widget that reads an RSS feed and displays the items");
+		setPluginDescription("A widget that reads an RSS feed and displays the items as you see fit.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
 		setCategory( "Content" );
+		setIcon( "cloud.png" );
 		return this;
 	}
 

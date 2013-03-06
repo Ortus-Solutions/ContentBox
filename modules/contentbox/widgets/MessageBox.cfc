@@ -10,11 +10,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("MessageBox");
 		setPluginVersion("1.0");
-		setPluginDescription("A widget that executes the ColdBox MessageBox Plugin to render something out.");
+		setPluginDescription("A widget that executes the ColdBox MessageBox Plugin to render a nice UI messagebox for info, warning or error messages.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setCategory( "Utilities" );
-		setIcon( "quote.png" );
+		setCategory( "ColdBox" );
+		setIcon( "information.png" );
 		return this;
 	}
 

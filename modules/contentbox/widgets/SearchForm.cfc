@@ -10,10 +10,10 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("SearchForm");
 		setPluginVersion("1.0");
-		setPluginDescription("This widget creates a simple ContentBox search form");
+		setPluginDescription("This widget creates a simple ContentBox search form.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setCategory( "Utilities" );
+		setCategory( "Miscellaneous" );
 		setIcon( "search.png" );
 		return this;
 	}

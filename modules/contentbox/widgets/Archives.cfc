@@ -10,11 +10,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("Archives");
 		setPluginVersion("1.0");
-		setPluginDescription("A cool basic widget that shows our blog archives");
+		setPluginDescription("A cool widget that renders your blog archives summary information.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "folder.png" );
-		setCategory( "Content" );
+		setIcon( "clock.png" );
+		setCategory( "Blog" );
 		return this;
 	}
 
