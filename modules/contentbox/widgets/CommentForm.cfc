@@ -10,11 +10,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("CommentForm");
 		setPluginVersion("1.0");
-		setPluginDescription("A cool basic commenting form for ContentBox");
+		setPluginDescription("A cool basic commenting form for ContentBox content objects.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
 		setIcon( "comment_add.png" );
-		setCategory( "Utilities" );
+		setCategory( "Miscellaneous" );
 		return this;
 	}
 

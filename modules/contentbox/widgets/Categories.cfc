@@ -10,11 +10,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// Widget Properties
 		setPluginName("Categories");
 		setPluginVersion("1.0");
-		setPluginDescription("A cool basic widget that shows our blog categories");
+		setPluginDescription("A cool widget that renders your blog categories summary.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "list.png" );
-		setCategory( "Content" );
+		setIcon( "tag.png" );
+		setCategory( "Blog" );
 		return this;
 	}
 

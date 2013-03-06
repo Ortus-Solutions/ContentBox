@@ -13,7 +13,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginDescription("A widget that executes any internal ColdBox event and return its results");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setCategory( "Utilities" );
+		setCategory( "ColdBox" );
+		setIcon( 'wired.png' );
+		
 		return this;
 	}
 

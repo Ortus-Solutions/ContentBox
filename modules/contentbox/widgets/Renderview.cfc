@@ -10,9 +10,10 @@ component extends="contentbox.model.ui.BaseWidget"{
 		// Widget Properties
 		setPluginName("Renderview");
 		setPluginVersion("1.0");
-		setPluginDescription("Renders any view in your ColdBox application");
+		setPluginDescription("Renders any view within the deployed ColdBox application.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
+		setCategory( "ColdBox" );
 		setIcon( "book.png" );
 		return this;
 	}
