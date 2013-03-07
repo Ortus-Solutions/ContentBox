@@ -73,9 +73,14 @@
 					<tr<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()> class="selected"</cfif>>
 						<td>
 							#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=author.getEmail(),size="30")#
-							<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
+							<!--- Display Link if Admin Or yourself --->
+							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
+								<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
+							<cfelse>
+								#author.getName()#
+							</cfif>
 							<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()>
-								<img src="#prc.cbRoot#/includes/images/asterisk_orange.png" alt="you" title="You dude!" />
+								<img src="#prc.cbRoot#/includes/images/asterisk_orange.png" alt="you" title="That's you!" />
 							</cfif>
 						</td>
 						<td>#author.getEmail()#</td>
@@ -90,7 +95,7 @@
 							</cfif>
 						</td>
 						<td class="center">
-							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
 								<!--- Edit Command --->
 								<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
 								<!--- Delete Command --->
