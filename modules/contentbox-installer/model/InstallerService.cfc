@@ -334,7 +334,8 @@ component accessors="true"{
 			"cb_site_maintenance" = "false",
 
 			// Versioning
-			"cb_versions_max_history" = ""
+			"cb_versions_max_history" = "",
+			"cb_versions_commit_mandatory" = "false"
 		};
 
 		// Create setting objects and save
