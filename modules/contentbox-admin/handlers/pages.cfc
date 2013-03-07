@@ -143,6 +143,7 @@ component extends="baseHandler"{
 		prc.xehPageSave 		= "#prc.cbAdminEntryPoint#.pages.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.pages.slugify";
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
+		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
 
 		// Turn Tab On
 		prc.tabContent_pages = true;

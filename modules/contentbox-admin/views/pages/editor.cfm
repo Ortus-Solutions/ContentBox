@@ -256,7 +256,6 @@
 			<!--- id --->
 			#html.hiddenField(name="contentID",bind=prc.page)#
 			#html.hiddenField(name="contentType",bind=prc.page)#
-			#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 
 			<!--- title --->
 			#html.textfield(label="Title:",name="title",bind=prc.page,maxlength="100",required="required",title="The title for this page",class="textfield width98")#
@@ -265,6 +264,7 @@
 				<img src='#prc.cbroot#/includes/images/link.png' alt='permalink' title="Convert title to permalink" onclick="createPermalink()"/>
 				<cfif prc.page.hasParent()> <small>/#prc.page.getParent().getSlug()#/</small></cfif>
 			</label>
+			<div id='slugCheckErrors'></div>
 			#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width98",title="The URL permalink for this page")#
 
 			<!---ContentToolBar --->

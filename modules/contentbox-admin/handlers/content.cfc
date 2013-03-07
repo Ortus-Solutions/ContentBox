@@ -39,4 +39,18 @@ component extends="baseHandler"{
 		event.setView(view="content/preview",layout="ajax");
 	}
 
+	function slugUnique(event,rc,prc){
+		param rc.slug = "";
+		param rc.contentID = "";
+		var data = {
+			unique = false
+		};
+		
+		if( len( rc.slug ) ){
+			data.unique = contentService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
+		}
+		
+		event.renderData(data=data, type="json");
+	}
+
 }
