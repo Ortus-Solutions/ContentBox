@@ -237,7 +237,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 #quickPost{display: none;}
 #addCustomFieldButton{margin:0xp 10px 0px 10px}
 .editorTime{ width:35px; }
-#contentToolBar{ margin: 5px 0px 0px 0px; padding: 3px;}
+#contentToolBar{ margin: 5px 0px 0px 0px; padding: 3px; min-height: 30px}
 #contentLabel{margin:2px 0px 10px 0px;}
 .actionsPanel, .contentInfoPanel { cursor: help; display:none; position: absolute; margin-left: 5px; padding: 10px; background-color: #eaeaea; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
 .actionsPanel, .contentInfoPanel a{color:black;}

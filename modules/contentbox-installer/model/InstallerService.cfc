@@ -142,7 +142,8 @@ component accessors="true"{
 			"EDITORS_MODIFIERS" = "Ability to view the content modifiers panel",
 			"EDITORS_CACHING" = "Ability to view the content caching panel",
 			"EDITORS_CATEGORIES" = "Ability to view the content categories panel",
-			"EDITORS_HTML_ATTRIBUTES" = "Ability to view the content HTML attributes panel"
+			"EDITORS_HTML_ATTRIBUTES" = "Ability to view the content HTML attributes panel",
+			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor"
 		};
 
 		var allperms = [];
@@ -179,6 +180,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["EDITORS_CACHING"] );
 		oRole.addPermission( permissions["EDITORS_CATEGORIES"] );
 		oRole.addPermission( permissions["EDITORS_HTML_ATTRIBUTES"] );
+		oRole.addPermission( permissions["EDITORS_EDITOR_SELECTOR"] );
 		roleService.save(entity=oRole, transactional=false);
 
 		// Create Admin
