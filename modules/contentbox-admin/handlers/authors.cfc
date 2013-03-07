@@ -16,12 +16,15 @@ component extends="baseHandler"{
 		prc.tabUsers = true;
 		
 		// Specific admin validation actions
-		if( listFindNoCase( "save,savePreferences,passwordChange,saveRawPreferences", arguments.action ) ){
-			// Validate credentials
+		if( listFindNoCase( "save,editor,savePreferences,passwordChange,saveRawPreferences", arguments.action ) ){
+			// Get incoming author to verify credentials
+			param rc.authorID = 0;
+			var oAuthor = authorService.get( rc.authorID );
+			// Validate credentials only if you are an admin or you are yourself.
 			if(  !prc.oAuthor.checkPermission("AUTHOR_ADMIN") AND oAuthor.getAuthorID() NEQ prc.oAuthor.getAuthorID() ){
 				// relocate
 				getPlugin("MessageBox").error("You do not have permissions to do this!");
-				setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#rc.authorID#");
+				setNextEvent(event=prc.xehAuthors);
 				return;
 			}
 		}
