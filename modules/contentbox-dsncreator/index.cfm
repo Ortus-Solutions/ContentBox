@@ -17,6 +17,7 @@
 	<link href="#assetRoot#/includes/css/style.css"	rel="stylesheet"/>
 	<link href="#assetRoot#/includes/css/teal.css" 	rel="stylesheet"/>
 	<!--- JS --->
+	<script src="#assetRoot#/includes/js/jquery.min.js"></script>
 	<script src="#assetRoot#/includes/js/jquery.tools.min.js"></script>
 	<script src="#assetRoot#/includes/js/contentbox.js"></script>
 </head>
