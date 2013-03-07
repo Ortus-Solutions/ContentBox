@@ -1,4 +1,5 @@
 ﻿<cfoutput>
+<cfsetting showdebugoutput="false">
 <!--- Process Handler --->
 <cfinclude template="handlers/process.cfm">
 <!DOCTYPE html>
