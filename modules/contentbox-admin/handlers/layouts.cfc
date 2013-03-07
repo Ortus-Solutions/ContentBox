@@ -26,6 +26,11 @@ component extends="baseHandler"{
 		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
 		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.layouts.saveSettings";
 
+		// Rescan if newly installed layout?
+		if( event.getValue( "rescan", false ) ){
+			layoutService.buildLayoutRegistry();
+		}
+
 		// Get all layouts
 		prc.layouts 		= layoutService.getLayouts();
 		prc.layoutsPath 	= layoutService.getLayoutsPath();
@@ -37,7 +42,7 @@ component extends="baseHandler"{
 		// ForgeBox Stuff
 		prc.forgeBoxSlug = "contentbox-layouts";
 		prc.forgeBoxInstallDir = URLEncodedFormat(layoutService.getLayoutsPath());
-		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink(prc.xehLayouts) );
+		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink(linkto=prc.xehLayouts, querystring="rescan=true") );
 
 		// Tab
 		prc.tabLookAndFeel_layouts = true;
