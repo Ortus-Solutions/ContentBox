@@ -23,6 +23,7 @@
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 	<!--- JS --->
+	<script src="#prc.cbroot#/includes/js/jquery.min.js"></script>
 	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
 	<script src="#prc.cbroot#/includes/js/metadata.pack.js"></script>
 	<script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
