@@ -111,11 +111,12 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// Have we passed the limit?
 		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
 			var oldestVersion = contentVersionService.newCriteria()
-				.isEq("relatedContent.contentID", getContentID() )
-				.withProjections(min="version", id="true")
-				.get();
-			// delete by primary key ID
-			contentVersionService.deleteByID( oldestVersion[2] );
+				.isEq( "relatedContent.contentID", getContentID() )
+				.isEq( "isActive", javaCast("boolean", false) )
+				.withProjections( id="true" )
+				.list( sortOrder="createdDate DESC", offset=settingService.getSetting( "cb_versions_max_history" ) - 2 );
+			// delete by primary key IDs found
+			contentVersionService.deleteByID( arraytoList( oldestVersion ) );
 		}
 	}
 
