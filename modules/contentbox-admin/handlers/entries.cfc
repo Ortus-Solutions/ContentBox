@@ -160,6 +160,7 @@ component extends="baseHandler"{
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
+		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
 
 		// Tab
 		prc.tabContent_blog = true;

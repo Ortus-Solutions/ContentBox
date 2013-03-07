@@ -60,6 +60,10 @@ function setupEditors($theForm, withExcerpt){
 			createPermalink( $title.val() );
 		}
 	});
+	// Activate permalink blur
+	$("##slug").blur(function(){
+		permalinkUniqueCheck()
+	});
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
 	needConfirmation = true;
@@ -90,10 +94,21 @@ function askLeaveConfirmation(){
 
 // Create Permalinks
 function createPermalink(){
-	var slugger = $("##sluggerURL").val();
 	$slug = $("##slug").fadeOut();
-	$.get(slugger,{slug:$("##title").val()},function(data){
-		$slug.fadeIn().val($.trim(data));
+	$.get( '#event.buildLink( prc.xehSlugify )#', {slug:$("##title").val()}, function(data){
+		$slug.fadeIn().val( $.trim(data) );
+	} );
+	permalinkUniqueCheck();
+}
+function permalinkUniqueCheck(){
+	// Verify unique
+	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', {slug:$("##slug").val(), contentID: $("##contentID").val()}, function(data){
+		if( !data.UNIQUE ){
+			$("##slugCheckErrors").html("The permalink you entered is already in use, please enter another one or modify it.").addClass("infoBar");
+		}
+		else{
+			$("##slugCheckErrors").html("").removeClass("infoBar");
+		}
 	} );
 }
 
