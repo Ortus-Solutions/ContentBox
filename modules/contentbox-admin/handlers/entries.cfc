@@ -171,16 +171,18 @@ component extends="baseHandler"{
 	// save
 	function save(event,rc,prc){
 		// params
-		event.paramValue("allowComments",prc.cbSettings.cb_comments_enabled);
-		event.paramValue("newCategories","");
-		event.paramValue("isPublished",true);
-		event.paramValue("slug","");
-		event.paramValue("changelog","");
-		event.paramValue("customFieldsCount",0);
-		event.paramValue("publishedDate",now());
-		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
-		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
-		event.paramValue("content","");
+		event.paramValue( "allowComments", prc.cbSettings.cb_comments_enabled );
+		event.paramValue( "newCategories", "" );
+		event.paramValue( "isPublished", true );
+		event.paramValue( "slug", "" );
+		event.paramValue( "changelog", "" );
+		event.paramValue( "customFieldsCount", 0 );
+		event.paramValue( "publishedDate", now() );
+		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH") );
+		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm") );
+		event.paramValue( "expireHour", "" );
+		event.paramValue( "expireMinute", "" );
+		event.paramValue( "content", "" );
 
 		// Quick save changelog
 		if( event.isAjax() ){
