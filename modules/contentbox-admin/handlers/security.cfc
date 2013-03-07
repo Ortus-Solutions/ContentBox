@@ -6,14 +6,18 @@ component{
 	// DI
 	property name="securityService" inject="id:securityService@cb";
 	property name="authorService" 	inject="id:authorService@cb";
+	property name="antiSamy"		inject="coldbox:plugin:AntiSamy";
 	
 	// login screen
 	function login(event,rc,prc){
 		// exit handlers
-		rc.xehDoLogin 		= "#prc.cbAdminEntryPoint#.security.doLogin";
-		rc.xehLostPassword 	= "#prc.cbAdminEntryPoint#.security.lostPassword";
+		prc.xehDoLogin 		= "#prc.cbAdminEntryPoint#.security.doLogin";
+		prc.xehLostPassword 	= "#prc.cbAdminEntryPoint#.security.lostPassword";
 		// remember me
-		prc.rememberMe = securityService.getRememberMe();
+		prc.rememberMe = antiSamy.htmlSanitizer( securityService.getRememberMe() );
+		// secured URL from security interceptor
+		param rc._securedURL = "";
+		rc._securedURL = antiSamy.htmlSanitizer( rc._securedURL );
 		// view
 		event.setView(view="security/login",layout="simple");	
 	}
@@ -21,12 +25,20 @@ component{
 	// authenticate users
 	function doLogin(event,rc,prc){
 		// params
-		event.paramValue("rememberMe",false);
+		param rc.rememberMe = false;
+		param rc._securedURL = "";
+		
 		// announce event
 		announceInterception("cbadmin_preLogin");
 		
+		// Sanitize
+		rc.username 	= antiSamy.htmlSanitizer( rc.username );
+		rc.password 	= antiSamy.htmlSanitizer( rc.password );
+		rc.rememberMe 	= antiSamy.htmlSanitizer( rc.rememberMe );
+		rc._securedURL 	= antiSamy.htmlSanitizer( rc._securedURL );
+		
 		// authenticate users
-		if( securityService.authenticate(rc.username,rc.password) ){
+		if( securityService.authenticate( rc.username, rc.password ) ){
 			// set remember me
 			if( rc.rememberMe ){
 				securityService.setRememberMe( rc.username );
@@ -36,11 +48,11 @@ component{
 			announceInterception("cbadmin_onLogin");
 		
 			// check if securedURL came in?
-			if( len(event.getValue("_securedURL","")) ){
-				setNextEvent(uri=rc["_securedURL"]);
+			if( len( rc._securedURL ) ){
+				setNextEvent( uri=rc._securedURL );
 			}
 			else{
-				setNextEvent("#prc.cbAdminEntryPoint#.dashboard");
+				setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
 			}
 		}
 		else{
@@ -48,7 +60,8 @@ component{
 			announceInterception("cbadmin_onBadLogin");
 			// message and redirect
 			getPlugin("MessageBox").warn("Invalid Credentials, try it again!");
-			setNextEvent("#prc.cbAdminEntryPoint#.security.login");
+			// Relocate
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
 	
@@ -60,13 +73,14 @@ component{
 		announceInterception("cbadmin_onLogout");
 		// message redirect	
 		getPlugin("MessageBox").info("See you later!");
+		// relocate
 		setNextEvent("#prc.cbAdminEntryPoint#.security.login");
 	}
 	
 	// lost password screen
 	function lostPassword(event,rc,prc){
 		prc.xehLogin 			= "#prc.cbAdminEntryPoint#.security.login";
-		rc.xehDoLostPassword 	= "#prc.cbAdminEntryPoint#.security.doLostPassword";
+		prc.xehDoLostPassword 	= "#prc.cbAdminEntryPoint#.security.doLostPassword";
 		event.setView(view="security/lostPassword",layout="simple");	
 	}
 	
@@ -76,37 +90,38 @@ component{
 		var oAuthor = "";
 		
 		// Param email
-		event.paramValue("email","");
+		param email = "";
+		rc.email 	= antiSamy.htmlSanitizer( rc.email );
 		
 		// Validate email
-		if( NOT trim(rc.email).length() ){
-			arrayAppend(errors,"Please enter an email address<br />");	
+		if( NOT trim( rc.email ).length() ){
+			arrayAppend( errors, "Please enter an email address<br />" );	
 		}
 		else{
 			// Try To get the Author
-			oAuthor = authorService.findWhere({email=rc.email});
-			if( isNull(oAuthor) OR NOT oAuthor.isLoaded() ){
-				arrayAppend(errors,"The email address is invalid!<br />");
+			oAuthor = authorService.findWhere( {email=rc.email} );
+			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
+				arrayAppend( errors, "The email address is invalid!<br />" );
 			}
 		}			
 		
 		// Check if Errors
-		if( NOT arrayLen(errors) ){
+		if( NOT arrayLen( errors ) ){
 			// Send Reminder
 			securityService.sendPasswordReminder( oAuthor );
 			// announce event
-			announceInterception("cbadmin_onPasswordReminder",{author=oAuthor});
+			announceInterception( "cbadmin_onPasswordReminder", {author=oAuthor} );
 			// messagebox
-			getPlugin("MessageBox").info("Password reminder sent! Please try to log in with your new password.");
+			getPlugin("MessageBox").info( "Password reminder sent! Please try to log in with your new password." );
 		}
 		else{
 			// announce event
-			announceInterception("cbadmin_onInvalidPasswordReminder",{errors=errors,email=rc.email});
+			announceInterception( "cbadmin_onInvalidPasswordReminder", {errors=errors, email=rc.email} );
 			// messagebox
-			getPlugin("MessageBox").error(messageArray=errors);
+			getPlugin("MessageBox").error( messageArray=errors );
 		}
 		// Re Route
-		setNextEvent("#prc.cbAdminEntryPoint#.security.lostPassword");
+		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
 	
 }
