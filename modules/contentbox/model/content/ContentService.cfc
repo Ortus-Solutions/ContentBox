@@ -158,6 +158,21 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		return content;
 	}
+	
+	/**
+	* Verify an incoming slug is unique or not
+	* @slug.hint The slug to search for uniqueness
+	*/
+	function isSlugUnique(required slug, contentID=""){
+		var c = newCriteria()
+			.isEq( "slug", arguments.slug );
+		
+		if( len( arguments.contentID ) ){
+			c.ne( "contentID", javaCast( "int", arguments.contentID ) );
+		}
+
+		return ( c.count() gt 0 ? false : true );
+	}
 
 	/**
 	* Delete a content object safely via hierarchies

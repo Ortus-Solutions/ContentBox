@@ -226,6 +226,7 @@
 				<img src='#prc.cbroot#/includes/images/link.png' alt='permalink' title="Convert title to permalink" onclick="createPermalink()"/>
 				<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
 			</label>
+			<div id='slugCheckErrors'></div>
 			#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
 			
 			<!---ContentToolBar --->
