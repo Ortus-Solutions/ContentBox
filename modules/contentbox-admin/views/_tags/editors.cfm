@@ -94,6 +94,7 @@ function askLeaveConfirmation(){
 
 // Create Permalinks
 function createPermalink(){
+	if( !$("##title").val().length ){ return; }
 	$slug = $("##slug").fadeOut();
 	$.get( '#event.buildLink( prc.xehSlugify )#', {slug:$("##title").val()}, function(data){
 		$slug.fadeIn().val( $.trim(data) );
@@ -101,10 +102,11 @@ function createPermalink(){
 	permalinkUniqueCheck();
 }
 function permalinkUniqueCheck(){
+	if( !$("##slug").val().length ){ return; }
 	// Verify unique
 	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', {slug:$("##slug").val(), contentID: $("##contentID").val()}, function(data){
 		if( !data.UNIQUE ){
-			$("##slugCheckErrors").html("The permalink you entered is already in use, please enter another one or modify it.").addClass("infoBar");
+			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("infoBar");
 		}
 		else{
 			$("##slugCheckErrors").html("").removeClass("infoBar");

@@ -89,6 +89,8 @@ component extends="baseHandler"{
 		prc.xehContentSave 		= "#prc.cbAdminEntryPoint#.customHTML.save";
 		prc.xehSlugify	  		= "#prc.cbAdminEntryPoint#.customHTML.slugify";
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
+		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
+		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.customHTML.slugUnique";
 
 		// view
 		event.setView(view="customHTML/editor");
@@ -162,6 +164,20 @@ component extends="baseHandler"{
 		prc.CBHelper 		= CBHelper;
 		
 		event.setView(view="customHTML/editorSelector",layout="ajax");
+	}
+	
+	function slugUnique(event,rc,prc){
+		param rc.slug = "";
+		param rc.contentID = "";
+		var data = {
+			unique = false
+		};
+		
+		if( len( rc.slug ) ){
+			data.unique = htmlService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
+		}
+		
+		event.renderData(data=data, type="json");
 	}
 	
 }
