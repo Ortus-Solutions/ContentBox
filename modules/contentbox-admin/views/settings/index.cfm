@@ -38,15 +38,14 @@
 		<div class="body_vertical_nav clearfix">
 			<!--- Documentation Navigation Bar --->
 			<ul class="vertical_nav">
-				<li class="active"><a href="##general_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> General Options</a></li>
-				<li><a href="##dashboard_options"><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/> Dashboard Options</a></li>
+				<li class="active"><a href="##site_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> Site Options</a></li>
+				<li><a href="##dashboard_options"><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/> Admin Options</a></li>
 				<li><a href="##c"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Content Options</a></li>
 				<li><a href="##mediamanager"><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> Media Manager</a></li>
 				<li><a href="##gravatars"><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> Gravatars</a></li>
 				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
 				<li><a href="##search_options"><img src="#prc.cbRoot#/includes/images/search_black.png" alt="modifiers"/> Search Options</a></li>
 				<li><a href="##rss_options"><img src="#prc.cbRoot#/includes/images/feed.png" alt="modifiers"/> RSS Options</a></li>
-				<li><a href="##paging_options"><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/> Paging Options</a></li>
 				<!--- cbadmin Event --->
 				#announceInterception("cbadmin_onSettingsNav")#
 			</ul>
@@ -57,7 +56,7 @@
 					<!--- General Options --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>General Options</strong></legend>
+						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Site Options</strong></legend>
 						 	<!--- Site Name  --->
 							#html.textField(name="cb_site_name",label="Site Name:",value=prc.cbSettings.cb_site_name,class="textfield width98",title="The global name of this ContentBox installation")#
 							<!--- Tag Line --->
@@ -81,12 +80,6 @@
 							<small>You can enable SSL encryption for the entire site. This will make sure all requests to the site module use SSL.</small><br/>
 							#html.radioButton(name="cb_site_ssl",checked=prc.cbSettings.cb_site_ssl,value=true)# Yes
 							#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
-							
-							<!--- Admin SSL --->
-							#html.label(field="cb_admin_ssl",content="Admin Force SSL (Secure Sockets Layer):")#
-							<small>You can enable SSL encryption for the administrator module. This will make sure all requests to the admin use SSL.</small><br/>
-							#html.radioButton(name="cb_admin_ssl",checked=prc.cbSettings.cb_admin_ssl,value=true)# Yes
-							#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
 							
 						</fieldset>
 						<!---Blog Entries --->
@@ -124,6 +117,14 @@
 					<!--- Dashboard Options --->
 					<div>
 						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Admin Options</strong></legend>
+						 	<!--- Admin SSL --->
+							#html.label(field="cb_admin_ssl",content="Admin Force SSL (Secure Sockets Layer):")#
+							<small>You can enable SSL encryption for the administrator module. This will make sure all requests to the admin use SSL.</small><br/>
+							#html.radioButton(name="cb_admin_ssl",checked=prc.cbSettings.cb_admin_ssl,value=true)# Yes
+							#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
+						</fieldset>
+						<fieldset>
 							<legend><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/>  Dashboard Options</legend>
 							<!--- Recent Entries --->
 							<label for="cb_dashboard_recentEntries">Recent Entries Count</label>
@@ -149,6 +150,36 @@
 								</cfloop>
 							</select>
 						</fieldset>
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/>  Paging Options</legend>
+
+						<!--- Max Blog Post --->
+						<label for="cb_paging_maxentries">Max Home Page Blog Entries:</label>
+						<small>The number of entries to show on the blog before paging is done.</small><br/>
+						<select name="cb_paging_maxentries" id="cb_paging_maxentries">
+							<cfloop from="5" to="50" step="5" index="i">
+								<option value="#i#" <cfif i eq prc.cbSettings.cb_paging_maxentries>selected="selected"</cfif>>#i#</option>
+							</cfloop>
+						</select>
+
+						<!--- Max Rows --->
+						<label for="cb_paging_maxrows">Paging Max Rows</label>
+						<small>The max rows to use in the administrator.</small><br/>
+						<select name="cb_paging_maxrows" id="cb_paging_maxrows">
+							<cfloop from="5" to="50" step="5" index="i">
+								<option value="#i#" <cfif i eq prc.cbSettings.cb_paging_maxrows>selected="selected"</cfif>>#i#</option>
+							</cfloop>
+						</select>
+
+						<!--- Max Band Gap --->
+						<label for="cb_paging_bandgap">Paging Band Gap</label>
+						<small>The paging bandgap to use in the administrator.</small><br/>
+						<select name="cb_paging_bandgap" id="cb_paging_bandgap">
+							<cfloop from="1" to="10" index="i">
+								<option value="#i#" <cfif i eq prc.cbSettings.cb_paging_bandgap>selected="selected"</cfif>>#i#</option>
+							</cfloop>
+						</select>
+					</fieldset>
 					</div>
 					<!--- Content Options --->
 					<div>
@@ -299,7 +330,7 @@
 						<legend><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Notifications</strong></legend>
 							<!--- Site Email --->
 							#html.label(field="cb_site_email",content="Administrator Email:")#
-							<small>The email that receives all notifications</small><br/>
+							<small>The email(s) that receives all notifications from ContentBox.  To specify multiple addresses, separate the addresses with commas.</small><br/>
 							#html.textField(name="cb_site_email",value=prc.cbSettings.cb_site_email,class="textfield width98",required="required",title="The email that receives all notifications")#
 							<!--- Outgoing Email --->
 							#html.label(field="cb_site_outgoingEmail",content="Outgoing Email:")#
@@ -435,39 +466,6 @@
 							</select>
 
 						</fieldset>
-					</div>
-					<!--- Paging Options --->
-					<div>
-						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/>  Paging Options</legend>
-
-						<!--- Max Blog Post --->
-						<label for="cb_paging_maxentries">Max Home Page Blog Entries:</label>
-						<small>The number of entries to show on the blog before paging is done.</small><br/>
-						<select name="cb_paging_maxentries" id="cb_paging_maxentries">
-							<cfloop from="5" to="50" step="5" index="i">
-								<option value="#i#" <cfif i eq prc.cbSettings.cb_paging_maxentries>selected="selected"</cfif>>#i#</option>
-							</cfloop>
-						</select>
-
-						<!--- Max Rows --->
-						<label for="cb_paging_maxrows">Paging Max Rows</label>
-						<small>The max rows to use in the administrator.</small><br/>
-						<select name="cb_paging_maxrows" id="cb_paging_maxrows">
-							<cfloop from="5" to="50" step="5" index="i">
-								<option value="#i#" <cfif i eq prc.cbSettings.cb_paging_maxrows>selected="selected"</cfif>>#i#</option>
-							</cfloop>
-						</select>
-
-						<!--- Max Band Gap --->
-						<label for="cb_paging_bandgap">Paging Band Gap</label>
-						<small>The paging bandgap to use in the administrator.</small><br/>
-						<select name="cb_paging_bandgap" id="cb_paging_bandgap">
-							<cfloop from="1" to="10" index="i">
-								<option value="#i#" <cfif i eq prc.cbSettings.cb_paging_bandgap>selected="selected"</cfif>>#i#</option>
-							</cfloop>
-						</select>
-					</fieldset>
 					</div>
 					<!--- cbadmin Event --->
 					#announceInterception("cbadmin_onSettingsContent")#
