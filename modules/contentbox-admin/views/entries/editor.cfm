@@ -233,12 +233,14 @@
 				
 				<!--- editor selector --->
 				<label for="contentEditorChanger" class="inline">Editor: </label>
+				<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
 				#html.select(name="contentEditorChanger", 
 							 options=prc.editors,
 							 column="name",
 							 nameColumn="displayName",
 							 selectedValue=prc.defaultEditor,
 							 onchange="switchEditor(this.value)")#
+				</cfif>
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
