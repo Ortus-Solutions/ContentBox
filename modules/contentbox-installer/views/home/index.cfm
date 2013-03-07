@@ -8,13 +8,18 @@
 		<!--- Tabs --->
 		<ul class="vertical_nav">
 			<li class="active"><a href="##introduction">Introduction</a></li>
-			<li><a href="##installer">Installer</a></li>
+			<li><a href="##step1">1: Administrator</a></li>
+			<li><a href="##step2">2: Site Setup</a></li>
+			<li><a href="##step3">3: Email Setup</a></li>
+			<li><a href="##step4">4: URL Rewrites</a></li>
 		</ul>
 		<!--- Tab Content --->
 		<div class="main_column">
 			<div class="panes_vertical">
 				
-				<!--- Panel 1 --->
+				<!--- ****************************************************************************** --->
+				<!--- Intro Panel --->
+				<!--- ****************************************************************************** --->
 				<div>
 					<h1>Welcome To ContentBox!</h1>
 					<p>
@@ -27,11 +32,13 @@
 						So what are you waiting for? Let's get started!
 					</p>
 					
-					<a href="javascript:startInstaller()" class="button2">Start Installer</a>
+					<a href="javascript:nextStep()" class="button2">Start Installer</a>
 				</div>
 				<!--- end panel 1 --->
 				
-				<!--- Panel 2 : User Setup--->
+				<!--- ****************************************************************************** --->
+				<!--- Step 1 : Admin Setup--->
+				<!--- ****************************************************************************** --->
 				<div>
 					<!--- Admin Info --->
 					#html.startFieldset(legend="Administrator")#
@@ -47,6 +54,17 @@
 					#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="100",class="textfield")#
 					#html.endFieldSet()#
 					
+					<!---Toolbar --->
+					<div class="actionBar">
+						<a href="javascript:prevStep()" class="button2">Previous Step</a>
+						<a href="javascript:nextStep()" class="button2">Next Step</a>
+					</div>
+				</div>
+				
+				<!--- ****************************************************************************** --->
+				<!--- Step 2 : Site Setup--->
+				<!--- ****************************************************************************** --->
+				<div>	
 					<!--- Site Info --->
 					#html.startFieldset(legend="Site Information")#
 					<p>
@@ -72,10 +90,19 @@
 					#html.textarea(name="siteKeywords",label="Site Keywords:",rows="3",title="A comma delimited list of keywords to be used in the HTML keywords meta tag")#		
 					#html.endFieldSet()#
 					
-					
+					<!---Toolbar --->
+					<div class="actionBar">
+						<a href="javascript:prevStep()" class="button2">Previous Step</a>
+						<a href="javascript:nextStep()" class="button2">Next Step</a>
+					</div>
+				</div>
+				
+				<!--- ****************************************************************************** --->
+				<!--- Step 3 : Email Setup--->
+				<!--- ****************************************************************************** --->
+				<div>	
 					<!--- Mail Server Settings --->
-					<fieldset>
-					<legend><strong>Mail Server</strong></legend>
+					#html.startFieldset(legend="Email Setup")#
 						<p>By default ContentBox will use the mail settings in your application server.  You can override those settings by completing
 						   the settings below</p>
 						<!--- Mail Server --->
@@ -104,10 +131,19 @@
 						<small>Whether to use SSL when sending mail or not.</small><br/>
 						#html.radioButton(name="cb_site_mail_ssl",value=true)# Yes 	
 						#html.radioButton(name="cb_site_mail_ssl",checked=true,value=false)# No 
-					</fieldset>
+					#html.endFieldSet()#
 					
+					<!---Toolbar --->
+					<div class="actionBar">
+						<a href="javascript:prevStep()" class="button2">Previous Step</a>
+						<a href="javascript:nextStep()" class="button2">Next Step</a>
+					</div>
+				</div>
 					
-					
+				<!--- ****************************************************************************** --->
+				<!--- Step 4 : Site URL Rewrites --->
+				<!--- ****************************************************************************** --->
+				<div>	
 					<!--- URL Rewrites --->
 					#html.startFieldset(legend="Site URL Rewrites")#
 					<p>
@@ -149,14 +185,18 @@
 					
 					<!--- Action Bar --->
 					<div class="actionBar">
-						<div id="errorBar"></div>						
+						<a href="javascript:prevStep()" class="button2">Previous Step</a>
 						#html.submitButton(name="submit",value="Start Installation!",class="buttonred",title="Let's get this party started!")#
 					</div>
 					
 				</div> 
+				
 				<!--- end panel 2 --->
 			</div>
 			<!--- end panes vertical --->
+				
+			<!---Error Bar --->
+			<div id="errorBar"></div>
 		</div>
 		<!--- end main column --->
 	</div>
