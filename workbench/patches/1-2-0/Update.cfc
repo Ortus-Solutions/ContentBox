@@ -54,6 +54,9 @@ component implements="contentbox.model.updates.IUpdate"{
 				log.info("About to beggin #version# patching");
 				
 				updateSettings();
+				updatePermissions();
+				updateAdmin();
+				updateEditor();
 				
 				log.info("Finalized #version# patching");
 			}
@@ -83,6 +86,51 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 	
 	/************************************** PRIVATE *********************************************/
+	
+	function updateAdmin(){
+		var oRole = roleService.findWhere( { role = "Administrator" } );
+		// Add in new permissions
+		var thisPerm = permissionService.findWhere({permission="EDITORS_EDITOR_SELECTOR"});
+		if( !oRole.hasPermission( thisPerm ) ){ oRole.addPermission( thisPerm ); }
+		log.info("Added EDITORS_EDITOR_SELECTOR permission to admin role");
+		// save role
+		roleService.save(entity=oRole,transactional=false);
+
+		return oRole;
+	}
+	
+	function updateEditor(){
+		var oRole = roleService.findWhere({role="Editor"});
+		// Add in new permissions
+		var thisPerm = permissionService.findWhere({permission="EDITORS_EDITOR_SELECTOR"});
+		if( !oRole.hasPermission( thisPerm ) ){ oRole.addPermission( thisPerm ); }
+		log.info("Added EDITORS_EDITOR_SELECTOR permission to editor role");
+		// save role
+		roleService.save(entity=oRole, transactional=false);
+
+		return oRole;
+	}
+	
+	function updatePermissions(){
+		var perms = {
+			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor"
+		};
+
+		var allperms = [];
+		for(var key in perms){
+			var props = {permission=key, description=perms[ key ]};
+			// only add if not found
+			if( isNull( permissionService.findWhere( {permission=props.permission} ) ) ){
+				permissions[ key ] = permissionService.new(properties=props);
+				arrayAppend(allPerms, permissions[ key ] );
+				log.info("Added #key# permission");
+			}
+			else{
+				log.info("Skipped #key# permission addition as it was already in system");
+			}
+		}
+		permissionService.saveAll(entities=allPerms,transactional=false);
+	}
 	
 	private function updateSettings(){
 		// Create New setting
