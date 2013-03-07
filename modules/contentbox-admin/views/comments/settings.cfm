@@ -104,7 +104,7 @@
 						<legend><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Notifications</strong></legend>
 							<p>
 								By default all comment notifications are sent to the system email: <a href="mailto:#prc.cbSettings.cb_site_email#">#prc.cbSettings.cb_site_email#</a>, 
-							but you can add more emails, ohh goody!
+							but you can add more emails separated by commas, ohh goody!
 							</p>
 							<!--- Email Notifications --->
 							#html.textarea(name="cb_comments_notifyemails",label="Notification Emails",value=prc.cbSettings.cb_comments_notifyemails,rows="3",title="Comma delimited list")#		
