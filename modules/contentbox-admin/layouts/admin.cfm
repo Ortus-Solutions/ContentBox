@@ -84,7 +84,9 @@
 						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 							<option value="#event.buildLink(prc.xehAuthorEditor)#">Create New Author</option>
 						</cfif>
+						<cfif prc.oAuthor.checkPermission("SYSTEM_SAVE_CONFIGURATION")>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
+						</cfif>
 						<option value="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</option>
 						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>
 					</select>
