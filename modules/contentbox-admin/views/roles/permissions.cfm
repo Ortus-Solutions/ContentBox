@@ -35,8 +35,6 @@
 		
 		<cfloop array="#prc.role.getPermissions()#" index="perm">
 		<div>
-			<!--- Assigned --->
-			<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="Assigned" title="#perm.getPermission()# Assigned"/>
 			<!--- Remove --->
 			<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="Assigned" border="0"/></a>
 			<!--- Name --->
