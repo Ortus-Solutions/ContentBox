@@ -133,32 +133,24 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 	
 	private function updateSettings(){
-		// Create New setting
-		var setting = settingService.findWhere({name="cb_admin_ssl"});
+		// Create New settings
+		addSetting( "cb_admin_ssl", "false" );
+		addSetting( "cb_site_ssl", "false" );
+		addSetting( "cb_versions_commit_mandatory", "false" );
+	}
+	
+	private function addSetting(name, value){
+		var setting = settingService.findWhere({name=arguments.name});
 		if( isNull( setting ) ){
 			setting = settingService.new();
-			setting.setValue( "false" );
-			setting.setName( "cb_admin_ssl" );
+			setting.setValue( arguments.value );
+			setting.setName( arguments.name );
 			settingService.save(entity=setting, transactional=false);
-			log.info("Added cb_admin_ssl setting");
+			log.info("Added #arguments.name# setting");
 		}
 		else{
-			log.info("Skipped cb_admin_ssl setting, already there");
+			log.info("Skipped #arguments.name# setting, already there");
 		}
-		
-		var setting = settingService.findWhere({name="cb_site_ssl"});
-		if( isNull( setting ) ){
-			setting = settingService.new();
-			setting.setValue( "false" );
-			setting.setName( "cb_site_ssl" );
-			settingService.save(entity=setting, transactional=false);
-			log.info("Added cb_site_ssl setting");
-		}
-		else{
-			log.info("Skipped cb_site_ssl setting, already there");
-		}
-		
-		
 	}
 	
 	private function getVarcharType(){

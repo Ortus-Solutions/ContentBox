@@ -45,6 +45,8 @@ function setupEditors($theForm, withExcerpt){
 
 	// Activate Form Validator
 	$theForm.validator({position:'top left',grouped:true,onSuccess:function(e,els){ needConfirmation=false; }});
+	// Changelog mandatory?
+	$theForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
 	// Custom content unique validator
 	$.tools.validator.fn($content, function(el, value) {
 		if( value.length ){ return true; }
