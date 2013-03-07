@@ -40,7 +40,7 @@
 			<ul class="vertical_nav">
 				<li class="active"><a href="##site_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> Site Options</a></li>
 				<li><a href="##dashboard_options"><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/> Admin Options</a></li>
-				<li><a href="##c"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Content Options</a></li>
+				<li><a href="##content_options"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Content Options</a></li>
 				<li><a href="##mediamanager"><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> Media Manager</a></li>
 				<li><a href="##gravatars"><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> Gravatars</a></li>
 				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
@@ -195,6 +195,15 @@
 								</cfloop>
 								<option value="" <cfif prc.cbSettings.cb_versions_max_history eq "">selected="selected"</cfif>>Unlimited</option>
 							</select>
+							
+							<!--- Commit Mandatory --->
+							#html.label(field="cb_versions_commit_mandatory",content="Mandatory commit changelog:")#
+							<small>When enabled a commit changelog will have to be entered before any content revision is saved.</small><br/>
+							#html.radioButton(name="cb_versions_commit_mandatory",checked=prc.cbSettings.cb_versions_commit_mandatory,value=true)# Yes
+							#html.radioButton(name="cb_versions_commit_mandatory",checked=not prc.cbSettings.cb_versions_commit_mandatory,value=false)# No
+
+							
+							
 						</fieldset>
 						<fieldset>
 							<legend><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/>  Caching Options</legend>
