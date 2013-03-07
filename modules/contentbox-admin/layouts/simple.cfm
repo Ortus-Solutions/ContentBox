@@ -15,6 +15,7 @@
 	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet"/>
 	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet"/>
 	<!--- JS --->
+	<script src="#prc.cbroot#/includes/js/jquery.min.js"></script>
 	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
 	<script src="#prc.cbroot#/includes/js/contentbox.js"></script>
 	<!--- cbadmin Event --->

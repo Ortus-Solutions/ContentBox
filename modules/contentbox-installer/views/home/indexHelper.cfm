@@ -18,5 +18,8 @@ $(document).ready(function() {
 		}
 	});
 });
+function startInstaller(){
+	$("ul.vertical_nav").data("tabs").next();
+}
 </script>
 </cfoutput>

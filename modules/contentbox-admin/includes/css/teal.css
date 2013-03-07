@@ -35,11 +35,11 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .form_hint { color:#7c7c7c; background:url(../images/form_info.png) no-repeat; }
 /** ============================== Buttons ============================== **/
 .button { background:#fff url(../images/button_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#595959; }
-.button:hover { background:#fff url(../images/button_bg_hover.gif) repeat-x left bottom; border:1px solid #c6c6c6; }
+.button:hover { background:#fff url(../images/button_bg_hover.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#595959;}
 .button2 { background:#0074c6 url(../images/button2_bg.gif) repeat-x left bottom; border:1px solid #a9cbf3; color:#fff; }
-.button2:hover { background:#0063a8 url(../images/button2_bg_hover.gif) repeat-x left bottom; border:1px solid #a9c8ed; }
+.button2:hover { background:#0063a8 url(../images/button2_bg_hover.gif) repeat-x left bottom; border:1px solid #a9c8ed; color:#fff;}
 .buttonred { background:#c6c6c6 url(../images/buttonred_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#fff; }
-.buttonred:hover { background:#0063a8 url(../images/buttonred_bg_hover.gif) repeat-x left bottom; border:1px solid #a9c8ed; }
+.buttonred:hover { background:#0063a8 url(../images/buttonred_bg_hover.gif) repeat-x left bottom; border:1px solid #a9c8ed; color:#fff;}
 .button:active,.button2:active,.buttonred:active,.buttonsmall { color:#000; }
 .buttonsmall { background:#fff url(../images/button_bg.gif) repeat-x left bottom; border:1px solid #c6c6c6; color:#000; cursor:pointer; -moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; }
 .buttonsmall:hover { background:#fddedc; border:1px solid white; }
@@ -243,6 +243,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 .actionsPanel, .contentInfoPanel a{color:black;}
 .actionsPanel, .contentInfoPanel a:hover{ color: red;}
 .contentInfoPanel { margin-left: -95px; }
+#userDetails{ margin: 0px 0px 0px 10px;}
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}

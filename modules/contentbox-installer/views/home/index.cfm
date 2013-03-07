@@ -27,9 +27,7 @@
 						So what are you waiting for? Let's get started!
 					</p>
 					
-					<a href="##installer">
-						<input name="start" type="button" class="button2" id="start" value="Start Installer" onclick="return false;">
-					</a>
+					<a href="javascript:startInstaller()" class="button2">Start Installer</a>
 				</div>
 				<!--- end panel 1 --->
 				
