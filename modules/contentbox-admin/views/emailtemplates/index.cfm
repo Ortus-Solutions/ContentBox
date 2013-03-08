@@ -1,22 +1,7 @@
 ﻿<cfoutput>
-<!--============================Sidebar============================-->
-<div class="sidebar">
-	<!--- Info Box --->
-	<div class="small_box">
-		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />
-			Info
-		</div>
-		<div class="body">
-			<ul class="tipList">
-				<li>Email Templates are stored in: <strong>#prc.templatesPath#</strong></li>
-			</ul>
-		</div>
-	</div>		
-</div>
 <!--End sidebar-->	
 <!--============================Main Column============================-->
-<div class="main_column">
+<div class="main full">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">

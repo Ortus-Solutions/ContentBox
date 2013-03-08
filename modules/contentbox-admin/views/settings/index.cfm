@@ -1,25 +1,8 @@
 ﻿<cfoutput>
 #html.startForm(name="settingsForm",action=prc.xehSaveSettings)#
 #html.anchor(name="top")#
-<!--============================Sidebar============================-->
-<div class="sidebar">
-	<!--- Saerch Box --->
-	<div class="small_box">
-		<cfif prc.oAuthor.checkPermission("SYSTEM_SAVE_CONFIGURATION")>
-		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Actions
-		</div>
-		<div class="body">
-			<div class="actionBar">
-				#html.submitButton(value="Save Settings",class="buttonred",title="Save the ContentBox settings")#
-			</div>
-		</div>
-		</cfif>
-	</div>
-</div>
-<!--End sidebar-->
 <!--============================Main Column============================-->
-<div class="main_column" id="main_column">
+<div class="main" id="main_column">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
@@ -480,6 +463,12 @@
 					#announceInterception("cbadmin_onSettingsContent")#
 				</div>
 				<!--- End panes_vertical --->
+					
+				<!--- Button Bar --->
+				<div class="buttonBar">
+					#html.submitButton(value="Save Settings",class="buttonred",title="Save the ContentBox settings")#
+				</div>
+				
 			</div>
 			<!--- End main_column --->
 		</div>
