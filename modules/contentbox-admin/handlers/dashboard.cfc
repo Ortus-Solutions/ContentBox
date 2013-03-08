@@ -9,9 +9,9 @@ component extends="baseHandler"{
 	property name="contentService" 		inject="id:contentService@cb";
 	property name="commentService" 		inject="id:commentService@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
+	property name="settingService"		inject="id:settingService@cb";
 
-	function preHandler(event,action,eventArguments){
-		var prc = event.getCollection(private=true);
+	function preHandler(event,action,eventArguments,rc,prc){
 		prc.tabDashboard	  = true;
 	}
 
@@ -22,9 +22,14 @@ component extends="baseHandler"{
 		prc.xehEntryEditor		= "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehEntrySave		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehRemoveComment	= "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehDeleteInstaller 	= "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
+		prc.xehDeleteDSNCreator = "#prc.cbAdminEntryPoint#.dashboard.deleteDSNCreator";
 
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
+		
+		// Installer Check
+		prc.installerCheck = settingService.isInstallationPresent();
 
 		// Get entries viewlet: Stupid cf9 and its local scope blown on argument literals
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentEntries,pagination=false, latest=true};
@@ -53,6 +58,38 @@ component extends="baseHandler"{
 
 		// dashboard view
 		event.setView("dashboard/index");
+	}
+	
+	// Delete Installer
+	function deleteInstaller(){
+		var results = { error = false, message = "" };
+		
+		try{
+			settingService.deleteInstaller();
+			results.message = "The installer module has been successfully deleted.";
+		}
+		catch(Any e){
+			results.error = true;
+			results.message = "Error removing installer: #e.message#";
+		}
+		
+		event.renderData(data=results, type="json");
+	}
+	
+	// Delete INstaller
+	function deleteDSNCreator(){
+		var results = { error = false, message = "" };
+		
+		try{
+			settingService.deleteDSNCreator();
+			results.message = "The DSN Creator module has been successfully deleted.";
+		}
+		catch(Any e){
+			results.error = true;
+			results.message = "Error removing DSN Creator: #e.message#";
+		}
+		
+		event.renderData(data=results, type="json");
 	}
 
 	// about
