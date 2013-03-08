@@ -40,7 +40,15 @@ component extends="baseHandler"{
 		// Get Comments viewlet
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentComments,pagination=false};
 		prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments=eArgs);
-
+	
+		// Get latest ContentBox news
+		try{
+			prc.latestNews = getModel( "contentbox-news@cbadmin" );
+		}
+		catch(Any e){
+			prc.latestNews = { metadata = {}, items = queryNew("") };
+		}
+		
 		// Few counts
 		prc.entriesCount 			= entryService.count();
 		prc.pagesCount 				= pageService.count();

@@ -189,13 +189,13 @@
 			
 			<!--- Installer Checks --->
 			<cfif prc.installerCheck.installer>
-				<div class="infoBarRed" id="installerCheck">
+				<div class="infoBar" id="installerCheck">
 					<button class="buttonred" onclick="deleteInstaller()">Delete Installer</button>
 					The installer module still exists! Please delete it from your server as leaving it online is a security risk.
 				</div>
 			</cfif>
 			<cfif prc.installerCheck.dsncreator>
-				<div class="infoBarRed" id="dsnCreatorCheck">
+				<div class="infoBar" id="dsnCreatorCheck">
 					<button class="buttonred" onclick="deleteDSNCreator()">Delete DSN Creator</button>
 					The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.
 				</div>
@@ -247,6 +247,21 @@
 				</cfif>			
 				#prc.commentsViewlet#
 			</div>
+			
+			<!--- Latest News --->
+			<cfif structCount( prc.latestNews.metadata )>
+			#html.anchor(name="recentNews")#
+			<div class="contentBar">			
+				<h3><img src="#prc.cbroot#/includes/images/newspaper.png" alt="news" /> Recent ContentBox News</h3>
+				<cfloop query="prc.latestNews.items" endrow="5">
+					<div class="box padding10">
+						<h4><a href="#prc.latestNews.items.rsslink#" target="_blank">#prc.latestNews.items.title#</a></h4>
+						<div><p><strong>#prc.latestNews.items.PUBLISHEDDATE#</strong></p></div>
+						<p>#left( cb.stripHTML( prc.latestNews.items.content ), 500 )#...</p>
+					</div>
+				</cfloop>
+			</div>
+			</cfif>
 			
 			<!--- Event --->
 			#announceInterception("cbadmin_postDashboardContent")#
