@@ -187,6 +187,20 @@
 			<!--- Event --->
 			#announceInterception("cbadmin_preDashboardContent")#
 			
+			<!--- Installer Checks --->
+			<cfif prc.installerCheck.installer>
+				<div class="infoBarRed" id="installerCheck">
+					<button class="buttonred" onclick="deleteInstaller()">Delete Installer</button>
+					The installer module still exists! Please delete it from your server as leaving it online is a security risk.
+				</div>
+			</cfif>
+			<cfif prc.installerCheck.dsncreator>
+				<div class="infoBarRed" id="dsnCreatorCheck">
+					<button class="buttonred" onclick="deleteDSNCreator()">Delete DSN Creator</button>
+					The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.
+				</div>
+			</cfif>
+			
 			<!--- Latest Entries --->
 			#html.anchor(name="recentEntries")#
 			<div class="contentBar" id="entriesBar">
