@@ -99,7 +99,7 @@ component{
 		}
 		else{
 			// Try To get the Author
-			oAuthor = authorService.findWhere( {email=rc.email} );
+			oAuthor = authorService.findWhere( { email = rc.email } );
 			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
 				arrayAppend( errors, "The email address is invalid!<br />" );
 			}
@@ -110,17 +110,40 @@ component{
 			// Send Reminder
 			securityService.sendPasswordReminder( oAuthor );
 			// announce event
-			announceInterception( "cbadmin_onPasswordReminder", {author=oAuthor} );
+			announceInterception( "cbadmin_onPasswordReminder", { author = oAuthor } );
 			// messagebox
-			getPlugin("MessageBox").info( "Password reminder sent! Please try to log in with your new password." );
+			getPlugin("MessageBox").info( "Password reminder sent! Please check your inbox for our reset email that must be used within the next 15 minutes" );
 		}
 		else{
 			// announce event
-			announceInterception( "cbadmin_onInvalidPasswordReminder", {errors=errors, email=rc.email} );
+			announceInterception( "cbadmin_onInvalidPasswordReminder", { errors = errors, email = rc.email } );
 			// messagebox
 			getPlugin("MessageBox").error( messageArray=errors );
 		}
 		// Re Route
+		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+	}
+	
+	// Verify Reset
+	function verifyReset(event,rc,prc){
+		param rc.token = "";
+		
+		// Validate token
+		var results = securityService.resetUserPassword( trim( rc.token ) );
+		if( !results.error ){
+			// announce event
+			announceInterception( "cbadmin_onPasswordReset", { author = results.author } );
+			// Messagebox
+			getPlugin("MessageBox").info( "Wohoo! Your password has been reset and you will receive an email with your new security password." );
+		}
+		else{
+			// announce event
+			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
+			// messagebox
+			getPlugin("MessageBox").error( "The security reset token passed is invalid or has expired." );
+		}
+		
+		// Relcoate to login
 		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
 	

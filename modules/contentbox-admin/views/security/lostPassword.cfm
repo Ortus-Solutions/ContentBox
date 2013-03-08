@@ -11,8 +11,7 @@
 		#getPlugin("MessageBox").renderit()#
 		
 		<!--- Instructions --->
-		<p>Enter your email address below in order to reset your password.  A new password
-			will be generated and sent to your email address.</p>
+		<p>Enter your email address below in order to reset your password.</p>
 			
 		<div id="loginContent">
 		#html.startForm(action=prc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate")#
