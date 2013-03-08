@@ -33,6 +33,7 @@ component implements="ISecurityService" singleton{
 	property name="renderer"		inject="provider:ColdBoxRenderer";
 	property name="CBHelper"		inject="id:CBHelper@cb";
 	property name="log"				inject="logbox:logger:{this}";
+	property name="cache"			inject="cachebox:default";
 	
 	/**
 	* Constructor
@@ -145,25 +146,74 @@ component implements="ISecurityService" singleton{
 	}
 	
 	/**
-	* Send password reminder
+	* Send password reminder email
 	*/
 	ISecurityService function sendPasswordReminder(required Author author){
-		// generate temporary password
-		var genPassword = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
+		// Store Security Token For 15 minutes
+		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
+		cache.set( "reset-token-#token#", arguments.author.getAuthorID(), 15, 15 );
+		
 		// get settings
 		var settings = settingService.getAllSettings(asStruct=true);
 		
-		// set it in the user and save it
-		author.setPassword( genPassword );
-		authorService.saveAuthor(author=author,passwordChange=true);
+		// get mail payload
+		var bodyTokens = {
+			name=arguments.author.getName(),
+			linkToken = CBHelper.linkAdmin( "security.verifyReset" ) & "?token=#token#"
+		};
+		var mail = mailservice.newMail(to=arguments.author.getEmail(),
+									   from=settings.cb_site_outgoingEmail,
+									   subject="#settings.cb_site_name# Password Reset Verification",
+									   bodyTokens=bodyTokens,
+									   type="html",
+									   server=settings.cb_site_mail_server,
+									   username=settings.cb_site_mail_username,
+									   password=settings.cb_site_mail_password,
+									   port=settings.cb_site_mail_smtp,
+									   useTLS=settings.cb_site_mail_tls,
+									   useSSL=settings.cb_site_mail_ssl,
+									   body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification"));
+		// send it out
+		mailService.send( mail );
+		
+		return this;
+	}
+	
+	/**
+	* Resets a user's password if the passed in token is valid
+	* Returns [error, author]
+	*/
+	struct function resetUserPassword(required token){
+		var results = { error = false, author = "" };
+		var cacheKey = "reset-token-#arguments.token#";
+		var authorID = cache.get( cacheKey );
+
+		// If token not found, don't reset and return back
+		if( isNull( authorID ) ){ results.error = true; return results; };
+		
+		// Verify the author of the token
+		results.author = authorService.get( authorID );
+		if( isNull( results.author ) ){ results.error = true; return results; };
+		
+		// Remove token now that we have the data.
+		cache.clear( cacheKey );
+		
+		// generate temporary password
+		var genPassword = hash( results.author.getEmail() & results.author.getAuthorID() & now() );
+		// get settings
+		var settings = settingService.getAllSettings(asStruct=true);
+		
+		// set it in the user and save reset password
+		results.author.setPassword( genPassword );
+		authorService.saveAuthor( author=results.author, passwordChange=true );
 		
 		// get mail payload
 		var bodyTokens = {
 			genPassword=genPassword,
-			name=arguments.author.getName(),
+			name=results.author.getName(),
 			linkLogin = CBHelper.linkAdminLogin()
 		};
-		var mail = mailservice.newMail(to=arguments.author.getEmail(),
+		var mail = mailservice.newMail(to=results.author.getEmail(),
 									   from=settings.cb_site_outgoingEmail,
 									   subject="#settings.cb_site_name# Password Reset Issued",
 									   bodyTokens=bodyTokens,
@@ -173,13 +223,12 @@ component implements="ISecurityService" singleton{
 									   password=settings.cb_site_mail_password,
 									   port=settings.cb_site_mail_smtp,
 									   useTLS=settings.cb_site_mail_tls,
-									   useSSL=settings.cb_site_mail_ssl);
-		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder") );
+									   useSSL=settings.cb_site_mail_ssl,
+									   body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder"));
 		// send it out
 		mailService.send( mail );
 		
-		return this;
+		return results;
 	}
 	
 	/**
