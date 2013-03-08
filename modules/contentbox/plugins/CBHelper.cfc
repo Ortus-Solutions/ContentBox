@@ -1098,5 +1098,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		// return
 		return b.toString();
 	}
+	
+	/**
+	* utility to strip HTML
+	*/
+	function stripHTML(required stringTarget){
+		return HTMLEditFormat( REReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" ) );
+	}
 
 }
