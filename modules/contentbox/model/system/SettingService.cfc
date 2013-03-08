@@ -25,8 +25,9 @@ limitations under the License.
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton{
 
 	// DI properties
-	property name="cache" inject="cachebox:default";
-
+	property name="cache" 			inject="cachebox:default";
+	property name="moduleSettings"	inject="coldbox:setting:modules";
+	
 	// Properties
 	property name="settingsCacheKey" type="string";
 
@@ -39,6 +40,49 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		// settings cache key
 		setSettingsCacheKey("cb-settings");
 		return this;
+	}
+	
+	/**
+	* Check if the installer and dsn creator modules are present
+	*/
+	struct function isInstallationPresent(){
+		var results = { installer = false, dsncreator = false };
+		
+		if( structKeyExists( moduleSettings, "contentbox-installer") AND
+		    directoryExists( moduleSettings[ "contentbox-installer" ].path ) ){
+			results.installer = true;
+		}
+		
+		if( structKeyExists( moduleSettings, "contentbox-dsncreator") AND
+		    directoryExists( moduleSettings[ "contentbox-dsncreator" ].path ) ){
+			results.dsncreator = true;
+		}
+		
+		return results;
+	}
+	
+	/**
+	* Delete the installer module
+	*/
+	boolean function deleteInstaller(){
+		if( structKeyExists( moduleSettings, "contentbox-installer") AND
+		    directoryExists( moduleSettings[ "contentbox-installer" ].path ) ){
+			directoryDelete( moduleSettings[ "contentbox-installer" ].path, true );
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	* Delete the dsn creator module
+	*/
+	boolean function deleteDSNCreator(){
+		if( structKeyExists( moduleSettings, "contentbox-dsncreator") AND
+		    directoryExists( moduleSettings[ "contentbox-dsncreator" ].path ) ){
+			directoryDelete( moduleSettings[ "contentbox-dsncreator" ].path, true );
+			return true;
+		}
+		return false;
 	}
 
 	/**
