@@ -52,6 +52,9 @@
 			<fileset file="workbench/api/exports/ContentBox-API-${contentbox.version}.zip" />
 		</move>
 		
+		<!-- Activate DSN creator link -->
+		<replace file="${dir.build}/Application.cfc" value='location("modules/contentbox-dsncreator");' summary="true" token='//location("modules/contentbox-dsncreator");' />
+		
 		<!-- Zip Bundle -->
 		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}"></zip>
 		
