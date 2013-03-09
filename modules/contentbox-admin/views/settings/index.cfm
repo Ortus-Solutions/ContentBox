@@ -139,6 +139,15 @@
 						<fieldset>
 						<legend><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/>  Paging Options</legend>
 
+						<!--- Quick Search --->
+						<label for="cb_admin_quicksearch_max">Max Quick Search Count:</label>
+						<small>The number of results to show in the global search results panel.</small><br/>
+						<select name="cb_admin_quicksearch_max" id="cb_admin_quicksearch_max">
+							<cfloop from="5" to="50" step="5" index="i">
+								<option value="#i#" <cfif i eq prc.cbSettings.cb_admin_quicksearch_max>selected="selected"</cfif>>#i#</option>
+							</cfloop>
+						</select>
+						
 						<!--- Max Blog Post --->
 						<label for="cb_paging_maxentries">Max Home Page Blog Entries:</label>
 						<small>The number of entries to show on the blog before paging is done.</small><br/>

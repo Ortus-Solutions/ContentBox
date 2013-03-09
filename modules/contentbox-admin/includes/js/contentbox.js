@@ -8,6 +8,9 @@ $(document).ready(function() {
 		 offset:[5, 0]
 	};
 	
+ 	// Search Capabilities
+	activateContentSearch();
+	
 	// toggle flicker messages
 	$(".flickerMessages").slideDown();
 	//Main Navigation
@@ -35,16 +38,7 @@ $(document).ready(function() {
 	activateConfirmations();
 	// activate tooltips
 	activateTooltips();
-	
-	// Jump Menu
-	$('.jump_menu').hover(function(){
-		$('.jump_menu_btn').toggleClass('active');
-		$("ul.jump_menu_list").slideDown(200);
-		}, function(){
-			$('.jump_menu_btn').toggleClass('active');
-			$(".jump_menu_list").hide();
-	});
-	
+
 	// Expose | Any element with a class of .expose will expose when clicked
 	$(".expose").click(function() {
 		$(this).expose({ });
@@ -61,9 +55,56 @@ $(document).ready(function() {
 	var t=setTimeout("toggleFlickers()",5000);
 	
 });
+function activateContentSearch(){
+	// local refs
+	$nav_search = $("#nav-search");
+	$nav_search_results = $("#div-search-results");
+	// opacity
+	$nav_search.css("opacity","0.8");
+	// focus effects
+	$nav_search.focusin(function() {
+    	$(this).animate({
+		    opacity: 1.0,
+		    width: '+=95',
+		  }, 500, function(){});
+    }).blur(function() {
+    	$(this).animate({
+		    opacity: 0.50,
+		    width: '-=95',
+		  }, 500, function(){});
+    });
+	// keyup quick search
+	$nav_search.keyup(function(){
+		var $this = $(this);
+		// Only send requests if more than 2 characters
+		if( $this.val().length > 1 ){
+			$nav_search_results.load( $("#nav-search-url").val(), { search: $this.val() }, function(data){
+				if( $nav_search_results.css("display") == "none" ){
+					$nav_search_results.fadeIn().slideDown();
+				}
+			} );
+		}
+		
+	});
+	// add click listener to body to hide quick search panel
+    $( 'body' ).click( function( e ){
+       var target = $( e.target ),
+           ipTarget = target.closest( '#div-search-results' )
+       // if click occurs within visible element, add to ignore list
+       if( !ipTarget.length ) {
+           //run global hide methods
+    	   closeSearchBox();
+       }
+    });
+}
+function closeSearchBox(){
+	$nav_search_results.slideUp();
+	$nav_search.val('');
+}
 function quickLinks( inURL ){
 	if( inURL != 'null' )
 		window.location = inURL;
+	
 }
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
