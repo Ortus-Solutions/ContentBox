@@ -76,6 +76,7 @@
 						<span id="adminActionLoaderStatus"></span>
 						<select name="adminActions" id="adminActions" onchange="adminAction(this.value, '#event.buildLink(prc.xehAdminAction)#')">
 							<option value="null">Admin Actions</option>
+							<option value="null">--------------</option>
 							#html.options(values=prc.xehAdminActionData)#
 						</select>
 					</span>
@@ -84,7 +85,7 @@
 					<span id="quickLinksBar">
 					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
 						<option value="null">Welcome #prc.oAuthor.getName()#</option>
-						<option value="##">--------------</option>
+						<option value="javascript:null">--------------</option>
 						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
 							<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
 						</cfif>
@@ -100,7 +101,7 @@
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
 							<option value="javascript:showQuickPost()">Quick Post</option>
 						</cfif>
-						<option value="##">--------------</option>
+						<option value="javascript:null">--------------</option>
 						<option value="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</option>
 						<option value="#event.buildLink(linkto=prc.xehDoLogout)#">Logout</option>
 					</select>
