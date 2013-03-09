@@ -216,9 +216,9 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 /***** Form Toolbars ***/
 .filterBar { margin:10px 0 2px; }
 .buttonBar { float: right; margin:7px 0px 0px 10px;}
-.contentBar { padding:10px;margin:10px 0px;background-color:#f5f5f5;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;}
-.infoBar { padding:10px;margin:10px 0px;background-color: #fdfdbd;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;border:1px solid #ccc;font-weight: bold;}
-.infoBarRed { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; background-color: #EFD1D8; }
+.contentBar { padding:10px;margin:10px 0px;background-color:#f5f5f5;box-shadow:0 0 5px #ccc;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;}
+.infoBar { padding:10px;margin:10px 0px;background-color: #FFD060; box-shadow:0 0 5px #ccc; -moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; border:1px solid #FFD040;font-weight: bold;}
+.infoBarRed { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; background-color: #EFD1D8; box-shadow:0 0 5px #ccc; border-radius:6px; }
 .actionBar { margin:10px 0 5px; }
 #bottomCenteredBar { margin:20px 0 0; text-align:right; }
 #bottomCenteredLoader { margin:10px 0 0; text-align:center; display:none; }
@@ -244,6 +244,17 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 .actionsPanel, .contentInfoPanel a:hover{ color: red;}
 .contentInfoPanel { margin-left: -95px; }
 #userDetails{ margin: 0px 0px 0px 10px;}
+#div-search{ margin: 0px 5px 0px 5px}
+#nav-search{ padding: 3px; box-shadow:0 0 2px #ccc; -moz-box-shadow:0 0 2px #ccc; -webkit-box-shadow:0 0 2px #ccc; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; }
+#div-search-results{
+	display: none;
+	top: 35px;right: 300px;background-color: black; padding: 5px 10px; width: 400px; position: absolute; min-heigh: 100px; z-index: 9999;
+	box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; 
+	border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;
+}
+#div-search-results h2{ color: #31ADE8; font-size: 16px}
+#div-search-results ul{ font-size: 12px}
+#div-search-results li{ margin: 3px 0px }
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}

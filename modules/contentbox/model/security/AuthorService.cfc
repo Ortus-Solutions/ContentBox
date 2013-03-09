@@ -53,10 +53,23 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	/**
 	* Author search by name, email or username
 	*/
-	function search(criteria){
-		var params = {criteria="%#arguments.criteria#%"};
-		var r = executeQuery(query="from cbAuthor where firstName like :criteria OR lastName like :criteria OR email like :criteria",params=params,asQuery=false);
-		return r;
+	function search(searchTerm="", max=0, offset=0, asQuery=false, sortOrder="lastName"){
+		var results = {};
+		var c = newCriteria();
+		
+		// Search
+		c.$or( c.restrictions.like("firstName","%#arguments.searchTerm#%"),
+			   c.restrictions.like("lastName", "%#arguments.searchTerm#%"),
+			   c.restrictions.like("email", "%#arguments.searchTerm#%") );
+
+		// run criteria query and projections count
+		results.count = c.count( "authorID" );
+		results.authors = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+							.list(offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery);
+	
+		
+		
+		return results;
 	}
 	
 	/**

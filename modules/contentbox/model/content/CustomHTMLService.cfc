@@ -59,14 +59,18 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* custom HTML search returns struct with keys [entries,count]
+	* @search.hint The search term to search on
+	* @max.hint The max records to return
+	* @offset.hint The offset in the return of records
+	* @sortOrder.hint The sorting required. Title by default
 	*/
-	struct function search(search="",max=0,offset=0){
+	struct function search(search="", max=0, offset=0, sortOrder="title"){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
 		
 		// Search Criteria
-		if( len(arguments.search) ){
+		if( len( arguments.search ) ){
 			// like disjunctions
 			c.or( c.restrictions.like("slug","%#arguments.search#%"),
 				  c.restrictions.like("title","%#arguments.search#%"),
@@ -75,8 +79,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		
 		// run criteria query and projections count
-		results.count 	= c.count();
-		results.entries = c.list(offset=arguments.offset,max=arguments.max,sortOrder="title",asQuery=false);
+		results.count 	= c.count( "contentID" );
+		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+							.list(offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=false);
 		
 		return results;
 	}

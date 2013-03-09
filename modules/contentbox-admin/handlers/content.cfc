@@ -5,6 +5,8 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="contentService"		inject="id:contentService@cb";
+	property name="customHTMLService"	inject="id:customHTMLService@cb";
+	property name="authorService"		inject="id:authorService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 
 	// content preview
@@ -37,6 +39,26 @@ component extends="baseHandler"{
 		prc.h = hash( prc.oAuthor.getAuthorID() );
 		// full preview view
 		event.setView(view="content/preview",layout="ajax");
+	}
+	
+	function search(event,rc,prc){
+		param rc.search = "";
+		// Search for content
+		prc.results = contentService.searchContent( searchTerm=rc.search, 
+													max=prc.cbSettings.cb_admin_quicksearch_max, 
+													sortOrder="title", 
+													isPublished="all");
+		prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
+		
+		// Search for Custom HTML
+		prc.customHTML = customHTMLService.search( search=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
+		prc.minCustomHTMLCount = ( prc.customHTML.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.customHTML.count : prc.cbSettings.cb_admin_quicksearch_max );
+		
+		// Search for Authors
+		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
+		prc.minAuthorCount = ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
+			
+		event.renderdata( data = renderView( "content/search" ) );
 	}
 
 	function slugUnique(event,rc,prc){

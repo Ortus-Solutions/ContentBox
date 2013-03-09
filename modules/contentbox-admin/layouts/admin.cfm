@@ -56,12 +56,19 @@
 			<!--=======Top Header area======-->
 			<div id="header_top">
 				<span class="fr">
-					<!--- View Site --->
-					<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank"><button class="buttonsmall">View Site</button></a>
-					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
-					<!--- Quick Post --->
-					<button class="buttonsmall" onclick="showQuickPost()">Quick Post</button>
-					</cfif>
+					
+					<!---Search Results --->
+					<span id="div-search-results">
+						<span class="floatRight"><button class="buttonsmall" onclick="closeSearchBox()">close</button></span>
+						<h2>Search Results</h2>
+					</span>
+					
+					<!---Search --->
+					<span id="div-search">
+						<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url"/>
+						<input type="text" placeholder="Content Search" name="nav-search" id="nav-search" autocomplete="off" size="15"/>
+					</span>
+					
 					<!--- Admin Actions --->
 					<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
 					<span id="adminActionBar">
@@ -74,8 +81,10 @@
 					</span>
 					</cfif>
 					<!--- Quick Links --->
+					<span id="quickLinksBar">
 					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
-						<option value="null">Quick Links</option>
+						<option value="null">Welcome #prc.oAuthor.getName()#</option>
+						<option value="##">--------------</option>
 						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
 							<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
 						</cfif>
@@ -88,23 +97,21 @@
 						<cfif prc.oAuthor.checkPermission("SYSTEM_SAVE_CONFIGURATION")>
 						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
 						</cfif>
+						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
+							<option value="javascript:showQuickPost()">Quick Post</option>
+						</cfif>
+						<option value="##">--------------</option>
 						<option value="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</option>
-						<option value="#event.buildLink(prc.xehDashboard)#">Dashboard</option>
+						<option value="#event.buildLink(linkto=prc.xehDoLogout)#">Logout</option>
 					</select>
-
-					&nbsp;
-			  		Bienvenido <span id="header_top_authorName">#prc.oAuthor.getName()#</span>
-					&nbsp;
-
-					<!--- Log Out --->
-					<a href="#event.buildLink(prc.xehDoLogout)#" class="confirmIt"
-						data-title="Log Out" data-message="Really log out of this beautiful application?"><button class="buttonsmall" onclick="return false;">Log Out</button></a>
-
+					</span>
 					<!--- cbadmin event --->
 					#announceInterception("cbadmin_onTopBar")#
 				</span>
+			  	
 			  	<!--- site tag line --->
-				#prc.cbSettings.cb_site_name# - #prc.cbSettings.cb_site_tagline#
+				<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="Open the site">#prc.cbSettings.cb_site_name#</a>
+				
 				<!--- cbadmin event --->
 				#announceInterception("cbadmin_onTagline")#
 			</div>

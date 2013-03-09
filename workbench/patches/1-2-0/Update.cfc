@@ -135,6 +135,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	private function updateSettings(){
 		// Create New settings
 		addSetting( "cb_admin_ssl", "false" );
+		addSetting( "cb_admin_quicksearch_max", "5" );
 		addSetting( "cb_site_ssl", "false" );
 		addSetting( "cb_versions_commit_mandatory", "false" );
 		addSetting( "cb_editors_default", "ckeditor");
