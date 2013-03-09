@@ -35,51 +35,21 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 	/**
 	* Constructor
 	* @coldbox.inject coldbox
+	* @settingService.inject settingService@cb
 	*/
-	function init(required coldbox){
+	function init(required coldbox, required settingService){
 		
 		// register dependencies
 		variables.interceptorService = arguments.coldbox.getInterceptorService();
 		variables.requestService	 = arguments.coldbox.getRequestService();
 		variables.coldbox 			 = arguments.coldbox;
+		variables.settingService	 = arguments.settingService;
 		
 		// Store admin entry point and base URL settings
 		ADMIN_ENTRYPOINT = arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
 		HTML_BASE_URL	 = arguments.coldbox.getSetting( "htmlBaseURL" );
 		
-		// Toolbar definition
-		savecontent variable="TOOLBAR_JSON"{
-			writeOutput('[
-		    { "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
-		    { "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
-		    { "name": "editing",     "items" : [ "Find","Replace","SpellChecker"] },
-		    { "name": "forms",       "items" : [ "Form", "Checkbox", "Radio", "TextField", "Textarea", "Select", "Button","HiddenField" ] },
-		    "/",
-			{ "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat" ] },
-		    { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","-","Blockquote","CreateDiv","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","BidiLtr","BidiRtl" ] },
-		    { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
-		    "/",
-		    { "name": "styles",      "items" : [ "Styles","Format" ] },
-		    { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
-			{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
-		    { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
-		    ]');
-		};
-		savecontent variable="TOOLBAR_EXCERPT_JSON"{
-			writeOutput('[
-		    { "name": "document",    "items" : [ "Source","ShowBlocks" ] },
-		    { "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript"] },
-		    { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","CreateDiv"] },
-		    { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
-		    { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
-		    { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
-		    ]');
-		};
-		
-		// Register our extra plugins
-		extraPlugins = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre";
-		
-		// Register our events
+		// Register our CKEditor events
 		interceptorService.appendInterceptionPoints("cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig");
 		
 		return this;
@@ -104,11 +74,12 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 	*/
 	function startup(){
 		// prepare toolbar announcement on startup
-		var iData = { toolbar = deserializeJSON( TOOLBAR_JSON ), excerptToolbar = deserializeJSON( TOOLBAR_EXCERPT_JSON ) };
+		var iData = { toolbar = deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_toolbar" ) ), 
+					  excerptToolbar = deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" ) ) };
 		// Announce the editor toolbar is about to be processed
 		interceptorService.processState("cbadmin_ckeditorToolbar", iData);
 		// Load extra plugins according to our version
-		var iData2 = { extraPlugins = listToArray( extraPlugins) };
+		var iData2 = { extraPlugins = listToArray( settingService.getSetting( "cb_editors_ckeditor_extraplugins" ) ) };
 		// Announce extra plugins to see if user implements more.
 		interceptorService.processState("cbadmin_ckeditorExtraPlugins", iData2);
 		// Load extra configuration

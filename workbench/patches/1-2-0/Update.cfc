@@ -137,13 +137,41 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_admin_ssl", "false" );
 		addSetting( "cb_site_ssl", "false" );
 		addSetting( "cb_versions_commit_mandatory", "false" );
+		addSetting( "cb_editors_default", "ckeditor");
+		addSetting( "cb_editors_ckeditor_toolbar" , '[
+{ "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
+{ "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
+{ "name": "editing",     "items" : [ "Find","Replace","SpellChecker"] },
+{ "name": "forms",       "items" : [ "Form", "Checkbox", "Radio", "TextField", "Textarea", "Select", "Button","HiddenField" ] },
+"/",
+{ "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat" ] },
+{ "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","-","Blockquote","CreateDiv","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","BidiLtr","BidiRtl" ] },
+{ "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
+"/",
+{ "name": "styles",      "items" : [ "Styles","Format" ] },
+{ "name": "colors",      "items" : [ "TextColor","BGColor" ] },
+{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
+{ "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
+]' );
+		addSetting( "cb_editors_ckeditor_excerpt_toolbar" , '
+[
+    { "name": "document",    "items" : [ "Source","ShowBlocks" ] },
+    { "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript"] },
+    { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","CreateDiv"] },
+    { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
+    { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
+    { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
+]' );
+		addSetting( "cb_editors_ckeditor_extraplugins", "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre" );
+
+
 	}
 	
 	private function addSetting(name, value){
-		var setting = settingService.findWhere({name=arguments.name});
+		var setting = settingService.findWhere( { name = arguments.name } );
 		if( isNull( setting ) ){
 			setting = settingService.new();
-			setting.setValue( arguments.value );
+			setting.setValue( trim( arguments.value ) );
 			setting.setName( arguments.name );
 			settingService.save(entity=setting, transactional=false);
 			log.info("Added #arguments.name# setting");
