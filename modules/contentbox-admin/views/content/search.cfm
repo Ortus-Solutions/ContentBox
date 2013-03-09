@@ -26,7 +26,7 @@
 <h2>Users ( #prc.minAuthorCount# of #prc.authors.count# )<h2>
 <ul>
 <cfloop array="#prc.authors.authors#" index="thisAuthor">
-	<li><a href="#event.buildLInk(linkTo=prc.xehAuthorEditor, queryString="authorID=#thisAUthor.getAUthorID()#" )#">#thisAuthor.getName()#</a></li>
+	<li><a title="#thisAuthor.getEmail()#" href="#event.buildLInk(linkTo=prc.xehAuthorEditor, queryString="authorID=#thisAUthor.getAUthorID()#" )#">#thisAuthor.getName()#</a> (#thisAuthor.getRole().getRole()#)</li>
 </cfloop>
 <cfif !arrayLen( prc.authors.authors )>
 	<li><em>No Results</em></li>

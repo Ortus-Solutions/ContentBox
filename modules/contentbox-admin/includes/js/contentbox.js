@@ -89,9 +89,9 @@ function activateContentSearch(){
 	// add click listener to body to hide quick search panel
     $( 'body' ).click( function( e ){
        var target = $( e.target ),
-           ipTarget = target.closest( '#div-search-results' )
+           ipTarget = target.closest( '#div-search' )
        // if click occurs within visible element, add to ignore list
-       if( !ipTarget.length ) {
+       if( !ipTarget.length ){
            //run global hide methods
     	   closeSearchBox();
        }
