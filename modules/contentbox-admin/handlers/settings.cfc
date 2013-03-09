@@ -7,6 +7,7 @@ component extends="baseHandler"{
 	property name="settingsService"		inject="id:settingService@cb";
 	property name="pageService"			inject="id:pageService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
+	property name="editorService"		inject="id:editorService@cb";
 	
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -22,6 +23,8 @@ component extends="baseHandler"{
 		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.settings.save";
 		// pages
 		prc.pages = pageService.search(sortOrder="slug asc",isPublished=true).pages;
+		// Get All registered editors so we can display them
+		prc.editors = editorService.getRegisteredEditorsMap();
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper
