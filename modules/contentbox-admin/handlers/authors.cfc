@@ -18,7 +18,7 @@ component extends="baseHandler"{
 		// Specific admin validation actions
 		if( listFindNoCase( "save,editor,savePreferences,passwordChange,saveRawPreferences", arguments.action ) ){
 			// Get incoming author to verify credentials
-			param rc.authorID = 0;
+			arguments.event.paramValue("authorID", 0);
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
 			if(  !prc.oAuthor.checkPermission("AUTHOR_ADMIN") AND oAuthor.getAuthorID() NEQ prc.oAuthor.getAuthorID() ){
