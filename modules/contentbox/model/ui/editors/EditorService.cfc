@@ -28,6 +28,8 @@ component accessors="true" threadSafe singleton{
 	property name="editors"		type="struct";
 	// The structure that keeps the markup languages
 	property name="markups"		type="struct";
+	// Setting Servie
+	property name="settingService" inject="settingService@cb";
 	
 	/**
 	* Constructor
@@ -40,8 +42,6 @@ component accessors="true" threadSafe singleton{
 		
 		// store factory
 		variables.wirebox = arguments.wirebox;
-		// store default editor
-		DEFAULT_EDITOR = "ckeditor";
 		
 		// register core editors
 		registerEditor( arguments.wirebox.getInstance("CKEditor@cb") );
@@ -55,7 +55,7 @@ component accessors="true" threadSafe singleton{
 	* Get the default system editor
 	*/
 	function getDefaultEditor(){
-		return DEFAULT_EDITOR;
+		return settingService.getSetting( "cb_editors_default" );
 	}
 
 	/**

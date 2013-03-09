@@ -24,6 +24,7 @@
 				<li class="active"><a href="##site_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> Site Options</a></li>
 				<li><a href="##dashboard_options"><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/> Admin Options</a></li>
 				<li><a href="##content_options"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Content Options</a></li>
+				<li><a href="##editor_options"><img src="#prc.cbRoot#/includes/images/pen.png" alt="modifiers"/> Editor Options</a></li>
 				<li><a href="##mediamanager"><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> Media Manager</a></li>
 				<li><a href="##gravatars"><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> Gravatars</a></li>
 				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
@@ -47,7 +48,9 @@
 							<!--- Description --->
 							#html.textarea(name="cb_site_description",label="Site Description:",value=prc.cbSettings.cb_site_description,rows="3",title="Your site description, also used in the HTML description meta tag")#
 							<!--- Keywords --->
-							#html.textarea(name="cb_site_keywords",label="Site Keywords:",value=prc.cbSettings.cb_site_keywords,rows="3",title="A comma delimited list of keywords to be used in the HTML keywords meta tag")#
+							<label for="cb_site_keywords">Site Keywords:</label>
+							<small>Used in the meta tags of your site.</small><br/>
+							#html.textarea(name="cb_site_keywords",value=prc.cbSettings.cb_site_keywords,rows="3",title="A comma delimited list of keywords to be used in the HTML keywords meta tag")#
 							<!--- HomePage --->
 							<label for="cb_site_homepage">Home Page Displays:</label>
 							<small>Choose the latest blog entries or a ContentBox page.</small><br/>
@@ -60,7 +63,7 @@
 							
 							<!--- Site SSL --->
 							#html.label(field="cb_site_ssl",content="Site Force SSL (Secure Sockets Layer):")#
-							<small>You can enable SSL encryption for the entire site. This will make sure all requests to the site module use SSL.</small><br/>
+							<small>You can enable SSL encryption for the entire site.</small><br/>
 							#html.radioButton(name="cb_site_ssl",checked=prc.cbSettings.cb_site_ssl,value=true)# Yes
 							#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
 							
@@ -103,7 +106,7 @@
 						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Admin Options</strong></legend>
 						 	<!--- Admin SSL --->
 							#html.label(field="cb_admin_ssl",content="Admin Force SSL (Secure Sockets Layer):")#
-							<small>You can enable SSL encryption for the administrator module. This will make sure all requests to the admin use SSL.</small><br/>
+							<small>You can enable SSL encryption for the administrator module.</small><br/>
 							#html.radioButton(name="cb_admin_ssl",checked=prc.cbSettings.cb_admin_ssl,value=true)# Yes
 							#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
 						</fieldset>
@@ -231,6 +234,36 @@
 									<option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeoutIdle>selected="selected"</cfif>>#i#</option>
 								</cfloop>
 							</select>
+						</fieldset>
+					</div>
+					<!--- Editor Options --->
+					<div>
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/pen.png" alt="modifiers"/> <strong>Editor Options</strong></legend>
+						 	<!--- Default Editor --->
+							<label for="cb_editors_default">Default Editor:</label>
+							<small>Choose the default editor that all users will use for pages, blogs, custom HTML, etc.</small><br/>
+							#html.select(name="cb_editors_default", 
+								 options=prc.editors,
+								 column="name",
+								 nameColumn="displayName",
+								 selectedValue=prc.cbSettings.cb_editors_default)#
+							
+							<!--- CKEditor  --->
+							#html.label(field="cb_editors_ckeditor_toolbar",content="CKEditor Standard Toolbar: ")#
+							<small>The CKEditor toolbar elements. You can find a list of valid configuration items in <a href="http://docs.ckeditor.com/##!/guide/dev_configuration" target="_blank">CKEditor's documentation</a>.
+							<strong>Please make a backup before editing, just in case.</strong></small><br/>
+							#html.textarea(name="cb_editors_ckeditor_toolbar",value=prc.cbSettings.cb_editors_ckeditor_toolbar,rows="10")#
+							<!--- CKEditor Excerpt --->
+							#html.label(field="cb_editors_ckeditor_excerpt_toolbar",content="CKEditor Excerpt Toolbar: ")#
+							<small>The CKEditor excerpt toolbar elements. You can find a list of valid configuration items in <a href="http://docs.ckeditor.com/##!/guide/dev_configuration" target="_blank">CKEditor's documentation</a>.
+							<strong>Please make a backup before editing, just in case.</strong></small><br/>
+							#html.textarea(name="cb_editors_ckeditor_excerpt_toolbar",value=prc.cbSettings.cb_editors_ckeditor_excerpt_toolbar,rows="10")#
+							<!--- CKEditor Extra Plugins --->
+							#html.label(field="cb_editors_ckeditor_extraplugins",content="CKEditor Extra Plugins: ")#
+							<small>The CKEditor extra plugins to load. You can find a list of valid configuration items in <a href="http://docs.ckeditor.com/##!/guide/dev_configuration" target="_blank">CKEditor's documentation</a>.
+							<strong>Please make a backup before editing, just in case.</strong></small><br/>
+							#html.textarea(name="cb_editors_ckeditor_extraplugins",value=prc.cbSettings.cb_editors_ckeditor_extraplugins,rows="3")#
 						</fieldset>
 					</div>
 					<!--- Media Manager --->

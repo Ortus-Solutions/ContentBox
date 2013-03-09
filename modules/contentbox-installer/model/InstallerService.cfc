@@ -317,6 +317,34 @@ component accessors="true"{
 			"cb_media_allowUploads" = "true",
 			"cb_media_acceptMimeTypes" = "",
 			"cb_media_quickViewWidth" = "400",
+			
+			// Editor Manager
+			"cb_editors_default" = "ckeditor",
+			"cb_editors_ckeditor_toolbar" = '[
+{ "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
+{ "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
+{ "name": "editing",     "items" : [ "Find","Replace","SpellChecker"] },
+{ "name": "forms",       "items" : [ "Form", "Checkbox", "Radio", "TextField", "Textarea", "Select", "Button","HiddenField" ] },
+"/",
+{ "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript","-","RemoveFormat" ] },
+{ "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","-","Blockquote","CreateDiv","-","JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock","-","BidiLtr","BidiRtl" ] },
+{ "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
+"/",
+{ "name": "styles",      "items" : [ "Styles","Format" ] },
+{ "name": "colors",      "items" : [ "TextColor","BGColor" ] },
+{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
+{ "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
+]',
+			"cb_editors_ckeditor_excerpt_toolbar" = '
+[
+    { "name": "document",    "items" : [ "Source","ShowBlocks" ] },
+    { "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript"] },
+    { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","CreateDiv"] },
+    { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
+    { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
+    { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
+]' ,
+			"cb_editors_ckeditor_extraplugins" = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre",
 
 			// Uploadify Integration
 			"cb_media_uplodify_fileDesc" = "All Files",
@@ -341,7 +369,7 @@ component accessors="true"{
 		// Create setting objects and save
 		var aSettings = [];
 		for(var key in settings){
-			var props = {name=key,value=settings[key]};
+			var props = { name = key, value= trim( settings[ key ] ) };
 			arrayAppend( aSettings, settingService.new(properties=props) );
 		}
 
