@@ -57,14 +57,14 @@
 			<div id="header_top">
 				<span class="fr">
 					
-					<!---Search Results --->
-					<span id="div-search-results">
-						<span class="floatRight"><button class="buttonsmall" onclick="closeSearchBox()">close</button></span>
-						<h2>Search Results</h2>
-					</span>
-					
 					<!---Search --->
 					<span id="div-search">
+						<!---Search Results --->
+						<span id="div-search-results">
+							<span class="floatRight"><button class="buttonsmall" onclick="closeSearchBox()">close</button></span>
+							<h2>Search Results</h2>
+						</span>
+						<!--- Inputs --->
 						<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url"/>
 						<input type="text" placeholder="Content Search" name="nav-search" id="nav-search" autocomplete="off" size="15"/>
 					</span>
