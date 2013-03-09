@@ -27,7 +27,7 @@ component extends="baseHandler"{
 
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
-		prc.categories = widgetService.getWidgetCategories( prc.widgets );
+		prc.categories = widgetService.getWidgetCategories();
 
 		// ForgeBox Entry URL
 		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
@@ -86,7 +86,7 @@ component extends="baseHandler"{
 	function editorSelector(event,rc,prc){
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
-		prc.categories = widgetService.getWidgetCategories( prc.widgets );
+		prc.categories = widgetService.getWidgetCategories();
 		event.setView(view="widgets/editorSelector",layout="ajax");
 	}
 	
