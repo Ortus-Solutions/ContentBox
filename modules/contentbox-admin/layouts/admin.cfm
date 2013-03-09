@@ -66,7 +66,7 @@
 						</span>
 						<!--- Inputs --->
 						<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url"/>
-						<input type="text" placeholder="Content Search" name="nav-search" id="nav-search" autocomplete="off" size="15"/>
+						<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" size="15"/>
 					</span>
 					
 					<!--- Admin Actions --->
