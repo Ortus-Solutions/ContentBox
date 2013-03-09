@@ -95,16 +95,24 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @max.hint The maximum number of records to paginate
 	* @offset.hint The offset in the pagination
 	* @asQuery.hint Return as query or array of objects, defaults to array of objects
+	* @sortOrder.hint The sorting of the search results, defaults to publishedDate DESC
+	* @isPublished.hint Search for published, non-published or both content objects [true, false, 'all']
 	*/
-	function searchContent(searchTerm="", max=0, offset=0, asQuery=false){
+	function searchContent(searchTerm="", max=0, offset=0, asQuery=false, sortOrder="publishedDate DESC", isPublished=true){
 		var results = {};
 		var c = newCriteria();
 
 		// only published content
-		c.isTrue("isPublished")
-			.isLt("publishedDate", now() )
-			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
-			.isEq("passwordProtection","");
+		if( isBoolean( arguments.isPublished ) ){
+			// Published bit
+			c.isEq( "isPublished", javaCast( "Boolean", arguments.isPublished ) );
+			// Published eq true evaluate other params
+			if( arguments.isPublished ){
+				c.isLt("publishedDate", now() )
+				.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
+				.isEq("passwordProtection","");
+			}
+		}
 
 		// Search Criteria
 		if( len( arguments.searchTerm ) ){
@@ -115,11 +123,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count = c.count();
-		results.content = c.list(offset=arguments.offset, max=arguments.max, sortOrder="publishedDate DESC", asQuery=arguments.asQuery);
+		results.count = c.count( "contentID" );
+		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+							.list(offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery);
 	
-		
-		
 		return results;
 	}
 
@@ -243,7 +250,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count("contentID");
+		results.count 	= c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 

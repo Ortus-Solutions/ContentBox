@@ -227,6 +227,7 @@ component accessors="true"{
 			
 			// Admin settings
 			"cb_admin_ssl" = "false",
+			"cb_admin_quicksearch_max" = "5",
 
 			// Paging Defaults
 			"cb_paging_maxrows" = "20",

@@ -103,6 +103,10 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehCKFileBrowserURLImage	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLFlash	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		
+		// Search global
+		prc.xehSearchGlobal 	= "#prc.cbAdminEntryPoint#.content.search";
+		prc.xehCustomHTMLEditor	= "#prc.cbAdminEntryPoint#.customHTML.editor";
+		
 		// Prepare Admin Actions
 		prc.xehAdminActionData = [
 			{name="Reload Application",value="app"},

@@ -46,8 +46,9 @@ component extends="baseHandler"{
 
 		// Get all authors or search
 		if( len(event.getValue("searchAuthor","")) ){
-			rc.authors = authorService.search( rc.searchAuthor );
-			rc.authorCount = arrayLen(rc.authors);
+			var results 	= authorService.search(searchTerm=rc.searchAuthor);
+			rc.authors 		= results.authors;
+			rc.authorCount 	= results.count;
 		}
 		else{
 			rc.authors		= authorService.list(sortOrder="lastName desc", asQuery=false, offset=rc.paging.startRow-1, max=prc.cbSettings.cb_paging_maxrows);
