@@ -107,13 +107,13 @@ component accessors="true" singleton threadSafe{
 	}
 	/**
 	 * Get unique, sorted widget categories from main widget query
-	 * @widgets {Query} the widgets query from which to retrieve categories
 	 * returns Query
 	 */
-	public query function getWidgetCategories( required query widgets ) {
+	public query function getWidgetCategories() {
+		var widgets = getWidgets();
 		var q = new query();
 			q.setDbType( 'query' );
-			q.setAttributes( QoQ=arguments.widgets );
+			q.setAttributes( QoQ=widgets );
 			q.setSQL( 'select distinct category from QoQ order by category ASC' );
 		return q.execute().getResult();
 	}
