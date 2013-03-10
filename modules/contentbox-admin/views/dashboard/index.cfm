@@ -21,7 +21,7 @@
 			<p class="actionBar">
 				#html.startForm(name="reloadForm",action=prc.xehAdminAction)#
 				#html.select(label="Choose Command To Execute:",name="targetModule",options=prc.xehAdminActionData)#
-				#html.submitButton(value="Issue Reload",class="buttonred")#
+				#html.submitButton(value="Run",class="buttonred")#
 				#html.endForm()#
 			</p>
 		</div>
