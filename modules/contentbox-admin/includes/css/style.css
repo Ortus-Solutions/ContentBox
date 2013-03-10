@@ -57,7 +57,7 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 .button,.button2,.buttonred { padding:4px 7px 7px; cursor:pointer; font-weight:bold; margin-right:3px; text-decoration:none; -webkit-border-radius:5px; -khtml-border-radius:5px; }
 /**============================== Header ==============================**/
 #header_bg { height:126px; }
-#header_top { font-size:1.2em; padding-top:5px; height:10px; }
+#header_top { font-size:1.2em; padding-top: 3px; height:10px; }
 #header_top a { text-decoration:none; margin-right: 5px; }
 #header_top a:hover { text-decoration:underline; }
 /************ Search field in Header ************/
