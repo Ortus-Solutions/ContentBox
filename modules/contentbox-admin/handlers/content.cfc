@@ -42,7 +42,8 @@ component extends="baseHandler"{
 	}
 	
 	function search(event,rc,prc){
-		param rc.search = "";
+		// Params
+		event.paramValue( "search", "" );
 		// Search for content
 		prc.results = contentService.searchContent( searchTerm=rc.search, 
 													max=prc.cbSettings.cb_admin_quicksearch_max, 
@@ -57,13 +58,16 @@ component extends="baseHandler"{
 		// Search for Authors
 		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
 		prc.minAuthorCount = ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
-			
+		
+		// renderdata
 		event.renderdata( data = renderView( "content/search" ) );
 	}
 
 	function slugUnique(event,rc,prc){
-		param rc.slug = "";
-		param rc.contentID = "";
+		// Params
+		event.paramValue( "slug", "" );
+		event.paramValue( "contentID", "" );
+
 		var data = {
 			unique = false
 		};
