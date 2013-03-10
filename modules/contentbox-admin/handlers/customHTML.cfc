@@ -167,8 +167,9 @@ component extends="baseHandler"{
 	}
 	
 	function slugUnique(event,rc,prc){
-		param rc.slug = "";
-		param rc.contentID = "";
+		event.paramValue( "slug", "" );
+		event.paramValue( "contentID", "" );
+		
 		var data = {
 			unique = false
 		};
