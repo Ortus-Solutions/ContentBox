@@ -2,19 +2,9 @@
 <script language="javascript">
 $(document).ready(function() {
 	// form validators
-	$("##installerForm").validator( {grouped:true, effect:"wall", errorInputEvent: null} )
-		.submit(function(e){
-		   // when data is valid
-		   if (!e.isDefaultPrevented()) {
-		 
-		      // tell user that everything is OK
-		      $("##errorBar").html("<h2>All fields looking good</h2>");
-		 
-		      // prevent the form data being submitted to the server
-		      e.preventDefault();
-		   }
-	});
-	// pass validator
+	$("##installerForm").validator( {grouped:true, effect:"wall", errorInputEvent: null} );
+	
+	// password validator
 	$.tools.validator.fn("[name=password_confirm]", "Passwords need to match", function(el, value) {
 		return (value==$("[name=password]").val()) ? true : false;
 	});
