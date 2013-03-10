@@ -16,7 +16,7 @@ component{
 		// remember me
 		prc.rememberMe = antiSamy.htmlSanitizer( securityService.getRememberMe() );
 		// secured URL from security interceptor
-		param rc._securedURL = "";
+		arguments.event.paramValue("_securedURL", "");
 		rc._securedURL = antiSamy.htmlSanitizer( rc._securedURL );
 		// view
 		event.setView(view="security/login",layout="simple");	
@@ -25,9 +25,8 @@ component{
 	// authenticate users
 	function doLogin(event,rc,prc){
 		// params
-		param rc.rememberMe = false;
-		param rc._securedURL = "";
-		
+		arguments.event.paramValue("rememberMe", false);
+		arguments.event.paramValue("_securedURL", "");
 		// announce event
 		announceInterception("cbadmin_preLogin");
 		
@@ -90,7 +89,8 @@ component{
 		var oAuthor = "";
 		
 		// Param email
-		param email = "";
+		arguments.event.paramValue("email", "");
+
 		rc.email 	= antiSamy.htmlSanitizer( rc.email );
 		
 		// Validate email
@@ -126,8 +126,8 @@ component{
 	
 	// Verify Reset
 	function verifyReset(event,rc,prc){
-		param rc.token = "";
-		
+		arguments.event.paramValue("token", "");
+
 		// Validate token
 		var results = securityService.resetUserPassword( trim( rc.token ) );
 		if( !results.error ){
