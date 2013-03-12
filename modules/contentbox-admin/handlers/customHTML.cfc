@@ -81,9 +81,14 @@ component extends="baseHandler"{
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
 		// Get User's default editor
-		prc.defaultEditor = prc.oAuthor.getPreference("editor", editorService.getDefaultEditor() );
+		prc.defaultEditor = prc.oAuthor.getPreference( "editor", editorService.getDefaultEditor() );
 		// Get the editor driver object
 		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
+		
+		// Get All registered markups so we can display them
+		prc.markups = editorService.getRegisteredMarkups();
+		// Get User's default markup
+		prc.defaultMarkup = prc.oAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
 		
 		// exit handlers
 		prc.xehContentSave 		= "#prc.cbAdminEntryPoint#.customHTML.save";
@@ -171,11 +176,11 @@ component extends="baseHandler"{
 		event.paramValue( "contentID", "" );
 		
 		var data = {
-			unique = false
+			"UNIQUE" = false
 		};
 		
 		if( len( rc.slug ) ){
-			data.unique = htmlService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
+			data[ "UNIQUE" ] = htmlService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
 		}
 		
 		event.renderData(data=data, type="json");

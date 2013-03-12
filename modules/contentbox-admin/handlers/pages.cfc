@@ -112,6 +112,11 @@ component extends="baseHandler"{
 		// Get the editor driver object
 		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
 		
+		// Get All registered markups so we can display them
+		prc.markups = editorService.getRegisteredMarkups();
+		// Get User's default markup
+		prc.defaultMarkup = prc.oAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
+		
 		// get all categories for display purposes
 		prc.categories = categoryService.getAll(sortOrder="category");
 		

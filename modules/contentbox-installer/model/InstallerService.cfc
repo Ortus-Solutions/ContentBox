@@ -321,6 +321,7 @@ component accessors="true"{
 			
 			// Editor Manager
 			"cb_editors_default" = "ckeditor",
+			"cb_editors_markup" = "HTML",
 			"cb_editors_ckeditor_toolbar" = '[
 { "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
 { "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },

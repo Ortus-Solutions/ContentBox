@@ -38,7 +38,7 @@ component accessors="true" threadSafe singleton{
 	EditorService function init(required wirebox){
 		// init editors and markups
 		editors = {};
-		markups = {};
+		markups = [];
 		
 		// store factory
 		variables.wirebox = arguments.wirebox;
@@ -48,6 +48,8 @@ component accessors="true" threadSafe singleton{
 		registerEditor( arguments.wirebox.getInstance("EditAreaEditor@cb") );
 		registerEditor( arguments.wirebox.getInstance("TextareaEditor@cb") );
 		
+		// register default markup
+		registerMarkup( "HTML" );
 		return this;
 	}
 	
@@ -57,12 +59,27 @@ component accessors="true" threadSafe singleton{
 	function getDefaultEditor(){
 		return settingService.getSetting( "cb_editors_default" );
 	}
+	
+	/**
+	* Get the default system markup
+	*/
+	function getDefaultMarkup(){
+		return settingService.getSetting( "cb_editors_markup" );
+	}
 
 	/**
 	* Register a new editor in ContentBox
 	*/
 	EditorService function registerEditor(required contentbox.model.ui.editors.IEditor editor){
 		editors[ arguments.editor.getName() ] = arguments.editor;	
+		return this;
+	}
+	
+	/**
+	* Register a new markup in ContentBox
+	*/
+	EditorService function registerMarkup(required string markup){
+		arrayAppend( markups, arguments.markup );	
 		return this;
 	}
 	
@@ -75,10 +92,26 @@ component accessors="true" threadSafe singleton{
 	}
 	
 	/**
+	* UnRegister a markup in ContentBox
+	*/
+	EditorService function unRegisterMarkup(required string markup){
+		arrayDeleteAt( markups, arrayFindNoCase( markups, arguments.markup ) );
+		return this;
+	}
+	
+	/**
 	* Get an array of registered editor names in alphabetical order
 	*/
 	array function getRegisteredEditors(){
 		return listToArray( listSort( structKeyList( editors ), "textnocase" ) );
+	}
+	
+	/**
+	* Get an array of registered markup names in alphabetical order
+	*/
+	array function getRegisteredMarkups(){
+		arraySort( markups, "textnocase" );
+		return markups;
 	}
 	
 	/**
