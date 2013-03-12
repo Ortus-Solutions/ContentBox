@@ -13,7 +13,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginDescription("A widget that can render out a ContentBox page anywhere you like.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "page_add.png" );
+		setIcon( "page-add.png" );
 		setCategory( "Content" );
 		return this;
 	}

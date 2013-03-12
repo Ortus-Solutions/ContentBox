@@ -3,28 +3,7 @@
 	widgetName = prc.widget.name;
 	widgetSelector = prc.widget.name;
 	category = prc.widget.category;
-	if( prc.widget.icon != "" ) {
-		iconName = prc.widget.icon;
-	}
-	else {
-		switch( prc.widget.category ) {
-			case "Content":
-				iconName = "page_writing.png";
-				break;
-			case "Utilities":
-				iconName = "tune.png";
-				break;
-			case "Miscellaneous":
-				iconName = "puzzle.png";
-				break;
-			case "Module":
-				iconName = "box.png";
-				break;
-			case "Layout":
-				iconName = "layout_squares_small.png";
-				break;
-		}	
-	}
+	iconName = prc.widget.icon;
 </cfscript>				
 <cfoutput>
 <h2 style="position:relative;">
@@ -43,7 +22,16 @@
 	    <div class="widget-teaser">#p.getPluginDescription()#</div>
         <div class="widget-args">
             <div id="widgetArgs_#widgetName#">
-            	#renderWidgetArgs( p.renderit, widgetName, prc.widget.widgetType, p.getPluginName(), prc.vals )#
+                <fieldset <cfif arrayLen( prc.metadata ) eq 1>style="display:none;"</cfif>>
+        	        <legend>Public Methods</legend>
+                    <label for="renderMethodSelect"><strong>Select a Method:</strong></label>
+            		<select name="renderMethodSelect" id="renderMethodSelect">
+            		    <cfloop array="#prc.metadata#" index="method">
+        					<option value="#method.name#" <cfif prc.widget.udf eq method.name>selected=true</cfif>>#method.name#()</option>
+        				</cfloop> 
+            		</select>
+                </fieldset>
+                <div class="widget-args-holder"></div>
             </div>
         </div>
 	</div>    
