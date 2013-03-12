@@ -14,7 +14,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
 		setCategory( "ColdBox" );
-		setIcon( "information.png" );
+		setIcon( "question.png" );
 		return this;
 	}
 
