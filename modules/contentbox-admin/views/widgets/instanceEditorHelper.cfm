@@ -2,8 +2,13 @@
 <link href="#prc.cbroot#/includes/css/widgets/style.css" type="text/css" rel="stylesheet">	
 <!--- Custom Javascript --->
 <script type="text/javascript">
+    // temp cache for initial request, since form won't be available
+    var argCache = {};
+    <cfloop collection="#prc.vals#" item="key">
+        argCache[ '#key#' ] = '#prc.vals[ key ]#';
+    </cfloop>
 $(document).ready(function() {
-    updatePreview();
+    updateArgs( false );
     $( '##widget-button-update' ).click( function() {
         updateCBWidget();        
     });
@@ -11,9 +16,47 @@ $(document).ready(function() {
         updatePreview();
     });
     $( '##widget-arguments' ).delegate( 'input, select', 'change', function(){
-        updatePreview();
+        if( $( this ).attr( 'id' )!='renderMethodSelect' ) {
+            updatePreview();
+        }
     });
+    $( '##renderMethodSelect' ).change( updateArgs );
 });
+
+/*
+ * Updates arguments div with new form based on render method selection
+ * @useArgs {Boolean} whether to use form or argCache (default: false)
+ * return void
+ */
+function updateArgs( useArgs ) {
+    var args = {};
+    // if using form
+    if( useArgs ) {
+        var form = $( '##widget-arguments' ).find( 'form' ).serializeArray();
+        $.each( form, function(){
+            args[ this.name ] = this.value;
+        });
+        args[ 'widgetUDF' ] = $( '##renderMethodSelect' ).val();
+    }
+    // if using arugment cache
+    else {
+        args = argCache;
+    }
+    $.ajax({
+        type: 'GET',
+        url: getWidgetRenderArgsURL(),
+        data: args,
+        success: function( data ) {
+            $( '.widget-args-holder' ).html( data );
+            updatePreview();
+        }
+    })
+}
+
+/*
+ * Creates AJAX request to update preview area based on argument form
+ * return void
+ */
 function updatePreview() {
     var form = $( '##widget-arguments' ).find( 'form' ).serializeArray(),
         me = this,
@@ -35,6 +78,11 @@ function updatePreview() {
             }
         });
 }
+
+/*
+ * Updates widget in CKEditor with new values from form
+ * return void
+ */
 function updateCBWidget() {
     var editor = $("###rc.editorName#").ckeditorGet(),
             element = editor.widgetSelection,
@@ -57,8 +105,11 @@ function updateCBWidget() {
     infobarText += vals[ 'widgetDisplayName' ] + ' : ';
     for( var item in vals ) {
         if( vals[ item ].length ) {
-            if( item != 'widgetName' && item != 'widgetType' && item != 'widgetDisplayName' ) {
+            if( item != 'widgetName' && item != 'widgetType' && item != 'widgetDisplayName' && item != 'widgetUDF' ) {
                 infobarText+= item + ' = ' + vals[ item ] + ' | ';  
+            }
+            if( item == 'widgetUDF' ) {
+                infobarText += 'UDF = ' + vals[ item ] + '() | '; 
             }
         }
     }
@@ -69,61 +120,4 @@ function updateCBWidget() {
 	closeRemoteModal();
 }
 </script>
-<cfscript>
-	function renderWidgetArgs( udf, widgetName, widgetType, widgetDisplayName, vals ){
-		var md = getMetadata( arguments.udf );
-		var argForm = "";
-
-		//if( !arrayLen(md.parameters) ){ return argForm; }
-
-		savecontent variable="argForm"{
-
-			writeOutput( html.startForm(name="widgetArgsForm_#arguments.widgetName#") );
-			writeOutput( html.startFieldSet(legend="Widget Arguments") );
-			if( arrayLen( md.parameters ) ){ 
-				writeOutput( "<p>Please fill out the arguments for this widget:</p>" );
-			}
-			else {
-				writeOutput( "<p>There are no arguments for this widget!</p>" );
-			}
-
-
-			for(var x=1; x lte arrayLen(md.parameters); x++){
-				var thisArg = md.parameters[x];
-				var requiredText = "";
-				var requiredValidator = "";
-
-				if( !structKeyExists(thisArg,"required") ){ thisArg.required = false; }
-				if( !structKeyExists(thisArg,"hint") ){ thisArg.hint = ""; }
-				if( !structKeyExists(thisArg,"type") ){ thisArg.type = "any"; }
-				if( !structKeyExists(thisArg,"default") ){ thisArg.default = ""; }
-				thisArg.value = structKeyExists( arguments.vals, thisArg.name ) ? arguments.vals[ thisArg.name ] : "";
-				// required stuff
-				if( thisarg.required ){
-					requiredText = "<span class='textRed'>Required</span>";
-					requiredValidator = "required";
-				}
-
-				writeOutput( html.label(field=thisArg.name,content="#thisArg.name# (Type=#thisArg.type#) #requiredText#") );
-				if( len( thisArg.hint ) ){
-					writeOutput( "<small>#thisArg.hint#</small><br/>" );
-				}
-				// Boolean?
-				if( thisArg.type eq "boolean"){
-					writeOutput( html.select(name=thisArg.name,options="true,false",selectedValue=thisArg.value) );
-				}
-				else{
-					writeOutput( html.textfield(name=thisArg.name,size="35",class="textfield",required=requiredValidator,title=thisArg.hint, value=thisArg.value ) );
-				}
-			}
-			writeOutput( html.hiddenfield( name="widgetName", id="widgetName", value=widgetName ) );
-			writeOutput( html.hiddenfield( name="widgetDisplayName", id="widgetDisplayName", value=widgetDisplayName ) );
-			writeOutput( html.hiddenfield( name="widgetType",value=widgetType ) );
-			writeOutput( html.endFieldSet() );
-			writeOutput( html.endForm() );
-		}
-
-		return argForm;
-	}
-</cfscript>
 </cfoutput>
