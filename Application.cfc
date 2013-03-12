@@ -54,12 +54,12 @@ component{
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation=["model","modules"],
-		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU
+		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate = "update",
 		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
-		secondarycacheenabled = true,
+		secondarycacheenabled = false,
 		cacheprovider		= "ehCache",
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
 		logSQL 				= false,
