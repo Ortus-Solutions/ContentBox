@@ -25,6 +25,8 @@ component extends="baseHandler"{
 		prc.pages = pageService.search(sortOrder="slug asc",isPublished=true).pages;
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
+		// Get All registered markups so we can display them
+		prc.markups = editorService.getRegisteredMarkups();
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper

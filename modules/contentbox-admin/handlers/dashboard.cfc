@@ -70,15 +70,15 @@ component extends="baseHandler"{
 	
 	// Delete Installer
 	function deleteInstaller(){
-		var results = { error = false, message = "" };
+		var results = { "ERROR" = false, "MESSAGE" = "" };
 		
 		try{
 			settingService.deleteInstaller();
-			results.message = "The installer module has been successfully deleted.";
+			results[ "MESSAGE" ] = "The installer module has been successfully deleted.";
 		}
 		catch(Any e){
-			results.error = true;
-			results.message = "Error removing installer: #e.message#";
+			results[ "ERROR" ] = true;
+			results[ "MESSAGE" ] = "Error removing installer: #e.message#";
 		}
 		
 		event.renderData(data=results, type="json");
@@ -86,15 +86,15 @@ component extends="baseHandler"{
 	
 	// Delete INstaller
 	function deleteDSNCreator(){
-		var results = { error = false, message = "" };
+		var results = { "ERROR" = false, "MESSAGE" = "" };
 		
 		try{
 			settingService.deleteDSNCreator();
-			results.message = "The DSN Creator module has been successfully deleted.";
+			results[ "MESSAGE" ] = "The DSN Creator module has been successfully deleted.";
 		}
 		catch(Any e){
-			results.error = true;
-			results.message = "Error removing DSN Creator: #e.message#";
+			results[ "ERROR" ] = true;
+			results[ "MESSAGE" ] = "Error removing DSN Creator: #e.message#";
 		}
 		
 		event.renderData(data=results, type="json");

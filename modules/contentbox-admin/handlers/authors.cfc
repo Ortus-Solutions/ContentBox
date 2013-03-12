@@ -112,24 +112,26 @@ component extends="baseHandler"{
 	private function listPreferences(event,rc,prc){
 		// get editors for preferences
 		prc.editors = editorService.getRegisteredEditors();
+		// Get All registered markups so we can display them
+		prc.markups = editorService.getRegisteredMarkups();
 		// render out view
 		return renderView(view="authors/listPreferences", module="contentbox-admin");
 	}
 	
 	// change user editor preferences
 	function changeEditor(event,rc,prc){
-		var results = { error=false, messages="" };
+		var results = { "ERROR" = false, "MESSAGES" = "" };
 		try{
 			// store the new author preference	
 			prc.oAuthor.setPreference(name="editor", value=rc.editor);
 			// save Author preference
 			authorService.saveAuthor( prc.oAuthor );
-			results.messages = "Editor changed to #rc.editor#";
+			results[ "MESSAGES" ] = "Editor changed to #rc.editor#";
 		}
 		catch(Any e){
 			log.error("Error saving preferences.", e);
-			results.error = true;
-			results.messages = e.detail & e.message;
+			results[ "ERROR" ] = true;
+			results[ "MESSAGES" ] = e.detail & e.message;
 		}
 		// return preference saved
 		event.renderData(type="json", data=results);

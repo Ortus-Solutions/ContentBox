@@ -7,6 +7,9 @@
 	<!---Editor of Choice --->
 	<label for="preference.editor">Favorite Editor:</label>
 	#html.select(name="preference.editor", options=prc.editors, class="width98", selectedValue=prc.oAuthor.getPreference("editor", ""))#
+	<!---Markup of Choice --->
+	<label for="preference.editor">Favorite Markup:</label>
+	#html.select(name="preference.markup", options=prc.markups, class="width98", selectedValue=prc.oAuthor.getPreference("markup", ""))#
 	
 	<!---Social Preferences --->
 	<label for="preference.twitter">Twitter Profile:</label>

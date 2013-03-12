@@ -242,6 +242,11 @@
 							 selectedValue=prc.defaultEditor,
 							 onchange="switchEditor(this.value)")#
 				</cfif>
+				<!--- markup --->
+				<label for="markup" class="inline">Markup: </label>
+				#html.select(name="markup", 
+							 options=prc.markups,
+							 selectedValue=( prc.entry.isLoaded() ? prc.entry.getMarkup() : prc.defaultMarkup ))#
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
