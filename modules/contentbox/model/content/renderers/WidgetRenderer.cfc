@@ -52,6 +52,7 @@ component accessors="true"{
 			try{
 				widgetName = attributes.widgetname;
 				widgetType = attributes.widgettype;
+				widgetUDF = structKeyExists( attributes, "widgetUDF" ) ? attributes.widgetUDF : "renderIt";
 				isModuleWidget = widgetType=="Module";
 				isLayoutWidget = widgetType=="Layout";
 				// Detect direct method call
@@ -61,16 +62,16 @@ component accessors="true"{
 				else{
 					if( isModuleWidget ) {
 						// Render out the module widget
-						widgetContent = widgetService.getWidget( name=widgetName, type="module" ).renderit( argumentCollection=attributes );
+						widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="module" ).#widgetUDF#( argumentCollection=attributes )' );
 					}
 					else {
 						if( isLayoutWidget ) {
 							// Render out the layout widget
-							widgetContent = widgetService.getWidget( name=widgetName, type="layout" ).renderit( argumentCollection=attributes );
+							widgetContent = evalute( 'widgetService.getWidget( name=widgetName, type="layout" ).#widgetUDF#( argumentCollection=attributes )' );
 						}
 						else {
 							// Render out the core widget
-							widgetContent = widgetService.getWidget( widgetName ).renderit( argumentCollection=attributes );
+							widgetContent = evaluate( 'widgetService.getWidget( widgetName ).#widgetUDF#( argumentCollection=attributes )' );
 						}
 					}
 				}
@@ -147,6 +148,10 @@ component accessors="true"{
 						widgetArgs[key] = trim( tagXML[ widgetName ].XMLAttributes[ key ] );
 					}
 				}
+				// set default UDF, if doesn't exist
+				if( !structKeyExists( widgetArgs, "udf" ) ) {
+					widgetArgs[ "widgetUDF" ] = "renderIt";
+				}
 				// Detect direct method call
 				if( find(".", widgetName) ){
 					widgetContent = evaluate("widgetService.getWidget( '#getToken(widgetName,1,".")#' ).#getToken(widgetName,2,".")#(argumentCollection=widgetArgs)");
@@ -154,16 +159,16 @@ component accessors="true"{
 				else{
 					if( isModuleWidget ) {
 						// Render out the module widget
-						widgetContent = widgetService.getWidget( name=widgetName & "@" & moduleName, type="module" ).renderit( argumentCollection=widgetArgs );
+						widgetContent = evaluate( 'widgetService.getWidget( name=widgetName & "@" & moduleName, type="module" ).#widgetArgs.widgetUDF#( argumentCollection=widgetArgs )' );
 					}
 					else {
 						if( isLayoutWidget ) {
 							// Render out the layout widget
-							widgetContent = widgetService.getWidget( name=widgetName, type="layout" ).renderit(argumentCollection=widgetArgs);
+							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="layout" ).#widgetArgs.widgetUDF#(argumentCollection=widgetArgs)' );
 						}
 						else {
 							// Render out the core widget
-							widgetContent = widgetService.getWidget( widgetName ).renderit(argumentCollection=widgetArgs);
+							widgetContent = evaluate( 'widgetService.getWidget( widgetName ).#widgetArgs.widgetUDF#(argumentCollection=widgetArgs)' );
 						}
 					}
 				}

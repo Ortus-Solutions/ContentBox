@@ -1,56 +1,4 @@
-﻿<cfscript>
-	function renderWidgetArgs(udf,widgetName,widgetType,widgetDisplayName){
-		var md = getMetadata( arguments.udf );
-		var argForm = "";
-		savecontent variable="argForm"{
-			writeOutput( html.startForm(name="widgetArgsForm_#arguments.widgetName#") );
-			writeOutput( html.startFieldSet(legend="Widget Arguments") );
-			if( arrayLen( md.parameters ) ){ 
-				writeOutput( "<p>Please fill out the arguments for this widget:</p>" );
-			}
-			else {
-				writeOutput( "<p>There are no arguments for this widget!</p>" );
-			}
-
-			for(var x=1; x lte arrayLen(md.parameters); x++){
-				var thisArg = md.parameters[x];
-				var requiredText = "";
-				var requiredValidator = "";
-
-				if( !structKeyExists(thisArg,"required") ){ thisArg.required = false; }
-				if( !structKeyExists(thisArg,"hint") ){ thisArg.hint = ""; }
-				if( !structKeyExists(thisArg,"type") ){ thisArg.type = "any"; }
-				if( !structKeyExists(thisArg,"default") ){ thisArg.default = ""; }
-
-				// required stuff
-				if( thisarg.required ){
-					requiredText = "<span class='textRed'>Required</span>";
-					requiredValidator = "required";
-				}
-
-				writeOutput( html.label(field=thisArg.name,content="#thisArg.name# (Type=#thisArg.type#) #requiredText#") );
-				if( len( thisArg.hint ) ){
-					writeOutput( "<small>#thisArg.hint#</small><br/>" );
-				}
-				// Boolean?
-				if( thisArg.type eq "boolean"){
-					writeOutput( html.select(name=thisArg.name,options="true,false",selectedValue=thisArg.default) );
-				}
-				else{
-					writeOutput( html.textfield(name=thisArg.name,size="35",class="textfield",required=requiredValidator,title=thisArg.hint,value=thisArg.default) );
-				}
-			}
-			writeOutput( html.hiddenfield( name="widgetName", id="widgetName", value=widgetName ) );
-			writeOutput( html.hiddenfield( name="widgetDisplayName", id="widgetDisplayName", value=widgetDisplayName ) );
-			writeOutput( html.hiddenfield( name="widgetType",value=widgetType ) );
-			writeOutput( html.endFieldSet() );
-			writeOutput( html.endForm() );
-		}
-
-		return argForm;
-	}
-</cfscript>
-<cfoutput>
+﻿<cfoutput>
 <link href="#prc.cbroot#/includes/css/widgets/style.css" type="text/css" rel="stylesheet">
 <!--- Custom Javascript --->
 <script type="text/javascript">
@@ -91,14 +39,29 @@ $(document).ready(function() {
 	});
     // Handle clicks on widgets
     $( '.widget-content' ).click( function(){
+        var me = $( this );
         // mark selected
         $( this ).addClass( 'selected' );
-        // get content
-        var content = $( this ).find( '.widget-arguments-holder' ).html();
-        // add content to arguments div
-        $( '##widget-arguments' ).html( content );
-        // fire switch method
-        switchWidgetFormMode( 'detail' );
+        // make ajax request for arguments form
+        $.ajax({
+            type: 'GET',
+            url: getWidgetRenderArgsURL(),
+            data: {
+                widgetName: $( this ).attr( 'name' ),
+                widgetType: $( this ).attr( 'type' ),
+                widgetDisplayName: $( this ).attr( 'displayname' ),
+                widgetUDF: 'renderIt'
+            },
+            success: function( data ) {
+                // get content
+                me.find( '.widget-args-holder' ).html( data );
+                var content = me.find( '.widget-arguments-holder' ).html();
+                // add content to arguments div
+                $( '##widget-arguments' ).html( content );
+                // fire switch method
+                switchWidgetFormMode( 'detail' );
+            }
+        });
     });
     // Handle mode switch back to list
     $( '##widget-button-back' ).click( function(){
@@ -154,9 +117,42 @@ $(document).ready(function() {
         updatePreview();
     });
     $( '##widget-arguments' ).delegate( 'input, select', 'change', function(){
-        updatePreview();
+        if( !$( this ).hasClass( 'renderMethodSelect' ) ) {
+            updatePreview();
+        }
+        else {
+            updateArgs( $( this ) );
+        }
     });
 });
+
+/*
+ * Updates arguments div with new form based on render method selection
+ * @select {HTMLSelect} the select box
+ * return void
+ */
+function updateArgs( select ) {
+    var args = {},
+        form = $( '##widget-arguments' ).find( 'form' ).serializeArray();
+    $.each( form, function(){
+        args[ this.name ] = this.value;
+    });
+    args[ 'widgetUDF' ] = select.val();
+    $.ajax({
+        type: 'GET',
+        url: getWidgetRenderArgsURL(),
+        data: args,
+        success: function( data ) {
+            // get final location for args
+            var parent = $( '##widget-arguments' );
+            // update form section
+            parent.find( '.widget-args-holder' ).html( data );
+            // udpate preview with new args
+            updatePreview();
+        }
+    })
+}
+
 /*
  * Simple, common method to update preview div based on form parameters
  */

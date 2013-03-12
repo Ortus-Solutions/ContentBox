@@ -13,7 +13,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginDescription("A widget that renders Custom HTML content anywhere you like.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "window_text.png" );
+		setIcon( "window-text.png" );
 		setCategory( "Content" );
 		return this;
 	}
