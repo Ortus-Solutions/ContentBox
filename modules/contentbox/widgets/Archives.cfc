@@ -13,7 +13,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginDescription("A cool widget that renders your blog archives summary information.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "clock.png" );
+		setIcon( "calendar.png" );
 		setCategory( "Blog" );
 		return this;
 	}

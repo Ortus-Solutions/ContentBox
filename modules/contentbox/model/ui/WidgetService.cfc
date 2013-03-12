@@ -149,8 +149,8 @@ component accessors="true" singleton threadSafe{
 			widgets.widgettype[x] = "Core";
 			try{
 				widgets.plugin[x] = getWidget( widgets.name[x], widgets.widgettype[x] );
-				widgets.category[x] = widgets.plugin[x].getCategory() != "" ? widgets.plugin[x].getCategory() : "Miscellaneous";
-				widgets.icon[x] = widgets.plugin[x].getIcon()!="" ? widgets.plugin[x].getIcon() : "";
+				widgets.category[x] = getWidgetCategory( widgets.name[x], widgets.widgettype[x] );
+				widgets.icon[x] = getWidgetIcon( widgets.name[x], widgets.widgettype[x] );
 			}
 			catch(any e){
 				log.error("Error creating widget plugin: #widgets.name[x]#",e);
@@ -168,14 +168,14 @@ component accessors="true" singleton threadSafe{
 			
 			try{
 				var mplugin = getWidget( name=widget, type="module" );
-				var category = mplugin.getCategory() != "" ? mplugin.getCategory() : "Module";
-				var icon = mplugin.getIcon() != "" ? mplugin.getIcon() : "";
+				var category = getWidgetCategory( name=widget, type="module" );
+				var icon = getWidgetIcon( name=widget, type="module" );
 				querySetCell( widgets, "plugin", mplugin );
 				querySetCell( widgets, "category", category );
 				querySetCell( widgets, "icon", icon );
 			}
 			catch(any e){
-				log.error("Error creating module widget plugin: #widgetsName#",e);
+				log.error("Error creating module widget plugin: #widgetName#",e);
 			}
 		}
 		
@@ -188,8 +188,8 @@ component accessors="true" singleton threadSafe{
 			
 			try{
 				var lplugin = getWidget( name=widget, type="layout" );
-				var category = lplugin.getCategory() != "" ? lplugin.getCategory() : "Layout";
-				var icon = lplugin.getIcon() != "" ? lplugin.getIcon() : "";
+				var category = getWidgetCategory( name=widget, type="layout" );
+				var icon = getWidgetIcon( name=widget, type="layout" );
 				querySetCell( widgets, "plugin", lplugin );
 				querySetCell( widgets, "category", category );
 				querySetCell( widgets, "icon", icon );
@@ -198,7 +198,6 @@ component accessors="true" singleton threadSafe{
 				log.error("Error creating layout widget plugin: #widget#",e);
 			}
 		}
-		
 		return widgets;
 	}
 	
@@ -221,6 +220,44 @@ component accessors="true" singleton threadSafe{
 		if( len( path ) ) {
 			return coldbox.getPlugin(plugin=path, customPlugin=true);
 		}
+	}
+	
+	string function getWidgetIcon( required name, required string type="core" ) {
+		var widget = getWidget( argumentCollection=arguments );
+		var icon = widget.getIcon();
+		if( isNull( icon ) || icon == "" ) {
+			switch( type ) {
+				case "layout":
+					icon = "layout_squares_small.png";
+					break;
+				case "module":
+					icon="box.png";
+					break;
+				default:
+					icon = "puzzle.png";
+					break;
+			}
+		}
+		return icon;
+	}
+	
+	string function getWidgetCategory( required name, required string type="core" ) {
+		var widget = getWidget( argumentCollection=arguments );
+		var category = widget.getCategory();
+		if( isNull( category ) || category == "" ) {
+			switch( type ) {
+				case "layout":
+					category = "Layout";
+					break;
+				case "module":
+					category="Module";
+					break;
+				default:
+					category = "Miscellaneous";
+					break;
+			}
+		}
+		return category;
 	}
 	
 	/**
@@ -271,4 +308,10 @@ component accessors="true" singleton threadSafe{
 		return reReplace(arguments.filename,"\.[^.]*$","");
 	}
 	
+	any function getWidgetRenderArgs( udf, widget, type ){
+		// get widget
+		var p = getWidget( name=arguments.widget, type=arguments.type );
+		var md = getMetadata( p[ udf ] );
+		return md;
+	}
 }
