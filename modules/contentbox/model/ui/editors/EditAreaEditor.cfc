@@ -64,13 +64,10 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 	function startup(){
 		var js = "";
 		
-		/**
-		 We build the compiled JS with the knowledge of some inline variables we have context to
-		 $excerpt - The excerpt jquery object
-		 $content - The content jquery object
-		 withExcerpt - an argument telling us if an excerpt is available to render or not
-		*/
-		
+		// We build the compiled JS with the knowledge of some inline variables we have context to
+		// $excerpt - The excerpt jquery object
+		// $content - The content jquery object
+		// withExcerpt - an argument telling us if an excerpt is available to render or not
 		savecontent variable="js"{
 			writeOutput("
 			// load editable area
