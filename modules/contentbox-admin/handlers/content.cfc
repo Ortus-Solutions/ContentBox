@@ -69,11 +69,11 @@ component extends="baseHandler"{
 		event.paramValue( "contentID", "" );
 
 		var data = {
-			unique = false
+			"UNIQUE" = false
 		};
 		
 		if( len( rc.slug ) ){
-			data.unique = contentService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
+			data[ "UNIQUE" ] = contentService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
 		}
 		
 		event.renderData(data=data, type="json");

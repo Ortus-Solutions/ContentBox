@@ -58,6 +58,9 @@ component implements="contentbox.model.updates.IUpdate"{
 				updateAdmin();
 				updateEditor();
 				
+				// Add Columns
+				addColumn(table="cb_content", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
+				
 				log.info("Finalized #version# patching");
 			}
 		}
@@ -87,7 +90,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	
 	/************************************** PRIVATE *********************************************/
 	
-	function updateAdmin(){
+	private function updateAdmin(){
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Add in new permissions
 		var thisPerm = permissionService.findWhere({permission="EDITORS_EDITOR_SELECTOR"});
@@ -99,7 +102,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		return oRole;
 	}
 	
-	function updateEditor(){
+	private function updateEditor(){
 		var oRole = roleService.findWhere({role="Editor"});
 		// Add in new permissions
 		var thisPerm = permissionService.findWhere({permission="EDITORS_EDITOR_SELECTOR"});
@@ -111,7 +114,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		return oRole;
 	}
 	
-	function updatePermissions(){
+	private function updatePermissions(){
 		var perms = {
 			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor"
 		};
@@ -139,6 +142,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_site_ssl", "false" );
 		addSetting( "cb_versions_commit_mandatory", "false" );
 		addSetting( "cb_editors_default", "ckeditor");
+		addSetting( "cb_editors_markup", "HTML" );
 		addSetting( "cb_editors_ckeditor_toolbar" , '[
 { "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
 { "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
@@ -182,7 +186,56 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 	}
 	
-	private function getVarcharType(){
+	/************************************** DB MIGRATION OPERATIONS *********************************************/
+	
+	// Add a new column: type=[varchar, boolean, text]
+	private function addColumn(required table, required column, required type, required limit, boolean nullable=false, defaultValue){
+		if( !columnExists( arguments.table, arguments.column ) ){
+			// Nullable string
+			var sNullable = ( arguments.nullable ? "NULL" : "NOT NULL" );
+			// Type String
+			var sType = evaluate( "variables.get#arguments.type#DBType()" );
+			// Default String
+			var sDefault = "";
+			if( structKeyExists( arguments, "defaultValue") ){
+				// if null as default
+				if( arguments.defaultValue eq "null" ){
+					sDefault = " DEFAULT NULL";
+				}
+				// if boolean default value type
+				else if( arguments.type eq "boolean" ){
+					sDefault = " DEFAULT #( arguments.defaultValue ? 1 : 0 )#";
+				}
+				else{
+					sDefault = " DEFAULT '#ReplaceNoCase( arguments.defaultValue, "'", "''" )#'";
+				}
+			}
+			
+			// Build SQL
+			var q = new Query(datasource=getDatasource());
+			q.setSQL( "ALTER TABLE #arguments.table# ADD #arguments.column# #arguments.type#(#arguments.limit#) #sNullable##sDefault#;" );
+			q.execute();
+			log.info("Added column: #arguments.column# to table: #arguments.table#");
+		}
+		else{
+			log.info("Skipping adding column: #arguments.column# to table: #arguments.table# as it already existed");
+		}
+	}
+	
+	// Verify if a column exists
+	private boolean function columnExists(required table, required column){
+		var colFound = false;
+		var cols = new dbInfo(datasource=getDatasource(), table=arguments.table).columns();
+		for( var x=1; x lte cols.recordcount; x++ ){
+			if( cols[ "column_name" ][ x ] eq arguments.column){
+				colFound = true;
+			}
+		}
+		return colFound;
+	}
+	
+	// Get a DB specific varchar type
+	private function getVarcharDBType(){
 		var dbType = getDatabaseType();
 		
 		switch( dbType ){
@@ -204,10 +257,58 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 	}
 	
+	// Get a DB specific long text type
+	private function getTextDBType(){
+		var dbType = getDatabaseType();
+		
+		switch( dbType ){
+			case "PostgreSQL" : {
+				return "text";
+			}
+			case "MySQL" : {
+				return "longtext";
+			}
+			case "Microsoft SQL Server" : {
+				return "ntext";
+			}
+			case "Oracle" :{
+				return "clob";
+			}
+			default : {
+				return "text";
+			}
+		}
+	}
+	
+	// Get a DB specific boolean column
+	private function getBooleanDBType(){
+		var dbType = getDatabaseType();
+		
+		switch( dbType ){
+			case "PostgreSQL" : {
+				return "boolean";
+			}
+			case "MySQL" : {
+				return "bit";
+			}
+			case "Microsoft SQL Server" : {
+				return "tinyint";
+			}
+			case "Oracle" :{
+				return "number";
+			}
+			default : {
+				return "bit";
+			}
+		}
+	}
+	
+	// Get the database type
 	private function getDatabaseType(){
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
 	
+	// Get the default datasource
 	private function getDatasource(){
 		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
 	}

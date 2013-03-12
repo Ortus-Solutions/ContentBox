@@ -74,12 +74,19 @@
 				
 				<!--- editor selector --->
 				<label for="contentEditorChanger" class="inline">Editor: </label>
+				<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
 				#html.select(name="contentEditorChanger", 
 							 options=prc.editors,
 							 column="name",
 							 nameColumn="displayName",
 							 selectedValue=prc.defaultEditor,
 							 onchange="switchEditor(this.value)")#
+				</cfif>
+				<!--- markup --->
+				<label for="markup" class="inline">Markup: </label>
+				#html.select(name="markup", 
+							 options=prc.markups,
+							 selectedValue=( prc.content.isLoaded() ? prc.content.getMarkup() : prc.defaultMarkup ))#
 				
 				<!---Right References Panel --->
 				<div class="floatRight">

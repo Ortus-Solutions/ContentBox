@@ -257,7 +257,13 @@
 								 column="name",
 								 nameColumn="displayName",
 								 selectedValue=prc.cbSettings.cb_editors_default)#
-							
+							<!--- Default Markup --->
+							<label for="cb_editors_markup">Default Markup:</label>
+							<small>Choose the default markup to use for content objects.</small><br/>
+							#html.select(name="cb_editors_markup", 
+								 options=prc.markups,
+								 selectedValue=prc.cbSettings.cb_editors_markup)#
+								 
 							<!--- CKEditor  --->
 							#html.label(field="cb_editors_ckeditor_toolbar",content="CKEditor Standard Toolbar: ")#
 							<small>The CKEditor toolbar elements. You can find a list of valid configuration items in <a href="http://docs.ckeditor.com/##!/guide/dev_configuration" target="_blank">CKEditor's documentation</a>.
