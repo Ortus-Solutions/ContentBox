@@ -33,7 +33,7 @@
 				widgetName = prc.widgets.name;
 				widgetSelector = prc.widgets.name;
 				category = prc.widgets.category;
-				
+				iconName = prc.widgets.icon;
 				switch( prc.widgets.widgettype ) {
 					case 'module':
                     	widgetName &= "@" & prc.widgets.module;
@@ -42,51 +42,33 @@
                    		widgetName = "~" & widgetName;
                    		break;
 				}
-				if( prc.widgets.icon != "" ) {
-					iconName = prc.widgets.icon;
-				}
-				else {
-    				switch( prc.widgets.category ) {
-    					case "Content":
-    						iconName = "page_writing.png";
-    						break;
-    					case "Utilities":
-    						iconName = "tune.png";
-    						break;
-    					case "Module":
-    						iconName = "box.png";
-    						break;
-    					case "Layout":
-    						iconName = "layout_squares_small.png";
-    						break;
-    					default:
-    						iconName = "puzzle.png";
-    						break;
-    				}	
-				}
 			</cfscript>					
-			<cfif isSimpleValue(p)>
-				<!---<tr class="selected">
-					<td colspan="4">There is a problem creating widget: '#widgetName#', please check the application log files.</td>
-				</tr>--->
-			<cfelse>
-				<div class="widget-content" name="#widgetName#" category="#category#">
-                    <div class="widget-title">
-                        #p.getPluginName()#
-                        <span class="widget-type">#prc.widgets.widgettype#</span>
-                    </div>
-                    <img class="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
-                    <div class="widget-teaser">#p.getPluginDescription()#</div>
-                    <div class="widget-arguments-holder" name="#widgetName#" category="#category#" style="display:none;">
-                        <div class="widget-teaser">#p.getPluginDescription()#</div>
-                        <div class="widget-args">
-                            <div id="widgetArgs_#widgetName#">
-                            	#renderWidgetArgs( p.renderit, widgetName, prc.widgets.widgetType, p.getPluginName() )#
-                            </div>
-                        </div>
-                    </div>    
+			<div class="widget-content" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getPluginName()#">
+                <div class="widget-title">
+                    #p.getPluginName()#
+                    <span class="widget-type">#prc.widgets.widgettype#</span>
                 </div>
-			</cfif>
+                <img class="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
+                <div class="widget-teaser">#p.getPluginDescription()#</div>
+                <div class="widget-arguments-holder" name="#widgetName#" category="#category#" style="display:none;">
+                    <div class="widget-teaser">#p.getPluginDescription()#</div>
+                    <div class="widget-args">
+                        <div id="widgetArgs_#widgetName#">
+                            <cfset pMetaData = p.getPublicMethods()>
+                        	<fieldset <cfif arrayLen( pMetaData ) eq 1>style="display:none;"</cfif>>
+                    	        <legend>Public Methods</legend>
+                                <label for="renderMethodSelect"><strong>Select a Method:</strong></label>
+                        		<select name="renderMethodSelect_#widgetName#" id="renderMethodSelect_#widgetName#" class="renderMethodSelect">
+                        		    <cfloop array="#pMetaData#" index="method">
+                    					<option value="#method.name#" <cfif "renderIt" eq method.name>selected=true</cfif>>#method.name#()</option>
+                    				</cfloop> 
+                        		</select>
+                            </fieldset>
+                            <div class="widget-args-holder"></div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
 		</cfloop>
 		<div class="widget-no-preview" style="display:none;">Sorry, no widgets matched your search!</div>
     </div>

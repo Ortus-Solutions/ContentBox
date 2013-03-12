@@ -125,34 +125,8 @@
                 					case 'module':
                                     	widgetName &= "@" & prc.widgets.module;
                                     	break;
-                                   	case 'layout':
-                                   		widgetName = "~" & widgetName;
-                                   		break;
                 				}
-                				// If widget has icon, then use it
-                				if( prc.widgets.icon != "" ) {
-                					iconName = prc.widgets.icon;
-                				}
-                				// Else give it global icons via category it is in or default to a puzzle
-                				else {
-                    				switch( prc.widgets.category ) {
-                    					case "Content":
-                    						iconName = "page_writing.png";
-                    						break;
-                    					case "Utilities":
-                    						iconName = "tune.png";
-                    						break;
-                    					case "Module":
-                    						iconName = "box.png";
-                    						break;
-                    					case "Layout":
-                    						iconName = "layout_squares_small.png";
-                    						break;
-                    					default:
-                    						iconName = "puzzle.png";
-                    						break;
-                    				}	
-                				}
+                				iconName = prc.widgets.icon;
                 			</cfscript>					
             				<div class="widget-content full" name="#widgetName#" category="#category#">
                                 <div class="widget-title">
@@ -169,13 +143,13 @@
 									By <a href="#p.getPluginAuthorURL()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>
                                     <span class="widget-type">
 										<!---read docs--->
-                                        <a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(prc.widgets.name)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
+                                        <a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
 										    <img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" />
                                         </a>
                                         <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 											&nbsp;
 											<!--- Editor --->
-											<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#prc.widgets.name#&type=#prc.widgets.widgettype#')#">
+											<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#widgetName#&type=#prc.widgets.widgettype#')#">
 											    <img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" />
 											</a>
                             				<!---only allow deletion of core widgets--->

@@ -13,7 +13,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginDescription("A cool basic widget that shows N recent comments from any content object");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "comment.png" );
+		setIcon( "comment-add.png" );
 		setCategory( "Content" );
 		return this;
 	}

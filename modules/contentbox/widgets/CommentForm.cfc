@@ -13,7 +13,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		setPluginDescription("A cool basic commenting form for ContentBox content objects.");
 		setPluginAuthor("Ortus Solutions");
 		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "comment_add.png" );
+		setIcon( "comment-add.png" );
 		setCategory( "Miscellaneous" );
 		return this;
 	}

@@ -24,7 +24,6 @@ component extends="baseHandler"{
 		prc.xehWidgetEditor = "#prc.cbAdminEntryPoint#.widgets.edit";
 		prc.xehWidgetCreate = "#prc.cbAdminEntryPoint#.widgets.create";
 		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
-
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
 		prc.categories = widgetService.getWidgetCategories();
@@ -44,10 +43,11 @@ component extends="baseHandler"{
 	function docs(event,rc,prc){
 		prc.widgetName = widgetService.ripExtension( urlDecode( rc.widget ) );
 		prc.widgetType = urlDecode( rc.type );
+		prc.icon = widgetService.getWidgetIcon( rc.widget, rc.type );
 		// get widget plugin
 		prc.oWidget  = widgetService.getWidget( prc.widgetName, prc.widgetType );
 		// get its metadata
-		prc.metadata = getmetadata( prc.oWidget.renderit );
+		prc.metadata = prc.oWidget.getPublicMethods();
 		// presetn view
 		event.setView(view="widgets/docs",layout="ajax");
 	}
@@ -95,7 +95,7 @@ component extends="baseHandler"{
 		// get widget
 		var widget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
 		try {
-			event.renderData( data=widget.renderIt( argumentCollection=rc ), type="html" );
+			event.renderData( data=evaluate( "widget.#rc.widgetudf#( argumentCollection=rc )" ), type="html" );
 		}
 		catch ( any e ) {
 			event.renderData( data="", type="html" );
@@ -110,6 +110,7 @@ component extends="baseHandler"{
 			name = rc.widgetName,
         	widgetType = rc.widgetType,
         	plugin = widget,
+        	udf = structKeyExists( rc, "widgetudf" ) ? rc.widgetudf : "renderIt",
         	module = find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
         	category = !isNull( widget.getCategory() ) ? 
         					widget.getCategory() : 
@@ -118,8 +119,30 @@ component extends="baseHandler"{
                                 rc.widgetType,
         	icon = !isNull( widget.getIcon() ) ? widget.getIcon() : ""
 		};
+		// get its metadata
+		prc.metadata = widget.getPublicMethods();
 		prc.vals = rc;
-		event.setView(view="widgets/instanceEditor",layout="ajax");
+		prc.vals[ "widgetUDF" ] = prc.widget.udf;
+		event.setView( view="widgets/instanceEditor", layout="ajax" );
+	}
+
+	function renderArgs( event, rc, prc ) {
+		// get widget
+		var theWidget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
+		prc.md = WidgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
+		prc.widget = {
+			name = rc.widgetname,
+        	widgetType = rc.widgettype,
+        	plugin = theWidget,
+        	udf = rc.widgetudf
+		};
+		prc.vals = rc;
+		if( event.isAjax() ) {
+			event.renderData( data=renderView( view="widgets/arguments", layout="ajax" ), type="html" );
+		}
+		else {
+			event.setView( view="widgets/arguments", layout="ajax" );
+		}
 	}
 
 	// Create New Widget wizard
