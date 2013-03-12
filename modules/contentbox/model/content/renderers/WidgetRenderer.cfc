@@ -179,6 +179,9 @@ component accessors="true"{
 			}
 			// PROCESS REPLACING
 			
+			// null checks
+			if( isNull( widgetContent ) ){ widgetContent = "null!"; }
+			
 			// get location of target
 			var rLocation 	= builder.indexOf( targets[x] );
 			var rLen 		= len( targets[x] );
