@@ -60,6 +60,7 @@ component implements="contentbox.model.updates.IUpdate"{
 				
 				// Add Columns
 				addColumn(table="cb_content", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
+				addColumn(table="cb_customHTML", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
 				
 				log.info("Finalized #version# patching");
 			}
