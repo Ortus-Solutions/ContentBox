@@ -39,7 +39,8 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
-
+	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
+	
 	// Non-Persistable
 	property name="renderedContent" persistent="false";
 
