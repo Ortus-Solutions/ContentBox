@@ -44,10 +44,10 @@
 				</h2>
 				<div class="pane">
 					
-					<cfchart chartwidth="265" format="png" tipstyle="none" >
-						<cfchartseries type="bar" colorlist="##B22222,##FF69B4,##FF8C00, ##1E90FF,##ADFF2F" datalabelstyle="value">
+					<cfchart chartwidth="265" format="png" tipstyle="mouseOver" showlegend="false" >
+						<cfchartseries type="pie" colorlist="##B22222,##FF69B4,##FF8C00, ##1E90FF,##ADFF2F" datalabelstyle="value"  >
 							<cfloop array="#prc.topContent#" index="topContent">
-								<cfchartdata item="#topContent.getTitle()#"  value="#topContent.getHits()#">
+								<cfchartdata item="#topContent.getTitle()#.."  value="#topContent.getHits()#">
 							</cfloop>
 						</cfchartseries>
 					</cfchart>
