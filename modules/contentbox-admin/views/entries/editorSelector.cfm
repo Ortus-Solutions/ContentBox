@@ -53,7 +53,7 @@
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'entryssl' )">ssl</button>
+					<button class="button2" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )">ssl</button>
 					<button class="button2" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )">Select</button>
 				</td>
 			</tr>
