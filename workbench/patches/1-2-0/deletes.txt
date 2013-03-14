@@ -1,5 +1,4 @@
 includes/templates/404.html
-includes/templates/generic_error.cfm
 modules/contentbox-admin/includes/ckeditor/images/spacer.gif
 modules/contentbox-admin/includes/ckeditor/lang/_languages.js
 modules/contentbox-admin/includes/ckeditor/lang/_translationstatus.txt
