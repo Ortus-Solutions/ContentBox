@@ -285,7 +285,7 @@ component accessors="true" threadSafe{
 	* Upload an update file to disk
 	*/
 	struct function uploadUpdate(required fileField){
-		return fileUpload( getPatchesLocation(), arguments.fileField, "application/zip", "overwrite");
+		return fileUpload( getPatchesLocation(), arguments.fileField, "application/zip,application/x-zip-compressed", "overwrite");
 	}
 
 	/************************************** PRIVATE *********************************************/

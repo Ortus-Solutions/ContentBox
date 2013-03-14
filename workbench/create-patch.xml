@@ -39,6 +39,7 @@
 				<exclude name="test/"/>
 				<exclude name="config/"/>
 				<exclude name="Application.cfc"/>
+				<exclude name="readme.txt"/>
 				<exclude name="favicon.ico"/>
 				<exclude name=".htaccess"/>
 				<exclude name="${patch.excludes}"/>
