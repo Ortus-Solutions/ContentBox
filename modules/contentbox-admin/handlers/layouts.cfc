@@ -18,12 +18,13 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
+		prc.xehLayouts 			= "#prc.cbAdminEntryPoint#.layouts.index";
 		prc.xehLayoutRemove 	= "#prc.cbAdminEntryPoint#.layouts.remove";
-		prc.xehLayoutUpload  = "#prc.cbAdminEntryPoint#.layouts.upload";
-		prc.xehFlushRegistry = "#prc.cbAdminEntryPoint#.layouts.rebuildRegistry";
-		prc.xehActivate		= "#prc.cbAdminEntryPoint#.layouts.activate";
-		prc.xehPreview		= "#prc.cbEntryPoint#.__preview";
-		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
+		prc.xehLayoutUpload  	= "#prc.cbAdminEntryPoint#.layouts.upload";
+		prc.xehFlushRegistry 	= "#prc.cbAdminEntryPoint#.layouts.rebuildRegistry";
+		prc.xehActivate			= "#prc.cbAdminEntryPoint#.layouts.activate";
+		prc.xehPreview			= "#prc.cbEntryPoint#.__preview";
+		prc.xehForgeBox			= "#prc.cbAdminEntryPoint#.forgebox.index";
 		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.layouts.saveSettings";
 
 		// Rescan if newly installed layout?
@@ -38,11 +39,11 @@ component extends="baseHandler"{
 		prc.layoutService	= layoutService;
 
 		// ForgeBox Entry URL
-		prc.forgeBoxEntryURL = getModuleSettings("contentbox-admin").settings.forgeBoxEntryURL;
+		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).settings.forgeBoxEntryURL;
 		// ForgeBox Stuff
-		prc.forgeBoxSlug = "contentbox-layouts";
-		prc.forgeBoxInstallDir = URLEncodedFormat(layoutService.getLayoutsPath());
-		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink(linkto=prc.xehLayouts, querystring="rescan=true") );
+		prc.forgeBoxSlug 		= "contentbox-layouts";
+		prc.forgeBoxInstallDir 	= URLEncodedFormat( layoutService.getLayoutsPath() );
+		prc.forgeboxReturnURL 	= URLEncodedFormat( event.buildLink(linkto=prc.xehLayouts, querystring="rescan=true##manage") );
 
 		// Tab
 		prc.tabLookAndFeel_layouts = true;
