@@ -343,6 +343,10 @@ component accessors="true" threadSafe singleton{
 		// verify location and remove it
 		var lPath = getLayoutsPath() & "/" & arguments.layoutName;
 		if( directoryExists( lPath ) ){ directoryDelete( lPath,true ); return true; }
+		// Rebuild the registry
+		buildLayoutRegistry();
+		
+		// return
 		return false;
 	}
 
@@ -370,12 +374,14 @@ component accessors="true" threadSafe singleton{
 		try{
 			// check if zip file
 			if( fInfo.serverFileExt eq "zip" ){
-				// expand it
+				// Expand it
 				zipUtil.extract(zipFilePath=fFilePath, extractPath=destination, useFolderName=true);
 				// Removal of Mac stuff
 				if( directoryExists( destination & "/__MACOSX" ) ){
 					directoryDelete( destination & "/__MACOSX", true);
 				}
+				// rebuild the registry now that it is installed
+				buildLayoutRegistry();
 			}
 		}
 		catch(Any e){
