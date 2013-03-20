@@ -20,7 +20,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
-* Deliver file via cfcontent
+* Deliver file via pagecontext forward
 */
 component accessors="true" implements="contentbox.model.media.IMediaProvider" singleton{
 	
@@ -40,21 +40,22 @@ component accessors="true" implements="contentbox.model.media.IMediaProvider" si
 	* The internal name of the provider
 	*/
 	function getName(){
-		return "CFContentMediaProvider";
+		return "ForwardMediaProvider";
 	}
 	
 	/**
 	* Get the display name of a provider
 	*/
 	function getDisplayName(){
-		return "CF Content Media Provider";
+		return "Forward Media Provider";
 	}
 	
 	/**
 	* Get the description of this provider
 	*/
 	function getDescription(){
-		return "This provider uses the ColdFusion cfcontent tag to deliver and stream files securely to the user from anywhere your media root is in the server.";
+		return "This provider will forward to the real physical location in the server for the media path requested via the internal servlet
+		page context, so no real media path URL will be shown to the user. Use only if the media root is web accessible and a relative web root path, so double check your media root.";
 	}
 	
 	/**
@@ -71,11 +72,9 @@ component accessors="true" implements="contentbox.model.media.IMediaProvider" si
 	*/
 	any function deliverMedia(required mediaPath){
 		// get the real path
-		var realPath = getRealMediaPath( arguments.mediaPath );
-		// Deliver the file
-		fileUtils.sendFile( file=realPath, 
-							disposition="inline", 
-							mimeType=getPageContext().getServletContext().getMimeType( realPath ) );
+		var realPath =  mediaService.getCoreMediaRoot() & "/" & arguments.mediaPath;
+		// relocate to it
+		getPageContext().forward( realPath );abort;
 	}
 	
 	/************************************** PRIVATE *********************************************/
