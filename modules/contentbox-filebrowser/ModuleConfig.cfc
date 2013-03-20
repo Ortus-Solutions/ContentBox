@@ -76,7 +76,9 @@ The arguments you can use are:
 				multi 	 = true,
 				sizeLimit = 0,
 				customJSONOptions = ""
-			}
+			},
+			useMediaPath = true,
+			mediaPath = "__media"
 		};
 
 		// clean directory root
