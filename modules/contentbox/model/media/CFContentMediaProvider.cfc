@@ -54,7 +54,7 @@ component accessors="true" implements="contentbox.model.media.IMediaProvider" si
 	* Get the description of this provider
 	*/
 	function getDescription(){
-		return "This provider uses the ColdFusion cfcontent tag to deliver and stream files securely to the user from anywhere your media root is in the server.";
+		return "This provider uses the ColdFusion cfcontent tag to deliver and stream files securely to the user.";
 	}
 	
 	/**
