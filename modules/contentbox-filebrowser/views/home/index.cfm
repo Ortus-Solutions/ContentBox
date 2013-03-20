@@ -125,7 +125,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				<!--- URL used for selection --->
 				<cfset plainURL = prc.fbCurrentRoot & "/" & prc.fbqListing.name>
 				<cfset relURL = $getUrlRelativeToPath(prc.fbwebRootPath,plainURL)>
-
+				
 				<!---Grid or List --->
 				<cfif prc.fbPreferences.listType eq "grid">
 					<!---Grid Listing --->
@@ -203,7 +203,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							 data-name="#prc.fbqListing.Name#"
 							 data-fullURL="#plainURL#"
 							 data-relURL="#relURL#"
-							 data-mediaURL="#cb.linkMedia( prc.fbqListing.Name )#"
 							 data-lastModified="#prc.fbqListing.dateLastModified#"
 							 data-size="#numberFormat(prc.fbqListing.size/1024)#"
 							 data-quickview="#validQuickView( listLast(prc.fbQListing.name,".") )#"
