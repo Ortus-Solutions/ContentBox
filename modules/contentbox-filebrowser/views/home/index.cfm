@@ -203,6 +203,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							 data-name="#prc.fbqListing.Name#"
 							 data-fullURL="#plainURL#"
 							 data-relURL="#relURL#"
+							 data-mediaURL="#cb.linkMedia( prc.fbqListing.Name )#"
 							 data-lastModified="#prc.fbqListing.dateLastModified#"
 							 data-size="#numberFormat(prc.fbqListing.size/1024)#"
 							 data-quickview="#validQuickView( listLast(prc.fbQListing.name,".") )#"
@@ -252,7 +253,8 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<input type="hidden" name="selectedItemURL" id="selectedItemURL" value="">
 			<input type="hidden" name="selectedItemID" id="selectedItemID" value="">
 			<input type="hidden" name="selectedItemType" id="selectedItemType" value="file">
-
+			<input type="hidden" name="selectedItemMediaURL" id="selectedItemMediaURL" value="">
+			
 			<div id="statusButtons">
 				<!--- Cancel Button --->
 				<cfif len(rc.cancelCallback)>
