@@ -15,6 +15,8 @@
  */
 function fbCKSelect(sPath,sURL,sType){
 	if( !sPath.length || sType == "dir" ){ alert("Please select a file first."); return; }
+	console.log( sURL );
+	return false;
 	var funcNum = getUrlParam('CKEditorFuncNum');
 	window.opener.CKEDITOR.tools.callFunction(funcNum, sURL);
 	window.close();
