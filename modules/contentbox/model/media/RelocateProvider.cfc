@@ -40,21 +40,21 @@ component accessors="true" implements="contentbox.model.media.IMediaProvider" si
 	* The internal name of the provider
 	*/
 	function getName(){
-		return "RelocateProvider";
+		return "CFContentMediaProvider";
 	}
 	
 	/**
 	* Get the display name of a provider
 	*/
 	function getDisplayName(){
-		return "Relocation Provider";
+		return "CF Content Media Provider";
 	}
 	
 	/**
 	* Get the description of this provider
 	*/
 	function getDescription(){
-		return "This provider relocates to the requested media path.";
+		return "This provider uses the ColdFusion cfcontent tag to deliver and stream files securely to the user.";
 	}
 	
 	/**
