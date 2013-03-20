@@ -8,6 +8,7 @@ component extends="baseHandler"{
 	property name="pageService"			inject="id:pageService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="editorService"		inject="id:editorService@cb";
+	property name="mediaService"		inject="id:mediaService@cb";
 	
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -27,6 +28,8 @@ component extends="baseHandler"{
 		prc.editors = editorService.getRegisteredEditorsMap();
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
+		// Get all registered media providers so we can display them
+		prc.mediaProviders = mediaService.getRegisteredProvidersMap();
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper

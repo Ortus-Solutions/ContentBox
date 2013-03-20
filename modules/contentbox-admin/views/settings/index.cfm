@@ -289,9 +289,23 @@
 
 							<!--- Location --->
 							#html.label(field="",content="Directory Root: ")#
-							<small>The relative path in your server that will be the expanded root of your media manager. Make sure it is web accessible please.</small></br>
+							<small>The relative path or ColdFusion mapping in your server that will be the expanded root of your media manager.</small></br>
 							#html.textField(name="cb_media_directoryRoot",required="required",value=prc.cbSettings.cb_media_directoryRoot,class="textfield width98",title="The directory root of all your media files, make sure it is web accessible please")#
-
+							
+							<!---Media Providers --->
+							#html.label(field="",content="Media Providers: ")#
+							<small>Media providers are used to deliver your media files securely and with greater flexibility as you can place your entire media root outside of the webroot.</small><br/>
+							
+							<cfloop array="#prc.mediaProviders#" index="thisProvider">
+							#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
+							<strong>#thisProvider.displayName#</strong>
+							#thisProvider.description# <br/>
+							</cfloop>
+						</fieldset>
+						
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Media Options</strong></legend>
+							
 							<!--- Create Folders --->
 							#html.label(field="cb_media_createFolders",content="Allow Creation of Folders:")#
 							#html.radioButton(name="cb_media_createFolders",checked=prc.cbSettings.cb_media_createFolders,value=true)# Yes

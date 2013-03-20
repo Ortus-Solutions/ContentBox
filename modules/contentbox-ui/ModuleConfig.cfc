@@ -55,6 +55,8 @@ component {
 			{pattern="/__entry_preview", handler="blog", action="preview" },
 			// page preview
 			{pattern="/__page_preview", handler="page", action="preview" },
+			// media delivery
+			{pattern="/__media", handler="media", action="index"},
 			
 			/************************************** RSS ROUTES *********************************************/
 
@@ -112,7 +114,9 @@ component {
 				"cbui_onIndex","cbui_onArchives","cbui_onEntry","cbui_onPage","cbui_preCommentPost","cbui_onCommentPost",
 				// Fixed HTML Points
 				"cbui_preEntryDisplay","cbui_postEntryDisplay","cbui_preIndexDisplay","cbui_postIndexDisplay","cbui_preCommentForm","cbui_postCommentForm",
-				"cbui_prePageDisplay","cbui_postPageDisplay","cbui_preArchivesDisplay","cbui_postArchivesDisplay"
+				"cbui_prePageDisplay","cbui_postPageDisplay","cbui_preArchivesDisplay","cbui_postArchivesDisplay",
+				// Media Services
+				"cbui_onInvalidMedia", "cbui_onMediaRequest"
 			])
 		};
 
