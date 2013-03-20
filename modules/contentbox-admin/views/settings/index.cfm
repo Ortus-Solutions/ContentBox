@@ -298,7 +298,7 @@
 							
 							<cfloop array="#prc.mediaProviders#" index="thisProvider">
 							#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
-							<strong>#thisProvider.displayName#</strong>
+							<strong>#thisProvider.displayName#</strong><br/>
 							#thisProvider.description# <br/>
 							</cfloop>
 						</fieldset>
