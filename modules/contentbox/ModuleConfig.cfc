@@ -137,8 +137,6 @@ component {
 		// Media Services
 		binder.map("mediaService@cb").to("contentbox.model.media.MediaService");
 		binder.map("CFContentMediaProvider@cb").to("contentbox.model.media.CFContentMediaProvider");
-		binder.map("RelocationMediaProvider@cb").to("contentbox.model.media.RelocationMediaProvider");
-		binder.map("ForwardMediaProvider@cb").to("contentbox.model.media.ForwardMediaProvider");
 		// Search
 		binder.map("SearchResults@cb").to("contentbox.model.search.SearchResults");
 		binder.map("SearchService@cb").to("contentbox.model.search.SearchService");
