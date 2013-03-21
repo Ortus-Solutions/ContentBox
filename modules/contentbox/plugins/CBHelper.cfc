@@ -25,8 +25,6 @@ limitations under the License.
 component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// DI
-	property name="uiConfig"			inject="coldbox:moduleConfig:contentbox-ui";
-	property name="adminConfig"			inject="coldbox:moduleConfig:contentbox-admin";
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
@@ -98,7 +96,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// Get the site root location using your configured module's entry point
 	function siteRoot(){
-		return uiConfig.entryPoint;
+		var prc = getRequestCollection(private=true);
+		return prc.cbEntryPoint;
 	}
 
 	// Get the site base SES URL
@@ -108,7 +107,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// Get the admin site root location using the configured module's entry point
 	function adminRoot(){
-		return adminConfig.entryPoint;
+		var prc = getRequestCollection(private=true);
+		return prc.cbAdminEntryPoint;
 	}
 
 	// Get the name of the current set and active layout
@@ -704,16 +704,6 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 
 		return linkEntry( arguments.content, arguments.ssl ) & "/commentPost";
-	}
-	
-	/**
-	* Link to a media file
-	* @mediaPath.hint The path to the media to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
-	*/
-	function linkMedia(required mediaPath, boolean ssl=false){
-		var xeh = siteRoot() & sep() & "__media/" & arguments.mediaPath;
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
 	}
 
 	/************************************** widget functions *********************************************/
