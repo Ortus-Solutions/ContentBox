@@ -8,6 +8,9 @@ $(document).ready(function() {
 	$("##settingFilter").keyup(function(){
 		$.uiTableFilter( $("##settings"), this.value );
 	});
+	$("##eventFilter").keyup(function(){
+		$.uiTableFilter( $("##eventsList"), this.value );
+	});
 	// table sorting + filtering
 	$("##singletons").tablesorter({ sortList: [[0,0]] });
 	$("##singletonsFilter").keyup(function(){
@@ -23,6 +26,7 @@ $(document).ready(function() {
 	});
 });
 function edit(settingID,name,value){
+	openModal( $("##settingEditorContainer"), 500, 300 );
 	$settingEditor.find("##settingID").val( settingID );
 	$settingEditor.find("##name").val( name );
 	$settingEditor.find("##value").val( value );
@@ -33,6 +37,10 @@ function remove(settingID){
 	var $settingForm = $("##settingForm");
 	$settingForm.find("##settingID").val( settingID );
 	$settingForm.submit();
+}
+function createSetting(){
+	openModal( $("##settingEditorContainer"), 500, 300 );
+	return false;
 }
 </script>
 </cfoutput>

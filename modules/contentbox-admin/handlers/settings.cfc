@@ -89,6 +89,10 @@ component extends="baseHandler"{
 		if( rc.viewAll ){ args.offset = args.max = 0; }
 		prc.settings = settingsService.list(argumentCollection=args);
 		prc.settingsCount = settingsService.count();
+		
+		// Get INterception Points
+		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
+		arraySort( prc.interceptionPoints, "textnocase" );
 
 		// Get Singletons
 		prc.singletons = wirebox.getScope("singleton").getSingletons();
