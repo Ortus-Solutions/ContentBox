@@ -45,8 +45,7 @@ component accessors="true" singleton{
 		
 		// Register Core Media Providers
 		registerProvider( arguments.wirebox.getInstance( "CFContentMediaProvider@cb" ) );
-		registerProvider( arguments.wirebox.getInstance( "RelocationMediaProvider@cb" ) );
-		registerProvider( arguments.wirebox.getInstance( "ForwardMediaProvider@cb" ) );
+		registerProvider( arguments.wirebox.getInstance( "contentbox.model.media.RelocateProvider" ) );
 		
 		return this;
 	}
