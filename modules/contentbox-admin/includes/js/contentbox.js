@@ -18,7 +18,7 @@ $(document).ready(function() {
 	// Show current subnavigation	
 	$('#main_nav > li > a.current').parent().children("ul").show(); 
 	// li clicks
-	$('#main_nav > li > a[href="#"]').click( 
+	$('#main_nav > li > a[href="#"]').mouseover( 
 		function() {
 			$(this).parent().siblings().children("a").removeClass('current'); // Remove .current class from all tabs
 			$(this).addClass('current'); // Add class .current
