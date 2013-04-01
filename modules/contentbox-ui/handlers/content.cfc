@@ -163,7 +163,7 @@ component{
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( thisContent ) ){
 			getPlugin("MessageBox").warn("Comments are disabled! So you can't post any!");
-			setNextEvent( CBHelper.linkContent( thisContent ) );
+			setNextEvent( URL=CBHelper.linkContent( thisContent ) );
 		}
 
 		// Trim values & XSS Cleanup of fields
