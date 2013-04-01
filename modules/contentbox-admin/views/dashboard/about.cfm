@@ -48,8 +48,8 @@
 			<h2 class="border_grey">Links</h2>
 			<ul class="bulleted_list">
 				<li>Source Code: <a href="https://github.com/Ortus-Solutions/ContentBox" target="_blank">https://github.com/Ortus-Solutions/ContentBox</a></li>
-				<li>Code Tracker: <a href="http://coldbox.assembla.com/spaces/contentbox/" target="_blank">http://coldbox.assembla.com/spaces/contentbox/</a></li>
-				<li>Submit Bugs/Enhancements: <a href="http://coldbox.assembla.com/spaces/contentbox/support/tickets" target="_blank">http://coldbox.assembla.com/spaces/contentbox/support/tickets</a></li>
+				<li>Code Tracker: <a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">https://ortussolutions.atlassian.net/browse/CONTENTBOX</a></li>
+				<li>Submit Bugs/Enhancements: <a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">https://ortussolutions.atlassian.net/browse/CONTENTBOX</a></li>
 				<li>Professional Services: <a href="http://www.ortussolutions.com" target="_blank">http://www.ortussolutions.com</a></li>
 				<li>ColdBox Platform: <a href="http://www.coldbox.org" target="_blank">http://www.coldbox.org</a></li>
 			</ul>
