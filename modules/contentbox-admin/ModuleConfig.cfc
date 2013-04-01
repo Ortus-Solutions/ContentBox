@@ -30,7 +30,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Admin";
-	this.version			= "1.2";
+	this.version			= "1.2.1";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
