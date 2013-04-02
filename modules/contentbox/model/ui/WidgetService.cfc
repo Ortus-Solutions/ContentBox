@@ -6,18 +6,18 @@ www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 */
@@ -29,16 +29,16 @@ component accessors="true" singleton threadSafe{
 	property name="layoutService"		inject="LayoutService@cb";
 	property name="coldbox"				inject="coldbox";
 	property name="log"					inject="logbox:logger:{this}";
-	
+
 	// Local properties
 	property name="widgetsPath" 			type="string";
 	property name="widgetsIconsPath" 		type="string";
 	property name="widgetsIconsIncludePath" type="string";
-	
+
 	WidgetService function init(){
 		return this;
 	}
-	
+
 	/**
 	* onDIComplete
 	*/
@@ -48,7 +48,7 @@ component accessors="true" singleton threadSafe{
 		widgetsIconsPath 		= moduleSettings["contentbox-admin"].path & "/includes/images/widgets";
 		widgetsIconsIncludePath = moduleSettings["contentbox-admin"].mapping & "/includes/images/widgets";
 	}
-	
+
 	/**
 	* Get a list of widget icons available in the system
 	*/
@@ -63,7 +63,7 @@ component accessors="true" singleton threadSafe{
 		var w = getWidgets();
 		return valueList(w.name);
 	}
-	
+
 	/**
 	* Get widget code
 	* @name {String}
@@ -74,7 +74,7 @@ component accessors="true" singleton threadSafe{
 		var widgetPath = getWidgetFilePath( argumentCollection=arguments );
 		return fileRead( widgetPath );
 	}
-	
+
 	/**
 	* Save widget code
 	* @name {String}
@@ -87,7 +87,7 @@ component accessors="true" singleton threadSafe{
 		fileWrite( widgetPath, arguments.code );
 		return this;
 	}
-	
+
 	/**
 	* Create new core widget
 	*/
@@ -127,7 +127,7 @@ component accessors="true" singleton threadSafe{
 		var moduleWidgets = moduleService.getModuleWidgetCache();
 		// get layout widgets
 		var layoutWidgets = layoutService.getLayoutWidgetCache();
-		
+
 		// Add custom columns
 		QueryAddColumn(widgets,"filename",[]);
 		QueryAddColumn(widgets,"plugin",[]);
@@ -136,7 +136,7 @@ component accessors="true" singleton threadSafe{
 		QueryAddColumn(widgets,"category",[]);
 		QueryAddColumn(widgets,"icon",[]);
 		// cleanup and more stuff
-		
+
 		// add core widgets
 		for(var x=1; x lte widgets.recordCount; x++){
 			// filename
@@ -165,7 +165,7 @@ component accessors="true" singleton threadSafe{
 			querySetCell( widgets, "name", widgetName );
 			querySetCell( widgets, "widgettype", "Module" );
 			querySetCell( widgets, "module", moduleName );
-			
+
 			try{
 				var mplugin = getWidget( name=widget, type="module" );
 				var category = getWidgetCategory( name=widget, type="module" );
@@ -178,14 +178,14 @@ component accessors="true" singleton threadSafe{
 				log.error("Error creating module widget plugin: #widgetName#",e);
 			}
 		}
-		
+
 		// add layout widgets
 		for( var widget in layoutWidgets ) {
 			queryAddRow( widgets );
 			querySetCell( widgets, "filename", widget );
 			querySetCell( widgets, "name", widget );
 			querySetCell( widgets, "widgettype", "Layout" );
-			
+
 			try{
 				var lplugin = getWidget( name=widget, type="layout" );
 				var category = getWidgetCategory( name=widget, type="layout" );
@@ -200,7 +200,7 @@ component accessors="true" singleton threadSafe{
 		}
 		return widgets;
 	}
-	
+
 	/**
 	* Get a widget by name
 	*/
@@ -221,7 +221,7 @@ component accessors="true" singleton threadSafe{
 			return coldbox.getPlugin(plugin=path, customPlugin=true);
 		}
 	}
-	
+
 	string function getWidgetIcon( required name, required string type="core" ) {
 		var widget = getWidget( argumentCollection=arguments );
 		var icon = widget.getIcon();
@@ -240,7 +240,7 @@ component accessors="true" singleton threadSafe{
 		}
 		return icon;
 	}
-	
+
 	string function getWidgetCategory( required name, required string type="core" ) {
 		var widget = getWidget( argumentCollection=arguments );
 		var category = widget.getCategory();
@@ -259,7 +259,7 @@ component accessors="true" singleton threadSafe{
 		}
 		return category;
 	}
-	
+
 	/**
 	 * Gets widget file path by name and type
 	 * @name {String}
@@ -285,7 +285,7 @@ component accessors="true" singleton threadSafe{
 		}
 		return widgetPath;
 	}
-	
+
 	/**
 	* Remove widget
 	*/
@@ -294,7 +294,7 @@ component accessors="true" singleton threadSafe{
 		if( fileExists( wPath) ){ fileDelete( wPath ); return true; }
 		return false;
 	}
-	
+
 	/**
 	* Upload Widget
 	*/
@@ -302,12 +302,12 @@ component accessors="true" singleton threadSafe{
 		var destination = getWidgetsPath();
 		return fileUpload(destination,arguments.fileField,"","overwrite");
 	}
-	
+
 	// rip extensions
 	string function ripExtension(required filename){
 		return reReplace(arguments.filename,"\.[^.]*$","");
 	}
-	
+
 	any function getWidgetRenderArgs( udf, widget, type ){
 		// get widget
 		var p = getWidget( name=arguments.widget, type=arguments.type );

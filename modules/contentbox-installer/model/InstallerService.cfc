@@ -319,6 +319,10 @@ component accessors="true"{
 			"cb_media_acceptMimeTypes" = "",
 			"cb_media_quickViewWidth" = "400",
 			
+			// Media Services
+			"cb_media_provider" = "CFContentMediaProvider",
+			"cb_media_provider_caching" = "true",
+			
 			// Editor Manager
 			"cb_editors_default" = "ckeditor",
 			"cb_editors_markup" = "HTML",
