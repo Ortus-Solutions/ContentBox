@@ -297,9 +297,12 @@
 							<small>Media providers are used to deliver your media files securely and with greater flexibility as you can place your entire media root outside of the webroot.</small><br/>
 							
 							<cfloop array="#prc.mediaProviders#" index="thisProvider">
-							#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
-							<strong>#thisProvider.displayName#</strong><br/>
-							#thisProvider.description# <br/>
+							<div class="contentBar">
+								<label>
+								#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
+								<strong>#thisProvider.displayName#</strong></label>
+								#thisProvider.description# <br/>
+							</div>
 							</cfloop>
 						</fieldset>
 						
