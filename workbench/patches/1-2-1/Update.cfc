@@ -20,7 +20,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
-Update for 1.3.0 release
+Update for 1.2.1 release
 
 Start Commit Hash: 7609786c62bfdd5b0cc8df979a19e76d23fb2fde
 End Commit Hash: e70e2c90c2c6b326e3618be42315a78b7894687a
@@ -39,7 +39,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="log"						inject="logbox:logger:{this}";
 
 	function init(){
-		version = "1.3.0";
+		version = "1.2.1";
 		return this;
 	}
 
@@ -135,6 +135,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	private function updateSettings(){
 		// Create New settings
 		addSetting( "cb_media_provider", "CFContentMediaProvider" );
+		addSetting( "cb_media_provider_caching", "true" );
 	}
 	
 	private function addSetting(name, value){

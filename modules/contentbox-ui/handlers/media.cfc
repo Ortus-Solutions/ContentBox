@@ -26,11 +26,17 @@ component singleton{
 
 	// DI
 	property name="mediaService" 	inject="mediaService@cb";
+	property name="settingService"  inject="id:settingService@cb";
 
 	/**
 	* Deliver Media
 	*/
 	function index(event,rc,prc){
+		// Param cache purge
+		event.paramValue( "cbcache", "false");
+		if( !isBoolean( rc.cbcache ) ){ rc.cbcache = false; }
+		
+		// Get the requested media path
 		prc.mediaPath = trim( replacenocase( event.getCurrentRoutedURL(), event.getCurrentRoute(), "" ) );
 		prc.mediaPath = reReplace( prc.mediaPath, "\/$", "" );
 		
@@ -47,6 +53,19 @@ component singleton{
 		var iData = { mediaPath = prc.mediaPath, mediaProvider = mediaProvider };
 		announceInterception( "cbui_onMediaRequest", iData );
 		
+		// Media Caching Headers
+		if( !rc.cbcache and settingService.getSetting( "cb_media_provider_caching" ) ){
+			// Set expiration for one year in advanced
+			event.setHTTPHeader( name="expires", value="#GetHttpTimeString( dateAdd( "yyyy", 1, now() ) )#" )
+				.setHTTPHeader( name="pragma", value="cache")
+				.setHTTPHeader( name="cache-control", value="public, max-age=2592000" );
+		}
+		else{
+			event.setHTTPHeader( name="expires", value="#GetHttpTimeString( now() )#" )
+				.setHTTPHeader( name="pragma", value="no-cache")
+				.setHTTPHeader( name="cache-control", value="no-cache, no-store, must-revalidate" );
+		}
+				
 		// Deliver it baby!
 		mediaProvider.deliverMedia( prc.mediaPath );
 	}

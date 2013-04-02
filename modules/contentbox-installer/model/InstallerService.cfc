@@ -321,6 +321,7 @@ component accessors="true"{
 			
 			// Media Services
 			"cb_media_provider" = "CFContentMediaProvider",
+			"cb_media_provider_caching" = "true",
 			
 			// Editor Manager
 			"cb_editors_default" = "ckeditor",

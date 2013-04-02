@@ -304,6 +304,14 @@
 								#thisProvider.description# <br/>
 							</div>
 							</cfloop>
+							
+							<!--- Media Provider Caching --->
+							#html.label(field="cb_media_provider_caching",content="Provider Caching Headers:")#
+							<small>If enabled, the media provider system will issue caching headers for all assets. 
+							You can use the <em>cbcache=true</em> URL param to issue no caching headers on any asset.</small><br/>
+							#html.radioButton(name="cb_media_provider_caching",checked=prc.cbSettings.cb_media_provider_caching,value=true)# Yes
+							#html.radioButton(name="cb_media_provider_caching",checked=not prc.cbSettings.cb_media_provider_caching,value=false)# No
+
 						</fieldset>
 						
 						<fieldset>
