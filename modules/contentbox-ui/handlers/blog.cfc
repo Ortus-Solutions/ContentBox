@@ -86,6 +86,9 @@ component extends="content" singleton{
 		event.paramValue("page",1);
 		event.paramValue("category","");
 		event.paramValue("q","");
+		
+		// Page numeric check
+		if( !isNumeric( rc.page ) ){ rc.page = 1; }
 
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
@@ -128,6 +131,9 @@ component extends="content" singleton{
 		event.paramValue("year","0");
 		event.paramValue("month","0");
 		event.paramValue("day","0");
+		
+		// Page numeric check
+		if( !isNumeric( rc.page ) ){ rc.page = 1; }
 
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging",module="contentbox");
