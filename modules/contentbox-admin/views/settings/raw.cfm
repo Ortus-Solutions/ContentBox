@@ -213,6 +213,7 @@
 									<th width="30" class="{sorter:none}">No.</th>
 									<th>Event</th>
 									<th width="200">Module</th>
+									<th width="100">Listeners</th>									
 								</tr>
 							</thead>
 							<tbody>
@@ -233,6 +234,13 @@
 											<cfcase value="cbadmin">ContentBox Admin</cfcase>
 											<cfcase value="fb">ContentBox FileBrowser</cfcase>
 										</cfswitch>
+									</td>
+									<td>
+										<cfif structKeyExists( controller.getInterceptorService().getInterceptionStates(), thisEvent )>
+											<cfdump var="#structKeyArray( controller.getInterceptorService().getInterceptionStates()[ thisEvent ].getMetadataMap() )#">
+										<cfelse>
+											0
+										</cfif>
 									</td>
 								</tr>
 								</cfif>
