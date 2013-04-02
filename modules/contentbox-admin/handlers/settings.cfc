@@ -21,7 +21,8 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// Exit Handler
-		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.settings.save";
+		prc.xehSaveSettings = "#prc.cbAdminEntryPoint#.settings.save";
+		prc.xehEmailTest	= "#prc.cbAdminEntryPoint#.settings.emailTest";
 		// pages
 		prc.pages = pageService.search(sortOrder="slug asc",isPublished=true).pages;
 		// Get All registered editors so we can display them
@@ -38,6 +39,25 @@ component extends="baseHandler"{
 		prc.cacheNames = cachebox.getCacheNames();
 		// view
 		event.setView("settings/index");
+	}
+	
+	// email test
+	function emailTest(event,rc,prc){
+		var mailService = getPlugin( "MailService" );
+		var mail = mailservice.newMail(to=rc.cb_site_outgoingEmail,
+									   from=rc.cb_site_outgoingEmail,
+									   subject="ContentBox Test",
+									   server=rc.cb_site_mail_server,
+									   username=rc.cb_site_mail_username,
+									   password=rc.cb_site_mail_password,
+									   port=rc.cb_site_mail_smtp,
+									   useTLS=rc.cb_site_mail_tls,
+									   useSSL=rc.cb_site_mail_ssl,
+									   body='Test Email From ContentBox');
+		// send it out
+		var results = mailService.send( mail );
+		
+		event.renderData(data=results, type="json");		
 	}
 
 	// save settings
