@@ -44,6 +44,13 @@ function $getUrlRelativeToPath(required basePath,required filePath, encodeURL=fa
 	URLOut=replacenocase(URLOut,"//","","all");
 	return URLOut;
 }
+function $getURLMediaPath(required fbDirRoot, required filePath) {
+	var URLOut = replaceNoCase(arguments.filePath, arguments.fbDirRoot, "", "all");
+	if(len(URLOut)){
+		URLOut = prc.fbSettings.mediaPath & URLOut;
+	}
+	return URLOut;
+}
 </cfscript>
 <cfoutput>
 <!--- Custom Javascript --->

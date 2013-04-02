@@ -134,6 +134,11 @@ component {
 		binder.map("HQLHelper@cb").to("contentbox.model.util.HQLHelper");
 		binder.map("Validator@cb").to("coldbox.system.core.util.Validator");
 		binder.map("mobileDetector@cb").toDSL("coldbox:myplugin:MobileDetector@contentbox");
+		// Media Services
+		binder.map("mediaService@cb").to("contentbox.model.media.MediaService");
+		binder.map("CFContentMediaProvider@cb").to("contentbox.model.media.CFContentMediaProvider");
+		binder.map("RelocationMediaProvider@cb").to("contentbox.model.media.RelocationMediaProvider");
+		binder.map("ForwardMediaProvider@cb").to("contentbox.model.media.ForwardMediaProvider");
 		// Search
 		binder.map("SearchResults@cb").to("contentbox.model.search.SearchResults");
 		binder.map("SearchService@cb").to("contentbox.model.search.SearchService");

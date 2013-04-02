@@ -289,9 +289,34 @@
 
 							<!--- Location --->
 							#html.label(field="",content="Directory Root: ")#
-							<small>The relative path in your server that will be the expanded root of your media manager. Make sure it is web accessible please.</small></br>
+							<small>The relative path or ColdFusion mapping in your server that will be the expanded root of your media manager.</small></br>
 							#html.textField(name="cb_media_directoryRoot",required="required",value=prc.cbSettings.cb_media_directoryRoot,class="textfield width98",title="The directory root of all your media files, make sure it is web accessible please")#
+							
+							<!---Media Providers --->
+							#html.label(field="",content="Media Providers: ")#
+							<small>Media providers are used to deliver your media files securely and with greater flexibility as you can place your entire media root outside of the webroot.</small><br/>
+							
+							<cfloop array="#prc.mediaProviders#" index="thisProvider">
+							<div class="contentBar">
+								<label>
+								#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
+								<strong>#thisProvider.displayName#</strong></label>
+								#thisProvider.description# <br/>
+							</div>
+							</cfloop>
+							
+							<!--- Media Provider Caching --->
+							#html.label(field="cb_media_provider_caching",content="Provider Caching Headers:")#
+							<small>If enabled, the media provider system will issue caching headers for all assets. 
+							You can use the <em>cbcache=true</em> URL param to issue no caching headers on any asset.</small><br/>
+							#html.radioButton(name="cb_media_provider_caching",checked=prc.cbSettings.cb_media_provider_caching,value=true)# Yes
+							#html.radioButton(name="cb_media_provider_caching",checked=not prc.cbSettings.cb_media_provider_caching,value=false)# No
 
+						</fieldset>
+						
+						<fieldset>
+						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Media Options</strong></legend>
+							
 							<!--- Create Folders --->
 							#html.label(field="cb_media_createFolders",content="Allow Creation of Folders:")#
 							#html.radioButton(name="cb_media_createFolders",checked=prc.cbSettings.cb_media_createFolders,value=true)# Yes
