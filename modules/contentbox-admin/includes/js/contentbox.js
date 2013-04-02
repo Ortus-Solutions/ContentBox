@@ -27,6 +27,11 @@ $(document).ready(function() {
 			return false;
 		}
 	);
+	$('#main_nav > li > a[href="#"]').click( 
+		function() {
+			return false;
+		}
+	);
 	
 	// setup global variables
 	$confirmIt 			= $('#confirmIt');
