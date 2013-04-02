@@ -461,6 +461,11 @@
 							<small>Whether to use SSL when sending mail or not.</small><br/>
 							#html.radioButton(name="cb_site_mail_ssl",checked=prc.cbSettings.cb_site_mail_ssl,value=true)# Yes
 							#html.radioButton(name="cb_site_mail_ssl",checked=not prc.cbSettings.cb_site_mail_ssl,value=false)# No
+							
+							<!--- Test Connection --->
+							<hr/>
+							<div id="emailTestDiv"></div>
+							#html.button(value="Test Connection", id="emailTestButton", class="button2", title="Send a test email with these settings", onclick="emailTest()")#
 						</fieldset>
 
 
