@@ -112,6 +112,20 @@
 						</fieldset>
 						<fieldset>
 							<legend><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/>  Dashboard Options</legend>
+							
+							<!--- Dashboard Feed --->
+							<label for="cb_dashboard_newsfeed">News Feed</label>
+							<small>The RSS feed to present in the dashboard. Leave blank if you don't want any news to display.</small><br/>
+							#html.textField(name="cb_dashboard_newsfeed", value=prc.cbSettings.cb_dashboard_newsfeed, class="textfield width98", title="The RSS feed to present in the dashboard")#
+							
+							<!--- Recent Feed Count --->
+							<label for="cb_dashboard_newsfeed_count">News Feed Count</label>
+							<select name="cb_dashboard_newsfeed_count" id="cb_dashboard_newsfeed_count">
+								<cfloop from="5" to="50" step="5" index="i">
+									<option value="#i#" <cfif i eq prc.cbSettings.cb_dashboard_newsfeed_count>selected="selected"</cfif>>#i#</option>
+								</cfloop>
+							</select>
+
 							<!--- Recent Entries --->
 							<label for="cb_dashboard_recentEntries">Recent Entries Count</label>
 							<select name="cb_dashboard_recentEntries" id="cb_dashboard_recentEntries">

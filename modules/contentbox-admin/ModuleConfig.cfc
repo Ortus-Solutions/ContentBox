@@ -115,10 +115,5 @@ component {
 			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" }
 		];
 		
-		// Admin Mappings
-		binder.map("contentbox-news@cbadmin")
-			.toRSS( "http://www.gocontentbox.org/blog/rss" )
-			.inCacheBox(timeout="60");
-
 	}
 }

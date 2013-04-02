@@ -249,15 +249,15 @@
 			</div>
 			
 			<!--- Latest News --->
-			<cfif structCount( prc.latestNews.metadata )>
+			<cfif prc.latestNews.items.recordCount>
 			#html.anchor(name="recentNews")#
 			<div class="contentBar">			
-				<h3><img src="#prc.cbroot#/includes/images/newspaper.png" alt="news" /> Recent ContentBox News</h3>
+				<h3><img src="#prc.cbroot#/includes/images/newspaper.png" alt="news" /> Recent News</h3>
 				<cfloop query="prc.latestNews.items" endrow="5">
 					<div class="box padding10">
-						<h4><a href="#prc.latestNews.items.rsslink#" target="_blank">#prc.latestNews.items.title#</a></h4>
-						<div><p><strong>#prc.latestNews.items.PUBLISHEDDATE#</strong></p></div>
-						<p>#left( cb.stripHTML( prc.latestNews.items.content ), 500 )#...</p>
+						<h4><a href="#prc.latestNews.items.URL#" target="_blank">#prc.latestNews.items.title#</a></h4>
+						<div><p><strong>#dateFormat( prc.latestNews.items.datepublished, "full" )#</strong></p></div>
+						<p>#left( cb.stripHTML( prc.latestNews.items.body ), 500 )#...</p>
 					</div>
 				</cfloop>
 			</div>
