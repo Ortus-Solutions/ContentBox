@@ -136,6 +136,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		// Create New settings
 		addSetting( "cb_media_provider", "CFContentMediaProvider" );
 		addSetting( "cb_media_provider_caching", "true" );
+		addSetting( "cb_dashboard_newsfeed", "http://www.gocontentbox.org/blog/rss" );
+		addSetting( "cb_dashboard_newsfeed_count", "5" );
 	}
 	
 	private function addSetting(name, value){

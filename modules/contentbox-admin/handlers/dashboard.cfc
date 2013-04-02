@@ -10,6 +10,7 @@ component extends="baseHandler"{
 	property name="commentService" 		inject="id:commentService@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="settingService"		inject="id:settingService@cb";
+	property name="feedReader"			inject="coldbox:plugin:FeedReader";
 
 	function preHandler(event,action,eventArguments,rc,prc){
 		prc.tabDashboard	  = true;
@@ -43,10 +44,18 @@ component extends="baseHandler"{
 	
 		// Get latest ContentBox news
 		try{
-			prc.latestNews = getModel( "contentbox-news@cbadmin" );
+			if( len( prc.cbsettings.cb_dashboard_newsfeed ) ){
+				prc.latestNews = feedReader.readFeed( feedURL=prc.cbsettings.cb_dashboard_newsfeed, 
+													  itemsType="query", 
+													  maxItems=prc.cbsettings.cb_dashboard_newsfeed_count);
+			}
+			else{
+				prc.latestNews = { items = queryNew("") };
+			}
 		}
 		catch(Any e){
-			prc.latestNews = { metadata = {}, items = queryNew("") };
+			prc.latestNews = { items = queryNew("") };
+			log.error( "Error retrieving news feed: #e.message# #e.detail#", e );
 		}
 		
 		// Few counts
