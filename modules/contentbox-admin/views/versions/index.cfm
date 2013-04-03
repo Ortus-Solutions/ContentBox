@@ -4,7 +4,7 @@
 	<!--- Saerch Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/notice.png" alt="info" width="24" height="24" />#prc.content.getContentType()# Snapshot
+			<i class="icon-camera"></i> #prc.content.getContentType()# Snapshot
 		</div>
 		<div class="body">
 			<table class="tablelisting" width="100%">
@@ -55,7 +55,7 @@
 	<!--- Help Box--->
 	<div class="small_box" id="help_tips">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/help.png" alt="info" width="24" height="24" />Help Tips
+			<i class="icon-question-sign"></i> Help Tips
 		</div>
 		<div class="body">
 			<ul class="tipList">
@@ -71,7 +71,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/clock.png" alt="versions" width="30" height="30" />
+			<i class="icon-time icon-large"></i>
 			Content Version History
 		</div>
 		<!--- Body --->

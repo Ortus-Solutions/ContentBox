@@ -5,7 +5,7 @@
 	<!--- Saerch Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Actions
+			<i class="icon-cogs"></i> Actions
 		</div>
 		<div class="body">
 			<!--- Submit Button --->
@@ -15,8 +15,8 @@
 			
 			<!--- Loader --->
 			<div class="loaders" id="uploadBarLoader">
+				<i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
 				Importing Blog
-				<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
 			</div>
 			
 		</div>
@@ -28,7 +28,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/Database.png" alt="settings" />
+			<i class="icon-exchange icon-large"></i>
 			Import Databases Into ContentBox
 		</div>
 		<!--- Body --->
@@ -44,7 +44,7 @@
 		
 		<!--- dsn Info --->
 		<fieldset>
-		<legend><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/> <strong>Datasource Options</strong></legend>
+		<legend><i class="icon-bolt icon-large"></i> <strong>Datasource Options</strong></legend>
 			<p>
 				This server must have a defined datasource to the source blog database in order to import it. Please
 				make sure this datasource exists in the ColdFusion administrator.
@@ -56,7 +56,7 @@
 		
 		<!--- importer --->
 		<fieldset>
-		<legend><img src="#prc.cbRoot#/includes/images/source.png" alt="modifiers"/> <strong>Source Content</strong></legend>
+		<legend><i class="icon-cog icon-large"></i> <strong>Source Content</strong></legend>
 			#html.label(field="importer",content="Choose your importer source:")#
 			#html.select(name="importer",options="Select Source,Mango,WordPress,BlogCFC,MachBlog",style="width:200px")#
 			

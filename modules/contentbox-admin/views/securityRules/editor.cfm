@@ -3,33 +3,11 @@
 <!--- ruleID --->
 #html.hiddenField(name="ruleID",bind=prc.rule)#
 	
-<!--============================Sidebar============================-->
-<div class="sidebar">
-	<!--- Info Box --->
-	<div class="small_box">
-		<div class="header">
-			<img src="#prc.cbroot#/includes/images/tools_icon.png" alt="info" width="24" height="24" />
-			Actions
-		</div>
-		<div class="body">
-				
-			<!--- Action Bar --->
-			<div class="actionBar center">
-				<button class="button2" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
-				&nbsp;<input type="submit" class="buttonred" value="Save">
-			</div>
-			
-		</div>
-	</div>		
-</div>
-<!--End sidebar-->	
-<!--============================Main Column============================-->
-
-<div class="main_column">
+<div class="main">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/securityRule.png" alt="securityRule" width="30" height="30" />
+			<i class="icon-road icon-large"></i>
 			Security Rule Editor
 		</div>
 		<!--- Body --->
@@ -41,8 +19,8 @@
 			<!--- fields --->
 			#html.startFieldset(legend="Security")#
 				<!--- Usage --->
-				<div class="infoBar">
-					<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />
+				<div class="infoBar infoBar-red">
+					<i class="icon-warning-sign icon-large"></i>
 					Please remember that the secure and white lists are lists of 
 					<a href="http://www.regular-expressions.info/reference.html" target="_blank">regular expressions</a> that will match against an incoming
 					event pattern string or a routed URL string.  So remember the event pattern syntax: <em>[moduleName:][package.]handler[.action]</em> if you will
@@ -71,6 +49,12 @@
 				#html.radioButton(name="useSSL",value=false,bind=prc.rule)# No 	
 				#html.textField(name="redirect",label="*Redirect Pattern:",required="required",bind=prc.rule,maxlength="255",class="textfield",size="100",title="The URL pattern to redirect to if user does not have access to this rule.")#
 			#html.endFieldset()#
+			
+			<!--- Action Bar --->
+			<div class="actionBar center">
+				<button class="button2" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
+				&nbsp;<input type="submit" class="buttonred" value="Save">
+			</div>
 			
 		</div>	
 	</div>

@@ -6,7 +6,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/ContentBox-Circle_32.png" alt="settings" />
+			<i class="icon-wrench icon-large"></i>
 			Configure ContentBox
 		</div>
 		<!--- Body --->
@@ -21,15 +21,15 @@
 		<div class="body_vertical_nav clearfix">
 			<!--- Documentation Navigation Bar --->
 			<ul class="vertical_nav">
-				<li class="active"><a href="##site_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> Site Options</a></li>
-				<li><a href="##dashboard_options"><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/> Admin Options</a></li>
-				<li><a href="##content_options"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> Content Options</a></li>
-				<li><a href="##editor_options"><img src="#prc.cbRoot#/includes/images/pen.png" alt="modifiers"/> Editor Options</a></li>
-				<li><a href="##mediamanager"><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> Media Manager</a></li>
-				<li><a href="##gravatars"><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> Gravatars</a></li>
-				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
-				<li><a href="##search_options"><img src="#prc.cbRoot#/includes/images/search_black.png" alt="modifiers"/> Search Options</a></li>
-				<li><a href="##rss_options"><img src="#prc.cbRoot#/includes/images/feed.png" alt="modifiers"/> RSS Options</a></li>
+				<li class="active"><a href="##site_options"><i class="icon-cog icon-large"></i> Site Options</a></li>
+				<li><a href="##dashboard_options"><i class="icon-desktop icon-large"></i> Admin Options</a></li>
+				<li><a href="##content_options"><i class="icon-file-alt icon-large"></i> Content Options</a></li>
+				<li><a href="##editor_options"><i class="icon-edit icon-large"></i> Editor Options</a></li>
+				<li><a href="##mediamanager"><i class="icon-th icon-large"></i> Media Manager</a></li>
+				<li><a href="##gravatars"><i class="icon-user icon-large"></i> Gravatars</a></li>
+				<li><a href="##notifications"><i class="icon-envelope-alt icon-large"></i> Notifications</a></li>
+				<li><a href="##search_options"><i class="icon-search icon-large"></i> Search Options</a></li>
+				<li><a href="##rss_options"><i class="icon-rss icon-large"></i> RSS Options</a></li>
 				<!--- cbadmin Event --->
 				#announceInterception("cbadmin_onSettingsNav")#
 			</ul>
@@ -40,7 +40,7 @@
 					<!--- General Options --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Site Options</strong></legend>
+						<legend><i class="icon-cog icon-large"></i> <strong>Site Options</strong></legend>
 						 	<!--- Site Name  --->
 							#html.textField(name="cb_site_name",label="Site Name:",value=prc.cbSettings.cb_site_name,class="textfield width98",title="The global name of this ContentBox installation")#
 							<!--- Tag Line --->
@@ -70,7 +70,7 @@
 						</fieldset>
 						<!---Blog Entries --->
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/pen.png" alt="modifiers"/> <strong>Blog Options</strong></legend>
+						<legend><i class="icon-quote-left icon-large"></i> <strong>Blog Options</strong></legend>
 							<!--- Disable Blog --->
 							#html.label(field="cb_site_disable_blog",content="Disable Blog:")#
 							<small>You can disable the Blog in this entire ContentBox. This does not delete data, it just disables blog features. Also
@@ -88,7 +88,7 @@
 						</fieldset>
 						<!--- Site Maintenance --->
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/logout.png" alt="modifiers"/> <strong>Site Maintenance</strong></legend>
+						<legend><i class="icon-ambulance icon-large"></i> <strong>Site Maintenance</strong></legend>
 						 	<p>You can put your entire site in maintenance mode if you are doing upgrades or anything funky!</p>
 							<!--- Site maintenance --->
 							#html.label(field="cb_site_maintenance",content="Site Maintenance:")#
@@ -103,7 +103,7 @@
 					<!--- Dashboard Options --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Admin Options</strong></legend>
+						<legend><i class="icon-desktop icon-large"></i> <strong>Admin Options</strong></legend>
 						 	<!--- Admin SSL --->
 							#html.label(field="cb_admin_ssl",content="Admin Force SSL (Secure Sockets Layer):")#
 							<small>You can enable SSL encryption for the administrator module.</small><br/>
@@ -111,7 +111,7 @@
 							#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
 						</fieldset>
 						<fieldset>
-							<legend><img src="#prc.cbRoot#/includes/images/chart.png" alt="modifiers"/>  Dashboard Options</legend>
+							<legend><i class="icon-dashboard icon-large"></i>  Dashboard Options</legend>
 							
 							<!--- Dashboard Feed --->
 							<label for="cb_dashboard_newsfeed">News Feed</label>
@@ -151,7 +151,7 @@
 							</select>
 						</fieldset>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/>  Paging Options</legend>
+						<legend><i class="icon-copy icon-large"></i>  Paging Options</legend>
 
 						<!--- Quick Search --->
 						<label for="cb_admin_quicksearch_max">Max Quick Search Count:</label>
@@ -193,7 +193,7 @@
 					<!--- Content Options --->
 					<div>
 						<fieldset>
-							<legend><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/>  General Options</legend>
+							<legend><i class="icon-cog icon-large"></i>  Content Options</legend>
 
 							<!--- Content Max Versions --->
 							<label for="cb_versions_max_history">Content Max Versions To Keep:</label>
@@ -215,7 +215,7 @@
 							
 						</fieldset>
 						<fieldset>
-							<legend><img src="#prc.cbRoot#/includes/images/database_black.png" alt="modifiers"/>  Caching Options</legend>
+							<legend><i class="icon-hdd icon-large"></i>  Content Caching</legend>
 
 							<!--- Content Caching --->
 							#html.label(field="cb_content_caching",content="Activate Page rendered content caching:")#
@@ -262,7 +262,7 @@
 					<!--- Editor Options --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/pen.png" alt="modifiers"/> <strong>Editor Options</strong></legend>
+						<legend><i class="icon-edit icon-large"></i> <strong>Editor Options</strong></legend>
 						 	<!--- Default Editor --->
 							<label for="cb_editors_default">Default Editor:</label>
 							<small>Choose the default editor that all users will use for pages, blogs, custom HTML, etc.</small><br/>
@@ -298,7 +298,7 @@
 					<!--- Media Manager --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/media.png" alt="modifiers"/> <strong>Media Manager</strong></legend>
+						<legend><i class="icon-th icon-large"></i> <strong>Media Manager</strong></legend>
 							<p>From here you can control the media manager settings.</p>
 
 							<!--- Location --->
@@ -311,7 +311,7 @@
 							<small>Media providers are used to deliver your media files securely and with greater flexibility as you can place your entire media root outside of the webroot.</small><br/>
 							
 							<cfloop array="#prc.mediaProviders#" index="thisProvider">
-							<div class="contentBar">
+							<div class="infoBar infoBar-blue">
 								<label>
 								#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
 								<strong>#thisProvider.displayName#</strong></label>
@@ -329,7 +329,7 @@
 						</fieldset>
 						
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Media Options</strong></legend>
+						<legend><i class="icon-cog icon-large"></i> <strong>Media Options</strong></legend>
 							
 							<!--- Create Folders --->
 							#html.label(field="cb_media_createFolders",content="Allow Creation of Folders:")#
@@ -362,7 +362,7 @@
 						</fieldset>
 						<!--- Uplodify --->
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/upload.png" alt="modifiers"/> <strong>Uploadify Integration</strong></legend>
+						<legend><i class="icon-upload-alt icon-large"></i> <strong>Uploadify Integration</strong></legend>
 							<p>From here you control the <a href="http://www.uploadify.com/" target="_blank">Uploadify</a> integration settings.</p>
 
 							<!--- descrip[tion] --->
@@ -385,7 +385,7 @@
 					<!--- Gravatars --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/gravatar.png" alt="modifiers"/> <strong>Gravatars</strong></legend>
+						<legend><i class="icon-user icon-large"></i> <strong>Gravatars</strong></legend>
 							<p>An avatar is an image that follows you from site to site appearing beside your name when you comment on avatar enabled sites.(<a href="http://www.gravatar.com/" target="_blank">http://www.gravatar.com/</a>)</p>
 
 							<!--- Gravatars  --->
@@ -406,7 +406,7 @@
 					<!--- Notifications --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Notifications</strong></legend>
+						<legend><i class="icon-envelope-alt icon-large"></i> <strong>Notifications</strong></legend>
 							<!--- Site Email --->
 							#html.label(field="cb_site_email",content="Administrator Email:")#
 							<small>The email(s) that receives all notifications from ContentBox.  To specify multiple addresses, separate the addresses with commas.</small><br/>
@@ -432,7 +432,7 @@
 						</fieldset>
 						<!--- Mail Server Settings --->
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Mail Server</strong></legend>
+						<legend><i class="icon-laptop icon-large"></i> <strong>Mail Server</strong></legend>
 							<p>By default ContentBox will use the mail settings in your application server.  You can override those settings by completing
 							   the settings below</p>
 							<!--- Mail Server --->
@@ -465,7 +465,7 @@
 							<!--- Test Connection --->
 							<hr/>
 							<div id="emailTestDiv"></div>
-							#html.button(value="Test Connection", id="emailTestButton", class="button2", title="Send a test email with these settings", onclick="emailTest()")#
+							<button id="emailTestButton" class="button2" title="Send a test email with these settings" onclick="return emailTest()"><i class="icon-spinner icon-large" id="iTest"></i> Test Connection</button>
 						</fieldset>
 
 
@@ -473,7 +473,7 @@
 					<!--- Search Options --->
 					<div>
 						<fieldset>
-							<legend><img src="#prc.cbRoot#/includes/images/search_black.png" alt="modifiers"/>  Search Options</legend>
+							<legend><i class="icon-search icon-large"></i>  Search Options</legend>
 
 							<!--- Max Search Results --->
 							<label for="cb_search_maxResults">Max Search Results:</label>
@@ -501,7 +501,7 @@
 					<!--- RSS Options --->
 					<div>
 						<fieldset>
-							<legend><img src="#prc.cbRoot#/includes/images/feed.png" alt="modifiers"/>  RSS Options</legend>
+							<legend><i class="icon-rss icon-large"></i>  RSS Options</legend>
 
 							<!--- Max RSS Entries --->
 							<label for="cb_rss_maxEntries">Max RSS Content Items:</label>
@@ -520,6 +520,9 @@
 									<option value="#i#" <cfif i eq prc.cbSettings.cb_rss_maxComments>selected="selected"</cfif>>#i#</option>
 								</cfloop>
 							</select>
+					</fieldset>
+					<fieldset>
+							<legend><i class="icon-hdd icon-large"></i>  RSS Caching</legend>
 
 							<!--- RSS Caching --->
 							#html.label(field="cb_rss_caching",content="Activate RSS feed caching:")#

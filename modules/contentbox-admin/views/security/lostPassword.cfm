@@ -2,7 +2,7 @@
 <div class="box clear" id="loginBox">
 	
 	<div class="header">
-		<img src="#prc.cbroot#/includes/images/key_icon.png" alt="help" />Lost Password
+		<i class="icon-key icon-"></i> Lost Password
 	</div>
 	
 	<div class="body clearfix">

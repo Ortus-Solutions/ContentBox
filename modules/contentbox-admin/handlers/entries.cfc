@@ -60,7 +60,7 @@ component extends="baseHandler"{
 		event.paramValue("fAuthors","all");
 		event.paramValue("fCategories","all");
 		event.paramValue("fStatus","any");
-		event.paramValue("isFiltering",false);
+		event.paramValue("isFiltering", false, true);
 
 		// prepare paging plugin
 		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
@@ -73,7 +73,7 @@ component extends="baseHandler"{
 		if( rc.fCategories neq "all"){ prc.pagingLink&="&fCategories=#rc.fCategories#"; }
 		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
 		// is Filtering?
-		if( rc.fAuthors neq "all" OR rc.fCategories neq "all" or rc.fStatus neq "any"){ rc.isFiltering = true; }
+		if( rc.fAuthors neq "all" OR rc.fCategories neq "all" or rc.fStatus neq "any"){ prc.isFiltering = true; }
 
 		// get all categories
 		prc.categories = categoryService.getAll(sortOrder="category");

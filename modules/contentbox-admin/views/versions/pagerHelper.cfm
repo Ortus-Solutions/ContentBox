@@ -24,7 +24,7 @@ function versionsPagerDiff(){
 }
 <cfif prc.oAuthor.checkPermission("VERSIONS_DELETE")>
 function versionsPagerRemove(versionID){
-	$('##version_delete_'+versionID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+	$('##version_delete_'+versionID).removeClass( "icon-remove-sign" ).addClass( "icon-spin icon-spinner" );
 	// ajax remove change
 	$.post("#event.buildlink(linkTo=prc.xehVersionRemove)#",{versionID:versionID},function(data){
 		if( data ){
@@ -32,14 +32,14 @@ function versionsPagerRemove(versionID){
 		}
 		else{
 			alert("Weird error removing version. Please try again or check the logs.");
-			$('##version_delete_'+versionID).attr('src','#prc.cbRoot#/includes/images/delete.png');
+			$('##version_delete_'+versionID).removeClass( "icon-spin icon-spinner").addClass( "icon-remove-sign" );
 		}
 	},"json");	
 }
 </cfif>
 <cfif prc.oAuthor.checkPermission("VERSIONS_ROLLBACK")>
 function versionsPagerRollback(versionID){
-	$('##version_rollback_'+versionID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+	$('##version_rollback_'+versionID).addClass( "icon-spin" );
 	// ajax rollback change
 	$.post("#event.buildlink(linkTo=prc.xehVersionRollback)#",{revertID:versionID},function(data){
 		if( data ){
@@ -47,7 +47,7 @@ function versionsPagerRollback(versionID){
 		}
 		else{
 			alert("Weird error rolling back version. Please try again or check the logs.");
-			$('##version_rollback_'+versionID).attr('src','#prc.cbRoot#/includes/images/arrow_merge.png');
+			$('##version_rollback_'+versionID).removeClass( "icon-spin" );
 		}
 	},"json");	
 }

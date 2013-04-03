@@ -2,7 +2,7 @@
 <div id="pagerEntries">
 <!--- Loader --->
 <div class="loaders floatRight" id="entryPagerLoader">
-	<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+	<i class="icon-spinner icon-spin icon-large"></i>
 </div>
 <!--- Paging --->
 <cfif prc.pager_pagination>
@@ -15,9 +15,9 @@
 		<tr>
 			<th>Title</th>
 			<th>Categories</th>
-			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Entry Published"/></th>
-			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="views" title="Number of Views"/></th>
-			<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/comments.png" alt="comments" title="Number of Comments"/></th>
+			<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
+			<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
+			<th width="40" class="center"><i class="icon-comments icon-large" title="Comments"></i></th>
 			<th width="75" class="center">Actions</th>
 		</tr>
 	</thead>
@@ -39,16 +39,16 @@
 			<td>#entry.getCategoriesList()#</td>
 			<td class="center">
 				<cfif entry.isExpired()>
-					<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Entry has expired!" />
+					<i class="icon-time icon-large textRed" title="Entry has expired!"></i>
 					<span class="hidden">expired</span>
 				<cfelseif entry.isPublishedInFuture()>
-					<img src="#prc.cbRoot#/includes/images/information.png" alt="published" title="Entry Publishes in the future!" />
+					<i class="icon-fighter-jet icon-large textBlue" title="Entry Publishes in the future!"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif entry.isContentPublished()>
-					<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Entry Published!" />
+					<i class="icon-ok icon-large textGreen" title="Entry Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
-					<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Entry Draft!" />
+					<i class="icon-remove icon-large textRed" title="Entry Published!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
@@ -57,14 +57,14 @@
 			<td class="center">
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<!--- Edit Command --->
-				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#"><i class="icon-edit icon-large"></i></a>
 				&nbsp;
 				</cfif>
 				<!--- History Command --->
-				<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#" title="Version History"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/></a>
+				<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#" title="Version History"><i class="icon-time icon-large"></i></a>
 				&nbsp;
 				<!--- View Command --->
-				<a href="#prc.CBHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
+				<a href="#prc.CBHelper.linkEntry(entry)#" title="View Entry In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>
 			</td>
 		</tr>
 		</cfloop>

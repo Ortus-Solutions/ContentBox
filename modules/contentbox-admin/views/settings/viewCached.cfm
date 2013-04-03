@@ -39,7 +39,7 @@
 		<cfloop query="rc.settings">
 		<tr>
 			<td>#rc.settings.name#</td>
-			<td>#rc.settings.value#</td>
+			<td>#HTMLEditFormat( rc.settings.value )#</td>
 		</tr>
 		</cfloop>
 	</tbody>

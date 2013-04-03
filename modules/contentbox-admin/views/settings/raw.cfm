@@ -17,10 +17,10 @@
 		<div class="body_vertical_nav clearfix">
 			<!--- Geek Navigation Bar --->
 			<ul class="vertical_nav">
-				<li title="Raw Settings"><a href="##raw" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Raw Settings</a></li>
-				<li title="WireBox"><a href="##wirebox"><img src="#prc.cbroot#/includes/images/eye.png" alt="icon" border="0"/> WireBox</a></li>
-				<li title="CacheBox Monitor"><a href="##cachebox"><img src="#prc.cbroot#/includes/images/database_black.png" alt="icon" border="0"/> CacheBox</a></li>
-				<li title="ContentBox Events"><a href="##events"><img src="#prc.cbroot#/includes/images/docs_icon.png" alt="icon" border="0"/> ContentBox Events</a></li>
+				<li title="Raw Settings"><a href="##raw" class="current"><i class="icon-cog icon-large"></i> Raw Settings</a></li>
+				<li title="WireBox"><a href="##wirebox"><i class="icon-th-large icon-large"></i> WireBox</a></li>
+				<li title="CacheBox Monitor"><a href="##cachebox"><i class="icon-hdd icon-large"></i>  CacheBox</a></li>
+				<li title="ContentBox Events"><a href="##events"><i class="icon-bullhorn icon-large"></i>  ContentBox Events</a></li>
 			</ul>
 			<!--- Panes --->
 			<div class="main_column">
@@ -108,9 +108,9 @@
 									</td>
 									<td class="center">
 										<!--- Edit Command --->
-										<a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
+										<a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting"><i class="icon-edit icon-large"></i></a>
 										<!--- Delete Command --->
-										<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><img id="delete_#setting.getsettingID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+										<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><i class="icon-remove-sign icon-large" id="delete_#setting.getsettingID()#"></i></a>
 									</td>
 								</tr>
 								</cfloop>
@@ -165,7 +165,7 @@
 										#wirebox.getBinder().getMapping(target).getPath()#
 									</td>
 									<td class="center">
-										<a href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'})" title="Dump Mapping Memento"><img src="#prc.cbroot#/includes/images/eye.png" alt="icon" border="0"/></a>
+										<a href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'})" title="Dump Mapping Memento"><i class="icon-eye-open icon-large"></i> </a>
 									</td>
 								</tr>
 								</cfloop>
@@ -223,7 +223,7 @@
 								<cfset thisModule = listFirst( thisEvent, "_" )>
 								<tr>
 									<td>
-										#index++#
+										<span class="badge badge-info">#index++#</badge>
 									</td>
 									<td>
 										#thisEvent#
@@ -239,7 +239,7 @@
 										<cfif structKeyExists( controller.getInterceptorService().getInterceptionStates(), thisEvent )>
 											<cfdump var="#structKeyArray( controller.getInterceptorService().getInterceptionStates()[ thisEvent ].getMetadataMap() )#">
 										<cfelse>
-											0
+											<span class="badge badge-inverse">0</badge>
 										</cfif>
 									</td>
 								</tr>

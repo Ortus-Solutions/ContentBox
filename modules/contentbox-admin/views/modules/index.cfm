@@ -5,7 +5,7 @@
 	<!--- Upload Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Module Uploader
+			<i class="icon-upload-alt"></i> Module Uploader
 		</div>
 		<div class="body">
 			#html.startForm(name="moduleUploadForm",action=prc.xehModuleUpload,multipart=true,novalidate="novalidate")#
@@ -26,7 +26,7 @@
 	<!--- Actions Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Module Admin Actions
+			<i class="icon-cogs"></i> Module Admin Actions
 		</div>
 		<div class="body">
 			<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivates, Wipes and Re-Registers All Modules"><button class="button2">Reset Modules</button></a>
@@ -43,10 +43,10 @@
 		<div class="header">
 			<ul class="sub_nav">
 				<!--- Manage --->
-				<li title="Manage Modules"><a href="##manage" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Manage</a></li>
+				<li title="Manage Modules"><a href="##manage" class="current"><i class="icon-cog icon-large"></i> Manage</a></li>
 				<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
 				<!--- Install --->
-				<li title="Install New Modules"><a href="##install" onclick="loadForgeBox()"><img src="#prc.cbroot#/includes/images/download.png" alt="icon" border="0"/> ForgeBox</a></li>
+				<li title="Install New Modules"><a href="##install" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
 				</cfif>
 			</ul>
 			<img src="#prc.cbroot#/includes/images/ContentBox-Circle_32.png" alt="modules"/>
@@ -107,32 +107,32 @@
 							</td>
 							<td class="center">
 								<cfif module.getIsActive()>
-									<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="active" title="Module is active!" />
+									<i class="icon-ok icon-large textGreen"></i>
 									<span class="hidden">active</span>
 								<cfelse>
-									<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="deactivated" title="Module is not active!" />
+									<i class="icon-remove icon-large textRed"></i>
 									<span class="hidden">deactivated</span>
 								</cfif>
 							</td>
 							<td class="center">
 							<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
 
-								<cfif len(module.getForgeBoxSlug())>
+								<cfif !len(module.getForgeBoxSlug())>
 								<!--- Update Check --->
-								<a title="Check For Updates" href="##"><img src="#prc.cbRoot#/includes/images/download_black.png" alt="download" /></a>
+								<a title="Check For Updates" href="##"><i class="icon-refresh icon-large"></i></a>
 								&nbsp;
 								</cfif>
 								<!--- Check if active --->
 								<cfif module.getIsActive()>
 									<!--- Update Check --->
-									<a title="Deactivate Module" href="javascript:deactivate('#JSStringFormat(module.getName())#')"><img src="#prc.cbRoot#/includes/images/hand_contra.png" alt="deactivate" /></a>
+									<a title="Deactivate Module" href="javascript:deactivate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-down icon-large"></i></a>
 									&nbsp;
 								<cfelse>
-									<a title="Activate Module" href="javascript:activate('#JSStringFormat(module.getName())#')"><img src="#prc.cbRoot#/includes/images/hand_pro.png" alt="activate" /></a>
+									<a title="Activate Module" href="javascript:activate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-up icon-large"></i></a>
 									&nbsp;
 									<!--- Delete Module --->
 									<a title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
-										data-title="Delete #module.getName()#?"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+										data-title="Delete #module.getName()#?"><i class="icon-remove-sign icon-large"></i></a>
 									</cfif>
 							</cfif>
 							</td>
@@ -149,7 +149,7 @@
 				<!--- ForgeBox --->
 				<div id="forgeboxPane">
 					<div class="center">
-						<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/><br/>
+						<i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
 						Please wait, connecting to ForgeBox...
 					</div>
 				</div>

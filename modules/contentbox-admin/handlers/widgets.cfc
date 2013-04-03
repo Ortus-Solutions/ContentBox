@@ -70,7 +70,7 @@ component extends="baseHandler"{
 		else{
 			// Upload File
 			try{
-				widgetService.uploadWidget("filePlugin");
+				widgetService.uploadWidget( "filePlugin" );
 				// Info
 				getPlugin("MessageBox").setMessage(type="info", message="Widget Installed Successfully");
 			}

@@ -26,6 +26,7 @@ function edit(permissionID,permission,description){
 }
 function remove(permissionID){
 	var $permissionForm = $("##permissionForm");
+	$("##delete_"+ permissionID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 	$permissionForm.find("##permissionID").val( permissionID );
 	$permissionForm.submit();
 }

@@ -67,9 +67,9 @@
 				<ul class="vertical_nav">
 					<li class="active"><a href="##userDetails"><i class="icon-eye-open"></i> Details</a></li>
 					<cfif prc.author.isLoaded()>
-					<li><a href="##password"><i class="icon-lock"></i> Change Password</a></li>
+					<li><a href="##password"><i class="icon-key"></i> Change Password</a></li>
 					<li><a href="##preferences"><i class="icon-briefcase"></i> Preferences</a></li>
-					<li><a href="##permissions" onclick="loadPermissions()"><i class="icon-star"></i> Permissions</a></li>
+					<li><a href="##permissions" onclick="loadPermissions()"><i class="icon-lock"></i> Permissions</a></li>
 					<li><a href="##entries"><i class="icon-quote-left"></i> User Entries</a></li>
 					<li><a href="##pages"><i class="icon-pencil"></i> User Pages</a></li>
 					</cfif>
