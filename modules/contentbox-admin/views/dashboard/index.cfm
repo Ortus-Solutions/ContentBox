@@ -9,7 +9,8 @@
 	<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Admin Actions
+			<i class="icon-cogs"></i>
+			Admin Actions
 		</div>
 		<div class="body">
 			<cfif flash.exists("moduleReloaded")>
@@ -21,7 +22,7 @@
 			<p class="actionBar">
 				#html.startForm(name="reloadForm",action=prc.xehAdminAction)#
 				#html.select(label="Choose Command To Execute:",name="targetModule",options=prc.xehAdminActionData)#
-				#html.submitButton(value="Run",class="buttonred")#
+				<button class="buttonred"><i class="icon-play"></i> Run</button>
 				#html.endForm()#
 			</p>
 		</div>
@@ -31,7 +32,7 @@
 	<!--- Snapshot Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/camera.png" alt="info" width="24" height="24" />Data Snapshots
+			<i class="icon-camera"></i> Data Snapshots
 		</div>
 		<div class="body">
 			<!--- Accordion Snapshots --->
@@ -40,7 +41,7 @@
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-					<img src="#prc.cbroot#/includes/images/chart.png" alt="info" /> Top Visited Content 
+					<i class="icon-bar-chart icon-large"></i> Top Visited Content 
 				</h2>
 				<div class="pane">
 					
@@ -75,7 +76,7 @@
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-					<img src="#prc.cbroot#/includes/images/chart.png" alt="info" /> Top Commented Content 
+					<i class="icon-bar-chart icon-large"></i> Top Commented Content 
 				</h2>
 				<div class="pane">
 					
@@ -110,7 +111,7 @@
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-					<img src="#prc.cbroot#/includes/images/comments_black.png" alt="info" /> Discussions 
+					<i class="icon-comments icon-large"></i> Discussions 
 				</h2>
 				<div class="pane">
 					<ul>
@@ -123,7 +124,7 @@
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-					<img src="#prc.cbroot#/includes/images/pen.png" alt="info" /> Content </h2>
+					<i class="icon-pencil icon-large"></i> Content </h2>
 				<div class="pane">
 					<ul>
 						<li><a title="View Entries" href="#event.buildLink(prc.xehEntries)#">#prc.entriesCount# Entries</a> </li>
@@ -140,7 +141,7 @@
 	<!--- Info Box --->
 	<div class="small_box expose">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/info.png" alt="info" width="24" height="24" />Need Help?
+			<i class="icon-medkit"></i> Need Help?
 		</div>
 		<div class="body">
 			<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox and ContentBox">
@@ -155,7 +156,7 @@
 	<!--- Help Box--->
 	<div class="small_box" id="help_tips">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/help.png" alt="info" width="24" height="24" />Help Tips
+			<i class="icon-question-sign"></i> Help Tips
 		</div>
 		<div class="body">
 			<ul class="tipList">
@@ -176,7 +177,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/line_chart.png" alt="sofa" width="30" height="30" />
+			<i class="icon-dashboard icon-larger"></i>
 			Welcome to your ContentBox Dashboard
 		</div>
 		<!--- Body --->
@@ -211,7 +212,7 @@
 				</div>				
 				</cfif>
 				<div class="filterBar">
-					<h3><img src="#prc.cbroot#/includes/images/blog.png" alt="blog" /> Recent Entries</h3>
+					<h3><i class="icon-quote-left"></i> Recent Entries</h3>
 				</div>				
 				#prc.entriesViewlet#
 			</div>
@@ -225,7 +226,7 @@
 				</div>				
 				</cfif>
 				<div class="filterBar">
-					<h3><img src="#prc.cbroot#/includes/images/page_big.png" alt="blog" /> Recent Pages</h3>
+					<h3><i class="icon-pencil"></i> Recent Pages</h3>
 				</div>				
 				#prc.pagesViewlet#
 			</div>
@@ -236,12 +237,12 @@
 				<div class="buttonBar">					
 				</div>				
 				<div class="filterBar">
-					<h3><img src="#prc.cbroot#/includes/images/comments_32.png" alt="blog" /> Recent Comments</h3>
+					<h3><i class="icon-comments"></i> Recent Comments</h3>
 				</div>	
 				<!--- Info Bar --->
 				<cfif NOT prc.cbSettings.cb_comments_enabled>
 					<div class="infoBar">
-						<img src="#prc.cbRoot#/includes/images/info.png" alt="comments" />
+						<i class="icon-exclamation-sign icon-2x pull-left"></i>
 						Comments are currently disabled site-wide!
 					</div>
 				</cfif>			
@@ -252,7 +253,7 @@
 			<cfif prc.latestNews.items.recordCount>
 			#html.anchor(name="recentNews")#
 			<div class="contentBar">			
-				<h3><img src="#prc.cbroot#/includes/images/newspaper.png" alt="news" /> Recent News</h3>
+				<h3><i class="icon-rss"></i> Recent News</h3>
 				<cfloop query="prc.latestNews.items" endrow="5">
 					<div class="box padding10">
 						<h4><a href="#prc.latestNews.items.URL#" target="_blank">#prc.latestNews.items.title#</a></h4>

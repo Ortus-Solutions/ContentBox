@@ -29,6 +29,16 @@ RewriteRule ^(.*)$ - [NC,L]
 RewriteCond %{REQUEST_URI} ^/(.*(flashservices|flex2gateway|flex-remoting)).*$
 RewriteRule ^(.*)$ - [NC,L]
 
+#font awesome
+AddType application/vnd.ms-fontobject .eot
+AddType font/ttf .ttf
+AddType font/otf .otf
+<FilesMatch "\.(ttf|otf|eot|woff)$">
+  <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+  </IfModule>
+</FilesMatch>
+
 #Images, css, javascript and docs, add your own extensions if needed.
 RewriteCond %{REQUEST_URI} \.(bmp|gif|jpe?g|png|css|js|txt|pdf|doc|xls|ico|swf)$
 RewriteRule ^(.*)$ - [NC,L]

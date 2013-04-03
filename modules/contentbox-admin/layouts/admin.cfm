@@ -12,9 +12,10 @@
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/sort.css"	 	rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/style.css"			rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/teal.css" 			rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/sort.css"	 			rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/font-awesome.min.css"	rel="stylesheet"/>
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
@@ -65,6 +66,7 @@
 							<h2>Search Results</h2>
 						</span>
 						<!--- Inputs --->
+						<i class="icon-search"></i> 
 						<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url"/>
 						<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" size="15"/>
 					</span>
@@ -111,7 +113,7 @@
 				</span>
 			  	
 			  	<!--- site tag line --->
-				<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="Open the site">#prc.cbSettings.cb_site_name#</a>
+				<i class="icon-desktop"></i> <a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="Open the site">#prc.cbSettings.cb_site_name#</a>
 				
 				<!--- cbadmin event --->
 				#announceInterception("cbadmin_onTagline")#
