@@ -32,7 +32,7 @@
 		
 		<!--- Loader --->
 		<div class="loaders floatRight" id="permissionLoader">
-			<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/><br/>
+			<i class="icon-spinner icon-spin icon-large icon-2x"><br/>
 			<div class="center"><small>Please Wait...</small></div>
 		</div>
 		
