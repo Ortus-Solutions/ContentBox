@@ -36,7 +36,7 @@
 			<cfloop array="#prc.entries#" index="entry">
 			<tr id="contentID-#entry.getContentID()#">
 				<td class="middle">
-					<img src="#prc.cbRoot#/includes/images/html.png" alt="child"/>
+					<i class="icon-tasks icon-large"></i>
 				</td>
 				<td>
 					<!--- Title --->

@@ -4,7 +4,7 @@
 	<!--- Saerch Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/search.png" alt="info" width="24" height="24" />Search
+			<i class="icon-search"></i> Search
 		</div>
 		<div class="body<cfif len(rc.search)> selected</cfif>">
 			<!--- Search Form --->
@@ -22,7 +22,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/html_32.png" alt="customHTML" />
+			<i class="icon-tasks icon-large"></i>
 			Custom HTML
 		</div>
 		<!--- Body --->
@@ -88,10 +88,10 @@
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 							<!--- Edit Command --->
-							<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+							<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><i class="icon-edit icon-large"></i></a>
 							&nbsp;
 							<!--- Delete Command --->
-							<a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#entry.getContentID()#" class="icon-remove-sign icon-large"></i></a>
 							</cfif>
 						</td>
 					</tr>

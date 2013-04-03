@@ -5,7 +5,7 @@
 	<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/entry.png" alt="info" width="24" height="24" />Editor
+			<i class="icon-edit"></i> Editor
 		</div>
 		<div class="body">
 			<!--- Create/Edit form --->
@@ -28,7 +28,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/category.png" alt="sofa" width="30" height="30" />
+			<i class="icon-tags icon-large"></i>
 			Content Categories
 		</div>
 		<!--- Body --->
@@ -73,9 +73,9 @@
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
 							<!--- Edit Command --->
-							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
+							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
 							<!--- Delete Command --->
-							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><img id="delete_#category.getCategoryID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-remove-sign icon-large" id="delete_#category.getCategoryID()#"></i></a>
 							</cfif>
 						</td>
 					</tr>

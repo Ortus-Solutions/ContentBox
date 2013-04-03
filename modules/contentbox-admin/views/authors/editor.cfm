@@ -4,12 +4,12 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Actions
+			<i class="icon-cogs"></i> Actions
 		</div>
 		<div class="body">
 			<!--- Back button --->
 			<p class="center">
-				<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')"> <img src="#prc.cbroot#/includes/images/go-back.png" alt="help"/> Back To Authors</button>
+				<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')"> Back To Authors</button>
 			</p>
 		</div>
 	</div>
@@ -17,7 +17,7 @@
 	<cfif prc.author.isLoaded()>
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/users_icon.png" alt="info" width="24" height="24" />Details
+			<i class="icon-eye-open"></i> Details
 		</div>
 		<div class="body">
 			<!--- Info --->
@@ -54,7 +54,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" />
+			<i class="icon-user icon-large"></i>
 			<cfif prc.author.isLoaded()>Editing #prc.author.getName()#<cfelse>Create Author</cfif>
 		</div>
 		<!--- Body --->
@@ -65,13 +65,13 @@
 			<div class="body_vertical_nav clearfix">
 				<!--- User Navigation Bar --->
 				<ul class="vertical_nav">
-					<li class="active"><a href="##userDetails"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> Details</a></li>
+					<li class="active"><a href="##userDetails"><i class="icon-eye-open"></i> Details</a></li>
 					<cfif prc.author.isLoaded()>
-					<li><a href="##password"><img src="#prc.cbRoot#/includes/images/credit-card.png" alt="modifiers"/> Change Password</a></li>
-					<li><a href="##preferences"><img src="#prc.cbRoot#/includes/images/eye.png" alt="modifiers"/> Preferences</a></li>
-					<li><a href="##permissions" onclick="loadPermissions()"><img src="#prc.cbRoot#/includes/images/lock.png" alt="modifiers"/> Permissions</a></li>
-					<li><a href="##entries"><img src="#prc.cbRoot#/includes/images/page.png" alt="modifiers"/> User Entries</a></li>
-					<li><a href="##pages"><img src="#prc.cbRoot#/includes/images/library.png" alt="modifiers"/> User Pages</a></li>
+					<li><a href="##password"><i class="icon-lock"></i> Change Password</a></li>
+					<li><a href="##preferences"><i class="icon-briefcase"></i> Preferences</a></li>
+					<li><a href="##permissions" onclick="loadPermissions()"><i class="icon-star"></i> Permissions</a></li>
+					<li><a href="##entries"><i class="icon-quote-left"></i> User Entries</a></li>
+					<li><a href="##pages"><i class="icon-pencil"></i> User Pages</a></li>
 					</cfif>
 				</ul>
 				<!--- Tab Content --->
