@@ -38,8 +38,8 @@
 	<h3 class="border_grey">Changelog:</h3>
 	<p>#prc.updateEntry.changelog#</p>
 	
-	<div class="infoBar">
-		<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />
+	<div class="infoBar infoBar-red">
+		<i class="info-warning-sign icon-large"></i>
 		Please make sure you do any backups before applying this update.
 	</div>
 	

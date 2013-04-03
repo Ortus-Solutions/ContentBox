@@ -5,7 +5,7 @@
 
 	<!--- Loader --->
 	<div class="loaders floatRight" id="entryLoader">
-		<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+		<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 	</div>
 	
 	<!--- Content Bar --->
