@@ -3,7 +3,7 @@
 <div class="sidebar">
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Actions
+			<i class="icon-cogs"></i> Actions
 		</div>
 		<div class="body">
 		
@@ -16,7 +16,7 @@
 		
 			<div class="actionBar">
 				<a href="#event.buildLink(prc.xehAPIDocs&"/index/apislug/#rc.apislug#/?_cfcviewer_package=#rc._cfcviewer_package#&print=true")#" target="_blank">
-					<button name="print" class="button"><img src="#prc.cbRoot#/includes/images/print.png" alt="print" border="0"> Print</button>
+					<button name="print" class="button"><i class="icon-print icon-large"></i> Print</button>
 				</a>
 			</div>
 			
@@ -29,7 +29,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/help.png" alt="settings" />
+			<i class="icon-book icon-large"></i>
 			ContentBox API Docs
 		</div>
 		<!--- Body --->

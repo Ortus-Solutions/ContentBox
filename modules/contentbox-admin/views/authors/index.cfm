@@ -4,7 +4,7 @@
 	<!--- Search Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/search.png" alt="info" width="24" height="24" />User Search
+			<i class="icon-search"></i> User Search
 		</div>
 		<div class="body">
 			<!--- Search Form --->
@@ -22,7 +22,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/user-admin.png" alt="sofa" width="30" height="30" title="I am a geek and I love it!"/>
+			<i class="icon-user icon-large"></i>
 			User Management
 		</div>
 		<!--- Body --->
@@ -62,8 +62,8 @@
 						<th>Email</th>
 						<th>Role</th>
 						<th>Last Login</th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/pen.png" alt="posts" title="Number of Entries"/></th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="active" title="User Active Flag"/></th>
+						<th width="40" class="center"><i class="icon-pencil icon-large" title="Number of Entries"></i></th>
+						<th width="40" class="center"><i class="icon-thumbs-up icon-large" title="Active User?"></i></th>
 						<th width="65" class="center {sorter: false}">Actions</th>
 					</tr>
 				</thead>
@@ -80,7 +80,7 @@
 								#author.getName()#
 							</cfif>
 							<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()>
-								<img src="#prc.cbRoot#/includes/images/asterisk_orange.png" alt="you" title="That's you!" />
+								<i class="icon-star icon-large textOrange" title="That's you!"></i>
 							</cfif>
 						</td>
 						<td>#author.getEmail()#</td>
@@ -89,18 +89,18 @@
 						<th class="center">#author.getNumberOfEntries()#</th>
 						<td class="center">
 							<cfif author.getIsActive()>
-								<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="ok" title="User Active" />
+								<i class="icon-ok-sign icon-large textGreen" title="User Active"></i>
 							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="off" title="User Deactivated" />
+								<i class="icon-minus-sign icon-large textRed" title="User Deactivated"></i>
 							</cfif>
 						</td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
 								<!--- Edit Command --->
-								<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+								<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><i class="icon-edit icon-large"></i></a>
 								<!--- Delete Command --->
 								<cfif prc.oAuthor.getAuthorID() neq author.getAuthorID()>
-								<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><img id="delete_#author.getAuthorID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+								<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><i id="delete_#author.getAuthorID()#" class="icon-remove-sign icon-large"></i></a>
 								</cfif>
 							</cfif>
 						</td>

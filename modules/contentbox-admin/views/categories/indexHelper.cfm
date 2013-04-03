@@ -23,6 +23,7 @@ function edit(categoryID,category,slug){
 }
 function remove(categoryID){
 	var $categoryForm = $("##categoryForm");
+	$("##delete_"+ categoryID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 	$categoryForm.find("##categoryID").val( categoryID );
 	$categoryForm.submit();
 }

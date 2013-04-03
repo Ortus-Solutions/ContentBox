@@ -5,7 +5,7 @@
 	<!--- Info Box --->
 	<div class="small_box expose">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/info.png" alt="info" width="24" height="24" />Need Help?
+			<i class="icon-medkit"></i> Need Help?
 		</div>
 		<div class="body">
 			<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox and ContentBox">

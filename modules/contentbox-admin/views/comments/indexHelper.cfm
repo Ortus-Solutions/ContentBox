@@ -24,14 +24,14 @@ function changeStatus(status,recordID){
 	$commentForm.attr("action","#event.buildlink(linkTo=prc.xehCommentstatus)#");
 	$commentForm.find("##commentStatus").val(status);
 	if( recordID != null ){
-		$('##status_'+recordID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 		checkByValue('commentID',recordID);	
 	}
 	$commentForm.submit();
 }
 function remove(recordID){
 	if( recordID != null ){
-		$('##delete_'+recordID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 		checkByValue('commentID',recordID);		
 	}
 	//Submit Form

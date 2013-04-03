@@ -8,13 +8,13 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/tools_icon.png" alt="info" width="24" height="24" />
+			<i class="icon-cogs"></i>
 			Actions
 		</div>
 		<div class="body">
 
 			<!--- Publish Info --->
-			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/publish_black.png" alt="publish" width="16"/> Publishing')#
+			#html.startFieldset(legend='<i class="icon-globe icon-large"></i> Publishing')#
 
 				<!--- Action Bar --->
 				<div class="actionBar center">
@@ -30,7 +30,7 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/database_black.png" alt="info" /> Cache Settings </h2>
+					<i class="icon-hdd icon-large"></i> Cache Settings </h2>
 				<div class="pane">
 
 					<!--- Cache Settings --->
@@ -53,7 +53,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/html_32.png" alt="customHTML" width="30" height="30" />
+			<i class="icon-tasks icon-large"></i>
 			Custom HTML Editor
 		</div>
 		<!--- Body --->
@@ -90,8 +90,8 @@
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
-					<a href="javascript:previewContent()" class="button">
-						<img src="#prc.cbRoot#/includes/images/eye.png" alt="print" border="0"> Preview
+					<a href="javascript:previewContent()" class="button" title="Quick Preview">
+						<i class="icon-eye-open icon-large"></i>
 					</a>
 				</div>
 			</div>
