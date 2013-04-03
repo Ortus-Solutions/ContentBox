@@ -36,7 +36,7 @@
 					<!--- Global HTML Page --->
 					<div>
 						<fieldset>
-						<legend><<i class="icon-globe icon-large"></i> <strong>Global Layout</strong></legend>
+						<legend><i class="icon-globe icon-large"></i> <strong>Global Layout</strong></legend>
 							#html.textarea(name="cb_html_beforeHeadEnd",label="Before Head End: ",rows="6",value=prc.cbSettings.cb_html_beforeHeadEnd)#
 							#html.textarea(name="cb_html_afterBodyStart",label="After Body Start: ",rows="6",value=prc.cbSettings.cb_html_afterBodyStart)#
 							#html.textarea(name="cb_html_beforeBodyEnd",label="Before Body End: ",rows="6",value=prc.cbSettings.cb_html_beforeBodyEnd)#
