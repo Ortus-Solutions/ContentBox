@@ -113,7 +113,7 @@
 				</span>
 			  	
 			  	<!--- site tag line --->
-				<i class="icon-desktop"></i> <a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="Open the site">#prc.cbSettings.cb_site_name#</a>
+				<i class="icon-desktop"></i> &nbsp;<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="Open the site">#prc.cbSettings.cb_site_name#</a>
 				
 				<!--- cbadmin event --->
 				#announceInterception("cbadmin_onTagline")#

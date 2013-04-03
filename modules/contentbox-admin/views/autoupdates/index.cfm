@@ -5,7 +5,7 @@
 	<!--- Info Box --->
 	<div class="small_box expose">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/info.png" alt="info" width="24" height="24" />Components Installed
+			<i class="icon-info-sign"></i> Components Installed
 		</div>
 		<div class="body">
 			<table name="settings" id="settings" class="tablesorter" width="98%">
@@ -44,7 +44,7 @@
 	<!--- Info Box --->
 	<div class="small_box expose">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/info.png" alt="info" width="24" height="24" />Need Help?
+			<i class="icon-medkit"></i> Need Help?
 		</div>
 		<div class="body">
 			<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox and ContentBox">
@@ -64,7 +64,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/ortus_circle_small.gif" alt="ortus" width="30" height="30" title="Ortus Solutions, Corp" />
+			<i class="icon-bolt icon-large"></i> 
 			Auto Updates
 		</div>
 		<!--- Body --->
@@ -82,7 +82,7 @@
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-					<img src="#prc.cbroot#/includes/images/world.png" alt="info" /> Check For Updates </h2>
+					<i class="icon-globe icon-large"></i> Check For Updates </h2>
 				<div class="pane">
 					<!--- Update Form --->
 					#html.startForm(name="updateCheckForm",novalidate="novalidate")#
@@ -103,7 +103,7 @@
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-					<img src="#prc.cbroot#/includes/images/download.png" alt="info" /> Download Update </h2>
+					<i class="icon-download icon-large"></i> Download Update </h2>
 				<div class="pane">
 					<!--- Update Form --->
 					#html.startForm(name="updateNowForm",action=prc.xehInstallUpdate,novalidate="novalidate")#
@@ -119,7 +119,7 @@
 				<h2> 
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-					<img src="#prc.cbroot#/includes/images/upload.png" alt="info" /> Upload Update </h2>
+					<i class="icon-upload icon-large"></i> Upload Update </h2>
 				<div class="pane">
 					<!--- Upload Form --->
 					#html.startForm(name="uploadNowForm",action=prc.xehUploadUpdate,multipart=true,novalidate="novalidate")#

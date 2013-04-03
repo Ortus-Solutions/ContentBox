@@ -14,7 +14,7 @@
 		<cfloop array="#prc.author.getRole().getPermissions()#" index="perm">
 		<div>
 			<!--- Assigned --->
-			<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="Assigned" title="#perm.getPermission()# Assigned"/>
+			<i class="icon-ok icon-large textGreen"></i>
 			<!--- Name --->
 			&nbsp; 
 			<strong>#perm.getPermission()#</strong>
@@ -57,16 +57,16 @@
 		<cfif !prc.author.hasPermission()>
 			<small>No permissions assigned!</small>
 		<cfelse>
-			<p>Below are the currently assigned a-la-carte permissions. You can optionally remove permissions by clicking on the remove button (<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="Assigned" title="Remove"/>).</p>
+			<p>Below are the currently assigned a-la-carte permissions. You can optionally remove permissions by clicking on the remove button (<i class="icon-remove icon-large textRed"></i>).</p>
 		</cfif>			
 		
 		<cfloop array="#prc.author.getPermissions()#" index="perm">
 		<div>
 			<!--- Assigned --->
-			<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="Assigned" title="#perm.getPermission()# Assigned"/>
+			<i class="icon-ok icon-large textGreen"></i>
 			<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 			<!--- Remove --->
-			<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="Assigned" border="0"/></a>
+			<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="icon-remove icon-large textRed"></i></a>
 			</cfif>
 			<!--- Name --->
 			&nbsp; 

@@ -7,6 +7,7 @@ $(document).ready(function() {
 	})
 });
 function removeAuthor(authorID){
+	$("##delete_"+ authorID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 	$("##authorID").val( authorID );
 	$("##authorForm").submit();
 }

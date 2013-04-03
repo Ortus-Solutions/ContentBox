@@ -9,7 +9,7 @@ $(document).ready(function() {
 });
 function remove(recordID){
 	if( recordID != null ){
-		$('##delete_'+recordID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 		$("##contentID").val( recordID );
 	}
 	//Submit Form

@@ -1,28 +1,11 @@
 ﻿<cfoutput>
 #html.startForm(name="commentSettingsForm",action=rc.xehSaveSettings)#		
 #html.anchor(name="top")#
-<!--============================Sidebar============================-->
-<div class="sidebar">
-	<!--- Saerch Box --->
-	<div class="small_box">
-		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Actions
-		</div>
-		<div class="body">
-			<div class="actionBar">
-				<button class="button" onclick="return to('#event.buildLink(prc.xehComments)#')" title="Go to the comments inbox"> Comments Inbox</button>
-				#html.submitButton(value="Save Settings",class="buttonred",title="Save the comment settings")#
-			</div>
-		</div>
-	</div>	
-</div>
-<!--End sidebar-->	
-<!--============================Main Column============================-->
-<div class="main_column" id="main_column">
+<div class="main" id="main">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/comments_32.png" alt="sofa" width="30" height="30" />
+			<i class="icon-comments icon-large"></i>
 			Comment Settings
 		</div>
 		<!--- Body --->
@@ -37,9 +20,9 @@
 		<div class="body_vertical_nav clearfix">
 			<!--- Documentation Navigation Bar --->
 			<ul class="vertical_nav">
-				<li class="active"><a href="##general_options"><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> General Options</a></li>
-				<li><a href="##moderation"><img src="#prc.cbRoot#/includes/images/lock.png" alt="modifiers"/> Moderation</a></li>
-				<li><a href="##notifications"><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> Notifications</a></li>
+				<li class="active"><a href="##general_options"><i class="icon-cog icon-large"></i> General Options</a></li>
+				<li><a href="##moderation"><i class="icon-unlock icon-large"></i> Moderation</a></li>
+				<li><a href="##notifications"><i class="icon-envelope-alt icon-large"></i> Notifications</a></li>
 				<!--- cbadmin Event --->
 				#announceInterception("cbadmin_onCommentSettingsNav")#
 			</ul>		
@@ -50,7 +33,7 @@
 					<!--- comment options --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/settings_black.png" alt="modifiers"/> <strong>Comment Options</strong></legend>
+						<legend><i class="icon-cog icon-large"></i> <strong>Comment Options</strong></legend>
 						 	<!--- Activate Comments  --->
 							#html.label(field="cb_comments_enabled",content="Enable Site Wide Comments:")#
 							#html.radioButton(name="cb_comments_enabled",checked=prc.cbSettings.cb_comments_enabled,value=true)# Yes 	
@@ -74,7 +57,7 @@
 					<!--- Comment Moderation --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/lock.png" alt="modifiers"/> <strong>Before A Comment Appears</strong></legend>
+						<legend><i class="icon-unlock icon-large"></i> <strong>Before A Comment Appears</strong></legend>
 						 	<!--- Enable Moderation --->
 							#html.label(field="cb_comments_moderation",content="An administrator must moderate the comment:")#
 							<small>All comments will be moderated according to our moderation rules</small><br/>
@@ -101,7 +84,7 @@
 					<!--- Notifications --->
 					<div>
 						<fieldset>
-						<legend><img src="#prc.cbRoot#/includes/images/email.png" alt="modifiers"/> <strong>Notifications</strong></legend>
+						<legend><i class="icon-envelope-alt icon-large"></i> <strong>Notifications</strong></legend>
 							<p>
 								By default all comment notifications are sent to the system email: <a href="mailto:#prc.cbSettings.cb_site_email#">#prc.cbSettings.cb_site_email#</a>, 
 							but you can add more emails separated by commas, ohh goody!
@@ -124,6 +107,9 @@
 					#announceInterception("cbadmin_onCommentSettingsContent")#
 				</div>
 				<!--- end panes_vertical --->
+				<div class="actionBar pull-right">
+					#html.submitButton(value="Save Settings",class="buttonred",title="Save the comment settings")#
+				</div>
 			</div>
 			<!--- end main_column --->
 		</div>

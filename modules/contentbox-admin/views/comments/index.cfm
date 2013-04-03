@@ -4,7 +4,7 @@
 	<!--- Saerch Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/search.png" alt="info" width="24" height="24" />Search
+			<i class="icon-search"></i> Search
 		</div>
 		<div class="body<cfif len(rc.searchComments)> selected</cfif>">
 			<!--- Search Form --->
@@ -18,7 +18,7 @@
 	<!--- Filter Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Filters
+			<i class="icon-filter"></i> Filters
 		</div>
 		<div class="body<cfif rc.isFiltering> selected</cfif>">
 			#html.startForm(name="commentFilterForm",action=prc.xehComments)#
@@ -44,7 +44,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/comments_32.png" alt="sofa" width="30" height="30" />
+			<i class="icon-comments icon-large"></i>
 			Comments (#rc.commentsCount#)
 			<cfif len(rc.searchComments)> > Search: #event.getValue("searchComments")#</cfif>
 		</div>
@@ -62,7 +62,7 @@
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
 				<div class="infoBar">
-					<img src="#prc.cbRoot#/includes/images/info.png" alt="comments" />
+					<i class="icon-exclamation-sign icon-large"></i>
 					Comments are currently disabled site-wide!
 				</div>
 			</cfif>
@@ -118,18 +118,18 @@
 							&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 							<br/>
 							<cfif len(comment.getAuthorURL())>
-								<img src="#prc.cbRoot#/includes/images/link.png" alt="link" /> 
+								<i class="icon-cloud"></i>
 								<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
 									#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 								</a>
 								<br />
 							</cfif>
-							<img src="#prc.cbRoot#/includes/images/database_black.png" alt="server" /> 
+							<i class="icon-laptop"></i> 
 							<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
 						</td>
 						<td>
 							<!--- Entry Or Page --->
-							<img src="#prc.cbRoot#/includes/images/page.png" alt="link" title="Posted Entry"/> <strong>#comment.getParentTitle()#</strong> 
+							<strong>#comment.getParentTitle()#</strong> 
 							<br/>
 							#left(comment.getContent(),prc.cbSettings.cb_comments_maxDisplayChars)#
 							<cfif len(comment.getContent()) gt prc.cbSettings.cb_comments_maxDisplayChars>....<strong>more</strong></cfif>
@@ -140,21 +140,21 @@
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 								<!--- Edit Command --->
-								<a href="javascript:openRemoteModal('#event.buildLink(rc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+								<a href="javascript:openRemoteModal('#event.buildLink(rc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="icon-edit icon-large"></i></a>
 								&nbsp;
 								<!--- Approve/Unapprove --->
 								<cfif !comment.getIsApproved()>
-									<a href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_pro.png" alt="approve" /></a>
+									<a href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-up icon-large"></i></a>
 								<cfelse>
-									<a href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><img id="status_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/hand_contra.png" alt="unapprove" /></a>
+									<a href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-down icon-large"></i></a>
 								</cfif>
 								&nbsp;
 								<!--- Delete Command --->
-								<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><img id="delete_#comment.getCommentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+								<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="icon-remove-sign icon-large"></i></a>
 								&nbsp;	
 							</cfif>
 							<!--- View in Site --->
-							<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/></a>
+							<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>
 						</td>
 					</tr>
 					</cfloop>

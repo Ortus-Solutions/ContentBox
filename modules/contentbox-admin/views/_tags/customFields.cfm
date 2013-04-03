@@ -1,5 +1,5 @@
 <cfoutput>
-#html.startFieldSet(legend='<img src="#prc.cbRoot#/includes/images/database_black.png" alt="publish" width="16"/> Custom Fields:')#
+#html.startFieldSet(legend='<i class="icon-hdd icon-large"></i> Custom Fields:')#
 	<p>
 		You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via 
 		the CB Helper -> 
@@ -10,7 +10,7 @@
 		<!--- Counter Of How Many Custom Fields --->
 		#html.hiddenField(name="customFieldsCount",value=arrayLen( args.customFields ))#
 		<!--- Add CustomField --->
-		<button class="button dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;"><img src="#prc.cbRoot#/includes/images/add.png" /> Add</button>
+		<button class="button dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;"><i class="icon-plus-sign"></i> Add</button>
 		<!--- Render out Fields --->
 		<cfloop array="#args.customFields#" index="cField" >
 			<p class="margin0">
@@ -18,11 +18,11 @@
 				#html.textField(name="CustomFieldKeys",class="textfield inline customFieldKey",size="18",maxsize="255",value=cField.getKey())#
 				<label class="inline">Value: </label> 
 				#html.textField(name="CustomFieldValues",class="textfield inline customFieldValue",size="60",value=cField.getValue())#
-				<button class="button dynamicRemove" onclick="return false;"><img src="#prc.cbroot#/includes/images/delete.png" alt="delete"/> Remove</button>
+				<button class="button dynamicRemove" onclick="return false;"><i class="icon-remove-sign"></i> Remove</button>
 			</p>
 		</cfloop>
 		<!--- Remove All Custom Fields --->
-		<button id="removeCustomFieldsButton" class="button" onclick="return cleanCustomFields()"><img src="#prc.cbroot#/includes/images/delete.png" alt="delete"/> Remove All</button>
+		<button id="removeCustomFieldsButton" class="button" onclick="return cleanCustomFields()"><i class="icon-remove-sign"></i> Remove All</button>
 	</div>
 #html.endFieldset()#
 
@@ -32,7 +32,7 @@
 	#html.textField(name="CustomFieldKeys",class="textfield inline customFieldKey",size="18",maxsize="255")#
 	<label class="inline">Value: </label> 
 	#html.textField(name="CustomFieldValues",class="textfield inline customFieldValue",size="60")#
-	<button class="button dynamicRemove" onclick="return false;"><img src="#prc.cbroot#/includes/images/delete.png" alt="delete"/> Remove</button>
+	<button class="button dynamicRemove" onclick="return false;"><i class="icon-remove-sign"></i> Remove</button>
 </p>	
 
 <!--- Custom JS --->

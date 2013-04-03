@@ -138,6 +138,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 .inline { display:inline; margin:5px 0; }
 .floatLeft { float:left!important; }
 .floatRight { float:right!important; }
+.textGreen{ color:green }
 .textOrange{ color:orange }
 .textRed{ color:red}
 .textBlue{ color:blue}
