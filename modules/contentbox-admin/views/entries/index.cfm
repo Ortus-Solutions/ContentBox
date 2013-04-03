@@ -4,7 +4,7 @@
 	<!--- Saerch Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/search.png" alt="info" width="24" height="24" />Search
+			<i class="icon-search"></i> Search
 		</div>
 		<div class="body<cfif len(rc.searchEntries)> selected</cfif>">
 			<!--- Search Form --->
@@ -19,9 +19,9 @@
 	<!--- Filter Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Filters
+			<i class="icon-filter"></i> Filters
 		</div>
-		<div class="body<cfif rc.isFiltering> selected</cfif>">
+		<div class="body<cfif prc.isFiltering> selected</cfif>">
 			#html.startForm(name="entryFilterForm",action=prc.xehEntrySearch)#
 			<!--- Authors --->
 			<label for="fAuthors">Authors: </label>
@@ -60,7 +60,7 @@
 	<!--- Help Box--->
 	<div class="small_box" id="help_tips">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/help.png" alt="info" width="24" height="24" />Help Tips
+			<i class="icon-question-sign"></i> Help Tips
 		</div>
 		<div class="body">
 			<ul class="tipList">
@@ -77,10 +77,10 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/blog.png" alt="sofa" width="30" height="30" />
-			Blog Entries (#prc.entriesCount#)
-			<cfif len(rc.searchEntries)> > Search: #event.getValue("searchEntries")#</cfif>
-			<cfif rc.isFiltering> > Filtered View</cfif>
+			<i class="icon-quote-left icon-large"></i>
+			Blog Entries
+			<cfif len(rc.searchEntries)><span class="badge">Search: #rc.searchEntries#</span></cfif>
+			<cfif prc.isFiltering> <span class="badge">Filtered View</span></cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -96,7 +96,7 @@
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
 				<div class="infoBar">
-					<img src="#prc.cbRoot#/includes/images/info.png" alt="comments" />
+					<i class="icon-exclamation-sign icon-large"></i>
 					Comments are currently disabled site-wide!
 				</div>
 			</cfif>
@@ -132,9 +132,9 @@
 						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 						<th>Name</th>
 						<th width="150">Categories</th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish"/></th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="hits"/></th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/comments.png" alt="comments"/></th>
+						<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
+						<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
+						<th width="40" class="center"><i class="icon-comments icon-large" title="Comments"></i></th>
 						<th width="100" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
@@ -163,64 +163,64 @@
 						<td>#entry.getCategoriesList()#</td>
 						<td class="center">
 							<cfif entry.isExpired()>
-								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Entry has expired!" />
+								<i class="icon-time icon-large textRed" title="Entry has expired on ( (#entry.getDisplayExpireDate()#))"></i>
 								<span class="hidden">expired</span>
 							<cfelseif entry.isPublishedInFuture()>
-								<img src="#prc.cbRoot#/includes/images/information.png" alt="published" title="Entry Publishes in the future!" />
+								<i class="icon-fighter-jet icon-large textBlue" title="Entry Publishes in the future (#entry.getDisplayPublishedDate()#)"></i>
 								<span class="hidden">published in future</span>
 							<cfelseif entry.isContentPublished()>
-								<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Entry Published!" />
+								<i class="icon-ok icon-large textGreen" title="Entry Published!"></i>
 								<span class="hidden">published in future</span>
 							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Entry Draft!" />
+								<i class="icon-remove icon-large textRed" title="Entry Published!"></i>
 								<span class="hidden">draft</span>
 							</cfif>
 						</td>
-						<td class="center">#entry.getHits()#</td>
-						<td class="center">#entry.getNumberOfComments()#</td>
+						<td class="center"><span class="badge badge-info">#entry.getHits()#</span></td>
+						<td class="center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
 						<td class="center">
 							<!---Info Panel --->
-							<button class="button infoPanelButton" title="Entry Info" ><img src="#prc.cbroot#/includes/images/gravatar.png" /></button>
+							<button class="button infoPanelButton" title="Entry Info" ><i class="icon-info-sign icon-large"></i></button>
 							<!---Info Panel --->
 							<div id="infoPanel_#entry.getContentID()#" class="contentInfoPanel">
-								<img src="#prc.cbRoot#/includes/images/calendar_small.png" alt="calendar"/>  
+								<i class="icon-calendar"></i> 
 								Last edit by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on 
 								#entry.getActiveContent().getDisplayCreatedDate()#
 								</br>
 								<!--- password protect --->
 								<cfif entry.isPasswordProtected()>
-									<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked"/> Password Protected
+									<i class="icon-lock"></i> Password Protected
 								<cfelse>
-									<img src="#prc.cbRoot#/includes/images/lock_off.png" alt="locked"/> Public Entry
+									<i class="icon-unlock"></i> Public Entry
 								</cfif>
 								<br/>
 								<!--- comments icon --->
-								<cfif entry.getallowComments()>
-									<img src="#prc.cbRoot#/includes/images/comments.png" alt="locked"/> Open Comments
+								<cfif !entry.getallowComments()>
+									<i class="icon-comments"></i> Open Comments
 								<cfelse>
-									<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked"/> Closed Comments
+									<i class="icon-warning-sign"></i> Closed Comments
 								</cfif>
 							</div>
 							
 							<!---Entry Actions --->
-							<button class="button actionsPanelButton" title="Entry Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
+							<button class="button actionsPanelButton" title="Entry Actions" ><i class="icon-cogs icon-large"></i></button>
 							<!---Entry Actions Panel --->
 							<div id="entryActions_#entry.getContentID()#" class="actionsPanel">
 								<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 								<!--- Edit Command --->
-								<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0"/> Edit Entry</a>
+								<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a>
 								<br/>
 								</cfif>
 								<!--- History Command --->
-								<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/> Entry History</a>
+								<a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="icon-time icon-large"></i> History</a>
 								<br/>
 								<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 								<!--- Delete Command --->
-								<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><img id="delete_#entry.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/> Delete Entry</a>
+								<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><i id="delete_#entry.getContentID()#" class="icon-remove-sign icon-large" ></i> Delete</a>
 								<br/>
 								</cfif>
 								<!--- View in Site --->
-								<a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/> View Entry</a>
+								<a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="icon-eye-open icon-large"></i> Open In Site</a>
 							</div>
 							
 							</td>

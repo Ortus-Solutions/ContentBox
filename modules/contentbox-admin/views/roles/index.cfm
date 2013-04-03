@@ -5,7 +5,7 @@
 	<div class="small_box">
 		<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/entry.png" alt="info" width="24" height="24" />Editor
+			<i class="icon-edit"></i> Editor
 		</div>
 		<div class="body">
 			<!--- Create/Edit form --->
@@ -28,7 +28,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/roles.png" alt="roles" width="30" height="30" />
+			<i class="icon-group"></i>
 			Roles
 		</div>
 		<!--- Body --->
@@ -53,8 +53,8 @@
 			</div>
 			
 			<!--- Info Bar --->
-			<div class="infoBar">
-				<img src="#prc.cbRoot#/includes/images/info.png" alt="info"/>
+			<div class="infoBar infoBar-red">
+				<i class="icon-warning-sign icon-large"></i>
 				You cannot delete roles that have authors attached to them.  You will need to un-attach those authors from the role first.
 			</div>			
 			
@@ -86,18 +86,18 @@
 						<td class="center">
 							<!--- permissions --->
 							<a href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" 
-							   title="Manage Permissions"><img src="#prc.cbroot#/includes/images/lock.png" alt="edit" border="0" /></a>
+							   title="Manage Permissions"><i class="icon-lock icon-large"></i></a>
 							&nbsp;
 							
 							<!--- ROLES_ADMIN --->
 							<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 								<!--- Edit Command --->
 								<a href="javascript:edit('#role.getRoleID()#','#jsstringFormat( role.getRole() )#','#jsstringFormat( role.getDescription() )#')" 
-								   title="Edit Role"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
+								   title="Edit Role"><i class="icon-edit icon-large"></i></a>
 								&nbsp;
 								<!--- Delete Command --->
 								<cfif role.getNumberOfAuthors() eq 0>
-								<a title="Delete Role" href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><img id="delete_#role.getRoleID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+								<a title="Delete Role" href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><i class="icon-remove-sign icon-large" id="delete_#role.getRoleID()#"></i></a>
 								</cfif>
 							</cfif>
 						</td>

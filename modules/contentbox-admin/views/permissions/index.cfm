@@ -5,7 +5,7 @@
 	<div class="small_box">
 		<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/entry.png" alt="info" width="24" height="24" />Editor
+			<i class="icon-edit"></i> Editor
 		</div>
 		<div class="body">
 			<!--- Create/Edit form --->
@@ -28,7 +28,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/permissions.png" alt="permissions" width="30" height="30" />
+			<i class="icon-lock icon-large"></i>
 			Permissions
 		</div>
 		<!--- Body --->
@@ -71,9 +71,9 @@
 							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 							<!--- Edit Command --->
 							<a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat( permission.getPermission() )#','#jsstringFormat( permission.getDescription() )#')" 
-							   title="Edit #permission.getPermission()#"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" border="0" /></a>
+							   title="Edit #permission.getPermission()#"><i class="icon-edit icon-large"></i></a>
 							<!--- Delete Command --->
-							<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><img id="delete_#permission.getPermissionID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+							<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-remove-sign icon-large"></i></a>
 							</cfif>
 						</td>
 					</tr>

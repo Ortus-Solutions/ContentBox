@@ -5,7 +5,7 @@
 	<div class="small_box">
 		<cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Widget Uploader
+			<i class="icon-upload-alt"></i> Widget Uploader
 		</div>
 		<div class="body">
 			#html.startForm(name="widgetUploadForm",action=prc.xehWidgetupload,multipart=true,novalidate="novalidate")#
@@ -18,7 +18,8 @@
 
 				<!--- Loader --->
 				<div class="loaders" id="uploadBarLoader">
-					<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+					<i class="icon-spinner icon-spin icon-large icon-2x"></i> <br>
+					Uploading & Installing
 				</div>
 			#html.endForm()#
 		</div>
@@ -28,19 +29,19 @@
 	<!--- Help Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/help.png" alt="info" width="24" height="24" />Widget Help
+			<i class="icon-question-sign"></i> Widget Help
 		</div>
 		<div class="body">
 			<p>Render widgets in your layouts and views by using the CB Helper method <em>widget()</em>:</p>
-			<div class="infoBar">
+			<div class="infoBar infoBar-green">
 				##cb.widget("name",{arg1=val,arg2=val})##
 			</div>
 			<p>Render module widgets by appending the module name <em>@module</em>:</p>
-			<div class="infoBar">
+			<div class="infoBar infoBar-green">
 				##cb.widget("name@module",{arg1=val,arg2=val})##
 			</div>
 			<p>Get an instance of a widget in your layouts and views using the CB helper method <em>getWidget()</em></p>
-			<div class="infoBar">
+			<div class="infoBar infoBar-green">
 				 ##cb.getWidget("name")##
 				 ##cb.getWidget("name@module")##
 			</div>
@@ -55,13 +56,13 @@
 		<div class="header">
 			<ul class="sub_nav">
 				<!--- Manage --->
-				<li title="Manage Widgets"><a href="##manage" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Manage</a></li>
+				<li title="Manage Widgets"><a href="##manage" class="current"><i class="icon-cog icon-large"></i>  Manage</a></li>
 				<!--- Install --->
 				<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
-				<li title="Install New Widgets"><a href="##install" onclick="loadForgeBox()"><img src="#prc.cbroot#/includes/images/download.png" alt="icon" border="0"/> ForgeBox</a></li>
+				<li title="Install New Widgets"><a href="##install" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
 				</cfif>
 			</ul>
-			<img src="#prc.cbroot#/includes/images/widgets.png" alt="widgets"/>
+			<i class="icon-magic icon-large"></i> 
 			Widgets
 		</div>
 		<!--- Body --->
@@ -144,20 +145,20 @@
                                     <span class="widget-type">
 										<!---read docs--->
                                         <a title="Read Widget Documentation" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
-										    <img src="#prc.cbRoot#/includes/images/docs_icon.png" alt="docs" />
+										    <i class="icon-book icon-large"></i> 
                                         </a>
                                         <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
 											&nbsp;
 											<!--- Editor --->
 											<a title="Edit Widget" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#widgetName#&type=#prc.widgets.widgettype#')#">
-											    <img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" />
+											    <i class="icon-edit icon-large"></i> 
 											</a>
                             				<!---only allow deletion of core widgets--->
 											<cfif prc.widgets.widgettype eq "core">
 												&nbsp;
 												<!--- Delete Command --->
 												<a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt" data-title="Delete #widgetName#?">
-													<img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/>
+													<i class="icon-remove-sign icon-large"></i> 
                                                 </a>
 											</cfif>
                             			</cfif>
@@ -176,7 +177,7 @@
 				<!--- ForgeBox --->
 				<div id="forgeboxPane">
 					<div class="center">
-						<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/><br/>
+						<i class="icon-spinner icon-spin icon-large icon-4x"></i> <br/>
 						Please wait, connecting to ForgeBox...
 					</div>
 				</div>

@@ -5,7 +5,7 @@
 
 	<!--- Loader --->
 	<div class="loaders floatRight" id="entryLoader">
-		<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+		<i class="icon-spinner icon-spin icon-large"></i>
 	</div>
 
 	<!--- Content Bar --->
@@ -27,39 +27,39 @@
 	<table name="entries" id="entries" class="tablesorter" width="98%">
 		<thead>
 			<tr>
-				<th width="15" class="center {sorter:false}"></th>
-				<th>Entry Name</th>
-				<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
+				<th>Entry Title</th>
+				<th width="40" class="center"><i class="icon-globe icon-large"></i></th>
 				<th width="120" class="center">Select</th>
 			</tr>
 		</thead>
 		<tbody>
 			<cfloop array="#prc.entries#" index="entry">
 			<tr id="contentID-#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
-				<td class="middle">
-					<img src="#prc.cbRoot#/includes/images/pen.png" alt="child"/>
-				</td>
 				<td>
 					<!--- Title --->
 					<strong>#entry.getTitle()#</strong>
 				</td>
 				<td class="center">
 					<cfif entry.getIsPublished()>
-						<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Published!" />
+						<i class="icon-ok icon-large textGreen"></i>
 						<span class="hidden">published</span>
 					<cfelse>
-						<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Draft!" />
+						<i class="icon-remove icon-large textRed"></i>
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )">ssl</button>
-					<button class="button2" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )">Select</button>
+					<button class="button2" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
+					<button class="button2" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="icon-link icon-large"></i></button>
 				</td>
 			</tr>
 			</cfloop>
 		</tbody>
 	</table>
+	
+	<!--- Paging --->
+	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
+
 
 #html.endForm()#
 </div>

@@ -6,7 +6,7 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />Actions
+			<i class="icon-cogs"></i> Actions
 		</div>
 		<div class="body">
 			
@@ -18,7 +18,7 @@
 			
 			<!--- Loader --->
 			<div class="loaders" id="uploadBarLoader">
-				<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+				<i class="icon-spinner icon-spin icon-large"></i>
 				<div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
 			</div>
 		</div>
@@ -26,7 +26,7 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/settings.png" alt="info" width="24" height="24" />
+			<i class="icon-info-sign"></i>
 			Info
 		</div>
 		<div class="body">
@@ -39,10 +39,10 @@
 			<div class="actionBar">
 				<a href="javascript:openRemoteModal('#event.buildLink(prc.xehAPIDocs&"/index/apislug/plugins/print/?_cfcviewer_cfc=CBHelper")#')" 
 				   class="button" title="Get some quick CBHelper API Goodness!">
-					<img src="#prc.cbRoot#/includes/images/help_small.png" alt="print" border="0"> CBHelper Docs
+					<i class="icon-book icon-large"></i> CBHelper Docs
 				</a>
 				<a href="#event.buildLink(prc.xehApiDocs)#" target="_blank" class="button" title="Open the ContentBox API Docs in another window">
-					<img src="#prc.cbRoot#/includes/images/help_small.png" alt="print" border="0"> API Docs
+					<i class="icon-book icon-large"></i> API Docs
 				</a>
 			</div>
 		</div>
@@ -54,7 +54,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/messages_icon.png" alt="email"/>
+			<i class="icon-envelope icon-large"></i>
 			Email Template Editor -> #rc.template#
 		</div>
 		<!--- Body --->

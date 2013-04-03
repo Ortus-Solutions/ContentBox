@@ -12,8 +12,9 @@
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.cbroot#/includes/css/style.css"	rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/teal.css" 	rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/style.css"			rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/teal.css" 			rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/font-awesome.min.css"	rel="stylesheet"/>
 	<!--- JS --->
 	<script src="#prc.cbroot#/includes/js/jquery.min.js"></script>
 	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>

@@ -2,7 +2,7 @@
 <div class="box clear" id="loginBox">
 	
 	<div class="header">
-		<img src="#prc.cbroot#/includes/images/key_icon.png" alt="help" />Login
+		<i class="icon-key icon-"></i> Login
 	</div>
 	
 	<div class="body clearfix">
@@ -23,7 +23,7 @@
 			</div>
 			
 			<br/>
-			<img src="#prc.cbRoot#/includes/images/lock.png" alt="lostPassword" />
+			<i class="icon-question-sign"></i>
 			<a href="#event.buildLink( prc.xehLostPassword )#">Lost your password?</a> 
 			
 		#html.endForm()#

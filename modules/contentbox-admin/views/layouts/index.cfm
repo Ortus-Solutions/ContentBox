@@ -5,13 +5,13 @@
 		<div class="header">
 			<ul class="sub_nav">
 				<!--- Manage Themes --->
-				<li title="Manage Layout Themes"><a href="##manage" class="current"><img src="#prc.cbroot#/includes/images/settings_black.png" alt="icon" border="0"/> Manage</a></li>
+				<li title="Manage Layout Themes"><a href="##manage" class="current"><i class="icon-cog icon-large"></i> Manage</a></li>
 				<!--- Install Themes --->
 				<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
-				<li title="Install New Themes"><a href="##install" onclick="loadForgeBox()"><img src="#prc.cbroot#/includes/images/download.png" alt="icon" border="0"/> ForgeBox</a></li>
+				<li title="Install New Themes"><a href="##install" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
 				</cfif>
 			</ul>
-			<img src="#prc.cbroot#/includes/images/layouts.png" alt="layouts"/>
+			<i class="icon-picture icon-large"></i>
 			Layout Themes
 		</div>
 
@@ -36,8 +36,8 @@
 					<div class="body_vertical_nav clearfix">
 						<!--- Layouts Navigation Bar --->
 						<ul class="vertical_nav">
-							<li class="active"><a href="##active"><img src="#prc.cbRoot#/includes/images/edit.png" alt="modifiers"/> Active Layout</a></li>
-							<li><a href="##manage"><img src="#prc.cbRoot#/includes/images/layout.png" alt="modifiers"/> Manage Layouts</a></li>
+							<li class="active"><a href="##active"><i class="icon-star icon-large"></i> Active Layout</a></li>
+							<li><a href="##manage"><i class="icon-columns icon-large"></i> Manage Layouts</a></li>
 						</ul>
 						<!--- Layout Panes --->
 						<div class="main_column">
@@ -61,25 +61,25 @@
 										<div id="layout-description>">#prc.activelayout.description#</div>
 										<!---Author --->
 										<div id="layout-author">
-											<img src="#prc.cbRoot#/includes/images/gravatar.png" alt="user"/>
+											<i class="icon-user"></i>
 											<strong>Author: </strong> <a href="#prc.layouts.authorURL#" title="#prc.layouts.AuthorURL#" target="_blank">#prc.layouts.Author#</a>
 										</div>
 										<!--- Version --->
 										<div id="layout-version>">
-											<img src="#prc.cbRoot#/includes/images/old-versions.png" alt="world"/>
+											<i class="icon-time"></i>
 											<strong>Version: </strong>
 											#prc.activelayout.version#
 										</div>
 										<!--- Installed --->
 										<div id="layout-location>">
-											<img src="#prc.cbRoot#/includes/images/parent.png" alt="world"/>
+											<i class="icon-laptop"></i>
 											<strong>Installed Location: </strong>
 											#prc.activelayout.directory#
 										</div>
 										
 										<!--- ForgeBox Slug --->
 										<div id="layout-forgebox>">
-											<img src="#prc.cbRoot#/includes/images/world.png" alt="world"/>
+											<i class="icon-cloud-download"></i>
 											<strong>ForgeBox Slug: </strong>
 											<cfif len( prc.activelayout.forgeboxSlug )>
 												<a href="http://www.coldbox.org/forgebox/view/#prc.activelayout.forgeboxSlug#">#prc.activelayout.forgeboxSlug#</a>
@@ -89,7 +89,7 @@
 										</div>
 										<!---Interceptions --->
 										<div id="layout-interceptions">
-											<img src="#prc.cbRoot#/includes/images/settings_black.png" alt="world"/>
+											<i class="icon-bullhorn"></i>
 											<strong>Registered Interceptions: </strong> 
 											<cfif len( prc.activeLayout.customInterceptionPoints )>
 												#prc.activeLayout.customInterceptionPoints#
@@ -99,7 +99,7 @@
 										</div>
 										<!---Widgets --->
 										<div id="layout-widgets">
-											<img src="#prc.cbRoot#/includes/images/source.png" alt="world"/>
+											<i class="icon-magic"></i>
 											<strong>Layout Widgets: </strong> 
 											<cfif len( prc.activeLayout.widgets )>
 												#prc.activeLayout.widgets#
@@ -165,7 +165,7 @@
 											#html.submitButton(value="Upload & Install",class="buttonred")#
 										</div>
 										<div class="loaders" id="uploadBarLoader">
-											<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+											<i class="icon-spinner icon-spin icon-large"></i>
 										</div>
 									#html.endForm()#
 									</div>
@@ -187,7 +187,7 @@
 											<tr>
 												<td>
 													<cfif prc.cbSettings.cb_site_layout eq prc.layouts.name>
-														<img src="#prc.cbRoot#/includes/images/asterisk_orange.png" alt="active" />
+														<i class="icon-asterisk icon-large textOrance"></i>
 													</cfif>
 													<strong>#prc.layouts.layoutName#</strong>
 													<br/>	
@@ -225,7 +225,7 @@
 													<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 													<!--- Delete Command --->
 													<a title="Delete layout" href="javascript:remove('#JSStringFormat(prc.layouts.name)#')" 
-													   class="confirmIt" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><img src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+													   class="confirmIt" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><i class="icon-remove-sign icon-large"></i></a>
 													</cfif>
 												</td>
 											</tr>
@@ -248,7 +248,7 @@
 				<!--- ForgeBox Pane --->
 				<div id="forgeboxPane">
 					<div class="center">
-						<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/><br/>
+						<i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
 						Please wait, connecting to ForgeBox...
 					</div>
 				</div>

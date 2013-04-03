@@ -50,7 +50,7 @@ function pagerLink(page){
 <cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 function changeOrder(contentID,order,direction){
 	// img change
-	$('##order'+direction+'_'+contentID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+	$('##order'+direction+'_'+contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 	// change order
 	$.post('#event.buildLink(prc.xehPageOrder)#',{contentID:contentID,order:order},function(){
 		hideAllTooltips();

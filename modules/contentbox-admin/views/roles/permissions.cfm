@@ -8,7 +8,7 @@
 		
 		<!--- Loader --->
 		<div class="loaders floatRight" id="permissionLoader">
-			<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/><br/>
+			<i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
 			<div class="center"><small>Please Wait...</small></div>
 		</div>
 		
@@ -29,14 +29,14 @@
 		<cfif !prc.role.hasPermission()>
 			<small>No permissions assigned!</small>
 		<cfelse>
-			<p>Below are the currently assigned permissions. You can optionally remove permissions by clicking on the remove button (<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="Assigned" title="Remove"/>).</p>
+			<p>Below are the currently assigned permissions. You can optionally remove permissions by clicking on the remove button (<i class="icon-remove icon-large textRed"></i>).</p>
 		</cfif>			
 	
 		
 		<cfloop array="#prc.role.getPermissions()#" index="perm">
 		<div>
 			<!--- Remove --->
-			<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="Assigned" border="0"/></a>
+			<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="icon-remove icon-large textRed"></i></a>
 			<!--- Name --->
 			&nbsp; 
 			<strong>#perm.getPermission()#</strong>
