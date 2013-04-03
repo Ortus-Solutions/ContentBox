@@ -35,6 +35,7 @@ function edit(settingID,name,value){
 }
 function remove(settingID){
 	var $settingForm = $("##settingForm");
+	$("##delete_"+ settingID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 	$settingForm.find("##settingID").val( settingID );
 	$settingForm.submit();
 }

@@ -15,8 +15,9 @@
 	<!--- Favicon --->
 	<link href="#assetRoot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#assetRoot#/includes/css/style.css"	rel="stylesheet"/>
-	<link href="#assetRoot#/includes/css/teal.css" 	rel="stylesheet"/>
+	<link href="#assetRoot#/includes/css/style.css"				rel="stylesheet"/>
+	<link href="#assetRoot#/includes/css/teal.css" 				rel="stylesheet"/>
+	<link href="#assetRoot#/includes/css/font-awesome.min.css"	rel="stylesheet"/>
 	<!--- JS --->
 	<script src="#assetRoot#/includes/js/jquery.min.js"></script>
 	<script src="#assetRoot#/includes/js/jquery.tools.min.js"></script>

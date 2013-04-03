@@ -5,7 +5,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/messages_icon.png" alt="email"/>
+			<i class="icon-envelope icon-large"></i>
 			Email Templates
 		</div>
 		<!--- Body --->
@@ -36,7 +36,7 @@
 						</td>
 						<td class="center">
 							<!--- Editor --->
-							<a title="Edit Template" href="#event.buildLink(linkTo=prc.xehTemplateEditor,queryString='template=#URLEncodedFormat( listFirst( prc.templates.name, ".") )#')#"><img src="#prc.cbRoot#/includes/images/edit.png" alt="edit" /></a>
+							<a title="Edit Template" href="#event.buildLink(linkTo=prc.xehTemplateEditor,queryString='template=#URLEncodedFormat( listFirst( prc.templates.name, ".") )#')#"><i class="icon-edit icon-large"></i></a>
 						</td>
 					</tr>
 					</cfloop>

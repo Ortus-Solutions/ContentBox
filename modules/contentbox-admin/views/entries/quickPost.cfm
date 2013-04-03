@@ -8,7 +8,7 @@
 			#html.hiddenField(name="contentID",value="")#
 			#html.hiddenField(name="isPublished",value="true")#
 			
-			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/pen.png" alt="post" width="16"/> Post')#
+			#html.startFieldset(legend='<i class="icon-edit icon-large"></i> Post')#
 				<!--- title --->
 				#html.textfield(name="title",maxlength="100",required="required",title="The title for this entry",class="textfield width98",
 								value="Title Here", onclick="if( this.value == 'Title Here' ){ this.value = '';}")#
@@ -17,7 +17,7 @@
 			#html.endFieldSet()#
 			
 			<!--- Categories --->
-			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/category_black.png" alt="category" width="16"/> Categories')#
+			#html.startFieldset(legend='<i class="icon-tags icon-large"></i> Categories')#
 				<cfloop from="1" to="#arrayLen(prc.qpCategories)#" index="x">
 					#html.checkbox(name="category_#x#",value="#prc.qpCategories[x].getCategoryID()#")#
 					#html.label(field="category_#x#",content="#prc.qpCategories[x].getCategory()#",class="inline")#

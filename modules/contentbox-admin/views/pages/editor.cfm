@@ -6,13 +6,13 @@
 	<!--- Info Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/tools_icon.png" alt="info" width="24" height="24" />
+			<i class="icon-info-sign"></i>
 			Page Details
 		</div>
 		<div class="body">
 
 			<!--- Publish Info --->
-			#html.startFieldset(legend='<img src="#prc.cbRoot#/includes/images/calendar.png" alt="publish" width="16"/> Publishing',class="#prc.page.getIsPublished()?'':'selected'#")#
+			#html.startFieldset(legend='<i class="icon-calendar"></i> Publishing',class="#prc.page.getIsPublished()?'':'selected'#")#
 
 				<!--- Published? --->
 				<cfif prc.page.isLoaded()>
@@ -48,7 +48,7 @@
 
 				<!--- Loader --->
 				<div class="loaders" id="uploadBarLoader">
-					<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+					<i class="icon-spinner icon-spin icon-large"></i>
 					<div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
 				</div>
 
@@ -61,7 +61,7 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/eye.png" alt="info" /> Page Info </h2>
+					<i class="icon-info-sign icon-large"></i> Page Info </h2>
 				<div class="pane">
 					<table class="tablelisting" width="100%">
 						<tr>
@@ -108,7 +108,7 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/page.png" alt="info" /> Display Options </h2>
+					<i class="icon-picture icon-large"></i> Display Options </h2>
 				<div class="pane">
 					<!--- Parent Page --->
 					#html.label(field="parentPage",content='Parent:')#
@@ -148,17 +148,17 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/settings_black.png" alt="info" /> Modifiers </h2>
+					<i class="icon-cogs icon-large"></i> Modifiers </h2>
 				<div class="pane">
 					<!--- Allow Comments --->
 					<cfif prc.cbSettings.cb_comments_enabled>
-					<img src="#prc.cbRoot#/includes/images/comments_black.png" alt="comments" />
+					<i class="icon-comments icon-large"></i>
 					#html.label(field="allowComments",content="Allow Comments:",class="inline")#
 					#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()))#
 					<br/>
 					</cfif>
 					<!--- Password Protection --->
-					<label for="passwordProtection"><img src="#prc.cbRoot#/includes/images/lock.png" alt="lock" /> Password Protection:</label>
+					<label for="passwordProtection"><i class="icon-lock icon-large"></i> Password Protection:</label>
 					#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="textfield",size="25",maxlength="100")#
 					<br>
 				</div>
@@ -169,7 +169,7 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/database_black.png" alt="info" /> Cache Settings </h2>
+					<i class="icon-hdd icon-large"></i> Cache Settings </h2>
 				<div class="pane">
 					<!--- Cache Settings --->
 					#html.label(field="cache",content="Cache Page Content: (fast)")#
@@ -190,7 +190,7 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/category_black.png" alt="info" /> Categories </h2>
+					<i class="icon-tags icon-large"></i> Categories </h2>
 				<div class="pane">
 					<!--- Display categories --->
 					<div id="categoriesChecks">
@@ -210,7 +210,7 @@
 				<h2>
 					<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-					<img src="#prc.cbroot#/includes/images/world.png" alt="info" /> HTML Attributes </h2>
+					<i class="icon-cloud icon-large"></i> HTML Attributes </h2>
 				<div class="pane">
 					#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.page,class="textfield width95",maxlength="160")#
 					#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.page,class="textfield",maxlength="160")#
@@ -235,7 +235,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/page_big.png" alt="editor" width="30" height="30" />
+			<i class="icon-edit icon-large"></i>
 			Page Editor
 
 			<div class="floatRight">
@@ -261,8 +261,8 @@
 			#html.textfield(label="Title:",name="title",bind=prc.page,maxlength="100",required="required",title="The title for this page",class="textfield width98")#
 			<!--- slug --->
 			<label for="slug">Permalink:
-				<img src='#prc.cbroot#/includes/images/link.png' alt='permalink' title="Convert title to permalink" onclick="createPermalink()"/>
-				<cfif prc.page.hasParent()> <small>/#prc.page.getParent().getSlug()#/</small></cfif>
+				<i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
+				<small> #prc.CBHelper.linkPageWithSlug('')#</small><cfif prc.page.hasParent()><small>#prc.page.getParent().getSlug()#/</small></cfif>
 			</label>
 			<div id='slugCheckErrors'></div>
 			#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width98",title="The URL permalink for this page")#
@@ -288,8 +288,8 @@
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
-					<a href="javascript:previewContent()" class="button">
-						<img src="#prc.cbRoot#/includes/images/eye.png" alt="print" border="0"> Preview
+					<a href="javascript:previewContent()" class="button" title="Quick Preview">
+						<i class="icon-eye-open icon-large"></i>
 					</a>
 				</div>
 			</div>
@@ -312,7 +312,7 @@
 		<!--- Versions --->
 		<div class="box">
 			<div class="header">
-				<img src="#prc.cbroot#/includes/images/clock.png" alt="editor" width="30" height="30" />
+				<i class="icon-time icon-large"></i>
 				Versions
 			</div>
 			<div class="body">
@@ -325,7 +325,7 @@
 		<div class="box">
 			<cfif structKeyExists(prc,"commentsViewlet")>
 				<div class="header">
-					<img src="#prc.cbroot#/includes/images/comments_32.png" alt="editor" width="30" height="30" />
+					<i class="icon-comments icon-large"></i>
 					Comments
 				</div>
 				<div class="body">
@@ -337,7 +337,7 @@
 		<!--- Sub Pages --->
 		<div class="box">
 			<div class="header">
-				<img src="#prc.cbroot#/includes/images/parent_color.png" alt="editor" width="30" height="30" />
+				<i class="icon-sitemap icon-large"></i>
 				Child Pages
 			</div>
 			<div class="body">

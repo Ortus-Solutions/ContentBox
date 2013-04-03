@@ -2,7 +2,7 @@
 <div class="box clear">
 	<!--- Body Header --->
 	<div class="header">
-		<img src="#prc.cbroot#/includes/images/mediamanager.png" alt="media manager" />
+		<i class="icon-th icon-large"></i>
 		Media Manager :
 		#html.select(options=prc.libraryOptions, class="textbox", onchange="switchLibrary(this.value)")#
 	</div>

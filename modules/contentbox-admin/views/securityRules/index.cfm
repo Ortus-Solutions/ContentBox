@@ -4,7 +4,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/securityRule.png" alt="securityRules" />
+			<i class="icon-road icon-large"></i>
 			Security Rules
 		</div>
 		<!--- Body --->
@@ -14,8 +14,8 @@
 		#getPlugin("MessageBox").renderit()#
 		
 		<!--- Usage --->
-		<div class="infoBar">
-			<img src="#prc.cbRoot#/includes/images/info.png" alt="info" />
+		<div class="infoBar infoBar-red">
+			<i class="icon-warning-sign icon-large"></i>
 			Please remember that the security rules are fired in the order shown. You can drag and drop
 			the rows to the desired order of firing. Be careful with security rules as with much power comes great responsibility!
 		</div>

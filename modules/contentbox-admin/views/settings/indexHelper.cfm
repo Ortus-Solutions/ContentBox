@@ -6,6 +6,7 @@ $(document).ready(function() {
 });
 function emailTest(){
 	$("##emailTestDiv").html("");
+	$("##iTest").addClass( "icon-spin" );
 	$.post('#event.buildLink( prc.xehEmailTest )#',
 		{
 		  cb_site_mail_server : $("##cb_site_mail_server").val(),
@@ -24,11 +25,13 @@ function emailTest(){
 				$("##emailTestDiv").html("Error sending test email: " + eMessages );
 			}
 			else{
-				$("##emailTestDiv").html('<div class="infoBar">Test email sent to ' + $("##cb_site_outgoingEmail").val() + ', please verify you received it.</div>');
+				$("##emailTestDiv").html('<div class="infoBar infoBar-green">Test email sent to ' + $("##cb_site_outgoingEmail").val() + ', please verify you received it.</div>');
 			}
+			$("##iTest").removeClass( "icon-spin" );
 		},
 		"JSON"
 	);
+	return false;
 }
 function chooseAdapter(adapter){
 	$("##settingsForm").find("##cb_search_adapter").val( adapter );

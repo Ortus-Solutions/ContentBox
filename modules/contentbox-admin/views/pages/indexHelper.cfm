@@ -125,7 +125,7 @@ function toggleInfoPanel(contentID){
 }
 function remove(contentID){
 	if( contentID != null ){
-		$('##delete_'+contentID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 		checkByValue('contentID',contentID);		
 	}
 	$pageForm.submit();
@@ -158,7 +158,7 @@ function bulkChangeStatus(status, contentID){
 	$pageForm.attr("action","#event.buildlink(linkTo=prc.xehPageBulkStatus)#");
 	$pageForm.find("##contentStatus").val( status );
 	if( contentID != null ){
-		$('##status_'+recordID).attr('src','#prc.cbRoot#/includes/images/ajax-spinner.gif');
+		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 		checkByValue('contentID',contentID);	
 	}
 	$pageForm.submit();

@@ -300,7 +300,12 @@ component accessors="true" singleton threadSafe{
 	*/
 	struct function uploadWidget(required fileField){
 		var destination = getWidgetsPath();
-		return fileUpload(destination,arguments.fileField,"","overwrite");
+		var results = fileUpload(destination, arguments.fileField, "", "overwrite");
+		if( results.clientfileext neq "cfc" ){
+			fileDelete( results.serverDirectory & "/" & results.serverfile );
+			throw(message="Invalid widget type detected: #results.clientfileext#", type="InvalidWidgetType");
+		}
+		return results;
 	}
 
 	// rip extensions

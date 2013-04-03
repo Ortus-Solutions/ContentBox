@@ -3,7 +3,7 @@
 
 	<!--- Loader --->
 	<div class="loaders floatRight" id="versionsPagerLoader">
-		<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+		<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 	</div>
 
 	<!--- History --->
@@ -57,7 +57,7 @@
 
 				<!--- ACTIVE INDICATOR --->
 				<cfif thisVersion.getIsActive()>
-					<img src="#prc.cbRoot#/includes/images/asterisk_orange.png" alt="active" /> <strong>Active</strong>
+					<span class="label label-warning">Active</span>
 				</cfif>
 
 				<cfif not thisVersion.getIsActive()>
@@ -65,14 +65,14 @@
 					<!--- ROLLBACK BUTTON --->
 					<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
 					   class="confirmIt"
-					   data-message="Do you really want to rollback to this version?"><img id="version_rollback_#thisVersion.getContentVersionID()#"  src="#prc.cbRoot#/includes/images/arrow_merge.png" alt="rollback" border="0"/></a>
+					   data-message="Do you really want to rollback to this version?"><i class="icon-refresh icon-large" id="version_rollback_#thisVersion.getContentVersionID()#"></i></a>
 					</cfif>
 
 					<cfif prc.oAuthor.checkPermission("VERSIONS_DELETE")>
 					<!--- DELETE VERSION --->
 					<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
 					   data-title="Remove Content Version"
-					   data-message="Do you really want to remove this content version?"><img id="version_delete_#thisVersion.getContentVersionID()#" src="#prc.cbRoot#/includes/images/delete.png" alt="delete" border="0" /></a>
+					   data-message="Do you really want to remove this content version?"><i class="icon-remove-sign icon-large" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
 					</cfif>
 				</cfif>
 			</td>

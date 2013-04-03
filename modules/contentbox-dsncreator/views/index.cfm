@@ -1,7 +1,7 @@
 <cfoutput>
 <div class="box clear">
 	<div class="header">
-		<img src="#assetRoot#/includes/images/help.png" alt="help" width="30" height="30" /> Datasource Wizard
+		<i class="icon-lightbulb icon-large"></i> Datasource Wizard
 	</div>
 	<div class="body clearfix">
 		<div>

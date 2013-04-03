@@ -2,7 +2,7 @@
 #html.addAsset("#prc.cbRoot#/includes/css/diff.css")#
 <!--- Title --->
 <h2>
-	<img src="#prc.cbRoot#/includes/images/clock.png" border="0" alt="history" />
+	<i class="icon-time icon-large"></i>
 	Comparing Version <strong>#prc.currentVersion#</strong> and <strong>#prc.oldVersion#</strong>
 </h2>
 <div>

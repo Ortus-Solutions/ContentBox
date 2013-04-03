@@ -5,7 +5,7 @@
 		<tr>
 			<th>Secured</th>
 			<th>Credentials</th>
-			<th width="65" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="sort" title="Order"/></th>
+			<th width="65" class="center"><i class="icon-reorder icon-large"></i></th>
 			<th width="70" class="center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
@@ -24,15 +24,15 @@
 				<strong>Roles:</strong>#rule.getRoles()#
 			</td>
 			<td class="center">
-				<div id="ruleid-#rule.getRuleID()#_order">#rule.getOrder()#</div>
+				<div id="ruleid-#rule.getRuleID()#_order"><span class="badge badge-info">#rule.getOrder()#</span></div>
 			</td>
 			<td class="center">
 				<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
 				<!--- Edit Command --->
-				<a href="#event.buildLink(prc.xehEditorRule)#/ruleID/#rule.getRuleID()#" title="Edit Rule"><img src="#prc.cbroot#/includes/images/edit.png" alt="edit" /></a>
+				<a href="#event.buildLink(prc.xehEditorRule)#/ruleID/#rule.getRuleID()#" title="Edit Rule"><i class="icon-edit icon-large"></i></a>
 				&nbsp;
 				<!--- Delete Command --->
-				<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="Delete Rule?"><img id="delete_#rule.getRuleID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/></a>
+				<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="Delete Rule?"><i class="icon-remove-sign icon-large" id="delete_#rule.getRuleID()#"></i></a>
 				</cfif>
 			</td>
 		</tr>

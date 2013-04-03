@@ -4,7 +4,7 @@
 	<!--- Saerch Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/search.png" alt="info" width="24" height="24" />Search
+			<i class="icon-search"></i> Search
 		</div>
 		<div class="body<cfif len(rc.searchPages)> selected</cfif>">
 			<!--- Search Form --->
@@ -19,7 +19,7 @@
 	<!--- Filter Box --->
 	<div class="small_box">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/filter.png" alt="info" width="24" height="24" />Filters
+			<i class="icon-filter"></i> Filters
 		</div>
 		<div class="body<cfif prc.isFiltering> selected</cfif>">
 			#html.startForm(name="pageFilterForm",action=prc.xehPageSearch)#
@@ -59,7 +59,7 @@
 	<!--- Help Box--->
 	<div class="small_box" id="help_tips">
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/help.png" alt="info" width="24" height="24" />Help Tips
+			<i class="icon-question-sign"></i> Help Tips
 		</div>
 		<div class="body">
 			<ul class="tipList">
@@ -78,10 +78,10 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/page_big.png" alt="sofa" width="30" height="30" />
-			Pages (#prc.pagesCount#)
-			<cfif len(rc.searchPages)> > Search: #rc.searchPages#</cfif>
-			<cfif prc.isFiltering> > Filtered View</cfif>
+			<i class="icon-file-alt icon-large"></i>
+			Pages
+			<cfif len(rc.searchPages)><span class="badge">Search: #rc.searchPages#</span></cfif>
+			<cfif prc.isFiltering> <span class="badge">Filtered View</span></cfif>
 		</div>
 		<!--- Body --->
 		<div class="body">
@@ -98,7 +98,7 @@
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
 				<div class="infoBar">
-					<img src="#prc.cbRoot#/includes/images/info.png" alt="comments" />
+					<i class="icon-exclamation-sign icon-large"></i>
 					Comments are currently disabled site-wide!
 				</div>
 			</cfif>
@@ -129,10 +129,9 @@
 
 			<!--- Location Bar --->
 			<cfif structKeyExists(rc, "parent") AND len( rc.parent )>
-			<div class="infoBar">
-			  <a href="#event.buildLink(prc.xehPages)#">
-			  	<img src="#prc.cbRoot#/includes/images/home.png" alt="root" title="Home"/>
-			  </a> #getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-admin").visit(prc.page, event.buildLink(prc.xehPages))#
+			<div class="infoBar infoBar-blue">
+			  <a href="#event.buildLink(prc.xehPages)#"><i class="icon-home icon-large"></i></a> 
+			  #getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-admin").visit(prc.page, event.buildLink(prc.xehPages))#
 			</div>
 			</cfif>
 
@@ -143,9 +142,9 @@
 						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 						<th>Name</th>
 						<th width="150">Categories</th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/sort.png" alt="menu" title="Show in Menu"/></th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/publish.png" alt="publish" title="Published"/></th>
-						<th width="40" class="center"><img src="#prc.cbRoot#/includes/images/glasses.png" alt="hits" title="Hits"/></th>
+						<th width="40" class="center"><i class="icon-th-list icon-large" title="Show in Menu"></i></th>
+						<th width="40" class="center"><i class="icon-globe icon-large" title="Published"></i></th>
+						<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
 						<th width="100" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>
@@ -159,7 +158,8 @@
 							class="futurePublished"
 						<cfelseif !page.isContentPublished()>
 							class="selected"
-						</cfif>>
+						</cfif>
+						<cfif page.getNumberOfChildren()>ondblclick="to('#event.buildLink(prc.xehPages)#/parent/#page.getContentID()#')"</cfif>>
 						<!--- check box --->
 						<td>
 							<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
@@ -167,9 +167,9 @@
 						<td>
 							<!--- Children Dig Deeper --->
 							<cfif page.getNumberOfChildren()>
-								<a href="#event.buildLink(prc.xehPages)#/parent/#page.getContentID()#" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><img src="#prc.cbRoot#/includes/images/plus.png" alt="child" border="0"/></a>
+								<a href="#event.buildLink(prc.xehPages)#/parent/#page.getContentID()#" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="icon-plus-sign icon-large"></i></a>
 							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/page.png" alt="page"/>
+								<i class="icon-circle-blank icon-large"></i>
 							</cfif>
 							<!--- Title --->
 							<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
@@ -177,86 +177,83 @@
 							<cfelse>
 								#page.getTitle()#
 							</cfif>
-							<cfif page.getNumberOfChildren()>
-							(#page.getNumberOfChildren()#)
-							</cfif>
 						</td>
 						<td>#page.getCategoriesList()#</td>
 						<td class="center">
 							<cfif page.getShowInMenu()>
-								<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Shows in menu!" />
+								<i class="icon-ok icon-large textGreen" title="Shows in menu"></i>
 							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Not in menu!" />
+								<i class="icon-remove icon-large textRed" title="Not in menu"></i>
 							</cfif>
 						</td>
 						<td class="center">
 							<cfif page.isExpired()>
-								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="expired" title="Page has expired on ( (#page.getDisplayExpireDate()#))" />
+								<i class="icon-time icon-large textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
 								<span class="hidden">expired</span>
 							<cfelseif page.isPublishedInFuture()>
-								<img src="#prc.cbRoot#/includes/images/information.png" alt="published" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)" />
+								<i class="icon-fighter-jet icon-large textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
 								<span class="hidden">published in future</span>
 							<cfelseif page.isContentPublished()>
-								<img src="#prc.cbRoot#/includes/images/button_ok.png" alt="published" title="Page Published!" />
+								<i class="icon-ok icon-large textGreen" title="Page Published"></i>
 								<span class="hidden">published in future</span>
 							<cfelse>
-								<img src="#prc.cbRoot#/includes/images/button_cancel.png" alt="draft" title="Page Draft!" />
+								<i class="icon-remove icon-large textRed" title="Page Draft"></i>
 								<span class="hidden">draft</span>
 							</cfif>
 						</td>
-						<td class="center">#page.getHits()#</td>
+						<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
 						<td class="center">
 							<!---Info Panel --->
-							<button class="button infoPanelButton" title="Page Info" ><img src="#prc.cbroot#/includes/images/gravatar.png" /></button>
+							<button class="button infoPanelButton" title="Page Info" ><i class="icon-info-sign icon-large"></i></button>
 							<!---Info Panel --->
 							<div id="infoPanel_#page.getContentID()#" class="contentInfoPanel">
-								<img src="#prc.cbRoot#/includes/images/calendar_small.png" alt="calendar"/>  
+								<i class="icon-calendar"></i>
 								Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on 
 								#page.getActiveContent().getDisplayCreatedDate()#
 								</br>
 								<!--- password protect --->
 								<cfif page.isPasswordProtected()>
-									<img src="#prc.cbRoot#/includes/images/lock.png" alt="locked"/> Password Protected
+									<i class="icon-lock"></i> Password Protected
 								<cfelse>
-									<img src="#prc.cbRoot#/includes/images/lock_off.png" alt="locked"/> Public Page
+									<i class="icon-unlock"></i> Public Page
 								</cfif>
 								<br/>
 								<!--- comments icon --->
 								<cfif page.getallowComments()>
-									<img src="#prc.cbRoot#/includes/images/comments.png" alt="locked"/> Open Comments
+									<i class="icon-comments"></i> Open Comments
 								<cfelse>
-									<img src="#prc.cbRoot#/includes/images/comments_off.png" alt="locked"/> Closed Comments
+									<i class="icon-warning-sign"></i> Closed Comments
 								</cfif>
 								<!---Layouts --->
 								<br/>
-								<img src="#prc.cbRoot#/includes/images/layouts_small.png" alt="page layout"/> Layout: <strong>#page.getLayout()#</strong>
+								<i class="icon-picture"></i> Layout: <strong>#page.getLayout()#</strong>
 								<br/>
-								<img src="#prc.cbRoot#/includes/images/iPad.png" alt="mobile layout"/> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
+								<i class="icon-tablet"></i> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
 							</div>
 							
 							<!---Page Actions --->
-							<button class="button actionsPanelButton" title="Page Actions" ><img src="#prc.cbroot#/includes/images/settings_black.png" /></button>
+							<button class="button actionsPanelButton" title="Page Actions" ><i class="icon-cogs icon-large"></i></button>
 							<!---Page Actions Panel --->
 							<div id="pageActions_#page.getContentID()#" class="actionsPanel">
 								<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 								<!--- Clone Command --->
-								<a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><img src="#prc.cbroot#/includes/images/clone.png" alt="edit" border="0"/> Clone Page</a>
+								<a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a>
 								<br/>
 								<!--- Create Child --->
-								<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><img src="#prc.cbroot#/includes/images/parent.png" alt="edit" border="0"/> Create Child</a>
+								<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="icon-sitemap icon-large"></i> Create Child</a>
 								<br/>
 								</cfif>
 								<!--- History Command --->
-								<a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><img src="#prc.cbroot#/includes/images/old-versions.png" alt="versions" border="0"/> Page History</a>
+								<a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="icon-time icon-large"></i> History</a>
 								<br/>
 								<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 								<!--- Delete Command --->
 								<a href="javascript:remove('#page.getContentID()#')" class="confirmIt"
-								  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><img id="delete_#page.getContentID()#" src="#prc.cbroot#/includes/images/delete.png" border="0" alt="delete"/> Delete Page</a>
+								  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="icon-remove-sign icon-large"/> Delete</i></a>
 								<br/>
 								</cfif>
 								<!--- View in Site --->
-								<a href="#prc.CBHelper.linkPage(page)#" target="_blank"><img src="#prc.cbroot#/includes/images/eye.png" alt="edit" border="0"/> View Page</a>
+								<a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="icon-eye-open icon-large"></i> View Page</a>
 							</div>
 							</td>
 					</tr>
@@ -292,7 +289,7 @@
 			</div>
 			<!--- Loader --->
 			<div class="center loaders" id="clonerBarLoader">
-				<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+				<i class="icon-spinner icon-spin icon-large"></i>
 				<br>Please wait, doing some hardcore cloning action...
 			</div>
 		#html.endForm()#

@@ -2,7 +2,7 @@
 #html.startForm(action="cbinstaller/install",name="installerForm",novalidate="novalidate")#
 <div class="box clear">
 	<div class="header">
-		<img src="#prc.assetRoot#/includes/images/help.png" alt="help" width="30" height="30" />Install Wizard
+		<i class="icon-lightbulb icon-large"></i> Install Wizard
 	</div>
 	<div class="body_vertical_nav clearfix">
 		<!--- Tabs --->
@@ -156,12 +156,11 @@
 						the application web root.
 					</p>
 					
-					<div class="infoBar">
+					<div class="infoBar infoBar-orange">
 						<p>
 							If you select full URL rewrites below, then we will modify your application's routing table to remove the 
 							<strong>index.cfm</strong> from the URLs (<em>config/routes.cfm</em>).  You can also select not to have full URL rewrites and your URLs
 							will contain an <strong>index.cfm</strong> in them. 
-	
 						</p>
 						<strong>Full URL Rewrite:</strong>
 						<code>
