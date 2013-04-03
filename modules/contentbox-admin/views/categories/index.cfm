@@ -68,8 +68,8 @@
 					<tr>
 						<td><a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
 						<td>#category.getSlug()#</td>
-						<td class="center">#category.getNumberOfPages()#</td>
-						<td class="center">#category.getnumberOfEntries()#</td>
+						<td class="center"><span class="badge badge-info">#category.getNumberOfPages()#</span></td>
+						<td class="center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
 							<!--- Edit Command --->
