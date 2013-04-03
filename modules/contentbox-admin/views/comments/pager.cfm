@@ -2,7 +2,7 @@
 <div id="pagerComments">
 <!--- Loader --->
 <div class="loaders floatRight" id="commentsPagerLoader">
-	<img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/>
+	<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 </div>
 <!--- Paging --->
 <cfif prc.commentPager_pagination>
