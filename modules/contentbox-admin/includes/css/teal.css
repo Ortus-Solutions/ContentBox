@@ -295,7 +295,9 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus { color: #ffffff; tex
 .navbarPanels a { color: white !important; }
 .navbarPanels a:hover{ text-transform: underline;}
 .navbarPanels li{ list-style: none;}
+.navbarSlot{ margin: 0px 3px; }
 #quickLinksPanel{ right: 2px;}
+#adminActionsPanel{ margin-left: 100px}
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}
