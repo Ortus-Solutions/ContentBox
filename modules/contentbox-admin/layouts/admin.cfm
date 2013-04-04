@@ -71,54 +71,79 @@
 						<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" size="15"/>
 					</span>
 					
+					<!--- Quick Post --->
+					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
+						<span><a href="javascript:showQuickPost()" title="Quick Post"><i class="icon-edit"></i></a></span>
+					</cfif>
+					<div id="quickLinksPanel" class="navbarPanels" style="display:none;">
+						<p class="label label-info">Quick Links</p>
+						
+						<ul>
+						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
+							<li><i class="icon-file-alt"></i> <a href="#event.buildLink( prc.xehPagesEditor )#">Create New Page</a></li>
+						</cfif>
+						</ul>
+						<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
+							<li><i class="icon-quote-left"></i> <a href="#event.buildLink( prc.xehBlogEditor )#">Create New Entry</a></li>
+						</cfif>
+						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+							<li><i class="icon-group"></i> <a href="#event.buildLink( prc.xehAuthorEditor )#">Create New User</a></li>
+						</cfif>
+						<cfif prc.oAuthor.checkPermission("SYSTEM_SAVE_CONFIGURATION")>
+							<li><i class="icon-wrench"></i> <a href="#event.buildLink( prc.xehSettings )#">ContentBox Settings</a></li>
+						</cfif>
+						
+						<li><i class="icon-camera"></i> <a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</a></li>
+						<li><i class="icon-off"></i> <a href="#event.buildLink( prc.xehDoLogout )#">Logout</a></li>
+					</div>
+					
 					<!--- Admin Actions --->
 					<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
 					<!---Loader Status --->
 					<span id="adminActionLoaderStatus"></span>
 					<!---Icon --->	
-					<a href="javascript:null" title="Admin Actions" id="adminActionsButton"><i id="adminActionsIcon" class="icon-cogs"></i></a>
+					<a href="javascript:null" title="Admin Actions" id="adminActionsButton"><i id="adminActionsIcon" class="icon-cog"></i></a>
 					<!---Actions Panel --->
 					<div id="adminActionsPanel" class="navbarPanels" style="display:none;">
-						<p class="label label-inverse">Admin Actions</p>
+						<p class="label label-info">Admin Actions</p>
 						<ul>
 							<cfloop array="#prc.xehAdminActionData#" index="thisAction">
 							<li><i class="icon-caret-right"></i> <a href="javascript:adminAction( '#thisAction.value#', '#event.buildLink(prc.xehAdminAction)#')">#thisAction.name#</a></li>
 							</cfloop>
 						</ul>
 					</div>
-					
 					</cfif>
+					
 					<!--- Quick Links --->
-					<span id="quickLinksBar">
-					<select name="quickLinks" id="quickLinks" onchange="quickLinks(this.value)">
-						<option value="null">Welcome #prc.oAuthor.getName()#</option>
-						<option value="javascript:null">--------------</option>
+					<a href="javascript:null" id="quickLinksButton"><i id="quickLinksIcon" class="icon-user"></i> #prc.oAuthor.getName()#</a>
+					<div id="quickLinksPanel" class="navbarPanels" style="display:none;">
+						<p class="label label-info">Quick Links</p>
+						
+						<ul>
 						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
-							<option value="#event.buildLink(prc.xehPagesEditor)#">Create New Page</option>
+							<li><i class="icon-file-alt"></i> <a href="#event.buildLink( prc.xehPagesEditor )#">Create New Page</a></li>
 						</cfif>
+						</ul>
 						<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
-							<option value="#event.buildLink(prc.xehBlogEditor)#">Create New Entry</option>
+							<li><i class="icon-quote-left"></i> <a href="#event.buildLink( prc.xehBlogEditor )#">Create New Entry</a></li>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-							<option value="#event.buildLink(prc.xehAuthorEditor)#">Create New Author</option>
+							<li><i class="icon-group"></i> <a href="#event.buildLink( prc.xehAuthorEditor )#">Create New User</a></li>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission("SYSTEM_SAVE_CONFIGURATION")>
-						<option value="#event.buildLink(prc.xehSettings)#">ContentBox Settings</option>
+							<li><i class="icon-wrench"></i> <a href="#event.buildLink( prc.xehSettings )#">ContentBox Settings</a></li>
 						</cfif>
-						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
-							<option value="javascript:showQuickPost()">Quick Post</option>
-						</cfif>
-						<option value="javascript:null">--------------</option>
-						<option value="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</option>
-						<option value="#event.buildLink(linkto=prc.xehDoLogout)#">Logout</option>
-					</select>
-					</span>
+						
+						<li><i class="icon-camera"></i> <a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</a></li>
+						<li><i class="icon-off"></i> <a href="#event.buildLink( prc.xehDoLogout )#">Logout</a></li>
+					</div>
+					
 					<!--- cbadmin event --->
 					#announceInterception("cbadmin_onTopBar")#
 				</span>
 			  	
 			  	<!--- site tag line --->
-				<i class="icon-desktop"></i> &nbsp;<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="Open the site">#prc.cbSettings.cb_site_name#</a>
+				<i class="icon-desktop icon-large"></i> &nbsp;<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="Open the site">#prc.cbSettings.cb_site_name#</a>
 				
 				<!--- cbadmin event --->
 				#announceInterception("cbadmin_onTagline")#

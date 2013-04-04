@@ -73,7 +73,11 @@ $(document).ready(function() {
     });
     // add click listener to actions panel buttons
     $( '#adminActionsButton' ).click( function( e ){
-    	handleNavbarPanelClick( e, this, '#adminActionsPanel', toggleAdminActionsPanel );
+    	handleNavbarPanelClick( e, this, '#adminActionsPanel', toggleNavbarPanel );
+    });
+    // add click listener to quick links panel buttons
+    $( '#quickLinksButton' ).click( function( e ){
+    	handleNavbarPanelClick( e, this, '#quickLinksPanel', toggleNavbarPanel );
     });
 	
 });
@@ -106,10 +110,10 @@ function handleNavbarPanelClick( e, el, selector, handler ) {
     // stop propagation so click doesn't bubble to body
     e.stopPropagation();
     // call the handler
-    handler.call( this );
+    handler.call( this, selector );
 }
-function toggleAdminActionsPanel(){
-	$("#adminActionsPanel").slideToggle();
+function toggleNavbarPanel(selector){
+	$( selector ).slideToggle();
 	return false;
 }
 function adminAction( action, actionURL ){

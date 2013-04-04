@@ -47,6 +47,7 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 #header_bg { background:url(../images/header_bg.png) repeat-x; }
 #header_top { color:#ffffff; font-size:13px; }
 #header_top a { color:#fff; }
+#header_top a:hover {text-decoration:none; }
 #header_main { height:80px; }
 #header_main h1 { font-family:Serif, Georgia; font-weight:bold; font-size:4em; margin:24px 0 0; }
 #header_main h1 span { font-size:18px; }
@@ -289,11 +290,12 @@ a.label:hover, a.label:focus, a.badge:hover, a.badge:focus { color: #ffffff; tex
 #div-search-results h2{ color: #31ADE8; font-size: 16px}
 #div-search-results ul{ font-size: 12px}
 #div-search-results li{ margin: 3px 0px }
-.navbarPanels{ color: black; z-index:999; display:none; position: absolute; margin-left: 5px; padding: 10px; background-color: #eaeaea; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
-.navbarPanels a { color:black !important; }
+#adminActionsButton{ text-decoration: none; }
+.navbarPanels{ color: white; z-index:999; display:none; position: absolute; margin-left: 15px; padding: 10px; background-color: black; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
+.navbarPanels a { color: white !important; }
 .navbarPanels a:hover{ text-transform: underline;}
 .navbarPanels li{ list-style: none;}
-#quickLinks{ padding: 3px;}
+#quickLinksPanel{ right: 2px;}
 /**============================== FILEBROWSER CSS ==============================**/
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}
