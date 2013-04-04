@@ -59,7 +59,74 @@ $(document).ready(function() {
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
 	
+	// add click listener to body to hide info and action panels
+    $( 'body' ).click( function( e ){
+       var target = $( e.target ),
+           apIgnore = [],
+           apTarget = target.closest( '.navbarPanels' )
+       // hideInfoPanels( ipIgnore );
+       if( apTarget.length ) {
+           apIgnore.push( apTarget[ 0 ].id );
+       }
+       // run global hide methods
+       hideNavbarPanels( '.navbarPanels', apIgnore );
+    });
+    // add click listener to actions panel buttons
+    $( '#adminActionsButton' ).click( function( e ){
+    	handleNavbarPanelClick( e, this, '#adminActionsPanel', toggleAdminActionsPanel );
+    });
+	
 });
+/*
+ * Hides panels which match the passed selector
+ * @selector {String} the selector class of panels to hide
+ * @ignore {Array} array of ids of elements to ignore when hiding elements
+ */
+function hideNavbarPanels( selector, ignore ) {
+    var ignore = !ignore ? [] : ignore;
+    $( selector ).each(function() {
+        var me = this;
+        if( $.inArray( me.id, ignore )==-1 ) {
+            $( this ).slideUp({
+                duration: 200
+            })
+        }
+    });
+}
+/*
+ * Consolidated way to show selected panel and hide others
+ * @e {Event} the click event
+ * @el {HTMLElement} the button which was clicked
+ * @selector {String} the selector class of the target element
+ * @handler {Function} the function to execute
+ */
+function handleNavbarPanelClick( e, el, selector, handler ) {
+    // prevent default event
+    e.preventDefault();
+    // stop propagation so click doesn't bubble to body
+    e.stopPropagation();
+    // call the handler
+    handler.call( this );
+}
+function toggleAdminActionsPanel(){
+	$("#adminActionsPanel").slideToggle();
+	return false;
+}
+function adminAction( action, actionURL ){
+	if( action != 'null' ){
+		$("#adminActionsPanel").hide();
+		$("#adminActionsIcon").addClass( "icon-spin textOrange" );
+		// Run Action Dispatch
+		$.post( actionURL , {targetModule: action}, function(data){
+			var message = "<strong>Action Ran, Booya!</strong>";
+			if( data.ERROR ){
+				message = "<strong>Error running action, check logs!</strong>";
+			}
+			$("#adminActionsIcon").removeClass( "icon-spin textOrange" );
+			$("#adminActionLoaderStatus").fadeIn().html( message ).delay( 1500 ).fadeOut();
+		} );
+	}
+}
 function activateContentSearch(){
 	// local refs
 	$nav_search = $("#nav-search");
@@ -110,23 +177,6 @@ function quickLinks( inURL ){
 	if( inURL != 'null' )
 		window.location = inURL;
 	
-}
-function adminAction( action, actionURL ){
-	if( action != 'null' ){
-		$("#adminActions").hide();
-		$("#adminActionLoaderBar").fadeIn();
-		// Run Action Dispatch
-		$.post( actionURL , {targetModule: action}, function(data){
-			var message = "<strong>Action Ran, Booya!</strong>";
-			if( data.ERROR ){
-				message = "<strong>Error running action, check logs!</strong>";
-			}
-			$("#adminActionLoaderBar").hide();
-			$("#adminActionLoaderStatus").fadeIn().html( message ).delay( 1500 ).fadeOut();
-			$('#adminActions option:first-child').attr("selected", "selected");
-			$("#adminActions").delay( 2000 ).fadeIn();
-		} );
-	}
 }
 function exposeIt(vID){
 	$(vID).expose();
