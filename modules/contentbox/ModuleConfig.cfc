@@ -37,8 +37,8 @@ component {
 	function configure(){
 		// contentbox settings
 		settings = {
-			codename = "John 12:44",
-			codenameLink = "http://www.youversion.com/bible/john.12.44.nkjv",
+			codename = "Psalm 119:73",
+			codenameLink = "https://www.youversion.com/bible/psa.119.73.niv",
 			// Auto Updates
 			updateSlug_stable 	= "contentbox-stable-updates",
 			updateSlug_beta 	= "contentbox-beta-updates",
