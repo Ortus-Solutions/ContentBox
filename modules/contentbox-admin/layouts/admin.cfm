@@ -73,15 +73,20 @@
 					
 					<!--- Admin Actions --->
 					<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
-					<span id="adminActionBar">
-						<span id="adminActionLoaderBar" style="display:none"><img src="#prc.cbRoot#/includes/images/ajax-loader-blue.gif" alt="loader"/></span>
-						<span id="adminActionLoaderStatus"></span>
-						<select name="adminActions" id="adminActions" onchange="adminAction(this.value, '#event.buildLink(prc.xehAdminAction)#')">
-							<option value="null">Admin Actions</option>
-							<option value="null">--------------</option>
-							#html.options(values=prc.xehAdminActionData)#
-						</select>
-					</span>
+					<!---Loader Status --->
+					<span id="adminActionLoaderStatus"></span>
+					<!---Icon --->	
+					<a href="javascript:null" title="Admin Actions" id="adminActionsButton"><i id="adminActionsIcon" class="icon-cogs"></i></a>
+					<!---Actions Panel --->
+					<div id="adminActionsPanel" class="navbarPanels" style="display:none;">
+						<p class="label label-inverse">Admin Actions</p>
+						<ul>
+							<cfloop array="#prc.xehAdminActionData#" index="thisAction">
+							<li><i class="icon-caret-right"></i> <a href="javascript:adminAction( '#thisAction.value#', '#event.buildLink(prc.xehAdminAction)#')">#thisAction.name#</a></li>
+							</cfloop>
+						</ul>
+					</div>
+					
 					</cfif>
 					<!--- Quick Links --->
 					<span id="quickLinksBar">
