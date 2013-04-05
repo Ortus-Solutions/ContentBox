@@ -69,6 +69,13 @@ The arguments you can use are:
 			loadSelectCallbacks = true,
 			// Quick View image width in pixels
 			quickViewWidth = 400,
+			// HTML Uploads
+			html5uploads = {
+				// max file size in mbytes
+				maxfilesize = 100,
+				// max multiple upload files
+				maxfiles = 25	
+			},
 			// Uploadify Settings
 			uploadify = {
 				fileDesc = "All Files",
@@ -126,7 +133,7 @@ The arguments you can use are:
 			// downloads
 			"fb_preFileDownload", "fb_postFileDownload",
 			// Uploads
-			"fb_preFileUpload", "fb_postFileUpload"
+			"fb_preFileUpload", "fb_postFileUpload", "fb_onFileUploadError"
 			] )
 		};
 

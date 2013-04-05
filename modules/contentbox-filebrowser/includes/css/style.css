@@ -48,6 +48,57 @@
 	padding: 5px;
     overflow: auto;
 }
+#FileBrowser .fileListingUploading{ background-color: #eaeaea; opacity: 1.0; border: 2px dashed #333; }
+#FileBrowser #fileUploaderMessage{
+	z-index:999; font-size: 50px; opacity:0.5; width: 95%; margin:auto; text-align:center; margin-top:150px; position:absolute; display:none;
+}
+#FileBrowser .preview{
+	width: 250px;
+	height: 35px;
+	margin: 10px 10px;
+	position: relative;
+	text-align: center;
+	z-index: 9999;
+	opacity: 1.0;
+	border: 1px dotted #ccc;
+	padding: 10px;
+	background-color: white;
+	float:left;
+	-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;
+	box-shadow:0 0 2px #000;
+}
+#FileBrowser .fileHolder{
+	display: inline-block;
+	position: relative;
+	font-style: bold;
+}
+#FileBrowser .preview.done{
+	display: block;
+}
+#FileBrowser .progressHolder{
+	position: absolute;
+	background-color:#252f38;
+	height:12px;
+	width:100%;
+	left:0;
+	bottom: 0;
+	/**box-shadow:0 0 2px #000;**/
+}
+#FileBrowser .progress{
+	background-color:#F23E44;
+	position: absolute;
+	height:100%;
+	left:0;
+	width:0;
+	box-shadow: 0 0 1px rgba(255, 255, 255, 0.4) inset;
+	-moz-transition:0.25s;
+	-webkit-transition:0.25s;
+	-o-transition:0.25s;
+	transition:0.25s;
+}
+#FileBrowser .preview.done .progress{
+	width:100% !important;
+}
 #FileBrowser input[type=button]{
 	border: 1px solid #CCC; 
 	background: #FFFFFF url(../images/headerbg.gif) repeat-x bottom left; 
