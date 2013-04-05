@@ -77,7 +77,7 @@ The arguments you can use are:
 				sizeLimit = 0,
 				customJSONOptions = ""
 			},
-			useMediaPath = true,
+			useMediaPath = false,
 			mediaPath = "__media"
 		};
 
