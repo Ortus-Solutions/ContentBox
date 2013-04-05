@@ -27,7 +27,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	// DI properties
 	property name="cache" 			inject="cachebox:default";
 	property name="moduleSettings"	inject="coldbox:setting:modules";
-	
+	property name="appMapping"		inject="coldbox:setting:appMapping";
+	property name="requestService"	inject="coldbox:requestService";
+
 	// Properties
 	property name="settingsCacheKey" type="string";
 
@@ -191,6 +193,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			allowUploads	= cbSettings.cb_media_allowUploads,
 			acceptMimeTypes	= cbSettings.cb_media_acceptMimeTypes,
 			quickViewWidth	= cbSettings.cb_media_quickViewWidth,
+			loadJQuery 		= false,
+			useMediaPath	= true,
 			uploadify = {
 				fileDesc 	= cbSettings.cb_media_uplodify_fileDesc,
 				fileExt 	= cbSettings.cb_media_uplodify_fileExt,
@@ -199,6 +203,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 				customJSONOptions = cbSettings.cb_media_uploadify_customOptions
 			}
 		};
+		
+		// Base MediaPath
+		var mediaPath = ( len( AppMapping ) ? AppMapping : "" ) & "/";
+		if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
+			mediaPath = "index.cfm" & mediaPath;;
+		}
+		// add the entry point
+		mediaPath &= moduleSettings[ "contentbox-ui" ].entryPoint & "__media";
+		// Store it
+		settings.mediaPath = mediaPath;
+		
 		return settings;
 	}
 
