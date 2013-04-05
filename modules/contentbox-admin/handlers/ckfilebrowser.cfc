@@ -16,15 +16,8 @@ component extends="baseHandler"{
 		rc.callback="fbCKSelect";
 		// get settings according to contentbox
 		prc.cbCKSetting = settingService.buildFileBrowserSettings();
+		// load jquery as it is standalone
 		prc.cbCKSetting.loadJQuery = true;
-		//base mediaPath
-		var mediaPath = ( len( getSetting( "AppMapping" ) ) ? getSetting( "AppMapping" ) : "" ) & "/";
-		if(findNoCase("index.cfm",event.getSESBaseURL())) {
-			mediaPath = "index.cfm" & mediaPath;;
-		}
-		// add the entry point
-		mediaPath &= getSetting("modules")["contentbox-ui"].entryPoint & "__media";
-		prc.cbCKSetting.mediaPath = mediaPath;
 	}
 
 	// index

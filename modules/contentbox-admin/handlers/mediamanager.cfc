@@ -53,7 +53,7 @@ component extends="baseHandler"{
 		];
 
 		// build argument list for widget
-		prc.fbArgs = {widget=true,settings=prc.cbFileBrowserSettings};
+		prc.fbArgs = {widget=true, settings=prc.cbFileBrowserSettings};
 
 		// view
 		event.setView("mediamanager/index");
