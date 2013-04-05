@@ -321,6 +321,10 @@ component accessors="true"{
 			"cb_media_acceptMimeTypes" = "",
 			"cb_media_quickViewWidth" = "400",
 			
+			// HTML5 Media Manager
+			"cb_media_html5uploads_maxFileSize" = "100",
+			"cb_media_html5uploads_maxFiles" 	= "25",
+			
 			// Media Services
 			"cb_media_provider" = "CFContentMediaProvider",
 			"cb_media_provider_caching" = "true",

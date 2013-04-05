@@ -329,7 +329,7 @@
 						</fieldset>
 						
 						<fieldset>
-						<legend><i class="icon-cog icon-large"></i> <strong>Media Options</strong></legend>
+						<legend><i class="icon-cog icon-large"></i> <strong>FileBrowser Options</strong></legend>
 							
 							<!--- Create Folders --->
 							#html.label(field="cb_media_createFolders",content="Allow Creation of Folders:")#
@@ -352,13 +352,17 @@
 							#html.radioButton(name="cb_media_allowUploads",checked=not prc.cbSettings.cb_media_allowUploads,value=false)# No
 
 							<!--- Mime Types --->
-							#html.label(field="cb_media_acceptMimeTypes",content="Accept Mime Types")#
-							<small>The allowed mime types the <em>CFFile Upload</em> will allow (<a href="http://help.adobe.com/en_US/ColdFusion/9.0/CFMLRef/WSc3ff6d0ea77859461172e0811cbec22c24-738f.html" target="_blank">See Reference</a>).</small></br>
+							#html.label(field="cb_media_acceptMimeTypes",content="Accepted Upload File Mime Types")#
+							<small>The allowed mime types the <em>CFFile Upload & HTML5 uploads</em> will allow (<a href="http://help.adobe.com/en_US/ColdFusion/9.0/CFMLRef/WSc3ff6d0ea77859461172e0811cbec22c24-738f.html" target="_blank">See Reference</a>).</small></br>
 							#html.textField(name="cb_media_acceptMimeTypes",value=prc.cbSettings.cb_media_acceptMimeTypes,class="textfield width98",title="The accepted mime types of the CFFile upload action. Blank means all files are accepted.")#
 
+							<!--- size limits --->
+							#html.textField(name="cb_media_html5uploads_maxFileSize",label="HTML5 Uploads - Size Limit (mb):",required="required",value=prc.cbSettings.cb_media_html5uploads_maxFileSize,class="textfield width98",title="The size limit of the HTML5 uploads.")#
+							#html.textField(name="cb_media_html5uploads_maxFiles",label="HTML5 Uploads - Max Simultaneous Uploads:",required="required",value=prc.cbSettings.cb_media_html5uploads_maxFiles,class="textfield width98",title="The maximum simultaneous HTML5 uploads.")#
+							
 							<!--- Quick View --->
 							#html.inputField(type="numeric",name="cb_media_quickViewWidth",label="Quick View Image Width: (pixels)",value=prc.cbSettings.cb_media_quickViewWidth,class="textfield width98",title="The width in pixels of the quick view dialog")#
-
+							
 						</fieldset>
 						<!--- Uplodify --->
 						<fieldset>

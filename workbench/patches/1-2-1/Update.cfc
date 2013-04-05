@@ -138,6 +138,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_media_provider_caching", "true" );
 		addSetting( "cb_dashboard_newsfeed", "http://www.gocontentbox.org/blog/rss" );
 		addSetting( "cb_dashboard_newsfeed_count", "5" );
+		addSetting( "cb_media_html5uploads_maxFileSize", "100" );
+		addSetting( "cb_media_html5uploads_maxFiles", "25" );
 	}
 	
 	private function addSetting(name, value){

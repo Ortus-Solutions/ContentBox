@@ -9,7 +9,7 @@
 	<!--- Title --->
     <title>#prc.fbSettings.title#</title> 
 	<!--- JQuery --->
-	<cfset addAsset("#prc.fbModRoot#/includes/javascript/jquery-1.4.4.min.js")>
+	<cfset addAsset("#prc.fbModRoot#/includes/javascript/jquery.min.js")>
 </head>
 <body>#renderView()#</body>
 </html>
