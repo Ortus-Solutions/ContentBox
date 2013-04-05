@@ -58,6 +58,8 @@ function $getURLMediaPath(required fbDirRoot, required filePath) {
 $(document).ready(function() {
 	$fileBrowser 		= $("##FileBrowser");
 	$fileLoaderBar 		= $fileBrowser.find("##loaderBar");
+	$fileUploaderMessage = $fileBrowser.find("##fileUploaderMessage");
+	$fileListing 		= $fileBrowser.find("##fileListing");
 	$selectedItem		= $fileBrowser.find("##selectedItem");
 	$selectedItemURL	= $fileBrowser.find("##selectedItemURL");
 	$selectedItemID		= $fileBrowser.find("##selectedItemID");
@@ -240,25 +242,108 @@ function fbChoose(){
 <cfif prc.fbSettings.allowUploads>
 <script type="text/javascript">
 $(document).ready(function() {
-  $('##file_upload').uploadify({
-    'swf'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
-    //'cancelImg' : '#prc.fbModRoot#/includes/uploadify/uploadify-cancel.png',
-   	'uploader'    : '#event.buildLink(prc.xehFBUpload)#?#$safe(session.URLToken)#&folder=#prc.fbSafeCurrentRoot#',
-	'formData': {path: '#prc.fbSafeCurrentRoot#'},
-    'auto'      : true,
-	'multi'  	: #prc.fbSettings.uploadify.multi#,
-	'fileTypeDesc'	: '#prc.fbSettings.uploadify.fileDesc#',
-    'fileTypeExts'		: '#prc.fbSettings.uploadify.fileExt#',
-	<cfif isNumeric( prc.fbSettings.uploadify.sizeLimit )>
-	'fileSizeLimit'	: #prc.fbSettings.uploadify.sizeLimit#,
-	</cfif>
-	'onQueueComplete': function(queueData){
-		//alert(data.filesUploaded + ' file(s) uploaded successfully!');
-		$("##uploadBar").slideUp();
-		fbRefresh();
-	}
-	<cfif len( prc.fbSettings.uploadify.customJSONOptions )>#prc.fbSettings.uploadify.customJSONOptions#</cfif>
+	$('##file_upload').uploadify({
+	    'swf'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
+	    //'cancelImg' : '#prc.fbModRoot#/includes/uploadify/uploadify-cancel.png',
+	   	'uploader'    : '#event.buildLink(prc.xehFBUpload)#?#$safe(session.URLToken)#&folder=#prc.fbSafeCurrentRoot#',
+		'formData': {path: '#prc.fbSafeCurrentRoot#'},
+	    'auto'      : true,
+		'multi'  	: #prc.fbSettings.uploadify.multi#,
+		'fileTypeDesc'	: '#prc.fbSettings.uploadify.fileDesc#',
+	    'fileTypeExts'		: '#prc.fbSettings.uploadify.fileExt#',
+		<cfif isNumeric( prc.fbSettings.uploadify.sizeLimit )>
+		'fileSizeLimit'	: #prc.fbSettings.uploadify.sizeLimit#,
+		</cfif>
+		'onQueueComplete': function(queueData){
+			//alert(data.filesUploaded + ' file(s) uploaded successfully!');
+			$("##uploadBar").slideUp();
+			fbRefresh();
+		}
+		<cfif len( prc.fbSettings.uploadify.customJSONOptions )>#prc.fbSettings.uploadify.customJSONOptions#</cfif>
 	});
+	
+	// File drag and drop	
+	var dropbox = $fileBrowser;
+	dropbox.filedrop({
+		// The name of the $_FILES entry:
+		paramname : 'FILEDATA',
+		<cfif isNumeric( prc.fbSettings.html5uploads.maxfiles )>
+		maxfiles: #prc.fbSettings.html5uploads.maxfiles#,
+		</cfif>
+		<cfif isNumeric( prc.fbSettings.html5uploads.maxfilesize )>
+		maxfilesize: #prc.fbSettings.html5uploads.maxfilesize#, // in mb
+		</cfif>
+		<cfif len( prc.fbSettings.acceptMimeTypes )>
+		allowedfiletypes : "#prc.fbSettings.acceptMimeTypes#".split( "," ),
+		</cfif>
+		url: '#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#',
+		data: {
+	        path: '#prc.fbSafeCurrentRoot#'
+	    },
+		dragOver: function() {
+			$fileListing.addClass("fileListingUploading");
+			$fileUploaderMessage.fadeIn();
+	    },
+	    dragLeave: function() {
+			$fileListing.removeClass("fileListingUploading");
+			$fileUploaderMessage.fadeOut(); 
+	    },
+		drop: function() {
+			$fileUploaderMessage.fadeOut();
+	    },
+		uploadFinished:function(i,file,response){
+			$.data(file).addClass('done');
+			fbRefresh();
+			if( response.ERRORS ){
+				alert( response.MESSAGES );
+			}
+		},
+		error: function(err, file) {
+			switch(err) {
+				case 'BrowserNotSupported':
+					alert('Your browser does not support HTML5 file uploads!');
+					break;
+				case 'TooManyFiles':
+					alert('Too many files! Please select 25 at most!');
+					break;
+				case 'FileTooLarge':
+					alert(file.name+' is too large! Please upload files up to 5mb.');
+					break;
+				case 'FileTypeNotAllowed':
+					alert(file.type+' type is not allowed. Allowed types are #prc.fbSettings.acceptMimeTypes#');
+					break;
+				default:
+					break;
+			}
+			$fileListing.removeClass("fileListingUploading");
+			$fileUploaderMessage.fadeOut(); 
+		},
+		uploadStarted:function(i, file, len){
+			//console.log( "uploading starting" + file );
+			fbinitUploadFile( file );
+		},
+		progressUpdated: function(i, file, progress) {
+			$.data( file ).find( '.progress' ).width( progress );
+			//console.log( "uploading progress" + progress );
+		}
+	});
+	// Progress template
+	var template = '<div class="preview">'+
+						'<span class="fileHolder"></span>'+
+						'<div class="progressHolder">'+
+							'<div class="progress"></div>'+
+						'</div>'+
+					'</div>';
+	// when uploading files
+	function fbinitUploadFile(file){
+		var preview = $( template );
+		preview.find(".fileHolder").html("Uploading " + file.name );
+		// Append preview
+		preview.prependTo( $fileListing );
+		// Associating a preview container with the file, using jQuery's $.data()
+		$.data( file, preview );
+	}
+	
 });
 function fbUpload(){
 	$("##uploadBar").slideToggle();

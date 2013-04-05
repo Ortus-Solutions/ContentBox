@@ -92,6 +92,14 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<!--- Show the File Listing --->
 		<div id="fileListing">
+			<!---Clear Fix --->
+			<div style="clear:both"></div>
+			
+			<!---Upload Message Bar --->
+			<div id="fileUploaderMessage">
+				Drop files here to upload!
+			</div>
+			
 			#announceInterception("fb_preFileListing")#
 			<!--- Messagebox --->
 			#getPlugin("MessageBox").renderit()#
@@ -222,7 +230,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			</cfif>
 			#announceInterception("fb_postFileListing")#
 		</div> <!--- end fileListing --->
-
+		
 		<!--- Location Bar --->
 		<div id="locationBar">
 			#announceInterception("fb_preLocationBar")#

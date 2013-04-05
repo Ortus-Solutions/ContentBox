@@ -414,9 +414,9 @@ component output="false" hint="Main filebrowser module handler"{
 			announceInterception("fb_preFileUpload",iData);
 
 			iData.results = fileUtils.uploadFile(fileField="FILEDATA",
-											   destination=rc.path,
-											   nameConflict="Overwrite",
-											   accept=prc.fbSettings.acceptMimeTypes);
+											    destination=rc.path,
+											    nameConflict="Overwrite",
+											    accept=prc.fbSettings.acceptMimeTypes);
 			// debug log file
 			if( log.canDebug() ){
 				log.debug("File Uploaded!", iData.results);
@@ -432,6 +432,13 @@ component output="false" hint="Main filebrowser module handler"{
 			data.errors = true;
 			data.messages = "Error uploading file: #e.message# #e.detail#";
 			log.error(data.messages, e);
+			// Announce exception
+			var iData = {
+				fileField = "FILEDATA",
+				path = rc.path,
+				exception = e
+			};
+			announceInterception("fb_onFileUploadError",iData);
 		}
 
 		// render stuff out
@@ -462,8 +469,9 @@ component output="false" hint="Main filebrowser module handler"{
 
 			// load jquery if needed
 			if( prc.fbSettings.loadJquery ){
-				addAsset("#prc.fbModRoot#/includes/javascript/jquery-1.4.4.min.js");
+				addAsset("#prc.fbModRoot#/includes/javascript/jquery.min.js");
 			}
+			
 			// Add additional JS
 			addAsset("#prc.fbModRoot#/includes/javascript/jquery.uidivfilter.js");
 			addAsset("#prc.fbModRoot#/includes/javascript/jquery.contextMenu.min.js");
@@ -472,7 +480,10 @@ component output="false" hint="Main filebrowser module handler"{
 			if( prc.fbSettings.allowUploads ){
 				addAsset("#prc.fbModRoot#/includes/uploadify/uploadify.css");
 				addAsset("#prc.fbModRoot#/includes/uploadify/jquery.uploadify-3.1.min.js");
+				addAsset("#prc.fbModRoot#/includes/javascript/jquery.filedrop.js");
 			}
+			
+			// load selection callbacks
 			if( prc.fbSettings.loadSelectCallbacks ){
 				addAsset("#prc.fbModRoot#/includes/javascript/fbSelectCallbacks.js");
 			}
