@@ -90,8 +90,12 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			#announceInterception("fb_postQuickViewBar")#
 		</div>
 
+		<!--- Uploader Message --->
+		<div id="uploaderHelp">Drag and drop files to upload!</div>
+			
 		<!--- Show the File Listing --->
 		<div id="fileListing">
+			
 			<!---Clear Fix --->
 			<div style="clear:both"></div>
 			
