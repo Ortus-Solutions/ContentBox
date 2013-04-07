@@ -16,7 +16,7 @@
 			<!--- Loader --->
 			<div class="loaders" id="uploadBarLoader">
 				<i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
-				Importing Blog
+				Importing Action
 			</div>
 			
 		</div>
