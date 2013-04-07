@@ -45,10 +45,10 @@ component implements="contentbox.model.importers.ICBImporter"{
 			for(var x=1; x lte q.recordcount; x++){
 				var props 	= {category=q.name[x], slug=q.slug[x]};
 				var cat 	= categoryService.new(properties=props);
-
-				var exists  = categoryService.findAllWhere(criteria={slug=q.slug[x]});
-				if(arrayLen(exists)){
-					cat = exists[1];
+				var exists = categoryService.findAllBySlug( q.slug[ x ] );
+				
+				if( arrayLen( exists ) ){
+					cat = exists[ 1 ];
 				}else{
 					entitySave( cat );
 				}
@@ -72,13 +72,12 @@ component implements="contentbox.model.importers.ICBImporter"{
 						     firstName=listFirst(q.display_name[x]," "), lastName=trim(replacenocase(q.display_name[x], listFirst(q.display_name[x]," "), "" ))};
 				var author = authorService.new(properties=props);
 				author.setRole( defaultRole );
+				
 				// duplicate usernames
-				var exists = authorService.findAllWhere(criteria={username=props.username});
-
-				if( arrayLen(exists) ){
-					author = exists[1];
+				var exists = authorService.findAllByUsername( props.username );
+				if( arrayLen( exists ) ){
+					author = exists[ 1 ];
 				}
-
 				entitySave( author );
 				log.info("Imported author: #props.firstName# #props.lastName#");
 				authorMap[ q.id[x] ] = author.getAuthorID();
@@ -176,8 +175,8 @@ component implements="contentbox.model.importers.ICBImporter"{
 							 createdDate=qEntries.last_modified[x], isPublished=published, allowComments=commentStatus, layout="entries"};
 
 				var moreLoc = findnocase("<!--more-->", props.content);
-				if( moreLoc ){
-					props.excerpt = left(props.content,moreLoc-1);
+				if( (moreLoc-1) GT 0 ){
+					props.excerpt = left(props.content, moreLoc-1 );
 				}
 
 				// slug checks
