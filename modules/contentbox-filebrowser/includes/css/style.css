@@ -48,6 +48,7 @@
 	padding: 5px;
     overflow: auto;
 }
+#FileBrowser #uploaderHelp{text-align:center;padding:2px;background:#D9EDF7; color:#3A87AD}
 #FileBrowser .fileListingUploading{ background-color: #eaeaea; opacity: 1.0; border: 2px dashed #333; }
 #FileBrowser #fileUploaderMessage{
 	z-index:999; font-size: 50px; opacity:0.5; width: 95%; margin:auto; text-align:center; margin-top:150px; position:absolute; display:none;
