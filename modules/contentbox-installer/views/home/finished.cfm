@@ -1,7 +1,7 @@
 <cfoutput>
 <div class="box clear">
 	<div class="header">
-		<img src="#prc.assetRoot#/includes/images/help.png" alt="help" width="30" height="30" />Install Wizard Finished
+		<i class="icon-lightbulb icon-large"></i> Install Wizard Finished
 	</div>
 	<div class="body_vertical_nav clearfix">
 		<!--- Tabs --->
@@ -22,7 +22,8 @@
 					</p>
 					
 					<!--- Info Panel --->
-					<div class="infoBar">
+					<div class="infoBar infoBar-red">
+						<i class="icon-warning-sign icon-large icon-4x pull-left"></i>
 						<strong>Now that you are done, we recommend you remove these modules from disk, unless you plan to use them in the future: <br/>
 						<em>/{installed_location}/modules/contentbox-installer</em><br/>
 						<em>/{installed_location}/modules/contentbox-dsncreator</em></strong>
