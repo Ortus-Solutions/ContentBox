@@ -18,7 +18,8 @@
 			    #prc.cbroot#/includes/css/sort.css,
 			    #prc.cbroot#/includes/css/bootstrap.css,
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
-			    #prc.cbroot#/includes/css/font-awesome.min.css",
+			    #prc.cbroot#/includes/css/font-awesome.min.css,
+			    #prc.cbroot#/includes/css/contentbox.css",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
@@ -55,113 +56,135 @@
 <body>
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_afterBodyStart")#
-	<!--==================== Header =======================-->
-	<div id="header_bg">
-
-		<!--============Header Wrapper============-->
-		<div class="wrapper">
-
-			<!--=======Top Header area======-->
-			<div id="header_top">
-				<span class="fr">
-					
-					<!---Search --->
-					<span id="div-search" class="navbarSlot">
-						<!---Search Results --->
-						<span id="div-search-results">
-							<span class="floatRight"><button class="buttonsmall" onclick="closeSearchBox()">close</button></span>
-							<h2>Search Results</h2>
-						</span>
-						<!--- Inputs --->
-						<i class="icon-search"></i> 
-						<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url"/>
-						<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" size="15"/>
-					</span>
-					
-					<!--- Quick Post --->
-					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
-					<span class="navbarSlot">
-						<a href="javascript:showQuickPost()" title="Quick Post"><i class="icon-edit"></i></a>
-					</span>
-					</cfif>
-					
-					<!--- Admin Actions --->
-					<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
-					<span class="navbarSlot">
-						<!---Loader Status --->
-						<span id="adminActionLoaderStatus"></span>
-						<!---Icon --->	
-						<a href="javascript:null" title="Admin Actions" id="adminActionsButton"><i id="adminActionsIcon" class="icon-cog"></i></a>
-						<!---Actions Panel --->
-						<div id="adminActionsPanel" class="navbarPanels" style="display:none;">
-							<p class="label label-info">Admin Actions</p>
-							<ul>
-								<cfloop array="#prc.xehAdminActionData#" index="thisAction">
-								<li><i class="icon-caret-right"></i> <a href="javascript:adminAction( '#thisAction.value#', '#event.buildLink(prc.xehAdminAction)#')">#thisAction.name#</a></li>
-								</cfloop>
-							</ul>
-						</div>
-					</span>
-					</cfif>
-					
-					<!--- Quick Links --->
-					<span class="navbarSlot">
-						<!--- User Icon --->
-						<a href="javascript:null" id="quickLinksButton"><i id="quickLinksIcon" class="icon-user"></i> #prc.oAuthor.getName()#</a>
-						<!--- Quick Links --->
-						<div id="quickLinksPanel" class="navbarPanels" style="display:none;">
-							<p class="label label-info">Quick Links</p>
-							
-							<ul>
-							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
-								<li><i class="icon-file-alt"></i> <a href="#event.buildLink( prc.xehPagesEditor )#">Create New Page</a></li>
-							</cfif>
-							</ul>
-							<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
-								<li><i class="icon-quote-left"></i> <a href="#event.buildLink( prc.xehBlogEditor )#">Create New Entry</a></li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-								<li><i class="icon-group"></i> <a href="#event.buildLink( prc.xehAuthorEditor )#">Create New User</a></li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission("SYSTEM_SAVE_CONFIGURATION")>
-								<li><i class="icon-wrench"></i> <a href="#event.buildLink( prc.xehSettings )#">ContentBox Settings</a></li>
-							</cfif>
-							
-							<li><i class="icon-camera"></i> <a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#">My Profile</a></li>
-							<li><i class="icon-off"></i> <a href="#event.buildLink( prc.xehDoLogout )#">Logout</a></li>
-						</div>
-					</span>
-					
-					<!--- cbadmin event --->
-					#announceInterception("cbadmin_onTopBar")#
-				</span>
-			  	
-			  	<!--- site tag line --->
-				<span class="navbarSlot">
-					<i class="icon-desktop icon-large"></i> 
-					&nbsp;<a href="#event.buildLink(prc.cbEntryPoint)#" target="_blank" title="Open the site">#prc.cbSettings.cb_site_name#</a>
-				</span>
+	
+	<!--- NavBar --->
+	<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
+	    <div class="navbar-inner">
+	    	<div class="container">
+	    		
+				<!--- Responsive --->
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+				
+				<!--- Logo --->
+				<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
+				
+				<!--- Brand, future multi-site switcher --->
+				<a class="brand" href="#event.buildLink( prc.xehDashboard )#">
+					#prc.cbSettings.cb_site_name#
+				</a>
 				
 				<!--- cbadmin event --->
 				#announceInterception("cbadmin_onTagline")#
-			</div>
-			<!--End Header top Area=-->
+		    	
+				<!--- Main Menu bar --->
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<!--- Spacer --->
+						<li class="divider-vertical"></li>
+						
+						<!--- View Site --->
+						<li><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home icon-large"></i></a></li>
+						
+						<!--- New Quick Links --->
+				    	<li class="dropdown">
+				    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
+							<ul class="dropdown-menu">
+								<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
+									<li><a href="#event.buildLink( prc.xehPagesEditor )#"><i class="icon-file-alt"></i> New Page</a></li>
+								</cfif>
+								<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
+									<li><a href="#event.buildLink( prc.xehBlogEditor )#"><i class="icon-quote-left"></i> New Entry</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+									<li><a href="#event.buildLink( prc.xehAuthorEditor )#"><i class="icon-user"></i> New User</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission("MEDIAMANAGER_ADMIN")>
+									<li><a href="#event.buildLink( prc.xehMediaManager )#"><i class="icon-th"></i> New Media</a></li>
+								</cfif>
+							</ul>
+						</li>
+						
+						<!---Quick Post --->
+						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
+							<li><a href="javascript:showQuickPost()"><i class="icon-edit icon-large"></i></a></li>
+						</cfif>
+						
+						<!---Admin Actions --->
+						<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
+						<li class="dropdown">
+							<!---Loader Status --->
+							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cog icon-large"></i></a>
+							<ul class="dropdown-menu">
+								<cfloop array="#prc.xehAdminActionData#" index="thisAction">
+								<li><a href="javascript:adminAction( '#thisAction.value#', '#event.buildLink(prc.xehAdminAction)#')"><i class="icon-bolt"></i>  #thisAction.name#</a></li>
+								</cfloop>
+							</ul>
+						</li>
+						</cfif>
+						
+						<!---Divider --->
+						<li class="divider-vertical"></li>
+						
+						<!---Search --->
+						<span class="navbar-search pull-left" id="div-search">
+							<!---Search Results --->
+							<span id="div-search-results">
+								<span class="floatRight"><button class="buttonsmall" onclick="closeSearchBox()">close</button></span>
+								<h2>Search Results</h2>
+							</span>
+							<!---Search Inputs --->
+							<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url"/>
+							<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
+						</span>
+						
+						<!--- cbadmin event --->
+						#announceInterception("cbadmin_onTopBar")#
+			    	</ul>
+					
+					<!--- Right NavBar --->
+					<ul class="nav pull-right">
+						<li class="divider-vertical"></li>
+						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-info-sign icon-large"></i> About <b class="icon-caret-down icon-large"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-ambulance"></i> Professional Support</a></li>
+								<li><a href="http://www.gocontentbox.org" target="_blank"><i class="icon-cloud"></i> ContentBox.org</a></li>
+								<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-book"></i> Documentation</a></li>
+								<li><a href="https://groups.google.com/forum/?fromgroups##!forum/contentbox" target="_blank"><i class="icon-envelope"></i> Support Forums</a></li>
+								<li class="divider"></li>
+								<li><a href="https://www.twitter.com/gocontentbox" target="_blank"><i class="icon-twitter"></i> Twitter</a></li>
+								<li><a href="https://www.facebook.com/gocontentbox" target="_blank"><i class="icon-facebook"></i> FaceBook</a></li>
+								<li><a href="https://plus.google.com/u/0/111231811346031749369" target="_blank"><i class="icon-google-plus"></i> Google+</a></li>
+								<li class="divider"></li>
+								<li>
+									<a href="#event.buildLink( prc.xehAutoUpdates )#"><i class="icon-download-alt"></i> Check For Updates</a>
+									<a href="#event.buildLink( prc.xehAbout )#"><i class="icon-info-sign"></i> ContentBox v.#getModuleSettings('contentbox').version# <br>
+									<span class="label label-warning">(Codename: #getModuleSettings("contentbox").settings.codename#)</span></a>
+								</li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="quickLinksIcon" class="icon-user icon-large"></i> #prc.oAuthor.getName()# <b class="icon-caret-down icon-large"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"><i class="icon-camera"></i> My Profile</a></li>
+								<li><a href="#event.buildLink( prc.xehDoLogout )#"><i class="icon-off"></i> Logout</a></li>
+							</ul>
+						</li>
+                    </ul>
+				</div>
+			</div> <!---end container --->
+	    </div> <!--- end navbar-inner --->
+    </div> <!---end navbar --->
 		
-			<!--=========Header Area including search field and logo=========-->
-			<div id="logo">
-				<a href="#event.buildLink(prc.xehAbout)#">
-					<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo"/>
-				</a>
-			</div>
-			<!--End Search field and logo Header Area-->
-			<!--=========Main Navigation=========-->
-			#prc.adminMenuService.generateMenu()#
-			<!--End Main Navigation-->
-
-	  	</div>
-	  <!--End Wrapper-->
-	</div>
-	<!--End Header-->
+	<!---Admin Notifier --->
+	<span id="adminActionNotifier" class="alert hide"></span>
+						
+	<!--- Main Navbar --->
+	#prc.adminMenuService.generateMenu()#
 
 	<!--============================ Template Content Background ============================-->
 	<div id="content_bg" class="clearfix">
@@ -176,16 +199,8 @@
 		</div>
 	</div>
 
-	<!--============================Footer============================-->
-	<div id="footer">
-		<!--- cbadmin event --->
-		#announceInterception("cbadmin_footer")#
-		<div class="wrapper">
-		Copyright (C) #dateformat(now(),"yyyy")# <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>  . All Rights Reserved.<br/>
-		<a href="http://www.ortussolutions.com">Need Professional ColdFusion-ContentBox-ColdBox Support, Architecture, Design, or Development?</a>
-		</div>
-	</div>
-	<!--End Footer-->
+	<!--- Footer --->
+	#renderView(view="_tags/footer", module="contentbox-admin")#
 
 	<!--- ============================ confirm it modal dialog ============================ --->
 	<div id="confirmIt">

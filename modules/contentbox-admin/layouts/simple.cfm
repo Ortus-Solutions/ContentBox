@@ -18,7 +18,8 @@
 			    #prc.cbroot#/includes/css/sort.css,
 			    #prc.cbroot#/includes/css/bootstrap.css,
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
-			    #prc.cbroot#/includes/css/font-awesome.min.css",
+			    #prc.cbroot#/includes/css/font-awesome.min.css,
+			    #prc.cbroot#/includes/css/contentbox.css",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- JS --->
 	#cb.minify(assets="#prc.cbroot#/includes/js/jquery.min.js,
@@ -33,37 +34,21 @@
 <body>
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_afterLoginBodyStart")#
-	<!--==================== Header =======================-->
-	<div id="header_bg">
-
-		<!--============Header Wrapper============-->
-		<div class="wrapper">
-
-			<!--=======Top Header area======-->
-			<div id="header_top">
-				<span class="fr"><br/>
-				<!--- cbadmin event --->
-				#announceInterception("cbadmin_onTopBar")#
-				</span>
-			  	<!--- cbadmin event --->
-				#announceInterception("cbadmin_onTagline")#
-			</div>
-			<!--End Header top Area=-->
-
-			<!--=========Header Area including search field and logo=========-->
-			<div id="logo">
-				<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo" title="ContentBox by ColdBox!"/>
-			</div>
-
-			<div id="header_main" class="clearfix">
-	           	<h1>ContentBox Admin</h1>
-			</div>
-			<!--End Search field and logo Header Area-->
-
-	  	</div>
-	  <!--End Wrapper-->
-	</div>
-	<!--End Header-->
+	
+	<!--- NavBar --->
+	<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
+	    <div class="navbar-inner">
+	    	<div class="container">
+	    		<!--- Logo --->
+				<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
+				
+				<!--- Brand, future multi-site switcher --->
+				<a class="brand">
+					ContentBox Administrator
+				</a>
+			</div> <!---end container --->
+	    </div> <!--- end navbar-inner --->
+    </div> <!---end navbar --->
 
 	<!--============================ Template Content Background ============================-->
 	<div id="content_bg" class="clearfix">
@@ -78,16 +63,8 @@
 		</div>
 	</div>
 
-	<!--============================Footer============================-->
-	<div id="footer">
-		<!--- cbadmin event --->
-		#announceInterception("cbadmin_loginFooter")#
-		<div class="wrapper">
-		Copyright (C) #dateformat(now(),"yyyy")# <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>  . All Rights Reserved.<br/>
-		<a href="http://www.ortussolutions.com">Need Professional ColdFusion/ColdBox Support, Architecture, Design, or Development?</a>
-		</div>
-	</div>
-	<!--End Footer-->
+	<!--- Footer --->
+	#renderView(view="_tags/footer", module="contentbox-admin")#
 
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginBodyEnd")#

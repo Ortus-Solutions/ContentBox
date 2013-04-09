@@ -51,11 +51,10 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 #header_main { height:80px; }
 #header_main h1 { font-family:Serif, Georgia; font-weight:bold; font-size:4em; margin:24px 0 0; }
 #header_main h1 span { font-size:18px; }
-/********* Logo *********/
-#logo { float:right; clear:both; margin: -4px 0 0; }
+/********* Logo *******
+#logo { float:right; clear:both; margin: 2px 0 0; }
 #logo img { box-shadow:0 0 10px #ccc; -moz-box-shadow:0 0 10px #ccc; -webkit-box-shadow:0 0 10px #ccc; }
-/********* Search field in header ***/
-.search_field { border:1px solid #a2a2a2; }
+**/
 /** ============================== Main Navigation ============================== **/
 #main_nav a { color:#242424; }
 /* main navigation link color */
@@ -98,9 +97,6 @@ button[disabled]:active,button[disabled],input[type=reset][disabled]:active,inpu
 /** ============================== Box ============================== **/
 .box { background:#fdfdfd; }
 .box .header { background:url(../images/box_header_bg.gif) repeat-x bottom; color:#004A7E; }
-/** ============================== Footer ============================== **/
-#footer { background:url(../images/footer_bg.gif) repeat-x top #282828; color:#CCC; }
-#footer a { color:#fff; text-decoration:underline; }
 /** ==============================  Bulleted List ============================== **/
 .bulleted_list li { background:url(../images/bullet_right.png) no-repeat 0 7px; }
 /**  ==============================  Users List  ============================== **/
@@ -252,17 +248,6 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 .actionsPanel, .contentInfoPanel a:hover{ color: red;}
 .contentInfoPanel { margin-left: -95px; }
 #userDetails{ margin: 0px 0px 0px 10px;}
-#div-search{ margin: 0px 5px 0px 5px}
-#nav-search{ padding: 3px; box-shadow:0 0 2px #ccc; -moz-box-shadow:0 0 2px #ccc; -webkit-box-shadow:0 0 2px #ccc; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; }
-#div-search-results{
-	display: none;
-	top: 35px;right: 300px;background-color: black; padding: 5px 10px; width: 400px; position: absolute; min-heigh: 100px; z-index: 9999;
-	box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; 
-	border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;
-}
-#div-search-results h2{ color: #31ADE8; font-size: 16px; font-weight: normal;}
-#div-search-results ul{ font-size: 12px}
-#div-search-results li{ margin: 3px 0px }
 #adminActionsButton{ text-decoration: none; }
 .navbarPanels{ color: white; z-index:999; display:none; position: absolute; margin-left: 15px; padding: 10px; background-color: black; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
 .navbarPanels a { color: white !important; }

@@ -60,10 +60,6 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 #header_top { font-size:1.2em; padding-top: 3px; height:10px; }
 #header_top a { text-decoration:none; margin-right: 5px; }
 #header_top a:hover { text-decoration:underline; }
-/************ Search field in Header ************/
-.header_search { float:right; margin-top:25px; width:280px; }
-.search_field { font-style:italic; width:220px; padding:5px 30px 5px 5px; float:right; right:-20px; position:relative; z-index:2; margin:0; }
-.search_icon { float:right; position:relative; top:5px; right:5px; z-index:3; }
 /**============================== Main Navigation ==============================**/
 #main_nav { font-size:1.4em; list-style:none; margin:39px 0 0; text-transform:uppercase; }
 #main_nav a { text-decoration:none; }
@@ -126,8 +122,6 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 .box .header { height:40px; font-size:1.5em; line-height:1.8em; padding:0 15px; position:relative; }
 .box .header img { position:relative; margin-right:10px; }
 .box .body { padding: 2px 15px 5px; }
-/** ============================== Footer ============================== **/
-#footer { text-align:center; padding:20px 0; height:45px; position:absolute; width:100%; bottom:0; font-size:1.1em; }
 /** ============================== Bulleted List ============================== **/
 .bulleted_list li { list-style:none; padding-left:15px; line-height:17px; margin-bottom:15px; list-style-position:outside; }
 /** ============================== User List ============================== **/

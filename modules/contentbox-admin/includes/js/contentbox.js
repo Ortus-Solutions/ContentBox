@@ -122,12 +122,14 @@ function adminAction( action, actionURL ){
 		$("#adminActionsIcon").addClass( "icon-spin textOrange" );
 		// Run Action Dispatch
 		$.post( actionURL , {targetModule: action}, function(data){
-			var message = "<strong>Action Ran, Booya!</strong>";
+			$("#adminActionNotifier").addClass( "alert-info" );
+			var message = "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>";
 			if( data.ERROR ){
-				message = "<strong>Error running action, check logs!</strong>";
+				$("#adminActionNotifier").addClass( "alert-danger" );
+				message = "<i class='icon-exclamation-sign'></i> <strong>Error running action, check logs!</strong>";
 			}
 			$("#adminActionsIcon").removeClass( "icon-spin textOrange" );
-			$("#adminActionLoaderStatus").fadeIn().html( message ).delay( 1500 ).fadeOut();
+			$("#adminActionNotifier").fadeIn().html( message ).delay( 1500 ).fadeOut();
 		} );
 	}
 }
