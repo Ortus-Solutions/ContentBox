@@ -32,7 +32,7 @@
 		
 		<!--- Loader --->
 		<div class="loaders floatRight" id="permissionLoader">
-			<i class="icon-spinner icon-spin icon-large icon-2x"><br/>
+			<i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
 			<div class="center"><small>Please Wait...</small></div>
 		</div>
 		

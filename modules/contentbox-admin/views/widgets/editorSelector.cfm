@@ -1,10 +1,6 @@
 ﻿<cfoutput>
 <h2 style="position:relative;">
     <span id="widget-title-bar">Select a Widget</span>
-    <div class="widget-filter" id="widget-filter">
-        #html.label(field="widgetFilter",content="Quick Filter:",class="inline")#
-		#html.textField(name="widgetFilter",size="30",class="textfield")#
-    </div>
 </h2>
 <div class="widget-detail" id="widget-detail" style="display:none;">
 	<div class="widget-preview">
@@ -26,6 +22,10 @@
         </ul>
     </div>
     <div class="widget-store">
+    	<div class="widget-filter" id="widget-filter">
+	        #html.label(field="widgetFilter",content="Quick Filter:",class="inline")#
+			#html.textField(name="widgetFilter",size="30",class="textfield")#
+	    </div>
         <div id="widget-total-bar" class="widget-total-bar">Category: <strong>All</strong> (#prc.widgets.recordcount# Widgets)</div>
         <cfloop query="prc.widgets">
 			<cfscript>

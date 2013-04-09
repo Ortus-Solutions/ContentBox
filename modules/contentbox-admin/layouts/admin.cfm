@@ -2,22 +2,24 @@
 #html.doctype()#
 <!--============================Head============================-->
 <head>
+	<!--- charset --->
 	<meta charset="utf-8" />
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
-	<base href="#getSetting('htmlBaseURL')#" />
+	<base href="#cb.siteBaseURL()#" />
 	<!--- Title --->
     <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.cbroot#/includes/css/style.css"				rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/teal.css" 				rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/sort.css"	 				rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/bootstrap.css"			rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/bootstrap-responsive.css"	rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/font-awesome.min.css"		rel="stylesheet"/>
+	#cb.minify(assets="#prc.cbroot#/includes/css/style.css,
+			    #prc.cbroot#/includes/css/teal.css,
+			    #prc.cbroot#/includes/css/sort.css,
+			    #prc.cbroot#/includes/css/bootstrap.css,
+			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
+			    #prc.cbroot#/includes/css/font-awesome.min.css",
+			   location="#prc.cbroot#/includes/cache")#
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
@@ -26,15 +28,17 @@
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 	<!--- JS --->
-	<script src="#prc.cbroot#/includes/js/jquery.min.js"></script>
-	<script src="#prc.cbroot#/includes/js/bootstrap.min.js"></script>
-	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
-	<script src="#prc.cbroot#/includes/js/metadata.pack.js"></script>
-	<script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
-	<script src="#prc.cbroot#/includes/js/jquery.uidivfilter.js"></script>
-	<script src="#prc.cbroot#/includes/js/jquery.tablednd_0_5.js"></script>
-	<script src="#prc.cbroot#/includes/js/tablesorter.min.js"></script>
-	<script src="#prc.cbroot#/includes/js/contentbox.js"></script>
+	#cb.minify(assets="#prc.cbroot#/includes/js/jquery.min.js,
+			    #prc.cbroot#/includes/js/bootstrap.min.js,
+			    #prc.cbroot#/includes/js/jquery.tools.min.js,
+			    #prc.cbroot#/includes/js/metadata.pack.js,
+			    #prc.cbroot#/includes/js/jquery.uitablefilter.js,
+			    #prc.cbroot#/includes/js/jquery.uitablefilter.js,
+			    #prc.cbroot#/includes/js/jquery.tablednd_0_5.js,
+			    #prc.cbroot#/includes/js/tablesorter.min.js,
+			    #prc.cbroot#/includes/js/contentbox.js",
+			   location="#prc.cbroot#/includes/cache")#
+	<!--- CKEditor Separate --->
 	<script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
 	<script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
