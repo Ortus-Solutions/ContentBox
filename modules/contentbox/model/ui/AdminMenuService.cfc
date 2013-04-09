@@ -271,7 +271,7 @@ component accessors="true" threadSafe singleton{
 		var genMenu = "";
 
 		savecontent variable="genMenu"{
-			include "templates/adminMenu.cfm";
+			include "templates/bootstrap-adminMenu.cfm";
 		}
 		// return it
 		return genMenu;

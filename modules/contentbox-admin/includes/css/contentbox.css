@@ -1,0 +1,60 @@
+/***** NAVBAR *****/
+#adminMenuTopNav{ font-size: 13px;}
+#adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
+#adminMenuTopNav .nav > li > a {
+    padding: 10px 10px;
+}
+#adminMenuTopNav .navbar-inner {
+    background-color: #1B1B1B;
+    background-image: linear-gradient(to bottom, #525252, #111111);
+    background-repeat: repeat-x;
+    border-color: #252525;
+}
+#adminMenuTopNav #logo{ margin: 5px 15px 0px 0px;float:left}
+/***** NAVBAR SEARCH *****/
+#nav-search{ margin-top: 5px}
+#div-search-results{
+	display: none;
+	top: 35px;background-color: black; padding: 5px 10px; width: 400px; position: absolute; min-heigh: 100px; z-index: 9999;
+	box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; 
+	border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;
+}
+#div-search-results h2{ color: #31ADE8; font-size: 16px; font-weight: normal;}
+#div-search-results ul{ font-size: 12px}
+#div-search-results li{ margin: 3px 0px }
+#adminActionNotifier{ font-size:13px; position: absolute; right:10px; min-width:250px; z-index: 9999; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; margin: auto}
+/***** NAVBAR MAIN *****/
+#adminMenuBar{ font-size:13px; margin: 45px 0px 0px 0px;}
+#adminMenuBar .nav{ margin-left: 55px; font-weight: bold}
+#adminMenuBar .navbar-inner {
+    background-color: #ccc;
+    background-image: linear-gradient(to bottom, #ccc, #eaeaea);
+    background-repeat: repeat-x;
+    border: 1px solid #D4D4D4;
+    border-radius: 0px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+    min-height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+/***** BODY MAIN *****/
+.body{ padding-top: 40px; }
+/***** FOOTER MAIN *****/
+footer {
+    background-color: #1B1B1B;
+    background-image: linear-gradient(to bottom, #3B3B3B, #111111);
+    background-repeat: repeat-x;
+    border-color: #252525;
+    border-top: 1px solid #222222;
+    box-shadow: 0 1px 0 #666666 inset;
+    color: #EEEEEE;
+    float: right;
+    height: 60px;
+    padding: 20px 0;
+    width: 100%;
+    text-align:center;
+    font-size: 11px;
+}
+footer a { color:#fff; text-decoration:underline; }
+footer a:hover{ color: #3a87ff}
+footer #footerLogo img{ margin:-12px 10px; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; }
