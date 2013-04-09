@@ -54,7 +54,7 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 .form_error { font-style:italic; font-size:.9em; padding-left:20px; }
 .form_hint { font-style:italic; font-size:.9em; padding-left:20px; }
 /**============================== Buttons ==============================**/
-.button,.button2,.buttonred { padding:4px 7px 7px; cursor:pointer; font-weight:bold; margin-right:3px; text-decoration:none; line-height:1.2em; -webkit-border-radius:5px; -khtml-border-radius:5px; }
+.button,.button2,.buttonred { padding:4px 7px 7px; cursor:pointer; margin-right:3px; text-decoration:none; line-height:1.2em; -webkit-border-radius:5px; -khtml-border-radius:5px; }
 /**============================== Header ==============================**/
 #header_bg { height:126px; }
 #header_top { font-size:1.2em; padding-top: 3px; height:10px; }
