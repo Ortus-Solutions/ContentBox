@@ -104,7 +104,7 @@ sub {
 
 img {
   width: auto\9;
-  height: auto;
+  /**height: auto;**/
   max-width: 100%;
   vertical-align: middle;
   border: 0;
@@ -1098,7 +1098,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 20px;
+  height: 15px;
   padding: 4px 6px;
   margin-bottom: 10px;
   font-size: 12px;
@@ -1113,7 +1113,7 @@ input[type="color"],
 input,
 textarea,
 .uneditable-input {
-  width: 206px;
+  /*width: 206px;*/
 }
 
 textarea {

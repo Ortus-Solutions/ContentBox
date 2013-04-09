@@ -44,7 +44,7 @@ component {
 			updateSlug_beta 	= "contentbox-beta-updates",
 			updatesURL			= "http://www.coldbox.org/api/forgebox"
 		};
-
+		
 		// CB Module Conventions
 		conventions = {
 			layoutsLocation = "layouts",
@@ -56,7 +56,9 @@ component {
 			// override messagebox styles
 			messagebox_style_override	= true,
 			// File Browser module name override
-			filebrowser_module_name		= "contentbox-filebrowser"
+			filebrowser_module_name		= "contentbox-filebrowser",
+			// JSMin settings
+			jsmin_enable = true
 		};
 
 		// interceptor settings
@@ -152,6 +154,13 @@ component {
 
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
+	}
+	
+	/**
+	* Development tier
+	*/
+	function development(){
+		parentSettings.jsmin_enable = false;
 	}
 
 	/**
