@@ -53,6 +53,7 @@ component extends="coldbox.system.Interceptor"{
 		// Global Admin Exit Handlers
 		prc.xehDashboard 	= "#prc.cbAdminEntryPoint#.dashboard";
 		prc.xehAbout		= "#prc.cbAdminEntryPoint#.dashboard.about";
+		prc.xehAutoUpdates	= "#prc.cbAdminEntryPoint#.dashboard.autoupdates";
 
 		// Entries Tab
 		prc.xehEntries		= "#prc.cbAdminEntryPoint#.entries";
