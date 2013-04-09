@@ -12,10 +12,12 @@
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.cbroot#/includes/css/style.css"			rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/teal.css" 			rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/sort.css"	 			rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/font-awesome.min.css"	rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/style.css"				rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/teal.css" 				rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/sort.css"	 				rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/bootstrap.css"			rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/bootstrap-responsive.css"	rel="stylesheet"/>
+	<link href="#prc.cbroot#/includes/css/font-awesome.min.css"		rel="stylesheet"/>
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
@@ -25,6 +27,7 @@
 	</cfloop>
 	<!--- JS --->
 	<script src="#prc.cbroot#/includes/js/jquery.min.js"></script>
+	<script src="#prc.cbroot#/includes/js/bootstrap.min.js"></script>
 	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
 	<script src="#prc.cbroot#/includes/js/metadata.pack.js"></script>
 	<script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
