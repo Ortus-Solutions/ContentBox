@@ -78,7 +78,7 @@ form input[type=checkbox],form input[type=radio] { padding:0; background:none; b
 #main_nav li ul li a.current { font-weight:bold; height:21px; text-decoration:none; }
 /**============================== Navigation in box header ==============================**/
 .box .header .sub_nav { position:absolute; top:0; right:0; }
-.box .header .sub_nav li { text-transform:uppercase; list-style:none; display:inline-block; margin:0 5px; font-size:.6em; letter-spacing:.05em; float:left; }
+.box .header .sub_nav li { text-transform:uppercase; list-style:none; display:inline-block; margin:0 5px; font-size:.6em; letter-spacing:.05em; float:left; line-height: 30px}
 .box .header .sub_nav li a { display:block; text-decoration:none; padding:5px 10px; }
 .sub_nav .current,.sub_nav .current:hover,.sub_nav .current a { display:block; padding:5px 10px; }
 /** ============================== Vertical Nav ============================== **/

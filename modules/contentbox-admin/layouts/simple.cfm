@@ -2,6 +2,7 @@
 #html.doctype()#
 <!--============================Head============================-->
 <head>
+	<!--- charset --->
 	<meta charset="utf-8"/>
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
@@ -12,13 +13,19 @@
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.cbroot#/includes/css/style.css"			rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/teal.css" 			rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/font-awesome.min.css"	rel="stylesheet"/>
+	#cb.minify(assets="#prc.cbroot#/includes/css/style.css,
+			    #prc.cbroot#/includes/css/teal.css,
+			    #prc.cbroot#/includes/css/sort.css,
+			    #prc.cbroot#/includes/css/bootstrap.css,
+			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
+			    #prc.cbroot#/includes/css/font-awesome.min.css",
+			   location="#prc.cbroot#/includes/cache")#
 	<!--- JS --->
-	<script src="#prc.cbroot#/includes/js/jquery.min.js"></script>
-	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
-	<script src="#prc.cbroot#/includes/js/contentbox.js"></script>
+	#cb.minify(assets="#prc.cbroot#/includes/js/jquery.min.js,
+			    #prc.cbroot#/includes/js/bootstrap.min.js,
+			    #prc.cbroot#/includes/js/jquery.tools.min.js,
+			    #prc.cbroot#/includes/js/contentbox.js",
+			   location="#prc.cbroot#/includes/cache")#
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginHeadEnd")#
 </head>
