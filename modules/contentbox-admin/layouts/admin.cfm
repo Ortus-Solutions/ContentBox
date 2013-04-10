@@ -120,7 +120,7 @@
 							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cog icon-large"></i></a>
 							<ul class="dropdown-menu">
 								<cfloop array="#prc.xehAdminActionData#" index="thisAction">
-								<li><a href="javascript:adminAction( '#thisAction.value#', '#event.buildLink(prc.xehAdminAction)#')"><i class="icon-bolt"></i>  #thisAction.name#</a></li>
+								<li><a href="javascript:adminAction( '#thisAction.value#', '#event.buildLink(prc.xehAdminAction)#')"><i class="icon-caret-right"></i>  #thisAction.name#</a></li>
 								</cfloop>
 							</ul>
 						</li>
@@ -149,7 +149,7 @@
 					<ul class="nav pull-right">
 						<li class="divider-vertical"></li>
 						<li class="dropdown">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-info-sign icon-large"></i> About <b class="icon-caret-down icon-large"></b></a>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-info-sign"></i> About <b class="icon-caret-down"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-ambulance"></i> Professional Support</a></li>
 								<li><a href="http://www.gocontentbox.org" target="_blank"><i class="icon-cloud"></i> ContentBox.org</a></li>
@@ -168,7 +168,7 @@
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="quickLinksIcon" class="icon-user icon-large"></i> #prc.oAuthor.getName()# <b class="icon-caret-down icon-large"></b></a>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="quickLinksIcon" class="icon-user"></i> #prc.oAuthor.getName()# <b class="icon-caret-down"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"><i class="icon-camera"></i> My Profile</a></li>
 								<li><a href="#event.buildLink( prc.xehDoLogout )#"><i class="icon-off"></i> Logout</a></li>
@@ -182,26 +182,27 @@
 		
 	<!---Admin Notifier --->
 	<span id="adminActionNotifier" class="alert hide"></span>
-						
 	<!--- Main Navbar --->
 	#prc.adminMenuService.generateMenu()#
-
-	<!--============================ Template Content Background ============================-->
-	<div id="content_bg" class="clearfix">
-		<!--============================ Main Content Area ============================-->
-		<div class="content wrapper clearfix">
-			<!--- cbadmin event --->
-			#announceInterception("cbadmin_beforeContent")#
-			<!--- Main Content --->
-			#renderView()#
-			<!--- cbadmin event --->
-			#announceInterception("cbadmin_afterContent")#
+		
+	<!---Container --->
+	<div class="container-fluid clearfix">					
+		<!--- Main Content --->
+		<div id="content_bg" class="clearfix">
+			<div class="content wrapper clearfix">
+				<!--- cbadmin event --->
+				#announceInterception("cbadmin_beforeContent")#
+				<!--- Main Content --->
+				#renderView()#
+				<!--- cbadmin event --->
+				#announceInterception("cbadmin_afterContent")#
+			</div>
 		</div>
 	</div>
-
+	
 	<!--- Footer --->
 	#renderView(view="_tags/footer", module="contentbox-admin")#
-
+	
 	<!--- ============================ confirm it modal dialog ============================ --->
 	<div id="confirmIt">
 		<div>
@@ -214,7 +215,6 @@
 			</p>
 		</div>
 	</div>
-	<!--- ============================ end Confirmit ============================ --->
 
 	<!--- ============================ Remote Modal Window ============================ --->
 	<div id="remoteModal">
@@ -222,12 +222,10 @@
 			<img src="#prc.cbroot#/includes/images/ajax-loader-blue.gif" alt="loader" />
 		</div>
 	</div>
-	<!--- ============================ end Confirmit ============================ --->
 
 	<!--- ============================ QuickPost ============================ --->
 	#runEvent(event="contentbox-admin:entries.quickPost",prePostExempt=true)#
-	<!--- ============================ end QuickPost ============================ --->
-
+	
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeBodyEnd")#
 </body>
