@@ -47,7 +47,8 @@
 			</div> <!---end container --->
 	    </div> <!--- end navbar-inner --->
     </div> <!---end navbar --->
-
+	
+	<!--- Container --->
 	<div class="container-fluid">
 		<!--- cbadmin event --->
 		#announceInterception("cbadmin_beforeLoginContent")#
@@ -55,11 +56,9 @@
 		#renderView()#
 		<!--- cbadmin event --->
 		#announceInterception("cbadmin_afterLoginContent")#
+		<!--- Footer --->
+		#renderView(view="_tags/footer", module="contentbox-admin")#
 	</div>
-
-	<!--- Footer --->
-	#renderView(view="_tags/footer", module="contentbox-admin")#
-
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginBodyEnd")#
 </body>
