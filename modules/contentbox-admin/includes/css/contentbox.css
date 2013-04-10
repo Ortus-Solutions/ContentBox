@@ -10,7 +10,7 @@
     background-repeat: repeat-x;
     border-color: #252525;
 }
-#adminMenuTopNav #logo{ margin: 5px 15px 0px 0px;float:left}
+#adminMenuTopNav #logo{ margin: 5px 15px 0px 0px;float:left;height:25px}
 /***** NAVBAR SEARCH *****/
 #nav-search{ margin-top: 5px}
 #div-search-results{
@@ -37,24 +37,37 @@
     padding-left: 20px;
     padding-right: 20px;
 }
-/***** BODY MAIN *****/
-.body{ padding-top: 40px; }
+/***** MAIN *****/
+html{ 
+	height:100%;
+	color: #3B3B3B;
+}
+body{ 
+	margin: 0;
+	padding: 0;
+  	font: 12px Arial,Helvetica,sans-serif;
+	line-height: 20px;
+	color: #333333;
+	background-image: linear-gradient(to bottom, #000132, #004D85);
+	background-repeat: repeat-x;
+}
 /***** FOOTER MAIN *****/
 footer {
     background-color: #1B1B1B;
+    opacity: 0.90;
     background-image: linear-gradient(to bottom, #3B3B3B, #111111);
     background-repeat: repeat-x;
     border-color: #252525;
     border-top: 1px solid #222222;
     box-shadow: 0 1px 0 #666666 inset;
     color: #EEEEEE;
-    float: right;
-    height: 60px;
-    padding: 20px 0;
+    bottom: 0px;
+    position:fixed;
+    height: 50px;
+    padding: 20px;
     width: 100%;
-    text-align:center;
     font-size: 11px;
 }
 footer a { color:#fff; text-decoration:underline; }
 footer a:hover{ color: #3a87ff}
-footer #footerLogo img{ margin:-12px 10px; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; }
+footer #footerLogo img{ margin:-17px 35px; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; }
