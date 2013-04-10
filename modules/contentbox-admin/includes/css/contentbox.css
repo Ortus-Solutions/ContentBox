@@ -1,18 +1,41 @@
-/***** NAVBAR *****/
-#adminMenuTopNav{ font-size: 13px;}
-#adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
-#adminMenuTopNav .nav > li > a {
-    padding: 10px 10px;
+/***** MAIN ELEMENTS *****/
+html{ 
+	height:100%;
+	color: #3B3B3B;
 }
+body{ 
+	margin: 0;
+	padding-top: 40px;
+  	font: 12px Arial,Helvetica,sans-serif;
+	line-height: 20px;
+	color: #333333;
+	background-image: linear-gradient(to bottom, #000132, #004D85);
+	background-image: -moz-linear-gradient(top, #000132, #004D85);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#000132), to(#004D85));
+	background-image: -webkit-linear-gradient(top, #000132, #004D85);
+	background-image: -o-linear-gradient(top, #000132, #004D85);
+	background-image: linear-gradient(to bottom, #000132, #004D85);
+	background-repeat: repeat-x;
+}
+/***** ADMIN MENU TOP NAVBAR *****/
+#adminMenuTopNav { font-size: 13px;}
+#adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
+#adminMenuTopNav .nav > li > a { padding: 8px 5px;}
 #adminMenuTopNav .navbar-inner {
     background-color: #1B1B1B;
     background-image: linear-gradient(to bottom, #525252, #111111);
-    background-repeat: repeat-x;
+    background-image: -moz-linear-gradient(top, #525252, #111111);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#525252), to(#111111));
+	background-image: -webkit-linear-gradient(top, #525252, #111111);
+	background-image: -o-linear-gradient(top, #525252, #111111);
+	background-image: linear-gradient(to bottom, #525252, #111111);
+	background-repeat: repeat-x;
     border-color: #252525;
 }
-#adminMenuTopNav #logo{ margin: 5px 15px 0px 0px;float:left;height:25px}
-/***** NAVBAR SEARCH *****/
-#nav-search{ margin-top: 5px}
+#adminMenuTopNav #logo{ margin: 5px 10px 0px 0px;float:left;height:25px}
+#adminActionNotifier{ font-size:13px; position: absolute; right:10px; min-width:250px; z-index: 9999; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; margin: auto}
+/***** ADMIN MENU NAVBAR SEARCH *****/
+#nav-search{ margin-top: 2px}
 #div-search-results{
 	display: none;
 	top: 35px;background-color: black; padding: 5px 10px; width: 400px; position: absolute; min-heigh: 100px; z-index: 9999;
@@ -22,41 +45,21 @@
 #div-search-results h2{ color: #31ADE8; font-size: 16px; font-weight: normal;}
 #div-search-results ul{ font-size: 12px}
 #div-search-results li{ margin: 3px 0px }
-#adminActionNotifier{ font-size:13px; position: absolute; right:10px; min-width:250px; z-index: 9999; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; margin: auto}
-/***** NAVBAR MAIN *****/
-#adminMenuBar{ font-size:13px; margin: 45px 0px 0px 0px;}
-#adminMenuBar .nav{ margin-left: 55px; font-weight: bold}
-#adminMenuBar .navbar-inner {
-    background-color: #ccc;
-    background-image: linear-gradient(to bottom, #ccc, #eaeaea);
-    background-repeat: repeat-x;
-    border: 1px solid #D4D4D4;
-    border-radius: 0px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-    min-height: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-/***** MAIN *****/
-html{ 
-	height:100%;
-	color: #3B3B3B;
-}
-body{ 
-	margin: 0;
-	padding: 0;
-  	font: 12px Arial,Helvetica,sans-serif;
-	line-height: 20px;
-	color: #333333;
-	background-image: linear-gradient(to bottom, #000132, #004D85);
-	background-repeat: repeat-x;
-}
-/***** FOOTER MAIN *****/
+/***** ADMIN MAIN GENERATED MENU *****/
+#adminMenuBar {  }
+#adminMenuBar .nav > li { line-height:20px;}
+#adminMenuBar .nav > li > a{ padding: 10px;}
+/***** FOOTER *****/
 footer {
     background-color: #1B1B1B;
     opacity: 0.90;
     background-image: linear-gradient(to bottom, #3B3B3B, #111111);
-    background-repeat: repeat-x;
+    background-image: -moz-linear-gradient(top, #3B3B3B, #111111);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3B3B3B), to(#111111));
+	background-image: -webkit-linear-gradient(top, #3B3B3B, #111111);
+	background-image: -o-linear-gradient(top, #3B3B3B, #111111);
+	background-image: linear-gradient(to bottom, #3B3B3B, #111111);
+	background-repeat: repeat-x;
     border-color: #252525;
     border-top: 1px solid #222222;
     box-shadow: 0 1px 0 #666666 inset;
