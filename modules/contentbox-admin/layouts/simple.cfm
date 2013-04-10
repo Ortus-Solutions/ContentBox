@@ -30,7 +30,6 @@
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginHeadEnd")#
 </head>
-<!--============================Body============================-->
 <body>
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_afterLoginBodyStart")#
@@ -41,7 +40,6 @@
 	    	<div class="container">
 	    		<!--- Logo --->
 				<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
-				
 				<!--- Brand, future multi-site switcher --->
 				<a class="brand">
 					ContentBox Administrator
@@ -50,17 +48,13 @@
 	    </div> <!--- end navbar-inner --->
     </div> <!---end navbar --->
 
-	<!--============================ Template Content Background ============================-->
-	<div id="content_bg" class="clearfix">
-		<!--============================ Main Content Area ============================-->
-		<div class="content wrapper clearfix">
-			<!--- cbadmin event --->
-			#announceInterception("cbadmin_beforeLoginContent")#
-			<!--- Main Content --->
-			#renderView()#
-			<!--- cbadmin event --->
-			#announceInterception("cbadmin_afterLoginContent")#
-		</div>
+	<div class="container-fluid">
+		<!--- cbadmin event --->
+		#announceInterception("cbadmin_beforeLoginContent")#
+		<!--- Main Content --->
+		#renderView()#
+		<!--- cbadmin event --->
+		#announceInterception("cbadmin_afterLoginContent")#
 	</div>
 
 	<!--- Footer --->
