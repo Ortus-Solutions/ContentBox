@@ -1,8 +1,8 @@
 @charset utf-8; 
 /** ============================== Blue ============================== **/
 html { color:#3b3b3b; }
-/** ============================== background for main content area ============================== **/
-#content_bg { background:#004d84 url(../images/content_bg.jpg) repeat-x; }
+/** ============================== background for main content area ============================== 
+#content_bg { background:#004d84 url(../images/content_bg.jpg) repeat-x; }**/
 /**  ============================== Anchor Styling  ============================== **/
 a { color:#00339b; }
 a:hover { color:#000; }
