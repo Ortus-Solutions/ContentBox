@@ -148,7 +148,7 @@ form textarea,form .wysiwyg { width:98%; }
 #quickLinksPanel{ right: 2px;}
 #adminActionsPanel{ margin-left: 100px}
 /** Button Bars ***/
-.actionBar { margin:10px 0 5px; }
+.actionBar { margin:10px 0 5px; text-align: center }
 .filterBar { margin:10px 0 2px; }
 .buttonBar { float: right; margin:7px 0px 0px 10px;}
 #bottomCenteredBar { margin:20px 0 0; text-align:right; }
