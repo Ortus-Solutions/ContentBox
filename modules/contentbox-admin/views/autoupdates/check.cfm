@@ -1,14 +1,15 @@
 ﻿<cfoutput>
 #html.startForm(name="updateForm",action=prc.xehUpdateApply)#
-<h2>Update Check: #rc.channel#</h2>
+<h2>Update Check: <span class="label label-inverse">#rc.channel#</span></h2>
 <div>
 	#getPlugin("MessageBox").renderit()#
 
 	<cfif prc.updateFound>
+	<div class="alert alert-info">
 	<h3>Version Information:</h3>
-	<table name="settings" id="settings" class="tablesorter" width="98%">
+	<table name="settings" id="settings" class="table table-striped table-hover table-condensed table-bordered" width="98%">
 		<thead>
-			<tr>
+			<tr class="">
 				<th width="100">Your Version</th>
 				<th width="100">New Version</th>	
 				<th>Update Date</th>
@@ -22,35 +23,43 @@
 			</tr>
 		</tbody>
 	</table>
+	</div>
 	
 	<!--- download URL --->
 	#html.hiddenField(name="downloadURL",value=prc.updateEntry.downloadURL)#
 	#html.hiddenField(name="version",value=prc.updateEntry.version)#
 	
+	<div class="alert alert-info">
 	<h3>Description:</h3>
 	<p>#prc.updateEntry.description#</p>
-	
-	<cfif len(prc.updateEntry.installInstructions)>
-		<h2>Special Instructions:</h2>
-		<p>#prc.updateEntry.InstallInstructions#</p>
-	</cfif>
-	
-	<h3>Changelog:</h3>
-	<p>#prc.updateEntry.changelog#</p>
-	
-	<div class="alert alert-error">
-		<i class="info-warning-sign icon-large"></i>
-		Please make sure you do any backups before applying this update.
 	</div>
 	
-	#html.submitButton(name="submitUpdate",class="btn btn-primary",value="Apply Update",onclick="return confirm('Are you positive?')")#
+	<cfif len(prc.updateEntry.installInstructions)>
+	<div class="alert">
+		<h3>Special Instructions:</h3>
+		<p>#prc.updateEntry.InstallInstructions#</p>	
+	</div>
+	</cfif>
+	
+	<div class="alert alert-info">
+		<h3>Changelog:</h3>
+		<p>#prc.updateEntry.changelog#</p>
+	</div>
+	
+	<div class="form-actions text-center">
+		<div class="alert alert-error">
+			<i class="icon-warning-sign icon-large"></i>
+			Please make sure you do any backups before applying this update.
+		</div>
+		#html.submitButton(name="submitUpdate",class="btn btn-primary",value="Apply Update",onclick="return confirm('Are you positive?')")#
+	</div>
 	</cfif>
 	
 </div>
 <hr/>
 #html.endForm()#
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<p class="text-right">
 	<button class="btn btn-danger" onclick="return closeRemoteModal()"> Close </button>
-</div>
+</p>
 </cfoutput>
