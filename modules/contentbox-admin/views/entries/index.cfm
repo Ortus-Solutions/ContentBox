@@ -102,7 +102,7 @@
 			</cfif>
 			
 			<!--- Content Bar --->
-			<div class="contentBar" id="contentBar">
+			<div class="well well-small" id="contentBar">
 				
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR")>

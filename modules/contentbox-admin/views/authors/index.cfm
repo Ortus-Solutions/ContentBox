@@ -34,7 +34,7 @@
 			#html.startForm(name="authorForm",action=rc.xehAuthorRemove)#
 			<input type="hidden" name="authorID" id="authorID" value="" />
 
-			<div class="contentBar">
+			<div class="well well-small">
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 				<div class="buttonBar">

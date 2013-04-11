@@ -59,7 +59,7 @@
 						<input type="hidden" name="settingID" id="settingID" value="" />
 	
 						<!--- content bar --->
-						<div class="contentBar">
+						<div class="well well-small">
 							<!--- Flush Cache Button --->
 							<div class="buttonBar">
 								<button class="btn btn-primary" onclick="openRemoteModal('#event.buildLink(prc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
@@ -133,7 +133,7 @@
 						#html.startForm(name="singletonForm")#
 	
 						<!--- content bar --->
-						<div class="contentBar">
+						<div class="well well-small">
 							<!--- Flush Cache Button --->
 							<div class="buttonBar">
 								<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons">Clear All Singletons</button>
@@ -196,7 +196,7 @@
 						#html.startForm(name="eventsForm")#
 						
 						<!--- content bar --->
-						<div class="contentBar">
+						<div class="well well-small">
 							<!--- Filter Bar --->
 							<div class="filterBar">
 								<div>
