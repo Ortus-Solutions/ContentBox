@@ -18,7 +18,7 @@
 	#cb.minify(assets="#prc.cbroot#/includes/css/style.css,
 			    #prc.cbroot#/includes/css/sort.css,
 			    #prc.cbroot#/includes/css/bootstrap.css,
-			    #prc.cbroot#/includes/css/contentbox.css.
+			    #prc.cbroot#/includes/css/contentbox.css,
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
 			    #prc.cbroot#/includes/css/font-awesome.min.css",
 			   location="#prc.cbroot#/includes/cache")#
