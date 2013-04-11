@@ -8,7 +8,7 @@ body{
 	width:100%;
 	height:100%;
 	padding-top: 39px;
-  	font: 12px Arial,Helvetica,sans-serif;
+  	font: 13px Arial,Helvetica,sans-serif;
 	line-height: 20px;
 	color: #333333;
 	background-color: #F5F5F5;
@@ -25,6 +25,7 @@ td,th { padding:5px; display:table-cell; }
 ol { list-style:decimal inside; }
 ul { list-style:disc inside; }
 #main-sidebar{ margin-left: 20px !important;}
+.hero-unit{padding:50px; margin-top:20px; margin-bottom: 20px}
 /**============================== ADMIN MAIN TOP MENU ==============================**/
 #adminMenuTopNav { font-size: 13px;}
 #adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}
