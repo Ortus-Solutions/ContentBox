@@ -55,9 +55,9 @@
 		#renderView()#
 		<!--- cbadmin event --->
 		#announceInterception("cbadmin_afterLoginContent")#
-		<!--- Footer --->
-		#renderView(view="_tags/footer", module="contentbox-admin")#
 	</div>
+	<!--- Footer --->
+	#renderView(view="_tags/footer", module="contentbox-admin")#
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginBodyEnd")#
 </body>
