@@ -1,4 +1,11 @@
 $(document).ready(function() {
+	
+	// setup global variables
+	$confirmIt 			= $('#confirmIt');
+	$remoteModal 		= $("#remoteModal");
+	$remoteModalContent	= $remoteModal.find("#remoteModelContent");
+	$remoteModalLoading	= $remoteModalContent.html();
+	
 	// Global Tool Tip Settings
 	toolTipSettings	= {	//will make a tooltip of all elements having a title property
 		 opacity: 0.8,
@@ -8,37 +15,10 @@ $(document).ready(function() {
 		 offset:[5, 0]
 	};
 	
- 	// Search Capabilities
-	activateContentSearch();
-	
 	// toggle flicker messages
 	$(".flickerMessages").slideDown();
-	//Main Navigation
-	$('#main_nav > li > ul').hide(); // Hide all subnavigation
-	// Show current subnavigation	
-	$('#main_nav > li > a.current').parent().children("ul").show(); 
-	// li clicks
-	$('#main_nav > li > a[href="#"]').mouseover( 
-		function() {
-			$(this).parent().siblings().children("a").removeClass('current'); // Remove .current class from all tabs
-			$(this).addClass('current'); // Add class .current
-			$(this).parent().siblings().children("ul").fadeOut(100); // Hide all subnavigation
-			$(this).parent().children("ul").fadeIn(100); // Show current subnavigation
-			return false;
-		}
-	);
-	$('#main_nav > li > a[href="#"]').click( 
-		function() {
-			return false;
-		}
-	);
-	
-	// setup global variables
-	$confirmIt 			= $('#confirmIt');
-	$remoteModal 		= $("#remoteModal");
-	$remoteModalContent	= $remoteModal.find("#remoteModelContent");
-	$remoteModalLoading	= $remoteModalContent.html();
-	
+	// Search Capabilities
+	activateContentSearch();
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
@@ -58,64 +38,7 @@ $(document).ready(function() {
 	
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
-	
-	// add click listener to body to hide info and action panels
-    $( 'body' ).click( function( e ){
-       var target = $( e.target ),
-           apIgnore = [],
-           apTarget = target.closest( '.navbarPanels' )
-       // hideInfoPanels( ipIgnore );
-       if( apTarget.length ) {
-           apIgnore.push( apTarget[ 0 ].id );
-       }
-       // run global hide methods
-       hideNavbarPanels( '.navbarPanels', apIgnore );
-    });
-    // add click listener to actions panel buttons
-    $( '#adminActionsButton' ).click( function( e ){
-    	handleNavbarPanelClick( e, this, '#adminActionsPanel', toggleNavbarPanel );
-    });
-    // add click listener to quick links panel buttons
-    $( '#quickLinksButton' ).click( function( e ){
-    	handleNavbarPanelClick( e, this, '#quickLinksPanel', toggleNavbarPanel );
-    });
-	
 });
-/*
- * Hides panels which match the passed selector
- * @selector {String} the selector class of panels to hide
- * @ignore {Array} array of ids of elements to ignore when hiding elements
- */
-function hideNavbarPanels( selector, ignore ) {
-    var ignore = !ignore ? [] : ignore;
-    $( selector ).each(function() {
-        var me = this;
-        if( $.inArray( me.id, ignore )==-1 ) {
-            $( this ).slideUp({
-                duration: 200
-            })
-        }
-    });
-}
-/*
- * Consolidated way to show selected panel and hide others
- * @e {Event} the click event
- * @el {HTMLElement} the button which was clicked
- * @selector {String} the selector class of the target element
- * @handler {Function} the function to execute
- */
-function handleNavbarPanelClick( e, el, selector, handler ) {
-    // prevent default event
-    e.preventDefault();
-    // stop propagation so click doesn't bubble to body
-    e.stopPropagation();
-    // call the handler
-    handler.call( this, selector );
-}
-function toggleNavbarPanel(selector){
-	$( selector ).slideToggle();
-	return false;
-}
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
 		$("#adminActionsPanel").hide();
@@ -182,7 +105,6 @@ function closeSearchBox(){
 function quickLinks( inURL ){
 	if( inURL != 'null' )
 		window.location = inURL;
-	
 }
 function exposeIt(vID){
 	$(vID).expose();
@@ -202,7 +124,6 @@ function toggleFlickers(){
 	$(".cbox_messagebox_warn").slideToggle();
 	$(".cbox_messagebox_error").slideToggle();
 }
-
 /**
  * A-la-Carte closing of remote modal windows
  * @return
