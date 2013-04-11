@@ -104,7 +104,7 @@
 			</cfif>
 
 			<!--- Content Bar --->
-			<div class="contentBar" id="contentBar">
+			<div class="well well-small" id="contentBar">
 
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") or prc.oAuthor.checkPermission("PAGES_EDITOR")>
@@ -136,7 +136,7 @@
 			</cfif>
 
 			<!--- pages --->
-			<table name="pages" id="pages" class="tablesorter" width="98%">
+			<table name="pages" id="pages" class="tablesorter table table-striped table-hover table-condensed" width="98%">
 				<thead>
 					<tr>
 						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>

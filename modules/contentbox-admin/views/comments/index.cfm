@@ -68,7 +68,7 @@
 			</cfif>
 			
 			<!--- Content Bar --->
-			<div class="contentBar" id="contentBar">
+			<div class="well well-small" id="contentBar">
 				
 				<!--- Bulk Butons --->
 				<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
@@ -95,7 +95,7 @@
 			#rc.pagingPlugin.renderit(rc.commentsCount,rc.pagingLink)#
 		
 			<!--- comments --->
-			<table name="comments" id="comments" class="tablesorter" width="98%">
+			<table name="comments" id="comments" class="table table-striped table-hover tablesorter" width="98%">
 				<thead>
 					<tr>
 						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>

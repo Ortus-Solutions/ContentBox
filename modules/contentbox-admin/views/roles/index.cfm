@@ -42,7 +42,7 @@
 			#html.hiddenField(name="roleID",value="")#
 			
 			<!--- Content Bar --->
-			<div class="contentBar">
+			<div class="well well-small">
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>

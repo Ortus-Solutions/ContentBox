@@ -9,7 +9,7 @@
 	</div>
 
 	<!--- Content Bar --->
-	<div class="contentBar" id="contentBar">
+	<div class="well well-small" id="contentBar">
 
 		<!--- Filter Bar --->
 		<div class="filterBar">
