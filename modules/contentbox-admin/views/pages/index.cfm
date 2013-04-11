@@ -41,8 +41,8 @@
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:bulkChangeStatus('publish')">Publish Checked</a></li>
-								<li><a href="javascript:bulkChangeStatus('draft')">Draft Checked</a></li>
+					    		<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish</a></li>
+								<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft</a></li>
 					    	</ul>
 					    </div>
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#event.getValue('parent','')#');">Create Page</button>
