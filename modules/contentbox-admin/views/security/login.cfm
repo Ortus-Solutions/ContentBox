@@ -13,13 +13,17 @@
 		<div id="loginContent">
 		#html.startForm(action=prc.xehDoLogin,name="loginForm",novalidate="novalidate")#
 			#html.hiddenField(name="_securedURL",value=rc._securedURL)#
-			#html.textfield(name="username",label="Username: ",size="40",required="required",class="textfield",value=prc.rememberMe)#
-			#html.passwordField(name="password",label="Password: ",size="40",required="required",class="textfield")#
+			#html.textfield(name="username",label="Username: ",size="40",required="required",class="span4",value=prc.rememberMe)#
+			#html.passwordField(name="password",label="Password: ",size="40",required="required",class="span4")#
+			
+			<label class="checkbox inline">
+				#html.checkBox(name="rememberMe",value=true,checked=( len( prc.rememberMe ) ))#
+				Remember Me
+			</label> 
 			
 			<div id="loginButtonbar">
-			#html.checkBox(name="rememberMe",value=true,checked=( len( prc.rememberMe ) ))# 
-			#html.label(field="rememberMe",content="Remember Me &nbsp;",class="inline")#
-			#html.submitButton(value="&nbsp;&nbsp;Log In&nbsp;&nbsp;",class="btn btn-danger")#
+			
+			#html.submitButton(value="&nbsp;&nbsp;Log In&nbsp;&nbsp;", class="btn btn-danger btn-large")#
 			</div>
 			
 			<br/>

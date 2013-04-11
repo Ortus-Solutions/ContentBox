@@ -15,11 +15,11 @@
 			
 		<div id="loginContent">
 		#html.startForm(action=prc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate")#
-			#html.textfield(name="email",label="Email Address: ",size="40",required="required",class="textfield")#
+			#html.textfield(name="email",label="Email Address: ",size="40",required="required",class="span4")#
 			
 			<div id="loginButtonbar">
-			#html.href(href=event.buildLink( prc.xehLogin ), text=html.button(class="btn",value="&nbsp;&nbsp;Back To Login&nbsp;&nbsp;"))#
-			#html.submitButton(value="&nbsp;&nbsp;Reset Password&nbsp;&nbsp;",class="btn btn-danger")#
+			#html.href(href=event.buildLink( prc.xehLogin ), text="&nbsp;&nbsp;Back To Login&nbsp;&nbsp;", class="btn")#
+			#html.button(type="submit", value="&nbsp;&nbsp;Reset Password&nbsp;&nbsp;", class="btn btn-danger")#
 			</div>
 			
 		#html.endForm()#

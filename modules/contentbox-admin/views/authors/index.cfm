@@ -38,7 +38,7 @@
 				#rc.pagingPlugin.renderit(rc.authorCount,rc.pagingLink)#
 	
 				<!--- authors --->
-				<table name="authors" id="authors" class="tablesorter table table-striped table-hover table-condensed" width="98%">
+				<table name="authors" id="authors" class="tablesorter table table-striped table-hover" width="98%">
 					<thead>
 						<tr>
 							<th>Name</th>
