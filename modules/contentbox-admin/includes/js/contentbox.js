@@ -274,6 +274,9 @@ function openRemoteModal(url,params,w,h){
 	// open the remote modal
 	$remoteModal.data("overlay").load();
 }
+function closeConfirmations(){
+	$confirmIt.data("overlay").close();
+}
 /**
  * Activate modal confirmation windows
  * @return
