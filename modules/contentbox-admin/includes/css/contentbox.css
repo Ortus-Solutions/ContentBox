@@ -7,7 +7,7 @@ body{
 	margin: 0;
 	width:100%;
 	height:100%;
-	padding-top: 40px;
+	padding-top: 39px;
   	font: 12px Arial,Helvetica,sans-serif;
 	line-height: 20px;
 	color: #333333;
@@ -26,6 +26,7 @@ ol { list-style:decimal inside; }
 ul { list-style:disc inside; }
 /**============================== ADMIN MAIN TOP MENU ==============================**/
 #adminMenuTopNav { font-size: 13px;}
+#adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}
 #adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
 #adminMenuTopNav .nav > li > a { padding: 8px 5px;}
 #adminMenuTopNav .navbar-inner {
@@ -56,6 +57,17 @@ ul { list-style:disc inside; }
 #adminMenuBar {  }
 #adminMenuBar .nav > li { line-height:20px;}
 #adminMenuBar .nav > li > a{ padding: 10px;}
+#adminMenuBar .navbar-inner {
+    background-color: #343434;
+    background-image: linear-gradient(to bottom, #343434, #111111);
+    background-image: -moz-linear-gradient(top, #343434, #111111);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#343434), to(#111111));
+	background-image: -webkit-linear-gradient(top, #343434, #111111);
+	background-image: -o-linear-gradient(top, #343434, #111111);
+	background-image: linear-gradient(to bottom, #343434, #111111);
+	background-repeat: repeat-x;
+    border-color: #252525;
+}
 /**============================== FOOTER ==============================**/
 footer {
     background-color: #1B1B1B;
