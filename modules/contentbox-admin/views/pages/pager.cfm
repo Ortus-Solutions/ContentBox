@@ -28,11 +28,11 @@
 			<cfset i++>
 			<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#"
 				<cfif page.isExpired()>
-					class="expired"
+					class="error"
 				<cfelseif page.isPublishedInFuture()>
-					class="futurePublished"
+					class="success"
 				<cfelseif !page.isContentPublished()>
-					class="selected"
+					class="warning"
 				</cfif>>
 				<td>
 					<!--- Title --->
@@ -61,7 +61,7 @@
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
-				<td class="center">#page.getHits()#</td>
+				<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
 				<td class="center">
 					<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 					<!--- Edit Command --->
