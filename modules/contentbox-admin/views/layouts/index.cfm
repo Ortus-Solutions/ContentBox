@@ -1,6 +1,7 @@
 ﻿<cfoutput>
-<div class="main">
+<div class="row-fluid">
 	<div class="box">
+		
 		<!--- Body Header --->
 		<div class="header">
 			<ul class="sub_nav">
@@ -45,11 +46,12 @@
 								<!--- Active Layout --->
 								<div>
 									<div id="layout-info">
+										
 										<!---screenshot --->
-										<div id="layout-screenshot" class="floatRight">
+										<div id="layout-screenshot" class="pull-right">
 										<cfif len( prc.activelayout.screenShotURL )>
 											<a href="#prc.activelayout.screenShotURL#" target="_blank" title="Open screenshot">
-												<img src="#prc.activelayout.screenShotURL#"  alt="screenshot" height="200" border="0"/>
+												<img src="#prc.activelayout.screenShotURL#" alt="screenshot" height="200" border="0" class="img-polaroid img-screenshot"/>
 											</a>
 											<br/>
 										</cfif>
@@ -58,7 +60,7 @@
 										<!--- Title --->
 										<div id="layout-title"><h2>#prc.activeLayout.layoutName#</h2></div>
 										<!---Description --->
-										<div id="layout-description>">#prc.activelayout.description#</div>
+										<div id="layout-description" class="well well-small">#prc.activelayout.description#</div>
 										<!---Author --->
 										<div id="layout-author">
 											<i class="icon-user"></i>
@@ -143,8 +145,8 @@
 										<!--- Rebuild Registry Button --->
 										<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 										<div class="buttonBar">
-											<button class="btn btn-primary" onclick="return toggleUploader()" title="Upload and install a new layout theme">Upload Layout</button>
-											<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan layouts directory and rebuild registry">Rebuild Registry</button>
+											<button class="btn btn-primary" onclick="return toggleUploader()" title="Upload and install a new layout theme"><i class="icon-upload-alt"></i> Upload Layout</button>
+											<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan layouts directory and rebuild registry"><i class="icon-refresh"></i> Rebuild Registry</button>
 										</div>
 										</cfif>
 										<!--- Filter Bar --->
@@ -171,7 +173,7 @@
 									</div>
 									
 									<!--- layouts --->
-									<table name="layouts" id="layouts" class="tablesorter" width="98%">
+									<table name="layouts" id="layouts" class="tablesorter table table-striped table-hover" width="98%">
 										<thead>
 											<tr>
 												<th width="200">Theme Info</th>
@@ -225,7 +227,7 @@
 													<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 													<!--- Delete Command --->
 													<a title="Delete layout" href="javascript:remove('#JSStringFormat(prc.layouts.name)#')" 
-													   class="confirmIt" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><i class="icon-remove-sign icon-large"></i></a>
+													   class="confirmIt btn" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><i class="icon-remove-sign icon-large"></i></a>
 													</cfif>
 												</td>
 											</tr>

@@ -139,7 +139,7 @@
 							<td class="center">
 								<!---Info Panel --->
 								<a 	class="btn popovers" 
-									data-pageID="#page.getContentID()#"
+									data-contentID="#page.getContentID()#"
 									data-toggle="popover"><i class="icon-info-sign icon-large"></i></a>
 								<!---Info Panel --->
 								<div id="infoPanel_#page.getContentID()#" class="hide">
@@ -167,7 +167,6 @@
 									<i class="icon-tablet"></i> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
 								</div>
 								
-								
 								<!--- Page Actions --->
 								<div class="btn-group">
 							    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
@@ -191,7 +190,6 @@
 										<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="icon-eye-open icon-large"></i> View Page</a></li>
 							    	</ul>
 							    </div>
-								
 								
 								</td>
 						</tr>

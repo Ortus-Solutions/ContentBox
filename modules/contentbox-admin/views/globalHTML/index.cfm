@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 #html.startForm(name="globalHTMLForm",action=prc.xehSaveHTML)#		
-<div class="main" id="main">
+<div class="row-fluid" id="main-content">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">

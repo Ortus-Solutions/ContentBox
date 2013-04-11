@@ -7,12 +7,6 @@
 <cfif prc.errors>
 #getPlugin("MessageBox").renderit()#
 <cfelse>
-	<div class="floatRight infoBar">
-		<label class="inline">Sort By: </label>
-		<a href="javascript:loadForgeBox('popular')">Popularity</a> |
-		<a href="javascript:loadForgeBox('recent')">Recently Updated</a> |
-		<a href="javascript:loadForgeBox('new')">New Stuff</a>
-	</div>
 	<!--- Title --->
 	<h2>
 		#prc.entriesTitle# - #prc.entries.recordcount# record(s)
@@ -20,7 +14,7 @@
 	<!--- Instructions --->
 	<p>
 		Please note that not all contributed entries can be automatically installed for you. 
-		A button much like this <button class="btn btn-primary" onclick="return false;">Download & Install</button>
+		A button much like this <button class="btn btn-primary btn-small" onclick="return false;">Download & Install</button>
 		will appear if an item can be automatically installed for you.  If not, you will 
 		have to download the entry manually and upload it to install it.
 		 You can also browse all of our online 
@@ -30,6 +24,17 @@
 	<!--- Filter Bar --->
 	<div class="well well-small">
 		<div class="filterBar">
+			<div class="btn-group pull-right">
+			    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+			    <i class="icon-sort"></i> Sort By
+			    <span class="caret"></span>
+			    </a>
+			    <ul class="dropdown-menu">
+			    	<li><a href="javascript:loadForgeBox('popular')"><i class="icon-thumbs-up"></i> Popularity</a></li>
+					<li><a href="javascript:loadForgeBox('recent')"><i class="icon-calendar"></i> Recently Updated</a></li>
+					<li><a href="javascript:loadForgeBox('new')"><i class="icon-gift"></i> New Stuff</a>
+			    </ul>
+		    </div>
 			<div>
 				#html.label(field="entryFilter",content="Quick Filter:",class="inline")#
 				#html.textField(name="entryFilter",size="30",class="textfield")#
@@ -54,27 +59,51 @@
 		
 		<!--- Description --->
 		<cfif len(prc.entries.description)>
-			<a href="javascript:openForgeboxModal('entry_description_#prc.entries.entryID#')">> Read Description</a>
-			<div id="entry_description_#prc.entries.entryID#" class="forgebox-infobox" style="display:none">
-				<h2>Description</h2>
+			<a href="##entry_description_#prc.entries.entryID#" role="button" data-toggle="modal"><i class="icon-plus"></i> Read Description</a>
+			<div id="entry_description_#prc.entries.entryID#" class="modal forgebox-modal hide fade">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3>Description</h3>
+				</div>
+				<div class="modal-body">
 				#prc.entries.description#
-			</div><br />
+				</div>
+				<div class="modal-footer">
+					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				</div>
+			</div><br/>
 		</cfif>
 		<!--- Install Instructions --->
 		<cfif len(prc.entries.installinstructions)>
-			<a href="javascript:openForgeboxModal('entry_ii_#prc.entries.entryID#')">> Read Installation Instructions</a>
-			<div id="entry_ii_#prc.entries.entryID#" class="forgebox-infobox" style="display:none">
-				<h2>Installation Instructions</h2>
+			<a href="##entry_ii_#prc.entries.entryID#" role="button" data-toggle="modal"><i class="icon-plus"></i> Read Installation Instructions</a>
+			<div id="entry_ii_#prc.entries.entryID#" class="modal forgebox-modal hide fade">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3>Installation Instructions</h3>
+				</div>
+				<div class="modal-body">
 				#prc.entries.installinstructions#
-			</div><br />
+				</div>
+				<div class="modal-footer">
+					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				</div>
+			</div><br/>
 		</cfif>
 		<!--- Changelog --->
 		<cfif len(prc.entries.changelog)>
-			<a href="javascript:openForgeboxModal('entry_cl_#prc.entries.entryID#')">> Read Changelog</a>
-			<div id="entry_cl_#prc.entries.entryID#" class="forgebox-infobox" style="display:none">
-				<h2>Changelog</h2>
+			<a href="##entry_cl_#prc.entries.entryID#" role="button" data-toggle="modal"><i class="icon-plus"></i> Read Changelog</a>
+			<div id="entry_cl_#prc.entries.entryID#" class="modal forgebox-modal hide fade">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h3>Changelog</h3>
+				</div>
+				<div class="modal-body">
 				#prc.entries.changelog#
-			</div><br />
+				</div>
+				<div class="modal-footer">
+					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				</div>
+			</div><br/>
 		</cfif>
 		<br/>
 		<!--- Download & Install --->

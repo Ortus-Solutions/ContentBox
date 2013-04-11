@@ -24,7 +24,7 @@
 	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
 
 	<!--- entries --->
-	<table name="entries" id="entries" class="tablesorter" width="98%">
+	<table name="entries" id="entries" class="tablesorter table table-hover table-striped table-condensed" width="98%">
 		<thead>
 			<tr>
 				<th>Entry Title</th>
@@ -34,7 +34,7 @@
 		</thead>
 		<tbody>
 			<cfloop array="#prc.entries#" index="entry">
-			<tr id="contentID-#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
+			<tr id="contentID-#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="warning"</cfif>>
 				<td>
 					<!--- Title --->
 					<strong>#entry.getTitle()#</strong>
@@ -49,8 +49,10 @@
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="btn btn-primary" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
-					<button class="btn btn-primary" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="icon-link icon-large"></i></button>
+					<div class="btn-group">
+					<button class="btn" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
+					<button class="btn" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="icon-link icon-large"></i></button>
+					</div>
 				</td>
 			</tr>
 			</cfloop>
@@ -63,9 +65,8 @@
 
 #html.endForm()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<div class="text-center form-actions">
 	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

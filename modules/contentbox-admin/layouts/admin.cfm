@@ -200,8 +200,7 @@
 		<div>
 			<h2 id="confirmItTitle">Are you sure?</h2>
 			<p id="confirmItMessage">Are you sure you want to perform this action?</p>
-			<hr />
-			<p class="text-right">
+			<p class="text-center form-actions">
 				<button class="btn" data-action="cancel" onclick="closeConfirmations()"> Cancel </button>
 				<button class="btn btn-danger" data-action="confirm"> Confirm </button>
 			</p>
