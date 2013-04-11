@@ -3,7 +3,7 @@
 	<p>
 		You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via 
 		the CB Helper -> 
-		<em>cb.quickCustomFields() or cb.getCustomField(key,[defaultValue])</em>
+		<code>cb.quickCustomFields() or cb.getCustomField(key,[defaultValue])</code>
 	</p>
 	<!--- CustomFields Holder --->
 	<div id="customFields">
@@ -18,7 +18,7 @@
 				#html.textField(name="CustomFieldKeys",class="textfield inline customFieldKey",size="18",maxsize="255",value=cField.getKey())#
 				<label class="inline">Value: </label> 
 				#html.textField(name="CustomFieldValues",class="textfield inline customFieldValue",size="60",value=cField.getValue())#
-				<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-remove-sign"></i> Remove</button>
+				<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-remove-sign icon-large"></i></button>
 			</p>
 		</cfloop>
 		<!--- Remove All Custom Fields --->
@@ -32,7 +32,7 @@
 	#html.textField(name="CustomFieldKeys",class="textfield inline customFieldKey",size="18",maxsize="255")#
 	<label class="inline">Value: </label> 
 	#html.textField(name="CustomFieldValues",class="textfield inline customFieldValue",size="60")#
-	<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-remove-sign"></i> Remove</button>
+	<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-remove-sign icon-large"></i></button>
 </p>	
 
 <!--- Custom JS --->
