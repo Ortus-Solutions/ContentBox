@@ -4,6 +4,8 @@
 <head>
 	<!--- charset --->
 	<meta charset="utf-8"/>
+	<!--- Responsive --->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
@@ -16,9 +18,9 @@
 	#cb.minify(assets="#prc.cbroot#/includes/css/style.css,
 			    #prc.cbroot#/includes/css/sort.css,
 			    #prc.cbroot#/includes/css/bootstrap.css,
+			    #prc.cbroot#/includes/css/contentbox.css.
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
-			    #prc.cbroot#/includes/css/font-awesome.min.css,
-			    #prc.cbroot#/includes/css/contentbox.css",
+			    #prc.cbroot#/includes/css/font-awesome.min.css",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- JS --->
 	#cb.minify(assets="#prc.cbroot#/includes/js/jquery.min.js,
