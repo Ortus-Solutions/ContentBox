@@ -1,11 +1,10 @@
 ﻿<cfoutput>
-<h2>#prc.page.getTitle()#</h2>
+<h2><i class="icon-eye-open"></i> #prc.page.getTitle()#</h2>
 <div>
 #prc.page.renderContent()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<div class="text-center form-actions">
 	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 	<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehPageEditor)#/contentID/#prc.page.getContentID()#')"> Edit </button>
 	</cfif>

@@ -24,7 +24,7 @@
 	#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
 
 	<!--- pages --->
-	<table name="pages" id="pages" class="tablesorter" width="98%">
+	<table name="pages" id="pages" class="tablesorter table table-condensed table-striped table-hover" width="98%">
 		<thead>
 			<tr>
 				<th>Page Name</th>
@@ -34,7 +34,7 @@
 		</thead>
 		<tbody>
 			<cfloop array="#prc.pages#" index="page">
-			<tr id="contentID-#page.getContentID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
+			<tr id="contentID-#page.getContentID()#" <cfif NOT page.getIsPublished()>class="alert"</cfif>>
 				<td>
 					<!--- Title --->
 					<strong>#page.getSlug()#</strong>
@@ -49,8 +49,10 @@
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="btn btn-primary" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )"><i class="icon-lock icon-large"></i></button>
-					<button class="btn btn-primary" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )"><i class="icon-link icon-large"></i></button>
+					<div class="btn-group">
+					<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )"><i class="icon-lock icon-large"></i></button>
+					<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )"><i class="icon-link icon-large"></i></button>
+					</div>
 				</td>
 			</tr>
 			</cfloop>
@@ -62,9 +64,8 @@
 
 #html.endForm()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<div class="text-center form-actions">
 	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>
