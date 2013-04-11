@@ -1,5 +1,5 @@
 <cfoutput>
-<h2>Quick Preview</h2>
+<h2><i class="icon-eye-open"></i> Quick Preview</h2>
 <div>
 	<!---hidden form for preview submit, has to be a form as content can be quite large
 		so get operations do not work.	

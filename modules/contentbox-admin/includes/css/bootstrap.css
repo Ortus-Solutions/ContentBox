@@ -92,7 +92,7 @@ sub {
 
 img {
   width: auto\9;
-  /**height: auto;**/
+  height: auto;
   max-width: 100%;
   vertical-align: middle;
   border: 0;
@@ -1015,7 +1015,7 @@ pre code {
   overflow-y: scroll;
 }
 
-/**
+
 form {
   margin: 0 0 20px;
 }
@@ -1037,12 +1037,10 @@ legend {
   border: 0;
   border-bottom: 1px solid #e5e5e5;
 }
-
 legend small {
   font-size: 15px;
   color: #999999;
 }
-*/
 
 label,
 input,
@@ -1084,7 +1082,7 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  height: 15px;
+  height: 20px;
   padding: 4px 6px;
   margin-bottom: 10px;
   font-size: 12px;
@@ -1099,7 +1097,7 @@ input[type="color"],
 input,
 textarea,
 .uneditable-input {
-  /*width: 206px;*/
+  width: 206px;
 }
 
 textarea {

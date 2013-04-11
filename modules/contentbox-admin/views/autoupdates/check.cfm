@@ -56,10 +56,9 @@
 	</cfif>
 	
 </div>
-<hr/>
 #html.endForm()#
 <!--- Button Bar --->
-<p class="text-right">
+<p class="form-actions text-center">
 	<button class="btn btn-danger" onclick="return closeRemoteModal()"> Close </button>
 </p>
 </cfoutput>

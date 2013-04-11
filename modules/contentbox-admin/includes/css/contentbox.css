@@ -26,6 +26,12 @@ ul { list-style:disc inside; }
 #main-sidebar{ margin-left: 20px !important;}
 .hero-unit{padding:50px; margin-top:20px; margin-bottom: 20px}
 .well{ margin-bottom: 10px; margin-top: 10px;}
+img{ height: inherit; }
+input,
+textarea,
+.uneditable-input {
+  width: inherit;
+}
 /**============================== ADMIN MAIN TOP MENU ==============================**/
 #adminMenuTopNav { font-size: 13px;}
 #adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}
@@ -98,7 +104,7 @@ footer a:hover{ color: #3a87ff}
 footer #footerLogo img{ margin:-17px 35px; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; }
 /**============================== Form Styling ==============================**/
 fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
-fieldset legend { color:#3a3a3a; font-weight: bold;}
+fieldset legend { color:#3a3a3a; font-weight: bold; border-bottom: none; width: inherit; line-height:20px; font-size: inherit; margin: 0px}
 form label { font-size:1em; font-weight:bold; display:block; margin:2px 0; }
 form input.textfield, form select, form textarea{ padding:6px; margin-right:4px; }
 form textarea,form .wysiwyg { width:98%; }
@@ -197,7 +203,7 @@ form textarea,form .wysiwyg { width:98%; }
 .grabCursors{cursor:grab !important;cursor:-moz-grab !important;cursor:-webkit-grab !important;}
 .hand-cursor{cursor:pointer !important;}
 /**============================== Table Listings ==============================**/
-td,th { padding:5px; display:table-cell; vertical-align:middle !important; }
+td,th { font-size: 12px; padding:5px; display:table-cell; vertical-align:middle !important; }
 .selected{ background-color: #fcdddb !important; }
 .unapproved{ background-color: #fcdddb !important;}
 .table { margin-bottom: 5px;}
