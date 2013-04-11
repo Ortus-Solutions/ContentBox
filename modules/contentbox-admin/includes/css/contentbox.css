@@ -11,13 +11,13 @@ body{
   	font: 12px Arial,Helvetica,sans-serif;
 	line-height: 20px;
 	color: #333333;
-	background-color: #004D85;
-	background-image: linear-gradient(to bottom, #000132, #004D85);
-	background-image: -moz-linear-gradient(top, #000132, #004D85);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#000132), to(#004D85));
-	background-image: -webkit-linear-gradient(top, #000132, #004D85);
-	background-image: -o-linear-gradient(top, #000132, #004D85);
-	background-image: linear-gradient(to bottom, #000132, #004D85);
+	background-color: #F5F5F5;
+	background-image: linear-gradient(to bottom, #ddd, #F5F5F5);
+	background-image: -moz-linear-gradient(top, #ddd, #F5F5F5);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ddd), to(#F5F5F5));
+	background-image: -webkit-linear-gradient(top, #ddd, #F5F5F5);
+	background-image: -o-linear-gradient(top, #ddd, #F5F5F5);
+	background-image: linear-gradient(to bottom, #ddd, #F5F5F5);
 	background-repeat: repeat-x;
 }
 .container-fluid{ margin-bottom: 100px;}
