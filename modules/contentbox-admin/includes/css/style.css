@@ -15,7 +15,7 @@
 .box { margin-bottom:15px; }
 .box .header { height:40px; font-size:1.5em; line-height:1.8em; padding:0 15px; position:relative; }
 .box .header img { position:relative; margin-right:10px; }
-.box .body { padding: 2px 15px 5px; }
+.box .body { padding: 10px 15px 5px; }
 /***** BOXES *****/
 .box { background:#fdfdfd; }
 .box .header { background:url(../images/box_header_bg.gif) repeat-x bottom; color:#004A7E; }
