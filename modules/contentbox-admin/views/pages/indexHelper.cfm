@@ -23,11 +23,11 @@ $(document).ready(function() {
 	$(".popovers").popover({
 		html : true,
 		content : function(){
-			return getInfoPanelContent( $(this).attr( "data-pageID" ) );
+			return getInfoPanelContent( $(this).attr( "data-contentID" ) );
 		},
 		trigger : 'hover',
 		placement : 'top',
-		title : 'Page Info',
+		title : 'Quick Info',
 		delay : { show: 200, hide: 500 }
 	});
 	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
