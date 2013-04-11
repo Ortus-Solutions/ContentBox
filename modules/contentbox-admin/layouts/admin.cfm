@@ -202,9 +202,9 @@
 			<h2 id="confirmItTitle">Are you sure?</h2>
 			<p id="confirmItMessage">Are you sure you want to perform this action?</p>
 			<hr />
-			<p class="textRight">
-				<button class="close button" 	data-action="cancel"> Cancel </button>
-				<button class="close buttonred" data-action="confirm"> Confirm </button>
+			<p class="text-right">
+				<button class="btn" data-action="cancel" onclick="closeConfirmations()"> Cancel </button>
+				<button class="btn btn-danger" data-action="confirm"> Confirm </button>
 			</p>
 		</div>
 	</div>
@@ -212,7 +212,7 @@
 	<!--- ============================ Remote Modal Window ============================ --->
 	<div id="remoteModal">
 		<div id="remoteModelContent">
-			<img src="#prc.cbroot#/includes/images/ajax-loader-blue.gif" alt="loader" />
+			<i class="icon-spinner icon-spin icon-large icon-4x"></i>
 		</div>
 	</div>
 
