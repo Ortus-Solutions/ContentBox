@@ -45,8 +45,8 @@
 				ContentBox is a professional open source project with tons of services, training, customizations and more.
 			</p>
 			
-			<h2 class="border_grey">Links</h2>
-			<ul class="bulleted_list">
+			<h2>Links</h2>
+			<ul>
 				<li>Source Code: <a href="https://github.com/Ortus-Solutions/ContentBox" target="_blank">https://github.com/Ortus-Solutions/ContentBox</a></li>
 				<li>Code Tracker: <a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">https://ortussolutions.atlassian.net/browse/CONTENTBOX</a></li>
 				<li>Submit Bugs/Enhancements: <a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">https://ortussolutions.atlassian.net/browse/CONTENTBOX</a></li>
@@ -54,7 +54,7 @@
 				<li>ColdBox Platform: <a href="http://www.coldbox.org" target="_blank">http://www.coldbox.org</a></li>
 			</ul>
 			
-			<h2 class="border_grey">Components</h2>
+			<h2>Components</h2>
 			<table name="settings" id="settings" class="tablesorter" width="98%">
 				<thead>
 					<tr>

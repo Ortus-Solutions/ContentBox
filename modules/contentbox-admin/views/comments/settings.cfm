@@ -108,7 +108,7 @@
 				</div>
 				<!--- end panes_vertical --->
 				<div class="actionBar pull-right">
-					#html.submitButton(value="Save Settings",class="buttonred",title="Save the comment settings")#
+					#html.submitButton(value="Save Settings",class="btn btn-danger",title="Save the comment settings")#
 				</div>
 			</div>
 			<!--- end main_column --->

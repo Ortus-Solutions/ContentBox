@@ -10,8 +10,8 @@
 			<!--- Search Form --->
 			#html.startForm(name="htmlSearchForm",action=prc.xehCustomHTML)#
 				#html.textField(label="Search:",name="search",class="textfield",size="16",title="Search all content pieces",value=rc.search)#
-				<input type="submit" value="Search" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Clear</button>				
+				<input type="submit" value="Search" class="btn btn-danger" />
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Clear</button>				
 			#html.endForm()#
 		</div>
 	</div>	
@@ -47,7 +47,7 @@
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');" title="Create new content">Create Content</button>
+					<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');" title="Create new content">Create Content</button>
 				</div>
 				</cfif>
 				<!--- Filter Bar --->

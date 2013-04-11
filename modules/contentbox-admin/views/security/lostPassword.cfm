@@ -18,8 +18,8 @@
 			#html.textfield(name="email",label="Email Address: ",size="40",required="required",class="textfield")#
 			
 			<div id="loginButtonbar">
-			#html.href(href=event.buildLink( prc.xehLogin ), text=html.button(class="button",value="&nbsp;&nbsp;Back To Login&nbsp;&nbsp;"))#
-			#html.submitButton(value="&nbsp;&nbsp;Reset Password&nbsp;&nbsp;",class="buttonred")#
+			#html.href(href=event.buildLink( prc.xehLogin ), text=html.button(class="btn",value="&nbsp;&nbsp;Back To Login&nbsp;&nbsp;"))#
+			#html.submitButton(value="&nbsp;&nbsp;Reset Password&nbsp;&nbsp;",class="btn btn-danger")#
 			</div>
 			
 		#html.endForm()#

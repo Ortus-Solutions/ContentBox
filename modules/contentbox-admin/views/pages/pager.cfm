@@ -11,7 +11,7 @@
 	</cfif>
 
 	<!--- entries --->
-	<table name="pages_pager" id="pages_pager" class="tablelisting" width="100%">
+	<table name="pages_pager" id="pages_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
 		<thead>
 			<tr>
 				<th>Page</th>

@@ -8,15 +8,13 @@
 <div>
 	<h3>Version Info Comparison</h3>
 	<!--- Info Table --->
-	<table class="tablelisting">
-		<thead>
-		<tr>
+	<table class="table table-striped table-hover table-condensed table-bordered">
+		<tbody>
+		<tr class="info">
 			<th class="center">Info</th>
 			<th class="center">Version #prc.oldVersion#</th>
 			<th class="center">Version #prc.currentVersion#</th>
 		</tr>
-		</thead>
-		<tbody>
 		<tr>
 			<td><strong>Author</strong></td>
 			<td><a href="mailto:#prc.oldContent.getAuthorEmail()#">#prc.oldContent.getAuthorName()#</a></td>
@@ -89,6 +87,6 @@
 <hr/>
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

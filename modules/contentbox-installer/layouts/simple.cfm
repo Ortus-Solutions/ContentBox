@@ -14,12 +14,14 @@
 	<!--- Favicon --->
 	<link href="#prc.assetRoot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.assetRoot#/includes/css/style.css"	rel="stylesheet"/>
-	<link href="#prc.assetRoot#/includes/css/teal.css" 	rel="stylesheet"/>
+	<link href="#prc.assetRoot#/includes/css/style.css"				rel="stylesheet"/>
+	<link href="#prc.assetRoot#/includes/css/bootstrap.css" 		rel="stylesheet"/>
+	<link href="#prc.assetRoot#/includes/css/contentbox.css" 		rel="stylesheet"/>
 	<link href="#prc.assetRoot#/includes/css/font-awesome.min.css"	rel="stylesheet"/>
 	<!--- JS --->
 	<script src="#prc.assetRoot#/includes/js/jquery.min.js"></script>
 	<script src="#prc.assetRoot#/includes/js/jquery.tools.min.js"></script>
+	<script src="#prc.assetRoot#/includes/js/bootstrap.min.js"></script>
 	<script src="#prc.assetRoot#/includes/js/contentbox.js"></script>
 </head>
 <!--============================Body============================-->

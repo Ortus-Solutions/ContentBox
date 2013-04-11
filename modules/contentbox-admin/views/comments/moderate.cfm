@@ -12,8 +12,8 @@
 				#html.hiddenField(name="commentID",bind=rc.comment)#
 				#html.hiddenField(name="commentStatus",value="approve")#
 				<!--- Buttons --->
-				<input type="submit" value="Delete Comment" class="buttonred" onclick="removeComment()" />
-				<input type="submit" value="Approve Comment" class="button2" />				
+				<input type="submit" value="Delete Comment" class="btn btn-danger" onclick="removeComment()" />
+				<input type="submit" value="Approve Comment" class="btn btn-primary" />				
 			#html.endForm()#
 		</div>
 	</div>		

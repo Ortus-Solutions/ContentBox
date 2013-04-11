@@ -10,8 +10,8 @@
 			<!--- Search Form --->
 			#html.startForm(name="commentSearchForm",action=prc.xehComments)#
 				#html.textField(label="Search:",name="searchComments",class="textfield",size="16",title="Search all authors, author emails and content",value=event.getValue("searchComments",""))#
-				<input type="submit" value="Search" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>				
+				<input type="submit" value="Search" class="btn btn-danger" />
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>				
 			#html.endForm()#
 		</div>
 	</div>		
@@ -31,8 +31,8 @@
 			</select>
 			<!--- ActionBar --->
 			<div class="actionBar">
-				<input type="submit" value="Apply Filters" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>				
+				<input type="submit" value="Apply Filters" class="btn btn-danger" />
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>				
 			</div>			
 			#html.endForm()#
 		</div>
@@ -61,7 +61,7 @@
 			
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
-				<div class="infoBar">
+				<div class="alert alert-info">
 					<i class="icon-exclamation-sign icon-large"></i>
 					Comments are currently disabled site-wide!
 				</div>
@@ -73,11 +73,11 @@
 				<!--- Bulk Butons --->
 				<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return changeStatus('approve')" title="Bulk Approve Comments">Approve</button>
-					<button class="button2" onclick="return changeStatus('moderate')" title="Bulk Moderate Comments">Moderate</button>
+					<button class="btn btn-primary" onclick="return changeStatus('approve')" title="Bulk Approve Comments">Approve</button>
+					<button class="btn btn-primary" onclick="return changeStatus('moderate')" title="Bulk Moderate Comments">Moderate</button>
 					<!--- As Link for confirmations --->
 					<a href="javascript:remove()" class="confirmIt" data-title="Really do a bulk delete?">
-						<button class="button2" onclick="return false" title="Bulk Remove Comments">Remove</button>
+						<button class="btn btn-primary" onclick="return false" title="Bulk Remove Comments">Remove</button>
 					</a>
 				</div>
 				</cfif>

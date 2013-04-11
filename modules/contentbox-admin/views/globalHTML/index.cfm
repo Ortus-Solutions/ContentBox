@@ -79,7 +79,7 @@
 				
 				<!---Button Bar --->
 				<div class="buttonBar">
-					#html.submitButton(value="Save Global HTML",class="buttonred",title="Save Global HTML content")#
+					#html.submitButton(value="Save Global HTML",class="btn btn-danger",title="Save Global HTML content")#
 				</div>
 			</div>
 		</div>

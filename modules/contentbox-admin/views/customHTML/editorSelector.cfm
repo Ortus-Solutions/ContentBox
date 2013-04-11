@@ -45,7 +45,7 @@
 					#entry.getDescription()#
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return insertCustomHTML('#entry.getSlug()#')">Select</button>
+					<button class="btn btn-primary" onclick="return insertCustomHTML('#entry.getSlug()#')">Select</button>
 				</td>
 			</tr>
 			</cfloop>
@@ -57,6 +57,6 @@
 <hr/>
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

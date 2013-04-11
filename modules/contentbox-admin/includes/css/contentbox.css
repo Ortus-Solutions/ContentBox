@@ -1,14 +1,17 @@
-/***** MAIN ELEMENTS *****/
+/**============================== ADMIN MAIN ELEMENTS ==============================**/
 html{ 
 	height:100%;
 	color: #3B3B3B;
 }
 body{ 
 	margin: 0;
+	width:100%;
+	height:100%;
 	padding-top: 40px;
   	font: 12px Arial,Helvetica,sans-serif;
 	line-height: 20px;
 	color: #333333;
+	background-color: #004D85;
 	background-image: linear-gradient(to bottom, #000132, #004D85);
 	background-image: -moz-linear-gradient(top, #000132, #004D85);
 	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#000132), to(#004D85));
@@ -17,7 +20,11 @@ body{
 	background-image: linear-gradient(to bottom, #000132, #004D85);
 	background-repeat: repeat-x;
 }
-/***** ADMIN MENU TOP NAVBAR *****/
+.container-fluid{ margin-bottom: 100px;}
+td,th { padding:5px; display:table-cell; }
+ol { list-style:decimal inside; }
+ul { list-style:disc inside; }
+/**============================== ADMIN MAIN TOP MENU ==============================**/
 #adminMenuTopNav { font-size: 13px;}
 #adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
 #adminMenuTopNav .nav > li > a { padding: 8px 5px;}
@@ -34,7 +41,7 @@ body{
 }
 #adminMenuTopNav #logo{ margin: 5px 10px 0px 0px;float:left;height:25px}
 #adminActionNotifier{ font-size:13px; position: absolute; right:10px; min-width:250px; z-index: 9999; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; margin: auto}
-/***** ADMIN MENU NAVBAR SEARCH *****/
+/**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
 #nav-search{ margin-top: 2px}
 #div-search-results{
 	display: none;
@@ -45,11 +52,11 @@ body{
 #div-search-results h2{ color: #31ADE8; font-size: 16px; font-weight: normal;}
 #div-search-results ul{ font-size: 12px}
 #div-search-results li{ margin: 3px 0px }
-/***** ADMIN MAIN GENERATED MENU *****/
+/**============================== ADMIN MAIN GENERATED MENU ==============================**/
 #adminMenuBar {  }
 #adminMenuBar .nav > li { line-height:20px;}
 #adminMenuBar .nav > li > a{ padding: 10px;}
-/***** FOOTER *****/
+/**============================== FOOTER ==============================**/
 footer {
     background-color: #1B1B1B;
     opacity: 0.90;
@@ -74,3 +81,159 @@ footer {
 footer a { color:#fff; text-decoration:underline; }
 footer a:hover{ color: #3a87ff}
 footer #footerLogo img{ margin:-17px 35px; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; }
+/**============================== Form Styling ==============================**/
+fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+fieldset legend { color:#3a3a3a; }
+form label { font-size:1em; font-weight:bold; display:block; margin:2px 0; }
+form input.textfield, form select, form textarea{ padding:6px; margin-right:4px; }
+form textarea,form .wysiwyg { width:98%; }
+/**============================== ColdBox MessageBox ==============================**/
+.cbox_messagebox { font-weight:bold; margin:10px; }
+.cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
+.cbox_messagebox_warning { background:#FFF2CF url(../images/warning_icon.png) no-repeat scroll .5em 50%; color:#bc6c34; border:1px solid #bc6c34; margin:.3em auto; padding:0 1em 0 3.5em; }
+.cbox_messagebox_error { background:#FFFFE0 url(../images/error_icon.png) no-repeat scroll .5em 50%; color:#b22723; border:1px solid #ff0606; margin:.3em auto; padding:0 1em 0 3.5em; }
+/**============================== FILEBROWSER CSS ==============================**/
+#FileBrowser #statusText {margin:0px !important}
+#FileBrowser #fileListing{min-height: 350px !important ;}
+/**============================== DIFF CSS ==============================**/
+.consoleLog{ border:2px solid #eaeaea;padding:5px;font-size:11px;font-family: courier;background-color:black;color:#66E10D}
+/**============================== FORGEBOX CSS ==============================**/
+#forgebox-entrysidebar { width:180px; float:right; }
+#forgebox-entrycontent { width:515px; }
+.forgeBox-entrybox { margin:10px 0px 0px 10px; border:1px solid #CCC; background:#FFFFFF url(../images/divbg.gif) repeat-x bottom left; padding:10px; -moz-border-radius:10px; -webkit-border-radius:10px; -khtml-border-radius:10px; }
+.forgebox-rating { float:right; margin-right:5px; }
+.forgebox-infobox { top:20px !important; border:10px solid #666; padding:10px; background-color:#fff; width: 95%; min-height: 70%;-moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;width:90%}
+.forgebox-infobox a.close { background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
+.forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
+.forgebox-download { float:right; clear:right; }
+/**============================== UNIQUE CSS ==============================**/
+.futurePublished{ background-color: #c7e0f9 !important; }
+.expired{ background-color: #fcc699 !important; }
+.loaders { margin:10px; display:none; text-align:center; }
+.tipList { list-style-image: url("../images/light_bulb.png"); cursor: pointer;}
+.tipList li{ padding: 5px 0px 0px 0px; }
+#authorDetails { margin:7px 0 0 45px; font-size:16px; }
+#loginBox { width:500px; margin:100px auto; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
+#loginContent { text-align:center; }
+#loginButtonbar {margin:10px}
+#header_top_authorName { color:orange; font-weight:bold; }
+#categoriesChecks{ overflow: auto; max-height: 250px; border: 1px dotted #707171;}
+#quickPost{display: none;}
+#addCustomFieldButton{margin:0xp 10px 0px 10px}
+.editorTime{ width:35px; }
+#contentToolBar{ margin: 5px 0px 0px 0px; padding: 3px; min-height: 30px}
+#contentLabel{margin:2px 0px 10px 0px;}
+.actionsPanel, .contentInfoPanel { z-index:999; cursor: help; display:none; position: absolute; margin-left: 5px; padding: 10px; background-color: #eaeaea; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
+.actionsPanel, .contentInfoPanel a{color:black;}
+.actionsPanel, .contentInfoPanel a:hover{ color: red;}
+.contentInfoPanel { margin-left: -95px; }
+#userDetails{ margin: 0px 0px 0px 10px;}
+#adminActionsButton{ text-decoration: none; }
+.navbarPanels{ color: white; z-index:999; display:none; position: absolute; margin-left: 15px; padding: 10px; background-color: black; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
+.navbarPanels a { color: white !important; }
+.navbarPanels a:hover{ text-transform: underline;}
+.navbarPanels li{ list-style: none;}
+.navbarSlot{ margin: 0px 3px; }
+#quickLinksPanel{ right: 2px;}
+#adminActionsPanel{ margin-left: 100px}
+/** Button Bars ***/
+.actionBar { margin:10px 0 5px; }
+.filterBar { margin:10px 0 2px; }
+.buttonBar { float: right; margin:7px 0px 0px 10px;}
+.contentBar { padding:10px;margin:10px 0px;background-color:#f5f5f5;box-shadow:0 0 5px #ccc;-moz-box-shadow:0 0 5px #ccc; -webkit-box-shadow:0 0 5px #ccc; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;}
+#bottomCenteredBar { margin:20px 0 0; text-align:right; }
+/** ============================== ConfirmIt-Modals ============================== **/
+#exposeMask { background:#000!important; }
+/* background color for overlay and expose mask */
+#confirmIt, #remoteModal, #quickPost, .modal {top:20px !important; border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
+#remoteModal, .modal { width:1000px; height: 90% }
+#quickPost { width:1000px; height: 80% }
+#confirmIt div { border:1px solid #3B5998; background-color:#fff; padding:10px; font-size:1.2em; margin:0; }
+#confirmIt h2, #remoteModal h2, #quickPost h2, .modal h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; font-size: 14px }
+#confirmIt p { font-size:12px; }
+#confirmIt hr, #remoteModelContent hr, #quickPost hr, .modal hr { border-bottom-color:#C0C0C0; color:#C0C0C0; border-bottom:1px solid; border-style:none none solid; height:1px; margin:2em 0; }
+#confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close { opacity: 1.0; background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
+#remoteModelContent, #quickPostContent, #modalContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:98%;overflow-y:auto; }
+/** ============================== PAGING TABS =============================== **/
+.pagingTabs { font-size:.8em; text-align:left; }
+.pagingTabs a { color:#000; padding:2px 4px; background-color:#fff; border:1px solid #ccc; margin-left:2px; }
+.pagingTabs a:hover { color:#000; background-color:#FCF9C3; border:1px solid black; }
+.pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }
+.pagingTabsCarrousel { margin-top:5px; }
+/**============================== Utility Classes ==============================**/
+.inline { display:inline; margin:5px 0; }
+.floatLeft { float:left!important; }
+.floatRight { float:right!important; }
+.textGreen{ color: #468847 }
+.textOrange{ color:#C09853 }
+.textRed{ color:#B94A48}
+.textBlue{ color:#3A87AD}
+.textWhite{ color:white}
+.textRight { text-align:right!important; }
+.textLeft { text-align:left!important; }
+.textCenter { text-align:center!important; }
+.center { text-align:center!important; margin:auto!important; }
+.padding10 { padding:10px; }
+.margin10 { margin:10px; }
+.margin0 { margin:0px; }
+.width98{ width: 98%; }
+.width95{ width: 95%; }
+.hidden { display:none!important; }
+.show{ display: block; }
+.flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 URL(../images/iinfo_icon.png) no-repeat 2% 50%; }
+.cachebox_debugContentCell{clear: none !important;}
+.grabCursors{cursor:grab !important;cursor:-moz-grab !important;cursor:-webkit-grab !important;}
+.hand-cursor{cursor:pointer !important;}
+/**============================== Table Listings ==============================**/
+.selected{ background-color: #fcdddb !important; }
+.unapproved{ background-color: #fcdddb !important;}
+tr.unapproved td{ border: 1px solid #000 !important; }
+.table-hover tbody tr:hover > td,
+.table-hover tbody tr:hover > th { background-color: #d7eafe; }
+.table tr.success > th {
+  background-color: #dff0d8;
+}
+.table tr.error > th {
+  background-color: #f2dede;
+}
+.table tr.warning > th {
+  background-color: #fcf8e3;
+}
+.table tr.info > th {
+  background-color: #d9edf7;
+}
+.table-hover tr.success:hover > th {
+  background-color: #d0e9c6;
+}
+.table-hover tr.error:hover > th {
+  background-color: #ebcccc;
+}
+.table-hover tr.warning:hover > th {
+  background-color: #faf2cc;
+}
+.table-hover tr.info:hover > th {
+  background-color: #c4e3f3;
+}
+/************** Error styles ***************/ 
+form input.error, form select.error, form textarea.error, form .wysiwyg.error, form input.error:focus, form select.error:focus, form textarea.error:focus, form .wysiwyg.error:focus { border: 1px solid #ff8388; }
+.error{
+	/* supply height to ensure consistent positioning for every browser */
+	height:20px;
+	background-color:#ffcfcb;
+	border:1px solid #ff9289;
+	font-size:12px;
+	font-weight: bold;
+	color:#000;
+	padding:3px 10px;
+	margin-left:-2px;
+	z-index: 9999;
+	/* CSS3 spicing for mozilla and webkit */
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+	-moz-border-radius-bottomleft:0;
+	-moz-border-radius-topleft:0;
+	-webkit-border-bottom-left-radius:0;
+	-webkit-border-top-left-radius:0;
+	-moz-box-shadow:0 0 6px #ddd;
+	-webkit-box-shadow:0 0 6px #ddd;
+}

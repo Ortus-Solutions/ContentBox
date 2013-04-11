@@ -14,8 +14,8 @@
 	
 	<!--- Button Bar --->
 	<div id="bottomCenteredBar" class="textRight">
-		<button class="button" onclick="closeRemoteModal();return false;" title="Close Modal"> Close </button>
-		&nbsp;<input type="submit" class="buttonred" value="Save" title="Save Comment">
+		<button class="btn" onclick="closeRemoteModal();return false;" title="Close Modal"> Close </button>
+		&nbsp;<input type="submit" class="btn btn-danger" value="Save" title="Save Comment">
 	</div>
 #html.endForm()#
 </cfoutput>

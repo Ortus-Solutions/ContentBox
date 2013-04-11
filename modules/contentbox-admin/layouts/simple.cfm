@@ -14,7 +14,6 @@
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
 	#cb.minify(assets="#prc.cbroot#/includes/css/style.css,
-			    #prc.cbroot#/includes/css/teal.css,
 			    #prc.cbroot#/includes/css/sort.css,
 			    #prc.cbroot#/includes/css/bootstrap.css,
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,

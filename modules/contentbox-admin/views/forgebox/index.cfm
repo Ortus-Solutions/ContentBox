@@ -20,7 +20,7 @@
 	<!--- Instructions --->
 	<p>
 		Please note that not all contributed entries can be automatically installed for you. 
-		A button much like this <button class="button2" onclick="return false;">Download & Install</button>
+		A button much like this <button class="btn btn-primary" onclick="return false;">Download & Install</button>
 		will appear if an item can be automatically installed for you.  If not, you will 
 		have to download the entry manually and upload it to install it.
 		 You can also browse all of our online 
@@ -80,11 +80,11 @@
 		<!--- Download & Install --->
 		<div class="forgebox-download">
 			<cfif findnocase(".zip", prc.entries.downloadURL)>
-			<a href="javascript:installEntry('entry_#prc.entries.entryID#','#prc.entries.downloadURL#')" class="button2">
+			<a href="javascript:installEntry('entry_#prc.entries.entryID#','#prc.entries.downloadURL#')" class="btn btn-primary">
 			   	<span>Download & Install</span>
 			</a>
 			<cfelse>
-			<div class="infoBar"><i class="icon-exclamation-sign icon-large"></i> No zip detected, manual install only!</div>
+			<div class="alert"><i class="icon-exclamation-sign icon-large"></i> No zip detected, manual install only!</div>
 			</cfif>	
 		</div>
 		<!--- Info --->

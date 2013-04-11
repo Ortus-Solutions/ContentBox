@@ -311,7 +311,7 @@
 							<small>Media providers are used to deliver your media files securely and with greater flexibility as you can place your entire media root outside of the webroot.</small><br/>
 							
 							<cfloop array="#prc.mediaProviders#" index="thisProvider">
-							<div class="infoBar infoBar-blue">
+							<div class="alert alert-info">
 								<label>
 								#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
 								<strong>#thisProvider.displayName#</strong></label>
@@ -469,7 +469,7 @@
 							<!--- Test Connection --->
 							<hr/>
 							<div id="emailTestDiv"></div>
-							<button id="emailTestButton" class="button2" title="Send a test email with these settings" onclick="return emailTest()"><i class="icon-spinner icon-large" id="iTest"></i> Test Connection</button>
+							<button id="emailTestButton" class="btn btn-primary" title="Send a test email with these settings" onclick="return emailTest()"><i class="icon-spinner icon-large" id="iTest"></i> Test Connection</button>
 						</fieldset>
 
 
@@ -565,7 +565,7 @@
 					
 				<!--- Button Bar --->
 				<div class="buttonBar">
-					#html.submitButton(value="Save Settings",class="buttonred",title="Save the ContentBox settings")#
+					#html.submitButton(value="Save Settings",class="btn btn-danger",title="Save the ContentBox settings")#
 				</div>
 				
 			</div>

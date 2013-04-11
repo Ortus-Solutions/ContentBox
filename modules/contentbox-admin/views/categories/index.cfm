@@ -14,8 +14,8 @@
 				#html.textField(name="category",label="Category:",required="required",maxlength="100",size="30",class="textfield")#
 				#html.textField(name="slug",label="Slug (blank to generate it):",maxlength="100",size="30",class="textfield")#
 				<div class="actionBar">
-					#html.resetButton(name="btnReset",value="Reset Form",class="button")#
-					#html.submitButton(value="Save Category",class="buttonred")#
+					#html.resetButton(name="btnReset",value="Reset Form",class="btn")#
+					#html.submitButton(value="Save Category",class="btn btn-danger")#
 				</div>
 			#html.endForm()#
 		</div>

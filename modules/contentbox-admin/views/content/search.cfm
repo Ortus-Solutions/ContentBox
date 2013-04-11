@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- Content --->
-<span class="floatRight"><button class="buttonsmall" onclick="closeSearchBox()" title="close search panel"><i class="icon-minus-sign"></i></button></span>
+<span class="floatRight"><button class="btn btn-mini btn-danger" onclick="closeSearchBox()" title="close search panel"><i class="icon-minus-sign"></i></button></span>
 <h2><i class="icon-file-alt"></i> Content ( #prc.minContentCount# of #prc.results.count# )<h2>
 <ul>
 <cfloop array="#prc.results.content#" index="thisContent">

@@ -19,7 +19,7 @@
 			<div id="loginButtonbar">
 			#html.checkBox(name="rememberMe",value=true,checked=( len( prc.rememberMe ) ))# 
 			#html.label(field="rememberMe",content="Remember Me &nbsp;",class="inline")#
-			#html.submitButton(value="&nbsp;&nbsp;Log In&nbsp;&nbsp;",class="buttonred")#
+			#html.submitButton(value="&nbsp;&nbsp;Log In&nbsp;&nbsp;",class="btn btn-danger")#
 			</div>
 			
 			<br/>

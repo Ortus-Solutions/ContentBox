@@ -14,8 +14,8 @@
 				#html.textField(name="role",label="Role:",required="required",maxlength="255",size="30",class="textfield",title="A unique role name")#
 				#html.textArea(name="description",label="Description:",cols="20",rows="3",class="textarea",title="A short role description")#
 				<div class="actionBar">
-					#html.resetButton(name="btnReset",value="Reset Form",class="button")#
-					#html.submitButton(value="Save Role",class="buttonred")#
+					#html.resetButton(name="btnReset",value="Reset Form",class="btn")#
+					#html.submitButton(value="Save Role",class="btn btn-danger")#
 				</div>
 			#html.endForm()#
 		</div>
@@ -53,7 +53,7 @@
 			</div>
 			
 			<!--- Info Bar --->
-			<div class="infoBar infoBar-red">
+			<div class="alert alert-error">
 				<i class="icon-warning-sign icon-large"></i>
 				You cannot delete roles that have authors attached to them.  You will need to un-attach those authors from the role first.
 			</div>			

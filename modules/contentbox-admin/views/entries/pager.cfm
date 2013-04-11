@@ -10,7 +10,7 @@
 </cfif>
 
 <!--- entries --->
-<table name="entries_pager" id="entries_pager" class="tablelisting" width="100%">
+<table name="entries_pager" id="entries_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
 	<thead>
 		<tr>
 			<th>Title</th>
