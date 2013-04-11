@@ -28,7 +28,7 @@
 		items manually.
 	</p>
 	<!--- Filter Bar --->
-	<div class="contentBar">
+	<div class="well well-small">
 		<div class="filterBar">
 			<div>
 				#html.label(field="entryFilter",content="Quick Filter:",class="inline")#

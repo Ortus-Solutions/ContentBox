@@ -31,7 +31,7 @@
 			#html.hiddenField(name="ruleID")#
 		
 			<!--- Content Bar --->
-			<div class="contentBar" id="contentBar">
+			<div class="well well-small" id="contentBar">
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
 				<div class="buttonBar">

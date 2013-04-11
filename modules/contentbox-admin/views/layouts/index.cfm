@@ -139,7 +139,7 @@
 									#html.hiddenField(name="layoutName")#
 									
 									<!--- Content Bar --->
-									<div class="contentBar">
+									<div class="well well-small">
 										<!--- Rebuild Registry Button --->
 										<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 										<div class="buttonBar">
@@ -157,7 +157,7 @@
 									</div>
 									
 									<!--- Uploader --->
-									<div id="uploaderBar" class="contentBar" style="display:none">
+									<div id="uploaderBar" class="well well-small" style="display:none">
 									#html.startForm(name="layoutUploadForm",action=prc.xehlayoutupload,multipart=true,novalidate="novalidate")#
 										<h3>Layout Uploader</h3>
 										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50")#		
@@ -210,7 +210,7 @@
 													</cfif>
 													<!--- description --->
 													#prc.layouts.description#<br/>
-													<div class="contentBar">
+													<div class="well well-small">
 														Theme located in <em title="#prc.layoutsPath#/#prc.layouts.name#">contentbox-ui/layouts/#prc.layouts.name#</em>
 													</div>
 												</td>

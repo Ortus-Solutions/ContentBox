@@ -43,7 +43,7 @@
 			#html.hiddenField(name="contentID")#
 		
 			<!--- Content Bar --->
-			<div class="contentBar" id="contentBar">
+			<div class="well well-small" id="contentBar">
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 				<div class="buttonBar">

@@ -42,7 +42,7 @@
 			<input type="hidden" name="categoryID" id="categoryID" value="" />
 			
 			<!--- Content Bar --->
-			<div class="contentBar">
+			<div class="well well-small">
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>

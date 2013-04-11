@@ -84,7 +84,7 @@
 				#html.hiddenField(name="widgetFile")#
 	
 				<!--- Content Bar --->
-				<div class="contentBar">
+				<div class="well well-small">
 					<!--- Create Widget --->
 					<div class="buttonBar">
 						<button class="btn btn-primary" onclick="openRemoteModal('#event.buildLink(prc.xehWidgetCreate)#');return false"

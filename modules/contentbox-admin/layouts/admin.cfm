@@ -118,7 +118,7 @@
 						<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
 						<li class="dropdown">
 							<!---Loader Status --->
-							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cog icon-large"></i></a>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cogs icon-large"></i></a>
 							<ul class="dropdown-menu">
 								<cfloop array="#prc.xehAdminActionData#" index="thisAction">
 								<li><a href="javascript:adminAction( '#thisAction.value#', '#event.buildLink(prc.xehAdminAction)#')"><i class="icon-caret-right"></i>  #thisAction.name#</a></li>
