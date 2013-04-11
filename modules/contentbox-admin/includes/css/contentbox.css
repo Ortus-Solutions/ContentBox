@@ -25,6 +25,7 @@ ol { list-style:decimal inside; }
 ul { list-style:disc inside; }
 #main-sidebar{ margin-left: 20px !important;}
 .hero-unit{padding:50px; margin-top:20px; margin-bottom: 20px}
+.well{ margin-bottom: 10px; margin-top: 10px;}
 /**============================== ADMIN MAIN TOP MENU ==============================**/
 #adminMenuTopNav { font-size: 13px;}
 #adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}
@@ -237,8 +238,8 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 }
 .tablesorter thead tr th, .tablesorter tfoot tr th {
 	background-color: #d9edf7 !important;
-	font-size: 8pt !important;
-	padding: 4px !important;
+	font-size: 9pt !important;
+	padding: 7px !important;
 }
 .tablesorter thead tr .headerSortUp {
 	background-image: url(../images/asc.gif) !important;
