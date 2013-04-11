@@ -39,10 +39,10 @@
 
 				<!--- Action Bar --->
 				<div class="actionBar">
-					&nbsp;<input type="submit" class="button2" value="Save" onclick="return quickSave()">
-					&nbsp;<input type="submit" class="button2" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
+					&nbsp;<input type="submit" class="btn btn-primary" value="Save" onclick="return quickSave()">
+					&nbsp;<input type="submit" class="btn btn-primary" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
 					<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-					&nbsp;<input type="submit" class="buttonred" value="Publish">
+					&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
 					</cfif>
 				</div>
 
@@ -63,7 +63,7 @@
 					<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
 					<i class="icon-info-sign icon-large"></i> Page Info </h2>
 				<div class="pane">
-					<table class="tablelisting" width="100%">
+					<table class="table table-hover table-condensed table-striped" width="100%">
 						<tr>
 							<th width="85" class="textRight">Created By:</th>
 							<td>
@@ -240,10 +240,10 @@
 
 			<div class="floatRight">
 				<!--- View Page In Site --->
-				<button class="button2" onclick="return to('#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#')">Cancel</button>
+				<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#')">Cancel</button>
 				<cfif prc.page.isLoaded()>
 					<!--- View Page In Site --->
-					<button class="button2" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;">View In Site</button>
+					<button class="btn btn-primary" onclick="window.open('#prc.CBHelper.linkPage( prc.page )#');return false;">View In Site</button>
 				</cfif>
 			</div>
 		</div>
@@ -288,7 +288,7 @@
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
-					<a href="javascript:previewContent()" class="button" title="Quick Preview">
+					<a href="javascript:previewContent()" class="btn" title="Quick Preview">
 						<i class="icon-eye-open icon-large"></i>
 					</a>
 				</div>

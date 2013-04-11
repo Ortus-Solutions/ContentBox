@@ -47,8 +47,8 @@
 								<textarea name="value" id="value" rows="4"></textarea>
 				
 								<div class="actionBar">
-									#html.resetButton(name="btnReset",value="Cancel",class="button", onclick="closeModal( $('##settingEditorContainer') )")#
-									#html.submitButton(name="btnSave",value="Save",class="buttonred")#
+									#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##settingEditorContainer') )")#
+									#html.submitButton(name="btnSave",value="Save",class="btn btn-danger")#
 								</div>
 							#html.endForm()#
 							</div>
@@ -62,8 +62,8 @@
 						<div class="contentBar">
 							<!--- Flush Cache Button --->
 							<div class="buttonBar">
-								<button class="button2" onclick="openRemoteModal('#event.buildLink(prc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
-								<button class="button2" onclick="return to('#event.buildLink(prc.xehFlushCache)#')" title="Flush the settings cache">Flush Settings Cache</button>
+								<button class="btn btn-primary" onclick="openRemoteModal('#event.buildLink(prc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
+								<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushCache)#')" title="Flush the settings cache">Flush Settings Cache</button>
 							</div>
 	
 							<!--- Filter Bar --->
@@ -78,8 +78,8 @@
 						<cfif !rc.viewAll>
 						<!--- View all --->
 						<div class="floatRight">
-							<button class="buttonred" onclick="return createSetting()">Create Setting</button>
-							<button class="buttonred" onclick="return to('#event.buildLink(prc.xehRawSettings)#/viewall/true')">View All</button>
+							<button class="btn btn-danger" onclick="return createSetting()">Create Setting</button>
+							<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehRawSettings)#/viewall/true')">View All</button>
 						</div>
 						<!--- Paging --->
 						#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
@@ -136,7 +136,7 @@
 						<div class="contentBar">
 							<!--- Flush Cache Button --->
 							<div class="buttonBar">
-								<button class="button2" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons">Clear All Singletons</button>
+								<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons">Clear All Singletons</button>
 							</div>
 							<!--- Filter Bar --->
 							<div class="filterBar">

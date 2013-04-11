@@ -13,7 +13,7 @@
 				#html.fileField(name="fileModule",label="Upload Module: ", class="textfield",required="required")#
 
 				<div class="actionBar" id="uploadBar">
-					#html.submitButton(value="Upload & Install",class="buttonred")#
+					#html.submitButton(value="Upload & Install",class="btn btn-danger")#
 				</div>
 
 				<!--- Loader --->
@@ -29,8 +29,8 @@
 			<i class="icon-cogs"></i> Module Admin Actions
 		</div>
 		<div class="body">
-			<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivates, Wipes and Re-Registers All Modules"><button class="button2">Reset Modules</button></a>
-			<a href="#event.buildLink(prc.xehModuleRescan)#" title="Rescans the Modules for new registrations"><button class="button2">Rescan Modules</button></a>
+			<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivates, Wipes and Re-Registers All Modules"><button class="btn btn-primary">Reset Modules</button></a>
+			<a href="#event.buildLink(prc.xehModuleRescan)#" title="Rescans the Modules for new registrations"><button class="btn btn-primary">Rescan Modules</button></a>
 		</div>
 	</div>
 	</cfif>

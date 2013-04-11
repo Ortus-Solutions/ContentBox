@@ -27,9 +27,9 @@
 			#html.endFieldSet()#
 			<!--- Button Bar --->
 			<div id="bottomCenteredBar" class="textRight">
-				<button class="button" onclick="return closeQuickPost()" title="Change your mind hugh?"> Cancel </button>
-				&nbsp;<input type="submit" class="button2" value="Save Draft" onclick="qpSaveDraft()" title="Not ready for primetime!">
-				&nbsp;<input type="submit" class="buttonred" value="Publish" title="Yeahaww! Let's Publish It!">
+				<button class="btn" onclick="return closeQuickPost()" title="Change your mind hugh?"> Cancel </button>
+				&nbsp;<input type="submit" class="btn btn-primary" value="Save Draft" onclick="qpSaveDraft()" title="Not ready for primetime!">
+				&nbsp;<input type="submit" class="btn btn-danger" value="Publish" title="Yeahaww! Let's Publish It!">
 			</div>
 		#html.endForm()#
 	</div>

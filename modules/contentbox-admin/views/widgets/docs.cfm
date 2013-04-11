@@ -14,8 +14,8 @@
             		<li><strong>Hint: </strong> <cfif structKeyExists( method, "hint" )>#method.hint#<cfelse>N/A</cfif></li>
             		<li><strong>Arguments: </strong>
             			<cfif ArrayLen( method.parameters )>
-            				<table class="tablelisting" width="100%">
-            					<tr>
+            				<table class="table table-hover table-condensed table-striped" width="100%">
+            					<tr class="info">
             						<th>Argument</th>
             						<th>Type</th>
             						<th>Required</th>
@@ -60,7 +60,7 @@
         &nbsp;
     </div>
     <div class="widget-footer-right">
-        <button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+        <button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
     </div>
 </div>
 </cfoutput>

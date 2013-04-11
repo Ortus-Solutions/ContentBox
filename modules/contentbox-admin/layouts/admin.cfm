@@ -14,7 +14,6 @@
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
 	#cb.minify(assets="#prc.cbroot#/includes/css/style.css,
-			    #prc.cbroot#/includes/css/teal.css,
 			    #prc.cbroot#/includes/css/sort.css,
 			    #prc.cbroot#/includes/css/bootstrap.css,
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
@@ -132,10 +131,7 @@
 						<!---Search --->
 						<span class="navbar-search pull-left" id="div-search">
 							<!---Search Results --->
-							<span id="div-search-results">
-								<span class="floatRight"><button class="buttonsmall" onclick="closeSearchBox()">close</button></span>
-								<h2>Search Results</h2>
-							</span>
+							<span id="div-search-results"></span>
 							<!---Search Inputs --->
 							<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url"/>
 							<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
@@ -182,21 +178,19 @@
 		
 	<!---Admin Notifier --->
 	<span id="adminActionNotifier" class="alert hide"></span>
-	<!--- Main Navbar --->
+	<!--- Main Generated Menu --->
 	#prc.adminMenuService.generateMenu()#
 		
 	<!---Container --->
 	<div class="container-fluid clearfix">					
 		<!--- Main Content --->
-		<div id="content_bg" class="clearfix">
-			<div class="content wrapper clearfix">
-				<!--- cbadmin event --->
-				#announceInterception("cbadmin_beforeContent")#
-				<!--- Main Content --->
-				#renderView()#
-				<!--- cbadmin event --->
-				#announceInterception("cbadmin_afterContent")#
-			</div>
+		<div class="content wrapper">
+			<!--- cbadmin event --->
+			#announceInterception("cbadmin_beforeContent")#
+			<!--- Main Content --->
+			#renderView()#
+			<!--- cbadmin event --->
+			#announceInterception("cbadmin_afterContent")#
 		</div>
 	</div>
 	

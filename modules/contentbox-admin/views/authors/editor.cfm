@@ -9,7 +9,7 @@
 		<div class="body">
 			<!--- Back button --->
 			<p class="center">
-				<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')"> Back To Authors</button>
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehAuthors)#')"> Back To Authors</button>
 			</p>
 		</div>
 	</div>
@@ -30,7 +30,7 @@
 
 			<!--- Persisted Info --->
 			<br/>
-			<table class="tablelisting" width="100%">
+			<table class="table table-condensed table-hover table-striped" width="100%">
 				<tr>
 					<th width="75" class="textRight">Last Login</th>
 					<td>
@@ -108,7 +108,7 @@
 								<!--- Action Bar --->
 								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 								<div class="actionBar">
-									<input type="submit" value="Save Details" class="buttonred">
+									<input type="submit" value="Save Details" class="btn btn-danger">
 								</div>
 								</cfif>
 								#html.endFieldSet()#
@@ -128,7 +128,7 @@
 							<!--- Action Bar --->
 							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 							<div class="actionBar">
-								<input type="submit" value="Change Password" class="buttonred">
+								<input type="submit" value="Change Password" class="btn btn-danger">
 							</div>
 							</cfif>
 

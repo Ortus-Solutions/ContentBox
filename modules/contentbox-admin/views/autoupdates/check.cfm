@@ -5,7 +5,7 @@
 	#getPlugin("MessageBox").renderit()#
 
 	<cfif prc.updateFound>
-	<h3 class="border_grey">Version Information:</h3>
+	<h3>Version Information:</h3>
 	<table name="settings" id="settings" class="tablesorter" width="98%">
 		<thead>
 			<tr>
@@ -27,23 +27,23 @@
 	#html.hiddenField(name="downloadURL",value=prc.updateEntry.downloadURL)#
 	#html.hiddenField(name="version",value=prc.updateEntry.version)#
 	
-	<h3 class="border_grey">Description:</h3>
+	<h3>Description:</h3>
 	<p>#prc.updateEntry.description#</p>
 	
 	<cfif len(prc.updateEntry.installInstructions)>
-		<h2 class="border_grey">Special Instructions:</h2>
+		<h2>Special Instructions:</h2>
 		<p>#prc.updateEntry.InstallInstructions#</p>
 	</cfif>
 	
-	<h3 class="border_grey">Changelog:</h3>
+	<h3>Changelog:</h3>
 	<p>#prc.updateEntry.changelog#</p>
 	
-	<div class="infoBar infoBar-red">
+	<div class="alert alert-error">
 		<i class="info-warning-sign icon-large"></i>
 		Please make sure you do any backups before applying this update.
 	</div>
 	
-	#html.submitButton(name="submitUpdate",class="button2",value="Apply Update",onclick="return confirm('Are you positive?')")#
+	#html.submitButton(name="submitUpdate",class="btn btn-primary",value="Apply Update",onclick="return confirm('Are you positive?')")#
 	</cfif>
 	
 </div>
@@ -51,6 +51,6 @@
 #html.endForm()#
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="return closeRemoteModal()"> Close </button>
+	<button class="btn btn-danger" onclick="return closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

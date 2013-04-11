@@ -10,8 +10,8 @@
 			<!--- Search Form --->
 			#html.startForm(name="authorSearchForm",action=prc.xehAuthorsearch)#
 				#html.textField(label="Search:",name="searchAuthor",class="textfield",size="16",title="Search authors by name, username or email",value=event.getValue("searchAuthor",""))#
-				<input type="submit" class="buttonred" value="Search" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Clear</button>
+				<input type="submit" class="btn btn-danger" value="Search" />
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehAuthors)#')">Clear</button>
 			#html.endForm()#
 		</div>
 	</div>
@@ -38,7 +38,7 @@
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')" title="Create new user">Create User</button>
+					<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')" title="Create new user">Create User</button>
 				</div>
 				</cfif>
 

@@ -122,7 +122,7 @@
 										
 										<div class="actionBar">
 										<br/>
-										#html.submitButton(value="Save Settings", class="buttonred")#
+										#html.submitButton(value="Save Settings", class="btn btn-danger")#
 										</div>
 										
 										#html.endForm()#
@@ -143,8 +143,8 @@
 										<!--- Rebuild Registry Button --->
 										<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 										<div class="buttonBar">
-											<button class="button2" onclick="return toggleUploader()" title="Upload and install a new layout theme">Upload Layout</button>
-											<button class="button2" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan layouts directory and rebuild registry">Rebuild Registry</button>
+											<button class="btn btn-primary" onclick="return toggleUploader()" title="Upload and install a new layout theme">Upload Layout</button>
+											<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan layouts directory and rebuild registry">Rebuild Registry</button>
 										</div>
 										</cfif>
 										<!--- Filter Bar --->
@@ -162,7 +162,7 @@
 										<h3>Layout Uploader</h3>
 										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50")#		
 										<div class="actionBar" id="uploadBar">
-											#html.submitButton(value="Upload & Install",class="buttonred")#
+											#html.submitButton(value="Upload & Install",class="btn btn-danger")#
 										</div>
 										<div class="loaders" id="uploadBarLoader">
 											<i class="icon-spinner icon-spin icon-large"></i>
@@ -196,8 +196,8 @@
 													<br/>
 													<!--- Button Bar --->
 													<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN") AND prc.cbSettings.cb_site_layout NEQ prc.layouts.name>
-														<button class="button2"   onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;"  title="Preview this layout">Preview</button>
-														<button class="buttonred" onclick="return to('#event.buildLink(prc.xehActivate)#?layoutname=#prc.layouts.name#')" title="Activate this layout">Activate</button>
+														<button class="btn btn-primary"   onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;"  title="Preview this layout">Preview</button>
+														<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehActivate)#?layoutname=#prc.layouts.name#')" title="Activate this layout">Activate</button>
 													</cfif>		
 												</td>
 												<td>
