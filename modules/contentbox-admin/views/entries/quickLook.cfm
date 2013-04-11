@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-<h2>#prc.entry.getTitle()#</h2>
+<h2><i class="icon-eye-open"></i> #prc.entry.getTitle()#</h2>
 <div>
 #prc.entry.renderContent()#
 </div>

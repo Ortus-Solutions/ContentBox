@@ -9,17 +9,17 @@
 			<div class="header">
 				<i class="icon-edit icon-large"></i>
 				Entry Editor
-				<cfif prc.entry.isLoaded()>
 				<div class="btn-group pull-right">
-				    <button class="btn btn-primary" onclick="window.open('#prc.CBHelper.linkEntry(prc.entry)#');return false;">View In Site</button>
-				    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+				    <button class="btn btn-primary" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;"><i class="icon-reply"></i> Back</button>
+				    <cfif prc.entry.isLoaded()>
+					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
 				    	<span class="caret"></span>
 				    </button>
-				    <ul class="dropdown-menu">
-				    	<li><a href="#event.buildLink(prc.xehentries)#"><i class="icon-reply"></i> Back To Listings</a></li>
+				   		<ul class="dropdown-menu">
+				    	<li><a href="##" onclick="window.open('#prc.CBHelper.linkEntry(prc.entry)#');return false;"><i class="icon-eye-open"></i> View In Site</a></li>
 				    </ul>
+					</cfif>
 			    </div>
-				</cfif>
 			</div>
 			<!--- Body --->
 			<div class="body">
