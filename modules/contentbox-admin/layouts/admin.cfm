@@ -185,15 +185,12 @@
 		
 	<!---Container --->
 	<div class="container-fluid clearfix">					
+		<!--- cbadmin event --->
+		#announceInterception("cbadmin_beforeContent")#
 		<!--- Main Content --->
-		<div class="content wrapper">
-			<!--- cbadmin event --->
-			#announceInterception("cbadmin_beforeContent")#
-			<!--- Main Content --->
-			#renderView()#
-			<!--- cbadmin event --->
-			#announceInterception("cbadmin_afterContent")#
-		</div>
+		#renderView()#
+		<!--- cbadmin event --->
+		#announceInterception("cbadmin_afterContent")#
 	</div>
 	
 	<!--- Footer --->
