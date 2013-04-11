@@ -59,6 +59,7 @@ ul { list-style:disc inside; }
 #adminMenuBar {  }
 #adminMenuBar .nav > li { line-height:20px;}
 #adminMenuBar .nav > li > a{ padding: 10px;}
+#adminMenuBar .nav li.dropdown:hover ul.dropdown-menu{ display: block; }
 #adminMenuBar .navbar-inner {
     background-color: #343434;
     background-image: linear-gradient(to bottom, #343434, #111111);
