@@ -18,9 +18,8 @@
 <div>
 #rc.comment.getDisplayContent()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<div class="text-center form-actions">
 	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

@@ -10,12 +10,10 @@
 	<!--- content --->
 	#html.textarea(name="content",label="Content:",bind=rc.comment,rows=8,required="required")#
 	
-	<hr/>
-	
 	<!--- Button Bar --->
-	<div id="bottomCenteredBar" class="textRight">
+	<div class="form-actions text-center">
 		<button class="btn" onclick="closeRemoteModal();return false;" title="Close Modal"> Close </button>
-		&nbsp;<input type="submit" class="btn btn-danger" value="Save" title="Save Comment">
+		<button type="submit" class="btn btn-danger">Save</button>
 	</div>
 #html.endForm()#
 </cfoutput>

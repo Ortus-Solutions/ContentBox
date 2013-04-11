@@ -15,7 +15,7 @@
 		<tr>
 			<th width="200">Author</th>
 			<th>Comment</th>
-			<th width="115" class="center">Date</th>			
+			<th width="135" class="center">Date</th>			
 			<th width="90" class="center">Actions</th>
 		</tr>
 	</thead>
