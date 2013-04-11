@@ -40,7 +40,6 @@
 					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 					<div class="buttonBar">
 						<button class="btn btn-primary" 	id="btnCreateEntry" title="Create a new blog entry" onclick="return to('#event.buildLink(prc.xehBlogEditor)#')">Create Entry</button>
-						<button class="btn btn-danger" 		id="btnQuickPost" 	title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 					</div>				
 					</cfif>
 					<div class="filterBar">
