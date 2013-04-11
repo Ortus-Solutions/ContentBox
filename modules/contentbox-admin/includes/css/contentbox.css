@@ -21,7 +21,6 @@ body{
 	background-repeat: repeat-x;
 }
 .container-fluid{ margin-bottom: 100px;}
-td,th { padding:5px; display:table-cell; }
 ol { list-style:decimal inside; }
 ul { list-style:disc inside; }
 #main-sidebar{ margin-left: 20px !important;}
@@ -122,8 +121,6 @@ form textarea,form .wysiwyg { width:98%; }
 .forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
 .forgebox-download { float:right; clear:right; }
 /**============================== UNIQUE CSS ==============================**/
-.futurePublished{ background-color: #c7e0f9 !important; }
-.expired{ background-color: #fcc699 !important; }
 .loaders { margin:10px; display:none; text-align:center; }
 .tipList li{ padding: 5px 0px 0px 0px; }
 #authorDetails { margin:7px 0 0 45px; font-size:16px; }
@@ -168,7 +165,7 @@ form textarea,form .wysiwyg { width:98%; }
 #confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close { opacity: 1.0; background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
 #remoteModelContent, #quickPostContent, #modalContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:98%;overflow-y:auto; }
 /** ============================== PAGING TABS =============================== **/
-.pagingTabs { font-size:.8em; text-align:left; }
+.pagingTabs { font-size:.8em; text-align:left; margin:5px 0px;}
 .pagingTabs a { color:#000; padding:2px 4px; background-color:#fff; border:1px solid #ccc; margin-left:2px; }
 .pagingTabs a:hover { color:#000; background-color:#FCF9C3; border:1px solid black; }
 .pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }
@@ -177,6 +174,7 @@ form textarea,form .wysiwyg { width:98%; }
 .inline { display:inline; margin:5px 0; }
 .floatLeft { float:left!important; }
 .floatRight { float:right!important; }
+.text{ color: #333333}
 .textGreen{ color: #468847 }
 .textOrange{ color:#C09853 }
 .textRed{ color:#B94A48}
@@ -198,8 +196,10 @@ form textarea,form .wysiwyg { width:98%; }
 .grabCursors{cursor:grab !important;cursor:-moz-grab !important;cursor:-webkit-grab !important;}
 .hand-cursor{cursor:pointer !important;}
 /**============================== Table Listings ==============================**/
+td,th { padding:5px; display:table-cell; vertical-align:middle !important; }
 .selected{ background-color: #fcdddb !important; }
 .unapproved{ background-color: #fcdddb !important;}
+.table { margin-bottom: 5px;}
 tr.unapproved td{ border: 1px solid #000 !important; }
 .table-hover tbody tr:hover > td,
 .table-hover tbody tr:hover > th { background-color: #d7eafe; }

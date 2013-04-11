@@ -24,7 +24,7 @@ component singleton="true"{
 		}
 		
 		if( len( arguments.page.getTitle() ) ){
-			bc &= '> <a href="#arguments.link#/parent/#arguments.page.getContentID()#">#arguments.page.getTitle()#</a>';
+			bc &= '<span class="icon-caret-right"> </span> <a href="#arguments.link#/parent/#arguments.page.getContentID()#">#arguments.page.getTitle()#</a> ';
 		}
 		
 		return bc;
