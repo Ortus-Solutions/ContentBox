@@ -8,28 +8,28 @@
 			#html.hiddenField(name="contentID",value="")#
 			#html.hiddenField(name="isPublished",value="true")#
 			
-			#html.startFieldset(legend='<i class="icon-edit icon-large"></i> Post')#
 				<!--- title --->
-				#html.textfield(name="title",maxlength="100",required="required",title="The title for this entry",class="textfield width98",
-								value="Title Here", onclick="if( this.value == 'Title Here' ){ this.value = '';}")#
+				#html.textfield(name="title", maxlength="100", required="required", title="The title for this entry",class="input-block-level", placeholder="Title Here")#
 				<!--- content --->
 				#html.textarea(name="quickcontent",required="required")#
-			#html.endFieldSet()#
 			
 			<!--- Categories --->
 			#html.startFieldset(legend='<i class="icon-tags icon-large"></i> Categories')#
 				<cfloop from="1" to="#arrayLen(prc.qpCategories)#" index="x">
+					<label class="checkbox inline">
 					#html.checkbox(name="category_#x#",value="#prc.qpCategories[x].getCategoryID()#")#
-					#html.label(field="category_#x#",content="#prc.qpCategories[x].getCategory()#",class="inline")#
+					#prc.qpCategories[x].getCategory()#
+					</label>
 				</cfloop>
 				<!--- New Categories --->
-				#html.textField(name="newCategories",label="New Categories (Comma delimited)",size="45",title="Comma delimited list of new categories to create",class="textfield")#
+				#html.textField(name="newCategories",label="New Categories (Comma delimited)", title="Comma delimited list of new categories to create",class="input-block-level")#
 			#html.endFieldSet()#
+			
 			<!--- Button Bar --->
-			<div id="bottomCenteredBar" class="textRight">
+			<div class="text-center form-actions">
 				<button class="btn" onclick="return closeQuickPost()" title="Change your mind hugh?"> Cancel </button>
-				&nbsp;<input type="submit" class="btn btn-primary" value="Save Draft" onclick="qpSaveDraft()" title="Not ready for primetime!">
-				&nbsp;<input type="submit" class="btn btn-danger" value="Publish" title="Yeahaww! Let's Publish It!">
+				&nbsp;<button type="submit" class="btn btn-primary" onclick="qpSaveDraft()" title="Not ready for primetime!">Save Draft</button>
+				&nbsp;<button type="submit" class="btn btn-danger" title="Yeahaww! Let's Publish It!">Publish</button>
 			</div>
 		#html.endForm()#
 	</div>

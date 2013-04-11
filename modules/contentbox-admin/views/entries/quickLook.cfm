@@ -3,9 +3,8 @@
 <div>
 #prc.entry.renderContent()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<div class="text-center form-actions">
 	<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 		<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehEntryEditor)#/contentID/#prc.entry.getContentID()#')"> Edit </button>
 	</cfif>
