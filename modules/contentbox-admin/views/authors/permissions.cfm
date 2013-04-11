@@ -38,14 +38,15 @@
 		
 		<!--- Permissions --->
 		<p>You can also add a-la-carte permissions to the user by adding from the selection below:</p>
-		#html.select(name="permissionID",options=prc.permissions,column="permissionID",nameColumn="permission")#
 		
-		<!--- Button --->
-		<cfif arrayLen(prc.permissions) GT 0>
-			<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
-		<cfelse>
-			<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false">Add Permission</button>
-		</cfif>
+		<div class="input-append">
+			#html.select(name="permissionID",options=prc.permissions,column="permissionID",nameColumn="permission")#
+			<cfif arrayLen(prc.permissions) GT 0>
+				<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
+			<cfelse>
+				<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
+			</cfif>
+		</div>
 		
 	#html.endFieldSet()#
 	#html.endForm()#

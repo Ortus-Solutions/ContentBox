@@ -26,11 +26,11 @@
 		<cfloop array="#prc.pager_entries#" index="entry">
 		<tr data-contentID="#entry.getContentID()#"
 			<cfif entry.isExpired()>
-				class="expired"
+				class="error"
 			<cfelseif entry.isPublishedInFuture()>
-				class="futurePublished"
+				class="success"
 			<cfelseif !entry.isContentPublished()>
-				class="selected"
+				class="warning"
 			</cfif>>
 			<td>
 				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
@@ -52,8 +52,8 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center">#entry.getHits()#</td>
-			<td class="center">#entry.getNumberOfComments()#</td>
+			<td class="center"><span class="badge badge-info">#entry.getHits()#</span></td>
+			<td class="center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
 			<td class="center">
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<!--- Edit Command --->
