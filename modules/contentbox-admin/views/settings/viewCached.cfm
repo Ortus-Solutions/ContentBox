@@ -3,7 +3,7 @@
 
 <h3>Cached Metadata</h3>
 <!--- settings --->
-<table class="tablelisting" width="98%">
+<table class="table table-hover table-condensed table-striped" width="98%">
 	<thead>
 		<tr>
 			<th>Hits</th>
@@ -28,7 +28,7 @@
 
 <h3>Cached Data</h3>
 <!--- settings --->
-<table name="settings" id="settings" class="tablelisting" width="98%">
+<table name="settings" id="settings" class="table table-hover table-condensed table-striped" width="98%">
 	<thead>
 		<tr>
 			<th width="250">Name</th>
@@ -49,6 +49,6 @@
 
 <!--- Button Bar --->
 <div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

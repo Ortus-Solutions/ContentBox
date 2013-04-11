@@ -42,9 +42,9 @@
 		
 		<!--- Button --->
 		<cfif arrayLen(prc.permissions) GT 0>
-			<button class="buttonred" onclick="addPermission();return false;">Add Permission</button>
+			<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
 		<cfelse>
-			<button class="buttonred" onclick="alert('No Permissions Found, Cannot Add!'); return false">Add Permission</button>
+			<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false">Add Permission</button>
 		</cfif>
 		
 	#html.endFieldSet()#

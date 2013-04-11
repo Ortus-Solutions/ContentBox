@@ -10,7 +10,7 @@
 		<div class="body">
 			<!--- Submit Button --->
 			<div class="actionBar" id="uploadBar">
-				#html.submitButton(value="Start Import",class="buttonred",title="Start Import Process",onclick="return confirm('Really Start?')")#
+				#html.submitButton(value="Start Import",class="btn btn-danger",title="Start Import Process",onclick="return confirm('Really Start?')")#
 			</div>
 			
 			<!--- Loader --->

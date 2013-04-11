@@ -11,9 +11,9 @@
 		<div class="body">
 			
 			<div class="actionBar">
-				#html.href(href=prc.xehEmailTemplates,text=html.button(name="cancelButton",value="Cancel",class="button"))# &nbsp;
-				#html.button(value="Save",class="buttonred",title="Save and keep on working",onclick="return saveTemplateCode()")#
-				#html.submitButton(value="Save & Close",class="buttonred",title="Save template and return to listing")#
+				#html.href(href=prc.xehEmailTemplates,text=html.button(name="cancelButton",value="Cancel",class="btn"))# &nbsp;
+				#html.button(value="Save",class="btn btn-danger",title="Save and keep on working",onclick="return saveTemplateCode()")#
+				#html.submitButton(value="Save & Close",class="btn btn-danger",title="Save template and return to listing")#
 			</div>
 			
 			<!--- Loader --->
@@ -38,10 +38,10 @@
 			
 			<div class="actionBar">
 				<a href="javascript:openRemoteModal('#event.buildLink(prc.xehAPIDocs&"/index/apislug/plugins/print/?_cfcviewer_cfc=CBHelper")#')" 
-				   class="button" title="Get some quick CBHelper API Goodness!">
+				   class="btn" title="Get some quick CBHelper API Goodness!">
 					<i class="icon-book icon-large"></i> CBHelper Docs
 				</a>
-				<a href="#event.buildLink(prc.xehApiDocs)#" target="_blank" class="button" title="Open the ContentBox API Docs in another window">
+				<a href="#event.buildLink(prc.xehApiDocs)#" target="_blank" class="btn" title="Open the ContentBox API Docs in another window">
 					<i class="icon-book icon-large"></i> API Docs
 				</a>
 			</div>

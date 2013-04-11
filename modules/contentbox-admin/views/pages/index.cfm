@@ -10,8 +10,8 @@
 			<!--- Search Form --->
 			#html.startForm(name="authorSearchForm",action=prc.xehPageSearch)#
 				#html.textField(label="Search:",name="searchPages",class="textfield",size="16",title="Search all pages",value=event.getValue("searchPages",""))#
-				<input type="submit" value="Search" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehPages)#')">Clear</button>
+				<input type="submit" value="Search" class="btn btn-danger" />
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehPages)#')">Clear</button>
 			#html.endForm()#
 		</div>
 	</div>
@@ -49,8 +49,8 @@
 			</select>
 
 			<div class="actionBar">
-				<input type="submit" value="Apply Filters" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehPages)#')">Reset</button>
+				<input type="submit" value="Apply Filters" class="btn btn-danger" />
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehPages)#')">Reset</button>
 			</div>
 			#html.endForm()#
 		</div>
@@ -97,7 +97,7 @@
 
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
-				<div class="infoBar">
+				<div class="alert alert-info">
 					<i class="icon-exclamation-sign icon-large"></i>
 					Comments are currently disabled site-wide!
 				</div>
@@ -109,9 +109,9 @@
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") or prc.oAuthor.checkPermission("PAGES_EDITOR")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return bulkChangeStatus('publish')" title="Bulk Publish Content">Publish</button>
-					<button class="button2" onclick="return bulkChangeStatus('draft')" title="Bulk Draft Content">Draft</button>
-					<button class="buttonred" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#event.getValue('parent','')#');">Create Page</button>
+					<button class="btn btn-primary" onclick="return bulkChangeStatus('publish')" title="Bulk Publish Content">Publish</button>
+					<button class="btn btn-primary" onclick="return bulkChangeStatus('draft')" title="Bulk Draft Content">Draft</button>
+					<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#event.getValue('parent','')#');">Create Page</button>
 				</div>
 				</cfif>
 
@@ -129,7 +129,7 @@
 
 			<!--- Location Bar --->
 			<cfif structKeyExists(rc, "parent") AND len( rc.parent )>
-			<div class="infoBar infoBar-blue">
+			<div class="alert alert-info">
 			  <a href="#event.buildLink(prc.xehPages)#"><i class="icon-home icon-large"></i></a> 
 			  #getMyPlugin(plugin="PageBreadcrumbVisitor",module="contentbox-admin").visit(prc.page, event.buildLink(prc.xehPages))#
 			</div>
@@ -204,7 +204,7 @@
 						<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
 						<td class="center">
 							<!---Info Panel --->
-							<button class="button infoPanelButton" title="Page Info" ><i class="icon-info-sign icon-large"></i></button>
+							<button class="btn  infoPanelButton" title="Page Info" ><i class="icon-info-sign icon-large"></i></button>
 							<!---Info Panel --->
 							<div id="infoPanel_#page.getContentID()#" class="contentInfoPanel">
 								<i class="icon-calendar"></i>
@@ -232,7 +232,7 @@
 							</div>
 							
 							<!---Page Actions --->
-							<button class="button actionsPanelButton" title="Page Actions" ><i class="icon-cogs icon-large"></i></button>
+							<button class="btn  actionsPanelButton" title="Page Actions" ><i class="icon-cogs icon-large"></i></button>
 							<!---Page Actions Panel --->
 							<div id="pageActions_#page.getContentID()#" class="actionsPanel">
 								<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
@@ -280,12 +280,12 @@
 			<small>By default all cloned pages are published as drafts.</small><br>
 			#html.select(options="true,false", name="pageStatus", selectedValue="false")#
 			
-			<div class="infoBar">Please note that cloning is an expensive process, so please be patient when cloning big hierarchical content trees.</div>
+			<div class="alert alert-info">Please note that cloning is an expensive process, so please be patient when cloning big hierarchical content trees.</div>
 			<hr/>
 			<!--- Button Bar --->
 			<div id="bottomCenteredBar" class="textRight">
-				<button class="button2" id="cloneButton"> Clone </button>
-				<button class="buttonred" id="closeButton"> Cancel </button>
+				<button class="btn btn-primary" id="cloneButton"> Clone </button>
+				<button class="btn btn-danger" id="closeButton"> Cancel </button>
 			</div>
 			<!--- Loader --->
 			<div class="center loaders" id="clonerBarLoader">

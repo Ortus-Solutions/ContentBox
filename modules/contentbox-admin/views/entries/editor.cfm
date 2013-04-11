@@ -40,10 +40,10 @@
 
 				<!--- Action Bar --->
 				<div class="actionBar">
-					&nbsp;<input type="submit" class="button2" value="Save" onclick="return quickSave()">
-					&nbsp;<input type="submit" class="button2" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
+					&nbsp;<input type="submit" class="btn btn-primary" value="Save" onclick="return quickSave()">
+					&nbsp;<input type="submit" class="btn btn-primary" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
 					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-					&nbsp;<input type="submit" class="buttonred" value="Publish">
+					&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
 					</cfif>
 				</div>
 
@@ -65,7 +65,7 @@
 					<i class="icon-info-sign icon-large"></i> Entry Info </h2>
 				<div class="pane">
 					<!--- Persisted Info --->
-					<table class="tablelisting" width="100%">
+					<table class="table table-hover table-condensed table-striped" width="100%">
 						<tr>
 							<th width="85" class="textRight">Created By:</th>
 							<td>
@@ -203,8 +203,8 @@
 			Entry Editor
 			<cfif prc.entry.isLoaded()>
 			<div class="floatRight">
-				<button class="button2" onclick="return to( '#event.buildLink(prc.xehentries)#' )">Cancel</button>
-				<button class="button2" onclick="window.open('#prc.CBHelper.linkEntry(prc.entry)#');return false;">View In Site</button>
+				<button class="btn btn-primary" onclick="return to( '#event.buildLink(prc.xehentries)#' )">Cancel</button>
+				<button class="btn btn-primary" onclick="window.open('#prc.CBHelper.linkEntry(prc.entry)#');return false;">View In Site</button>
 			</div>
 			</cfif>
 		</div>
@@ -250,7 +250,7 @@
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
-					<a href="javascript:previewContent()" class="button" title="Quick Preview">
+					<a href="javascript:previewContent()" class="btn" title="Quick Preview">
 						<i class="icon-eye-open icon-large"></i>
 					</a>
 				</div>

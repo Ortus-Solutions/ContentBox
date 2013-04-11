@@ -9,10 +9,10 @@
 	<!--- History --->
 	<div class="buttonBar">
 		<cfif arrayLen( prc.versionsPager_versions ) gt 1>
-		<button class="buttonred" onclick="return versionsPagerDiff();" title="Compare Content">Compare Versions</button>
+		<button class="btn btn-danger" onclick="return versionsPagerDiff();" title="Compare Content">Compare Versions</button>
 		</cfif>
 		<cfif prc.versionsPager_viewFullHistory>
-		<button class="button2" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
+		<button class="btn btn-primary" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
 		</cfif>
 	</div>
 
@@ -22,7 +22,7 @@
 
 	#html.startForm(name="versionsPagerForm")#
 
-	<table id="versionsHistoryTable" width="100%" class="tablelisting" border="0">
+	<table id="versionsHistoryTable" width="100%" class="table table-hover table-condensed table-striped table-bordered" border="0">
 	<thead>
 		<tr>
 		<th width="50" class="center">Diff</th>

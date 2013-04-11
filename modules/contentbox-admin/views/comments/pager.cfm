@@ -10,7 +10,7 @@
 </cfif>
 #html.startForm(name="commentPagerForm")#
 <!--- comments --->
-<table name="comments_pager" id="comments_pager" class="tablesorter" width="100%">
+<table name="comments_pager" id="comments_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
 	<thead>
 		<tr>
 			<th width="200">Author</th>

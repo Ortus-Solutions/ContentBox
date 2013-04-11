@@ -19,7 +19,7 @@
 			<!--- fields --->
 			#html.startFieldset(legend="Security")#
 				<!--- Usage --->
-				<div class="infoBar infoBar-red">
+				<div class="alert alert-error">
 					<i class="icon-warning-sign icon-large"></i>
 					Please remember that the secure and white lists are lists of 
 					<a href="http://www.regular-expressions.info/reference.html" target="_blank">regular expressions</a> that will match against an incoming
@@ -52,8 +52,8 @@
 			
 			<!--- Action Bar --->
 			<div class="actionBar center">
-				<button class="button2" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
-				&nbsp;<input type="submit" class="buttonred" value="Save">
+				<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
+				&nbsp;<input type="submit" class="btn btn-danger" value="Save">
 			</div>
 			
 		</div>	

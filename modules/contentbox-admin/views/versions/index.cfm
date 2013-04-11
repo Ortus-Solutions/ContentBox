@@ -7,7 +7,7 @@
 			<i class="icon-camera"></i> #prc.content.getContentType()# Snapshot
 		</div>
 		<div class="body">
-			<table class="tablelisting" width="100%">
+			<table class="table table-hover table-condensed table-striped" width="100%">
 				<tr>
 					<th width="85" class="textRight">Title:</th>
 					<td>
@@ -46,8 +46,8 @@
 				</tr>
 			</table>
 			<div class="center">
-				<button class="button2" onclick="to('#event.buildLink(prc.xehBackTrack)#');return false;">Back To Listing</button>
-				<button class="button2" onclick="window.open('#prc.CBHelper.linkContent(prc.content)#');return false;">Open In Site</button>
+				<button class="btn btn-primary" onclick="to('#event.buildLink(prc.xehBackTrack)#');return false;">Back To Listing</button>
+				<button class="btn btn-primary" onclick="window.open('#prc.CBHelper.linkContent(prc.content)#');return false;">Open In Site</button>
 			</div>
 		</div>
 	</div>

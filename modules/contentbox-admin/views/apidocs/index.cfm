@@ -16,7 +16,7 @@
 		
 			<div class="actionBar">
 				<a href="#event.buildLink(prc.xehAPIDocs&"/index/apislug/#rc.apislug#/?_cfcviewer_package=#rc._cfcviewer_package#&print=true")#" target="_blank">
-					<button name="print" class="button"><i class="icon-print icon-large"></i> Print</button>
+					<button name="print" class="btn"><i class="icon-print icon-large"></i> Print</button>
 				</a>
 			</div>
 			

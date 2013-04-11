@@ -25,7 +25,7 @@
 	<!--- Action Bar --->
 	<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 	<div class="actionBar">
-		<input type="submit" value="Save Preferences" class="buttonred">
+		<input type="submit" value="Save Preferences" class="btn btn-danger">
 	</div>
 	</cfif>
 	#html.endFieldSet()#
@@ -44,7 +44,7 @@
 		<!--- Action Bar --->
 		<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 		<div class="actionBar">
-			<input type="submit" value="Save" class="buttonred">
+			<input type="submit" value="Save" class="btn btn-danger">
 		</div>
 		</cfif>
 	</div>

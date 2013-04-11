@@ -10,8 +10,8 @@
 			<!--- Search Form --->
 			#html.startForm(name="authorSearchForm",action=prc.xehEntrySearch)#
 				#html.textField(label="Search:",name="searchEntries",class="textfield",size="16",title="Search all entries",value=event.getValue("searchEntries",""))#
-				<input type="submit" value="Search" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehEntries)#')">Clear</button>				
+				<input type="submit" value="Search" class="btn btn-danger" />
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehEntries)#')">Clear</button>				
 			#html.endForm()#
 		</div>
 	</div>	
@@ -49,8 +49,8 @@
 			</select>
 				
 			<div class="actionBar">
-				<input type="submit" value="Apply Filters" class="buttonred" />
-				<button class="button" onclick="return to('#event.buildLink(prc.xehEntries)#')">Reset</button>				
+				<input type="submit" value="Apply Filters" class="btn btn-danger" />
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehEntries)#')">Reset</button>				
 			</div>
 			
 			#html.endForm()#
@@ -95,7 +95,7 @@
 			
 			<!--- Info Bar --->
 			<cfif NOT prc.cbSettings.cb_comments_enabled>
-				<div class="infoBar">
+				<div class="alert alert-info">
 					<i class="icon-exclamation-sign icon-large"></i>
 					Comments are currently disabled site-wide!
 				</div>
@@ -107,9 +107,9 @@
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR")>
 				<div class="buttonBar">
-					<button class="button2" onclick="return bulkChangeStatus('publish')" title="Bulk Publish Content">Publish</button>
-					<button class="button2" onclick="return bulkChangeStatus('draft')" title="Bulk Draft Content">Draft</button>
-					<button class="buttonred" onclick="return to('#event.buildLink(linkTo=prc.xehEntryEditor)#');">Create Entry</button>
+					<button class="btn btn-primary" onclick="return bulkChangeStatus('publish')" title="Bulk Publish Content">Publish</button>
+					<button class="btn btn-primary" onclick="return bulkChangeStatus('draft')" title="Bulk Draft Content">Draft</button>
+					<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehEntryEditor)#');">Create Entry</button>
 				</div>
 				</cfif>
 				
@@ -180,7 +180,7 @@
 						<td class="center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
 						<td class="center">
 							<!---Info Panel --->
-							<button class="button infoPanelButton" title="Entry Info" ><i class="icon-info-sign icon-large"></i></button>
+							<button class="btn  infoPanelButton" title="Entry Info" ><i class="icon-info-sign icon-large"></i></button>
 							<!---Info Panel --->
 							<div id="infoPanel_#entry.getContentID()#" class="contentInfoPanel">
 								<i class="icon-calendar"></i> 
@@ -203,7 +203,7 @@
 							</div>
 							
 							<!---Entry Actions --->
-							<button class="button actionsPanelButton" title="Entry Actions" ><i class="icon-cogs icon-large"></i></button>
+							<button class="btn  actionsPanelButton" title="Entry Actions" ><i class="icon-cogs icon-large"></i></button>
 							<!---Entry Actions Panel --->
 							<div id="entryActions_#entry.getContentID()#" class="actionsPanel">
 								<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>

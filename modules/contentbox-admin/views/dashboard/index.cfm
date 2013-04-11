@@ -22,7 +22,7 @@
 			<p class="actionBar">
 				#html.startForm(name="reloadForm",action=prc.xehAdminAction)#
 				#html.select(label="Choose Command To Execute:",name="targetModule",options=prc.xehAdminActionData)#
-				<button class="buttonred"><i class="icon-play"></i> Run</button>
+				<button class="btn btn-danger btn-small"><i class="icon-play"></i> Run</button>
 				#html.endForm()#
 			</p>
 		</div>
@@ -190,15 +190,19 @@
 			
 			<!--- Installer Checks --->
 			<cfif prc.installerCheck.installer>
-				<div class="infoBar" id="installerCheck">
-					<button class="buttonred" onclick="deleteInstaller()">Delete Installer</button>
+				<div class="alert alert-error" id="installerCheck">
+					<a href="##" class="close" data-dismiss="alert">&times;</a>
+					<i class="icon-warning-sign icon-large icon-2x"></i>
 					The installer module still exists! Please delete it from your server as leaving it online is a security risk.
+					<button class="btn btn-danger" onclick="deleteInstaller()">Delete Installer</button>
 				</div>
 			</cfif>
 			<cfif prc.installerCheck.dsncreator>
-				<div class="infoBar" id="dsnCreatorCheck">
-					<button class="buttonred" onclick="deleteDSNCreator()">Delete DSN Creator</button>
+				<div class="alert alert-error" id="dsnCreatorCheck">
+					<a href="##" class="close" data-dismiss="alert">&times;</a>
+					<i class="icon-warning-sign icon-large icon-2x"></i>
 					The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.
+					<button class="btn btn-danger" onclick="deleteDSNCreator()">Delete DSN Creator</button>
 				</div>
 			</cfif>
 			
@@ -207,8 +211,8 @@
 			<div class="contentBar" id="entriesBar">
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				<div class="buttonBar">
-					<button class="button2" 	id="btnCreateEntry" title="Create a new blog entry" onclick="return to('#event.buildLink(prc.xehBlogEditor)#')">Create Entry</button>
-					<button class="buttonred" 	id="btnQuickPost" 	title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
+					<button class="btn btn-primary" 	id="btnCreateEntry" title="Create a new blog entry" onclick="return to('#event.buildLink(prc.xehBlogEditor)#')">Create Entry</button>
+					<button class="btn btn-danger" 		id="btnQuickPost" 	title="Create a new quick post" onclick="showQuickPost()">Quick Post</button>
 				</div>				
 				</cfif>
 				<div class="filterBar">
@@ -222,7 +226,7 @@
 			<div class="contentBar" id="entriesBar">
 				<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 				<div class="buttonBar">
-					<button class="button2" 	id="btnCreateEntry" title="Create a new page" onclick="return to('#event.buildLink(prc.xehPageEditor)#')">Create Page</button>
+					<button class="btn btn-primary" 	id="btnCreateEntry" title="Create a new page" onclick="return to('#event.buildLink(prc.xehPageEditor)#')">Create Page</button>
 				</div>				
 				</cfif>
 				<div class="filterBar">
@@ -241,7 +245,7 @@
 				</div>	
 				<!--- Info Bar --->
 				<cfif NOT prc.cbSettings.cb_comments_enabled>
-					<div class="infoBar">
+					<div class="alert alert-info">
 						<i class="icon-exclamation-sign icon-2x pull-left"></i>
 						Comments are currently disabled site-wide!
 					</div>

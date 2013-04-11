@@ -106,10 +106,10 @@ function permalinkUniqueCheck(){
 	// Verify unique
 	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', {slug:$("##slug").val(), contentID: $("##contentID").val()}, function(data){
 		if( !data.UNIQUE ){
-			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("infoBar");
+			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("alert");
 		}
 		else{
-			$("##slugCheckErrors").html("").removeClass("infoBar");
+			$("##slugCheckErrors").html("").removeClass("alert");
 		}
 	} );
 }

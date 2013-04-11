@@ -18,8 +18,8 @@
 
 				<!--- Action Bar --->
 				<div class="actionBar center">
-					<button class="button2" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Cancel</button>
-					&nbsp;<input type="submit" class="buttonred" value="Save">
+					<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Cancel</button>
+					&nbsp;<input type="submit" class="btn btn-danger" value="Save">
 				</div>
 
 			#html.endFieldSet()#
@@ -90,7 +90,7 @@
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
-					<a href="javascript:previewContent()" class="button" title="Quick Preview">
+					<a href="javascript:previewContent()" class="btn" title="Quick Preview">
 						<i class="icon-eye-open icon-large"></i>
 					</a>
 				</div>

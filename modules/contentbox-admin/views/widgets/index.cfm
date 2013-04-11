@@ -13,7 +13,7 @@
 				#html.fileField(name="filePlugin",label="Upload Widget: ", class="textfield",required="required")#
 
 				<div class="actionBar" id="uploadBar">
-					#html.submitButton(value="Upload & Install",class="buttonred")#
+					#html.submitButton(value="Upload & Install",class="btn btn-danger")#
 				</div>
 
 				<!--- Loader --->
@@ -33,15 +33,15 @@
 		</div>
 		<div class="body">
 			<p>Render widgets in your layouts and views by using the CB Helper method <em>widget()</em>:</p>
-			<div class="infoBar infoBar-green">
+			<div class="alert alert-success">
 				##cb.widget("name",{arg1=val,arg2=val})##
 			</div>
 			<p>Render module widgets by appending the module name <em>@module</em>:</p>
-			<div class="infoBar infoBar-green">
+			<div class="alert alert-success">
 				##cb.widget("name@module",{arg1=val,arg2=val})##
 			</div>
 			<p>Get an instance of a widget in your layouts and views using the CB helper method <em>getWidget()</em></p>
-			<div class="infoBar infoBar-green">
+			<div class="alert alert-success">
 				 ##cb.getWidget("name")##
 				 ##cb.getWidget("name@module")##
 			</div>
@@ -87,7 +87,7 @@
 				<div class="contentBar">
 					<!--- Create Widget --->
 					<div class="buttonBar">
-						<button class="button2" onclick="openRemoteModal('#event.buildLink(prc.xehWidgetCreate)#');return false"
+						<button class="btn btn-primary" onclick="openRemoteModal('#event.buildLink(prc.xehWidgetCreate)#');return false"
 								title="Create a spanking new Widget">Create New Widget</button>
 					</div>
 	

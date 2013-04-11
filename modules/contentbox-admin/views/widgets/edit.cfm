@@ -12,9 +12,9 @@
 		<div class="body">
 			
 			<div class="actionBar">
-				#html.href(href=prc.xehWidgets,text=html.button(name="cancelButton",value="Cancel",class="button"))#
-				#html.button(value="Save",class="buttonred",title="Save and keep on working",onclick="return saveWidgetCode()")#
-				#html.submitButton(value="Save & Close",class="buttonred",title="Save widget and return to listing")#
+				#html.href(href=prc.xehWidgets,text=html.button(name="cancelButton",value="Cancel",class="btn"))#
+				#html.button(value="Save",class="btn btn-danger",title="Save and keep on working",onclick="return saveWidgetCode()")#
+				#html.submitButton(value="Save & Close",class="btn btn-danger",title="Save widget and return to listing")#
 			</div>
 			
 			<!--- Loader --->

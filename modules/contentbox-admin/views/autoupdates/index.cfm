@@ -96,7 +96,7 @@
 						<label for="beta" class="inline">Bleeding Edge Release</label> : Beta releases can be done at your own risk as it is still in development.
 						
 						<br/><br/>
-						#html.button(value="Check For Updates",class="buttonred",onclick="return checkForUpdates()")#
+						#html.button(value="Check For Updates",class="btn btn-danger",onclick="return checkForUpdates()")#
 					#html.endForm()#	
 				</div>
 				<!--- Apply By Download --->
@@ -112,7 +112,7 @@
 						#html.inputfield(type="url",required="required",name="downloadURL",label="Download URL:", class="textfield",size="75")#
 						
 						<br/><br/>
-						#html.submitButton(value="Install Update",class="buttonred")#
+						#html.submitButton(value="Install Update",class="btn btn-danger")#
 					#html.endForm()#	
 				</div>
 				<!--- Apply By Upload --->
@@ -128,7 +128,7 @@
 						#html.fileField(name="filePatch",label="Upload Patch: ", class="textfield",required="required", size="50")#	
 						
 						<br/><br/>
-						#html.submitButton(value="Upload & Install Update",class="buttonred")#
+						#html.submitButton(value="Upload & Install Update",class="btn btn-danger")#
 					#html.endForm()#	
 				</div>
 			</div>
@@ -140,7 +140,7 @@
 				<hr/>
 				<h3>Installation Log</h3>
 				<div class="consoleLog">#prc.installLog#</div>
-				#html.button(value="Clear Log",class="button2",onclick="to ('#event.buildLink(prc.xehAutoUpdater)#/index/clearlogs/true')")#
+				#html.button(value="Clear Log",class="btn btn-primary",onclick="to ('#event.buildLink(prc.xehAutoUpdater)#/index/clearlogs/true')")#
 			</cfif>
 			
 		</div>	
