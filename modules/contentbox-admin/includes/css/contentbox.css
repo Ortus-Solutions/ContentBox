@@ -226,6 +226,25 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 .table-hover tr.info:hover > th {
   background-color: #c4e3f3;
 }
+/************** TABLE SORTERS ***************/
+.tablesorter thead tr .header {
+	background: #d9edf7 url(../images/bg.gif) no-repeat center right !important;
+	cursor: pointer  !important;
+	-moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius:0px; 
+	color: inherit !important;
+	height: inherit !important;
+}
+.tablesorter thead tr th, .tablesorter tfoot tr th {
+	background-color: #d9edf7 !important;
+	font-size: 8pt !important;
+	padding: 4px !important;
+}
+.tablesorter thead tr .headerSortUp {
+	background-image: url(../images/asc.gif) !important;
+}
+.tablesorter thead tr .headerSortDown {
+	background-image: url(../images/desc.gif) !important;
+}
 /************** Error styles ***************/ 
 form input.error, form select.error, form textarea.error, form .wysiwyg.error, form input.error:focus, form select.error:focus, form textarea.error:focus, form .wysiwyg.error:focus { border: 1px solid #ff8388; }
 .error{
