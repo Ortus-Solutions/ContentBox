@@ -1,5 +1,5 @@
 <cfoutput>
-<h2>Link To A ContentBox CustomHTML</h2>
+<h2><i class="icon-tasks"></i> CustomHTML Chooser</h2>
 <div>
 #html.startForm(name="entryEditorSelectorForm")#
 
@@ -24,10 +24,9 @@
 	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
 	
 	<!--- entries --->
-	<table name="entries" id="entries" class="tablesorter" width="98%">
+	<table name="entries" id="entries" class="tablesorter table table-condensed table-striped table-hover" width="98%">
 		<thead>
 			<tr>
-				<th width="15" class="center {sorter:false}"></th>
 				<th>CustomHTML</th>
 				<th width="40" class="center">Select</th>
 			</tr>
@@ -35,9 +34,6 @@
 		<tbody>
 			<cfloop array="#prc.entries#" index="entry">
 			<tr id="contentID-#entry.getContentID()#">
-				<td class="middle">
-					<i class="icon-tasks icon-large"></i>
-				</td>
 				<td>
 					<!--- Title --->
 					<strong>#entry.getTitle()#</strong>
@@ -54,9 +50,8 @@
 			
 #html.endForm()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<div class="text-center form-actions">
 	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>
