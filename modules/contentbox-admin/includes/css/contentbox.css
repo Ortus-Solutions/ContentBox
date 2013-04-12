@@ -104,7 +104,7 @@ footer a { color:#fff; text-decoration:underline; }
 footer a:hover{ color: #3a87ff}
 footer #footerLogo img{ margin:-17px 35px; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; }
 /**============================== Form Styling ==============================**/
-fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:15px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
 fieldset legend { color:#3a3a3a; font-weight: bold; border-bottom: none; width: inherit; line-height:20px; font-size: inherit; margin: 0px}
 form label { font-size:1em; font-weight:bold; display:block; margin:2px 0; }
 form input.textfield, form select, form textarea{ padding:6px; margin-right:4px; }
