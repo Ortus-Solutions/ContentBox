@@ -2,8 +2,7 @@
 #html.startForm(name="ruleEditForm",action=prc.xehRuleSave,novalidate="novalidate")#
 <!--- ruleID --->
 #html.hiddenField(name="ruleID",bind=prc.rule)#
-	
-<div class="main">
+<div class="row-fluid" id="main-content">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
@@ -51,9 +50,9 @@
 			#html.endFieldset()#
 			
 			<!--- Action Bar --->
-			<div class="actionBar center">
+			<div class="text-center">
 				<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
-				&nbsp;<input type="submit" class="btn btn-danger" value="Save">
+				&nbsp;<button type="submit" class="btn btn-danger">Save</button>
 			</div>
 			
 		</div>	
