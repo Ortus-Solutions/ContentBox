@@ -174,6 +174,8 @@
 									</a>
 							    	<ul class="dropdown-menu text-left">
 							    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+										<!--- Edit Command --->
+										<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
 										<!--- Clone Command --->
 										<li><a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
 										<!--- Create Child --->
@@ -284,25 +286,29 @@
 <cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 <div id="cloneDialog" class="modal">
 	<div id="modalContent">
-		<h2>Page Cloning</h2>
+		<h2><i class="icon-copy"></i> Page Cloning</h2>
 		<p>By default, all internal page links are updated for you as part of the cloning process.</p>
 		#html.startForm(name="cloneForm", action=prc.xehPageClone)#
 			#html.hiddenField(name="contentID")#
-			#html.textfield(name="title", label="Please enter the new page title:", class="textfield", required="required", size="50")#
+			#html.textfield(name="title", label="Please enter the new page title:", class="input-block-level", required="required", size="50")#
 			<label for="pageStatus">Publish all pages in hierarchy?</label>
 			<small>By default all cloned pages are published as drafts.</small><br>
-			#html.select(options="true,false", name="pageStatus", selectedValue="false")#
+			#html.select(options="true,false", name="pageStatus", selectedValue="false", class="input-block-level")#
 			
-			<div class="alert alert-info">Please note that cloning is an expensive process, so please be patient when cloning big hierarchical content trees.</div>
-			<hr/>
+			<!---Notice --->
+			<div class="alert alert-info">
+				<i class="icon-info-sign icon-large"></i> Please note that cloning is an expensive process, so please be patient when cloning big hierarchical content trees.
+			</div>
+			
 			<!--- Button Bar --->
-			<div id="bottomCenteredBar" class="textRight">
+			<div class="text-center form-actions">
 				<button class="btn btn-primary" id="cloneButton"> Clone </button>
 				<button class="btn btn-danger" id="closeButton"> Cancel </button>
 			</div>
+			
 			<!--- Loader --->
 			<div class="center loaders" id="clonerBarLoader">
-				<i class="icon-spinner icon-spin icon-large"></i>
+				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 				<br>Please wait, doing some hardcore cloning action...
 			</div>
 		#html.endForm()#

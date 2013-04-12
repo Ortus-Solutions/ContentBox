@@ -14,7 +14,7 @@
 	<div class="widget-preview">
 	    <div class="widget-preview-toolbar">
 	        Preview
-            <a href="javascript:void(0);" class="widget-preview-refresh">Refresh</a>
+            <a href="javascript:void(0);" class="widget-preview-refresh btn btn-mini"><i class="icon-refresh"></i> Refresh</a>
 	    </div>
         <div id="widget-preview-content" class="widget-preview-content"></div>
 	</div>
@@ -41,8 +41,8 @@
         &nbsp;
     </div>
     <div class="widget-footer-right">
-        <button class="btn btn-danger" id="widget-button-update">Update Widget</button>
         <a id="widget-button-cancel" href="javascript:void(0);" onclick="closeRemoteModal()" class="btn">Cancel</a>
+		<button class="btn btn-danger" id="widget-button-update">Update Widget</button>
     </div>
 </div>
 </cfoutput>

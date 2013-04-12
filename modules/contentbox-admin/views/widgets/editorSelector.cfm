@@ -1,12 +1,12 @@
 ﻿<cfoutput>
 <h2 style="position:relative;">
-    <span id="widget-title-bar">Select a Widget</span>
+    <span id="widget-title-bar"><i class="icon-magic"></i> Select a Widget</span>
 </h2>
 <div class="widget-detail" id="widget-detail" style="display:none;">
 	<div class="widget-preview">
 	    <div class="widget-preview-toolbar">
 	        Preview
-            <a href="javascript:void(0);" class="widget-preview-refresh">Refresh</a>
+            <a href="javascript:void(0);" class="widget-preview-refresh btn btn-mini"><i class="icon-refresh"></i> Refresh</a>
 	    </div>
         <div id="widget-preview-content" class="widget-preview-content"></div>
 	</div>
@@ -75,11 +75,11 @@
 </div>
 <div class="widget-footer">
     <div class="widget-footer-left">
-        <a id="widget-button-back" style="display:none;" href="javascript:void(0);" class="btn btn-primary">Back to Widgets</a>&nbsp;
+        <a id="widget-button-back" style="display:none;" href="javascript:void(0);" class="btn btn-primary"><i class="icon-reply"></i> Back to Widgets</a>&nbsp;
     </div>
     <div class="widget-footer-right">
-        <button class="btn btn-danger" style="display:none;" id="widget-button-insert">Insert Widget</button>
         <a id="widget-button-cancel" href="javascript:void(0);" class="btn" onclick="closeRemoteModal()">Cancel</a>
+		<button class="btn btn-danger" style="display:none;" id="widget-button-insert">Insert Widget</button>
     </div>
 </div>
 </cfoutput>
