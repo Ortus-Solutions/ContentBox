@@ -83,7 +83,7 @@
 							<small>Choose the entry point in the URL to trigger the blog engine. The usual defaul entry point pattern is 
 							<strong>blog</strong>. Do not use symbols or slashes (/ \)<br/></small>
 								
-							<em>#prc.cb.linkHome()#</em> #html.textField(name="cb_site_blog_entrypoint", value=prc.cbSettings.cb_site_blog_entrypoint, class="textfield")#
+							<code>#prc.cb.linkHome()#</code> #html.textField(name="cb_site_blog_entrypoint", value=prc.cbSettings.cb_site_blog_entrypoint, class="textfield")#
 							
 						</fieldset>
 						<!--- Site Maintenance --->
@@ -312,9 +312,10 @@
 							
 							<cfloop array="#prc.mediaProviders#" index="thisProvider">
 							<div class="alert alert-info">
-								<label>
-								#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
-								<strong>#thisProvider.displayName#</strong></label>
+								<label class="radio inline">
+									#html.radioButton(name="cb_media_provider", checked=(prc.cbSettings.cb_media_provider eq thisProvider.name), value=thisProvider.name)#
+									<strong>#thisProvider.displayName#</strong>
+								</label><br/>
 								#thisProvider.description# <br/>
 							</div>
 							</cfloop>
