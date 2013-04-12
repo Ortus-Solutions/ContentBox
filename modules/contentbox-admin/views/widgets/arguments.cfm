@@ -29,9 +29,9 @@
 		</cfif>
 		<!---Boolean?--->
 		<cfif thisArg.type eq "boolean">
-			#html.select( name=thisArg.name, options="true,false", selectedValue=thisArg.value )#
+			#html.select( name=thisArg.name, options="true,false", selectedValue=thisArg.value, class="input-block-level" )#
 		<cfelse>
-			#html.textfield( name=thisArg.name, size="35", class="textfield", required=requiredValidator, title=thisArg.hint, value=thisArg.value )#
+			#html.textfield( name=thisArg.name, size="35", class="input-block-level", required=requiredValidator, title=thisArg.hint, value=thisArg.value )#
 		</cfif>
 	</cfloop>
 	#html.hiddenfield( name="widgetName", id="widgetName", value=prc.widget.name )#
