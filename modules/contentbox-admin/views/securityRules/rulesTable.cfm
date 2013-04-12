@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- rules --->
-<table name="rules" id="rules" class="tablesorter" width="98%">
+<table name="rules" id="rules" class="tablesorter table table-hover table-striped table-condensed" width="98%">
 	<thead>
 		<tr>
 			<th>Secured</th>
