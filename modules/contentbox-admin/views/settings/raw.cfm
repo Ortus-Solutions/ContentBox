@@ -1,11 +1,11 @@
 ﻿<cfoutput>
-<div class="main">
+<div class="row-fluid" id="main-content">
 	<div class="box">
 		
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" width="30" height="30" />
-			Geek Panel (Environment:#getSetting('Environment')#)
+			<img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" height="30" style="height: 30px;" />
+			Geek Panel <span class="label label-inverse">Environment: #getSetting('Environment')#</span>
 		</div>
 		
 		<!--- Body --->
@@ -20,7 +20,7 @@
 				<li title="Raw Settings"><a href="##raw" class="current"><i class="icon-cog icon-large"></i> Raw Settings</a></li>
 				<li title="WireBox"><a href="##wirebox"><i class="icon-th-large icon-large"></i> WireBox</a></li>
 				<li title="CacheBox Monitor"><a href="##cachebox"><i class="icon-hdd icon-large"></i>  CacheBox</a></li>
-				<li title="ContentBox Events"><a href="##events"><i class="icon-bullhorn icon-large"></i>  ContentBox Events</a></li>
+				<li title="ContentBox Events"><a href="##events"><i class="icon-bullhorn icon-large"></i> Events</a></li>
 			</ul>
 			<!--- Panes --->
 			<div class="main_column">
@@ -41,12 +41,12 @@
 								<input type="hidden" name="page" id="page" value="#rc.page#" />
 				
 								<label for="name">Setting:</label>
-								<input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="textfield"/>
+								<input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="input-block-level"/>
 				
 								<label for="value">Value:</label>
-								<textarea name="value" id="value" rows="4"></textarea>
+								<textarea name="value" id="value" rows="3" class="input-block-level"></textarea>
 				
-								<div class="actionBar">
+								<div class="text-center form-actions">
 									#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##settingEditorContainer') )")#
 									#html.submitButton(name="btnSave",value="Save",class="btn btn-danger")#
 								</div>
@@ -60,10 +60,30 @@
 	
 						<!--- content bar --->
 						<div class="well well-small">
+							
 							<!--- Flush Cache Button --->
-							<div class="buttonBar">
-								<button class="btn btn-primary" onclick="openRemoteModal('#event.buildLink(prc.xehViewCached)#');return false" title="View cached settings">View Cached Settings</button>
-								<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushCache)#')" title="Flush the settings cache">Flush Settings Cache</button>
+							<div class="pull-right">
+								<div class="btn-group">
+									<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+										Special Actions
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');return false"><i class="icon-hdd"></i> View Cached Settings</a></li>
+										<li><a href="#event.buildLink(prc.xehFlushCache)#"><i class="icon-refresh"></i> Flush Settings Cache</a></li>
+									</ul>
+								</div>
+								
+								<div class="btn-group">
+									<a href="##" onclick="return createSetting();" class="btn btn-danger"><i class="icon-plus-sign"></i> Create Setting</a>
+									<button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="#event.buildLink(prc.xehRawSettings)#/viewall/true"><i class="icon-truck"></i> View All</a></li>
+									</ul>
+								</div>
+									
 							</div>
 	
 							<!--- Filter Bar --->
@@ -76,17 +96,12 @@
 						</div>
 						
 						<cfif !rc.viewAll>
-						<!--- View all --->
-						<div class="floatRight">
-							<button class="btn btn-danger" onclick="return createSetting()">Create Setting</button>
-							<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehRawSettings)#/viewall/true')">View All</button>
-						</div>
-						<!--- Paging --->
-						#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
+							<!--- Paging --->
+							#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
 						</cfif>
 						
 						<!--- settings --->
-						<table name="settings" id="settings" class="tablesorter" width="98%">
+						<table name="settings" id="settings" class="tablesorter table table-striped table-hover table-condensed" width="98%">
 							<thead>
 								<tr>
 									<th width="250">Name</th>
@@ -136,7 +151,7 @@
 						<div class="well well-small">
 							<!--- Flush Cache Button --->
 							<div class="buttonBar">
-								<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons">Clear All Singletons</button>
+								<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons"><i class="icon-magnet"></i> Clear All Singletons</button>
 							</div>
 							<!--- Filter Bar --->
 							<div class="filterBar">
@@ -148,7 +163,7 @@
 						</div>
 	
 						<!--- settings --->
-						<table name="singletons" id="singletons" class="tablesorter" width="98%">
+						<table name="singletons" id="singletons" class="tablesorter table table-hover table-striped table-condensed" width="98%">
 							<thead>
 								<tr>
 									<th width="250">ID</th>
@@ -207,7 +222,7 @@
 						</div>
 						
 						<!--- events --->
-						<table name="eventsList" id="eventsList" class="tablesorter" width="98%">
+						<table name="eventsList" id="eventsList" class="tablesorter table table-striped table-hover table-condensed" width="98%">
 							<thead>
 								<tr>
 									<th width="30" class="{sorter:none}">No.</th>
