@@ -14,10 +14,11 @@
 		
 		<!--- Permissions --->
 		<p>Choose a permission to add:</p>
-		#html.select(name="permissionID",options=prc.permissions,column="permissionID",nameColumn="permission")#
-		
-		<!--- Button --->
-		<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
+		<div class="btn-group">
+			#html.select(name="permissionID",options=prc.permissions,column="permissionID",nameColumn="permission")#
+			<!--- Button --->
+			<button class="btn btn-danger btn-small" onclick="addPermission();return false;">Add Permission</button>
+		</div>
 		
 	#html.endFieldSet()#
 	#html.endForm()#
@@ -49,9 +50,8 @@
 	
 	
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<div class="text-center form-actions">
 	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>
