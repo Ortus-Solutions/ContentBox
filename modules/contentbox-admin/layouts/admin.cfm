@@ -109,7 +109,7 @@
 						</li>
 						
 						<!---Quick Post --->
-						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") AND !prc.cbSettings.cb_site_disable_blog>
+						<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") AND !prc.cbSettings.cb_site_disable_blog>
 							<li><a href="javascript:showQuickPost()"><i class="icon-edit icon-large"></i></a></li>
 						</cfif>
 						
