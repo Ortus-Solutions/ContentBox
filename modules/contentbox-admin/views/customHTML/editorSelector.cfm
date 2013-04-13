@@ -20,9 +20,6 @@
 		</div>
 	</div>
 
-	<!--- Paging --->
-	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
-	
 	<!--- entries --->
 	<table name="entries" id="entries" class="tablesorter table table-condensed table-striped table-hover" width="98%">
 		<thead>
@@ -47,6 +44,9 @@
 			</cfloop>
 		</tbody>
 	</table>
+	
+	<!--- Paging --->
+	#prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
 			
 #html.endForm()#
 </div>

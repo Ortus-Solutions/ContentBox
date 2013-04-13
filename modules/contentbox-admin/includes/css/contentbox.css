@@ -168,9 +168,7 @@ form textarea,form .wysiwyg { width:98%; }
 #confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close { opacity: 1.0; background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
 #remoteModelContent, #quickPostContent, #modalContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:98%;overflow-y:auto; }
 /** ============================== PAGING TABS =============================== **/
-.pagingTabs { font-size:.8em; text-align:left; margin:5px 0px;}
-.pagingTabs a { color:#000; padding:2px 4px; background-color:#fff; border:1px solid #ccc; margin-left:2px; }
-.pagingTabs a:hover { color:#000; background-color:#FCF9C3; border:1px solid black; }
+.pagingTabs a:hover { color:#000; background-color:#FCF9C3; }
 .pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }
 .pagingTabsCarrousel { margin-top:5px; }
 /**============================== Utility Classes ==============================**/
