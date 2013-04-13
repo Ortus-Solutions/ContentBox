@@ -29,7 +29,9 @@
 			<div class="text-center form-actions">
 				<button class="btn" onclick="return closeQuickPost()" title="Change your mind hugh?"> Cancel </button>
 				&nbsp;<button type="submit" class="btn btn-primary" onclick="qpSaveDraft()" title="Not ready for primetime!">Save Draft</button>
+				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 				&nbsp;<button type="submit" class="btn btn-danger" title="Yeahaww! Let's Publish It!">Publish</button>
+				</cfif>
 			</div>
 		#html.endForm()#
 	</div>
