@@ -82,26 +82,29 @@
 					</div>
 	
 				#html.endFieldSet()#
-	
-				<!--- Accordion --->
-				<div id="accordion">
-					<!--- Entry Cache Panel --->
-					<h2>
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-						<i class="icon-hdd icon-large"></i> Cache Settings </h2>
-					<div class="pane">
-	
-						<!--- Cache Settings --->
-						#html.label(field="cache",content="Cache Content:",class="inline")#
-						#html.select(name="cache", options="Yes,No", selectedValue=yesNoFormat(prc.content.getCache()), class="input-block-level")#
-						#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.content,title="Enter the number of minutes to cache your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
-						#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.content,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
-	
-					</div>
+				
+				<!---Begin Accordion--->
+				<div id="accordion" class="accordion">
+				    <!---Begin Cache Content--->
+				    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##cachecontent">
+                        		<i class="icon-hdd icon-large"></i> Cache Settings
+                      		</a>
+                    	</div>
+                    	<div id="cachecontent" class="accordion-body collapse in">
+                      		<div class="accordion-inner">
+        						<!--- Cache Settings --->
+        						#html.label(field="cache",content="Cache Content:",class="inline")#
+        						#html.select(name="cache", options="Yes,No", selectedValue=yesNoFormat(prc.content.getCache()), class="input-block-level")#
+        						#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.content,title="Enter the number of minutes to cache your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
+        						#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.content,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
+                      		</div>
+                    	</div>
+                  	</div>
+                    <!---End Cache Content--->
 				</div>
-				<!--- End Accordion --->
-	
+                <!---End Accordion--->	
 			</div>
 		</div>
 	</div>
