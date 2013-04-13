@@ -8,8 +8,9 @@ body{
 	width:100%;
 	height:100%;
 	padding-top: 39px;
-  	font: 13px Arial,Helvetica,sans-serif;
-	line-height: 20px;
+  	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 13px;
+  	line-height: 20px;
 	color: #333333;
 	background-color: #F5F5F5;
 	background-image: linear-gradient(to bottom, #ddd, #F5F5F5);

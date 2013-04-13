@@ -188,7 +188,7 @@
 						<!--- Action Bar --->
 						<div class="actionBar">
 							<a href="javascript:prevStep()" class="btn btn-primary"><i class="icon-chevron-left"></i> Previous Step</a>
-							#html.button(type="submit", name="submit",value="Start Installation!",class="btn btn-danger",title="Let's get this party started!")#
+							#html.button(type="submit", name="submit", value="<i class='icon-ok'></i> Start Installation!",class="btn btn-danger",title="Let's get this party started!")#
 						</div>
 						
 					</div> 
