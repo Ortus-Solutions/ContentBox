@@ -14,7 +14,6 @@
 	<thead>
 		<tr>
 			<th>Title</th>
-			<th>Categories</th>
 			<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
 			<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
 			<th width="40" class="center"><i class="icon-comments icon-large" title="Comments"></i></th>
@@ -36,7 +35,6 @@
 				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
 				by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on #entry.getActiveContent().getDisplayCreatedDate()#
 			</td>
-			<td>#entry.getCategoriesList()#</td>
 			<td class="center">
 				<cfif entry.isExpired()>
 					<i class="icon-time icon-large textRed" title="Entry has expired!"></i>
