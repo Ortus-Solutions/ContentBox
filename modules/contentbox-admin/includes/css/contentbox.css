@@ -282,3 +282,6 @@ form input.error, form select.error, form textarea.error, form .wysiwyg.error, f
 .forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
 .forgebox-download { float:right; clear:right; }
 .forgebox-modal{ height: auto; width: 50%}
+/** ==============================  Accordions  ============================== **/
+.accordion .accordion-heading { background:#f7f8f8 url(../images/accordion_heading_bg.gif) repeat-x bottom; color:#111010; border:1px solid #fff; border-bottom:1px solid #ddd; }
+a.accordion-toggle { text-decoration:none; }
