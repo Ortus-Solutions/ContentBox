@@ -1,50 +1,52 @@
 ﻿<cfoutput>
-<div class="box clear" id="loginBox">
-	
-	<div class="header">
-		<i class="icon-key icon-"></i> Login
-	</div>
-	
-	<div class="body clearfix">
-		
-		<!--- Render Messagebox. --->
-		#getPlugin("MessageBox").renderit()#
-		
-		<div id="loginContent">
-		#html.startForm(action=prc.xehDoLogin,name="loginForm",novalidate="novalidate")#
-			#html.hiddenField(name="_securedURL",value=rc._securedURL)#
+<div class="row-fluid" id="main-login">
+	<div class="box span4 offset4" id="loginBox">
+		<!---Login Header --->
+		<div class="header"><i class="icon-key icon-"></i> Login</div>
+		<!---Body --->
+		<div class="body">
 			
-			<p></p>
+			<!--- Render Messagebox. --->
+			#getPlugin("MessageBox").renderit()#
 			
-			<div class="control-group">
-				<div class="input-prepend">
+			<div id="loginContent">
+			#html.startForm(action=prc.xehDoLogin, name="loginForm", novalidate="novalidate", class="form-inline")#
+				#html.hiddenField(name="_securedURL",value=rc._securedURL)#
+				
+				<p></p>
+				
+				<div class="padding10">
+					<div class="input-prepend">
 					<span class="add-on"><i class="icon-user"></i></span>
-					#html.textfield(name="username", required="required", class="span4", value=prc.rememberMe, placeholder="Username", autocomplete="off")#
+					#html.textfield(name="username", required="required", class="input-large", value=prc.rememberMe, placeholder="Username", autocomplete="off")#
+					</div>
 				</div>
 				
-				<div class="input-prepend">
-					<span class="add-on"><i class="icon-key"></i></span>
-					#html.passwordField(name="password", required="required", class="span4", placeholder="Password", autocomplete="off")#
-				</div>	
+				<div class="padding10">
+					<div class="input-prepend">
+						<span class="add-on"><i class="icon-key"></i></span>
+						#html.passwordField(name="password", required="required", class="input-large", placeholder="Password", autocomplete="off")#
+					</div>	
+				</div>
+					
+				<div class="padding10">
+					<label class="checkbox inline">
+						#html.checkBox(name="rememberMe",value=true,checked=( len( prc.rememberMe ) ))#
+						Remember Me
+					</label>		
+				</div>
+				
+				<div id="loginButtonbar">
+					#html.button(type="submit", value="<i class='icon-signin'></i> Log In&nbsp;&nbsp;", class="btn btn-danger btn-large")#
+				</div>
 				
 				<br/>
-				<label class="checkbox inline">
-					#html.checkBox(name="rememberMe",value=true,checked=( len( prc.rememberMe ) ))#
-					Remember Me
-				</label>		
+				<a href="#event.buildLink( prc.xehLostPassword )#" class="btn btn-mini"><i class="icon-question-sign"></i> Lost your password?</a> 
+				
+			#html.endForm()#
 			</div>
-			
-			<div id="loginButtonbar">
-				#html.submitButton(value="&nbsp;&nbsp;Log In&nbsp;&nbsp;", class="btn btn-danger btn-large")#
-			</div>
-			
-			<br/>
-			<i class="icon-question-sign"></i>
-			<a href="#event.buildLink( prc.xehLostPassword )#">Lost your password?</a> 
-			
-		#html.endForm()#
+		
 		</div>
-	
 	</div>
 </div>
 </cfoutput>

@@ -1,5 +1,5 @@
 <cfoutput>
-<footer id="footer" class="clearfix">
+<footer id="footer" class="clearfix hidden-phone">
 	<!--- cbadmin event --->
 	#announceInterception("cbadmin_loginFooter")#
 	<div class="pull-right" id="footerLogo">
