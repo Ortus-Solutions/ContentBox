@@ -95,11 +95,6 @@
 							</div>
 						</div>
 						
-						<cfif !rc.viewAll>
-							<!--- Paging --->
-							#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
-						</cfif>
-						
 						<!--- settings --->
 						<table name="settings" id="settings" class="tablesorter table table-striped table-hover table-condensed" width="98%">
 							<thead>
@@ -134,7 +129,7 @@
 	
 						<!--- Paging --->
 						<cfif !rc.viewAll>
-						#prc.pagingPlugin.renderit(prc.settingsCount,prc.pagingLink)#
+						#prc.pagingPlugin.renderit(foundRows=prc.settingsCount, link=prc.pagingLink, asList=true)#
 						</cfif>
 						
 						#html.endForm()#

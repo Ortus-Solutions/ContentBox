@@ -66,9 +66,6 @@
 				</div>
 				</cfif>
 				
-				<!--- Paging --->
-				#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
-	
 				<!--- pages --->
 				<table name="pages" id="pages" class="tablesorter table table-striped table-hover" width="98%">
 					<thead>
@@ -200,7 +197,7 @@
 				</table>
 	
 				<!--- Paging --->
-				#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
+				#prc.pagingPlugin.renderit(foundRows=prc.pagesCount, link=prc.pagingLink, asList=true)#
 	
 				#html.endForm()#
 			</div>

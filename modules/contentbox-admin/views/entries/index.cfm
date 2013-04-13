@@ -57,9 +57,6 @@
 					</div>
 				</div>
 				
-				<!--- Paging --->
-				#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
-			
 				<!--- entries --->
 				<table name="entries" id="entries" class="tablesorter table table-hover table-striped" width="98%">
 					<thead>
@@ -169,8 +166,7 @@
 				</table>
 				
 				<!--- Paging --->
-				#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
-			
+				#prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
 				#html.endForm()#
 	
 			</div>	
