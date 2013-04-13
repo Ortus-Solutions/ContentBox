@@ -23,7 +23,7 @@ body{
 	background-image: linear-gradient(to bottom, #ddd, #F5F5F5);
 	background-repeat: repeat-x;
 }
-.container-fluid{ margin-bottom: 100px;}
+.container-fluid{ padding-bottom: 100px }
 ol { list-style:decimal inside; }
 ul { list-style:disc inside; }
 #main-sidebar{ margin-left: 20px !important;}
