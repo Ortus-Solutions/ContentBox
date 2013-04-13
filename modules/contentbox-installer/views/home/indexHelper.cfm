@@ -12,18 +12,18 @@ $(document).ready(function() {
 	// adds an effect called "wall" to the validator
 	$.tools.validator.addEffect("wall", function(errors, event) {
 		// get the message wall
-		var wall = $("##errorBar").addClass("infoBarRed").fadeIn();
+		var wall = $("##errorBar").addClass("alert alert-error").fadeIn();
 		// remove all existing messages
 		wall.html("");
 		// Init messages
-		wall.append( "<h1>Cannot continue installation, please fix the following errors:</h1><ul>" );
+		wall.append( "<h3>Cannot continue installation, please fix the following errors:</h3><ul id='formErrors'>" );
+		var formErrors = wall.find("##formErrors");
 		// add new errors
 		$.each(errors, function(index, error) {
-			wall.append(
+			formErrors.append(
 				"<li><strong>" +error.input.attr("name")+ "</strong> " + error.messages[0] + "</li>"
 			);
 		});
-		wall.append( "</ul>" );
 	 
 	// the effect does nothing when all inputs are valid
 	}, function(inputs)  {
