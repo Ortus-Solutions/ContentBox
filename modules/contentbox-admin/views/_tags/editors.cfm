@@ -73,6 +73,10 @@ function setupEditors($theForm, withExcerpt){
 function switchEditor(editorType){
 	// destroy the editor
 	#prc.oEditorDriver.shutdown()#
+	// Save work
+	if( confirm( "Would you like to save your work before switching editors?" ) ){
+		quickSave();
+	}
 	// Call change user editor preference
 	$.ajax({
 		url : '#event.buildLink(prc.xehAuthorEditorSave)#',
