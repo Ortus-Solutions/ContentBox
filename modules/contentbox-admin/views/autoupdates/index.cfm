@@ -16,64 +16,82 @@
 				<p>You can patch ContentBox in order to receive the latest bugfixes and enhancements from here.  We do encourage you
 				to make backups when doing auto-udpates.</p>
 				
-				
-				<!--- Accordion Snapshots --->
-				<div id="accordion">
-					<!--- Check For Updates --->
-					<h2> 
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-						<i class="icon-globe icon-large"></i> Check For Updates </h2>
-					<div class="pane">
-						<!--- Update Form --->
-						#html.startForm(name="updateCheckForm",novalidate="novalidate")#
-							<p>Select your update channel so we can check if there are any new releases available for you.</p>
-							
-							#html.radioButton(name="channel",id="stable",value=prc.updateSlugStable,checked="false",checked=true)#
-							<label for="stable" class="inline">Stable Release</label> : Official ContentBox releases.
-							<br/>
-							
-							#html.radioButton(name="channel",id="beta",value=prc.updateSlugBeta,checked="false")#
-							<label for="beta" class="inline">Bleeding Edge Release</label> : Beta releases can be done at your own risk as it is still in development.
-							
-							<br/><br/>
-							#html.button(value="Check For Updates",class="btn btn-danger",onclick="return checkForUpdates()")#
-						#html.endForm()#	
-					</div>
-					<!--- Apply By Download --->
-					<h2> 
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-						<i class="icon-download icon-large"></i> Download Update </h2>
-					<div class="pane">
-						<!--- Update Form --->
-						#html.startForm(name="updateNowForm",action=prc.xehInstallUpdate,novalidate="novalidate")#
-							<p>You can apply an update by selecting the download URL of the update archive.</p>
-							
-							#html.inputfield(type="url",required="required",name="downloadURL",label="Download URL:", class="textfield",size="75")#
-							
-							#html.submitButton(value="Install Update", class="btn btn-danger")#
-						#html.endForm()#	
-					</div>
-					<!--- Apply By Upload --->
-					<h2> 
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" /> 
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" /> 
-						<i class="icon-upload icon-large"></i> Upload Update </h2>
-					<div class="pane">
-						<!--- Upload Form --->
-						#html.startForm(name="uploadNowForm",action=prc.xehUploadUpdate,multipart=true,novalidate="novalidate")#
-							<p>You can also apply an update by uploading the update archive.</p>
-							
-							#html.fileField(name="filePatch",label="Upload Patch: ", class="textfield",required="required", size="50")#	
-							
-							<br/><br/>
-							#html.submitButton(value="Upload & Install Update",class="btn btn-danger")#
-						#html.endForm()#	
-					</div>
+				<!---Begin Accordion--->
+				<div id="accordion" class="accordion">
+				    <!---Begin Check--->
+				    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##check">
+                        		<i class="icon-globe icon-large"></i> Check For Updates
+                      		</a>
+                    	</div>
+                    	<div id="check" class="accordion-body collapse in">
+                      		<div class="accordion-inner">
+        						<!--- Update Form --->
+        						#html.startForm(name="updateCheckForm",novalidate="novalidate")#
+        							<p>Select your update channel so we can check if there are any new releases available for you.</p>
+        							
+        							#html.radioButton(name="channel",id="stable",value=prc.updateSlugStable,checked="false",checked=true)#
+        							<label for="stable" class="inline">Stable Release</label> : Official ContentBox releases.
+        							<br/>
+        							
+        							#html.radioButton(name="channel",id="beta",value=prc.updateSlugBeta,checked="false")#
+        							<label for="beta" class="inline">Bleeding Edge Release</label> : Beta releases can be done at your own risk as it is still in development.
+        							
+        							<br/><br/>
+        							#html.button(value="Check For Updates",class="btn btn-danger",onclick="return checkForUpdates()")#
+        						#html.endForm()#	
+                      		</div>
+                    	</div>
+                  	</div>
+                    <!---End Check--->
+					
+					<!---Begin Download--->
+				    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##download">
+                        		<i class="icon-download icon-large"></i> Download Update
+                      		</a>
+                    	</div>
+                    	<div id="download" class="accordion-body collapse">
+                      		<div class="accordion-inner">
+        						<!--- Update Form --->
+        						#html.startForm(name="updateNowForm",action=prc.xehInstallUpdate,novalidate="novalidate")#
+        							<p>You can apply an update by selecting the download URL of the update archive.</p>
+        							
+        							#html.inputfield(type="url",required="required",name="downloadURL",label="Download URL:", class="textfield",size="75")#
+        							
+        							#html.submitButton(value="Install Update", class="btn btn-danger")#
+        						#html.endForm()#	
+                      		</div>
+                    	</div>
+                  	</div>
+                    <!---End Download--->
+						
+					<!---Begin Upload--->
+				    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##upload">
+                        		<i class="icon-upload icon-large"></i> Upload Update
+                      		</a>
+                    	</div>
+                    	<div id="upload" class="accordion-body collapse">
+                      		<div class="accordion-inner">
+        						<!--- Upload Form --->
+        						#html.startForm(name="uploadNowForm",action=prc.xehUploadUpdate,multipart=true,novalidate="novalidate")#
+        							<p>You can also apply an update by uploading the update archive.</p>
+        							
+        							#html.fileField(name="filePatch",label="Upload Patch: ", class="textfield",required="required", size="50")#	
+        							
+        							<br/><br/>
+        							#html.submitButton(value="Upload & Install Update",class="btn btn-danger")#
+        						#html.endForm()#	
+                      		</div>
+                    	</div>
+                  	</div>
+                    <!---End Check--->
 				</div>
-				<!--End Accordion-->	
-				
+				<!---End Accordion--->	
 				
 				<!--- Logs --->
 				<cfif len(prc.installLog)>
