@@ -158,15 +158,23 @@ form textarea,form .wysiwyg { width:98%; }
 /** ============================== ConfirmIt-Modals ============================== **/
 #exposeMask { background:#000!important; }
 /* background color for overlay and expose mask */
-#confirmIt, #remoteModal, #quickPost, .modal {top:20px !important; border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
+#remoteModal, #quickPost, .modal {top:20px !important; border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
 #remoteModal, .modal { width:1000px; height: 90% }
 #quickPost { width:1000px; height: 80% }
-#confirmIt div { border:1px solid #3B5998; background-color:#fff; padding:10px; font-size:1.2em; margin:0; }
-#confirmIt h2, #remoteModal h2, #quickPost h2, .modal h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; font-size: 14px }
-#confirmIt p { font-size:12px; }
-#confirmIt hr, #remoteModelContent hr, #quickPost hr, .modal hr { border-bottom-color:#C0C0C0; color:#C0C0C0; border-bottom:1px solid; border-style:none none solid; height:1px; margin:2em 0; }
-#confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close { opacity: 1.0; background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
+#remoteModal h2, #quickPost h2, .modal h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; font-size: 14px }
+#remoteModelContent hr, #quickPost hr, .modal hr { border-bottom-color:#C0C0C0; color:#C0C0C0; border-bottom:1px solid; border-style:none none solid; height:1px; margin:2em 0; }
+#remoteModal a.close, #quickPost a.close, .modal a.close { opacity: 1.0; background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
 #remoteModelContent, #quickPostContent, #modalContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:98%;overflow-y:auto; }
+#confirmIt {
+	box-shadow:0 0 15px #ccc;
+	-moz-box-shadow:0 0 15px #ccc; 
+	-webkit-box-shadow:0 0 15px #ccc; 
+	border-radius: 6px;
+	-moz-border-radius:6px; 
+	-webkit-border-radius:6px; 
+	max-width: 400px;
+	max-height: 200px;
+}
 /** ============================== PAGING TABS =============================== **/
 .pagingTabs a:hover { color:#000; background-color:#FCF9C3; }
 .pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }

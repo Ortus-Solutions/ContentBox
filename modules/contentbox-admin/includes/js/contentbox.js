@@ -196,33 +196,21 @@ function openRemoteModal(url,params,w,h){
 	$remoteModal.data("overlay").load();
 }
 function closeConfirmations(){
-	$confirmIt.data("overlay").close();
+	$confirmIt.modal( 'hide' );
 }
 /**
  * Activate modal confirmation windows
  * @return
  */
 function activateConfirmations(){
-	
-	// verify overlay already loaded
-	if( !$confirmIt.data("overlay") ){
-		// Overlay the global confirmation
-		$confirmIt.overlay({
-			mask: {
-				color: '#fff',
-				loadSpeed: 200,
-				opacity: 0.6
-			},
-			closeOnClick:false
-		});
-		
-		// close button triggers for confirmation dialog
-		$confirmIt.find("button").click(function(e){
-			if( $(this).attr("data-action") == "confirm" ){
-				window.location =  $confirmIt.data('confirmSrc');
-			}
-		});
-	}
+	// close button triggers for confirmation dialog
+	$confirmIt.find("button").click(function(e){
+		if( $(this).attr("data-action") == "confirm" ){
+			$confirmIt.find("#confirmItButtons").hide();
+			$confirmIt.find("#confirmItLoader").fadeIn();
+			window.location =  $confirmIt.data('confirmSrc');
+		}
+	});
 	
 	// Activate dynamic confirmations from <a> of class confirmIt
 	$('a.confirmIt').click(function(e){
@@ -237,7 +225,8 @@ function activateConfirmations(){
 			$confirmIt.find("#confirmItTitle").html( $(this).attr('data-title') );
 		}
 		// show the confirmation when clicked
-		$confirmIt.data("overlay").load();
+		//$confirmIt.data("overlay").load();
+		$confirmIt.modal();
 		// prevent default action
 		e.preventDefault();
 	});
