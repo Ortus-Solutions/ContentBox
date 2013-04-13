@@ -178,174 +178,206 @@
 					</div>
 	
 				#html.endFieldSet()#
-	
-				<!--- Accordion --->
-				<div id="accordion">
-					<!--- Stats Panel --->
-					<cfif prc.page.isLoaded()>
-					<h2>
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-						<i class="icon-info-sign icon-large"></i> Page Info </h2>
-					<div class="pane">
-						<table class="table table-hover table-condensed table-striped" width="100%">
-							<tr>
-								<th width="85" class="textRight">Created By:</th>
-								<td>
-									<a href="mailto:#prc.page.getAuthorEmail()#">#prc.page.getAuthorName()#</a>
-								</td>
-							</tr>
-							<tr>
-								<th class="textRight">Published On:</th>
-								<td>
-									#prc.page.getDisplayPublishedDate()#
-								</td>
-							</tr>
-							<tr>
-								<th class="textRight">Page Version:</th>
-								<td>
-									#prc.page.getActiveContent().getVersion()#
-								</td>
-							</tr>
-							<tr>
-								<th class="textRight">Child Pages:</th>
-								<td>
-									#prc.page.getNumberOfChildren()#
-								</td>
-							</tr>
-							<tr>
-								<th class="textRight">Views:</th>
-								<td>
-									#prc.page.getHits()#
-								</td>
-							</tr>
-							<tr>
-								<th class="textRight">Comments:</th>
-								<td>
-									#prc.page.getNumberOfComments()#
-								</td>
-							</tr>
-						</table>
-					</div>
-					</cfif>
-					<!--- Page Options Panel --->
-					<cfif prc.oAuthor.checkPermission("EDITORS_DISPLAY_OPTIONS")>
-					<h2>
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-						<i class="icon-picture icon-large"></i> Display Options </h2>
-					<div class="pane">
-						<!--- Parent Page --->
-						#html.label(field="parentPage",content='Parent:')#
-						<select name="parentPage" id="parentPage" class="input-block-level">
-							<option value="">No Parent</option>
-							#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
-						</select>
-	
-						<!--- layout --->
-						#html.label(field="layout",content='Layout:')#
-						<select name="layout" id="layout" class="width98">
-							<option value="-inherit-" <cfif prc.page.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
-							#html.options(values=prc.availableLayouts, selectedValue=prc.page.getLayoutWithDefault())#
-						</select>
-						
-						<!--- mobile layout --->
-						#html.label(field="mobileLayout",content='Mobile Layout:')#
-						<select name="mobileLayout" id="mobileLayout" class="input-block-level">
-							<option value="" <cfif prc.page.getMobileLayout() eq "">selected="selected"</cfif>>-None-</option>
-							<option value="-inherit-" <cfif prc.page.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
-							#html.options(values=prc.availableLayouts, selectedValue=prc.page.getMobileLayout())#
-						</select>
-	
-						<!--- Show in Menu Builders --->
-						#html.select(name="showInMenu",label="Show In Menus:",class="input-block-level",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
-	
-						<!--- menu order --->
-						#html.inputfield(type="number",label="Menu Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="input-block-level",size="5",maxlength="2",min="0",max="99")#
-	
-					</div>
-					<cfelse>
+				
+				<!---Begin Accordion--->
+				<div class="accordion" id="accordion">
+				    <!---Begin Page info--->
+                    <cfif prc.page.isLoaded()>
+					<div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
+                        		<i class="icon-info-sign icon-large"></i> Page Info
+                      		</a>
+                    	</div>
+                    	<div id="pageinfo" class="accordion-body collapse in">
+                      		<div class="accordion-inner">
+                        		<table class="table table-hover table-condensed table-striped" width="100%">
+        							<tr>
+        								<th width="85" class="textRight">Created By:</th>
+        								<td>
+        									<a href="mailto:#prc.page.getAuthorEmail()#">#prc.page.getAuthorName()#</a>
+        								</td>
+        							</tr>
+        							<tr>
+        								<th class="textRight">Published On:</th>
+        								<td>
+        									#prc.page.getDisplayPublishedDate()#
+        								</td>
+        							</tr>
+        							<tr>
+        								<th class="textRight">Page Version:</th>
+        								<td>
+        									#prc.page.getActiveContent().getVersion()#
+        								</td>
+        							</tr>
+        							<tr>
+        								<th class="textRight">Child Pages:</th>
+        								<td>
+        									#prc.page.getNumberOfChildren()#
+        								</td>
+        							</tr>
+        							<tr>
+        								<th class="textRight">Views:</th>
+        								<td>
+        									#prc.page.getHits()#
+        								</td>
+        							</tr>
+        							<tr>
+        								<th class="textRight">Comments:</th>
+        								<td>
+        									#prc.page.getNumberOfComments()#
+        								</td>
+        							</tr>
+        						</table>
+                      		</div>
+                    	</div>
+                  	</div>
+                    </cfif>
+                    <!---End Page Info--->
+                    
+                    <!---Begin Display Options--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_DISPLAY_OPTIONS")>
+                  	<div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##displayoptions">
+                        		<i class="icon-picture icon-large"></i> Display Options
+                      		</a>
+                    	</div>
+                    	<div id="displayoptions" class="accordion-body collapse">
+                      		<div class="accordion-inner">
+                        		<!--- Parent Page --->
+        						#html.label(field="parentPage",content='Parent:')#
+        						<select name="parentPage" id="parentPage" class="input-block-level">
+        							<option value="">No Parent</option>
+        							#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
+        						</select>
+        	
+        						<!--- layout --->
+        						#html.label(field="layout",content='Layout:')#
+        						<select name="layout" id="layout" class="width98">
+        							<option value="-inherit-" <cfif prc.page.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+        							#html.options(values=prc.availableLayouts, selectedValue=prc.page.getLayoutWithDefault())#
+        						</select>
+        						
+        						<!--- mobile layout --->
+        						#html.label(field="mobileLayout",content='Mobile Layout:')#
+        						<select name="mobileLayout" id="mobileLayout" class="input-block-level">
+        							<option value="" <cfif prc.page.getMobileLayout() eq "">selected="selected"</cfif>>-None-</option>
+        							<option value="-inherit-" <cfif prc.page.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+        							#html.options(values=prc.availableLayouts, selectedValue=prc.page.getMobileLayout())#
+        						</select>
+        	
+        						<!--- Show in Menu Builders --->
+        						#html.select(name="showInMenu",label="Show In Menus:",class="input-block-level",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
+        	
+        						<!--- menu order --->
+        						#html.inputfield(type="number",label="Menu Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="input-block-level",size="5",maxlength="2",min="0",max="99")#
+                      		</div>
+                    	</div>
+                  	</div>
+                    <cfelse>
 						#html.hiddenField(name="parentPage", value=prc.parentcontentID)#
-					</cfif>
-	
-					<!--- Page Modifiers Panel --->
-					<cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
-					<h2>
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-						<i class="icon-cogs icon-large"></i> Modifiers </h2>
-					<div class="pane">
-						<!--- Allow Comments --->
-						<cfif prc.cbSettings.cb_comments_enabled>
-						<i class="icon-comments icon-large"></i>
-						#html.label(field="allowComments",content="Allow Comments:",class="inline")#
-						#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()), class="input-block-level")#
-						</cfif>
-						<!--- Password Protection --->
-						<label for="passwordProtection"><i class="icon-lock icon-large"></i> Password Protection:</label>
-						#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="input-block-level",size="25",maxlength="100")#
-					</div>
-					</cfif>
-					
-					<!--- Page Cache Panel --->
-					<cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
-					<h2>
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-						<i class="icon-hdd icon-large"></i> Cache Settings </h2>
-					<div class="pane">
-						<!--- Cache Settings --->
-						#html.label(field="cache",content="Cache Page Content: (fast)")#
-						<small>Caches content translation only</small><Br/>
-						#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCache()), class="input-block-level")#
-	
-						#html.label(field="cacheLayout",content="Cache Page Layout: (faster)")#
-						<small>Caches all generated page+layout HTML</small><br/>
-						#html.select(name="cacheLayout",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCacheLayout()), class="input-block-level")#
-	
-						#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.page,title="Enter the number of minutes to cache your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
-						#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.page,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
-					</div>
-					</cfif>
-					
-					<!--- Categories --->
-					<cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
-					<h2>
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-						<i class="icon-tags icon-large"></i> Categories </h2>
-					<div class="pane">
-						<!--- Display categories --->
-						<div id="categoriesChecks">
-						<cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
-							<label class="checkbox">
-							#html.checkbox(name="category_#x#",value="#prc.categories[x].getCategoryID()#",checked=prc.page.hasCategories( prc.categories[x] ))#
-							#prc.categories[x].getCategory()#
-							</label>
-						</cfloop>
-						</div>
-	
-						<!--- New Categories --->
-						#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="input-block-level")#
-					</div>
-					</cfif>
-					
-					<!--- HTML Modifiers Panel --->
-					<cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>
-					<h2>
-						<img src="#prc.cbRoot#/includes/images/arrow_right.png" alt="" width="6" height="6" class="arrow_right" />
-						<img src="#prc.cbRoot#/includes/images/arrow_down.png" alt="" width="6" height="6" class="arrow_down" />
-						<i class="icon-cloud icon-large"></i> HTML Attributes </h2>
-					<div class="pane">
-						#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.page,class="input-block-level",maxlength="160")#
-						#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.page,class="input-block-level",maxlength="160")#
-					</div>
-					</cfif>
-					
-					<!--- Event --->
+                    </cfif>
+                    <!---End Display Options--->
+                    
+                    <!---Begin Modifiers--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
+                    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
+                        		<i class="icon-cogs icon-large"></i> Modifiers
+                      		</a>
+                    	</div>
+                    	<div id="modifiers" class="accordion-body collapse">
+                      		<div class="accordion-inner">
+                        		<!--- Allow Comments --->
+        						<cfif prc.cbSettings.cb_comments_enabled>
+        						<i class="icon-comments icon-large"></i>
+        						#html.label(field="allowComments",content="Allow Comments:",class="inline")#
+        						#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()), class="input-block-level")#
+        						</cfif>
+        						<!--- Password Protection --->
+        						<label for="passwordProtection"><i class="icon-lock icon-large"></i> Password Protection:</label>
+        						#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="input-block-level",size="25",maxlength="100")#
+                      		</div>
+                    	</div>
+                  	</div>
+                    </cfif>
+                    <!---End Modifiers--->
+                    
+                    <!---Begin Cache Settings--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
+                    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
+                        		<i class="icon-hdd icon-large"></i> Cache Settings
+                      		</a>
+                    	</div>
+                    	<div id="cachesettings" class="accordion-body collapse">
+                      		<div class="accordion-inner">
+                        		<!--- Cache Settings --->
+        						#html.label(field="cache",content="Cache Page Content: (fast)")#
+        						<small>Caches content translation only</small><Br/>
+        						#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCache()), class="input-block-level")#
+        	
+        						#html.label(field="cacheLayout",content="Cache Page Layout: (faster)")#
+        						<small>Caches all generated page+layout HTML</small><br/>
+        						#html.select(name="cacheLayout",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCacheLayout()), class="input-block-level")#
+        	
+        						#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.page,title="Enter the number of minutes to cache your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
+        						#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.page,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
+                      		</div>
+                    	</div>
+                  	</div>
+                    </cfif>
+                    <!---End Cache Settings--->
+                    
+                    <!---Begin Categories--->
+                    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
+                        		<i class="icon-tags icon-large"></i> Categories
+                      		</a>
+                    	</div>
+                    	<div id="categories" class="accordion-body collapse">
+                      		<div class="accordion-inner">
+                        		<!--- Display categories --->
+        						<div id="categoriesChecks">
+        						<cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
+        							<label class="checkbox">
+        							#html.checkbox(name="category_#x#",value="#prc.categories[x].getCategoryID()#",checked=prc.page.hasCategories( prc.categories[x] ))#
+        							#prc.categories[x].getCategory()#
+        							</label>
+        						</cfloop>
+        						</div>
+        	
+        						<!--- New Categories --->
+        						#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="input-block-level")#
+                      		</div>
+                    	</div>
+                  	</div>
+                    <!---End HTML Attributes--->
+                    
+                    <!---Begin HTML Attributes--->
+                    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##htmlattributes">
+                        		<i class="icon-cloud icon-large"></i> HTML Attributes
+                      		</a>
+                    	</div>
+                    	<div id="htmlattributes" class="accordion-body collapse">
+                      		<div class="accordion-inner">
+                        		#html.textField(name="htmlKeywords",label="Keywords: (Max 160 characters)",title="HTML Keywords Comma Delimited (Good for SEO)",bind=prc.page,class="input-block-level",maxlength="160")#
+								#html.textArea(name="htmlDescription",label="Description: (Max 160 characters)",title="HTML Description (Good for SEO)",bind=prc.page,class="input-block-level",maxlength="160")#
+                      		</div>
+                    	</div>
+                  	</div>
+                    <!---End HTML Attributes--->
+                    
+                    <!--- Event --->
 					#announceInterception("cbadmin_pageEditorSidebarAccordion")#
 				</div>
-				<!--- end accordion --->
+				<!--- End Accordion --->
 	
 				<!--- Event --->
 				#announceInterception("cbadmin_pageEditorSidebar")#
