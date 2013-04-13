@@ -46,27 +46,6 @@
 .horizontal_nav li a:hover { color:#000; }
 .horizontal_nav li.active { background:#FFF; border-top:1px solid #006ab7; border-right:1px solid #006ab7; border-left:1px solid #006ab7; border-bottom-style:none; }
 .horizontal_nav li.active a { color:#006ab7!important; }
-/** ==============================  Accordion  ============================== **/
-/* accordion header */
-#accordion h2 { margin:0; font-size:1em; padding:5px 15px; font-weight:normal; cursor:pointer; position:relative; }
-/* currently active header */
-#accordion h2.current { cursor:default; }
-/* accordion header arrows */
-#accordion h2 .arrow_down,#accordion h2 .arrow_right { position:absolute; top:10px; right:10px; }
-#accordion h2 .arrow_down { display:none; }
-#accordion h2.current .arrow_right { display:none; }
-#accordion h2.current .arrow_down { display:block; }
-/* Accordion pane */
-#accordion div.pane { display:none; padding:10px 10px; font-size:1em; }
-/** ============================== Accordion ============================== **/
-#accordion { background-color:#fff; }
-/* accordion header */
-#accordion h2 { background:#f7f8f8 url(../images/accordion_heading_bg.gif) repeat-x bottom; color:#111010; border:1px solid #fff; border-bottom:1px solid #ddd; }
-/* currently active header */
-#accordion h2.current { background-color:#fff; }
-a.accordion-toggle { text-decoration:none; }
-/* Accordion pane */
-#accordion div.pane { color:#5e5e5e; }
 /**============================== Page Layout with Sidebar ==============================**/
 .sidebar { width: 300px; float:right; margin:0 0 0 25px; }
 .main_column { margin-right: 312px; }
