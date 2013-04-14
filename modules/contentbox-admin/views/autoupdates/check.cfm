@@ -1,7 +1,11 @@
 ﻿<cfoutput>
-#html.startForm(name="updateForm",action=prc.xehUpdateApply)#
-<h2>Update Check: <span class="label label-inverse">#rc.channel#</span></h2>
-<div>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3><i class="icon-bolt icon-large"></i> Update Check: <span class="label label-inverse">#rc.channel#</span></h3>
+</div>
+<div class="modal-body">
+    #html.startForm(name="updateForm",action=prc.xehUpdateApply)#
 	#getPlugin("MessageBox").renderit()#
 
 	<cfif prc.updateFound>
@@ -54,11 +58,10 @@
 		#html.submitButton(name="submitUpdate",class="btn btn-primary",value="Apply Update",onclick="return confirm('Are you positive?')")#
 	</div>
 	</cfif>
-	
+	#html.endForm()#
 </div>
-#html.endForm()#
 <!--- Button Bar --->
-<p class="form-actions text-center">
+<div class="modal-footer">
 	<button class="btn btn-danger" onclick="return closeRemoteModal()"> Close </button>
-</p>
+</div>
 </cfoutput>

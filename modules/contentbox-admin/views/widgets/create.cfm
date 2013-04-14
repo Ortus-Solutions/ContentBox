@@ -1,7 +1,10 @@
 ﻿<cfoutput>
-<h2>Create New Widget</h2>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Create New Widget</h3>
+</div>
 #html.startForm(name="widgetCreateForm",action=prc.xehWidgetSave,novalidate="novalidate")#
-<div>
+<div class="modal-body">
 	<p>
 		First give me some information first and I will create a new ContentBox widget for you.  Then you 
 		can edit it to your heart's content! You can find your ContentBox widgets in the following location:
@@ -36,10 +39,8 @@
 		</cfloop>
 	</div>
 </div>
-<!---clear --->
-<div class="clearfix"></div>
 <!--- Button Bar --->
-<div class="text-center form-actions">
+<div class="modal-footer">
 	#html.button(class="btn btn-danger",onclick="closeRemoteModal()",value="Cancel")#
 	#html.button(type="submit", class="btn btn-primary", value="Create")#
 </div>
