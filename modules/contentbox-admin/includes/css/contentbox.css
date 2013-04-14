@@ -126,8 +126,7 @@ form textarea,form .wysiwyg { width:98%; }
 .loaders { margin:10px; display:none; text-align:center; }
 .tipList li{ padding: 5px 0px 0px 0px; }
 #authorDetails { margin:7px 0 0 45px; font-size:16px; }
-#main-login{ margin-left: 20px; margin-right:20px;}
-#loginBox {margin-top: 50px; max-width: 400px; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
+#loginBox {margin-top: 50px; max-width: 350px; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
 #loginContent { text-align:center; }
 #loginButtonbar {margin:10px}
 #header_top_authorName { color:orange; font-weight:bold; }

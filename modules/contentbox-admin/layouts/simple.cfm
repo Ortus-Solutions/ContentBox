@@ -49,7 +49,7 @@
     </div> <!---end navbar --->
 	
 	<!--- Container --->
-	<div class="container-fluid">
+	<div class="container">
 		<!--- cbadmin event --->
 		#announceInterception("cbadmin_beforeLoginContent")#
 		<!--- Main Content --->

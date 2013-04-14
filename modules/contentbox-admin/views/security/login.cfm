@@ -1,6 +1,6 @@
 ﻿<cfoutput>
-<div class="row-fluid" id="main-login">
-	<div class="box span4 offset4" id="loginBox">
+<div class="row" id="main-login">
+	<div class="box span12 offset4" id="loginBox">
 		<!---Login Header --->
 		<div class="header"><i class="icon-key icon-"></i> Login</div>
 		<!---Body --->
