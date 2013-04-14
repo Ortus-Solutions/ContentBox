@@ -5,7 +5,22 @@ $(document).ready(function() {
 	$remoteModal 		= $("#remoteModal");
 	$remoteModalContent	= $remoteModal.find("#remoteModelContent");
 	$remoteModalLoading	= $remoteModalContent.html();
-	
+    
+    // handler for "shown" event in modals
+    $( '#modal' ).on( 'shown', function() {
+        var modal = $( '#modal' ); 
+        // only run if modal is in delayed mode
+        if( modal.data( 'delay' ) ) {
+            // load the modal content
+            modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
+        }        
+    });
+    // reset modal content when hidden
+    $( '#modal' ).on( 'hidden', function() {
+        var modal = $( '#modal' );
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body"><i class="icon-spinner icon-spin icon-large icon-4x"></i></div>' );
+    })
+    
 	// Global Tool Tip Settings
 	toolTipSettings	= {	//will make a tooltip of all elements having a title property
 		 opacity: 0.8,
@@ -34,7 +49,7 @@ $(document).ready(function() {
 	//Vertical Navigation	
 	$("ul.vertical_nav").tabs("div.panes_vertical> div", {effect: 'fade'});
 	//Accordion
-	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:0});		
+	//$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:0});		
 	
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
@@ -129,17 +144,16 @@ function toggleFlickers(){
  * @return
  */
 function closeRemoteModal(){
-	$(".error").hide();
-	$remoteModal.data("overlay").close();
-	$remoteModalContent.html('').html($remoteModalLoading);
+    $(".error").hide();
+    $( '#modal' ).modal( 'hide' );
 }
 /**
 * Close a local modal window
 * @param div The jquery div object that represents the dialog.
 */
 function closeModal(div){
-	$(".error").hide();
-	div.data("overlay").close();
+    $(".error").hide();
+	div.modal( 'hide' );
 }
 /**
  * Open a new local modal window.
@@ -149,21 +163,10 @@ function closeModal(div){
  * @return
  */
 function openModal(div, w, h){
-	div.overlay({
-		mask: {
-			color: '#fff',
-			loadSpeed: 200,
-			opacity: 0.6 },
-		closeOnClick : true,
-		closeOnEsc : true,
-		onClose: function(){ closeModal( div ); }
-	});
-	div.find("a.close").attr("title","Close Window");
-	// width/height
-	if( w ){ div.css("width",w); }
-	if( h ){ div.css("height",h); }
-	// open the remote modal
-	div.data("overlay").load();
+    div.modal({
+        width: w,
+        height: h
+    })
 }
 /**
  * Open a new remote modal window Ajax style.
@@ -171,30 +174,50 @@ function openModal(div, w, h){
  * @param data The data packet to send
  * @param w The width of the modal
  * @param h The height of the modal
+ * @param delay Whether or not to delay loading of dialog until after dialog is created (useful for iframes)
  * @return
  */
-function openRemoteModal(url,params,w,h){
-	$remoteModal.overlay({
-		mask: {
-			color: '#fff',
-			loadSpeed: 200,
-			opacity: 0.6 },
-		closeOnClick : true,
-		closeOnEsc : true,
-		onBeforeLoad : function(){
-			$remoteModalContent.load( $remoteModal.data("url"),$remoteModal.data("params") );
-		},
-		onClose: function(){ closeRemoteModal(); }
-	});
-	$remoteModal.find("a.close").attr("title","Close Window");
-	// Set data for this remote modal
-	$remoteModal.data("url",url).data("params",params);
-	// width/height
-	if( w ){ $remoteModal.css("width",w); }
-	if( h ){ $remoteModal.css("height",h); }
-	// open the remote modal
-	$remoteModal.data("overlay").load();
+function openRemoteModal(url,params,w,h,delay){
+    var modal = $( '#modal' );
+    // set data values
+    modal.data( 'url', url )
+	modal.data( 'params', params );
+    modal.data( 'width', w != undefined ? w : $( window ).width() * .85 );
+    modal.data( 'height', h != undefined ? h : ($( window ).height() -360) );
+    
+    // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes)
+    if( delay ) {
+        var height = modal.data( 'height' );
+        // convert height percentage to a numeric value
+        if( height.search && height.search( '%' )!=-1 ) {
+            height = height.replace( '%', '' ) / 100.00;
+            height = $( window ).height() * height;
+            modal.data( 'height', height )
+        }
+        // set delay data in element
+        modal.data( 'delay', true );
+        // show modal
+        modal.modal({
+            height: modal.data( 'height' ),
+            width: modal.data( 'width' )
+        });
+    }
+    // otherwise, front-load the request and then create modal
+    else {
+        // load request for content
+        modal.load( url, params, function() {
+            // in callback, show modal
+            var maxHeight = ($( window ).height() -360);
+            modal.modal({
+                height: h!=undefined ? h : modal.height() < maxHeight ? modal.height() : maxHeight,
+                width: w!=undefined ? w : $( window ).width() * .80,
+                maxHeight: maxHeight
+            })
+        }) 
+    }
+    return;
 }
+
 function closeConfirmations(){
 	$confirmIt.modal( 'hide' );
 }

@@ -30,22 +30,16 @@ function qpSaveDraft(){
 	$quickPostForm.find("##isPublished").val('false');
 }
 function showQuickPost(){
-	$quickPost.overlay({
-			mask: {
-			color: '##fff',
-			loadSpeed: 200,
-			opacity: 0.6
-		},
-		closeOnClick : false,
-		onClose: function(){ closeQuickPost(); }
-	});
-	// load it
-	$quickPost.data("overlay").load();
+    $( '##quickPostModal' ).modal({
+        maxHeight: 800,
+        height: '80%',
+        width: 1000
+    });
 }
 function closeQuickPost(){
-	$quickPost.data("overlay").close();
-	$(".error").hide();
-	return false;
+    $(".error").hide();
+    $( '##quickPostModal' ).modal( 'hide' );
+    return false;
 }
 </script>
 </cfoutput>

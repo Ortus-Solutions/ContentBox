@@ -1,6 +1,9 @@
 <cfoutput>
-<h2>Link To A ContentBox Entry</h2>
-<div>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>Link To A ContentBox Entry</h3>
+</div>
+<div class="modal-body">
 #html.startForm(name="entryEditorSelectorForm")#
 
 	<!--- Loader --->
@@ -63,7 +66,7 @@
 #html.endForm()#
 </div>
 <!--- Button Bar --->
-<div class="text-center form-actions">
+<div class="modal-footer">
 	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

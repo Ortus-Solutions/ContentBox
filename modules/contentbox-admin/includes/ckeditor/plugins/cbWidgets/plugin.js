@@ -8,7 +8,7 @@ openRemoteModal() is part of contentbox js
 	var insertWidget= {
     		exec:function(editor){
     			// Open the selector widget dialog.
-    			openRemoteModal( getWidgetSelectorURL(), {editorName: editor.name}, undefined, 530 );
+    			openRemoteModal( getWidgetSelectorURL(), {editorName: editor.name}, 1000, 450 );
     		}
     	},
     	updateWidget = {

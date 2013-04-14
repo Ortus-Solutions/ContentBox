@@ -3,7 +3,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// Take height for iframe
-	$("##previewFrame").attr("height", $("##remoteModelContent").height() - 50 + "px" );
+    var height = $("##modal").data( 'height' );
+    $("##previewFrame").attr("height", height );
 	// load source
 	$("##previewForm").submit();
 });
