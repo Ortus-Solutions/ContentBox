@@ -14,7 +14,8 @@ function previewContent(){
 					   slug: $("##slug").val(),
 					   contentType : $("##contentType").val() },
 					 "95%",
-					 "90%");
+					 "85%",
+                     true);
 }
 // Set the actual publishing date to now
 function publishNow(){

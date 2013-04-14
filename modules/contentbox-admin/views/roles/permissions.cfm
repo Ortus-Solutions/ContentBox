@@ -1,7 +1,10 @@
 ﻿<!--- Container ID: remoteModelContent --->
 <cfoutput>
-<h2>Permissions Manager for '#prc.role.getRole()#'</h2>
-<div>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Permissions Manager for '#prc.role.getRole()#'</h3>
+</div>
+<div class="modal-body">
 	<!--- Add Permission Form--->
 	#html.startForm(name="permissionForm")#
 	#html.startFieldset(legend="Available Permissions")#
@@ -47,11 +50,9 @@
 		
 	#html.endFieldSet()#
 	#html.endForm()#
-	
-	
 </div>
 <!--- Button Bar --->
-<div class="text-center form-actions">
+<div class="modal-footer">
 	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

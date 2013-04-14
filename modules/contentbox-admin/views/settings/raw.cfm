@@ -32,11 +32,15 @@
 						<p>Manage the raw settings at your own risk buddy!</p>
 						
 						<!--- Settings Editor --->
-						<div id="settingEditorContainer" class="modal">
+						<div id="settingEditorContainer" class="modal hide fade">
 							<div id="modalContent">
-							<h2>Setting Editor</h2>
+							<div class="modal-header">
+    							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h3>Setting Editor</h3>
+                            </div>
 							<!--- Create/Edit form --->
 							#html.startForm(action=prc.xehSettingsave,name="settingEditor",novalidate="novalidate")#
+							<div class="modal-body">
 								<input type="hidden" name="settingID" id="settingID" value="" />
 								<input type="hidden" name="page" id="page" value="#rc.page#" />
 				
@@ -45,11 +49,11 @@
 				
 								<label for="value">Value:</label>
 								<textarea name="value" id="value" rows="3" class="input-block-level"></textarea>
-				
-								<div class="text-center form-actions">
-									#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##settingEditorContainer') )")#
-									#html.submitButton(name="btnSave",value="Save",class="btn btn-danger")#
-								</div>
+							</div>
+							<div class="modal-footer">
+								#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##settingEditorContainer') )")#
+								#html.submitButton(name="btnSave",value="Save",class="btn btn-danger")#
+							</div>
 							#html.endForm()#
 							</div>
 						</div>
@@ -69,7 +73,7 @@
 										<span class="caret"></span>
 									</a>
 									<ul class="dropdown-menu">
-										<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');return false"><i class="icon-hdd"></i> View Cached Settings</a></li>
+										<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="icon-hdd"></i> View Cached Settings</a></li>
 										<li><a href="#event.buildLink(prc.xehFlushCache)#"><i class="icon-refresh"></i> Flush Settings Cache</a></li>
 									</ul>
 								</div>

@@ -58,7 +58,7 @@ textarea,
 #nav-search { padding: 6px 14px 2px 14px; }
 #div-search-results{
 	display: none;
-	top: 35px;background-color: black; padding: 5px 10px; width: 400px; position: absolute; min-heigh: 100px; z-index: 9999;
+	top: 35px;background-color: black; padding: 5px 10px; width: 400px; position: absolute; min-height: 100px; z-index: 9999;
 	box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; 
 	border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;
 }
@@ -113,6 +113,7 @@ fieldset legend { color:#3a3a3a; font-weight: bold; border-bottom: none; width: 
 form label { font-size:1em; font-weight:bold; display:block; margin:2px 0; }
 form input.textfield, form select, form textarea{ padding:6px; margin-right:4px; }
 form textarea,form .wysiwyg { width:98%; }
+.modal form { margin:0px !important; }
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
@@ -133,7 +134,7 @@ form textarea,form .wysiwyg { width:98%; }
 #header_top_authorName { color:orange; font-weight:bold; }
 #categoriesChecks{ overflow: auto; max-height: 250px; border: 1px dotted #707171;}
 #quickPost{display: none;}
-#addCustomFieldButton{margin:0xp 10px 0px 10px}
+#addCustomFieldButton{margin:0px 10px 0px 10px}
 .editorTime{ width:35px; }
 #contentToolBar{ margin: 5px 0px 0px 0px; padding: 3px; min-height: 30px}
 #contentLabel{margin:2px 0px 10px 0px;}
@@ -145,7 +146,7 @@ form textarea,form .wysiwyg { width:98%; }
 #adminActionsButton{ text-decoration: none; }
 .navbarPanels{ color: white; z-index:999; display:none; position: absolute; margin-left: 15px; padding: 10px; background-color: black; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
 .navbarPanels a { color: white !important; }
-.navbarPanels a:hover{ text-transform: underline;}
+.navbarPanels a:hover{ text-decoration: underline;}
 .navbarPanels li{ list-style: none;}
 .navbarSlot{ margin: 0px 3px; }
 #quickLinksPanel{ right: 2px;}
@@ -154,17 +155,17 @@ form textarea,form .wysiwyg { width:98%; }
 .actionBar { margin:10px 0 5px; text-align: center }
 .filterBar { margin:10px 0 2px; }
 .buttonBar { float: right; margin:7px 0px 0px 10px;}
-#bottomCenteredBar { margin:20px 0 0; text-align:right; }
+#bottomCenteredBar { margin:0px 0 0; text-align:right; }
 /** ============================== ConfirmIt-Modals ============================== **/
 #exposeMask { background:#000!important; }
 /* background color for overlay and expose mask */
-#remoteModal, #quickPost, .modal {top:20px !important; border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
-#remoteModal, .modal { width:1000px; height: 90% }
+#remoteModal, #quickPost {top:20px !important; border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
+#remoteModal { width:1000px; height: 90% }
 #quickPost { width:1000px; height: 80% }
-#remoteModal h2, #quickPost h2, .modal h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; font-size: 14px }
-#remoteModelContent hr, #quickPost hr, .modal hr { border-bottom-color:#C0C0C0; color:#C0C0C0; border-bottom:1px solid; border-style:none none solid; height:1px; margin:2em 0; }
-#remoteModal a.close, #quickPost a.close, .modal a.close { opacity: 1.0; background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
-#remoteModelContent, #quickPostContent, #modalContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:98%;overflow-y:auto; }
+#remoteModal h2, #quickPost h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; font-size: 14px }
+#remoteModelContent hr, #quickPost hr { border-bottom-color:#C0C0C0; color:#C0C0C0; border-bottom:1px solid; border-style:none none solid; height:1px; margin:2em 0; }
+#remoteModal a.close, #quickPost a.close { opacity: 1.0; background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
+#remoteModelContent, #quickPostContent { background-color:#fff; padding:10px; font-size:12px; margin:0; height:98%;overflow-y:auto; }
 #confirmIt {
 	box-shadow:0 0 15px #ccc;
 	-moz-box-shadow:0 0 15px #ccc; 
