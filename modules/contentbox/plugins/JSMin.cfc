@@ -270,7 +270,12 @@ location than layouts.
 			}
 
 			// Create concatenated file according to content.
+			// Media Query Fix
 			var sbString = trim( replace( sb.toString(), " and(", " and (", "all" ) );
+			// Class Select Fix
+			sbString = trim( REreplace( sb.toString(), "\b\[class", " [class", "all" ) );
+			
+			// Write it out
 			tempFileName = hash( sbString, "MD5" ) & ".cache." & listLast( compressedFiles[ 1 ], "." );
 
 			//write out buffer
