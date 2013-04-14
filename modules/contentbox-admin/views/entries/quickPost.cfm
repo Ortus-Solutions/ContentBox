@@ -1,9 +1,12 @@
 ﻿<cfoutput>
-<div id="quickPost">
-	<div id="quickPostContent">
+<div id="quickPostModal" class="modal hide fade">
 		<!--- Entry Form  --->
 		#html.startForm(action=prc.xehQPEntrySave,name="quickPostForm",novalidate="novalidate")#
-			<h2>Quick Post</h2>
+			<div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            	<h3>Quick Post</h3>
+            </div>
+            <div class="modal-body" id="quickPostContent">
 			<!--- Hidden Fields --->
 			#html.hiddenField(name="contentID",value="")#
 			#html.hiddenField(name="isPublished",value="true")#
@@ -24,9 +27,9 @@
 				<!--- New Categories --->
 				#html.textField(name="newCategories",label="New Categories (Comma delimited)", title="Comma delimited list of new categories to create",class="input-block-level")#
 			#html.endFieldSet()#
-			
+			</div>
 			<!--- Button Bar --->
-			<div class="text-center form-actions">
+			<div class="modal-footer">
 				<button class="btn" onclick="return closeQuickPost()" title="Change your mind hugh?"> Cancel </button>
 				&nbsp;<button type="submit" class="btn btn-primary" onclick="qpSaveDraft()" title="Not ready for primetime!">Save Draft</button>
 				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
@@ -34,6 +37,5 @@
 				</cfif>
 			</div>
 		#html.endForm()#
-	</div>
 </div>
 </cfoutput>

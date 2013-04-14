@@ -19,8 +19,10 @@
 			    #prc.cbroot#/includes/css/bootstrap.css,
 			    #prc.cbroot#/includes/css/contentbox.css,
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
+			    #prc.cbroot#/includes/css/bootstrap-modal.css,
 			    #prc.cbroot#/includes/css/font-awesome.min.css",			    
 			   location="#prc.cbroot#/includes/cache")#
+
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
@@ -37,6 +39,8 @@
 			    #prc.cbroot#/includes/js/jquery.uitablefilter.js,
 			    #prc.cbroot#/includes/js/jquery.tablednd_0_5.js,
 			    #prc.cbroot#/includes/js/tablesorter.min.js,
+			    #prc.cbroot#/includes/js/bootstrap-modalmanager.js,
+			    #prc.cbroot#/includes/js/bootstrap-modal.js,
 			    #prc.cbroot#/includes/js/contentbox.js",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- CKEditor Separate --->
@@ -218,8 +222,11 @@
 	</div>
 
 	<!--- ============================ Remote Modal Window ============================ --->
-	<div id="remoteModal">
-		<div id="remoteModelContent">
+	<div id="modal" class="modal hide fade">
+	    <div class="modal-header">
+	        <h3>Loading...</h3>
+	    </div>
+		<div id="remoteModelContent" class="modal-body">
 			<i class="icon-spinner icon-spin icon-large icon-4x"></i>
 		</div>
 	</div>
