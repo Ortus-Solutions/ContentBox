@@ -1,5 +1,5 @@
 <cfoutput>
-<div class="navbar navbar-inverse" id="adminMenuBar">
+<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuBar">
 	<div class="navbar-inner">
 		<div class="container">
 		
