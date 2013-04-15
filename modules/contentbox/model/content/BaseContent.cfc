@@ -20,8 +20,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="title"					notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
-	property name="publishedDate"			notnull="false" ormtype="timestamp" idx="idx_publishedDate";
-	property name="expireDate"				notnull="false" ormtype="timestamp" default="" idx="idx_expireDate";
+	property name="publishedDate"			notnull="false" ormtype="timestamp" index="idx_publishedDate";
+	property name="expireDate"				notnull="false" ormtype="timestamp" default="" index="idx_expireDate";
 	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
 	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
@@ -33,7 +33,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
-	
+
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
