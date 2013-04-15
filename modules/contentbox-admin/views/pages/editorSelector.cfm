@@ -1,7 +1,10 @@
 ﻿<cfoutput>
-<h2>Link To A ContentBox Page</h2>
-<div>
-#html.startForm(name="pageEditorSelectorForm")#
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>Link To A ContentBox Page</h3>
+</div>
+<div class="modal-body">
+    #html.startForm(name="pageEditorSelectorForm")#
 
 	<!--- Loader --->
 	<div class="loaders floatRight" id="pageLoader">
@@ -59,10 +62,10 @@
 	<!--- Paging --->
 	#prc.pagingPlugin.renderit(foundRows=prc.pagesCount, link=prc.pagingLink, asList=true)#
 
-#html.endForm()#
+    #html.endForm()#
 </div>
 <!--- Button Bar --->
-<div class="text-center form-actions">
+<div class="modal-footer">
 	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>
