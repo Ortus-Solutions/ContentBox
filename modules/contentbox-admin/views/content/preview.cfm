@@ -1,6 +1,9 @@
 <cfoutput>
-<h2><i class="icon-eye-open"></i> Quick Preview</h2>
-<div>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3><i class="icon-eye-open"></i> Quick Preview</h3>
+</div>
+<div class="modal-body">
 	<!---hidden form for preview submit, has to be a form as content can be quite large
 		so get operations do not work.	
 	 --->
