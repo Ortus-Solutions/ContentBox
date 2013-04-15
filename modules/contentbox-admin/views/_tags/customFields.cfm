@@ -69,7 +69,6 @@ function addDynamicItem(_this, inData){
 	// populate inputs
 	$trigger.prev().find("input").each(function(index){
 		var $this = $(this);
-		console.log($this);
 		if (inData != null) {
 			$this.val(inData[index]);
 		}
