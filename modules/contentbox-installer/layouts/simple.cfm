@@ -28,23 +28,29 @@
 	<script src="#prc.assetRoot#/includes/js/contentbox.js"></script>
 </head>
 <body>
-	<!--- NavBar --->
-	<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
-	    <div class="navbar-inner">
-	    	<div class="container">
-	    		<!--- Logo --->
-				<img src="#prc.assetRoot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
-				<!--- Brand, future multi-site switcher --->
-				<a class="brand">
-					ContentBox Installer
-				</a>
-			</div> <!---end container --->
-	    </div> <!--- end navbar-inner --->
-    </div> <!---end navbar --->
+	
+	<div id="wrapper">
+		<!--- NavBar --->
+		<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
+		    <div class="navbar-inner">
+		    	<div class="container">
+		    		<!--- Logo --->
+					<img src="#prc.assetRoot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
+					<!--- Brand, future multi-site switcher --->
+					<a class="brand">
+						ContentBox Installer
+					</a>
+				</div> <!---end container --->
+		    </div> <!--- end navbar-inner --->
+	    </div> <!---end navbar --->
 
-	<!--- Container --->
-	<div class="container-fluid margin10">
-		#renderView()#
+		<!--- Container --->
+		<div id="simple-container" class="container-fluid">
+			#renderView()#
+		</div>
+		
+		<div class="push"></div>
+
 	</div>
 
 	<footer id="footer" class="clearfix">
