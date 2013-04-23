@@ -23,7 +23,7 @@ openRemoteModal() is part of contentbox js
                     }
                 }
                 attributes.editorName = editor.name;
-    	        openRemoteModal( getWidgetEditorURL(), attributes );
+    	        openRemoteModal( getWidgetEditorURL(), attributes, 1000, 450 );
             }
     	},
         removeWidget = {
