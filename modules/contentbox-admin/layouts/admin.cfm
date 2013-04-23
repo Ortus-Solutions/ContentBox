@@ -14,6 +14,12 @@
     <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->
+	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-57.png" rel="apple-touch-icon"/>
+	<!--- For first-generation iPad: --->
+	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-72.png" rel="apple-touch-icon" sizes="72x72"/>
+	<!--- For iPhone 4 with high-resolution Retina display: --->
+	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
 	<!--- StyleSheets --->
 	#cb.minify(assets="#prc.cbroot#/includes/css/style.css,
 			    #prc.cbroot#/includes/css/bootstrap.css,
