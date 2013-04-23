@@ -4,13 +4,15 @@
 .widget-sidebar ul {list-style:none;}
 .widget-sidebar ul li {padding: 5px 10px;font-size: 110%;cursor: pointer !important;display:block;}
 .widget-sidebar ul li.selected, .widget-sidebar ul li:hover {background: #0D9DFF !important;color: #fafafa;}
-.widget-store {overflow-y:scroll;height:460px;padding-top:15px;margin-left: 190px;margin-top:-15px;}
-.widget-store.full {height:auto !important;padding-top:0px;margin-left:200px;overflow-y:visible;}
+.widget-store {height:460px;padding-top:20px;margin-left: 150px;margin-top:-15px;}
+.widget-store.full {height:auto !important;padding-top:25px;margin-left:0px;overflow-y:visible;}
 .widget-content {cursor:pointer;float: left;width: 228px;border: solid 1px #dadada;padding: 10px;border-radius: 4px;margin-bottom:20px;margin-right: 15px;}
 .widget-content.full {width:300px;cursor:default;}
 .widget-content.selected {background-color:#f1f1f1 !important;}
 .widget-content:hover {background:#f1f1f1;}
 .widget-content:hover .widget-title {background:#dadada;}
+#widget-container .nav-tabs {margin-top:-15px;padding-top:15px;height:465px;position:fixed;width:120px;}
+#widget-container {height:450px;}
 .widget-content img.widget-icon {
     float:left;margin-right:10px;
     transition: all .2s ease;
