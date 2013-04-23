@@ -34,28 +34,33 @@
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_afterLoginBodyStart")#
 	
-	<!--- NavBar --->
-	<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
-	    <div class="navbar-inner">
-	    	<div class="container">
-	    		<!--- Logo --->
-				<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
-				<!--- Brand, future multi-site switcher --->
-				<a class="brand">
-					ContentBox Administrator
-				</a>
-			</div> <!---end container --->
-	    </div> <!--- end navbar-inner --->
-    </div> <!---end navbar --->
+	<div id="wrapper">
+		<!--- NavBar --->
+		<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
+		    <div class="navbar-inner">
+		    	<div class="container">
+		    		<!--- Logo --->
+					<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
+					<!--- Brand, future multi-site switcher --->
+					<a class="brand">
+						ContentBox Administrator
+					</a>
+				</div> <!---end container --->
+		    </div> <!--- end navbar-inner --->
+	    </div> <!---end navbar --->
+		
+		<!--- Container --->
+		<div id="simple-container" class="container-fluid">
+			<!--- cbadmin event --->
+			#announceInterception("cbadmin_beforeLoginContent")#
+			<!--- Main Content --->
+			#renderView()#
+			<!--- cbadmin event --->
+			#announceInterception("cbadmin_afterLoginContent")#
+		</div>
 	
-	<!--- Container --->
-	<div class="container">
-		<!--- cbadmin event --->
-		#announceInterception("cbadmin_beforeLoginContent")#
-		<!--- Main Content --->
-		#renderView()#
-		<!--- cbadmin event --->
-		#announceInterception("cbadmin_afterLoginContent")#
+		<div class="push"></div>
+
 	</div>
 	<!--- Footer --->
 	#renderView(view="_tags/footer", module="contentbox-admin")#
