@@ -5,7 +5,9 @@
     // temp cache for initial request, since form won't be available
     var argCache = {};
     <cfloop collection="#prc.vals#" item="key">
-        argCache[ '#key#' ] = '#prc.vals[ key ]#';
+        <cfif isSimpleValue( prc.vals[ key ] ) >
+        argCache[ '#key#' ] = '#prc.vals[ key ]#';    
+        </cfif>
     </cfloop>
 $(document).ready(function() {
     updateArgs( false );
