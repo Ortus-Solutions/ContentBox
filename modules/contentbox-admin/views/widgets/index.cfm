@@ -53,72 +53,74 @@
 		
 					<!--- widgets --->
 					<!--- Vertical Nav --->
-					<div class="body_vertical_nav clearfix widgets">
+					<div class="tabbable tabs-left">
 						<!--- Navigation Bar --->
-						<ul class="vertical_nav" id="widget-sidebar">
-	                        <li class="active"><a href="##" class="current">All</a></li>
-	            			<cfloop query="prc.categories">
-	                        	<li><a href="##">#prc.categories.category#</a></li>
-	            			</cfloop>
-	                    </ul>
+						<ul class="nav nav-tabs" id="widget-sidebar">
+                            <li class="active"><a href="##widget-store" class="current" data-toggle="tab">All</a></li>
+                			<cfloop query="prc.categories">
+                            	<li><a href="##widget-store" data-toggle="tab">#prc.categories.category#</a></li>
+                			</cfloop>
+                        </ul>
 						<!--- ContentBars --->
-	                    <div class="widget-store full">
-	                    	<!--- Category Total Bar --->
-	                        <div id="widget-total-bar" class="widget-total-bar">Category: <strong>All</strong> (#prc.widgets.recordcount# Widgets)</div>
-							<!--- Widgets --->
-	                        <cfloop query="prc.widgets">
-	                			<cfscript>
-	                				p = prc.widgets.plugin;
-	                				widgetName = prc.widgets.name;
-	                				widgetSelector = prc.widgets.name;
-	                				category = prc.widgets.category;
-	                				
-	                				switch( prc.widgets.widgettype ) {
-	                					case 'module':
-	                                    	widgetName &= "@" & prc.widgets.module;
-	                                    	break;
-	                				}
-	                				iconName = prc.widgets.icon;
-	                			</cfscript>					
-	            				<div class="widget-content full" name="#widgetName#" category="#category#">
-	                                <div class="widget-title">
-	                                    #p.getPluginName()#
-	                                    <span class="widget-type">#prc.widgets.widgettype#</span>
-	                                </div>
-	                                <img class="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
-	                                <div class="widget-teaser">#p.getPluginDescription()#</div>
-	                                <div class="widget-arguments-holder" name="#widgetName#" category="#category#" style="display:none;">
-	                                    <div class="widget-teaser">#p.getPluginDescription()#</div>
-	                                </div>
-	                                <div class="widget-actions">
-	                                    Version #p.getPluginVersion()#
-										By <a href="#p.getPluginAuthorURL()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>
-	                                    <span class="widget-type">
-	                                    	<div class=" btn-group">
-												<!---read docs--->
-		                                        <a title="Read Widget Documentation" class="btn btn-mini" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
-												    <i class="icon-book icon-large"></i> 
-		                                        </a>
-		                                        <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
-													<!--- Editor --->
-													<a title="Edit Widget" class="btn btn-mini" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#widgetName#&type=#prc.widgets.widgettype#')#">
-													    <i class="icon-edit icon-large"></i> 
-													</a>
-		                            				<!---only allow deletion of core widgets--->
-													<cfif prc.widgets.widgettype eq "core">
-													<!--- Delete Command --->
-													<a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-mini" data-title="Delete #widgetName#?">
-														<i class="icon-remove-sign icon-large"></i> 
-	                                                </a>
-													</cfif>
-		                            			</cfif>
-	                            			</div>
-										</span>
-	                                </div>    
-	                            </div>
-	                		</cfloop>
-	                		<div class="widget-no-preview" style="display:none;">Sorry, no widgets matched your search!</div>
-	                    </div>
+						<div class="tab-content">
+            				<div class="widget-store full tab-pane active">
+    	                    	<!--- Category Total Bar --->
+    	                        <div id="widget-total-bar" class="widget-total-bar">Category: <strong>All</strong> (#prc.widgets.recordcount# Widgets)</div>
+    							<!--- Widgets --->
+    	                        <cfloop query="prc.widgets">
+    	                			<cfscript>
+    	                				p = prc.widgets.plugin;
+    	                				widgetName = prc.widgets.name;
+    	                				widgetSelector = prc.widgets.name;
+    	                				category = prc.widgets.category;
+    	                				
+    	                				switch( prc.widgets.widgettype ) {
+    	                					case 'module':
+    	                                    	widgetName &= "@" & prc.widgets.module;
+    	                                    	break;
+    	                				}
+    	                				iconName = prc.widgets.icon;
+    	                			</cfscript>					
+    	            				<div class="widget-content full" name="#widgetName#" category="#category#">
+    	                                <div class="widget-title">
+    	                                    #p.getPluginName()#
+    	                                    <span class="widget-type">#prc.widgets.widgettype#</span>
+    	                                </div>
+    	                                <img class="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
+    	                                <div class="widget-teaser">#p.getPluginDescription()#</div>
+    	                                <div class="widget-arguments-holder" name="#widgetName#" category="#category#" style="display:none;">
+    	                                    <div class="widget-teaser">#p.getPluginDescription()#</div>
+    	                                </div>
+    	                                <div class="widget-actions">
+    	                                    Version #p.getPluginVersion()#
+    										By <a href="#p.getPluginAuthorURL()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>
+    	                                    <span class="widget-type">
+    	                                    	<div class=" btn-group">
+    												<!---read docs--->
+    		                                        <a title="Read Widget Documentation" class="btn btn-mini" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
+    												    <i class="icon-book icon-large"></i> 
+    		                                        </a>
+    		                                        <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
+    													<!--- Editor --->
+    													<a title="Edit Widget" class="btn btn-mini" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#widgetName#&type=#prc.widgets.widgettype#')#">
+    													    <i class="icon-edit icon-large"></i> 
+    													</a>
+    		                            				<!---only allow deletion of core widgets--->
+    													<cfif prc.widgets.widgettype eq "core">
+    													<!--- Delete Command --->
+    													<a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-mini" data-title="Delete #widgetName#?">
+    														<i class="icon-remove-sign icon-large"></i> 
+    	                                                </a>
+    													</cfif>
+    		                            			</cfif>
+    	                            			</div>
+    										</span>
+    	                                </div>    
+    	                            </div>
+    	                		</cfloop>
+    	                		<div class="widget-no-preview" style="display:none;">Sorry, no widgets matched your search!</div>
+    	                    </div>
+                    	</div>
 	                </div>
 					
 					#html.endForm()#
