@@ -301,3 +301,15 @@ form input.error, form select.error, form textarea.error, form .wysiwyg.error, f
 /** ==============================  Accordions  ============================== **/
 .accordion .accordion-heading { background:#f7f8f8 url(../images/accordion_heading_bg.gif) repeat-x bottom; color:#111010; border:1px solid #fff; border-bottom:1px solid #ddd; }
 a.accordion-toggle { text-decoration:none; }
+/** ==============================  Vertical Tabs  ============================== **/
+.tabs-left > .nav-tabs > li > a, .tabs-left > .nav-tabs > li > a:focus {
+	background-color: #f5f5f5;
+}
+.tabs-left > .nav-tabs > .active > a, .tabs-left > .nav-tabs > .active > a:hover, .tabs-left > .nav-tabs > .active > a:focus {
+	color: black;
+	background-color: #ffffff;
+	border-color: #BBBBBB transparent #BBBBBB #BBBBBB
+}
+.tabs-left > .nav-tabs > li > a:hover, .tabs-left > .nav-tabs > .active > a:hover {
+	background-color: #9FCEE6;
+}
