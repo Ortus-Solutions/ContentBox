@@ -7,7 +7,6 @@ body{
 	margin: 0;
 	width:100%;
 	height:100%;
-	padding-top: 100px;
 	padding-left: 0px !important;
 	padding-right: 0px !important;
   	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -23,7 +22,15 @@ body{
 	background-image: linear-gradient(to bottom, #ddd, #F5F5F5);
 	background-repeat: repeat-x;
 }
-.container-fluid{ padding-bottom: 100px }
+#wrapper {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -91px;
+}
+#main-container { padding-top: 100px; margin-bottom: 20px; }
+#simple-container { padding-top: 60px; }
+.container-fluid{ padding-bottom: 30px }
 ol { list-style:decimal inside; }
 ul { list-style:disc inside; }
 #main-sidebar{ margin-left: 20px !important;}
@@ -83,6 +90,7 @@ textarea,
     border-color: #252525;
 }
 /**============================== FOOTER ==============================**/
+.push { height: 50px; }
 footer {
     background-color: #1B1B1B;
     opacity: 0.90;
@@ -97,12 +105,11 @@ footer {
     border-top: 1px solid #222222;
     box-shadow: 0 1px 0 #666666 inset;
     color: #EEEEEE;
-    bottom: 0px;
-    position:fixed;
     height: 50px;
     padding: 20px;
-    width: 100%;
     font-size: 11px;
+    position: relative;
+	margin-top: -91px;
 }
 footer a { color:#fff; text-decoration:underline; }
 footer a:hover{ color: #3a87ff}
@@ -128,7 +135,7 @@ form textarea,form .wysiwyg { width:98%; }
 .loaders { margin:10px; display:none; text-align:center; }
 .tipList li{ padding: 5px 0px 0px 0px; }
 #authorDetails { margin:7px 0 0 45px; font-size:16px; }
-#loginBox {margin-top: 50px; max-width: 350px; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
+#loginBox {margin: 30px auto; max-width: 350px; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
 #loginContent { text-align:center; }
 #loginButtonbar {margin:10px}
 #header_top_authorName { color:orange; font-weight:bold; }
@@ -313,4 +320,11 @@ a.accordion-toggle { text-decoration:none; }
 }
 .tabs-left > .nav-tabs > li > a:hover, .tabs-left > .nav-tabs > .active > a:hover {
 	background-color: #9FCEE6;
+}
+
+/**============================== Media Querys ==============================**/
+@media (max-width: 979px) {
+	#main-container { padding-top: 20px; }
+	#simple-container { padding-top: 0; }
+	.navbar-fixed-top { margin-bottom: 0 !important; }
 }
