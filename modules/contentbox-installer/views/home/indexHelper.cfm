@@ -30,11 +30,14 @@ $(document).ready(function() {
 	 
 	});
 });
+
 function nextStep(){
-	$("ul.vertical_nav").data("tabs").next();
+    var $tabs = $('.tabbable li');
+	$tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
 }
 function prevStep(){
-	$("ul.vertical_nav").data("tabs").prev();
+    var $tabs = $('.tabbable li');
+	$tabs.filter('.active').prev('li').find('a[data-toggle="tab"]').tab('show');
 }
 </script>
 </cfoutput>
