@@ -27,7 +27,7 @@
 .vertical_nav li a { padding-left:10px; }
 .vertical_nav li .current { display:block; height:25px; text-decoration:none!important; }
 .vertical_nav li a { color:#333; }
-.vertical_nav li a:hover { color:#000; }
+.vertical_nav li a:hover { color:#000; text-decoration:none !important; }
 .vertical_nav li .current { background:url(../images/vertical_nav_bg.gif) no-repeat left top; color:#000!important; }
 /************* Box body with vertical Navigation *************/
 .body_vertical_nav { padding:20px 0; }

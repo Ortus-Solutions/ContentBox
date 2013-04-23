@@ -10,9 +10,9 @@ $(document).ready(function() {
             widgetCount = 0;
 		// remove selected class from any sidebar link
         // remove selected class from any sidebar link
-        $( '##widget-sidebar' ).find( 'li' ).removeClass( 'active' ).find( 'a' ).removeClass( 'current' );
+        //$( '##widget-sidebar' ).find( 'li' ).removeClass( 'active' ).find( 'a' ).removeClass( 'current' );
         // set first item ('All') as selected
-        $( '##widget-sidebar' ).find( 'li' ).first().addClass( 'active' ).find( 'a' ).addClass( 'current' );
+        //$( '##widget-sidebar' ).find( 'li' ).first().addClass( 'active' ).find( 'a' ).addClass( 'current' );
         // search through widget content to match ones relevant to the search
         $( '.widget-store' ).find( '.widget-content' ).each(function(){
             var widget = $( this );
