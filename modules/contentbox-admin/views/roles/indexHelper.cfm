@@ -19,6 +19,7 @@ $(document).ready(function() {
 });
 <cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 function edit(roleID,role,description){
+	openModal( $("##roleEditorContainer"), 500, 200 );
 	$roleEditor.find("##roleID").val( roleID );
 	$roleEditor.find("##role").val( role );
 	$roleEditor.find("##description").val( description );
@@ -28,6 +29,10 @@ function remove(roleID){
 	$("##delete_"+ roleID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 	$roleForm.find("##roleID").val( roleID );
 	$roleForm.submit();
+}
+function createRole(){
+	openModal( $("##roleEditorContainer"), 500, 200 );
+	return false;
 }
 </cfif>
 </script>

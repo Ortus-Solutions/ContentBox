@@ -49,16 +49,15 @@ component extends="baseHandler"{
 	function remove(event,rc,prc){
 		// announce event
 		announceInterception("cbadmin_preRoleRemove",{roleID=rc.roleID});
-		// delete by id
-		if( !roleService.deleteByID( rc.roleID ) ){
-			getPlugin("MessageBox").setMessage("warning","Invalid role detected!");
-		}
-		else{
-			// announce event
-			announceInterception("cbadmin_postRoleRemove",{roleID=rc.roleID});
-			// Message
-			getPlugin("MessageBox").setMessage("info","Role Removed!");
-		}
+		// Get requested role and remove permissions
+		var oRole = roleService.get( id=rc.roleID ).clearPermissions();
+		// finally delete
+		roleService.delete( oRole );
+		// announce event
+		announceInterception("cbadmin_postRoleRemove",{roleID=rc.roleID});
+		// Message
+		getPlugin("MessageBox").setMessage("info","Role Removed!");
+		// relocate
 		setNextEvent( prc.xehroles );
 	}
 	
