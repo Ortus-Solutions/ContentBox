@@ -2,13 +2,11 @@ $(document).ready(function() {
 	
 	// setup global variables
 	$confirmIt 			= $('#confirmIt');
-	$remoteModal 		= $("#remoteModal");
-	$remoteModalContent	= $remoteModal.find("#remoteModelContent");
-	$remoteModalLoading	= $remoteModalContent.html();
+	$remoteModal 		= $("#modal");
     
     // handler for "shown" event in modals
-    $( '#modal' ).on( 'shown', function() {
-        var modal = $( '#modal' ); 
+	$remoteModal.on( 'shown', function() {
+        var modal = $remoteModal; 
         // only run if modal is in delayed mode
         if( modal.data( 'delay' ) ) {
             // load the modal content
@@ -16,8 +14,8 @@ $(document).ready(function() {
         }        
     });
     // reset modal content when hidden
-    $( '#modal' ).on( 'hidden', function() {
-        var modal = $( '#modal' );
+	$remoteModal.on( 'hidden', function() {
+        var modal = $remoteModal;
         modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body"><i class="icon-spinner icon-spin icon-large icon-4x"></i></div>' );
     })
     
@@ -144,7 +142,7 @@ function toggleFlickers(){
  */
 function closeRemoteModal(){
     $(".error").hide();
-    $( '#modal' ).modal( 'hide' );
+    $remoteModal.modal( 'hide' );
 }
 /**
 * Close a local modal window
@@ -177,7 +175,7 @@ function openModal(div, w, h){
  * @return
  */
 function openRemoteModal(url,params,w,h,delay){
-    var modal = $( '#modal' );
+    var modal = $remoteModal;
     // set data values
     modal.data( 'url', url )
 	modal.data( 'params', params );
