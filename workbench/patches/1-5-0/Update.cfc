@@ -20,7 +20,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
-Update for 1.2.1 release
+Update for 1.5.0 release
 
 Start Commit Hash: 7609786c62bfdd5b0cc8df979a19e76d23fb2fde
 End Commit Hash: e70e2c90c2c6b326e3618be42315a78b7894687a
@@ -37,9 +37,10 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="coldbox"					inject="coldbox";
 	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
 	property name="log"						inject="logbox:logger:{this}";
-
+	property name="contentService" 			inject="contentService@cb";
+	
 	function init(){
-		version = "1.2.1";
+		version = "1.5.0";
 		return this;
 	}
 
@@ -54,6 +55,7 @@ component implements="contentbox.model.updates.IUpdate"{
 				log.info("About to begin #version# patching");
 				
 				updateSettings();
+				updateContentCreators();
 				
 				// Add Columns
 				//addColumn(table="cb_content", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
@@ -86,6 +88,15 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 	
 	/************************************** PRIVATE *********************************************/
+	
+	private function updateContentCreators(){
+		// Update the creator to be the last edited user, so we can start somewhere.
+		var allContent = contentService.getAll();
+		for( var thisContent in allContent ){
+			thisContent.setCreator( thisContent.getAuthor() );
+		}
+		contentService.saveAll( allContent );
+	}
 	
 	private function updateAdmin(){
 		var oRole = roleService.findWhere( { role = "Administrator" } );

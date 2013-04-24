@@ -34,6 +34,9 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
 	
+	// M20 -> creator loaded as a proxy and fetched immediately
+	property name="creator" notnull="true" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
+	
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
@@ -147,6 +150,26 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( hasActiveContent() ){
 			return activeContent[1];
 		}
+	}
+	
+	/**
+	* Shorthand Creator name
+	*/
+	string function getCreatorName(){
+		if( hasCreator() ){
+			return getCreator().getName();
+		}
+		return '';
+	}
+
+	/**
+	* Shorthand Creator email
+	*/
+	string function getCreatorEmail(){
+		if( hasCreator() ){
+			return getCreator().getEmail();
+		}
+		return '';
 	}
 
 	/**

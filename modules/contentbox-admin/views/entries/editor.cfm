@@ -188,13 +188,7 @@
         							<tr>
         								<th width="85" class="textRight">Created By:</th>
         								<td>
-        									<a href="mailto:#prc.entry.getAuthorEmail()#">#prc.entry.getAuthorName()#</a>
-        								</td>
-        							</tr>
-        							<tr>
-        								<th class="textRight">Published On:</th>
-        								<td>
-        									#prc.entry.getDisplayPublishedDate()#
+        									<a href="mailto:#prc.entry.getCreatorEmail()#">#prc.entry.getCreatorName()#</a>
         								</td>
         							</tr>
         							<tr>
@@ -204,9 +198,27 @@
         								</td>
         							</tr>
         							<tr>
+        								<th class="textRight">Published On:</th>
+        								<td>
+        									#prc.entry.getDisplayPublishedDate()#
+        								</td>
+        							</tr>
+        							<tr>
         								<th class="textRight">Version:</th>
         								<td>
         									#prc.entry.getActiveContent().getVersion()#
+        								</td>
+        							</tr>
+									<tr>
+        								<th width="85" class="textRight">Last Edit By:</th>
+        								<td>
+        									<a href="mailto:#prc.entry.getAuthorEmail()#">#prc.entry.getAuthorName()#</a>
+        								</td>
+        							</tr>
+									<tr>
+        								<th width="85" class="textRight">Last Edit On:</th>
+        								<td>
+        									#prc.entry.getActiveContent().getDisplayCreatedDate()#
         								</td>
         							</tr>
         							<tr>
@@ -238,7 +250,18 @@
                     	</div>
                     	<div id="modifiers" class="accordion-body collapse">
                       		<div class="accordion-inner">
-                        		<!--- Allow Comments --->
+                        		<!--- Creator --->
+								<cfif prc.entry.isLoaded() and prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+								<i class="icon-user icon-large"></i>
+								#html.label(field="creatorID",content="Creator:",class="inline")#
+								<select name="creatorID" id="creatorID" class="input-block-level">
+									<cfloop array="#prc.authors#" index="author">
+									<option value="#author.getAuthorID()#" <cfif prc.entry.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+									</cfloop>
+								</select>
+								</cfif>
+								
+								<!--- Allow Comments --->
         						<cfif prc.cbSettings.cb_comments_enabled>
         						<i class="icon-comments icon-large"></i> 
         						#html.label(field="allowComments",content="Allow Comments:",class="inline")#

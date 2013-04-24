@@ -161,6 +161,9 @@ component extends="baseHandler"{
 		// Get User's default markup
 		prc.defaultMarkup = prc.oAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
 		
+		// get all authors
+		prc.authors = authorService.getAll(sortOrder="lastName");
+
 		// exit handlers
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
@@ -223,6 +226,14 @@ component extends="baseHandler"{
 			getPlugin("MessageBox").warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
+		}
+		
+		// Attach creator if new page
+		if( isNew ){ entry.setCreator( prc.oAuthor ); }
+		
+		// Override creator?
+		if( !isNew and prc.oAuthor.checkPermission("PAGES_ADMIN") and entry.getCreator().getAuthorID() NEQ rc.creatorID ){
+			entry.setCreator( authorService.get( rc.creatorID ) );
 		}
 
 		// Register a new content in the page, versionized!
