@@ -38,6 +38,7 @@
 					<tr>
 						<th>Permission</th>
 						<th>Description</th>		
+						<th width="95" class="center">Roles</th>
 						<th width="75" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
@@ -47,6 +48,7 @@
 						<td><a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat(permission.getPermission())#','#jsstringFormat(permission.getDescription())#')" 
 							   title="Edit #permission.getPermission()#">#permission.getPermission()#</a></td>
 						<td>#permission.getDescription()#</td>
+						<td class="center"><span class="badge badge-info">#permission.getNumberOfRoles()#</span></td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 							<!--- Edit Command --->
@@ -73,18 +75,18 @@
 		<h3>Permission Editor</h3>
     </div>
 	<!--- Create/Edit form --->
+	#html.startForm(action=prc.xehPermissionSave,name="permissionEditor",novalidate="novalidate")#
 	<div class="modal-body">
-		#html.startForm(action=prc.xehPermissionSave,name="permissionEditor",novalidate="novalidate")#
 			#html.hiddenField(name="permissionID",value="")#
 			#html.textField(name="permission",label="Permission:",required="required",maxlength="255",size="30",class="input-block-level",title="The unique permission name")#
 			#html.textArea(name="description",label="Description:",cols="20",rows="3",class="input-block-level",required="required",title="A short permission description")#
-		#html.endForm()#
 	</div>
 	<!--- Footer --->
 	<div class="modal-footer">
 		#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##permissionEditorContainer') )")#
 		#html.submitButton(name="btnSave",value="Save",class="btn btn-danger")#
 	</div>
+	#html.endForm()#
 	</div>
 </div>
 </cfif>
