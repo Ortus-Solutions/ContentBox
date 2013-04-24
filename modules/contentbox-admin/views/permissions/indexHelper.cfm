@@ -20,6 +20,7 @@ $(document).ready(function() {
 });
 <cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 function edit(permissionID,permission,description){
+	openModal( $("##permissionEditorContainer"), 500, 200 );
 	$permissionEditor.find("##permissionID").val( permissionID );
 	$permissionEditor.find("##permission").val( permission );
 	$permissionEditor.find("##description").val( description );
@@ -29,6 +30,10 @@ function remove(permissionID){
 	$("##delete_"+ permissionID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 	$permissionForm.find("##permissionID").val( permissionID );
 	$permissionForm.submit();
+}
+function createPermission(){
+	openModal( $("##permissionEditorContainer"), 500, 200 );
+	return false;
 }
 </cfif>
 </script>
