@@ -2,8 +2,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// global ids
-	$entryForm = $("##entryForm");
-	$entries	  = $("##entries");
+	$entryForm 		= $("##entryForm");
+	$entries	  	= $("##entries");
+	$cloneDialog 	= $("##cloneDialog");
 	// filters and sorters
 	$entries.tablesorter();
 	$("##entryFilter").keyup(function(){
@@ -33,6 +34,7 @@ $(document).ready(function() {
 function getInfoPanelContent(contentID){
 	return $("##infoPanel_" + contentID).html();
 }
+<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 function remove(contentID){
 	if( contentID != null ){
 		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
@@ -49,5 +51,32 @@ function bulkChangeStatus(status, contentID){
 	}
 	$entryForm.submit();
 }
+</cfif>
+<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+function openCloneDialog(contentID, title){
+	// local id's
+	var $cloneForm = $("##cloneForm");
+	// open modal for cloning options
+	openModal( $cloneDialog, 500, 300 );
+	// form validator and data
+	$cloneForm.validator({
+		position:'top left', 
+		onSuccess:function(e,els){
+			$cloneForm.find("##cloneButtonBar").hide();
+			$cloneForm.find("##clonerBarLoader").slideDown();
+		} 
+	});
+	$cloneForm.find("##contentID").val( contentID );
+	$cloneForm.find("##title").val( title ).focus();
+	// close button
+	$cloneForm.find("##closeButton").click(function(e){
+		closeModal( $cloneDialog ); return false;
+	});
+	// clone button
+	$cloneForm.find("##cloneButton").click(function(e){
+		$cloneForm.submit();
+	});
+}
+</cfif>
 </script>
 </cfoutput>

@@ -148,6 +148,8 @@
 							    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 										<!--- Edit Command --->
 										<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+										<!--- Clone Command --->
+										<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
 										</cfif>
 										<!--- History Command --->
 										<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
@@ -247,4 +249,43 @@
 		</div>
 	</div>    
 </div>
+<!--- Clone Dialog --->
+<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+<div id="cloneDialog" class="modal hide fade">
+	<div id="modalContent">
+	    <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h3><i class="icon-copy"></i> Entry Cloning</h3>
+	    </div>
+        #html.startForm(name="cloneForm", action=prc.xehEntryClone)#
+        <div class="modal-body">
+			<p>By default, all internal links are updated for you as part of the cloning process.</p>
+		
+			#html.hiddenField(name="contentID")#
+			#html.textfield(name="title", label="Please enter the new entry title:", class="input-block-level", required="required", size="50")#
+			<label for="entryStatus">Publish entry?</label>
+			<small>By default all cloned entries are published as drafts.</small><br>
+			#html.select(options="true,false", name="entryStatus", selectedValue="false", class="input-block-level")#
+			
+			<!---Notice --->
+			<div class="alert alert-info">
+				<i class="icon-info-sign icon-large"></i> Please note that cloning is an expensive process, so please be patient.
+			</div>
+		</div>
+        <div class="modal-footer">
+        	<!--- Button Bar --->
+        	<div id="cloneButtonBar">
+          	 	<button class="btn btn-primary" id="cloneButton"> Clone </button>
+				<button class="btn btn-danger" id="closeButton"> Cancel </button>
+			</div>
+            <!--- Loader --->
+			<div class="center loaders" id="clonerBarLoader">
+				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+				<br>Please wait, doing some hardcore cloning action...
+			</div>
+        </div>
+		#html.endForm()#
+	</div>
+</div>
+</cfif>
 </cfoutput>
