@@ -75,5 +75,26 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 
 		return errors;
 	}
+	
+	/**
+	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
+	* @author.hint The author doing the cloning
+	* @original.hint The original content object that will be cloned into this content object
+	* @originalService.hint The ContentBox content service object
+	* @publish.hint Publish pages or leave as drafts
+	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
+	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
+	*/
+	BaseContent function prepareForClone(required any author, 
+										 required any original, 
+										 required any originalService, 
+										 required boolean publish,
+										 required any originalSlugRoot,
+										 required any newSlugRoot){
+		if( arguments.original.hasExcerpt() ){
+			setExcerpt( arguments.original.getExcerpt() );
+		}
+		return super.prepareForClone(argumentCollection=arguments);
+	}
 
 }

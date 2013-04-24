@@ -278,6 +278,7 @@ component extends="baseHandler"{
 		}
 		// get a clone
 		var clone = pageService.new({title=rc.title,slug=getPlugin("HTMLHelper").slugify( rc.title )});
+		clone.setCreator( prc.oAuthor );
 		// attach to the original's parent.
 		if( original.hasParent() ){
 			clone.setParent( original.getParent() );
