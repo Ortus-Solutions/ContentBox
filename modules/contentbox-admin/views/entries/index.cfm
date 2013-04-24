@@ -91,6 +91,10 @@
 								<cfelse>
 									#entry.getTitle()#
 								</cfif>
+								<!--- password protect --->
+								<cfif entry.isPasswordProtected()>
+									<i class="icon-lock"></i>
+								</cfif>
 							</td>
 							<td>#entry.getCategoriesList()#</td>
 							<td class="center">
@@ -117,17 +121,16 @@
 									data-toggle="popover"><i class="icon-info-sign icon-large"></i></a>
 								<!---Info Panel --->
 								<div id="infoPanel_#entry.getContentID()#" class="hide">
+									<!---Creator --->
+									<i class="icon-user"></i>
+									Created by <a href="mailto:#entry.getCreatorEmail()#">#entry.getCreatorName()#</a> on 
+									#entry.getDisplayCreatedDate()#
+									</br>
+									<!--- Last Edit --->
 									<i class="icon-calendar"></i> 
 									Last edit by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on 
 									#entry.getActiveContent().getDisplayCreatedDate()#
 									</br>
-									<!--- password protect --->
-									<cfif entry.isPasswordProtected()>
-										<i class="icon-lock"></i> Password Protected
-									<cfelse>
-										<i class="icon-unlock"></i> Public Entry
-									</cfif>
-									<br/>
 									<!--- comments icon --->
 									<cfif !entry.getallowComments()>
 										<i class="icon-comments"></i> Open Comments

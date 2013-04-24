@@ -25,8 +25,8 @@ $(document).ready(function() {
 			return getInfoPanelContent( $(this).attr( "data-contentID" ) );
 		},
 		trigger : 'hover',
-		placement : 'top',
-		title : 'Quick Info',
+		placement : 'left',
+		title : '<i class="icon-info-sign"></i> Quick Info',
 		delay : { show: 200, hide: 500 }
 	});
 });
