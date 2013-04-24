@@ -95,6 +95,7 @@ component extends="baseHandler"{
 		prc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
 		prc.xehEntryHistory  = "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.entries.bulkstatus";
+		prc.xehEntryClone 	= "#prc.cbAdminEntryPoint#.entries.clone";
 
 		// Tab
 		prc.tabContent_blog = true;
@@ -174,6 +175,44 @@ component extends="baseHandler"{
 		prc.tabContent_blog = true;
 		// view
 		event.setView("entries/editor");
+	}
+	
+	// clone
+	function clone(event,rc,prc){
+		// validation
+		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
+			getPlugin("MessageBox").warn("Can't clone the unclonable, meaning no contentID or title passed.");
+			setNextEvent(event=prc.xehPages);
+			return;
+		}
+		// decode the incoming title
+		rc.title = urldecode( rc.title );
+		// get the entry to clone
+		var original = entryService.get( rc.contentID );
+		// Verify new Title, else do a new copy of it
+		if( rc.title eq original.getTitle() ){
+			rc.title = "Copy of #rc.title#";
+		}
+		// get a clone
+		var clone = entryService.new( { title=rc.title, slug=getPlugin("HTMLHelper").slugify( rc.title ) } );
+		clone.setCreator( prc.oAuthor );
+		// attach to the original's parent.
+		if( original.hasParent() ){
+			clone.setParent( original.getParent() );
+			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
+		}
+		// prepare descendants for cloning, might take a while if lots of children to copy.
+		clone.prepareForClone(author=prc.oAuthor, 
+							  original=original, 
+							  originalService=entryService, 
+							  publish=rc.entryStatus, 
+							  originalSlugRoot=original.getSlug(),
+							  newSlugRoot=clone.getSlug());
+		// clone this sucker now!
+		entryService.saveEntry( clone );
+		// relocate
+		getPlugin("MessageBox").info("Entry Cloned, isn't that cool!");
+		setNextEvent(event=prc.xehEntries);
 	}
 
 	// save

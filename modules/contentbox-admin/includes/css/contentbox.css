@@ -44,7 +44,7 @@ textarea,
   width: inherit;
 }
 /**============================== ADMIN MAIN TOP MENU ==============================**/
-#adminMenuTopNav { font-size: 13px; z-index: 1500}
+#adminMenuTopNav { font-size: 13px; z-index: 1025}
 #adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}
 #adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
 #adminMenuTopNav .nav > li > a { padding: 8px 5px;}
@@ -73,7 +73,7 @@ textarea,
 #div-search-results ul{ font-size: 12px}
 #div-search-results li{ margin: 3px 0px }
 /**============================== ADMIN MAIN GENERATED MENU ==============================**/
-#adminMenuBar { top: 41px; }
+#adminMenuBar { top: 41px;  z-index: 1000}
 #adminMenuBar .container{ margin-left: 20px; margin-right: 20px; width: auto;}
 #adminMenuBar .nav > li { line-height:20px;}
 #adminMenuBar .nav > li > a{ padding: 10px;}

@@ -56,6 +56,7 @@ $(document).ready(function() {
 function getInfoPanelContent(contentID){
 	return $("##infoPanel_" + contentID).html();
 }
+<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 function remove(contentID){
 	if( contentID != null ){
 		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
@@ -63,15 +64,27 @@ function remove(contentID){
 	}
 	$pageForm.submit();
 }
+function bulkChangeStatus(status, contentID){
+	$pageForm.attr("action","#event.buildlink(linkTo=prc.xehPageBulkStatus)#");
+	$pageForm.find("##contentStatus").val( status );
+	if( contentID != null ){
+		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+		checkByValue('contentID',contentID);	
+	}
+	$pageForm.submit();
+}
+</cfif>
+<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 function openCloneDialog(contentID, title){
 	// local id's
 	var $cloneForm = $("##cloneForm");
 	// open modal for cloning options
-	openModal( $cloneDialog, 500, 500 );
+	openModal( $cloneDialog, 500, 300 );
 	// form validator and data
 	$cloneForm.validator({
 		position:'top left', 
 		onSuccess:function(e,els){
+			$cloneForm.find("##cloneButtonBar").hide();
 			$cloneForm.find("##clonerBarLoader").slideDown();
 		} 
 	});
@@ -86,14 +99,6 @@ function openCloneDialog(contentID, title){
 		$cloneForm.submit();
 	});
 }
-function bulkChangeStatus(status, contentID){
-	$pageForm.attr("action","#event.buildlink(linkTo=prc.xehPageBulkStatus)#");
-	$pageForm.find("##contentStatus").val( status );
-	if( contentID != null ){
-		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
-		checkByValue('contentID',contentID);	
-	}
-	$pageForm.submit();
-}
+</cfif>
 </script>
 </cfoutput>

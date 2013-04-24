@@ -99,7 +99,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 										 required boolean publish,
 										 required any originalSlugRoot,
 										 required any newSlugRoot){
-		setLayout( original.getLayout() );
+		setLayout( arguments.original.getLayout() );
 		return super.prepareForClone(argumentCollection=arguments);
 	}
 

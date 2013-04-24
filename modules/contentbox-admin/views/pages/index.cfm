@@ -306,9 +306,12 @@
 			</div>
 		</div>
         <div class="modal-footer">
-            <button class="btn btn-primary" id="cloneButton"> Clone </button>
-			<button class="btn btn-danger" id="closeButton"> Cancel </button>
-            <!--- Loader --->
+            <!--- Button Bar --->
+        	<div id="cloneButtonBar">
+          		<button class="btn btn-primary" id="cloneButton"> Clone </button>
+				<button class="btn btn-danger" id="closeButton"> Cancel </button>
+            </div>
+			<!--- Loader --->
 			<div class="center loaders" id="clonerBarLoader">
 				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 				<br>Please wait, doing some hardcore cloning action...
