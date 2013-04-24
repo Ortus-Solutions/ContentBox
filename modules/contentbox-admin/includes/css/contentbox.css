@@ -44,7 +44,7 @@ textarea,
   width: inherit;
 }
 /**============================== ADMIN MAIN TOP MENU ==============================**/
-#adminMenuTopNav { font-size: 13px; z-index: 999}
+#adminMenuTopNav { font-size: 13px; z-index: 1500}
 #adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}
 #adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
 #adminMenuTopNav .nav > li > a { padding: 8px 5px;}
