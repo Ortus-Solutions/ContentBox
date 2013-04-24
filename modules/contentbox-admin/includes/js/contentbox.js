@@ -56,7 +56,6 @@ $(document).ready(function() {
 });
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
-		$("#adminActionsPanel").hide();
 		$("#adminActionsIcon").addClass( "icon-spin textOrange" );
 		// Run Action Dispatch
 		$.post( actionURL , {targetModule: action}, function(data){

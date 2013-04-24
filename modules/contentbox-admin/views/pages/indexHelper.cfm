@@ -72,7 +72,6 @@ function openCloneDialog(contentID, title){
 	$cloneForm.validator({
 		position:'top left', 
 		onSuccess:function(e,els){
-			$cloneForm.find("##bottomCenteredBar").slideUp();
 			$cloneForm.find("##clonerBarLoader").slideDown();
 		} 
 	});
