@@ -108,6 +108,10 @@
 								<cfelse>
 									#page.getTitle()#
 								</cfif>
+								<!--- password protected --->
+								<cfif page.isPasswordProtected()>
+									<i class="icon-lock"></i>
+								</cfif>
 							</td>
 							<td>#page.getCategoriesList()#</td>
 							<td class="center">
@@ -140,17 +144,16 @@
 									data-toggle="popover"><i class="icon-info-sign icon-large"></i></a>
 								<!---Info Panel --->
 								<div id="infoPanel_#page.getContentID()#" class="hide">
+									<!--- creator --->
+									<i class="icon-user"></i>
+									Created by <a href="mailto:#page.getCreatorEmail()#">#page.getCreatorName()#</a> on 
+									#page.getDisplayCreatedDate()#
+									</br>
+									<!--- last edit --->
 									<i class="icon-calendar"></i>
 									Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on 
 									#page.getActiveContent().getDisplayCreatedDate()#
 									</br>
-									<!--- password protect --->
-									<cfif page.isPasswordProtected()>
-										<i class="icon-lock"></i> Password Protected
-									<cfelse>
-										<i class="icon-unlock"></i> Public Page
-									</cfif>
-									<br/>
 									<!--- comments icon --->
 									<cfif page.getallowComments()>
 										<i class="icon-comments"></i> Open Comments
@@ -160,8 +163,10 @@
 									<!---Layouts --->
 									<br/>
 									<i class="icon-picture"></i> Layout: <strong>#page.getLayout()#</strong>
+									<cfif len( page.getMobileLayout() )>
 									<br/>
 									<i class="icon-tablet"></i> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
+									</cfif>
 								</div>
 								
 								<!--- Page Actions --->
@@ -253,10 +258,8 @@
 					<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Draft</option>
 				</select>
 	
-				<div class="actionBar">
-					<button type="submit" class="btn btn-danger">Apply Filters</button>
-					<button class="btn" onclick="return to('#event.buildLink(prc.xehPages)#')">Reset</button>
-				</div>
+				<button type="submit" class="btn btn-danger">Apply Filters</button>
+				<button class="btn" onclick="return to('#event.buildLink(prc.xehPages)#')">Reset</button>
 				#html.endForm()#
 			</div>
 		</div>

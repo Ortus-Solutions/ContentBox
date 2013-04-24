@@ -15,7 +15,6 @@
 		<thead>
 			<tr>
 				<th>Page</th>
-				<th width="40" class="center"><i class="icon-th-list icon-large" title="Show in Menu"></i></th>
 				<th width="40" class="center"><i class="icon-globe icon-large" title="Published"></i></th>
 				<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
 				<th width="100" class="center">Actions</th>
@@ -37,14 +36,7 @@
 				<td>
 					<!--- Title --->
 					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#">#page.getSlug()#</a><br>
-					by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on #page.getActiveContent().getDisplayCreatedDate()#
-				</td>
-				<td class="center">
-					<cfif page.getShowInMenu()>
-						<i class="icon-ok icon-large textGreen" title="Shows in menu"></i>
-					<cfelse>
-						<i class="icon-remove icon-large textRed" title="Not in menu"></i>
-					</cfif>
+					<i class="icon-user" title="last edit by"></i> <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on #page.getActiveContent().getDisplayCreatedDate()#
 				</td>
 				<td class="center">
 					<cfif page.isExpired()>
