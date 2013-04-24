@@ -23,7 +23,7 @@ function removePermission(permissionID){
 	});
 }
 function reloadPerms(){
-	$remoteModalContent.load('#event.buildLink(prc.xehRolePermissions)#/roleID/#prc.role.getRoleID()#');
+	$remoteModal.load('#event.buildLink( prc.xehRolePermissions )#/roleID/#prc.role.getRoleID()#');
 }
 </script>
 </cfoutput>
