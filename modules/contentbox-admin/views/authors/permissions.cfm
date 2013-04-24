@@ -40,8 +40,20 @@
 		<p>You can also add a-la-carte permissions to the user by adding from the selection below:</p>
 		
 		<div class="input-append">
-			#html.select(name="permissionID",options=prc.permissions,column="permissionID",nameColumn="permission")#
-			<cfif arrayLen(prc.permissions) GT 0>
+			<!---Permission list --->
+			<select name="permissionID" id="permissionID">
+				<cfset noPerms = true>
+				<cfloop array="#prc.permissions#" index="thisPerm">
+					<cfif !prc.author.hasPermission( thisPerm ) AND !prc.author.getRole().hasPermission( thisPerm )>
+						<cfset noperms = false>
+						<option value="#thisPerm.getPermissionID()#">#thisPerm.getPermission()#</option>
+					</cfif>
+				</cfloop>
+				<cfif noPerms>
+					<option value="null">Role has all permissions</option>
+				</cfif>
+			</select>
+			<cfif arrayLen( prc.permissions ) GT 0 AND !noPerms>
 				<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
 			<cfelse>
 				<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
