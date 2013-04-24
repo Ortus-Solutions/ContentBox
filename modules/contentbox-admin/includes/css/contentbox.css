@@ -44,7 +44,7 @@ textarea,
   width: inherit;
 }
 /**============================== ADMIN MAIN TOP MENU ==============================**/
-#adminMenuTopNav { font-size: 13px; z-index: 9999}
+#adminMenuTopNav { font-size: 13px; z-index: 999}
 #adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}
 #adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
 #adminMenuTopNav .nav > li > a { padding: 8px 5px;}
@@ -134,6 +134,7 @@ form textarea,form .wysiwyg { width:98%; }
 /**============================== UNIQUE CSS ==============================**/
 .loaders { margin:10px; display:none; text-align:center; }
 .tipList li{ padding: 5px 0px 0px 0px; }
+.editorTime{ width:35px; }
 #authorDetails { margin:7px 0 0 45px; font-size:16px; }
 #loginBox {margin: 30px auto; max-width: 350px; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
 #loginContent { text-align:center; }
@@ -142,29 +143,14 @@ form textarea,form .wysiwyg { width:98%; }
 #categoriesChecks{ overflow: auto; max-height: 250px; border: 1px dotted #707171;}
 #quickPost{display: none;}
 #addCustomFieldButton{margin:0px 10px 0px 10px}
-.editorTime{ width:35px; }
 #contentToolBar{ margin: 5px 0px 0px 0px; padding: 3px; min-height: 30px}
 #contentLabel{margin:2px 0px 10px 0px;}
-.actionsPanel, .contentInfoPanel { z-index:999; cursor: help; display:none; position: absolute; margin-left: 5px; padding: 10px; background-color: #eaeaea; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
-.actionsPanel, .contentInfoPanel a{color:black;}
-.actionsPanel, .contentInfoPanel a:hover{ color: red;}
-.contentInfoPanel { margin-left: -95px; }
 #userDetails{ margin: 0px 0px 0px 10px;}
-#adminActionsButton{ text-decoration: none; }
-.navbarPanels{ color: white; z-index:999; display:none; position: absolute; margin-left: 15px; padding: 10px; background-color: black; text-align:left; min-width:100px; border:3px solid #666; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:10px; -webkit-border-radius:10px; border-radius:10px;}
-.navbarPanels a { color: white !important; }
-.navbarPanels a:hover{ text-decoration: underline;}
-.navbarPanels li{ list-style: none;}
-.navbarSlot{ margin: 0px 3px; }
-#quickLinksPanel{ right: 2px;}
-#adminActionsPanel{ margin-left: 100px}
 /** Button Bars ***/
 .actionBar { margin:10px 0 5px; text-align: center }
 .filterBar { margin:10px 0 2px; }
 .buttonBar { float: right; margin:7px 0px 0px 10px;}
-#bottomCenteredBar { margin:0px 0 0; text-align:right; }
 /** ============================== ConfirmIt-Modals ============================== **/
-#exposeMask { background:#000!important; }
 /* background color for overlay and expose mask */
 #remoteModal, #quickPost {top:20px !important; border:10px solid #666; display:none; text-align:left; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; width:600px; }
 #remoteModal { width:1000px; height: 90% }
