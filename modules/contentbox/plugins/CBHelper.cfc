@@ -133,7 +133,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// Get the site base SES URL
 	function siteBaseURL(){
-		return getRequestContext().buildLink('');
+		return replacenocase( getRequestContext().buildLink(''), "index.cfm", "" );
 	}
 
 	// Get the admin site root location using the configured module's entry point

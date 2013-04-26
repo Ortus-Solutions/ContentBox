@@ -229,7 +229,7 @@ Loads a coldbox cfc configuration file
 			if ( not StructKeyExists(configStruct, "AppName") )
 				instance.util.throwit("There was no 'AppName' setting defined. This is required by the framework.","","MissingSetting");
 			//Check for Default Event
-			if ( not StructKeyExists(configStruct, "DefaultEvent") )
+			if ( not StructKeyExists(configStruct, "DefaultEvent") OR NOT len( configStruct[ "DefaultEvent" ] ) )
 				configStruct["DefaultEvent"] = fwSettingsStruct["DefaultEvent"];
 			//Check for Event Name
 			if ( not StructKeyExists(configStruct, "EventName") )
@@ -637,22 +637,28 @@ Loads a coldbox cfc configuration file
 			var x 					= 1;
 			var thisLayout			= "";
 			var layoutsArray 		= arrayNew(1);
-
+			var fwSettingsStruct 	= instance.coldboxSettings;
+			
 			// defaults
-			configStruct.defaultLayout 		= "";
+			configStruct.defaultLayout 		= fwSettingsStruct.defaultLayout;
 			configStruct.defaultView 		= "";
 			configStruct.registeredLayouts  = structnew();
 
 			// Register layout settings
-			structAppend(configStruct,layoutSettings);
+			structAppend( configStruct, layoutSettings );
+			
+			// Check blank defaultLayout
+			if( !len( trim( configStruct.defaultLayout ) ) ){
+				configStruct.defaultLayout = fwSettingsStruct.defaultLayout;
+			}
 
 			// registered layouts
-			if( isStruct(layouts) ){
+			if( isStruct( layouts ) ){
 				// process structure into array
-				for(key in layouts){
-					thisLayout = layouts[key];
+				for( key in layouts ){
+					thisLayout = layouts[ key ];
 					thisLayout.name = key;
-					arrayAppend(layoutsArray, thisLayout);
+					arrayAppend( layoutsArray, thisLayout );
 				}
 			}
 			else{
