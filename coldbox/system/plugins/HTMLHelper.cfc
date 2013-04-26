@@ -197,7 +197,7 @@ Description :
 		<cfargument name="media" 	 	type="any"		required="false" 	default="" hint="The media attribute"/>
 		<cfargument name="noBaseURL" 	type="boolean" 	required="false" 	default="false" hint="Defaults to false. If you want to NOT append a request's ses or html base url then set this argument to true"/>
 		<cfargument name="charset" 		type="any" 		required="false" 	default="UTF-8" hint="The charset to add, defaults to utf-8"/>
-		<cfargument name="sendToHeader" type="boolean"	required="false" 	default="true" hint="Send to the header via htmlhead by default, else it returns the content"/>
+		<cfargument name="sendToHeader" type="boolean"	required="false" 	default="false" hint="Send to the header via htmlhead by default, else it returns the content"/>
 		<cfscript>
 			var buffer 		= createObject("java","java.lang.StringBuffer").init("<link");
 
@@ -432,7 +432,7 @@ Description :
 		<cfargument name="name" 	type="any" 		required="true" hint="A name for the meta tag or an array of struct data to convert to meta tags.Keys [name,content,type]"/>
 		<cfargument name="content" 	type="any" 		required="false" default="" hint="The content attribute"/>
 		<cfargument name="type" 	type="string"	 required="false" default="name" hint="Either ''name'' or ''equiv'' which produces http-equiv instead of the name"/>
-		<cfargument name="sendToHeader" type="boolean"	required="false" default="true" hint="Send to the header via htmlhead by default, else it returns the content"/>
+		<cfargument name="sendToHeader" type="boolean"	required="false" default="false" hint="Send to the header via htmlhead by default, else it returns the content"/>
 		<cfscript>
 			var x 		= 1;
 			var buffer	= createObject("java","java.lang.StringBuffer").init("");
@@ -805,6 +805,40 @@ Description :
 		<cfargument name="bindProperty" type="any" 		required="false" default="" hint="The property to use for the value, by convention we use the name attribute"/>
 		<cfscript>
 			arguments.type="password";
+			return inputField(argumentCollection=arguments);
+		</cfscript>
+	</cffunction>
+	
+	<!--- urlfield --->
+	<cffunction name="urlfield" access="public" returntype="any" output="false" hint="Render out a URL field. Remember that any extra arguments are passed as tag attributes">
+		<cfargument name="name" 		type="string" 	required="false" default="" hint="The name of the field"/>
+		<cfargument name="value" 		type="string"	required="false" default="" hint="The value of the field"/>
+		<cfargument name="disabled" 	type="boolean" 	required="false" default="false" hint="Disabled"/>
+		<cfargument name="readonly" 	type="boolean" 	required="false" default="false" hint="Readonly"/>
+		<cfargument name="wrapper" 		type="string" 	required="false" default="" hint="The wrapper tag to use around the tag. Empty by default">
+		<cfargument name="label" 		type="string"	required="false" default="" hint="If Passed we will prepend a label tag"/>
+		<cfargument name="labelwrapper" type="string"	required="false" default="" hint="The wrapper tag to use around the label. Empty by default"/>
+		<cfargument name="bind" 		type="any" 		required="false" default="" hint="The entity binded to this control"/>
+		<cfargument name="bindProperty" type="any" 		required="false" default="" hint="The property to use for the value, by convention we use the name attribute"/>
+		<cfscript>
+			arguments.type="url";
+			return inputField(argumentCollection=arguments);
+		</cfscript>
+	</cffunction>
+	
+	<!--- emailField --->
+	<cffunction name="emailField" access="public" returntype="any" output="false" hint="Render out an email field. Remember that any extra arguments are passed as tag attributes">
+		<cfargument name="name" 		type="string" 	required="false" default="" hint="The name of the field"/>
+		<cfargument name="value" 		type="string"	required="false" default="" hint="The value of the field"/>
+		<cfargument name="disabled" 	type="boolean" 	required="false" default="false" hint="Disabled"/>
+		<cfargument name="readonly" 	type="boolean" 	required="false" default="false" hint="Readonly"/>
+		<cfargument name="wrapper" 		type="string" 	required="false" default="" hint="The wrapper tag to use around the tag. Empty by default">
+		<cfargument name="label" 		type="string"	required="false" default="" hint="If Passed we will prepend a label tag"/>
+		<cfargument name="labelwrapper" type="string"	required="false" default="" hint="The wrapper tag to use around the label. Empty by default"/>
+		<cfargument name="bind" 		type="any" 		required="false" default="" hint="The entity binded to this control"/>
+		<cfargument name="bindProperty" type="any" 		required="false" default="" hint="The property to use for the value, by convention we use the name attribute"/>
+		<cfscript>
+			arguments.type="email";
 			return inputField(argumentCollection=arguments);
 		</cfscript>
 	</cffunction>
@@ -1567,19 +1601,28 @@ Description :
 		<cfargument name="buffer" 	type="any" required="true"/>
 		<cfscript>
 			var key	 = "";
+			var datakey = "";
 
 			// global exclusions
 			arguments.excludes &= ",fieldWrapper,labelWrapper,entity,booleanSelect,textareas,manytoone,onetomany,sendToHeader";
 
 			for(key in arguments.target){
-
+				// Normal Keys
 				if( (NOT len(arguments.excludes) OR (len(arguments.excludes) AND NOT listFindNoCase(arguments.excludes,key)))
 						AND (structKeyExists(arguments.target, key) AND isSimpleValue(arguments.target[key]) AND len(arguments.target[key])) ){
 					arguments.buffer.append(' #lcase(key)#="#arguments.target[key]#"');
 				}
+				// data keys
+				if( key eq "data" and isStruct( arguments.target[ key ] ) ){
+					for( dataKey in arguments.target.data ){
+						if( isSimplevalue( arguments.target.data[ dataKey ] ) ){
+							arguments.buffer.append(' data-#lcase( dataKey )#="#arguments.target.data[ datakey ]#"');
+						}
+					}
+				}
 
 			}
-
+			
 			return arguments.buffer;
 		</cfscript>
 	</cffunction>
