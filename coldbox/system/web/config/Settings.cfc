@@ -16,13 +16,14 @@ ColdBox Default Configuration
 	this.author			= "Ortus Solutions";
 	this.authorEmail 	= "coldbox@ortussolutions.com";
 	this.authorWebsite	= "http://www.ortussolutions.com";
-	this.suffix			= "Jeremiah 29:13";
+	this.suffix			= "1 John 5:12-13";
 	this.version		= "3.6.0";
 	this.description	= "This is the ColdBox Platform for ColdFusion Powered Web Applications.";
 
 	// Operation Defaults
 	this.eventName 	= "event";
 	this.defaultEvent = "main.index";
+	this.defaultLayout = "Main.cfm";
 
 	// flash scope defaults
 	this.flash = {
