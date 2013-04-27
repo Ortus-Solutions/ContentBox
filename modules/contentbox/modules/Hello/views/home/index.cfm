@@ -3,7 +3,7 @@
 <div class="sidebar">
 
 	<!--- Info Box --->
-	<div class="small_box expose">
+	<div class="small_box">
 		<div class="header">
 			<img src="#prc.cbroot#/includes/images/info.png" alt="info" width="24" height="24" />Need Help?
 		</div>

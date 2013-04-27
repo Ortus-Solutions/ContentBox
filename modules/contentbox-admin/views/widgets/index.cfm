@@ -5,12 +5,12 @@
 		<div class="box">
 			<!--- Body Header --->
 			<div class="header">
-				<ul class="sub_nav">
+				<ul class="sub_nav nav nav-tabs">
 					<!--- Manage --->
-					<li title="Manage Widgets"><a href="##manage" class="current"><i class="icon-cog icon-large"></i>  Manage</a></li>
+					<li title="Manage Widgets" class="active"><a href="##managePane" data-toggle="tab"><i class="icon-cog icon-large"></i>  Manage</a></li>
 					<!--- Install --->
 					<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
-					<li title="Install New Widgets"><a href="##install" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
+					<li title="Install New Widgets"><a href="##forgeboxPane" data-toggle="tab" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
 					</cfif>
 				</ul>
 				<i class="icon-magic icon-large"></i> 
@@ -28,8 +28,8 @@
 					<div class="consoleLog">#flash.get("forgeboxInstallLog")#</div>
 				</cfif>
 				
-				<div class="panes">
-					<div id="managePane">
+				<div class="panes tab-content">
+					<div id="managePane" class="tab-pane active">
 					<!--- CategoryForm --->
 					#html.startForm(name="widgetForm",action=prc.xehWidgetRemove)#
 					#html.hiddenField(name="widgetFile")#
@@ -128,7 +128,7 @@
 					<!--- end manage pane --->
 					
 					<!--- ForgeBox --->
-					<div id="forgeboxPane">
+					<div id="forgeboxPane" class="tab-pane">
 						<div class="center">
 							<i class="icon-spinner icon-spin icon-large icon-4x"></i> <br/>
 							Please wait, connecting to ForgeBox...

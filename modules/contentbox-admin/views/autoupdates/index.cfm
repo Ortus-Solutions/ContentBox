@@ -104,7 +104,7 @@
 	
 	<!--- main sidebar --->
 	<div class="span3" id="main-sidebar">
-		<div class="small_box expose">
+		<div class="small_box">
 			<div class="header">
 				<i class="icon-info-sign"></i> Components Installed
 			</div>
@@ -143,7 +143,7 @@
 		</div>	
 		
 		<!--- Info Box --->
-		<div class="small_box expose">
+		<div class="small_box">
 			<div class="header">
 				<i class="icon-medkit"></i> Need Help?
 			</div>

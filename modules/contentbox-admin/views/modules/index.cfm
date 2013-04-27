@@ -3,19 +3,23 @@
 	<!--- main content --->
 	<div class="span9" id="main-content">
 		<div class="box">
+			
 			<!--- Body Header --->
 			<div class="header">
-				<ul class="sub_nav">
+				<ul class="sub_nav nav nav-tabs">
 					<!--- Manage --->
-					<li title="Manage Modules"><a href="##manage" class="current"><i class="icon-cog icon-large"></i> Manage</a></li>
+					<li class="active" title="Manage Modules"><a href="##managePane" data-toggle="tab"><i class="icon-cog icon-large"></i> Manage</a></li>
 					<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
 					<!--- Install --->
-					<li title="Install New Modules"><a href="##install" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
+					<li title="Install New Modules"><a href="##forgeboxPane" data-toggle="tab" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
 					</cfif>
 				</ul>
+				
+				<!--- Title --->
 				<i class="icon-bolt icon-large"></i>
 				Modules
 			</div>
+			
 			<!--- Body --->
 			<div class="body">
 	
@@ -28,8 +32,9 @@
 					<div class="consoleLog">#flash.get("forgeboxInstallLog")#</div>
 				</cfif>
 	
-				<div class="panes">
-					<div id="managePane">
+				<div class="panes tab-content">
+					
+					<div id="managePane" class="tab-pane active">
 					<!--- CategoryForm --->
 					#html.startForm(name="moduleForm")#
 					#html.hiddenField(name="moduleName")#
@@ -111,7 +116,7 @@
 	
 					<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
 					<!--- ForgeBox --->
-					<div id="forgeboxPane">
+					<div id="forgeboxPane" class="tab-pane">
 						<div class="center">
 							<i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
 							Please wait, connecting to ForgeBox...
