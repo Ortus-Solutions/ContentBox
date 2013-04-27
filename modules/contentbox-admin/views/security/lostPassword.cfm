@@ -15,12 +15,14 @@
 			<p>Enter your email address below in order to reset your password.</p>
 				
 			<div id="loginContent">
-			#html.startForm(action=prc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate")#
+			#html.startForm(action=prc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate",class="form-vertical")#
 				
 				<div class="padding10">
-					<div class="input-prepend">
-						<span class="add-on"><i class="icon-envelope"></i></span>
-						#html.textfield(name="email", required="required", class="input-large", placeholder="Email Address", autocomplete="off")#
+					<div class="input-prepend control-group">
+					    <div class="controls">
+							<span class="add-on"><i class="icon-envelope"></i></span>
+							#html.textfield(name="email", required="required", class="input-large", placeholder="Email Address", autocomplete="off")#
+						</div>
 					</div>
 				</div>
 				

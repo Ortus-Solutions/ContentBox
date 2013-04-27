@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-#html.startForm(name="commentSettingsForm",action=rc.xehSaveSettings)#		
+#html.startForm(name="commentSettingsForm",action=rc.xehSaveSettings,class="form-vertical")#		
 #html.anchor(name="top")#
 <div class="row-fluid">
 	<div class="span12">
@@ -30,29 +30,43 @@
     					<!--- cbadmin Event --->
     					#announceInterception("cbadmin_onCommentSettingsNav")#
     				</ul>		
+                    
     				<!--- Tab Content --->
-    				<div class="tab-content">
+    				<div class="tab-content well">
+    				    
     					<!--- comment options --->
     					<div class="tab-pane active" id="general_options">
     						<fieldset>
     						<legend><i class="icon-cog icon-large"></i> <strong>Comment Options</strong></legend>
     						 	<!--- Activate Comments  --->
-    							#html.label(field="cb_comments_enabled",content="Enable Site Wide Comments:")#
-    							#html.radioButton(name="cb_comments_enabled",checked=prc.cbSettings.cb_comments_enabled,value=true)# Yes 	
-    							#html.radioButton(name="cb_comments_enabled",checked=not prc.cbSettings.cb_comments_enabled,value=false)# No 	
+								<div class="control-group">
+    								#html.label(field="cb_comments_enabled",content="Enable Site Wide Comments:",class="control-label")#
+    								<div class="controls">
+    									#html.radioButton(name="cb_comments_enabled",checked=prc.cbSettings.cb_comments_enabled,value=true)# Yes 	
+        								#html.radioButton(name="cb_comments_enabled",checked=not prc.cbSettings.cb_comments_enabled,value=false)# No   
+    								</div>
+								</div>
     							   
     							<!--- URL Translations --->
-    							#html.label(field="cb_comments_urltranslations",content="Translate URL's to links:")#
-    							#html.radioButton(name="cb_comments_urltranslations",checked=prc.cbSettings.cb_comments_urltranslations,value=true)# Yes 	
-    							#html.radioButton(name="cb_comments_urltranslations",checked=not prc.cbSettings.cb_comments_urltranslations,value=false)# No 	
-    							
+    							<div class="control-group">
+    							    #html.label(field="cb_comments_urltranslations",content="Translate URL's to links:",class="control-label")#
+    							    <div class="controls">
+    							        #html.radioButton(name="cb_comments_urltranslations",checked=prc.cbSettings.cb_comments_urltranslations,value=true)# Yes 	
+    									#html.radioButton(name="cb_comments_urltranslations",checked=not prc.cbSettings.cb_comments_urltranslations,value=false)# No 	
+    							    </div>
+    							</div>
+                                
     							<!--- Captcha --->
-    							#html.label(field="cb_comments_captcha",content="Use Security Captcha Image:")#
-    							#html.radioButton(name="cb_comments_captcha",checked=prc.cbSettings.cb_comments_captcha,value=true)# Yes 	
-    							#html.radioButton(name="cb_comments_captcha",checked=not prc.cbSettings.cb_comments_captcha,value=false)# No 	
-    							
+    							<div class="control-group">
+    							    #html.label(field="cb_comments_captcha",content="Use Security Captcha Image:",class="control-label")#
+    							    <div class="controls">
+    							        #html.radioButton(name="cb_comments_captcha",checked=prc.cbSettings.cb_comments_captcha,value=true)# Yes 	
+    									#html.radioButton(name="cb_comments_captcha",checked=not prc.cbSettings.cb_comments_captcha,value=false)# No 
+    							    </div>
+    							</div>
+    							   							
     							<!--- Whois URL --->
-    							#html.textField(name="cb_comments_whoisURL",label="Whois URL",value=prc.cbSettings.cb_comments_whoisURL,class="textfield",size="60")#
+    							#html.textField(name="cb_comments_whoisURL",label="Whois URL",value=prc.cbSettings.cb_comments_whoisURL,class="textfield",size="60",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
     							<strong>={AuthorIP}</strong>	
     						</fieldset>
     					</div>
@@ -61,26 +75,42 @@
     						<fieldset>
     						<legend><i class="icon-unlock icon-large"></i> <strong>Before A Comment Appears</strong></legend>
     						 	<!--- Enable Moderation --->
-    							#html.label(field="cb_comments_moderation",content="An administrator must moderate the comment:")#
-    							<small>All comments will be moderated according to our moderation rules</small><br/>
-    							#html.radioButton(name="cb_comments_moderation",checked=prc.cbSettings.cb_comments_moderation,value=true)# Yes 	
-    							#html.radioButton(name="cb_comments_moderation",checked=not prc.cbSettings.cb_comments_moderation,value=false)# No 	
-    							
+								<div class="control-group">
+								    #html.label(field="cb_comments_moderation",content="An administrator must moderate the comment:")#
+                                    <div class="controls">
+								        <small>All comments will be moderated according to our moderation rules</small><br/>
+            							#html.radioButton(name="cb_comments_moderation",checked=prc.cbSettings.cb_comments_moderation,value=true)# Yes 	
+            							#html.radioButton(name="cb_comments_moderation",checked=not prc.cbSettings.cb_comments_moderation,value=false)# No 	
+								    </div>
+								</div>
+
     							<!--- Comment Previous History --->
-    							#html.label(field="cb_comments_moderation_whitelist",content="Comment author must have a previously approved comment:")#
-    							<small>If an approved comment is found for the submitting email address, the comment is automatically approved and not moderated.</small><br/>
-    							#html.radioButton(name="cb_comments_moderation_whitelist",checked=prc.cbSettings.cb_comments_moderation_whitelist,value=true)# Yes 	
-    							#html.radioButton(name="cb_comments_moderation_whitelist",checked=not prc.cbSettings.cb_comments_moderation_whitelist,value=false)# No 	
+								<div class="control-group">
+								    #html.label(field="cb_comments_moderation_whitelist",content="Comment author must have a previously approved comment:")#
+                                    <div class="controls">
+								        <small>If an approved comment is found for the submitting email address, the comment is automatically approved and not moderated.</small><br/>
+    									#html.radioButton(name="cb_comments_moderation_whitelist",checked=prc.cbSettings.cb_comments_moderation_whitelist,value=true)# Yes 	
+    									#html.radioButton(name="cb_comments_moderation_whitelist",checked=not prc.cbSettings.cb_comments_moderation_whitelist,value=false)# No
+								    </div>
+								</div>	
     							
     							<!--- Moderated Keywords --->
-    							#html.label(field="cb_comments_moderation_blacklist",content="Moderated keywords (Affects content, Author IP, or Author Email):")#
-    							<small>If a comment's content, author ip or email address matches any of these keywords, the comment is automatically moderated. Regular expressions are ok.</small>
-    							#html.textarea(name="cb_comments_moderation_blacklist",value=prc.cbSettings.cb_comments_moderation_blacklist,rows="8",title="One per line please")#		
+								<div class="control-group">
+								    #html.label(field="cb_comments_moderation_blacklist",content="Moderated keywords (Affects content, Author IP, or Author Email):",class="control-label")#
+								    <div class="controls">
+								        <small>If a comment's content, author ip or email address matches any of these keywords, the comment is automatically moderated. Regular expressions are ok.</small>
+    									#html.textarea(name="cb_comments_moderation_blacklist",value=prc.cbSettings.cb_comments_moderation_blacklist,rows="8",title="One per line please")#
+								    </div>
+								</div>
     							
     							<!--- Blocked Keywords --->
-    							#html.label(field="cb_comments_moderation_blockedlist",content="Blocked keywords (Affects content, Author IP, or Author Email):")#
-    							<small>If a comment's content, author ip or email address matches any of these keywords, the comment is automatically rejected with no notifications. Regular expressions are ok.</small>
-    							#html.textarea(name="cb_comments_moderation_blockedlist",value=prc.cbSettings.cb_comments_moderation_blockedlist,rows="8",title="One per line please")#		
+								<div class="control-group">
+								    #html.label(field="cb_comments_moderation_blockedlist",content="Blocked keywords (Affects content, Author IP, or Author Email):")#
+                                    <div class="controls">
+								        <small>If a comment's content, author ip or email address matches any of these keywords, the comment is automatically rejected with no notifications. Regular expressions are ok.</small>
+    									#html.textarea(name="cb_comments_moderation_blockedlist",value=prc.cbSettings.cb_comments_moderation_blockedlist,rows="8",title="One per line please")#		
+								    </div>
+								</div>	
     						</fieldset>
     					</div>
     					<!--- Notifications --->
@@ -92,26 +122,36 @@
     							but you can add more emails separated by commas, ohh goody!
     							</p>
     							<!--- Email Notifications --->
-    							#html.textarea(name="cb_comments_notifyemails",label="Notification Emails",value=prc.cbSettings.cb_comments_notifyemails,rows="3",title="Comma delimited list")#		
+    							#html.textarea(name="cb_comments_notifyemails",label="Notification Emails",value=prc.cbSettings.cb_comments_notifyemails,rows="3",title="Comma delimited list",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#		
     							
     							<!--- Notification on Comment --->
-    							#html.label(field="cb_comments_notify",content="Send a notification that a comment has been made:")#
-    							#html.radioButton(name="cb_comments_notify",checked=prc.cbSettings.cb_comments_notify,value=true)# Yes 	
-    							#html.radioButton(name="cb_comments_notify",checked=not prc.cbSettings.cb_comments_notify,value=false)# No 	
+                                <div class="control-group">
+								    #html.label(field="cb_comments_notify",content="Send a notification that a comment has been made:")#
+                                    <div class="controls">
+								        #html.radioButton(name="cb_comments_notify",checked=prc.cbSettings.cb_comments_notify,value=true)# Yes 	
+    									#html.radioButton(name="cb_comments_notify",checked=not prc.cbSettings.cb_comments_notify,value=false)# No 	
+								    </div>
+								</div>
     							
     							<!--- Notification on Moderation --->
-    							#html.label(field="cb_comments_moderation_notify",content="Send a notification when a comment needs moderation:")#
-    							#html.radioButton(name="cb_comments_moderation_notify",checked=prc.cbSettings.cb_comments_moderation_notify,value=true)# Yes 	
-    							#html.radioButton(name="cb_comments_moderation_notify",checked=not prc.cbSettings.cb_comments_moderation_notify,value=false)# No 	
+								<div class="control-group">
+									#html.label(field="cb_comments_moderation_notify",content="Send a notification when a comment needs moderation:")#    
+                                    <div class="controls">
+								        #html.radioButton(name="cb_comments_moderation_notify",checked=prc.cbSettings.cb_comments_moderation_notify,value=true)# Yes 	
+    									#html.radioButton(name="cb_comments_moderation_notify",checked=not prc.cbSettings.cb_comments_moderation_notify,value=false)# No 	
+								    </div>
+								</div>    							
     						</fieldset>						
     					</div>
 						<!--- cbadmin Event --->
 						#announceInterception("cbadmin_onCommentSettingsContent")#
+						<!--- End Tab Content --->
+        				<div class="form-actions">
+        					#html.submitButton(value="Save Settings",class="btn btn-danger",title="Save the comment settings")#
+        				</div>
+						
 					</div>
 					<!--- End Tab Content --->
-    				<div class="actionBar pull-right">
-    					#html.submitButton(value="Save Settings",class="btn btn-danger",title="Save the comment settings")#
-    				</div>
 				</div>
                 <!---End Veritcal Nav--->
 			</div>

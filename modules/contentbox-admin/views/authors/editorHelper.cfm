@@ -7,26 +7,25 @@ $(document).ready(function() {
 	$authorUsername = $authorForm.find("##username");
 	
 	// initialize validator and add a custom form submission logic
-	$authorForm.validator({grouped:true});
-	
+	$authorForm.validate();
+    
 	// Custom username unique validator
-	$.tools.validator.fn($authorUsername, function(el, value) {
-		// verify if same as user
-		if(value.length && value == "#prc.author.getUsername()#" ){
+    $.validator.addMethod( 'username', function( value, element ) {
+       if(value.length && value == "#prc.author.getUsername()#" ){
 			return true;
 		}
 		// verify username
 		if( isUsernameFound(value) ){
-			return "The username you entered already exists, try a new one!";
+			return false;
 		}
 		return true;
-	});
+    }, "The username you entered already exists, try a new one!" );
 	
 	<cfif prc.author.isLoaded()>
-	$("##authorPasswordForm").validator({grouped:true});
-	$.tools.validator.fn("[name=password_confirm]", "Passwords need to match", function(el, value) {
-		return (value==$("[name=password]").val()) ? true : false;
-	});
+    $("##authorPasswordForm").validate();
+    $.validator.addMethod( 'password', function( value, element ) {
+        return (value==$("[name=password]").val()) ? true : false;
+    }, 'Passwords need to match' );
 	// Setup Permissions
 	$permissionsTab = $("##permissionsTab");
 	</cfif>

@@ -49,6 +49,3 @@
 /**============================== Page Layout with Sidebar ==============================**/
 .sidebar { width: 300px; float:right; margin:0 0 0 25px; }
 .main_column { margin-right: 312px; }
-/** ============================== Tooltip ============================== **/
-.tooltip,.tooltip.bottom { display:none; font-size:1.2em; padding:5px 10px; line-height:1.3em; text-align:center; }
-.tooltip,.tooltip.bottom { background:#000; color:#fff; z-index: 9999; font-size: 11px}

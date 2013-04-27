@@ -115,12 +115,25 @@ footer a { color:#fff; text-decoration:underline; }
 footer a:hover{ color: #3a87ff}
 footer #footerLogo img{ margin:-17px 35px; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; }
 /**============================== Form Styling ==============================**/
-fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:15px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+/*fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:15px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
 fieldset legend { color:#3a3a3a; font-weight: bold; border-bottom: none; width: inherit; line-height:20px; font-size: inherit; margin: 0px}
-form label { font-size:1em; font-weight:bold; display:block; margin:2px 0; }
-form input.textfield, form select, form textarea{ padding:6px; margin-right:4px; }
+*/form label { font-size:1em; font-weight:bold; }
+/*form input.textfield, form select, form textarea{ padding:6px; margin-right:4px; }*/
 form textarea,form .wysiwyg { width:98%; }
 .modal form { margin:0px !important; }
+.form-vertical .control-label {
+  float: none;
+  padding-top: inherit;
+  text-align: inherit;
+  width: auto;
+}
+.form-vertical .controls {
+  margin-left: inherit;
+}
+.well .form-actions {
+    padding-left: 0px;
+    padding-bottom:0px;
+}
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
@@ -252,8 +265,7 @@ tr.unapproved td{ border: 1px solid #000 !important; }
 }
 /************** Error styles ***************/ 
 form input.error, form select.error, form textarea.error, form .wysiwyg.error, form input.error:focus, form select.error:focus, form textarea.error:focus, form .wysiwyg.error:focus { border: 1px solid #ff8388; }
-.error{
-	/* supply height to ensure consistent positioning for every browser */
+/*.error{
 	height:20px;
 	background-color:#ffcfcb;
 	border:1px solid #ff9289;
@@ -263,7 +275,6 @@ form input.error, form select.error, form textarea.error, form .wysiwyg.error, f
 	padding:3px 10px;
 	margin-left:-2px;
 	z-index: 9999;
-	/* CSS3 spicing for mozilla and webkit */
 	-moz-border-radius:4px;
 	-webkit-border-radius:4px;
 	-moz-border-radius-bottomleft:0;
@@ -272,7 +283,7 @@ form input.error, form select.error, form textarea.error, form .wysiwyg.error, f
 	-webkit-border-top-left-radius:0;
 	-moz-box-shadow:0 0 6px #ddd;
 	-webkit-box-shadow:0 0 6px #ddd;
-}
+}*/
 /**============================== FORGEBOX CSS ==============================**/
 #forgebox-entrysidebar { width:180px; float:right; }
 #forgebox-entrycontent { width:515px; }

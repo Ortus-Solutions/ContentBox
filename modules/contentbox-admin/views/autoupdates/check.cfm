@@ -5,7 +5,7 @@
 	<h3><i class="icon-bolt icon-large"></i> Update Check: <span class="label label-inverse">#rc.channel#</span></h3>
 </div>
 <div class="modal-body">
-    #html.startForm(name="updateForm",action=prc.xehUpdateApply)#
+    #html.startForm(name="updateForm",action=prc.xehUpdateApply,class="well form-vertical")#
 	#getPlugin("MessageBox").renderit()#
 
 	<cfif prc.updateFound>
