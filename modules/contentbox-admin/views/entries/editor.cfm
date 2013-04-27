@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- Entry Form  --->
-#html.startForm(action=prc.xehEntrySave,name="entryForm",novalidate="novalidate")#
+#html.startForm(action=prc.xehEntrySave,name="entryForm",novalidate="novalidate",class="form-vertical")#
 <div class="row-fluid">
 	<!--- main content --->
 	<div class="span9" id="main-content">
@@ -33,15 +33,18 @@
 				#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 	
 				<!--- title --->
-				#html.textfield(label="Title:",name="title",bind=prc.entry,maxlength="100",required="required",title="The title for this entry",class="textfield width98")#
+				#html.textfield(label="Title:",name="title",bind=prc.entry,maxlength="100",required="required",title="The title for this entry",class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 				<!--- slug --->
-				<label for="slug">Permalink:
-					<i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
-					<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
-				</label>
-				<div id='slugCheckErrors'></div>
-				#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
-				
+                <div class="control-group">
+                    <label for="slug" class="control-label">Permalink:
+                        <i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
+    					<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
+    				</label>
+                    <div class="controls">
+                        <div id='slugCheckErrors'></div>
+						#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
+                    </div>
+                </div>			
 				<!---ContentToolBar --->
 				<div id="contentToolBar">
 					
@@ -72,7 +75,7 @@
 				</div>
 				
 				<!--- content --->
-				#html.textarea(name="content", value=htmlEditFormat( prc.entry.getContent() ), rows="25", class="width98")#
+				#html.textarea(name="content", value=htmlEditFormat( prc.entry.getContent() ), rows="25", class="width98 content")#
 				<!--- excerpt --->
 				#html.textarea(label="Excerpt:", name="excerpt", bind=prc.entry, rows="10", class="width98")#
 	
@@ -139,19 +142,27 @@
 					<!--- is Published --->
 					#html.hiddenField(name="isPublished",value=true)#
 					<!--- publish date --->
-					#html.inputField(size="9",type="date",name="publishedDate",label="Publish Date (<a href='javascript:publishNow()'>Now</a>)",value=prc.entry.getPublishedDateForEditor(),class="textfield")#
-					@
-					#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
-					#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
-	
+					<div class="control-group">
+					    #html.label(class="control-label",field="publishedDate",content="Publish Date (<a href='javascript:publishNow()'>Now</a>)")#
+					    <div class="controls">
+					        #html.inputField(size="9",type="date",name="publishedDate",value=prc.entry.getPublishedDateForEditor(),class="textfield")#
+        					@
+        					#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
+        					#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
+					    </div>
+					</div>
 					<!--- expire date --->
-					#html.inputField(size="9",type="date",name="expireDate",label="Expire Date",value=prc.entry.getExpireDateForEditor(),class="textfield")#
-					@
-					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
-					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
-	
+					<div class="control-group">
+					    #html.label(class="control-label",field="expireDate",content="")#
+                        <div class="controls">
+                            #html.inputField(size="9",type="date",name="expireDate",value=prc.entry.getExpireDateForEditor(),class="textfield")#
+        					@
+        					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
+        					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
+                        </div>
+					</div>	
 					<!--- Changelog --->
-					#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.")#
+					#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 	
 					<!--- Action Bar --->
 					<div class="actionBar">

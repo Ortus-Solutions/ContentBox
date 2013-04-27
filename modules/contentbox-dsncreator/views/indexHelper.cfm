@@ -2,9 +2,8 @@
 <script language="javascript">
 $(document).ready(function() {
 	// form validators
-	$("##dsnForm").validator({grouped:true, 
-		position:"center right",
-		onSuccess: function(e, els){
+	$("##dsnForm").validate(
+		success: function(e, els){
 				$("##actionBarLoader").fadeIn();
 			}
 		});

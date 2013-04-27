@@ -11,7 +11,7 @@ $(document).ready(function() {
 	// form id
 	$permissionEditor = $("##permissionEditor");
 	// form validator
-	$permissionEditor.validator({position:'top left'});
+	$permissionEditor.validate();
 	// reset
 	$('##btnReset').click(function() {
 		$permissionEditor.find("##permissionID").val( '' );

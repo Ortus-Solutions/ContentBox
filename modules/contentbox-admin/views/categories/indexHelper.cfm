@@ -9,7 +9,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##categories"), this.value );
 	});
 	// form validator
-	$categoryEditor.validator({position:'top left'});
+	$categoryEditor.validate();
 	// reset
 	$('##btnReset').click(function() {
 		$categoryEditor.find("##categoryID").val( '' );

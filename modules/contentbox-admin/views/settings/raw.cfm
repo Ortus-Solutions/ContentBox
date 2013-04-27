@@ -37,16 +37,22 @@
     							<h3>Setting Editor</h3>
                             </div>
     						<!--- Create/Edit form --->
-    						#html.startForm(action=prc.xehSettingsave,name="settingEditor",novalidate="novalidate")#
+    						#html.startForm(action=prc.xehSettingsave,name="settingEditor",novalidate="novalidate",class="vertical-form")#
     						<div class="modal-body">
     							<input type="hidden" name="settingID" id="settingID" value="" />
     							<input type="hidden" name="page" id="page" value="#rc.page#" />
-    			
-    							<label for="name">Setting:</label>
-    							<input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="input-block-level"/>
-    			
-    							<label for="value">Value:</label>
-    							<textarea name="value" id="value" rows="3" class="input-block-level"></textarea>
+    							<div class="control-group">
+    							    <label for="name" class="control-label">Setting:</label>
+    							    <div class="controls">
+    							        <input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="input-block-level"/>
+    							    </div>
+    							</div>
+    							<div class="control-group">
+    							    <label for="value" class="control-label">Value:</label>
+    							    <div class="controls">
+    							        <textarea name="value" id="value" rows="3" class="input-block-level"></textarea>
+    							    </div>
+    							</div>
     						</div>
     						<div class="modal-footer">
     							#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##settingEditorContainer') )")#

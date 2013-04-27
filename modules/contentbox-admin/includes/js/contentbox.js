@@ -21,11 +21,8 @@ $(document).ready(function() {
     
 	// Global Tool Tip Settings
 	toolTipSettings	= {	//will make a tooltip of all elements having a title property
-		 opacity: 0.8,
-		 effect: 'slide',
-		 predelay: 200,
-		 delay: 10,
-		 offset:[5, 0]
+		 animation: 'slide',
+		 delay: 10
 	};
 	
 	// toggle flicker messages
@@ -42,12 +39,26 @@ $(document).ready(function() {
 		$(this).expose({ });
 	});
 	
-	//Tabs in box header 
-	$("ul.sub_nav").tabs("div.panes > div", {effect: 'fade'});
-	//Vertical Navigation	
-	$("ul.vertical_nav").tabs("div.panes_vertical> div", {effect: 'fade'});
-	//Accordion
-	//$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:0});		
+    // global Validaiton settings
+    $.validator.setDefaults({
+        // apparently, the *default* of jQuery validation is to ignore validation of hidden elements (e.g., when using tabs, validation is skipped)
+        // seriously???
+        // anyway, setting ignore: [] fixes it
+        ignore:[],
+        errorElement: 'span',
+        errorClass: 'help-block',
+        highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function(element) {
+            element
+                .addClass('valid')
+                .closest('.control-group').removeClass('error').addClass('success');
+        },
+        errorPlacement: function(error, element) {
+            error.appendTo( element.parent("div.controls") );
+        }
+    })	
 	
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
@@ -123,9 +134,7 @@ function exposeIt(vID){
 }
 function activateTooltips(){
 	//Tooltip 
-	$("[title]").tooltip(toolTipSettings)
-		 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isn't space on the top
-	});
+    $( '[title]' ).tooltip( toolTipSettings )
 }
 function hideAllTooltips(){
 	$(".tooltip").hide();

@@ -245,11 +245,11 @@ function insertCBWidget(widget){
         infobarText='',
         args,form,vals={},separator=" ";
     // apply form validator
-	form.validator({position:'center right'});
+	form.validate();
     // choose form based on selector
 	var $widgetForm = form;
     // validate form
-	if( !$widgetForm.data("validator").checkValidity() ){
+	if( !$widgetForm.valid() ){
 		return;
 	}
     // add selector to args form

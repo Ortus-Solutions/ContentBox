@@ -93,11 +93,11 @@ function updateCBWidget() {
             args = form.serializeArray(),
             vals={},infobarText='',i=0,re = / \| $/g;
     // apply form validator
-	form.validator({position:'center right'});
+	form.validate();
     // choose form based on selector
 	var $widgetForm = form;
     // validate
-	if( !$widgetForm.data("validator").checkValidity() ){
+	if( !$widgetForm.valid() ){
 		return;
 	}
     // get attributes from form

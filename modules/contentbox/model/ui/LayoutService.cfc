@@ -447,28 +447,31 @@ component accessors="true" threadSafe singleton{
 					requiredText = "<span class='textRed'>*Required</span>";
 					requiredValidator = "required";
 				}
-				// write out label
-				writeOutput( html.label(field=thisSetting.name, content="#thisSetting.label# #requiredText#") );
-				
-				// write out control
-				switch( thisSetting.type ){
-					case "boolean" : {
-						writeOutput( html.select(name=thisSetting.name, options="true,false", selectedValue=thisSetting.defaultValue, title=thisSetting.title) );
-						break;
-					}
-					case "select" : {
-						writeOutput( html.select(name=thisSetting.name, options=thisSetting.options, selectedValue=thisSetting.defaultValue, title=thisSetting.title) );
-						break;
-					}
-					case "textarea" : {
-						writeOutput( html.textarea(name=thisSetting.name, required=requiredValidator, title=thisSetting.title, value=thisSetting.defaultValue) );
-						break;
-					}
-					default:{
-						writeOutput( html.textfield(name=thisSetting.name, size="55", class="textfield", required=requiredValidator, title=thisSetting.title, value=thisSetting.defaultValue) );
-					}
-				}
-				
+				// writeout control wrapper
+				writeOutput( '<div class="control-group">' );
+					// write out label
+					writeOutput( html.label(field=thisSetting.name, content="#thisSetting.label# #requiredText#") );
+					writeOutput( '<div class="controls">' );
+    				// write out control
+    				switch( thisSetting.type ){
+    					case "boolean" : {
+    						writeOutput( html.select(name=thisSetting.name, options="true,false", selectedValue=thisSetting.defaultValue, title=thisSetting.title) );
+    						break;
+    					}
+    					case "select" : {
+    						writeOutput( html.select(name=thisSetting.name, options=thisSetting.options, selectedValue=thisSetting.defaultValue, title=thisSetting.title) );
+    						break;
+    					}
+    					case "textarea" : {
+    						writeOutput( html.textarea(name=thisSetting.name, required=requiredValidator, title=thisSetting.title, value=thisSetting.defaultValue) );
+    						break;
+    					}
+    					default:{
+    						writeOutput( html.textfield(name=thisSetting.name, size="55", class="textfield", required=requiredValidator, title=thisSetting.title, value=thisSetting.defaultValue) );
+    					}
+    				}
+    				writeOutput( '</div>' );
+				writeOutput( '</div>' );
 			}
 		}
 		

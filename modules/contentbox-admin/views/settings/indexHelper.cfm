@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// form validators
-	$("##settingsForm").validator({grouped:true});
+	$("##settingsForm").validate();
 });
 function emailTest(){
 	$("##emailTestDiv").html("");
