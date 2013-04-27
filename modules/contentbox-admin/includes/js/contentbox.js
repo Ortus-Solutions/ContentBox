@@ -34,11 +34,6 @@ $(document).ready(function() {
 	// activate tooltips
 	activateTooltips();
 
-	// Expose | Any element with a class of .expose will expose when clicked
-	$(".expose").click(function() {
-		$(this).expose({ });
-	});
-	
     // global Validaiton settings
     $.validator.setDefaults({
         // apparently, the *default* of jQuery validation is to ignore validation of hidden elements (e.g., when using tabs, validation is skipped)
@@ -154,9 +149,6 @@ function closeSearchBox(){
 function quickLinks( inURL ){
 	if( inURL != 'null' )
 		window.location = inURL;
-}
-function exposeIt(vID){
-	$(vID).expose();
 }
 function activateTooltips(){
 	//Tooltip 

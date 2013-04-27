@@ -5,7 +5,7 @@
 		<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<img src="#prc.cbroot#/includes/images/ortus_circle_small.gif" alt="ortus" width="30" height="30" title="Ortus Solutions, Corp" />
+			<img src="#prc.cbroot#/includes/images/ortus_circle_small.gif" alt="ortus" width="30" height="30" title="Ortus Solutions, Corp" style="height:30px" />
 			About ContentBox
 		</div>
 		<!--- Body --->
@@ -61,7 +61,7 @@
 	<!--- Sidebar --->
 	<div class="span3" id="main-sidebar">
 		<!--- Info Box --->
-		<div class="small_box expose">
+		<div class="small_box">
 			<div class="header">
 				<i class="icon-medkit"></i> Need Help?
 			</div>

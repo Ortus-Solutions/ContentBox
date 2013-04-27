@@ -4,12 +4,12 @@
 		
 		<!--- Body Header --->
 		<div class="header">
-			<ul class="sub_nav">
+			<ul class="sub_nav nav nav-tabs">
 				<!--- Manage Themes --->
-				<li title="Manage Layout Themes"><a href="##manage" class="current"><i class="icon-cog icon-large"></i> Manage</a></li>
+				<li class="active" title="Manage Layout Themes"><a href="##managePane" data-toggle="tab"><i class="icon-cog icon-large"></i> Manage</a></li>
 				<!--- Install Themes --->
 				<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
-				<li title="Install New Themes"><a href="##install" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
+				<li title="Install New Themes"><a href="##forgeboxPane"  data-toggle="tab" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
 				</cfif>
 			</ul>
 			<i class="icon-picture icon-large"></i>
@@ -28,10 +28,10 @@
 			</cfif>
 			
 			<!---Tabs --->
-			<div class="panes">
+			<div class="panes tab-content">
 				
 				<!---Management Pane --->
-				<div id="managePane">
+				<div id="managePane" class="tab-pane active">
 					
 					<!--- Vertical Nav --->
 					<div class="tabbable tabs-left">
@@ -238,7 +238,7 @@
 				<!--- end managePane --->
 
 				<!--- ForgeBox Pane --->
-				<div id="forgeboxPane">
+				<div id="forgeboxPane" class="tab-pane">
 					<div class="center">
 						<i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
 						Please wait, connecting to ForgeBox...
