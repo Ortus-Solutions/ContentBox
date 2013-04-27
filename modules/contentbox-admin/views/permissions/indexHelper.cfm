@@ -32,6 +32,7 @@ function remove(permissionID){
 	$permissionForm.submit();
 }
 function createPermission(){
+    // open modal
 	openModal( $("##permissionEditorContainer"), 500, 200 );
 	return false;
 }

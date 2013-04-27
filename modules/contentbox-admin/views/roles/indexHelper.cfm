@@ -31,6 +31,7 @@ function remove(roleID){
 	$roleForm.submit();
 }
 function createRole(){
+    // open modal
 	openModal( $("##roleEditorContainer"), 500, 200 );
 	return false;
 }
