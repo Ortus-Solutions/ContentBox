@@ -109,21 +109,20 @@
 								</div>
                                 <!---Layout Settings --->
 								<cfif len( prc.activelayout.settings )>
+								#html.startForm(action=prc.xehSaveSettings, class="well form-vertical")#	
 								<fieldset>
 									<legend> Layout Settings: </legend>
-									#html.startForm(action=prc.xehSaveSettings)#
+									
 									#html.hiddenField(name="layoutName", value=prc.activelayout.name)#
 									
 									#prc.layoutService.buildSettingsForm( prc.activeLayout )#
 									
-									<div class="actionBar">
-									<br/>
-									#html.submitButton(value="Save Settings", class="btn btn-danger")#
+									<div class="form-actions">
+										<br/>
+										#html.submitButton(value="Save Settings", class="btn btn-danger")#
 									</div>
-									
-									#html.endForm()#
-									
 								</fieldset>
+                                #html.endForm()#
 								</cfif>
 							</div>								
 							<!--- Manage Layouts --->
@@ -152,15 +151,17 @@
 								
 								<!--- Uploader --->
 								<div id="uploaderBar" class="well well-small" style="display:none">
-								#html.startForm(name="layoutUploadForm",action=prc.xehlayoutupload,multipart=true,novalidate="novalidate")#
-									<h3>Layout Uploader</h3>
-									#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50")#		
-									<div class="actionBar" id="uploadBar">
-										#html.submitButton(value="Upload & Install",class="btn btn-danger")#
-									</div>
-									<div class="loaders" id="uploadBarLoader">
-										<i class="icon-spinner icon-spin icon-large"></i>
-									</div>
+								#html.startForm(name="layoutUploadForm",action=prc.xehlayoutupload,multipart=true,novalidate="novalidate",class="form-vertical")#
+									<fieldset>
+										<legend>Layout Uploader</legend>
+										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#		
+    									<div class="form-actions" id="uploadBar">
+    										#html.submitButton(value="Upload & Install",class="btn btn-danger")#
+    									</div>
+    									<div class="loaders" id="uploadBarLoader">
+    										<i class="icon-spinner icon-spin icon-large"></i>
+    									</div>
+                                	</fieldset>
 								#html.endForm()#
 								</div>
 								

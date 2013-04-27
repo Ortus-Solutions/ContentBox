@@ -30,34 +30,34 @@
 						<!--- Author Details --->
 						<div class="tab-pane active" id="userDetails">
 							<!--- AuthorForm --->
-							#html.startForm(name="authorForm",action=prc.xehAuthorsave,novalidate="novalidate")#
+							#html.startForm(name="authorForm",action=prc.xehAuthorsave,novalidate="novalidate", class="well form-vertical")#
 								#html.startFieldset(legend="User Details")#
 								#html.hiddenField(name="authorID",bind=prc.author)#
 								<!--- Fields --->
-								#html.textField(name="firstName",bind=prc.author,label="*First Name:",required="required",size="50",class="textfield")#
-								#html.textField(name="lastName",bind=prc.author,label="*Last Name:",required="required",size="50",class="textfield")#
-								#html.inputField(name="email",type="email",bind=prc.author,label="*Email:",required="required",size="50",class="textfield")#
-								#html.textField(name="username",bind=prc.author,label="*Username:",required="required",size="50",class="textfield")#
+								#html.textField(name="firstName",bind=prc.author,label="*First Name:",required="required",size="50",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+								#html.textField(name="lastName",bind=prc.author,label="*Last Name:",required="required",size="50",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+								#html.inputField(name="email",type="email",bind=prc.author,label="*Email:",required="required",size="50",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+								#html.textField(name="username",bind=prc.author,label="*Username:",required="required",size="50",class="textfield username",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 								<cfif NOT prc.author.isLoaded()>
-								#html.passwordField(name="password",bind=prc.author,label="*Password:",required="required",size="50",class="textfield")#
+								#html.passwordField(name="password",bind=prc.author,label="*Password:",required="required",size="50",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 								</cfif>
 
 								<!--- Active --->
 								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-								#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author)#
+								#html.select(label="Active User:",name="isActive",options="yes,no",style="width:200px",bind=prc.author,wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 								<!--- Roles --->
-								#html.select(label="User Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role",bind=prc.author.getRole(),style="width:200px")#
+								#html.select(label="User Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role",bind=prc.author.getRole(),style="width:200px",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 								<cfelse>
 									<label>Active User: </label> <span class="textRed">#prc.author.getIsActive()#</span><br/>
 									<label>User Role: </label> <span class="textRed">#prc.author.getRole().getRole()#</span><br/>
 								</cfif>
 								
 								<!--- Biography --->
-								#html.textarea(name="biography",label="Biography or Notes About The User:",bind=prc.author,rows="10")#
+								#html.textarea(name="biography",label="Biography or Notes About The User:",bind=prc.author,rows="10",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 
 								<!--- Action Bar --->
 								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
-								<div class="actionBar">
+								<div class="form-actions">
 									<input type="submit" value="Save Details" class="btn btn-danger">
 								</div>
 								</cfif>
@@ -68,16 +68,16 @@
 						<cfif prc.author.isLoaded()>
 						<!--- Change Password --->
 						<div class="tab-pane" id="password">
-						#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate")#
+						#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate",class="well form-vertical")#
 							#html.startFieldset(legend="Change Password")#
 							#html.hiddenField(name="authorID",bind=prc.author)#
 							<!--- Fields --->
-							#html.passwordField(name="password",label="Password:",required="required",size="50",class="textfield")#
-							#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield")#
+							#html.passwordField(name="password",label="Password:",required="required",size="50",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+							#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 
 							<!--- Action Bar --->
 							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
-							<div class="actionBar">
+							<div class="form-actions">
 								<input type="submit" value="Change Password" class="btn btn-danger">
 							</div>
 							</cfif>
@@ -93,7 +93,7 @@
 						<div class="tab-pane" id="permissionsTab"></div>
 
 						<!--- My Entries --->
-						<div class="tab-pane" id="entries">
+						<div class="tab-pane well" id="entries">
 						#html.startFieldset(legend="User Entries")#
 							<!--- Entries Pager Viewlet --->
 							#prc.entryViewlet#
@@ -101,7 +101,7 @@
 						</div>
 
 						<!--- My Pages --->
-						<div class="tab-pane" id="pages">
+						<div class="tab-pane well" id="pages">
 						#html.startFieldset(legend="User Pages")#
 							<!--- Pages Pager Viewlet --->
 							#prc.pageViewlet#

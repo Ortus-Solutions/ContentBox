@@ -8,7 +8,7 @@ $(document).ready(function() {
 		$("##username").focus();
 	</cfif>
 	// form validators
-	$("##loginForm").validator({grouped:true});
+	$("##loginForm").validate();
 });
 </script>
 </cfoutput>

@@ -17,7 +17,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##singletons"), this.value );
 	});
 	// form validator
-	$settingEditor.validator({position:'bottom left'});
+	$settingEditor.validate();
 	// reset
 	$('##btnReset').click(function() {
 		$settingEditor.find("##settingID").val( '' );

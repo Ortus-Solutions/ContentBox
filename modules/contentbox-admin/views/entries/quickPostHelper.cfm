@@ -24,7 +24,7 @@ $(document).ready(function() {
 			filebrowserFlashBrowseUrl : '#event.buildLink(prc.xehCKFileBrowserURLFlash)#'
 		} );
 	// form validator
-	$quickPostForm.validator({position:'top left'});
+    $quickPostForm.validate();
 });
 function qpSaveDraft(){
 	$quickPostForm.find("##isPublished").val('false');
