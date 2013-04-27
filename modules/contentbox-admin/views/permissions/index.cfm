@@ -58,64 +58,10 @@
 						</tr>
 						</cfloop>
 					</tbody>
-				</table>
-				#html.endForm()#
-			
-			</div>	
+				</table>			
+			</div>
+            #html.endForm()#	
 		</div>
-	</div>
-
-	<!--- main sidebar --->
-	<div class="span3" id="main-sidebar">
-		<!--- Info Box --->
-		<div class="small_box">
-			<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
-			<div class="header">
-				<i class="icon-edit"></i> Editor
-			</div>
-			<div class="body">
-				<!--- Create/Edit form --->
-				#html.startForm(action=prc.xehPermissionSave,name="permissionEditor",novalidate="novalidate",class="form-vertical")#
-					#html.hiddenField(name="permissionID",value="")#
-					#html.textField(name="permission",label="Permission:",required="required",maxlength="255",size="30",class="input-block-level",title="The unique permission name",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-					#html.textArea(name="description",label="Description:",cols="20",rows="3",class="input-block-level",required="required",title="A short permission description",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-					#html.resetButton(name="btnReset",value="Reset Form",class="btn")#
-					#html.submitButton(value="Save Permission",class="btn btn-danger")#
-				#html.endForm()#
-			</div>
-			
-			<!--- permissions --->
-			<table name="permissions" id="permissions" class="tablesorter table table-hover table-striped" width="98%">
-				<thead>
-					<tr>
-						<th>Permission</th>
-						<th>Description</th>		
-						<th width="95" class="center">Roles</th>
-						<th width="75" class="center {sorter:false}">Actions</th>
-					</tr>
-				</thead>				
-				<tbody>
-					<cfloop array="#prc.permissions#" index="permission">
-					<tr>
-						<td><a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat(permission.getPermission())#','#jsstringFormat(permission.getDescription())#')" 
-							   title="Edit #permission.getPermission()#">#permission.getPermission()#</a></td>
-						<td>#permission.getDescription()#</td>
-						<td class="center"><span class="badge badge-info">#permission.getNumberOfRoles()#</span></td>
-						<td class="center">
-							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
-							<!--- Edit Command --->
-							<a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat( permission.getPermission() )#','#jsstringFormat( permission.getDescription() )#')" 
-							   title="Edit #permission.getPermission()#"><i class="icon-edit icon-large"></i></a>
-							<!--- Delete Command --->
-							<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-remove-sign icon-large"></i></a>
-							</cfif>
-						</td>
-					</tr>
-					</cfloop>
-				</tbody>
-			</table>
-			#html.endForm()#
-		</div>	
 	</div>
 </div>
 <cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
@@ -127,11 +73,11 @@
 		<h3>Permission Editor</h3>
     </div>
 	<!--- Create/Edit form --->
-	#html.startForm(action=prc.xehPermissionSave,name="permissionEditor",novalidate="novalidate")#
+	#html.startForm(action=prc.xehPermissionSave,name="permissionEditor",novalidate="novalidate",class="form-vertical")#
 	<div class="modal-body">
 			#html.hiddenField(name="permissionID",value="")#
-			#html.textField(name="permission",label="Permission:",required="required",maxlength="255",size="30",class="input-block-level",title="The unique permission name")#
-			#html.textArea(name="description",label="Description:",cols="20",rows="3",class="input-block-level",required="required",title="A short permission description")#
+			#html.textField(name="permission",label="Permission:",required="required",maxlength="255",size="30",class="input-block-level",title="The unique permission name",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+			#html.textArea(name="description",label="Description:",cols="20",rows="3",class="input-block-level",required="required",title="A short permission description",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 	</div>
 	<!--- Footer --->
 	<div class="modal-footer">

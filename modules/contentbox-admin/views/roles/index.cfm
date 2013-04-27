@@ -97,11 +97,11 @@
 		<h3>Role Editor</h3>
     </div>
 	<!--- Create/Edit form --->
-	#html.startForm(action=prc.xehRoleSave,name="roleEditor",novalidate="novalidate")#
+	#html.startForm(action=prc.xehRoleSave,name="roleEditor",novalidate="novalidate",class="form-vertical")#
 	<div class="modal-body">
 		#html.hiddenField(name="roleID",value="")#
-		#html.textField(name="role",label="Role:",required="required",maxlength="255",size="30",class="input-block-level",title="A unique role name")#
-		#html.textArea(name="description",label="Description:",cols="20",rows="3",class="input-block-level",title="A short role description")#
+		#html.textField(name="role",label="Role:",required="required",maxlength="255",size="30",class="input-block-level",title="A unique role name",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+		#html.textArea(name="description",label="Description:",cols="20",rows="3",class="input-block-level",title="A short role description",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 	</div>
 	<!--- Footer --->
 	<div class="modal-footer">
