@@ -3,8 +3,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$widgetCreateForm = $("##widgetCreateForm");
-	// form validator
-	$widgetCreateForm.validator({position:'center right'});	
+	// form validator	
+    $widgetCreateForm.validate();
 });
 function toggleIconSelector(){
 	$widgetCreateForm.find("##widget-icon-selector").slideToggle();

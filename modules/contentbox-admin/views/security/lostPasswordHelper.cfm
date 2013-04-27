@@ -4,7 +4,7 @@ $(document).ready(function() {
 	//Get Focus
 	$("##email").focus();
 	// form validators
-	$("##lostPasswordForm").validator({grouped:true});
+	$("##lostPasswordForm").validate();
 });
 </script>
 </cfoutput>

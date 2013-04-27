@@ -19,10 +19,10 @@
 	
 				<!--- fields --->
 				#html.hiddenField(name="contentType",value="CustomHTML")#
-				#html.textField(name="title",label="Title:",bind=prc.content,required="required",maxlength="200",class="textfield width98",size="50",title="A human friendly name for the content piece")#
+				#html.textField(name="title",label="Title:",bind=prc.content,required="required",maxlength="200",class="textfield width98",size="50",title="A human friendly name for the content piece",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 				<div id='slugCheckErrors'></div>
-				#html.textField(name="slug",label="Slug:",bind=prc.content,required="required",maxlength="200",class="textfield width98",size="50",title="The slug used to retrieve this content piece")#
-				#html.textarea(name="description",label="Short Description:",bind=prc.content,rows=3,class="width98",title="A short description for metadata purposes")#
+				#html.textField(name="slug",label="Slug:",bind=prc.content,required="required",maxlength="200",class="textfield width98",size="50",title="The slug used to retrieve this content piece",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+				#html.textarea(name="description",label="Short Description:",bind=prc.content,rows=3,class="width98",title="A short description for metadata purposes",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 				
 				<!---ContentToolBar --->
 				<div id="contentToolBar">

@@ -56,12 +56,11 @@
                     	<div id="download" class="accordion-body collapse">
                       		<div class="accordion-inner">
         						<!--- Update Form --->
-        						#html.startForm(name="updateNowForm",action=prc.xehInstallUpdate,novalidate="novalidate")#
+        						#html.startForm(name="updateNowForm",action=prc.xehInstallUpdate,novalidate="novalidate",class="form-vertical")#
         							<p>You can apply an update by selecting the download URL of the update archive.</p>
         							
-        							#html.inputfield(type="url",required="required",name="downloadURL",label="Download URL:", class="textfield",size="75")#
-        							
-        							#html.submitButton(value="Install Update", class="btn btn-danger")#
+        							#html.inputfield(type="url",required="required",name="downloadURL",label="Download URL:", class="textfield",size="75",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+        							#html.submitButton(value="Install Update", class="btn btn-danger")#   
         						#html.endForm()#	
                       		</div>
                     	</div>
@@ -78,12 +77,10 @@
                     	<div id="upload" class="accordion-body collapse">
                       		<div class="accordion-inner">
         						<!--- Upload Form --->
-        						#html.startForm(name="uploadNowForm",action=prc.xehUploadUpdate,multipart=true,novalidate="novalidate")#
+        						#html.startForm(name="uploadNowForm",action=prc.xehUploadUpdate,multipart=true,novalidate="novalidate",class="form-vertical")#
         							<p>You can also apply an update by uploading the update archive.</p>
         							
-        							#html.fileField(name="filePatch",label="Upload Patch: ", class="textfield",required="required", size="50")#	
-        							
-        							<br/><br/>
+        							#html.fileField(name="filePatch",label="Upload Patch: ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#	
         							#html.submitButton(value="Upload & Install Update",class="btn btn-danger")#
         						#html.endForm()#	
                       		</div>

@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// form validators
-	$("##commentSettingsForm").validator({grouped:true});
+	$("##commentSettingsForm").validate();
 });
 </script>
 </cfoutput>
