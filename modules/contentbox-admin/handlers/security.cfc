@@ -101,7 +101,9 @@ component{
 			// Try To get the Author
 			oAuthor = authorService.findWhere( { email = rc.email } );
 			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
-				arrayAppend( errors, "The email address is invalid!<br />" );
+				// Don't give away that the email did not exist.
+				getPlugin("MessageBox").info( "Please check your inbox for our reset email that must be used within the next 15 minutes" );
+				setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			}
 		}			
 		
