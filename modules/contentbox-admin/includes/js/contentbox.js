@@ -59,7 +59,33 @@ $(document).ready(function() {
             error.appendTo( element.parent("div.controls") );
         }
     })	
-	
+    
+    // simple method to blank out all form fields 
+    $.fn.clearForm = function() {
+        // reset classes and what not
+        this.data( 'validator' ).resetForm();
+        // run over input fields and blank them out
+        this.find(':input').each(function() {
+            switch(this.type) {
+                case 'password':
+                case 'hidden':
+                case 'select-multiple':
+                case 'select-one':
+                case 'text':
+                case 'textarea':
+                    $(this).val('');
+                    break;
+                case 'checkbox':
+                case 'radio':
+                    this.checked = false;
+            }
+        });
+        // also remove success and error classes
+        this.find( '.control-group' ).each(function() {
+            $( this ).removeClass( 'error' ).removeClass( 'success' );
+        });
+    }
+    
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
 });
@@ -145,12 +171,16 @@ function toggleFlickers(){
 	$(".cbox_messagebox_warn").slideToggle();
 	$(".cbox_messagebox_error").slideToggle();
 }
+
 /**
  * A-la-Carte closing of remote modal windows
  * @return
  */
 function closeRemoteModal(){
-    $(".error").hide();
+    var frm = div.find( 'form' );
+    if( frm.length ) {
+        $( frm[0] ).clearForm();        
+    }
     $remoteModal.modal( 'hide' );
 }
 /**
@@ -158,7 +188,10 @@ function closeRemoteModal(){
 * @param div The jquery div object that represents the dialog.
 */
 function closeModal(div){
-    $(".error").hide();
+    var frm = div.find( 'form' );
+    if( frm.length ) {
+        $( frm[0] ).clearForm();        
+    }
 	div.modal( 'hide' );
 }
 /**
@@ -173,6 +206,15 @@ function openModal(div, w, h){
         width: w,
         height: h
     })
+    // attach a listener to clear form when modal closes
+    $( div ).on( 'hidden', function() {
+        if( !$( this ).hasClass( 'in' ) ) {
+            var frm = $( this ).find( 'form' );
+            if( frm.length ) {
+                $( frm[0] ).clearForm();        
+            }
+        }
+    });
 }
 /**
  * Open a new remote modal window Ajax style.
