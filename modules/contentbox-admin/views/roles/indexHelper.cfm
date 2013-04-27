@@ -32,6 +32,9 @@ function remove(roleID){
 }
 function createRole(){
 	openModal( $("##roleEditorContainer"), 500, 200 );
+	$roleEditor.find("##roleID").val( '' );
+	$roleEditor.find("##role").val( '' );
+	$roleEditor.find("##description").val( '' );
 	return false;
 }
 </cfif>

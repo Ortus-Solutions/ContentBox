@@ -30,6 +30,7 @@
 						#html.textField(name="permissionFilter",size="30",class="textfield")#
 					</div>
 				</div>
+			</div>
 				
 				<!--- permissions --->
 				<table name="permissions" id="permissions" class="tablesorter table table-hover table-striped" width="98%">
@@ -60,8 +61,7 @@
 					</tbody>
 				</table>			
 			</div>
-            #html.endForm()#	
-		</div>
+         #html.endForm()#	
 	</div>
 </div>
 <cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
