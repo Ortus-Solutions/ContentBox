@@ -33,6 +33,9 @@ function remove(permissionID){
 }
 function createPermission(){
 	openModal( $("##permissionEditorContainer"), 500, 200 );
+	$permissionEditor.find("##permissionID").val( '' );
+	$permissionEditor.find("##permission").val( '' );
+	$permissionEditor.find("##description").val( '' );
 	return false;
 }
 </cfif>
