@@ -42,7 +42,6 @@
 			    #prc.cbroot#/includes/js/bootstrap.min.js,
 			    #prc.cbroot#/includes/js/metadata.pack.js,
 			    #prc.cbroot#/includes/js/jquery.uitablefilter.js,
-			    #prc.cbroot#/includes/js/jquery.uitablefilter.js,
 			    #prc.cbroot#/includes/js/jquery.tablednd_0_5.js,
 			    #prc.cbroot#/includes/js/tablesorter.min.js,
 			    #prc.cbroot#/includes/js/bootstrap-modalmanager.js,
