@@ -21,8 +21,7 @@
 	<!--- For iPhone 4 with high-resolution Retina display: --->
 	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
 	<!--- StyleSheets --->
-	#cb.minify(assets="#prc.cbroot#/includes/css/style.css,
-			    #prc.cbroot#/includes/css/bootstrap.css,
+	#cb.minify(assets="#prc.cbroot#/includes/css/bootstrap.css,
 			    #prc.cbroot#/includes/css/contentbox.css,
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
 			    #prc.cbroot#/includes/css/font-awesome.min.css",

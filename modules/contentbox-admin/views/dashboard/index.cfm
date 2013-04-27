@@ -237,7 +237,7 @@
 		</div>	
 		
 		<!--- Info Box --->
-		<div class="small_box expose">
+		<div class="small_box">
 			<div class="header">
 				<i class="icon-medkit"></i> Need Help?
 			</div>

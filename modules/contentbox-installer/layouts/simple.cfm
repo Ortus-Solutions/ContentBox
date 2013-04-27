@@ -16,7 +16,6 @@
 	<!--- Favicon --->
 	<link href="#prc.assetRoot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
-	<link href="#prc.assetRoot#/includes/css/style.css"					rel="stylesheet"/>
 	<link href="#prc.assetRoot#/includes/css/bootstrap.css" 			rel="stylesheet"/>
 	<link href="#prc.assetRoot#/includes/css/contentbox.css" 			rel="stylesheet"/>
 	<link href="#prc.assetRoot#/includes/css/bootstrap-responsive.css" 	rel="stylesheet"/>
