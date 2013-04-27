@@ -11,7 +11,9 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##layouts"), this.value );
 	});
 	// form validator
-	$uploadForm.validator({position:'top left',onSuccess:function(e,els){ activateLoaders(); }});	
+	$uploadForm.validate({
+        success:function(e,els){ activateLoaders(); }
+    });	
 });
 function activateLoaders(){
 	$("##uploadBar").slideToggle();

@@ -12,7 +12,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##widgets"), this.value );
 	});
 	// form validator
-	$uploadForm.validator({position:'top left',onSuccess:function(e,els){ activateLoaders(); }});
+	$uploadForm.validate({success:function(e,els){ activateLoaders(); }});
     // Widget Filter by text input
     $( '##widgetFilter' ).keyup(function(){
         var value = this.value,

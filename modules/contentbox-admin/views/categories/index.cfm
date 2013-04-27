@@ -15,7 +15,7 @@
 				#getPlugin("MessageBox").renderit()#
 				
 				<!--- CategoryForm --->
-				#html.startForm(name="categoryForm",action=prc.xehCategoryRemove)#
+				#html.startForm(name="categoryForm",action=prc.xehCategoryRemove,class="form-vertical")#
 				<input type="hidden" name="categoryID" id="categoryID" value="" />
 				
 				<!--- Content Bar --->
@@ -23,8 +23,7 @@
 					<!--- Filter Bar --->
 					<div class="filterBar">
 						<div>
-							#html.label(field="categoryFilter",content="Quick Filter:",class="inline")#
-							#html.textField(name="categoryFilter",size="30",class="textfield")#
+							#html.textField(name="categoryFilter",size="30",class="textfield",label="Quick Filter:")#
 						</div>
 					</div>
 				</div>
@@ -75,14 +74,13 @@
 			</div>
 			<div class="body">
 				<!--- Create/Edit form --->
-				#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate")#
+				#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate",class="form-vertical")#
 					#html.hiddenField(name="categoryID",value="")#
-					#html.textField(name="category",label="Category:",required="required",maxlength="100",size="30",class="input-block-level")#
-					#html.textField(name="slug",label="Slug (blank to generate it):",maxlength="100",size="30",class="input-block-level")#
-					<div class="actionBar">
-						#html.resetButton(name="btnReset",value="Reset Form",class="btn")#
-						#html.submitButton(value="Save Category",class="btn btn-danger")#
-					</div>
+					#html.textField(name="category",label="Category:",required="required",maxlength="100",size="30",class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+					#html.textField(name="slug",label="Slug (blank to generate it):",maxlength="100",size="30",class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+					#html.resetButton(name="btnReset",value="Reset Form",class="btn")#
+					#html.submitButton(value="Save Category",class="btn btn-danger")#
+					
 				#html.endForm()#
 			</div>
 		</div>		

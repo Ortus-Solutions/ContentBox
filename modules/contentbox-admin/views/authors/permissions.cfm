@@ -3,7 +3,7 @@
 <div>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="permissionRolesForm")#
+	#html.startForm(name="permissionRolesForm",class="well form-vertical")#
 	#html.startFieldset(legend="Active User Role Permissions")#
 		<cfif !prc.author.getRole().hasPermission()>
 			<small>No permissions assigned!</small>
@@ -26,7 +26,7 @@
 	
 	<!--- Add Permission Form--->
 	<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-	#html.startForm(name="permissionForm")#
+	#html.startForm(name="permissionForm",class="well form-vertical")#
 	#html.startFieldset(legend="Assign A-la-Carte Permissions")#
 		#html.hiddenField(name="authorID",bind=prc.author)#
 		
@@ -54,10 +54,14 @@
 				</cfif>
 			</select>
 			<cfif arrayLen( prc.permissions ) GT 0 AND !noPerms>
-				<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
+            	<div class="form-actions">
+					<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
+                </div>
 			<cfelse>
-				<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
-			</cfif>
+				<div class="form-actions">
+					<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
+				</div>
+            </cfif>
 		</div>
 		
 	#html.endFieldSet()#
@@ -65,7 +69,7 @@
 	</cfif>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="alacartePermissions")#
+	#html.startForm(name="alacartePermissions",class="well form-vertical")#
 	#html.startFieldset(legend="Active A-la-carte Permissions")#
 		<cfif !prc.author.hasPermission()>
 			<small>No permissions assigned!</small>

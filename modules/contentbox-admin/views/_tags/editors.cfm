@@ -42,18 +42,39 @@ function setupEditors($theForm, withExcerpt){
 	#prc.oEditorDriver.startup()#
 
 	// Activate Date fields
-	$(":date").dateinput();
+	$("[type=date]").datepicker();
 
 	// Activate Form Validator
-	$theForm.validator({position:'top left',grouped:true,onSuccess:function(e,els){ needConfirmation=false; }});
+	$theForm.validate({
+    	ignore: 'content',
+    	success:function(e,els){ 
+    		needConfirmation=false; 
+    	},
+        submitHandler: function( form ) {
+        	// weird issue in jQuery validator where it won't validate hidden fields
+            // so call updateElement() to get content for hidden textarea
+        	CKEDITOR.instances.content.updateElement();
+            // validate element
+    		var el = $( '##content' );
+            // if it's valid, submit form
+            if( el.val().length ) {
+            	form.submit();
+            }
+            // otherwise, show error
+            else {
+            	alert( 'Please enter some content!' );
+           	}
+        }
+    });
+
 	// Changelog mandatory?
 	$theForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
 	// Custom content unique validator
-	$.tools.validator.fn($content, function(el, value) {
+	/*$.tools.validator.fn($content, function(el, value) {
 		if( value.length ){ return true; }
 		alert("Please enter some content!");
 		return false;
-	});
+	});*/
 	// Activate blur slugify on titles
 	var $title = $theForm.find("##title");
 	$title.blur(function(){

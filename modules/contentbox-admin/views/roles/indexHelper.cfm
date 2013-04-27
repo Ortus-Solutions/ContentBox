@@ -5,7 +5,7 @@ $(document).ready(function() {
 	<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 	$roleEditor = $("##roleEditor");
 	// form validator
-	$roleEditor.validator({position:'top left'});
+	$roleEditor.validate();
 	// reset
 	$('##btnReset').click(function() {
 		$roleEditor.find("##roleID").val( '' );

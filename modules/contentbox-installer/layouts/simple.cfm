@@ -24,7 +24,8 @@
 	<!--- JS --->
 	<script src="#prc.assetRoot#/includes/js/jquery.min.js"></script>
 	<script src="#prc.assetRoot#/includes/js/bootstrap.min.js"></script>
-	<script src="#prc.assetRoot#/includes/js/jquery.tools.min.js"></script>
+    <script src="#prc.assetRoot#/includes/js/jquery.validate.js"></script>
+    <script src="#prc.assetRoot#/includes/js/jquery.validate.bootstrap.js"></script>
 	<script src="#prc.assetRoot#/includes/js/contentbox.js"></script>
 </head>
 <body>

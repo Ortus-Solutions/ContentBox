@@ -10,22 +10,24 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<div id="loginContent">
-			#html.startForm(action=prc.xehDoLogin, name="loginForm", novalidate="novalidate", class="form-inline")#
+			#html.startForm(action=prc.xehDoLogin, name="loginForm", novalidate="novalidate", class="form-vertical")#
 				#html.hiddenField(name="_securedURL",value=rc._securedURL)#
 				
 				<p></p>
 				
 				<div class="padding10">
-					<div class="input-prepend">
+					<div class="input-prepend control-group">
 					<span class="add-on"><i class="icon-user"></i></span>
 					#html.textfield(name="username", required="required", class="input-large", value=prc.rememberMe, placeholder="Username", autocomplete="off")#
 					</div>
 				</div>
 				
 				<div class="padding10">
-					<div class="input-prepend">
-						<span class="add-on"><i class="icon-key"></i></span>
-						#html.passwordField(name="password", required="required", class="input-large", placeholder="Password", autocomplete="off")#
+					<div class="input-prepend control-group">
+					    <div class="controls">
+							<span class="add-on"><i class="icon-key"></i></span>
+							#html.passwordField(name="password", required="required", class="input-large", placeholder="Password", autocomplete="off")#
+						</div>
 					</div>	
 				</div>
 					

@@ -4,8 +4,8 @@
 $(document).ready(function() {
 	$updateCheckForm = $("##updateCheckForm");
 	// form validators
-	$("##updateNowForm").validator({grouped:true});
-	$("##uploadNowForm").validator({grouped:true});
+	$("##updateNowForm").validate();
+	$("##uploadNowForm").validate();
 });
 function checkForUpdates(){
 	var channel = $updateCheckForm.find("input[name='channel']:checked").val();
