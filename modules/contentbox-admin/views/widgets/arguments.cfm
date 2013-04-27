@@ -1,5 +1,5 @@
 <cfoutput>
-	#html.startForm(name="widgetArgsForm_#prc.widget.name#")#
+	#html.startForm(name="widgetArgsForm_#prc.widget.name#",class="form-vertical")#
 	#html.startFieldSet(legend="Widget Arguments")#
 	<cfif arrayLen( prc.md.parameters )> 
 		<p>Please fill out the arguments for this widget:</p>
@@ -23,16 +23,20 @@
     			requiredValidator = "required";
     		}
 		</cfscript>
-		#html.label( field=thisArg.name, content="#thisArg.name# (Type=#thisArg.type#) #requiredText#" )#
-		<cfif len( thisArg.hint )>
-			<small>#thisArg.hint#</small><br/>
-		</cfif>
-		<!---Boolean?--->
-		<cfif thisArg.type eq "boolean">
-			#html.select( name=thisArg.name, options="true,false", selectedValue=thisArg.value, class="input-block-level" )#
-		<cfelse>
-			#html.textfield( name=thisArg.name, size="35", class="input-block-level", required=requiredValidator, title=thisArg.hint, value=thisArg.value )#
-		</cfif>
+		<div class="control-group">
+		    #html.label( field=thisArg.name, content="#thisArg.name# (Type=#thisArg.type#) #requiredText#", class="control-label" )#
+		    <div class="controls">
+		        <cfif len( thisArg.hint )>
+        			<small>#thisArg.hint#</small><br/>
+        		</cfif>
+        		<!---Boolean?--->
+        		<cfif thisArg.type eq "boolean">
+        			#html.select( name=thisArg.name, options="true,false", selectedValue=thisArg.value, class="input-block-level" )#
+        		<cfelse>
+        			#html.textfield( name=thisArg.name, size="35", class="input-block-level", required=requiredValidator, title=thisArg.hint, value=thisArg.value )#
+        		</cfif>
+		    </div>
+		</div>
 	</cfloop>
 	#html.hiddenfield( name="widgetName", id="widgetName", value=prc.widget.name )#
 	#html.hiddenfield( name="widgetDisplayName", id="widgetDisplayName", value=prc.widget.plugin.getPluginName() )#

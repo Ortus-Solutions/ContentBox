@@ -3,9 +3,9 @@
 $(document).ready(function() {
 	$importForm = $("##importerForm");
 	// form validator
-	$importForm.validator({position:'center right'});	
+	$importForm.validate();	
 	$importForm.submit(function(){
-		if ($importForm.data("validator").checkValidity()) {
+		if ( $importForm.valid() ) {
 			activateLoaders();
 		}
 	});

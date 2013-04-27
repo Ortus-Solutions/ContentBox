@@ -290,15 +290,15 @@
 	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	        <h3><i class="icon-copy"></i> Page Cloning</h3>
 	    </div>
-        #html.startForm(name="cloneForm", action=prc.xehPageClone)#
+        #html.startForm(name="cloneForm", action=prc.xehPageClone, class="form-vertical")#
         <div class="modal-body">
 			<p>By default, all internal page links are updated for you as part of the cloning process.</p>
 		
 			#html.hiddenField(name="contentID")#
-			#html.textfield(name="title", label="Please enter the new page title:", class="input-block-level", required="required", size="50")#
+			#html.textfield(name="title", label="Please enter the new page title:", class="input-block-level", required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 			<label for="pageStatus">Publish all pages in hierarchy?</label>
 			<small>By default all cloned pages are published as drafts.</small><br>
-			#html.select(options="true,false", name="pageStatus", selectedValue="false", class="input-block-level")#
+			#html.select(options="true,false", name="pageStatus", selectedValue="false", class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 			
 			<!---Notice --->
 			<div class="alert alert-info">

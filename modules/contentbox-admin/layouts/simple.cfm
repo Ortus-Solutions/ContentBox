@@ -30,7 +30,8 @@
 	<!--- JS --->
 	#cb.minify(assets="#prc.cbroot#/includes/js/jquery.min.js,
 			    #prc.cbroot#/includes/js/bootstrap.min.js,
-			    #prc.cbroot#/includes/js/jquery.tools.min.js,
+			    #prc.cbroot#/includes/js/jquery.validate.js,
+			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
 			    #prc.cbroot#/includes/js/contentbox.js",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- cbadmin Event --->

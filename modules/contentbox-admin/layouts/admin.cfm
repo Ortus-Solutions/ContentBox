@@ -26,6 +26,7 @@
 			    #prc.cbroot#/includes/css/contentbox.css,
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
 			    #prc.cbroot#/includes/css/bootstrap-modal.css,
+			    #prc.cbroot#/includes/css/bootstrap-datepicker.css,
 			    #prc.cbroot#/includes/css/font-awesome.min.css",			    
 			   location="#prc.cbroot#/includes/cache")#
 
@@ -39,7 +40,6 @@
 	<!--- JS --->
 	#cb.minify(assets="#prc.cbroot#/includes/js/jquery.min.js,
 			    #prc.cbroot#/includes/js/bootstrap.min.js,
-			    #prc.cbroot#/includes/js/jquery.tools.min.js,
 			    #prc.cbroot#/includes/js/metadata.pack.js,
 			    #prc.cbroot#/includes/js/jquery.uitablefilter.js,
 			    #prc.cbroot#/includes/js/jquery.uitablefilter.js,
@@ -47,6 +47,9 @@
 			    #prc.cbroot#/includes/js/tablesorter.min.js,
 			    #prc.cbroot#/includes/js/bootstrap-modalmanager.js,
 			    #prc.cbroot#/includes/js/bootstrap-modal.js,
+			    #prc.cbroot#/includes/js/bootstrap-datepicker.js,
+			    #prc.cbroot#/includes/js/jquery.validate.js,
+			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
 			    #prc.cbroot#/includes/js/contentbox.js",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- CKEditor Separate --->
