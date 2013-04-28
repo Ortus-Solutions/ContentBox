@@ -3,7 +3,7 @@
 <div>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="permissionRolesForm",class="well form-vertical")#
+	#html.startForm(name="permissionRolesForm",class="form-vertical")#
 	#html.startFieldset(legend="Active User Role Permissions")#
 		<cfif !prc.author.getRole().hasPermission()>
 			<small>No permissions assigned!</small>
@@ -26,7 +26,7 @@
 	
 	<!--- Add Permission Form--->
 	<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-	#html.startForm(name="permissionForm",class="well form-vertical")#
+	#html.startForm(name="permissionForm",class="form-vertical")#
 	#html.startFieldset(legend="Assign A-la-Carte Permissions")#
 		#html.hiddenField(name="authorID",bind=prc.author)#
 		
@@ -69,7 +69,7 @@
 	</cfif>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="alacartePermissions",class="well form-vertical")#
+	#html.startForm(name="alacartePermissions",class="form-vertical")#
 	#html.startFieldset(legend="Active A-la-carte Permissions")#
 		<cfif !prc.author.hasPermission()>
 			<small>No permissions assigned!</small>

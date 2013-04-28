@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- authorPreferencesForm --->
-#html.startForm(name="authorPreferencesForm",action=prc.xehAuthorPreferences,novalidate="novalidate",class="well form-vertical")#
+#html.startForm(name="authorPreferencesForm",action=prc.xehAuthorPreferences,novalidate="novalidate",class="form-vertical")#
 	#html.startFieldset(legend="User Preferences")#
 	#html.hiddenField(name="authorID",bind=prc.author)#
 	
@@ -19,7 +19,7 @@
 	
 	<!--- Action Bar --->
 	<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
-	<div class="form-actions">
+	<div>
 		<input type="submit" value="Save Preferences" class="btn btn-danger">
 	</div>
 	</cfif>
@@ -27,7 +27,7 @@
 #html.endForm()#
 
 <!--- authorRawPreferencesForm --->
-#html.startForm(name="authorRawPreferencesForm",action=prc.xehAuthorRawPreferences,novalidate="novalidate",class="well form-vertical")#
+#html.startForm(name="authorRawPreferencesForm",action=prc.xehAuthorRawPreferences,novalidate="novalidate",class="form-vertical")#
 	#html.startFieldset(legend="Raw Preferences (<a href='javascript:toggleRawPreferences()'>Show/Hide</a>)")#
 	#html.hiddenField(name="authorID",bind=prc.author)#
 	
@@ -37,7 +37,7 @@
 
 		<!--- Action Bar --->
 		<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
-		<div class="form-actions">
+		<div>
 			<input type="submit" value="Save" class="btn btn-danger">
 		</div>
 		</cfif>

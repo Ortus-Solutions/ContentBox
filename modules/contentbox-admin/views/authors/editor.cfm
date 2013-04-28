@@ -30,7 +30,7 @@
 						<!--- Author Details --->
 						<div class="tab-pane active" id="userDetails">
 							<!--- AuthorForm --->
-							#html.startForm(name="authorForm",action=prc.xehAuthorsave,novalidate="novalidate", class="well form-vertical")#
+							#html.startForm(name="authorForm",action=prc.xehAuthorsave,novalidate="novalidate", class="form-vertical")#
 								#html.startFieldset(legend="User Details")#
 								#html.hiddenField(name="authorID",bind=prc.author)#
 								<!--- Fields --->
@@ -55,34 +55,35 @@
 								<!--- Biography --->
 								#html.textarea(name="biography",label="Biography or Notes About The User:",bind=prc.author,rows="10",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 
+								#html.endFieldSet()#
+								
 								<!--- Action Bar --->
 								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 								<div class="form-actions">
 									<input type="submit" value="Save Details" class="btn btn-danger">
 								</div>
 								</cfif>
-								#html.endFieldSet()#
+								
 							#html.endForm()#
 						</div>
 
 						<cfif prc.author.isLoaded()>
 						<!--- Change Password --->
 						<div class="tab-pane" id="password">
-						#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate",class="well form-vertical")#
+						#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate",class="form-vertical")#
 							#html.startFieldset(legend="Change Password")#
 							#html.hiddenField(name="authorID",bind=prc.author)#
 							<!--- Fields --->
 							#html.passwordField(name="password",label="Password:",required="required",size="50",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 							#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-
+							#html.endFieldSet()#
+							
 							<!--- Action Bar --->
 							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 							<div class="form-actions">
 								<input type="submit" value="Change Password" class="btn btn-danger">
 							</div>
 							</cfif>
-
-							#html.endFieldSet()#
 						#html.endForm()#
 						</div>
 						
@@ -93,7 +94,7 @@
 						<div class="tab-pane" id="permissionsTab"></div>
 
 						<!--- My Entries --->
-						<div class="tab-pane well" id="entries">
+						<div class="tab-pane" id="entries">
 						#html.startFieldset(legend="User Entries")#
 							<!--- Entries Pager Viewlet --->
 							#prc.entryViewlet#
@@ -101,7 +102,7 @@
 						</div>
 
 						<!--- My Pages --->
-						<div class="tab-pane well" id="pages">
+						<div class="tab-pane" id="pages">
 						#html.startFieldset(legend="User Pages")#
 							<!--- Pages Pager Viewlet --->
 							#prc.pageViewlet#

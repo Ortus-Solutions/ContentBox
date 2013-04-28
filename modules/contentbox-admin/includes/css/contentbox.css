@@ -136,8 +136,8 @@ footer #footerLogo img{ margin:-17px 35px; box-shadow:0 0 6px #ccc; -moz-box-sha
 .small_box .header, .box .header, .box, .small_box { border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; }
 /**============================== Form Styling ==============================**/
 form label { font-size:1em; font-weight:bold; }
-fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:15px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
-fieldset legend { border-bottom: none; width: inherit; line-height:20px; margin-bottom: 0px}
+fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+fieldset legend { border-bottom: none;font-weight:bold; font-size:16px; width: inherit; line-height:20px; margin-bottom: 0px}
 fieldset legend + .control-group { margin-top: 5px; }
 form textarea,form .wysiwyg { width:98%; }
 .modal form { margin:0px !important; }
