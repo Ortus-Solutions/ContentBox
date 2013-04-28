@@ -17,10 +17,10 @@
 			<div class="tabbable tabs-left">
     			<!--- Geek Navigation Bar --->
     			<ul class="nav nav-tabs">
-    				<li class="active" title="Raw Settings"><a href="##raw" data-toggle="tab"><i class="icon-cog icon-large"></i> Raw Settings</a></li>
-    				<li title="WireBox"><a href="##wirebox" data-toggle="tab"><i class="icon-th-large icon-large"></i> WireBox</a></li>
-    				<li title="CacheBox Monitor"><a href="##cachebox" data-toggle="tab"><i class="icon-hdd icon-large"></i>  CacheBox</a></li>
-    				<li title="ContentBox Events"><a href="##events" data-toggle="tab"><i class="icon-bullhorn icon-large"></i> Events</a></li>
+    				<li class="active"><a href="##raw" data-toggle="tab"><i class="icon-cog icon-large"></i> Raw Settings</a></li>
+    				<li><a href="##wirebox" data-toggle="tab"><i class="icon-th-large icon-large"></i> WireBox</a></li>
+    				<li><a href="##cachebox" data-toggle="tab"><i class="icon-hdd icon-large"></i>  CacheBox</a></li>
+    				<li><a href="##events" data-toggle="tab"><i class="icon-bullhorn icon-large"></i> Events</a></li>
     			</ul>
     			<!--- Tab Content --->
     			<div class="tab-content">
@@ -83,7 +83,7 @@
     							</div>
     							
     							<div class="btn-group">
-    								<a href="##" onclick="return createSetting();" class="btn btn-danger"><i class="icon-plus-sign"></i> Create Setting</a>
+    								<a href="##" onclick="return createSetting();" class="btn btn-danger">Create Setting</a>
     								<button class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
     									<span class="caret"></span>
     								</button>
@@ -154,7 +154,7 @@
     					<div class="well well-small">
     						<!--- Flush Cache Button --->
     						<div class="buttonBar">
-    							<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons"><i class="icon-magnet"></i> Clear All Singletons</button>
+    							<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons">Clear All Singletons</button>
     						</div>
     						<!--- Filter Bar --->
     						<div class="filterBar">
