@@ -34,9 +34,6 @@
 					</div>
 				</div>
 	
-				<!--- Paging --->
-				#rc.pagingPlugin.renderit(rc.authorCount,rc.pagingLink)#
-	
 				<!--- authors --->
 				<table name="authors" id="authors" class="tablesorter table table-striped table-hover" width="98%">
 					<thead>

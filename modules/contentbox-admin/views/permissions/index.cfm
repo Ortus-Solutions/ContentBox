@@ -37,7 +37,8 @@
 					<thead>
 						<tr>
 							<th>Permission</th>
-							<th>Description</th>		
+							<th>Description</th>
+							<th width="95" class="center">Roles</th>		
 							<th width="75" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>				
@@ -47,6 +48,7 @@
 							<td><a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat(permission.getPermission())#','#jsstringFormat(permission.getDescription())#')" 
 								   title="Edit #permission.getPermission()#">#permission.getPermission()#</a></td>
 							<td>#permission.getDescription()#</td>
+							<td class="center"><span class="badge badge-info">#permission.getNumberOfRoles()#</span></td>
 							<td class="center">
 								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 								<!--- Edit Command --->
