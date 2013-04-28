@@ -8,14 +8,14 @@
 		</div>
 		<!--- Body --->
 		<div class="body">
-			#html.startForm(name="ruleEditForm",action=prc.xehRuleSave,novalidate="novalidate",class="well form-vertical")#
+			#html.startForm(name="ruleEditForm",action=prc.xehRuleSave,novalidate="novalidate",class="form-vertical")#
                 <!--- ruleID --->
                 #html.hiddenField(name="ruleID",bind=prc.rule)#
     			<!--- MessageBox --->
     			#getPlugin("MessageBox").renderit()#
     			
     			<!--- fields --->
-    			#html.startFieldset(legend="Security")#
+    			#html.startFieldset(legend="<strong>Rule Match</strong>")#
     				<!--- Usage --->
     				<div class="alert alert-error">
     					<i class="icon-warning-sign icon-large"></i>
@@ -45,7 +45,7 @@
     				#html.textField(name="roles",label="Roles:",bind=prc.rule,maxlength="500",class="textfield",size="100",title="The list of security roles needed to access the secured content of this rule.",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
     			#html.endFieldset()#
     			
-    			#html.startFieldset(legend="Relocation Data")#
+    			#html.startFieldset(legend="<strong>Relocation Data</strong>")#
     				<div class="control-group">
                         #html.label(field="useSSL",content="Redirect using SSL:")#
                         <div class="controls">
@@ -59,7 +59,7 @@
     			
     			<!--- Action Bar --->
     			<div class="form-actions">
-    				<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
+    				<button class="btn" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
     				&nbsp;<button type="submit" class="btn btn-danger">Save</button>
     			</div>
 			#html.endForm()#

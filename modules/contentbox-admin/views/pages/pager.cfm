@@ -5,11 +5,6 @@
 		<i class="icon-spinner icon-spin icon-large"></i>
 	</div>
 
-	<!--- Paging --->
-	<cfif prc.pagePager_pagination>
-		#prc.pagePager_pagingPlugin.renderit(prc.pager_pagesCount,prc.pagePager_pagingLink)#
-	</cfif>
-
 	<!--- entries --->
 	<table name="pages_pager" id="pages_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
 		<thead>
@@ -73,6 +68,11 @@
 			</cfloop>
 		</tbody>
 	</table>
+	
+	<!--- Paging --->
+	<cfif prc.pagePager_pagination>
+		#prc.pagePager_pagingPlugin.renderit(prc.pager_pagesCount,prc.pagePager_pagingLink)#
+	</cfif>
 
 </div>
 </cfoutput>
