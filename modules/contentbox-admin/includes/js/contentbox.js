@@ -57,6 +57,7 @@ $(document).ready(function() {
     
     // simple method to blank out all form fields 
     $.fn.clearForm = function() {
+    	if( this.data( 'validator') == undefined ){ return; }
         // reset classes and what not
         this.data( 'validator' ).resetForm();
         // run over input fields and blank them out
@@ -169,7 +170,7 @@ function toggleFlickers(){
  * @return
  */
 function closeRemoteModal(){
-    var frm = div.find( 'form' );
+    var frm = $remoteModal.find( 'form' );
     if( frm.length ) {
         $( frm[0] ).clearForm();        
     }
