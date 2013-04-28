@@ -35,7 +35,7 @@
     			</ul>
 				<!--- Documentation Panes --->
     			<!--- Tab Content --->
-    			<div class="tab-content well">
+    			<div class="tab-content">
     				<!--- General Options --->
     				<div class="tab-pane active" id="site_options">
     					<fieldset>
@@ -768,7 +768,7 @@
 					#announceInterception("cbadmin_onSettingsContent")#
 					<!--- Button Bar --->
         			<div class="form-actions">
-        				#html.submitButton(value="Save Settings",class="btn btn-danger",title="Save the ContentBox settings")#
+        				#html.submitButton(value="Save Settings", class="btn btn-danger")#
         			</div>
 				</div>
 				<!--- End Tab Content --->

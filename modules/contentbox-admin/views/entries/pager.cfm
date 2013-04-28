@@ -4,10 +4,6 @@
 <div class="loaders floatRight" id="entryPagerLoader">
 	<i class="icon-spinner icon-spin icon-large"></i>
 </div>
-<!--- Paging --->
-<cfif prc.pager_pagination>
-	#prc.pager_pagingPlugin.renderit(prc.pager_entriesCount,prc.pager_pagingLink)#
-</cfif>
 
 <!--- entries --->
 <table name="entries_pager" id="entries_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
@@ -68,5 +64,10 @@
 		</cfloop>
 	</tbody>
 </table>
+
+<!--- Paging --->
+<cfif prc.pager_pagination>
+	#prc.pager_pagingPlugin.renderit(prc.pager_entriesCount,prc.pager_pagingLink)#
+</cfif>
 </div>
 </cfoutput>
