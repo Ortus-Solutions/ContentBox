@@ -85,12 +85,6 @@
 								</td>
 								<td class="center">
 								<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
-	
-									<cfif !len(module.getForgeBoxSlug())>
-									<!--- Update Check --->
-									<a title="Check For Updates" href="##"><i class="icon-refresh icon-large"></i></a>
-									&nbsp;
-									</cfif>
 									<!--- Check if active --->
 									<cfif module.getIsActive()>
 										<!--- Update Check --->
@@ -101,8 +95,8 @@
 										&nbsp;
 										<!--- Delete Module --->
 										<a title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
-											data-title="Delete #module.getName()#?"><i class="icon-remove-sign icon-large"></i></a>
-										</cfif>
+											data-title="Delete #module.getName()#?"><i class="icon-trash icon-large"></i></a>
+									</cfif>
 								</cfif>
 								</td>
 							</tr>
@@ -134,6 +128,18 @@
 	<!--- main sidebar --->
 	<div class="span3" id="main-sidebar">
 		<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
+		<!--- Actions Box --->
+		<div class="small_box">
+			<div class="header">
+				<i class="icon-cogs"></i> Module Admin Actions
+			</div>
+			<div class="body text-center">
+				<div class="btn-group">
+				<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivate + Rescan" class="btn"><i class="icon-hdd"></i> Reset</a>
+				<a href="#event.buildLink(prc.xehModuleRescan)#" title="Scans For New Modules" class="btn"><i class="icon-refresh"></i> Rescan</a>
+				</div>
+			</div>
+		</div>
 		<!--- Upload Box --->
 		<div class="small_box">
 			<div class="header">
@@ -153,16 +159,6 @@
 						<i class="icon-spinner icon-spin icon-large icon-2x"></i> Uploading...
 					</div>
 				#html.endForm()#
-			</div>
-		</div>
-		<!--- Actions Box --->
-		<div class="small_box">
-			<div class="header">
-				<i class="icon-cogs"></i> Module Admin Actions
-			</div>
-			<div class="body text-center">
-				<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivates, Wipes and Re-Registers All Modules"><button class="btn btn-primary"><i class="icon-off"></i> Reset Modules</button></a>
-				<a href="#event.buildLink(prc.xehModuleRescan)#" title="Rescans the Modules for new registrations"><button class="btn btn-primary"><i class="icon-refresh"></i> Rescan Modules</button></a>
 			</div>
 		</div>
 		</cfif>

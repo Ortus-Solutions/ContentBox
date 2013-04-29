@@ -55,7 +55,7 @@
 								<a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat( permission.getPermission() )#','#jsstringFormat( permission.getDescription() )#')" 
 								   title="Edit #permission.getPermission()#"><i class="icon-edit icon-large"></i></a>
 								<!--- Delete Command --->
-								<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-remove-sign icon-large"></i></a>
+								<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-trash icon-large"></i></a>
 								</cfif>
 							</td>
 						</tr>

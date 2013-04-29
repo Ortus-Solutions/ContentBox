@@ -43,7 +43,7 @@ component extends="baseHandler"{
 		// ForgeBox Stuff
 		prc.forgeBoxSlug 		= "contentbox-layouts";
 		prc.forgeBoxInstallDir 	= URLEncodedFormat( layoutService.getLayoutsPath() );
-		prc.forgeboxReturnURL 	= URLEncodedFormat( event.buildLink(linkto=prc.xehLayouts, querystring="rescan=true##manage") );
+		prc.forgeboxReturnURL 	= URLEncodedFormat( event.buildLink(linkto=prc.xehLayouts, querystring="rescan=true##managePane") );
 
 		// Tab
 		prc.tabLookAndFeel_layouts = true;
@@ -83,7 +83,7 @@ component extends="baseHandler"{
 	function rebuildRegistry(event,rc,prc){
 		layoutService.buildLayoutRegistry();
 		getPlugin("MessageBox").info("Layouts re-scanned and registered!");
-		setNextEvent(event=prc.xehLayouts, queryString="##manage");
+		setNextEvent(event=prc.xehLayouts, queryString="##layoutsPane");
 	}
 
 	//Remove
@@ -94,7 +94,7 @@ component extends="baseHandler"{
 		else{
 			getPlugin("MessageBox").error("Error removing layout, please check your logs for more information!");
 		}
-		setNextEvent(event=prc.xehLayouts, queryString="##manage");
+		setNextEvent(event=prc.xehLayouts, queryString="##layoutsPane");
 	}
 
 	//upload
@@ -124,6 +124,6 @@ component extends="baseHandler"{
 			}
 		}
 
-		setNextEvent(event=prc.xehLayouts, queryString="##manage");
+		setNextEvent(event=prc.xehLayouts, queryString="##layoutsPane");
 	}
 }

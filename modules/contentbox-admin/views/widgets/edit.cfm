@@ -39,9 +39,11 @@
 			<div class="body">
 				
 				<div class="actionBar">
+					<div class="btn-group">
 					#html.href(href=prc.xehWidgets,text=html.button(name="cancelButton",value="Cancel",class="btn"))#
 					#html.button(value="Save",class="btn btn-danger",title="Save and keep on working",onclick="return saveWidgetCode()")#
 					#html.button(value="Save & Close", type="submit", class="btn btn-danger",title="Save widget and return to listing")#
+					</div>
 				</div>
 				
 				<!--- Loader --->
