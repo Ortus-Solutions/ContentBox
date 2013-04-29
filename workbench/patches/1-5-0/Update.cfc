@@ -22,8 +22,8 @@ limitations under the License.
 ********************************************************************************
 Update for 1.5.0 release
 
-Start Commit Hash: 7609786c62bfdd5b0cc8df979a19e76d23fb2fde
-End Commit Hash: e70e2c90c2c6b326e3618be42315a78b7894687a
+Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
+End Commit Hash: 560fa71ce2741cfbe27ba09ed95aee19aebb4f59
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -55,7 +55,12 @@ component implements="contentbox.model.updates.IUpdate"{
 				log.info("About to begin #version# patching");
 				
 				updateSettings();
-				updateContentCreators();
+				
+				// create caching directory
+				var cacheDir = coldbox.getSetting("modules")["contentbox-admin"].path & "/includes/cache";
+				if( !directoryExists( cacheDir ) ){
+					directoryCreate( cacheDir );
+				}
 				
 				// Add Columns
 				//addColumn(table="cb_content", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
@@ -77,7 +82,8 @@ component implements="contentbox.model.updates.IUpdate"{
 	function postInstallation(){
 		try{
 			transaction{
-
+				// Update Content Creators
+				updateContentCreators();
 			}
 		}
 		catch(Any e){
