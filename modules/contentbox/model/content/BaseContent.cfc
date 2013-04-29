@@ -20,8 +20,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="title"					notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
-	property name="publishedDate"			notnull="false" ormtype="timestamp" idx="idx_publishedDate";
-	property name="expireDate"				notnull="false" ormtype="timestamp" default="" idx="idx_expireDate";
+	property name="publishedDate"			notnull="false" ormtype="timestamp" index="idx_publishedDate";
+	property name="expireDate"				notnull="false" ormtype="timestamp" default="" index="idx_expireDate";
 	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
 	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
