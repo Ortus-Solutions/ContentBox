@@ -1,25 +1,24 @@
 ﻿<cfoutput>
 <div class="row" id="main-login">
-	<div class="box span12 offset4" id="loginBox">
 	
-		<div class="header">
-			<i class="icon-key icon-"></i> Lost Password
-		</div>
+	<div class="well" id="loginBox">
+	
+		<h2><i class="icon-key icon-"></i> Lost Password</h2>
 		
-		<div class="body clearfix">
+		<div class="body">
 			
 			<!--- Render Messagebox. --->
 			#getPlugin("MessageBox").renderit()#
 			
-			<!--- Instructions --->
-			<p>Enter your email address below in order to reset your password.</p>
-				
 			<div id="loginContent">
+			<!--- Instructions --->
+			<p>Enter your email address below in order to reset your password with a temporary password.</p>
+			
 			#html.startForm(action=prc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate",class="form-vertical")#
 				
-				<div class="padding10">
-					<div class="input-prepend control-group">
-					    <div class="controls">
+				<div class="control-group">
+					<div class="controls">
+					    <div class="input-prepend">
 							<span class="add-on"><i class="icon-envelope"></i></span>
 							#html.textfield(name="email", required="required", class="input-large", placeholder="Email Address", autocomplete="off")#
 						</div>
