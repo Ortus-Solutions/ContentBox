@@ -1,133 +1,110 @@
 $(document).ready(function() {
-	// Global Tool Tip Settings
-	toolTipSettings	= {	//will make a tooltip of all elements having a title property
-		 opacity: 0.8,
-		 effect: 'slide',
-		 predelay: 200,
-		 delay: 10,
-		 offset:[5, 0]
-	};
-	
- 	// Search Capabilities
-	activateContentSearch();
-	
-	// toggle flicker messages
-	$(".flickerMessages").slideDown();
-	//Main Navigation
-	$('#main_nav > li > ul').hide(); // Hide all subnavigation
-	// Show current subnavigation	
-	$('#main_nav > li > a.current').parent().children("ul").show(); 
-	// li clicks
-	$('#main_nav > li > a[href="#"]').mouseover( 
-		function() {
-			$(this).parent().siblings().children("a").removeClass('current'); // Remove .current class from all tabs
-			$(this).addClass('current'); // Add class .current
-			$(this).parent().siblings().children("ul").fadeOut(100); // Hide all subnavigation
-			$(this).parent().children("ul").fadeIn(100); // Show current subnavigation
-			return false;
-		}
-	);
-	$('#main_nav > li > a[href="#"]').click( 
-		function() {
-			return false;
-		}
-	);
 	
 	// setup global variables
 	$confirmIt 			= $('#confirmIt');
-	$remoteModal 		= $("#remoteModal");
-	$remoteModalContent	= $remoteModal.find("#remoteModelContent");
-	$remoteModalLoading	= $remoteModalContent.html();
+	$remoteModal 		= $("#modal");
+    
+    // handler for "shown" event in modals
+	$remoteModal.on( 'shown', function() {
+        var modal = $remoteModal; 
+        // only run if modal is in delayed mode
+        if( modal.data( 'delay' ) ) {
+            // load the modal content
+            modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
+        }        
+    });
+
+    // reset modal content when hidden
+	$remoteModal.on( 'hidden', function() {
+        var modal = $remoteModal;
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body"><i class="icon-spinner icon-spin icon-large icon-4x"></i></div>' );
+    })
+    
+	// Global Tool Tip Settings
+	toolTipSettings	= {
+		 animation: 'slide',
+		 delay: { show: 250, hide: 250 }
+	};
 	
+	// toggle flicker messages
+	$(".flickerMessages").slideDown();
+	// Search Capabilities
+	activateContentSearch();
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
 	activateTooltips();
 
-	// Expose | Any element with a class of .expose will expose when clicked
-	$(".expose").click(function() {
-		$(this).expose({ });
-	});
-	
-	//Tabs in box header 
-	$("ul.sub_nav").tabs("div.panes > div", {effect: 'fade'});
-	//Vertical Navigation	
-	$("ul.vertical_nav").tabs("div.panes_vertical> div", {effect: 'fade'});
-	//Accordion
-	$("#accordion").tabs("#accordion div.pane", {tabs: 'h2', effect: 'slide', initialIndex:0});		
-	
+    // global Validaiton settings
+    $.validator.setDefaults({
+        // apparently, the *default* of jQuery validation is to ignore validation of hidden elements (e.g., when using tabs, validation is skipped)
+        // seriously???
+        // anyway, setting ignore: [] fixes it
+        ignore:[],
+        errorElement: 'span',
+        errorClass: 'help-block',
+        highlight: function(element) {
+            $(element).closest('.control-group').removeClass('success').addClass('error');
+        },
+        success: function(element) {
+            element
+                .addClass('valid')
+                .closest('.control-group').removeClass('error').addClass('success');
+        },
+        errorPlacement: function(error, element) {
+            error.appendTo( element.parent("div.controls") );
+        }
+    })	
+    
+    // simple method to blank out all form fields 
+    $.fn.clearForm = function() {
+    	if( this.data( 'validator') == undefined ){ return; }
+        // reset classes and what not
+        this.data( 'validator' ).resetForm();
+        // run over input fields and blank them out
+        this.find(':input').each(function() {
+            switch(this.type) {
+                case 'password':
+                case 'hidden':
+                case 'select-multiple':
+                case 'select-one':
+                case 'text':
+                case 'textarea':
+                    $(this).val('');
+                    break;
+                case 'checkbox':
+                case 'radio':
+                    this.checked = false;
+            }
+        });
+        // also remove success and error classes
+        this.find( '.control-group' ).each(function() {
+            $( this ).removeClass( 'error' ).removeClass( 'success' );
+        });
+    }
+    
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
-	
-	// add click listener to body to hide info and action panels
-    $( 'body' ).click( function( e ){
-       var target = $( e.target ),
-           apIgnore = [],
-           apTarget = target.closest( '.navbarPanels' )
-       // hideInfoPanels( ipIgnore );
-       if( apTarget.length ) {
-           apIgnore.push( apTarget[ 0 ].id );
-       }
-       // run global hide methods
-       hideNavbarPanels( '.navbarPanels', apIgnore );
-    });
-    // add click listener to actions panel buttons
-    $( '#adminActionsButton' ).click( function( e ){
-    	handleNavbarPanelClick( e, this, '#adminActionsPanel', toggleNavbarPanel );
-    });
-    // add click listener to quick links panel buttons
-    $( '#quickLinksButton' ).click( function( e ){
-    	handleNavbarPanelClick( e, this, '#quickLinksPanel', toggleNavbarPanel );
-    });
-	
+
+	// Tab link detector
+	$(function () {
+	   var activeTab = $('[href=' + location.hash + ']');
+	   activeTab && activeTab.tab('show');
+	});
 });
-/*
- * Hides panels which match the passed selector
- * @selector {String} the selector class of panels to hide
- * @ignore {Array} array of ids of elements to ignore when hiding elements
- */
-function hideNavbarPanels( selector, ignore ) {
-    var ignore = !ignore ? [] : ignore;
-    $( selector ).each(function() {
-        var me = this;
-        if( $.inArray( me.id, ignore )==-1 ) {
-            $( this ).slideUp({
-                duration: 200
-            })
-        }
-    });
-}
-/*
- * Consolidated way to show selected panel and hide others
- * @e {Event} the click event
- * @el {HTMLElement} the button which was clicked
- * @selector {String} the selector class of the target element
- * @handler {Function} the function to execute
- */
-function handleNavbarPanelClick( e, el, selector, handler ) {
-    // prevent default event
-    e.preventDefault();
-    // stop propagation so click doesn't bubble to body
-    e.stopPropagation();
-    // call the handler
-    handler.call( this, selector );
-}
-function toggleNavbarPanel(selector){
-	$( selector ).slideToggle();
-	return false;
-}
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
-		$("#adminActionsPanel").hide();
 		$("#adminActionsIcon").addClass( "icon-spin textOrange" );
 		// Run Action Dispatch
 		$.post( actionURL , {targetModule: action}, function(data){
-			var message = "<strong>Action Ran, Booya!</strong>";
+			$("#adminActionNotifier").addClass( "alert-info" );
+			var message = "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>";
 			if( data.ERROR ){
-				message = "<strong>Error running action, check logs!</strong>";
+				$("#adminActionNotifier").addClass( "alert-danger" );
+				message = "<i class='icon-exclamation-sign'></i> <strong>Error running action, check logs!</strong>";
 			}
 			$("#adminActionsIcon").removeClass( "icon-spin textOrange" );
-			$("#adminActionLoaderStatus").fadeIn().html( message ).delay( 1500 ).fadeOut();
+			$("#adminActionNotifier").fadeIn().html( message ).delay( 1500 ).fadeOut();
 		} );
 	}
 }
@@ -180,16 +157,10 @@ function closeSearchBox(){
 function quickLinks( inURL ){
 	if( inURL != 'null' )
 		window.location = inURL;
-	
-}
-function exposeIt(vID){
-	$(vID).expose();
 }
 function activateTooltips(){
 	//Tooltip 
-	$("[title]").tooltip(toolTipSettings)
-		 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isn't space on the top
-	});
+    $( '[title]' ).tooltip( toolTipSettings )
 }
 function hideAllTooltips(){
 	$(".tooltip").hide();
@@ -206,17 +177,22 @@ function toggleFlickers(){
  * @return
  */
 function closeRemoteModal(){
-	$(".error").hide();
-	$remoteModal.data("overlay").close();
-	$remoteModalContent.html('').html($remoteModalLoading);
+    var frm = $remoteModal.find( 'form' );
+    if( frm.length ) {
+        $( frm[0] ).clearForm();        
+    }
+    $remoteModal.modal( 'hide' );
 }
 /**
 * Close a local modal window
 * @param div The jquery div object that represents the dialog.
 */
 function closeModal(div){
-	$(".error").hide();
-	div.data("overlay").close();
+    var frm = div.find( 'form' );
+    if( frm.length ) {
+        $( frm[0] ).clearForm();        
+    }
+	div.modal( 'hide' );
 }
 /**
  * Open a new local modal window.
@@ -226,21 +202,19 @@ function closeModal(div){
  * @return
  */
 function openModal(div, w, h){
-	div.overlay({
-		mask: {
-			color: '#fff',
-			loadSpeed: 200,
-			opacity: 0.6 },
-		closeOnClick : true,
-		closeOnEsc : true,
-		onClose: function(){ closeModal( div ); }
-	});
-	div.find("a.close").attr("title","Close Window");
-	// width/height
-	if( w ){ div.css("width",w); }
-	if( h ){ div.css("height",h); }
-	// open the remote modal
-	div.data("overlay").load();
+    div.modal({
+        width: w,
+        height: h
+    })
+    // attach a listener to clear form when modal closes
+    $( div ).on( 'hidden', function() {
+        if( !$( this ).hasClass( 'in' ) ) {
+            var frm = $( this ).find( 'form' );
+            if( frm.length ) {
+                $( frm[0] ).clearForm();        
+            }
+        }
+    });
 }
 /**
  * Open a new remote modal window Ajax style.
@@ -248,55 +222,66 @@ function openModal(div, w, h){
  * @param data The data packet to send
  * @param w The width of the modal
  * @param h The height of the modal
+ * @param delay Whether or not to delay loading of dialog until after dialog is created (useful for iframes)
  * @return
  */
-function openRemoteModal(url,params,w,h){
-	$remoteModal.overlay({
-		mask: {
-			color: '#fff',
-			loadSpeed: 200,
-			opacity: 0.6 },
-		closeOnClick : true,
-		closeOnEsc : true,
-		onBeforeLoad : function(){
-			$remoteModalContent.load( $remoteModal.data("url"),$remoteModal.data("params") );
-		},
-		onClose: function(){ closeRemoteModal(); }
-	});
-	$remoteModal.find("a.close").attr("title","Close Window");
-	// Set data for this remote modal
-	$remoteModal.data("url",url).data("params",params);
-	// width/height
-	if( w ){ $remoteModal.css("width",w); }
-	if( h ){ $remoteModal.css("height",h); }
-	// open the remote modal
-	$remoteModal.data("overlay").load();
+function openRemoteModal(url,params,w,h,delay){
+    var modal = $remoteModal;
+    // set data values
+    modal.data( 'url', url )
+	modal.data( 'params', params );
+    modal.data( 'width', w != undefined ? w : $( window ).width() * .85 );
+    modal.data( 'height', h != undefined ? h : ($( window ).height() -360) );
+    
+    // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes)
+    if( delay ) {
+        var height = modal.data( 'height' );
+        // convert height percentage to a numeric value
+        if( height.search && height.search( '%' )!=-1 ) {
+            height = height.replace( '%', '' ) / 100.00;
+            height = $( window ).height() * height;
+            modal.data( 'height', height )
+        }
+        // set delay data in element
+        modal.data( 'delay', true );
+        // show modal
+        modal.modal({
+            height: modal.data( 'height' ),
+            width: modal.data( 'width' )
+        });
+    }
+    // otherwise, front-load the request and then create modal
+    else {
+        // load request for content
+        modal.load( url, params, function() {
+            // in callback, show modal
+            var maxHeight = ($( window ).height() -360);
+            modal.modal({
+                height: h!=undefined ? h : modal.height() < maxHeight ? modal.height() : maxHeight,
+                width: w!=undefined ? w : $( window ).width() * .80,
+                maxHeight: maxHeight
+            })
+        }) 
+    }
+    return;
+}
+
+function closeConfirmations(){
+	$confirmIt.modal( 'hide' );
 }
 /**
  * Activate modal confirmation windows
  * @return
  */
 function activateConfirmations(){
-	
-	// verify overlay already loaded
-	if( !$confirmIt.data("overlay") ){
-		// Overlay the global confirmation
-		$confirmIt.overlay({
-			mask: {
-				color: '#fff',
-				loadSpeed: 200,
-				opacity: 0.6
-			},
-			closeOnClick:false
-		});
-		
-		// close button triggers for confirmation dialog
-		$confirmIt.find("button").click(function(e){
-			if( $(this).attr("data-action") == "confirm" ){
-				window.location =  $confirmIt.data('confirmSrc');
-			}
-		});
-	}
+	// close button triggers for confirmation dialog
+	$confirmIt.find("button").click(function(e){
+		if( $(this).attr("data-action") == "confirm" ){
+			$confirmIt.find("#confirmItButtons").hide();
+			$confirmIt.find("#confirmItLoader").fadeIn();
+			window.location =  $confirmIt.data('confirmSrc');
+		}
+	});
 	
 	// Activate dynamic confirmations from <a> of class confirmIt
 	$('a.confirmIt').click(function(e){
@@ -311,7 +296,8 @@ function activateConfirmations(){
 			$confirmIt.find("#confirmItTitle").html( $(this).attr('data-title') );
 		}
 		// show the confirmation when clicked
-		$confirmIt.data("overlay").load();
+		//$confirmIt.data("overlay").load();
+		$confirmIt.modal();
 		// prevent default action
 		e.preventDefault();
 	});

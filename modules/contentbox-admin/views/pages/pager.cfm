@@ -5,20 +5,14 @@
 		<i class="icon-spinner icon-spin icon-large"></i>
 	</div>
 
-	<!--- Paging --->
-	<cfif prc.pagePager_pagination>
-		#prc.pagePager_pagingPlugin.renderit(prc.pager_pagesCount,prc.pagePager_pagingLink)#
-	</cfif>
-
 	<!--- entries --->
-	<table name="pages_pager" id="pages_pager" class="tablelisting" width="100%">
+	<table name="pages_pager" id="pages_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
 		<thead>
 			<tr>
 				<th>Page</th>
-				<th width="40" class="center"><i class="icon-th-list icon-large" title="Show in Menu"></i></th>
 				<th width="40" class="center"><i class="icon-globe icon-large" title="Published"></i></th>
 				<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
-				<th width="100" class="center">Actions</th>
+				<th width="50" class="center">Actions</th>
 			</tr>
 		</thead>
 
@@ -28,23 +22,16 @@
 			<cfset i++>
 			<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#"
 				<cfif page.isExpired()>
-					class="expired"
+					class="error"
 				<cfelseif page.isPublishedInFuture()>
-					class="futurePublished"
+					class="success"
 				<cfelseif !page.isContentPublished()>
-					class="selected"
+					class="warning"
 				</cfif>>
 				<td>
 					<!--- Title --->
 					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#">#page.getSlug()#</a><br>
-					by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on #page.getActiveContent().getDisplayCreatedDate()#
-				</td>
-				<td class="center">
-					<cfif page.getShowInMenu()>
-						<i class="icon-ok icon-large textGreen" title="Shows in menu"></i>
-					<cfelse>
-						<i class="icon-remove icon-large textRed" title="Not in menu"></i>
-					</cfif>
+					<i class="icon-user" title="last edit by"></i> <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on #page.getActiveContent().getDisplayCreatedDate()#
 				</td>
 				<td class="center">
 					<cfif page.isExpired()>
@@ -61,26 +48,36 @@
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
-				<td class="center">#page.getHits()#</td>
+				<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
 				<td class="center">
-					<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-					<!--- Edit Command --->
-					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#"><i class="icon-edit icon-large"></i></a>
-					&nbsp;
-					<!--- History Command --->
-					<a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#" title="Version History"><i class="icon-time icon-large"></i></a>
-					&nbsp;
-					<!--- Create Child --->
-					<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><i class="icon-sitemap icon-large"></i></a>
-					&nbsp;
-					</cfif>
-					<!--- View in Site --->
-					<a href="#prc.CBHelper.linkPage(page)#" title="View Page In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>
+					<!--- Page Actions --->
+					<div class="btn-group">
+				    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
+							<i class="icon-cogs icon-large"></i>
+						</a>
+				    	<ul class="dropdown-menu text-left">
+				    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+							<!--- Edit Command --->
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+							<!--- Create Child --->
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="icon-sitemap icon-large"></i> Create Child</a></li>
+							</cfif>
+							<!--- History Command --->
+							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
+							<!--- View in Site --->
+							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="icon-eye-open icon-large"></i> View Page</a></li>
+				    	</ul>
+				    </div>
 				</td>
 			</tr>
 			</cfloop>
 		</tbody>
 	</table>
+	
+	<!--- Paging --->
+	<cfif prc.pagePager_pagination>
+		#prc.pagePager_pagingPlugin.renderit(prc.pager_pagesCount,prc.pagePager_pagingLink)#
+	</cfif>
 
 </div>
 </cfoutput>

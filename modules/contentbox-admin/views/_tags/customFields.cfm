@@ -3,14 +3,14 @@
 	<p>
 		You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via 
 		the CB Helper -> 
-		<em>cb.quickCustomFields() or cb.getCustomField(key,[defaultValue])</em>
+		<code>cb.quickCustomFields() or cb.getCustomField(key,[defaultValue])</code>
 	</p>
 	<!--- CustomFields Holder --->
 	<div id="customFields">
 		<!--- Counter Of How Many Custom Fields --->
 		#html.hiddenField(name="customFieldsCount",value=arrayLen( args.customFields ))#
 		<!--- Add CustomField --->
-		<button class="button dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;"><i class="icon-plus-sign"></i> Add</button>
+		<button class="btn  dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;"><i class="icon-plus-sign"></i> Add</button>
 		<!--- Render out Fields --->
 		<cfloop array="#args.customFields#" index="cField" >
 			<p class="margin0">
@@ -18,11 +18,11 @@
 				#html.textField(name="CustomFieldKeys",class="textfield inline customFieldKey",size="18",maxsize="255",value=cField.getKey())#
 				<label class="inline">Value: </label> 
 				#html.textField(name="CustomFieldValues",class="textfield inline customFieldValue",size="60",value=cField.getValue())#
-				<button class="button dynamicRemove" onclick="return false;"><i class="icon-remove-sign"></i> Remove</button>
+				<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-trash icon-large"></i></button>
 			</p>
 		</cfloop>
 		<!--- Remove All Custom Fields --->
-		<button id="removeCustomFieldsButton" class="button" onclick="return cleanCustomFields()"><i class="icon-remove-sign"></i> Remove All</button>
+		<button id="removeCustomFieldsButton" class="btn" onclick="return cleanCustomFields()"><i class="icon-trash"></i> Remove All</button>
 	</div>
 #html.endFieldset()#
 
@@ -32,7 +32,7 @@
 	#html.textField(name="CustomFieldKeys",class="textfield inline customFieldKey",size="18",maxsize="255")#
 	<label class="inline">Value: </label> 
 	#html.textField(name="CustomFieldValues",class="textfield inline customFieldValue",size="60")#
-	<button class="button dynamicRemove" onclick="return false;"><i class="icon-remove-sign"></i> Remove</button>
+	<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-trash icon-large"></i></button>
 </p>	
 
 <!--- Custom JS --->
@@ -69,7 +69,6 @@ function addDynamicItem(_this, inData){
 	// populate inputs
 	$trigger.prev().find("input").each(function(index){
 		var $this = $(this);
-		console.log($this);
 		if (inData != null) {
 			$this.val(inData[index]);
 		}

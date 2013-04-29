@@ -1,7 +1,10 @@
 ﻿<cfoutput>
-<h2>Link To A ContentBox Page</h2>
-<div>
-#html.startForm(name="pageEditorSelectorForm")#
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>Link To A ContentBox Page</h3>
+</div>
+<div class="modal-body">
+    #html.startForm(name="pageEditorSelectorForm")#
 
 	<!--- Loader --->
 	<div class="loaders floatRight" id="pageLoader">
@@ -9,7 +12,7 @@
 	</div>
 
 	<!--- Content Bar --->
-	<div class="contentBar" id="contentBar">
+	<div class="well well-small" id="contentBar">
 
 		<!--- Filter Bar --->
 		<div class="filterBar">
@@ -20,11 +23,8 @@
 		</div>
 	</div>
 
-	<!--- Paging --->
-	#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
-
 	<!--- pages --->
-	<table name="pages" id="pages" class="tablesorter" width="98%">
+	<table name="pages" id="pages" class="tablesorter table table-condensed table-striped table-hover" width="98%">
 		<thead>
 			<tr>
 				<th>Page Name</th>
@@ -34,7 +34,7 @@
 		</thead>
 		<tbody>
 			<cfloop array="#prc.pages#" index="page">
-			<tr id="contentID-#page.getContentID()#" <cfif NOT page.getIsPublished()>class="selected"</cfif>>
+			<tr id="contentID-#page.getContentID()#" <cfif NOT page.getIsPublished()>class="alert"</cfif>>
 				<td>
 					<!--- Title --->
 					<strong>#page.getSlug()#</strong>
@@ -49,8 +49,10 @@
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )"><i class="icon-lock icon-large"></i></button>
-					<button class="button2" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )"><i class="icon-link icon-large"></i></button>
+					<div class="btn-group">
+					<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
+					<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )" title="Link"><i class="icon-link icon-large"></i></button>
+					</div>
 				</td>
 			</tr>
 			</cfloop>
@@ -58,13 +60,12 @@
 	</table>
 	
 	<!--- Paging --->
-	#prc.pagingPlugin.renderit(prc.pagesCount,prc.pagingLink)#
+	#prc.pagingPlugin.renderit(foundRows=prc.pagesCount, link=prc.pagingLink, asList=true)#
 
-#html.endForm()#
+    #html.endForm()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+<div class="modal-footer">
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

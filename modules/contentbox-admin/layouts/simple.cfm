@@ -2,7 +2,10 @@
 #html.doctype()#
 <!--============================Head============================-->
 <head>
+	<!--- charset --->
 	<meta charset="utf-8"/>
+	<!--- Responsive --->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
@@ -11,57 +14,49 @@
     <title>ContentBox Administrator - Login</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+	<!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->
+	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-57.png" rel="apple-touch-icon"/>
+	<!--- For first-generation iPad: --->
+	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-72.png" rel="apple-touch-icon" sizes="72x72"/>
+	<!--- For iPhone 4 with high-resolution Retina display: --->
+	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
 	<!--- StyleSheets --->
-	<link href="#prc.cbroot#/includes/css/style.css"			rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/teal.css" 			rel="stylesheet"/>
-	<link href="#prc.cbroot#/includes/css/font-awesome.min.css"	rel="stylesheet"/>
+	#cb.minify(assets="#prc.cbroot#/includes/css/bootstrap.css,
+			    #prc.cbroot#/includes/css/contentbox.css,
+			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
+			    #prc.cbroot#/includes/css/font-awesome.min.css",
+			   location="#prc.cbroot#/includes/cache")#
 	<!--- JS --->
-	<script src="#prc.cbroot#/includes/js/jquery.min.js"></script>
-	<script src="#prc.cbroot#/includes/js/jquery.tools.min.js"></script>
-	<script src="#prc.cbroot#/includes/js/contentbox.js"></script>
+	#cb.minify(assets="#prc.cbroot#/includes/js/jquery.min.js,
+			    #prc.cbroot#/includes/js/bootstrap.min.js,
+			    #prc.cbroot#/includes/js/jquery.validate.js,
+			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
+			    #prc.cbroot#/includes/js/contentbox.js",
+			   location="#prc.cbroot#/includes/cache")#
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginHeadEnd")#
 </head>
-<!--============================Body============================-->
 <body>
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_afterLoginBodyStart")#
-	<!--==================== Header =======================-->
-	<div id="header_bg">
-
-		<!--============Header Wrapper============-->
-		<div class="wrapper">
-
-			<!--=======Top Header area======-->
-			<div id="header_top">
-				<span class="fr"><br/>
-				<!--- cbadmin event --->
-				#announceInterception("cbadmin_onTopBar")#
-				</span>
-			  	<!--- cbadmin event --->
-				#announceInterception("cbadmin_onTagline")#
-			</div>
-			<!--End Header top Area=-->
-
-			<!--=========Header Area including search field and logo=========-->
-			<div id="logo">
-				<img src="#prc.cbroot#/includes/images/ContentBox_90.png" border="0" alt="logo" title="ContentBox by ColdBox!"/>
-			</div>
-
-			<div id="header_main" class="clearfix">
-	           	<h1>ContentBox Admin</h1>
-			</div>
-			<!--End Search field and logo Header Area-->
-
-	  	</div>
-	  <!--End Wrapper-->
-	</div>
-	<!--End Header-->
-
-	<!--============================ Template Content Background ============================-->
-	<div id="content_bg" class="clearfix">
-		<!--============================ Main Content Area ============================-->
-		<div class="content wrapper clearfix">
+	
+	<div id="wrapper">
+		<!--- NavBar --->
+		<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
+		    <div class="navbar-inner">
+		    	<div class="container">
+		    		<!--- Logo --->
+					<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
+					<!--- Brand, future multi-site switcher --->
+					<a class="brand">
+						ContentBox Administrator
+					</a>
+				</div> <!---end container --->
+		    </div> <!--- end navbar-inner --->
+	    </div> <!---end navbar --->
+		
+		<!--- Container --->
+		<div id="simple-container" class="container-fluid">
 			<!--- cbadmin event --->
 			#announceInterception("cbadmin_beforeLoginContent")#
 			<!--- Main Content --->
@@ -69,19 +64,12 @@
 			<!--- cbadmin event --->
 			#announceInterception("cbadmin_afterLoginContent")#
 		</div>
-	</div>
+	
+		<div class="push"></div>
 
-	<!--============================Footer============================-->
-	<div id="footer">
-		<!--- cbadmin event --->
-		#announceInterception("cbadmin_loginFooter")#
-		<div class="wrapper">
-		Copyright (C) #dateformat(now(),"yyyy")# <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>  . All Rights Reserved.<br/>
-		<a href="http://www.ortussolutions.com">Need Professional ColdFusion/ColdBox Support, Architecture, Design, or Development?</a>
-		</div>
 	</div>
-	<!--End Footer-->
-
+	<!--- Footer --->
+	#renderView(view="_tags/footer", module="contentbox-admin")#
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeLoginBodyEnd")#
 </body>

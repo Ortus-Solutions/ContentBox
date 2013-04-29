@@ -47,6 +47,11 @@ component {
 			forgeBoxEntryURL = "http://www.coldbox.org/forgebox/view"
 		};
 
+		// Parent Settings
+		parentSettings = {
+			messagebox_template = "#moduleMapping#/views/_tags/messagebox.cfm"
+		};
+
 		// SES Routes
 		routes = [
 			{pattern="/", handler="dashboard", action="index" },
@@ -115,5 +120,15 @@ component {
 			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" }
 		];
 		
+	}
+	
+	
+	/*
+	* On Module Load
+	*/
+	function onLoad(){
+		// Clean cached assets
+		controller.getPlugin( plugin="JSMin", customPlugin="true", module="contentbox" )
+			.cleanCache( "/#moduleMapping#/includes/cache" );
 	}
 }

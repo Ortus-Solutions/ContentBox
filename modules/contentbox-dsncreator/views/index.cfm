@@ -1,5 +1,5 @@
 <cfoutput>
-<div class="box clear">
+<div class="box">
 	<div class="header">
 		<i class="icon-lightbulb icon-large"></i> Datasource Wizard
 	</div>
@@ -15,12 +15,14 @@
 				</div>
 			</cfif>
 			
-			<h1>Welcome To ContentBox!</h1>
-			<p>
-				You are one step closer to releasing your content out of its box! The first step in our installer is to make sure
-				we can connect to your database of choice.  So if you have not created an empty database for ContenBox yet, please go do
-				that now.  The next step is for ContentBox to create or use a datasource connection to the database from our CFML engine.
-			</p>
+			<div class="hero-unit">
+				<h1>Welcome To ContentBox!</h1>
+				<p>
+					You are one step closer to releasing your content out of its box! The first step in our installer is to make sure
+					we can connect to your database of choice.  So if you have not created an empty database for ContenBox yet, please go do
+					that now.  The next step is for ContentBox to create or use a datasource connection to the database from our CFML engine.
+				</p>
+			</div>
 			
 			<fieldset>
 				<legend>Datasource Created?</legend>
@@ -45,8 +47,8 @@
 					</label>
 					
 					<div class="actionBar">
-						<input name="verifyButton" id="verifyButton" type="button" class="button" value="Verify Datasource" onclick="verifyDSN()" />
-						<input name="createButton" id="createButton" type="submit" class="button2" value="Continue Installation" style="display: none" />
+						<input name="verifyButton" id="verifyButton" type="button" class="btn btn-primary" value="Verify Datasource" onclick="verifyDSN()" />
+						<input name="createButton" id="createButton" type="submit" class="btn btn-danger" value="Continue Installation" style="display: none" />
 					</div>
 				</form>
 			</fieldset>
@@ -94,9 +96,9 @@
 					<input type="password" class="textfield" size="40" name="dbPassword" id="dbPassword" />
 					
 					<div class="actionBar">	
-						<input name="verifyDataButton" id="verifyDataButton" type="button" class="button" value="Verify Data" onclick="verifyData()" />
-						<input name="createDSNButton" id="createDSNButton" type="submit" class="button2" value="Create Datasource" style="display: none" />
-						<div id="actionBarLoader" style="display:none"><img src="#assetRoot#/includes/images/ajax-loader-blue.gif" /> Creating, Please Wait...</div>
+						<input name="verifyDataButton" id="verifyDataButton" type="button" class="btn btn-primary" value="Verify Data" onclick="verifyData()" />
+						<input name="createDSNButton" id="createDSNButton" type="submit" class="btn btn-danger" value="Create Datasource" style="display: none" />
+						<div id="actionBarLoader" style="display:none"><i class="icon-spinner icon-spin icon-large icon-2x"></i> Creating, Please Wait...</div>
 					</div>
 				</form>
 			</fieldset>

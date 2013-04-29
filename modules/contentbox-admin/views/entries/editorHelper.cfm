@@ -21,7 +21,7 @@ function quickSave(){
 	$isPublished.val('false');
 
 	// Validation first
-	if( !$entryForm.data("validator").checkValidity() ){
+	if( !$entryForm.valid() ){
 		return false;
 	}
 	if( !$content.val().length ){

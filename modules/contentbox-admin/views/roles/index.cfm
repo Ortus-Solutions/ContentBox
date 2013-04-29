@@ -1,31 +1,6 @@
 ﻿<cfoutput>
-<!--============================Sidebar============================-->
-<div class="sidebar">
-	<!--- Info Box --->
-	<div class="small_box">
-		<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
-		<div class="header">
-			<i class="icon-edit"></i> Editor
-		</div>
-		<div class="body">
-			<!--- Create/Edit form --->
-			#html.startForm(action=prc.xehRoleSave,name="roleEditor",novalidate="novalidate")#
-				#html.hiddenField(name="roleID",value="")#
-				#html.textField(name="role",label="Role:",required="required",maxlength="255",size="30",class="textfield",title="A unique role name")#
-				#html.textArea(name="description",label="Description:",cols="20",rows="3",class="textarea",title="A short role description")#
-				<div class="actionBar">
-					#html.resetButton(name="btnReset",value="Reset Form",class="button")#
-					#html.submitButton(value="Save Role",class="buttonred")#
-				</div>
-			#html.endForm()#
-		</div>
-		</cfif>
-	</div>		
-</div>
-<!--End sidebar-->	
-<!--============================Main Column============================-->
-<div class="main_column">
-	<div class="box">
+<div class="row-fluid" id="main-content">   
+    <div class="box">
 		<!--- Body Header --->
 		<div class="header">
 			<i class="icon-group"></i>
@@ -42,7 +17,11 @@
 			#html.hiddenField(name="roleID",value="")#
 			
 			<!--- Content Bar --->
-			<div class="contentBar">
+			<div class="well well-small">
+				<!--- Command Bar --->
+				<div class="pull-right">
+					<a href="##" onclick="return createRole();" class="btn btn-danger">Create Role</a>
+				</div>
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>
@@ -53,13 +32,13 @@
 			</div>
 			
 			<!--- Info Bar --->
-			<div class="infoBar infoBar-red">
+			<div class="alert">
 				<i class="icon-warning-sign icon-large"></i>
 				You cannot delete roles that have authors attached to them.  You will need to un-attach those authors from the role first.
 			</div>			
 			
 			<!--- roles --->
-			<table name="roles" id="roles" class="tablesorter" width="98%">
+			<table name="roles" id="roles" class="tablesorter table table-hover table-striped" width="98%">
 				<thead>
 					<tr>
 						<th>Role</th>
@@ -81,8 +60,8 @@
 							</cfif>
 						</td>
 						<td>#role.getDescription()#</td>
-						<td class="center">#role.getNumberOfPermissions()#</td>
-						<td class="center">#role.getNumberOfAuthors()#</td>
+						<td class="center"><span class="badge badge-info">#role.getNumberOfPermissions()#</span></td>
+						<td class="center"><span class="badge badge-info">#role.getNumberOfAuthors()#</span></td>
 						<td class="center">
 							<!--- permissions --->
 							<a href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" 
@@ -97,7 +76,7 @@
 								&nbsp;
 								<!--- Delete Command --->
 								<cfif role.getNumberOfAuthors() eq 0>
-								<a title="Delete Role" href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><i class="icon-remove-sign icon-large" id="delete_#role.getRoleID()#"></i></a>
+								<a title="Delete Role" href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><i class="icon-trash icon-large" id="delete_#role.getRoleID()#"></i></a>
 								</cfif>
 							</cfif>
 						</td>
@@ -106,8 +85,31 @@
 				</tbody>
 			</table>
 			#html.endForm()#
-		
 		</div>	
 	</div>
 </div>
+<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
+<!--- Role Editor --->
+<div id="roleEditorContainer" class="modal hide fade">
+	<div id="modalContent">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Role Editor</h3>
+    </div>
+	<!--- Create/Edit form --->
+	#html.startForm(action=prc.xehRoleSave,name="roleEditor",novalidate="novalidate",class="form-vertical")#
+	<div class="modal-body">
+		#html.hiddenField(name="roleID",value="")#
+		#html.textField(name="role",label="Role:",required="required",maxlength="255",size="30",class="input-block-level",title="A unique role name",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+		#html.textArea(name="description",label="Description:",cols="20",rows="3",class="input-block-level",title="A short role description",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+	</div>
+	<!--- Footer --->
+	<div class="modal-footer">
+		#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##roleEditorContainer') )")#
+		#html.submitButton(name="btnSave",value="Save",class="btn btn-danger")#
+	</div>
+	#html.endForm()#
+	</div>
+</div>
+</cfif>
 </cfoutput>

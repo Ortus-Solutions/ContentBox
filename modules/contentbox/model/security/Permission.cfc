@@ -29,6 +29,9 @@ component persistent="true" entityName="cbPermission" table="cb_permission" cach
 	
 	// Properties
 	property name="permission"  ormtype="string" notnull="true" length="255" unique="true" default="";	property name="description" ormtype="string" notnull="false" default="" length="500";	
+	// Calculated Fields
+	property name="numberOfRoles" formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_permissionID=permissionID";
+	
 	// Constructor
 	function init(){
 		return this;

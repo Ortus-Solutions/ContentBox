@@ -102,7 +102,6 @@ component extends="baseHandler"{
 		prc.cbHelper = CBHelper;
 		
 		// CK Editor Helper
-		// TODO: Change this
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
 		
 		// Get All registered editors so we can display them
@@ -143,6 +142,8 @@ component extends="baseHandler"{
 		if( structKeyExistS(rc,"parentID") ){
 			prc.parentcontentID = rc.parentID;
 		}
+		// get all authors
+		prc.authors = authorService.getAll(sortOrder="lastName");
 
 		// exit handlers
 		prc.xehPageSave 		= "#prc.cbAdminEntryPoint#.pages.save";
@@ -164,6 +165,7 @@ component extends="baseHandler"{
 		event.paramValue("newCategories","");
 		event.paramValue("isPublished",true);
 		event.paramValue("slug","");
+		event.paramValue("creatorID","");
 		event.paramValue("changelog","");
 		event.paramValue("publishedDate",now());
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
@@ -180,7 +182,7 @@ component extends="baseHandler"{
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oAuthor.checkPermission("PAGES_ADMIN") ){
-			rc.isPublished = "false";
+			rc.isPublished 	= "false";
 		}
 
 		// get new/persisted page and populate it with incoming data.
@@ -201,7 +203,15 @@ component extends="baseHandler"{
 			editor(argumentCollection=arguments);
 			return;
 		}
-
+		
+		// Attach creator if new page
+		if( isNew ){ page.setCreator( prc.oAuthor ); }
+		
+		// Override creator?
+		if( !isNew and prc.oAuthor.checkPermission("PAGES_ADMIN") and page.getCreator().getAuthorID() NEQ rc.creatorID ){
+			page.setCreator( authorService.get( rc.creatorID ) );
+		}
+		
 		// Register a new content in the page, versionized!
 		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
 		
@@ -268,6 +278,7 @@ component extends="baseHandler"{
 		}
 		// get a clone
 		var clone = pageService.new({title=rc.title,slug=getPlugin("HTMLHelper").slugify( rc.title )});
+		clone.setCreator( prc.oAuthor );
 		// attach to the original's parent.
 		if( original.hasParent() ){
 			clone.setParent( original.getParent() );

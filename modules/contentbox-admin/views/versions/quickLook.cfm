@@ -1,11 +1,13 @@
 ﻿<cfoutput>
-<h2>Version: #prc.contentVersion.getVersion()# - Active: #yesNoFormat( prc.contentVersion.getIsActive() )#</h2>
-<div>
-#prc.contentVersion.renderContent()#
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3><i class="icon-eye-open"></i> Version: #prc.contentVersion.getVersion()# - Active: #yesNoFormat( prc.contentVersion.getIsActive() )#</h3>
 </div>
-<hr/>
+<div class="modal-body">
+	#prc.contentVersion.renderContent()#
+</div>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+<div class="modal-footer">
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

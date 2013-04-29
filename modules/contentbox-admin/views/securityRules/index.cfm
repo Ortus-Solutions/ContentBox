@@ -1,6 +1,5 @@
 ﻿<cfoutput>
-<!--============================Main Column============================-->
-<div class="main" id="main">
+<div class="row-fluid" id="main-content">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
@@ -14,7 +13,7 @@
 		#getPlugin("MessageBox").renderit()#
 		
 		<!--- Usage --->
-		<div class="infoBar infoBar-red">
+		<div class="alert alert-error">
 			<i class="icon-warning-sign icon-large"></i>
 			Please remember that the security rules are fired in the order shown. You can drag and drop
 			the rows to the desired order of firing. Be careful with security rules as with much power comes great responsibility!
@@ -31,21 +30,23 @@
 			#html.hiddenField(name="ruleID")#
 		
 			<!--- Content Bar --->
-			<div class="contentBar" id="contentBar">
+			<div class="well well-small" id="contentBar">
 				<!--- Create Butons --->
 				<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
 				<div class="buttonBar">
-					<a href="#event.buildLink(prc.xehResetRules)#" class="confirmIt" 
+					<a href="#event.buildLink(prc.xehResetRules)#" class="confirmIt btn" 
 						data-title="Really Reset All Rules?"
 						data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
-						<button class="buttonred" onclick="return false">Reset Rules</button>
+						Reset Rules
 					</a>
-					<a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt" 
+					<a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt btn" 
 						data-title="Really Apply Rules?"
 						data-message="Please be aware that you could be locked out of application if your rules are not correct.">
-						<button class="buttonred" onclick="return false">Apply Rules</button>
+						Apply Rules
 					</a>
-					<button class="button2" onclick="return to('#event.buildLink(prc.xehEditorRule)#');">Create Rule</button>
+					<a href="#event.buildLink(prc.xehEditorRule)#" class="btn btn-danger">
+						Create Rule
+					</a>
 				</div>
 				</cfif>
 				<!--- Filter Bar --->

@@ -1,30 +1,41 @@
 ﻿<cfoutput>
-<div class="box clear" id="loginBox">
+<div class="row" id="main-login">
 	
-	<div class="header">
-		<i class="icon-key icon-"></i> Lost Password
-	</div>
+	<div class="well" id="loginBox">
 	
-	<div class="body clearfix">
+		<h2><i class="icon-key icon-"></i> Lost Password</h2>
 		
-		<!--- Render Messagebox. --->
-		#getPlugin("MessageBox").renderit()#
-		
-		<!--- Instructions --->
-		<p>Enter your email address below in order to reset your password.</p>
+		<div class="body">
 			
-		<div id="loginContent">
-		#html.startForm(action=prc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate")#
-			#html.textfield(name="email",label="Email Address: ",size="40",required="required",class="textfield")#
+			<!--- Render Messagebox. --->
+			#getPlugin("MessageBox").renderit()#
 			
-			<div id="loginButtonbar">
-			#html.href(href=event.buildLink( prc.xehLogin ), text=html.button(class="button",value="&nbsp;&nbsp;Back To Login&nbsp;&nbsp;"))#
-			#html.submitButton(value="&nbsp;&nbsp;Reset Password&nbsp;&nbsp;",class="buttonred")#
+			<div id="loginContent">
+			<!--- Instructions --->
+			<p>Enter your email address below in order to reset your password with a temporary password.</p>
+			
+			#html.startForm(action=prc.xehDoLostPassword,name="lostPasswordForm",novalidate="novalidate",class="form-vertical")#
+				
+				<div class="control-group">
+					<div class="controls">
+					    <div class="input-prepend">
+							<span class="add-on"><i class="icon-envelope"></i></span>
+							#html.textfield(name="email", required="required", class="input-large", placeholder="Email Address", autocomplete="off")#
+						</div>
+					</div>
+				</div>
+				
+				<div id="loginButtonbar">
+					#html.button(type="submit", value="<i class='icon-refresh'></i> Reset Password&nbsp;&nbsp;", class="btn btn-danger btn-large")#
+				</div>
+				
+				<br/>
+				<a href="#event.buildLink( prc.xehLogin )#" class="btn btn-mini"><i class="icon-reply"></i> Back to Login</a> 
+				
+			#html.endForm()#
 			</div>
-			
-		#html.endForm()#
+		
 		</div>
-	
 	</div>
 </div>
 </cfoutput>
