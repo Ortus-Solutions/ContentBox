@@ -37,7 +37,7 @@
 					<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") or prc.oAuthor.checkPermission("PAGES_EDITOR")>
 					<div class="buttonBar">
 					    <div class="btn-group">
-					    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
@@ -188,7 +188,7 @@
 										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 										<!--- Delete Command --->
 										<li><a href="javascript:remove('#page.getContentID()#')" class="confirmIt"
-										  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="icon-remove-sign icon-large"></i> Delete</a></li>
+										  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="icon-trash icon-large"></i> Delete</a></li>
 										</cfif>
 										<!--- View in Site --->
 										<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="icon-eye-open icon-large"></i> View Page</a></li>
@@ -308,8 +308,8 @@
         <div class="modal-footer">
             <!--- Button Bar --->
         	<div id="cloneButtonBar">
-          		<button class="btn btn-primary" id="cloneButton"> Clone </button>
-				<button class="btn btn-danger" id="closeButton"> Cancel </button>
+          		<button class="btn" id="closeButton"> Cancel </button>
+          		<button class="btn btn-danger" id="cloneButton"> Clone </button>
             </div>
 			<!--- Loader --->
 			<div class="center loaders" id="clonerBarLoader">

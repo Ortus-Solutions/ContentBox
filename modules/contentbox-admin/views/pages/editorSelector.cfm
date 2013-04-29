@@ -50,8 +50,8 @@
 				</td>
 				<td class="center">
 					<div class="btn-group">
-					<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )"><i class="icon-lock icon-large"></i></button>
-					<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )"><i class="icon-link icon-large"></i></button>
+					<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
+					<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )" title="Link"><i class="icon-link icon-large"></i></button>
 					</div>
 				</td>
 			</tr>
@@ -66,6 +66,6 @@
 </div>
 <!--- Button Bar --->
 <div class="modal-footer">
-	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>
