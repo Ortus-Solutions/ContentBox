@@ -38,7 +38,7 @@
 						<!--- Layouts Navigation Bar --->
 						<ul class="nav nav-tabs">
 							<li class="active"><a href="##active" data-toggle="tab"><i class="icon-star icon-large"></i> Active Layout</a></li>
-							<li><a href="##manage" data-toggle="tab"><i class="icon-columns icon-large"></i> Manage Layouts</a></li>
+							<li><a href="##layoutsPane" data-toggle="tab"><i class="icon-columns icon-large"></i> Manage Layouts</a></li>
 						</ul>
 						<!--- Tab Content --->
 						<div class="tab-content">
@@ -48,7 +48,7 @@
 								<!---screenshot --->
 								<div id="layout-screenshot" class="pull-right">
 								<cfif len( prc.activelayout.screenShotURL )>
-									<a href="#prc.activelayout.screenShotURL#" target="_blank" title="Open screenshot">
+									<a href="#prc.activelayout.screenShotURL#" target="_blank">
 										<img src="#prc.activelayout.screenShotURL#" alt="screenshot" height="200" border="0" class="img-polaroid img-screenshot"/>
 									</a>
 									<br/>
@@ -109,24 +109,20 @@
 								</div>
                                 <!---Layout Settings --->
 								<cfif len( prc.activelayout.settings )>
-								#html.startForm(action=prc.xehSaveSettings, class="well form-vertical")#	
+								#html.startForm(action=prc.xehSaveSettings, class="form-vertical")#	
 								<fieldset>
 									<legend> Layout Settings: </legend>
-									
 									#html.hiddenField(name="layoutName", value=prc.activelayout.name)#
-									
 									#prc.layoutService.buildSettingsForm( prc.activeLayout )#
-									
-									<div class="form-actions">
-										<br/>
-										#html.submitButton(value="Save Settings", class="btn btn-danger")#
-									</div>
 								</fieldset>
+								<div class="form-actions">
+									#html.submitButton(value="Save Settings", class="btn btn-danger")#
+								</div>
                                 #html.endForm()#
 								</cfif>
 							</div>								
 							<!--- Manage Layouts --->
-							<div class="tab-pane" id="manage">
+							<div class="tab-pane" id="layoutsPane">
 								<!--- Layout Form --->
 								#html.startForm(name="layoutForm",action=prc.xehlayoutRemove)#
 								#html.hiddenField(name="layoutName")#
@@ -136,8 +132,8 @@
 									<!--- Rebuild Registry Button --->
 									<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 									<div class="buttonBar">
-										<button class="btn btn-primary" onclick="return toggleUploader()" title="Upload and install a new layout theme"><i class="icon-upload-alt"></i> Upload Layout</button>
-										<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan layouts directory and rebuild registry"><i class="icon-refresh"></i> Rebuild Registry</button>
+										<button class="btn" onclick="return toggleUploader()" ><i class="icon-upload-alt"></i> Upload Layout</button>
+										<button class="btn" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan layouts directory and rebuild registry"><i class="icon-refresh"></i> Rebuild Registry</button>
 									</div>
 									</cfif>
 									<!--- Filter Bar --->
@@ -150,12 +146,12 @@
 								</div>
 								
 								<!--- Uploader --->
-								<div id="uploaderBar" class="well well-small" style="display:none">
+								<div id="uploaderBar" class="" style="display:none">
 								#html.startForm(name="layoutUploadForm",action=prc.xehlayoutupload,multipart=true,novalidate="novalidate",class="form-vertical")#
 									<fieldset>
 										<legend>Layout Uploader</legend>
 										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#		
-    									<div class="form-actions" id="uploadBar">
+    									<div id="uploadBar">
     										#html.submitButton(value="Upload & Install",class="btn btn-danger")#
     									</div>
     									<div class="loaders" id="uploadBarLoader">
@@ -191,15 +187,15 @@
 												<br/>
 												<!--- Button Bar --->
 												<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN") AND prc.cbSettings.cb_site_layout NEQ prc.layouts.name>
-													<button class="btn btn-primary"   onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;"  title="Preview this layout">Preview</button>
-													<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehActivate)#?layoutname=#prc.layouts.name#')" title="Activate this layout">Activate</button>
+													<button class="btn btn-primary" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;">Preview</button>
+													<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehActivate)#?layoutname=#prc.layouts.name#')">Activate</button>
 												</cfif>		
 											</td>
 											<td>
 												<cfif len( prc.layouts.screenShotURL )>
 													<!--- image --->
-													<a href="#prc.layouts.screenShotURL#" target="_blank" title="Open screenshot">
-													<img src="#prc.layouts.screenShotURL#"  alt="screenshot" width="300" border="0"/>
+													<a href="#prc.layouts.screenShotURL#" target="_blank">
+														<img src="#prc.layouts.screenShotURL#"  alt="screenshot" class="img-polaroid" width="300" border="0"/>
 													</a>
 													<br/>
 												</cfif>
@@ -219,8 +215,8 @@
 											<td class="center">
 												<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 												<!--- Delete Command --->
-												<a title="Delete layout" href="javascript:remove('#JSStringFormat(prc.layouts.name)#')" 
-												   class="confirmIt btn" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><i class="icon-remove-sign icon-large"></i></a>
+												<a href="javascript:remove('#JSStringFormat(prc.layouts.name)#')" 
+												   class="confirmIt btn" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><i class="icon-trash icon-large"></i></a>
 												</cfif>
 											</td>
 										</tr>

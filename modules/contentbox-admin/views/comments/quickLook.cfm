@@ -4,7 +4,7 @@
     <h3 id="header">Comment Quick Look</h3>
 </div>
 <div class="modal-body">
-	#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=rc.comment.getAuthorEmail(),size="50")#
+	#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=rc.comment.getAuthorEmail(), size="50")#
 	&nbsp;<a href="mailto:#rc.comment.getAUthorEmail()#" title="#rc.comment.getAUthorEmail()#">#rc.comment.getAuthor()#</a>
 	<br/>
 	<cfif len(rc.comment.getAuthorURL())>
@@ -21,6 +21,6 @@
 </div>
 <!--- Button Bar --->
 <div class="modal-footer">
-	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

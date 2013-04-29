@@ -38,9 +38,11 @@
 			<div class="body">
 				
 				<div class="actionBar">
+					<div class="btn-group">
 					#html.href(href=prc.xehEmailTemplates,text=html.button(name="cancelButton",value="Cancel",class="btn"))#
 					#html.button(value="Save",class="btn btn-danger",title="Save and keep on working",onclick="return saveTemplateCode()")#
 					#html.button(value="Save & Close", type="submit", class="btn btn-danger",title="Save template and return to listing")#
+					</div>
 				</div>
 				
 				<!--- Loader --->
@@ -66,10 +68,10 @@
 				<div class="actionBar">
 					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehAPIDocs&"/index/apislug/plugins/print/?_cfcviewer_cfc=CBHelper")#')" 
 					   class="btn" title="Get some quick CBHelper API Goodness!">
-						<i class="icon-book icon-large"></i> CBHelper Docs
+						CBHelper Docs
 					</a>
 					<a href="#event.buildLink(prc.xehApiDocs)#" target="_blank" class="btn" title="Open the ContentBox API Docs in another window">
-						<i class="icon-book icon-large"></i> API Docs
+						API Docs
 					</a>
 				</div>
 			</div>

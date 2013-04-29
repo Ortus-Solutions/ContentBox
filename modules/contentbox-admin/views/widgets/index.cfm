@@ -38,8 +38,8 @@
 					<div class="well well-small">
 						<!--- Create Widget --->
 						<div class="buttonBar">
-							<button class="btn btn-primary" onclick="openRemoteModal('#event.buildLink(prc.xehWidgetCreate)#');return false"
-									title="Create a spanking new Widget">Create New Widget</button>
+							<button class="btn btn-danger" onclick="openRemoteModal('#event.buildLink(prc.xehWidgetCreate)#');return false"
+									title="Create a spanking new Widget">Create Widget</button>
 						</div>
 		
 						<!--- Filter Bar --->
@@ -92,28 +92,28 @@
     	                                    <div class="widget-teaser">#p.getPluginDescription()#</div>
     	                                </div>
     	                                <div class="widget-actions">
-    	                                    Version #p.getPluginVersion()#
-    										By <a href="#p.getPluginAuthorURL()#" target="_blank" title="#p.getPluginAuthorURL()#">#p.getPluginAuthor()#</a>
+    	                                    v#p.getPluginVersion()#
+    										By <a href="#p.getPluginAuthorURL()#" target="_blank">#p.getPluginAuthor()#</a>
     	                                    <span class="widget-type">
     	                                    	<div class=" btn-group">
-    												<!---read docs--->
-    		                                        <a title="Read Widget Documentation" class="btn btn-mini" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
-    												    <i class="icon-book icon-large"></i> 
-    		                                        </a>
-    		                                        <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
-    													<!--- Editor --->
-    													<a title="Edit Widget" class="btn btn-mini" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#widgetName#&type=#prc.widgets.widgettype#')#">
-    													    <i class="icon-edit icon-large"></i> 
-    													</a>
-    		                            				<!---only allow deletion of core widgets--->
-    													<cfif prc.widgets.widgettype eq "core">
-    													<!--- Delete Command --->
-    													<a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-mini" data-title="Delete #widgetName#?">
-    														<i class="icon-remove-sign icon-large"></i> 
-    	                                                </a>
-    													</cfif>
-    		                            			</cfif>
-    	                            			</div>
+													<!---read docs--->
+			                                        <a title="Read Widget Documentation" class="btn btn-mini" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
+													    <i class="icon-book icon-large"></i> 
+			                                        </a>
+			                                        <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
+														<!--- Editor --->
+														<a title="Edit Widget" class="btn btn-mini" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#widgetName#&type=#prc.widgets.widgettype#')#">
+														    <i class="icon-edit icon-large"></i> 
+														</a>
+			                            				<!---only allow deletion of core widgets--->
+														<cfif prc.widgets.widgettype eq "core">
+														<!--- Delete Command --->
+														<a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-mini" data-title="Delete #widgetName#?">
+															<i class="icon-trash icon-large"></i> 
+		                                                </a>
+														</cfif>
+			                            			</cfif>
+		                            			</div>
     										</span>
     	                                </div>    
     	                            </div>

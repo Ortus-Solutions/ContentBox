@@ -30,7 +30,7 @@
     				<li><a href="##pages" data-toggle="tab"><i class="icon-pencil icon-large"></i> Pages</a></li>
     			</ul>
     			<!--- Tab Content --->
-    			<div class="tab-content well">
+    			<div class="tab-content">
     				<!--- Global HTML Page --->
     				<div class="tab-pane active" id="global">
     					<fieldset>

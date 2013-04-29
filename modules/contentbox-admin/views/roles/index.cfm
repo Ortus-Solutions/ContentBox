@@ -76,7 +76,7 @@
 								&nbsp;
 								<!--- Delete Command --->
 								<cfif role.getNumberOfAuthors() eq 0>
-								<a title="Delete Role" href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><i class="icon-remove-sign icon-large" id="delete_#role.getRoleID()#"></i></a>
+								<a title="Delete Role" href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><i class="icon-trash icon-large" id="delete_#role.getRoleID()#"></i></a>
 								</cfif>
 							</cfif>
 						</td>

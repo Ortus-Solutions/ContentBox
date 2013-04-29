@@ -21,7 +21,7 @@
 					<!--- Create Butons --->
 					<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 					<div class="buttonBar">
-						<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')">Create User</button>
+						<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')">Create User</button>
 					</div>
 					</cfif>
 	
@@ -78,7 +78,9 @@
 									<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><i class="icon-edit icon-large"></i></a>
 									<!--- Delete Command --->
 									<cfif prc.oAuthor.getAuthorID() neq author.getAuthorID()>
-									<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><i id="delete_#author.getAuthorID()#" class="icon-remove-sign icon-large"></i></a>
+									<a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="Delete Author?"><i id="delete_#author.getAuthorID()#" class="icon-trash icon-large"></i></a>
+									<cfelse>
+										<a title="Can't Delete Yourself" href="javascript:alert('Can\'t delete yourself buddy!')" class="textRed"><i id="delete_#author.getAuthorID()#" class="icon-trash icon-large"></i></a>
 									</cfif>
 								</cfif>
 							</td>

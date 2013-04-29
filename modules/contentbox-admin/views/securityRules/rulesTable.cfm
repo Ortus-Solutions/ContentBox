@@ -32,7 +32,7 @@
 				<a href="#event.buildLink(prc.xehEditorRule)#/ruleID/#rule.getRuleID()#" title="Edit Rule"><i class="icon-edit icon-large"></i></a>
 				&nbsp;
 				<!--- Delete Command --->
-				<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="Delete Rule?"><i class="icon-remove-sign icon-large" id="delete_#rule.getRuleID()#"></i></a>
+				<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="Delete Rule?"><i class="icon-trash icon-large" id="delete_#rule.getRuleID()#"></i></a>
 				</cfif>
 			</td>
 		</tr>

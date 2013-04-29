@@ -6,13 +6,13 @@
 	</div>
 
 	<!--- entries --->
-	<table name="pages_pager" id="pages_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
+	<table name="pages_pager" id="pages_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
 		<thead>
 			<tr>
 				<th>Page</th>
 				<th width="40" class="center"><i class="icon-globe icon-large" title="Published"></i></th>
 				<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
-				<th width="100" class="center">Actions</th>
+				<th width="50" class="center">Actions</th>
 			</tr>
 		</thead>
 
@@ -50,19 +50,24 @@
 				</td>
 				<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
 				<td class="center">
-					<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-					<!--- Edit Command --->
-					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#"><i class="icon-edit icon-large"></i></a>
-					&nbsp;
-					<!--- History Command --->
-					<a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#" title="Version History"><i class="icon-time icon-large"></i></a>
-					&nbsp;
-					<!--- Create Child --->
-					<a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#" title="Create Child Page"><i class="icon-sitemap icon-large"></i></a>
-					&nbsp;
-					</cfif>
-					<!--- View in Site --->
-					<a href="#prc.CBHelper.linkPage(page)#" title="View Page In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>
+					<!--- Page Actions --->
+					<div class="btn-group">
+				    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
+							<i class="icon-cogs icon-large"></i>
+						</a>
+				    	<ul class="dropdown-menu text-left">
+				    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+							<!--- Edit Command --->
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+							<!--- Create Child --->
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="icon-sitemap icon-large"></i> Create Child</a></li>
+							</cfif>
+							<!--- History Command --->
+							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
+							<!--- View in Site --->
+							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="icon-eye-open icon-large"></i> View Page</a></li>
+				    	</ul>
+				    </div>
 				</td>
 			</tr>
 			</cfloop>

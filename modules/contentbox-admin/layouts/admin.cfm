@@ -98,10 +98,10 @@
 							<li class="divider-vertical"></li>
 							
 							<!--- View Site --->
-							<li><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home icon-large"></i></a></li>
+							<li title="Open Site" data-placement="left"><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home icon-large"></i></a></li>
 							
 							<!--- New Quick Links --->
-					    	<li class="dropdown">
+					    	<li class="dropdown" title="Create New..." data-placement="left">
 					    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
 								<ul class="dropdown-menu">
 									<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
@@ -121,12 +121,12 @@
 							
 							<!---Quick Post --->
 							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") AND !prc.cbSettings.cb_site_disable_blog>
-								<li><a href="javascript:showQuickPost()"><i class="icon-edit icon-large"></i></a></li>
+								<li title="Quick Post" data-placement="left"><a href="javascript:showQuickPost()"><i class="icon-edit icon-large"></i></a></li>
 							</cfif>
 							
 							<!---Admin Actions --->
 							<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
-							<li class="dropdown">
+							<li class="dropdown" title="Admin Actions" data-placement="left">
 								<!---Loader Status --->
 								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cogs icon-large"></i></a>
 								<ul class="dropdown-menu">
