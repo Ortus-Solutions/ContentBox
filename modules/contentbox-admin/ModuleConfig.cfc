@@ -47,6 +47,11 @@ component {
 			forgeBoxEntryURL = "http://www.coldbox.org/forgebox/view"
 		};
 
+		// Parent Settings
+		parentSettings = {
+			messagebox_template = "#moduleMapping#/views/_tags/messagebox.cfm"
+		};
+
 		// SES Routes
 		routes = [
 			{pattern="/", handler="dashboard", action="index" },
