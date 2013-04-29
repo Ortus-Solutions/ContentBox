@@ -75,10 +75,12 @@
 				#html.startFieldset(legend='<i class="icon-globe icon-large"></i> Publishing')#
 	
 					<!--- Action Bar --->
-					<div class="actionBar center">
+					<div class="actionBar">
+						<div class="btn-group">
 						<button class="btn" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Cancel</button>
 						&nbsp;
 						<button type="submit" class="btn btn-danger">Save</button>
+						</div>	
 					</div>
 	
 				#html.endFieldSet()#
@@ -97,8 +99,8 @@
         						<!--- Cache Settings --->
         						#html.label(field="cache",content="Cache Content:",class="inline")#
         						#html.select(name="cache", options="Yes,No", selectedValue=yesNoFormat(prc.content.getCache()), class="input-block-level")#
-        						#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.content,title="Enter the number of minutes to cache your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
-        						#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.content,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
+        						#html.inputField(name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.content,title="Enter the number of minutes to cache your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
+        						#html.inputField(name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.content,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
                       		</div>
                     	</div>
                   	</div>

@@ -67,6 +67,6 @@
 </div>
 <!--- Button Bar --->
 <div class="modal-footer">
-	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

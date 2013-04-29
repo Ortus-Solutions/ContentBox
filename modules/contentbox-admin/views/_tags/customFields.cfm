@@ -18,11 +18,11 @@
 				#html.textField(name="CustomFieldKeys",class="textfield inline customFieldKey",size="18",maxsize="255",value=cField.getKey())#
 				<label class="inline">Value: </label> 
 				#html.textField(name="CustomFieldValues",class="textfield inline customFieldValue",size="60",value=cField.getValue())#
-				<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-remove-sign icon-large"></i></button>
+				<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-trash icon-large"></i></button>
 			</p>
 		</cfloop>
 		<!--- Remove All Custom Fields --->
-		<button id="removeCustomFieldsButton" class="btn" onclick="return cleanCustomFields()"><i class="icon-remove-sign"></i> Remove All</button>
+		<button id="removeCustomFieldsButton" class="btn" onclick="return cleanCustomFields()"><i class="icon-trash"></i> Remove All</button>
 	</div>
 #html.endFieldset()#
 
@@ -32,7 +32,7 @@
 	#html.textField(name="CustomFieldKeys",class="textfield inline customFieldKey",size="18",maxsize="255")#
 	<label class="inline">Value: </label> 
 	#html.textField(name="CustomFieldValues",class="textfield inline customFieldValue",size="60")#
-	<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-remove-sign icon-large"></i></button>
+	<button class="btn  dynamicRemove" onclick="return false;"><i class="icon-trash icon-large"></i></button>
 </p>	
 
 <!--- Custom JS --->

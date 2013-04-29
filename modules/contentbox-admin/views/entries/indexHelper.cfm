@@ -59,12 +59,11 @@ function openCloneDialog(contentID, title){
 	// open modal for cloning options
 	openModal( $cloneDialog, 500, 300 );
 	// form validator and data
-	$cloneForm.validator({
-		position:'top left', 
-		onSuccess:function(e,els){
-			$cloneForm.find("##cloneButtonBar").hide();
+	$cloneForm.validate({
+		success:function(e,els){
+			$cloneForm.find("##bottomCenteredBar").slideUp();
 			$cloneForm.find("##clonerBarLoader").slideDown();
-		} 
+		}  
 	});
 	$cloneForm.find("##contentID").val( contentID );
 	$cloneForm.find("##title").val( title ).focus();

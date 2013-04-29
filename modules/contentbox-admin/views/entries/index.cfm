@@ -36,7 +36,7 @@
 					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR")>
 					<div class="buttonBar">
 						<div class="btn-group">
-					    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
@@ -156,7 +156,7 @@
 										<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 										<!--- Delete Command --->
 										<li>
-											<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><i id="delete_#entry.getContentID()#" class="icon-remove-sign icon-large" ></i> Delete</a>
+											<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><i id="delete_#entry.getContentID()#" class="icon-trash icon-large" ></i> Delete</a>
 										</li>
 										</cfif>
 										<!--- View in Site --->
@@ -275,8 +275,8 @@
         <div class="modal-footer">
         	<!--- Button Bar --->
         	<div id="cloneButtonBar">
-          	 	<button class="btn btn-primary" id="cloneButton"> Clone </button>
-				<button class="btn btn-danger" id="closeButton"> Cancel </button>
+          	 	<button class="btn" id="closeButton"> Cancel </button>
+				<button class="btn btn-danger" id="cloneButton"> Clone </button>
 			</div>
             <!--- Loader --->
 			<div class="center loaders" id="clonerBarLoader">

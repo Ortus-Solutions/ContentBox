@@ -30,7 +30,7 @@
 					<!--- Create Butons --->
 					<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 					<div class="buttonBar">
-						<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');" title="Create new content">Create Content</button>
+						<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');">Create Content</button>
 					</div>
 					</cfif>
 					<!--- Filter Bar --->
@@ -71,7 +71,7 @@
 								<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><i class="icon-edit icon-large"></i></a>
 								&nbsp;
 								<!--- Delete Command --->
-								<a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#entry.getContentID()#" class="icon-remove-sign icon-large"></i></a>
+								<a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#entry.getContentID()#" class="icon-trash icon-large"></i></a>
 								</cfif>
 							</td>
 						</tr>

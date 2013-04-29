@@ -3,29 +3,30 @@
 	<!--- main content --->
 	<div class="span9" id="main-content">
 		<div class="box">
-		<!--- Body Header --->
-		<div class="header">
-			<img src="#prc.cbroot#/includes/images/ortus_circle_small.gif" alt="ortus" width="30" height="30" title="Ortus Solutions, Corp" style="height:30px" />
-			About ContentBox
-		</div>
-		<!--- Body --->
-		<div class="body" id="mainBody">
-			
-			<div class="hero-unit">
-                 <img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="pull-left padding10" /><br/>
-			    <h2>ContentBox Modular CMS <span class="label label-warning">#getModuleSettings('contentbox').version#</span></h2>
-                <blockquote class="clearfix">
-					<strong>ContentBox</strong> is a modular content platform developed by <a href="http://www.ortussolutions.com">Ortus Solutions</a> and 
-					based on the popular <a href="http://www.coldbox.org">ColdBox Platform</a> development framework.
-					ContentBox is a professional open source project with tons of services, training, customizations and more.
-					<small><a href="http://www.gocontentbox.org">www.gocontentbox.org</a></small>
-				</blockquote>
+			<!--- Body Header --->
+			<div class="header">
+				<img src="#prc.cbroot#/includes/images/ortus_circle_small.gif" alt="ortus" width="30" height="30" title="Ortus Solutions, Corp" style="height:30px" />
+				About ContentBox
 			</div>
-		
-			<div class="page-header">
-				<h2>Components</h2>
+			<!--- Body --->
+			<div class="body" id="mainBody">
+				
+				<div class="hero-unit">
+	                <img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="pull-left padding10" /><br/>
+				    <h2>ContentBox Modular CMS <span class="label label-warning">#getModuleSettings('contentbox').version#</span></h2>
+	                <blockquote class="clearfix">
+						<strong>ContentBox</strong> is a modular content platform developed by <a href="http://www.ortussolutions.com">Ortus Solutions</a> and 
+						based on the popular <a href="http://www.coldbox.org">ColdBox Platform</a> development framework.
+						ContentBox is a professional open source project with tons of services, training, customizations and more.
+						<small><a href="http://www.gocontentbox.org">www.gocontentbox.org</a></small>
+					</blockquote>
 				</div>
-				<table name="settings" id="settings" class="table table-hover table-condensed table-striped table-bordered">
+			
+				<div class="page-header">
+					<h2>Components</h2>
+				</div>
+					
+				<table name="settings" id="settings" class="table table-hover table-striped">
 					<thead>
 						<tr class="info">
 							<th>Module</th>	

@@ -10,9 +10,9 @@
 				<i class="icon-edit icon-large"></i>
 				Entry Editor
 				<div class="btn-group pull-right">
-				    <button class="btn btn-primary" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;"><i class="icon-reply"></i> Back</button>
+				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;"><i class="icon-reply"></i> Back</button>
 				    <cfif prc.entry.isLoaded()>
-					<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
 				    	<span class="caret"></span>
 				    </button>
 				   		<ul class="dropdown-menu">
@@ -166,11 +166,13 @@
 	
 					<!--- Action Bar --->
 					<div class="actionBar">
-						&nbsp;<input type="submit" class="btn btn-primary" value="Save" onclick="return quickSave()">
-						&nbsp;<input type="submit" class="btn btn-primary" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
+						<div class="btn-group">
+						&nbsp;<input type="submit" class="btn" value="Save" onclick="return quickSave()">
+						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
 						</cfif>
+						</div>
 					</div>
 	
 					<!--- Loader --->

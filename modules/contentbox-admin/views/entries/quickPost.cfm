@@ -32,11 +32,13 @@
 			</div>
 			<!--- Button Bar --->
 			<div class="modal-footer">
-    				<button class="btn" onclick="return closeQuickPost()" title="Change your mind hugh?"> Cancel </button>
-    				&nbsp;<button type="submit" class="btn btn-primary" onclick="qpSaveDraft()" title="Not ready for primetime!">Save Draft</button>
+				<div class="btn-group">
+    				<button class="btn" onclick="return closeQuickPost()"> Cancel </button>
+    				&nbsp;<button type="submit" class="btn" onclick="qpSaveDraft()">Save Draft</button>
     				<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-    				&nbsp;<button type="submit" class="btn btn-danger" title="Yeahaww! Let's Publish It!">Publish</button>
+    				&nbsp;<button type="submit" class="btn btn-danger">Publish</button>
     				</cfif>
+    			</div>
 			</div>
 		#html.endForm()#
 </div>
