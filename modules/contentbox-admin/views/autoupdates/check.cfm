@@ -5,12 +5,11 @@
 	<h3><i class="icon-bolt icon-large"></i> Update Check: <span class="label label-inverse">#rc.channel#</span></h3>
 </div>
 <div class="modal-body">
-    #html.startForm(name="updateForm",action=prc.xehUpdateApply,class="well form-vertical")#
+    #html.startForm(name="updateForm",action=prc.xehUpdateApply,class="form-vertical")#
 	#getPlugin("MessageBox").renderit()#
 
 	<cfif prc.updateFound>
-	<div class="alert alert-info">
-	<h3>Version Information:</h3>
+	#html.startFieldSet(legend="Version Information")#
 	<table name="settings" id="settings" class="table table-striped table-hover table-condensed table-bordered" width="98%">
 		<thead>
 			<tr class="">
@@ -27,16 +26,14 @@
 			</tr>
 		</tbody>
 	</table>
-	</div>
+	#html.endFieldset()#
 	
 	<!--- download URL --->
 	#html.hiddenField(name="downloadURL",value=prc.updateEntry.downloadURL)#
 	#html.hiddenField(name="version",value=prc.updateEntry.version)#
 	
-	<div class="alert alert-info">
-	<h3>Description:</h3>
+	#html.startFieldSet(legend="Description")#
 	<p>#prc.updateEntry.description#</p>
-	</div>
 	
 	<cfif len(prc.updateEntry.installInstructions)>
 	<div class="alert">
@@ -44,24 +41,24 @@
 		<p>#prc.updateEntry.InstallInstructions#</p>	
 	</div>
 	</cfif>
+	#html.endFieldSet()#
 	
-	<div class="alert alert-info">
-		<h3>Changelog:</h3>
-		<p>#prc.updateEntry.changelog#</p>
-	</div>
+	#html.startFieldSet(legend="Changelog")#	
+	<p>#prc.updateEntry.changelog#</p>
+	#html.endFieldSet()#
 	
 	<div class="form-actions text-center">
 		<div class="alert alert-error">
 			<i class="icon-warning-sign icon-large"></i>
 			Please make sure you do any backups before applying this update.
 		</div>
-		#html.submitButton(name="submitUpdate",class="btn btn-primary",value="Apply Update",onclick="return confirm('Are you positive?')")#
+		#html.button(type="submit", name="submitUpdate", class="btn btn-danger btn-large", value="<i class='icon-ok'></i> Apply Update", onclick="return confirm('Are you positive?')")#
 	</div>
 	</cfif>
 	#html.endForm()#
 </div>
 <!--- Button Bar --->
 <div class="modal-footer">
-	<button class="btn btn-danger" onclick="return closeRemoteModal()"> Close </button>
+	<button class="btn" onclick="return closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

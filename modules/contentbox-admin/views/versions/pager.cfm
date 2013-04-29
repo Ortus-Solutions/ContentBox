@@ -9,10 +9,10 @@
 	<!--- History --->
 	<div class="buttonBar">
 		<cfif arrayLen( prc.versionsPager_versions ) gt 1>
-		<button class="btn btn-danger" onclick="return versionsPagerDiff();" title="Compare Content"><i class="icon-exchange"></i> Compare Versions</button>
+		<button class="btn btn-danger" onclick="return versionsPagerDiff();"><i class="icon-exchange"></i> Compare Versions</button>
 		</cfif>
 		<cfif prc.versionsPager_viewFullHistory>
-		<button class="btn btn-primary" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');" title="Open History Panel">View Full History</button>
+		<button class="btn" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"><i class="icon-time"></i> Full History</button>
 		</cfif>
 	</div>
 
@@ -72,7 +72,7 @@
 					<!--- DELETE VERSION --->
 					<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
 					   data-title="Remove Content Version"
-					   data-message="Do you really want to remove this content version?"><i class="icon-remove-sign icon-large" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
+					   data-message="Do you really want to remove this content version?"><i class="icon-trash icon-large" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
 					</cfif>
 				</cfif>
 			</td>

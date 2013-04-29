@@ -53,7 +53,7 @@
 							<!--- Edit Command --->
 							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
 							<!--- Delete Command --->
-							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-remove-sign icon-large" id="delete_#category.getCategoryID()#"></i></a>
+							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
 							</cfif>
 						</td>
 					</tr>

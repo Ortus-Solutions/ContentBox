@@ -11,6 +11,6 @@
 	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 	<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehPageEditor)#/contentID/#prc.page.getContentID()#')"> Edit </button>
 	</cfif>
-	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

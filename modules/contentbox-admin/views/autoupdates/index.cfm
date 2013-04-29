@@ -109,7 +109,7 @@
 				<i class="icon-info-sign"></i> Components Installed
 			</div>
 			<div class="body">
-				<table name="settings" id="settings" class="table table-striped table-condensed table-hover" width="98%">
+				<table name="settings" id="settings" class="table table-striped table-hover" width="98%">
 					<thead>
 						<tr class="info">
 							<th>Module</th>	
