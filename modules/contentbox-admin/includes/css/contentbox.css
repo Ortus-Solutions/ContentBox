@@ -22,6 +22,11 @@ body{
 	background-image: linear-gradient(to bottom, #ddd, #F5F5F5);
 	background-repeat: repeat-x;
 }
+ol { list-style:decimal inside; }
+ul { list-style:disc inside; }
+img{ height: inherit; }
+img.img-screenshot{ height: 200px; }
+input, textarea, .uneditable-input { width: inherit; }
 #wrapper {
 	min-height: 100%;
 	height: auto !important;
@@ -30,19 +35,11 @@ body{
 }
 #main-container { padding-top: 100px; margin-bottom: 20px; }
 #simple-container { padding-top: 60px; }
-.container-fluid{ padding-bottom: 30px }
-ol { list-style:decimal inside; }
-ul { list-style:disc inside; }
 #main-sidebar{ margin-left: 20px !important;}
+.container-fluid{ padding-bottom: 30px }
 .hero-unit{padding:50px; margin-top:20px; margin-bottom: 20px}
 .well{ margin-bottom: 10px; margin-top: 10px;}
-img{ height: inherit; }
-img.img-screenshot{ height: 200px; }
-input,
-textarea,
-.uneditable-input {
-  width: inherit;
-}
+.gravatar{ height: auto; }
 /**============================== ADMIN MAIN TOP MENU ==============================**/
 #adminMenuTopNav { font-size: 13px; z-index: 1025}
 #adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}

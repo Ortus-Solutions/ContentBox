@@ -54,13 +54,9 @@
 				</cfif>
 			</select>
 			<cfif arrayLen( prc.permissions ) GT 0 AND !noPerms>
-            	<div class="form-actions">
-					<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
-                </div>
+				<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
 			<cfelse>
-				<div class="form-actions">
-					<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
-				</div>
+				<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
             </cfif>
 		</div>
 		

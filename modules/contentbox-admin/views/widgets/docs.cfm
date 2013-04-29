@@ -69,7 +69,7 @@
         &nbsp;
     </div>
     <div class="widget-footer-right">
-        <button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
+        <button class="btn" onclick="closeRemoteModal()"> Close </button>
     </div>
 </div>
 </cfoutput>

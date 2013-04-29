@@ -72,7 +72,7 @@
     						<!--- Flush Cache Button --->
     						<div class="pull-right">
     							<div class="btn-group">
-    								<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+    								<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
     									Special Actions
     									<span class="caret"></span>
     								</a>
@@ -128,7 +128,7 @@
     									<!--- Edit Command --->
     									<a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting"><i class="icon-edit icon-large"></i></a>
     									<!--- Delete Command --->
-    									<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><i class="icon-remove-sign icon-large" id="delete_#setting.getsettingID()#"></i></a>
+    									<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><i class="icon-trash icon-large" id="delete_#setting.getsettingID()#"></i></a>
     								</td>
     							</tr>
     							</cfloop>
@@ -154,7 +154,7 @@
     					<div class="well well-small">
     						<!--- Flush Cache Button --->
     						<div class="buttonBar">
-    							<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons">Clear All Singletons</button>
+    							<button class="btn" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons"><i class="icon-trash"></i> Clear All Singletons</button>
     						</div>
     						<!--- Filter Bar --->
     						<div class="filterBar">

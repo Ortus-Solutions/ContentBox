@@ -40,6 +40,10 @@ function remove(settingID){
 	$settingForm.submit();
 }
 function createSetting(){
+	$settingEditor.find("##settingID").val( '' );
+	$settingEditor.find("##name").val( '' );
+	$settingEditor.find("##value").val( '' );
+	$settingEditor.find("##btnSave").val( "Save" );
 	openModal( $("##settingEditorContainer"), 500, 300 );
 	return false;
 }

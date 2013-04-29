@@ -35,7 +35,7 @@
 					<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 					<div class="buttonBar">
 						<div class="btn-group">
-					    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
@@ -56,17 +56,14 @@
 					</div>
 				</div>
 				
-				<!--- Paging --->
-				#rc.pagingPlugin.renderit(rc.commentsCount,rc.pagingLink)#
-			
 				<!--- comments --->
-				<table name="comments" id="comments" class="table table-striped table-hover tablesorter" width="98%">
+				<table name="comments" id="comments" class="table table-striped table-hover tablesorter table-condensed" width="98%">
 					<thead>
 						<tr>
 							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 							<th width="200">Author</th>
 							<th>Comment</th>
-							<th width="115" class="center">Date</th>			
+							<th width="120" class="center">Date</th>			
 							<th width="100" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
@@ -115,7 +112,7 @@
 									</cfif>
 									&nbsp;
 									<!--- Delete Command --->
-									<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="icon-remove-sign icon-large"></i></a>
+									<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="icon-trash icon-large"></i></a>
 									&nbsp;	
 								</cfif>
 								<!--- View in Site --->

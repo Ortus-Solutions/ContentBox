@@ -39,7 +39,7 @@
 				<div class="well well-small" id="entriesBar">
 					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 					<div class="buttonBar">
-						<button class="btn btn-primary" 	id="btnCreateEntry" title="Create a new blog entry" onclick="return to('#event.buildLink(prc.xehBlogEditor)#')">Create Entry</button>
+						<button class="btn" id="btnCreateEntry" onclick="return to('#event.buildLink(prc.xehBlogEditor)#')"><i class="icon-plus-sign"></i> Create New Entry</button>
 					</div>				
 					</cfif>
 					<div class="filterBar">
@@ -53,7 +53,7 @@
 				<div class="well well-small" id="entriesBar">
 					<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 					<div class="buttonBar">
-						<button class="btn btn-primary" 	id="btnCreateEntry" title="Create a new page" onclick="return to('#event.buildLink(prc.xehPageEditor)#')">Create Page</button>
+						<button class="btn" id="btnCreateEntry" onclick="return to('#event.buildLink(prc.xehPageEditor)#')"><i class="icon-plus-sign"></i> Create New Page</button>
 					</div>				
 					</cfif>
 					<div class="filterBar">
@@ -242,13 +242,7 @@
 				<i class="icon-medkit"></i> Need Help?
 			</div>
 			<div class="body">
-				<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox and ContentBox">
-				<div class="center"><img src="#prc.cbroot#/includes/images/ortus-top-logo.png" alt="Ortus Solutions" border="0" /></a><br/></div>
-				
-				<p><strong>Ortus Solutions</strong> is the company behind anything ColdBox and ContentBox. Need professional support, architecture analysis,
-				code reviews, custom development or anything ColdFusion, ColdBox, ContentBox related? 
-				<a href="mailto:help@ortussolutions.com">Contact us</a>, we are here
-				to help!</p>
+				#renderview(view="_tags/needhelp", module="contentbox-admin")#
 			</div>
 		</div>	
 		<!--- Help Box--->

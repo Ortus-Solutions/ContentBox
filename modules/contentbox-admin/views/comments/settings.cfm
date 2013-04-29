@@ -32,7 +32,7 @@
     				</ul>		
                     
     				<!--- Tab Content --->
-    				<div class="tab-content well">
+    				<div class="tab-content">
     				    
     					<!--- comment options --->
     					<div class="tab-pane active" id="general_options">
@@ -67,7 +67,6 @@
     							   							
     							<!--- Whois URL --->
     							#html.textField(name="cb_comments_whoisURL",label="Whois URL",value=prc.cbSettings.cb_comments_whoisURL,class="textfield",size="60",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    							<strong>={AuthorIP}</strong>	
     						</fieldset>
     					</div>
     					<!--- Comment Moderation --->
@@ -147,7 +146,7 @@
 						#announceInterception("cbadmin_onCommentSettingsContent")#
 						<!--- End Tab Content --->
         				<div class="form-actions">
-        					#html.submitButton(value="Save Settings",class="btn btn-danger",title="Save the comment settings")#
+        					#html.button(type="submit", value="Save Settings", class="btn btn-danger")#
         				</div>
 						
 					</div>

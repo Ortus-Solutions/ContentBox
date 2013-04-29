@@ -10,7 +10,7 @@
 </cfif>
 #html.startForm(name="commentPagerForm")#
 <!--- comments --->
-<table name="comments_pager" id="comments_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
+<table name="comments_pager" id="comments_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
 	<thead>
 		<tr>
 			<th width="200">Author</th>
@@ -29,7 +29,7 @@
 				<br/>
 				<cfif len(comment.getAuthorURL())>
 					<i class="icon-cloud"></i> 
-					<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
+					<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" target="_blank">
 						#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 					</a>
 					<br />
@@ -56,7 +56,7 @@
 					</cfif>
 					&nbsp;	
 					<!--- Delete Command --->
-					<a title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="icon-remove-sign icon-large" ></i></a>
+					<a title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="icon-trash icon-large" ></i></a>
 					&nbsp;
 				</cfif>
 				<!--- View in Site --->

@@ -13,6 +13,7 @@ $(document).ready(function() {
             modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
         }        
     });
+
     // reset modal content when hidden
 	$remoteModal.on( 'hidden', function() {
         var modal = $remoteModal;
@@ -20,9 +21,9 @@ $(document).ready(function() {
     })
     
 	// Global Tool Tip Settings
-	toolTipSettings	= {	//will make a tooltip of all elements having a title property
+	toolTipSettings	= {
 		 animation: 'slide',
-		 delay: 10
+		 delay: { show: 250, hide: 250 }
 	};
 	
 	// toggle flicker messages
@@ -84,6 +85,12 @@ $(document).ready(function() {
     
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
+
+	// Tab link detector
+	$(function () {
+	   var activeTab = $('[href=' + location.hash + ']');
+	   activeTab && activeTab.tab('show');
+	});
 });
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
