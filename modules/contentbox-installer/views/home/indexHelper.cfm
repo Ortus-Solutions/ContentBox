@@ -1,40 +1,36 @@
 <cfoutput>
 <script language="javascript">
 $(document).ready(function() {
+    var $installerForm = $("##installerForm")
 	// form validators
-	$("##installerForm").validator( {grouped:true, effect:"wall", errorInputEvent: null} );
+	$installerForm.validate({
+        showErrors: function( errorMap, errorList ) {
+            var errors = this.numberOfInvalids();
+            if ( errors ) {
+                var msg = '<p><strong>Please correct the following errors:</strong></p><ul>';
+                for( var i=0; i<errors; i++ ) {
+                    var label = $("label[for='"+$(errorList[ i ].element).attr('id')+"']");
+                    msg += '<li>' + label.text() + ' ' + errorList[ i ].message + '</li>';
+                }
+                msg += '</ul>';
+                var wall = $("##errorBar").addClass("alert alert-error").fadeIn().html( msg );
+            }
+        }
+    });
 	
 	// password validator
-	$.tools.validator.fn("[name=password_confirm]", "Passwords need to match", function(el, value) {
-		return (value==$("[name=password]").val()) ? true : false;
-	});
-	
-	// adds an effect called "wall" to the validator
-	$.tools.validator.addEffect("wall", function(errors, event) {
-		// get the message wall
-		var wall = $("##errorBar").addClass("infoBarRed").fadeIn();
-		// remove all existing messages
-		wall.html("");
-		// Init messages
-		wall.append( "<h1>Cannot continue installation, please fix the following errors:</h1><ul>" );
-		// add new errors
-		$.each(errors, function(index, error) {
-			wall.append(
-				"<li><strong>" +error.input.attr("name")+ "</strong> " + error.messages[0] + "</li>"
-			);
-		});
-		wall.append( "</ul>" );
-	 
-	// the effect does nothing when all inputs are valid
-	}, function(inputs)  {
-	 
-	});
+	$.validator.addMethod( 'passwordmatch', function( value, element ) {
+        return (value==$("[name=password]").val()) ? true : false;
+    }, 'Passwords need to match' );
 });
+
 function nextStep(){
-	$("ul.vertical_nav").data("tabs").next();
+    var $tabs = $('.tabbable li');
+	$tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
 }
 function prevStep(){
-	$("ul.vertical_nav").data("tabs").prev();
+    var $tabs = $('.tabbable li');
+	$tabs.filter('.active').prev('li').find('a[data-toggle="tab"]').tab('show');
 }
 </script>
 </cfoutput>

@@ -1,27 +1,6 @@
-﻿<cfoutput>		
-<!--============================Sidebar============================-->
-<div class="sidebar">
-	<!--- Info Box --->
-	<div class="small_box">
-		<div class="header">
-			<i class="icon-cogs"></i> Actions
-		</div>
-		<div class="body">
-			<!--- Search Form --->
-			#html.startForm(name="commentForm",action=prc.xehCommentstatus)#
-				#html.hiddenField(name="commentID",bind=rc.comment)#
-				#html.hiddenField(name="commentStatus",value="approve")#
-				<!--- Buttons --->
-				<input type="submit" value="Delete Comment" class="buttonred" onclick="removeComment()" />
-				<input type="submit" value="Approve Comment" class="button2" />				
-			#html.endForm()#
-		</div>
-	</div>		
-	
-</div>
-<!--End sidebar-->	
-<!--============================Main Column============================-->
-<div class="main_column" id="main_column">
+﻿<cfoutput>	
+<div class="row-fluid" id="main-content">
+	<!--- main content --->
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
@@ -39,7 +18,7 @@
 					<br/>
 					<cfif len(rc.comment.getAuthorURL())>
 						<i class="icon-cloud"></i> 
-						<a href="<cfif NOT findnocase("http",rc.comment.getAuthorURL())>http://</cfif>#rc.comment.getAuthorURL()#" title="Open URL" target="_blank">
+						<a href="<cfif NOT findnocase("http",rc.comment.getAuthorURL())>http://</cfif>#rc.comment.getAuthorURL()#" target="_blank">
 							#rc.comment.getAuthorURL()#
 						</a>
 						<br />
@@ -59,8 +38,20 @@
 				<legend><i class="icon-comment"></i> Comment</legend>
 				#rc.comment.getContent()#
 			</fieldset>
+
+			<!--- Search Form --->
+			#html.startForm(name="commentForm",action=prc.xehCommentstatus)#
+				#html.hiddenField(name="commentID",bind=rc.comment)#
+				#html.hiddenField(name="commentStatus",value="approve")#
+				<div class="form-actions">
+				<!--- Buttons --->
+				<button type="submit" class="btn btn-primary" onclick="removeComment()"><i class="icon-trash"></i> Delete</button>
+				<button type="submit" class="btn btn-danger" /><i class="icon-ok"></i> Approve</button>
+				</div>				
+			#html.endForm()#
 			
 		</div>	
 	</div>
+	
 </div>
 </cfoutput>

@@ -45,11 +45,10 @@ component extends="baseHandler"{
 		}
 		// options
 		prc.libraryOptions = [
-			{name="Choose Library To Manage", value="null"},
-			{name="Content", value="Content"},
-			{name="Modules", value="Modules"},
-			{name="Updates", value="Updates"},
-			{name="Widgets", value="Widgets"}
+			{name="<i class='icon-pencil'></i> Content", value="Content"},
+			{name="<i class='icon-bolt'></i> Modules", value="Modules"},
+			{name="<i class='icon-download-alt'></i> Updates", value="Updates"},
+			{name="<i class='icon-magic'></i> Widgets", value="Widgets"}
 		];
 
 		// build argument list for widget

@@ -1,11 +1,13 @@
 ﻿<cfoutput>
-<h2>WireBox Mapping For: #rc.id#</h2>
-<div>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>WireBox Mapping For: #rc.id#</h3>
+</div>
+<div class="modal-body">
 	<cfdump var="#prc.mapping.getMemento()#" expand="false">
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+<div class="modal-footer">
+	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

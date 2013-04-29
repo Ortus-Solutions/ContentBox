@@ -1,7 +1,10 @@
 <cfoutput>
-<h2>Link To A ContentBox CustomHTML</h2>
-<div>
-#html.startForm(name="entryEditorSelectorForm")#
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3><i class="icon-tasks"></i> CustomHTML Chooser</h3>
+</div>
+<div class="modal-body">
+	#html.startForm(name="entryEditorSelectorForm")#
 
 	<!--- Loader --->
 	<div class="loaders floatRight" id="entryLoader">
@@ -9,7 +12,7 @@
 	</div>
 	
 	<!--- Content Bar --->
-	<div class="contentBar" id="contentBar">
+	<div class="well well-small" id="contentBar">
 
 		<!--- Filter Bar --->
 		<div class="filterBar">
@@ -20,14 +23,10 @@
 		</div>
 	</div>
 
-	<!--- Paging --->
-	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
-	
 	<!--- entries --->
-	<table name="entries" id="entries" class="tablesorter" width="98%">
+	<table name="entries" id="entries" class="tablesorter table table-condensed table-striped table-hover" width="98%">
 		<thead>
 			<tr>
-				<th width="15" class="center {sorter:false}"></th>
 				<th>CustomHTML</th>
 				<th width="40" class="center">Select</th>
 			</tr>
@@ -35,9 +34,6 @@
 		<tbody>
 			<cfloop array="#prc.entries#" index="entry">
 			<tr id="contentID-#entry.getContentID()#">
-				<td class="middle">
-					<i class="icon-tasks icon-large"></i>
-				</td>
 				<td>
 					<!--- Title --->
 					<strong>#entry.getTitle()#</strong>
@@ -45,18 +41,20 @@
 					#entry.getDescription()#
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return insertCustomHTML('#entry.getSlug()#')">Select</button>
+					<button class="btn btn-primary" onclick="return insertCustomHTML('#entry.getSlug()#')">Select</button>
 				</td>
 			</tr>
 			</cfloop>
 		</tbody>
 	</table>
+	
+	<!--- Paging --->
+	#prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
 			
-#html.endForm()#
+	#html.endForm()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+<div class="modal-footer">
+	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

@@ -1,14 +1,18 @@
 ﻿<cfoutput>
-#html.startForm(name="updateForm",action=prc.xehUpdateApply)#
-<h2>Update Check: #rc.channel#</h2>
-<div>
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3><i class="icon-bolt icon-large"></i> Update Check: <span class="label label-inverse">#rc.channel#</span></h3>
+</div>
+<div class="modal-body">
+    #html.startForm(name="updateForm",action=prc.xehUpdateApply,class="form-vertical")#
 	#getPlugin("MessageBox").renderit()#
 
 	<cfif prc.updateFound>
-	<h3 class="border_grey">Version Information:</h3>
-	<table name="settings" id="settings" class="tablesorter" width="98%">
+	#html.startFieldSet(legend="Version Information")#
+	<table name="settings" id="settings" class="table table-striped table-hover table-condensed table-bordered" width="98%">
 		<thead>
-			<tr>
+			<tr class="">
 				<th width="100">Your Version</th>
 				<th width="100">New Version</th>	
 				<th>Update Date</th>
@@ -22,35 +26,39 @@
 			</tr>
 		</tbody>
 	</table>
+	#html.endFieldset()#
 	
 	<!--- download URL --->
 	#html.hiddenField(name="downloadURL",value=prc.updateEntry.downloadURL)#
 	#html.hiddenField(name="version",value=prc.updateEntry.version)#
 	
-	<h3 class="border_grey">Description:</h3>
+	#html.startFieldSet(legend="Description")#
 	<p>#prc.updateEntry.description#</p>
 	
 	<cfif len(prc.updateEntry.installInstructions)>
-		<h2 class="border_grey">Special Instructions:</h2>
-		<p>#prc.updateEntry.InstallInstructions#</p>
-	</cfif>
-	
-	<h3 class="border_grey">Changelog:</h3>
-	<p>#prc.updateEntry.changelog#</p>
-	
-	<div class="infoBar infoBar-red">
-		<i class="info-warning-sign icon-large"></i>
-		Please make sure you do any backups before applying this update.
+	<div class="alert">
+		<h3>Special Instructions:</h3>
+		<p>#prc.updateEntry.InstallInstructions#</p>	
 	</div>
-	
-	#html.submitButton(name="submitUpdate",class="button2",value="Apply Update",onclick="return confirm('Are you positive?')")#
 	</cfif>
+	#html.endFieldSet()#
 	
+	#html.startFieldSet(legend="Changelog")#	
+	<p>#prc.updateEntry.changelog#</p>
+	#html.endFieldSet()#
+	
+	<div class="form-actions text-center">
+		<div class="alert alert-error">
+			<i class="icon-warning-sign icon-large"></i>
+			Please make sure you do any backups before applying this update.
+		</div>
+		#html.button(type="submit", name="submitUpdate", class="btn btn-danger btn-large", value="<i class='icon-ok'></i> Apply Update", onclick="return confirm('Are you positive?')")#
+	</div>
+	</cfif>
+	#html.endForm()#
 </div>
-<hr/>
-#html.endForm()#
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="return closeRemoteModal()"> Close </button>
+<div class="modal-footer">
+	<button class="btn" onclick="return closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

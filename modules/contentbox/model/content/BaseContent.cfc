@@ -33,7 +33,10 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
-
+	
+	// M20 -> creator loaded as a proxy and fetched immediately
+	property name="creator" notnull="true" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
+	
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
@@ -148,6 +151,26 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			return activeContent[1];
 		}
 	}
+	
+	/**
+	* Shorthand Creator name
+	*/
+	string function getCreatorName(){
+		if( hasCreator() ){
+			return getCreator().getName();
+		}
+		return '';
+	}
+
+	/**
+	* Shorthand Creator email
+	*/
+	string function getCreatorEmail(){
+		if( hasCreator() ){
+			return getCreator().getEmail();
+		}
+		return '';
+	}
 
 	/**
 	* Shorthand Author name from latest version
@@ -253,7 +276,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// Original slug updates on all content
 		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all");
 		// reset versioning, and start with one
-		addNewContentVersion(content=latestContent, changelog="Page Cloned!", author=arguments.author);
+		addNewContentVersion(content=latestContent, changelog="Content Cloned!", author=arguments.author);
 		// safe clone custom fields
 		var newFields = arguments.original.getCustomFields();
 		for(var thisField in newFields){

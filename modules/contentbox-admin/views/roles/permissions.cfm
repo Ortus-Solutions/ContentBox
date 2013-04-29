@@ -1,7 +1,10 @@
 ﻿<!--- Container ID: remoteModelContent --->
 <cfoutput>
-<h2>Permissions Manager for '#prc.role.getRole()#'</h2>
-<div>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Permissions Manager for '#prc.role.getRole()#'</h3>
+</div>
+<div class="modal-body">
 	<!--- Add Permission Form--->
 	#html.startForm(name="permissionForm")#
 	#html.startFieldset(legend="Available Permissions")#
@@ -14,10 +17,23 @@
 		
 		<!--- Permissions --->
 		<p>Choose a permission to add:</p>
-		#html.select(name="permissionID",options=prc.permissions,column="permissionID",nameColumn="permission")#
-		
-		<!--- Button --->
-		<button class="buttonred" onclick="addPermission();return false;">Add Permission</button>
+		<div class="btn-group">
+			<!---Permission list --->
+			<select name="permissionID" id="permissionID">
+				<cfset noPerms = true>
+				<cfloop array="#prc.permissions#" index="thisPerm">
+					<cfif !prc.role.hasPermission( thisPerm )>
+						<cfset noperms = false>
+						<option value="#thisPerm.getPermissionID()#">#thisPerm.getPermission()#</option>
+					</cfif>
+				</cfloop>
+				<cfif noPerms>
+					<option value="null">Role has all permissions</option>
+				</cfif>
+			</select>
+			<!--- Button --->
+			<button class="btn btn-danger btn-small" onclick="addPermission();return false;" <cfif noPerms>disabled="disabled"</cfif>>Add Permission</button>
+		</div>
 		
 	#html.endFieldSet()#
 	#html.endForm()#
@@ -46,12 +62,9 @@
 		
 	#html.endFieldSet()#
 	#html.endForm()#
-	
-	
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+<div class="modal-footer">
+	<button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

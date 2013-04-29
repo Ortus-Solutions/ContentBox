@@ -1,14 +1,16 @@
 ﻿<cfoutput>
-<h2>#prc.entry.getTitle()#</h2>
-<div>
-#prc.entry.renderContent()#
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3><i class="icon-eye-open"></i> #prc.entry.getTitle()#</h3>
 </div>
-<hr/>
+<div class="modal-body">
+	#prc.entry.renderContent()#
+</div>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
+<div class="modal-footer">
 	<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-		<button class="button2" onclick="return to('#event.buildLink(prc.xehEntryEditor)#/contentID/#prc.entry.getContentID()#')"> Edit </button>
+		<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehEntryEditor)#/contentID/#prc.entry.getContentID()#')"> Edit </button>
 	</cfif>
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

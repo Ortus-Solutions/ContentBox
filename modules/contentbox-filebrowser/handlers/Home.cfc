@@ -479,7 +479,7 @@ component output="false" hint="Main filebrowser module handler"{
 			// uploadify if uploads enabled
 			if( prc.fbSettings.allowUploads ){
 				addAsset("#prc.fbModRoot#/includes/uploadify/uploadify.css");
-				addAsset("#prc.fbModRoot#/includes/uploadify/jquery.uploadify-3.1.min.js");
+				addAsset("#prc.fbModRoot#/includes/uploadify/jquery.uploadify.min.js");
 				addAsset("#prc.fbModRoot#/includes/javascript/jquery.filedrop.js");
 			}
 			

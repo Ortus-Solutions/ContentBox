@@ -50,6 +50,7 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 	
 	/**
 	* Check for permission
+	* @slug.hint the slug of the permission to check.
 	*/
 	boolean function checkPermission(required slug){
 		// cache list
@@ -63,6 +64,14 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 		}
 		
 		return false;
+	}
+	
+	/**
+	* Clear all permissions
+	*/
+	Role function clearPermissions(){
+		permissions = [];
+		return this;
 	}
 	
 }

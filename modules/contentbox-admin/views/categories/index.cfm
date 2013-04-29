@@ -1,30 +1,5 @@
 ﻿<cfoutput>
-<!--============================Sidebar============================-->
-<div class="sidebar">
-	<!--- Editor Box --->
-	<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
-	<div class="small_box">
-		<div class="header">
-			<i class="icon-edit"></i> Editor
-		</div>
-		<div class="body">
-			<!--- Create/Edit form --->
-			#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate")#
-				#html.hiddenField(name="categoryID",value="")#
-				#html.textField(name="category",label="Category:",required="required",maxlength="100",size="30",class="textfield")#
-				#html.textField(name="slug",label="Slug (blank to generate it):",maxlength="100",size="30",class="textfield")#
-				<div class="actionBar">
-					#html.resetButton(name="btnReset",value="Reset Form",class="button")#
-					#html.submitButton(value="Save Category",class="buttonred")#
-				</div>
-			#html.endForm()#
-		</div>
-	</div>		
-	</cfif>
-</div>
-<!--End sidebar-->	
-<!--============================Main Column============================-->
-<div class="main_column">
+<div class="row-fluid" id="main-content">
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
@@ -38,22 +13,25 @@
 			#getPlugin("MessageBox").renderit()#
 			
 			<!--- CategoryForm --->
-			#html.startForm(name="categoryForm",action=prc.xehCategoryRemove)#
+			#html.startForm(name="categoryForm",action=prc.xehCategoryRemove,class="form-vertical")#
 			<input type="hidden" name="categoryID" id="categoryID" value="" />
 			
 			<!--- Content Bar --->
-			<div class="contentBar">
+			<div class="well well-small">
+				<!--- Command Bar --->
+				<div class="pull-right">
+					<a href="##" onclick="return createCategory();" class="btn btn-danger">Create Category</a>
+				</div>
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>
-						#html.label(field="categoryFilter",content="Quick Filter:",class="inline")#
-						#html.textField(name="categoryFilter",size="30",class="textfield")#
+						#html.textField(name="categoryFilter",size="30", class="textfield", label="Quick Filter: ", labelClass="inline")#
 					</div>
 				</div>
 			</div>
 			
 			<!--- categories --->
-			<table name="categories" id="categories" class="tablesorter" width="98%">
+			<table name="categories" id="categories" class="tablesorter table table-striped table-hover" width="98%">
 				<thead>
 					<tr>
 						<th>Category Name</th>
@@ -75,7 +53,7 @@
 							<!--- Edit Command --->
 							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
 							<!--- Delete Command --->
-							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-remove-sign icon-large" id="delete_#category.getCategoryID()#"></i></a>
+							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
 							</cfif>
 						</td>
 					</tr>
@@ -87,4 +65,28 @@
 		</div>	
 	</div>
 </div>
+<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+<!--- Permissions Editor --->
+<div id="categoryEditorContainer" class="modal hide fade">
+	<div id="modalContent">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Category Editor</h3>
+    </div>
+	<!--- Create/Edit form --->
+	#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate",class="form-vertical")#
+	<div class="modal-body">
+		#html.hiddenField(name="categoryID",value="")#
+		#html.textField(name="category",label="Category:",required="required",maxlength="100",size="30",class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+		#html.textField(name="slug",label="Slug (blank to generate it):",maxlength="100",size="30",class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+	</div>
+	<!--- Footer --->
+	<div class="modal-footer">
+		#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##categoryEditorContainer') )")#
+		#html.submitButton(name="btnSave",value="Save Category",class="btn btn-danger")#
+	</div>
+	#html.endForm()#
+	</div>
+</div>
+</cfif>
 </cfoutput>

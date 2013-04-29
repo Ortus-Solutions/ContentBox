@@ -1,6 +1,9 @@
 <cfoutput>
-<h2>Link To A ContentBox Entry</h2>
-<div>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>Link To A ContentBox Entry</h3>
+</div>
+<div class="modal-body">
 #html.startForm(name="entryEditorSelectorForm")#
 
 	<!--- Loader --->
@@ -9,7 +12,7 @@
 	</div>
 
 	<!--- Content Bar --->
-	<div class="contentBar" id="contentBar">
+	<div class="well well-small" id="contentBar">
 
 		<!--- Filter Bar --->
 		<div class="filterBar">
@@ -20,11 +23,8 @@
 		</div>
 	</div>
 
-	<!--- Paging --->
-	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
-
 	<!--- entries --->
-	<table name="entries" id="entries" class="tablesorter" width="98%">
+	<table name="entries" id="entries" class="tablesorter table table-hover table-striped table-condensed" width="98%">
 		<thead>
 			<tr>
 				<th>Entry Title</th>
@@ -34,7 +34,7 @@
 		</thead>
 		<tbody>
 			<cfloop array="#prc.entries#" index="entry">
-			<tr id="contentID-#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="selected"</cfif>>
+			<tr id="contentID-#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="warning"</cfif>>
 				<td>
 					<!--- Title --->
 					<strong>#entry.getTitle()#</strong>
@@ -49,8 +49,10 @@
 					</cfif>
 				</td>
 				<td class="center">
-					<button class="button2" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
-					<button class="button2" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="icon-link icon-large"></i></button>
+					<div class="btn-group">
+					<button class="btn" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
+					<button class="btn" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="icon-link icon-large"></i></button>
+					</div>
 				</td>
 			</tr>
 			</cfloop>
@@ -58,14 +60,13 @@
 	</table>
 	
 	<!--- Paging --->
-	#prc.pagingPlugin.renderit(prc.entriesCount,prc.pagingLink)#
+	#prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
 
 
 #html.endForm()#
 </div>
-<hr/>
 <!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+<div class="modal-footer">
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>

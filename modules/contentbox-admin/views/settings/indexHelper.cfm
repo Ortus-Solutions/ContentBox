@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// form validators
-	$("##settingsForm").validator({grouped:true});
+	$("##settingsForm").validate();
 });
 function emailTest(){
 	$("##emailTestDiv").html("");
@@ -25,7 +25,7 @@ function emailTest(){
 				$("##emailTestDiv").html("Error sending test email: " + eMessages );
 			}
 			else{
-				$("##emailTestDiv").html('<div class="infoBar infoBar-green">Test email sent to ' + $("##cb_site_outgoingEmail").val() + ', please verify you received it.</div>');
+				$("##emailTestDiv").html('<div class="alert alert-success">Test email sent to ' + $("##cb_site_outgoingEmail").val() + ', please verify you received it.</div>');
 			}
 			$("##iTest").removeClass( "icon-spin" );
 		},

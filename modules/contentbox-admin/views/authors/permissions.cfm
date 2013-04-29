@@ -3,7 +3,7 @@
 <div>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="permissionRolesForm")#
+	#html.startForm(name="permissionRolesForm",class="form-vertical")#
 	#html.startFieldset(legend="Active User Role Permissions")#
 		<cfif !prc.author.getRole().hasPermission()>
 			<small>No permissions assigned!</small>
@@ -26,33 +26,46 @@
 	
 	<!--- Add Permission Form--->
 	<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-	#html.startForm(name="permissionForm")#
+	#html.startForm(name="permissionForm",class="form-vertical")#
 	#html.startFieldset(legend="Assign A-la-Carte Permissions")#
 		#html.hiddenField(name="authorID",bind=prc.author)#
 		
 		<!--- Loader --->
 		<div class="loaders floatRight" id="permissionLoader">
-			<i class="icon-spinner icon-spin icon-large icon-2x"><br/>
+			<i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
 			<div class="center"><small>Please Wait...</small></div>
 		</div>
 		
 		<!--- Permissions --->
 		<p>You can also add a-la-carte permissions to the user by adding from the selection below:</p>
-		#html.select(name="permissionID",options=prc.permissions,column="permissionID",nameColumn="permission")#
 		
-		<!--- Button --->
-		<cfif arrayLen(prc.permissions) GT 0>
-			<button class="buttonred" onclick="addPermission();return false;">Add Permission</button>
-		<cfelse>
-			<button class="buttonred" onclick="alert('No Permissions Found, Cannot Add!'); return false">Add Permission</button>
-		</cfif>
+		<div class="input-append">
+			<!---Permission list --->
+			<select name="permissionID" id="permissionID">
+				<cfset noPerms = true>
+				<cfloop array="#prc.permissions#" index="thisPerm">
+					<cfif !prc.author.hasPermission( thisPerm ) AND !prc.author.getRole().hasPermission( thisPerm )>
+						<cfset noperms = false>
+						<option value="#thisPerm.getPermissionID()#">#thisPerm.getPermission()#</option>
+					</cfif>
+				</cfloop>
+				<cfif noPerms>
+					<option value="null">Role has all permissions</option>
+				</cfif>
+			</select>
+			<cfif arrayLen( prc.permissions ) GT 0 AND !noPerms>
+				<button class="btn btn-danger" onclick="addPermission();return false;">Add Permission</button>
+			<cfelse>
+				<button class="btn btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
+            </cfif>
+		</div>
 		
 	#html.endFieldSet()#
 	#html.endForm()#
 	</cfif>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="alacartePermissions")#
+	#html.startForm(name="alacartePermissions",class="form-vertical")#
 	#html.startFieldset(legend="Active A-la-carte Permissions")#
 		<cfif !prc.author.hasPermission()>
 			<small>No permissions assigned!</small>

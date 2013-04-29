@@ -5,7 +5,9 @@
     // temp cache for initial request, since form won't be available
     var argCache = {};
     <cfloop collection="#prc.vals#" item="key">
-        argCache[ '#key#' ] = '#prc.vals[ key ]#';
+        <cfif isSimpleValue( prc.vals[ key ] ) >
+        argCache[ '#key#' ] = '#prc.vals[ key ]#';    
+        </cfif>
     </cfloop>
 $(document).ready(function() {
     updateArgs( false );
@@ -91,11 +93,11 @@ function updateCBWidget() {
             args = form.serializeArray(),
             vals={},infobarText='',i=0,re = / \| $/g;
     // apply form validator
-	form.validator({position:'center right'});
+	form.validate();
     // choose form based on selector
 	var $widgetForm = form;
     // validate
-	if( !$widgetForm.data("validator").checkValidity() ){
+	if( !$widgetForm.valid() ){
 		return;
 	}
     // get attributes from form

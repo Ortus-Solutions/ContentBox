@@ -14,7 +14,8 @@ function previewContent(){
 					   slug: $("##slug").val(),
 					   contentType : $("##contentType").val() },
 					 "95%",
-					 "90%");
+					 "85%",
+                     true);
 }
 // Set the actual publishing date to now
 function publishNow(){
@@ -41,18 +42,39 @@ function setupEditors($theForm, withExcerpt){
 	#prc.oEditorDriver.startup()#
 
 	// Activate Date fields
-	$(":date").dateinput();
+	$("[type=date]").datepicker();
 
 	// Activate Form Validator
-	$theForm.validator({position:'top left',grouped:true,onSuccess:function(e,els){ needConfirmation=false; }});
+	$theForm.validate({
+    	ignore: 'content',
+    	success:function(e,els){ 
+    		needConfirmation=false; 
+    	},
+        submitHandler: function( form ) {
+        	// weird issue in jQuery validator where it won't validate hidden fields
+            // so call updateElement() to get content for hidden textarea
+        	CKEDITOR.instances.content.updateElement();
+            // validate element
+    		var el = $( '##content' );
+            // if it's valid, submit form
+            if( el.val().length ) {
+            	form.submit();
+            }
+            // otherwise, show error
+            else {
+            	alert( 'Please enter some content!' );
+           	}
+        }
+    });
+
 	// Changelog mandatory?
 	$theForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
 	// Custom content unique validator
-	$.tools.validator.fn($content, function(el, value) {
+	/*$.tools.validator.fn($content, function(el, value) {
 		if( value.length ){ return true; }
 		alert("Please enter some content!");
 		return false;
-	});
+	});*/
 	// Activate blur slugify on titles
 	var $title = $theForm.find("##title");
 	$title.blur(function(){
@@ -73,6 +95,10 @@ function setupEditors($theForm, withExcerpt){
 function switchEditor(editorType){
 	// destroy the editor
 	#prc.oEditorDriver.shutdown()#
+	// Save work
+	if( confirm( "Would you like to save your work before switching editors?" ) ){
+		quickSave();
+	}
 	// Call change user editor preference
 	$.ajax({
 		url : '#event.buildLink(prc.xehAuthorEditorSave)#',
@@ -106,10 +132,10 @@ function permalinkUniqueCheck(){
 	// Verify unique
 	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', {slug:$("##slug").val(), contentID: $("##contentID").val()}, function(data){
 		if( !data.UNIQUE ){
-			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("infoBar");
+			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("alert");
 		}
 		else{
-			$("##slugCheckErrors").html("").removeClass("infoBar");
+			$("##slugCheckErrors").html("").removeClass("alert");
 		}
 	} );
 }

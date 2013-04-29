@@ -116,13 +116,13 @@ component accessors="true" threadSafe singleton{
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
 
 		// Dashboard
-		addTopMenu(name=this.DASHBOARD,label="Dashboard")
+		addTopMenu(name=this.DASHBOARD,label="<i class='icon-dashboard icon-large'></i> Dashboard")
 			.addSubMenu(name="home",label="Home",href="#event.buildLink(prc.xehDashboard)#")
 			.addSubMenu(name="about",label="About",href="#event.buildLink(prc.xehAbout)#")
 			.addSubMenu(name="updates",label="Updates",href="#event.buildLink(prc.xehAutoUpdater)#",permissions="SYSTEM_UPDATES");
 
 		// Content
-		addTopMenu(name=this.CONTENT,label="Content")
+		addTopMenu(name=this.CONTENT,label="<i class='icon-pencil icon-large'></i> Content")
 			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#")
 			.addSubMenu(topMenu=this.CONTENT,name="Blog",label="Blog",href="#event.buildLink(prc.xehEntries)#")
 			.addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#")
@@ -130,33 +130,33 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",permissions="MEDIAMANAGER_ADMIN");
 
 		// Comments
-		addTopMenu(name=this.COMMENTS,label="Comments")
+		addTopMenu(name=this.COMMENTS,label="<i class='icon-comments icon-large'></i> Comments")
 			.addSubMenu(name="Inbox",label="Inbox",href="#event.buildLink(prc.xehComments)#")
 			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehCommentsettings)#",permissions="COMMENTS_ADMIN");
 
 		// Look and Feel
-		addTopMenu(name=this.LOOK_FEEL,label="Look & Feel")
+		addTopMenu(name=this.LOOK_FEEL,label="<i class='icon-tint icon-large'></i> Look & Feel")
 			.addSubMenu(name="Layouts",label="Layouts",href="#event.buildLink(prc.xehLayouts)#",permissions="LAYOUT_ADMIN")
 			.addSubMenu(name="Widgets",label="Widgets",href="#event.buildLink(prc.xehWidgets)#",permissions="WIDGET_ADMIN")
 			.addSubMenu(name="globalHTML",label="Global HTML",href="#event.buildLink(prc.xehGlobalHTML)#",permissions="GLOBALHTML_ADMIN");
 
 		// Modules
-		addTopMenu(name=this.MODULES,label="Modules",permissions="MODULES_ADMIN")
+		addTopMenu(name=this.MODULES,label="<i class='icon-bolt icon-large'></i> Modules",permissions="MODULES_ADMIN")
 			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehModules)#");
 
 		// User
-		addTopMenu(name=this.USERS,label="Users")
+		addTopMenu(name=this.USERS,label="<i class='icon-group icon-large'></i> Users")
 			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehAuthors)#")
 			.addSubMenu(name="Permissions",label="Permissions",href="#event.buildLink(prc.xehPermissions)#", permissions="PERMISSIONS_ADMIN")
 			.addSubMenu(name="Roles",label="Roles",href="#event.buildLink(prc.xehRoles)#", permissions="ROLES_ADMIN");
 
 		// Tools
-		addTopMenu(name=this.TOOLS,label="Tools")
+		addTopMenu(name=this.TOOLS,label="<i class='icon-wrench icon-large'></i> Tools")
 			.addSubMenu(name="Import",label="Import",href="#event.buildLink(prc.xehToolsImport)#", permissions="TOOLS_IMPORT")
 			.addSubMenu(name="APIDocs",label="API Docs",href="#event.buildLink(prc.xehApiDocs)#");
 
 		// SYSTEM
-		addTopMenu(name=this.SYSTEM,label="System",permissions="SYSTEM_TAB")
+		addTopMenu(name=this.SYSTEM,label="<i class='icon-briefcase icon-large'></i> System",permissions="SYSTEM_TAB")
 			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehSettings)#")
 			.addSubMenu(name="SecurityRules",label="Security Rules",href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN")
 			.addSubMenu(name="EmailTemplates",label="Email Templates",href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN")
@@ -271,7 +271,7 @@ component accessors="true" threadSafe singleton{
 		var genMenu = "";
 
 		savecontent variable="genMenu"{
-			include "templates/adminMenu.cfm";
+			include "templates/bootstrap-adminMenu.cfm";
 		}
 		// return it
 		return genMenu;

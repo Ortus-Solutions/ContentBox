@@ -34,7 +34,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	property name="widgetService"		inject="id:widgetService@cb";
 	property name="moduleService"		inject="id:moduleService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
-
+	property name="minifier"			inject="coldbox:myplugin:JSMin@contentbox";
+	
 	function init(controller){
 		super.init( arguments.controller );
 	}
@@ -85,6 +86,36 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return content.renderContent();
 	}
+	
+	/************************************** Minify methods *********************************************/
+
+	// Get the ContentBox JS/CSS Minifier
+	function getMinifier(){
+		return minifier;
+	}
+	
+	/**
+	* Prepare source(s) statements using our fabulous jsmin compressor
+	* @assets.hint A list of js or css files to compress and add to the page. They will be concatenated in order
+	*/
+	any function minify(required assets){
+		return minifier.minify(argumentCollection=arguments);
+	}
+	
+	/**
+	* Prepare source(s) statements using our fabulous jsmin compressor and send them to the head section
+	* @assets.hint A list of js or css files to compress and add to the page. They will be concatenated in order
+	*/
+	CBHelper function minifyToHead(required assets){
+		minifier.minifyToHead(argumentCollection=arguments);
+		return this;
+	}
+	
+	// Clean minify cache
+	CBHelper function minifyClearCache(){
+		minifier.cleanCache();
+		return this;
+	}
 
 	/************************************** root methods *********************************************/
 
@@ -102,7 +133,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// Get the site base SES URL
 	function siteBaseURL(){
-		return replacenocase( getRequestContext().getSESBaseURL(), "index.cfm", "");
+		return replacenocase( getRequestContext().buildLink(''), "index.cfm", "" );
 	}
 
 	// Get the admin site root location using the configured module's entry point

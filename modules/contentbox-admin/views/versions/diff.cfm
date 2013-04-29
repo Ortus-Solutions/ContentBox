@@ -1,22 +1,21 @@
 ﻿<cfoutput>
 #html.addAsset("#prc.cbRoot#/includes/css/diff.css")#
-<!--- Title --->
-<h2>
-	<i class="icon-time icon-large"></i>
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <i class="icon-time icon-large"></i>
 	Comparing Version <strong>#prc.currentVersion#</strong> and <strong>#prc.oldVersion#</strong>
-</h2>
-<div>
+</div>
+
+<div class="modal-body">
 	<h3>Version Info Comparison</h3>
 	<!--- Info Table --->
-	<table class="tablelisting">
-		<thead>
-		<tr>
-			<th class="center">Info</th>
+	<table class="table table-hover table-condensed table-bordered">
+		<tbody>
+		<tr class="info">
+			<th class="center" width="100">Info</th>
 			<th class="center">Version #prc.oldVersion#</th>
 			<th class="center">Version #prc.currentVersion#</th>
 		</tr>
-		</thead>
-		<tbody>
 		<tr>
 			<td><strong>Author</strong></td>
 			<td><a href="mailto:#prc.oldContent.getAuthorEmail()#">#prc.oldContent.getAuthorName()#</a></td>
@@ -86,9 +85,8 @@
 	</table>
 		
 </div>
-<hr/>
-<!--- Button Bar --->
-<div id="bottomCenteredBar" class="textRight">
-	<button class="buttonred" onclick="closeRemoteModal()"> Close </button>
+
+<div class="modal-footer">
+	<button class="btn" onclick="closeRemoteModal()"> Close </button>
 </div>
 </cfoutput>
