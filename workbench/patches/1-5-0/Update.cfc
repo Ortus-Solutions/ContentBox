@@ -23,7 +23,7 @@ limitations under the License.
 Update for 1.5.0 release
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
-End Commit Hash: 560fa71ce2741cfbe27ba09ed95aee19aebb4f59
+End Commit Hash: ed43d88712a19b672573e9698e7ec320efe5a55a
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -99,9 +99,20 @@ component implements="contentbox.model.updates.IUpdate"{
 		// Update the creator to be the last edited user, so we can start somewhere.
 		var allContent = contentService.getAll();
 		for( var thisContent in allContent ){
-			thisContent.setCreator( thisContent.getAuthor() );
+			
+			if( !structKeyExists( thisContent, "hasCreator") OR ( structKeyExists( thisContent, "hasCreator") AND !thisContent.hasCreator() ) ){
+				// Build SQL
+				var q = new Query(datasource=getDatasource());
+				q.setSQL( "UPDATE cb_content SET FK_authorID = :authorID WHERE contentID = :contentID" );
+				q.addParam(name="authorID", value=thisContent.getAuthor().getAuthorID(), cfsqltype="numeric");
+				q.addParam(name="contentID", value=thisContent.getContentID(), cfsqltype="numeric");
+				q.execute();
+				log.info("Updated creator for content id #thisContent.getContentID()# - #thisContent.getSlug()#");
+			}
+			else{
+				log.info("Content already has a creator, skipping id: #thisContent.getContentID()# - #thisContent.getSlug()#");
+			}
 		}
-		contentService.saveAll( allContent );
 	}
 	
 	private function updateAdmin(){
