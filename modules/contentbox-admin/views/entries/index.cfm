@@ -63,7 +63,6 @@
 						<tr>
 							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 							<th>Name</th>
-							<th width="150">Categories</th>
 							<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
 							<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
 							<th width="40" class="center"><i class="icon-comments icon-large" title="Comments"></i></th>
@@ -95,8 +94,8 @@
 								<cfif entry.isPasswordProtected()>
 									<i class="icon-lock"></i>
 								</cfif>
+								<br/><small><i class="icon-tag"></i> #entry.getCategoriesList()#</small>
 							</td>
-							<td>#entry.getCategoriesList()#</td>
 							<td class="center">
 								<cfif entry.isExpired()>
 									<i class="icon-time icon-large textRed" title="Entry has expired on ( (#entry.getDisplayExpireDate()#))"></i>
