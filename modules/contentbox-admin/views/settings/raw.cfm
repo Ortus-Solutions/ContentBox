@@ -50,7 +50,7 @@
     							<div class="control-group">
     							    <label for="value" class="control-label">Value:</label>
     							    <div class="controls">
-    							        <textarea name="value" id="value" rows="3" class="input-block-level"></textarea>
+    							        <textarea name="value" id="value" rows="7" class="input-block-level"></textarea>
     							    </div>
     							</div>
     						</div>
@@ -116,7 +116,9 @@
     						<tbody>
     							<cfloop array="#prc.settings#" index="setting">
     							<tr>
-    								<td><a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting">#setting.getName()#</a></td>
+    								<td><a href="javascript:edit('#setting.getSettingId()#',
+																 '#HTMLEditFormat( setting.getName() )#',
+																 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting">#setting.getName()#</a></td>
     								<td>
     									<cfif len( setting.getValue() ) gt 90 >
     										#html.textarea(value=setting.getValue(), rows="5", cols="5")#
@@ -126,7 +128,9 @@
     								</td>
     								<td class="center">
     									<!--- Edit Command --->
-    									<a href="javascript:edit('#setting.getSettingId()#','#setting.getName()#','#JSStringFormat(setting.getValue())#')" title="Edit Setting"><i class="icon-edit icon-large"></i></a>
+    									<a href="javascript:edit('#setting.getSettingId()#',
+																 '#HTMLEditFormat( setting.getName() )#',
+																 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting"><i class="icon-edit icon-large"></i></a>
     									<!--- Delete Command --->
     									<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><i class="icon-trash icon-large" id="delete_#setting.getsettingID()#"></i></a>
     								</td>
