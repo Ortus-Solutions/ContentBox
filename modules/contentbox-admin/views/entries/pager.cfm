@@ -29,7 +29,9 @@
 			</cfif>>
 			<td>
 				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
+				<small>
 				<i class="icon-user" title="last edit by"></i> <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on #entry.getActiveContent().getDisplayCreatedDate()#
+				</small>
 			</td>
 			<td class="center">
 				<cfif entry.isExpired()>
