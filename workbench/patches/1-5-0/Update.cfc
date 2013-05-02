@@ -38,6 +38,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
 	property name="log"						inject="logbox:logger:{this}";
 	property name="contentService" 			inject="contentService@cb";
+	property name="wirebox"					inject="wirebox";
 	
 	function init(){
 		version = "1.5.0";
@@ -64,6 +65,9 @@ component implements="contentbox.model.updates.IUpdate"{
 				
 				// Add Columns
 				//addColumn(table="cb_content", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
+				
+				// Clear singletons so they are rebuilt
+				wirebox.clearSingletons();
 				
 				log.info("Finalized #version# patching");
 			}
