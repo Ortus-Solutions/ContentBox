@@ -407,6 +407,7 @@ component accessors="true"{
 			HTMLKeywords = "cool,first entry, contentbox",
 			HTMLDescription = "The most amazing ContentBox blog entry in the world"
 		});
+		entry.setCreator( autor );
 		// version content
 		entry.addNewContentVersion(content="Hey everybody, this is my first blog entry made from ContentBox.  Isn't this amazing!'",
 								   changelog="Initial creation",
@@ -451,6 +452,8 @@ component accessors="true"{
 			HTMLDescription = "The most amazing ContentBox page in the world",
 			layout = "pages"
 		});
+		page.setCreator( author);
+		// Add new version
 		page.addNewContentVersion(content="<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{CustomHTML slug='contentbox'}}}</p>",
 								  changelog="First creation",
 								  author=author);
