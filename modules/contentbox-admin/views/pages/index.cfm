@@ -72,7 +72,6 @@
 						<tr>
 							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 							<th>Name</th>
-							<th width="150">Categories</th>
 							<th width="40" class="center"><i class="icon-th-list icon-large" title="Show in Menu"></i></th>
 							<th width="40" class="center"><i class="icon-globe icon-large" title="Published"></i></th>
 							<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
@@ -113,7 +112,6 @@
 									<i class="icon-lock"></i>
 								</cfif>
 							</td>
-							<td>#page.getCategoriesList()#</td>
 							<td class="center">
 								<cfif page.getShowInMenu()>
 									<i class="icon-ok icon-large textGreen"></i>
@@ -154,6 +152,8 @@
 									Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on 
 									#page.getActiveContent().getDisplayCreatedDate()#
 									</br>
+									<!--- Categories --->
+									<i class="icon-tag"></i> #page.getCategoriesList()#<br/>
 									<!--- comments icon --->
 									<cfif page.getallowComments()>
 										<i class="icon-comments"></i> Open Comments
