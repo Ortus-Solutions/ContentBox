@@ -45,14 +45,18 @@
 					<tbody>
 						<cfloop array="#prc.permissions#" index="permission">
 						<tr>
-							<td><a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat(permission.getPermission())#','#jsstringFormat(permission.getDescription())#')" 
+							<td><a href="javascript:edit('#permission.getPermissionID()#',
+								   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
+								   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
 								   title="Edit #permission.getPermission()#">#permission.getPermission()#</a></td>
 							<td>#permission.getDescription()#</td>
 							<td class="center"><span class="badge badge-info">#permission.getNumberOfRoles()#</span></td>
 							<td class="center">
 								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 								<!--- Edit Command --->
-								<a href="javascript:edit('#permission.getPermissionID()#','#jsstringFormat( permission.getPermission() )#','#jsstringFormat( permission.getDescription() )#')" 
+								<a href="javascript:edit('#permission.getPermissionID()#',
+								   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
+								   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
 								   title="Edit #permission.getPermission()#"><i class="icon-edit icon-large"></i></a>
 								<!--- Delete Command --->
 								<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-trash icon-large"></i></a>

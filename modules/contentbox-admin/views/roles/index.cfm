@@ -53,7 +53,9 @@
 					<tr>
 						<td>
 							<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
-							<a href="javascript:edit('#role.getRoleID()#','#jsstringFormat( role.getRole() )#','#jsstringFormat( role.getDescription() )#')" 
+							<a href="javascript:edit('#role.getRoleID()#',
+							   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
+							   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')" 
 							   title="Edit #role.getRole()#">#role.getRole()#</a>
 							<cfelse>
 								#role.getRole()#
@@ -71,7 +73,9 @@
 							<!--- ROLES_ADMIN --->
 							<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 								<!--- Edit Command --->
-								<a href="javascript:edit('#role.getRoleID()#','#jsstringFormat( role.getRole() )#','#jsstringFormat( role.getDescription() )#')" 
+								<a href="javascript:edit('#role.getRoleID()#',
+							   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
+							   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')" 
 								   title="Edit Role"><i class="icon-edit icon-large"></i></a>
 								&nbsp;
 								<!--- Delete Command --->

@@ -44,14 +44,18 @@
 				<tbody>
 					<cfloop array="#prc.categories#" index="category">
 					<tr>
-						<td><a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
+						<td><a href="javascript:edit('#category.getCategoryID()#',
+							   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+							   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
 						<td>#category.getSlug()#</td>
 						<td class="center"><span class="badge badge-info">#category.getNumberOfPages()#</span></td>
 						<td class="center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
 						<td class="center">
 							<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
 							<!--- Edit Command --->
-							<a href="javascript:edit('#category.getCategoryID()#','#category.getCategory()#','#category.getSlug()#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
+							<a href="javascript:edit('#category.getCategoryID()#',
+							   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+							   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
 							<!--- Delete Command --->
 							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
 							</cfif>
