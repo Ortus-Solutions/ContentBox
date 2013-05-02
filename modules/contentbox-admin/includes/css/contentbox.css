@@ -233,9 +233,7 @@ form textarea,form .wysiwyg { width:98%; }
 /**============================== Table Listings ==============================**/
 td,th { font-size: 12px; padding:5px; display:table-cell; vertical-align:middle !important; }
 .selected{ background-color: #fcdddb !important; }
-.unapproved{ background-color: #fcdddb !important;}
 .table { margin-bottom: 5px;}
-tr.unapproved td{ border: 1px solid #000 !important; }
 .table-hover tbody tr:hover > td,
 .table-hover tbody tr:hover > th { background-color: #d7eafe; }
 .table tr.success > th {
