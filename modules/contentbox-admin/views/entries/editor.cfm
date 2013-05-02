@@ -54,7 +54,7 @@
 					#html.select(name="contentEditorChanger", 
 								 options=prc.editors,
 								 column="name",
-								 class="textfield",
+								 class="input-medium",
 								 nameColumn="displayName",
 								 selectedValue=prc.defaultEditor,
 								 onchange="switchEditor(this.value)")#
@@ -62,7 +62,7 @@
 					<!--- markup --->
 					<label for="markup" class="inline">Markup: </label>
 					#html.select(name="markup", 
-								 class="textfield",
+								 class="input-medium",
 								 options=prc.markups,
 								 selectedValue=( prc.entry.isLoaded() ? prc.entry.getMarkup() : prc.defaultMarkup ))#
 					
