@@ -32,8 +32,8 @@
 }
 .widget-toolbar {margin-bottom: 15px;display: block;position: relative;}
 .widget-title {position:relative;text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);background:#efefef; padding:3px 10px;font-size:115%;font-weight:bold;margin: -10px -10px 10px;border-bottom:solid 1px #dadada;}
-.widget-actions {position:relative;font-size:85%;text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);background:#efefef; padding:3px 10px;font-weight:bold;margin: 0px -10px -10px;border-top:solid 1px #dadada;clear:both;}
-.widget-type {font-size:80%;position:absolute;right:0px;margin-right:10px;color:#999;text-shadow:1px 1px 1px rgb(255, 255, 255);}
+.widget-actions {position:relative;font-size:85%;background:#efefef; padding:3px 10px;font-weight:bold;margin: 0px -10px -10px;border-top:solid 1px #dadada;clear:both;}
+.widget-type {font-size:80%;position:absolute;right:0px;margin-right:10px;color:#999;}
 .widget-teaser {line-height: 1.4em;}
 .widget-filter {position: absolute;right: 30px;top: -5px;font-size: 50%;font-weight: bold;}
 .widget-footer {margin-left:-10px;position:absolute;height:40px;bottom:0px;background-color:#ededed;border-top:solid 1px #dadada;width:100%;}
