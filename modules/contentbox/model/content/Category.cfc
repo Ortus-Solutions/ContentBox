@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * I content category
 */
-component persistent="true" entityname="cbCategory" table="cb_category"{
+component persistent="true" entityname="cbCategory" table="cb_category" cachename="cbCategory" cacheuse="read-write"{
 
 	// Properties
 	property name="categoryID" fieldtype="id" generator="native" setter="false";
