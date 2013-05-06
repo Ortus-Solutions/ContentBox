@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * A cool SecurityRule entity
 */
-component persistent="true" table="cb_securityRule" entityName="cbSecurityRule"{
+component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" cachename="cbSecurityRule" cacheuse="read-write"{
 
 	// Primary Key
 	property name="ruleID" fieldtype="id" column="ruleID" generator="native" setter="false";
