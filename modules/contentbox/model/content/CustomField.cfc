@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * I am a custom field metadata that can be attached to base content in contentbox
 */
-component persistent="true" entityname="cbCustomField" table="cb_customfield"{
+component persistent="true" entityname="cbCustomField" table="cb_customfield" cachename="cbCustomField" cacheuse="read-write"{
 
 	// Properties
 	property name="customFieldID" fieldtype="id" generator="native" setter="false";
