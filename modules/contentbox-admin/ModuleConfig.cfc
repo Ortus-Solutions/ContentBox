@@ -106,7 +106,7 @@ component {
 				// Custom HTML Events
 				"cbadmin_preCustomHTMLSave", "cbadmin_postCustomHTMLSave","cbadmin_preCustomHTMLRemove", "cbadmin_postCustomHTMLRemove",
 				// Security Rules Events
-				"cbadmin_preSecurityRulesSave", "cbadmin_postSecurityRulesSave", "cbadmin_preSecurityRulesRemove", "cbadmin_postSecurityRulesRemove",
+				"cbadmin_preSecurityRulesSave", "cbadmin_postSecurityRulesSave", "cbadmin_preSecurityRulesRemove", "cbadmin_postSecurityRulesRemove", "cbadmin_onResetSecurityRules",
 				// Layout Themes
 				"cbadmin_onLayoutActivation", "cbadmin_onLayoutDeactivation",
 				// Version Control
