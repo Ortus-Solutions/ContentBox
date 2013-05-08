@@ -43,7 +43,7 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	* constructor
 	*/
 	function init(){
-		createdDate		= now();
+		createdDate	= now();
 	}
 
 	/************************************** PUBLIC *********************************************/
@@ -52,7 +52,7 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	* Get Display Content
 	*/
 	string function getDisplayContent(){
-		return reReplace( getContent(), "\r\n?" , "<br/>", "all" );
+		return paragraphFormat( getContent() );
 	}
 
 	/**
