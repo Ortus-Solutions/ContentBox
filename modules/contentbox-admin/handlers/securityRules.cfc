@@ -37,6 +37,8 @@ component extends="baseHandler"{
 	function reset(event,rc,prc){
 		ruleService.resetRules();
 		securityInterceptor.loadRules();
+		// announce event
+		announceInterception("cbadmin_onResetSecurityRules");
 		getPlugin("MessageBox").info("Security Rules Re-created and Re-applied!");
 		setNextEvent(prc.xehsecurityRules);
 	}
