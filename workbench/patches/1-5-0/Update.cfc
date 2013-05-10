@@ -63,8 +63,8 @@ component implements="contentbox.model.updates.IUpdate"{
 					directoryCreate( cacheDir );
 				}
 				
-				// Add Columns
-				//addColumn(table="cb_content", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
+				// Update Content Creators
+				updateContentCreators();
 				
 				// Clear singletons so they are rebuilt
 				wirebox.clearSingletons();
@@ -86,8 +86,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	function postInstallation(){
 		try{
 			transaction{
-				// Update Content Creators
-				updateContentCreators();
+				
 			}
 		}
 		catch(Any e){
@@ -100,22 +99,19 @@ component implements="contentbox.model.updates.IUpdate"{
 	/************************************** PRIVATE *********************************************/
 	
 	private function updateContentCreators(){
-		// Update the creator to be the last edited user, so we can start somewhere.
-		var allContent = contentService.getAll();
-		for( var thisContent in allContent ){
-			
-			if( !structKeyExists( thisContent, "hasCreator") OR ( structKeyExists( thisContent, "hasCreator") AND !thisContent.hasCreator() ) ){
-				// Build SQL
-				var q = new Query(datasource=getDatasource());
-				q.setSQL( "UPDATE cb_content SET FK_authorID = :authorID WHERE contentID = :contentID" );
-				q.addParam(name="authorID", value=thisContent.getAuthor().getAuthorID(), cfsqltype="numeric");
-				q.addParam(name="contentID", value=thisContent.getContentID(), cfsqltype="numeric");
-				q.execute();
-				log.info("Updated creator for content id #thisContent.getContentID()# - #thisContent.getSlug()#");
-			}
-			else{
-				log.info("Content already has a creator, skipping id: #thisContent.getContentID()# - #thisContent.getSlug()#");
-			}
+		// get all content versions
+		var qContent = new Query()
+			.setSQL("select distinct FK_authorID, FK_contentID from cb_contentVersion where isActive = 1")
+			.execute()
+			.getResult();
+		// Update creators	
+		for(var x=1; x lte qContent.recordcount; x++ ){
+			var q = new Query();
+			q.setSQL( "UPDATE cb_content SET FK_authorID = :authorID WHERE contentID = :contentID" );
+			q.addParam(name="authorID", value=qContent.FK_authorID[ x ], cfsqltype="numeric");
+			q.addParam(name="contentID", value=qContent.FK_contentID[ x ], cfsqltype="numeric");
+			q.execute();
+			log.info("Updated creator for content id #qContent.FK_contentID[ x ]#");
 		}
 	}
 	
