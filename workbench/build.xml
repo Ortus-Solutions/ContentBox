@@ -66,6 +66,14 @@
 		</replaceregexp>
 		-->
 		
+		<!-- Copy in WEB-INF and create WAR -->
+		<mkdir dir="${dir.build}/WEB-INF" />
+		<copy todir="${dir.build}/WEB-INF">
+      		<fileset dir="workbench/resources/WEB-INF" />
+        </copy>
+		<zip destfile="${dir.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}"></zip>
+		<delete dir="${dir.build}/WEB-INF" />
+		
 		<!-- Remove DSN creator link For Express Edition -->
 		<replace file="${dir.build}/Application.cfc" value="" summary="true" token='location("modules/contentbox-dsncreator");' />
 				
