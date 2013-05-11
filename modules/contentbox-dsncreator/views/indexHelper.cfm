@@ -2,7 +2,7 @@
 <script language="javascript">
 $(document).ready(function() {
 	// form validators
-	$("##dsnForm").validate(
+	$("##dsnForm").validate({
 		success: function(e, els){
 				$("##actionBarLoader").fadeIn();
 			}

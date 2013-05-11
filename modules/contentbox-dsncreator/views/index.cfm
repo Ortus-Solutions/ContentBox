@@ -105,7 +105,5 @@
 		</div>
 	</div>
 </div>
-<!--- end content box --->
-</form>
 <cfinclude template="indexHelper.cfm">
 </cfoutput>
