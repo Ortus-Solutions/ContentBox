@@ -83,6 +83,7 @@
 		<!-- Zip Express -->
 		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" basedir="${dir.build}"></zip>
 		
+		<delete dir="${dir.build}" />
     </target>
 	
 </project>
