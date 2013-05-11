@@ -97,8 +97,6 @@ limitations under the License.
 			},
 			// Root Logger
 			root = { levelmax="INFO", appenders="*" }
-			// Implicit Level Categories
-			//info = [ "coldbox.system" ]
 		};
 
 		//Layout Settings
@@ -134,12 +132,14 @@ limitations under the License.
 		//Debugger Settings
 		debugger.showRCPanel = false;
 
-		// ses debugging
+		// debugging file
+		/**
 		logbox.appenders.files={class="coldbox.system.logging.appenders.AsyncRollingFileAppender",
 			properties = {
 				filename = "ContentBox", filePath="../logs"
 			}
 		};
+		***/
 		//logbox.debug = ["coldbox.system.interceptors.Security"];
 		//logbox.debug = [ "coldbox.system.aop" ];
 		logbox.debug = ["root"];
