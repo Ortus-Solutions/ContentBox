@@ -1,12 +1,6 @@
 <cfoutput>
 <script language="javascript">
 $(document).ready(function() {
-	// form validators
-	$("##dsnForm").validate({
-		success: function(e, els){
-				$("##actionBarLoader").fadeIn();
-			}
-		});
 });
 function showDSNPanel(created){
 	if( created ){
