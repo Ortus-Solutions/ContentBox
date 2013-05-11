@@ -23,7 +23,7 @@ limitations under the License.
 Update for 1.5.0 release
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
-End Commit Hash: ed43d88712a19b672573e9698e7ec320efe5a55a
+End Commit Hash: b3fad3e588d9734c482787f796c4b5ccb050f85f
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -106,6 +106,15 @@ component implements="contentbox.model.updates.IUpdate"{
 			.getResult();
 		// Update creators	
 		for(var x=1; x lte qContent.recordcount; x++ ){
+			
+			// check uthor not empty
+			var authCheck = new Query(sql="SELECT FK_authorID FROM cb_content WHERE contentID = :contentID");
+			authCheck.addParam(name="contentID", value=qContent.FK_contentID[ x ], cfsqltype="numeric");
+			if( len( authCheck.execute().getResult().FK_authorID ) ){
+				log.info("Skipping creator for content id #qContent.FK_contentID[ x ]# as it is already set.");
+				continue;
+			};
+			
 			var q = new Query();
 			q.setSQL( "UPDATE cb_content SET FK_authorID = :authorID WHERE contentID = :contentID" );
 			q.addParam(name="authorID", value=qContent.FK_authorID[ x ], cfsqltype="numeric");

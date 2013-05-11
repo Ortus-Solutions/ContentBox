@@ -14,3 +14,7 @@ modules/contentbox/modules/google-prettify
 modules/_gsdata_
 mxunit
 *.cache.*
+workbench/resources/WEB-INF/lib/railo-server/context/logs
+workbench/resources/WEB-INF/railo/cfclasses
+workbench/resources/WEB-INF/railo/temp
+workbench/resources/WEB-INF/railo/logs
