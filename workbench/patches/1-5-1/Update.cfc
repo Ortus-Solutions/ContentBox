@@ -51,30 +51,28 @@ component implements="contentbox.model.updates.IUpdate"{
 	function preInstallation(){
 
 		try{
-			transaction{
-
-				log.info("About to begin #version# patching");
-				
-				updateSettings();
-				
-				// create caching directory
-				var cacheDir = coldbox.getSetting("modules")["contentbox-admin"].path & "/includes/cache";
-				if( !directoryExists( cacheDir ) ){
-					directoryCreate( cacheDir );
-				}
-				
-				// Update Content Creators
-				updateContentCreators();
-				
-				// Clear singletons so they are rebuilt
-				wirebox.clearSingletons();
-				
-				log.info("Finalized #version# patching");
+		
+			log.info("About to begin #version# patching");
+			
+			updateSettings();
+			
+			// create caching directory
+			var cacheDir = coldbox.getSetting("modules")["contentbox-admin"].path & "/includes/cache";
+			if( !directoryExists( cacheDir ) ){
+				directoryCreate( cacheDir );
 			}
+			
+			// Update Content Creators
+			updateContentCreators();
+			
+			// Clear singletons so they are rebuilt
+			coldbox.setColdboxInitiated( false );
+			
+			log.info("Finalized #version# patching");
 		}
 		catch(Any e){
 			ORMClearSession();
-			log.error("Error doing #version# patch preInstallation. #e.message# #e.detail#", e);
+			log.error("Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e);
 			rethrow;
 		}
 
