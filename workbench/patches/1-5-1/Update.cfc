@@ -41,7 +41,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="wirebox"					inject="wirebox";
 	
 	function init(){
-		version = "1.5.0";
+		version = "1.5.1";
 		return this;
 	}
 
@@ -100,10 +100,10 @@ component implements="contentbox.model.updates.IUpdate"{
 	
 	private function updateContentCreators(){
 		// get all content versions
-		var qContent = new Query()
-			.setSQL("select distinct FK_authorID, FK_contentID from cb_contentVersion where isActive = 1")
-			.execute()
-			.getResult();
+		var qAllContent = new Query();
+		qAllContent.setSQL("select distinct FK_authorID, FK_contentID from cb_contentVersion where isActive = 1");
+		var qContent = qAllContent.execute().getResult();
+			
 		// Update creators	
 		for(var x=1; x lte qContent.recordcount; x++ ){
 			
