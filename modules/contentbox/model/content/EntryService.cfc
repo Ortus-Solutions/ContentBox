@@ -117,11 +117,13 @@ component extends="ContentService" singleton{
 				   FROM cbEntry
 				  WHERE isPublished = true
 				    AND passwordProtection = ''
+				    AND publishedDate <= :now
 				  GROUP BY YEAR(publishedDate), MONTH(publishedDate)
 				  ORDER BY 2 DESC, 3 DESC";
-
+		var params = {};
+		params["now"] = now();
 		// run report
-		return executeQuery(query=hql,asQuery=false);
+		return executeQuery(query=hql,params=params,asQuery=false);
 	}
 
 	// Entry listing by Date
@@ -129,9 +131,10 @@ component extends="ContentService" singleton{
 		var results = {};
 		var hql = "FROM cbEntry
 				  WHERE isPublished = true
-				    AND passwordProtection = ''";
+				    AND passwordProtection = ''
+				    AND publishedDate <= :now";
 		var params = {};
-
+		params["now"] = now();
 		// year lookup mandatory
 		if( arguments.year NEQ 0 ){
 			params["year"] = arguments.year;
@@ -147,14 +150,14 @@ component extends="ContentService" singleton{
 			params["day"] = arguments.day;
 			hql &= " AND DAY(publishedDate) = :day";
 		}
-		
+
 		// Get Count
 		results.count 	= executeQuery(query="select count(*) #hql#",params=params,max=1,asQuery=false)[1];
 		// Add Ordering
 		hql &= " ORDER BY publishedDate DESC";
 		// find entries
 		results.entries = executeQuery(query=hql,params=params,max=arguments.max,offset=arguments.offset,asQuery=arguments.asQuery);
-		
+
 		return results;
 	}
 
