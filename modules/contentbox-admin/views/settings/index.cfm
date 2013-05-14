@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-#html.startForm(name="settingsForm",action=prc.xehSaveSettings)#
+#html.startForm(name="settingsForm", action=prc.xehSaveSettings, novalidate="novalidate")#
 #html.anchor(name="top")#
 <!--============================Main Column============================-->
 <div class="main" id="main_column">
@@ -556,7 +556,7 @@
                                 #html.label(class="control-label",field="cb_site_email",content="Administrator Email:")#
                                 <div class="controls">
                                     <small>The email(s) that receives all notifications from ContentBox.  To specify multiple addresses, separate the addresses with commas.</small><br/>
-    								#html.inputField(name="cb_site_email",value=prc.cbSettings.cb_site_email,class="textfield width98",required="required",title="The email that receives all notifications",type="email")#
+    								#html.inputField(name="cb_site_email",value=prc.cbSettings.cb_site_email,class="textfield width98",required="required",title="The email that receives all notifications")#
                                 </div>
                             </div>
     						<!--- Outgoing Email --->
