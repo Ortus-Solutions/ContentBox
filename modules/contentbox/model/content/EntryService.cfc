@@ -57,7 +57,7 @@ component extends="ContentService" singleton{
 	/**
 	* entry search returns struct with keys [entries,count]
 	*/
-	struct function search(search="",isPublished,category,author,max=0,offset=0,sortOrder="publishedDate DESC"){
+	struct function search(search="",isPublished,category,author,max=0,offset=0,sortOrder="publishedDate DESC",boolean searchActiveContent=true){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
@@ -84,9 +84,15 @@ component extends="ContentService" singleton{
 		}
 		// Search Criteria
 		if( len(arguments.search) ){
-			// like disjunctions
-			c.or( c.restrictions.like("title","%#arguments.search#%"),
-				  c.restrictions.like("ac.content", "%#arguments.search#%") );
+			// Search with active content
+			if( arguments.searchActiveContent ){
+				// like disjunctions
+				c.or( c.restrictions.like("title","%#arguments.search#%"),
+					  c.restrictions.like("ac.content", "%#arguments.search#%") );
+			}
+			else{
+				c.like("title","%#arguments.search#%");
+			}
 		}
 		// Category Filter
 		if( structKeyExists(arguments,"category") AND arguments.category NEQ "all"){
