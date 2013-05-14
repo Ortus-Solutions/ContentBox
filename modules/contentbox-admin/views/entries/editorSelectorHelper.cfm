@@ -14,7 +14,7 @@ $(document).ready(function() {
 });
 function pagerLink(page){
 	$entryEditorSelectorLoader.fadeIn("fast");
-	$('##remoteModelContent')
+	$('##modal')
 		.load('#event.buildLink(prc.xehEditorSelector)#?editorName=#rc.editorName#&page=' + page, function() {
 			$entryEditorSelectorLoader.fadeOut();
 	});
