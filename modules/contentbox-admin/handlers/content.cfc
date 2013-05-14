@@ -48,7 +48,8 @@ component extends="baseHandler"{
 		prc.results = contentService.searchContent( searchTerm=rc.search, 
 													max=prc.cbSettings.cb_admin_quicksearch_max, 
 													sortOrder="title", 
-													isPublished="all");
+													isPublished="all",
+													searchActiveContent=false);
 		prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
 		
 		// Search for Custom HTML

@@ -97,8 +97,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @asQuery.hint Return as query or array of objects, defaults to array of objects
 	* @sortOrder.hint The sorting of the search results, defaults to publishedDate DESC
 	* @isPublished.hint Search for published, non-published or both content objects [true, false, 'all']
+	* @searchActiveContent.hint Search only content titles or both title and active content. Defaults to both.
 	*/
-	function searchContent(searchTerm="", max=0, offset=0, asQuery=false, sortOrder="publishedDate DESC", isPublished=true){
+	function searchContent(searchTerm="", max=0, offset=0, asQuery=false, sortOrder="publishedDate DESC", isPublished=true, boolean searchActiveContent=true){
 		var results = {};
 		var c = newCriteria();
 
@@ -117,9 +118,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Search Criteria
 		if( len( arguments.searchTerm ) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac")
-				.$or( c.restrictions.like("title","%#arguments.searchTerm#%"),
+			c.createAlias("activeContent","ac");
+			// Do we search title and active content or just title?
+			if( arguments.searchActiveContent ){
+				c.$or( c.restrictions.like("title","%#arguments.searchTerm#%"),
 				  	  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
+			}
+			else{
+				c.like( "title", "%#arguments.searchTerm#%" ); 
+			}
 		}
 
 		// run criteria query and projections count
