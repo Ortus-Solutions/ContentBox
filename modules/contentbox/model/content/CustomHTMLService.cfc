@@ -64,18 +64,27 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @offset.hint The offset in the return of records
 	* @sortOrder.hint The sorting required. Title by default
 	*/
-	struct function search(search="", max=0, offset=0, sortOrder="title"){
+	struct function search(search="", max=0, offset=0, sortOrder="title",boolean searchActiveContent=true){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
 		
 		// Search Criteria
 		if( len( arguments.search ) ){
-			// like disjunctions
-			c.or( c.restrictions.like("slug","%#arguments.search#%"),
-				  c.restrictions.like("title","%#arguments.search#%"),
-				  c.restrictions.like("description","%#arguments.search#%"),
-				  c.restrictions.like("content","%#arguments.search#%") );
+			if( arguments.searchActiveContent ){
+				// like disjunctions
+				c.or( c.restrictions.like("slug","%#arguments.search#%"),
+					  c.restrictions.like("title","%#arguments.search#%"),
+					  c.restrictions.like("description","%#arguments.search#%"),
+					  c.restrictions.like("content","%#arguments.search#%") );
+			}
+			else{
+				// like disjunctions
+				c.or( c.restrictions.like("slug","%#arguments.search#%"),
+					  c.restrictions.like("title","%#arguments.search#%"),
+					  c.restrictions.like("description","%#arguments.search#%") );
+			}
+			
 		}
 		
 		// run criteria query and projections count
