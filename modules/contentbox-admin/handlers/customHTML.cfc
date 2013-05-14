@@ -152,7 +152,9 @@ component extends="baseHandler"{
 	function editorSelector(event,rc,prc){
 		// paging default
 		event.paramValue("page",1);
-		
+		event.paramValue("search", "");
+		event.paramValue("clear", false);
+
 		// exit handlers
 		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.customHTML.editorSelector";
 
@@ -162,13 +164,22 @@ component extends="baseHandler"{
 		prc.pagingLink 		= "javascript:pagerLink(@page@)";
 
 		// search entries with filters and all
-		var htmlResults = htmlService.search(offset=prc.paging.startRow-1,max=prc.cbSettings.cb_paging_maxrows);
+		var htmlResults = htmlService.search(search=rc.search,
+											 offset=prc.paging.startRow-1,
+											 max=prc.cbSettings.cb_paging_maxrows,
+											 searchActiveContent=false);
 
 		prc.entries 		= htmlResults.entries;
 		prc.entriesCount  	= htmlResults.count;
 		prc.CBHelper 		= CBHelper;
 		
-		event.setView(view="customHTML/editorSelector",layout="ajax");
+		// if ajax and searching, just return tables
+		if( event.isAjax() and len( rc.search ) OR rc.clear ){
+			return renderView(view="customHTML/editorSelectorEntries", module="contentbox-admin");
+		}
+		else{
+			event.setView(view="customHTML/editorSelector",layout="ajax");
+		}
 	}
 	
 	function slugUnique(event,rc,prc){

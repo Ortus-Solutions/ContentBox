@@ -17,39 +17,16 @@
 		<!--- Filter Bar --->
 		<div class="filterBar">
 			<div>
-				#html.label(field="entryFilter",content="Quick Filter:",class="inline")#
-				#html.textField(name="entryFilter",size="30",class="textfield")#
+				#html.label(field="entrySearch",content="Quick Search:",class="inline")#
+				#html.textField(name="entrySearch",size="30",class="textfield",value=rc.search)#
 			</div>
 		</div>
 	</div>
 
-	<!--- entries --->
-	<table name="entries" id="entries" class="tablesorter table table-condensed table-striped table-hover" width="98%">
-		<thead>
-			<tr>
-				<th>CustomHTML</th>
-				<th width="40" class="center">Select</th>
-			</tr>
-		</thead>
-		<tbody>
-			<cfloop array="#prc.entries#" index="entry">
-			<tr id="contentID-#entry.getContentID()#">
-				<td>
-					<!--- Title --->
-					<strong>#entry.getTitle()#</strong>
-					<br/>
-					#entry.getDescription()#
-				</td>
-				<td class="center">
-					<button class="btn btn-primary" onclick="return insertCustomHTML('#entry.getSlug()#')">Select</button>
-				</td>
-			</tr>
-			</cfloop>
-		</tbody>
-	</table>
-	
-	<!--- Paging --->
-	#prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
+	<!--- Render tables out --->
+	<div id="entriesContainer">
+	#renderView(view="customHTML/editorSelectorEntries", module="contentbox-admin")#
+	</div>
 			
 	#html.endForm()#
 </div>
