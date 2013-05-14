@@ -32,7 +32,7 @@
 					<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
 					#html.select(name="contentEditorChanger", 
 								 options=prc.editors,
-								 class="span2",
+								 class="input-medium",
 								 column="name",
 								 nameColumn="displayName",
 								 selectedValue=prc.defaultEditor,
@@ -42,7 +42,7 @@
 					<!--- markup --->
 					<label for="markup" class="inline">Markup: </label>
 					#html.select(name="markup", 
-								 class="span2",
+								 class="input-medium",
 								 options=prc.markups,
 								 selectedValue=( prc.content.isLoaded() ? prc.content.getMarkup() : prc.defaultMarkup ))#
 					
