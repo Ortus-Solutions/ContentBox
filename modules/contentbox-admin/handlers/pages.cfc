@@ -461,6 +461,8 @@ component extends="baseHandler"{
 	function editorSelector(event,rc,prc){
 		// paging default
 		event.paramValue("page",1);
+		event.paramValue("search", "");
+		event.paramValue("clear", false);
 
 		// exit handlers
 		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.pages.editorSelector";
@@ -471,15 +473,23 @@ component extends="baseHandler"{
 		prc.pagingLink 		= "javascript:pagerLink(@page@)";
 
 		// search entries with filters and all
-		var pageResults = pageService.search(offset=prc.paging.startRow-1,
+		var pageResults = pageService.search(search=rc.search,
+											 offset=prc.paging.startRow-1,
 											 max=prc.cbSettings.cb_paging_maxrows,
-											 sortOrder="slug asc");
-
+											 sortOrder="slug asc",
+											 searchActiveContent=false);
+		// setup data for display
 		prc.pages 	  	= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
 		prc.CBHelper 	= CBHelper;
 
-		event.setView(view="pages/editorSelector",layout="ajax");
+		// if ajax and searching, just return tables
+		if( event.isAjax() and len( rc.search ) OR rc.clear ){
+			return renderView(view="pages/editorSelectorPages", module="contentbox-admin");
+		}
+		else{
+			event.setView(view="pages/editorSelector",layout="ajax");
+		}
 	}
 
 }
