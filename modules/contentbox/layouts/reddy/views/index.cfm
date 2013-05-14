@@ -25,7 +25,7 @@
 			<button class="button2" onclick="return to('#cb.linkHome()#')" title="Clear search and view all entries">Clear Search</button>
 		</div>
 		<div class="infoBar">
-			Searching by: '#cb.getSearchTerm()#'
+			Searching by: '#htmlEditFormat(cb.getSearchTerm())#'
 		</div>
 		<br/>
 	</cfif>
