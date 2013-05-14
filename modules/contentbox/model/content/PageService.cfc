@@ -70,7 +70,7 @@ component extends="ContentService" singleton{
 	* page search returns struct with keys [pages,count]
 	* @parent.hint If empty, then looks for empty parent nodes. If you do not want to attach it, send as null
 	*/
-	struct function search(search="",isPublished,author,parent,category,max=0,offset=0,sortOrder="title asc"){
+	struct function search(search="",isPublished,author,parent,category,max=0,offset=0,sortOrder="title asc",boolean searchActiveContent=true){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
@@ -97,9 +97,15 @@ component extends="ContentService" singleton{
 		}
 		// Search Criteria	
 		if( len(arguments.search) ){
-			// like disjunctions
-			c.or( c.restrictions.like("title","%#arguments.search#%"),
-				  c.restrictions.like("ac.content", "%#arguments.search#%") );
+			// Search with active content
+			if( arguments.searchActiveContent ){
+				// like disjunctions
+				c.or( c.restrictions.like("title","%#arguments.search#%"),
+					  c.restrictions.like("ac.content", "%#arguments.search#%") );
+			}
+			else{
+				c.like("title","%#arguments.search#%");
+			}
 		}
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
