@@ -294,6 +294,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 				var newChild = originalService.new();
 				// attach to new parent copy
 				newChild.setParent( this );
+				// attach creator
+				newChild.setCreator( arguments.author );
 				// Setup the Page Title
 				newChild.setTitle( thisChild.getTitle() );
 				// Create the new hierarchical slug
