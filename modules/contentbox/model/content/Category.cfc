@@ -49,4 +49,19 @@ component persistent="true" entityname="cbCategory" table="cb_category" cachenam
 	boolean function isLoaded(){
 		return len( getCategoryID() );
 	}
+	
+	
+	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "categoryID,category,slug,numberOfEntries,numberOfPages" );
+		var result = {};
+		
+		for(var thisProp in pList ){
+			result[ thisProp ] = variables[ thisProp ];	
+		}
+		
+		return result;
+	}
 }
