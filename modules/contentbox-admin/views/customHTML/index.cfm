@@ -30,9 +30,26 @@
 					<!--- Create Butons --->
 					<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 					<div class="buttonBar">
+						<!---Global --->
+						<div class="btn-group">
+					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+								Global Actions <span class="caret"></span>
+							</a>
+					    	<ul class="dropdown-menu">
+					    		<li class="dropdown-submenu">
+									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
+									<ul class="dropdown-menu text-left">
+										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.json"><i class="icon-code"></i> as JSON</a></li>
+										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.xml"><i class="icon-sitemap"></i> as XML</a></li>
+									</ul>
+								</li>
+					    	</ul>
+					    </div>
+						<!---Create --->
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');">Create Content</button>
 					</div>
 					</cfif>
+					
 					<!--- Filter Bar --->
 					<div class="filterBar">
 						<div>
@@ -81,7 +98,6 @@
 										<li><a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><i class="icon-edit icon-large"></i> Edit</a></li>
 										<!--- Delete Command --->
 										<li><a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#entry.getContentID()#" class="icon-trash icon-large"></i> Delete</a></li>
-										</cfif>
 										<!--- Export --->
 										<li class="dropdown-submenu">
 											<a href="##"><i class="icon-download icon-large"></i> Export</a>
@@ -90,7 +106,7 @@
 												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.xml"><i class="icon-sitemap"></i> as XML</a></li>
 											</ul>
 										</li>
-										
+										</cfif>
 							    	</ul>
 							    </div>
 							</td>
