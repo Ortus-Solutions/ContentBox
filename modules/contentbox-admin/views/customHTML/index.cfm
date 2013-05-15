@@ -57,7 +57,11 @@
 						<cfloop array="#prc.entries#" index="entry">
 						<tr>
 							<td>
-								#entry.getTitle()#
+								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+									<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content">#entry.getTitle()#</a>
+								<cfelse>
+									#entry.getTitle()#
+								</cfif>
 							</td>
 							<td>
 								#entry.getSlug()#
@@ -66,13 +70,29 @@
 								#entry.getDescription()#
 							</td>
 							<td class="center">
-								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
-								<!--- Edit Command --->
-								<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><i class="icon-edit icon-large"></i></a>
-								&nbsp;
-								<!--- Delete Command --->
-								<a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#entry.getContentID()#" class="icon-trash icon-large"></i></a>
-								</cfif>
+								
+								<div class="btn-group">
+							    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
+										<i class="icon-cogs icon-large"></i>
+									</a>
+							    	<ul class="dropdown-menu text-left">
+										<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+										<!--- Edit Command --->
+										<li><a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><i class="icon-edit icon-large"></i> Edit</a></li>
+										<!--- Delete Command --->
+										<li><a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#entry.getContentID()#" class="icon-trash icon-large"></i> Delete</a></li>
+										</cfif>
+										<!--- Export --->
+										<li class="dropdown-submenu">
+											<a href="##"><i class="icon-download icon-large"></i> Export</a>
+											<ul class="dropdown-menu text-left">
+												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.json"><i class="icon-code"></i> as JSON</a></li>
+												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.xml"><i class="icon-sitemap"></i> as XML</a></li>
+											</ul>
+										</li>
+										
+							    	</ul>
+							    </div>
 							</td>
 						</tr>
 						</cfloop>
