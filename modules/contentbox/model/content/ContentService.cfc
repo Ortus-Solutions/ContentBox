@@ -309,5 +309,25 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			.list(max=arguments.max, sortOrder="numberOfComments desc", asQuery=false);
 		return c;
 	}
-
+	
+	/**
+	* Get all content for export as flat data
+	*/
+	array function getAllForExport(inData){
+		var result = [];
+		
+		if( !structKeyExists( arguments, "inData") ){
+			var data = getAll();
+		}
+		else{
+			data = arguments.inData;
+		}
+		
+		for( var thisItem in data ){
+			arrayAppend( result, thisItem.getMemento() );	
+		}
+		
+		return result;
+	}
+	
 }

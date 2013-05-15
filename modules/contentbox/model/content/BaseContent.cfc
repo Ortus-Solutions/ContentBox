@@ -106,7 +106,99 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		return this;
 	}
+	
+	/**
+	* Get a flat representation of this entry
+	*/
+	function getMemento(){
+		var pList = contentService.getPropertyNames();
+		var result = {};
+		
+		// Do simple properties only
+		for(var x=1; x lte arrayLen( pList ); x++ ){
+			if( structKeyExists( variables, pList[ x ] ) ){
+				if( isSimpleValue( variables[ pList[ x ] ] ) ){
+					result[ pList[ x ] ] = variables[ pList[ x ] ];	
+				}
+			}
+			else{
+				result[ pList[ x ] ] = "";
+			}
+		}
 
+		// Do Author Relationship
+		if( hasCreator() ){
+			result[ "creator" ] = {
+				creatorID = getCreator().getAuthorID(),
+				firstname = getCreator().getFirstname(),
+				lastName = getCreator().getLastName(),
+				email = getCreator().getEmail(),
+				username = getCreator().getUsername()
+			};
+		}
+
+		// Comments
+		if( hasComment() ){
+			result[ "comments" ] = [];
+			for( var thisComment in variables.comments ){
+				arrayAppend( result[ "comments" ], thisComment.getMemento() );	
+			}
+		}
+		else{
+			result[ "comments" ] = [];
+		}
+		// Custom Fields
+		if( hasCustomField() ){
+			result[ "customfields" ] = [];
+			for( var thisField in variables.customfields ){
+				arrayAppend( result[ "customfields" ], thisField.getMemento() );	
+			}
+		}
+		else{
+			result[ "customfields" ] = [];
+		}
+		// Versions
+		if( hasContentVersion() ){
+			result[ "contentversions" ] = [];
+			for( var thisVersion in variables.contentversions ){
+				arrayAppend( result[ "contentversions" ], thisVersion.getMemento() );	
+			}
+		}
+		else{
+			result[ "contentversions" ] = [];
+		}
+		// Parent
+		if( hasParent() ){
+			result[ "parent" ] = {
+				contentID = getParent().getContentID(),
+				slug = getParent().getSlug(),
+				title = getParent().getTitle()
+			};
+		}
+		// Children
+		if( hasChild() ){
+			result[ "children" ] = [];
+			for( var thisChild in variables.children ){
+				arrayAppend( result[ "children" ], thisChild.getMemento() );	
+			}
+		}
+		else{
+			result[ "children" ] = [];
+		}
+		// Categories
+		if( hasCategories() ){
+			result[ "categories" ] = [];
+			for( var thisCategory in variables.categories ){
+				arrayAppend( result[ "categories" ], thisCategory.getMemento() );	
+			}
+		}
+		else{
+			result[ "categories" ] = [];
+		}
+		
+		return result;
+	}
+	
 	private function maxContentVersionChecks(){
 		if( !len( settingService.getSetting( "cb_versions_max_history" ) )  ){ return; }
 

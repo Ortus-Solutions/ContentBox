@@ -40,8 +40,15 @@
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish</a></li>
-								<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft</a></li>
+					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft</a></li>
+								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish</a></li>
+								<li class="dropdown-submenu">
+									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
+									<ul class="dropdown-menu text-left">
+										<li><a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+										<li><a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
+									</ul>
+								</li>
 					    	</ul>
 					    </div>
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehEntryEditor)#');">Create Entry</button>
@@ -145,19 +152,29 @@
 									</a>
 							    	<ul class="dropdown-menu text-left">
 							    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-										<!--- Edit Command --->
-										<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
 										<!--- Clone Command --->
 										<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
-										</cfif>
-										<!--- History Command --->
-										<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
 										<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 										<!--- Delete Command --->
 										<li>
 											<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><i id="delete_#entry.getContentID()#" class="icon-trash icon-large" ></i> Delete</a>
 										</li>
 										</cfif>
+										<!--- Edit Command --->
+										<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+										</cfif>
+										<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+										<!--- Export --->
+										<li class="dropdown-submenu">
+											<a href="##"><i class="icon-download icon-large"></i> Export</a>
+											<ul class="dropdown-menu text-left">
+												<li><a href="#event.buildLink(linkto=prc.xehEntryExport)#/contentID/#entry.getContentID()#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+												<li><a href="#event.buildLink(linkto=prc.xehEntryExport)#/contentID/#entry.getContentID()#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
+											</ul>
+										</li>
+										</cfif>
+										<!--- History Command --->
+										<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
 										<!--- View in Site --->
 										<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="icon-eye-open icon-large"></i> Open In Site</a></li>
 							    	</ul>
