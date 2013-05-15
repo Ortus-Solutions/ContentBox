@@ -30,7 +30,7 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	property name="interceptorService"	inject="coldbox:interceptorService" persistent="false";
 
 	// PROPERTIES
-	property name="contentID" 	fieldtype="id" generator="native" setter="false";
+	property name="contentID" 				fieldtype="id" generator="native" setter="false";
 	property name="title"					notnull="true"  length="200";
 	property name="slug"					notnull="true"  length="200" unique="true" index="idx_customHTML_slug";
 	property name="description"				notnull="false" length="500" default="";
@@ -60,6 +60,20 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	*/
 	function init(){
 		renderedContent = "";
+	}
+	
+	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "contentID,title,slug,description,content,createdDate,cache,cacheTimeout,cacheLastAccessTimeout,markup" );
+		var result = {};
+		
+		for(var thisProp in pList ){
+			result[ thisProp ] = variables[ thisProp ];	
+		}
+		
+		return result;
 	}
 
 	/**
