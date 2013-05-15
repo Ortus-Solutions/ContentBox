@@ -39,6 +39,7 @@ component extends="baseHandler"{
 		prc.xehSaveHTML 	= "#prc.cbAdminEntryPoint#.customHTML.save";
 		prc.xehRemoveHTML	= "#prc.cbAdminEntryPoint#.customHTML.remove";
 		prc.xehEditorHTML	= "#prc.cbAdminEntryPoint#.customHTML.editor";
+		prc.xehExportHTML	= "#prc.cbAdminEntryPoint#.customHTML.export";
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
@@ -182,6 +183,7 @@ component extends="baseHandler"{
 		}
 	}
 	
+	// check if a slug unique
 	function slugUnique(event,rc,prc){
 		event.paramValue( "slug", "" );
 		event.paramValue( "contentID", "" );
@@ -195,6 +197,30 @@ component extends="baseHandler"{
 		}
 		
 		event.renderData(data=data, type="json");
+	}
+	
+	// Export CustomHTML
+	function export(event,rc,prc){
+		event.paramValue("format", "json");
+		// get content object
+		prc.content  = htmlService.get( event.getValue("contentID",0) );
+		// relocate if not existent
+		if( isNull( prc.content ) ){
+			getPlugin("MessageBox").warn("ContentID sent is not valid");
+			setNextEvent( "#prc.cbAdminEntryPoint#.customHTML" );
+		}
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				event.renderData(data=prc.content.getMemento(), type=rc.format, xmlRootName="customhtml"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
+		
+		
 	}
 	
 }
