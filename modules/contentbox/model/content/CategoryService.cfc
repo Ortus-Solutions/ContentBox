@@ -104,4 +104,16 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		return deleteResults;
 	}
 
+	/**
+	* Get all data prepared for export
+	*/
+	array function getAllForExport(){
+		var c = newCriteria();
+		
+		return c.withProjections(property="categoryID,category,slug")
+			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list(sortOrder="category");
+			 
+	}
+
 }
