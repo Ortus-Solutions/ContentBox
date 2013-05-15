@@ -59,7 +59,28 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 	}
 
 	/************************************** PUBLIC *********************************************/
-
+	
+	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "contentVersionID,content,changelog,version,createdDate,isActive" );
+		var result = {};
+		
+		for(var thisProp in pList ){
+			result[ thisProp ] = variables[ thisProp ];	
+		}
+		
+		result[ "author" ] = {
+			authorID = getAuthor().getAuthorID(),
+			firstname = getAuthor().getFirstname(),
+			lastName = getAuthor().getLastName(),
+			email = getAuthor().getEmail(),
+			username = getAuthor().getUsername()
+		};
+		
+		return result;
+	}
 	/**
 	* Shorthand Author name
 	*/

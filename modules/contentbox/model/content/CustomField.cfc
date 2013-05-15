@@ -40,5 +40,19 @@ component persistent="true" entityname="cbCustomField" table="cb_customfield" ca
 	boolean function isLoaded(){
 		return len( getCustomFieldID() );
 	}
+	
+	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "customFieldID,key,value" );
+		var result = {};
+		
+		for(var thisProp in pList ){
+			result[ thisProp ] = variables[ thisProp ];	
+		}
+		
+		return result;
+	}
 
 }
