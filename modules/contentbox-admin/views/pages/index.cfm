@@ -41,8 +41,15 @@
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish</a></li>
-								<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft</a></li>
+					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft</a></li>
+								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish</a></li>
+								<li class="dropdown-submenu">
+									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
+									<ul class="dropdown-menu text-left">
+										<li><a href="#event.buildLink(linkto=prc.xehPageExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+										<li><a href="#event.buildLink(linkto=prc.xehPageExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
+									</ul>
+								</li>
 					    	</ul>
 					    </div>
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#event.getValue('parent','')#');">Create Page</button>
@@ -176,22 +183,32 @@
 									</a>
 							    	<ul class="dropdown-menu text-left">
 							    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
-										<!--- Edit Command --->
-										<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
 										<!--- Clone Command --->
 										<li><a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
 										<!--- Create Child --->
 										<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="icon-sitemap icon-large"></i> Create Child</a></li>
-										</cfif>
-										<!--- History Command --->
-										<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
 										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 										<!--- Delete Command --->
 										<li><a href="javascript:remove('#page.getContentID()#')" class="confirmIt"
 										  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="icon-trash icon-large"></i> Delete</a></li>
 										</cfif>
+										<!--- Edit Command --->
+										<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+										</cfif>
+										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+										<!--- Export --->
+										<li class="dropdown-submenu">
+											<a href="##"><i class="icon-download icon-large"></i> Export</a>
+											<ul class="dropdown-menu text-left">
+												<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+												<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
+											</ul>
+										</li>
+										</cfif>
+										<!--- History Command --->
+										<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
 										<!--- View in Site --->
-										<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="icon-eye-open icon-large"></i> View Page</a></li>
+										<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="icon-eye-open icon-large"></i> Open In Site</a></li>
 							    	</ul>
 							    </div>
 								
