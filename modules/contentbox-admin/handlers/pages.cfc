@@ -76,12 +76,14 @@ component extends="baseHandler"{
 		}
 
 		// exit handlers
-		prc.xehPageSearch 	= "#prc.cbAdminEntryPoint#.pages";
-		prc.xehPageQuickLook= "#prc.cbAdminEntryPoint#.pages.quickLook";
-		prc.xehPageOrder 	= "#prc.cbAdminEntryPoint#.pages.changeOrder";
-		prc.xehPageHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
-		prc.xehPageClone 	= "#prc.cbAdminEntryPoint#.pages.clone";
+		prc.xehPageSearch 		= "#prc.cbAdminEntryPoint#.pages";
+		prc.xehPageQuickLook	= "#prc.cbAdminEntryPoint#.pages.quickLook";
+		prc.xehPageOrder 		= "#prc.cbAdminEntryPoint#.pages.changeOrder";
+		prc.xehPageHistory 		= "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
 		prc.xehPageBulkStatus 	= "#prc.cbAdminEntryPoint#.pages.bulkstatus";
+		prc.xehPageExport 		= "#prc.cbAdminEntryPoint#.pages.export";
+		prc.xehPageExportAll 	= "#prc.cbAdminEntryPoint#.pages.exportAll";
 
 		// Tab
 		prc.tabContent_pages = true;
@@ -489,6 +491,50 @@ component extends="baseHandler"{
 		}
 		else{
 			event.setView(view="pages/editorSelector",layout="ajax");
+		}
+	}
+	
+	// Export Entry
+	function export(event,rc,prc){
+		event.paramValue("format", "json");
+		// get page
+		prc.page  = pageService.get( event.getValue("contentID",0) );
+		
+		// relocate if not existent
+		if( !prc.page.isLoaded() ){
+			getPlugin("MessageBox").warn("ContentID sent is not valid");
+			setNextEvent( "#prc.cbAdminEntryPoint#.pages" );
+		}
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "#prc.page.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=prc.page.getMemento(), type=rc.format, xmlRootName="page")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
+	}
+	
+	// Export All Pages
+	function exportAll(event,rc,prc){
+		event.paramValue("format", "json");
+		// get all prepared content objects
+		var data  = pageService.getAllForExport();
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "Pages." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=data, type=rc.format, xmlRootName="pages")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
 		}
 	}
 

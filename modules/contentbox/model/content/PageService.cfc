@@ -201,5 +201,12 @@ component extends="ContentService" singleton{
 			.list(sortOrder="title asc");
 			 
 	}
+	
+	/**
+	* Get all content for export as flat data
+	*/
+	array function getAllForExport(){
+		return super.getAllForExport( getAll() );
+	}
 
 }

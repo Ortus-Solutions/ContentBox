@@ -200,5 +200,12 @@ component extends="ContentService" singleton{
 
 		return results;
 	}
+	
+	/**
+	* Get all content for export as flat data
+	*/
+	array function getAllForExport(){
+		return super.getAllForExport( getAll() );
+	}
 
 }

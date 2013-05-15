@@ -46,10 +46,27 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		
 		// INHERITANCE LAYOUT STATIC
 		LAYOUT_INHERITANCE_KEY = "-inherit-";
+		
+		return this;
 	}
 
 	/************************************** PUBLIC *********************************************/
 
+	/**
+	* Get a flat representation of this page
+	*/
+	function getMemento(){
+		var pList = listToArray( "layout,mobileLayout,order,showInMenu" );
+		var result = super.getMemento();
+		
+		// Local Memento Properties
+		for(var thisProp in pList ){
+			result[ thisProp ] = variables[ thisProp ];	
+		}
+		
+		return result;
+	}
+	
 	/**
 	* Get the layout or if empty the default convention of "pages"
 	*/
