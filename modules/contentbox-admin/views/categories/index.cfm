@@ -20,6 +20,22 @@
 			<div class="well well-small">
 				<!--- Command Bar --->
 				<div class="pull-right">
+					<!---Global --->
+					<div class="btn-group">
+				    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+							Global Actions <span class="caret"></span>
+						</a>
+				    	<ul class="dropdown-menu">
+				    		<li class="dropdown-submenu">
+								<a href="##"><i class="icon-download icon-large"></i> Export All</a>
+								<ul class="dropdown-menu text-left">
+									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
+								</ul>
+							</li>
+				    	</ul>
+				    </div>
+					<!--- Create --->
 					<a href="##" onclick="return createCategory();" class="btn btn-danger">Create Category</a>
 				</div>
 				<!--- Filter Bar --->

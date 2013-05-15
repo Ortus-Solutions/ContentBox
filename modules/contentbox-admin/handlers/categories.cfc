@@ -19,6 +19,7 @@ component extends="baseHandler"{
 		// exit Handlers
 		prc.xehCategoryRemove 	= "#prc.cbAdminEntryPoint#.categories.remove";
 		prc.xehCategoriesSave 	= "#prc.cbAdminEntryPoint#.Categories.save";
+		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.Categories.exportAll";
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// Tab
@@ -71,5 +72,24 @@ component extends="baseHandler"{
 			getPlugin("MessageBox").setMessage("info","Category Removed!");
 		}
 		setNextEvent( prc.xehCategories );
+	}
+
+	// Export All CustomHTML
+	function exportAll(event,rc,prc){
+		event.paramValue("format", "json");
+		// get all prepared content objects
+		var data  = categoryService.getAllForExport();
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "Categories." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=data, type=rc.format, xmlRootName="categories")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); ; 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
 	}
 }
