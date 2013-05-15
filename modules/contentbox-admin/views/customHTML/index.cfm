@@ -39,8 +39,8 @@
 					    		<li class="dropdown-submenu">
 									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
-										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.json"><i class="icon-code"></i> as JSON</a></li>
-										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.xml"><i class="icon-sitemap"></i> as XML</a></li>
+										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 									</ul>
 								</li>
 					    	</ul>
@@ -102,8 +102,8 @@
 										<li class="dropdown-submenu">
 											<a href="##"><i class="icon-download icon-large"></i> Export</a>
 											<ul class="dropdown-menu text-left">
-												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.json"><i class="icon-code"></i> as JSON</a></li>
-												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.xml"><i class="icon-sitemap"></i> as XML</a></li>
+												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 											</ul>
 										</li>
 										</cfif>
