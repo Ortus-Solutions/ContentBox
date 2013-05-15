@@ -91,11 +91,13 @@ component extends="baseHandler"{
 		prc.entriesCount = entryResults.count;
 
 		// exit handlers
-		prc.xehEntrySearch 	 = "#prc.cbAdminEntryPoint#.entries";
-		prc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
-		prc.xehEntryHistory  = "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehEntrySearch 	 	= "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntryQuickLook	= "#prc.cbAdminEntryPoint#.entries.quickLook";
+		prc.xehEntryHistory  	= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.entries.bulkstatus";
-		prc.xehEntryClone 	= "#prc.cbAdminEntryPoint#.entries.clone";
+		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
+		prc.xehEntryExport 		= "#prc.cbAdminEntryPoint#.entries.export";
+		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
 
 		// Tab
 		prc.tabContent_blog = true;
@@ -422,6 +424,50 @@ component extends="baseHandler"{
 		}
 		else{
 			event.setView(view="entries/editorSelector",layout="ajax");
+		}
+	}
+
+	// Export Entry
+	function export(event,rc,prc){
+		event.paramValue("format", "json");
+		// get entry
+		prc.entry  = entryService.get( event.getValue("contentID",0) );
+		
+		// relocate if not existent
+		if( !prc.entry.isLoaded() ){
+			getPlugin("MessageBox").warn("ContentID sent is not valid");
+			setNextEvent( "#prc.cbAdminEntryPoint#.entries" );
+		}
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "#prc.entry.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=prc.entry.getMemento(), type=rc.format, xmlRootName="entry")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
+	}
+	
+	// Export All Entries
+	function exportAll(event,rc,prc){
+		event.paramValue("format", "json");
+		// get all prepared content objects
+		var data  = entryService.getAllForExport();
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "Entries." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=data, type=rc.format, xmlRootName="entries")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
 		}
 	}
 }
