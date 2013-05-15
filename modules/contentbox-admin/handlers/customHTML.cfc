@@ -214,7 +214,9 @@ component extends="baseHandler"{
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
-				event.renderData(data=prc.content.getMemento(), type=rc.format, xmlRootName="customhtml"); 
+				var filename = "#prc.content.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=prc.content.getMemento(), type=rc.format, xmlRootName="customhtml")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
 				break;
 			}
 			default:{
@@ -233,7 +235,9 @@ component extends="baseHandler"{
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
-				event.renderData(data=data, type=rc.format, xmlRootName="customhtml"); 
+				var filename = "CustomHTML." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=data, type=rc.format, xmlRootName="customhtml")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); ; 
 				break;
 			}
 			default:{
