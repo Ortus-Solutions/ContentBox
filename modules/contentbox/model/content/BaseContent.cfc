@@ -138,11 +138,35 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 
 		// Comments
-		result[ "comments" ] = entityToQuery( getComments() );
+		if( hasComment() ){
+			result[ "comments" ] = [];
+			for( var thisComment in variables.comments ){
+				arrayAppend( result[ "comments" ], thisComment.getMemento() );	
+			}
+		}
+		else{
+			result[ "comments" ] = [];
+		}
 		// Custom Fields
-		result[ "customFields" ] = entityToQuery( getCustomFields() );
+		if( hasCustomField() ){
+			result[ "customfields" ] = [];
+			for( var thisField in variables.customfields ){
+				arrayAppend( result[ "customfields" ], thisField.getMemento() );	
+			}
+		}
+		else{
+			result[ "customfields" ] = [];
+		}
 		// Versions
-		result[ "contentVersions" ] = entityToQuery( getContentVersions() );
+		if( hasContentVersion() ){
+			result[ "contentversions" ] = [];
+			for( var thisVersion in variables.contentversions ){
+				arrayAppend( result[ "contentversions" ], thisVersion.getMemento() );	
+			}
+		}
+		else{
+			result[ "contentversions" ] = [];
+		}
 		// Parent
 		if( hasParent() ){
 			result[ "parent" ] = {
@@ -162,7 +186,15 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			result[ "children" ] = [];
 		}
 		// Categories
-		result[ "categories" ] = entityToQuery( getCategories() );
+		if( hasCategories() ){
+			result[ "categories" ] = [];
+			for( var thisCategory in variables.categories ){
+				arrayAppend( result[ "categories" ], thisCategory.getMemento() );	
+			}
+		}
+		else{
+			result[ "categories" ] = [];
+		}
 		
 		return result;
 	}
