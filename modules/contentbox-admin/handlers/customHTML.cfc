@@ -36,10 +36,11 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 		
 		// Exit Handler
-		prc.xehSaveHTML 	= "#prc.cbAdminEntryPoint#.customHTML.save";
-		prc.xehRemoveHTML	= "#prc.cbAdminEntryPoint#.customHTML.remove";
-		prc.xehEditorHTML	= "#prc.cbAdminEntryPoint#.customHTML.editor";
-		prc.xehExportHTML	= "#prc.cbAdminEntryPoint#.customHTML.export";
+		prc.xehSaveHTML 		= "#prc.cbAdminEntryPoint#.customHTML.save";
+		prc.xehRemoveHTML		= "#prc.cbAdminEntryPoint#.customHTML.remove";
+		prc.xehEditorHTML		= "#prc.cbAdminEntryPoint#.customHTML.editor";
+		prc.xehExportHTML		= "#prc.cbAdminEntryPoint#.customHTML.export";
+		prc.xehExportAllHTML	= "#prc.cbAdminEntryPoint#.customHTML.exportAll";
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
@@ -204,8 +205,9 @@ component extends="baseHandler"{
 		event.paramValue("format", "json");
 		// get content object
 		prc.content  = htmlService.get( event.getValue("contentID",0) );
+		
 		// relocate if not existent
-		if( isNull( prc.content ) ){
+		if( !prc.content.isLoaded() ){
 			getPlugin("MessageBox").warn("ContentID sent is not valid");
 			setNextEvent( "#prc.cbAdminEntryPoint#.customHTML" );
 		}
@@ -221,6 +223,23 @@ component extends="baseHandler"{
 		}
 		
 		
+	}
+	
+	// Export All CustomHTML
+	function exportAll(event,rc,prc){
+		event.paramValue("format", "json");
+		// get all prepared content objects
+		var data  = htmlService.getAllForExport();
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				event.renderData(data=data, type=rc.format, xmlRootName="customhtml"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
 	}
 	
 }
