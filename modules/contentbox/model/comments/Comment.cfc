@@ -49,6 +49,20 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	/************************************** PUBLIC *********************************************/
 
 	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "commentID,content,author,authorIP,authorEmail,authorURL,createdDate,isApproved" );
+		var result = {};
+		
+		for(var thisProp in pList ){
+			result[ thisProp ] = variables[ thisProp ];	
+		}
+		
+		return result;
+	}
+	
+	/**
 	* Get Display Content
 	*/
 	string function getDisplayContent(){
@@ -86,21 +100,4 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 		return len( getCommentID() );
 	}
 
-	/**
-	* Get memento
-	*/
-	struct function getMemento(){
-		var r = {
-			author = variables.author,
-			authorIP = variables.authorIP,
-			authorEmail = variables.authorEmail,
-			authorURL = variables.authorURL,
-			createdDate = variables.createdDate,
-			isApproved = variables.isApproved,
-			content = variables.content
-		};
-
-		return r;
-
-	}
 }

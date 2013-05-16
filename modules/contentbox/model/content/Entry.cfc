@@ -38,9 +38,22 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		renderedContent = "";
 		createdDate		= now();
 		contentType		= "Entry";
+		return this;
 	}
 
 	/************************************** PUBLIC *********************************************/
+	
+	/**
+	* Get a flat representation of this entry
+	*/
+	function getMemento(){
+		var result = super.getMemento();
+		
+		// Local Memento Properties
+		result[ "excerpt" ] = variables.excerpt;
+		
+		return result;
+	}
 
 	/**
 	* has excerpt
