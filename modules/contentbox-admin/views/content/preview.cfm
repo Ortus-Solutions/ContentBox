@@ -14,6 +14,7 @@
 		#html.hiddenField(name="layout", value=rc.layout)#
 		#html.hiddenField(name="title", value=rc.title)#
 		#html.hiddenField(name="slug", value=rc.slug)#
+		#html.hiddenField(name="markup", value=rc.markup)#
 	#html.endForm()#
 	<!--- hidden iframe for preview --->
 	<iframe id="previewFrame" name="previewFrame" width="100%" scrolling="auto" style="border: 1px solid ##eaeaea"></iframe>

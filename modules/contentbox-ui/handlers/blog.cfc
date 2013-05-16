@@ -68,6 +68,7 @@ component extends="content" singleton{
 		prc.entry.setPublishedDate( now() );
 		prc.entry.setAllowComments( false );
 		prc.entry.setCache( false );
+		prc.entry.setMarkup( rc.markup );
 		// Comments need to be empty
 		prc.comments = [];
 		// Create preview version
