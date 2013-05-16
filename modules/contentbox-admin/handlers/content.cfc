@@ -17,6 +17,7 @@ component extends="baseHandler"{
 		event.paramValue("contentType","");
 		event.paramValue("title","");
 		event.paramValue("slug","");
+		event.paramValue("markup","HTML");
 		
 		// Determine Type
 		switch( rc.contentType ){
