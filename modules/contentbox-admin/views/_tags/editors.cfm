@@ -12,7 +12,8 @@ function previewContent(){
 					   layout: $("##layout").val(),
 					   title: $("##title").val(),
 					   slug: $("##slug").val(),
-					   contentType : $("##contentType").val() },
+					   contentType : $("##contentType").val(),
+					   markup : $("##markup").val() },
 					 "95%",
 					 "85%",
                      true);
