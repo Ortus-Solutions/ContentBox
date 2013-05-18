@@ -39,6 +39,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global cb options on scope
 		prc.cbSettings = settingService.getAllSettings(asStruct=true);
+		// Place widgets root location
+		prc.cbWidgetRoot = getContextRoot() & event.getModuleRoot('contentbox') & "/widgets";
 		// store admin menu service
 		prc.adminMenuService = adminMenuService;
 		
