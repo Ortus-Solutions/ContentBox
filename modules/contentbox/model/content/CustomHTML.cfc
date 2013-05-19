@@ -183,7 +183,7 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		// announce renderings with data, so content renderers can process them
 		var iData = {
 			builder = b,
-			content	= this
+			customHTML = this
 		};
 		interceptorService.processState("cb_onCustomHTMLRendering", iData);
 
