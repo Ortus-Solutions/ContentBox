@@ -25,6 +25,7 @@ component accessors="true" {
 		cb_site_mail_smtp = "25";
 		cb_site_mail_tls = "false";
 		cb_site_mail_ssl = "false";
+		populateData = true;
 		fullRewrite = true;
 		rewrite_engine = "mod_rewrite";
 
