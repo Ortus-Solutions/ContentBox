@@ -273,7 +273,7 @@ component extends="baseHandler"{
 		if( isNew ){ entry.setCreator( prc.oAuthor ); }
 		
 		// Override creator?
-		if( !isNew and prc.oAuthor.checkPermission("PAGES_ADMIN") and entry.getCreator().getAuthorID() NEQ rc.creatorID ){
+		if( !isNew and prc.oAuthor.checkPermission("PAGES_ADMIN") and len( rc.creatorID ) and entry.getCreator().getAuthorID() NEQ rc.creatorID ){
 			entry.setCreator( authorService.get( rc.creatorID ) );
 		}
 
