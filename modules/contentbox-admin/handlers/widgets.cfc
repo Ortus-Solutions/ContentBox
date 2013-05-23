@@ -7,9 +7,7 @@ component extends="baseHandler"{
 	property name="widgetService"	inject="id:widgetService@cb";
 
 	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+	function preHandler(event,action,eventArguments,rc,prc){
 		// Tab control
 		prc.tabLookAndFeel = true;
 		prc.tabLookAndFeel_widgets = true;
@@ -98,7 +96,8 @@ component extends="baseHandler"{
 			event.renderData( data=evaluate( "widget.#rc.widgetudf#( argumentCollection=rc )" ), type="html" );
 		}
 		catch ( any e ) {
-			event.renderData( data="", type="html" );
+			log.error("Error rendering widget: #e.message# #e.detail#", e);
+			event.renderData( data="Error rendering widget: #e.message# #e.detail# #e.stacktrace#", type="html" );
 		}
 	}
 

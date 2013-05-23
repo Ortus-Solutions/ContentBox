@@ -194,7 +194,7 @@ component extends="baseHandler"{
 			.addPublishedtime( rc.publishedHour, rc.publishedMinute )
 			.addExpiredTime( rc.expireHour, rc.expireMinute );
 		var isNew = ( NOT page.isLoaded() );
-
+		
 		// Validate Page And Incoming Data
 		var errors = page.validate();
 		if( !len( trim( rc.content ) ) ){
@@ -208,12 +208,10 @@ component extends="baseHandler"{
 		
 		// Attach creator if new page
 		if( isNew ){ page.setCreator( prc.oAuthor ); }
-		
 		// Override creator?
-		if( !isNew and prc.oAuthor.checkPermission("PAGES_ADMIN") and page.getCreator().getAuthorID() NEQ rc.creatorID ){
+		else if( !isNew and prc.oAuthor.checkPermission("PAGES_ADMIN") and len( rc.creatorID ) and page.getCreator().getAuthorID() NEQ rc.creatorID ){
 			page.setCreator( authorService.get( rc.creatorID ) );
 		}
-		
 		// Register a new content in the page, versionized!
 		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
 		

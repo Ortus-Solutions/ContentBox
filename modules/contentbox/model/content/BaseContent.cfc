@@ -377,7 +377,12 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			addCustomField( newField );
 		}
 		// safe clone categories
-		categories = duplicate( arguments.original.getCategories() );
+		if( arguments.original.hasCategories() ){
+			categories = duplicate( arguments.original.getCategories() );
+		}
+		else{
+			categories = [];
+		}
 		// now clone children
 		if( original.hasChild() ){
 			var allChildren = original.getChildren();

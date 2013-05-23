@@ -153,18 +153,8 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		if( NOT len(renderedContent) ){
 			lock name="contentbox.customHTMLRendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
 				if( NOT len(renderedContent) ){
-					// else render content out, prepare builder
-					var b = createObject("java","java.lang.StringBuilder").init( content );
-
-					// announce renderings with data, so content renderers can process them
-					var iData = {
-						builder = b,
-						customHTML	= this
-					};
-					interceptorService.processState("cb_onCustomHTMLRendering", iData);
-
 					// save content
-					renderedContent = b.toString();
+					renderedContent = renderContentSilent();
 				}
 			}
 		}
@@ -180,6 +170,25 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 
 		// renturn translated content
 		return renderedContent;
+	}
+	
+	/**
+	* Renders the content silently so no caching, or extra fluff is done, just content translation rendering.
+	* @content.hint The content markup to translate, by default it uses the active content version's content
+	*/
+	any function renderContentSilent(any content=getContent()){
+		// render content out, prepare builder
+		var b = createObject("java","java.lang.StringBuilder").init( arguments.content );
+
+		// announce renderings with data, so content renderers can process them
+		var iData = {
+			builder = b,
+			customHTML = this
+		};
+		interceptorService.processState("cb_onCustomHTMLRendering", iData);
+
+		// return processed content
+		return b.toString();
 	}
 
 

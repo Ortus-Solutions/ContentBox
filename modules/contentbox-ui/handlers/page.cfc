@@ -100,6 +100,7 @@ component extends="content" singleton{
 		prc.page.setPublishedDate( now() );
 		prc.page.setAllowComments( false );
 		prc.page.setCache( false );
+		prc.page.setMarkup( rc.markup );
 		// Comments need to be empty
 		prc.comments = [];
 		// Create preview version
