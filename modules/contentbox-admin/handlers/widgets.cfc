@@ -96,7 +96,8 @@ component extends="baseHandler"{
 			event.renderData( data=evaluate( "widget.#rc.widgetudf#( argumentCollection=rc )" ), type="html" );
 		}
 		catch ( any e ) {
-			event.renderData( data="", type="html" );
+			log.error("Error rendering widget: #e.message# #e.detail#", e);
+			event.renderData( data="Error rendering widget: #e.message# #e.detail# #e.stacktrace#", type="html" );
 		}
 	}
 
