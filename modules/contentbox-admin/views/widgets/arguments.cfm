@@ -10,7 +10,8 @@
 	<!--- Iterate and present arguments --->
 	<cfloop from="1" to="#arrayLen( prc.md.parameters )#" index="x">
 		<cfscript>
-    		thisArg = prc.md.parameters[ x ];
+			// duplicate so we don't affect real md as ACF caches this stupidity
+			thisArg = duplicate( prc.md.parameters[ x ] );
     		requiredText = "";
     		requiredValidator = "";
     		// Verify attributes
@@ -18,6 +19,7 @@
     		if( !structKeyExists(thisArg,"hint") ){ thisArg.hint = ""; }
     		if( !structKeyExists(thisArg,"type") ){ thisArg.type = "any"; }
     		if( !structKeyExists(thisArg,"default") ){ thisArg.default = ""; }
+    		if( !structKeyExists(thisArg,"options") ){ thisArg.options = ""; }
     		thisArg.value = structKeyExists( prc.vals, thisArg.name ) ? prc.vals[ thisArg.name ] == "" ? thisArg.default : prc.vals[ thisArg.name ] : thisArg.default;
     		// required stuff
     		if( thisarg.required ){
@@ -35,6 +37,9 @@
         		<!---Boolean?--->
         		<cfif thisArg.type eq "boolean">
         			#html.select( name=thisArg.name, options="true,false", selectedValue=thisArg.value, class="input-block-level" )#
+        		<!--- Options --->
+        		<cfelseif listLen( thisArg.options )>
+					#html.select( name=thisArg.name, options=thisArg.options, selectedValue=thisArg.value, class="input-block-level" )#
         		<!--- Default --->
         		<cfelse>
         			#html.textfield( name=thisArg.name, size="35", class="input-block-level", required=requiredValidator, title=thisArg.hint, value=thisArg.value )#
