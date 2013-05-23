@@ -322,7 +322,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Bit that denotes if the content has been published or not
 	*/
 	boolean function isContentPublished(){
-		return ( getIsPublished() AND getPublishedDate() LTE now() ) ? true : false;
+		return ( getIsPublished() AND !isNull( publishedDate ) AND getPublishedDate() LTE now() ) ? true : false;
 	}
 
 	/**
