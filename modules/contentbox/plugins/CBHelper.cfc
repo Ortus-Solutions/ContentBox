@@ -1026,15 +1026,21 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		var b = createObject("java","java.lang.StringBuilder").init('');
 		// current page?
 		var prc = getRequestCollection(private=true);
-		var currentcontentID = "";
+		var pageAncestorContentIDs = "";
+		var locPage = "";
 		// class text
 		var classtext = [];
 
-		// Get contentID;
+		// Get contentID
 		if( structKeyExists(prc,"page") and prc.page.isLoaded() ){
-			currentcontentID = prc.page.getContentID();
+			locPage = getCurrentPage();
+			pageAncestorContentIDs = locPage.getContentID();
+			// If this is subnav, add ancestry trail
+			while(locPage.hasParent()) {
+				locPage = locPage.getParent();
+				pageAncestorContentIDs = ListAppend(pageAncestorContentIDs,locPage.getContentID());
+			}			
 		}
-
 		// list start
 		if( !listFindNoCase("li,none,data", arguments.type) ){
 			b.append('<#arguments.type# class="submenu">');
@@ -1051,8 +1057,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[x].getTitle() )){
 				// Do we need to nest?
 				var doNesting 		= ( arguments.currentLevel lt arguments.levels AND pageResults.pages[x].hasChild() );
-				// Is element active
-				var isElementActive = ( currentcontentID eq pageResults.pages[x].getContentID() );
+				// Is element active (or one of its decendants)
+				var isElementActive = ( listFindNoCase(pageAncestorContentIDs, pageResults.pages[x].getContentID()) );
 				// class = active? Then add to class text
 				if( isElementActive ){ arrayAppend( classText, arguments.activeClass); }
 				// class = parent nesting?
