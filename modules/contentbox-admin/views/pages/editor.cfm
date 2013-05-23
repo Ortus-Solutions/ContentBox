@@ -154,7 +154,7 @@
 					<div class="control-group">
 					    #html.label(class="control-label",field="publishedDate",content="Publish Date (<a href='javascript:publishNow()'>Now</a>)")#
 					    <div class="controls">
-					        #html.inputField(size="9",type="date",name="publishedDate",value=prc.page.getPublishedDateForEditor(),class="textfield")#
+					        #html.inputField(size="9", name="publishedDate",value=prc.page.getPublishedDateForEditor(),class="textfield")#
         					@
         					#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
@@ -164,7 +164,7 @@
 					<div class="control-group">
 					    #html.label(class="control-label",field="expireDate",content="")#
                         <div class="controls">
-                            #html.inputField(size="9",type="date",name="expireDate",value=prc.page.getExpireDateForEditor(),class="textfield")#
+                            #html.inputField(size="9", name="expireDate",value=prc.page.getExpireDateForEditor(),class="textfield")#
         					@
         					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.page.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.page.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
