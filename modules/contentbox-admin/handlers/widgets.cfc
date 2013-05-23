@@ -7,9 +7,7 @@ component extends="baseHandler"{
 	property name="widgetService"	inject="id:widgetService@cb";
 
 	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+	function preHandler(event,action,eventArguments,rc,prc){
 		// Tab control
 		prc.tabLookAndFeel = true;
 		prc.tabLookAndFeel_widgets = true;
