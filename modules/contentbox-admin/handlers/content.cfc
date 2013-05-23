@@ -17,6 +17,7 @@ component extends="baseHandler"{
 		event.paramValue("contentType","");
 		event.paramValue("title","");
 		event.paramValue("slug","");
+		event.paramValue("markup","HTML");
 		
 		// Determine Type
 		switch( rc.contentType ){
@@ -30,8 +31,10 @@ component extends="baseHandler"{
 				break; 
 			}
 			case "CustomHTML" : {
-				prc.preview = contentService.new().renderContentSilent( rc.content );
-				event.setView(view="content/simplePreview",layout="ajax");
+				var oContent = customHTMLService.new();
+				oContent.setMarkup( rc.markup );
+				prc.preview = oContent.renderContentSilent( rc.content );
+				event.setView(view="content/simplePreview", layout="ajax");
 				return;
 			}
 		}

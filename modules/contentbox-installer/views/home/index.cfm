@@ -77,8 +77,8 @@
 						<div class="control-group">
 						    #html.label(field="populatedata",content="Populate Site With Sample Data:",class="control-label")#
                             <div class="controls">
-                                #html.radioButton(name="populatedata",checked=true,value=true)# Yes 	
-    							#html.radioButton(name="populatedata",value=false)# No 	
+                                #html.radioButton(name="populatedata",checked=true,value=true,autocomplete=false)# Yes 	
+    							#html.radioButton(name="populatedata",value=false,autocomplete=false)# No 	
                             </div>
 						</div>
     					<!--- Site Name  --->

@@ -20,28 +20,74 @@ component extends="baseHandler"{
 	function index(event,rc,prc){
 
 		// exit Handlers
-		prc.xehEntryEditor		= "#prc.cbAdminEntryPoint#.entries.editor";
-		prc.xehEntrySave		= "#prc.cbAdminEntryPoint#.entries.save";
-		prc.xehRemoveComment	= "#prc.cbAdminEntryPoint#.comments.remove";
 		prc.xehDeleteInstaller 	= "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
 		prc.xehDeleteDSNCreator = "#prc.cbAdminEntryPoint#.dashboard.deleteDSNCreator";
-
+		// Ajax Loaded handlers
+		prc.xehLatestEntries	= "#prc.cbAdminEntryPoint#.dashboard.latestEntries";
+		prc.xehLatestPages		= "#prc.cbAdminEntryPoint#.dashboard.latestPages";
+		prc.xehLatestComments	= "#prc.cbAdminEntryPoint#.dashboard.latestComments";
+		prc.xehLatestNews		= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
+		prc.xehLatestSnapshot	= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
+		
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
 		
 		// Installer Check
 		prc.installerCheck = settingService.isInstallationPresent();
 
+		// announce event
+		announceInterception("cbadmin_onDashboard");
+
+		// dashboard view
+		event.setView("dashboard/index");
+	}
+	
+	// latest snapshot
+	function latestSnapshot(event,rc,rpc){
+		// Few counts
+		prc.entriesCount			= entryService.count();
+		prc.pagesCount 				= pageService.count();
+		prc.commentsCount 			= commentService.count();
+		prc.commentsApprovedCount 	= commentService.getApprovedCommentCount();
+		prc.commentsUnApprovedCount = commentService.getUnApprovedCommentCount();
+		prc.categoriesCount 		= categoryService.count();
+		
+		// Few Reports
+		prc.topContent 		= contentService.getTopVisitedContent();
+		prc.topCommented 	= contentService.getTopCommentedContent();
+		
+		event.setView(view="dashboard/latestSnapshot", layout="ajax");
+	}
+	
+	// Latest Entries
+	function latestEntries(event,rc,prc){
 		// Get entries viewlet: Stupid cf9 and its local scope blown on argument literals
-		var eArgs = {max=prc.cbSettings.cb_dashboard_recentEntries,pagination=false, latest=true};
-		prc.entriesViewlet = runEvent(event="contentbox-admin:entries.pager",eventArguments=eArgs);
+		var eArgs = { max=prc.cbSettings.cb_dashboard_recentEntries, pagination=false, latest=true };
+		prc.entriesViewlet = runEvent(event="contentbox-admin:entries.pager", eventArguments=eArgs);
+		
+		event.setView(view="dashboard/latestEntries", layout="ajax");
+	}
+	
+	// Latest Pages
+	function latestPages(event,rc,prc){
 		// Get Pages viewlet
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentPages,pagination=false, latest=true, sorting=false};
 		prc.pagesViewlet = runEvent(event="contentbox-admin:pages.pager",eventArguments=eArgs);
+		
+		event.setView(view="dashboard/latestPages", layout="ajax");
+	}
+	
+	// Latest Comments
+	function latestComments(event,rc,prc){
 		// Get Comments viewlet
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentComments,pagination=false};
 		prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments=eArgs);
 	
+		event.setView(view="dashboard/latestComments", layout="ajax");
+	}
+	
+	// Latest News
+	function latestNews(event,rc,prc){
 		// Get latest ContentBox news
 		try{
 			if( len( prc.cbsettings.cb_dashboard_newsfeed ) ){
@@ -58,23 +104,7 @@ component extends="baseHandler"{
 			log.error( "Error retrieving news feed: #e.message# #e.detail#", e );
 		}
 		
-		// Few counts
-		prc.entriesCount 			= entryService.count();
-		prc.pagesCount 				= pageService.count();
-		prc.commentsCount 			= commentService.count();
-		prc.commentsApprovedCount 	= commentService.getApprovedCommentCount();
-		prc.commentsUnApprovedCount = commentService.getUnApprovedCommentCount();
-		prc.categoriesCount 		= categoryService.count();
-		
-		// Few Reports
-		prc.topContent 		= contentService.getTopVisitedContent();
-		prc.topCommented 	= contentService.getTopCommentedContent();
-		
-		// announce event
-		announceInterception("cbadmin_onDashboard");
-
-		// dashboard view
-		event.setView("dashboard/index");
+		event.setView(view="dashboard/latestNews", layout="ajax");
 	}
 	
 	// Delete Installer
