@@ -1,5 +1,26 @@
 ﻿/**
-* ContentBOx security
+********************************************************************************
+ContentBox - A Modular Content Platform
+Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+********************************************************************************
+Apache License, Version 2.0
+
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+********************************************************************************
+* ContentBox security handler
 */
 component{
 
@@ -8,10 +29,16 @@ component{
 	property name="authorService" 	inject="id:authorService@cb";
 	property name="antiSamy"		inject="coldbox:plugin:AntiSamy";
 	
+	// Method Security
+	this.allowedMethods = {
+		doLogin = "POST",
+		doLostPassword = "POST"
+	};
+	
 	// login screen
 	function login(event,rc,prc){
 		// exit handlers
-		prc.xehDoLogin 		= "#prc.cbAdminEntryPoint#.security.doLogin";
+		prc.xehDoLogin 			= "#prc.cbAdminEntryPoint#.security.doLogin";
 		prc.xehLostPassword 	= "#prc.cbAdminEntryPoint#.security.lostPassword";
 		// remember me
 		prc.rememberMe = antiSamy.htmlSanitizer( securityService.getRememberMe() );
@@ -19,7 +46,7 @@ component{
 		arguments.event.paramValue("_securedURL", "");
 		rc._securedURL = antiSamy.htmlSanitizer( rc._securedURL );
 		// view
-		event.setView(view="security/login",layout="simple");	
+		event.setView(view="security/login");	
 	}
 	
 	// authenticate users
@@ -80,7 +107,7 @@ component{
 	function lostPassword(event,rc,prc){
 		prc.xehLogin 			= "#prc.cbAdminEntryPoint#.security.login";
 		prc.xehDoLostPassword 	= "#prc.cbAdminEntryPoint#.security.doLostPassword";
-		event.setView(view="security/lostPassword",layout="simple");	
+		event.setView(view="security/lostPassword");	
 	}
 	
 	// do the lost password goodness
@@ -91,7 +118,7 @@ component{
 		// Param email
 		arguments.event.paramValue("email", "");
 
-		rc.email 	= antiSamy.htmlSanitizer( rc.email );
+		rc.email = antiSamy.htmlSanitizer( rc.email );
 		
 		// Validate email
 		if( NOT trim( rc.email ).length() ){

@@ -16,7 +16,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess(event, interceptData) eventPattern="^contentbox-admin"{
+	function preProcess(event, interceptData) eventPattern="^(contentbox-admin|contentbox-security)"{
 		var prc = event.getCollection(private=true);
 		var rc	= event.getCollection();
 
