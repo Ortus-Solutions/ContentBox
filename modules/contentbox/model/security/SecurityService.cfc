@@ -268,15 +268,29 @@ component implements="ISecurityService" singleton{
 	* Get remember me cookie
 	*/
 	any function getRememberMe(){
-		return cookieStorage.getVar(name="contentbox_remember_me",default="");
+		return decryptIt( cookieStorage.getVar(name="contentbox_remember_me", default="") );
 	}
 	
 	/**
 	* Set remember me cookie
 	*/
 	ISecurityService function setRememberMe(required username){
-		cookieStorage.setVar(name="contentbox_remember_me",value=arguments.username);
+		cookieStorage.setVar(name="contentbox_remember_me", value=encryptIt( arguments.username ));
 		return this;
 	}
 	
+	// Cookie encryption
+	private function encryptIt(required encValue){
+		return encrypt( arguments.encValue, getEncryptionKey() , "BLOWFISH", "HEX" );
+	}
+	
+	// Cookie decryption
+	private function decryptIt(required decValue){
+		return decrypt( arguments.decValue, getEncryptionKey(), "BLOWFISH", "HEX" );
+	}
+	
+	// Get encryption key according to cookie algorithm
+	private function getEncryptionKey(){
+		return left( settingService.getSetting( "cb_salt"), 24 );
+	}
 }

@@ -213,6 +213,9 @@ component accessors="true"{
 
 		// Create Settings
 		var settings = {
+			// Installation security salt
+			"cb_salt" = hash( createUUID() & getTickCount() & now(), "SHA-512" ),
+			
 			// User Input Settings
 			"cb_site_name" = setup.getSiteName(),
 			"cb_site_email" = setup.getSiteEmail(),
