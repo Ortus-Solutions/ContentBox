@@ -8,6 +8,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="settingService"			inject="id:settingService@cb" 		persistent="false";
 	property name="interceptorService"		inject="coldbox:interceptorService" persistent="false";
 	property name="customFieldService" 	 	inject="customFieldService@cb" 		persistent="false";
+	property name="categoryService" 	 	inject="categoryService@cb" 		persistent="false";
 	property name="contentService"			inject="contentService@cb"			persistent="false";
 	property name="contentVersionService"	inject="contentVersionService@cb"	persistent="false";
 
@@ -369,6 +370,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all");
 		// reset versioning, and start with one
 		addNewContentVersion(content=latestContent, changelog="Content Cloned!", author=arguments.author);
+		
 		// safe clone custom fields
 		var newFields = arguments.original.getCustomFields();
 		for(var thisField in newFields){
@@ -376,13 +378,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			newField.setRelatedContent( this );
 			addCustomField( newField );
 		}
+		
 		// safe clone categories
-		if( arguments.original.hasCategories() ){
-			categories = duplicate( arguments.original.getCategories() );
+		var newCategories = arguments.original.getCategories();
+		for(var thisCategory in newCategories){
+			addCategories( categoryService.findBySlug( thisCategory.getSlug() ) );
 		}
-		else{
-			categories = [];
-		}
+		
 		// now clone children
 		if( original.hasChild() ){
 			var allChildren = original.getChildren();
