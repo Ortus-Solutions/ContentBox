@@ -72,15 +72,6 @@ component {
 
 		// interceptors
 		interceptors = [
-			// ContentBox security
-			{class="coldbox.system.interceptors.Security",
-			 name="security@cb",
-			 properties={
-			 	 rulesSource 	= "model",
-			 	 rulesModel		= "securityRuleService@cb",
-			 	 rulesModelMethod = "getSecurityRules",
-			 	 validatorModel = "securityService@cb"}
-			},
 			// CB RSS Cache Cleanup Ghost
 			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
 			// CB Content Cache Cleanup Ghost
@@ -167,7 +158,7 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Startup the Editor Service
+		// Startup the Editor Service, needed for markup translations support
 		controller.getWireBox().getInstance("EditorService@cb");
 		// Startup the ContentBox modules, if any
 		controller.getWireBox().getInstance("moduleService@cb").startup();
