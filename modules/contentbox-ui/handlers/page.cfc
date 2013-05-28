@@ -186,9 +186,6 @@ component extends="content" singleton{
 		event.paramValue("page",1);
 		event.paramValue("q","");
 
-		// Decode search term
-		rc.q = URLDecode( rc.q );
-
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging", module="contentbox");
 		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries(pagingMaxRows=prc.cbSettings.cb_search_maxResults);
