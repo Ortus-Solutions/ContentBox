@@ -11,7 +11,7 @@ component{
 		var prc = event.getCollection(private=true);
 		// setup asset root from administrator as that is the holder of 
 		// all things assets :)
-		prc.assetRoot = getModuleSettings("contentbox-admin").mapping;
+		prc.assetRoot = GetContextRoot() & getModuleSettings("contentbox-admin").mapping;
 	}
 
 	function index(event,rc,prc){
