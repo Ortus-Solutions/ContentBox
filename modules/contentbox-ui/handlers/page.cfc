@@ -166,15 +166,16 @@ component extends="content" singleton{
 			prc.missingPage 	 = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
 
-			// announce event
-			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
-
 			// set 404 headers
 			event.setHTTPHeader("404","Page not found");
 
 			// set skin not found
 			event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");
+				
+			// announce event
+			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
+
 		}
 	}
 
@@ -185,9 +186,6 @@ component extends="content" singleton{
 		// incoming params
 		event.paramValue("page",1);
 		event.paramValue("q","");
-
-		// Decode search term
-		rc.q = URLDecode( rc.q );
 
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin(plugin="Paging", module="contentbox");
