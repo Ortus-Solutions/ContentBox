@@ -21,7 +21,7 @@
 
 <h4>Content Search</h4>
 <div class="bg"></div>
-#cb.widget("SearchForm")#
+#cb.widget(name="SearchForm", args={placeholder="Search..."})#
 <br/>
 
 <!--- ContentBoxEvent --->
