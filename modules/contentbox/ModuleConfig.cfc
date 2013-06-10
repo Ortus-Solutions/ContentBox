@@ -142,7 +142,12 @@ component {
 		binder.map("machblogImporter@cb").to("contentbox.model.importers.MachBlogImporter");
 		// ColdBox Integrations
 		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
-
+		
+		// Verify if the AOP mixer is loaded, if not, load it
+		if( !isAOPMixerLoaded() ){
+			loadAOPMixer();
+		}
+		
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
 	}
@@ -184,6 +189,30 @@ component {
 		binder.bindAspect(classes=binder.match().regex("contentbox.*"),
 									methods=binder.match().annotatedWith("transactional"),
 									aspects="CFTransaction");
+	}
+	
+	// Load AOP Mixer
+	private function loadAOPMixer(){
+		var mixer = new coldbox.system.aop.Mixer();
+		// configure it
+		mixer.configure( controller.getWireBox(), {} );
+		// register it
+		controller.getInterceptorService().registerInterceptor(interceptorObject=mixer, interceptorName="AOPMixer");
+	}
+	
+	// Verify if wirebox aop mixer is loaded
+	private function isAOPMixerLoaded(){
+		var listeners 	= controller.getWireBox().getBinder().getListeners();
+		var results 	= false;
+		
+		for(var thisListener in listeners ){
+			if( thisListener.class eq "coldbox.system.aop.Mixer" ){
+				results = true;
+				break;
+			}
+		}
+		
+		return results;
 	}
 
 }
