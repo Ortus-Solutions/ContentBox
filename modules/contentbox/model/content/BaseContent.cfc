@@ -519,7 +519,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* Render content out using translations, caching, etc.
 	*/
-	any function renderContent(){
+	any function renderContent() profile{
 		var settings = settingService.getAllSettings(asStruct=true);
 
 		// caching enabled?
@@ -561,7 +561,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Renders the content silently so no caching, or extra fluff is done, just content translation rendering.
 	* @content.hint The content markup to translate, by default it uses the active content version's content
 	*/
-	any function renderContentSilent(any content=getContent()){
+	any function renderContentSilent(any content=getContent()) profile{
 		// render content out, prepare builder
 		var b = createObject("java","java.lang.StringBuilder").init( arguments.content );
 
