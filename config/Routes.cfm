@@ -23,7 +23,7 @@ limitations under the License.
  --->
 <cfscript>
 	// Allow unique URL or combination of URLs, we recommend both enabled
-	setUniqueURLS(false);
+	setUniqueURLS( false );
 	// Auto reload configuration, true in dev makes sense to reload the routes on every request
 	//setAutoReload(false);
 	// Sets automatic route extension detection and places the extension in the rc.format variable
@@ -37,10 +37,10 @@ limitations under the License.
 
 	// Base URL
 	if( len(getSetting('AppMapping') ) lte 1){
-		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#");
+		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/index.cfm");
 	}
 	else{
-		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#");
+		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#/index.cfm");
 	}
 	
 	// Your Application Routes
