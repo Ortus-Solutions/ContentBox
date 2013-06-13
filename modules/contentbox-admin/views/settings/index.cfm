@@ -545,6 +545,14 @@
             						</select>
                                 </div>
                             </div>
+							
+							<!---Gravatar info --->
+							<div class="alert alert-info clearfix">
+								<i class="icon-info-sign icon-large"></i>
+								To change or create avatars <a href="http://www.gravatar.com/site/signup" target="_blank">sign up to Gravatar.com</a>
+								and follow the on-screen instructions.
+							</div>
+							
     					</fieldset>
     				</div>
     				<!--- Notifications --->
