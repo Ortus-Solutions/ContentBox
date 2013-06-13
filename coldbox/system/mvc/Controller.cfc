@@ -35,14 +35,14 @@ component serializable="false" accessors="true"{
 	this.COLDBOX.authorEmail 	= "coldbox@ortussolutions.com";
 	this.COLDBOX.authorWebsite	= "http://www.ortussolutions.com";
 	this.COLDBOX.suffix			= "Gideon+Judges 6:15";
-	this.COLDBOX.version		= "1.0.0";
+	this.COLDBOX.version		= "1.1.0";
 	this.COLDBOX.description	= "This is the ColdBox LITE MVC Framework.";
 	
 	// Operation Static Defaults
 	this.COLDBOX.eventName 		= "event";
 	this.COLDBOX.eventAction	= "index";
 	this.COLDBOX.defaultEvent 	= "main.index";
-	this.COLDBOX.defaultLayout	= "main.cfm";
+	this.COLDBOX.defaultLayout	= "Main.cfm";
 
 	// Static Conventions
     this.COLDBOX.handlersConvention	= "handlers";
