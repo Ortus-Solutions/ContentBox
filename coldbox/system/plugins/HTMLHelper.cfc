@@ -1667,10 +1667,10 @@ Description :
 					arguments.buffer.append(' #lcase(key)#="#arguments.target[key]#"');
 				}
 				// data keys
-				if( key eq "data" and isStruct( arguments.target[ key ] ) ){
-					for( dataKey in arguments.target.data ){
-						if( isSimplevalue( arguments.target.data[ dataKey ] ) ){
-							arguments.buffer.append(' data-#lcase( dataKey )#="#arguments.target.data[ datakey ]#"');
+				if( isStruct( arguments.target[ key ] ) ){
+					for( dataKey in arguments.target[ key ] ){
+						if( isSimplevalue( arguments.target[ key ][ dataKey ] ) ){
+							arguments.buffer.append(' #lcase( key )#-#lcase( dataKey )#="#arguments.target[ key ][ datakey ]#"');
 						}
 					}
 				}
@@ -1680,5 +1680,24 @@ Description :
 			return arguments.buffer;
 		</cfscript>
 	</cffunction>
+	
+	<!--- onMissingMethod --->
+    <cffunction name="onMissingMethod" output="false" access="public" returntype="any" hint="Proxy calls to provided element">
+    	<cfargument	name="missingMethodName"		required="true"	hint="missing method name"	/>
+		<cfargument	name="missingMethodArguments" 	required="true"	hint="missing method arguments"/>
+    	
+    	<!---Incorporate tag to args --->
+    	<cfset missingMethodArguments.tag = arguments.missingMethodName>
+		
+		<!--- Do Content --->
+		<cfif structKeyExists(arguments.missingMethodArguments, 1)>
+			<cfset arguments.missingMethodArguments.content = arguments.missingMethodArguments.1>
+			<cfset structdelete( arguments.missingMethodArguments, 1)>
+		</cfif>
+
+		<!--- Execute Tag --->
+    	<cfreturn tag( argumentCollection=arguments.missingMethodArguments )>
+		
+    </cffunction>
 
 </cfcomponent>
