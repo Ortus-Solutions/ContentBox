@@ -449,7 +449,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayPublishedDate(){
 		var publishedDate = getPublishedDate();
-		return dateFormat( publishedDate, "mm/dd/yyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
+		return dateFormat( publishedDate, "mm/dd/yyyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
 	}
 
 	/**
@@ -457,7 +457,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
 
 	/**
@@ -465,7 +465,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayExpireDate(){
 		if( isNull(expireDate) ){ return "N/A"; }
-		return dateFormat( expireDate, "mm/dd/yyy" ) & " " & timeFormat(expireDate, "hh:mm:ss tt");
+		return dateFormat( expireDate, "mm/dd/yyyy" ) & " " & timeFormat(expireDate, "hh:mm:ss tt");
 	}
 
 	/**
