@@ -213,8 +213,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
 			mediaPath = "index.cfm" & mediaPath;;
 		}
+		
 		// add the entry point
-		mediaPath &= moduleSettings[ "contentbox-ui" ].entryPoint & "__media";
+		var entryPoint = moduleSettings[ "contentbox-ui" ].entryPoint;
+		mediaPath &= ( len( entryPoint ) ? "#entryPoint#/" : "" ) & "__media";
 		// Store it
 		settings.mediaPath = mediaPath;
 		
