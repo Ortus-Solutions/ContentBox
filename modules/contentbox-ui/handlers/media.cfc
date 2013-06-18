@@ -37,12 +37,11 @@ component singleton{
 		if( !isBoolean( rc.cbcache ) ){ rc.cbcache = false; }
 		
 		// Get the requested media path
-		prc.mediaPath = trim( replacenocase( event.getCurrentRoutedURL(), event.getCurrentRoute(), "" ) );
+		prc.mediaPath = trim( replacenocase( event.getCurrentRoutedURL(), prc.cbEntryPoint & "/" & event.getCurrentRoute(), "" ) );
 		prc.mediaPath = reReplace( prc.mediaPath, "\/$", "" );
 		
 		// Get the media provider
 		var mediaProvider = mediaService.getDefaultProvider();
-		
 		// Check if media path detected
 		if( !len( prc.mediaPath ) OR !mediaProvider.mediaExists( prc.mediaPath ) ){
 			// return invalid media
