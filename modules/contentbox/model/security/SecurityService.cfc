@@ -286,7 +286,7 @@ component implements="ISecurityService" singleton{
 	
 	// Cookie decryption
 	private function decryptIt(required decValue){
-		if( !len( argumetns.decValue) ){ return arguments.decValue; }
+		if( !len( arguments.decValue) ){ return arguments.decValue; }
 		return decrypt( arguments.decValue, getEncryptionKey(), "BLOWFISH", "HEX" );
 	}
 	
