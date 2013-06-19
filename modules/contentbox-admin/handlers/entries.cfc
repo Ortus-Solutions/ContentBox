@@ -232,6 +232,7 @@ component extends="baseHandler"{
 		event.paramValue( "expireHour", "" );
 		event.paramValue( "expireMinute", "" );
 		event.paramValue( "content", "" );
+		event.paramValue("creatorID","");
 
 		// Quick save changelog
 		if( event.isAjax() ){
