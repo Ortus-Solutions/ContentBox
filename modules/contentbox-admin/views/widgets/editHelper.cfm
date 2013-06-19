@@ -22,7 +22,9 @@ function saveWidgetCode(){
 	$status.html("Saving...");
 	$uploader.slideToggle();
 	// Post it
-	$.post('#event.buildLink(prc.xehWidgetSave)#',{widget:'#rc.widget#',widgetCode:editAreaLoader.getValue('widgetCode')},function(data){
+	$.post('#event.buildLink(prc.xehWidgetSave)#',
+		{ widget:'#rc.widget#', widgetCode:editAreaLoader.getValue('widgetCode'), type: '#rc.type#'},
+		function(data){
 		$uploader.fadeOut(1500);
 		$status.html('Code Saved!');
 	});

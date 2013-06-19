@@ -40,7 +40,7 @@
       			<exclude name=".DS_Store" />
       			<exclude name="settings.xml" />
       			<exclude name=".project" />
-      			<exclude name="modules/contentbox/contentbox-codexwiki" />
+      			<exclude name="modules/contentbox/modules/contentbox-codexwiki/**" />
       		</fileset>
         </copy>
 		

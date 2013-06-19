@@ -148,9 +148,8 @@
 				<div class="margin10">
 					<a title="Email Me!" href="mailto:#prc.author.getEmail()#">#prc.author.getName()#</a>
 				</div>
-	
-				<!--- Persisted Info --->
 				
+				<!--- Persisted Info --->
 				<table class="table table-condensed table-hover table-striped" width="100%">
 					<tr>
 						<th width="75" class="textRight">Last Login</th>
@@ -171,6 +170,15 @@
 						</td>
 					</tr>
 				</table>
+				
+				<p></p>
+				<!---Gravatar info --->
+				<div class="alert alert-info clearfix">
+					<i class="icon-info-sign icon-large"></i>
+					To change your avatar <a href="http://www.gravatar.com/site/signup/#URLEncode( prc.author.getEmail() )#" target="_blank">sign up to Gravatar.com</a>
+					and follow the on-screen instructions to add a Gravatar for #prc.author.getEmail()#
+				</div>
+	
 			</div>
 		</div>
 		</cfif>

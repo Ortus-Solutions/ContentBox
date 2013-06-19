@@ -8,6 +8,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="settingService"			inject="id:settingService@cb" 		persistent="false";
 	property name="interceptorService"		inject="coldbox:interceptorService" persistent="false";
 	property name="customFieldService" 	 	inject="customFieldService@cb" 		persistent="false";
+	property name="categoryService" 	 	inject="categoryService@cb" 		persistent="false";
 	property name="contentService"			inject="contentService@cb"			persistent="false";
 	property name="contentVersionService"	inject="contentVersionService@cb"	persistent="false";
 
@@ -322,7 +323,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Bit that denotes if the content has been published or not
 	*/
 	boolean function isContentPublished(){
-		return ( getIsPublished() AND getPublishedDate() LTE now() ) ? true : false;
+		return ( getIsPublished() AND !isNull( publishedDate ) AND getPublishedDate() LTE now() ) ? true : false;
 	}
 
 	/**
@@ -369,6 +370,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all");
 		// reset versioning, and start with one
 		addNewContentVersion(content=latestContent, changelog="Content Cloned!", author=arguments.author);
+		
 		// safe clone custom fields
 		var newFields = arguments.original.getCustomFields();
 		for(var thisField in newFields){
@@ -376,13 +378,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			newField.setRelatedContent( this );
 			addCustomField( newField );
 		}
+		
 		// safe clone categories
-		if( arguments.original.hasCategories() ){
-			categories = duplicate( arguments.original.getCategories() );
+		var newCategories = arguments.original.getCategories();
+		for(var thisCategory in newCategories){
+			addCategories( categoryService.findBySlug( thisCategory.getSlug() ) );
 		}
-		else{
-			categories = [];
-		}
+		
 		// now clone children
 		if( original.hasChild() ){
 			var allChildren = original.getChildren();
@@ -447,7 +449,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayPublishedDate(){
 		var publishedDate = getPublishedDate();
-		return dateFormat( publishedDate, "mm/dd/yyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
+		return dateFormat( publishedDate, "mm/dd/yyyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
 	}
 
 	/**
@@ -455,7 +457,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
 
 	/**
@@ -463,7 +465,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayExpireDate(){
 		if( isNull(expireDate) ){ return "N/A"; }
-		return dateFormat( expireDate, "mm/dd/yyy" ) & " " & timeFormat(expireDate, "hh:mm:ss tt");
+		return dateFormat( expireDate, "mm/dd/yyyy" ) & " " & timeFormat(expireDate, "hh:mm:ss tt");
 	}
 
 	/**
@@ -517,7 +519,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* Render content out using translations, caching, etc.
 	*/
-	any function renderContent(){
+	any function renderContent() profile{
 		var settings = settingService.getAllSettings(asStruct=true);
 
 		// caching enabled?
@@ -559,7 +561,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Renders the content silently so no caching, or extra fluff is done, just content translation rendering.
 	* @content.hint The content markup to translate, by default it uses the active content version's content
 	*/
-	any function renderContentSilent(any content=getContent()){
+	any function renderContentSilent(any content=getContent()) profile{
 		// render content out, prepare builder
 		var b = createObject("java","java.lang.StringBuilder").init( arguments.content );
 

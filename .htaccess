@@ -41,6 +41,8 @@ AddType font/otf .otf
 
 # Media Types
 RewriteCond %{REQUEST_URI} /__media\/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.cfm/%{REQUEST_URI} [QSA,L,NS]
 
 #Images, css, javascript and docs, add your own extensions if needed.

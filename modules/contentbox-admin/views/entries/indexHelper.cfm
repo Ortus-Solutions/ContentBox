@@ -60,10 +60,11 @@ function openCloneDialog(contentID, title){
 	openModal( $cloneDialog, 500, 300 );
 	// form validator and data
 	$cloneForm.validate({
-		success:function(e,els){
-			$cloneForm.find("##bottomCenteredBar").slideUp();
+		submitHandler: function(form){
+           	$cloneForm.find("##cloneButtonBar").slideUp();
 			$cloneForm.find("##clonerBarLoader").slideDown();
-		}  
+			form.submit();
+        } 
 	});
 	$cloneForm.find("##contentID").val( contentID );
 	$cloneForm.find("##title").val( title ).focus();

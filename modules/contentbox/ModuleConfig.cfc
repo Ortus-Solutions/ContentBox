@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "An enterprise modular content platform";
-	this.version			= "1.5.3";
+	this.version			= "1.5.4";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
@@ -72,15 +72,6 @@ component {
 
 		// interceptors
 		interceptors = [
-			// ContentBox security
-			{class="coldbox.system.interceptors.Security",
-			 name="security@cb",
-			 properties={
-			 	 rulesSource 	= "model",
-			 	 rulesModel		= "securityRuleService@cb",
-			 	 rulesModelMethod = "getSecurityRules",
-			 	 validatorModel = "securityService@cb"}
-			},
 			// CB RSS Cache Cleanup Ghost
 			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
 			// CB Content Cache Cleanup Ghost
@@ -151,7 +142,12 @@ component {
 		binder.map("machblogImporter@cb").to("contentbox.model.importers.MachBlogImporter");
 		// ColdBox Integrations
 		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
-
+		
+		// Verify if the AOP mixer is loaded, if not, load it
+		if( !isAOPMixerLoaded() ){
+			loadAOPMixer();
+		}
+		
 		// Load Hibernate Transactions for ContentBox
 		loadHibernateTransactions(binder);
 	}
@@ -167,7 +163,7 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Startup the Editor Service
+		// Startup the Editor Service, needed for markup translations support
 		controller.getWireBox().getInstance("EditorService@cb");
 		// Startup the ContentBox modules, if any
 		controller.getWireBox().getInstance("moduleService@cb").startup();
@@ -193,6 +189,30 @@ component {
 		binder.bindAspect(classes=binder.match().regex("contentbox.*"),
 									methods=binder.match().annotatedWith("transactional"),
 									aspects="CFTransaction");
+	}
+	
+	// Load AOP Mixer
+	private function loadAOPMixer(){
+		var mixer = new coldbox.system.aop.Mixer();
+		// configure it
+		mixer.configure( controller.getWireBox(), {} );
+		// register it
+		controller.getInterceptorService().registerInterceptor(interceptorObject=mixer, interceptorName="AOPMixer");
+	}
+	
+	// Verify if wirebox aop mixer is loaded
+	private function isAOPMixerLoaded(){
+		var listeners 	= controller.getWireBox().getBinder().getListeners();
+		var results 	= false;
+		
+		for(var thisListener in listeners ){
+			if( thisListener.class eq "coldbox.system.aop.Mixer" ){
+				results = true;
+				break;
+			}
+		}
+		
+		return results;
 	}
 
 }
