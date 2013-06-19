@@ -350,8 +350,8 @@
                     	</div>
                     	<div id="htmlattributes" class="accordion-body collapse">
                       		<div class="accordion-inner">
-        						#html.textArea(name="htmlKeywords",label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", bind=prc.page,class="input-block-level",maxlength="160")#
-								#html.textArea(name="htmlDescription",label="Description: (<span id='html_description_count'>0</span>/160 characters left)", bind=prc.page,class="input-block-level",maxlength="160")#
+        							#html.textArea(name="htmlKeywords",label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", bind=prc.entry,class="input-block-level",maxlength="160")#
+								#html.textArea(name="htmlDescription",label="Description: (<span id='html_description_count'>0</span>/160 characters left)", bind=prc.entry,class="input-block-level",maxlength="160")#
                       		</div>
                     	</div>
                   	</div>
