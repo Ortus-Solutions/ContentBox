@@ -13,3 +13,5 @@ CKEDITOR.editorConfig = function( config ) {
 	config.docType = '<!DOCTYPE html>';
 	config.disableNativeSpellChecker = false;
 };
+CKEDITOR.dtd.$removeEmpty.span = 0;
+CKEDITOR.dtd.$removeEmpty.i = 0;

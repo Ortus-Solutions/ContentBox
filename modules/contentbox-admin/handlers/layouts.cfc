@@ -5,6 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="layoutService"	inject="id:layoutService@cb";
+	property name="settingService"	inject="id:settingService@cb";
 	property name="contentService"	inject="id:contentService@cb";
 
 	// pre handler
@@ -62,6 +63,7 @@ component extends="baseHandler"{
 		
 		// Results validated, save settings
 		layoutService.saveLayoutSettings( name=rc.layoutName, settings=rc );
+		settingservice.flushSettingsCache();
 		getPlugin("MessageBox").info(message="Layout settings saved!");
 		// Relocate
 		setNextEvent(event=prc.xehLayouts);

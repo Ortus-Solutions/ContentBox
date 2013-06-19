@@ -14,6 +14,13 @@ $(document).ready(function() {
 	$contentID		= $pageForm.find("##contentID");
 	// setup editors via _tags/editors.cfm by passing the form container
 	setupEditors( $pageForm, false );
+	// counters
+	$("##htmlKeywords").keyup(function(){
+		$("##html_keywords_count").html( $("##htmlKeywords").val().length );
+	});
+	$("##htmlDescription").keyup(function(){
+		$("##html_description_count").html( $("##htmlDescription").val().length );
+	});
 });
 // quick save for pages
 function quickSave(){

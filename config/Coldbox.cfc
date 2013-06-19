@@ -29,7 +29,7 @@ limitations under the License.
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= "ContentBox",
+			appName 				= "ContentBox Modular CMS",
 
 			//Development Settings
 			debugMode				= false,
@@ -38,13 +38,13 @@ limitations under the License.
 			handlersIndexAutoReload = false,
 
 			//Implicit Events
-			defaultEvent			= "General.index",
-			requestStartHandler		= "",
-			requestEndHandler		= "",
-			applicationStartHandler = "",
-			applicationEndHandler	= "",
-			sessionStartHandler 	= "",
-			sessionEndHandler		= "",
+			defaultEvent						= "Main.index",
+			requestStartHandler			= "",
+			requestEndHandler			= "",
+			applicationStartHandler 		= "",
+			applicationEndHandler		= "",
+			sessionStartHandler 			= "",
+			sessionEndHandler			= "",
 			missingTemplateHandler	= "",
 
 			//Extension Points
@@ -58,12 +58,12 @@ limitations under the License.
 			requestContextDecorator 	= "",
 
 			//Error/Exception Handling
-			exceptionHandler		= "",
-			onInvalidEvent			= "",
-			customErrorTemplate		= "",
+			exceptionHandler			= "",
+			onInvalidEvent				= "",
+			customErrorTemplate	= "",
 
 			//Application Aspects
-			handlerCaching 			= true,
+			handlerCaching 	= true,
 			eventCaching			= true
 		};
 
@@ -76,7 +76,7 @@ limitations under the License.
 		// create a function with the name of the environment so it can be executed if that environment is detected
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
-			development = "^cf9.,^railo.,^local"
+			development = "^local,jfetmac"
 		};
 
 		// Module Directives
@@ -101,7 +101,7 @@ limitations under the License.
 
 		//Layout Settings
 		layoutSettings = {
-			defaultLayout = "Layout.Main.cfm"
+			defaultLayout = "Main.cfm"
 		};
 
 		// ORM
@@ -122,6 +122,7 @@ limitations under the License.
 
 	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
 	function development(){
+		
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching = false;

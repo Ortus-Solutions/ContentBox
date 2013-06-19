@@ -30,7 +30,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Admin";
-	this.version			= "1.5.3";
+	this.version			= "1.5.4";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
@@ -73,8 +73,6 @@ component {
 			customInterceptionPoints = arrayToList([
 				// Admin Layout HTML points
 				"cbadmin_beforeHeadEnd","cbadmin_afterBodyStart","cbadmin_beforeBodyEnd","cbadmin_footer","cbadmin_beforeContent","cbadmin_afterContent","cbadmin_onTagLine", "cbadmin_onTopBar",
-				// Login Layout HTML points
-				"cbadmin_beforeLoginHeadEnd","cbadmin_afterLoginBodyStart","cbadmin_beforeLoginBodyEnd","cbadmin_loginFooter","cbadmin_beforeLoginContent","cbadmin_afterLoginContent",
 				// Entry Events
 				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove", "cbadmin_onEntryStatusUpdate",
 				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarAccordion", "cbadmin_entryEditorSidebarFooter",
@@ -121,7 +119,6 @@ component {
 		];
 		
 	}
-	
 	
 	/*
 	* On Module Load
