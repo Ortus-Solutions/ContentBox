@@ -45,6 +45,10 @@
 				<exclude name="${patch.excludes}"/>
 				<exclude name="modules/contentbox-dsncreator/**"/>
 				<exclude name="modules/contentbox-installer/**"/>
+				<exclude name="layouts/**"/>
+				<exclude name="views/**"/>
+				<exclude name="includes/**"/>
+				<exclude name="handlers/**"/>
 		    </patternset>
 		</unzip>
 		<!-- Delete Patch -->
