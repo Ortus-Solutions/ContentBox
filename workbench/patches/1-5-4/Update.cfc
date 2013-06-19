@@ -31,14 +31,14 @@ component implements="contentbox.model.updates.IUpdate"{
 	// DI
 	property name="settingService"			inject="id:settingService@cb";
 	property name="permissionService" 		inject="permissionService@cb";
-	property name="roleService" 			inject="roleService@cb";
+	property name="roleService" 				inject="roleService@cb";
 	property name="securityRuleService"		inject="securityRuleService@cb";
 	property name="pageService"				inject="pageService@cb";
-	property name="coldbox"					inject="coldbox";
-	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
-	property name="log"						inject="logbox:logger:{this}";
+	property name="coldbox"						inject="coldbox";
+	property name="fileUtils"						inject="coldbox:plugin:FileUtils";
+	property name="log"							inject="logbox:logger:{this}";
 	property name="contentService" 			inject="contentService@cb";
-	property name="wirebox"					inject="wirebox";
+	property name="wirebox"						inject="wirebox";
 	
 	function init(){
 		version = "1.5.4";
@@ -51,14 +51,17 @@ component implements="contentbox.model.updates.IUpdate"{
 	function preInstallation(){
 
 		try{
-		
+			var currentVersion = coldbox.getSetting( "modules" ).contentbox.version;
+			
 			log.info("About to begin #version# patching");
 			
 			// Check for System Salt, else create it
 			updateSalt();
 			
 			// Update security rules
-			securityRuleService.resetRules();
+			if( replace( currentVersion, ".", "", "all" )  LTE 152 ){
+				securityRuleService.resetRules();	
+			}
 			
 			// Update new settings
 			updateSettings();
