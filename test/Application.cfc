@@ -47,15 +47,14 @@ limitations under the License.
 	this.mappings["/coldbox"] 			= rootPath & "/coldbox" ;
 
 	this.ormSettings = {
-		cfclocation=["../modules/contentbox"],
+		cfclocation=[ "../modules" ],
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		eventHandling 		= true,
 		//eventHandler		= "coldbox.system.orm.hibernate.WBEventHandler",
 		skipCFCWithError	= true,
-		secondarycacheenabled = true,
-		cacheprovider		= "ehCache"
+		secondarycacheenabled = false
 	};
 
 	public boolean function onRequestStart(String targetPage){
