@@ -95,6 +95,7 @@ $(document).ready(function() {
 	// Shortcut key bindings
 	jwerty.key( "ctrl+shift+e" , toggleSidebar );
 	jwerty.key( "ctrl+shift+s" , function(){ $("#nav-search").focus(); return false;} );
+	jwerty.key( "ctrl+shift+p" , showQuickPost );
 	
 });
 function toggleSidebar(){

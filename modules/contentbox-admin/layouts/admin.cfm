@@ -122,7 +122,7 @@
 							
 							<!---Quick Post --->
 							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") AND !prc.cbSettings.cb_site_disable_blog>
-								<li title="Quick Post" data-placement="left"><a href="javascript:showQuickPost()"><i class="icon-edit icon-large"></i></a></li>
+								<li title="Quick Post (ctrl+shift+P)" data-placement="left"><a href="javascript:showQuickPost()"><i class="icon-edit icon-large"></i></a></li>
 							</cfif>
 							
 							<!---Admin Actions --->
