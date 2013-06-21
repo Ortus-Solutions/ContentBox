@@ -34,17 +34,21 @@
 					</div>
 				</cfif>
 				
-				<!--- Latest Entries --->
-				<div class="well well-small" id="latestEntries"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
-				
-				<!--- Latest Pages --->
-				<div class="well well-small" id="latestPages"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
-				
-				<!--- Latest Comments --->
-				<div class="well well-small" id="latestComments"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
-				
-				<!--- Latest News --->
-				<div class="well well-small" id="latestNews"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+				<div class="tabbable">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="##recentContentTab" data-toggle="tab"><i class="icon-pencil"></i> Recent Content</a></li>
+						<li><a href="##latestComments" data-toggle="tab"><i class="icon-comments"></i> Recent Comments</a></li>
+						<li><a href="##latestNews" data-toggle="tab"><i class="icon-rss"></i> Recent News</a></li>
+					</ul>
+					<div class="tab-content">
+						<div class="tab-pane active" id="recentContentTab">
+							<div class="well well-small" id="latestEntries"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+							<div class="well well-small" id="latestPages"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+						</div>
+						<div class="well well-small tab-pane" id="latestComments"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+						<div class="well well-small tab-pane" id="latestNews"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+					</div>
+				</div>
 				
 				<!--- Event --->
 				#announceInterception("cbadmin_postDashboardContent")#
