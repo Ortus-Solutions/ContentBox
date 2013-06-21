@@ -9,7 +9,7 @@
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
-	<base href="#getSetting('htmlBaseURL')#" />
+	<base href="#cb.siteBaseURL()#"/>
 	<!--- Title --->
     <title>ContentBox Administrator - Login</title>
 	<!--- Favicon --->
