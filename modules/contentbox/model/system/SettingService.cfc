@@ -218,7 +218,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var entryPoint = moduleSettings[ "contentbox-ui" ].entryPoint;
 		mediaPath &= ( len( entryPoint ) ? "#entryPoint#/" : "" ) & "__media";
 		// Store it
-		settings.mediaPath = mediaPath;
+		mediaPath = ( left( mediaPath,1 ) == '/' ? mediaPath : "/" & mediaPath );
+		settings.mediaPath =mediaPath;
 		
 		return settings;
 	}
