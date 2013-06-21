@@ -135,6 +135,7 @@ component accessors="true" singleton threadSafe{
 		QueryAddColumn(widgets,"module",[]);
 		QueryAddColumn(widgets,"category",[]);
 		QueryAddColumn(widgets,"icon",[]);
+		QueryAddColumn(widgets,"debug",[]);
 		// cleanup and more stuff
 
 		// add core widgets
@@ -176,6 +177,7 @@ component accessors="true" singleton threadSafe{
 			}
 			catch(any e){
 				log.error("Error creating module widget plugin: #widgetName#",e);
+				querySetCell( widgets, "debug", "Error creating module widget plugin #e.message# #e.detail#. Logged error and stacktrace too." );
 			}
 		}
 
