@@ -91,7 +91,30 @@ $(document).ready(function() {
 	   var activeTab = $('[href=' + location.hash + ']');
 	   activeTab && activeTab.tab('show');
 	});
+	
+	// Shortcut key bindings
+	jwerty.key( "ctrl+shift+e" , toggleSidebar );
+	jwerty.key( "ctrl+shift+s" , function(){ $("#nav-search").focus(); return false;} );
+	
 });
+function toggleSidebar(){
+	var sidebar = $("#main-sidebar");
+	var type = sidebar.css( "display" );
+	// nosidebar exit
+	if( type == undefined ){ return; }
+	// toggles
+	if( type == "block" ){
+		sidebar.fadeOut();
+		$("#sidebar_trigger").removeClass("icon-collapse-alt").addClass("icon-expand-alt");
+		$("#main-content").removeClass("span9").addClass("span12");
+	}
+	else{
+		$("#sidebar_trigger").removeClass("icon-expand-alt").addClass("icon-collapse-alt");
+		sidebar.fadeIn();
+		$("#main-content").removeClass("span12").addClass("span9");
+		
+	}
+}
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
 		$("#adminActionsIcon").addClass( "icon-spin textOrange" );
