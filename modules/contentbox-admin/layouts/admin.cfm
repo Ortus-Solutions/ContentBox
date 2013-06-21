@@ -46,6 +46,7 @@
 			    #prc.cbroot#/includes/js/bootstrap-modalmanager.js,
 			    #prc.cbroot#/includes/js/bootstrap-modal.js,
 			    #prc.cbroot#/includes/js/bootstrap-datepicker.js,
+			    #prc.cbroot#/includes/js/jwerty.js,
 			    #prc.cbroot#/includes/js/jquery.validate.js,
 			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
 			    #prc.cbroot#/includes/js/contentbox.js",
@@ -101,23 +102,23 @@
 							<li title="Open Site" data-placement="left"><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home icon-large"></i></a></li>
 							
 							<!--- New Quick Links --->
-					    	<li class="dropdown" title="Create New..." data-placement="left">
-					    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
-								<ul class="dropdown-menu">
-									<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
-										<li><a href="#event.buildLink( prc.xehPagesEditor )#"><i class="icon-file-alt"></i> New Page</a></li>
-									</cfif>
-									<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
-										<li><a href="#event.buildLink( prc.xehBlogEditor )#"><i class="icon-quote-left"></i> New Entry</a></li>
-									</cfif>
-									<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-										<li><a href="#event.buildLink( prc.xehAuthorEditor )#"><i class="icon-user"></i> New User</a></li>
-									</cfif>
-									<cfif prc.oAuthor.checkPermission("MEDIAMANAGER_ADMIN")>
-										<li><a href="#event.buildLink( prc.xehMediaManager )#"><i class="icon-th"></i> New Media</a></li>
-									</cfif>
-								</ul>
-							</li>
+						    	<li class="dropdown" title="Create New..." data-placement="left">
+						    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
+									<ul class="dropdown-menu">
+										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
+											<li><a href="#event.buildLink( prc.xehPagesEditor )#"><i class="icon-file-alt"></i> New Page</a></li>
+										</cfif>
+										<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
+											<li><a href="#event.buildLink( prc.xehBlogEditor )#"><i class="icon-quote-left"></i> New Entry</a></li>
+										</cfif>
+										<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+											<li><a href="#event.buildLink( prc.xehAuthorEditor )#"><i class="icon-user"></i> New User</a></li>
+										</cfif>
+										<cfif prc.oAuthor.checkPermission("MEDIAMANAGER_ADMIN")>
+											<li><a href="#event.buildLink( prc.xehMediaManager )#"><i class="icon-th"></i> New Media</a></li>
+										</cfif>
+									</ul>
+								</li>
 							
 							<!---Quick Post --->
 							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") AND !prc.cbSettings.cb_site_disable_blog>
@@ -141,11 +142,11 @@
 							<li class="divider-vertical"></li>
 							
 							<!---Search --->
-							<span class="navbar-search pull-left" id="div-search">
+							<span class="navbar-search pull-left" id="div-search" title="ctrl+shift+s" data-placement="right"/>
 								<!---Search Results --->
 								<span id="div-search-results"></span>
 								<!---Search Inputs --->
-								<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url"/>
+								<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
 								<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
 							</span>
 							
