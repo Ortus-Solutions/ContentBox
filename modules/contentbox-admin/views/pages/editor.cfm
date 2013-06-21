@@ -9,15 +9,15 @@
 		<div class="header">
 			<i class="icon-edit icon-large"></i>
 			Page Editor
-			<div class="btn-group pull-right">
+			<div class="btn-group pull-right" style="margin-top:5px">
 			    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#';return false;"><i class="icon-reply"></i> Back</button>
 			    <cfif prc.page.isLoaded()>
 				<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
-			    	<span class="caret"></span>
+			    		<span class="caret"></span>
 			    </button>
 			   		<ul class="dropdown-menu">
-			    	<li><a href="##" onclick="#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#"><i class="icon-eye-open"></i> View In Site</a></li>
-			    </ul>
+			    			<li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li>
+			    		</ul>
 				</cfif>
 		    </div>
 		</div>
