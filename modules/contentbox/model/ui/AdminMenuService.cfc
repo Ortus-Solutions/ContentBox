@@ -157,7 +157,7 @@ component accessors="true" threadSafe singleton{
 
 		// SYSTEM
 		addTopMenu(name=this.SYSTEM,label="<i class='icon-briefcase icon-large'></i> System",permissions="SYSTEM_TAB")
-			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehSettings)#")
+			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehSettings)#",data={ "keybinding"="ctrl+shift+c" },title="ctrl+shift+C" )
 			.addSubMenu(name="SecurityRules",label="Security Rules",href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN")
 			.addSubMenu(name="EmailTemplates",label="Email Templates",href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN")
 			.addSubMenu(name="GeekSettings",label="Geek Settings",href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS");
@@ -191,8 +191,9 @@ component accessors="true" threadSafe singleton{
 	* @href.hint The href, if any to locate when clicked
 	* @target.hint The target to execute the link in, default is same page.
 	* @permissions.hint The list of permissions needed to view this menu
+	* @data.hint A structure of data attributes to add to the link
 	*/
-	AdminMenuService function addTopMenu(required name, required label, title="", href="##", target="", permissions=""){
+	AdminMenuService function addTopMenu(required name, required label, title="", href="##", target="", permissions="", data=structNew() ){
 		// stash pointer
 		thisTopMenu = arguments.name;
 		// store new top menu
@@ -213,8 +214,9 @@ component accessors="true" threadSafe singleton{
 	* @href.hint The href, if any to locate when clicked
 	* @target.hint The target to execute the link in, default is same page.
 	* @permissions.hint The list of permissions needed to view this menu
+	* @data.hint A structure of data attributes to add to the link
 	*/
-	AdminMenuService function addSubMenu(topMenu, required name, required label, title="", href="##", target="", permissions=""){
+	AdminMenuService function addSubMenu(topMenu, required name, required label, title="", href="##", target="", permissions="", data=structNew() ){
 		// Check if thisTopMenu set?
 		if( !len(thisTopMenu) AND !structKeyExists(arguments,"topMenu") ){ throw("No top menu passed or concatenated with"); }
 		// check this pointer
@@ -277,4 +279,13 @@ component accessors="true" threadSafe singleton{
 		return genMenu;
 	}
 
+	public string function parseADataAttributes( required Struct data ) {
+		var dataString = "";
+		for( dataKey in arguments.data ){
+			if( isSimplevalue( arguments.data[ dataKey ] ) ){
+				dataString &= ' data-#lcase( dataKey )#="#arguments.data[ datakey ]#"';
+			}
+		}
+		return dataString;
+	}
 }

@@ -55,7 +55,7 @@
 				    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
 							<i class="icon-cogs icon-large"></i>
 						</a>
-				    	<ul class="dropdown-menu text-left">
+				    	<ul class="dropdown-menu text-left pull-right">
 				    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Edit Command --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
