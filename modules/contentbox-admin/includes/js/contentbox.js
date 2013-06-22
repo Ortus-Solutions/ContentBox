@@ -95,7 +95,22 @@ $(document).ready(function() {
 	// Shortcut key bindings
 	jwerty.key( "ctrl+shift+e" , toggleSidebar );
 	jwerty.key( "ctrl+shift+s" , function(){ $("#nav-search").focus(); return false;} );
-	jwerty.key( "ctrl+shift+p" , showQuickPost );
+	jwerty.key( "ctrl+shift+q" , showQuickPost );
+	// find all links with the key-binding data attribute
+	$( '[data-keybinding]' ).each(function(){
+		var boundItem = $( this );
+		jwerty.key( boundItem.data( 'keybinding' ), function(){ 
+			// give precedence to onclick
+			if( boundItem.attr( 'onclick' ) ) {
+				// if onclick, call event
+				boundItem.click();
+			}
+			else {
+				// otherwise, follow link
+				to( boundItem.attr( 'href' ) );
+			} 
+		});
+	});
 	
 });
 function toggleSidebar(){

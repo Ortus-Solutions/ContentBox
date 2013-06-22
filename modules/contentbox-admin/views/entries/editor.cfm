@@ -167,7 +167,7 @@
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-						&nbsp;<input type="submit" class="btn" value="Save" onclick="return quickSave()">
+						&nbsp;<input type="submit" class="btn" value="Save" data-keybinding="ctrl+s" onclick="return quickSave()">
 						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
