@@ -85,7 +85,7 @@
 					<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
 					
 					<!--- Brand, future multi-site switcher --->
-					<a class="brand" href="#event.buildLink( prc.xehDashboard )#">
+					<a class="brand" data-keybinding="ctrl+shift+d" title="ctrl+shift+D" href="#event.buildLink( prc.xehDashboard )#">
 						#prc.cbSettings.cb_site_name#
 					</a>
 					
@@ -106,23 +106,39 @@
 						    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
 									<ul class="dropdown-menu">
 										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
-											<li><a href="#event.buildLink( prc.xehPagesEditor )#"><i class="icon-file-alt"></i> New Page</a></li>
+											<li>
+												<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
+													<i class="icon-file-alt"></i> New Page
+												</a>
+											</li>
 										</cfif>
 										<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
-											<li><a href="#event.buildLink( prc.xehBlogEditor )#"><i class="icon-quote-left"></i> New Entry</a></li>
+											<li>
+												<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
+													<i class="icon-quote-left"></i> New Entry
+												</a>
+											</li>
 										</cfif>
 										<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-											<li><a href="#event.buildLink( prc.xehAuthorEditor )#"><i class="icon-user"></i> New User</a></li>
+											<li>
+												<a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
+													<i class="icon-user"></i> New User
+												</a>
+											</li>
 										</cfif>
 										<cfif prc.oAuthor.checkPermission("MEDIAMANAGER_ADMIN")>
-											<li><a href="#event.buildLink( prc.xehMediaManager )#"><i class="icon-th"></i> New Media</a></li>
+											<li>
+												<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
+													<i class="icon-th"></i> New Media
+												</a>
+											</li>
 										</cfif>
 									</ul>
 								</li>
 							
 							<!---Quick Post --->
 							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") AND !prc.cbSettings.cb_site_disable_blog>
-								<li title="Quick Post (ctrl+shift+P)" data-placement="left"><a href="javascript:showQuickPost()"><i class="icon-edit icon-large"></i></a></li>
+								<li title="Quick Post (ctrl+shift+Q)" data-placement="left"><a href="javascript:showQuickPost()"><i class="icon-edit icon-large"></i></a></li>
 							</cfif>
 							
 							<!---Admin Actions --->
@@ -179,8 +195,8 @@
 							<li class="dropdown">
 								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="quickLinksIcon" class="icon-user"></i> #prc.oAuthor.getName()# <b class="icon-caret-down"></b></a>
 								<ul class="dropdown-menu">
-									<li><a href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"><i class="icon-camera"></i> My Profile</a></li>
-									<li><a href="#event.buildLink( prc.xehDoLogout )#"><i class="icon-off"></i> Logout</a></li>
+									<li><a data-keybinding="ctrl+shift+a" title="ctrl+shift+A" href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"><i class="icon-camera"></i> My Profile</a></li>
+									<li><a data-keybinding="ctrl+shift+l" title="ctrl+shift+L" href="#event.buildLink( prc.xehDoLogout )#"><i class="icon-off"></i> Logout</a></li>
 								</ul>
 							</li>
 	                    </ul>
