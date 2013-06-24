@@ -150,7 +150,7 @@
 							    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
 										<i class="icon-cogs icon-large"></i>
 									</a>
-							    	<ul class="dropdown-menu text-left">
+							    	<ul class="dropdown-menu text-left pull-right">
 							    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 										<!--- Clone Command --->
 										<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
@@ -165,7 +165,7 @@
 										</cfif>
 										<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 										<!--- Export --->
-										<li class="dropdown-submenu">
+										<li class="dropdown-submenu pull-left">
 											<a href="##"><i class="icon-download icon-large"></i> Export</a>
 											<ul class="dropdown-menu text-left">
 												<li><a href="#event.buildLink(linkto=prc.xehEntryExport)#/contentID/#entry.getContentID()#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>

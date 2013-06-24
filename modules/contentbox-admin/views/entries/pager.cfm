@@ -56,7 +56,7 @@
 			    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
 						<i class="icon-cogs icon-large"></i>
 					</a>
-			    	<ul class="dropdown-menu text-left">
+			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 						<!--- Edit Command --->
 						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>

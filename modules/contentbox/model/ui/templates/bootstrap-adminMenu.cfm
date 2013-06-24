@@ -7,8 +7,7 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
-			</a>
-						
+			</a>	
 			<div class="nav-collapse collapse" id="adminMenuBarContent">
 			 	<ul class="nav">
 					<!--- Loop over Top Menus --->
@@ -17,7 +16,8 @@
 						<li class="dropdown<cfif event.getValue(name='tab#local.topMenu.name#',defaultValue=false,private=true)> active</cfif>">
 							<a href="#local.topMenu.href#" class="dropdown-toggle" data-toggle="dropdown"<!---
 							---><cfif len(local.topMenu.title)> title="#local.topMenu.title#"</cfif><!---
-							---><cfif len(local.topMenu.target)> target="#local.topMenu.target#"</cfif>>#local.topMenu.label# <i class="caret"></i> </a>
+							---><cfif len(local.topMenu.target)> target="#local.topMenu.target#"</cfif><!---
+							----><cfif structKeyExists( local.topMenu, "data" ) && structCount( local.topMenu.data )>#parseADataAttributes( local.topMenu.data )#</cfif>>#local.topMenu.label# <i class="caret"></i> </a>
 							<!--- Do we have submenus --->
 							<cfif arrayLen(local.topMenu.subMenu)>
 							<ul class="dropdown-menu">
@@ -27,10 +27,11 @@
 								<li class="<cfif event.getValue(name="tab#local.topMenu.name#_#local.thisSubMenu.name#",defaultValue=false,private=true)>active</cfif>">
 									<a href="#local.thisSubMenu.href#"<!---
 									---><cfif len(local.thisSubMenu.title)> title="#local.thisSubMenu.title#"</cfif><!---
-									---><cfif len(local.thisSubMenu.target)> target="#local.thisSubMenu.target#"</cfif>>#local.thisSubMenu.label#</a>
+									---><cfif len(local.thisSubMenu.target)> target="#local.thisSubMenu.target#"</cfif><!---
+									----><cfif structKeyExists( local.thisSubMenu, "data" ) && structCount( local.thisSubMenu.data )>#parseADataAttributes( local.thisSubMenu.data )#</cfif>>#local.thisSubMenu.label#</a>
 								</li>
 								</cfif>
-							</cfloop>
+							</cfloop> 
 							</ul>
 							</cfif>
 						</li>
