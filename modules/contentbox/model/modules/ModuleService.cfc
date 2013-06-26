@@ -99,7 +99,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 
 		return results;
 	}
-	
+
 	/**
 	 * gets path for requested widget from modules' widget cache
 	 * @widgetName {String}
@@ -112,11 +112,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			path = moduleWidgetCache[ arguments.widgetName ];
 		}
 		else {
-			log.error("Could not find #arguments.widgetname# widget in the module.");	
+			log.error("Could not find #arguments.widgetname# widget in the module.");
 		}
 		return path;
 	}
-	
+
 	/**
 	* Register a new module and return the module representation, this does not activate, just registers
 	*/
@@ -213,14 +213,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	ModuleService function deleteModule(required name){
 		var args = {"name" = arguments.name};
 		var configPath = modulesInvocationPath & ".#name#.ModuleConfig";
-		
+
 		// Try to do an onDelete() callback.
 		var config = createObject("component", configPath);
 		if( structKeyExists( config, "onDelete" ) ){
 			config.onDelete();
 		}
-		
-		// Now delete it		
+
+		// Now delete it
 		deleteWhere(argumentCollection=args);
 		if( directoryExists( modulesPath & "/#arguments.name#" ) ){
 			directoryDelete( modulesPath & "/#arguments.name#", true );
@@ -282,7 +282,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var results 		= {error=true, logInfo=""};
 
 		// Upload the module zip
-		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream", "overwrite");
+		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream,application/x-zip-compressed", "overwrite");
 
 		// Unzip File?
 		if ( listLast(fileResults.clientFile, ".") eq "zip" ){
@@ -347,7 +347,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
     					};
     					cache[ widgetName & "@" & module.getName() ] = widget.path;
     				}
-    				
+
     			}
 			}
 		}
