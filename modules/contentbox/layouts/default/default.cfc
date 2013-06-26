@@ -86,8 +86,6 @@ component{
 	this.customInterceptionPoints = arrayToList( ["cbui_beforeBottomBar","cbui_afterBottomBar"] );
 	
 	this.settings = [
-		{ name="color", defaultValue="blue", type="select", options="red,blue,green"},
-		{ name="mobileLayout", defaultValue="false", type="boolean"},
-		{ name="googleAnalyticsAPI", defaultValue="", type="textarea"}
+		{ name="googleAnalyticsAPI", defaultValue="", type="textarea", required=false}
 	];
 }

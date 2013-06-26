@@ -408,7 +408,7 @@ component accessors="true" threadSafe singleton{
 		// iterate and build
 		for( var thisSetting in oLayout.settings ){
 			// Check if required
-			if( structKeyExists( thisSetting, "required" ) ){ 
+			if( structKeyExists( thisSetting, "required" ) and thisSetting.required ){ 
 				constraints[ thisSetting.name ] = {
 					required = true
 				};
