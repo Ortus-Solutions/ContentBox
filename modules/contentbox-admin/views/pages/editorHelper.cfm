@@ -13,7 +13,7 @@ $(document).ready(function() {
 	$isPublished 	= $pageForm.find("##isPublished");
 	$contentID		= $pageForm.find("##contentID");
 	// setup editors via _tags/editors.cfm by passing the form container
-	setupEditors( $pageForm, false );
+	setupEditors( $pageForm, true );
 	// counters
 	$("##htmlKeywords").keyup(function(){
 		$("##html_keywords_count").html( $("##htmlKeywords").val().length );

@@ -29,7 +29,8 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	property name="mobileLayout"	notnull="false" length="200" default="";
 	property name="order"			notnull="false" ormtype="integer" default="0" dbdefault="0";
 	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
-
+	property name="excerpt" 		notnull="false" ormtype="text" default="" length="8000";
+	
 	/************************************** CONSTRUCTOR *********************************************/
 
 	/**
@@ -53,10 +54,24 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	/************************************** PUBLIC *********************************************/
 
 	/**
+	* has excerpt
+	*/
+	boolean function hasExcerpt(){
+		return len( getExcerpt() ) GT 0;
+	}
+	
+	/**
+	* Render excerpt
+	*/
+	any function renderExcerpt(){
+		return getExcerpt();
+	}
+	
+	/**
 	* Get a flat representation of this page
 	*/
 	function getMemento(){
-		var pList = listToArray( "layout,mobileLayout,order,showInMenu" );
+		var pList = listToArray( "layout,mobileLayout,order,showInMenu,excerpt" );
 		var result = super.getMemento();
 		
 		// Local Memento Properties
@@ -116,7 +131,13 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 										 required boolean publish,
 										 required any originalSlugRoot,
 										 required any newSlugRoot){
+		// do layout
 		setLayout( arguments.original.getLayout() );
+		// do excerpts
+		if( arguments.original.hasExcerpt() ){
+			setExcerpt( arguments.original.getExcerpt() );
+		}
+		// do core
 		return super.prepareForClone(argumentCollection=arguments);
 	}
 
