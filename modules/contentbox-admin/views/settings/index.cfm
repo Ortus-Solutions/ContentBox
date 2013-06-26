@@ -272,6 +272,15 @@
             						#html.radioButton(name="cb_versions_commit_mandatory",checked=not prc.cbSettings.cb_versions_commit_mandatory,value=false)# No
                                 </div>
                             </div>
+							<!--- Page Excerpts --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="cb_page_excerpts",content="Allow Page Excerpts:")#
+                                <div class="controls">
+                                    <small>Enable/Disabled page excerpt summaries.</small><br/>
+            						#html.radioButton(name="cb_page_excerpts",checked=prc.cbSettings.cb_page_excerpts,value=true)# Yes
+            						#html.radioButton(name="cb_page_excerpts",checked=not prc.cbSettings.cb_page_excerpts,value=false)# No
+                                </div>
+                            </div>
     					</fieldset>
     					<fieldset>
     						<legend><i class="icon-hdd icon-large"></i>  Content Caching</legend>
