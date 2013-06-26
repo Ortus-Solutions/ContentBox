@@ -22,7 +22,7 @@ component accessors="true"{
 	void function cb_onCustomHTMLRendering( event, struct interceptData ){
 		translateContent(builder=arguments.interceptData.builder,customHTML=arguments.interceptData.customHTML);
 	}
-	
+
 	/**
     * Executes custom parsing rules on content
     * @builder {java.lang.StringBuilder}
@@ -33,7 +33,7 @@ component accessors="true"{
 		parseTagWidgets( argumentCollection=arguments );
 		parseTripleMustacheWidgets( argumentCollection=arguments );
 	}
-	
+
 	/**
     * Parses content to find <widget>...</widget> tags, and renders the associated widget
     * @builder {java.lang.StringBuilder}
@@ -67,7 +67,7 @@ component accessors="true"{
 					else {
 						if( isLayoutWidget ) {
 							// Render out the layout widget
-							widgetContent = evalute( 'widgetService.getWidget( name=widgetName, type="layout" ).#widgetUDF#( argumentCollection=attributes )' );
+							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="layout" ).#widgetUDF#( argumentCollection=attributes )' );
 						}
 						else {
 							// Render out the core widget
@@ -81,7 +81,7 @@ component accessors="true"{
 				log.error("Error translating widget on target: #targets[x]#", e);
 			}
 			// PROCESS REPLACING
-			
+
 			// get location of target
 			var rLocation 	= builder.indexOf( targets[x] );
 			var rLen 		= len( targets[x] );
@@ -94,7 +94,7 @@ component accessors="true"{
 			}
 		}
 	}
-	
+
 	/**
     * Parses content to find {{{...}}} syntax, and renders the associated widget
     * @builder {java.lang.StringBuilder}
@@ -178,10 +178,10 @@ component accessors="true"{
 				log.error("Error translating widget on target: #targets[x]#", e);
 			}
 			// PROCESS REPLACING
-			
+
 			// null checks
 			if( isNull( widgetContent ) ){ widgetContent = "null!"; }
-			
+
 			// get location of target
 			var rLocation 	= builder.indexOf( targets[x] );
 			var rLen 		= len( targets[x] );
