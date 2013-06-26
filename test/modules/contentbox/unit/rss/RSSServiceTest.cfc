@@ -24,7 +24,6 @@ limitations under the License.
 component extends="coldbox.system.testing.BaseTestCase"{
 
 	function setup(){
-		reset();
 		super.setup();
 		mockSettingsService = getMockBox().prepareMock( getModel("SettingService@cb") );
 		mockCBHelper = getMockBox().prepareMock( getModel("CBHelper@cb") );
