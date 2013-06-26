@@ -51,7 +51,7 @@ component extends="baseHandler"{
 		// view
 		event.setView("layouts/index");
 	}
-	
+
 	// save Settings
 	function saveSettings(event,rc,prc){
 		var vResults = validateModel( target=rc, constraints=layoutService.getSettingsConstraints( rc.layoutname ) );
@@ -60,7 +60,7 @@ component extends="baseHandler"{
 			getPlugin("MessageBox").error(messageArray=vResults.getAllErrors());
 			return index(argumentCollection=arguments);
 		}
-		
+
 		// Results validated, save settings
 		layoutService.saveLayoutSettings( name=rc.layoutName, settings=rc );
 		settingservice.flushSettingsCache();
@@ -91,6 +91,7 @@ component extends="baseHandler"{
 	//Remove
 	function remove(event,rc,prc){
 		if( layoutService.removeLayout( rc.layoutName ) ){
+			layoutService.buildLayoutRegistry();
 			getPlugin("MessageBox").info("Layout Removed Forever!");
 		}
 		else{
