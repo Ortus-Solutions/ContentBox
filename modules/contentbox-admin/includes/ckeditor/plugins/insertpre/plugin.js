@@ -21,7 +21,7 @@ CKEDITOR.plugins.add( 'insertpre',
 		icons: 'insertpre', // %REMOVE_LINE_CORE%
 		onLoad : function()
 		{
-			CKEDITOR.addCss( 'pre.prettyprint{' + CKEDITOR.config.insertpre_style + '}' );
+			CKEDITOR.addCss( 'pre{' + CKEDITOR.config.insertpre_style + '}' );
 		},
 		init : function( editor )
 		{
@@ -37,7 +37,7 @@ CKEDITOR.plugins.add( 'insertpre',
 					element = element.getAscendant( 'pre', true );
 				}
 				// No element or not a pre
-				if ( element && element.getName() == 'pre' && element.hasClass( 'prettyprint' ) )
+				if ( element && element.getName() == 'pre' )
 				{
 					evt.data.dialog = 'insertpre';
 			        editor.getSelection().selectElement( element );
@@ -69,7 +69,7 @@ CKEDITOR.plugins.add( 'insertpre',
 				{
 					if ( element )
 						element = element.getAscendant( 'pre', true );
-					if ( element && !element.isReadOnly() && element.hasClass( 'prettyprint' ) )
+					if ( element && !element.isReadOnly() )
 						return { insertpre : CKEDITOR.TRISTATE_OFF };
 					return null;
 				});
@@ -116,15 +116,15 @@ CKEDITOR.plugins.add( 'insertpre',
 									label : editor.lang.insertpre.codeclass,
 									required : false,
 									setup : function( element ){
-										this.setValue( element.getAttribute( "class" ) ? $.trim( element.getAttribute( "class" ).replace( "prettyprint", "" ) ) : '' );
+										this.setValue( element.getAttribute( "class" ) ? $.trim( element.getAttribute( "class" ) ) : '' );
 									},
 									commit : function( element )
 									{
 										if( this.getValue().length ){
-											element.setAttribute( 'class', 'prettyprint ' + $.trim( this.getValue() ) );
+											element.setAttribute( 'class', $.trim( this.getValue() ) );
 										}
 										else{
-											element.setAttribute( 'class', 'prettyprint');
+											element.setAttribute( 'class', '');
 										}
 										
 									}
@@ -145,7 +145,7 @@ CKEDITOR.plugins.add( 'insertpre',
 							element = element.getAscendant( 'pre', true );
 						}
 						// No element or not a pre
-						if ( !element || element.getName() != 'pre' || !element.hasClass( 'prettyprint' ) )
+						if ( !element || element.getName() != 'pre' )
 						{
 							element = editor.document.createElement( 'pre' );
 							this.insertMode = true;
