@@ -75,7 +75,9 @@
 			
 			<!---Content TextArea --->
 			#html.textarea(name="content", value=htmleditFormat( prc.page.getContent() ), rows="25", class="width98 content")#
-			
+			<!--- excerpt --->
+			#html.textarea(label="Excerpt:", name="excerpt", bind=prc.page, rows="10", class="width98")#
+	
 			<!--- Custom Fields --->
 			<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
 			<cfset mArgs = {fieldType="Page", customFields=prc.page.getCustomFields()}>

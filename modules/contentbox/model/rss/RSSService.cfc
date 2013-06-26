@@ -217,7 +217,7 @@ component singleton{
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= settings.cb_site_email & " (Site Administrator)";
+		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -270,6 +270,12 @@ component singleton{
 			qPages.content[i]			= pageResults.pages[i].getActiveContent().renderContent();
 			qPages.guid_permalink[i] 	= false;
 			qPages.guid_string[i] 		= CBHelper.linkPage( qPages.slug );
+			if( pageResults.pages[i].hasExcerpt() ){
+				qEntries.content[i]	= pageResults.pages[i].renderExcerpt();
+			}
+			else{
+				qEntries.content[i]	= pageResults.pages[i].getActiveContent().renderContent();
+			}
 		}
 
 		// Generate feed items
@@ -277,7 +283,7 @@ component singleton{
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= settings.cb_site_email & " (Site Administrator)";
+		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -338,7 +344,7 @@ component singleton{
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= settings.cb_site_email & " (Site Administrator)";
+		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -391,7 +397,7 @@ component singleton{
 		feedStruct.generator	= "ContentBox by ColdBox Platform";
 		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
 		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= settings.cb_site_email & " (Site Administrator)";
+		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
