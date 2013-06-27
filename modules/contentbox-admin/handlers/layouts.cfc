@@ -96,7 +96,7 @@ component extends="baseHandler"{
 		else{
 			getPlugin("MessageBox").error("Error removing layout, please check your logs for more information!");
 		}
-		setNextEvent(event=prc.xehLayouts, queryString="##layoutsPane");
+		setNextEvent(event=prc.xehLayouts, queryString="rescan=true##layoutsPane");
 	}
 
 	//upload
@@ -126,6 +126,6 @@ component extends="baseHandler"{
 			}
 		}
 
-		setNextEvent(event=prc.xehLayouts, queryString="##layoutsPane");
+		setNextEvent(event=prc.xehLayouts, queryString="rescan=true##layoutsPane");
 	}
 }
