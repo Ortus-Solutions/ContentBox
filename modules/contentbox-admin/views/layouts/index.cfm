@@ -123,10 +123,6 @@
 							</div>								
 							<!--- Manage Layouts --->
 							<div class="tab-pane" id="layoutsPane">
-								<!--- Layout Form --->
-								#html.startForm(name="layoutForm",action=prc.xehlayoutRemove)#
-								#html.hiddenField(name="layoutName")#
-								
 								<!--- Content Bar --->
 								<div class="well well-small">
 									<!--- Rebuild Registry Button --->
@@ -160,7 +156,10 @@
                                 	</fieldset>
 								#html.endForm()#
 								</div>
-								
+
+								<!--- Layout Form --->
+								#html.startForm(name="layoutForm",action=prc.xehlayoutRemove)#
+								#html.hiddenField(name="layoutName")#
 								<!--- layouts --->
 								<table name="layouts" id="layouts" class="tablesorter table table-striped table-hover" width="98%">
 									<thead>
