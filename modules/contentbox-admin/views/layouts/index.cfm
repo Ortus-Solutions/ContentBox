@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row-fluid">
 	<div class="box">
-		
+
 		<!--- Body Header --->
 		<div class="header">
 			<ul class="sub_nav nav nav-tabs">
@@ -18,7 +18,7 @@
 
 		<!--- Body --->
 		<div class="body">
-			
+
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
 			<!--- Logs --->
@@ -26,13 +26,13 @@
 				<h3>Installation Log</h3>
 				<div class="consoleLog">#flash.get("forgeboxInstallLog")#</div>
 			</cfif>
-			
+
 			<!---Tabs --->
 			<div class="panes tab-content">
-				
+
 				<!---Management Pane --->
 				<div id="managePane" class="tab-pane active">
-					
+
 					<!--- Vertical Nav --->
 					<div class="tabbable tabs-left">
 						<!--- Layouts Navigation Bar --->
@@ -44,7 +44,7 @@
 						<div class="tab-content">
 							<!--- Active Layout --->
 							<div class="tab-pane active" id="active">
-								
+
 								<!---screenshot --->
 								<div id="layout-screenshot" class="pull-right">
 								<cfif len( prc.activelayout.screenShotURL )>
@@ -54,7 +54,7 @@
 									<br/>
 								</cfif>
 								</div>
-								
+
 								<!--- Title --->
 								<div id="layout-title"><h2>#prc.activeLayout.layoutName#</h2></div>
 								<!---Description --->
@@ -76,7 +76,7 @@
 									<strong>Installed Location: </strong>
 									#prc.activelayout.directory#
 								</div>
-								
+
 								<!--- ForgeBox Slug --->
 								<div id="layout-forgebox>">
 									<i class="icon-cloud-download"></i>
@@ -90,7 +90,7 @@
 								<!---Interceptions --->
 								<div id="layout-interceptions">
 									<i class="icon-bullhorn"></i>
-									<strong>Registered Interceptions: </strong> 
+									<strong>Registered Interceptions: </strong>
 									<cfif len( prc.activeLayout.customInterceptionPoints )>
 										#prc.activeLayout.customInterceptionPoints#
 									<cfelse>
@@ -100,7 +100,7 @@
 								<!---Widgets --->
 								<div id="layout-widgets">
 									<i class="icon-magic"></i>
-									<strong>Layout Widgets: </strong> 
+									<strong>Layout Widgets: </strong>
 									<cfif len( prc.activeLayout.widgets )>
 										#prc.activeLayout.widgets#
 									<cfelse>
@@ -109,7 +109,7 @@
 								</div>
                                 <!---Layout Settings --->
 								<cfif len( prc.activelayout.settings )>
-								#html.startForm(action=prc.xehSaveSettings, class="form-vertical")#	
+								#html.startForm(action=prc.xehSaveSettings, class="form-vertical")#
 								<fieldset>
 									<legend> Layout Settings: </legend>
 									#html.hiddenField(name="layoutName", value=prc.activelayout.name)#
@@ -120,13 +120,9 @@
 								</div>
                                 #html.endForm()#
 								</cfif>
-							</div>								
+							</div>
 							<!--- Manage Layouts --->
 							<div class="tab-pane" id="layoutsPane">
-								<!--- Layout Form --->
-								#html.startForm(name="layoutForm",action=prc.xehlayoutRemove)#
-								#html.hiddenField(name="layoutName")#
-								
 								<!--- Content Bar --->
 								<div class="well well-small">
 									<!--- Rebuild Registry Button --->
@@ -144,13 +140,13 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<!--- Uploader --->
 								<div id="uploaderBar" class="" style="display:none">
 								#html.startForm(name="layoutUploadForm",action=prc.xehlayoutupload,multipart=true,novalidate="novalidate",class="form-vertical")#
 									<fieldset>
 										<legend>Layout Uploader</legend>
-										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#		
+										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
     									<div id="uploadBar">
     										#html.submitButton(value="Upload & Install",class="btn btn-danger")#
     									</div>
@@ -160,7 +156,10 @@
                                 	</fieldset>
 								#html.endForm()#
 								</div>
-								
+
+								<!--- Layout Form --->
+								#html.startForm(name="layoutForm",action=prc.xehlayoutRemove)#
+								#html.hiddenField(name="layoutName")#
 								<!--- layouts --->
 								<table name="layouts" id="layouts" class="tablesorter table table-striped table-hover" width="98%">
 									<thead>
@@ -170,7 +169,7 @@
 											<th>Included Layouts</th>
 											<th width="55" class="center {sorter:false}">Actions</th>
 										</tr>
-									</thead>				
+									</thead>
 									<tbody>
 										<cfloop query="prc.layouts">
 										<!--- Show only non active layouts --->
@@ -181,15 +180,15 @@
 													<i class="icon-asterisk icon-large textOrance"></i>
 												</cfif>
 												<strong>#prc.layouts.layoutName#</strong>
-												<br/>	
-												Version #prc.layouts.version# by 
+												<br/>
+												Version #prc.layouts.version# by
 												<a href="#prc.layouts.authorURL#" title="#prc.layouts.AuthorURL#" target="_blank">#prc.layouts.Author#</a>
 												<br/>
 												<!--- Button Bar --->
 												<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN") AND prc.cbSettings.cb_site_layout NEQ prc.layouts.name>
 													<button class="btn btn-primary" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;">Preview</button>
 													<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehActivate)#?layoutname=#prc.layouts.name#')">Activate</button>
-												</cfif>		
+												</cfif>
 											</td>
 											<td>
 												<cfif len( prc.layouts.screenShotURL )>
@@ -215,7 +214,7 @@
 											<td class="center">
 												<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 												<!--- Delete Command --->
-												<a href="javascript:remove('#JSStringFormat(prc.layouts.name)#')" 
+												<a href="javascript:remove('#JSStringFormat(prc.layouts.name)#')"
 												   class="confirmIt btn" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><i class="icon-trash icon-large"></i></a>
 												</cfif>
 											</td>
@@ -224,7 +223,7 @@
 									</tbody>
 								</table>
 								#html.endForm()#
-							</div>	
+							</div>
 							<!--- end manage tab --->
 						</div>
 						<!--- End Tab cContent --->
@@ -242,7 +241,7 @@
 				</div>
 			</div>
 			<!--- end panes div --->
-		</div>	
+		</div>
 		<!--- end div body --->
 	</div>
 	<!--- end div box --->
