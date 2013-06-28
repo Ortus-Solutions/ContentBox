@@ -101,7 +101,21 @@ component{
 	* Go Into maintenance mode.
 	*/
 	function maintenance(event,rc,prc){
-		event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
+		// If no maintenance view exists, just output data
+		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/views/maintenance.cfm" ) ) ){
+			event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
+		}
+		else{
+			var layout = "pages";
+			// verify if there is a maintenance layout? Else use default of pages
+			if( fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/maintenance.cfm" ) ) ){
+				layout = "maintenance";
+			}
+			// output maintenance view
+			event.setLayout(name="#prc.cbLayout#/layouts/#layout#", module="contentbox")
+				.setView(view="#prc.cbLayout#/views/maintenance", module="contentbox");
+		}
+		
 	}
 
 	/*

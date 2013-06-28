@@ -283,7 +283,7 @@
                         		<!--- Parent Page --->
         						#html.label(field="parentPage",content='Parent:')#
         						<select name="parentPage" id="parentPage" class="input-block-level">
-        							<option value="">No Parent</option>
+        							<option value="null">No Parent</option>
         							#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
         						</select>
         	
