@@ -306,7 +306,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			}
 			// rescan and startup the modules
 			startup();
-			// sucess
+			// success
 			results.error = false;
 		}
 		else{

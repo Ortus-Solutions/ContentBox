@@ -149,7 +149,7 @@ limitations under the License.
 			<cfreturn results>
 		</cfif>
 		
-		<cfset log.append("File #fileName# downloaded succesfully at #destination#, checking type for extraction.<br />")>
+		<cfset log.append("File #fileName# downloaded successfully at #destination#, checking type for extraction.<br />")>
 		
 		<!--- Unzip File? --->
 		<cfif listLast(filename,".") eq "zip">
@@ -162,7 +162,7 @@ limitations under the License.
 			<cfset fileDelete( destination & "/" & fileName )>
 		</cfif>
 		
-		<cfset log.append("Entry: #filename# sucessfully installed at #destination#.<br />")>
+		<cfset log.append("Entry: #filename# successfully installed at #destination#.<br />")>
 		<cfset results = {error=false,logInfo=log.toString()}>
 		
 		<cfreturn results>		
