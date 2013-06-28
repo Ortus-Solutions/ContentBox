@@ -216,10 +216,14 @@ component extends="baseHandler"{
 		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
 		
 		// attach a parent page if it exists and not the same
-		if( len( rc.parentPage ) AND page.getContentID() NEQ rc.parentPage ){
+		if( rc.parentPage NEQ "null" AND page.getContentID() NEQ rc.parentPage ){
 			page.setParent( pageService.get( rc.parentPage ) );
 			// update slug
 			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
+		}
+		// Remove parent
+		else if( rc.parentPage EQ "null" ){
+			page.setParent( javaCast("null", "") );
 		}
 		
 		// Create new categories?
