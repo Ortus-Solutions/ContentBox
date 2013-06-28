@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-<div class="infoBar">
+<div>
 <!---Maintenance message --->
 #cb.getMaintenanceMessage()#
 </div>
