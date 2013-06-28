@@ -74,6 +74,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	function getBlogEntryPoint(){
 		return setting("cb_site_blog_entrypoint", "blog");
 	}
+	
+	function getMaintenanceMessage(){
+		return setting( "cb_site_maintenance_message" );
+	}
 
 	/**
 	* Get custom HTML content pieces by slug
