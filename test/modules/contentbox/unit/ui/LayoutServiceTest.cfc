@@ -10,7 +10,9 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		
 		// init the model object
 		model.init();
+		mockCBHelper = getMockBox().createStub();
 		model.$property( "wirebox", "variables", mockWirebox );
+		model.$property( "cbHelper", "variables", mockCBHelper );
 	}
 
 	function testOnDIComplete(){
@@ -42,7 +44,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		model.buildLayoutRegistry();
 	}
 	
-	function testREmoveLayout(){
+	function testRemoveLayout(){
 		// 1 No layout name
 		r = model.removeLayout( "" );
 		assertFalse( r );
@@ -53,16 +55,51 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		mockLayout = getMockBox().createStub().$("onDelete");
 		mockLayout.settings = {};
 		model.setlayoutCFCRegistry( { "unittest" = mockLayout } );
+		model.setLayoutsPath( expandPath( "/modules/contentbox/layouts" ) );
 		model.$("unregisterLayoutSettings")
-			.$("buildLayoutRegistry", queryNew("") )
-			.$("directoryExists", true)
-			.$("directoryDelete");
+			.$("buildLayoutRegistry", queryNew("") );
 		
+		directoryCreate( model.getLayoutsPath() & "/unittest" );
 		r = model.removeLayout( "unittest" );
 		assertTrue( r );
 		assertTrue( mockLayout.$once("onDelete") );
 		assertTrue( model.$once( "unregisterLayoutSettings" ) );
 		assertTrue( model.$once( "buildLayoutRegistry" ) );
 		assertFalse( structKeyExists( model.getLayoutCFCRegistry(), "unittest" ) );
+	}
+	
+	function testthemeMaintenanceViewExists(){
+		// No
+		mockCBHelper.$("layoutRoot", "/");
+		assertFalse( model.themeMaintenanceViewExists() );
+		
+		// No
+		mockCBHelper.$("layoutRoot", "/modules/contentbox/layouts/default");
+		assertTrue( model.themeMaintenanceViewExists() );
+	}
+	
+	function testgetThemeMaintenanceLayout(){
+		// default
+		mockCBHelper.$("layoutRoot", "/");
+		r = model.getThemeMaintenanceLayout();
+		assertEquals( "pages", r );
+		
+		// Valid
+		mockCBHelper.$("layoutRoot", "/modules/contentbox/layouts/default");
+		r = model.getThemeMaintenanceLayout();
+		assertEquals( "maintenance", r );
+	}
+	
+	function testgetThemeSearchLayout(){
+		// default
+		mockCBHelper.$("layoutRoot", "/");
+		r = model.getThemeSearchLayout();
+		assertEquals( "pages", r );
+		
+		// Valid
+		mockCBHelper.$("layoutRoot", "/modules/contentbox/layouts/default");
+		r = model.getThemeSearchLayout();
+		assertEquals( "search", r );
+		
 	}
 }

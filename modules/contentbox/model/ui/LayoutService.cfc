@@ -30,6 +30,7 @@ component accessors="true" threadSafe singleton{
 	property name="log"					inject="logbox:logger:{this}";
 	property name="wirebox"				inject="wirebox";
 	property name="html"				inject="coldbox:plugin:HTMLHelper";
+	property name="cbHelper"			inject="provider:CBHelper@cb";
 
 	// The location in disk of the layouts
 	property name="layoutsPath";
@@ -67,7 +68,41 @@ component accessors="true" threadSafe singleton{
 		setLayoutsInvocationPath( moduleSettings["contentbox"].invocationPath & ".layouts" );
 		// Register all layouts
 		buildLayoutRegistry();
-		// Startup Active Layout
+	}
+	
+	/**
+	* Does theme have a maintenance view
+	*/
+	boolean function themeMaintenanceViewExists(){
+		return fileExists( expandPath( CBHelper.layoutRoot() & "/views/maintenance.cfm" ) );
+	}
+	
+	/**
+	* Get the current theme's maintenance layout
+	*/
+	string function getThemeMaintenanceLayout(){
+		var layout = "pages";
+		
+		// verify existence of convention
+		if( fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/maintenance.cfm" ) ) ){
+			layout = "maintenance";
+		}
+		
+		return layout;
+	}
+	
+	/**
+	* Get the current theme's search layout
+	*/
+	string function getThemeSearchLayout(){
+		var layout = "pages";
+		
+		// verify existence of convention
+		if( fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/search.cfm" ) ) ){
+			layout = "search";
+		}
+		
+		return layout;
 	}
 
 	/**
