@@ -332,7 +332,7 @@ I oversee and manage ColdBox modules
 			mConfig.activated = true;
 			
 			// Log it
-			instance.logger.debug("Module #arguments.moduleName# activated successfully.");
+			instance.logger.debug("Module #arguments.moduleName# activated sucessfully.");
 		</cfscript>
 		</cflock>
 
