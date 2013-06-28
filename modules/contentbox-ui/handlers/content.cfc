@@ -32,7 +32,8 @@ component{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="rssService"			inject="id:rssService@cb";
 	property name="validator"			inject="id:Validator@cb";
-
+	property name="layoutService"		inject="id:layoutService@cb";
+	
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
 	
@@ -102,17 +103,12 @@ component{
 	*/
 	function maintenance(event,rc,prc){
 		// If no maintenance view exists, just output data
-		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/views/maintenance.cfm" ) ) ){
+		if( !layoutService.themeMaintenanceViewExists() ){
 			event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
 		}
 		else{
-			var layout = "pages";
-			// verify if there is a maintenance layout? Else use default of pages
-			if( fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/maintenance.cfm" ) ) ){
-				layout = "maintenance";
-			}
 			// output maintenance view
-			event.setLayout(name="#prc.cbLayout#/layouts/#layout#", module="contentbox")
+			event.setLayout(name="#prc.cbLayout#/layouts/#layoutService.getThemeMaintenanceLayout()#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/maintenance", module="contentbox");
 		}
 		
