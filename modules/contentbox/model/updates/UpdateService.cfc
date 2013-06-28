@@ -189,7 +189,7 @@ component accessors="true" threadSafe{
 		}
 
 		// log it
-		log.append("File #fileName# downloaded succesfully at #getPatchesLocation()#, checking type for extraction.<br />");
+		log.append("File #fileName# downloaded successfully at #getPatchesLocation()#, checking type for extraction.<br />");
 
 		// Uncompress Patch?
 		return extractPatch(filename,log);
