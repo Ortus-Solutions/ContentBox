@@ -175,7 +175,7 @@
 				<!---Gravatar info --->
 				<div class="alert alert-info clearfix">
 					<i class="icon-info-sign icon-large"></i>
-					To change your avatar <a href="http://www.gravatar.com/site/signup/#URLEncode( prc.author.getEmail() )#" target="_blank">sign up to Gravatar.com</a>
+					To change your avatar <a href="http://www.gravatar.com/site/signup/#URLEncodedFormat( prc.author.getEmail() )#" target="_blank">sign up to Gravatar.com</a>
 					and follow the on-screen instructions to add a Gravatar for #prc.author.getEmail()#
 				</div>
 	
