@@ -51,7 +51,7 @@ limitations under the License.
 		<div class="post-content">
 			<!--- excerpt or content --->
 			<cfif entry.hasExcerpt() and cb.isIndexView()>
-				#entry.getExcerpt()#
+				#entry.renderExcerpt()#
 				<div class="post-more">
 					<a href="#cb.linkEntry(entry)#" title="Read The Full Entry!"><button class="button2">Read More...</button></a>
 				</div>

@@ -31,6 +31,9 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
 	property name="excerpt" 		notnull="false" ormtype="text" default="" length="8000";
 	
+	// Non-Persistable Properties
+	property name="renderedExcerpt" persistent="false";
+
 	/************************************** CONSTRUCTOR *********************************************/
 
 	/**
@@ -39,6 +42,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	function init(){
 		customFields	= [];
 		renderedContent = "";
+		renderedExcerpt	= "";
 		allowComments 	= false;
 		createdDate		= now();
 		layout 			= "pages";
@@ -64,7 +68,26 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	* Render excerpt
 	*/
 	any function renderExcerpt(){
-		return getExcerpt();
+		
+		// Check if we need to translate
+		if( NOT len( renderedExcerpt ) ){
+			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
+				if( NOT len( renderedExcerpt ) ){
+					// render excerpt out, prepare builder
+					var b = createObject("java","java.lang.StringBuilder").init( getExcerpt() );
+					// announce renderings with data, so content renderers can process them
+					var iData = {
+						builder = b,
+						content	= this
+					};
+					interceptorService.processState("cb_onContentRendering", iData);
+					// store processed content
+					renderedExcerpt = b.toString();
+				}
+			}
+		}
+		
+		return renderedExcerpt;
 	}
 	
 	/**
