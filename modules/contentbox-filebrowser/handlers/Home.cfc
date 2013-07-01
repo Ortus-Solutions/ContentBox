@@ -109,6 +109,12 @@ component output="false" hint="Main filebrowser module handler"{
 		// get directory listing.
 		prc.fbqListing = directoryList( prc.fbCurrentRoot, false, "query", prc.fbSettings.extensionFilter, "#prc.fbPreferences.sorting#");
 
+		var iData = {
+			directory = prc.fbCurrentRoot,
+			listing = prc.fbqListing
+		};
+		announceInterception("fb_postDirectoryRead",iData);
+
 		// set view or render widget?
 		if( arguments.widget ){
 			return renderView(view="home/index",module=prc.fbModuleName);
