@@ -29,7 +29,7 @@ component extends="coldbox.system.Plugin" singleton{
 		
 		// render it out
 		savecontent variable="avatar"{
-			writeOutput('<img class="gravatar" align="middle" width="#arguments.size#" height="#arguments.size#" src="http://www.gravatar.com/avatar.php?gravatar_id=#lcase(Hash(emailTarget))#&s=#arguments.size#&r=#prc.cbSettings.cb_gravatar_rating#" alt="#arguments.email#" />');
+			writeOutput('<img class="gravatar" align="middle" width="#arguments.size#" height="#arguments.size#" src="http://www.gravatar.com/avatar.php?gravatar_id=#lcase(Hash(emailTarget))#&s=#arguments.size#&r=#prc.cbSettings.cb_gravatar_rating#" />');
 		}
 		
 		return avatar;
