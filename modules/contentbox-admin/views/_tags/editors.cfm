@@ -25,16 +25,52 @@ function publishNow(){
 	$("##publishedHour").val( fullDate.getHours() );
 	$("##publishedMinute").val( fullDate.getMinutes() );
 }
+// quick save for pages
+function quickSave(){
+	// Draft it
+	$isPublished.val('false');
+	// Validation of Form First before quick save
+	if( !$targetEditorForm.valid() ){
+		return false;
+	}
+	// Commit Changelog default if none specified, most likely changelogs are not mandatory
+	if( !$changelog.val().length ){
+		$changelog.val( "quick save" );
+	}
+	// Activate Loader
+	toggleLoaderBar();
+	// Save current content, just in case
+	$content.val( getEditorContent() );
+	// Post it
+	$.post($targetEditorSaveURL, $targetEditorForm.serialize(), function(data){
+		// Save new id
+		$contentID.val( data.CONTENTID );
+		// finalize
+		$changelog.val( '' );
+		$uploaderBarLoader.fadeOut( 1500 );
+		$uploaderBarStatus.html( 'Draft Quick Saved!' );
+		$isPublished.val( 'true' );
+	},"json");
+
+	return false;
+}
 /**
  * Setup the editors. 
  * TODO: Move this to a more OOish approach, don't like it.
  * @param $theForm The form container for the content
  * @param withExcerpt Using excerpt or not
  */
-function setupEditors($theForm, withExcerpt){
+function setupEditors($theForm, withExcerpt, saveURL){
 	// Setup global editor elements
-	$uploaderBarLoader 	= $("##uploadBarLoader");
-	$uploaderBarStatus 	= $("##uploadBarLoaderStatus");
+	$targetEditorForm   	= $theForm;
+	$targetEditorSaveURL 	= saveURL;
+	$uploaderBarLoader 		= $targetEditorForm.find("##uploadBarLoader");
+	$uploaderBarStatus 		= $targetEditorForm.find("##uploadBarLoaderStatus");
+	$excerpt				= $targetEditorForm.find("##excerpt");
+	$content 				= $targetEditorForm.find("##content");
+	$isPublished 			= $targetEditorForm.find("##isPublished");
+	$contentID				= $targetEditorForm.find("##contentID");
+	$changelog				= $targetEditorForm.find("##changelog");
 	
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
@@ -90,6 +126,13 @@ function setupEditors($theForm, withExcerpt){
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
 	needConfirmation = true;
+	// counters
+	$("##htmlKeywords").keyup(function(){
+		$("##html_keywords_count").html( $("##htmlKeywords").val().length );
+	});
+	$("##htmlDescription").keyup(function(){
+		$("##html_description_count").html( $("##htmlDescription").val().length );
+	});
 }
 
 // Switch Editors
@@ -98,6 +141,7 @@ function switchEditor(editorType){
 	#prc.oEditorDriver.shutdown()#
 	// Save work
 	if( confirm( "Would you like to save your work before switching editors?" ) ){
+		$changelog.val( 'Editor Change Quick Save' );
 		quickSave();
 	}
 	// Call change user editor preference

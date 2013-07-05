@@ -8,49 +8,8 @@
 $(document).ready(function() {
  	// Editor Pointers
 	$entryForm 		= $("##entryForm");
-	$excerpt		= $entryForm.find("##excerpt");
-	$content 		= $entryForm.find("##content");
-	$isPublished 	= $entryForm.find("##isPublished");
-	$contentID		= $entryForm.find("##contentID");
 	// setup editors via _tags/editors.cfm by passing the form container
-	setupEditors( $entryForm, true );
-	// counters
-	$("##htmlKeywords").keyup(function(){
-		$("##html_keywords_count").html( $("##htmlKeywords").val().length );
-	});
-	$("##htmlDescription").keyup(function(){
-		$("##html_description_count").html( $("##htmlDescription").val().length );
-	});
+	setupEditors( $entryForm, true, '#event.buildLink(prc.xehEntrySave)#' );
 });
-// quick save for blog entries
-function quickSave(){
-	// Draft it
-	$isPublished.val('false');
-
-	// Validation first
-	if( !$entryForm.valid() ){
-		return false;
-	}
-	if( !$content.val().length ){
-		alert("Please enter some content");
-		return false;
-	}
-
-	// Activate Loader
-	toggleLoaderBar();
-	// Save current content, just in case
-	$("##content").val( getEditorContent() );
-	// Post it
-	$.post('#event.buildLink(prc.xehEntrySave)#', $entryForm.serialize(),function(data){
-		// Save newly saved or persisted id
-		$contentID.val( data.CONTENTID );
-		// finalize
-		$uploaderBarLoader.fadeOut(1500);
-		$uploaderBarStatus.html('Entry Draft Saved!');
-		$isPublished.val('true');
-	},"json");
-
-	return false;
-}
 </script>
 </cfoutput>

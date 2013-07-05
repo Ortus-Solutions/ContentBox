@@ -234,11 +234,6 @@ component extends="baseHandler"{
 		event.paramValue( "content", "" );
 		event.paramValue("creatorID","");
 
-		// Quick save changelog
-		if( event.isAjax() ){
-			rc.changelog = "Quick save";
-		}
-
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent") ){
 			rc.content = rc.quickcontent;
