@@ -68,7 +68,7 @@
 					
 					<!---Right References Panel --->
 					<div class="floatRight">
-						<a href="javascript:previewContent()" class="btn" title="Quick Preview">
+						<a href="javascript:previewContent()" class="btn" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
 							<i class="icon-eye-open icon-large"></i>
 						</a>
 					</div>
