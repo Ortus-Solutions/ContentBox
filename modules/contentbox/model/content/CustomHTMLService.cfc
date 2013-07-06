@@ -26,6 +26,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	// Dependencies
 	property name="htmlHelper" inject="coldbox:plugin:HTMLHelper";
+	property name="populator"  inject="wirebox:populator";
 	
 	/**
 	* Constructor
@@ -134,4 +135,62 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			 
 	}
 	
+	/**
+	* Import data from a ContentBox JSON file. Returns the import log
+	*/
+	string function importFromFile(required importFile, boolean override=false){
+		var data 		= fileRead( arguments.importFile );
+		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		
+		if( !isJSON( data ) ){
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+		}
+		
+		// deserialize packet: Should be array of { settingID, name, value }
+		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
+		
+	}
+	
+	/**
+	* Import data from an array of structures of customHTML 
+	*/
+	string function importFromData(required importData, boolean override=false, importLog){
+		var allContent = [];
+		
+		// iterate and import
+		for( var thisContent in arguments.importData ){
+			var args = { slug = thisContent.slug };
+			var oCustomHTML = findWhere( criteria=args );
+			// if null, then create it
+			if( isNull( oCustomHTML ) ){
+				// populate new content
+				oCustomHTML = populator.populateFromStruct( target=new(), memento=thisContent, exclude="contentID", composeRelationships=false );
+				arrayAppend( allContent, oCustomHTMl );
+				// logs
+				importLog.append( "New content imported: #thisContent.slug#<br>" );
+			}
+			// else only override if true
+			else if( arguments.override ){
+				// populate content
+				populator.populateFromStruct( target=oCustomHTML, memento=thisContent, exclude="contentID", composeRelationships=false );
+				// assign to save.
+				arrayAppend( allContent, oCustomHTML );
+				importLog.append( "Overriding content: #thisContent.slug#<br>" );
+			}
+			else{
+				importLog.append( "Skipping content: #thisContent.slug#<br>" );
+			}
+		}
+		
+		// Save them?
+		if( arrayLen( allContent ) ){
+			saveAll( allContent );
+			importLog.append( "Saved all imported and overriden content!" );
+		}
+		else{
+			importLog.append( "No content imported as none where found or able to be overriden from the import file." );
+		}
+		
+		return importLog.toString(); 
+	}
 }
