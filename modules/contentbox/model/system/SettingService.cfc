@@ -253,5 +253,55 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			.list(sortOrder="name");
 			 
 	}
+	
+	/**
+	* Import data from a ContentBox JSON file. Returns the import log
+	*/
+	string function importAll(required importFile, boolean override=false){
+		
+		var data = fileRead( arguments.importFile );
+		var allSettings = [];
+		var importLog = createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		
+		if( !isJSON( data ) ){
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+		}
+		
+		// deserialize packet: Should be array of { settingID, name, value }
+		data = deserializeJSON( data );
+		
+		// iterate and import
+		for( var thisSetting in data ){
+			var args = { name = thisSetting.name };
+			var oSetting = findWhere( criteria=args );
+			// if null, then create it
+			if( isNull( oSetting ) ){
+				var args = { name = thisSetting.name, value = thisSetting.value };
+				arrayAppend( allSettings, new( properties=args ) );
+				// logs
+				importLog.append( "New setting imported: #thisSetting.name#<br>" );
+			}
+			// else only override if true
+			else if( arguments.override ){
+				oSetting.setValue( thisSetting.value );
+				arrayAppend( allSettings, oSetting );
+				importLog.append( "Overriding setting: #thisSetting.name#<br>" );
+			}
+			else{
+				importLog.append( "Skipping setting: #thisSetting.name#<br>" );
+			}
+		}
+		
+		// Save them?
+		if( arrayLen( allSettings ) ){
+			saveAll( allSettings );
+			importLog.append( "Saved all imported and overriden settings!" );
+		}
+		else{
+			importLog.append( "No settings imported as none where found or able to be overriden from the import file." );
+		}
+		
+		return importLog.toString(); 
+	}
 
 }

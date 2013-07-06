@@ -93,6 +93,7 @@ component extends="baseHandler"{
 		prc.xehMappingDump		= "#prc.cbAdminEntryPoint#.settings.mappingDump";
 		prc.xehRawSettingsTable	= "#prc.cbAdminEntryPoint#.settings.rawtable";
 		prc.xehExportAll		= "#prc.cbAdminEntryPoint#.settings.exportAll";
+		prc.xehSettingsImport	= "#prc.cbAdminEntryPoint#.settings.importAll";
 
 		// Get Interception Points
 		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
@@ -116,13 +117,35 @@ component extends="baseHandler"{
 		event.renderData( data=data, formats="xml,json", xmlRootName="settings" )
 			.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#");
 	}
-	
+
+	// import settings
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideSettings", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = settingsService.importAll( importFile=rc.importFile, override=rc.overrideSettings );
+				getPlugin("MessageBox").info( "Settings imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehRawSettings );
+	}
+
 	// retrieve raw settings table
 	function rawtable(event,rc,prc){
 		// params
-		event.paramValue("page",1);
-		event.paramValue("search", "");
-		event.paramValue("viewAll", false);
+		event.paramValue( "page", 1 );
+		event.paramValue( "search", "" );
+		event.paramValue( "viewAll", false );
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
