@@ -82,6 +82,8 @@
 						<button type="submit" class="btn btn-danger">Save</button>
 						</div>	
 					</div>
+					
+					#html.hiddenField(name="changelog",value="")#
 	
 				#html.endFieldSet()#
 				
