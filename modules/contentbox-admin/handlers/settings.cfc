@@ -124,7 +124,7 @@ component extends="baseHandler"{
 		event.paramValue( "overrideSettings", false );
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
-				var importLog = settingsService.importAll( importFile=rc.importFile, override=rc.overrideSettings );
+				var importLog = settingsService.importFromFile( importFile=rc.importFile, override=rc.overrideSettings );
 				getPlugin("MessageBox").info( "Settings imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
