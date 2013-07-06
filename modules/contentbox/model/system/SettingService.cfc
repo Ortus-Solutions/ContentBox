@@ -241,5 +241,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 								.list(offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false);
 		return results;
 	}
+	
+	/**
+	* Get all data prepared for export
+	*/
+	array function getAllForExport(){
+		var c = newCriteria();
+		
+		return c.withProjections(property="settingID,name,value")
+			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list(sortOrder="name");
+			 
+	}
 
 }

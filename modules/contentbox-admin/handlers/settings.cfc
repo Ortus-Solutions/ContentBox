@@ -92,6 +92,7 @@ component extends="baseHandler"{
 		prc.xehViewCached    	= "#prc.cbAdminEntryPoint#.settings.viewCached";
 		prc.xehMappingDump		= "#prc.cbAdminEntryPoint#.settings.mappingDump";
 		prc.xehRawSettingsTable	= "#prc.cbAdminEntryPoint#.settings.rawtable";
+		prc.xehExportAll		= "#prc.cbAdminEntryPoint#.settings.exportAll";
 
 		// Get Interception Points
 		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
@@ -102,6 +103,18 @@ component extends="baseHandler"{
 		prc.tabSystem_geekSettings = true;
 		// view
 		event.setView("settings/raw");
+	}
+	
+	// Export All settings
+	function exportAll(event,rc,prc){
+		event.paramValue("format", "json");
+		
+		// get all prepared content objects
+		var data  		= settingsService.getAllForExport();
+		var filename 	= "Settings." & ( rc.format eq "xml" ? "xml" : "json" );
+				
+		event.renderData( data=data, formats="xml,json", xmlRootName="settings" )
+			.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#");
 	}
 	
 	// retrieve raw settings table
