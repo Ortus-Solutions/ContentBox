@@ -257,21 +257,27 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
 	*/
-	string function importAll(required importFile, boolean override=false){
-		
-		var data = fileRead( arguments.importFile );
-		var allSettings = [];
-		var importLog = createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+	string function importFromFile(required importFile, boolean override=false){
+		var data 		= fileRead( arguments.importFile );
+		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
 		
 		if( !isJSON( data ) ){
 			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }
-		data = deserializeJSON( data );
+		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
+		
+	}
+	
+	/**
+	* Import data from an array of structures of settings 
+	*/
+	string function importFromData(required importData, boolean override=false, importLog){
+		var allSettings = [];
 		
 		// iterate and import
-		for( var thisSetting in data ){
+		for( var thisSetting in arguments.importData ){
 			var args = { name = thisSetting.name };
 			var oSetting = findWhere( criteria=args );
 			// if null, then create it
