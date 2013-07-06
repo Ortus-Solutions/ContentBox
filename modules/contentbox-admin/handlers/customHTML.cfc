@@ -41,6 +41,7 @@ component extends="baseHandler"{
 		prc.xehEditorHTML		= "#prc.cbAdminEntryPoint#.customHTML.editor";
 		prc.xehExportHTML		= "#prc.cbAdminEntryPoint#.customHTML.export";
 		prc.xehExportAllHTML	= "#prc.cbAdminEntryPoint#.customHTML.exportAll";
+		prc.xehImportHTML		= "#prc.cbAdminEntryPoint#.customHTML.importAll";
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
@@ -244,6 +245,28 @@ component extends="baseHandler"{
 				event.renderData(data="Invalid export type: #rc.format#");
 			}
 		}
+	}
+	
+	// import settings
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = htmlService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Custom HTML imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehCustomHTML );
 	}
 	
 }
