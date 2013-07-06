@@ -167,6 +167,19 @@ component {
 		controller.getWireBox().getInstance("EditorService@cb");
 		// Startup the ContentBox modules, if any
 		controller.getWireBox().getInstance("moduleService@cb").startup();
+		// Startup localization settings
+		if( controller.getSetting( 'using_i18n' ) ){
+			// Load resource bundles here when ready
+		}
+		else{
+			// Parent app does not have i18n configured, so add settings manually
+			controller.setSetting( 'LocaleStorage', 'cookie' );
+			// Add Back when Ready -> controller.setSetting( 'defaultResourceBundle', moduleMapping & '/includes/i18n/main' );
+			controller.setSetting( 'defaultLocale', "en_US" );
+			// initialize i18n plugin
+			controller.getPlugin( "i18n" )
+				.init_i18N( "" );
+		}
 	}
 
 	/**
