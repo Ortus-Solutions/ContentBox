@@ -79,6 +79,13 @@
     								<ul class="dropdown-menu">
     									<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="icon-hdd"></i> View Cached Settings</a></li>
     									<li><a href="javascript:flushSettingsCache()"><i class="icon-refresh"></i> Flush Settings Cache</a></li>
+										<li class="dropdown-submenu">
+											<a href="##"><i class="icon-download icon-large"></i> Export All</a>
+											<ul class="dropdown-menu text-left">
+												<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+												<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
+											</ul>
+										</li>
     								</ul>
     							</div>
     							
