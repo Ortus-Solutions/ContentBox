@@ -114,6 +114,12 @@
 						</tr>
 						<tr>
 							<th>
+								Editors Quick Preview
+							</th>
+							<th class="center">ctrl+p</th>
+						</tr>
+						<tr>
+							<th>
 								Log Out
 							</th>
 							<th class="center">ctrl+shift+l</th>
