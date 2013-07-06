@@ -223,5 +223,23 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		
 		return settings;
 	}
+	
+	/**
+	* setting search returns struct with keys [settings,count]
+	*/
+	struct function search(search="", max=0, offset=0, sortOrder="name asc"){
+		var results = {};
+		// criteria queries
+		var c = newCriteria();
+		// Search Criteria	
+		if( len(arguments.search) ){
+			c.like("name","%#arguments.search#%");
+		}
+		// run criteria query and projections count
+		results.count 		= c.count( "settingID" );
+		results.settings 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+								.list(offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false);
+		return results;
+	}
 
 }

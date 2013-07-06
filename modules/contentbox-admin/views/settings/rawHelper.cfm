@@ -3,15 +3,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$settingEditor = $("##settingEditor");
-	// table sorting + filtering
+	// settings sorting
 	$("##settings").tablesorter();
-	$("##settingFilter").keyup(function(){
-		$.uiTableFilter( $("##settings"), this.value );
-	});
 	$("##eventFilter").keyup(function(){
 		$.uiTableFilter( $("##eventsList"), this.value );
 	});
-	// table sorting + filtering
+	// singletons sorting + filter
 	$("##singletons").tablesorter({ sortList: [[0,0]] });
 	$("##singletonsFilter").keyup(function(){
 		$.uiTableFilter( $("##singletons"), this.value );
@@ -24,7 +21,51 @@ $(document).ready(function() {
 		$settingEditor.find("##btnSave").val( "Save" );
 		$settingEditor.find("##btnReset").val( "Reset" );
 	});
+	// keyup quick search
+	$("##settingSearch").keyup(function(){
+		var $this = $(this);
+		var clearIt = ( $this.val().length > 0 ? false : true );
+		// ajax search
+		settingsLoad( $this.val() );
+	});
+	// Load settings
+	settingsLoad();
 });
+function flushSettingsCache(){
+	$("##specialActionsLoader").removeClass("hidden");
+	$.ajax({
+		url : '#event.buildLink(prc.xehFlushCache)#',
+		success : function(data){
+			if (data.ERROR) {
+				$("##adminActionNotifier").fadeIn().addClass("alert-error").html(data.MESSAGES).delay( 3000 ).fadeOut();
+			}
+			else{
+				$("##adminActionNotifier").fadeIn().addClass("alert-info").html(data.MESSAGES).delay( 1500 ).fadeOut();
+			}
+			$("##specialActionsLoader").addClass("hidden");
+		}
+	});
+	
+}
+function settingsLoad(search, viewAll, page){
+	if( search == undefined){ search = ""; }
+	if( viewAll == undefined){ viewAll = false; }
+	if( page == undefined){ page = 1; }
+	
+	$('##settingsTableContainer').load( '#event.buildLink( prc.xehRawSettingsTable )#', 
+		{ search: search, viewAll: viewAll, page: page }, 
+		function(){
+			$(this).fadeIn();
+	});
+}
+function settingsPaginate(page){
+	$('##settingsTableContainer').fadeOut();
+	settingsLoad( $("##settingSearch").val() , false, page );
+}
+function viewAllSettings(){
+	$('##settingsTableContainer').fadeOut();
+	settingsLoad( "", true );
+}
 function edit(settingID,name,value){
 	openModal( $("##settingEditorContainer"), 500, 300 );
 	$settingEditor.find("##settingID").val( settingID );
