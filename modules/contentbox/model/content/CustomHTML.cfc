@@ -151,6 +151,42 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
+	
+	/**
+	* Get display publishedDate
+	*/
+	string function getDisplayPublishedDate(){
+		var publishedDate = getPublishedDate();
+		return dateFormat( publishedDate, "mm/dd/yyyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
+	}
+	
+	/**
+	* Get display publishedDate
+	*/
+	string function getPublishedDateForEditor(boolean showTime=false){
+		var pDate = getPublishedDate();
+		if( isNull(pDate) ){ pDate = now(); }
+		// get formatted date
+		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
+		if( arguments.showTime ){
+			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt");
+		}
+		return fDate;
+	}
+
+	/**
+	* Get display expireDate
+	*/
+	string function getExpireDateForEditor(boolean showTime=false){
+		var pDate = getExpireDate();
+		if( isNull(pDate) ){ pDate = ""; }
+		// get formatted date
+		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
+		if( arguments.showTime ){
+			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt");
+		}
+		return fDate;
+	}
 
 	/**
 	* Build content cache keys according to sent content object
