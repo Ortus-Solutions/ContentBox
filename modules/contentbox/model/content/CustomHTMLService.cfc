@@ -131,12 +131,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Get all data prepared for export
 	*/
 	array function getAllForExport(){
-		var c = newCriteria();
+		var result = [];
+		var data = getAll();
 		
-		return c.withProjections(property="contentID,title,slug,description,content,createdDate,cache,cacheTimeout,cacheLastAccessTimeout,markup")
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="createdDate asc");
-			 
+		for( var thisItem in data ){
+			arrayAppend( result, thisItem.getMemento() );	
+		}
+		
+		return result;
 	}
 	
 	/**
