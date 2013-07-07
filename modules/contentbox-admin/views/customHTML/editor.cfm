@@ -1,7 +1,7 @@
 ﻿<cfoutput>
-#html.startForm(name="contentEditForm",action=prc.xehContentSave,novalidate="novalidate")#
+#html.startForm(name="contentEditForm", action=prc.xehContentSave, novalidate="novalidate")#
 <!--- contentid --->
-#html.hiddenField(name="contentID",bind=prc.content)#
+#html.hiddenField(name="contentID", bind=prc.content)#
 <div class="row-fluid">
 	<!--- main content --->
 	<div class="span9" id="main-content">
@@ -77,26 +77,82 @@
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-						<button class="btn" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Cancel</button>
-						&nbsp;
-						<button type="submit" class="btn btn-danger">Save</button>
+							<button class="btn" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Cancel</button>
+							<button type="submit" class="btn btn-danger">Save</button>
 						</div>	
 					</div>
 					
-					#html.hiddenField(name="changelog",value="")#
+					#html.hiddenField(name="changelog", value="Custom HTML")#
 	
 				#html.endFieldSet()#
 				
 				<!---Begin Accordion--->
 				<div id="accordion" class="accordion">
+					
+					<!---Begin content info--->
+                    <cfif prc.content.isLoaded()>
+					<div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##contentinfo">
+                        		<i class="icon-info-sign icon-large"></i> Content Info
+                      		</a>
+                    	</div>
+                    	<div id="contentinfo" class="accordion-body collapse in">
+                      		<div class="accordion-inner">
+                        		<table class="table table-hover table-condensed table-striped" width="100%">
+        							<tr>
+        								<th width="85" class="textRight">Created By:</th>
+        								<td>
+        									<a href="mailto:#prc.content.getCreatorEmail()#">#prc.content.getCreatorName()#</a>
+        								</td>
+        							</tr>
+        							<tr>
+        								<th class="textRight">Created On:</th>
+        								<td>
+        									#prc.content.getDisplayCreatedDate()#
+        								</td>
+        							</tr>
+        						</table>
+                      		</div>
+                    	</div>
+					</div>
+					</cfif>
+					
+					<!---Begin Modifiers--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
+                    <div class="accordion-group">
+                    	<div class="accordion-heading">
+                      		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
+                        		<i class="icon-cogs icon-large"></i> Modifiers
+                      		</a>
+                    	</div>
+                    	<div id="modifiers" class="accordion-body collapse">
+                      		<div class="accordion-inner">
+                      			<!--- Creator --->
+								<cfif prc.content.isLoaded() and prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+								<i class="icon-user icon-large"></i>
+								#html.label(field="creatorID", content="Creator:", class="inline")#
+								<select name="creatorID" id="creatorID" class="input-block-level">
+									<cfloop array="#prc.authors#" index="author">
+									<option value="#author.getAuthorID()#" <cfif prc.content.hasCreator() and prc.content.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+									</cfloop>
+								</select>
+								</cfif>
+                        	</div>
+                    	</div>
+                  	</div>
+                    </cfif>
+                    <!---End Modifiers--->
+					
 				    <!---Begin Cache Content--->
+					<cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
 				    <div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##cachecontent">
                         		<i class="icon-hdd icon-large"></i> Cache Settings
                       		</a>
                     	</div>
-                    	<div id="cachecontent" class="accordion-body collapse in">
+                    	<div id="cachecontent" class="accordion-body collapse">
                       		<div class="accordion-inner">
         						<!--- Cache Settings --->
         						#html.label(field="cache",content="Cache Content:",class="inline")#
@@ -107,6 +163,7 @@
                     	</div>
                   	</div>
                     <!---End Cache Content--->
+					</cfif>
 				</div>
                 <!---End Accordion--->	
 			</div>

@@ -82,7 +82,7 @@ function setupEditors($theForm, withExcerpt, saveURL){
 	$("[type=date]").datepicker();
 
 	// Activate Form Validator
-	$theForm.validate({
+	$targetEditorForm.validate({
     	ignore: 'content',
     	success:function(e,els){ 
     		needConfirmation=false; 
@@ -105,7 +105,7 @@ function setupEditors($theForm, withExcerpt, saveURL){
     });
 
 	// Changelog mandatory?
-	$theForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
+	$targetEditorForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
 	// Custom content unique validator
 	/*$.tools.validator.fn($content, function(el, value) {
 		if( value.length ){ return true; }
@@ -113,14 +113,14 @@ function setupEditors($theForm, withExcerpt, saveURL){
 		return false;
 	});*/
 	// Activate blur slugify on titles
-	var $title = $theForm.find("##title");
+	var $title = $targetEditorForm.find("##title");
 	$title.blur(function(){
-		if( $theForm.find("##slug").size() ){
+		if( $targetEditorForm.find("##slug").size() ){
 			createPermalink( $title.val() );
 		}
 	});
 	// Activate permalink blur
-	$("##slug").blur(function(){
+	$targetEditorForm.find("##slug").blur(function(){
 		permalinkUniqueCheck()
 	});
 	// Editor dirty checks

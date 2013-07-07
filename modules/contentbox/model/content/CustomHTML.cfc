@@ -41,6 +41,9 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
 	
+	// M20 -> creator loaded as a proxy and fetched immediately
+	property name="creator" notnull="false" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
+	
 	// Non-Persistable
 	property name="renderedContent" persistent="false";
 
@@ -71,6 +74,17 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		
 		for(var thisProp in pList ){
 			result[ thisProp ] = variables[ thisProp ];	
+		}
+		
+		// Do Author Relationship
+		if( hasCreator() ){
+			result[ "creator" ] = {
+				creatorID = getCreator().getAuthorID(),
+				firstname = getCreator().getFirstname(),
+				lastName = getCreator().getLastName(),
+				email = getCreator().getEmail(),
+				username = getCreator().getUsername()
+			};
 		}
 		
 		return result;
@@ -191,5 +205,24 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		return b.toString();
 	}
 
+	/**
+	* Shorthand Creator name
+	*/
+	string function getCreatorName(){
+		if( hasCreator() ){
+			return getCreator().getName();
+		}
+		return '';
+	}
+
+	/**
+	* Shorthand Creator email
+	*/
+	string function getCreatorEmail(){
+		if( hasCreator() ){
+			return getCreator().getEmail();
+		}
+		return '';
+	}
 
 }
