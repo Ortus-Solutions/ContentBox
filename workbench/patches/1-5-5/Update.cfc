@@ -23,7 +23,12 @@ limitations under the License.
 Update for 1.5.5 release
 
 DB Structure Changes
-Create FK_authorID in the CustomHTML table with a foreign key to Authors.authorID
+
+CustomHTML
+- FK_authorID with a foreign key to Authors.authorID
+- isPublished boolean bit
+- publishedDate timestamp
+- expireDate timestamp
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
 End Commit Hash: e1e4d063e9fad68eb3873a4ecf3c9305af0045e4
@@ -116,6 +121,12 @@ component implements="contentbox.model.updates.IUpdate"{
 	
 	private function updateCustomHTML(){
 		var oAuthor = securityService.getAuthorSession();
+		
+		// Update all content now with published info
+		var qAllContent = new Query(sql="update cb_customHTML set publishedDate :today" );
+		q.addParam(name="today", value=now(), cfsqltype="timestamp");
+		qAllContent.execute().getResult();
+		
 		// Update all content now with logged in user
 		var qAllContent = new Query(sql="select contentID, FK_authorID from cb_customHTML" ).execute().getResult();
 		for( var x=1; x lte qAllContent.recordCount; x++ ){

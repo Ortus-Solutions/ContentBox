@@ -47,6 +47,7 @@ component extends="baseHandler"{
 		prc.xehExportAllHTML	= "#prc.cbAdminEntryPoint#.customHTML.exportAll";
 		prc.xehImportHTML		= "#prc.cbAdminEntryPoint#.customHTML.importAll";
 		prc.xehContentSearch 	= "#prc.cbAdminEntryPoint#.customHTML";
+		prc.xehBulkStatus 		= "#prc.cbAdminEntryPoint#.customHTML.bulkstatus";
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
@@ -157,6 +158,27 @@ component extends="baseHandler"{
 		
 		// relocate back to editor
 		setNextEvent(prc.xehCustomHTML);
+	}
+	
+	// Bulk Status Change
+	function bulkStatus(event,rc,prc){
+		event.paramValue("contentID","");
+		event.paramValue("contentStatus","draft");
+
+		// check if id list has length
+		if( len( rc.contentID ) ){
+			// save in bulk
+			htmlService.bulkPublishStatus(contentID=rc.contentID, status=rc.contentStatus);
+			// announce event
+			announceInterception("cbadmin_onCustomHTMLStatusUpdate", { contentID=rc.contentID, status=rc.contentStatus } );
+			// Message
+			getPlugin("MessageBox").info("#listLen(rc.contentID)# CustomHTML where set to '#rc.contentStatus#'");
+		}
+		else{
+			getPlugin("MessageBox").warn("No content selected!");
+		}
+		// relocate back
+		setNextEvent( event=prc.xehCustomHTML );
 	}
 	
 	// remove

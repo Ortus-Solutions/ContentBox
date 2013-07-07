@@ -60,8 +60,36 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
+	* Bulk Publish Status Updates
+	* @contentID The list or array of ID's to bulk update
+	* @status The status either 'publish' or 'draft'
+	*/
+	any function bulkPublishStatus(required contentID, required status){
+		var publish = false;
+
+		// publish flag
+		if( arguments.status eq "publish" ){
+			publish = true;
+		}
+
+		// Get all by id
+		var contentObjects = getAll(id=arguments.contentID);
+		for(var x=1; x lte arrayLen( contentObjects ); x++){
+			contentObjects[x].setpublishedDate( now() );
+			contentObjects[x].setisPublished( publish );
+		}
+		
+		// transaction the save of all the content objects
+		saveAll( contentObjects );
+
+		return this;
+	}
+	
+	/**
 	* custom HTML search returns struct with keys [entries,count]
 	* @search.hint The search term to search on
+	* @isPublished.hint Flag that searches content as published=1, published=0 (draft) or published=any for all
+	* @author.hint Search with an author or empty/null for all
 	* @max.hint The max records to return
 	* @offset.hint The offset in the return of records
 	* @sortOrder.hint The sorting required. Title by default
@@ -74,6 +102,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Author Filter
 		if( structKeyExists( arguments, "author" ) AND arguments.author NEQ "all"){
 			c.isEq("creator.authorID", javaCast( "int", arguments.author ) );
+		}
+		// isPublished filter
+		if( structKeyExists( arguments, "isPublished" ) AND arguments.isPublished NEQ "any"){
+			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
 		}
 		// Search Criteria
 		if( len( arguments.search ) ){

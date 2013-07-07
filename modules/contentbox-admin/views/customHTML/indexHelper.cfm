@@ -9,6 +9,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##entries"), this.value );
 	});
 });
+<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 function importContent(){
 	// local id's
 	var $importForm = $("##importForm");
@@ -39,5 +40,15 @@ function remove(recordID){
 	//Submit Form
 	$contentForm.submit();
 }
+function bulkChangeStatus(status, contentID){
+	$contentForm.attr("action","#event.buildlink( linkTo=prc.xehBulkStatus )#");
+	$contentForm.find("##contentStatus").val( status );
+	if( contentID != null ){
+		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+		checkByValue('contentID',contentID);	
+	}
+	$contentForm.submit();
+}
+</cfif>
 </script>
 </cfoutput>
