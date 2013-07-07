@@ -31,15 +31,18 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 
 	// PROPERTIES
 	property name="contentID" 				fieldtype="id" generator="native" setter="false";
-	property name="title"					notnull="true"  length="200";
-	property name="slug"					notnull="true"  length="200" unique="true" index="idx_customHTML_slug";
+	property name="title"					notnull="true"  length="200" default="";
+	property name="slug"					notnull="true"  length="200" unique="true" index="idx_customHTML_slug" default="";
 	property name="description"				notnull="false" length="500" default="";
-	property name="content" 				notnull="true"  ormtype="text" length="8000";
-	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false";
+	property name="content" 				notnull="true"  ormtype="text" length="8000" default="";
+	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
 	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
+	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search";
+	property name="publishedDate"			notnull="false" ormtype="timestamp" index="idx_published,idx_publishedDate";
+	property name="expireDate"				notnull="false" ormtype="timestamp" default="" index="idx_expireDate";
 	
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property name="creator" notnull="false" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
@@ -69,7 +72,7 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	* Get memento representation
 	*/
 	function getMemento(){
-		var pList = listToArray( "contentID,title,slug,description,content,createdDate,cache,cacheTimeout,cacheLastAccessTimeout,markup" );
+		var pList = listToArray( "contentID,title,slug,description,content,createdDate,cache,cacheTimeout,cacheLastAccessTimeout,markup,isPublished,publishedDate,expireDate" );
 		var result = {};
 		
 		for(var thisProp in pList ){
@@ -99,6 +102,27 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	*/
 	boolean function isLoaded(){
 		return len( getContentID() ) GT 0;
+	}
+	
+	/**
+	* Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
+	*/
+	boolean function isExpired(){
+		return ( isContentPublished() AND !isNull(expireDate) AND expireDate lte now() ) ? true : false;
+	}
+
+	/**
+	* Bit that denotes if the content has been published or not
+	*/
+	boolean function isContentPublished(){
+		return ( getIsPublished() AND !isNull( publishedDate ) AND getPublishedDate() LTE now() ) ? true : false;
+	}
+
+	/**
+	* Bit that denotes if the content has been published or not in the future
+	*/
+	boolean function isPublishedInFuture(){
+		return ( getIsPublished() AND getPublishedDate() GT now() ) ? true : false;
 	}
 
 	/*

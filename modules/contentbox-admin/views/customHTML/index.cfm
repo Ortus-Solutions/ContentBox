@@ -28,6 +28,7 @@
 			<!--- entryForm --->
 			#html.startForm(name="contentForm",action=prc.xehRemoveHTML)#
 				#html.hiddenField(name="page",value=rc.page)#
+				#html.hiddenField(name="contentStatus",value="")#
 				#html.hiddenField(name="contentID")#
 			
 				<!--- Content Bar --->
@@ -41,8 +42,10 @@
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
-					    		<li class="dropdown-submenu">
+					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
+					    		<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
+								<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+								<li class="dropdown-submenu">
 					    			<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
 										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
@@ -69,16 +72,29 @@
 				<table name="entries" id="entries" class="tablesorter table table-striped table-hover" width="98%">
 					<thead>
 						<tr>
+							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 							<th>Title</th>
 							<th width="300">Slug</th>
 							<th>Author</th>
+							<th width="40" class="center"><i class="icon-globe icon-large" title="Published"></i></th>
 							<th width="90" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
 					
 					<tbody>
 						<cfloop array="#prc.entries#" index="entry">
-						<tr>
+						<tr id="contentID-#entry.getContentID()#" data-contentID="#entry.getContentID()#"
+							<cfif entry.isExpired()>
+								class="error"
+							<cfelseif entry.isPublishedInFuture()>
+								class="success"
+							<cfelseif !entry.isContentPublished()>
+								class="warning"
+							</cfif>>
+							<!--- check box --->
+							<td>
+								<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
+							</td>
 							<td>
 								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 									<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content">#entry.getTitle()#</a>
@@ -94,9 +110,24 @@
 								<cfif entry.hasCreator()>#entry.getCreatorName()#<cfelse><span class="label label-warning">none</span></cfif>
 							</td>
 							<td class="center">
+								<cfif entry.isExpired()>
+									<i class="icon-time icon-large textRed" title="Content has expired on ( (#entry.getDisplayExpireDate()#))"></i>
+									<span class="hidden">expired</span>
+								<cfelseif entry.isPublishedInFuture()>
+									<i class="icon-fighter-jet icon-large textBlue" title="Content publishes in the future (#entry.getDisplayPublishedDate()#)"></i>
+									<span class="hidden">published in future</span>
+								<cfelseif entry.isContentPublished()>
+									<i class="icon-ok icon-large textGreen" title="Published"></i>
+									<span class="hidden">published in future</span>
+								<cfelse>
+									<i class="icon-remove icon-large textRed" title="Draft"></i>
+									<span class="hidden">draft</span>
+								</cfif>
+							</td>
+							<td class="center">
 								
 								<div class="btn-group">
-							    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
+							    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
 										<i class="icon-cogs icon-large"></i>
 									</a>
 							    	<ul class="dropdown-menu text-left">
@@ -163,14 +194,13 @@
 					<option value="#author.getAuthorID()#" <cfif rc.fAuthors eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
 					</cfloop>
 				</select>
-				<!--- Status 
-				<label for="fStatus">Page Status: </label>
+				<!--- Status --->
+				<label for="fStatus">Content Status: </label>
 				<select name="fStatus" id="fStatus" class="input-block-level">
 					<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status</option>
 					<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Published</option>
 					<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Draft</option>
 				</select>
-				--->
 				
 				<button type="submit" class="btn btn-danger">Apply Filters</button>
 				<button class="btn" onclick="return to('#event.buildLink( prc.xehCustomHTML )#')">Reset</button>
