@@ -147,6 +147,37 @@
 				#html.endForm()#
 			</div>
 		</div>	
+		
+		<!--- Filter Box --->
+		<div class="small_box">
+			<div class="header">
+				<i class="icon-filter"></i> Filters
+			</div>
+			<div class="body<cfif prc.isFiltering> selected</cfif>">
+				#html.startForm(name="contentFilterForm", action=prc.xehContentSearch)#
+				<!--- Authors --->
+				<label for="fAuthors">Authors: </label>
+				<select name="fAuthors" id="fAuthors" class="input-block-level">
+					<option value="all" <cfif rc.fAuthors eq "all">selected="selected"</cfif>>All Authors</option>
+					<cfloop array="#prc.authors#" index="author">
+					<option value="#author.getAuthorID()#" <cfif rc.fAuthors eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+					</cfloop>
+				</select>
+				<!--- Status 
+				<label for="fStatus">Page Status: </label>
+				<select name="fStatus" id="fStatus" class="input-block-level">
+					<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status</option>
+					<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Published</option>
+					<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Draft</option>
+				</select>
+				--->
+				
+				<button type="submit" class="btn btn-danger">Apply Filters</button>
+				<button class="btn" onclick="return to('#event.buildLink( prc.xehCustomHTML )#')">Reset</button>
+				#html.endForm()#
+			</div>
+		</div>
+	
 	</div>    
 </div>
 

@@ -35,6 +35,9 @@ component extends="baseHandler"{
 	function index(event,rc,prc){
 		event.paramValue("search","");
 		event.paramValue("page",1);
+		event.paramValue("fAuthors","all");
+		event.paramValue("fStatus","any");
+		event.paramValue("isFiltering",false,true);
 		
 		// Exit Handler
 		prc.xehSaveHTML 		= "#prc.cbAdminEntryPoint#.customHTML.save";
@@ -43,31 +46,39 @@ component extends="baseHandler"{
 		prc.xehExportHTML		= "#prc.cbAdminEntryPoint#.customHTML.export";
 		prc.xehExportAllHTML	= "#prc.cbAdminEntryPoint#.customHTML.exportAll";
 		prc.xehImportHTML		= "#prc.cbAdminEntryPoint#.customHTML.importAll";
+		prc.xehContentSearch 	= "#prc.cbAdminEntryPoint#.customHTML";
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
 		prc.paging 		 = prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	 = event.buildLink('#prc.xehCustomHTML#.page.@page@?');
+		prc.pagingLink 	 = event.buildLink( '#prc.xehCustomHTML#.page.@page@?' );
 		
+		// Append filters to paging link?
+		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
+		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		// is Filtering?
+		if( rc.fAuthors neq "all" OR rc.fStatus neq "any"){ prc.isFiltering = true; }
+
+		// get all authors
+		prc.authors    = authorService.getAll(sortOrder="lastName");
 		// Append search to paging link?
-		if( len(rc.search) ){ prc.pagingLink&="&search=#rc.search#"; }
+		if( len( rc.search ) ){ prc.pagingLink&="&search=#rc.search#"; }
 		
 		// get content pieces
 		var entryResults = htmlService.search(search=rc.search,
+											  isPublished=rc.fStatus,
+											  author=rc.fAuthors,
 											  offset=prc.paging.startRow-1,
 											  max=prc.cbSettings.cb_paging_maxrows);
 		prc.entries 		= entryResults.entries;
 		prc.entriesCount  	= entryResults.count;
 		
-		// get all authors
-		prc.authors    = authorService.getAll(sortOrder="lastName");
-				
 		// tab
 		prc.tabContent				= true;
 		prc.tabContent_customHTML	= true; 
 		
 		// view
-		event.setView("customHTML/index");
+		event.setView( "customHTML/index" );
 	}
 	
 	// slugify remotely

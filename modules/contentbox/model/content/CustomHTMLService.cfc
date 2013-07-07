@@ -65,11 +65,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @offset.hint The offset in the return of records
 	* @sortOrder.hint The sorting required. Title by default
 	*/
-	struct function search(search="", max=0, offset=0, sortOrder="title",boolean searchActiveContent=true){
+	struct function search(search="", isPublished, author, max=0, offset=0, sortOrder="title", boolean searchActiveContent=true){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
 		
+		// Author Filter
+		if( structKeyExists( arguments, "author" ) AND arguments.author NEQ "all"){
+			c.isEq("creator.authorID", javaCast( "int", arguments.author ) );
+		}
 		// Search Criteria
 		if( len( arguments.search ) ){
 			if( arguments.searchActiveContent ){
