@@ -156,9 +156,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
 		var allContent = [];
-		
+		// if importData isn't an array, make it one
+		var iterableData = !isArray( arguments.importData ) ? [ arguments.importData ] : arguments.importData;
 		// iterate and import
-		for( var thisContent in arguments.importData ){
+		for( var thisContent in iterableData ){
 			var args = { slug = thisContent.slug };
 			var oCustomHTML = findWhere( criteria=args );
 			// if null, then create it
