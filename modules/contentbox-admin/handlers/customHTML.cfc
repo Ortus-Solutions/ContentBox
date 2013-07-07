@@ -94,6 +94,9 @@ component extends="baseHandler"{
 		prc.tabContent				= true;
 		prc.tabContent_customHTML	= true; 
 		
+		// CK Editor Helper
+		prc.ckHelper = getMyPlugin(plugin="CKHelper", module="contentbox-admin");
+		
 		// get new or persisted
 		prc.content  = htmlService.get( event.getValue("contentID",0) );
 		

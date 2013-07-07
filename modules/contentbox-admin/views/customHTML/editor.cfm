@@ -66,20 +66,58 @@
 		<div class="small_box">
 			
 			<div class="header">
-				<i class="icon-cogs"></i>
-				Actions
+				<i class="icon-info-sign"></i>
+				Content Details
 			</div>
 			<div class="body">
 	
 				<!--- Publish Info --->
-				#html.startFieldset(legend='<i class="icon-globe icon-large"></i> Publishing')#
+				#html.startFieldset(legend='<i class="icon-calendar"></i> Publishing',class="#prc.content.getIsPublished()?'':'selected'#")#
+					
+					<!--- Published? --->
+					<cfif prc.content.isLoaded()>
+					<label class="inline">Status: </label>
+					<cfif !prc.content.getIsPublished()><div class="textRed inline">Draft!</div><cfelse>Published</cfif>
+					</cfif>
+					
+					<!--- is Published --->
+					#html.hiddenField(name="isPublished",value=true)#
+					<!--- publish date --->
+					<div class="control-group">
+					    #html.label(class="control-label", field="publishedDate", content="Publish Date (<a href='javascript:publishNow()'>Now</a>)")#
+					    <div class="controls">
+					        #html.inputField(size="9", name="publishedDate",value=prc.content.getPublishedDateForEditor(),class="textfield")#
+        					@
+        					#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.content.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
+        					#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.content.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
+					    </div>
+					</div>
+					<!--- expire date --->
+					<div class="control-group">
+					    #html.label(class="control-label",field="expireDate",content="")#
+                        <div class="controls">
+                            #html.inputField(size="9", name="expireDate",value=prc.content.getExpireDateForEditor(),class="textfield")#
+        					@
+        					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.content.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
+        					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.content.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
+                        </div>
+					</div>
 	
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-							<button class="btn" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Cancel</button>
-							<button type="submit" class="btn btn-danger">Save</button>
-						</div>	
+						&nbsp;<input type="submit" class="btn" value="Save" data-keybinding="ctrl+s" onclick="return quickSave()">
+						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
+						<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
+						</cfif>
+						</div>
+					</div>
+					
+					<!--- Loader --->
+					<div class="loaders" id="uploadBarLoader">
+						<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+						<div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
 					</div>
 					
 					#html.hiddenField(name="changelog", value="Custom HTML")#
@@ -110,6 +148,12 @@
         								<th class="textRight">Created On:</th>
         								<td>
         									#prc.content.getDisplayCreatedDate()#
+        								</td>
+        							</tr>
+									<tr>
+        								<th class="textRight">Published On:</th>
+        								<td>
+        									#prc.content.getDisplayPublishedDate()#
         								</td>
         							</tr>
         						</table>

@@ -1,4 +1,6 @@
 <cfoutput>
+<!--- Load Editor Custom Assets --->
+#html.addAsset(prc.cbroot & "/includes/css/date.css")#
 <!--- Editor Javascript --->
 <script type="text/javascript">
 // Load Custom Editor Assets, Functions, etc.
