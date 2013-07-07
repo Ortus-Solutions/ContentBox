@@ -290,7 +290,7 @@ component extends="baseHandler"{
 			}
 		}
 		catch(any e){
-			var errorMessage = "Error importing file: #e.message# #e.detail#";
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
 			getPlugin("MessageBox").error( errorMessage );
 		}

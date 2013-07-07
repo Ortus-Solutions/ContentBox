@@ -25,8 +25,9 @@ limitations under the License.
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	// Dependencies
-	property name="htmlHelper" inject="coldbox:plugin:HTMLHelper";
-	property name="populator"  inject="wirebox:populator";
+	property name="htmlHelper" 		inject="coldbox:plugin:HTMLHelper";
+	property name="populator"  		inject="wirebox:populator";
+	property name="authorService"	inject="id:authorService@cb";
 	
 	/**
 	* Constructor
@@ -165,29 +166,36 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// iterate and import
 		for( var thisContent in arguments.importData ){
-			var args = { slug = thisContent.slug };
-			var oCustomHTML = findWhere( criteria=args );
-			// if null, then create it
-			if( isNull( oCustomHTML ) ){
-				// populate new content
-				oCustomHTML = populator.populateFromStruct( target=new(), memento=thisContent, exclude="contentID", composeRelationships=false );
-				arrayAppend( allContent, oCustomHTMl );
-				// logs
-				importLog.append( "New content imported: #thisContent.slug#<br>" );
+			var oCustomHTML = this.findBySlug( thisContent.slug );
+			oCustomHTML = ( isNull( oCustomHTML) ? new() : oCustomHTML );
+			
+			// populate content from data
+			populator.populateFromStruct( target=oCustomHTML, memento=thisContent, exclude="contentID,creator", composeRelationships=false );
+			
+			// determine author else ignore
+			var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
+			if( !isNull( oAuthor ) ){
+				oCustomHTML.setCreator( oAuthor );
+				importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
+			}	
+			else{
+				importLog.append( "Content author not found (#thisContent.creator.toString()#): #thisContent.slug#<br>" );
 			}
-			// else only override if true
-			else if( arguments.override ){
-				// populate content
-				populator.populateFromStruct( target=oCustomHTML, memento=thisContent, exclude="contentID", composeRelationships=false );
-				// assign to save.
-				arrayAppend( allContent, oCustomHTML );
-				importLog.append( "Overriding content: #thisContent.slug#<br>" );
+			
+			// if new or persisted with override then save.
+			if( !oCustomHTML.isLoaded() ){
+				importLog.append( "New content imported: #thisContent.slug#<br>" );
+				arrayAppend( allContent, oCustomHTMl );
+			}
+			else if( oCustomHTML.isLoaded() and arguments.override ){
+				importLog.append( "Persisted content overriden: #thisContent.slug#<br>" );
+				arrayAppend( allContent, oCustomHTMl );
 			}
 			else{
-				importLog.append( "Skipping content: #thisContent.slug#<br>" );
+				importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
 			}
-		}
-		
+		} // end import loop
+
 		// Save them?
 		if( arrayLen( allContent ) ){
 			saveAll( allContent );

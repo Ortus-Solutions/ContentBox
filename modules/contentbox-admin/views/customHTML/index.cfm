@@ -190,7 +190,9 @@
 	    </div>
         #html.startForm(name="importForm", action=prc.xehImportHTML, class="form-vertical", multipart=true)#
         <div class="modal-body">
-			<p>Choose the ContentBox <strong>JSON</strong> custom HTML file to import.</p>
+			<p>Choose the ContentBox <strong>JSON</strong> custom HTML file to import. The creator of the customHTML is matched via their <strong>username</strong> and 
+			content overrides are matched via their <strong>slug</strong>.
+			If the importer cannot find the username from the import file in your installation, then it will continue saving the content with no creator attached.</p>
 			
 			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
 			
