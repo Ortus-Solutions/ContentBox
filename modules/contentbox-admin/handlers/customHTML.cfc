@@ -262,7 +262,6 @@ component extends="baseHandler"{
 		event.paramValue("format", "json");
 		// get all prepared content objects
 		var data  = htmlService.getAllForExport();
-		
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "CustomHTML." & ( rc.format eq "xml" ? "xml" : "json" );
