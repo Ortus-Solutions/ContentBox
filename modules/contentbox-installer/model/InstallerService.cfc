@@ -473,6 +473,7 @@ component accessors="true"{
 <p style="text-align: center;">
 	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>'
 		});
+		customHTML.setCreator( author );
 		customHTMLService.saveCustomHTML( customHTML );
 
 	}

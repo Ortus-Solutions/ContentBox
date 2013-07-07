@@ -29,6 +29,7 @@ component extends="baseHandler"{
 	property name="htmlService"			inject="id:customHTMLService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="editorService"		inject="id:editorService@cb";
+	property name="authorService"		inject="id:authorService@cb";
 	
 	// index
 	function index(event,rc,prc){
@@ -55,9 +56,12 @@ component extends="baseHandler"{
 		var entryResults = htmlService.search(search=rc.search,
 											  offset=prc.paging.startRow-1,
 											  max=prc.cbSettings.cb_paging_maxrows);
-		prc.entries 		 = entryResults.entries;
-		prc.entriesCount  = entryResults.count;
+		prc.entries 		= entryResults.entries;
+		prc.entriesCount  	= entryResults.count;
 		
+		// get all authors
+		prc.authors    = authorService.getAll(sortOrder="lastName");
+				
 		// tab
 		prc.tabContent				= true;
 		prc.tabContent_customHTML	= true; 
@@ -99,16 +103,30 @@ component extends="baseHandler"{
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.customHTML.slugUnique";
-
+		
+		// get all authors
+		prc.authors    = authorService.getAll(sortOrder="lastName");
+		
 		// view
 		event.setView(view="customHTML/editor");
 	}
 	
 	// save html
 	function save(event,rc,prc){
+		// param values
+		event.paramValue("creatorID","");
 		
 		// populate and get content
 		var oContent = populateModel( htmlService.get(id=rc.contentID) );
+		// Attach creator if new customHTML or no author registered
+		var isNew = ( NOT oContent.isLoaded() );
+		if( isNew OR !oContent.hasCreator() ){ 
+			oContent.setCreator( prc.oAuthor ); 
+		}
+		// Override creator?
+		else if( !isNew and prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN") and len( rc.creatorID ) and oContent.getCreator().getAuthorID() NEQ rc.creatorID ){
+			oContent.setCreator( authorService.get( rc.creatorID ) );
+		}
 		
 		// validate it
 		var errors = oContent.validate();

@@ -69,9 +69,9 @@
 				<table name="entries" id="entries" class="tablesorter table table-striped table-hover" width="98%">
 					<thead>
 						<tr>
-							<th width="200">Title</th>
-							<th>Slug</th>
-							<th>Description</th>
+							<th>Title</th>
+							<th width="300">Slug</th>
+							<th>Author</th>
 							<th width="90" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
@@ -85,12 +85,13 @@
 								<cfelse>
 									#entry.getTitle()#
 								</cfif>
+								<br>#entry.getDescription()#
 							</td>
 							<td>
 								#entry.getSlug()#
 							</td>
 							<td>
-								#entry.getDescription()#
+								<cfif entry.hasCreator()>#entry.getCreatorName()#<cfelse><span class="label label-warning">none</span></cfif>
 							</td>
 							<td class="center">
 								

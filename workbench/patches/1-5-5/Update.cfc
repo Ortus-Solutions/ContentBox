@@ -20,7 +20,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
-Update for 1.5.3 release
+Update for 1.5.5 release
+
+DB Structure Changes
+Create FK_authorID in the CustomHTML table with a foreign key to Authors.authorID
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
 End Commit Hash: e1e4d063e9fad68eb3873a4ecf3c9305af0045e4
@@ -31,14 +34,15 @@ component implements="contentbox.model.updates.IUpdate"{
 	// DI
 	property name="settingService"			inject="id:settingService@cb";
 	property name="permissionService" 		inject="permissionService@cb";
-	property name="roleService" 				inject="roleService@cb";
+	property name="roleService" 			inject="roleService@cb";
 	property name="securityRuleService"		inject="securityRuleService@cb";
 	property name="pageService"				inject="pageService@cb";
-	property name="coldbox"						inject="coldbox";
-	property name="fileUtils"						inject="coldbox:plugin:FileUtils";
-	property name="log"							inject="logbox:logger:{this}";
+	property name="coldbox"					inject="coldbox";
+	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
+	property name="log"						inject="logbox:logger:{this}";
 	property name="contentService" 			inject="contentService@cb";
-	property name="wirebox"						inject="wirebox";
+	property name="wirebox"					inject="wirebox";
+	property name="securityService" 		inject="id:securityService@cb";
 	
 	function init(){
 		version = "1.5.5";
@@ -93,8 +97,12 @@ component implements="contentbox.model.updates.IUpdate"{
 	*/
 	function postInstallation(){
 		try{
+			// Make changes on disk take effect
+			ORMREload();
+			
 			transaction{
-				
+				// Update custom HTML creators
+				updateCustomHTML();
 			}
 		}
 		catch(Any e){
@@ -105,6 +113,21 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 	
 	/************************************** PRIVATE *********************************************/
+	
+	private function updateCustomHTML(){
+		var oAuthor = securityService.getAuthorSession();
+		// Update all content now with logged in user
+		var qAllContent = new Query(sql="select contentID, FK_authorID from cb_customHTML" ).execute().getResult();
+		for( var x=1; x lte qAllContent.recordCount; x++ ){
+			// update author if none found in row
+			if( !len( qAllContent.FK_authorID[ x ] ) ){
+				var q = new Query(sql="update cb_customHTML set FK_authorid = :authorID where contentID = :contentID" );
+				q.addParam(name="contentID", value=qAllContent.contentID[ x ], cfsqltype="numeric");
+				q.addParam(name="authorID", value=oAuthor.getAuthorID(), cfsqltype="numeric");
+				q.execute();
+			}
+		}
+	}
 	
 	private function updateContentCreators(){
 		// get all content versions
