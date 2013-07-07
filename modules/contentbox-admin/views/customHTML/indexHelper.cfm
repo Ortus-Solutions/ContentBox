@@ -13,7 +13,7 @@ function importContent(){
 	// local id's
 	var $importForm = $("##importForm");
 	// open modal for cloning options
-	openModal( $importDialog, 500, 300 );
+	openModal( $importDialog, 500, 350 );
 	// form validator and data
 	$importForm.validate({ 
 		submitHandler: function(form){

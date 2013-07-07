@@ -83,8 +83,12 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 				firstname = getCreator().getFirstname(),
 				lastName = getCreator().getLastName(),
 				email = getCreator().getEmail(),
-				username = getCreator().getUsername()
+				username = getCreator().getUsername(),
+				role = getCreator().getRole().getRole()
 			};
+		}
+		else{
+			result[ "creator" ] = {};
 		}
 		
 		return result;
