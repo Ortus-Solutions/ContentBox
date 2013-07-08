@@ -135,14 +135,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* Retrieve a content piece by slug
-	* @slug The unique slug this content is tied to
+	* @slug.hint The unique slug this content is tied to
+	* @throwException.hint Throw an exception if not found.
 	*/
-	function findBySlug(required slug){
+	function findBySlug(required slug, boolean throwException=true){
 		var html = findWhere({slug=arguments.slug});
 		
-		if( !isNull(html) ){ return html; }
+		if( !isNull( html ) ){ return html; }
 		
-		throw(message="Custom HTML cannot be found using slug: #arguments.slug#",type="ContentBox.CustomHTMLService.NoContentFound");
+		if( arguments.throwException ){
+			throw(message="Custom HTML cannot be found using slug: #arguments.slug#",type="ContentBox.CustomHTMLService.NoContentFound");
+		}
 	}
 	
 	/**
@@ -191,18 +194,23 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
-	* Import data from an array of structures of customHTML 
+	* Import data from an array of structures of customHTML or just one structure of CustomHTML 
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
 		var allContent = [];
 		
+		// if struct, inflate into an array
+		if( isStruct( arguments.importData ) ){
+			arguments.importData = [ arguments.importData ];
+		}
+		
 		// iterate and import
 		for( var thisContent in arguments.importData ){
-			var oCustomHTML = this.findBySlug( thisContent.slug );
+			var oCustomHTML = this.findBySlug( slug=thisContent.slug, throwException=false );
 			oCustomHTML = ( isNull( oCustomHTML) ? new() : oCustomHTML );
 			
 			// populate content from data
-			populator.populateFromStruct( target=oCustomHTML, memento=thisContent, exclude="contentID,creator", composeRelationships=false );
+			populator.populateFromStruct( target=oCustomHTML, memento=thisContent, exclude="contentID,creator", composeRelationships=false, nullEmptyInclude="publishedDate,expireDate" );
 			
 			// determine author else ignore
 			var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
