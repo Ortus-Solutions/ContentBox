@@ -82,6 +82,7 @@ function setupEditors($theForm, withExcerpt, saveURL){
 
 	// Activate Date fields
 	$("[type=date]").datepicker();
+	$(".datepicker").datepicker();
 
 	// Activate Form Validator
 	$targetEditorForm.validate({
