@@ -10,6 +10,9 @@
 			<div class="header">
 				<i class="icon-tasks icon-large"></i>
 				Custom HTML Editor
+				<div class="btn-group pull-right" style="margin-top:5px">
+				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehCustomHTML)#';return false;"><i class="icon-reply"></i> Back</button>
+			    </div>
 			</div>
 			<!--- Body --->
 			<div class="body">
