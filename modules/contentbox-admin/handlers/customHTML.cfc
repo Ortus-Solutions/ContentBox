@@ -129,10 +129,28 @@ component extends="baseHandler"{
 	// save html
 	function save(event,rc,prc){
 		// param values
-		event.paramValue("creatorID","");
+		event.paramValue( "creatorID", "" );
+		event.paramValue( "isPublished", true );
+		event.paramValue( "slug", "" );
+		event.paramValue( "changelog", "" );
+		event.paramValue( "publishedDate", now() );
+		event.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) );
+		event.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) );
+		
+		// slugify the incoming title or slug
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin("HTMLHelper").slugify( rc.slug ) );
+		
+		// Verify permission for publishing, else save as draft
+		if( !prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN") ){
+			rc.isPublished 	= "false";
+		}
 		
 		// populate and get content
-		var oContent = populateModel( htmlService.get(id=rc.contentID) );
+		var oContent = htmlService.get( id=rc.contentID );
+		populateModel( htmlService.get(id=rc.contentID) )
+			.addPublishedtime( rc.publishedHour, rc.publishedMinute )
+			.addExpiredTime( rc.expireHour, rc.expireMinute );
+		
 		// Attach creator if new customHTML or no author registered
 		var isNew = ( NOT oContent.isLoaded() );
 		if( isNew OR !oContent.hasCreator() ){ 
@@ -159,8 +177,17 @@ component extends="baseHandler"{
 			getPlugin("MessageBox").warn(errorMessages=errors);
 		}
 		
-		// relocate back to editor
-		setNextEvent(prc.xehCustomHTML);
+		// Ajax Save?
+		if( event.isAjax() ){
+			var rData = {
+				"CONTENTID" = oContent.getContentID()
+			};
+			event.renderData(type="json", data=rData);
+		}
+		else{
+			// relocate back to editor
+			setNextEvent(prc.xehCustomHTML);
+		}
 	}
 	
 	// Bulk Status Change

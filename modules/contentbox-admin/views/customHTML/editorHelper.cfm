@@ -6,7 +6,7 @@ $(document).ready(function() {
  	// pointers
 	$contentEditForm = $("##contentEditForm");
 	// setup editors
-	setupEditors( $contentEditForm, false, '#event.buildLink(prc.xehContentSave)#' );
+	setupEditors( $contentEditForm, false, '#event.buildLink(prc.xehContentSave)#', false );
 });
 </script>
 </cfoutput>
