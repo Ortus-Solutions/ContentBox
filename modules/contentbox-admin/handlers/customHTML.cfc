@@ -249,6 +249,7 @@ component extends="baseHandler"{
 
 		// search entries with filters and all
 		var htmlResults = htmlService.search(search=rc.search,
+											 isPublished=true,
 											 offset=prc.paging.startRow-1,
 											 max=prc.cbSettings.cb_paging_maxrows,
 											 searchActiveContent=false);
