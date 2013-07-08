@@ -40,8 +40,8 @@
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft</a></li>
-								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish</a></li>
+					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
+								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
 								<li class="dropdown-submenu">
 									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
