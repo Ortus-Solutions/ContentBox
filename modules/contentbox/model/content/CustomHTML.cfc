@@ -52,9 +52,6 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 
-	/*
-	* In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
-	*/
 	public void function preInsert(){
 		setCreatedDate( now() );
 	}
@@ -65,7 +62,12 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	* constructor
 	*/
 	function init(){
+		createdDate		= now();
+		publishedDate	= "";
+		expireDate		= "";
 		renderedContent = "";
+		
+		return this;
 	}
 	
 	/**
@@ -76,7 +78,12 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		var result = {};
 		
 		for(var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}
 		}
 		
 		// Do Author Relationship
