@@ -174,8 +174,7 @@ component extends="baseHandler"{
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
 
 		// slugify the incoming title or slug
-		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
-		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin("HTMLHelper").slugify( rc.slug ) );
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oAuthor.checkPermission("PAGES_ADMIN") ){

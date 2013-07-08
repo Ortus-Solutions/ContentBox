@@ -59,10 +59,12 @@ function quickSave(){
 /**
  * Setup the editors. 
  * TODO: Move this to a more OOish approach, don't like it.
- * @param $theForm The form container for the content
- * @param withExcerpt Using excerpt or not
+ * @param $theForm The form container for the editor
+ * @param withExcerpt Using excerpt or not apart from the main 'content' object
+ * @param saveURL The URL used for saving the content asynchronously
+ * @param withChangelogs Using changelogs or not in the editing forms
  */
-function setupEditors($theForm, withExcerpt, saveURL){
+function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	// Setup global editor elements
 	$targetEditorForm   	= $theForm;
 	$targetEditorSaveURL 	= saveURL;
@@ -76,6 +78,8 @@ function setupEditors($theForm, withExcerpt, saveURL){
 	
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
+	// with changelogs
+	if( withChangelogs == null ){ withChangelogs = true; }
 	
 	// Startup the choosen editor
 	#prc.oEditorDriver.startup()#
@@ -108,13 +112,9 @@ function setupEditors($theForm, withExcerpt, saveURL){
     });
 
 	// Changelog mandatory?
-	$targetEditorForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
-	// Custom content unique validator
-	/*$.tools.validator.fn($content, function(el, value) {
-		if( value.length ){ return true; }
-		alert("Please enter some content!");
-		return false;
-	});*/
+	if( withChangelogs ){
+		$targetEditorForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
+	}
 	// Activate blur slugify on titles
 	var $title = $targetEditorForm.find("##title");
 	$title.blur(function(){

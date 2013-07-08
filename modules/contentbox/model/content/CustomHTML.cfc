@@ -194,6 +194,26 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		}
 		return fDate;
 	}
+	
+	/**
+	* add published timestamp to property
+	*/
+	any function addPublishedTime(required hour, required minute){
+		if( !isDate( getPublishedDate() ) ){ return this; }
+		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
+		setPublishedDate( getPublishedDate() & " " & time);
+		return this;
+	}
+
+	/**
+	* add expired timestamp to property
+	*/
+	any function addExpiredTime(required hour, required minute){
+		if( !isDate( getExpireDate() ) ){ return this; }
+		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
+		setExpireDate( getExpireDate() & " " & time);
+		return this;
+	}
 
 	/**
 	* Build content cache keys according to sent content object
