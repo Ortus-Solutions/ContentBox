@@ -24,6 +24,9 @@ limitations under the License.
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
+	// DI
+	property name="populator" 	inject="wirebox:populator";
+	
 	/**
 	* Constructor
 	*/
@@ -49,6 +52,79 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		q.execute();
 		// delete permission now
 		return deleteById( arguments.permissionID );
+	}
+	
+	/**
+	* Get all data prepared for export
+	*/
+	array function getAllForExport(){
+		var c = newCriteria();
+		
+		return c.withProjections(property="permissionID,permission,description")
+			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list(sortOrder="permission");
+			 
+	}
+	
+	/**
+	* Import data from a ContentBox JSON file. Returns the import log
+	*/
+	string function importFromFile(required importFile, boolean override=false){
+		var data 		= fileRead( arguments.importFile );
+		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		
+		if( !isJSON( data ) ){
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+		}
+		
+		// deserialize packet: Should be array of { settingID, name, value }
+		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
+	}
+	
+	/**
+	* Import data from an array of structures of customHTML or just one structure of CustomHTML 
+	*/
+	string function importFromData(required importData, boolean override=false, importLog){
+		var allPermissions = [];
+		
+		// if struct, inflate into an array
+		if( isStruct( arguments.importData ) ){
+			arguments.importData = [ arguments.importData ];
+		}
+		
+		// iterate and import
+		for( var thisPermission in arguments.importData ){
+			// Get new or persisted
+			var oPermission = this.findByPermission( thisPermission.permission );
+			oPermission = ( isNull( oPermission) ? new() : oPermission );
+			
+			// populate content from data
+			populator.populateFromStruct( target=oPermission, memento=thisPermission, exclude="permissionID", composeRelationships=false );
+			
+			// if new or persisted with override then save.
+			if( !oPermission.isLoaded() ){
+				arguments.importLog.append( "New permission imported: #thisPermission.permission#<br>" );
+				arrayAppend( allPermissions, oPermission );
+			}
+			else if( oPermission.isLoaded() and arguments.override ){
+				arguments.importLog.append( "Persisted permission overriden: #thisPermission.permission#<br>" );
+				arrayAppend( allPermissions, oPermission );
+			}
+			else{
+				arguments.importLog.append( "Skipping persisted permission: #thisPermission.permission#<br>" );
+			}
+		} // end import loop
+
+		// Save them?
+		if( arrayLen( allPermissions ) ){
+			saveAll( allPermissions );
+			arguments.importLog.append( "Saved all imported and overriden permissions!" );
+		}
+		else{
+			arguments.importLog.append( "No permissions imported as none where found or able to be overriden from the import file." );
+		}
+		
+		return arguments.importLog.toString(); 
 	}
 	
 }

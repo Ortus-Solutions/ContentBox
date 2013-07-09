@@ -36,4 +36,12 @@ component persistent="true" entityName="cbPermission" table="cb_permission" cach
 	function init(){
 		return this;
 	}
+	
+	/**
+	* is loaded?
+	*/
+	boolean function isLoaded(){
+		return ( len( getPermissionID() ) ? true : false );
+	}
+	
 }
