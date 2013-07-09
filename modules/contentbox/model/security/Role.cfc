@@ -23,7 +23,9 @@ limitations under the License.
 * A cool Role entity
 */
 component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRole" cacheuse="read-write"{
-
+	// DI
+	property name="permissionService" 	inject="permissionService@cb" persistent="false";
+	
 	// Primary Key
 	property name="roleID" fieldtype="id" generator="native" setter="false";
 	
@@ -72,6 +74,57 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 	Role function clearPermissions(){
 		permissions = [];
 		return this;
+	}
+	
+	/**
+	* Override the setPermissions
+	*/
+	Role function setPermissions(required array permissions){
+		if( hasPermission() ){
+			variables.permissions.clear();
+			variables.permissions.addAll( arguments.permissions );
+		}
+		else{
+			variables.permissions = arguments.permissions;
+		}
+		return this;
+	}
+	
+	/**
+	* is loaded?
+	*/
+	boolean function isLoaded(){
+		return ( len( getRoleID() ) ? true : false );
+	}
+	
+	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "roleID,role,description" );
+		var result = {};
+		
+		for(var thisProp in pList ){
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}
+		}
+		
+		// Do Permissions
+		if( hasPermission() ){
+			result[ "permissions" ]= [];
+			for( var thisPerm in variables.permissions ){
+				arrayAppend( result[ "permissions" ], thisPerm.getMemento() );
+			}
+		}
+		else{
+			result[ "permissions" ] = [];
+		}
+		
+		return result;
 	}
 	
 }
