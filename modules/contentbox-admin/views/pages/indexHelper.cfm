@@ -2,9 +2,10 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// global ids
-	$pageForm = $("##pageForm");
-	$pages	  = $("##pages");
-	$cloneDialog = $("##cloneDialog");
+	$pageForm 		= $("##pageForm");
+	$pages	  		= $("##pages");
+	$cloneDialog 	= $("##cloneDialog");
+	$importDialog 	= $("##importDialog");
 	// sorting and filtering
 	$("##pages").tablesorter();
 	$("##pageFilter").keyup(function(){
@@ -72,6 +73,28 @@ function bulkChangeStatus(status, contentID){
 		checkByValue('contentID',contentID);	
 	}
 	$pageForm.submit();
+}
+function importContent(){
+	// local id's
+	var $importForm = $("##importForm");
+	// open modal for cloning options
+	openModal( $importDialog, 500, 350 );
+	// form validator and data
+	$importForm.validate({ 
+		submitHandler: function(form){
+           	$importForm.find("##importButtonBar").slideUp();
+			$importForm.find("##importBarLoader").slideDown();
+			form.submit();
+        }
+	});
+	// close button
+	$importForm.find("##closeButton").click(function(e){
+		closeModal( $importDialog ); return false;
+	});
+	// clone button
+	$importForm.find("##importButton").click(function(e){
+		$importForm.submit();
+	});
 }
 </cfif>
 <cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>

@@ -373,7 +373,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* is loaded?
 	*/
 	boolean function isLoaded(){
-		return len( getContentID() );
+		return ( len( getContentID() ) ? true : false );
 	}
 
 	/**
