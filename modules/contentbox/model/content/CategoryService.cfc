@@ -25,8 +25,9 @@ limitations under the License.
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 	// Dependencies
-	property name="htmlHelper" inject="coldbox:plugin:HTMLHelper";
-
+	property name="htmlHelper" 		inject="coldbox:plugin:HTMLHelper";
+	property name="populator"  		inject="wirebox:populator";
+	
 	/**
 	* Constructor
 	*/
@@ -114,6 +115,67 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list(sortOrder="category");
 			 
+	}
+	
+	/**
+	* Import data from a ContentBox JSON file. Returns the import log
+	*/
+	string function importFromFile(required importFile, boolean override=false){
+		var data 		= fileRead( arguments.importFile );
+		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		
+		if( !isJSON( data ) ){
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+		}
+		
+		// deserialize packet: Should be array of { settingID, name, value }
+		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
+	}
+	
+	/**
+	* Import data from an array of structures of customHTML or just one structure of CustomHTML 
+	*/
+	string function importFromData(required importData, boolean override=false, importLog){
+		var allCategories = [];
+		
+		// if struct, inflate into an array
+		if( isStruct( arguments.importData ) ){
+			arguments.importData = [ arguments.importData ];
+		}
+		
+		// iterate and import
+		for( var thisCategory in arguments.importData ){
+			// Get new or persisted
+			var oCategory = this.findBySlug( slug=thisCategory.slug);
+			oCategory = ( isNull( oCategory) ? new() : oCategory );
+			
+			// populate content from data
+			populator.populateFromStruct( target=oCategory, memento=thisCategory, exclude="categoryID", composeRelationships=false );
+			
+			// if new or persisted with override then save.
+			if( !oCategory.isLoaded() ){
+				arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
+				arrayAppend( allCategories, oCategory );
+			}
+			else if( oCategory.isLoaded() and arguments.override ){
+				arguments.importLog.append( "Persisted category overriden: #thisCategory.slug#<br>" );
+				arrayAppend( allCategories, oCategory );
+			}
+			else{
+				arguments.importLog.append( "Skipping persisted category: #thisCategory.slug#<br>" );
+			}
+		} // end import loop
+
+		// Save them?
+		if( arrayLen( allCategories ) ){
+			saveAll( allCategories );
+			arguments.importLog.append( "Saved all imported and overriden categories!" );
+		}
+		else{
+			arguments.importLog.append( "No categories imported as none where found or able to be overriden from the import file." );
+		}
+		
+		return arguments.importLog.toString(); 
 	}
 
 }
