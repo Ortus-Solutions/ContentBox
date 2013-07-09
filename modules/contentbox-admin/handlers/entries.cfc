@@ -468,7 +468,7 @@ component extends="baseHandler"{
 		}
 	}
 	
-	// import settings
+	// import entries
 	function importAll(event,rc,prc){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );

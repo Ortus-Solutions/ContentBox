@@ -84,6 +84,7 @@ component extends="baseHandler"{
 		prc.xehPageBulkStatus 	= "#prc.cbAdminEntryPoint#.pages.bulkstatus";
 		prc.xehPageExport 		= "#prc.cbAdminEntryPoint#.pages.export";
 		prc.xehPageExportAll 	= "#prc.cbAdminEntryPoint#.pages.exportAll";
+		prc.xehPageImport		= "#prc.cbAdminEntryPoint#.pages.importAll";
 
 		// Tab
 		prc.tabContent_pages = true;
@@ -532,6 +533,28 @@ component extends="baseHandler"{
 				event.renderData(data="Invalid export type: #rc.format#");
 			}
 		}
+	}
+	
+	// import settings
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = pageService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Pages imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehPages );
 	}
 
 }
