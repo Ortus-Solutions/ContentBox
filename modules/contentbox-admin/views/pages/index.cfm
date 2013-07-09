@@ -15,6 +15,11 @@
 	
 				<!--- MessageBox --->
 				#getPlugin("MessageBox").renderit()#
+				
+				<!---Import Log --->
+				<cfif flash.exists( "importLog" )>
+				<div class="consoleLog">#flash.get( "importLog" )#</div>
+				</cfif>
 	
 				<!--- pageForm --->
 				#html.startForm(name="pageForm",action=prc.xehPageRemove)#
