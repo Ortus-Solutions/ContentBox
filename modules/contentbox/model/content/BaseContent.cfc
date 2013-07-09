@@ -112,8 +112,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Override the setComments
 	*/
 	BaseContent function setComments(required array comments){
-		comments.clear();
-		comments.addAll( arguments.comments );
+		if( hasComment() ){
+			variables.comments.clear();
+			variables.comments.addAll( arguments.comments );
+		}
+		else{
+			variables.comments = arguments.comments;
+		}
 		return this;
 	}
 	
@@ -121,8 +126,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Override the setCustomFields
 	*/
 	BaseContent function setCustomFields(required array customFields){
-		customFields.clear();
-		customFields.addAll( arguments.customFields );
+		if( hasCustomField() ){
+			variables.customFields.clear();
+			variables.customFields.addAll( arguments.customFields );
+		}
+		else{
+			variables.customFields = arguments.customFields;
+		}
 		return this;
 	}
 	
@@ -130,8 +140,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Override the setContentVersions
 	*/
 	BaseContent function setContentVersions(required array contentVersions){
-		contentVersions.clear();
-		contentVersions.addAll( arguments.contentVersions );
+		if( hasContentVersion() ){
+			variables.contentVersions.clear();
+			variables.contentVersions.addAll( arguments.contentVersions );
+		}
+		else{
+			variables.contentVersions = arguments.contentVersions;
+		}
 		return this;
 	}
 	
@@ -139,8 +154,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Override the setChildren
 	*/
 	BaseContent function setChildren(required array children){
-		children.clear();
-		children.addAll( arguments.children );
+		if( hasChild() ){
+			variables.children.clear();
+			variables.children.addAll( arguments.children );
+		}
+		else{
+			variables.children = arguments.children;
+		}
 		return this;
 	}
 	
