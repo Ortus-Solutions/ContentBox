@@ -207,5 +207,145 @@ component extends="ContentService" singleton{
 	array function getAllForExport(){
 		return super.getAllForExport( getAll() );
 	}
+	
+	/**
+	* Import data from a ContentBox JSON file. Returns the import log
+	*/
+	string function importFromFile(required importFile, boolean override=false){
+		var data 		= fileRead( arguments.importFile );
+		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		
+		if( !isJSON( data ) ){
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+		}
+		
+		// deserialize packet: Should be array of { settingID, name, value }
+		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
+	}
+	
+	/**
+	* Import data from an array of structures of blog entries or just one structure of a blog entry 
+	*/
+	string function importFromData(required importData, boolean override=false, importLog){
+		var allContent = [];
+		
+		// if struct, inflate into an array
+		if( isStruct( arguments.importData ) ){
+			arguments.importData = [ arguments.importData ];
+		}
+		
+		// iterate and import
+		for( var thisContent in arguments.importData ){
+			// Get content by slug, if not found then it returns a new entity so we can persist it.
+			var oContent = findBySlug( slug=thisContent.slug, showUnpublished=true );
+			
+			// populate content from data
+			populator.populateFromStruct( target=oContent, 
+										  memento=thisContent, 
+										  exclude="creator,parent", 
+										  composeRelationships=false,
+										  nullEmptyInclude="publishedDate,expireDate" );
+			
+			// determine author else ignore
+			var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
+			if( !isNull( oAuthor ) ){
+				// link author
+				oContent.setCreator( oAuthor );
+				importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
+				
+				// CUSTOM FIELDS
+				if( arrayLen( thisContent.customfields ) ){
+					oContent.getCustomFields().clear();
+					for( var thisCF in thisContent.customfields ){
+						var args = { key = thisCF.key, value = thisCF.value };
+						var oField = customFieldService.new(properties=args);
+						oField.setRelatedContent( oContent );
+						oContent.addCustomField( oField );
+					}
+				}
+				
+				// CATEGORIES
+				if( arrayLen( thisContent.categories ) ){
+					// Create categories that don't exist first
+					var allCategories = [];
+					for( var thisCategory in thisContent.categories ){
+						var oCategory = categoryService.findBySlug( thisCategory.slug );
+						oCategory = ( isNull( oCategory ) ? populator.populateFromStruct( target=categoryService.new(), memento=thisCategory, exclude="categoryID" ) : oCategory );	
+						// save category if new only
+						if( !oCategory.isLoaded() ){ categoryService.save( entity=oCategory ); }
+						// append to add.
+						arrayAppend( allCategories, oCategory );
+					}
+					// detach categories and re-attach
+					oContent.removeAllCategories().setCategories( allCategories );
+				}
+				
+				// COMMENTS
+				if( arrayLen( thisContent.comments ) ){
+					var allComments = [];
+					for( var thisComment in thisContent.comments ){
+						var oComment = populator.populateFromStruct( target=commentService.new(), 
+																 	 memento=thisComment, 
+																 	 exclude="commentID", 
+																 	 composeRelationships=false );
+						oComment.setRelatedContent( oContent );
+						arrayAppend( allComments, oComment );
+					}	
+					oContent.setComments( allComments );		
+				}
+				
+				// CONTENT VERSIONS
+				if( arrayLen( thisContent.contentversions ) ){
+					oContent.getContentVersions().clear();		
+					for( var thisVersion in thisContent.contentversions ){
+						var oVersion = populator.populateFromStruct( target=contentVersionService.new(), 
+																	 memento=thisVersion, 
+																	 exclude="contentVersionID,author", 
+																	 composeRelationships=false );
+						// Get author
+						var oAuthor = authorService.findByUsername( thisVersion.author.username );
+						// Only add if author found
+						if( !isNull( oAuthor ) ){
+							oVersion.setAuthor( oAuthor );
+							oVersion.setRelatedContent( oContent );
+							oContent.addContentVersion( oVersion );
+						}
+						else{
+							importLog.append( "Skipping importing version content #thisVersion.version# as author (#thisVersion.author.toString()#) not found!<br>" );
+						}						
+					}		
+				}
+				
+				// if new or persisted with override then save.
+				if( !oContent.isLoaded() ){
+					importLog.append( "New content imported: #thisContent.slug#<br>" );
+					arrayAppend( allContent, oContent );
+				}
+				else if( oContent.isLoaded() and arguments.override ){
+					importLog.append( "Persisted content overriden: #thisContent.slug#<br>" );
+					arrayAppend( allContent, oContent );
+				}
+				else{
+					importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
+				}
+				
+			}	
+			else{
+				importLog.append( "Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>" );
+			}
+			
+		} // end import loop
+		
+		// Save them?
+		if( arrayLen( allContent ) ){
+			saveAll( allContent );
+			importLog.append( "Saved all imported and overriden content!" );
+		}
+		else{
+			importLog.append( "No content imported as none where found or able to be overriden from the import file." );
+		}
+		
+		return importLog.toString(); 
+	}
 
 }

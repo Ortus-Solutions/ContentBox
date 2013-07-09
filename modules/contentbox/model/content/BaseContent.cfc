@@ -109,6 +109,42 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 	
 	/**
+	* Override the setComments
+	*/
+	BaseContent function setComments(required array comments){
+		comments.clear();
+		comments.addAll( arguments.comments );
+		return this;
+	}
+	
+	/**
+	* Override the setCustomFields
+	*/
+	BaseContent function setCustomFields(required array customFields){
+		customFields.clear();
+		customFields.addAll( arguments.customFields );
+		return this;
+	}
+	
+	/**
+	* Override the setContentVersions
+	*/
+	BaseContent function setContentVersions(required array contentVersions){
+		contentVersions.clear();
+		contentVersions.addAll( arguments.contentVersions );
+		return this;
+	}
+	
+	/**
+	* Override the setChildren
+	*/
+	BaseContent function setChildren(required array children){
+		children.clear();
+		children.addAll( arguments.children );
+		return this;
+	}
+	
+	/**
 	* Get a flat representation of this entry
 	*/
 	function getMemento(){
@@ -190,7 +226,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( hasCategories() ){
 			result[ "categories" ] = [];
 			for( var thisCategory in variables.categories ){
-				arrayAppend( result[ "categories" ], thisCategory.getMemento() );	
+				arrayAppend( result[ "categories" ], thisCategory.getMemento() );
 			}
 		}
 		else{
