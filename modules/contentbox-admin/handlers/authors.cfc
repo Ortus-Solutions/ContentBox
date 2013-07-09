@@ -36,23 +36,26 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging", module="contentbox");
-		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#prc.xehAuthors#.page.@page@');
+		prc.pagingPlugin = getMyPlugin(plugin="Paging", module="contentbox");
+		prc.paging 		= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	= event.buildLink('#prc.xehAuthors#.page.@page@');
 
 		// exit Handlers
-		rc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
-		prc.xehAuthorsearch = "#prc.cbAdminEntryPoint#.authors";
-
+		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
+		prc.xehAuthorsearch 	= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehExport 			= "#prc.cbAdminEntryPoint#.authors.export";
+		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.authors.exportAll";
+		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.authors.importAll";
+		
 		// Get all authors or search
 		if( len(event.getValue("searchAuthor","")) ){
 			var results 	= authorService.search(searchTerm=rc.searchAuthor);
-			rc.authors 		= results.authors;
-			rc.authorCount 	= results.count;
+			prc.authors 		= results.authors;
+			prc.authorCount 	= results.count;
 		}
 		else{
-			rc.authors		= authorService.list(sortOrder="lastName desc", asQuery=false, offset=rc.paging.startRow-1, max=prc.cbSettings.cb_paging_maxrows);
-			rc.authorCount 	= authorService.count();
+			prc.authors		= authorService.list(sortOrder="lastName desc", asQuery=false, offset=prc.paging.startRow-1, max=prc.cbSettings.cb_paging_maxrows);
+			prc.authorCount = authorService.count();
 		}
 
 		// View all tab
@@ -258,6 +261,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception("cbadmin_preAuthorRemove",{author=oAuthor,authorID=rc.authorID});
 		// remove
+		oAuthor.clearPermissions();
 		authorService.delete( oAuthor );
 		// announce event
 		announceInterception("cbadmin_postAuthorRemove",{authorID=rc.authorID});
@@ -307,5 +311,71 @@ component extends="baseHandler"{
 		authorService.saveAuthor( oAuthor );
 		// Saved
 		event.renderData(data="true",type="json");
+	}
+	
+	// Export Entry
+	function export(event,rc,prc){
+		event.paramValue("format", "json");
+		// get user
+		prc.user  = authorService.get( event.getValue("authorID",0) );
+		
+		// relocate if not existent
+		if( !prc.user.isLoaded() ){
+			getPlugin("MessageBox").warn("authorID sent is not valid");
+			setNextEvent( "#prc.cbAdminEntryPoint#.authors" );
+		}
+		//writeDump( prc.role.getMemento() );abort;
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "#prc.user.getUsername()#." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=prc.user.getMemento(), type=rc.format, xmlRootName="user")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
+	}
+	
+	// Export All Entries
+	function exportAll(event,rc,prc){
+		event.paramValue("format", "json");
+		// get all prepared content objects
+		var data  = authorService.getAllForExport();
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "Users." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=data, type=rc.format, xmlRootName="users")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
+	}
+	
+	// import entries
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = authorService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Users imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehAuthors );
 	}
 }

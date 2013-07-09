@@ -86,7 +86,6 @@
 						<td class="center"><span class="badge badge-info">#role.getNumberOfPermissions()#</span></td>
 						<td class="center"><span class="badge badge-info">#role.getNumberOfAuthors()#</span></td>
 						<td class="center">
-							
 							<!--- Actions --->
 							<div class="btn-group">
 						    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
