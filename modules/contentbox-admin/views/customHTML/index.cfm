@@ -212,6 +212,7 @@
 </div>
 
 <!---import dialog --->
+<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">
 	    <div class="modal-header">
@@ -250,4 +251,5 @@
 		#html.endForm()#
 	</div>
 </div>
+</cfif>
 </cfoutput>
