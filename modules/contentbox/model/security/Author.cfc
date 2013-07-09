@@ -128,7 +128,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	* is loaded?
 	*/
 	boolean function isLoaded(){
-		return len( getAuthorID() );
+		return ( len( getAuthorID() ) ? true : false );
 	}
 	
 	/************************************** PREFERENCE FUNCTIONS *********************************************/
