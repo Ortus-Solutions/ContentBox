@@ -44,4 +44,24 @@ component persistent="true" entityName="cbPermission" table="cb_permission" cach
 		return ( len( getPermissionID() ) ? true : false );
 	}
 	
+	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "permissionID,permission,description,numberOfRoles" );
+		var result = {};
+		
+		for(var thisProp in pList ){
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}
+		}
+		
+		return result;
+	}
+	
+	
 }
