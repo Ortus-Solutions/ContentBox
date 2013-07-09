@@ -56,6 +56,8 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 		setContent( '' );
 		setChangelog( '' );
 		setRenderedContent( '' );
+		
+		return this;
 	}
 
 	/************************************** PUBLIC *********************************************/
@@ -68,7 +70,12 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 		var result = {};
 		
 		for(var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}	
 		}
 		
 		result[ "author" ] = {
@@ -76,7 +83,8 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 			firstname = getAuthor().getFirstname(),
 			lastName = getAuthor().getLastName(),
 			email = getAuthor().getEmail(),
-			username = getAuthor().getUsername()
+			username = getAuthor().getUsername(),
+			role = getAuthor().getRole().getRole()
 		};
 		
 		return result;

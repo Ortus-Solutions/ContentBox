@@ -25,10 +25,16 @@ limitations under the License.
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 	// DI
-	property name="settingService"		inject="id:settingService@cb";
-	property name="cacheBox"			inject="cachebox";
-	property name="log"					inject="logbox:logger:{this}";
-
+	property name="settingService"			inject="id:settingService@cb";
+	property name="cacheBox"				inject="cachebox";
+	property name="log"						inject="logbox:logger:{this}";
+	property name="customFieldService" 	 	inject="customFieldService@cb";
+	property name="categoryService" 	 	inject="categoryService@cb";
+	property name="commentService" 	 		inject="commentService@cb";
+	property name="contentVersionService"	inject="contentVersionService@cb";
+	property name="authorService"			inject="authorService@cb";
+	property name="populator"				inject="wirebox:populator";
+	
 	/**
 	* Constructor
 	*/
