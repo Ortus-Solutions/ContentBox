@@ -364,131 +364,169 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// iterate and import
 		for( var thisContent in arguments.importData ){
-			// Get content by slug, if not found then it returns a new entity so we can persist it.
-			var oContent = findBySlug( slug=thisContent.slug, showUnpublished=true );
+				
+			// Inflate content from data
+			var inflateResults = inflateFromStruct( thisContent, arguments.importLog );
 			
-			// populate content from data
-			populator.populateFromStruct( target=oContent, 
-										  memento=thisContent, 
-										  exclude="creator,parent", 
-										  composeRelationships=false,
-										  nullEmptyInclude="publishedDate,expireDate" );
+			// continue to next record if author not found
+			if( !inflateResults.authorFound ){ continue; }
 			
-			// determine author else ignore
-			var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
-			if( !isNull( oAuthor ) ){
-				// link author
-				oContent.setCreator( oAuthor );
-				importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
-				
-				// Parent
-				if( structCount( thisContent.parent ) ){
-					var oParent = findBySlug( slug=thisContent.parent.slug, showUnpublished=true );
-					// assign if persisted
-					if( oParent.isLoaded() ){ 
-						oContent.setParent( oParent ); 
-						importLog.append( "Content parent found and linked: #thisContent.parent.slug#<br>" );
-					}
-					else{
-						importLog.append( "Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>" );
-					}
-				}
-				
-				// CUSTOM FIELDS
-				if( arrayLen( thisContent.customfields ) ){
-					// wipe out custom fileds if they exist
-					if( oContent.hasCustomField() ){ oContent.getCustomFields().clear(); }
-					// add new custom fields
-					for( var thisCF in thisContent.customfields ){
-						var args = { key = thisCF.key, value = thisCF.value };
-						var oField = customFieldService.new(properties=args);
-						oField.setRelatedContent( oContent );
-						oContent.addCustomField( oField );
-					}
-				}
-				
-				// CATEGORIES
-				if( arrayLen( thisContent.categories ) ){
-					// Create categories that don't exist first
-					var allCategories = [];
-					for( var thisCategory in thisContent.categories ){
-						var oCategory = categoryService.findBySlug( thisCategory.slug );
-						oCategory = ( isNull( oCategory ) ? populator.populateFromStruct( target=categoryService.new(), memento=thisCategory, exclude="categoryID" ) : oCategory );	
-						// save category if new only
-						if( !oCategory.isLoaded() ){ categoryService.save( entity=oCategory ); }
-						// append to add.
-						arrayAppend( allCategories, oCategory );
-					}
-					// detach categories and re-attach
-					oContent.removeAllCategories().setCategories( allCategories );
-				}
-				
-				// COMMENTS
-				if( arrayLen( thisContent.comments ) ){
-					var allComments = [];
-					for( var thisComment in thisContent.comments ){
-						var oComment = populator.populateFromStruct( target=commentService.new(), 
-																 	 memento=thisComment, 
-																 	 exclude="commentID", 
-																 	 composeRelationships=false );
-						oComment.setRelatedContent( oContent );
-						arrayAppend( allComments, oComment );
-					}	
-					oContent.setComments( allComments );		
-				}
-				
-				// CONTENT VERSIONS
-				if( arrayLen( thisContent.contentversions ) ){
-					var allContentVersions = [];
-					for( var thisVersion in thisContent.contentversions ){
-						var oVersion = populator.populateFromStruct( target=contentVersionService.new(), 
-																	 memento=thisVersion, 
-																	 exclude="contentVersionID,author", 
-																	 composeRelationships=false );
-						// Get author
-						var oAuthor = authorService.findByUsername( thisVersion.author.username );
-						// Only add if author found
-						if( !isNull( oAuthor ) ){
-							oVersion.setAuthor( oAuthor );
-							oVersion.setRelatedContent( oContent );
-							arrayAppend( allContentVersions, oVersion );
-						}
-						else{
-							importLog.append( "Skipping importing version content #thisVersion.version# as author (#thisVersion.author.toString()#) not found!<br>" );
-						}						
-					}	
-					oContent.setContentVersions( allContentVersions );	
-				}
-				
-				// if new or persisted with override then save.
-				if( !oContent.isLoaded() ){
-					importLog.append( "New content imported: #thisContent.slug#<br>" );
-					arrayAppend( allContent, oContent );
-				}
-				else if( oContent.isLoaded() and arguments.override ){
-					importLog.append( "Persisted content overriden: #thisContent.slug#<br>" );
-					arrayAppend( allContent, oContent );
-				}
-				else{
-					importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
-				}
-				
-			}	
+			// if new or persisted with override then save.
+			if( !inflateResults.content.isLoaded() ){
+				arguments.importLog.append( "New content imported: #thisContent.slug#<br>" );
+				arrayAppend( allContent, inflateResults.content );
+			}
+			else if( inflateResults.content.isLoaded() and arguments.override ){
+				arguments.importLog.append( "Persisted content overriden: #thisContent.slug#<br>" );
+				arrayAppend( allContent, inflateResults.content );
+			}
 			else{
-				importLog.append( "Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>" );
+				arguments.importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
 			}
 			
 		} // end import loop
-		// Save them?
+		
+		// Save content
 		if( arrayLen( allContent ) ){
 			saveAll( allContent );
-			importLog.append( "Saved all imported and overriden content!" );
+			arguments.importLog.append( "Saved all imported and overriden content!" );
 		}
 		else{
-			importLog.append( "No content imported as none where found or able to be overriden from the import file." );
+			arguments.importLog.append( "No content imported as none where found or able to be overriden from the import file." );
 		}
 		
-		return importLog.toString(); 
+		return arguments.importLog.toString(); 
+	}
+	
+	/**
+	* Inflate a content object from a ContentBox JSON structure
+	* @contentData.hint The content structure inflated from JSON
+	* @importLog.hint The string builder import log
+	* @parent.hint If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
+	*/
+	private function inflateFromStruct(required contentData, required importLog, parent){
+		var thisContent = arguments.contentData;
+		
+		// Get content by slug, if not found then it returns a new entity so we can persist it.
+		var oContent = findBySlug( slug=thisContent.slug, showUnpublished=true );
+		
+		// populate content from data and ignore relationships, we need to build those manually.
+		populator.populateFromStruct( target=oContent, 
+									  memento=thisContent, 
+									  exclude="creator,parent,children,categories,customfields,contentversions,comments", 
+									  composeRelationships=false,
+									  nullEmptyInclude="publishedDate,expireDate" );
+									  
+		// determine author else ignore import
+		var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
+		if( !isNull( oAuthor ) ){
+			
+			// AUTHOR CREATOR
+			oContent.setCreator( oAuthor );
+			arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
+			
+			// PARENT
+			if( structKeyExists( arguments, "parent") and isObject( arguments.parent ) ){
+				oContent.setParent( arguments.parent );
+				arguments.importLog.append( "Content parent passed and linked: #arguments.parent.getSlug()#<br>" );
+			}
+			else if( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ){
+				var oParent = findBySlug( slug=thisContent.parent.slug, showUnpublished=true );
+				// assign if persisted
+				if( oParent.isLoaded() ){ 
+					oContent.setParent( oParent ); 
+					arguments.importLog.append( "Content parent found and linked: #thisContent.parent.slug#<br>" );
+				}
+				else{
+					arguments.importLog.append( "Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>" );
+				}
+			}
+			
+			// CHILDREN
+			if( arrayLen( thisContent.children ) ){
+				var allChildren = [];
+				// recurse on them and inflate hiearchy
+				for( var thisChild in thisContent.children ){
+					var inflateResults = inflateFromStruct( contentData=thisChild, importLog=arguments.importLog, parent=oContent );
+					// continue to next record if author not found
+					if( !inflateResults.authorFound ){ continue; }
+					// Add to array of children to add.
+					arrayAppend( allChildren, inflateResults.content );
+				}
+				oContent.setChildren( allChildren );
+			}
+			
+			// CUSTOM FIELDS
+			if( arrayLen( thisContent.customfields ) ){
+				// wipe out custom fileds if they exist
+				if( oContent.hasCustomField() ){ oContent.getCustomFields().clear(); }
+				// add new custom fields
+				for( var thisCF in thisContent.customfields ){
+					var args = { key = thisCF.key, value = thisCF.value };
+					var oField = customFieldService.new(properties=args);
+					oField.setRelatedContent( oContent );
+					oContent.addCustomField( oField );
+				}
+			}
+			
+			// CATEGORIES
+			if( arrayLen( thisContent.categories ) ){
+				// Create categories that don't exist first
+				var allCategories = [];
+				for( var thisCategory in thisContent.categories ){
+					var oCategory = categoryService.findBySlug( thisCategory.slug );
+					oCategory = ( isNull( oCategory ) ? populator.populateFromStruct( target=categoryService.new(), memento=thisCategory, exclude="categoryID" ) : oCategory );	
+					// save category if new only
+					if( !oCategory.isLoaded() ){ categoryService.save( entity=oCategory ); }
+					// append to add.
+					arrayAppend( allCategories, oCategory );
+				}
+				// detach categories and re-attach
+				oContent.removeAllCategories().setCategories( allCategories );
+			}
+			
+			// COMMENTS
+			if( arrayLen( thisContent.comments ) ){
+				var allComments = [];
+				for( var thisComment in thisContent.comments ){
+					var oComment = populator.populateFromStruct( target=commentService.new(), 
+															 	 memento=thisComment, 
+															 	 exclude="commentID", 
+															 	 composeRelationships=false );
+					oComment.setRelatedContent( oContent );
+					arrayAppend( allComments, oComment );
+				}	
+				oContent.setComments( allComments );		
+			}
+			
+			// CONTENT VERSIONS
+			if( arrayLen( thisContent.contentversions ) ){
+				var allContentVersions = [];
+				for( var thisVersion in thisContent.contentversions ){
+					var oVersion = populator.populateFromStruct( target=contentVersionService.new(), 
+																 memento=thisVersion, 
+																 exclude="contentVersionID,author", 
+																 composeRelationships=false );
+					// Get author
+					var oAuthor = authorService.findByUsername( thisVersion.author.username );
+					// Only add if author found
+					if( !isNull( oAuthor ) ){
+						oVersion.setAuthor( oAuthor );
+						oVersion.setRelatedContent( oContent );
+						arrayAppend( allContentVersions, oVersion );
+					}
+					else{
+						arguments.importLog.append( "Skipping importing version content #thisVersion.version# as author (#thisVersion.author.toString()#) not found!<br>" );
+					}						
+				}	
+				oContent.setContentVersions( allContentVersions );	
+			}
+		} // end if author found
+		else{
+			arguments.importLog.append( "Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>" );
+		}
+			
+		return { content=oContent, authorFound=( !isNull( oAuthor ) ) };
 	}
 	
 }

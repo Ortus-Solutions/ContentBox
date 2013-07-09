@@ -190,7 +190,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		
 		// deserialize packet: Should be array of { settingID, name, value }
 		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
-		
 	}
 	
 	/**
@@ -216,35 +215,35 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
 			if( !isNull( oAuthor ) ){
 				oCustomHTML.setCreator( oAuthor );
-				importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
+				arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
 			}	
 			else{
-				importLog.append( "Content author not found (#thisContent.creator.toString()#): #thisContent.slug#<br>" );
+				arguments.importLog.append( "Content author not found (#thisContent.creator.toString()#): #thisContent.slug#<br>" );
 			}
 			
 			// if new or persisted with override then save.
 			if( !oCustomHTML.isLoaded() ){
-				importLog.append( "New content imported: #thisContent.slug#<br>" );
+				arguments.importLog.append( "New content imported: #thisContent.slug#<br>" );
 				arrayAppend( allContent, oCustomHTMl );
 			}
 			else if( oCustomHTML.isLoaded() and arguments.override ){
-				importLog.append( "Persisted content overriden: #thisContent.slug#<br>" );
+				arguments.importLog.append( "Persisted content overriden: #thisContent.slug#<br>" );
 				arrayAppend( allContent, oCustomHTMl );
 			}
 			else{
-				importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
+				arguments.importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
 			}
 		} // end import loop
 
 		// Save them?
 		if( arrayLen( allContent ) ){
 			saveAll( allContent );
-			importLog.append( "Saved all imported and overriden content!" );
+			arguments.importLog.append( "Saved all imported and overriden content!" );
 		}
 		else{
-			importLog.append( "No content imported as none where found or able to be overriden from the import file." );
+			arguments.importLog.append( "No content imported as none where found or able to be overriden from the import file." );
 		}
 		
-		return importLog.toString(); 
+		return arguments.importLog.toString(); 
 	}
 }
