@@ -84,6 +84,7 @@ component extends="baseHandler"{
 		prc.xehPageBulkStatus 	= "#prc.cbAdminEntryPoint#.pages.bulkstatus";
 		prc.xehPageExport 		= "#prc.cbAdminEntryPoint#.pages.export";
 		prc.xehPageExportAll 	= "#prc.cbAdminEntryPoint#.pages.exportAll";
+		prc.xehPageImport		= "#prc.cbAdminEntryPoint#.pages.importAll";
 
 		// Tab
 		prc.tabContent_pages = true;
@@ -173,14 +174,8 @@ component extends="baseHandler"{
 		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
 		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
 
-		// Quick save changelog
-		if( event.isAjax() ){
-			rc.changelog = "Quick save";
-		}
-
 		// slugify the incoming title or slug
-		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
-		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin("HTMLHelper").slugify( rc.slug ) );
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oAuthor.checkPermission("PAGES_ADMIN") ){
@@ -216,10 +211,14 @@ component extends="baseHandler"{
 		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
 		
 		// attach a parent page if it exists and not the same
-		if( len( rc.parentPage ) AND page.getContentID() NEQ rc.parentPage ){
+		if( rc.parentPage NEQ "null" AND page.getContentID() NEQ rc.parentPage ){
 			page.setParent( pageService.get( rc.parentPage ) );
 			// update slug
 			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
+		}
+		// Remove parent
+		else if( rc.parentPage EQ "null" ){
+			page.setParent( javaCast("null", "") );
 		}
 		
 		// Create new categories?
@@ -534,6 +533,28 @@ component extends="baseHandler"{
 				event.renderData(data="Invalid export type: #rc.format#");
 			}
 		}
+	}
+	
+	// import settings
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = pageService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Pages imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehPages );
 	}
 
 }

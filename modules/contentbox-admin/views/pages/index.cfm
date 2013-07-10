@@ -15,6 +15,11 @@
 	
 				<!--- MessageBox --->
 				#getPlugin("MessageBox").renderit()#
+				
+				<!---Import Log --->
+				<cfif flash.exists( "importLog" )>
+				<div class="consoleLog">#flash.get( "importLog" )#</div>
+				</cfif>
 	
 				<!--- pageForm --->
 				#html.startForm(name="pageForm",action=prc.xehPageRemove)#
@@ -41,8 +46,9 @@
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft</a></li>
-								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish</a></li>
+					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
+								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
+								<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
 								<li class="dropdown-submenu">
 									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
@@ -181,7 +187,7 @@
 							    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
 										<i class="icon-cogs icon-large"></i>
 									</a>
-							    	<ul class="dropdown-menu text-left">
+							    	<ul class="dropdown-menu text-left pull-right">
 							    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
 										<!--- Clone Command --->
 										<li><a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
@@ -197,7 +203,7 @@
 										</cfif>
 										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 										<!--- Export --->
-										<li class="dropdown-submenu">
+										<li class="dropdown-submenu pull-left">
 											<a href="##"><i class="icon-download icon-large"></i> Export</a>
 											<ul class="dropdown-menu text-left">
 												<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
@@ -332,6 +338,46 @@
 			<div class="center loaders" id="clonerBarLoader">
 				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 				<br>Please wait, doing some hardcore cloning action...
+			</div>
+        </div>
+		#html.endForm()#
+	</div>
+</div>
+</cfif>
+<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+<div id="importDialog" class="modal hide fade">
+	<div id="modalContent">
+	    <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h3><i class="icon-copy"></i> Import Pages</h3>
+	    </div>
+        #html.startForm(name="importForm", action=prc.xehPageImport, class="form-vertical", multipart=true)#
+        <div class="modal-body">
+			<p>Choose the ContentBox <strong>JSON</strong> pages file to import. The creator of the page is matched via their <strong>username</strong> and 
+			page overrides are matched via their <strong>slug</strong>.
+			If the importer cannot find the username from the import file in your installation, then it will ignore the record.</p>
+			
+			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
+			
+			<label for="overrideContent">Override blog entries?</label>
+			<small>By default all content that exist is not overwritten.</small><br>
+			#html.select(options="true,false", name="overrideContent", selectedValue="false", class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+			
+			<!---Notice --->
+			<div class="alert alert-info">
+				<i class="icon-info-sign icon-large"></i> Please note that import is an expensive process, so please be patient when importing.
+			</div>
+		</div>
+        <div class="modal-footer">
+            <!--- Button Bar --->
+        	<div id="importButtonBar">
+          		<button class="btn" id="closeButton"> Cancel </button>
+          		<button class="btn btn-danger" id="importButton"> Import </button>
+            </div>
+			<!--- Loader --->
+			<div class="center loaders" id="importBarLoader">
+				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+				<br>Please wait, doing some hardcore importing action...
 			</div>
         </div>
 		#html.endForm()#

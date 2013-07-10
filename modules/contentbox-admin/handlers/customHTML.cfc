@@ -29,11 +29,15 @@ component extends="baseHandler"{
 	property name="htmlService"			inject="id:customHTMLService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="editorService"		inject="id:editorService@cb";
+	property name="authorService"		inject="id:authorService@cb";
 	
 	// index
 	function index(event,rc,prc){
 		event.paramValue("search","");
 		event.paramValue("page",1);
+		event.paramValue("fAuthors","all");
+		event.paramValue("fStatus","any");
+		event.paramValue("isFiltering",false,true);
 		
 		// Exit Handler
 		prc.xehSaveHTML 		= "#prc.cbAdminEntryPoint#.customHTML.save";
@@ -41,28 +45,41 @@ component extends="baseHandler"{
 		prc.xehEditorHTML		= "#prc.cbAdminEntryPoint#.customHTML.editor";
 		prc.xehExportHTML		= "#prc.cbAdminEntryPoint#.customHTML.export";
 		prc.xehExportAllHTML	= "#prc.cbAdminEntryPoint#.customHTML.exportAll";
+		prc.xehImportHTML		= "#prc.cbAdminEntryPoint#.customHTML.importAll";
+		prc.xehContentSearch 	= "#prc.cbAdminEntryPoint#.customHTML";
+		prc.xehBulkStatus 		= "#prc.cbAdminEntryPoint#.customHTML.bulkstatus";
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
 		prc.paging 		 = prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	 = event.buildLink('#prc.xehCustomHTML#.page.@page@?');
+		prc.pagingLink 	 = event.buildLink( '#prc.xehCustomHTML#.page.@page@?' );
 		
+		// Append filters to paging link?
+		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
+		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		// is Filtering?
+		if( rc.fAuthors neq "all" OR rc.fStatus neq "any"){ prc.isFiltering = true; }
+
+		// get all authors
+		prc.authors    = authorService.getAll(sortOrder="lastName");
 		// Append search to paging link?
-		if( len(rc.search) ){ prc.pagingLink&="&search=#rc.search#"; }
+		if( len( rc.search ) ){ prc.pagingLink&="&search=#rc.search#"; }
 		
 		// get content pieces
 		var entryResults = htmlService.search(search=rc.search,
+											  isPublished=rc.fStatus,
+											  author=rc.fAuthors,
 											  offset=prc.paging.startRow-1,
 											  max=prc.cbSettings.cb_paging_maxrows);
-		prc.entries 		 = entryResults.entries;
-		prc.entriesCount  = entryResults.count;
+		prc.entries 		= entryResults.entries;
+		prc.entriesCount  	= entryResults.count;
 		
 		// tab
 		prc.tabContent				= true;
 		prc.tabContent_customHTML	= true; 
 		
 		// view
-		event.setView("customHTML/index");
+		event.setView( "customHTML/index" );
 	}
 	
 	// slugify remotely
@@ -76,6 +93,9 @@ component extends="baseHandler"{
 		// tab
 		prc.tabContent				= true;
 		prc.tabContent_customHTML	= true; 
+		
+		// CK Editor Helper
+		prc.ckHelper = getMyPlugin(plugin="CKHelper", module="contentbox-admin");
 		
 		// get new or persisted
 		prc.content  = htmlService.get( event.getValue("contentID",0) );
@@ -98,16 +118,48 @@ component extends="baseHandler"{
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.customHTML.slugUnique";
-
+		
+		// get all authors
+		prc.authors    = authorService.getAll(sortOrder="lastName");
+		
 		// view
 		event.setView(view="customHTML/editor");
 	}
 	
 	// save html
 	function save(event,rc,prc){
+		// param values
+		event.paramValue( "creatorID", "" );
+		event.paramValue( "isPublished", true );
+		event.paramValue( "slug", "" );
+		event.paramValue( "changelog", "" );
+		event.paramValue( "publishedDate", now() );
+		event.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) );
+		event.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) );
+		
+		// slugify the incoming title or slug
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin("HTMLHelper").slugify( rc.slug ) );
+		
+		// Verify permission for publishing, else save as draft
+		if( !prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN") ){
+			rc.isPublished 	= "false";
+		}
 		
 		// populate and get content
-		var oContent = populateModel( htmlService.get(id=rc.contentID) );
+		var oContent = htmlService.get( id=rc.contentID );
+		populateModel( htmlService.get(id=rc.contentID) )
+			.addPublishedtime( rc.publishedHour, rc.publishedMinute )
+			.addExpiredTime( rc.expireHour, rc.expireMinute );
+		
+		// Attach creator if new customHTML or no author registered
+		var isNew = ( NOT oContent.isLoaded() );
+		if( isNew OR !oContent.hasCreator() ){ 
+			oContent.setCreator( prc.oAuthor ); 
+		}
+		// Override creator?
+		else if( !isNew and prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN") and len( rc.creatorID ) and oContent.getCreator().getAuthorID() NEQ rc.creatorID ){
+			oContent.setCreator( authorService.get( rc.creatorID ) );
+		}
 		
 		// validate it
 		var errors = oContent.validate();
@@ -125,8 +177,38 @@ component extends="baseHandler"{
 			getPlugin("MessageBox").warn(errorMessages=errors);
 		}
 		
-		// relocate back to editor
-		setNextEvent(prc.xehCustomHTML);
+		// Ajax Save?
+		if( event.isAjax() ){
+			var rData = {
+				"CONTENTID" = oContent.getContentID()
+			};
+			event.renderData(type="json", data=rData);
+		}
+		else{
+			// relocate back to editor
+			setNextEvent(prc.xehCustomHTML);
+		}
+	}
+	
+	// Bulk Status Change
+	function bulkStatus(event,rc,prc){
+		event.paramValue("contentID","");
+		event.paramValue("contentStatus","draft");
+
+		// check if id list has length
+		if( len( rc.contentID ) ){
+			// save in bulk
+			htmlService.bulkPublishStatus(contentID=rc.contentID, status=rc.contentStatus);
+			// announce event
+			announceInterception("cbadmin_onCustomHTMLStatusUpdate", { contentID=rc.contentID, status=rc.contentStatus } );
+			// Message
+			getPlugin("MessageBox").info("#listLen(rc.contentID)# CustomHTML where set to '#rc.contentStatus#'");
+		}
+		else{
+			getPlugin("MessageBox").warn("No content selected!");
+		}
+		// relocate back
+		setNextEvent( event=prc.xehCustomHTML );
 	}
 	
 	// remove
@@ -167,6 +249,7 @@ component extends="baseHandler"{
 
 		// search entries with filters and all
 		var htmlResults = htmlService.search(search=rc.search,
+											 isPublished=true,
 											 offset=prc.paging.startRow-1,
 											 max=prc.cbSettings.cb_paging_maxrows,
 											 searchActiveContent=false);
@@ -232,7 +315,6 @@ component extends="baseHandler"{
 		event.paramValue("format", "json");
 		// get all prepared content objects
 		var data  = htmlService.getAllForExport();
-		
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "CustomHTML." & ( rc.format eq "xml" ? "xml" : "json" );
@@ -244,6 +326,28 @@ component extends="baseHandler"{
 				event.renderData(data="Invalid export type: #rc.format#");
 			}
 		}
+	}
+	
+	// import settings
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = htmlService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Custom HTML imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehCustomHTML );
 	}
 	
 }

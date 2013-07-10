@@ -9,15 +9,15 @@
 			<div class="header">
 				<i class="icon-edit icon-large"></i>
 				Entry Editor
-				<div class="btn-group pull-right">
+				<div class="btn-group pull-right" style="margin-top:5px">
 				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;"><i class="icon-reply"></i> Back</button>
 				    <cfif prc.entry.isLoaded()>
 					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
 				    	<span class="caret"></span>
 				    </button>
 				   		<ul class="dropdown-menu">
-				    	<li><a href="##" onclick="window.open('#prc.CBHelper.linkEntry(prc.entry)#');return false;"><i class="icon-eye-open"></i> View In Site</a></li>
-				    </ul>
+				    			<li><li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li></li>
+				   		 </ul>
 					</cfif>
 			    </div>
 			</div>
@@ -68,7 +68,7 @@
 					
 					<!---Right References Panel --->
 					<div class="floatRight">
-						<a href="javascript:previewContent()" class="btn" title="Quick Preview">
+						<a href="javascript:previewContent()" class="btn" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
 							<i class="icon-eye-open icon-large"></i>
 						</a>
 					</div>
@@ -145,7 +145,7 @@
 					<div class="control-group">
 					    #html.label(class="control-label",field="publishedDate",content="Publish Date (<a href='javascript:publishNow()'>Now</a>)")#
 					    <div class="controls">
-					        #html.inputField(size="9", name="publishedDate",value=prc.entry.getPublishedDateForEditor(),class="textfield")#
+					        #html.inputField(size="9", name="publishedDate",value=prc.entry.getPublishedDateForEditor(), class="textfield datepicker")#
         					@
         					#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.entry.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
@@ -155,7 +155,7 @@
 					<div class="control-group">
 					    #html.label(class="control-label",field="expireDate",content="")#
                         <div class="controls">
-                            #html.inputField(size="9", name="expireDate",value=prc.entry.getExpireDateForEditor(),class="textfield")#
+                            #html.inputField(size="9", name="expireDate",value=prc.entry.getExpireDateForEditor(), class="textfield datepicker")#
         					@
         					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
@@ -167,7 +167,7 @@
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-						&nbsp;<input type="submit" class="btn" value="Save" onclick="return quickSave()">
+						&nbsp;<input type="submit" class="btn" value="Save" data-keybinding="ctrl+s" onclick="return quickSave()">
 						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">

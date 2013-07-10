@@ -98,7 +98,8 @@ component extends="baseHandler"{
 		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		prc.xehEntryExport 		= "#prc.cbAdminEntryPoint#.entries.export";
 		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
-
+		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
+		
 		// Tab
 		prc.tabContent_blog = true;
 		// view
@@ -233,11 +234,6 @@ component extends="baseHandler"{
 		event.paramValue( "expireMinute", "" );
 		event.paramValue( "content", "" );
 		event.paramValue("creatorID","");
-
-		// Quick save changelog
-		if( event.isAjax() ){
-			rc.changelog = "Quick save";
-		}
 
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent") ){
@@ -471,4 +467,27 @@ component extends="baseHandler"{
 			}
 		}
 	}
+	
+	// import entries
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = entryService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Entries imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehEntries );
+	}
+	
 }

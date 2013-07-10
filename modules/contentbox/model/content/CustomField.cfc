@@ -49,7 +49,12 @@ component persistent="true" entityname="cbCustomField" table="cb_customfield" ca
 		var result = {};
 		
 		for(var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}	
 		}
 		
 		return result;

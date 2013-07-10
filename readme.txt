@@ -1,4 +1,14 @@
-﻿********************************************************************************
+﻿.oPYo.                o                 o   .oPYo.               
+8    8                8                 8   8   `8               
+8      .oPYo. odYo.  o8P .oPYo. odYo.  o8P o8YooP' .oPYo. `o  o' 
+8      8    8 8' `8   8  8oooo8 8' `8   8   8   `b 8    8  `bd'  
+8    8 8    8 8   8   8  8.     8   8   8   8    8 8    8  d'`b  
+`YooP' `YooP' 8   8   8  `Yooo' 8   8   8   8oooP' `YooP' o'  `o 
+:.....::.....:..::..::..::.....:..::..::..::......::.....:..:::..
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+********************************************************************************
 ContentBox Modular CMS - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
 www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com

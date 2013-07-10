@@ -29,6 +29,7 @@ component extends="content" singleton{
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
+	property name="layoutService"		inject="id:LayoutService@cb";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -205,7 +206,7 @@ component extends="content" singleton{
 		}
 		
 		// set skin search
-		event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
+		event.setLayout(name="#prc.cbLayout#/layouts/#layoutService.getThemeSearchLayout()#", module="contentbox")
 			.setView(view="#prc.cbLayout#/views/search",module="contentbox");
 			
 		// announce event

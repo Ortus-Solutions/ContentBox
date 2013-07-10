@@ -142,7 +142,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			bodyTokens.entryExcerpt = entry.renderExcerpt();
 		}
 		else{
-			bodyTokens.entryExcerpt = left(entry.renderContent(),500) & "... more ....";
+			bodyTokens.entryExcerpt = entry.renderContent();
 		}
 		
 		var mail = mailservice.newMail(to=settings.cb_site_email,
@@ -191,7 +191,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			bodyTokens.entryExcerpt = entry.renderExcerpt();
 		}
 		else{
-			bodyTokens.entryExcerpt = left(entry.renderContent(),500) & "... more ....";
+			bodyTokens.entryExcerpt = entry.renderContent();
 		}
 		
 		var mail = mailservice.newMail(to=settings.cb_site_email,
@@ -236,7 +236,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			currentAuthor		= currentAuthor.getName(),
 			currentAuthorEmail 	= currentAuthor.getEmail()
 		};
-		bodyTokens.pageExcerpt = left(page.renderContent(),500) & "... more ....";
+		if( page.hasExcerpt() ){
+			bodyTokens.pageExcerpt = page.renderExcerpt();
+		}
+		else{
+			bodyTokens.pageExcerpt = page.renderContent();
+		}
 		
 		var mail = mailservice.newMail(to=settings.cb_site_email,
 									   from=settings.cb_site_outgoingEmail,
@@ -280,7 +285,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			currentAuthor		= currentAuthor.getName(),
 			currentAuthorEmail 	= currentAuthor.getEmail()
 		};
-		bodyTokens.pageExcerpt = left(page.renderContent(),500) & "... more ....";
+		if( page.hasExcerpt() ){
+			bodyTokens.pageExcerpt = page.renderExcerpt();
+		}
+		else{
+			bodyTokens.pageExcerpt = page.renderContent();
+		}
 		
 		var mail = mailservice.newMail(to=settings.cb_site_email,
 									   from=settings.cb_site_outgoingEmail,

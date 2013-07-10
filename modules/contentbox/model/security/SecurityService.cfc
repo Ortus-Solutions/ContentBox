@@ -268,7 +268,20 @@ component implements="ISecurityService" singleton{
 	* Get remember me cookie
 	*/
 	any function getRememberMe(){
-		return decryptIt( cookieStorage.getVar(name="contentbox_remember_me", default="") );
+		var results = "";
+		var cookieValue = cookieStorage.getVar(name="contentbox_remember_me", default="");
+		
+		try{
+			results = decryptIt(  cookieValue );
+		}
+		catch(Any e){
+			// Errors on decryption
+			log.error("Error decrypting remember me key: #e.message# #e.detail#", cookieValue );
+			cookieStorage.deleteVar(name="contentbox_remember_me");
+			results = "";
+		}
+		
+		return results;
 	}
 	
 	/**
@@ -281,6 +294,8 @@ component implements="ISecurityService" singleton{
 	
 	// Cookie encryption
 	private function encryptIt(required encValue){
+		// if empty just return it
+		if( !len( arguments.encValue ) ){ return arguments.encValue; }
 		return encrypt( arguments.encValue, getEncryptionKey() , "BLOWFISH", "HEX" );
 	}
 	
@@ -292,6 +307,17 @@ component implements="ISecurityService" singleton{
 	
 	// Get encryption key according to cookie algorithm
 	private function getEncryptionKey(){
-		return left( settingService.getSetting( "cb_salt"), 24 );
+		var setting = settingService.findWhere( { name = "cb_enc_key" } );
+		
+		// if no key, then create it for this ContentBox installation
+		if( isNull( setting ) ){
+			setting = settingService.new();
+			setting.setValue( generateSecretKey( "BLOWFISH" ) );
+			setting.setName( "cb_enc_key" );
+			settingService.save(entity=setting);
+			log.info("Registered new cookie encryption key");
+		}
+		
+		return setting.getValue();
 	}
 }

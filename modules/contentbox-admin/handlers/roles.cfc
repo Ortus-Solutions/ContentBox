@@ -21,6 +21,10 @@ component extends="baseHandler"{
 		prc.xehRoleRemove 		= "#prc.cbAdminEntryPoint#.roles.remove";
 		prc.xehRoleSave 		= "#prc.cbAdminEntryPoint#.roles.save";
 		prc.xehRolePermissions 	= "#prc.cbAdminEntryPoint#.roles.permissions";
+		prc.xehExport 			= "#prc.cbAdminEntryPoint#.roles.export";
+		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.roles.exportAll";
+		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.roles.importAll";
+		
 		// Get all roles
 		prc.roles = roleService.list(sortOrder="role",asQuery=false);
 		// Tab
@@ -103,6 +107,72 @@ component extends="baseHandler"{
 		
 		// Saved
 		event.renderData(data="true",type="json");
+	}
+	
+	// Export Entry
+	function export(event,rc,prc){
+		event.paramValue("format", "json");
+		// get role
+		prc.role  = roleService.get( event.getValue("roleID",0) );
+		
+		// relocate if not existent
+		if( !prc.role.isLoaded() ){
+			getPlugin("MessageBox").warn("roleID sent is not valid");
+			setNextEvent( "#prc.cbAdminEntryPoint#.roles" );
+		}
+		//writeDump( prc.role.getMemento() );abort;
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "#prc.role.getRole()#." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=prc.role.getMemento(), type=rc.format, xmlRootName="role")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
+	}
+	
+	// Export All Entries
+	function exportAll(event,rc,prc){
+		event.paramValue("format", "json");
+		// get all prepared content objects
+		var data  = roleService.getAllForExport();
+		
+		switch( rc.format ){
+			case "xml" : case "json" : {
+				var filename = "Roles." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=data, type=rc.format, xmlRootName="roles")
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				break;
+			}
+			default:{
+				event.renderData(data="Invalid export type: #rc.format#");
+			}
+		}
+	}
+	
+	// import entries
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = roleService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Roles imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehRoles );
 	}
 
 }

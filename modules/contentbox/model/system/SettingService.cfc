@@ -218,9 +218,96 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var entryPoint = moduleSettings[ "contentbox-ui" ].entryPoint;
 		mediaPath &= ( len( entryPoint ) ? "#entryPoint#/" : "" ) & "__media";
 		// Store it
-		settings.mediaPath = mediaPath;
+		mediaPath = ( left( mediaPath,1 ) == '/' ? mediaPath : "/" & mediaPath );
+		settings.mediaPath =mediaPath;
 		
 		return settings;
+	}
+	
+	/**
+	* setting search returns struct with keys [settings,count]
+	*/
+	struct function search(search="", max=0, offset=0, sortOrder="name asc"){
+		var results = {};
+		// criteria queries
+		var c = newCriteria();
+		// Search Criteria	
+		if( len(arguments.search) ){
+			c.like("name","%#arguments.search#%");
+		}
+		// run criteria query and projections count
+		results.count 		= c.count( "settingID" );
+		results.settings 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+								.list(offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false);
+		return results;
+	}
+	
+	/**
+	* Get all data prepared for export
+	*/
+	array function getAllForExport(){
+		var c = newCriteria();
+		
+		return c.withProjections(property="settingID,name,value")
+			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list(sortOrder="name");
+			 
+	}
+	
+	/**
+	* Import data from a ContentBox JSON file. Returns the import log
+	*/
+	string function importFromFile(required importFile, boolean override=false){
+		var data 		= fileRead( arguments.importFile );
+		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		
+		if( !isJSON( data ) ){
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+		}
+		
+		// deserialize packet: Should be array of { settingID, name, value }
+		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
+		
+	}
+	
+	/**
+	* Import data from an array of structures of settings 
+	*/
+	string function importFromData(required importData, boolean override=false, importLog){
+		var allSettings = [];
+		
+		// iterate and import
+		for( var thisSetting in arguments.importData ){
+			var args = { name = thisSetting.name };
+			var oSetting = findWhere( criteria=args );
+			// if null, then create it
+			if( isNull( oSetting ) ){
+				var args = { name = thisSetting.name, value = thisSetting.value };
+				arrayAppend( allSettings, new( properties=args ) );
+				// logs
+				importLog.append( "New setting imported: #thisSetting.name#<br>" );
+			}
+			// else only override if true
+			else if( arguments.override ){
+				oSetting.setValue( thisSetting.value );
+				arrayAppend( allSettings, oSetting );
+				importLog.append( "Overriding setting: #thisSetting.name#<br>" );
+			}
+			else{
+				importLog.append( "Skipping setting: #thisSetting.name#<br>" );
+			}
+		}
+		
+		// Save them?
+		if( arrayLen( allSettings ) ){
+			saveAll( allSettings );
+			importLog.append( "Saved all imported and overriden settings!" );
+		}
+		else{
+			importLog.append( "No settings imported as none where found or able to be overriden from the import file." );
+		}
+		
+		return importLog.toString(); 
 	}
 
 }

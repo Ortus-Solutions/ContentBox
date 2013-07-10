@@ -84,10 +84,6 @@ component extends="baseHandler"{
 
 	// raw settings manager
 	function raw(event,rc,prc){
-		// params
-		event.paramValue("page",1);
-		event.paramValue("viewall",false);
-
 		// exit Handlers
 		prc.xehSettingRemove 	= "#prc.cbAdminEntryPoint#.settings.remove";
 		prc.xehSettingsave 		= "#prc.cbAdminEntryPoint#.settings.saveRaw";
@@ -95,32 +91,79 @@ component extends="baseHandler"{
 		prc.xehFlushSingletons  = "#prc.cbAdminEntryPoint#.settings.flushSingletons";
 		prc.xehViewCached    	= "#prc.cbAdminEntryPoint#.settings.viewCached";
 		prc.xehMappingDump		= "#prc.cbAdminEntryPoint#.settings.mappingDump";
+		prc.xehRawSettingsTable	= "#prc.cbAdminEntryPoint#.settings.rawtable";
+		prc.xehExportAll		= "#prc.cbAdminEntryPoint#.settings.exportAll";
+		prc.xehSettingsImport	= "#prc.cbAdminEntryPoint#.settings.importAll";
 
-		// prepare paging plugin
-		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
-		prc.paging 		= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
-
-		// Get all settings
-		var args = {
-			sortOrder = "name asc", asQuery = false,
-			offset = prc.paging.startRow-1, max = prc.cbSettings.cb_paging_maxrows
-		};
-		if( rc.viewAll ){ args.offset = args.max = 0; }
-		prc.settings = settingsService.list(argumentCollection=args);
-		prc.settingsCount = settingsService.count();
-		
-		// Get INterception Points
+		// Get Interception Points
 		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
 		arraySort( prc.interceptionPoints, "textnocase" );
-
 		// Get Singletons
 		prc.singletons = wirebox.getScope("singleton").getSingletons();
-
 		// Raw tab
 		prc.tabSystem_geekSettings = true;
 		// view
 		event.setView("settings/raw");
+	}
+	
+	// Export All settings
+	function exportAll(event,rc,prc){
+		event.paramValue("format", "json");
+		
+		// get all prepared content objects
+		var data  		= settingsService.getAllForExport();
+		var filename 	= "Settings." & ( rc.format eq "xml" ? "xml" : "json" );
+				
+		event.renderData( data=data, formats="xml,json", xmlRootName="settings" )
+			.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#");
+	}
+
+	// import settings
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideSettings", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = settingsService.importFromFile( importFile=rc.importFile, override=rc.overrideSettings );
+				getPlugin("MessageBox").info( "Settings imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehRawSettings );
+	}
+
+	// retrieve raw settings table
+	function rawtable(event,rc,prc){
+		// params
+		event.paramValue( "page", 1 );
+		event.paramValue( "search", "" );
+		event.paramValue( "viewAll", false );
+		
+		// prepare paging plugin
+		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 		= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
+		prc.pagingLink 	= "javascript:settingsPaginate(@page@)";
+		
+		// View all?
+		var offset  = prc.paging.startRow-1;
+		var max		= prc.cbSettings.cb_paging_maxrows;
+		if( rc.viewAll ){ offset = max = 0; }
+		
+		// Get settings
+		var results = settingsService.search(search=rc.search, offset=offset, max=max);
+		prc.settings = results.settings;
+		prc.settingsCount = results.count;
+		
+		event.setView(view="settings/rawSettingsTable", layout="ajax");
 	}
 
 	// mappingDump
@@ -167,9 +210,17 @@ component extends="baseHandler"{
 
 	// flush cache
 	function flushCache(event,rc,prc){
-		settingsService.flushSettingsCache();
-		getPlugin("MessageBox").setMessage("info","Settings Flushed From Cache");
-		setNextEvent(prc.xehRawSettings);
+		var data = { error = false, messages = "" };
+		try{
+			settingsService.flushSettingsCache();
+			data.messages = "Settings cache flushed!";
+		}
+		catch(Any e){
+			data["ERROR"] = true;
+			data["MESSAGES"] = "Error executing flush, please check logs: #e.message#";
+			log.error( e.message & e.detail, e );
+		}
+		event.renderData(data=data, type="json");
 	}
 
 	// flush singletons

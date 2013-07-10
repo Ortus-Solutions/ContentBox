@@ -1,6 +1,7 @@
 ﻿<cfoutput>
 <script type="text/javascript">
 $(document).ready(function() {
+	$importDialog = $("##importDialog");
 	$ruleForm = $("##ruleForm");
 	$rulesTable = $ruleForm.find("##rulesTable");
 	$ruleForm.find("##rules").tablesorter();
@@ -30,6 +31,29 @@ $(document).ready(function() {
 	});
 	</cfif>
 });
+<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
+function importContent(){
+	// local id's
+	var $importForm = $("##importForm");
+	// open modal for cloning options
+	openModal( $importDialog, 500, 350 );
+	// form validator and data
+	$importForm.validate({ 
+		submitHandler: function(form){
+           	$importForm.find("##importButtonBar").slideUp();
+			$importForm.find("##importBarLoader").slideDown();
+			form.submit();
+        }
+	});
+	// close button
+	$importForm.find("##closeButton").click(function(e){
+		closeModal( $importDialog ); return false;
+	});
+	// clone button
+	$importForm.find("##importButton").click(function(e){
+		$importForm.submit();
+	});
+}
 function remove(recordID){
 	if( recordID != null ){
 		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
@@ -38,5 +62,6 @@ function remove(recordID){
 	//Submit Form
 	$ruleForm.submit();
 }
+</cfif>
 </script>
 </cfoutput>

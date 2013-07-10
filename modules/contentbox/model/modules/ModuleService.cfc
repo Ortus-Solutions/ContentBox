@@ -282,7 +282,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var results 		= {error=true, logInfo=""};
 
 		// Upload the module zip
-		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream", "overwrite");
+		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream,application/x-zip-compressed", "overwrite");
 
 		// Unzip File?
 		if ( listLast(fileResults.clientFile, ".") eq "zip" ){
@@ -306,7 +306,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			}
 			// rescan and startup the modules
 			startup();
-			// sucess
+			// success
 			results.error = false;
 		}
 		else{

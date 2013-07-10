@@ -9,9 +9,9 @@
 	<!--- Robots --->
 	<meta name="robots" content="noindex,nofollow" />
 	<!--- SES --->
-	<base href="#getSetting('htmlBaseURL')#" />
+	<base href="#cb.siteBaseURL()#"/>
 	<!--- Title --->
-    <title>ContentBox Administrator - Login</title>
+    <title>ContentBox Modular CMS - Login</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->
@@ -31,6 +31,7 @@
 			    #prc.cbroot#/includes/js/bootstrap.min.js,
 			    #prc.cbroot#/includes/js/jquery.validate.js,
 			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
+			    #prc.cbroot#/includes/js/jwerty.js,
 			    #prc.cbroot#/includes/js/contentbox.js",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- cbadmin Event --->
@@ -49,7 +50,7 @@
 					<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
 					<!--- Brand, future multi-site switcher --->
 					<a class="brand">
-						ContentBox Administrator
+						ContentBox Modular CMS
 					</a>
 				</div> <!---end container --->
 		    </div> <!--- end navbar-inner --->
