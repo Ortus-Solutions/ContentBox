@@ -31,7 +31,7 @@ CustomHTML
 - expireDate timestamp
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
-End Commit Hash: 0716a27a77a7ac1be19409c72cd0f1198c73268c
+End Commit Hash: 0b581f17e69c6d802adcd09a02f60981f96b7509
 
 */
 component implements="contentbox.model.updates.IUpdate"{
