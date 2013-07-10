@@ -32,7 +32,7 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" 
 	property name="useSSL"		ormtype="boolean" notnull="false" 	default="false" dbdefault="0";
 	property name="order"		ormtype="integer" notnull="true" 	default="0" dbdefault="0";
 	property name="match"		ormtype="string"  notnull="false" 	default="" length="50";
-	
+		
 	// Constructor
 	SecurityRule function init(){
 		setMatch('event');
@@ -42,11 +42,12 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" 
 	/**
 	* Overriden setter
 	*/
-	function setMatch(required match){
+	SecurityRule function setMatch(required match){
 		if( not reFindnocase("^(event|url)$", arguments.match) ){
 			throw(message="Invalid match type sent: #arguments.match#",detail="Valid match types are 'event,url'",type="InvalidMatchType");
 		}
 		variables.match = arguments.match;
+		return this;
 	}
 	
 	/*
@@ -73,7 +74,26 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" 
 	* is loaded?
 	*/
 	boolean function isLoaded(){
-		return len( getRuleID() );
+		return ( len( getRuleID() ) ? true : false );
+	}
+	
+	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "ruleID,whitelist,securelist,roles,permissions,redirect,useSSL,order,match" );
+		var result = {};
+		
+		for(var thisProp in pList ){
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}
+		}
+		
+		return result;
 	}
 	
 }
