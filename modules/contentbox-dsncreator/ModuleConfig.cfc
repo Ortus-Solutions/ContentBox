@@ -8,7 +8,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "The ContentBox DSN creator module";
-	this.version			= "1.5.4";
+	this.version			= "1.5.5";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "";

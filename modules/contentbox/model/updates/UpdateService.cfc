@@ -104,12 +104,12 @@ component accessors="true" threadSafe{
 	function processRemovals(required path, required log){
 		// verify the path exists on the incoming path
 		if( !fileExists( arguments.path ) ){
-			log.append("Skipping file removals as file does not exist: #arguments.path#<br/>");
+			arguments.log.append("Skipping file removals as file does not exist: #arguments.path#<br/>");
 			return;
 		}
 		// read the files to remove
 		var removalText = fileRead( arguments.path );
-		log.append("Starting to process removals from: #arguments.path#<br/>");
+		arguments.log.append("Starting to process removals from: #arguments.path#<br/>");
 
 		// if there are files, then remove, else continue
 		if( len( removalText ) ){
@@ -117,15 +117,15 @@ component accessors="true" threadSafe{
 			for(var thisFile in files){
 				if( fileExists( expandPath("/#thisFile#" ) ) ){
 					fileDelete( expandPath("/#thisFile#" ) );
-					log.append("Removed: #thisFile#<br/>");
+					arguments.log.append("Removed: #thisFile#<br/>");
 				}
 				else{
-					log.append("File Not Found, so not removed: #thisFile#<br/>");
+					arguments.log.append("File Not Found, so not removed: #thisFile#<br/>");
 				}
 			}
 		}
 		else{
-			log.append("No updated files to remove. <br/>");
+			arguments.log.append("No updated files to remove. <br/>");
 		}
 
 		// remove deletes.txt file
@@ -139,7 +139,7 @@ component accessors="true" threadSafe{
 
 		// Verify patch exists
 		if( !fileExists( arguments.path ) ){
-			log.append("Skipping patch extraction as no patch.zip found in update patch.<br/>");
+			arguments.log.append("Skipping patch extraction as no patch.zip found in update patch.<br/>");
 			return;
 		}
 
@@ -149,16 +149,16 @@ component accessors="true" threadSafe{
 		}
 		catch(Any e){
 			// bad zip file.
-			log.append("Error getting listing of zip archive, bad zip.<br />");
+			arguments.log.append("Error getting listing of zip archive, bad zip.<br />");
 			rethrow;
 		}
 
 		// good zip file
-		log.append("Patch Zip archive detected, beginning to expand update: #arguments.path#<br />");
+		arguments.log.append("Patch Zip archive detected, beginning to expand update: #arguments.path#<br />");
 		// extract it
 		zipUtil.extract(zipFilePath=arguments.path, extractPath=appPath, overwriteFiles="true");
 		// more logging
-		log.append("Patch Updates uncompressed.<br />");
+		arguments.log.append("Patch Updates uncompressed.<br />");
 
 		// remove patch
 		fileDelete( arguments.path );
@@ -174,7 +174,7 @@ component accessors="true" threadSafe{
 		var fileName = getFileFromPath( arguments.downloadURL );
 
 		try{
-			log.append("Starting Download...<br />");
+			arguments.log.append("Starting Download...<br />");
 			//Download File
 			var httpService = new http(url="#arguments.downloadURL#",
 									   method="GET",
@@ -184,12 +184,12 @@ component accessors="true" threadSafe{
 			httpService.send();
 		}
 		catch(Any e){
-			log.append("<strong>Error downloading file: #e.message# #e.detail#</strong><br />");
+			arguments.log.append("<strong>Error downloading file: #e.message# #e.detail#</strong><br />");
 			return false;
 		}
 
 		// log it
-		log.append("File #fileName# downloaded successfully at #getPatchesLocation()#, checking type for extraction.<br />");
+		arguments.log.append("File #fileName# downloaded successfully at #getPatchesLocation()#, checking type for extraction.<br />");
 
 		// Uncompress Patch?
 		return extractPatch(filename,log);
@@ -206,22 +206,22 @@ component accessors="true" threadSafe{
 			}
 			catch(Any e){
 				// bad zip file.
-				log.append("Error getting listing of zip archive (#getPatchesLocation()#/#arguments.filename#), bad zip, file will be removed.<br />");
+				arguments.log.append("Error getting listing of zip archive (#getPatchesLocation()#/#arguments.filename#), bad zip, file will be removed.<br />");
 				fileDelete( getPatchesLocation() & "/" & arguments.filename );
 				return false;
 			}
 
 			// good zip file
-			log.append("Zip archive detected, beginning to uncompress.<br />");
+			arguments.log.append("Zip archive detected, beginning to uncompress.<br />");
 			// extract it
 			zipUtil.extract(zipFilePath="#getPatchesLocation()#/#arguments.filename#", extractPath="#getPatchesLocation()#", overwriteFiles="true");
 			// more logging
-			log.append("Patch Update uncompressed at #getPatchesLocation()#.<br />");
+			arguments.log.append("Patch Update uncompressed at #getPatchesLocation()#.<br />");
 			// return good and extracted
 			return true;
 		}
 		else{
-			log.append("File #arguments.fileName# is not a zip file, so cannot extract it or use it, file will be removed.<br/>");
+			arguments.log.append("File #arguments.fileName# is not a zip file, so cannot extract it or use it, file will be removed.<br/>");
 			fileDelete( getPatchesLocation() & "/" & arguments.filename );
 			return false;
 		}
@@ -296,7 +296,7 @@ component accessors="true" threadSafe{
 
 		// Verify Patch integrity
 		if( !fileExists( getPatchesLocation() & "/Update.cfc" ) ){
-			log.append("Update.cfc not found in downloaded package, skipping patch update.<br/>");
+			arguments.log.append("Update.cfc not found in downloaded package, skipping patch update.<br/>");
 		}
 		else{
 			try{
@@ -304,7 +304,7 @@ component accessors="true" threadSafe{
 
 				// do preInstallation
 				updater.preInstallation();
-				log.append("Update.cfc - called preInstallation() method.<br/>");
+				arguments.log.append("Update.cfc - called preInstallation() method.<br/>");
 
 				// Do deletes first
 				processRemovals( getPatchesLocation() & "/deletes.txt", log );
@@ -314,12 +314,12 @@ component accessors="true" threadSafe{
 
 				// Post Install
 				updater.postInstallation();
-				log.append("Update.cfc - called postInstallation() method.<br/>");
+				arguments.log.append("Update.cfc - called postInstallation() method.<br/>");
 
 				results = true;
 			}
 			catch(any e){
-				log.append("Error applying update: #e.message# #e.detail#<br/>");
+				arguments.log.append("Error applying update: #e.message# #e.detail#<br/>#e.stacktrace#");
 			}
 			finally{
 				// Finally Remove Updater
