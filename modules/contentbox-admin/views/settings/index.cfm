@@ -7,7 +7,7 @@
 		<!--- Body Header --->
 		<div class="header">
 			<i class="icon-wrench icon-large"></i>
-			Configure ContentBox
+			ContentBox Settings
 		</div>
 		<!--- Body --->
 		<div class="body">
