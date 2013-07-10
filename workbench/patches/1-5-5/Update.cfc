@@ -31,7 +31,7 @@ CustomHTML
 - expireDate timestamp
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
-End Commit Hash: e1e4d063e9fad68eb3873a4ecf3c9305af0045e4
+End Commit Hash: 0716a27a77a7ac1be19409c72cd0f1198c73268c
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -105,10 +105,8 @@ component implements="contentbox.model.updates.IUpdate"{
 			// Make changes on disk take effect
 			ORMREload();
 			
-			transaction{
-				// Update custom HTML creators
-				updateCustomHTML();
-			}
+			// Update custom HTML creators
+			updateCustomHTML();
 		}
 		catch(Any e){
 			ORMClearSession();
@@ -123,12 +121,12 @@ component implements="contentbox.model.updates.IUpdate"{
 		var oAuthor = securityService.getAuthorSession();
 		
 		// Update all content now with published info
-		var qAllContent = new Query(sql="update cb_customHTML set publishedDate :today" );
-		q.addParam(name="today", value=now(), cfsqltype="timestamp");
-		qAllContent.execute().getResult();
+		var qAllContent = new Query(sql="update cb_customHTML set publishedDate = :today" );
+		qAllContent.addParam(name="today", value=now(), cfsqltype="timestamp");
+		qAllContent.execute();
 		
 		// Update all content now with logged in user
-		var qAllContent = new Query(sql="select contentID, FK_authorID from cb_customHTML" ).execute().getResult();
+		qAllContent = new Query(sql="select contentID, FK_authorID from cb_customHTML" ).execute().getResult();
 		for( var x=1; x lte qAllContent.recordCount; x++ ){
 			// update author if none found in row
 			if( !len( qAllContent.FK_authorID[ x ] ) ){
