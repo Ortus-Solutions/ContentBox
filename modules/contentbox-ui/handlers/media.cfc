@@ -37,7 +37,8 @@ component singleton{
 		if( !isBoolean( rc.cbcache ) ){ rc.cbcache = false; }
 		
 		// Get the requested media path
-		prc.mediaPath = trim( replacenocase( event.getCurrentRoutedURL(), prc.cbEntryPoint & "/" & event.getCurrentRoute(), "" ) );
+		var replacePath = ( len( prc.cbEntryPoint ) ? "#prc.cbEntryPoint#/" : "" ) & event.getCurrentRoute();
+		prc.mediaPath = trim( replacenocase( event.getCurrentRoutedURL(), replacePath, "" ) );
 		prc.mediaPath = reReplace( prc.mediaPath, "\/$", "" );
 		
 		// Get the media provider
@@ -79,6 +80,5 @@ component singleton{
 		// Render invalid media
 		event.renderData(data="<h1>404: Requested path not found</h1>", statusCode="404", statusText="Requested Path Not Found");
 	}
-	
 
 }

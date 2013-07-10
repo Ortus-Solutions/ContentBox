@@ -30,6 +30,7 @@ component accessors="true" threadSafe singleton{
 	property name="log"					inject="logbox:logger:{this}";
 	property name="wirebox"				inject="wirebox";
 	property name="html"				inject="coldbox:plugin:HTMLHelper";
+	property name="cbHelper"			inject="provider:CBHelper@cb";
 
 	// The location in disk of the layouts
 	property name="layoutsPath";
@@ -67,7 +68,41 @@ component accessors="true" threadSafe singleton{
 		setLayoutsInvocationPath( moduleSettings["contentbox"].invocationPath & ".layouts" );
 		// Register all layouts
 		buildLayoutRegistry();
-		// Startup Active Layout
+	}
+	
+	/**
+	* Does theme have a maintenance view
+	*/
+	boolean function themeMaintenanceViewExists(){
+		return fileExists( expandPath( CBHelper.layoutRoot() & "/views/maintenance.cfm" ) );
+	}
+	
+	/**
+	* Get the current theme's maintenance layout
+	*/
+	string function getThemeMaintenanceLayout(){
+		var layout = "pages";
+		
+		// verify existence of convention
+		if( fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/maintenance.cfm" ) ) ){
+			layout = "maintenance";
+		}
+		
+		return layout;
+	}
+	
+	/**
+	* Get the current theme's search layout
+	*/
+	string function getThemeSearchLayout(){
+		var layout = "pages";
+		
+		// verify existence of convention
+		if( fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/search.cfm" ) ) ){
+			layout = "search";
+		}
+		
+		return layout;
 	}
 
 	/**
@@ -257,9 +292,9 @@ component accessors="true" threadSafe singleton{
 			var layoutName 	= rawLayouts.name[x];
 
 			// Check if valid layout
-			if( !fileExists(getLayoutsPath() & "/#layoutName#/#layoutName#.cfc") ){
+			if( !fileExists( getLayoutsPath() & "/#layoutName#/#layoutName#.cfc") ){
 				log.warn("The layout: #layoutName# is an invalid layout, skipping.");
-				rawLayouts.isValid[x] = false;
+				rawLayouts.isValid[ x ] = false;
 				continue;
 			}
 			// construct layout descriptor via WireBox
@@ -317,7 +352,7 @@ component accessors="true" threadSafe singleton{
 			layoutCFCRegistry[ layoutName ] = config;
 		}
 
-		var rawLayouts 	= new Query(dbtype="query",sql="SELECT * from rawLayouts WHERE isValid='true'",rawlayouts=rawlayouts).execute().getResult();
+		var rawLayouts 	= new Query(dbtype="query",sql="SELECT * from rawLayouts WHERE isValid='true'", rawlayouts=rawlayouts).execute().getResult();
 		// store raw layouts
 		setLayoutRegistry( rawLayouts );
 
@@ -342,10 +377,13 @@ component accessors="true" threadSafe singleton{
 		structDelete( layoutCFCRegistry, arguments.layoutName );
 		// verify location and remove it
 		var lPath = getLayoutsPath() & "/" & arguments.layoutName;
-		if( directoryExists( lPath ) ){ directoryDelete( lPath,true ); return true; }
-		// Rebuild the registry
-		buildLayoutRegistry();
-		
+		if( directoryExists( lPath ) ){ 
+			// delete layout
+			directoryDelete( lPath, true );
+			// issue rebuild
+			buildLayoutRegistry();
+			return true; 
+		}
 		// return
 		return false;
 	}
@@ -408,7 +446,7 @@ component accessors="true" threadSafe singleton{
 		// iterate and build
 		for( var thisSetting in oLayout.settings ){
 			// Check if required
-			if( structKeyExists( thisSetting, "required" ) ){ 
+			if( structKeyExists( thisSetting, "required" ) and thisSetting.required ){ 
 				constraints[ thisSetting.name ] = {
 					required = true
 				};

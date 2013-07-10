@@ -67,7 +67,7 @@ component accessors="true"{
 					else {
 						if( isLayoutWidget ) {
 							// Render out the layout widget
-							widgetContent = evalute( 'widgetService.getWidget( name=widgetName, type="layout" ).#widgetUDF#( argumentCollection=attributes )' );
+							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="layout" ).#widgetUDF#( argumentCollection=attributes )' );
 						}
 						else {
 							// Render out the core widget

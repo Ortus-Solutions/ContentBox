@@ -3,6 +3,9 @@
 */
 component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="25" cachename="cbAuthor" cacheuse="read-write" {
 
+	// DI
+	property name="authorService"		inject="authorService@cb" persistent="false";
+
 	// Properties
 	property name="authorID" 	fieldtype="id" generator="native" setter="false";
 	property name="firstName"	length="100" notnull="true";
@@ -68,6 +71,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		setPermissionList( '' );
 		setLoggedIn( false );
 		setPreferences( {} );
+		
 		return this;
 	}
 
@@ -86,6 +90,28 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		}
 
 		return false;
+	}
+	
+	/**
+	* Clear all permissions
+	*/
+	Author function clearPermissions(){
+		permissions = [];
+		return this;
+	}
+	
+	/**
+	* Override the setPermissions
+	*/
+	Author function setPermissions(required array permissions){
+		if( hasPermission() ){
+			variables.permissions.clear();
+			variables.permissions.addAll( arguments.permissions );
+		}
+		else{
+			variables.permissions = arguments.permissions;
+		}
+		return this;
 	}
 
 	/**
@@ -128,7 +154,45 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	* is loaded?
 	*/
 	boolean function isLoaded(){
-		return len( getAuthorID() );
+		return ( len( getAuthorID() ) ? true : false );
+	}
+	
+	/**
+	* Get a flat representation of this entry
+	*/
+	function getMemento(){
+		var pList = authorService.getPropertyNames();
+		var result = {};
+		
+		// Do simple properties only
+		for(var x=1; x lte arrayLen( pList ); x++ ){
+			if( structKeyExists( variables, pList[ x ] ) ){
+				if( isSimpleValue( variables[ pList[ x ] ] ) ){
+					result[ pList[ x ] ] = variables[ pList[ x ] ];	
+				}
+			}
+			else{
+				result[ pList[ x ] ] = "";
+			}
+		}
+
+		// Do Role Relationship
+		if( hasRole() ){
+			result[ "role" ] = getRole().getMemento();
+		}
+		
+		// Permissions
+		if( hasPermission() ){
+			result[ "permissions" ] = [];
+			for( var thisPerm in variables.permissions ){
+				arrayAppend( result[ "permissions" ], thisPerm.getMemento() );
+			}
+		}
+		else{
+			result[ "permissions" ] = [];
+		}
+		
+		return result;
 	}
 	
 	/************************************** PREFERENCE FUNCTIONS *********************************************/

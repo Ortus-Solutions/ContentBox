@@ -9,15 +9,15 @@
 		<div class="header">
 			<i class="icon-edit icon-large"></i>
 			Page Editor
-			<div class="btn-group pull-right">
+			<div class="btn-group pull-right" style="margin-top:5px">
 			    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#';return false;"><i class="icon-reply"></i> Back</button>
 			    <cfif prc.page.isLoaded()>
 				<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
-			    	<span class="caret"></span>
+			    		<span class="caret"></span>
 			    </button>
 			   		<ul class="dropdown-menu">
-			    	<li><a href="##" onclick="#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#"><i class="icon-eye-open"></i> View In Site</a></li>
-			    </ul>
+			    			<li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li>
+			    		</ul>
 				</cfif>
 		    </div>
 		</div>
@@ -67,7 +67,7 @@
 				
 				<!---Right References Panel --->
 				<div class="floatRight">
-					<a href="javascript:previewContent()" class="btn" title="Quick Preview">
+					<a href="javascript:previewContent()" class="btn" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
 						<i class="icon-eye-open icon-large"></i>
 					</a>
 				</div>
@@ -75,6 +75,10 @@
 			
 			<!---Content TextArea --->
 			#html.textarea(name="content", value=htmleditFormat( prc.page.getContent() ), rows="25", class="width98 content")#
+			<cfif prc.cbSettings.cb_page_excerpts>
+				<!--- excerpt --->
+				#html.textarea(label="Excerpt:", name="excerpt", bind=prc.page, rows="10", class="width98")#
+			</cfif>
 			
 			<!--- Custom Fields --->
 			<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
@@ -154,7 +158,7 @@
 					<div class="control-group">
 					    #html.label(class="control-label",field="publishedDate",content="Publish Date (<a href='javascript:publishNow()'>Now</a>)")#
 					    <div class="controls">
-					        #html.inputField(size="9", name="publishedDate",value=prc.page.getPublishedDateForEditor(),class="textfield")#
+					        #html.inputField(size="9", name="publishedDate",value=prc.page.getPublishedDateForEditor(), class="textfield datepicker")#
         					@
         					#html.inputField(type="number",name="publishedHour",value=prc.ckHelper.ckHour( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="publishedMinute",value=prc.ckHelper.ckMinute( prc.page.getPublishedDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
@@ -164,7 +168,7 @@
 					<div class="control-group">
 					    #html.label(class="control-label",field="expireDate",content="")#
                         <div class="controls">
-                            #html.inputField(size="9", name="expireDate",value=prc.page.getExpireDateForEditor(),class="textfield")#
+                            #html.inputField(size="9", name="expireDate",value=prc.page.getExpireDateForEditor(), class="textfield datepicker")#
         					@
         					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.page.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.page.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
@@ -176,7 +180,7 @@
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-						&nbsp;<input type="submit" class="btn" value="Save" onclick="return quickSave()">
+						&nbsp;<input type="submit" class="btn" value="Save" data-keybinding="ctrl+s" onclick="return quickSave()">
 						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
 						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
@@ -279,7 +283,7 @@
                         		<!--- Parent Page --->
         						#html.label(field="parentPage",content='Parent:')#
         						<select name="parentPage" id="parentPage" class="input-block-level">
-        							<option value="">No Parent</option>
+        							<option value="null">No Parent</option>
         							#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
         						</select>
         	

@@ -207,5 +207,5 @@ component extends="ContentService" singleton{
 	array function getAllForExport(){
 		return super.getAllForExport( getAll() );
 	}
-
+	
 }

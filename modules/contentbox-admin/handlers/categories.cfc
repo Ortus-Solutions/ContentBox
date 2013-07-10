@@ -20,6 +20,8 @@ component extends="baseHandler"{
 		prc.xehCategoryRemove 	= "#prc.cbAdminEntryPoint#.categories.remove";
 		prc.xehCategoriesSave 	= "#prc.cbAdminEntryPoint#.Categories.save";
 		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.Categories.exportAll";
+		prc.xehCategoryImport	= "#prc.cbAdminEntryPoint#.Categories.importAll";
+		
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// Tab
@@ -91,5 +93,27 @@ component extends="baseHandler"{
 				event.renderData(data="Invalid export type: #rc.format#");
 			}
 		}
+	}
+	
+	// import settings
+	function importAll(event,rc,prc){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = categoryService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Categories imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			getPlugin("MessageBox").error( errorMessage );
+		}
+		setNextEvent( prc.xehCategories );
 	}
 }

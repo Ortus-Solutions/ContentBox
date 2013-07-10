@@ -1,7 +1,6 @@
 <cfoutput>
 #html.anchor(name="recentNews")#
 <cfif prc.latestNews.items.recordCount>
-	<div class="well well-small">			
 	<h3><i class="icon-rss"></i> Recent News</h3>
 	<cfloop query="prc.latestNews.items" endrow="5">
 		<div class="box padding10">
@@ -10,6 +9,5 @@
 			<p>#left( cb.stripHTML( prc.latestNews.items.body ), 500 )#...</p>
 		</div>
 	</cfloop>
-	</div>
 </cfif>
 </cfoutput>

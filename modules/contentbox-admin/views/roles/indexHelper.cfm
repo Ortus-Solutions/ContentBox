@@ -3,6 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
+	$importDialog = $("##importDialog");
 	$roleEditor = $("##roleEditor");
 	// form validator
 	$roleEditor.validate();
@@ -18,6 +19,28 @@ $(document).ready(function() {
 	});
 });
 <cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
+function importContent(){
+	// local id's
+	var $importForm = $("##importForm");
+	// open modal for cloning options
+	openModal( $importDialog, 500, 350 );
+	// form validator and data
+	$importForm.validate({ 
+		submitHandler: function(form){
+           	$importForm.find("##importButtonBar").slideUp();
+			$importForm.find("##importBarLoader").slideDown();
+			form.submit();
+        }
+	});
+	// close button
+	$importForm.find("##closeButton").click(function(e){
+		closeModal( $importDialog ); return false;
+	});
+	// clone button
+	$importForm.find("##importButton").click(function(e){
+		$importForm.submit();
+	});
+}
 function edit(roleID,role,description){
 	openModal( $("##roleEditorContainer"), 500, 200 );
 	$roleEditor.find("##roleID").val( roleID );

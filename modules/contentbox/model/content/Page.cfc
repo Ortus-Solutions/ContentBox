@@ -29,6 +29,10 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	property name="mobileLayout"	notnull="false" length="200" default="";
 	property name="order"			notnull="false" ormtype="integer" default="0" dbdefault="0";
 	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
+	property name="excerpt" 		notnull="false" ormtype="text" default="" length="8000";
+	
+	// Non-Persistable Properties
+	property name="renderedExcerpt" persistent="false";
 
 	/************************************** CONSTRUCTOR *********************************************/
 
@@ -38,6 +42,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	function init(){
 		customFields	= [];
 		renderedContent = "";
+		renderedExcerpt	= "";
 		allowComments 	= false;
 		createdDate		= now();
 		layout 			= "pages";
@@ -53,10 +58,43 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	/************************************** PUBLIC *********************************************/
 
 	/**
+	* has excerpt
+	*/
+	boolean function hasExcerpt(){
+		return len( getExcerpt() ) GT 0;
+	}
+	
+	/**
+	* Render excerpt
+	*/
+	any function renderExcerpt(){
+		
+		// Check if we need to translate
+		if( NOT len( renderedExcerpt ) ){
+			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
+				if( NOT len( renderedExcerpt ) ){
+					// render excerpt out, prepare builder
+					var b = createObject("java","java.lang.StringBuilder").init( getExcerpt() );
+					// announce renderings with data, so content renderers can process them
+					var iData = {
+						builder = b,
+						content	= this
+					};
+					interceptorService.processState("cb_onContentRendering", iData);
+					// store processed content
+					renderedExcerpt = b.toString();
+				}
+			}
+		}
+		
+		return renderedExcerpt;
+	}
+	
+	/**
 	* Get a flat representation of this page
 	*/
 	function getMemento(){
-		var pList = listToArray( "layout,mobileLayout,order,showInMenu" );
+		var pList = listToArray( "layout,mobileLayout,order,showInMenu,excerpt" );
 		var result = super.getMemento();
 		
 		// Local Memento Properties
@@ -116,7 +154,13 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 										 required boolean publish,
 										 required any originalSlugRoot,
 										 required any newSlugRoot){
+		// do layout
 		setLayout( arguments.original.getLayout() );
+		// do excerpts
+		if( arguments.original.hasExcerpt() ){
+			setExcerpt( arguments.original.getExcerpt() );
+		}
+		// do core
 		return super.prepareForClone(argumentCollection=arguments);
 	}
 

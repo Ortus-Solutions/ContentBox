@@ -31,24 +31,27 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 
 	// PROPERTIES
 	property name="contentID" 				fieldtype="id" generator="native" setter="false";
-	property name="title"					notnull="true"  length="200";
-	property name="slug"					notnull="true"  length="200" unique="true" index="idx_customHTML_slug";
+	property name="title"					notnull="true"  length="200" default="";
+	property name="slug"					notnull="true"  length="200" unique="true" index="idx_customHTML_slug" default="";
 	property name="description"				notnull="false" length="500" default="";
-	property name="content" 				notnull="true"  ormtype="text" length="8000";
-	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false";
+	property name="content" 				notnull="true"  ormtype="text" length="8000" default="";
+	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
 	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
+	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search";
+	property name="publishedDate"			notnull="false" ormtype="timestamp" index="idx_published,idx_publishedDate";
+	property name="expireDate"				notnull="false" ormtype="timestamp" default="" index="idx_expireDate";
+	
+	// M20 -> creator loaded as a proxy and fetched immediately
+	property name="creator" notnull="false" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
 	
 	// Non-Persistable
 	property name="renderedContent" persistent="false";
 
 	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
 
-	/*
-	* In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
-	*/
 	public void function preInsert(){
 		setCreatedDate( now() );
 	}
@@ -59,18 +62,43 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	* constructor
 	*/
 	function init(){
+		createdDate		= now();
+		publishedDate	= "";
+		expireDate		= "";
 		renderedContent = "";
+		
+		return this;
 	}
 	
 	/**
 	* Get memento representation
 	*/
 	function getMemento(){
-		var pList = listToArray( "contentID,title,slug,description,content,createdDate,cache,cacheTimeout,cacheLastAccessTimeout,markup" );
+		var pList = listToArray( "contentID,title,slug,description,content,createdDate,cache,cacheTimeout,cacheLastAccessTimeout,markup,isPublished,publishedDate,expireDate" );
 		var result = {};
 		
 		for(var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}
+		}
+		
+		// Do Author Relationship
+		if( hasCreator() ){
+			result[ "creator" ] = {
+				creatorID = getCreator().getAuthorID(),
+				firstname = getCreator().getFirstname(),
+				lastName = getCreator().getLastName(),
+				email = getCreator().getEmail(),
+				username = getCreator().getUsername(),
+				role = getCreator().getRole().getRole()
+			};
+		}
+		else{
+			result[ "creator" ] = {};
 		}
 		
 		return result;
@@ -81,6 +109,27 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	*/
 	boolean function isLoaded(){
 		return len( getContentID() ) GT 0;
+	}
+	
+	/**
+	* Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
+	*/
+	boolean function isExpired(){
+		return ( isContentPublished() AND !isNull(expireDate) AND expireDate lte now() ) ? true : false;
+	}
+
+	/**
+	* Bit that denotes if the content has been published or not
+	*/
+	boolean function isContentPublished(){
+		return ( getIsPublished() AND !isNull( publishedDate ) AND getPublishedDate() LTE now() ) ? true : false;
+	}
+
+	/**
+	* Bit that denotes if the content has been published or not in the future
+	*/
+	boolean function isPublishedInFuture(){
+		return ( getIsPublished() AND getPublishedDate() GT now() ) ? true : false;
 	}
 
 	/*
@@ -108,6 +157,62 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+	}
+	
+	/**
+	* Get display publishedDate
+	*/
+	string function getDisplayPublishedDate(){
+		var publishedDate = getPublishedDate();
+		return dateFormat( publishedDate, "mm/dd/yyyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
+	}
+	
+	/**
+	* Get display publishedDate
+	*/
+	string function getPublishedDateForEditor(boolean showTime=false){
+		var pDate = getPublishedDate();
+		if( isNull(pDate) ){ pDate = now(); }
+		// get formatted date
+		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
+		if( arguments.showTime ){
+			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt");
+		}
+		return fDate;
+	}
+
+	/**
+	* Get display expireDate
+	*/
+	string function getExpireDateForEditor(boolean showTime=false){
+		var pDate = getExpireDate();
+		if( isNull(pDate) ){ pDate = ""; }
+		// get formatted date
+		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
+		if( arguments.showTime ){
+			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt");
+		}
+		return fDate;
+	}
+	
+	/**
+	* add published timestamp to property
+	*/
+	any function addPublishedTime(required hour, required minute){
+		if( !isDate( getPublishedDate() ) ){ return this; }
+		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
+		setPublishedDate( getPublishedDate() & " " & time);
+		return this;
+	}
+
+	/**
+	* add expired timestamp to property
+	*/
+	any function addExpiredTime(required hour, required minute){
+		if( !isDate( getExpireDate() ) ){ return this; }
+		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
+		setExpireDate( getExpireDate() & " " & time);
+		return this;
 	}
 
 	/**
@@ -191,5 +296,24 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 		return b.toString();
 	}
 
+	/**
+	* Shorthand Creator name
+	*/
+	string function getCreatorName(){
+		if( hasCreator() ){
+			return getCreator().getName();
+		}
+		return '';
+	}
+
+	/**
+	* Shorthand Creator email
+	*/
+	string function getCreatorEmail(){
+		if( hasCreator() ){
+			return getCreator().getEmail();
+		}
+		return '';
+	}
 
 }

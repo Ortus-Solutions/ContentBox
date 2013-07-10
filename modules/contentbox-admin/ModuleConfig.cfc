@@ -30,7 +30,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Admin";
-	this.version			= "1.5.4";
+	this.version			= "1.5.5";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
@@ -102,7 +102,7 @@ component {
 				// Global HTML Events
 				"cbadmin_preGlobalHTMLSave","cbadmin_postGlobalHTMLSave",
 				// Custom HTML Events
-				"cbadmin_preCustomHTMLSave", "cbadmin_postCustomHTMLSave","cbadmin_preCustomHTMLRemove", "cbadmin_postCustomHTMLRemove",
+				"cbadmin_preCustomHTMLSave", "cbadmin_postCustomHTMLSave","cbadmin_preCustomHTMLRemove", "cbadmin_postCustomHTMLRemove", "cbadmin_onCustomHTMLStatusUpdate",
 				// Security Rules Events
 				"cbadmin_preSecurityRulesSave", "cbadmin_postSecurityRulesSave", "cbadmin_preSecurityRulesRemove", "cbadmin_postSecurityRulesRemove", "cbadmin_onResetSecurityRules",
 				// Layout Themes

@@ -133,7 +133,9 @@ The arguments you can use are:
 			// downloads
 			"fb_preFileDownload", "fb_postFileDownload",
 			// Uploads
-			"fb_preFileUpload", "fb_postFileUpload", "fb_onFileUploadError"
+			"fb_preFileUpload", "fb_postFileUpload", "fb_onFileUploadError",
+			// directory read
+			"fb_postDirectoryRead"
 			] )
 		};
 

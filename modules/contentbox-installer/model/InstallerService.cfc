@@ -287,13 +287,14 @@ component accessors="true"{
 			"cb_rss_cachingTimeoutIdle" = "15",
 			"cb_rss_cacheName" = "Template",
 
-			// Content Caching
+			// Content Caching and options
 			"cb_content_caching" = "true",
 			"cb_entry_caching" = "true",
 			"cb_customHTML_caching" = "true",
 			"cb_content_cachingTimeout" = "60",
 			"cb_content_cachingTimeoutIdle" = "15",
 			"cb_content_cacheName" = "Template",
+			"cb_page_excerpts" = "true",
 
 			// Global HTML
 			"cb_html_beforeHeadEnd" = "",
@@ -472,6 +473,7 @@ component accessors="true"{
 <p style="text-align: center;">
 	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>'
 		});
+		customHTML.setCreator( author );
 		customHTMLService.saveCustomHTML( customHTML );
 
 	}

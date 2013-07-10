@@ -56,7 +56,12 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 		var result = {};
 		
 		for(var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}	
 		}
 		
 		return result;

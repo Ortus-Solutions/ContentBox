@@ -3,15 +3,13 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$settingEditor = $("##settingEditor");
-	// table sorting + filtering
+	$importDialog = $("##importDialog");
+	// settings sorting
 	$("##settings").tablesorter();
-	$("##settingFilter").keyup(function(){
-		$.uiTableFilter( $("##settings"), this.value );
-	});
 	$("##eventFilter").keyup(function(){
 		$.uiTableFilter( $("##eventsList"), this.value );
 	});
-	// table sorting + filtering
+	// singletons sorting + filter
 	$("##singletons").tablesorter({ sortList: [[0,0]] });
 	$("##singletonsFilter").keyup(function(){
 		$.uiTableFilter( $("##singletons"), this.value );
@@ -24,7 +22,73 @@ $(document).ready(function() {
 		$settingEditor.find("##btnSave").val( "Save" );
 		$settingEditor.find("##btnReset").val( "Reset" );
 	});
+	// keyup quick search
+	$("##settingSearch").keyup(function(){
+		var $this = $(this);
+		var clearIt = ( $this.val().length > 0 ? false : true );
+		// ajax search
+		settingsLoad( $this.val() );
+	});
+	// Load settings
+	settingsLoad();
 });
+function importSettings(){
+	// local id's
+	var $importForm = $("##importForm");
+	// open modal for cloning options
+	openModal( $importDialog, 500, 300 );
+	// form validator and data
+	$importForm.validate({ 
+		submitHandler: function(form){
+           	$importForm.find("##importButtonBar").slideUp();
+			$importForm.find("##importBarLoader").slideDown();
+			form.submit();
+        }
+	});
+	// close button
+	$importForm.find("##closeButton").click(function(e){
+		closeModal( $importDialog ); return false;
+	});
+	// clone button
+	$importForm.find("##importButton").click(function(e){
+		$importForm.submit();
+	});
+}
+function flushSettingsCache(){
+	$("##specialActionsLoader").removeClass("hidden");
+	$.ajax({
+		url : '#event.buildLink(prc.xehFlushCache)#',
+		success : function(data){
+			if (data.ERROR) {
+				$("##adminActionNotifier").fadeIn().addClass("alert-error").html(data.MESSAGES).delay( 3000 ).fadeOut();
+			}
+			else{
+				$("##adminActionNotifier").fadeIn().addClass("alert-info").html(data.MESSAGES).delay( 1500 ).fadeOut();
+			}
+			$("##specialActionsLoader").addClass("hidden");
+		}
+	});
+	
+}
+function settingsLoad(search, viewAll, page){
+	if( search == undefined){ search = ""; }
+	if( viewAll == undefined){ viewAll = false; }
+	if( page == undefined){ page = 1; }
+	
+	$('##settingsTableContainer').load( '#event.buildLink( prc.xehRawSettingsTable )#', 
+		{ search: search, viewAll: viewAll, page: page }, 
+		function(){
+			$(this).fadeIn();
+	});
+}
+function settingsPaginate(page){
+	$('##settingsTableContainer').fadeOut();
+	settingsLoad( $("##settingSearch").val() , false, page );
+}
+function viewAllSettings(){
+	$('##settingsTableContainer').fadeOut();
+	settingsLoad( "", true );
+}
 function edit(settingID,name,value){
 	openModal( $("##settingEditorContainer"), 500, 300 );
 	$settingEditor.find("##settingID").val( settingID );

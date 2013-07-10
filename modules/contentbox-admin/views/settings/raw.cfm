@@ -12,7 +12,12 @@
 		<div class="body">
 			<!--- MessageBox --->
 			#getPlugin("MessageBox").renderit()#
-		
+			
+			<!---Import Log --->
+			<cfif flash.exists( "importLog" )>
+			<div class="consoleLog">#flash.get( "importLog" )#</div>
+			</cfif>
+			
 			<!--- Vertical Nav --->
 			<div class="tabbable tabs-left">
     			<!--- Geek Navigation Bar --->
@@ -28,7 +33,7 @@
     				<div class="tab-pane active" id="raw">
     					<br>
     					<p>Manage the raw settings at your own risk buddy!</p>
-    					
+						
     					<!--- Settings Editor --->
     					<div id="settingEditorContainer" class="modal hide fade">
     						<div id="modalContent">
@@ -37,10 +42,9 @@
     							<h3>Setting Editor</h3>
                             </div>
     						<!--- Create/Edit form --->
-    						#html.startForm(action=prc.xehSettingsave,name="settingEditor",novalidate="novalidate",class="vertical-form")#
+    						#html.startForm(action=prc.xehSettingsave, name="settingEditor", novalidate="novalidate", class="vertical-form")#
     						<div class="modal-body">
     							<input type="hidden" name="settingID" id="settingID" value="" />
-    							<input type="hidden" name="page" id="page" value="#rc.page#" />
     							<div class="control-group">
     							    <label for="name" class="control-label">Setting:</label>
     							    <div class="controls">
@@ -73,12 +77,21 @@
     						<div class="pull-right">
     							<div class="btn-group">
     								<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+    									<i class="icon-spinner icon-spin icon-large hidden" id="specialActionsLoader"></i>
     									Special Actions
     									<span class="caret"></span>
     								</a>
     								<ul class="dropdown-menu">
     									<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="icon-hdd"></i> View Cached Settings</a></li>
-    									<li><a href="#event.buildLink(prc.xehFlushCache)#"><i class="icon-refresh"></i> Flush Settings Cache</a></li>
+    									<li><a href="javascript:flushSettingsCache()"><i class="icon-refresh"></i> Flush Settings Cache</a></li>
+										<li><a href="javascript:importSettings()"><i class="icon-upload-alt"></i> Import Settings</a></li>
+										<li class="dropdown-submenu">
+											<a href="##"><i class="icon-download"></i> Export All</a>
+											<ul class="dropdown-menu text-left">
+												<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
+												<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
+											</ul>
+										</li>
     								</ul>
     							</div>
     							
@@ -88,7 +101,7 @@
     									<span class="caret"></span>
     								</button>
     								<ul class="dropdown-menu">
-    									<li><a href="#event.buildLink(prc.xehRawSettings)#/viewall/true"><i class="icon-truck"></i> View All</a></li>
+    									<li><a href="javascript:viewAllSettings()"><i class="icon-truck"></i> View All</a></li>
     								</ul>
     							</div>
     								
@@ -97,53 +110,15 @@
     						<!--- Filter Bar --->
     						<div class="filterBar">
     							<div>
-    								#html.label(field="settingFilter",content="Quick Filter:",class="inline")#
-    								#html.textField(name="settingFilter",size="30",class="textfield")#
+    								#html.label(field="settingSearch",content="Quick Search:",class="inline")#
+    								#html.textField(name="settingSearch",size="30",class="textfield")#
     							</div>
     						</div>
     					</div>
     					
-    					<!--- settings --->
-    					<table name="settings" id="settings" class="tablesorter table table-striped table-hover table-condensed" width="98%">
-    						<thead>
-    							<tr>
-    								<th width="250">Name</th>
-    								<th>Value</th>
-    								<th width="125" class="center {sorter:false}">Actions</th>
-    							</tr>
-    						</thead>
-    
-    						<tbody>
-    							<cfloop array="#prc.settings#" index="setting">
-    							<tr>
-    								<td><a href="javascript:edit('#setting.getSettingId()#',
-																 '#HTMLEditFormat( setting.getName() )#',
-																 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting">#setting.getName()#</a></td>
-    								<td>
-    									<cfif len( setting.getValue() ) gt 90 >
-    										#html.textarea(value=setting.getValue(), rows="5", cols="5")#
-    									<cfelse>
-    										#htmlEditFormat( setting.getValue() )#
-    									</cfif>
-    								</td>
-    								<td class="center">
-    									<!--- Edit Command --->
-    									<a href="javascript:edit('#setting.getSettingId()#',
-																 '#HTMLEditFormat( setting.getName() )#',
-																 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting"><i class="icon-edit icon-large"></i></a>
-    									<!--- Delete Command --->
-    									<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><i class="icon-trash icon-large" id="delete_#setting.getsettingID()#"></i></a>
-    								</td>
-    							</tr>
-    							</cfloop>
-    						</tbody>
-    					</table>
-    
-    					<!--- Paging --->
-    					<cfif !rc.viewAll>
-    					#prc.pagingPlugin.renderit(foundRows=prc.settingsCount, link=prc.pagingLink, asList=true)#
-    					</cfif>
-    					
+						<!---settings load --->
+    					<div id="settingsTableContainer"><i class="icon-spinner icon-spin icon-large icon-2x"></i></div>
+						
     					#html.endForm()#
     				</div>
 				
@@ -277,6 +252,43 @@
 			<!--- End Vertical Nav --->
 		</div>
 		<!--- End Body --->
+	</div>
+</div>
+
+<div id="importDialog" class="modal hide fade">
+	<div id="modalContent">
+	    <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h3><i class="icon-copy"></i> Import Settings</h3>
+	    </div>
+        #html.startForm(name="importForm", action=prc.xehSettingsImport, class="form-vertical", multipart=true)#
+        <div class="modal-body">
+			<p>Choose the ContentBox <strong>JSON</strong> settings file to import.</p>
+			
+			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
+			
+			<label for="overrideSettings">Override settings?</label>
+			<small>By default all settings that exist are not overwritten.</small><br>
+			#html.select(options="true,false", name="overrideSettings", selectedValue="false", class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+			
+			<!---Notice --->
+			<div class="alert alert-info">
+				<i class="icon-info-sign icon-large"></i> Please note that import is an expensive process, so please be patient when importing.
+			</div>
+		</div>
+        <div class="modal-footer">
+            <!--- Button Bar --->
+        	<div id="importButtonBar">
+          		<button class="btn" id="closeButton"> Cancel </button>
+          		<button class="btn btn-danger" id="importButton"> Import </button>
+            </div>
+			<!--- Loader --->
+			<div class="center loaders" id="importBarLoader">
+				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+				<br>Please wait, doing some hardcore importing action...
+			</div>
+        </div>
+		#html.endForm()#
 	</div>
 </div>
 </cfoutput>

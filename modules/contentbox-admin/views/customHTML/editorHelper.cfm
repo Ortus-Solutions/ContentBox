@@ -5,9 +5,8 @@
 $(document).ready(function() {
  	// pointers
 	$contentEditForm = $("##contentEditForm");
-	$content 		 = $contentEditForm.find("##content");
 	// setup editors
-	setupEditors( $contentEditForm, false );
+	setupEditors( $contentEditForm, false, '#event.buildLink(prc.xehContentSave)#', false );
 });
 </script>
 </cfoutput>

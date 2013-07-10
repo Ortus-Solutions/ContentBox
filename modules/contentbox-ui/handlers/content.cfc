@@ -32,7 +32,8 @@ component{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="rssService"			inject="id:rssService@cb";
 	property name="validator"			inject="id:Validator@cb";
-
+	property name="layoutService"		inject="id:layoutService@cb";
+	
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
 	
@@ -101,7 +102,16 @@ component{
 	* Go Into maintenance mode.
 	*/
 	function maintenance(event,rc,prc){
-		event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
+		// If no maintenance view exists, just output data
+		if( !layoutService.themeMaintenanceViewExists() ){
+			event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
+		}
+		else{
+			// output maintenance view
+			event.setLayout(name="#prc.cbLayout#/layouts/#layoutService.getThemeMaintenanceLayout()#", module="contentbox")
+				.setView(view="#prc.cbLayout#/views/maintenance", module="contentbox");
+		}
+		
 	}
 
 	/*

@@ -109,6 +109,62 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 	
 	/**
+	* Override the setComments
+	*/
+	BaseContent function setComments(required array comments){
+		if( hasComment() ){
+			variables.comments.clear();
+			variables.comments.addAll( arguments.comments );
+		}
+		else{
+			variables.comments = arguments.comments;
+		}
+		return this;
+	}
+	
+	/**
+	* Override the setCustomFields
+	*/
+	BaseContent function setCustomFields(required array customFields){
+		if( hasCustomField() ){
+			variables.customFields.clear();
+			variables.customFields.addAll( arguments.customFields );
+		}
+		else{
+			variables.customFields = arguments.customFields;
+		}
+		return this;
+	}
+	
+	/**
+	* Override the setContentVersions
+	*/
+	BaseContent function setContentVersions(required array contentVersions){
+		if( hasContentVersion() ){
+			variables.contentVersions.clear();
+			variables.contentVersions.addAll( arguments.contentVersions );
+		}
+		else{
+			variables.contentVersions = arguments.contentVersions;
+		}
+		return this;
+	}
+	
+	/**
+	* Override the setChildren
+	*/
+	BaseContent function setChildren(required array children){
+		if( hasChild() ){
+			variables.children.clear();
+			variables.children.addAll( arguments.children );
+		}
+		else{
+			variables.children = arguments.children;
+		}
+		return this;
+	}
+	
+	/**
 	* Get a flat representation of this entry
 	*/
 	function getMemento(){
@@ -190,7 +246,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( hasCategories() ){
 			result[ "categories" ] = [];
 			for( var thisCategory in variables.categories ){
-				arrayAppend( result[ "categories" ], thisCategory.getMemento() );	
+				arrayAppend( result[ "categories" ], thisCategory.getMemento() );
 			}
 		}
 		else{
@@ -337,7 +393,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* is loaded?
 	*/
 	boolean function isLoaded(){
-		return len( getContentID() );
+		return ( len( getContentID() ) ? true : false );
 	}
 
 	/**
