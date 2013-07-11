@@ -206,7 +206,7 @@ component extends="ContentService" singleton{
 	* Get all content for export as flat data
 	*/
 	array function getAllForExport(){
-		return super.getAllForExport( getAll() );
+		return super.getAllForExport( newCriteria().isNull( "parent" ).list() );
 	}
 
 }
