@@ -282,7 +282,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			var oSetting = findWhere( criteria=args );
 			// if null, then create it
 			if( isNull( oSetting ) ){
-				var args = { name = thisSetting.name, value = thisSetting.value };
+				var args = { name = thisSetting.name, value = javaCast( "string", thisSetting.value ) };
 				arrayAppend( allSettings, new( properties=args ) );
 				// logs
 				importLog.append( "New setting imported: #thisSetting.name#<br>" );
