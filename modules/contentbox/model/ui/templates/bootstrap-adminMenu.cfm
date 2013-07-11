@@ -14,7 +14,7 @@
 					<cfloop array="#menu#" index="local.topMenu">
 						<cfif !len(local.topMenu.permissions) OR prc.oAuthor.checkPermission( local.topMenu.permissions )>
 						<li class="dropdown<cfif event.getValue(name='tab#local.topMenu.name#',defaultValue=false,private=true)> active</cfif>">
-							<a href="#local.topMenu.href#" class="dropdown-toggle" data-toggle="dropdown"<!---
+							<a href="#local.topMenu.href#" class="dropdown-toggle" <cfif arrayLen( local.topMenu.subMenu )>data-toggle="dropdown"</cfif><!---
 							---><cfif len(local.topMenu.title)> title="#local.topMenu.title#"</cfif><!---
 							---><cfif len(local.topMenu.target)> target="#local.topMenu.target#"</cfif><!---
 							----><cfif structKeyExists( local.topMenu, "data" ) && structCount( local.topMenu.data )>#parseADataAttributes( local.topMenu.data )#</cfif>>#local.topMenu.label# <i class="caret"></i> </a>
