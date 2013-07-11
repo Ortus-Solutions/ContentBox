@@ -1227,10 +1227,10 @@ Description :
 			// Get path_info & script name
 			items["pathInfo"] 	= getCGIElement('path_info',arguments.event);
 			items["scriptName"] = trim( reReplacenocase(getCGIElement('script_name',arguments.event),"[/\\]index\.cfm","") );
-
+			
 			// Clean ContextRoots
 			if( len( getContextRoot() ) ){
-				items["pathInfo"] 	= replacenocase(items["pathInfo"],getContextRoot(),"");
+				//items["pathInfo"] 	= replacenocase(items["pathInfo"],getContextRoot(),"");
 				items["scriptName"] = replacenocase(items["scriptName"],getContextRoot(),"");
 			}
 
