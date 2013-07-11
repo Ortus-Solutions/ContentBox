@@ -17,7 +17,7 @@
 							<a href="#local.topMenu.href#" class="dropdown-toggle" <cfif arrayLen( local.topMenu.subMenu )>data-toggle="dropdown"</cfif><!---
 							---><cfif len(local.topMenu.title)> title="#local.topMenu.title#"</cfif><!---
 							---><cfif len(local.topMenu.target)> target="#local.topMenu.target#"</cfif><!---
-							----><cfif structKeyExists( local.topMenu, "data" ) && structCount( local.topMenu.data )>#parseADataAttributes( local.topMenu.data )#</cfif>>#local.topMenu.label# <i class="caret"></i> </a>
+							----><cfif structKeyExists( local.topMenu, "data" ) && structCount( local.topMenu.data )>#parseADataAttributes( local.topMenu.data )#</cfif>>#local.topMenu.label# <cfif arrayLen( local.topMenu.subMenu )><i class="caret"></i></cfif></a>
 							<!--- Do we have submenus --->
 							<cfif arrayLen(local.topMenu.subMenu)>
 							<ul class="dropdown-menu">
