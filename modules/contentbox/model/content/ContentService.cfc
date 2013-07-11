@@ -323,7 +323,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var result = [];
 		
 		if( !structKeyExists( arguments, "inData") ){
-			var data = getAll();
+			// export from the root node, instead of everything.
+			var data = newCriteria().isNull( "parent" ).list();
 		}
 		else{
 			data = arguments.inData;
