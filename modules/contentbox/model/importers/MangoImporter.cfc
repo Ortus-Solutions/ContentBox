@@ -104,7 +104,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				var page = pageService.new(properties=props);
 				// Add content versionized!
 				page.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[qPages.author_id[x]] ));
-				
+				page.setCreator( authorService.get( authorMap[qPages.author_id[x]] ) );
 				// Custom Fields
 				log.info("Starting to import Page Custom Fields....");
 				var qCustomFields = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
@@ -180,7 +180,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				var entry = entryService.new(properties=props);
 				// Add content versionized!
 				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.author_id[x]] ));
-				
+				entry.setCreator( authorService.get( authorMap[q.author_id[x]] ) );
 				// entry categories
 				var qCategories = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#post_category as mp where mp.post_id = '#q.id[x]#'").execute().getResult();
