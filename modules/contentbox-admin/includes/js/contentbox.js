@@ -92,8 +92,14 @@ $(document).ready(function() {
 	   activeTab && activeTab.tab('show');
 	});
 	
-	// Shortcut key bindings
-	jwerty.key( "ctrl+shift+e" , toggleSidebar );
+	// Sidebar shortcut keys
+	if( $("#main-sidebar").attr( "id" ) == undefined ){
+		$("#sidebar-toggle").hide();
+	}
+	else{
+		jwerty.key( "ctrl+shift+e" , toggleSidebar );
+	}
+	// Nav Search Shortcut
 	jwerty.key( "ctrl+shift+s" , function(){ $("#nav-search").focus(); return false;} );
 	// find all links with the key-binding data attribute
 	$( '[data-keybinding]' ).each(function(){
@@ -127,7 +133,6 @@ function toggleSidebar(){
 		$("#sidebar_trigger").removeClass("icon-expand-alt").addClass("icon-collapse-alt");
 		sidebar.fadeIn();
 		$("#main-content").removeClass("span12").addClass("span9");
-		
 	}
 }
 function adminAction( action, actionURL ){
