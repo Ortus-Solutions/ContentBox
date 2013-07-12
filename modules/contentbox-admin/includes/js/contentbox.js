@@ -99,6 +99,10 @@ $(document).ready(function() {
 	else{
 		jwerty.key( "ctrl+shift+e" , toggleSidebar );
 	}
+	// If the sidebar preference is off, toggle it
+	if( $("body").attr( "data-showsidebar" ) == "NO" ){
+		toggleSidebar();
+	}
 	// Nav Search Shortcut
 	jwerty.key( "ctrl+shift+s" , function(){ $("#nav-search").focus(); return false;} );
 	// find all links with the key-binding data attribute
@@ -120,7 +124,8 @@ $(document).ready(function() {
 });
 function toggleSidebar(){
 	var sidebar = $("#main-sidebar");
-	var type = sidebar.css( "display" );
+	var type 	= sidebar.css( "display" );
+	var sidebarState = false;
 	// nosidebar exit
 	if( type == undefined ){ return; }
 	// toggles
@@ -133,7 +138,14 @@ function toggleSidebar(){
 		$("#sidebar_trigger").removeClass("icon-expand-alt").addClass("icon-collapse-alt");
 		sidebar.fadeIn();
 		$("#main-content").removeClass("span12").addClass("span9");
+		sidebarState = true;
 	}
+	// Call change user editor preference
+	$.ajax({
+		url : $("#sidebar-toggle").attr( "data-stateurl" ),
+		data : { sidebarState: sidebarState },
+		async : true
+	});
 }
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
