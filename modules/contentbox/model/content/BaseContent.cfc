@@ -182,7 +182,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 				result[ pList[ x ] ] = "";
 			}
 		}
-
+		
 		// Do Author Relationship
 		if( hasCreator() ){
 			result[ "creator" ] = {

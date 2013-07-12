@@ -118,7 +118,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	* Import data from an array of structures of authors or just one structure of author 
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
-		var allUsers = [];
+		var allUsers 		= [];
+		var badDateRegex  	= " -\d{4}$";
 		
 		// if struct, inflate into an array
 		if( isStruct( arguments.importData ) ){
@@ -131,9 +132,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			var oUser = this.findByUsername( thisUser.username );
 			oUser = ( isNull( oUser ) ? new() : oUser );
 			
+			// date conversion tests
+			thisUser.createdDate 	= reReplace( thisUser.createdDate, badDateRegex, "" );
+			if( len( thisUser.lastLogin ) ){
+				thisUser.lastLogin = reReplace( thisUser.lastLogin, badDateRegex, "" );
+			}
+			
 			// populate content from data
 			populator.populateFromStruct( target=oUser, memento=thisUser, exclude="role,authorID,permissions", composeRelationships=false );
-			
 			
 			// A-LA-CARTE PERMISSIONS
 			if( arrayLen( thisUser.permissions ) ){
