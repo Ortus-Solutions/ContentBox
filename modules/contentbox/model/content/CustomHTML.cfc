@@ -26,6 +26,7 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 
 	// DI Injections
 	property name="cachebox" 			inject="cachebox" 					persistent="false";
+	property name="populator" 			inject="wirebox:populator"			persistent="false";
 	property name="settingService"		inject="id:settingService@cb" 		persistent="false";
 	property name="interceptorService"	inject="coldbox:interceptorService" persistent="false";
 
@@ -314,6 +315,36 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 			return getCreator().getEmail();
 		}
 		return '';
+	}
+	
+	/**
+	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
+	* @author.hint The author doing the cloning
+	* @original.hint The original content object that will be cloned into this content object
+	* @originalService.hint The ContentBox content service object used
+	* @publish.hint Publish pages or leave as drafts
+	*/
+	CustomHTML function prepareForClone(required any author,
+										 required any original,
+										 required any originalService,
+										 required boolean publish){
+		// set not published
+		setIsPublished( arguments.publish );
+		// reset creation date
+		setCreatedDate( now() );
+		setPublishedDate( now() );
+		// Update from original
+		setCreator( arguments.author );
+		populator.populateFromStruct( target=this, 
+									  memento=arguments.original.getMemento(), 
+									  exclude="contentID,creator,title,slug,createdDate,isPublished,publishedDate", 
+									  composeRelationships=false, 
+									  nullEmptyInclude="expireDate" );
+				
+		// evict original entity, just in case
+		arguments.originalService.evictEntity( arguments.original );
+
+		return this;
 	}
 
 }

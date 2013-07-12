@@ -143,7 +143,9 @@ component accessors="true"{
 			"EDITORS_CACHING" = "Ability to view the content caching panel",
 			"EDITORS_CATEGORIES" = "Ability to view the content categories panel",
 			"EDITORS_HTML_ATTRIBUTES" = "Ability to view the content HTML attributes panel",
-			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor"
+			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor",
+			"TOOLS_EXPORT" = "Ability to export data from ContentBox",
+			"CUSTOMHTML_EDITOR" = "Ability to manage custom HTML elements but not publish them"
 		};
 
 		var allperms = [];
@@ -166,7 +168,7 @@ component accessors="true"{
 		var oRole = roleService.new(properties={role="Editor",description="A ContentBox editor"});
 		// Add Editor Permissions
 		oRole.addPermission( permissions["COMMENTS_ADMIN"] );
-		oRole.addPermission( permissions["CUSTOMHTML_ADMIN"] );
+		oRole.addPermission( permissions["CUSTOMHTML_EDITOR"] );
 		oRole.addPermission( permissions["PAGES_EDITOR"] );
 		oRole.addPermission( permissions["CATEGORIES_ADMIN"] );
 		oRole.addPermission( permissions["ENTRIES_EDITOR"] );
@@ -467,6 +469,8 @@ component accessors="true"{
 		var customHTML = customHTMLService.new(properties={
 			title = "ContactInfo",
 			slug = "contentbox",
+			publishedDate = now(),
+			isPublished = true,
 			description = "Our contact information",
 			content = '<p style="text-align: center;">
 	<a href="http://gocontentbox.org"><img alt="" src="/modules/contentbox/content/ContentBox_125.gif" style="width: 124px; height: 118px;" /></a></p>

@@ -136,6 +136,8 @@
 									</a>
 							    	<ul class="dropdown-menu text-left">
 										<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,CUSTOMHTML_EDITOR")>
+										<!--- Clone Command --->
+										<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
 										<!--- Edit Command --->
 										<li><a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><i class="icon-edit icon-large"></i> Edit</a></li>
 										<cfelseif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
@@ -216,7 +218,43 @@
 	
 	</div>    
 </div>
-
+<!--- Clone Dialog --->
+<cfif prc.oAuthor.checkPermission("CUSTOMHTML_EDITOR,CUSTOMHTML_ADMIN")>
+<div id="cloneDialog" class="modal hide fade">
+	<div id="modalContent">
+	    <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h3><i class="icon-copy"></i> Entry Cloning</h3>
+	    </div>
+        #html.startForm(name="cloneForm", action=prc.xehEntryClone)#
+        <div class="modal-body">
+			#html.hiddenField(name="contentID")#
+			#html.textfield(name="title", label="Please enter the new entry title:", class="input-block-level", required="required", size="50")#
+			<label for="entryStatus">Publish entry?</label>
+			<small>By default all cloned entries are published as drafts.</small><br>
+			#html.select(options="true,false", name="entryStatus", selectedValue="false", class="input-block-level")#
+			
+			<!---Notice --->
+			<div class="alert alert-info">
+				<i class="icon-info-sign icon-large"></i> Please note that cloning is an expensive process, so please be patient.
+			</div>
+		</div>
+        <div class="modal-footer">
+        	<!--- Button Bar --->
+        	<div id="cloneButtonBar">
+          	 	<button class="btn" id="closeButton"> Cancel </button>
+				<button class="btn btn-danger" id="cloneButton"> Clone </button>
+			</div>
+            <!--- Loader --->
+			<div class="center loaders" id="clonerBarLoader">
+				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+				<br>Please wait, doing some hardcore cloning action...
+			</div>
+        </div>
+		#html.endForm()#
+	</div>
+</div>
+</cfif>
 <!---import dialog --->
 <cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT")>
 <div id="importDialog" class="modal hide fade">
