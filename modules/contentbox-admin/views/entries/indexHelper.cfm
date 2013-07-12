@@ -75,7 +75,7 @@ function importContent(){
 	});
 }
 </cfif>
-<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR,ENTRIES_ADMIN")>
 function openCloneDialog(contentID, title){
 	// local id's
 	var $cloneForm = $("##cloneForm");

@@ -48,6 +48,7 @@ component extends="baseHandler"{
 		prc.xehImportHTML		= "#prc.cbAdminEntryPoint#.customHTML.importAll";
 		prc.xehContentSearch 	= "#prc.cbAdminEntryPoint#.customHTML";
 		prc.xehBulkStatus 		= "#prc.cbAdminEntryPoint#.customHTML.bulkstatus";
+		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.customHTML.clone";
 		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
@@ -281,6 +282,36 @@ component extends="baseHandler"{
 		}
 		
 		event.renderData(data=data, type="json");
+	}
+	
+	// clone
+	function clone(event,rc,prc){
+		// validation
+		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
+			getPlugin("MessageBox").warn("Can't clone the unclonable, meaning no contentID or title passed.");
+			setNextEvent(event=prc.xehCustomHTML);
+			return;
+		}
+		// decode the incoming title
+		rc.title = urldecode( rc.title );
+		// get the entry to clone
+		var original = htmlService.get( rc.contentID );
+		// Verify new Title, else do a new copy of it
+		if( rc.title eq original.getTitle() ){
+			rc.title = "Copy of #rc.title#";
+		}
+		// get a clone with new title and slug
+		var clone = htmlService.new( { title=rc.title, slug=getPlugin("HTMLHelper").slugify( rc.title ) } );
+		// prepare descendants for cloning, might take a while if lots of children to copy.
+		clone.prepareForClone(author=prc.oAuthor, 
+							  original=original, 
+							  originalService=htmlService, 
+							  publish=rc.entryStatus);
+		// clone this sucker now!
+		htmlService.saveCustomHTML( clone );
+		// relocate
+		getPlugin("MessageBox").info("Entry Cloned, isn't that cool!");
+		setNextEvent(event=prc.xehCustomHTML);
 	}
 	
 	// Export CustomHTML
