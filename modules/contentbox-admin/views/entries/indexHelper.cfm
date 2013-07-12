@@ -35,7 +35,7 @@ $(document).ready(function() {
 function getInfoPanelContent(contentID){
 	return $("##infoPanel_" + contentID).html();
 }
-<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT")>
 function remove(contentID){
 	if( contentID != null ){
 		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );

@@ -9,7 +9,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##entries"), this.value );
 	});
 });
-<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT")>
 function importContent(){
 	// local id's
 	var $importForm = $("##importForm");

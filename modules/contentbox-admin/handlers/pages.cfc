@@ -13,7 +13,7 @@ component extends="baseHandler"{
 	
 	// Public properties
 	this.preHandler_except = "pager";
-
+	
 	// pre handler
 	function preHandler(event,action,eventArguments){
 		var rc 	= event.getCollection();

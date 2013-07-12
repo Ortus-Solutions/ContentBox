@@ -16,7 +16,7 @@ $(document).ready(function() {
 		$categoryEditor.find("##categoryID").val( '' );
 	});
 });
-<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN,TOOLS_IMPORT")>
 function importContent(){
 	// local id's
 	var $importForm = $("##importForm");
