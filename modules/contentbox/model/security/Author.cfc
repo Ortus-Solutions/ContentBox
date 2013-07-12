@@ -77,6 +77,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 
 	/**
 	* Check for permission
+	* @slug.hint The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
 	*/
 	boolean function checkPermission(required slug){
 		// cache list
@@ -85,11 +86,28 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 			permissionList = valueList( q.permission );
 		}
 		// checks via role and local
-		if( getRole().checkPermission( arguments.slug ) OR listFindNoCase(permissionList, arguments.slug) ){
+		if( getRole().checkPermission( arguments.slug ) OR inPermissionList( arguments.slug ) ){
 			return true;
 		}
 
 		return false;
+	}
+	
+	/**
+	* Verify that a passed in list of perms the user can use 
+	*/
+	public function inPermissionList( required list ){
+		var aList = listToArray( arguments.list );
+		var isFound = false;
+		
+		for( var thisPerm in aList ){
+			if( listFindNoCase( permissionList, trim( thisPerm ) ) ){
+				isFound = true;
+				break;
+			}
+		}
+		
+		return isFound;
 	}
 	
 	/**
