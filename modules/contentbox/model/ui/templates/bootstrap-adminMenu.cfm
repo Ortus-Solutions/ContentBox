@@ -38,7 +38,7 @@
 						</cfif>
 					</cfloop>
 				</ul>
-				<ul class="nav pull-right" id="sidebar-toggle">
+				<ul class="nav pull-right" id="sidebar-toggle" data-stateurl="#HTMLEditFormat( event.buildLink( prc.xehAuthorSideBar ) )#">
 					<li title="(ctrl+shift+e)" data-placement="bottom"><a href="javascript:toggleSidebar()"><i class="icon-collapse-alt icon-large" id="sidebar_trigger"></i> Sidebar</a></li>
 				</ul>
 			</div>
