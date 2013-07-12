@@ -39,16 +39,21 @@
 				<div class="well well-small" id="contentBar">
 	
 					<!--- Create Butons --->
-					<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") or prc.oAuthor.checkPermission("PAGES_EDITOR")>
 					<div class="buttonBar">
-					    <div class="btn-group">
+					    <cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
+					    		<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+								<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
 								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_IMPORT")>
 								<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_EXPORT")>
 								<li class="dropdown-submenu">
 									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
@@ -56,11 +61,13 @@
 										<li><a href="#event.buildLink(linkto=prc.xehPageExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 									</ul>
 								</li>
+								</cfif>
 					    	</ul>
 					    </div>
+						</cfif>
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/#event.getValue('parent','')#');">Create Page</button>
 					</div>
-					</cfif>
+					
 	
 					<!--- Filter Bar --->
 					<div class="filterBar">
@@ -115,7 +122,7 @@
 									<i class="icon-circle-blank icon-large"></i>
 								</cfif>
 								<!--- Title --->
-								<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+								<cfif prc.oAuthor.checkPermission("PAGES_EDITOR,PAGES_ADMIN")>
 									<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a>
 								<cfelse>
 									#page.getTitle()#
@@ -188,7 +195,7 @@
 										<i class="icon-cogs icon-large"></i>
 									</a>
 							    	<ul class="dropdown-menu text-left pull-right">
-							    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+							    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR,PAGES_ADMIN")>
 										<!--- Clone Command --->
 										<li><a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
 										<!--- Create Child --->
@@ -201,7 +208,7 @@
 										<!--- Edit Command --->
 										<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
 										</cfif>
-										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_EXPORT")>
 										<!--- Export --->
 										<li class="dropdown-submenu pull-left">
 											<a href="##"><i class="icon-download icon-large"></i> Export</a>
@@ -306,7 +313,7 @@
 </div>
 
 <!--- Clone Dialog --->
-<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("PAGES_EDITOR,PAGES_ADMIN")>
 <div id="cloneDialog" class="modal hide fade">
 	<div id="modalContent">
 	    <div class="modal-header">
@@ -344,7 +351,7 @@
 	</div>
 </div>
 </cfif>
-<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_IMPORT")>
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">
 	    <div class="modal-header">
@@ -361,7 +368,8 @@
 			
 			<label for="overrideContent">Override blog entries?</label>
 			<small>By default all content that exist is not overwritten.</small><br>
-			#html.select(options="true,false", name="overrideContent", selectedValue="false", class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+			#html.select(options="true,false", name="overrideContent", selectedValue="false", class="input-block-level", 
+						 wrapper="div class=controls", labelClass="control-label", groupWrapper="div class=control-group")#
 			
 			<!---Notice --->
 			<div class="alert alert-info">

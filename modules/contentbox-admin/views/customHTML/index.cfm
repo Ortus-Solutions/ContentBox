@@ -34,9 +34,9 @@
 				<!--- Content Bar --->
 				<div class="well well-small" id="contentBar">
 					<!--- Create Butons --->
-					<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 					<div class="buttonBar">
 						<!---Global --->
+						<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
@@ -44,7 +44,10 @@
 					    	<ul class="dropdown-menu">
 					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
 					    		<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
+								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT")>
 								<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 								<li class="dropdown-submenu">
 					    			<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
@@ -52,12 +55,13 @@
 										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 									</ul>
 								</li>
+								</cfif>
 					    	</ul>
 					    </div>
+						</cfif>
 						<!---Create --->
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');">Create Content</button>
 					</div>
-					</cfif>
 					
 					<!--- Filter Bar --->
 					<div class="filterBar">
@@ -96,7 +100,7 @@
 								<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
 							</td>
 							<td>
-								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,CUSTOMHTML_EDITOR")>
 									<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content">#entry.getTitle()#</a>
 								<cfelse>
 									#entry.getTitle()#
@@ -131,11 +135,13 @@
 										<i class="icon-cogs icon-large"></i>
 									</a>
 							    	<ul class="dropdown-menu text-left">
-										<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+										<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,CUSTOMHTML_EDITOR")>
 										<!--- Edit Command --->
 										<li><a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><i class="icon-edit icon-large"></i> Edit</a></li>
+										<cfelseif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 										<!--- Delete Command --->
 										<li><a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#entry.getContentID()#" class="icon-trash icon-large"></i> Delete</a></li>
+										<cfelseif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_EXPORT")>
 										<!--- Export --->
 										<li class="dropdown-submenu">
 											<a href="##"><i class="icon-download icon-large"></i> Export</a>
@@ -212,7 +218,7 @@
 </div>
 
 <!---import dialog --->
-<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT")>
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">
 	    <div class="modal-header">

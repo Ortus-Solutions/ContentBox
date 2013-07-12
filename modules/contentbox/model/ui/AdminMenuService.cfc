@@ -193,7 +193,7 @@ component accessors="true" threadSafe singleton{
 	* @permissions.hint The list of permissions needed to view this menu
 	* @data.hint A structure of data attributes to add to the link
 	*/
-	AdminMenuService function addTopMenu(required name, required label, title="", href="javascript:null", target="", permissions="", data=structNew() ){
+	AdminMenuService function addTopMenu(required name, required label, title="", href="javascript:null()", target="", permissions="", data=structNew() ){
 		// stash pointer
 		thisTopMenu = arguments.name;
 		// store new top menu

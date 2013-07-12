@@ -38,8 +38,8 @@
 				<div class="well well-small" id="contentBar">
 					
 					<!--- Create Butons --->
-					<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR")>
 					<div class="buttonBar">
+						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
@@ -47,7 +47,10 @@
 					    	<ul class="dropdown-menu">
 					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
 								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
+								<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT")>
 								<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_EXPORT")>
 								<li class="dropdown-submenu">
 									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
@@ -55,11 +58,12 @@
 										<li><a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 									</ul>
 								</li>
+								</cfif>
 					    	</ul>
 					    </div>
+						</cfif>
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehEntryEditor)#');">Create Entry</button>
 					</div>
-					</cfif>
 					
 					<!--- Filter Bar --->
 					<div class="filterBar">
@@ -157,7 +161,7 @@
 										<i class="icon-cogs icon-large"></i>
 									</a>
 							    	<ul class="dropdown-menu text-left pull-right">
-							    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+							    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR,ENTRIES_ADMIN")>
 										<!--- Clone Command --->
 										<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
 										<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
@@ -169,7 +173,7 @@
 										<!--- Edit Command --->
 										<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
 										</cfif>
-										<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+										<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_EXPORT")>
 										<!--- Export --->
 										<li class="dropdown-submenu pull-left">
 											<a href="##"><i class="icon-download icon-large"></i> Export</a>
@@ -272,7 +276,7 @@
 	</div>    
 </div>
 <!--- Clone Dialog --->
-<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR,ENTRIES_ADMIN")>
 <div id="cloneDialog" class="modal hide fade">
 	<div id="modalContent">
 	    <div class="modal-header">
@@ -310,7 +314,7 @@
 	</div>
 </div>
 </cfif>
-<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT")>
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">
 	    <div class="modal-header">

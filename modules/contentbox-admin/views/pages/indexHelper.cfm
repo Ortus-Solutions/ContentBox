@@ -57,7 +57,7 @@ $(document).ready(function() {
 function getInfoPanelContent(contentID){
 	return $("##infoPanel_" + contentID).html();
 }
-<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_IMPORT")>
 function remove(contentID){
 	if( contentID != null ){
 		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
@@ -97,7 +97,7 @@ function importContent(){
 	});
 }
 </cfif>
-<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("PAGES_EDITOR,PAGES_ADMIN")>
 function openCloneDialog(contentID, title){
 	// local id's
 	var $cloneForm = $("##cloneForm");
