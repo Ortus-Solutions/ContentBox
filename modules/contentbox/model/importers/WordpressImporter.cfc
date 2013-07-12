@@ -119,7 +119,8 @@ component implements="contentbox.model.importers.ICBImporter"{
 				var page = pageService.new(properties=props);
 				// Add content versionized!
 				page.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[qPages.author_id[x]] ));
-
+				// Add Creator
+				page.setCreator( authorService.get( authorMap[ qPages.author_id[ x ] ] ) );
 				// Save page and store in reference map
 				pageMap[ qPages.id[x] ] = page;
 				var c = pageService.newCriteria();
@@ -193,7 +194,8 @@ component implements="contentbox.model.importers.ICBImporter"{
 				var entry = entryService.new(properties=props);
 				// Add content versionized!
 				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[qEntries.author_id[x]] ));
-
+				entry.setCreator( authorService.get( authorMap[qEntries.author_id[x]] ) );
+				
 				// Save entry and store in reference map
 				entryMap[ qEntries.id[x] ] = entry;
 				var c = entryService.newCriteria();
