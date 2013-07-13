@@ -120,7 +120,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// Update all content now with published info
 		var qAllContent = new Query(sql="update cb_customHTML set publishedDate = :today" );
-		qAllContent.addParam(name="today", value=now(), cfsqltype="timestamp");
+		qAllContent.addParam(name="today", value=dateFormat( now(), "yyyy-mm-dd"  ), cfsqltype="timestamp");
 		qAllContent.execute();
 		
 		// Update all content now with logged in user
