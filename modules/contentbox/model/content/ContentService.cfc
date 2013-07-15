@@ -203,6 +203,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		if( arguments.content.hasParent() ){
 			arguments.content.getParent().removeChild( arguments.content );
 		}
+		if( arguments.content.hasCategories() ){
+			arguments.content.removeAllCategories();
+		}
 		// now delete it
 		delete( arguments.content );
 		// return service
@@ -491,7 +494,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 					arrayAppend( allCategories, oCategory );
 				}
 				// detach categories and re-attach
-				oContent.removeAllCategories().setCategories( allCategories );
+				oContent.setCategories( allCategories );
 			}
 			
 			// COMMENTS

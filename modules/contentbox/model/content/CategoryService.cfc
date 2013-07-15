@@ -92,17 +92,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	/**
 	* Delete a category which also removes itself from all many-to-many relationships
 	*/
-	boolean function deleteCategory(required categoryID) transactional{
-		// We do SQL deletions as those relationships are not bi-directional
-		var q = new Query(sql="delete from cb_contentCategories where FK_categoryID = :categoryID");
-		q.addParam(name="categoryID",value=arguments.categoryID,cfsqltype="numeric");
-		q.execute();
-		// delete category now
-		var deleteResults = deleteById(id=arguments.categoryID,transactional=false);
+	boolean function deleteCategory(required categoryID){
+		var oCategory = get( arguments.categoryID ).removeAllContent();
+		delete( oCategory );
 		// evict queries
 		ORMEvictQueries( getQueryCacheRegion() );
 		// return results
-		return deleteResults;
+		return true;
 	}
 
 	/**
