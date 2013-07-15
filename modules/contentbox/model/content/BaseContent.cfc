@@ -62,7 +62,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
 
 	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category"
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" inverse="true" cascade="all"  
 			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID";
 
 	// Calculated Fields
@@ -146,6 +146,70 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		else{
 			variables.contentVersions = arguments.contentVersions;
+		}
+		return this;
+	}
+	
+	/**
+	* Override the setCategories
+	*/
+	BaseContent function setCategories(required array categories){
+		
+		// Relate the incoming suckers
+		for( var oCat in arguments.categories ){
+			if( !oCat.hasContent( this ) ){
+				oCat.addContent( this );
+			}
+		}
+		
+		if( hasCategories() ){
+			// loop and remove yourself from categories
+			for( var oCat in variables.categories ){
+				if( !arrayContains( arguments.categories, oCat ) ){
+					oCat.removeContent( this );
+				}
+			}
+		}
+		
+		variables.categories = arguments.categories;
+		
+		return this;
+	}
+	
+	/*
+	* I remove all category associations
+	*/
+	BaseContent function removeAllCategories(){
+		if ( hasCategories() ){
+			for(var oCat in variables.categories ){
+				oCat.removeContent( this );
+			}
+			variables.categories.clear();
+		}
+		else{
+			variables.categories = [];
+		}
+		return this;
+	}
+
+	/**
+	* Bi directional add
+	*/
+	BaseContent function addCategories(required category){
+		if( !hasCategories( arguments.category ) ){
+			arguments.category.addContent( this );
+			arrayAppend( variables.categories, arguments.category );
+		}
+		return this;
+	}
+	
+	/**
+	* Bi directional remove
+	*/
+	BaseContent function removeCategories(required category){
+		if( hasCategories( arguments.category ) ){
+			arguments.category.removePost( this );
+			arrayDelete( variables.categories, arguments.category );
 		}
 		return this;
 	}
@@ -661,18 +725,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* Update a content's hits
 	*/
-	any function updateHits(){
+	BaseContent function updateHits(){
 		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #getContentID()#").execute();
-		return this;
-	}
-
-	/*
-	* I remove all category associations
-	*/
-	any function removeAllCategories(){
-		if ( hasCategories() ){
-			variables.categories = [];
-		}
 		return this;
 	}
 
