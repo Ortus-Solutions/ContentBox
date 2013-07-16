@@ -43,7 +43,7 @@ component extends="baseHandler"{
 	}
 	
 	// latest snapshot
-	function latestSnapshot(event,rc,rpc){
+	function latestSnapshot(event,rc,prc){
 		// Few counts
 		prc.entriesCount			= entryService.count();
 		prc.pagesCount 				= pageService.count();
