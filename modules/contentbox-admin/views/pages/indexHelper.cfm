@@ -65,6 +65,9 @@ function remove(contentID){
 	}
 	$pageForm.submit();
 }
+function bulkRemove(){
+	$pageForm.submit();
+}
 function bulkChangeStatus(status, contentID){
 	$pageForm.attr("action","#event.buildlink(linkTo=prc.xehPageBulkStatus)#");
 	$pageForm.find("##contentStatus").val( status );

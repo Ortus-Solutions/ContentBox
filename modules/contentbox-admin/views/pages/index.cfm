@@ -47,6 +47,8 @@
 							</a>
 					    	<ul class="dropdown-menu">
 					    		<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+								<li><a href="javascript:bulkRemove()" class="confirmIt"
+									data-title="Delete Selected Page(s)?" data-message="This will delete the page(s) and all of its sub-pages, are you sure?"><i class="icon-trash"></i> Delete Selected</a></li>
 								<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
 								<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
 								</cfif>
