@@ -36,18 +36,22 @@
 					<!--- Create Butons --->
 					<div class="buttonBar">
 						<!---Global --->
-						<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+						<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
+					    		<cfif prc.oAuthor.checkPermission( "CUSTOMHTML_ADMIN" )>
+								<li><a href="javascript:bulkRemove()" class="confirmIt"
+									data-title="Delete Selected Entries?" data-message="This will delete the custom HTML entries, are you sure?"><i class="icon-trash"></i> Delete Selected</a></li>
+								<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
 					    		<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
+								</cfif>
 								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT")>
 								<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
 								</cfif>
-								<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
+								<cfif prc.oAuthor.checkPermission( "CUSTOMHTML_ADMIN,TOOLS_EXPORT" )>
 								<li class="dropdown-submenu">
 					    			<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">

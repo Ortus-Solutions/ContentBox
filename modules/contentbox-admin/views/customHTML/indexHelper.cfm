@@ -33,6 +33,9 @@ function importContent(){
 		$importForm.submit();
 	});
 }
+function bulkRemove(){
+	$contentForm.submit();
+}
 function remove(recordID){
 	if( recordID != null ){
 		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );

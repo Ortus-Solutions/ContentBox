@@ -214,22 +214,41 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
-		event.paramValue("contentID","");
+		// params
+		event.paramValue( "contentID", "" );
 		event.paramValue("page","1");
-		// check for length
-		if( len(rc.contentID) ){
-			// announce event
-			announceInterception("cbadmin_preCustomHTMLRemove",{contentID=rc.contentID});
-			// remove using hibernate bulk
-			htmlService.deleteByID( listToArray(rc.contentID) );
-			// announce event
-			announceInterception("cbadmin_postCustomHTMLRemove",{contentID=rc.contentID});
-			// message
-			getPlugin("MessageBox").info("Custom HTML Content Removed!");
+		
+		// verify if contentID sent
+		if( !len( rc.contentID ) ){
+			getPlugin("MessageBox").warn( "No entries sent to delete!" );
+			setNextEvent(event=prc.xehCustomHTML, queryString="page=#rc.page#");
 		}
-		else{
-			getPlugin("MessageBox").warn("No ID selected!");
+		
+		// Inflate to array
+		rc.contentID = listToArray( rc.contentID );
+		var messages = [];
+		
+		// Iterate and remove
+		for( var thisContentID in rc.contentID ){
+			var entry = htmlService.get( thisContentID );
+			if( isNull( entry ) ){
+				arrayAppend( messages, "Invalid entry contentID sent: #thisContentID#, so skipped removal" );
+			}
+			else{
+				// GET id to be sent for announcing later
+				var contentID 	= entry.getContentID();
+				var title		= entry.getTitle();
+				// announce event
+				announceInterception("cbadmin_preCustomHTMLRemove", { entry=entry, contentID=contentID } );
+				// Delete it
+				htmlService.delete( entry );
+				arrayAppend( messages, "Entry '#title#' removed" );
+				// announce event
+				announceInterception("cbadmin_postCustomHTMLRemove", { contentID=contentID });
+			}
 		}
+		// messagebox
+		getPlugin("MessageBox").info(messageArray=messages);
 		setNextEvent(event=prc.xehCustomHTML,queryString="page=#rc.page#");
 	}
 	
