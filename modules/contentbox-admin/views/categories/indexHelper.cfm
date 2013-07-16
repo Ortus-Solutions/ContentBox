@@ -2,6 +2,7 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
+	$categoryForm = $("##categoryForm");
 	$categoryEditor = $("##categoryEditor");
 	$importDialog = $("##importDialog");
 	// table sorting + filtering
@@ -17,6 +18,9 @@ $(document).ready(function() {
 	});
 });
 <cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN,TOOLS_IMPORT")>
+function bulkRemove(){
+	$categoryForm.submit();
+}
 function importContent(){
 	// local id's
 	var $importForm = $("##importForm");
