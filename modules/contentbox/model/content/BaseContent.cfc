@@ -208,7 +208,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	BaseContent function removeCategories(required category){
 		if( hasCategories( arguments.category ) ){
-			arguments.category.removePost( this );
+			arguments.category.removeContent( this );
 			arrayDelete( variables.categories, arguments.category );
 		}
 		return this;
