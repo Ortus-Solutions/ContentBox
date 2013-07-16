@@ -81,14 +81,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/**
 	* Get custom HTML content pieces by slug
-	* @slug The content slug to retrieve
+	* @slug.hint The content slug to retrieve
+	* @defaultValue.hint The default value to use if custom html element not found.
 	*/
-	function customHTML(required slug){
+	function customHTML(required slug, defaultValue=""){
 		var content = customHTMLService.findWhere({slug=arguments.slug});
-		if( isNull(content) ){
-			throw(message="The content slug '#arguments.slug#' does not exist",type="ContentBox.CBHelper.InvalidCustomHTMLSlug");
-		}
-		return content.renderContent();
+		return ( isNull(content) OR not isObject( content ) ? arguments.defaultValue : content.renderContent() );
 	}
 	
 	/************************************** Minify methods *********************************************/
