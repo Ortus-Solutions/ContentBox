@@ -18,7 +18,7 @@
 			</cfif>
 			
 			<!--- CategoryForm --->
-			#html.startForm(name="categoryForm",action=prc.xehCategoryRemove,class="form-vertical")#
+			#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical")#
 			<input type="hidden" name="categoryID" id="categoryID" value="" />
 			
 			<!--- Content Bar --->
@@ -32,7 +32,11 @@
 							Global Actions <span class="caret"></span>
 						</a>
 				    	<ul class="dropdown-menu">
-				    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+				    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+				    		<li><a href="javascript:bulkRemove()" class="confirmIt"
+									data-title="Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="icon-trash"></i> Delete Selected</a></li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 				    		<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
 							</cfif>
 							<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
@@ -62,6 +66,7 @@
 			<table name="categories" id="categories" class="tablesorter table table-striped table-hover" width="98%">
 				<thead>
 					<tr>
+						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
 						<th>Category Name</th>
 						<th>Slug</th>		
 						<th width="75" class="center">Pages</th>
@@ -71,7 +76,11 @@
 				</thead>				
 				<tbody>
 					<cfloop array="#prc.categories#" index="category">
-					<tr>
+					<tr id="categoryID-#category.getCategoryID()#" data-categoryID="#category.getCategoryID()#">
+						<!--- check box --->
+						<td>
+							<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
+						</td>
 						<td><a href="javascript:edit('#category.getCategoryID()#',
 							   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
 							   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
