@@ -64,8 +64,6 @@ component persistent="true" entityname="cbCustomHTML" table="cb_customHTML" cach
 	*/
 	function init(){
 		createdDate		= now();
-		publishedDate	= "";
-		expireDate		= "";
 		renderedContent = "";
 		
 		return this;
