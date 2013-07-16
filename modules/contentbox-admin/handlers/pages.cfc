@@ -330,34 +330,46 @@ component extends="baseHandler"{
 
 	// remove
 	function remove(event,rc,prc){
-		event.paramValue("parent","");
-		var page = pageService.get(rc.contentID);
-
-		if( isNull( page ) ){
-			getPlugin("MessageBox").setMessage("warning","Invalid Page detected!");
+		// params
+		event.paramValue( "contentID", "" );
+		event.paramValue( "parent", "" );
+		
+		// verify if contentID sent
+		if( !len( rc.contentID ) ){
+			getPlugin("MessageBox").warn( "No pages sent to delete!" );
+			setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#");
 		}
-		else{
-			// GET id
-			var contentID = page.getContentID();
-			// announce event
-			announceInterception("cbadmin_prePageRemove",{page=page});
-			// Diassociate it
-			if( page.hasParent() ){
-				page.getParent().removeChild( page );
+		
+		// Inflate to array
+		rc.contentID = listToArray( rc.contentID );
+		var messages = [];
+		// Iterate and remove
+		for( var thisContentID in rc.contentID ){
+			var page = pageService.get( thisContentID );
+			if( isNull( page ) ){
+				arrayAppend( messages, "Invalid page contentID sent: #thisContentID#, so skipped removal" );
 			}
-			// Delete it
-			pageService.deleteContent( page );
-			// announce event
-			announceInterception("cbadmin_postPageRemove",{contentID=contentID});
-			// messagebox
-			getPlugin("MessageBox").setMessage("info","Page Removed!");
+			else{
+				// GET id to be sent for announcing later
+				var contentID 	= page.getContentID();
+				var title		= page.getTitle();
+				// announce event
+				announceInterception("cbadmin_prePageRemove", { page=page } );
+				// Diassociate it
+				if( page.hasParent() ){
+					page.getParent().removeChild( page );
+				}
+				// Delete it
+				pageService.deleteContent( page );
+				arrayAppend( messages, "Page '#title#' removed" );
+				// announce event
+				announceInterception("cbadmin_postPageRemove", { contentID=contentID });
+			}
 		}
-		if( len(rc.parent) ){
-			setNextEvent(event=prc.xehPages,queryString="parent=#rc.parent#");
-		}
-		else{
-			setNextEvent(event=prc.xehPages);
-		}
+		// messagebox
+		getPlugin("MessageBox").info(messageArray=messages);
+		// relocate
+		setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#");
 	}
 
 	// change order for all pages
