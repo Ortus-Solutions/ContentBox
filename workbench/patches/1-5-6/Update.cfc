@@ -120,7 +120,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// Update all content now with published info
 		var qAllContent = new Query(sql="update cb_customHTML set publishedDate = :today" );
-		qAllContent.addParam(name="today", value=dateFormat( now(), "yyyy-mm-dd"  ), cfsqltype="timestamp");
+		qAllContent.addParam(name="today", value=now(), cfsqltype=getDateTimeDBType());
 		qAllContent.execute();
 		
 		// Update all content now with logged in user
@@ -323,6 +323,29 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 			default : {
 				return "varchar";
+			}
+		}
+	}
+	
+	// Get a DB specific datetime type
+	private function getDateTimeDBType(){
+		var dbType = getDatabaseType();
+
+		switch( dbType ){
+			case "PostgreSQL" : {
+				return "cf_sql_timestamp";
+			}
+			case "MySQL" : {
+				return "cf_sql_timestamp";
+			}
+			case "Microsoft SQL Server" : {
+				return "cf_sql_date";
+			}
+			case "Oracle" :{
+				return "cf_sql_timestamp";
+			}
+			default : {
+				return "cf_sql_timestamp";
 			}
 		}
 	}
