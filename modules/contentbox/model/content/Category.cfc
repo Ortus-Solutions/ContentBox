@@ -59,9 +59,6 @@ component persistent="true" entityname="cbCategory" table="cb_category" cachenam
 	*/
 	Category function removeAllContent(){
 		if ( hasContent() ){
-			for(var oContent in variables.content ){
-				oContent.removeCategory( this );
-			}
 			variables.content.clear();
 		}
 		else{
