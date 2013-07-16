@@ -148,7 +148,7 @@ component extends="baseHandler"{
 		
 		// populate and get content
 		var oContent = htmlService.get( id=rc.contentID );
-		populateModel( htmlService.get(id=rc.contentID) )
+		populateModel( oContent )
 			.addPublishedtime( rc.publishedHour, rc.publishedMinute )
 			.addExpiredTime( rc.expireHour, rc.expireMinute );
 		
