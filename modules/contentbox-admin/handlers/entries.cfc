@@ -311,23 +311,42 @@ component extends="baseHandler"{
 
 	// remove
 	function remove(event,rc,prc){
-		var entry = entryService.get(rc.contentID);
-		if( isNull(entry) ){
-			getPlugin("MessageBox").setMessage("warning","Invalid Entry detected!");
+		// params
+		event.paramValue( "contentID", "" );
+		
+		// verify if contentID sent
+		if( !len( rc.contentID ) ){
+			getPlugin("MessageBox").warn( "No entries sent to delete!" );
+			setNextEvent(event=prc.xehEntries);
 		}
-		else{
-			// GET id
-			var contentID = entry.getContentID();
-			// announce event
-			announceInterception("cbadmin_preEntryRemove",{entry=entry});
-			// remove it
-			entryService.deleteContent( entry );
-			// announce event
-			announceInterception("cbadmin_postEntryRemove",{contentID=contentID});
-			// messagebox
-			getPlugin("MessageBox").setMessage("info","Entry Removed!");
+		
+		// Inflate to array
+		rc.contentID = listToArray( rc.contentID );
+		var messages = [];
+		
+		// Iterate and remove
+		for( var thisContentID in rc.contentID ){
+			var entry = entryService.get( thisContentID );
+			if( isNull( entry ) ){
+				arrayAppend( messages, "Invalid entry contentID sent: #thisContentID#, so skipped removal" );
+			}
+			else{
+				// GET id to be sent for announcing later
+				var contentID 	= entry.getContentID();
+				var title		= entry.getTitle();
+				// announce event
+				announceInterception("cbadmin_preEntryRemove", { entry=entry } );
+				// Delete it
+				entryService.deleteContent( entry );
+				arrayAppend( messages, "Entry '#title#' removed" );
+				// announce event
+				announceInterception("cbadmin_postEntryRemove", { contentID=contentID });
+			}
 		}
-		setNextEvent( prc.xehEntries );
+		// messagebox
+		getPlugin("MessageBox").info(messageArray=messages);
+		// relocate
+		setNextEvent(event=prc.xehEntries);
 	}
 
 	// pager viewlet

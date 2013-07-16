@@ -43,6 +43,9 @@ function remove(contentID){
 	}
 	$entryForm.submit();
 }
+function bulkRemove(){
+	$entryForm.submit();
+}
 function bulkChangeStatus(status, contentID){
 	$entryForm.attr("action","#event.buildlink(linkTo=prc.xehEntryBulkStatus)#");
 	$entryForm.find("##contentStatus").val( status );
