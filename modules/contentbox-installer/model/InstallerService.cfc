@@ -362,7 +362,7 @@ component accessors="true"{
     { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
     { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
 ]' ,
-			"cb_editors_ckeditor_extraplugins" = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre",
+			"cb_editors_ckeditor_extraplugins" = "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre",
 
 			// Uploadify Integration
 			"cb_media_uplodify_fileDesc" = "All Files",
