@@ -68,7 +68,7 @@ component extends="baseHandler"{
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
 		prc.paging 		 = prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	 = "javascript:pagesPaginate(@page@)";
+		prc.pagingLink 	 = "javascript:contentPaginate(@page@)";
 		
 		// is Filtering?
 		if( rc.fAuthors neq "all" OR rc.fStatus neq "any" OR rc.fCategories neq "all" or rc.showAll ){ 
