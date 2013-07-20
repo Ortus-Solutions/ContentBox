@@ -31,13 +31,13 @@ function publishNow(){
 function quickSave(){
 	// Draft it
 	$isPublished.val('false');
+	// Commit Changelog default it to quick save if not set
+	if( !$changelog.val().length ){
+		$changelog.val( "quick save" );
+	}
 	// Validation of Form First before quick save
 	if( !$targetEditorForm.valid() ){
 		return false;
-	}
-	// Commit Changelog default if none specified, most likely changelogs are not mandatory
-	if( !$changelog.val().length ){
-		$changelog.val( "quick save" );
 	}
 	// Activate Loader
 	toggleLoaderBar();
