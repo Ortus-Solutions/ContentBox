@@ -11,7 +11,7 @@
 #html.hiddenField(name="parent", value=event.getValue("parent",""))#
 
 <!--- pages --->
-<table name="pages" id="pages" class="tablesorter table table-striped table-hover" width="98%">
+<table name="pages" id="pages" class="tablesorter table table-hover" width="98%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>

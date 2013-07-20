@@ -1,6 +1,6 @@
 ﻿<cfoutput>
-<!--- Render Commong editor functions --->
-#renderView(view="_tags/contentLists", prePostExempt=true)#
+<!--- Load Content List Viewer UI --->
+#renderView(view="_tags/contentListViewer", prePostExempt=true)#
 <!--- page JS --->
 <script type="text/javascript">
 $(document).ready(function() {
@@ -9,6 +9,7 @@ $(document).ready(function() {
 		tableContainer	: $("##pagesTableContainer"), 
 		tableURL		: '#event.buildLink( prc.xehPageTable )#',
 		searchField 	: $("##pageSearch"),
+		searchName		: 'searchPages',
 		contentForm 	: $("##pageForm"),
 		bulkStatusURL 	: '#event.buildlink(linkTo=prc.xehPageBulkStatus)#',
 		importDialog 	: $("##importDialog"),

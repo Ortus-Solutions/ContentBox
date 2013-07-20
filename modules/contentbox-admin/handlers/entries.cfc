@@ -54,6 +54,27 @@ component extends="baseHandler"{
 
 	// index
 	function index(event,rc,prc){
+		// get all authors
+		prc.authors    = authorService.getAll(sortOrder="lastName");
+		// get all categories
+		prc.categories = categoryService.getAll(sortOrder="category");
+
+		// exit handlers
+		prc.xehEntrySearch 	 	= "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntryTable 	 	= "#prc.cbAdminEntryPoint#.entries.entriesTable";
+		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.entries.bulkstatus";
+		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
+		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
+		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
+		
+		// Tab
+		prc.tabContent_blog = true;
+		// view
+		event.setView("entries/index");
+	}
+	
+	// entriesTable
+	function entriesTable(event,rc,prc){
 		// params
 		event.paramValue("page",1);
 		event.paramValue("searchEntries","");
@@ -61,29 +82,22 @@ component extends="baseHandler"{
 		event.paramValue("fCategories","all");
 		event.paramValue("fStatus","any");
 		event.paramValue("isFiltering", false, true);
+		event.paramValue("showAll", false);
 
 		// prepare paging plugin
 		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
 		prc.paging 			= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 		= event.buildLink('#prc.xehEntries#.page.@page@?');
-		// Append search to paging link?
-		if( len(rc.searchEntries) ){ prc.pagingLink&="&searchEntries=#rc.searchEntries#"; }
-		// Append filters to paging link?
-		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
-		if( rc.fCategories neq "all"){ prc.pagingLink&="&fCategories=#rc.fCategories#"; }
-		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		prc.pagingLink 		= "javascript:contentPaginate(@page@)";
+		
 		// is Filtering?
-		if( rc.fAuthors neq "all" OR rc.fCategories neq "all" or rc.fStatus neq "any"){ prc.isFiltering = true; }
-
-		// get all categories
-		prc.categories = categoryService.getAll(sortOrder="category");
-		// get all authors
-		prc.authors    = authorService.getAll(sortOrder="lastName");
-
+		if( rc.fAuthors neq "all" OR rc.fStatus neq "any" OR rc.fCategories neq "all" or rc.showAll ){ 
+			prc.isFiltering = true;
+		}
+		
 		// search entries with filters and all
 		var entryResults = entryService.search(search=rc.searchEntries,
-											   offset=prc.paging.startRow-1,
-											   max=prc.cbSettings.cb_paging_maxrows,
+											   offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
+											   max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
 											   isPublished=rc.fStatus,
 											   category=rc.fCategories,
 											   author=rc.fAuthors);
@@ -94,16 +108,11 @@ component extends="baseHandler"{
 		prc.xehEntrySearch 	 	= "#prc.cbAdminEntryPoint#.entries";
 		prc.xehEntryQuickLook	= "#prc.cbAdminEntryPoint#.entries.quickLook";
 		prc.xehEntryHistory  	= "#prc.cbAdminEntryPoint#.versions.index";
-		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.entries.bulkstatus";
-		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		prc.xehEntryExport 		= "#prc.cbAdminEntryPoint#.entries.export";
-		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
-		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
+		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		
-		// Tab
-		prc.tabContent_blog = true;
 		// view
-		event.setView("entries/index");
+		event.setView(view="entries/indexTable", layout="ajax");
 	}
 
 	// Quick Look
