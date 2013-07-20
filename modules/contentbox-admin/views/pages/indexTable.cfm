@@ -2,7 +2,7 @@
 <!--- Location Bar --->
 <cfif structKeyExists(rc, "parent") AND len( rc.parent )>
 <div class="breadcrumb">
-  <a href="javascript:pagesDrilldown()"><i class="icon-home icon-large"></i></a> 
+  <a href="javascript:contentDrilldown()"><i class="icon-home icon-large"></i></a> 
   #getMyPlugin(plugin="PageBreadcrumbVisitor", module="contentbox-admin").visit( prc.page )#
 </div>
 </cfif>
@@ -34,7 +34,7 @@
 				class="warning"
 			</cfif>
 			<!--- double click drill down --->
-			<cfif page.getNumberOfChildren()>ondblclick="pagesDrilldown( '#page.getContentID()#' )"</cfif>>
+			<cfif page.getNumberOfChildren()>ondblclick="contentDrilldown( '#page.getContentID()#' )"</cfif>>
 			<!--- check box --->
 			<td>
 				<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
@@ -42,7 +42,7 @@
 			<td>
 				<!--- Children Dig Deeper --->
 				<cfif page.getNumberOfChildren()>
-					<a href="javascript:pagesDrilldown( '#page.getContentID()#' )" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="icon-plus-sign icon-large text"></i></a>
+					<a href="javascript:contentDrilldown( '#page.getContentID()#' )" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="icon-plus-sign icon-large text"></i></a>
 				<cfelse>
 					<i class="icon-circle-blank icon-large"></i>
 				</cfif>

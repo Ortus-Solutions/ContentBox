@@ -61,12 +61,12 @@
 									</ul>
 								</li>
 								</cfif>
-								<li><a href="javascript:pagesShowAll()"><i class="icon-list"></i> Show All</a></li>
+								<li><a href="javascript:contentShowAll()"><i class="icon-list"></i> Show All</a></li>
 					    	</ul>
 					    </div>
 						</cfif>
 						<button class="btn btn-danger" 
-								onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/' + getParentPage() )">Create Page</button>
+								onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/' + getParentContentID() )">Create Page</button>
 					</div>
 					
 	
@@ -122,8 +122,8 @@
 					<option value="false">Draft</option>
 				</select>
 	
-				<a class="btn btn-danger" href="javascript:pagesFilter()">Apply Filters</a>
-				<a class="btn" href="javascript:resetFilter()">Reset</a>
+				<a class="btn btn-danger" href="javascript:contentFilter()">Apply Filters</a>
+				<a class="btn" href="javascript:resetFilter( true )">Reset</a>
 				#html.endForm()#
 			</div>
 		</div>
