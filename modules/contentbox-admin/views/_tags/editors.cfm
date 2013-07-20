@@ -75,6 +75,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$isPublished 			= $targetEditorForm.find("##isPublished");
 	$contentID				= $targetEditorForm.find("##contentID");
 	$changelog				= $targetEditorForm.find("##changelog");
+	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
@@ -136,6 +137,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$("##htmlDescription").keyup(function(){
 		$("##html_description_count").html( $("##htmlDescription").val().length );
 	});
+	
 }
 
 // Switch Editors
@@ -187,13 +189,23 @@ function permalinkUniqueCheck(){
 		}
 	} );
 }
-
 // Toggle drafts on for saving
 function toggleDraft(){
 	needConfirmation = false;
 	$isPublished.val('false');
 }
-
+// Quick Publish Action
+function quickPublish(isDraft){
+	if( isDraft ){
+		toggleDraft();
+	}
+	// Verify changelogs and open sidebar if closed:
+	if( $changelogMandatory && !isSidebarOpen() ){
+		toggleSidebar();
+	}
+	// submit form
+	$targetEditorForm.submit();
+}
 // Widget Plugin Integration
 function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
 // Widget Preview Integration

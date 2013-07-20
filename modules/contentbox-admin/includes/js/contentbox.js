@@ -122,6 +122,10 @@ $(document).ready(function() {
 	});
 	
 });
+function isSidebarOpen(){
+	var sidebar = $("#main-sidebar");
+	return ( sidebar.attr( "id" ) != undefined && sidebar.css( "display" ) == "block"  ? true : false );
+}
 function toggleSidebar(){
 	var sidebar = $("#main-sidebar");
 	var type 	= sidebar.css( "display" );

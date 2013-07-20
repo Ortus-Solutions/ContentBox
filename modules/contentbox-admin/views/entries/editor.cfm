@@ -9,16 +9,22 @@
 			<div class="header">
 				<i class="icon-edit icon-large"></i>
 				Entry Editor
+				<!--- Quick Actions  --->
 				<div class="btn-group pull-right" style="margin-top:5px">
 				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;"><i class="icon-reply"></i> Back</button>
-				    <cfif prc.entry.isLoaded()>
-					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
-				    	<span class="caret"></span>
+					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
+			    	<span class="caret"></span>
 				    </button>
-				   		<ul class="dropdown-menu">
-				    			<li><li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li></li>
-				   		 </ul>
-					</cfif>
+			   		<ul class="dropdown-menu">
+			   			<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+						<li><a href="javascript:quickPublish(false)" target="_blank"><i class="icon-globe"></i> Publish</a></li>
+						</cfif>
+						<li><a href="javascript:quickPublish(true)" target="_blank"><i class="icon-eraser"></i> Publish as Draft</a></li>
+						<li><a href="javascript:quickSave()" target="_blank"><i class="icon-save"></i> Quick Save</a></li>
+						<cfif prc.entry.isLoaded()>
+			    		<li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li>
+						</cfif>
+			   		</ul>
 			    </div>
 			</div>
 			<!--- Body --->
