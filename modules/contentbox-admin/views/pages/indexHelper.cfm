@@ -2,58 +2,96 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// global ids
-	$pageForm 		= $("##pageForm");
-	$pages	  		= $("##pages");
-	$cloneDialog 	= $("##cloneDialog");
-	$importDialog 	= $("##importDialog");
-	// sorting and filtering
-	$("##pages").tablesorter();
-	$("##pageFilter").keyup(function(){
-		$.uiTableFilter( $pages, this.value );
+	$pageForm 				= $("##pageForm");
+	$cloneDialog 			= $("##cloneDialog");
+	$importDialog 			= $("##importDialog");
+	$pagesTableContainer 	= $("##pagesTableContainer");
+	$pageSearch				= $("##pageSearch");
+	
+	// load pages on startup
+	pagesLoad( { parent: '#rc.parent#' } );
+	
+	// keyup quick search binding
+	$pageSearch.keyup(function(){
+		var $this = $(this);
+		var clearIt = ( $this.val().length > 0 ? false : true );
+		// ajax search
+		pagesLoad( { search: $this.val() } );
 	});
-	// quick look
-	$pages.find("tr").bind("contextmenu",function(e) {
-	    if (e.which === 3) {
-	    	if($(this).attr('data-contentID') != null) {
-				openRemoteModal('#event.buildLink(prc.xehPageQuickLook)#/contentID/' + $(this).attr('data-contentID'));
-				e.preventDefault();
-			}
-	    }
-	});
-	// Popovers
-	$(".popovers").popover({
-		html : true,
-		content : function(){
-			return getInfoPanelContent( $(this).attr( "data-contentID" ) );
-		},
-		trigger : 'hover',
-		placement : 'left',
-		title : '<i class="icon-info-sign"></i> Quick Info',
-		delay : { show: 200, hide: 500 }
-	});
-	<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-	$pages.tableDnD({
-		onDragClass: "selected",
-		onDragStart : function(table,row){
-			$(row).css("cursor","grab");
-			$(row).css("cursor","-moz-grabbing");
-			$(row).css("cursor","-webkit-grabbing");
-		},
-		onDrop: function(table, row){
-			$(row).css("cursor","progress");
-			var newRulesOrder  =  $(table).tableDnDSerialize();
-			var rows = table.tBodies[0].rows;
-			$.post('#event.buildLink(prc.xehPageOrder)#',{newRulesOrder:newRulesOrder},function(){
-				for (var i = 0; i < rows.length; i++) {
-					var oID = '##' + rows[i].id + '_order';
-					$(oID).html(i+1);
-				}
-				$(row).css("cursor","move");
-			});
-		}
-	});
-	</cfif>
 });
+function getParentPage(){
+	return $("##parent").val();
+}
+function pagesLoad(criteria){
+	// default check
+	if( criteria == undefined ){ criteria = {}; }
+	// default criteria matches
+	if( !("search" in criteria) ){ criteria.search = ""; }
+	if( !("page" in criteria) ){ criteria.page = 1; }
+	if( !("parent" in criteria) ){ criteria.parent = ""; }
+	if( !("fAuthors" in criteria) ){ criteria.fAuthors = "all"; }
+	if( !("fCategories" in criteria) ){ criteria.fCategories = "all"; }
+	if( !("fStatus" in criteria) ){ criteria.fStatus = "any"; }
+	if( !("showAll" in criteria) ){ criteria.showAll = false; }
+	// loading effect
+	$pagesTableContainer.css( 'opacity', .60 );
+	// load content
+	$pagesTableContainer.load( '#event.buildLink( prc.xehPageTable )#', 
+		{ searchPages: criteria.search, 
+		  page: criteria.page, 
+		  parent: criteria.parent,
+		  fAuthors : criteria.fAuthors,
+		  fCategories : criteria.fCategories,
+		  fStatus : criteria.fStatus,
+		  showAll : criteria.showAll }, 
+		function(){
+			$pagesTableContainer.css( 'opacity', 1 );
+			$(this).fadeIn( 'fast' );
+	});
+}
+function pagesShowAll(){
+	resetFilter();
+	pagesLoad ({ showAll: true } );
+}
+function resetFilter(){
+	$("##filterBox").removeClass("selected");
+	pagesLoad();
+	$("##fAuthors").val( '' );
+	$("##fCategories").val( '' );
+	$("##fStatus").val( '' );
+}
+function pagesFilter(){
+	if ($("##fAuthors").val() != "all" ||
+		$("##fCategories").val() != "all" ||
+		$("##fStatus").val() != "any") {
+		$("##filterBox").addClass("selected");
+	}
+	else{
+		$("##filterBox").removeClass("selected");
+	}
+	pagesLoad( {
+		fAuthors : $("##fAuthors").val(),
+		fCategories : $("##fCategories").val(),
+		fStatus : $("##fStatus").val()
+	} );
+}
+function pagesDrilldown(parent){
+	resetFilter();
+	if( parent == undefined ){ parent = ""; }
+	$pageSearch.val( '' );
+	pagesLoad( { parent: parent } );
+}
+function pagesPaginate(page){
+	// paginate with kept searches and filters.
+	pagesLoad( {
+		search: $pageSearch.val(),
+		page: page,
+		parent: getParentPage(),
+		fAuthors : $("##fAuthors").val(),
+		fCategories : $("##fCategories").val(),
+		fStatus : $("##fStatus").val()
+	} );
+}
 function getInfoPanelContent(contentID){
 	return $("##infoPanel_" + contentID).html();
 }

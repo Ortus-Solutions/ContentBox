@@ -29,40 +29,62 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// params
-		event.paramValue("page",1);
-		event.paramValue("searchPages","");
-		event.paramValue("fAuthors","all");
-		event.paramValue("fStatus","any");
-		event.paramValue("fCategories","all");
-		event.paramValue("isFiltering",false,true);
 		event.paramValue("parent","");
-
-		// prepare paging plugin
-		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
-		prc.paging 		 = prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	 = event.buildLink('#prc.xehPages#?page=@page@');
-		// Doing a page search?
-		if( len(rc.searchPages) ){ 
-			prc.pagingLink&="&searchPages=#rc.searchPages#";
-			// remove parent for searches, we go site wide 
-			structDelete(rc, "parent");
-		}
-		// Append filters to paging link?
-		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
-		if( rc.fCategories neq "all"){ prc.pagingLink&="&fCategories=#rc.fCategories#"; }
-		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
-		// is Filtering?
-		if( rc.fAuthors neq "all" OR rc.fStatus neq "any"){ prc.isFiltering = true; }
 
 		// get all authors
 		prc.authors    = authorService.getAll(sortOrder="lastName");
 		// get all categories
 		prc.categories = categoryService.getAll(sortOrder="category");
 
+		// exit handlers
+		prc.xehPageSearch 		= "#prc.cbAdminEntryPoint#.pages";
+		prc.xehPageTable 		= "#prc.cbAdminEntryPoint#.pages.pageTable";
+		prc.xehPageBulkStatus 	= "#prc.cbAdminEntryPoint#.pages.bulkstatus";
+		prc.xehPageExportAll 	= "#prc.cbAdminEntryPoint#.pages.exportAll";
+		prc.xehPageImport		= "#prc.cbAdminEntryPoint#.pages.importAll";
+		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
+
+		// Tab
+		prc.tabContent_pages = true;
+		// view
+		event.setView("pages/index");
+	}
+	
+	// page tables
+	function pageTable(event,rc,prc){
+		// params
+		event.paramValue("page", 1);
+		event.paramValue("searchPages", "");
+		event.paramValue("fAuthors", "all");
+		event.paramValue("fStatus", "any");
+		event.paramValue("fCategories", "all");
+		event.paramValue("isFiltering", false,true);
+		event.paramValue("parent", "");
+		event.paramValue("showAll", false);
+		
+		// JS null checks
+		if( rc.parent eq "undefined" ){ rc.parent = ""; }
+		
+		// prepare paging plugin
+		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 		 = prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	 = "javascript:pagesPaginate(@page@)";
+		
+		// is Filtering?
+		if( rc.fAuthors neq "all" OR rc.fStatus neq "any" OR rc.fCategories neq "all" or rc.showAll ){ 
+			prc.isFiltering = true;
+		}
+
+		// Doing a page search or filtering?
+		if( len( rc.searchPages ) OR prc.isFiltering ){ 
+			// remove parent for searches, we go site wide 
+			structDelete(rc, "parent");
+		}
+		
 		// search entries with filters and all
 		var pageResults = pageService.search(search=rc.searchPages,
-											 offset=prc.paging.startRow-1,
-											 max=prc.cbSettings.cb_paging_maxrows,
+											 offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
+											 max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
 											 isPublished=rc.fStatus,
 											 category=rc.fCategories,
 											 author=rc.fAuthors,
@@ -80,16 +102,11 @@ component extends="baseHandler"{
 		prc.xehPageQuickLook	= "#prc.cbAdminEntryPoint#.pages.quickLook";
 		prc.xehPageOrder 		= "#prc.cbAdminEntryPoint#.pages.changeOrder";
 		prc.xehPageHistory 		= "#prc.cbAdminEntryPoint#.versions.index";
-		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
-		prc.xehPageBulkStatus 	= "#prc.cbAdminEntryPoint#.pages.bulkstatus";
 		prc.xehPageExport 		= "#prc.cbAdminEntryPoint#.pages.export";
-		prc.xehPageExportAll 	= "#prc.cbAdminEntryPoint#.pages.exportAll";
-		prc.xehPageImport		= "#prc.cbAdminEntryPoint#.pages.importAll";
+		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
 
-		// Tab
-		prc.tabContent_pages = true;
 		// view
-		event.setView("pages/index");
+		event.setView(view="pages/indexTable", layout="ajax");
 	}
 
 	// Quick Look

@@ -68,7 +68,7 @@
 					</tr>
 				</table>
 				<div class="center">
-					<button class="btn btn-primary" onclick="to('#event.buildLink(prc.xehBackTrack)#');return false;"><i class="icon-reply"></i> Back</button>
+					<button class="btn btn-primary" onclick="to('#event.buildLink(prc.xehBackTrack)#/parent/#prc.content.getParentID()#');return false;"><i class="icon-reply"></i> Back</button>
 					<button class="btn btn-primary" onclick="window.open('#prc.CBHelper.linkContent(prc.content)#');return false;"><i class="icon-eye-open"></i> Open</button>
 				</div>
 			</div>
