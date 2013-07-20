@@ -115,7 +115,7 @@
 					</cfloop>
 				</select>
 				<!--- Status --->
-				<label for="fStatus">Page Status: </label>
+				<label for="fStatus">Status: </label>
 				<select name="fStatus" id="fStatus" class="input-block-level">
 					<option value="any">Any Status</option>
 					<option value="true">Published</option>

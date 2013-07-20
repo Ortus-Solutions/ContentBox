@@ -7,6 +7,7 @@ function setupContentView( settings ){
 	$tableContainer = settings.tableContainer;
 	$tableURL		= settings.tableURL;
 	$searchField 	= settings.searchField;
+	$searchName		= settings.searchName;
 	$contentForm	= settings.contentForm;
 	$bulkStatusURL  = settings.bulkStatusURL;
 	$importDialog	= settings.importDialog;
@@ -90,16 +91,18 @@ function contentLoad(criteria){
 	if( !("showAll" in criteria) ){ criteria.showAll = false; }
 	// loading effect
 	$tableContainer.css( 'opacity', .60 );
+	var args = {  
+		page: criteria.page, 
+		parent: criteria.parent,
+		fAuthors : criteria.fAuthors,
+		fCategories : criteria.fCategories,
+		fStatus : criteria.fStatus,
+		showAll : criteria.showAll 
+	};
+	// Add dynamic search key name
+	args[ $searchName ] = criteria.search;
 	// load content
-	$tableContainer.load( $tableURL, 
-		{ searchPages: criteria.search, 
-		  page: criteria.page, 
-		  parent: criteria.parent,
-		  fAuthors : criteria.fAuthors,
-		  fCategories : criteria.fCategories,
-		  fStatus : criteria.fStatus,
-		  showAll : criteria.showAll }, 
-		function(){
+	$tableContainer.load( $tableURL, args, function(){
 			$tableContainer.css( 'opacity', 1 );
 			$(this).fadeIn( 'fast' );
 	});
