@@ -100,7 +100,8 @@ component extends="baseHandler"{
 											   max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
 											   isPublished=rc.fStatus,
 											   category=rc.fCategories,
-											   author=rc.fAuthors);
+											   author=rc.fAuthors,
+											   sortOrder="createdDate desc");
 		prc.entries 	 = entryResults.entries;
 		prc.entriesCount = entryResults.count;
 
