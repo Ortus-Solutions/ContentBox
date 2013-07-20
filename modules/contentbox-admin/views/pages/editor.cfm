@@ -9,16 +9,22 @@
 		<div class="header">
 			<i class="icon-edit icon-large"></i>
 			Page Editor
+			<!--- Quick Actions --->
 			<div class="btn-group pull-right" style="margin-top:5px">
 			    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#';return false;"><i class="icon-reply"></i> Back</button>
-			    <cfif prc.page.isLoaded()>
-				<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
-			    		<span class="caret"></span>
+			    <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
+			    	<span class="caret"></span>
 			    </button>
-			   		<ul class="dropdown-menu">
-			    			<li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li>
-			    		</ul>
-				</cfif>
+		   		<ul class="dropdown-menu">
+		    		<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+					<li><a href="javascript:quickPublish(false)" target="_blank"><i class="icon-globe"></i> Publish</a></li>
+					</cfif>
+					<li><a href="javascript:quickPublish(true)" target="_blank"><i class="icon-eraser"></i> Publish as Draft</a></li>
+					<li><a href="javascript:quickSave()" target="_blank"><i class="icon-save"></i> Quick Save</a></li>
+					<cfif prc.page.isLoaded()>
+					<li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="icon-eye-open"></i> View In Site</a></li>
+					</cfif>
+		    	</ul>
 		    </div>
 		</div>
 		<!--- Body --->
@@ -378,6 +384,7 @@
                     <!---End Cache Settings--->
                     
                     <!---Begin Categories--->
+					<cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
                     <div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
@@ -401,10 +408,12 @@
                       		</div>
                     	</div>
                   	</div>
-                    <!---End HTML Attributes--->
+					</cfif>
+                    <!---End HTML categories--->
                     
                     <!---Begin HTML Attributes--->
-                    <div class="accordion-group">
+                    <cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>
+					<div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##htmlattributes">
                         		<i class="icon-cloud icon-large"></i> HTML Attributes
@@ -417,6 +426,7 @@
                       		</div>
                     	</div>
                   	</div>
+					</cfif>
                     <!---End HTML Attributes--->
                     
                     <!--- Event --->

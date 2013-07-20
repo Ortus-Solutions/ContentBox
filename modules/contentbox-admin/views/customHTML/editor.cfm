@@ -10,8 +10,19 @@
 			<div class="header">
 				<i class="icon-tasks icon-large"></i>
 				Custom HTML Editor
+				<!--- Quick Actions  --->
 				<div class="btn-group pull-right" style="margin-top:5px">
 				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehCustomHTML)#';return false;"><i class="icon-reply"></i> Back</button>
+					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
+			    	<span class="caret"></span>
+				    </button>
+			   		<ul class="dropdown-menu">
+			   			<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+						<li><a href="javascript:quickPublish(false)" target="_blank"><i class="icon-globe"></i> Publish</a></li>
+						</cfif>
+						<li><a href="javascript:quickPublish(true)" target="_blank"><i class="icon-eraser"></i> Publish as Draft</a></li>
+						<li><a href="javascript:quickSave()" target="_blank"><i class="icon-save"></i> Quick Save</a></li>
+			   		</ul>
 			    </div>
 			</div>
 			<!--- Body --->
@@ -166,7 +177,7 @@
 					</cfif>
 					
 					<!---Begin Modifiers--->
-                    <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
+                    <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS") AND prc.content.isLoaded()>
                     <div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
