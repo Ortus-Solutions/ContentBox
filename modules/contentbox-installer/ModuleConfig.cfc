@@ -8,7 +8,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "The ContentBox installer module";
-	this.version			= "1.5.5";
+	this.version			= "1.5.6";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbinstaller";
