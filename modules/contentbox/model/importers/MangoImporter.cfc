@@ -44,7 +44,14 @@ component implements="contentbox.model.importers.ICBImporter"{
 			for(var x=1; x lte q.recordcount; x++){
 				var props 	= {category=q.title[x], slug=q.name[x]};
 				var cat 	= categoryService.new(properties=props);
-				entitySave( cat );
+				var exists 	= categoryService.findAllBySlug( q.name[ x ] );
+				
+				if( arrayLen( exists ) ){
+					cat = exists[ 1 ];
+				}else{
+					entitySave( cat );
+				}
+				
 				log.info("Imported category: #props.category#");
 				catMap[ q.id[x] ] = cat.getCategoryID();
 			}
