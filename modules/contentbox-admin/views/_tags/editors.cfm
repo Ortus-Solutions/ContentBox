@@ -42,7 +42,7 @@ function quickSave(){
 	// Activate Loader
 	toggleLoaderBar();
 	// Save current content, just in case
-	$content.val( getEditorContent() );
+	//$content.val( getEditorContent() );
 	// Post it
 	$.post($targetEditorSaveURL, $targetEditorForm.serialize(), function(data){
 		// Save new id
