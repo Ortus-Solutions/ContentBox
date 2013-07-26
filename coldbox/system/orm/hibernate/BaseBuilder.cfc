@@ -197,7 +197,7 @@ component accessors="true"{
 		boolean id,
 		string max,
 		string min,
-		any property,
+		string property,
 		boolean rowCount,
 		string sum,
 		any sqlProjection,
