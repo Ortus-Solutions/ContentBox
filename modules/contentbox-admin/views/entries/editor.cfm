@@ -17,10 +17,10 @@
 				    </button>
 			   		<ul class="dropdown-menu">
 			   			<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-						<li><a href="javascript:quickPublish(false)" target="_blank"><i class="icon-globe"></i> Publish</a></li>
+						<li><a href="javascript:null()" onclick="quickPublish(false)"><i class="icon-globe"></i> Publish</a></li>
 						</cfif>
-						<li><a href="javascript:quickPublish(true)" target="_blank"><i class="icon-eraser"></i> Publish as Draft</a></li>
-						<li><a href="javascript:quickSave()" target="_blank"><i class="icon-save"></i> Quick Save</a></li>
+						<li><a href="javascript:null()" onclick="quickPublish(true)"><i class="icon-eraser"></i> Publish as Draft</a></li>
+						<li><a href="javascript:null()" onclick="quickSave()"><i class="icon-save"></i> Quick Save</a></li>
 						<cfif prc.entry.isLoaded()>
 			    		<li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li>
 						</cfif>
