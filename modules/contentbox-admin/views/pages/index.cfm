@@ -74,7 +74,7 @@
 					<div class="filterBar">
 						<div>
 							#html.label(field="pageSearch", content="Quick Search:", class="inline")#
-							#html.textField(name="pageSearch", class="textfield span3")#
+							#html.textField(name="pageSearch", class="textfield", size="30")#
 						</div>
 					</div>
 				</div>
