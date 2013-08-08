@@ -26,7 +26,7 @@ DB Structure Changes
 
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
-End Commit Hash: 0b581f17e69c6d802adcd09a02f60981f96b7509
+End Commit Hash: 2ff0cd6f30be95ac35b4c12e4062cdf4704f1fdc
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -96,6 +96,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	* post installation
 	*/
 	function postInstallation(){
+		var thisPath = getDirectoryFromPath( getMetadata( this ).path );
 		try{
 			// Make changes on disk take effect
 			ORMREload();
@@ -104,7 +105,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			updateCustomHTML();
 			
 			// Import new security rules
-			securityRuleService.importFromFile( fileRead( thisPath & "rules.json.cfm" ) );
+			securityRuleService.importFromFile( thisPath & "rules.json.cfm" );
 		}
 		catch(Any e){
 			ORMClearSession();
@@ -295,7 +296,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	// Verify if a column exists
 	private boolean function columnExists(required table, required column){
 		var colFound = false;
-		var cols = new dbInfo(datasource=getDatasource(), table=arguments.table).columns();
+		var cols = getTableColumns( arguments.table );
 		for( var x=1; x lte cols.recordcount; x++ ){
 			if( cols[ "column_name" ][ x ] eq arguments.column){
 				colFound = true;
@@ -396,8 +397,21 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 	}
 	
+	// get Columns
+	private function getTableColumns(required table){
+		if( structkeyexists( server, "railo") ){
+			dbinfo datasource=getDatasource() type="columns" name="local.results";
+			return local.results.database_productName;
+		}
+		return new dbinfo(datasource=getDatasource(), table=arguments.table).columns();
+	}
+	
 	// Get the database type
 	private function getDatabaseType(){
+		if( structkeyexists( server, "railo") ){
+			dbinfo datasource=getDatasource() type="version" name="local.results";
+			return local.results.database_productName;
+		}
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
 	
