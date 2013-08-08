@@ -34,6 +34,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	property name="contentVersionService"	inject="contentVersionService@cb";
 	property name="authorService"			inject="authorService@cb";
 	property name="populator"				inject="wirebox:populator";
+	property name="systemUtil"				inject="SystemUtil@cb";
 	
 	/**
 	* Constructor
@@ -546,6 +547,29 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		
 		return { content=oContent, authorFound=( !isNull( oAuthor ) ) };
+	}
+	
+	/**
+	* Update a content's hits with some async flava
+	*/
+	ContentService function updateHits(required contentID){
+		if( systemUtil.inThread() ){
+			return syncUpdateHits( arguments.contentID );
+		}
+		
+		var threadName = "updateHits_#hash( arguments.contentID & now() )#";
+		thread name="#threadName#" contentID="#arguments.contentID#"{
+			variables.syncUpdateHits( attributes.contentID );
+		}
+		return this;
+	}
+	
+	/**
+	* Update the content hits
+	*/
+	private function syncUpdateHits(required contentID){
+		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.contentID#").execute();
+		return this;
 	}
 	
 }

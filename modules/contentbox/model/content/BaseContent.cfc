@@ -723,14 +723,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 
 	/**
-	* Update a content's hits
-	*/
-	BaseContent function updateHits(){
-		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #getContentID()#").execute();
-		return this;
-	}
-
-	/**
 	* get flat categories list
 	*/
 	function getCategoriesList(){
