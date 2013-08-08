@@ -230,7 +230,7 @@
         "useSSL": false
     },
     {
-        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|customHTML|securityrules)\.importAll$",
+        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|customHTML|securityrules)\\.importAll$",
         "roles": "",
         "permissions": "TOOLS_IMPORT",
         "whitelist": "",
@@ -240,7 +240,7 @@
         "useSSL": false
     },
     {
-        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|customHTML|securityrules)\.(export|exportAll)$",
+        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|customHTML|securityrules)\\.(export|exportAll)$",
         "roles": "",
         "permissions": "TOOLS_EXPORT",
         "whitelist": "",
