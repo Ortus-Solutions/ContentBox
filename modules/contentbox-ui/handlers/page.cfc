@@ -61,28 +61,33 @@ component extends="content" singleton{
 		else{
 			cacheKey = "cb-content-pagewrapper-#prc.pageOverride#/";
 		}
-
+		
 		// verify page wrapper
 		var data = cache.get( cacheKey );
 		if( !isNull(data) ){
 			// set cache header
 			event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information");
+			// Store hits
+			pageService.updateHits( data.contentID );
 			// return cache content
-			return data;
+			return data.content;
 		}
 
 		// execute index
 		index(event,rc,prc);
-
-		// verify if caching is possible by testing the page, also, page with comments are not cached.
-		if( prc.page.isLoaded() AND !prc.page.getAllowComments() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() ){
-			var data = controller.getPlugin("Renderer")
+		
+		// verify if caching is possible by testing the page
+		if( prc.page.isLoaded() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() ){
+			// create storage struct
+			var data = { content = "", contentID = prc.page.getContentID() };
+			// render out the content
+			data.content = controller.getPlugin("Renderer")
 				.renderLayout(module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule());
 			cache.set(cachekey,
 					  data,
 					  (prc.page.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : prc.page.getCacheTimeout()),
 					  (prc.page.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : prc.page.getCacheLastAccessTimeout()) );
-			return data;
+			return data.content;
 		}
 	}
 	
@@ -143,7 +148,7 @@ component extends="content" singleton{
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if( prc.page.isLoaded() ){
 			// Record hit
-			prc.page.updateHits();
+			pageService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID(),sortOrder="asc");

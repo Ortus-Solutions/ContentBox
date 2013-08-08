@@ -176,7 +176,7 @@ component extends="content" singleton{
 		// Check if loaded, else not found
 		if( prc.entry.isLoaded() ){
 			// Record hit
-			prc.entry.updateHits();
+			entryService.updateHits( prc.entry.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults 	= commentService.findApprovedComments(contentID=prc.entry.getContentID(),sortOrder="asc");
