@@ -7,6 +7,11 @@ component extends="coldbox.system.Interceptor"{
 	property name="cachebox" 			inject="cachebox" 					persistent="false";
 	property name="settingService"		inject="id:settingService@cb" 		persistent="false";
 
+	// Listen when comments are posted.
+	function cbui_onCommentPost(event,interceptData){
+		doCacheCleanup( arguments.interceptData.content.buildContentCacheKey() , arguments.interceptData.content );
+	}
+	
 	// Listen when entries are saved
 	function cbadmin_postEntrySave(event,interceptData){
 		var entry 	 = arguments.interceptData.entry;
@@ -38,11 +43,11 @@ component extends="coldbox.system.Interceptor"{
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
 		// clear by keysnippets
-		cache.clearByKeySnippet(keySnippet=arguments.cacheKey,async=false);
+		cache.clearByKeySnippet(keySnippet=arguments.cacheKey, async=true);
 		// Page specific caching cleanup
 		if( structKeyExists(arguments,"content") and arguments.content.getContentType() eq "Page"){
 			// Remove ancestry caching
-			cache.clearByKeySnippet(keySnippet="cb-content-pagewrapper-#replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#",async=false);
+			cache.clearByKeySnippet(keySnippet="cb-content-pagewrapper-#replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#", async=true);
 		}
 
 		// log
