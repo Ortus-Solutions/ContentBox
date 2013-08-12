@@ -35,7 +35,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			return arguments.defaultValue;
 		}
 
-		throw(message="The content slug '#arguments.slug#' does not exist",type="CustomHTMLWidget.InvalidPageSlug");
+		throw(message="The content slug '#arguments.slug#' does not exist",type="PageIncludeWidget.InvalidPageSlug");
 	}
 
 }
