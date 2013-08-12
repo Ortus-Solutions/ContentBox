@@ -209,12 +209,7 @@ component extends="baseHandler"{
 		// get a clone
 		var clone = entryService.new( { title=rc.title, slug=getPlugin("HTMLHelper").slugify( rc.title ) } );
 		clone.setCreator( prc.oAuthor );
-		// attach to the original's parent.
-		if( original.hasParent() ){
-			clone.setParent( original.getParent() );
-			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
-		}
-		// prepare descendants for cloning, might take a while if lots of children to copy.
+		// prepare for clone
 		clone.prepareForClone(author=prc.oAuthor, 
 							  original=original, 
 							  originalService=entryService, 
