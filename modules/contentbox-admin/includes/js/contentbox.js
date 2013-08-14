@@ -100,7 +100,7 @@ $(document).ready(function() {
 		jwerty.key( "ctrl+shift+e" , toggleSidebar );
 	}
 	// If the sidebar preference is off, toggle it
-	if( $("body").attr( "data-showsidebar" ) == "NO" ){
+	if( $("body").attr( "data-showsidebar" ) == "No" ){
 		toggleSidebar();
 	}
 	// Nav Search Shortcut

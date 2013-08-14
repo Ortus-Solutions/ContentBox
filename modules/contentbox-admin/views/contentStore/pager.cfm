@@ -1,70 +1,64 @@
 ﻿<cfoutput>
-<div id="pagerEntries">
+<div id="pagerContent">
 <!--- Loader --->
-<div class="loaders floatRight" id="entryPagerLoader">
+<div class="loaders floatRight" id="contentPagerLoader">
 	<i class="icon-spinner icon-spin icon-large"></i>
 </div>
 
-<!--- entries --->
-<table name="entries_pager" id="entries_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
+<!--- content --->
+<table name="content_pager" id="content_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
 	<thead>
 		<tr>
 			<th>Title</th>
 			<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
-			<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
-			<th width="40" class="center"><i class="icon-comments icon-large" title="Comments"></i></th>
 			<th width="50" class="center">Actions</th>
 		</tr>
 	</thead>
 
 	<tbody>
-		<cfloop array="#prc.pager_entries#" index="entry">
-		<tr data-contentID="#entry.getContentID()#"
-			<cfif entry.isExpired()>
+		<cfloop array="#prc.pager_content#" index="content">
+		<tr data-contentID="#content.getContentID()#"
+			<cfif content.isExpired()>
 				class="error"
-			<cfelseif entry.isPublishedInFuture()>
+			<cfelseif content.isPublishedInFuture()>
 				class="success"
-			<cfelseif !entry.isContentPublished()>
+			<cfelseif !content.isContentPublished()>
 				class="warning"
 			</cfif>>
 			<td>
-				<a href="#event.buildLink(prc.xehContentEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
+				<a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#" title="Edit #content.getTitle()#">#content.getTitle()#</a><br/>
 				<small>
-				<i class="icon-user" title="last edit by"></i> <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on #entry.getActiveContent().getDisplayCreatedDate()#
+				<i class="icon-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on #content.getActiveContent().getDisplayCreatedDate()#
 				</small>
 			</td>
 			<td class="center">
-				<cfif entry.isExpired()>
-					<i class="icon-time icon-large textRed" title="Entry has expired!"></i>
+				<cfif content.isExpired()>
+					<i class="icon-time icon-large textRed" title="Content has expired!"></i>
 					<span class="hidden">expired</span>
-				<cfelseif entry.isPublishedInFuture()>
-					<i class="icon-fighter-jet icon-large textBlue" title="Entry Publishes in the future!"></i>
+				<cfelseif content.isPublishedInFuture()>
+					<i class="icon-fighter-jet icon-large textBlue" title="Content Publishes in the future!"></i>
 					<span class="hidden">published in future</span>
-				<cfelseif entry.isContentPublished()>
-					<i class="icon-ok icon-large textGreen" title="Entry Published!"></i>
+				<cfelseif content.isContentPublished()>
+					<i class="icon-ok icon-large textGreen" title="Content Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
-					<i class="icon-remove icon-large textRed" title="Entry Published!"></i>
+					<i class="icon-remove icon-large textRed" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center"><span class="badge badge-info">#entry.getHits()#</span></td>
-			<td class="center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
 			<td class="center">
-				<!--- Entry Actions --->
+				<!--- content Actions --->
 				<div class="btn-group">
-			    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
+			    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
 						<i class="icon-cogs icon-large"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+			    		<cfif prc.oAuthor.checkPermission("CONTENTSOTE_EDITOR,CONTENTSTORE_ADMIN")>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#entry.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#entry.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
-						<!--- View in Site --->
-						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="icon-eye-open icon-large"></i> Open In Site</a></li>
+						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
 			    	</ul>
 			    </div>
 			</td>
@@ -75,7 +69,7 @@
 
 <!--- Paging --->
 <cfif prc.pager_pagination>
-	#prc.pager_pagingPlugin.renderit(prc.pager_entriesCount,prc.pager_pagingLink)#
+	#prc.pager_pagingPlugin.renderit(prc.pager_contentCount, prc.pager_pagingLink)#
 </cfif>
 </div>
 </cfoutput>
