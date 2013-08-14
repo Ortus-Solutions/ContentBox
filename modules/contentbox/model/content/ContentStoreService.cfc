@@ -29,7 +29,7 @@ component extends="ContentService" singleton{
 	*/
 	ContentStoreService function init(){
 		// init it
-		super.init(entityName="cbContentStore",useQueryCaching=true);
+		super.init(entityName="cbContentStore", useQueryCaching=true);
 
 		return this;
 	}

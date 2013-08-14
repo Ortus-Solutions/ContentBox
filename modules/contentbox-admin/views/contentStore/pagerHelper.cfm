@@ -2,23 +2,14 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$entriesPager = $("##entries_pager");
-	$entriesPager.find("tr:even").addClass("even");
-	// quick look
-	$entriesPager.find("tr").bind("contextmenu",function(e) {
-	    if (e.which === 3) {
-	    	if( $(this).attr('data-contentID') != null ){
-				e.preventDefault();
-				openRemoteModal('#event.buildLink(prc.xehContentQuickLook)#/contentID/' + $(this).attr('data-contentID'));
-			}
-	    }
-	});
+	$contentPager = $("##content_pager");
+	$contentPagerLoader = $("##contentPagerLoader");
 });
 function pagerLink(page){
-	$("##entryPagerLoader").fadeIn("fast");
-	$('##pagerEntries')
+	$("##contentPagerLoader").fadeIn("fast");
+	$('##pagerContent')
 		.load('#event.buildLink(prc.xehPager)#/pager_authorID/#prc.pager_authorID#/page/' + page, function() {
-			$("##entryPagerLoader").fadeOut();
+			$("##contentPagerLoader").fadeOut();
 			hideAllTooltips();
 			activateTooltips();
 	});

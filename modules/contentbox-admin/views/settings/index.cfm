@@ -180,6 +180,17 @@
             						</select>
                                 </div>
                             </div>
+							<!--- Recent ContentStore --->
+							<div class="control-group">
+                                <label class="control-label" for="cb_dashboard_recentContentStore">Recent Content Store Count</label>
+                                <div class="controls">
+                                    <select name="cb_dashboard_recentContentStore" id="cb_dashboard_recentContentStore">
+            							<cfloop from="5" to="50" step="5" index="i">
+            								<option value="#i#" <cfif i eq prc.cbSettings.cb_dashboard_recentContentStore>selected="selected"</cfif>>#i#</option>
+            							</cfloop>
+            						</select>
+                                </div>
+                            </div>  
     						<!--- Recent Comments--->
 							<div class="control-group">
                                 <label class="control-label" for="cb_dashboard_recentComments">Recent Comments Count</label>

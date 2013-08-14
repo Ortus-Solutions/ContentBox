@@ -280,7 +280,7 @@ component extends="baseHandler"{
 		// save content
 		contentStoreService.saveContent( content );
 		// announce event
-		announceInterception("cbadmin_postContentSave",{content=content,isNew=isNew});
+		announceInterception("cbadmin_postContentStoreSave",{content=content,isNew=isNew});
 
 		// Ajax?
 		if( event.isAjax() ){
@@ -292,7 +292,7 @@ component extends="baseHandler"{
 		else{
 			// relocate
 			getPlugin("MessageBox").info("content Saved!");
-			setNextEvent(prc.xehContentStore);
+			setNextEvent( prc.xehContentStore );
 		}
 	}
 
@@ -304,7 +304,7 @@ component extends="baseHandler"{
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
 			getPlugin("MessageBox").warn( "No content sent to delete!" );
-			setNextEvent(event=prc.xehContentStore);
+			setNextEvent( prc.xehContentStore );
 		}
 		
 		// Inflate to array
@@ -355,7 +355,7 @@ component extends="baseHandler"{
 		prc.xehContentHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 
 		// prepare paging plugin
-		prc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging", module="contentbox");
 		prc.pager_paging 	  	= prc.pager_pagingPlugin.getBoundaries();
 		prc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pager_pagination	= arguments.pagination;
@@ -366,9 +366,9 @@ component extends="baseHandler"{
 		
 		// search content with filters and all
 		var contentResults = contentStoreService.search(author=arguments.authorID,
-											   offset=prc.pager_paging.startRow-1,
-											   max=arguments.max,
-											   sortOrder=sortOrder);
+													    offset=prc.pager_paging.startRow-1,
+													    max=arguments.max,
+													    sortOrder=sortOrder);
 		prc.pager_content 	    = contentResults.content;
 		prc.pager_contentCount  = contentResults.count;
 
@@ -376,7 +376,7 @@ component extends="baseHandler"{
 		prc.pager_authorID		= arguments.authorID;
 
 		// view pager
-		return renderView(view="contentStore/pager",module="contentbox-admin");
+		return renderView(view="contentStore/pager", module="contentbox-admin");
 	}
 
 	// slugify remotely
