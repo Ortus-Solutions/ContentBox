@@ -287,6 +287,10 @@ component accessors="true" threadSafe singleton{
 		QueryAddColumn(rawLayouts,"settings",[]);
 		QueryAddColumn(rawLayouts,"widgets",[]);
 
+		// exclude .svn files from layouts
+		if(left(layoutName,1) eq '.')
+			continue;
+			
 		// Register each layout CFC
 		for(var x=1; x lte rawLayouts.recordCount; x++){
 			var layoutName 	= rawLayouts.name[x];
