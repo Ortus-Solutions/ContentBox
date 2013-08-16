@@ -95,7 +95,8 @@ component accessors="true" threadSafe singleton{
 	* Get the current theme's print layouts in ColdBox layout string format
 	*/
 	string function getThemePrintLayout(required format, required layout){
-		
+		// some cleanup, just in case
+		arguments.layout = replaceNoCase( arguments.layout, ".cfm", "" );
 		// verify existence of convention
 		if( fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.layout#_#arguments.format#.cfm" ) ) ){
 			return "#arguments.layout#_#arguments.format#";
