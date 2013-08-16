@@ -199,7 +199,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return false;
 	}
-
+	// Determine if you are in printing or exporting format
+	boolean function isPrintFormat(){
+		return ( getRequestContext().getValue("format","contentbox") eq "contentbox" ? false : true );
+	}
 	// get comment errors array, usually when the form elements did not validate
 	array function getCommentErrors(){
 		var prc = getRequestCollection(private=true);
