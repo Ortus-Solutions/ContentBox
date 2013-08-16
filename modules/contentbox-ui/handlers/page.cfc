@@ -104,7 +104,7 @@ component extends="content" singleton{
 		event.renderData(data=data.content, contentType=data.contentType, isBinary=data.isBinary);
 		
 		// verify if caching is possible by testing the page parameters
-		if( cacheEnabled AND prc.page.isLoaded() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() AND !prc.page.getAllowComments() ){
+		if( cacheEnabled AND prc.page.isLoaded() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() ){
 			// store page ID as we have it by now
 			data.contentID = prc.page.getContentID();
 			// Cache data
