@@ -70,6 +70,16 @@ component singleton{
 		mediaProvider.deliverMedia( prc.mediaPath );
 	}
 	
+	/**
+	* Deliver Captcha
+	*/
+	function captcha(event,rc,prc){
+		var data = getMyPlugin(plugin="Captcha",module="contentbox").display();
+		var imgURL = arrayToList( reMatchNoCase( 'src="([^"]*)"', data ) );
+		imgURL = replace( replace( imgURL, "src=", "" ) , '"', "", "all");
+		setNextEvent(URI=imgURL);
+	}
+	
 	/************************************** PRIVATE *********************************************/
 
 	// Invalid Media
