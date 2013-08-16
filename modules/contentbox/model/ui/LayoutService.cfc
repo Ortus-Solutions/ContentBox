@@ -273,6 +273,10 @@ component accessors="true" threadSafe singleton{
 		// filter layout folders only
 		var rawLayouts 	= new Query(dbtype="query", sql="SELECT directory,name from rawLayouts WHERE type = 'Dir'", rawlayouts=rawlayouts).execute().getResult();
 
+		// exclude .* files from layouts
+		if( left( rawLayouts.name[ x ], 1 ) eq '.' )
+			continue;
+		
 		// Add Columns
 		QueryAddColumn(rawLayouts,"layoutName",[]);
 		QueryAddColumn(rawLayouts,"isValid",[]);
@@ -287,9 +291,6 @@ component accessors="true" threadSafe singleton{
 		QueryAddColumn(rawLayouts,"settings",[]);
 		QueryAddColumn(rawLayouts,"widgets",[]);
 
-		// exclude .svn files from layouts
-		if(left(layoutName,1) eq '.')
-			continue;
 			
 		// Register each layout CFC
 		for(var x=1; x lte rawLayouts.recordCount; x++){
