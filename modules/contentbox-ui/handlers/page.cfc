@@ -30,6 +30,7 @@ component extends="content" singleton{
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	property name="layoutService"		inject="id:LayoutService@cb";
+	property name="utility"				inject="coldbox:plugin:Utilities";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -43,51 +44,76 @@ component extends="content" singleton{
 	* Around index to enable the caching aspects
 	*/
 	function aroundIndex(event,rc,prc,eventArguments){
-
-		// if not caching, just return
-		if( !prc.cbSettings.cb_content_caching OR 
-			structKeyExists(eventArguments, "noCache") OR
-			event.valueExists("cbCache") ){
-			return index(event,rc,prc);
-		}
-
-		// Get appropriate cache provider
-		var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-		// Do we have an override page setup by the settings?
-		if( !structKeyExists(prc,"pageOverride") ){
-			// Try slug parsing for hiearchical URLs
-			cacheKey = "cb-content-pagewrapper-#left(event.getCurrentRoutedURL(),255)#";
-		}
-		else{
-			cacheKey = "cb-content-pagewrapper-#prc.pageOverride#/";
+		// param incoming UI formats
+		event.paramValue("format", "contentbox");
+		// If UI export is disabled, default to contentbox
+		if( !prc.cbSettings.cb_content_uiexport ){
+			rc.format = "contentbox";
 		}
 		
-		// verify page wrapper
-		var data = cache.get( cacheKey );
-		if( !isNull(data) ){
-			// set cache header
-			event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information");
-			// Store hits
-			pageService.updateHits( data.contentID );
-			// return cache content
-			return data.content;
+		// Caching Enabled? Then test if data is in cache.
+		var cacheEnabled = ( prc.cbSettings.cb_content_caching AND !structKeyExists(eventArguments, "noCache") AND !event.valueExists( "cbCache" ) );
+		if( cacheEnabled ){
+			// Get appropriate cache provider
+			var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
+			// Do we have an override page setup by the settings?
+			cacheKey = ( !structKeyExists( prc, "pageOverride" ) ? "cb-content-pagewrapper-#left(event.getCurrentRoutedURL(),255)#.#rc.format#" : "cb-content-pagewrapper-#prc.pageOverride#/.#rc.format#");
+			// get page data from cache
+			var data = cache.get( cacheKey );
+			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
+			if( !isNull( data ) ){
+				// set cache headers
+				event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information")
+					.setHTTPHeader(name="Content-type", value=data.contentType);
+				// Store hits
+				pageService.updateHits( data.contentID );
+				// return cache content to be displayed
+				return data.content;
+			}
 		}
-
-		// execute index
+		
+		// execute index action
 		index(event,rc,prc);
 		
-		// verify if caching is possible by testing the page
-		if( prc.page.isLoaded() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() ){
-			// create storage struct
-			var data = { content = "", contentID = prc.page.getContentID() };
-			// render out the content
-			data.content = controller.getPlugin("Renderer")
-				.renderLayout(module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule());
+		// Check for missing page? If so, just return
+		if( structKeyExists( prc, "missingPage" ) ){
+			return;
+		}
+		
+		// Get a renderer to prepare to return content
+		var data = { content = "", contentID = "", contentType="text/html" };
+		// generate content
+		data.content = renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format=rc.format, layout=listLast(event.getCurrentLayout(),'/'))#", 
+									view=event.getCurrentView(),
+									module="contentbox",
+									viewModule="contentbox");
+		// Multi format generation
+		switch( rc.format ){
+			case "pdf" : {
+				data.content = utility.marshallData(data=data.content, type="pdf");
+				data.contentType = "application/pdf";
+				event.setHTTPHeader(name="Content-type", value=data.contentType);
+				break;
+			}
+			case "doc" : {
+				data.contentType = "application/msword";
+				event.setHTTPHeader(name="Content-type", value=data.contentType);
+				break;
+			}
+		} // end switch
+		
+		// Render it out after
+		event.renderData(data=data.content, contentType=data.contentType);
+		
+		// verify if caching is possible by testing the page parameters
+		if( cacheEnabled AND prc.page.isLoaded() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() AND !prc.page.getAllowComments() ){
+			// store page ID as we have it by now
+			data.contentID = prc.page.getContentID();
+			// Cache data
 			cache.set(cachekey,
 					  data,
 					  (prc.page.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : prc.page.getCacheTimeout()),
 					  (prc.page.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : prc.page.getCacheLastAccessTimeout()) );
-			return data.content;
 		}
 	}
 	
@@ -165,31 +191,6 @@ component extends="content" singleton{
 			// set skin view
 			event.setLayout(name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
-			// Different display formats if enabled?
-			if( prc.cbSettings.cb_content_uiexport ){
-				event.paramValue("format", "contentbox");
-				switch( rc.format ){
-					case "pdf" : {
-						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='pdf', layout=thisLayout)#", 
-														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
-							type="pdf");
-						break;
-					}
-					case "print" : case "html" : {
-						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='print', layout=thisLayout)#", 
-														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
-							type="html");
-						break;
-					}
-					case "doc" : {
-						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='doc', layout=thisLayout)#", 
-														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
-							contentType="application/msword")
-							.setHTTPHeader(name="Content-Disposition", value="inline; filename=#prc.entry.getSlug()#.doc");
-						break;
-					}
-				} // end switch
-			} // end if formats enabled
 		}
 		else{
 			// missing page
