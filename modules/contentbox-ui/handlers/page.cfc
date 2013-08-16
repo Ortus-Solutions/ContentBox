@@ -165,7 +165,31 @@ component extends="content" singleton{
 			// set skin view
 			event.setLayout(name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
-
+			// Different display formats if enabled?
+			if( prc.cbSettings.cb_content_uiexport ){
+				event.paramValue("format", "contentbox");
+				switch( rc.format ){
+					case "pdf" : {
+						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='pdf', layout=thisLayout)#", 
+														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
+							type="pdf");
+						break;
+					}
+					case "print" : case "html" : {
+						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='print', layout=thisLayout)#", 
+														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
+							type="html");
+						break;
+					}
+					case "doc" : {
+						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='doc', layout=thisLayout)#", 
+														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
+							contentType="application/msword")
+							.setHTTPHeader(name="Content-Disposition", value="inline; filename=#prc.entry.getSlug()#.doc");
+						break;
+					}
+				} // end switch
+			} // end if formats enabled
 		}
 		else{
 			// missing page
