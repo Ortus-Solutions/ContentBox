@@ -1,0 +1,1 @@
+﻿<cfoutput>#cb.renderLayout("blog_print")#</cfoutput>
