@@ -75,35 +75,33 @@ component extends="content" singleton{
 		// execute index action
 		index(event,rc,prc);
 		
-		// Check for missing page? If so, just return
+		// Check for missing page? If so, just return, no need to do multiple formats or caching
 		if( structKeyExists( prc, "missingPage" ) ){
 			return;
 		}
 		
 		// Get a renderer to prepare to return content
-		var data = { content = "", contentID = "", contentType="text/html" };
+		var data = { content = "", contentID = "", contentType="text/html", isBinary=false };
 		// generate content
 		data.content = renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format=rc.format, layout=listLast(event.getCurrentLayout(),'/'))#", 
-									view=event.getCurrentView(),
 									module="contentbox",
 									viewModule="contentbox");
 		// Multi format generation
 		switch( rc.format ){
 			case "pdf" : {
-				data.content = utility.marshallData(data=data.content, type="pdf");
-				data.contentType = "application/pdf";
-				event.setHTTPHeader(name="Content-type", value=data.contentType);
+				data.content 		= utility.marshallData(data=data.content, type="pdf");
+				data.contentType 	= "application/pdf";
+				data.isBinary 		= true;
 				break;
 			}
 			case "doc" : {
 				data.contentType = "application/msword";
-				event.setHTTPHeader(name="Content-type", value=data.contentType);
 				break;
 			}
-		} // end switch
+		}
 		
 		// Render it out after
-		event.renderData(data=data.content, contentType=data.contentType);
+		event.renderData(data=data.content, contentType=data.contentType, isBinary=data.isBinary);
 		
 		// verify if caching is possible by testing the page parameters
 		if( cacheEnabled AND prc.page.isLoaded() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() AND !prc.page.getAllowComments() ){
