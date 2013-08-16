@@ -45,8 +45,10 @@ limitations under the License.
 		<h2><a href="#cb.linkEntry(entry)#" rel="bookmark" title="#entry.getTitle()#">#entry.getTitle()#</a></h2>
 
 		<!--- Category Bar: I could loop but why, let the quick category do it--->
+		<cfif !cb.isPrintFormat()>
 		<span class="post-cat">#cb.quickCategoryLinks(entry)#</span>
-
+		</cfif>
+		
 		<!--- content --->
 		<div class="post-content">
 			<!--- excerpt or content --->
@@ -63,6 +65,7 @@ limitations under the License.
 
 	</div>
 
+	<cfif !cb.isPrintFormat()>
 	<!--- Comments Bar --->
 	<div class="post-comments">
 		<div class="infoBar">
@@ -82,6 +85,7 @@ limitations under the License.
 		</div>
 		<br/>
 	</div>
+	</cfif>
 
 	<div class="separator"></div>
 </div>

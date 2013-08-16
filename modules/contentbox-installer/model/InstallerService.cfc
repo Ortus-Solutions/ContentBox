@@ -297,6 +297,7 @@ component accessors="true"{
 			"cb_content_cachingTimeoutIdle" = "15",
 			"cb_content_cacheName" = "Template",
 			"cb_page_excerpts" = "true",
+			"cb_content_uiexport" = "true",
 
 			// Global HTML
 			"cb_html_beforeHeadEnd" = "",
