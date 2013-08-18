@@ -4,12 +4,19 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI Injections
-	property name="cachebox" 			inject="cachebox" 					persistent="false";
-	property name="settingService"		inject="id:settingService@cb" 		persistent="false";
+	property name="cachebox" 			inject="cachebox";
+	property name="settingService"		inject="id:settingService@cb";
+	property name="commentService"		inject="id:commentService@cb";
 
 	// Listen when comments are posted.
 	function cbui_onCommentPost(event,interceptData){
 		doCacheCleanup( arguments.interceptData.content.buildContentCacheKey() , arguments.interceptData.content );
+	}
+	
+	// Listen when comments are moderated
+	function cbadmin_onCommentStatusUpdate(event,interceptData){
+		var oComment = commentService.get( arguments.interceptData.commentID );
+		doCacheCleanup( oComment.getRelatedContent().buildContentCacheKey() , oComment.getRelatedContent() );
 	}
 	
 	// Listen when entries are saved
@@ -42,14 +49,11 @@ component extends="coldbox.system.Interceptor"{
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		// clear by keysnippets
+		// clear internal caches
 		cache.clearByKeySnippet(keySnippet=arguments.cacheKey, async=true);
-		// Page specific caching cleanup
-		if( structKeyExists(arguments,"content") and arguments.content.getContentType() eq "Page"){
-			// Remove ancestry caching
-			cache.clearByKeySnippet(keySnippet="cb-content-pagewrapper-#replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#", async=true);
-		}
-
+		// clear ancestry caches
+		var blogPrefix = ( arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : "" );
+		cache.clearByKeySnippet(keySnippet="cb-content-wrapper-#blogPrefix##replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#", async=true);
 		// log
 		if( log.canInfo() ){
 			log.info("Sent clear command using the following content key: #arguments.cacheKey# from provider: #settings.cb_content_cacheName#");
