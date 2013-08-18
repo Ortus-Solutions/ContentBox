@@ -4,7 +4,7 @@
 	#cb.event("cbui_prePageDisplay")#
 	
 	<!--- breadcrumbs only if not home page. --->
-	<cfif cb.getCurrentPage().getSlug() NEQ cb.getHomePage() AND cb.getCustomField("breadcrumb",true)>
+	<cfif cb.getCurrentPage().getSlug() NEQ cb.getHomePage() AND cb.getCustomField("breadcrumb",true) AND !cb.isPrintFormat()>
 	<div class="infoBar">> <a href="#cb.linkHome()#">Home</a> #cb.breadCrumbs()#</div>
 	</cfif>
 	
@@ -25,7 +25,7 @@
 		</div>
 				
 		<!--- Comments Bar --->
-		<cfif cb.isCommentsEnabled(cb.getCurrentPage())>
+		<cfif cb.isCommentsEnabled(cb.getCurrentPage()) and !cb.isPrintFormat()>
 					
 			#html.anchor(name="comments")#
 			<div class="post-comments">
@@ -60,7 +60,7 @@
 	#cb.event("cbui_postPageDisplay")#
 	
 <!--- Custom JS For Comments--->
-<cfif cb.isCommentsEnabled()>
+<cfif cb.isCommentsEnabled() and !cb.isPrintFormat()>
 <script type="text/javascript">
 $(document).ready(function() {
  	// form validator

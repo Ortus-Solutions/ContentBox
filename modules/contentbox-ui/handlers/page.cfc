@@ -30,6 +30,7 @@ component extends="content" singleton{
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	property name="layoutService"		inject="id:LayoutService@cb";
+	property name="utility"				inject="coldbox:plugin:Utilities";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -39,58 +40,6 @@ component extends="content" singleton{
 		super.preHandler(argumentCollection=arguments);
 	}
 
-	/**
-	* Around index to enable the caching aspects
-	*/
-	function aroundIndex(event,rc,prc,eventArguments){
-
-		// if not caching, just return
-		if( !prc.cbSettings.cb_content_caching OR 
-			structKeyExists(eventArguments, "noCache") OR
-			event.valueExists("cbCache") ){
-			return index(event,rc,prc);
-		}
-
-		// Get appropriate cache provider
-		var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-		// Do we have an override page setup by the settings?
-		if( !structKeyExists(prc,"pageOverride") ){
-			// Try slug parsing for hiearchical URLs
-			cacheKey = "cb-content-pagewrapper-#left(event.getCurrentRoutedURL(),255)#";
-		}
-		else{
-			cacheKey = "cb-content-pagewrapper-#prc.pageOverride#/";
-		}
-		
-		// verify page wrapper
-		var data = cache.get( cacheKey );
-		if( !isNull(data) ){
-			// set cache header
-			event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information");
-			// Store hits
-			pageService.updateHits( data.contentID );
-			// return cache content
-			return data.content;
-		}
-
-		// execute index
-		index(event,rc,prc);
-		
-		// verify if caching is possible by testing the page
-		if( prc.page.isLoaded() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() ){
-			// create storage struct
-			var data = { content = "", contentID = prc.page.getContentID() };
-			// render out the content
-			data.content = controller.getPlugin("Renderer")
-				.renderLayout(module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule());
-			cache.set(cachekey,
-					  data,
-					  (prc.page.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : prc.page.getCacheTimeout()),
-					  (prc.page.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : prc.page.getCacheLastAccessTimeout()) );
-			return data.content;
-		}
-	}
-	
 	/**
 	* Preview a page
 	*/
@@ -116,7 +65,14 @@ component extends="content" singleton{
 		event.setLayout(name="#prc.cbLayout#/layouts/#rc.layout#", module="contentbox")
 			.setView(view="#prc.cbLayout#/views/page", module="contentbox");
 	}
-
+	
+	/**
+	* Around entry page advice that provides caching and multi-output format
+	*/
+	function aroundIndex(event,rc,prc,eventArguments){
+		return wrapContentAdvice( event, rc, prc, eventArguments, variables.index );
+	}
+	
 	/**
 	* Present pages
 	*/
@@ -165,7 +121,6 @@ component extends="content" singleton{
 			// set skin view
 			event.setLayout(name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
-
 		}
 		else{
 			// missing page
