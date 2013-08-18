@@ -175,6 +175,7 @@ function activateContentSearch(){
 	$nav_search.css("opacity","0.8");
 	// focus effects
 	$nav_search.focusin(function() {
+		if( $nav_search.is(":focus") ){ return; }
     	$(this).animate({
 		    opacity: 1.0,
 		    width: '+=95',
