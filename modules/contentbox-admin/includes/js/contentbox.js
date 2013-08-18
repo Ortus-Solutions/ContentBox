@@ -156,16 +156,36 @@ function adminAction( action, actionURL ){
 		$("#adminActionsIcon").addClass( "icon-spin textOrange" );
 		// Run Action Dispatch
 		$.post( actionURL , {targetModule: action}, function(data){
-			$("#adminActionNotifier").addClass( "alert-info" );
-			var message = "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>";
 			if( data.ERROR ){
-				$("#adminActionNotifier").addClass( "alert-danger" );
-				message = "<i class='icon-exclamation-sign'></i> <strong>Error running action, check logs!</strong>";
+				adminNotifier( "error", "<i class='icon-exclamation-sign'></i> <strong>Error running action, check logs!</strong>" );
+			}
+			else{
+				adminNotifier( "info", "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>" );
 			}
 			$("#adminActionsIcon").removeClass( "icon-spin textOrange" );
-			$("#adminActionNotifier").fadeIn().html( message ).delay( 1500 ).fadeOut();
+			
 		} );
 	}
+}
+/**
+ * Send an admin notifier popup for a few seconds
+ * @param type The type to send: Defaults to warn, available are warn, info, error, success
+ * @param message The message to display in the notifier
+ * @param delay The delay of the message, defaults to 1500 ms
+ */
+function adminNotifier(type, message, delay){
+	var $notifier = $("#adminActionNotifier").attr( "class", "alert hide" );
+	if( type == null ){ type = "warn";  }
+	if( delay == null ){ delay = 1500;  }
+	// add type css
+	switch( type ){
+		case "info" : { $notifier.addClass( "alert-info" ); break; }
+		case "error" : { $notifier.addClass( "alert-error" ); break; }
+		case "success" : { $notifier.addClass( "alert-success" ); break; }
+	}
+	console.log( $notifier.attr("class") );
+	// show with message and delay and reset.
+	$notifier.fadeIn().html( message ).delay( delay ).fadeOut();
 }
 function activateContentSearch(){
 	// local refs
