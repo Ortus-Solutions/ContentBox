@@ -62,21 +62,33 @@ component extend="baseHandler"{
 
 	// change status
 	function doStatusUpdate(event,rc,prc){
+		// param values
 		event.paramValue("commentID","");
 		event.paramValue("page","1");
+		var data = { "ERROR" = false, "MESSAGES" = "" };
 		// check if comment id list has length
-		if( len(rc.commentID) ){
-			commentService.bulkStatus(commentID=rc.commentID,status=rc.commentStatus);
+		if( len( rc.commentID ) ){
+			commentService.bulkStatus(commentID=rc.commentID, status=rc.commentStatus);
 			// announce event
-			announceInterception("cbadmin_onCommentStatusUpdate",{commentID=rc.commentID,status=rc.commentStatus});
+			announceInterception( "cbadmin_onCommentStatusUpdate", {commentID=rc.commentID,status=rc.commentStatus} );
 			// Message
-			getPlugin("MessageBox").info("#listLen(rc.commentID)# Comment(s) #rc.commentStatus#d");
+			data.messages = "#listLen(rc.commentID)# Comment(s) #rc.commentStatus#d";
+			getPlugin("MessageBox").info( data.messages );
 		}
 		else{
-			getPlugin("MessageBox").warn("No comments selected!");
+			data.messages = "No comments selected!";
+			data.error = true;
+			getPlugin("MessageBox").warn( data.messages );
 		}
-		// relocate back
-		setNextEvent(event=prc.xehComments, queryString="page=#rc.page#");
+		
+		// If ajax call, return as ajax
+		if( event.isAjax() ){
+			event.renderData(data=data, type="json");
+		}
+		else{
+			// relocate back
+			setNextEvent(event=prc.xehComments, queryString="page=#rc.page#");
+		}
 	}
 
 	// editor
