@@ -77,7 +77,8 @@ component singleton{
 		var data = getMyPlugin(plugin="Captcha",module="contentbox").display();
 		var imgURL = arrayToList( reMatchNoCase( 'src="([^"]*)"', data ) );
 		imgURL = replace( replace( imgURL, "src=", "" ) , '"', "", "all");
-		setNextEvent(URI=imgURL);
+		// deliver image
+		getPageContext().forward( imgURL );
 	}
 	
 	/************************************** PRIVATE *********************************************/
