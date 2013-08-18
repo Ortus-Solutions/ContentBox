@@ -136,6 +136,82 @@ component{
 	/************************************** PRIVATE *********************************************/
 
 	/**
+	* Content display around advice that provides caching for content display and multi-format capabilities
+	*/
+	private function wrapContentAdvice(event,rc,prc,eventArguments,action){
+		// param incoming multi UI formats
+		event.paramValue("format", "contentbox");
+		// If UI export is disabled, default to contentbox
+		if( !prc.cbSettings.cb_content_uiexport ){
+			rc.format = "contentbox";
+		}
+		
+		// Caching Enabled? Then test if data is in cache.
+		var cacheEnabled = ( prc.cbSettings.cb_content_caching AND !structKeyExists(eventArguments, "noCache") AND !event.valueExists( "cbCache" ) );
+		if( cacheEnabled ){
+			// Get appropriate cache provider from settings
+			var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
+			// Do we have an override page setup by the settings?
+			cacheKey = ( !structKeyExists( prc, "pageOverride" ) ? "cb-content-wrapper-#left(event.getCurrentRoutedURL(),255)#.#rc.format#" : "cb-content-wrapper-#prc.pageOverride#/.#rc.format#");
+			// get content data from cache
+			var data = cache.get( cacheKey );
+			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
+			if( !isNull( data ) ){
+				// set cache headers
+				event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information")
+					.setHTTPHeader(name="Content-type", value=data.contentType);
+				// Store hits
+				contentService.updateHits( data.contentID );
+				// return cache content to be displayed
+				return data.content;
+			}
+		}
+		
+		// execute the wrapped action
+		arguments.action(event,rc,prc);
+		
+		// Check for missing page? If so, just return, no need to do multiple formats or caching for a missing page
+		if( structKeyExists( prc, "missingPage" ) ){ return; }
+		
+		// Prepare data packet for rendering and caching and more
+		var data = { content = "", contentID = "", contentType="text/html", isBinary=false };
+		// generate content
+		data.content = renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format=rc.format, layout=listLast(event.getCurrentLayout(),'/'))#", 
+									module="contentbox",
+									viewModule="contentbox");
+		// Multi format generation
+		switch( rc.format ){
+			case "pdf" : {
+				data.content 		= utility.marshallData(data=data.content, type="pdf");
+				data.contentType 	= "application/pdf";
+				data.isBinary 		= true;
+				break;
+			}
+			case "doc" : {
+				data.contentType = "application/msword";
+				break;
+			}
+		}
+		
+		// Tell renderdata to render it
+		event.renderData(data=data.content, contentType=data.contentType, isBinary=data.isBinary);
+		
+		// Get the content object
+		var oContent = ( structKeyExists( prc, "page" ) ? prc.page : prc.entry ); 
+		
+		// verify if caching is possible by testing the content parameters
+		if( cacheEnabled AND oContent.isLoaded() AND oContent.getCacheLayout() AND oContent.getIsPublished() ){
+			// store page ID as we have it by now
+			data.contentID = oContent.getContentID();
+			// Cache data
+			cache.set(cachekey,
+					  data,
+					  (oContent.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : oContent.getCacheTimeout()),
+					  (oContent.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : oContent.getCacheLastAccessTimeout()) );
+		}
+	}
+
+	/**
 	* Preview content page super event. Only called internally
 	*/
 	private function preview(event,rc,prc){
