@@ -671,7 +671,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @ssl.hint	Use SSL or not, defaults to false.
 	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkContent(required content, boolean ssl=false){
+	function linkContent(required content, boolean ssl=false, format="html"){
 		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl, arguments.format ); }
 		if( arguments.content.getContentType() eq "page" ){ return linkPage( arguments.content, arguments.ssl, arguments.format ); }
 	}

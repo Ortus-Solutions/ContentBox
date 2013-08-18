@@ -80,7 +80,7 @@ component extends="content" singleton{
 	}
 
 	/**
-	* The home page
+	* The blog home page
 	*/
 	function index(event,rc,prc){
 		// incoming params
