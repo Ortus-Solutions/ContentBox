@@ -80,7 +80,7 @@ component extends="content" singleton{
 	}
 
 	/**
-	* The home page
+	* The blog home page
 	*/
 	function index(event,rc,prc){
 		// incoming params
@@ -159,6 +159,13 @@ component extends="content" singleton{
 	}
 
 	/**
+	* Around entry page advice that provides caching and multi-output format
+	*/
+	function aroundEntry(event,rc,prc,eventArguments){
+		return wrapContentAdvice( event, rc, prc, eventArguments, variables.entry );
+	}
+
+	/**
 	* An entry page
 	*/
 	function entry(event,rc,prc){
@@ -187,6 +194,31 @@ component extends="content" singleton{
 			// set skin view
 			event.setLayout(name="#prc.cbLayout#/layouts/blog", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/entry",module="contentbox");
+			// Different display formats if enabled?
+			if( prc.cbSettings.cb_content_uiexport ){
+				event.paramValue("format", "contentbox");
+				switch( rc.format ){
+					case "pdf" : {
+						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='pdf', layout='blog')#", 
+														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
+							type="pdf");
+						break;
+					}
+					case "print" : case "html" : {
+						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='print', layout='blog')#", 
+														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
+							type="html");
+						break;
+					}
+					case "doc" : {
+						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='doc', layout='blog')#", 
+														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
+							contentType="application/msword")
+							.setHTTPHeader(name="Content-Disposition", value="inline; filename=#prc.entry.getSlug()#.doc");
+						break;
+					}
+				} // end switch
+			} // end if formats enabled
 		}
 		else{
 			// announce event

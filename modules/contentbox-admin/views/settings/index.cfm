@@ -292,6 +292,15 @@
             						#html.radioButton(name="cb_page_excerpts",checked=not prc.cbSettings.cb_page_excerpts,value=false)# No
                                 </div>
                             </div>
+							<!--- UI Exports --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="cb_content_uiexport",content="Allow UI content export display:")#
+                                <div class="controls">
+                                    <small>Enable/Disabled the ability to export pages/blog/etc from the UI via format extensions like pdf,doc,print.</small><br/>
+            						#html.radioButton(name="cb_content_uiexport",checked=prc.cbSettings.cb_content_uiexport,value=true)# Yes
+            						#html.radioButton(name="cb_content_uiexport",checked=not prc.cbSettings.cb_content_uiexport,value=false)# No
+                                </div>
+                            </div>
     					</fieldset>
     					<fieldset>
     						<legend><i class="icon-hdd icon-large"></i>  Content Caching</legend>
