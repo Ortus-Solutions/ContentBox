@@ -1,4 +1,4 @@
-﻿<cfsetting enablecfoutputonly="true">
+<cfsetting enablecfoutputonly="true">
 <!-----------------------------------------------------------------------
 ********************************************************************************
 Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
@@ -40,7 +40,7 @@ Description :
 					</cfquery>
 					<cfdump var="#varVal#" label="Query Truncated to #getDebuggerConfig().getmaxRCPanelQueryRows()# records" expand="false">
 				<cfelseif isObject(varVal)>
-					<cfdump var="#varVal#" expand="false" top="2">
+					<cfdump var="#varVal#" expand="false" top="3">
 				<cfelse>
 					<cfdump var="#varVal#" expand="false">
 				</cfif>			

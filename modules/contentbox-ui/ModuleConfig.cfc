@@ -57,6 +57,8 @@ component {
 			{pattern="/__page_preview", handler="page", action="preview" },
 			// media delivery
 			{pattern="/__media", handler="media", action="index"},
+			// captcha delivery
+			{pattern="/__captcha", handler="media", action="captcha"},
 			
 			/************************************** RSS ROUTES *********************************************/
 
