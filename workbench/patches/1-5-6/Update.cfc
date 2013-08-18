@@ -241,6 +241,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_media_html5uploads_maxFileSize", "100" );
 		addSetting( "cb_media_html5uploads_maxFiles", "25" );
 		addSetting( "cb_page_excerpts", "false" );
+		addSetting( "cb_content_uiexport", "true" );
 	}
 	
 	private function addSetting(name, value){

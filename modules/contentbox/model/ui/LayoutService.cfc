@@ -92,6 +92,20 @@ component accessors="true" threadSafe singleton{
 	}
 	
 	/**
+	* Get the current theme's print layouts in ColdBox layout string format
+	*/
+	string function getThemePrintLayout(required format, required layout){
+		// some cleanup, just in case
+		arguments.layout = replaceNoCase( arguments.layout, ".cfm", "" );
+		// verify existence of convention
+		if( fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.layout#_#arguments.format#.cfm" ) ) ){
+			return "#arguments.layout#_#arguments.format#";
+		}
+		
+		return "#arguments.layout#";
+	}
+	
+	/**
 	* Get the current theme's search layout
 	*/
 	string function getThemeSearchLayout(){
@@ -273,10 +287,6 @@ component accessors="true" threadSafe singleton{
 		// filter layout folders only
 		var rawLayouts 	= new Query(dbtype="query", sql="SELECT directory,name from rawLayouts WHERE type = 'Dir'", rawlayouts=rawlayouts).execute().getResult();
 
-		// exclude .* files from layouts
-		if( left( rawLayouts.name[ x ], 1 ) eq '.' )
-			continue;
-		
 		// Add Columns
 		QueryAddColumn(rawLayouts,"layoutName",[]);
 		QueryAddColumn(rawLayouts,"isValid",[]);
@@ -291,10 +301,13 @@ component accessors="true" threadSafe singleton{
 		QueryAddColumn(rawLayouts,"settings",[]);
 		QueryAddColumn(rawLayouts,"widgets",[]);
 
-			
 		// Register each layout CFC
 		for(var x=1; x lte rawLayouts.recordCount; x++){
 			var layoutName 	= rawLayouts.name[x];
+			
+			// exclude .* files from layouts
+			if( left( layoutName, 1 ) eq '.' )
+				continue;
 
 			// Check if valid layout
 			if( !fileExists( getLayoutsPath() & "/#layoutName#/#layoutName#.cfc") ){

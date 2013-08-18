@@ -27,12 +27,12 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		var cbSettings 	= event.getValue(name="cbSettings",private=true);
 		var captcha		= "";
 		var commentForm = "";
-
+		
 		// captcha?
 		if( cbSettings.cb_comments_captcha ){
 			saveContent variable="captcha"{
 				writeOutput("
-					#getMyPlugin(plugin="Captcha",module="contentbox").display()#<br />
+					<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
 					#html.textField(name="captchacode",label="Enter the security code shown above:",required="required",size="50")#
 				");
 			}

@@ -24,46 +24,48 @@ limitations under the License.
 */
 --->
 <cfoutput>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<!--- Page Includes --->
+	#cb.quickView("_pageIncludes")#
+	
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_preEntryDisplay")#
-	
-	<!--- top gap --->
-	<div class="post-top-gap"></div>
-	
-	<!--- Quickly reuse our entry template to build this one with some extra pizzaz --->
-	#cb.quickEntry(args={addComments=true})#
-	
-	<!--- Comment Form: I can build it or I can quick it? --->
-	<div id="commentFormShell">
-		#cb.quickCommentForm(prc.entry)#
-	</div>
-	
-	<div class="clr"></div>
-	
-	<!--- Display Comments --->
-	<cfif !cb.isPrintFormat()>
-	<div id="comments">
-		#cb.quickComments()#
-	</div>
-	</cfif>	
+	#cb.event("cbui_beforeHeadEnd")#
+</head>
+<body>
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_postEntryDisplay")#
+	#cb.event("cbui_afterBodyStart")#
 	
+	<!--- Main Content --->
+	<div class="main">
+		
+		<!--- body resize page --->
+		<div class="body_resize">
+			<div class="body">
+				<div class="body_bg">
+					<!--- ContentBoxEvent --->
+					#cb.event("cbui_beforeContent")#
+					
+					<!--- Content --->
+					<div class="fullWidth">#renderView()#</div>
+					
+					<!--- Separator --->
+					<div class="clr"></div>
 
-<!--- Custom JS For Comments--->
-<cfif cb.isCommentsEnabled() and !cb.isPrintFormat()>
-<script type="text/javascript">
-$(document).ready(function() {
- 	// form validator
-	$("##commentForm").validator({position:'top left'});
-	<cfif cb.isCommentFormError()>
-	toggleCommentForm();
-	</cfif>
-});
-function toggleCommentForm(){
-	$("##commentForm").slideToggle();
-}
-</script>
-</cfif>
+					<!--- ContentBoxEvent --->
+					#cb.event("cbui_afterContent")#
+				</div>
+			</div>
+			<!--- Separator --->
+			<div class="clr"></div>
+		</div>
+		
+	</div>
+	<!--- end main --->
+		
+	<!--- ContentBoxEvent --->
+	#cb.event("cbui_beforeBodyEnd")#	
+</body>
+</html>
 </cfoutput>
