@@ -159,6 +159,13 @@ component extends="content" singleton{
 	}
 
 	/**
+	* Around entry page advice that provides caching and multi-output format
+	*/
+	function aroundEntry(event,rc,prc,eventArguments){
+		return wrapContentAdvice( event, rc, prc, eventArguments, variables.entry );
+	}
+
+	/**
 	* An entry page
 	*/
 	function entry(event,rc,prc){
