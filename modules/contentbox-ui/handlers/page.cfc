@@ -41,81 +41,6 @@ component extends="content" singleton{
 	}
 
 	/**
-	* Around index to enable the caching aspects
-	*/
-	function aroundIndex(event,rc,prc,eventArguments){
-		// param incoming UI formats
-		event.paramValue("format", "contentbox");
-		// If UI export is disabled, default to contentbox
-		if( !prc.cbSettings.cb_content_uiexport ){
-			rc.format = "contentbox";
-		}
-		
-		// Caching Enabled? Then test if data is in cache.
-		var cacheEnabled = ( prc.cbSettings.cb_content_caching AND !structKeyExists(eventArguments, "noCache") AND !event.valueExists( "cbCache" ) );
-		if( cacheEnabled ){
-			// Get appropriate cache provider
-			var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-			// Do we have an override page setup by the settings?
-			cacheKey = ( !structKeyExists( prc, "pageOverride" ) ? "cb-content-pagewrapper-#left(event.getCurrentRoutedURL(),255)#.#rc.format#" : "cb-content-pagewrapper-#prc.pageOverride#/.#rc.format#");
-			// get page data from cache
-			var data = cache.get( cacheKey );
-			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
-			if( !isNull( data ) ){
-				// set cache headers
-				event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information")
-					.setHTTPHeader(name="Content-type", value=data.contentType);
-				// Store hits
-				pageService.updateHits( data.contentID );
-				// return cache content to be displayed
-				return data.content;
-			}
-		}
-		
-		// execute index action
-		index(event,rc,prc);
-		
-		// Check for missing page? If so, just return, no need to do multiple formats or caching
-		if( structKeyExists( prc, "missingPage" ) ){
-			return;
-		}
-		
-		// Get a renderer to prepare to return content
-		var data = { content = "", contentID = "", contentType="text/html", isBinary=false };
-		// generate content
-		data.content = renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format=rc.format, layout=listLast(event.getCurrentLayout(),'/'))#", 
-									module="contentbox",
-									viewModule="contentbox");
-		// Multi format generation
-		switch( rc.format ){
-			case "pdf" : {
-				data.content 		= utility.marshallData(data=data.content, type="pdf");
-				data.contentType 	= "application/pdf";
-				data.isBinary 		= true;
-				break;
-			}
-			case "doc" : {
-				data.contentType = "application/msword";
-				break;
-			}
-		}
-		
-		// Render it out after
-		event.renderData(data=data.content, contentType=data.contentType, isBinary=data.isBinary);
-		
-		// verify if caching is possible by testing the page parameters
-		if( cacheEnabled AND prc.page.isLoaded() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() ){
-			// store page ID as we have it by now
-			data.contentID = prc.page.getContentID();
-			// Cache data
-			cache.set(cachekey,
-					  data,
-					  (prc.page.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : prc.page.getCacheTimeout()),
-					  (prc.page.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : prc.page.getCacheLastAccessTimeout()) );
-		}
-	}
-	
-	/**
 	* Preview a page
 	*/
 	function preview(event,rc,prc){
@@ -140,7 +65,14 @@ component extends="content" singleton{
 		event.setLayout(name="#prc.cbLayout#/layouts/#rc.layout#", module="contentbox")
 			.setView(view="#prc.cbLayout#/views/page", module="contentbox");
 	}
-
+	
+	/**
+	* Around entry page advice that provides caching and multi-output format
+	*/
+	function aroundIndex(event,rc,prc,eventArguments){
+		return wrapContentAdvice( event, rc, prc, eventArguments, variables.index );
+	}
+	
 	/**
 	* Present pages
 	*/
