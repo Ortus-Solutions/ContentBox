@@ -106,29 +106,30 @@ component extends="baseHandler"{
 
 	// rollback Version
 	function rollback(event,rc,prc){
-		var results = false;
+		var results = { "ERROR" = false, "MESSAGES" = "" };
 		event.paramValue("revertID","");
 		// get version
 		var oVersion = contentVersionService.get( rc.revertID );
 		if( !isNull( oVersion ) ){
-
 			// announce event
-			announceInterception("cbadmin_preContentVersionRollback",{contentVersion=oVersion});
-
+			announceInterception("cbadmin_preContentVersionRollback", {contentVersion=oVersion} );
 			// Try to revert this version
 			oVersion.getRelatedContent().addNewContentVersion(content=oVersion.getContent(),
 															  changelog="Reverting to version #oVersion.getVersion()#",
 															  author=prc.oAuthor);
 			// save
 			contentVersionService.save( oVersion );
-
 			// announce event
 			announceInterception("cbadmin_postContentVersionRollback",{contentVersion=oVersion});
-
-			results = true;
+			// results
+			results.messages = "Version #oVersion.getVersion()# rollback was successfull!"
+		}
+		else{
+			results.error = true;
+			results.messages = "The versionID sent is not valid!";
 		}
 		// return in json
-		event.renderData(type="json",data=results);
+		event.renderData(type="json", data=results);
 	}
 
 	function diff(event,rc,prc){
