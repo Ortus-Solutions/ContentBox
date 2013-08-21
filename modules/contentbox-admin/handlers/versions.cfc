@@ -16,19 +16,25 @@ component extends="baseHandler"{
 
 		// Get Content
 		prc.content = contentService.get( rc.contentID );
-		// Select Appropriate Tab and buttons
-		if( prc.content.getContentType() eq "page" ){
-			prc.tabContent = true;
-			prc.tabContent_viewAll = true;
-			prc.xehBackTrack = "#prc.cbAdminEntryPoint#.pages";
+		// Do according to type
+		switch( prc.content.getContentType() ){
+			case "Page" : {
+				prc.xehBackTrack 	= "#prc.cbAdminEntryPoint#.pages";
+				prc.xehOpenContent 	= CBHelper.linkContent( prc.content );
+				break;
+			}
+			case "Entry" : {
+				prc.xehBackTrack = "#prc.cbAdminEntryPoint#.entries";
+				prc.xehOpenContent 	= CBHelper.linkContent( prc.content );
+				break;
+			}
+			case "ContentStore" : {
+				prc.xehBackTrack = "#prc.cbAdminEntryPoint#.contentStore";
+				prc.xehOpenContent 	= "";
+				break;
+			}
 		}
-		else{
-			prc.tabEntries = true;
-			prc.tabEntries_viewAll = true;
-			prc.xehBackTrack = "#prc.cbAdminEntryPoint#.entries";
-		}
-
-
+		
 		// Pager with all versions
 		prc.versionsPager = pager(event, rc, prc, rc.contentID, 0, false);
 
