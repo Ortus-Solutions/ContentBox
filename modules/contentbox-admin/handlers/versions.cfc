@@ -46,15 +46,15 @@ component extends="baseHandler"{
 	function pager(event, rc, prc, required contentID, numeric max=10, boolean viewFullHistory=true){
 
 		// Incoming
-		prc.versionsPager_max = arguments.max;
-		prc.versionsPager_contentID = arguments.contentID;
-		prc.versionsPager_viewFullHistory = arguments.viewFullHistory;
+		prc.versionsPager_max 				= arguments.max;
+		prc.versionsPager_contentID 		= arguments.contentID;
+		prc.versionsPager_viewFullHistory 	= arguments.viewFullHistory;
 
 		// Get Content
 		prc.versionsPager_content = contentService.get( arguments.contentID );
 
 		// Get the latest versions
-		var results = contentVersionService.findRelatedVersions(contentID=arguments.contentID,max=arguments.max);
+		var results = contentVersionService.findRelatedVersions(contentID=arguments.contentID, max=arguments.max);
 		prc.versionsPager_count 	= results.count;
 		prc.versionsPager_versions 	= results.versions;
 
@@ -71,7 +71,7 @@ component extends="baseHandler"{
 		prc.xehVersionDiff 		= "#prc.cbAdminEntryPoint#.versions.diff";
 
 		// render out widget
-		return renderView(view="versions/pager",module="contentbox-admin");
+		return renderView(view="versions/pager", module="contentbox-admin");
 	}
 
 	// Quick Look
@@ -83,10 +83,10 @@ component extends="baseHandler"{
 
 	// Remove Version
 	function remove(event,rc,prc){
-		var results = false;
+		var results = { "ERROR" = false, "MESSAGES" = "" };
 		event.paramValue("versionID","");
 		// check for length
-		if( len(rc.versionID) ){
+		if( len( rc.versionID ) ){
 			// announce event
 			announceInterception("cbadmin_preContentVersionRemove",{contentVersionID=rc.versionID});
 			// remove using hibernate bulk
@@ -94,10 +94,14 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception("cbadmin_postContentVersionRemove",{contentVersionID=rc.versionID});
 			// results
-			results = true;
+			results.messages = "Version removed!"
+		}
+		else{
+			results.error = true;
+			results.messages = "No versionID sent to remove!";
 		}
 		// return in json
-		event.renderData(type="json",data=results);
+		event.renderData(type="json", data=results);
 	}
 
 	// rollback Version
