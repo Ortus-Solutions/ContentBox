@@ -47,7 +47,12 @@
     			</label>
                 <div class="controls">
                     <div id='slugCheckErrors'></div>
-					#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width98",title="The URL permalink for this page")#
+					#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width95",title="The URL permalink for this page", disabled = "#(prc.page.getIsPublished() and prc.page.isLoaded())?'true':'false'#")#
+					<div class="floatLeft marginRight5">
+					<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
+						<i id="togglePermalink" class="icon-#(prc.page.getIsPublished() and prc.page.isLoaded())?'lock':'unlock'#"></i>
+					</a>
+					</div>
                 </div>
             </div>
 			<!---ContentToolBar --->
@@ -411,7 +416,6 @@
 					</cfif>
                     <!---End HTML categories--->
                     
-                    <!---Begin HTML Attributes--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>
 					<div class="accordion-group">
                     	<div class="accordion-heading">
