@@ -33,6 +33,7 @@ component persistent="true" entityname="cbContentStore" table="cb_contentStore" 
 	* constructor
 	*/
 	function init(){
+		categories 		= [];
 		customFields	= [];
 		renderedContent = "";
 		allowComments 	= false;

@@ -5,7 +5,6 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="contentService"		inject="id:contentService@cb";
-	property name="customHTMLService"	inject="id:customHTMLService@cb";
 	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
@@ -33,13 +32,6 @@ component extends="baseHandler"{
 			}
 			case "ContentStore" : { 
 				var oContent = contentStoreService.new();
-				prc.preview = oContent.renderContentSilent( rc.content );
-				event.setView(view="content/simplePreview", layout="ajax");
-				return; 
-			}
-			case "CustomHTML" : {
-				var oContent = customHTMLService.new();
-				oContent.setMarkup( rc.markup );
 				prc.preview = oContent.renderContentSilent( rc.content );
 				event.setView(view="content/simplePreview", layout="ajax");
 				return;

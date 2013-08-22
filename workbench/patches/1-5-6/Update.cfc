@@ -59,6 +59,9 @@ component implements="contentbox.model.updates.IUpdate"{
 			
 			log.info("About to begin #version# patching");
 			
+			// update CKEditor Plugins
+			updateCKEditorPlugins();
+
 			// Check for System Salt, else create it
 			updateSalt();
 			
@@ -116,6 +119,44 @@ component implements="contentbox.model.updates.IUpdate"{
 	
 	/************************************** PRIVATE *********************************************/
 	
+	private function updateCKEditorPlugins(){
+		// Update extra plugins
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_extraplugins" } );
+		if( !isNull( setting ) ){
+			var plugins = listToArray( setting.getValue() );
+			// key bindings
+			if( !arrayFindNoCase( plugins, "cbKeyBinding") ){
+				arrayAppend( plugins, "cbKeyBinding" );
+			}
+			// Custom HTML replaced by content store
+			var index = arrayFindNoCase( plugins, "cbCustomHTML" );
+			if( index ){
+				plugins[ index ] = "cbContentStore"
+			}
+			// save back
+			setting.setValue( arrayToList( plugins ) );
+			// save it
+			settingService.save( entity=setting, transactional=false );
+		}
+		// Update Toolbars
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_toolbar" } );
+		if( !isNull( setting ) ){
+			var value = replaceNoCase( setting.getValue(), "cbCustomHTML", "cbContentStore", "all" );
+			// save back
+			setting.setValue( value );
+			// save it
+			settingService.save( entity=setting, transactional=false );
+		}
+		// Update Excerpt Toolbars
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_excerpt_toolbar" } );
+		if( !isNull( setting ) ){
+			var value = replaceNoCase( setting.getValue(), "cbCustomHTML", "cbContentStore", "all" );
+			// save back
+			setting.setValue( value );
+		}
+			
+	}
+
 	private function updateCustomHTML(){
 		var oAuthor = securityService.getAuthorSession();
 		

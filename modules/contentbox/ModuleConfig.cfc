@@ -66,7 +66,7 @@ component {
 			// ContentBox Custom Events
 			customInterceptionPoints = arrayToList([
 				// Code Rendering
-				"cb_onContentRendering","cb_onCustomHTMLRendering,cb_onContentStoreRendering"
+				"cb_onContentRendering","cb_onContentStoreRendering"
 			])
 		};
 
@@ -101,7 +101,6 @@ component {
 		// Page services
 		binder.map("pageService@cb").to("contentbox.model.content.PageService");
 		// Content
-		binder.map("customHTMLService@cb").to("contentbox.model.content.CustomHTMLService");
 		binder.map("contentStoreService@cb").to("contentbox.model.content.ContentStoreService");
 		binder.map("contentVersionService@cb").to("contentbox.model.content.ContentVersionService");
 		binder.map("contentService@cb").to("contentbox.model.content.ContentService");

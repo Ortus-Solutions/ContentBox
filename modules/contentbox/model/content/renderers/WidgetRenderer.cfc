@@ -15,21 +15,13 @@ component accessors="true"{
 	void function cb_onContentRendering( event, struct interceptData ){
 		translateContent( builder=arguments.interceptData.builder, content=arguments.interceptData.content );
 	}
-
-	/**
-	* Execute on content translations for custom HTML
-	*/
-	void function cb_onCustomHTMLRendering( event, struct interceptData ){
-		translateContent(builder=arguments.interceptData.builder,customHTML=arguments.interceptData.customHTML);
-	}
 	
 	/**
     * Executes custom parsing rules on content
     * @builder {java.lang.StringBuilder}
     * @content {String}
-    * @customHTML {String}
     */
-	private function translateContent( required builder, content, customHTML ){
+	private function translateContent( required builder, content ){
 		parseTagWidgets( argumentCollection=arguments );
 		parseTripleMustacheWidgets( argumentCollection=arguments );
 	}
