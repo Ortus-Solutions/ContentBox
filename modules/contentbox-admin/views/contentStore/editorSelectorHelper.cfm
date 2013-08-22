@@ -5,30 +5,36 @@
 <script type="text/javascript">
 $(document).ready(function() {
  	// Shared Pointers
-	$entryEditorSelectorForm 	= $("##entryEditorSelectorForm");
-	$entryEditorSelectorLoader 	= $entryEditorSelectorForm.find("##entryLoader");
+	$editorSelectorForm 		= $("##contentStoreEditorSelectorForm");
+	$editorSelectorLoader 	= $editorSelectorForm.find("##contentStoreLoader");
 	// keyup quick search
-	$("##entrySearch").keyup(function(){
+	$("##contentSearch").keyup(function(){
 		var $this = $(this);
 		var clearIt = ( $this.val().length > 0 ? false : true );
 		// ajax search
-		$('##entriesContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
+		$('##contentContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
 			{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
 			function(){
-				$pageEditorSelectorLoader.fadeOut();
+				$editorSelectorLoader.fadeOut();
 		});
 		
 	});
 	<cfif len( rc.search )>
-	$("##entrySearch").focus();
+	$("##contentSearch").focus();
 	</cfif>
 });
 function pagerLink(page){
-	$entryEditorSelectorLoader.fadeIn("fast");
+	$editorSelectorLoader.fadeIn("fast");
 	$('##modal')
 		.load('#event.buildLink(prc.xehEditorSelector)#?editorName=#rc.editorName#&page=' + page, function() {
-			$entryEditorSelectorLoader.fadeOut();
+			$editorSelectorLoader.fadeOut();
 	});
+}
+function insertContentStore(slug){
+	var customContent = "{{{ContentStore slug='"+slug+"'}}}";
+	$("###rc.editorName#").ckeditorGet().insertText( customContent );
+	closeRemoteModal();
+	return false;
 }
 </script>
 </cfoutput>

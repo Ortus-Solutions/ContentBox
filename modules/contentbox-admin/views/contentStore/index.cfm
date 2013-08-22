@@ -5,7 +5,7 @@
 	    <div class="box">
 			<!--- Body Header --->
 			<div class="header">
-				<i class="icon-quote-left icon-large"></i>
+				<i class="icon-hdd icon-large"></i>
 				Content Store
 			</div>
 			<!--- Body --->
@@ -23,14 +23,6 @@
 				#html.startForm(name="contentForm",action=prc.xehContentRemove)#
 				#html.hiddenField(name="contentStatus",value="")#
 				#html.hiddenField(name="contentID",value="")#
-				
-				<!--- Info Bar --->
-				<cfif NOT prc.cbSettings.cb_comments_enabled>
-					<div class="alert alert-info">
-						<i class="icon-exclamation-sign icon-large"></i>
-						Comments are currently disabled site-wide!
-					</div>
-				</cfif>
 				
 				<!--- Content Bar --->
 				<div class="well well-small" id="contentBar">
