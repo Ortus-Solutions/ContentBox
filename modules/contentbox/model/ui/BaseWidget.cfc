@@ -32,7 +32,7 @@ component extends="coldbox.system.Plugin" accessors="true"{
 	property name="contentVersionService"	inject="id:contentVersionService@cb";
 	property name="authorService"			inject="id:authorService@cb";
 	property name="commentService"			inject="id:commentService@cb";
-	property name="customHTMLService"		inject="id:customHTMLService@cb";
+	property name="contentStoreService"		inject="id:contentStoreService@cb";
 	property name="cb"						inject="id:CBHelper@cb";
 	property name="securityService" 		inject="id:securityService@cb";
 	property name="html"					inject="coldbox:plugin:HTMLHelper";

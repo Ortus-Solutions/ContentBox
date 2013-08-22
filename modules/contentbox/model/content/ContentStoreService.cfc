@@ -36,8 +36,13 @@ component extends="ContentService" singleton{
 
 	/**
 	* Save content
+	* @content.hint The content object
+	* @transactional.hint Use a transaction or not.
 	*/
-	function saveContent(content, boolean transactional=true){
+	function saveContent(
+		any content, 
+		boolean transactional=true){
+		
 		var c = newCriteria();
 
 		// Prepare for slug uniqueness
@@ -56,8 +61,25 @@ component extends="ContentService" singleton{
 
 	/**
 	* content search returns struct with keys [content,count]
+	* @search.hint The search string to search
+	* @isPublished.hint Can be 'any', 'true' or 'false'
+	* @category.hint one or more categories to search content for 
+	* @author.hint The author ID to filter on or use 'any' for all
+	* @max.hint The maximum number of records to retrieve
+	* @offset.hint Where to start in the pagination
+	* @sortOrder.hint The sort ordering to apply to the results
+	* @searchActiveContent.hint Whether active content will be searched or not, by default it does
 	*/
-	struct function search(search="",isPublished,category,author,max=0,offset=0,sortOrder="publishedDate DESC",boolean searchActiveContent=true){
+	struct function search(
+		any search="",
+		any isPublished,
+		any category,
+		any author,
+		numeric max=0,
+		numeric offset=0,
+		any sortOrder="publishedDate DESC",
+		boolean searchActiveContent=true){
+
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
@@ -88,10 +110,14 @@ component extends="ContentService" singleton{
 			if( arguments.searchActiveContent ){
 				// like disjunctions
 				c.or( c.restrictions.like("title","%#arguments.search#%"),
+					  c.restrictions.like("slug","%#arguments.search#%"),
+					  c.restrictions.like("description","%#arguments.search#%"),
 					  c.restrictions.like("ac.content", "%#arguments.search#%") );
 			}
 			else{
-				c.like("title","%#arguments.search#%");
+				c.or( c.restrictions.like("title","%#arguments.search#%"),
+					  c.restrictions.like("slug","%#arguments.search#%"),
+					  c.restrictions.like("description","%#arguments.search#%") );
 			}
 		}
 		// Category Filter
@@ -109,15 +135,30 @@ component extends="ContentService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count("contentID");
+		results.count 	= c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(offset=arguments.offset,max=arguments.max,sortOrder=arguments.sortOrder,asQuery=false);
 
 		return results;
 	}
 
-	// Entry listing by Date
-	function findPublishedEntriesByDate(numeric year=0,numeric month=0, numeric day=0,max=0,offset=0,asQuery=false){
+	/**
+	* Entry listing by Date
+	* @year.hint The year to search
+	* @month.hint The month to search
+	* @day.hint The day to search
+	* @max.hint The maximum number of records to retrieve
+	* @offset.hint Where to start in the pagination
+	* @asQuery.hint Return results as query or array of objects. Defaults to false
+	*/
+	function findPublishedEntriesByDate(
+		numeric year=0,
+		numeric month=0, 
+		numeric day=0,
+		numeric max=0,
+		numeric offset=0,
+		boolean asQuery=false){
+
 		var results = {};
 		var hql = "FROM cbEntry
 				  WHERE isPublished = true
@@ -151,8 +192,21 @@ component extends="ContentService" singleton{
 		return results;
 	}
 
-	// Entry listing for UI
-	function findPublishedEntries(max=0,offset=0,category="",searchTerm="",asQuery=false){
+	/**
+	* Find published entries by filters
+	* @max.hint The maximum number of records to retrieve
+	* @offset.hint Where to start in the pagination
+	* @category.hint One or more categories to filter on
+	* @searchTerm.hint The search term to use for search
+	* @asQuery.hint Return results as query or array of objects. Defaults to false
+	*/
+	function findPublishedEntries(
+		numeric max=0,
+		numeric offset=0,
+		any category="",
+		any searchTerm="",
+		boolean asQuery=false){
+
 		var results = {};
 		var c = newCriteria();
 

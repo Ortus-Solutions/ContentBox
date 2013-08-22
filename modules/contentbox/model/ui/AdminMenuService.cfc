@@ -83,7 +83,6 @@ component accessors="true" threadSafe singleton{
 		// Content Tab
 		prc.xehPages		= "#this.ADMIN_ENTRYPOINT#.pages";
 		prc.xehPagesEditor	= "#this.ADMIN_ENTRYPOINT#.pages.editor";
-		prc.xehCustomHTML	= "#this.ADMIN_ENTRYPOINT#.customHTML";
 		prc.xehContentStore	= "#this.ADMIN_ENTRYPOINT#.contentstore";
 		prc.xehMediaManager	= "#this.ADMIN_ENTRYPOINT#.mediamanager";
 
@@ -126,9 +125,8 @@ component accessors="true" threadSafe singleton{
 		addTopMenu(name=this.CONTENT,label="<i class='icon-pencil icon-large'></i> Content")
 			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#")
 			.addSubMenu(topMenu=this.CONTENT,name="Blog",label="Blog",href="#event.buildLink(prc.xehEntries)#")
-			.addSubMenu(name="contentStore",label="Content Store",href="#event.buildLink(prc.xehContentStore)#",permissions="CONTENTSTORE_ADMIN")
+			.addSubMenu(name="contentStore",label="Content Store",href="#event.buildLink(prc.xehContentStore)#",permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR")
 			.addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#")
-			.addSubMenu(name="customHTML",label="Custom HTML",href="#event.buildLink(prc.xehCustomHTML)#",permissions="CUSTOMHTML_ADMIN")
 			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",permissions="MEDIAMANAGER_ADMIN");
 
 		// Comments

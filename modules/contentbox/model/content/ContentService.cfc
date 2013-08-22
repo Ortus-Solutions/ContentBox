@@ -38,10 +38,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* Constructor
+	* @entityName.hint The content entity name to bind this service to.
 	*/
 	ContentService function init(entityName="cbContent"){
 		// init it
-		super.init(entityName=arguments.entityName,useQueryCaching=true);
+		super.init(entityName=arguments.entityName, useQueryCaching=true);
 
 		return this;
 	}
@@ -75,7 +76,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @slug.hint The slug partial to clean on
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearPageWrapperCaches(required string slug, boolean async=false){
+	function clearPageWrapperCaches(required any slug, boolean async=false){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
@@ -88,7 +89,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @slug.hint The slug to clean
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearPageWrapper(required string slug, boolean async=false){
+	function clearPageWrapper(required any slug, boolean async=false){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
@@ -106,7 +107,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @isPublished.hint Search for published, non-published or both content objects [true, false, 'all']
 	* @searchActiveContent.hint Search only content titles or both title and active content. Defaults to both.
 	*/
-	function searchContent(searchTerm="", max=0, offset=0, asQuery=false, sortOrder="publishedDate DESC", isPublished=true, boolean searchActiveContent=true){
+	function searchContent(
+		any searchTerm="", 
+		numeric max=0, 
+		numeric offset=0, 
+		boolean asQuery=false, 
+		any sortOrder="publishedDate DESC", 
+		boolean isPublished=true, 
+		boolean searchActiveContent=true){
+
 		var results = {};
 		var c = newCriteria();
 
@@ -148,7 +157,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Get an id from a slug of a content object
 	* @slug.hint The slug to search an ID for.
 	*/
-	string function getIDBySlug(required slug){
+	function getIDBySlug(required any slug){
 		var results = newCriteria()
 			.isEq("slug", arguments.slug)
 			.withProjections(property="contentID")
@@ -159,32 +168,31 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Find a published content object by slug and published unpublished flags
+	* Find a published content object by slug and published unpublished flags, if not found it returns
+	* a new content object
 	* @slug.hint The slug to search
 	* @showUnpublished.hint To also show unpublished content, defaults to false.
 	*/
-	function findBySlug(required slug, required showUnpublished=false){
+	function findBySlug(required any slug, required boolean showUnpublished=false){
 		var c = newCriteria();
 		// Override usually for admins
-		if (!showUnpublished){
+		if( !showUnpublished ){
 			c.isTrue("isPublished")
 				.isLT("publishedDate", now())
 				.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) );
 		}
 		// By criteria now
 		var content = c.isEq("slug",arguments.slug).get();
-
-		// if not found, send and empty one
-		if( isNull(content) ){ return new(); }
-
-		return content;
+		// return accordingly
+		return ( isNull( content ) ? new() : content );
 	}
 	
 	/**
 	* Verify an incoming slug is unique or not
 	* @slug.hint The slug to search for uniqueness
+	* @contentID.hint Limit the search to the passed contentID usually for updates
 	*/
-	function isSlugUnique(required slug, contentID=""){
+	function isSlugUnique(required any slug, any contentID=""){
 		var c = newCriteria()
 			.isEq( "slug", arguments.slug );
 		
@@ -199,7 +207,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Delete a content object safely via hierarchies
 	* @content.hint the Content object to delete
 	*/
-	ContentService function deleteContent(required content){
+	ContentService function deleteContent(required any content){
 		// Check for dis-associations
 		if( arguments.content.hasParent() ){
 			arguments.content.getParent().removeChild( arguments.content );
@@ -223,7 +231,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @parent.hint The parent ID to filter on or not
 	* @showInMenu.hint Whether to filter with the show in menu bit or not
 	*/
-	function findPublishedContent(max=0,offset=0,searchTerm="",category="",asQuery=false,parent,boolean showInMenu){
+	function findPublishedContent(
+		numeric max=0,
+		numeric offset=0,
+		any searchTerm="",
+		any category="",
+		boolean asQuery=false,
+		any parent,
+		boolean showInMenu){
+
 		var results = {};
 		var c = newCriteria();
 		// sorting
@@ -238,7 +254,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		// Show only pages with showInMenu criteria?
 		if( structKeyExists(arguments,"showInMenu") ){
-			c.isTrue("showInMenu");
+			c.isEq( "showInMenu", javaCast( "boolean", arguments.showInMenu ) );
 		}
 
 		// Category Filter
@@ -276,10 +292,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* Bulk Publish Status Updates
-	* @contentID The list or array of ID's to bulk update
-	* @status The status either 'publish' or 'draft'
+	* @contentID.hint The list or array of ID's to bulk update
+	* @status.hint The status either 'publish' or 'draft'
 	*/
-	any function bulkPublishStatus(required contentID, required status){
+	any function bulkPublishStatus(required any contentID, required any status){
 		var publish = false;
 
 		// publish flag
@@ -304,7 +320,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Get the top visited content entries
 	* @max.hint The maximum to retrieve, defaults to 5 entries
 	*/
-	array function getTopVisitedContent(max=5){
+	array function getTopVisitedContent(numeric max=5){
 		var c = newCriteria()
 			.list(max=arguments.max, sortOrder="hits desc", asQuery=false);
 		return c;
@@ -314,7 +330,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Get the top commented content entries
 	* @max.hint The maximum to retrieve, defaults to 5 entries
 	*/
-	array function getTopCommentedContent(max=5){
+	array function getTopCommentedContent(numeric max=5){
 		var c = newCriteria()
 			.list(max=arguments.max, sortOrder="numberOfComments desc", asQuery=false);
 		return c;
@@ -322,8 +338,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* Get all content for export as flat data
+	* @inData.hint The data to use for exporting, usually concrete implementtions can override this.
 	*/
-	array function getAllForExport(inData){
+	array function getAllForExport(any inData){
 		var result = [];
 		
 		if( !structKeyExists( arguments, "inData") ){
@@ -343,6 +360,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
+	* @importFile.hint The absolute file path to use for importing
+	* @override.hint Override records or not
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
@@ -358,8 +377,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* Import data from an array of structures of content or just one structure of a content entry 
+	* @importData.hint The data to import
+	* @override.hint Override records or not
+	* @importLog.hint The import log buffer
 	*/
-	string function importFromData(required importData, boolean override=false, importLog){
+	string function importFromData(
+		required any importData, 
+		boolean override=false, 
+		required any importLog){
+		
 		var allContent = [];
 		
 		// if struct, inflate into an array
@@ -409,7 +435,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @importLog.hint The string builder import log
 	* @parent.hint If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
 	*/
-	private function inflateFromStruct(required contentData, required importLog, parent){
+	private function inflateFromStruct(
+		required any contentData, 
+		required any importLog, 
+		any parent){
+		
 		// setup
 		var thisContent 	= arguments.contentData;
 		var badDateRegex  = " -\d{4}$";
@@ -551,9 +581,12 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	
 	/**
 	* Update a content's hits with some async flava
+	* @contentID.hint The content id to update
+	* @async.hint Async or not
 	*/
-	ContentService function updateHits(required contentID){
-		if( systemUtil.inThread() ){
+	ContentService function updateHits(required contentID, boolean async=true){
+		// if in thread already or not async
+		if( systemUtil.inThread() OR !arguments.async ){
 			return syncUpdateHits( arguments.contentID );
 		}
 		
@@ -563,9 +596,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		return this;
 	}
+
+/********************************************* PRIVATE *********************************************/
 	
+
 	/**
 	* Update the content hits
+	* @contentID.hint The content id to update
 	*/
 	private function syncUpdateHits(required contentID){
 		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.contentID#").execute();

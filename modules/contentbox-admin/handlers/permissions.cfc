@@ -65,7 +65,7 @@ component extends="baseHandler"{
 		setNextEvent( prc.xehPermissions );
 	}
 	
-	// Export All CustomHTML
+	// Export All Permissions
 	function exportAll(event,rc,prc){
 		event.paramValue("format", "json");
 		// get all prepared content objects
