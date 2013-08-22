@@ -46,10 +46,17 @@
                         <i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
     					<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
     				</label>
-                    <div class="controls">
-                        <div id='slugCheckErrors'></div>
-						#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
-                    </div>
+					<div class="controls">
+					    <div id='slugCheckErrors'></div>
+						#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width95",title="The URL permalink for this page", disabled = "#(prc.entry.getIsPublished() and prc.entry.isLoaded())?'true':'false'#")#
+						<div class="floatLeft marginRight5">
+						<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
+							<i id="togglePermalink" class="icon-#(prc.entry.getIsPublished() and prc.entry.isLoaded())?'lock':'unlock'#"></i>
+						</a>
+						</div>
+					</div>					
+					
+					
                 </div>			
 				<!---ContentToolBar --->
 				<div id="contentToolBar">
