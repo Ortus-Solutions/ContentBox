@@ -218,8 +218,8 @@ function getWidgetRenderArgsURL(){ return '#event.buildLink( prc.cbAdminEntryPoi
 function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
 // Entry Selection Integration
 function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector")#';}
-// Custom HTML Selection Integration
-function getCustomHTMLSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".customHTML.editorselector")#';}
+// ContentStore Selection Integration
+function getContentStoreSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".contentStore.editorselector")#';}
 // Preview Integration
 function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".content.preview")#';}
 // Module Link Building

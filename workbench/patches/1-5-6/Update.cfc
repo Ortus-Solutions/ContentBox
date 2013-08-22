@@ -242,6 +242,13 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_media_html5uploads_maxFiles", "25" );
 		addSetting( "cb_page_excerpts", "false" );
 		addSetting( "cb_content_uiexport", "true" );
+		
+		// Update Settings
+		var setting = settingService.findWhere( { name = "cb_customHTML_caching" } );
+		if( !isNull( setting ) ){
+			setting.setName( "cb_contentstore_caching" );
+			settingService.save( entity=setting, transactional=false );
+		}
 	}
 	
 	private function addSetting(name, value){
