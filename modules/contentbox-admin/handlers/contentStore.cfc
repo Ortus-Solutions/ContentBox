@@ -401,10 +401,10 @@ component extends="baseHandler"{
 
 		// search content with filters and all
 		var contentResults = contentStoreService.search(search=rc.search,
-											   offset=prc.paging.startRow-1,
-											   max=prc.cbSettings.cb_paging_maxrows,
-											   sortOrder="createdDate asc",
-											   searchActiveContent=false);
+													    offset=prc.paging.startRow-1,
+													    max=prc.cbSettings.cb_paging_maxrows,
+													    sortOrder="createdDate asc",
+													    searchActiveContent=false);
 
 		prc.content 		= contentResults.content;
 		prc.contentCount  	= contentResults.count;
@@ -412,7 +412,7 @@ component extends="baseHandler"{
 		
 		// if ajax and searching, just return tables
 		if( event.isAjax() and len( rc.search ) OR rc.clear ){
-			return renderView(view="contentStore/editorSelectorContent", module="contentbox-admin");
+			return renderView(view="contentStore/editorSelectorEntries", module="contentbox-admin");
 		}
 		else{
 			event.setView(view="contentStore/editorSelector",layout="ajax");
