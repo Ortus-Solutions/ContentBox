@@ -13,7 +13,7 @@
 				<div class="btn-group pull-right" style="margin-top:5px">
 				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehContentStore)#';return false;"><i class="icon-reply"></i> Back</button>
 					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
-			    	<span class="caret"></span>
+			    	<span class="icon-cog"></span>
 				    </button>
 			   		<ul class="dropdown-menu">
 			   			<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
