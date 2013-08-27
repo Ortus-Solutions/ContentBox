@@ -81,10 +81,11 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehModules = "#prc.cbAdminEntryPoint#.modules";
 
 		// Authors Tab
-		prc.xehAuthors		= "#prc.cbAdminEntryPoint#.authors";
-		prc.xehAuthorEditor	= "#prc.cbAdminEntryPoint#.authors.editor";
+		prc.xehAuthors			= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehAuthorEditor		= "#prc.cbAdminEntryPoint#.authors.editor";
 		prc.xehPermissions		= "#prc.cbAdminEntryPoint#.permissions";
 		prc.xehRoles			= "#prc.cbAdminEntryPoint#.roles";
+		prc.xehAuthorSideBar 	= "#prc.cbAdminEntryPoint#.authors.changeSidebarState";
 
 		// Tools
 		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";

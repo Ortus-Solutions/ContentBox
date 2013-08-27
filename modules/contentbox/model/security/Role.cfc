@@ -52,7 +52,7 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 	
 	/**
 	* Check for permission
-	* @slug.hint the slug of the permission to check.
+	* @slug.hint The permission slug or list of slugs to validate the role has. If it's a list then they are ORed together
 	*/
 	boolean function checkPermission(required slug){
 		// cache list
@@ -60,12 +60,19 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 			var q = entityToQuery( getPermissions() );
 			permissionList = valueList( q.permission );	
 		}
-		// checks
-		if( listFindNoCase(permissionList, arguments.slug) ){
-			return true;
+		
+		// Do verification checks
+		var aList = listToArray( arguments.slug );
+		var isFound = false;
+		
+		for( var thisPerm in aList ){
+			if( listFindNoCase( permissionList, trim( thisPerm ) ) ){
+				isFound = true;
+				break;
+			}
 		}
 		
-		return false;
+		return isFound;
 	}
 	
 	/**

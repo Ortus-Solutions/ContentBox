@@ -31,18 +31,18 @@ function publishNow(){
 function quickSave(){
 	// Draft it
 	$isPublished.val('false');
+	// Commit Changelog default it to quick save if not set
+	if( !$changelog.val().length ){
+		$changelog.val( "quick save" );
+	}
 	// Validation of Form First before quick save
 	if( !$targetEditorForm.valid() ){
 		return false;
 	}
-	// Commit Changelog default if none specified, most likely changelogs are not mandatory
-	if( !$changelog.val().length ){
-		$changelog.val( "quick save" );
-	}
 	// Activate Loader
 	toggleLoaderBar();
 	// Save current content, just in case
-	$content.val( getEditorContent() );
+	//$content.val( getEditorContent() );
 	// Post it
 	$.post($targetEditorSaveURL, $targetEditorForm.serialize(), function(data){
 		// Save new id
@@ -75,6 +75,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$isPublished 			= $targetEditorForm.find("##isPublished");
 	$contentID				= $targetEditorForm.find("##contentID");
 	$changelog				= $targetEditorForm.find("##changelog");
+	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
@@ -136,6 +137,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$("##htmlDescription").keyup(function(){
 		$("##html_description_count").html( $("##htmlDescription").val().length );
 	});
+	
 }
 
 // Switch Editors
@@ -187,13 +189,23 @@ function permalinkUniqueCheck(){
 		}
 	} );
 }
-
 // Toggle drafts on for saving
 function toggleDraft(){
 	needConfirmation = false;
 	$isPublished.val('false');
 }
-
+// Quick Publish Action
+function quickPublish(isDraft){
+	if( isDraft ){
+		toggleDraft();
+	}
+	// Verify changelogs and open sidebar if closed:
+	if( $changelogMandatory && !isSidebarOpen() ){
+		toggleSidebar();
+	}
+	// submit form
+	$targetEditorForm.submit();
+}
 // Widget Plugin Integration
 function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
 // Widget Preview Integration

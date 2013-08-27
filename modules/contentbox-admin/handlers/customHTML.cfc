@@ -30,56 +30,69 @@ component extends="baseHandler"{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="editorService"		inject="id:editorService@cb";
 	property name="authorService"		inject="id:authorService@cb";
+	property name="categoryService"		inject="id:categoryService@cb";
 	
 	// index
 	function index(event,rc,prc){
-		event.paramValue("search","");
-		event.paramValue("page",1);
-		event.paramValue("fAuthors","all");
-		event.paramValue("fStatus","any");
-		event.paramValue("isFiltering",false,true);
-		
-		// Exit Handler
-		prc.xehSaveHTML 		= "#prc.cbAdminEntryPoint#.customHTML.save";
-		prc.xehRemoveHTML		= "#prc.cbAdminEntryPoint#.customHTML.remove";
-		prc.xehEditorHTML		= "#prc.cbAdminEntryPoint#.customHTML.editor";
-		prc.xehExportHTML		= "#prc.cbAdminEntryPoint#.customHTML.export";
-		prc.xehExportAllHTML	= "#prc.cbAdminEntryPoint#.customHTML.exportAll";
-		prc.xehImportHTML		= "#prc.cbAdminEntryPoint#.customHTML.importAll";
-		prc.xehContentSearch 	= "#prc.cbAdminEntryPoint#.customHTML";
-		prc.xehBulkStatus 		= "#prc.cbAdminEntryPoint#.customHTML.bulkstatus";
-		
-		// prepare paging plugin
-		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
-		prc.paging 		 = prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	 = event.buildLink( '#prc.xehCustomHTML#.page.@page@?' );
-		
-		// Append filters to paging link?
-		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
-		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
-		// is Filtering?
-		if( rc.fAuthors neq "all" OR rc.fStatus neq "any"){ prc.isFiltering = true; }
-
 		// get all authors
 		prc.authors    = authorService.getAll(sortOrder="lastName");
-		// Append search to paging link?
-		if( len( rc.search ) ){ prc.pagingLink&="&search=#rc.search#"; }
-		
-		// get content pieces
-		var entryResults = htmlService.search(search=rc.search,
-											  isPublished=rc.fStatus,
-											  author=rc.fAuthors,
-											  offset=prc.paging.startRow-1,
-											  max=prc.cbSettings.cb_paging_maxrows);
-		prc.entries 		= entryResults.entries;
-		prc.entriesCount  	= entryResults.count;
+		// get all categories
+		prc.categories = categoryService.getAll(sortOrder="category");
+
+		// Exit Handler
+		prc.xehEntrySearch 		= "#prc.cbAdminEntryPoint#.customHTML";
+		prc.xehEditorHTML		= "#prc.cbAdminEntryPoint#.customHTML.editor";
+		prc.xehRemoveHTML		= "#prc.cbAdminEntryPoint#.customHTML.remove";
+		prc.xehEntryTable	 	= "#prc.cbAdminEntryPoint#.customHTML.entriesTable";
+		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.customHTML.bulkstatus";
+		prc.xehExportAllHTML	= "#prc.cbAdminEntryPoint#.customHTML.exportAll";
+		prc.xehImportHTML		= "#prc.cbAdminEntryPoint#.customHTML.importAll";
+		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.customHTML.clone";
 		
 		// tab
-		prc.tabContent				= true;
 		prc.tabContent_customHTML	= true; 
 		
 		// view
 		event.setView( "customHTML/index" );
+	}
+	
+	// entriesTable
+	function entriesTable(event,rc,prc){
+		event.paramValue("page",1);
+		event.paramValue("searchEntries","");
+		event.paramValue("fAuthors","all");
+		event.paramValue("fCategories","all");
+		event.paramValue("fStatus","any");
+		event.paramValue("isFiltering",false,true);
+		event.paramValue("showAll", false);
+		
+		// prepare paging plugin
+		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 		 = prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	 = "javascript:contentPaginate(@page@)";
+		
+		// is Filtering?
+		if( rc.fAuthors neq "all" OR rc.fStatus neq "any" OR rc.fCategories neq "all" or rc.showAll ){ 
+			prc.isFiltering = true;
+		}
+		
+		// get content pieces
+		var entryResults = htmlService.search(search=rc.searchEntries,
+											  isPublished=rc.fStatus,
+											  author=rc.fAuthors,
+											  offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
+											  max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ));
+		prc.entries 		= entryResults.entries;
+		prc.entriesCount  	= entryResults.count;
+		
+		// Exit Handler
+		prc.xehContentSearch 	= "#prc.cbAdminEntryPoint#.customHTML";
+		prc.xehRemoveHTML		= "#prc.cbAdminEntryPoint#.customHTML.remove";
+		prc.xehEditorHTML		= "#prc.cbAdminEntryPoint#.customHTML.editor";
+		prc.xehExportHTML		= "#prc.cbAdminEntryPoint#.customHTML.export";
+		
+		// view
+		event.setView(view="customHTML/indexTable", layout="ajax");
 	}
 	
 	// slugify remotely
@@ -147,7 +160,7 @@ component extends="baseHandler"{
 		
 		// populate and get content
 		var oContent = htmlService.get( id=rc.contentID );
-		populateModel( htmlService.get(id=rc.contentID) )
+		populateModel( oContent )
 			.addPublishedtime( rc.publishedHour, rc.publishedMinute )
 			.addExpiredTime( rc.expireHour, rc.expireMinute );
 		
@@ -213,22 +226,41 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
-		event.paramValue("contentID","");
+		// params
+		event.paramValue( "contentID", "" );
 		event.paramValue("page","1");
-		// check for length
-		if( len(rc.contentID) ){
-			// announce event
-			announceInterception("cbadmin_preCustomHTMLRemove",{contentID=rc.contentID});
-			// remove using hibernate bulk
-			htmlService.deleteByID( listToArray(rc.contentID) );
-			// announce event
-			announceInterception("cbadmin_postCustomHTMLRemove",{contentID=rc.contentID});
-			// message
-			getPlugin("MessageBox").info("Custom HTML Content Removed!");
+		
+		// verify if contentID sent
+		if( !len( rc.contentID ) ){
+			getPlugin("MessageBox").warn( "No entries sent to delete!" );
+			setNextEvent(event=prc.xehCustomHTML, queryString="page=#rc.page#");
 		}
-		else{
-			getPlugin("MessageBox").warn("No ID selected!");
+		
+		// Inflate to array
+		rc.contentID = listToArray( rc.contentID );
+		var messages = [];
+		
+		// Iterate and remove
+		for( var thisContentID in rc.contentID ){
+			var entry = htmlService.get( thisContentID );
+			if( isNull( entry ) ){
+				arrayAppend( messages, "Invalid entry contentID sent: #thisContentID#, so skipped removal" );
+			}
+			else{
+				// GET id to be sent for announcing later
+				var contentID 	= entry.getContentID();
+				var title		= entry.getTitle();
+				// announce event
+				announceInterception("cbadmin_preCustomHTMLRemove", { entry=entry, contentID=contentID } );
+				// Delete it
+				htmlService.delete( entry );
+				arrayAppend( messages, "Entry '#title#' removed" );
+				// announce event
+				announceInterception("cbadmin_postCustomHTMLRemove", { contentID=contentID });
+			}
 		}
+		// messagebox
+		getPlugin("MessageBox").info(messageArray=messages);
 		setNextEvent(event=prc.xehCustomHTML,queryString="page=#rc.page#");
 	}
 	
@@ -281,6 +313,36 @@ component extends="baseHandler"{
 		}
 		
 		event.renderData(data=data, type="json");
+	}
+	
+	// clone
+	function clone(event,rc,prc){
+		// validation
+		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
+			getPlugin("MessageBox").warn("Can't clone the unclonable, meaning no contentID or title passed.");
+			setNextEvent(event=prc.xehCustomHTML);
+			return;
+		}
+		// decode the incoming title
+		rc.title = urldecode( rc.title );
+		// get the entry to clone
+		var original = htmlService.get( rc.contentID );
+		// Verify new Title, else do a new copy of it
+		if( rc.title eq original.getTitle() ){
+			rc.title = "Copy of #rc.title#";
+		}
+		// get a clone with new title and slug
+		var clone = htmlService.new( { title=rc.title, slug=getPlugin("HTMLHelper").slugify( rc.title ) } );
+		// prepare descendants for cloning, might take a while if lots of children to copy.
+		clone.prepareForClone(author=prc.oAuthor, 
+							  original=original, 
+							  originalService=htmlService, 
+							  publish=rc.entryStatus);
+		// clone this sucker now!
+		htmlService.saveCustomHTML( clone );
+		// relocate
+		getPlugin("MessageBox").info("Entry Cloned, isn't that cool!");
+		setNextEvent(event=prc.xehCustomHTML);
 	}
 	
 	// Export CustomHTML

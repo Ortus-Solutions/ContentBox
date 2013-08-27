@@ -24,15 +24,18 @@
 	
 				<div class="well well-small">
 					<!--- Create Butons --->
-					<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 					<div class="buttonBar">
 						<!---Global --->
+						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
+					    		<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT")>
 					    		<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_EXPORT")>
 					    		<li class="dropdown-submenu">
 									<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
@@ -40,11 +43,14 @@
 										<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 									</ul>
 								</li>
+								</cfif>
 					    	</ul>
 					    </div>
+						</cfif>
+						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')">Create User</button>
+						</cfif>
 					</div>
-					</cfif>
 	
 					<!--- Filter Bar --->
 					<div class="filterBar">
@@ -111,6 +117,7 @@
 											<li><a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><i class="icon-edit icon-large"></i> Edit</a></li>
 									
 											<!--- Export --->
+											<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_EXPORT")>
 											<li class="dropdown-submenu pull-left">
 												<a href="javascript:null"><i class="icon-download icon-large"></i> Export</a>
 												<ul class="dropdown-menu text-left">
@@ -118,6 +125,9 @@
 													<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 												</ul>
 											</li>
+											</cfif>
+										<cfelse>
+											<li><a href="javascript:null()"><em>No available actions</em></a></li>
 										</cfif>
 							    	</ul>
 							    </div>
@@ -155,7 +165,7 @@
 	</div>
 </div>
 
-<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT")>
 <!---Import Dialog --->
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">

@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox UI Module";
-	this.version			= "1.5.5";
+	this.version			= "1.5.6";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 
@@ -57,6 +57,8 @@ component {
 			{pattern="/__page_preview", handler="page", action="preview" },
 			// media delivery
 			{pattern="/__media", handler="media", action="index"},
+			// captcha delivery
+			{pattern="/__captcha", handler="media", action="captcha"},
 			
 			/************************************** RSS ROUTES *********************************************/
 

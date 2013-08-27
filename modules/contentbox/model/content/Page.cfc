@@ -99,7 +99,12 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		
 		// Local Memento Properties
 		for(var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}
 		}
 		
 		return result;

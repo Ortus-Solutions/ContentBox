@@ -81,14 +81,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/**
 	* Get custom HTML content pieces by slug
-	* @slug The content slug to retrieve
+	* @slug.hint The content slug to retrieve
+	* @defaultValue.hint The default value to use if custom html element not found.
 	*/
-	function customHTML(required slug){
+	function customHTML(required slug, defaultValue=""){
 		var content = customHTMLService.findWhere({slug=arguments.slug});
-		if( isNull(content) ){
-			throw(message="The content slug '#arguments.slug#' does not exist",type="ContentBox.CBHelper.InvalidCustomHTMLSlug");
-		}
-		return content.renderContent();
+		return ( isNull(content) OR not isObject( content ) ? arguments.defaultValue : content.renderContent() );
 	}
 	
 	/************************************** Minify methods *********************************************/
@@ -201,7 +199,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return false;
 	}
-
+	// Determine if you are in printing or exporting format
+	boolean function isPrintFormat(){
+		return ( getRequestContext().getValue("format","contentbox") eq "contentbox" ? false : true );
+	}
 	// get comment errors array, usually when the form elements did not validate
 	array function getCommentErrors(){
 		var prc = getRequestCollection(private=true);
@@ -638,58 +639,72 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* Link to a specific blog entry's page
 	* @entry The entry to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkEntry(required entry, boolean ssl=false){
+	function linkEntry(required entry, boolean ssl=false, format="html"){
+		// format?
+		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		if( isSimpleValue(arguments.entry) ){
 			return linkEntryWithSlug( arguments.entry, arguments.ssl );
 		}
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.entry.getSlug()#";
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
 
 	/**
 	* Link to a specific entry's page using a slug only
 	* @slug The entry slug to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkEntryWithSlug(required slug, boolean ssl=false){
+	function linkEntryWithSlug(required slug, boolean ssl=false, format="html"){
+		// format?
+		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.slug#";
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
 
 	/**
 	* Link to a specific content object
 	* @content.hint The content object to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkContent(required content, boolean ssl=false){
-		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl ); }
-		if( arguments.content.getContentType() eq "page" ){ return linkPage( arguments.content, arguments.ssl); }
+	function linkContent(required content, boolean ssl=false, format="html"){
+		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl, arguments.format ); }
+		if( arguments.content.getContentType() eq "page" ){ return linkPage( arguments.content, arguments.ssl, arguments.format ); }
 	}
 
 	/**
 	* Link to a specific page
 	* @page.hint The page to link to. This can be a simple value or a page object
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkPage(required page, boolean ssl=false){
-		if( isSimpleValue(arguments.page) ){
-			return linkPageWithSlug( arguments.page, arguments.ssl );
+	function linkPage(required page, boolean ssl=false, format="html"){
+		// format?
+		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+		// link directly or with slug
+		if( isSimpleValue( arguments.page ) ){
+			return linkPageWithSlug( arguments.page, arguments.ssl, arguments.format );
 		}
 		var xeh = siteRoot() & sep() & arguments.page.getSlug();
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
 
 	/**
 	* Link to a specific page using a slug only
 	* @slug.hint The page slug to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkPageWithSlug(required slug, boolean ssl=false){
+	function linkPageWithSlug(required slug, boolean ssl=false, format="html"){
+		// format?
+		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
 		var xeh = siteRoot() & sep() & "#arguments.slug#";
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
 
 	/**

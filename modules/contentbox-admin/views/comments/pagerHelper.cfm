@@ -2,7 +2,6 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$("tr:even").addClass("even");
 	// quick look
 	$("##comments_pager").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
@@ -19,6 +18,12 @@ function commentPagerChangeStatus(status,recordID){
 	$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
 	// ajax status change
 	$.post("#event.buildlink(linkTo=prc.xehCommentPagerStatus)#",{commentStatus:status, commentID:recordID},function(data){
+		if( data.ERROR ){
+			adminNotifier( "error", data.MESSAGES, 3000 );	
+		}
+		else{
+			adminNotifier( "info", data.MESSAGES );
+		}
 		hideAllTooltips();
 		commentPagerLink(#rc.page#);
 	});
