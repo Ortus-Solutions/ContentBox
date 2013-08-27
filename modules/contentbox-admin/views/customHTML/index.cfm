@@ -26,25 +26,31 @@
 			</p>
 			
 			<!--- entryForm --->
-			#html.startForm(name="contentForm",action=prc.xehRemoveHTML)#
-				#html.hiddenField(name="page",value=rc.page)#
+			#html.startForm(name="entryForm", action=prc.xehRemoveHTML)#
 				#html.hiddenField(name="contentStatus",value="")#
 				#html.hiddenField(name="contentID")#
 			
 				<!--- Content Bar --->
 				<div class="well well-small" id="contentBar">
 					<!--- Create Butons --->
-					<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
 					<div class="buttonBar">
 						<!---Global --->
+						<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
+					    		<cfif prc.oAuthor.checkPermission( "CUSTOMHTML_ADMIN" )>
+								<li><a href="javascript:bulkRemove()" class="confirmIt"
+									data-title="Delete Selected Entries?" data-message="This will delete the custom HTML entries, are you sure?"><i class="icon-trash"></i> Delete Selected</a></li>
+								<li><a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected</a></li>
 					    		<li><a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT")>
 								<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission( "CUSTOMHTML_ADMIN,TOOLS_EXPORT" )>
 								<li class="dropdown-submenu">
 					    			<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
@@ -52,110 +58,28 @@
 										<li><a href="#event.buildLink(linkto=prc.xehExportAllHTML)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 									</ul>
 								</li>
+								</cfif>
+								<li><a href="javascript:contentShowAll()"><i class="icon-list"></i> Show All</a></li>
 					    	</ul>
 					    </div>
+						</cfif>
 						<!---Create --->
 						<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehEditorHTML)#');">Create Content</button>
 					</div>
-					</cfif>
 					
 					<!--- Filter Bar --->
 					<div class="filterBar">
 						<div>
-							#html.label(field="entryFilter",content="Quick Filter:",class="inline")#
-							#html.textField(name="entryFilter",size="30",class="textfield")#
+							#html.label(field="entrySearch",content="Quick Search:",class="inline")#
+							#html.textField(name="entrySearch", class="textfield", size="30")#
 						</div>
 					</div>
 				</div>
 				
-				<!--- comments --->
-				<table name="entries" id="entries" class="tablesorter table table-striped table-hover" width="98%">
-					<thead>
-						<tr>
-							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
-							<th>Title</th>
-							<th width="300">Slug</th>
-							<th>Author</th>
-							<th width="40" class="center"><i class="icon-globe icon-large" title="Published"></i></th>
-							<th width="90" class="center {sorter:false}">Actions</th>
-						</tr>
-					</thead>
-					
-					<tbody>
-						<cfloop array="#prc.entries#" index="entry">
-						<tr id="contentID-#entry.getContentID()#" data-contentID="#entry.getContentID()#"
-							<cfif entry.isExpired()>
-								class="error"
-							<cfelseif entry.isPublishedInFuture()>
-								class="success"
-							<cfelseif !entry.isContentPublished()>
-								class="warning"
-							</cfif>>
-							<!--- check box --->
-							<td>
-								<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
-							</td>
-							<td>
-								<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
-									<a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content">#entry.getTitle()#</a>
-								<cfelse>
-									#entry.getTitle()#
-								</cfif>
-								<br>#entry.getDescription()#
-							</td>
-							<td>
-								#entry.getSlug()#
-							</td>
-							<td>
-								<cfif entry.hasCreator()>#entry.getCreatorName()#<cfelse><span class="label label-warning">none</span></cfif>
-							</td>
-							<td class="center">
-								<cfif entry.isExpired()>
-									<i class="icon-time icon-large textRed" title="Content has expired on ( (#entry.getDisplayExpireDate()#))"></i>
-									<span class="hidden">expired</span>
-								<cfelseif entry.isPublishedInFuture()>
-									<i class="icon-fighter-jet icon-large textBlue" title="Content publishes in the future (#entry.getDisplayPublishedDate()#)"></i>
-									<span class="hidden">published in future</span>
-								<cfelseif entry.isContentPublished()>
-									<i class="icon-ok icon-large textGreen" title="Published"></i>
-									<span class="hidden">published in future</span>
-								<cfelse>
-									<i class="icon-remove icon-large textRed" title="Draft"></i>
-									<span class="hidden">draft</span>
-								</cfif>
-							</td>
-							<td class="center">
-								
-								<div class="btn-group">
-							    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
-										<i class="icon-cogs icon-large"></i>
-									</a>
-							    	<ul class="dropdown-menu text-left">
-										<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
-										<!--- Edit Command --->
-										<li><a href="#event.buildLink(prc.xehEditorHTML)#/contentID/#entry.getContentID()#" title="Edit Content"><i class="icon-edit icon-large"></i> Edit</a></li>
-										<!--- Delete Command --->
-										<li><a title="Delete Content Permanently" href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#entry.getContentID()#" class="icon-trash icon-large"></i> Delete</a></li>
-										<!--- Export --->
-										<li class="dropdown-submenu">
-											<a href="##"><i class="icon-download icon-large"></i> Export</a>
-											<ul class="dropdown-menu text-left">
-												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
-												<li><a href="#event.buildLink(linkto=prc.xehExportHTML)#/contentID/#entry.getContentID()#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
-											</ul>
-										</li>
-										</cfif>
-							    	</ul>
-							    </div>
-							</td>
-						</tr>
-						</cfloop>
-					</tbody>
-				</table>
+				<!--- entries container --->
+    			<div id="entriesTableContainer"><p class="text-center"><i id="entryLoader" class="icon-spinner icon-spin icon-large icon-4x"></i></p></div>
 				
-				<!--- Paging --->
-				#prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
-			
+				
 			#html.endForm()#
 			
 			</div>
@@ -163,56 +87,86 @@
 	</div>    
 
 	<!--- main sidebar --->    
-	<div class="span3" id="main-sidebar">    
-		<!--- Saerch Box --->
-		<div class="small_box">
-			<div class="header">
-				<i class="icon-search"></i> Search
-			</div>
-			<div class="body<cfif len(rc.search)> selected</cfif>">
-				<!--- Search Form --->
-				#html.startForm(name="htmlSearchForm",action=prc.xehCustomHTML)#
-					#html.textField(label="Search:",name="search",class="input-block-level",size="16",title="Search all content pieces",value=rc.search)#
-					<button type="submit" class="btn btn-danger">Search</button>
-					<button class="btn" onclick="return to('#event.buildLink(prc.xehCustomHTML)#')">Clear</button>				
-				#html.endForm()#
-			</div>
-		</div>	
-		
+	<div class="span3" id="main-sidebar">    		
 		<!--- Filter Box --->
 		<div class="small_box">
 			<div class="header">
 				<i class="icon-filter"></i> Filters
 			</div>
-			<div class="body<cfif prc.isFiltering> selected</cfif>">
-				#html.startForm(name="contentFilterForm", action=prc.xehContentSearch)#
+			<div class="body" id="filterBox">
+				#html.startForm(name="entryFilterForm", action=prc.xehEntrySearch)#
 				<!--- Authors --->
 				<label for="fAuthors">Authors: </label>
 				<select name="fAuthors" id="fAuthors" class="input-block-level">
-					<option value="all" <cfif rc.fAuthors eq "all">selected="selected"</cfif>>All Authors</option>
+					<option value="all" selected="selected">All Authors</option>
 					<cfloop array="#prc.authors#" index="author">
-					<option value="#author.getAuthorID()#" <cfif rc.fAuthors eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+					<option value="#author.getAuthorID()#">#author.getName()#</option>
+					</cfloop>
+				</select>
+				<!--- Categories --->
+				<label for="fCategories">Categories: </label>
+				<select name="fCategories" id="fCategories" class="input-block-level">
+					<option value="all">All Categories</option>
+					<option value="none">Uncategorized</option>
+					<cfloop array="#prc.categories#" index="category">
+					<option value="#category.getCategoryID()#">#category.getCategory()#</option>
 					</cfloop>
 				</select>
 				<!--- Status --->
-				<label for="fStatus">Content Status: </label>
+				<label for="fStatus">Status: </label>
 				<select name="fStatus" id="fStatus" class="input-block-level">
-					<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status</option>
-					<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Published</option>
-					<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Draft</option>
+					<option value="any">Any Status</option>
+					<option value="true">Published</option>
+					<option value="false">Draft</option>
 				</select>
-				
-				<button type="submit" class="btn btn-danger">Apply Filters</button>
-				<button class="btn" onclick="return to('#event.buildLink( prc.xehCustomHTML )#')">Reset</button>
+	
+				<a class="btn btn-danger" href="javascript:contentFilter()">Apply Filters</a>
+				<a class="btn" href="javascript:resetFilter( true )">Reset</a>
 				#html.endForm()#
 			</div>
 		</div>
 	
 	</div>    
 </div>
-
+<!--- Clone Dialog --->
+<cfif prc.oAuthor.checkPermission("CUSTOMHTML_EDITOR,CUSTOMHTML_ADMIN")>
+<div id="cloneDialog" class="modal hide fade">
+	<div id="modalContent">
+	    <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h3><i class="icon-copy"></i> Entry Cloning</h3>
+	    </div>
+        #html.startForm(name="cloneForm", action=prc.xehEntryClone)#
+        <div class="modal-body">
+			#html.hiddenField(name="contentID")#
+			#html.textfield(name="title", label="Please enter the new entry title:", class="input-block-level", required="required", size="50")#
+			<label for="entryStatus">Publish entry?</label>
+			<small>By default all cloned entries are published as drafts.</small><br>
+			#html.select(options="true,false", name="entryStatus", selectedValue="false", class="input-block-level")#
+			
+			<!---Notice --->
+			<div class="alert alert-info">
+				<i class="icon-info-sign icon-large"></i> Please note that cloning is an expensive process, so please be patient.
+			</div>
+		</div>
+        <div class="modal-footer">
+        	<!--- Button Bar --->
+        	<div id="cloneButtonBar">
+          	 	<button class="btn" id="closeButton"> Cancel </button>
+				<button class="btn btn-danger" id="cloneButton"> Clone </button>
+			</div>
+            <!--- Loader --->
+			<div class="center loaders" id="clonerBarLoader">
+				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+				<br>Please wait, doing some hardcore cloning action...
+			</div>
+        </div>
+		#html.endForm()#
+	</div>
+</div>
+</cfif>
 <!---import dialog --->
-<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN")>
+<cfif prc.oAuthor.checkPermission("CUSTOMHTML_ADMIN,TOOLS_IMPORT")>
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">
 	    <div class="modal-header">

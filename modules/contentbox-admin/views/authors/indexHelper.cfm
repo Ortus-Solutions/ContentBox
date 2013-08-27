@@ -7,7 +7,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##authors"), this.value );
 	})
 });
-<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT")>
 function importContent(){
 	// local id's
 	var $importForm = $("##importForm");

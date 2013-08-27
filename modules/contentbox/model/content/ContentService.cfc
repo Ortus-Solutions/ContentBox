@@ -34,6 +34,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	property name="contentVersionService"	inject="contentVersionService@cb";
 	property name="authorService"			inject="authorService@cb";
 	property name="populator"				inject="wirebox:populator";
+	property name="systemUtil"				inject="SystemUtil@cb";
 	
 	/**
 	* Constructor
@@ -203,6 +204,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		if( arguments.content.hasParent() ){
 			arguments.content.getParent().removeChild( arguments.content );
 		}
+		if( arguments.content.hasCategories() ){
+			arguments.content.removeAllCategories();
+		}
 		// now delete it
 		delete( arguments.content );
 		// return service
@@ -323,7 +327,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var result = [];
 		
 		if( !structKeyExists( arguments, "inData") ){
-			var data = getAll();
+			// export from the root node, instead of everything.
+			var data = newCriteria().isNull( "parent" ).list();
 		}
 		else{
 			data = arguments.inData;
@@ -405,10 +410,18 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @parent.hint If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
 	*/
 	private function inflateFromStruct(required contentData, required importLog, parent){
-		var thisContent = arguments.contentData;
-		
+		// setup
+		var thisContent 	= arguments.contentData;
+		var badDateRegex  = " -\d{4}$";
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
 		var oContent = findBySlug( slug=thisContent.slug, showUnpublished=true );
+		
+		// date conversion tests
+		thisContent.publishedDate 	= reReplace( thisContent.publishedDate, badDateRegex, "" );
+		thisContent.createdDate 	= reReplace( thisContent.createdDate, badDateRegex, "" );
+		if( len( thisContent.expireDate ) ){
+			thisContent.expireDate = reReplace( thisContent.expireDate, badDateRegex, "" );
+		}
 		
 		// populate content from data and ignore relationships, we need to build those manually.
 		populator.populateFromStruct( target=oContent, 
@@ -482,13 +495,16 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 					arrayAppend( allCategories, oCategory );
 				}
 				// detach categories and re-attach
-				oContent.removeAllCategories().setCategories( allCategories );
+				oContent.setCategories( allCategories );
 			}
 			
 			// COMMENTS
 			if( arrayLen( thisContent.comments ) ){
 				var allComments = [];
 				for( var thisComment in thisContent.comments ){
+					// some conversions
+					thisComment.createdDate = reReplace( thisComment.createdDate, badDateRegex, "" );
+					// population
 					var oComment = populator.populateFromStruct( target=commentService.new(), 
 															 	 memento=thisComment, 
 															 	 exclude="commentID", 
@@ -503,6 +519,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			if( arrayLen( thisContent.contentversions ) ){
 				var allContentVersions = [];
 				for( var thisVersion in thisContent.contentversions ){
+					// some conversions
+					thisVersion.createdDate = reReplace( thisVersion.createdDate, badDateRegex, "" );
+					
+					// population
 					var oVersion = populator.populateFromStruct( target=contentVersionService.new(), 
 																 memento=thisVersion, 
 																 exclude="contentVersionID,author", 
@@ -525,8 +545,31 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		else{
 			arguments.importLog.append( "Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>" );
 		}
-			
+		
 		return { content=oContent, authorFound=( !isNull( oAuthor ) ) };
+	}
+	
+	/**
+	* Update a content's hits with some async flava
+	*/
+	ContentService function updateHits(required contentID){
+		if( systemUtil.inThread() ){
+			return syncUpdateHits( arguments.contentID );
+		}
+		
+		var threadName = "updateHits_#hash( arguments.contentID & now() )#";
+		thread name="#threadName#" contentID="#arguments.contentID#"{
+			variables.syncUpdateHits( attributes.contentID );
+		}
+		return this;
+	}
+	
+	/**
+	* Update the content hits
+	*/
+	private function syncUpdateHits(required contentID){
+		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.contentID#").execute();
+		return this;
 	}
 	
 }

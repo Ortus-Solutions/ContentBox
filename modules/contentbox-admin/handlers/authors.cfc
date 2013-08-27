@@ -139,6 +139,27 @@ component extends="baseHandler"{
 		// return preference saved
 		event.renderData(type="json", data=results);
 	}
+	
+	// change user sidebar preferences
+	function changeSidebarState(event,rc,prc){
+		event.paramvalue( "sidebarState", false );
+		var results = { "ERROR" = false, "MESSAGES" = "" };
+		try{
+			// store the new author preference	
+			prc.oAuthor.setPreference(name="sidebarstate", value=rc.sidebarstate);
+			// save Author preference
+			authorService.saveAuthor( prc.oAuthor );
+			results[ "MESSAGES" ] = "Sidebar state saved";
+		}
+		catch(Any e){
+			log.error("Error saving preferences.", e);
+			results[ "ERROR" ] = true;
+			results[ "MESSAGES" ] = e.detail & e.message;
+		}
+		// return preference saved
+		event.renderData(type="json", data=results);
+	}
+	
 
 	// save user
 	function savePreferences(event,rc,prc){

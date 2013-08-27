@@ -30,6 +30,7 @@ component{
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;
+	this.scriptProtect		= false;
 
 	// Mapping Imports
 	import coldbox.system.*;

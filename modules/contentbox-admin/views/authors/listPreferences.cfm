@@ -14,6 +14,9 @@
 	#html.textfield(name="preference.facebook", label="Facebook Profile", class="textfield width98", value=prc.oAuthor.getPreference("facebook", ""),wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 	#html.textfield(name="preference.google", label="Google+ Profile", class="textfield width98", value=prc.oAuthor.getPreference("google", ""),wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 	
+	<!---Sidebar --->
+	#html.select(name="preference.sidebarState", label="Show Sidebar", options="yes,no", class="width98", selectedValue=prc.oAuthor.getPreference("sidebarState", "no"),wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+	
 	<!--- Admin Event --->
 	#announceInterception("cbadmin_UserPreferencePanel")#
 	

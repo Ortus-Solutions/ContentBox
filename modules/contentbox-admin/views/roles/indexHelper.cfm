@@ -18,7 +18,7 @@ $(document).ready(function() {
 		$.uiTableFilter( $("##roles"), this.value );
 	});
 });
-<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("ROLES_ADMIN,TOOLS_IMPORT")>
 function importContent(){
 	// local id's
 	var $importForm = $("##importForm");

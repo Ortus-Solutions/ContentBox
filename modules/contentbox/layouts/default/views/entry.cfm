@@ -42,16 +42,17 @@ limitations under the License.
 	<div class="clr"></div>
 	
 	<!--- Display Comments --->
+	<cfif !cb.isPrintFormat()>
 	<div id="comments">
 		#cb.quickComments()#
 	</div>
-		
+	</cfif>	
 	<!--- ContentBoxEvent --->
 	#cb.event("cbui_postEntryDisplay")#
 	
 
 <!--- Custom JS For Comments--->
-<cfif cb.isCommentsEnabled()>
+<cfif cb.isCommentsEnabled() and !cb.isPrintFormat()>
 <script type="text/javascript">
 $(document).ready(function() {
  	// form validator

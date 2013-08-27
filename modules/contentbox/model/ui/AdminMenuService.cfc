@@ -114,7 +114,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehRawSettings		= "#this.ADMIN_ENTRYPOINT#.settings.raw";
 		prc.xehEmailTemplates   = "#this.ADMIN_ENTRYPOINT#.emailtemplates";
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
-
+		
 		// Dashboard
 		addTopMenu(name=this.DASHBOARD,label="<i class='icon-dashboard icon-large'></i> Dashboard")
 			.addSubMenu(name="home",label="Home",href="#event.buildLink(prc.xehDashboard)#")
@@ -193,7 +193,7 @@ component accessors="true" threadSafe singleton{
 	* @permissions.hint The list of permissions needed to view this menu
 	* @data.hint A structure of data attributes to add to the link
 	*/
-	AdminMenuService function addTopMenu(required name, required label, title="", href="##", target="", permissions="", data=structNew() ){
+	AdminMenuService function addTopMenu(required name, required label, title="", href="javascript:null()", target="", permissions="", data=structNew() ){
 		// stash pointer
 		thisTopMenu = arguments.name;
 		// store new top menu

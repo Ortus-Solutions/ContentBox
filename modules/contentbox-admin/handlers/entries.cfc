@@ -54,6 +54,27 @@ component extends="baseHandler"{
 
 	// index
 	function index(event,rc,prc){
+		// get all authors
+		prc.authors    = authorService.getAll(sortOrder="lastName");
+		// get all categories
+		prc.categories = categoryService.getAll(sortOrder="category");
+
+		// exit handlers
+		prc.xehEntrySearch 	 	= "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntryTable 	 	= "#prc.cbAdminEntryPoint#.entries.entriesTable";
+		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.entries.bulkstatus";
+		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
+		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
+		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
+		
+		// Tab
+		prc.tabContent_blog = true;
+		// view
+		event.setView("entries/index");
+	}
+	
+	// entriesTable
+	function entriesTable(event,rc,prc){
 		// params
 		event.paramValue("page",1);
 		event.paramValue("searchEntries","");
@@ -61,32 +82,26 @@ component extends="baseHandler"{
 		event.paramValue("fCategories","all");
 		event.paramValue("fStatus","any");
 		event.paramValue("isFiltering", false, true);
+		event.paramValue("showAll", false);
 
 		// prepare paging plugin
 		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
 		prc.paging 			= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 		= event.buildLink('#prc.xehEntries#.page.@page@?');
-		// Append search to paging link?
-		if( len(rc.searchEntries) ){ prc.pagingLink&="&searchEntries=#rc.searchEntries#"; }
-		// Append filters to paging link?
-		if( rc.fAuthors neq "all"){ prc.pagingLink&="&fAuthors=#rc.fAuthors#"; }
-		if( rc.fCategories neq "all"){ prc.pagingLink&="&fCategories=#rc.fCategories#"; }
-		if( rc.fStatus neq "any"){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		prc.pagingLink 		= "javascript:contentPaginate(@page@)";
+		
 		// is Filtering?
-		if( rc.fAuthors neq "all" OR rc.fCategories neq "all" or rc.fStatus neq "any"){ prc.isFiltering = true; }
-
-		// get all categories
-		prc.categories = categoryService.getAll(sortOrder="category");
-		// get all authors
-		prc.authors    = authorService.getAll(sortOrder="lastName");
-
+		if( rc.fAuthors neq "all" OR rc.fStatus neq "any" OR rc.fCategories neq "all" or rc.showAll ){ 
+			prc.isFiltering = true;
+		}
+		
 		// search entries with filters and all
 		var entryResults = entryService.search(search=rc.searchEntries,
-											   offset=prc.paging.startRow-1,
-											   max=prc.cbSettings.cb_paging_maxrows,
+											   offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
+											   max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
 											   isPublished=rc.fStatus,
 											   category=rc.fCategories,
-											   author=rc.fAuthors);
+											   author=rc.fAuthors,
+											   sortOrder="createdDate desc");
 		prc.entries 	 = entryResults.entries;
 		prc.entriesCount = entryResults.count;
 
@@ -94,16 +109,11 @@ component extends="baseHandler"{
 		prc.xehEntrySearch 	 	= "#prc.cbAdminEntryPoint#.entries";
 		prc.xehEntryQuickLook	= "#prc.cbAdminEntryPoint#.entries.quickLook";
 		prc.xehEntryHistory  	= "#prc.cbAdminEntryPoint#.versions.index";
-		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.entries.bulkstatus";
-		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		prc.xehEntryExport 		= "#prc.cbAdminEntryPoint#.entries.export";
-		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
-		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
+		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		
-		// Tab
-		prc.tabContent_blog = true;
 		// view
-		event.setView("entries/index");
+		event.setView(view="entries/indexTable", layout="ajax");
 	}
 
 	// Quick Look
@@ -285,7 +295,7 @@ component extends="baseHandler"{
 		// Inflate sent categories from collection
 		categories.addAll( categoryService.inflateCategories( rc ) );
 		// detach categories and re-attach
-		entry.removeAllCategories().setCategories( categories );
+		entry.setCategories( categories );
 		// Inflate Custom Fields into the page
 		entry.inflateCustomFields( rc.customFieldsCount, rc );
 		// announce event
@@ -311,23 +321,42 @@ component extends="baseHandler"{
 
 	// remove
 	function remove(event,rc,prc){
-		var entry = entryService.get(rc.contentID);
-		if( isNull(entry) ){
-			getPlugin("MessageBox").setMessage("warning","Invalid Entry detected!");
+		// params
+		event.paramValue( "contentID", "" );
+		
+		// verify if contentID sent
+		if( !len( rc.contentID ) ){
+			getPlugin("MessageBox").warn( "No entries sent to delete!" );
+			setNextEvent(event=prc.xehEntries);
 		}
-		else{
-			// GET id
-			var contentID = entry.getContentID();
-			// announce event
-			announceInterception("cbadmin_preEntryRemove",{entry=entry});
-			// remove it
-			entryService.deleteContent( entry );
-			// announce event
-			announceInterception("cbadmin_postEntryRemove",{contentID=contentID});
-			// messagebox
-			getPlugin("MessageBox").setMessage("info","Entry Removed!");
+		
+		// Inflate to array
+		rc.contentID = listToArray( rc.contentID );
+		var messages = [];
+		
+		// Iterate and remove
+		for( var thisContentID in rc.contentID ){
+			var entry = entryService.get( thisContentID );
+			if( isNull( entry ) ){
+				arrayAppend( messages, "Invalid entry contentID sent: #thisContentID#, so skipped removal" );
+			}
+			else{
+				// GET id to be sent for announcing later
+				var contentID 	= entry.getContentID();
+				var title		= entry.getTitle();
+				// announce event
+				announceInterception("cbadmin_preEntryRemove", { entry=entry } );
+				// Delete it
+				entryService.deleteContent( entry );
+				arrayAppend( messages, "Entry '#title#' removed" );
+				// announce event
+				announceInterception("cbadmin_postEntryRemove", { contentID=contentID });
+			}
 		}
-		setNextEvent( prc.xehEntries );
+		// messagebox
+		getPlugin("MessageBox").info(messageArray=messages);
+		// relocate
+		setNextEvent(event=prc.xehEntries);
 	}
 
 	// pager viewlet

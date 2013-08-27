@@ -9,8 +9,16 @@ CKEDITOR.plugins.add( 'cbKeyBinding', {
 				quickSave();
 			}
 		});
+		// add command for quickPreview
+		editor.addCommand( 'quickPreview', {
+			exec: function( editor ) {
+				previewContent();
+			}
+		});
 
 		// bind keystrokes...can be for ad-hoc commands added above, or event named commands in other plugins
+		// add key stroke -- ctrl+p
+		editor.setKeystroke( CKEDITOR.CTRL+80, 'quickPreview' );
 		// add key stroke -- ctrl+s
 		editor.setKeystroke( CKEDITOR.CTRL+83, 'quickSave' );
 		// add key stroke -- ctrl+shift+p
