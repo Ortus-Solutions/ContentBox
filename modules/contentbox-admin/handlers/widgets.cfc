@@ -85,7 +85,8 @@ component extends="baseHandler"{
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
 		prc.categories = widgetService.getWidgetCategories();
-		event.setView(view="widgets/editorSelector",layout="ajax");
+		// render it out
+		event.setView(view="widgets/editorSelector", layout="ajax");
 	}
 	
 	// Preview Widget

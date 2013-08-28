@@ -53,12 +53,17 @@ component extends="coldbox.system.Plugin" accessors="true"{
      * Get this widget's public methods'
      * return array
      */
-	public array function getPublicMethods() {
+	array function getPublicMethods() {
 		var publicMethods = [];
 		var meta = getMetadata( this );
 		var method = "";
-		for( var i=1; i<=arrayLen( meta.functions ); i++ ) {
+		for( var i=1; i <= arrayLen( meta.functions ); i++ ){
 			method = meta.functions[ i ];
+			// ignores?
+			if( structKeyExists( method, "cbignore" ) ){
+				continue;
+			}
+			// Add conditions
 			if( !listContains( "init,onMissingMethod", method.name ) ) {
 				if( !structKeyExists( method, "access" ) || ( structKeyExists( method, "access" ) && !listContains( "private,package", method.access ) ) ) {
 					arrayAppend( publicMethods, method );
