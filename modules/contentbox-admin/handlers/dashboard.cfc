@@ -23,11 +23,12 @@ component extends="baseHandler"{
 		prc.xehDeleteInstaller 	= "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
 		prc.xehDeleteDSNCreator = "#prc.cbAdminEntryPoint#.dashboard.deleteDSNCreator";
 		// Ajax Loaded handlers
-		prc.xehLatestEntries	= "#prc.cbAdminEntryPoint#.dashboard.latestEntries";
-		prc.xehLatestPages		= "#prc.cbAdminEntryPoint#.dashboard.latestPages";
-		prc.xehLatestComments	= "#prc.cbAdminEntryPoint#.dashboard.latestComments";
-		prc.xehLatestNews		= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
-		prc.xehLatestSnapshot	= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
+		prc.xehLatestEntries		= "#prc.cbAdminEntryPoint#.dashboard.latestEntries";
+		prc.xehLatestPages			= "#prc.cbAdminEntryPoint#.dashboard.latestPages";
+		prc.xehLatestContentStore	= "#prc.cbAdminEntryPoint#.dashboard.latestContentStore";
+		prc.xehLatestComments		= "#prc.cbAdminEntryPoint#.dashboard.latestComments";
+		prc.xehLatestNews			= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
+		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
 		
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
@@ -43,7 +44,7 @@ component extends="baseHandler"{
 	}
 	
 	// latest snapshot
-	function latestSnapshot(event,rc,rpc){
+	function latestSnapshot(event,rc,prc){
 		// Few counts
 		prc.entriesCount			= entryService.count();
 		prc.pagesCount 				= pageService.count();
@@ -66,6 +67,15 @@ component extends="baseHandler"{
 		prc.entriesViewlet = runEvent(event="contentbox-admin:entries.pager", eventArguments=eArgs);
 		
 		event.setView(view="dashboard/latestEntries", layout="ajax");
+	}
+	
+	// Latest ContentStore
+	function latestContentStore(event,rc,prc){
+		// Get contentStore viewlet: Stupid cf9 and its local scope blown on argument literals
+		var eArgs = { max=prc.cbSettings.cb_dashboard_recentContentStore, pagination=false, latest=true };
+		prc.contentStoreViewlet = runEvent(event="contentbox-admin:contentstore.pager", eventArguments=eArgs);
+		
+		event.setView(view="dashboard/latestContentStore", layout="ajax");
 	}
 	
 	// Latest Pages

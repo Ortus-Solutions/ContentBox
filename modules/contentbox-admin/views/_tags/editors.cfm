@@ -31,18 +31,21 @@ function publishNow(){
 function quickSave(){
 	// Draft it
 	$isPublished.val('false');
-	// Validation of Form First before quick save
-	if( !$targetEditorForm.valid() ){
-		return false;
-	}
-	// Commit Changelog default if none specified, most likely changelogs are not mandatory
+	// Commit Changelog default it to quick save if not set
 	if( !$changelog.val().length ){
 		$changelog.val( "quick save" );
 	}
+	// Validation of Form First before quick save
+	if( !$targetEditorForm.valid() ){
+		adminNotifier( "error", "Form is not valid, please verify." );
+		return false;
+	}
 	// Activate Loader
 	toggleLoaderBar();
-	// Save current content, just in case
-	$content.val( getEditorContent() );
+	// Save current content, just in case editor has not saved it
+	if( !$content.val().length ){
+		$content.val( getEditorContent() );	
+	}
 	// Post it
 	$.post($targetEditorSaveURL, $targetEditorForm.serialize(), function(data){
 		// Save new id
@@ -50,11 +53,10 @@ function quickSave(){
 		// finalize
 		$changelog.val( '' );
 		$uploaderBarLoader.fadeOut( 1500 );
-		$uploaderBarStatus.html( 'Draft Quick Saved!' );
+		$uploaderBarStatus.html( 'Draft Saved!' );
 		$isPublished.val( 'true' );
+		adminNotifier( "info", "Draft Saved!" );
 	},"json");
-
-	return false;
 }
 /**
  * Setup the editors. 
@@ -75,6 +77,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$isPublished 			= $targetEditorForm.find("##isPublished");
 	$contentID				= $targetEditorForm.find("##contentID");
 	$changelog				= $targetEditorForm.find("##changelog");
+	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
@@ -136,6 +139,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$("##htmlDescription").keyup(function(){
 		$("##html_description_count").html( $("##htmlDescription").val().length );
 	});
+	
 }
 
 // Switch Editors
@@ -150,13 +154,17 @@ function switchEditor(editorType){
 	// Call change user editor preference
 	$.ajax({
 		url : '#event.buildLink(prc.xehAuthorEditorSave)#',
-		data : {editor: $("##contentEditorChanger").val()},
+		data : {editor: editorType},
 		async : false,
 		success : function(data){
-			// Once changed, reload the page.
 			location.reload();
 		}
 	});
+}
+
+function switchMarkup(markupType){
+	$("##markup").val( markupType );
+	$("##markupLabel").html( markupType );
 }
 
 // Ask for leave confirmations
@@ -187,13 +195,23 @@ function permalinkUniqueCheck(){
 		}
 	} );
 }
-
 // Toggle drafts on for saving
 function toggleDraft(){
 	needConfirmation = false;
 	$isPublished.val('false');
 }
-
+// Quick Publish Action
+function quickPublish(isDraft){
+	if( isDraft ){
+		toggleDraft();
+	}
+	// Verify changelogs and open sidebar if closed:
+	if( $changelogMandatory && !isSidebarOpen() ){
+		toggleSidebar();
+	}
+	// submit form
+	$targetEditorForm.submit();
+}
 // Widget Plugin Integration
 function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
 // Widget Preview Integration
@@ -206,8 +224,8 @@ function getWidgetRenderArgsURL(){ return '#event.buildLink( prc.cbAdminEntryPoi
 function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
 // Entry Selection Integration
 function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector")#';}
-// Custom HTML Selection Integration
-function getCustomHTMLSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".customHTML.editorselector")#';}
+// ContentStore Selection Integration
+function getContentStoreSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".contentStore.editorselector")#';}
 // Preview Integration
 function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".content.preview")#';}
 // Module Link Building

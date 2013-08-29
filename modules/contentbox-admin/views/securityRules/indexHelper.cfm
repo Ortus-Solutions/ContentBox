@@ -31,7 +31,7 @@ $(document).ready(function() {
 	});
 	</cfif>
 });
-<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN,TOOLS_IMPORT")>
 function importContent(){
 	// local id's
 	var $importForm = $("##importForm");

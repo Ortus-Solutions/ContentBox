@@ -4,6 +4,7 @@
 $(document).ready(function() {
  	$("##latestEntries").load( '#event.buildLink( prc.xehLatestEntries )#' );
 	$("##latestPages").load( '#event.buildLink( prc.xehLatestPages )#' );
+	$("##latestContentStore").load( '#event.buildLink( prc.xehLatestContentStore )#' );
 	$("##latestNews").load( '#event.buildLink( prc.xehLatestNews )#' );
 	$("##latestComments").load( '#event.buildLink( prc.xehLatestComments )#' );
 	$("##latestSnapshot").load( '#event.buildLink( prc.xehLatestSnapshot )#' );

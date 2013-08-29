@@ -61,22 +61,45 @@ component extends="baseHandler"{
 	
 	// remove
 	function remove(event,rc,prc){
-		// announce event
-		announceInterception("cbadmin_preCategoryRemove",{categoryID=rc.categoryID});
-		// delete by id
-		if( !categoryService.deleteCategory( rc.categoryID ) ){
-			getPlugin("MessageBox").setMessage("warning","Invalid Category detected!");
+		// params
+		event.paramValue( "categoryID", "" );
+		
+		// verify if contentID sent
+		if( !len( rc.categoryID ) ){
+			getPlugin("MessageBox").warn( "No categories sent to delete!" );
+			setNextEvent(event=prc.xehCategories);
 		}
-		else{
-			// announce event
-			announceInterception("cbadmin_postCategoryRemove",{categoryID=rc.categoryID});
-			// Message
-			getPlugin("MessageBox").setMessage("info","Category Removed!");
+		
+		// Inflate to array
+		rc.categoryID = listToArray( rc.categoryID );
+		var messages = [];
+		
+		// Iterate and remove
+		for( var thisCatID in rc.categoryID ){
+			var category = categoryService.get( thisCatID );
+			if( isNull( category ) ){
+				arrayAppend( messages, "Invalid categoryID sent: #thisCatID#, so skipped removal" );
+			}
+			else{
+				// GET id to be sent for announcing later
+				var categoryID 	= category.getCategoryID();
+				var title		= category.getSlug();
+				// announce event
+				announceInterception("cbadmin_preCategoryRemove", { category=category, categoryID=categoryID } );
+				// Delete it
+				categoryService.delete( category.removeAllContent() ); 
+				arrayAppend( messages, "Category '#title#' removed" );
+				// announce event
+				announceInterception("cbadmin_postCategoryRemove", { categoryID=categoryID });
+			}
 		}
+		
+		// messagebox
+		getPlugin("MessageBox").info(messageArray=messages);
 		setNextEvent( prc.xehCategories );
 	}
 
-	// Export All CustomHTML
+	// Export All categories
 	function exportAll(event,rc,prc){
 		event.paramValue("format", "json");
 		// get all prepared content objects

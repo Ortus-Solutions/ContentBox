@@ -122,7 +122,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// Update all content now with published info
 		var qAllContent = new Query(sql="update cb_customHTML set publishedDate = :today" );
-		qAllContent.addParam(name="today", value=now(), cfsqltype="timestamp");
+		qAllContent.addParam(name="today", value=dateFormat( now(), "mm-dd-yyyy" ), cfsqltype=getDateTimeDBType());
 		qAllContent.execute();
 		
 		// Update all content now with logged in user
@@ -222,7 +222,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_dashboard_newsfeed_count", "5" );
 		addSetting( "cb_media_html5uploads_maxFileSize", "100" );
 		addSetting( "cb_media_html5uploads_maxFiles", "25" );
-		addSetting( "cb_page_excerpts", "true" );
+		addSetting( "cb_page_excerpts", "false" );
 	}
 	
 	private function addSetting(name, value){
@@ -309,7 +309,30 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 	}
-	
+
+	// Get a DB specific datetime type
+	private function getDateTimeDBType(){
+		var dbType = getDatabaseType();
+
+		switch( dbType ){
+			case "PostgreSQL" : {
+				return "cf_sql_timestamp";
+			}
+			case "MySQL" : {
+				return "cf_sql_timestamp";
+			}
+			case "Microsoft SQL Server" : {
+				return "cf_sql_date";
+			}
+			case "Oracle" :{
+				return "cf_sql_timestamp";
+			}
+			default : {
+				return "cf_sql_timestamp";
+			}
+		}
+	}
+
 	// Get a DB specific long text type
 	private function getTextDBType(){
 		var dbType = getDatabaseType();

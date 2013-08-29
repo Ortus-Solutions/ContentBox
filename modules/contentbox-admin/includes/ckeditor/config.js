@@ -6,7 +6,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-	config.extraPlugins = 'cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,mediaembed,insertpre'; 
+	config.extraPlugins = 'cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre'; 
 	config.tabSpaces = 4;
 	config.enableTabKeyTools = true;
 	config.entities = false;

@@ -10,7 +10,7 @@ component accessors="true"{
 	property name="pageService"			inject="pageService@cb";
 	property name="entryService"		inject="entryService@cb";
 	property name="commentService"		inject="commentService@cb";
-	property name="customHTMLService"	inject="customHTMLService@cb";
+	property name="contentStoreService"	inject="contentStoreService@cb";
 	property name="roleService" 		inject="roleService@cb";
 	property name="permissionService" 	inject="permissionService@cb";
 	property name="securityRuleService" inject="securityRuleService@cb";
@@ -121,7 +121,7 @@ component accessors="true"{
 			"WIDGET_ADMIN" = "Ability to manage widgets, default is view only",
 			"LAYOUT_ADMIN" = "Ability to manage layouts, default is view only",
 			"COMMENTS_ADMIN" = "Ability to manage comments, default is view only",
-			"CUSTOMHTML_ADMIN" = "Ability to manage custom HTML, default is view only",
+			"CONTENTSTORE_ADMIN" = "Ability to manage the content store, default is view only",
 			"PAGES_ADMIN" = "Ability to manage content pages, default is view only",
 			"PAGES_EDITOR" = "Ability to manage content pages but not publish pages",
 			"CATEGORIES_ADMIN" = "Ability to manage categories, default is view only",
@@ -143,7 +143,9 @@ component accessors="true"{
 			"EDITORS_CACHING" = "Ability to view the content caching panel",
 			"EDITORS_CATEGORIES" = "Ability to view the content categories panel",
 			"EDITORS_HTML_ATTRIBUTES" = "Ability to view the content HTML attributes panel",
-			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor"
+			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor",
+			"TOOLS_EXPORT" = "Ability to export data from ContentBox",
+			"CONTENTSTORE_EDITOR" = "Ability to manage content store elements but not publish them"
 		};
 
 		var allperms = [];
@@ -166,7 +168,7 @@ component accessors="true"{
 		var oRole = roleService.new(properties={role="Editor",description="A ContentBox editor"});
 		// Add Editor Permissions
 		oRole.addPermission( permissions["COMMENTS_ADMIN"] );
-		oRole.addPermission( permissions["CUSTOMHTML_ADMIN"] );
+		oRole.addPermission( permissions["CONTENTSTORE_EDITOR"] );
 		oRole.addPermission( permissions["PAGES_EDITOR"] );
 		oRole.addPermission( permissions["CATEGORIES_ADMIN"] );
 		oRole.addPermission( permissions["ENTRIES_EDITOR"] );
@@ -246,6 +248,7 @@ component accessors="true"{
 			"cb_dashboard_recentEntries" = "5",
 			"cb_dashboard_recentPages" = "5",
 			"cb_dashboard_recentComments" = "5",
+			"cb_dashboard_recentcontentstore" = "5",
 			"cb_dashboard_newsfeed" = "http://www.gocontentbox.org/blog/rss",
 			"cb_dashboard_newsfeed_count" = "5",
 
@@ -290,11 +293,12 @@ component accessors="true"{
 			// Content Caching and options
 			"cb_content_caching" = "true",
 			"cb_entry_caching" = "true",
-			"cb_customHTML_caching" = "true",
+			"cb_contentstore_caching" = "true",
 			"cb_content_cachingTimeout" = "60",
 			"cb_content_cachingTimeoutIdle" = "15",
 			"cb_content_cacheName" = "Template",
 			"cb_page_excerpts" = "true",
+			"cb_content_uiexport" = "true",
 
 			// Global HTML
 			"cb_html_beforeHeadEnd" = "",
@@ -349,7 +353,7 @@ component accessors="true"{
 { "name": "styles",      "items" : [ "Styles","Format" ] },
 { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
 { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
-{ "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
+{ "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbContentStore","cbLinks","cbEntryLinks" ] }
 ]',
 			"cb_editors_ckeditor_excerpt_toolbar" = '
 [
@@ -358,9 +362,9 @@ component accessors="true"{
     { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","CreateDiv"] },
     { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
     { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
-    { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
+    { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbContentStore","cbLinks","cbEntryLinks" ] }
 ]' ,
-			"cb_editors_ckeditor_extraplugins" = "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre",
+			"cb_editors_ckeditor_extraplugins" = "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre",
 
 			// Uploadify Integration
 			"cb_media_uplodify_fileDesc" = "All Files",
@@ -458,24 +462,29 @@ component accessors="true"{
 		});
 		page.setCreator( author );
 		// Add new version
-		page.addNewContentVersion(content="<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{CustomHTML slug='contentbox'}}}</p>",
+		page.addNewContentVersion(content="<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{ContentStore slug='contentbox'}}}</p>",
 								  changelog="First creation",
 								  author=author);
 		pageService.savePage( page );
 
-		// create a custom HTML snippet.
-		var customHTML = customHTMLService.new(properties={
-			title = "ContactInfo",
+		// create a custom store element
+		var contentStore = contentStoreService.new(properties={
+			title = "Contact Info",
 			slug = "contentbox",
-			description = "Our contact information",
-			content = '<p style="text-align: center;">
+			publishedDate = now(),
+			isPublished = true,
+			allowComments = false,
+			passwordProtection='',
+			description = "Our contact information"
+		});
+		contentStore.setCreator( author );
+		contentStore.addNewContentVersion(content='<p style="text-align: center;">
 	<a href="http://gocontentbox.org"><img alt="" src="/modules/contentbox/content/ContentBox_125.gif" style="width: 124px; height: 118px;" /></a></p>
 <p style="text-align: center;">
-	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>'
-		});
-		customHTML.setCreator( author );
-		customHTMLService.saveCustomHTML( customHTML );
-
+	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>',
+								  changelog="First creation",
+								  author=author);
+		contentStoreService.saveContent( contentStore );
 	}
 
 }

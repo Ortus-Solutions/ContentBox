@@ -42,11 +42,13 @@
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane active" id="recentContentTab">
-							<div class="well well-small" id="latestEntries"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
 							<div class="well well-small" id="latestPages"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+							<div class="well well-small" id="latestEntries"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+							<div class="well well-small" id="latestContentStore"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
 						</div>
 						<div class="well well-small tab-pane" id="latestComments"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
 						<div class="well well-small tab-pane" id="latestNews"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+						<p>&nbsp;</p><p>&nbsp;</p>
 					</div>
 				</div>
 				
