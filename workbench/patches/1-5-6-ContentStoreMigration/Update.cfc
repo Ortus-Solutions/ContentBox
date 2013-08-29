@@ -93,8 +93,11 @@ component implements="contentbox.model.updates.IUpdate"{
 		for( var oRule in aRules ){
 			if( findNoCase( "customHTML", oRule.getSecureList() ) ){
 				oRule.setSecureList( replaceNoCase( oRule.getSecureList(), "customHTML", "contentStore", "all" ) );
-				securityRuleService.save( oRule );
 			}
+			if( findNoCase( "CUSTOMHTML", oRule.getPermissions() ) ){
+				oRule.setPermissions( replaceNoCase( oRule.getPermissions(), "CUSTOMHTML", "CONTENTSTORE", "all" ) );
+			}
+			securityRuleService.save( oRule);
 		}
 
 		// Migrate customHTML to contentstore now
@@ -103,6 +106,12 @@ component implements="contentbox.model.updates.IUpdate"{
 			// get actual author
 			var thisAuthor = authorService.get( qAllContent.FK_authorid[ x ] );
 			if( isNull( thisAuthor ) ){ thisAuthor = oAuthor; }
+			
+			// verify slug and if migrated, just continue.
+			if( !isNull( contentStoreService.findBySlug( qAllContent.slug[ x ] ) ) ){
+				continue;
+			}
+			
 			// build contentStore
 			var oContentStore = contentStoreService.new( properties={
 				title = qAllContent.title[ x ],
