@@ -306,6 +306,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_media_html5uploads_maxFiles", "25" );
 		addSetting( "cb_page_excerpts", "false" );
 		addSetting( "cb_content_uiexport", "true" );
+		addSetting( "cb_dashboard_recentcontentstore", "5" );
 		
 		// Update contentstore settings
 		var setting = settingService.findWhere( { name = "cb_customHTML_caching" } );
