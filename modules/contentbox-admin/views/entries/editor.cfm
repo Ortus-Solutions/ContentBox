@@ -17,10 +17,10 @@
 				    </button>
 			   		<ul class="dropdown-menu">
 			   			<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-						<li><a href="javascript:null()" onclick="quickPublish(false)"><i class="icon-globe"></i> Publish</a></li>
+						<li><a href="javascript:quickPublish(false)"><i class="icon-globe"></i> Publish</a></li>
 						</cfif>
-						<li><a href="javascript:null()" onclick="quickPublish(true)"><i class="icon-eraser"></i> Publish as Draft</a></li>
-						<li><a href="javascript:null()" onclick="quickSave()"><i class="icon-save"></i> Quick Save</a></li>
+						<li><a href="javascript:quickPublish(true)"><i class="icon-eraser"></i> Publish as Draft</a></li>
+						<li><a href="javascript:quickSave()"><i class="icon-save"></i> Quick Save</a></li>
 						<cfif prc.entry.isLoaded()>
 			    		<li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li>
 						</cfif>
@@ -173,7 +173,7 @@
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-						&nbsp;<input type="submit" class="btn" value="Save" data-keybinding="ctrl+s" onclick="return quickSave()">
+						&nbsp;<input type="button" class="btn" value="Save" data-keybinding="ctrl+s" onclick="quickSave()">
 						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
