@@ -102,11 +102,15 @@ component implements="contentbox.model.updates.IUpdate"{
 			// Make changes on disk take effect
 			ORMREload();
 			
+			// Do a-la-carte mappings
+			wirebox.getBinder().map("SystemUtil@cb").to( "coldbox.system.core.util.Util" );
+			
 			// Update custom HTML creators
 			updateCustomHTML();
-
-			// Migrate Custom HTML to ContentStore
-			migrateCustomHTML();
+			
+			// Update Editor and Permissions
+			updatePermissions();
+			updateEditor();
 			
 			// Import new security rules
 			securityRuleService.importFromFile( thisPath & "rules.json.cfm" );
@@ -156,47 +160,6 @@ component implements="contentbox.model.updates.IUpdate"{
 			setting.setValue( value );
 		}
 			
-	}
-
-	private function migrateCustomHTML(){
-		// get author session
-		var oAuthor = securityService.getAuthorSession();
-		// get contentStoreService manually
-		var contentStoreService = wirebox.getInstance( "contentbox.model.content.ContentStoreService" );
-
-		// Update security rules from customHTML to contentStore
-		var aRules = securityRuleService.getAll();
-		for( var oRule in aRules ){
-			if( findNoCase( "customHTML", oRule.getSecureList() ) ){
-				oRule.setSecureList( replaceNoCase( oRole.getSecureList(), "customHTML", "contentStore", "all" ) );
-				securityRuleService.save( oRule );
-			}
-		}
-
-		// Migrate customHTML to contentstore now
-		var qAllContent = new Query(sql="select * from cb_customHTML" ).execute().getResult();
-		for( var x=1; x lte qAllContent.recordCount; x++ ){
-			// get actual author
-			var thisAuthor = authorService.get( qAllContent.FK_authorid[ x ] );
-			if( isNull( thisAuthor ) ){ thisAuthor = oAuthor; }
-			// build contentStore
-			var oContentStore = contentStoreService.new( properties={
-				title = qAllContent.title[ x ],
-				slug = qAllContent.slug[ x ],
-				publishedDate = qAllContent.publishedDate[ x ],
-				expireDate = qAllContent.expireDate[ x ],
-				isPublished = qAllContent.isPublished[ x ],
-				allowComments = false,
-				passwordProtection='',
-				description = qAllContent.description[ x ]
-			} );
-			oContentStore.setCreator( thisAuthor );
-			oContentStore.addNewContentVersion(content=aAllContent.content[ x ],
-									  		   changelog="Migrated Content",
-									  		   author=thisAuthor);
-			contentStoreService.saveContent( oContentStore );
-		}
-
 	}
 
 	private function updateCustomHTML(){
@@ -272,14 +235,16 @@ component implements="contentbox.model.updates.IUpdate"{
 		log.info("Added EDITORS_EDITOR_SELECTOR permission to editor role");
 		
 		// Add in new permissions
-		thisPerm = permissionService.findWhere({permission="CUSTOMHTML_EDITOR"});
-		if( !oRole.hasPermission( thisPerm ) ){ oRole.addPermission( thisPerm ); }
-		log.info("Added CUSTOMHTML_EDITOR permission to editor role");
+		thisPerm = permissionService.findWhere({permission="CONTENTSTORE_EDITOR"});
+		if( !isNull( thisPerm ) || !oRole.hasPermission( thisPerm ) ){ oRole.addPermission( thisPerm ); }
+		log.info("Added CONTENTSTORE_EDITOR permission to editor role");
 		
 		// Remove ADMIN Perm for Custom HTML		
-		thisPerm = permissionService.findWhere({permission="CUSTOMHTML_ADMIN"});
+		thisPerm = permissionService.findWhere({permission="CONTENTSTORE_ADMIN"});
 		// Remove it
-		oRole.removePermission( thisPerm );
+		if( !isNull( thisPerm ) ){
+			oRole.removePermission( thisPerm );
+		}
 		
 		// save role
 		roleService.save(entity=oRole, transactional=false);
@@ -288,6 +253,8 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 	
 	private function updatePermissions(){
+		
+		// Create new Permissions
 		var perms = {
 			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor",
 			"TOOLS_EXPORT" = "Ability to export data from ContentBox",
@@ -307,7 +274,21 @@ component implements="contentbox.model.updates.IUpdate"{
 				log.info("Skipped #key# permission addition as it was already in system");
 			}
 		}
-		permissionService.saveAll(entities=allPerms,transactional=false);
+		permissionService.saveAll(entities=allPerms, transactional=false);
+		
+		// Update CustomHTML Permissions
+		var perm = permissionService.findWhere( {permission="CUSTOMHTML_ADMIN"} );
+		if( !isNull( perm ) ){
+			perm.setPermission( "CONTENTSTORE_ADMIN" );
+			perm.setDescription( "Ability to manage the content store, default is view only" );
+			permissionService.save( entity=perm, transactional=false );
+		}
+		var perm = permissionService.findWhere( {permission="CUSTOMHTML_EDITOR"} );
+		if( !isNull( perm ) ){
+			perm.setPermission( "CONTENTSTORE_EDITOR" );
+			perm.setDescription( "Ability to manage content store elements but not publish them" );
+			permissionService.save( entity=perm, transactional=false );
+		}
 	}
 	
 	private function updateSalt(){
@@ -326,7 +307,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_page_excerpts", "false" );
 		addSetting( "cb_content_uiexport", "true" );
 		
-		// Update Settings
+		// Update contentstore settings
 		var setting = settingService.findWhere( { name = "cb_customHTML_caching" } );
 		if( !isNull( setting ) ){
 			setting.setName( "cb_contentstore_caching" );
