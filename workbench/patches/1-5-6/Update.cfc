@@ -26,7 +26,7 @@ DB Structure Changes
 
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
-End Commit Hash: 0d26871be50a1fdfcd05c9221d6bb179ab96b3ba
+End Commit Hash: ae71470c7e644628f5a43f0288ec7fc570551979
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -132,7 +132,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			// Custom HTML replaced by content store
 			var index = arrayFindNoCase( plugins, "cbCustomHTML" );
 			if( index ){
-				plugins[ index ] = "cbContentStore"
+				plugins[ index ] = "cbContentStore";
 			}
 			// save back
 			setting.setValue( arrayToList( plugins ) );
@@ -167,7 +167,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		// Update security rules from customHTML to contentStore
 		var aRules = securityRuleService.getAll();
 		for( var oRule in aRules ){
-			if( findNoCase( "customHTML", oRule.getSecureList() ){
+			if( findNoCase( "customHTML", oRule.getSecureList() ) ){
 				oRule.setSecureList( replaceNoCase( oRole.getSecureList(), "customHTML", "contentStore", "all" ) );
 				securityRuleService.save( oRule );
 			}
@@ -491,8 +491,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	// get Columns
 	private function getTableColumns(required table){
 		if( structkeyexists( server, "railo") ){
-			dbinfo datasource=getDatasource() type="columns" name="local.results";
-			return local.results.database_productName;
+			return new RailoDBInfo().getTableColumns(datasource=getDatasource(), table=arguments.table);
 		}
 		return new dbinfo(datasource=getDatasource(), table=arguments.table).columns();
 	}
@@ -500,8 +499,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	// Get the database type
 	private function getDatabaseType(){
 		if( structkeyexists( server, "railo") ){
-			dbinfo datasource=getDatasource() type="version" name="local.results";
-			return local.results.database_productName;
+			return new RailoDBInfo().getDatabaseType(datasource=getDatasource()).database_productName;
 		}
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
