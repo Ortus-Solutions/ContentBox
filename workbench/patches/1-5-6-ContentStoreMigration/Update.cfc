@@ -97,7 +97,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			if( findNoCase( "CUSTOMHTML", oRule.getPermissions() ) ){
 				oRule.setPermissions( replaceNoCase( oRule.getPermissions(), "CUSTOMHTML", "CONTENTSTORE", "all" ) );
 			}
-			securityRuleService.save( oRule);
+			securityRuleService.save( oRule );
 		}
 
 		// Migrate customHTML to contentstore now
@@ -108,7 +108,9 @@ component implements="contentbox.model.updates.IUpdate"{
 			if( isNull( thisAuthor ) ){ thisAuthor = oAuthor; }
 			
 			// verify slug and if migrated, just continue.
-			if( !isNull( contentStoreService.findBySlug( qAllContent.slug[ x ] ) ) ){
+			var thisContent = contentStoreService.findBySlug( qAllContent.slug[ x ], true );
+			if( thisContent.isLoaded() ){
+				log.info("Slug: #qAllContent.slug[ x ]# already migrated, skipping");
 				continue;
 			}
 			
@@ -128,6 +130,8 @@ component implements="contentbox.model.updates.IUpdate"{
 									  		   changelog="Migrated Content",
 									  		   author=thisAuthor);
 			contentStoreService.saveContent( oContentStore );
+			
+			log.info("Slug: #qAllContent.slug[ x ]# migrated and saved.");
 		}
 
 	}
