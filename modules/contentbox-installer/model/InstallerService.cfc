@@ -248,6 +248,7 @@ component accessors="true"{
 			"cb_dashboard_recentEntries" = "5",
 			"cb_dashboard_recentPages" = "5",
 			"cb_dashboard_recentComments" = "5",
+			"cb_dashboard_recentcontentstore" = "5",
 			"cb_dashboard_newsfeed" = "http://www.gocontentbox.org/blog/rss",
 			"cb_dashboard_newsfeed_count" = "5",
 
