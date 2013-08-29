@@ -37,12 +37,15 @@ function quickSave(){
 	}
 	// Validation of Form First before quick save
 	if( !$targetEditorForm.valid() ){
+		adminNotifier( "error", "Form is not valid, please verify." );
 		return false;
 	}
 	// Activate Loader
 	toggleLoaderBar();
-	// Save current content, just in case
-	//$content.val( getEditorContent() );
+	// Save current content, just in case editor has not saved it
+	if( !$content.val().length ){
+		$content.val( getEditorContent() );	
+	}
 	// Post it
 	$.post($targetEditorSaveURL, $targetEditorForm.serialize(), function(data){
 		// Save new id
@@ -50,11 +53,10 @@ function quickSave(){
 		// finalize
 		$changelog.val( '' );
 		$uploaderBarLoader.fadeOut( 1500 );
-		$uploaderBarStatus.html( 'Draft Quick Saved!' );
+		$uploaderBarStatus.html( 'Draft Saved!' );
 		$isPublished.val( 'true' );
+		adminNotifier( "info", "Draft Saved!" );
 	},"json");
-
-	return false;
 }
 /**
  * Setup the editors. 
@@ -152,13 +154,17 @@ function switchEditor(editorType){
 	// Call change user editor preference
 	$.ajax({
 		url : '#event.buildLink(prc.xehAuthorEditorSave)#',
-		data : {editor: $("##contentEditorChanger").val()},
+		data : {editor: editorType},
 		async : false,
 		success : function(data){
-			// Once changed, reload the page.
 			location.reload();
 		}
 	});
+}
+
+function switchMarkup(markupType){
+	$("##markup").val( markupType );
+	$("##markupLabel").html( markupType );
 }
 
 // Ask for leave confirmations
@@ -218,8 +224,8 @@ function getWidgetRenderArgsURL(){ return '#event.buildLink( prc.cbAdminEntryPoi
 function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
 // Entry Selection Integration
 function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector")#';}
-// Custom HTML Selection Integration
-function getCustomHTMLSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".customHTML.editorselector")#';}
+// ContentStore Selection Integration
+function getContentStoreSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".contentStore.editorselector")#';}
 // Preview Integration
 function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".content.preview")#';}
 // Module Link Building

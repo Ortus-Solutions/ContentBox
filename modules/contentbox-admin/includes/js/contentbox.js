@@ -100,7 +100,7 @@ $(document).ready(function() {
 		jwerty.key( "ctrl+shift+e" , toggleSidebar );
 	}
 	// If the sidebar preference is off, toggle it
-	if( $("body").attr( "data-showsidebar" ) == "NO" ){
+	if( $("body").attr( "data-showsidebar" ) == "no" ){
 		toggleSidebar();
 	}
 	// Nav Search Shortcut
@@ -183,7 +183,6 @@ function adminNotifier(type, message, delay){
 		case "error" : { $notifier.addClass( "alert-error" ); break; }
 		case "success" : { $notifier.addClass( "alert-success" ); break; }
 	}
-	console.log( $notifier.attr("class") );
 	// show with message and delay and reset.
 	$notifier.fadeIn().html( message ).delay( delay ).fadeOut();
 }

@@ -5,7 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="contentService"		inject="id:contentService@cb";
-	property name="customHTMLService"	inject="id:customHTMLService@cb";
+	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 
@@ -30,9 +30,8 @@ component extends="baseHandler"{
 				rc.layout = "blog";
 				break; 
 			}
-			case "CustomHTML" : {
-				var oContent = customHTMLService.new();
-				oContent.setMarkup( rc.markup );
+			case "ContentStore" : { 
+				var oContent = contentStoreService.new();
 				prc.preview = oContent.renderContentSilent( rc.content );
 				event.setView(view="content/simplePreview", layout="ajax");
 				return;
@@ -55,9 +54,9 @@ component extends="baseHandler"{
 													searchActiveContent=false);
 		prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
 		
-		// Search for Custom HTML
-		prc.customHTML = customHTMLService.search( search=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
-		prc.minCustomHTMLCount = ( prc.customHTML.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.customHTML.count : prc.cbSettings.cb_admin_quicksearch_max );
+		// Search for Content Store
+		prc.contentStore = contentStoreService.search( search=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
+		prc.minContentStoreCount = ( prc.contentStore.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.contentStore.count : prc.cbSettings.cb_admin_quicksearch_max );
 		
 		// Search for Authors
 		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);

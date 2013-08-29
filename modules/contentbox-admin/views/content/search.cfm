@@ -11,13 +11,13 @@
 </cfif>
 </ul>
 
-<!---Custom HTML --->
-<h2><i class="icon-tasks"></i> CustomHTML ( #prc.minCustomHTMLCount# of #prc.customHTML.count# )<h2>
+<!---ContentStore --->
+<h2><i class="icon-tasks"></i> Content Store ( #prc.minContentStoreCount# of #prc.contentStore.count# )<h2>
 <ul>
-<cfloop array="#prc.customHTML.entries#" index="thisEntry">
-	<li><a title="#thisEntry.getSlug()#" href="#event.buildLInk(linkTo=prc.xehCustomHTMLEditor, queryString="contentID=#thisEntry.getContentID()#" )#">#thisEntry.getTitle()#</a></li>
+<cfloop array="#prc.contentStore.content#" index="thisContent">
+	<li><a title="#thisContent.getSlug()#" href="#event.buildLInk(linkTo=prc.xehContentStoreEditor, queryString="contentID=#thisContent.getContentID()#" )#">#thisContent.getTitle()#</a></li>
 </cfloop>
-<cfif !arrayLen( prc.customHTML.entries )>
+<cfif !arrayLen( prc.contentStore.content )>
 	<li><em>No Results</em></li>
 </cfif>
 </ul>
@@ -32,5 +32,4 @@
 	<li><em>No Results</em></li>
 </cfif>
 </ul>
-	
 </cfoutput>

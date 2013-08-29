@@ -30,7 +30,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	property name="pageService"			inject="id:pageService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="commentService"		inject="id:commentService@cb";
-	property name="customHTMLService"	inject="id:customHTMLService@cb";
+	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="widgetService"		inject="id:widgetService@cb";
 	property name="moduleService"		inject="id:moduleService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
@@ -80,13 +80,32 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Get custom HTML content pieces by slug
+	* Get a published custom HTML content pieces by slug: DEPRECATED, use contentStore() instead
+	* @see contentStore
+	* @deprecated
 	* @slug.hint The content slug to retrieve
 	* @defaultValue.hint The default value to use if custom html element not found.
 	*/
 	function customHTML(required slug, defaultValue=""){
-		var content = customHTMLService.findWhere({slug=arguments.slug});
-		return ( isNull(content) OR not isObject( content ) ? arguments.defaultValue : content.renderContent() );
+		return contentStore(argumentCollection=arguments);
+	}
+
+	/**
+	* Get a published content store and return its latest active content
+	* @slug.hint The content slug to retrieve
+	* @defaultValue.hint The default value to use if the content element not found.
+	*/
+	function contentStore(required slug, defaultValue=""){
+		var content = contentStoreService.findBySlug( arguments.slug );
+		return ( !content.isLoaded() ? arguments.defaultValue : content.renderContent() );
+	}
+
+	/**
+	* Get a content store object by slug, if not found it returns null.
+	* @slug.hint The content slug to retrieve
+	*/
+	function contentStoreObject(required slug){
+		return contentStoreService.findBySlug( slug=arguments.slug, showUnpublished=true );
 	}
 	
 	/************************************** Minify methods *********************************************/

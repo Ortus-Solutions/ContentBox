@@ -13,14 +13,14 @@
 			<div class="btn-group pull-right" style="margin-top:5px">
 			    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.parentcontentID#';return false;"><i class="icon-reply"></i> Back</button>
 			    <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
-			    	<span class="caret"></span>
+			    	<span class="icon-cog"></span>
 			    </button>
 		   		<ul class="dropdown-menu">
 		    		<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
-					<li><a href="javascript:null()" onclick="quickPublish(false)"><i class="icon-globe"></i> Publish</a></li>
+					<li><a href="javascript:quickPublish(false)"><i class="icon-globe"></i> Publish</a></li>
 					</cfif>
-					<li><a href="javascript:null()" onclick="quickPublish(true)"><i class="icon-eraser"></i> Publish as Draft</a></li>
-					<li><a href="javascript:null()" onclick="quickSave()"><i class="icon-save"></i> Quick Save</a></li>
+					<li><a href="javascript:quickPublish(true)"><i class="icon-eraser"></i> Publish as Draft</a></li>
+					<li><a href="javascript:quickSave()"><i class="icon-save"></i> Quick Save</a></li>
 					<cfif prc.page.isLoaded()>
 					<li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="icon-eye-open"></i> View In Site</a></li>
 					</cfif>
@@ -54,23 +54,33 @@
 			<div id="contentToolBar">
 				
 				<!--- editor selector --->
-				<label for="contentEditorChanger" class="inline">Editor: </label>
 				<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
-				#html.select(name="contentEditorChanger", 
-							 options=prc.editors,
-							 column="name",
-							 class="input-medium",
-							 nameColumn="displayName",
-							 selectedValue=prc.defaultEditor,
-							 onchange="switchEditor(this.value)")#
+				<div class="btn-group">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+						Editor
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<cfloop array="#prc.editors#" index="thisEditor">
+							<li><a href="javascript:switchEditor( '#thisEditor.name#' )">#thisEditor.displayName#</li>
+						</cfloop>
+					</ul>
+				</div>
 				</cfif>
 				<!--- markup --->
-				<label for="markup" class="inline">Markup: </label>
-				#html.select(name="markup", 
-							 class="input-medium",
-							 options=prc.markups,
-							 selectedValue=( prc.page.isLoaded() ? prc.page.getMarkup() : prc.defaultMarkup ))#
-				
+				#html.hiddenField(name="markup", value=prc.page.isLoaded() ? prc.page.getMarkup() : prc.defaultMarkup)#
+				<div class="btn-group">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+						Markup : <span id="markupLabel">#prc.page.isLoaded() ? prc.page.getMarkup() : prc.defaultMarkup#</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<cfloop array="#prc.markups#" index="thismarkup">
+							<li><a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</li>
+						</cfloop>
+					</ul>
+				</div>
+
 				<!---Right References Panel --->
 				<div class="floatRight">
 					<a href="javascript:previewContent()" class="btn" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
@@ -186,7 +196,7 @@
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-						&nbsp;<input type="submit" class="btn" value="Save" data-keybinding="ctrl+s" onclick="return quickSave()">
+						&nbsp;<input type="button" class="btn" value="Save" data-keybinding="ctrl+s" onclick="quickSave()">
 						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
 						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
