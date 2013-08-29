@@ -31,7 +31,7 @@
 			<div class="body">
 				<table class="table table-hover table-condensed table-striped" width="100%">
 					<tr>
-						<th width="85" class="textRight">Title:</th>
+						<th width="95" class="textRight">Title:</th>
 						<td>
 							#prc.content.getTitle()#
 						</td>
@@ -49,27 +49,23 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="textRight">Version:</th>
+						<th class="textRight">Created By:</th>
+						<td>
+							<a href="mailto:#prc.content.getCreatorEmail()#">#prc.content.getCreatorName()#</a>
+						</td>
+					</tr>
+					<tr>
+						<th class="textRight">Active Version:</th>
 						<td>
 							#prc.content.getActiveContent().getVersion()#
 						</td>
 					</tr>
-					<tr>
-						<th class="textRight">Views:</th>
-						<td>
-							#prc.content.getHits()#
-						</td>
-					</tr>
-					<tr>
-						<th class="textRight">Comments:</th>
-						<td>
-							#prc.content.getNumberOfComments()#
-						</td>
-					</tr>
 				</table>
 				<div class="center">
-					<button class="btn btn-primary" onclick="to('#event.buildLink(prc.xehBackTrack)#/parent/#prc.content.getParentID()#');return false;"><i class="icon-reply"></i> Back</button>
-					<button class="btn btn-primary" onclick="window.open('#prc.CBHelper.linkContent(prc.content)#');return false;"><i class="icon-eye-open"></i> Open</button>
+					<button class="btn btn-primary" onclick="to('#event.buildLink( prc.xehBackTrack )#/parent/#prc.content.getParentID()#');return false;"><i class="icon-reply"></i> Back</button>
+					<cfif len( prc.xehOpenContent )>
+					<button class="btn btn-primary" onclick="window.open('#prc.xehOpenContent#');return false;"><i class="icon-eye-open"></i> Open</button>
+					</cfif>
 				</div>
 			</div>
 		</div>

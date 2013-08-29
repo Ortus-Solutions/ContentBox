@@ -20,13 +20,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
-* Manage blog entries
+* Manage content store
 */
 component extends="baseHandler"{
 
 	// Dependencies
 	property name="categoryService"		inject="id:categoryService@cb";
-	property name="entryService"		inject="id:entryService@cb";
+	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="editorService"		inject="id:editorService@cb";
@@ -39,17 +39,10 @@ component extends="baseHandler"{
 		var rc 	= event.getCollection();
 		var prc = event.getCollection(private=true);
 		// exit Handlers
-		prc.xehEntries 		= "#prc.cbAdminEntryPoint#.entries";
-		prc.xehEntryEditor 	= "#prc.cbAdminEntryPoint#.entries.editor";
-		prc.xehEntryRemove 	= "#prc.cbAdminEntryPoint#.entries.remove";
+		prc.xehContentEditor 	= "#prc.cbAdminEntryPoint#.contentStore.editor";
+		prc.xehContentRemove 	= "#prc.cbAdminEntryPoint#.contentStore.remove";
 		// Tab control
 		prc.tabContent = true;
-
-		// Verify if disabled?
-		if( prc.cbSettings.cb_site_disable_blog ){
-			getPlugin("MessageBox").warn("The blog has been currently disabled. You can activate it again in your ContentBox settings panel");
-			setNextEvent(prc.xehDashboard);
-		}
 	}
 
 	// index
@@ -60,24 +53,24 @@ component extends="baseHandler"{
 		prc.categories = categoryService.getAll(sortOrder="category");
 
 		// exit handlers
-		prc.xehEntrySearch 	 	= "#prc.cbAdminEntryPoint#.entries";
-		prc.xehEntryTable 	 	= "#prc.cbAdminEntryPoint#.entries.entriesTable";
-		prc.xehEntryBulkStatus 	= "#prc.cbAdminEntryPoint#.entries.bulkstatus";
-		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
-		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
-		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
+		prc.xehContentSearch 	 	= "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentTable 	 	= "#prc.cbAdminEntryPoint#.contentStore.contentTable";
+		prc.xehContentBulkStatus 	= "#prc.cbAdminEntryPoint#.contentStore.bulkstatus";
+		prc.xehContentExportAll 	= "#prc.cbAdminEntryPoint#.contentStore.exportAll";
+		prc.xehContentImport		= "#prc.cbAdminEntryPoint#.contentStore.importAll";
+		prc.xehContentClone 		= "#prc.cbAdminEntryPoint#.contentStore.clone";
 		
 		// Tab
-		prc.tabContent_blog = true;
+		prc.tabContent_contentStore = true;
 		// view
-		event.setView("entries/index");
+		event.setView("contentStore/index");
 	}
 	
-	// entriesTable
-	function entriesTable(event,rc,prc){
+	// contentTable
+	function contentTable(event,rc,prc){
 		// params
 		event.paramValue("page",1);
-		event.paramValue("searchEntries","");
+		event.paramValue("searchContent","");
 		event.paramValue("fAuthors","all");
 		event.paramValue("fCategories","all");
 		event.paramValue("fStatus","any");
@@ -94,33 +87,25 @@ component extends="baseHandler"{
 			prc.isFiltering = true;
 		}
 		
-		// search entries with filters and all
-		var entryResults = entryService.search(search=rc.searchEntries,
+		// search content with filters and all
+		var contentResults = contentStoreService.search(search=rc.searchContent,
 											   offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
 											   max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
 											   isPublished=rc.fStatus,
 											   category=rc.fCategories,
 											   author=rc.fAuthors,
 											   sortOrder="createdDate desc");
-		prc.entries 	 = entryResults.entries;
-		prc.entriesCount = entryResults.count;
+		prc.content 	 = contentResults.content;
+		prc.contentCount = contentResults.count;
 
 		// exit handlers
-		prc.xehEntrySearch 	 	= "#prc.cbAdminEntryPoint#.entries";
-		prc.xehEntryQuickLook	= "#prc.cbAdminEntryPoint#.entries.quickLook";
-		prc.xehEntryHistory  	= "#prc.cbAdminEntryPoint#.versions.index";
-		prc.xehEntryExport 		= "#prc.cbAdminEntryPoint#.entries.export";
-		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
+		prc.xehContentSearch 	 	= "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentHistory  		= "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehContentExport 		= "#prc.cbAdminEntryPoint#.contentStore.export";
+		prc.xehContentClone 		= "#prc.cbAdminEntryPoint#.contentStore.clone";
 		
 		// view
-		event.setView(view="entries/indexTable", layout="ajax");
-	}
-
-	// Quick Look
-	function quickLook(event,rc,prc){
-		// get entry
-		prc.entry  = entryService.get( event.getValue("contentID",0) );
-		event.setView(view="entries/quickLook",layout="ajax");
+		event.setView(view="contentStore/indexTable", layout="ajax");
 	}
 
 	// Bulk Status Change
@@ -130,18 +115,18 @@ component extends="baseHandler"{
 
 		// check if id list has length
 		if( len( rc.contentID ) ){
-			entryService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
+			contentStoreService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
 			// announce event
-			announceInterception("cbadmin_onEntryStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus});
+			announceInterception("cbadmin_onContentStoreStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus});
 			// Message
-			getPlugin("MessageBox").info("#listLen(rc.contentID)# Entries where set to '#rc.contentStatus#'");
+			getPlugin("MessageBox").info("#listLen(rc.contentID)# content where set to '#rc.contentStatus#'");
 		}
 		else{
-			getPlugin("MessageBox").warn("No entries selected!");
+			getPlugin("MessageBox").warn("No content selected!");
 		}
 
 		// relocate back
-		setNextEvent(event=prc.xehEntries);
+		setNextEvent(event=prc.xehContentStore);
 	}
 
 	// editor
@@ -151,12 +136,10 @@ component extends="baseHandler"{
 		// get all categories
 		prc.categories = categoryService.getAll(sortOrder="category");
 		// get new or persisted
-		prc.entry  = entryService.get( event.getValue("contentID",0) );
+		prc.content  = contentStoreService.get( event.getValue("contentID",0) );
 		// load comments viewlet if persisted
-		if( prc.entry.isLoaded() ){
+		if( prc.content.isLoaded() ){
 			var args = {contentID=rc.contentID};
-			// Get Comments viewlet
-			prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments=args);
 			// Get Versions Viewlet
 			prc.versionsViewlet = runEvent(event="contentbox-admin:versions.pager",eventArguments=args);
 		}
@@ -179,15 +162,15 @@ component extends="baseHandler"{
 		prc.authors = authorService.getAll(sortOrder="lastName");
 
 		// exit handlers
-		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
-		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
-		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
+		prc.xehContentSave 		= "#prc.cbAdminEntryPoint#.contentStore.save";
+		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.contentStore.slugify";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
+		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 
 		// Tab
-		prc.tabContent_blog = true;
+		prc.tabContent_contentStore = true;
 		// view
-		event.setView("entries/editor");
+		event.setView("contentStore/editor");
 	}
 	
 	// clone
@@ -200,33 +183,32 @@ component extends="baseHandler"{
 		}
 		// decode the incoming title
 		rc.title = urldecode( rc.title );
-		// get the entry to clone
-		var original = entryService.get( rc.contentID );
+		// get the content to clone
+		var original = contentStoreService.get( rc.contentID );
 		// Verify new Title, else do a new copy of it
 		if( rc.title eq original.getTitle() ){
 			rc.title = "Copy of #rc.title#";
 		}
 		// get a clone
-		var clone = entryService.new( { title=rc.title, slug=getPlugin("HTMLHelper").slugify( rc.title ) } );
+		var clone = contentStoreService.new( { title=rc.title, slug=getPlugin("HTMLHelper").slugify( rc.title ) } );
 		clone.setCreator( prc.oAuthor );
-		// prepare for clone
+		// prepare for cloning
 		clone.prepareForClone(author=prc.oAuthor, 
 							  original=original, 
-							  originalService=entryService, 
-							  publish=rc.entryStatus, 
+							  originalService=contentStoreService, 
+							  publish=rc.contentStatus, 
 							  originalSlugRoot=original.getSlug(),
 							  newSlugRoot=clone.getSlug());
 		// clone this sucker now!
-		entryService.saveEntry( clone );
+		contentStoreService.saveContent( clone );
 		// relocate
-		getPlugin("MessageBox").info("Entry Cloned, isn't that cool!");
-		setNextEvent(event=prc.xehEntries);
+		getPlugin("MessageBox").info("Content Cloned, isn't that cool!");
+		setNextEvent(event=prc.xehContentStore);
 	}
 
 	// save
 	function save(event,rc,prc){
 		// params
-		event.paramValue( "allowComments", prc.cbSettings.cb_comments_enabled );
 		event.paramValue( "newCategories", "" );
 		event.paramValue( "isPublished", true );
 		event.paramValue( "slug", "" );
@@ -238,7 +220,7 @@ component extends="baseHandler"{
 		event.paramValue( "expireHour", "" );
 		event.paramValue( "expireMinute", "" );
 		event.paramValue( "content", "" );
-		event.paramValue("creatorID","");
+		event.paramValue( "creatorID","" );
 
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent") ){
@@ -250,18 +232,18 @@ component extends="baseHandler"{
 		rc.slug = getPlugin("HTMLHelper").slugify( rc.slug );
 
 		// Verify permission for publishing, else save as draft
-		if( !prc.oAuthor.checkPermission("ENTRIES_ADMIN") ){
+		if( !prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN") ){
 			rc.isPublished = "false";
 		}
 
-		// get new/persisted entry and populate it
-		var entry = populateModel( entryService.get( rc.contentID ) )
-			.addPublishedtime(rc.publishedHour, rc.publishedMinute)
+		// get new/persisted content and populate it
+		var content = populateModel( contentStoreService.get( rc.contentID ) )
+			.addPublishedtime( rc.publishedHour, rc.publishedMinute)
 			.addExpiredTime( rc.expireHour, rc.expireMinute );
-		var isNew = ( NOT entry.isLoaded() );
+		var isNew = ( NOT content.isLoaded() );
 
 		// Validate it
-		var errors = entry.validate();
+		var errors = content.validate();
 		if( !len(trim(rc.content)) ){
 			arrayAppend(errors, "Please enter the content to save!");
 		}
@@ -272,15 +254,15 @@ component extends="baseHandler"{
 		}
 		
 		// Attach creator if new page
-		if( isNew ){ entry.setCreator( prc.oAuthor ); }
+		if( isNew ){ content.setCreator( prc.oAuthor ); }
 		
 		// Override creator?
-		if( !isNew and prc.oAuthor.checkPermission("ENTRIES_ADMIN") and len( rc.creatorID ) and entry.getCreator().getAuthorID() NEQ rc.creatorID ){
-			entry.setCreator( authorService.get( rc.creatorID ) );
+		if( !isNew and prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN") and len( rc.creatorID ) and content.getCreator().getAuthorID() NEQ rc.creatorID ){
+			content.setCreator( authorService.get( rc.creatorID ) );
 		}
 
 		// Register a new content in the page, versionized!
-		entry.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
+		content.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
 
 		// Create new categories?
 		var categories = [];
@@ -290,27 +272,27 @@ component extends="baseHandler"{
 		// Inflate sent categories from collection
 		categories.addAll( categoryService.inflateCategories( rc ) );
 		// detach categories and re-attach
-		entry.setCategories( categories );
+		content.setCategories( categories );
 		// Inflate Custom Fields into the page
-		entry.inflateCustomFields( rc.customFieldsCount, rc );
+		content.inflateCustomFields( rc.customFieldsCount, rc );
 		// announce event
-		announceInterception("cbadmin_preEntrySave",{entry=entry,isNew=isNew});
-		// save entry
-		entryService.saveEntry( entry );
+		announceInterception("cbadmin_preContentStoreSave", {content=content, isNew=isNew});
+		// save content
+		contentStoreService.saveContent( content );
 		// announce event
-		announceInterception("cbadmin_postEntrySave",{entry=entry,isNew=isNew});
+		announceInterception("cbadmin_postContentStoreSave", {content=content, isNew=isNew});
 
 		// Ajax?
 		if( event.isAjax() ){
 			var rData = {
-				"CONTENTID" = entry.getContentID()
+				"CONTENTID" = content.getContentID()
 			};
 			event.renderData(type="json",data=rData);
 		}
 		else{
 			// relocate
-			getPlugin("MessageBox").info("Entry Saved!");
-			setNextEvent(prc.xehEntries);
+			getPlugin("MessageBox").info("content Saved!");
+			setNextEvent( prc.xehContentStore );
 		}
 	}
 
@@ -321,8 +303,8 @@ component extends="baseHandler"{
 		
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
-			getPlugin("MessageBox").warn( "No entries sent to delete!" );
-			setNextEvent(event=prc.xehEntries);
+			getPlugin("MessageBox").warn( "No content sent to delete!" );
+			setNextEvent( prc.xehContentStore );
 		}
 		
 		// Inflate to array
@@ -331,27 +313,27 @@ component extends="baseHandler"{
 		
 		// Iterate and remove
 		for( var thisContentID in rc.contentID ){
-			var entry = entryService.get( thisContentID );
-			if( isNull( entry ) ){
-				arrayAppend( messages, "Invalid entry contentID sent: #thisContentID#, so skipped removal" );
+			var content = contentStoreService.get( thisContentID );
+			if( isNull( content ) ){
+				arrayAppend( messages, "Invalid content contentID sent: #thisContentID#, so skipped removal" );
 			}
 			else{
 				// GET id to be sent for announcing later
-				var contentID 	= entry.getContentID();
-				var title		= entry.getTitle();
+				var contentID 	= content.getContentID();
+				var title		= content.getTitle();
 				// announce event
-				announceInterception("cbadmin_preEntryRemove", { entry=entry } );
+				announceInterception("cbadmin_preContentStoreRemove", { content=content } );
 				// Delete it
-				entryService.deleteContent( entry );
-				arrayAppend( messages, "Entry '#title#' removed" );
+				contentStoreService.deleteContent( content );
+				arrayAppend( messages, "content '#title#' removed" );
 				// announce event
-				announceInterception("cbadmin_postEntryRemove", { contentID=contentID });
+				announceInterception("cbadmin_postContentStoreRemove", { contentID=contentID });
 			}
 		}
 		// messagebox
 		getPlugin("MessageBox").info(messageArray=messages);
 		// relocate
-		setNextEvent(event=prc.xehEntries);
+		setNextEvent(event=prc.xehContentStore);
 	}
 
 	// pager viewlet
@@ -368,13 +350,12 @@ component extends="baseHandler"{
 		event.paramValue("page",1);
 
 		// exit handlers
-		prc.xehPager 		= "#prc.cbAdminEntryPoint#.entries.pager";
-		prc.xehEntryEditor	= "#prc.cbAdminEntryPoint#.entries.editor";
-		prc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
-		prc.xehEntryHistory = "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehPager 			= "#prc.cbAdminEntryPoint#.contentStore.pager";
+		prc.xehContentEditor	= "#prc.cbAdminEntryPoint#.contentStore.editor";
+		prc.xehContentHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 
 		// prepare paging plugin
-		prc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging", module="contentbox");
 		prc.pager_paging 	  	= prc.pager_pagingPlugin.getBoundaries();
 		prc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pager_pagination	= arguments.pagination;
@@ -383,34 +364,24 @@ component extends="baseHandler"{
 		var sortOrder = "publishedDate DESC";
 		if( arguments.latest ){ sortOrder = "modifiedDate desc"; }
 		
-		// search entries with filters and all
-		var entryResults = entryService.search(author=arguments.authorID,
-											   offset=prc.pager_paging.startRow-1,
-											   max=arguments.max,
-											   sortOrder=sortOrder);
-		prc.pager_entries 	    = entryResults.entries;
-		prc.pager_entriesCount  = entryResults.count;
+		// search content with filters and all
+		var contentResults = contentStoreService.search(author=arguments.authorID,
+													    offset=prc.pager_paging.startRow-1,
+													    max=arguments.max,
+													    sortOrder=sortOrder);
+		prc.pager_content 	    = contentResults.content;
+		prc.pager_contentCount  = contentResults.count;
 
 		// author in RC
 		prc.pager_authorID		= arguments.authorID;
 
 		// view pager
-		return renderView(view="entries/pager",module="contentbox-admin");
+		return renderView(view="contentStore/pager", module="contentbox-admin");
 	}
 
 	// slugify remotely
 	function slugify(event,rc,prc){
 		event.renderData(data=getPlugin("HTMLHelper").slugify( rc.slug ),type="plain");
-	}
-
-	// quick post viewlet
-	function quickPost(event,rc,prc){
-		// get all categories for quick post
-		prc.qpCategories = categoryService.getAll(sortOrder="category");
-		// exit handlers
-		prc.xehQPEntrySave = "#prc.cbAdminEntryPoint#.entries.save";
-		// render it out
-		return renderView(view="entries/quickPost",module="contentbox-admin");
 	}
 
 	// editor selector
@@ -421,49 +392,49 @@ component extends="baseHandler"{
 		event.paramValue("clear", false);
 
 		// exit handlers
-		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.entries.editorSelector";
+		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.contentStore.editorSelector";
 
 		// prepare paging plugin
 		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
 		prc.paging 	  		= prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 		= "javascript:pagerLink(@page@)";
 
-		// search entries with filters and all
-		var entryResults = entryService.search(search=rc.search,
-											   offset=prc.paging.startRow-1,
-											   max=prc.cbSettings.cb_paging_maxrows,
-											   sortOrder="createdDate asc",
-											   searchActiveContent=false);
+		// search content with filters and all
+		var contentResults = contentStoreService.search(search=rc.search,
+													    offset=prc.paging.startRow-1,
+													    max=prc.cbSettings.cb_paging_maxrows,
+													    sortOrder="createdDate asc",
+													    searchActiveContent=false);
 
-		prc.entries 		= entryResults.entries;
-		prc.entriesCount  	= entryResults.count;
+		prc.content 		= contentResults.content;
+		prc.contentCount  	= contentResults.count;
 		prc.CBHelper 		= CBHelper;
 		
 		// if ajax and searching, just return tables
 		if( event.isAjax() and len( rc.search ) OR rc.clear ){
-			return renderView(view="entries/editorSelectorEntries", module="contentbox-admin");
+			return renderView(view="contentStore/editorSelectorEntries", module="contentbox-admin");
 		}
 		else{
-			event.setView(view="entries/editorSelector",layout="ajax");
+			event.setView(view="contentStore/editorSelector",layout="ajax");
 		}
 	}
 
-	// Export Entry
+	// Export content
 	function export(event,rc,prc){
 		event.paramValue("format", "json");
-		// get entry
-		prc.entry  = entryService.get( event.getValue("contentID",0) );
+		// get content
+		prc.content  = contentStoreService.get( event.getValue("contentID",0) );
 		
 		// relocate if not existent
-		if( !prc.entry.isLoaded() ){
+		if( !prc.content.isLoaded() ){
 			getPlugin("MessageBox").warn("ContentID sent is not valid");
-			setNextEvent( "#prc.cbAdminEntryPoint#.entries" );
+			setNextEvent( prc.xehContentStore );
 		}
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
-				var filename = "#prc.entry.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=prc.entry.getMemento(), type=rc.format, xmlRootName="entry")
+				var filename = "#prc.content.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=prc.content.getMemento(), type=rc.format, xmlRootName="content")
 					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
 				break;
 			}
@@ -473,16 +444,16 @@ component extends="baseHandler"{
 		}
 	}
 	
-	// Export All Entries
+	// Export All content
 	function exportAll(event,rc,prc){
 		event.paramValue("format", "json");
 		// get all prepared content objects
-		var data  = entryService.getAllForExport();
+		var data  = contentStoreService.getAllForExport();
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
-				var filename = "Entries." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="entries")
+				var filename = "ContentStore." & ( rc.format eq "xml" ? "xml" : "json" );
+				event.renderData(data=data, type=rc.format, xmlRootName="ContentStore")
 					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
 				break;
 			}
@@ -492,14 +463,14 @@ component extends="baseHandler"{
 		}
 	}
 	
-	// import entries
+	// import contentstore
 	function importAll(event,rc,prc){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
-				var importLog = entryService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin("MessageBox").info( "Entries imported sucessfully!" );
+				var importLog = contentStoreService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+				getPlugin("MessageBox").info( "Content imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
@@ -511,7 +482,7 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			getPlugin("MessageBox").error( errorMessage );
 		}
-		setNextEvent( prc.xehEntries );
+		setNextEvent( prc.xehContentStore );
 	}
 	
 }

@@ -34,6 +34,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	// DI
 	property name="settingService"			inject="id:settingService@cb";
 	property name="permissionService" 		inject="permissionService@cb";
+	property name="authorService"			inject="id:authorService@cb";
 	property name="roleService" 			inject="roleService@cb";
 	property name="securityRuleService"		inject="securityRuleService@cb";
 	property name="pageService"				inject="pageService@cb";
@@ -59,6 +60,9 @@ component implements="contentbox.model.updates.IUpdate"{
 			
 			log.info("About to begin #version# patching");
 			
+			// update CKEditor Plugins
+			updateCKEditorPlugins();
+			
 			// Check for System Salt, else create it
 			updateSalt();
 			
@@ -66,16 +70,13 @@ component implements="contentbox.model.updates.IUpdate"{
 			if( replace( currentVersion, ".", "", "all" )  LTE 152 ){
 				securityRuleService.resetRules();	
 			}
-			
 			// Update new settings
 			updateSettings();
-			
 			// create caching directory
 			var cacheDir = coldbox.getSetting("modules")["contentbox-admin"].path & "/includes/cache";
 			if( !directoryExists( cacheDir ) ){
 				directoryCreate( cacheDir );
 			}
-			
 			// Update Content Creators
 			updateContentCreators();
 			
@@ -103,6 +104,9 @@ component implements="contentbox.model.updates.IUpdate"{
 			
 			// Update custom HTML creators
 			updateCustomHTML();
+
+			// Migrate Custom HTML to ContentStore
+			migrateCustomHTML();
 			
 			// Import new security rules
 			securityRuleService.importFromFile( thisPath & "rules.json.cfm" );
@@ -116,6 +120,85 @@ component implements="contentbox.model.updates.IUpdate"{
 	
 	/************************************** PRIVATE *********************************************/
 	
+	private function updateCKEditorPlugins(){
+		// Update extra plugins
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_extraplugins" } );
+		if( !isNull( setting ) ){
+			var plugins = listToArray( setting.getValue() );
+			// key bindings
+			if( !arrayFindNoCase( plugins, "cbKeyBinding") ){
+				arrayAppend( plugins, "cbKeyBinding" );
+			}
+			// Custom HTML replaced by content store
+			var index = arrayFindNoCase( plugins, "cbCustomHTML" );
+			if( index ){
+				plugins[ index ] = "cbContentStore"
+			}
+			// save back
+			setting.setValue( arrayToList( plugins ) );
+			// save it
+			settingService.save( entity=setting, transactional=false );
+		}
+		// Update Toolbars
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_toolbar" } );
+		if( !isNull( setting ) ){
+			var value = replaceNoCase( setting.getValue(), "cbCustomHTML", "cbContentStore", "all" );
+			// save back
+			setting.setValue( value );
+			// save it
+			settingService.save( entity=setting, transactional=false );
+		}
+		// Update Excerpt Toolbars
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_excerpt_toolbar" } );
+		if( !isNull( setting ) ){
+			var value = replaceNoCase( setting.getValue(), "cbCustomHTML", "cbContentStore", "all" );
+			// save back
+			setting.setValue( value );
+		}
+			
+	}
+
+	private function migrateCustomHTML(){
+		// get author session
+		var oAuthor = securityService.getAuthorSession();
+		// get contentStoreService manually
+		var contentStoreService = wirebox.getInstance( "contentbox.model.content.ContentStoreService" );
+
+		// Update security rules from customHTML to contentStore
+		var aRules = securityRuleService.getAll();
+		for( var oRule in aRules ){
+			if( findNoCase( "customHTML", oRule.getSecureList() ){
+				oRule.setSecureList( replaceNoCase( oRole.getSecureList(), "customHTML", "contentStore", "all" ) );
+				securityRuleService.save( oRule );
+			}
+		}
+
+		// Migrate customHTML to contentstore now
+		var qAllContent = new Query(sql="select * from cb_customHTML" ).execute().getResult();
+		for( var x=1; x lte qAllContent.recordCount; x++ ){
+			// get actual author
+			var thisAuthor = authorService.get( qAllContent.FK_authorid[ x ] );
+			if( isNull( thisAuthor ) ){ thisAuthor = oAuthor; }
+			// build contentStore
+			var oContentStore = contentStoreService.new( properties={
+				title = qAllContent.title[ x ],
+				slug = qAllContent.slug[ x ],
+				publishedDate = qAllContent.publishedDate[ x ],
+				expireDate = qAllContent.expireDate[ x ],
+				isPublished = qAllContent.isPublished[ x ],
+				allowComments = false,
+				passwordProtection='',
+				description = qAllContent.description[ x ]
+			} );
+			oContentStore.setCreator( thisAuthor );
+			oContentStore.addNewContentVersion(content=aAllContent.content[ x ],
+									  		   changelog="Migrated Content",
+									  		   author=thisAuthor);
+			contentStoreService.saveContent( oContentStore );
+		}
+
+	}
+
 	private function updateCustomHTML(){
 		var oAuthor = securityService.getAuthorSession();
 		
@@ -242,6 +325,13 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_media_html5uploads_maxFiles", "25" );
 		addSetting( "cb_page_excerpts", "false" );
 		addSetting( "cb_content_uiexport", "true" );
+		
+		// Update Settings
+		var setting = settingService.findWhere( { name = "cb_customHTML_caching" } );
+		if( !isNull( setting ) ){
+			setting.setName( "cb_contentstore_caching" );
+			settingService.save( entity=setting, transactional=false );
+		}
 	}
 	
 	private function addSetting(name, value){

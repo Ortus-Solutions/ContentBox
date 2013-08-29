@@ -38,9 +38,9 @@ component extends="coldbox.system.Interceptor"{
 	}
 
 	// Listen when custom HTML is saved
-	function cbadmin_postCustomHTMLSave(event,interceptData){
+	function cbadmin_postContentStoreSave(event,interceptData){
 		var content		= arguments.interceptData.content;
-		doCacheCleanup( content.buildContentCacheKey() );
+		doCacheCleanup( content.buildContentCacheKey(), content );
 	}
 
 	// clear according to cache settings

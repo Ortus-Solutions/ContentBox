@@ -99,7 +99,7 @@ component extends="baseHandler"{
 		setNextEvent( prc.xehCategories );
 	}
 
-	// Export All CustomHTML
+	// Export All categories
 	function exportAll(event,rc,prc){
 		event.paramValue("format", "json");
 		// get all prepared content objects

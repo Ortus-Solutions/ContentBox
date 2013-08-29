@@ -68,7 +68,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
-	* Import data from an array of structures of customHTML or just one structure of CustomHTML 
+	* Import data from an array of structures of roles or just one structure of roles 
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
 		var allRoles = [];

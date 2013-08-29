@@ -45,8 +45,8 @@
                            		widgetName = "~" & widgetName;
                            		break;
         				}
-        			</cfscript>					
-        			<div class="widget-content" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getPluginName()#">
+        			</cfscript>		
+                    <div class="widget-content" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getPluginName()#">
                         <div class="widget-title">
                             #p.getPluginName()#
                             <span class="widget-type">#prc.widgets.widgettype#</span>
@@ -62,7 +62,7 @@
                             	        <legend>Public Methods</legend>
                                         <label for="renderMethodSelect"><strong>Select a Method:</strong></label>
                                 		<select name="renderMethodSelect_#widgetName#" id="renderMethodSelect_#widgetName#" class="renderMethodSelect">
-                                		    <cfloop array="#pMetaData#" index="method">
+                                            <cfloop array="#pMetaData#" index="method">
                             					<option value="#method.name#" <cfif "renderIt" eq method.name>selected=true</cfif>>#method.name#()</option>
                             				</cfloop> 
                                 		</select>

@@ -180,6 +180,17 @@
             						</select>
                                 </div>
                             </div>
+							<!--- Recent ContentStore --->
+							<div class="control-group">
+                                <label class="control-label" for="cb_dashboard_recentContentStore">Recent Content Store Count</label>
+                                <div class="controls">
+                                    <select name="cb_dashboard_recentContentStore" id="cb_dashboard_recentContentStore">
+            							<cfloop from="5" to="50" step="5" index="i">
+            								<option value="#i#" <cfif i eq prc.cbSettings.cb_dashboard_recentContentStore>selected="selected"</cfif>>#i#</option>
+            							</cfloop>
+            						</select>
+                                </div>
+                            </div>  
     						<!--- Recent Comments--->
 							<div class="control-group">
                                 <label class="control-label" for="cb_dashboard_recentComments">Recent Comments Count</label>
@@ -298,7 +309,7 @@
 							<div class="control-group">
                                 #html.label(class="control-label",field="cb_content_caching",content="Activate Page rendered content caching:")#
                                 <div class="controls">
-                                    <small>Page content will be cached once it has been rendered</small><br/>
+                                    <small>Page content will be cached once it has been translated and rendered</small><br/>
     								#html.radioButton(name="cb_content_caching",checked=prc.cbSettings.cb_content_caching,value=true)# Yes
     								#html.radioButton(name="cb_content_caching",checked=not prc.cbSettings.cb_content_caching,value=false)# No
                                 </div>
@@ -307,25 +318,25 @@
 							<div class="control-group">
                                 #html.label(class="control-label",field="cb_entry_caching",content="Activate Blog Entry rendered content caching:")#
                                 <div class="controls">
-                                    <small>Blog entry content will be cached once it has been rendered</small><br/>
+                                    <small>Blog entry content will be cached once it has been translated and rendered</small><br/>
             						#html.radioButton(name="cb_entry_caching",checked=prc.cbSettings.cb_entry_caching,value=true)# Yes
             						#html.radioButton(name="cb_entry_caching",checked=not prc.cbSettings.cb_entry_caching,value=false)# No
                                 </div>
                             </div>
     						<!--- Custom HTML Caching --->
 							<div class="control-group">
-                                #html.label(class="control-label",field="cb_customHTML_caching",content="Activate Custom HTML rendered content caching:")#
+                                #html.label(class="control-label",field="cb_contentstore_caching",content="Activate ContentStore rendered content caching:")#
                                 <div class="controls">
-                                    <small>Custom HTML content will be cached once it has been rendered</small><br/>
-    								#html.radioButton(name="cb_customHTML_caching",checked=prc.cbSettings.cb_customHTML_caching,value=true)# Yes
-    								#html.radioButton(name="cb_customHTML_caching",checked=not prc.cbSettings.cb_customHTML_caching,value=false)# No
+                                    <small>ContentStore content will be cached once it has been translated and rendered</small><br/>
+    								#html.radioButton(name="cb_contentstore_caching",checked=prc.cbSettings.cb_contentstore_caching,value=true)# Yes
+    								#html.radioButton(name="cb_contentstore_caching",checked=not prc.cbSettings.cb_contentstore_caching,value=false)# No
                                 </div>
                             </div>
     						<!--- Content Cache Name --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_content_cacheName">Content Cache Provider:</label>
                                 <div class="controls">
-                                    <small>Choose the CacheBox provider to cache rendered content (blog,page,customHTML) into.</small><br/>
+                                    <small>Choose the CacheBox provider to cache rendered content (blog,page,contentStore) into.</small><br/>
     								#html.select(name="cb_content_cacheName",options=prc.cacheNames,selectedValue=prc.cbSettings.cb_content_cacheName)#
                                 </div>
                             </div>
@@ -333,7 +344,7 @@
 							<div class="control-group">
                                 <label class="control-label" for="cb_content_cachingTimeout">Content Cache Timeouts:</label>
                                 <div class="controls">
-                                    <small>The number of minutes a rendered content (blog,page,customHTML) is cached for.</small><br/>
+                                    <small>The number of minutes a rendered content (blog,page,contentStore) is cached for.</small><br/>
             						<select name="cb_content_cachingTimeout" id="cb_content_cachingTimeout">
             							<cfloop from="5" to="100" step="5" index="i">
             								<option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeout>selected="selected"</cfif>>#i#</option>
@@ -345,7 +356,7 @@
 							<div class="control-group">
                                 <label class="control-label" for="cb_rss_cachingTimeoutIdle">Content Cache Idle Timeouts:</label>
                                 <div class="controls">
-                                    <small>The number of idle minutes allowed for cached rendered content (blog,page,customHTML) to live if not used. Usually this is less than the timeout you selected above</small><br/>
+                                    <small>The number of idle minutes allowed for cached rendered content (blog,page,contentStore) to live if not used. Usually this is less than the timeout you selected above</small><br/>
             						<select name="cb_content_cachingTimeoutIdle" id="cb_content_cachingTimeoutIdle">
             							<cfloop from="5" to="100" step="5" index="i">
             								<option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeoutIdle>selected="selected"</cfif>>#i#</option>
