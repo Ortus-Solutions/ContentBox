@@ -1,42 +1,18 @@
 ﻿/**
-* A widget that renders Custom HTML in ContentBox
+* A widget that renders Custom HTML in ContentBox: DEPRECATED
+* @deprecated
 */
-component extends="contentbox.model.ui.BaseWidget" singleton{
+component extends="ContentStore" singleton{
 
-	CustomHTML function init(controller){
+	CustomHTML function init(required controller){
 		// super init
-		super.init(controller);
+		super.init( arguments.controller );
 
 		// Widget Properties
 		setPluginName("CustomHTML");
-		setPluginVersion("1.0");
-		setPluginDescription("A widget that renders Custom HTML content anywhere you like.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "window-text.png" );
-		setCategory( "Content" );
+		setPluginDescription("A widget that renders Custom HTML content anywhere you like. Deprecated, use the ContentStore widget instead");
+
 		return this;
-	}
-
-	/**
-	* Renders Custom HTML content
-	* @slug.hint The custom HTML slug to render
-	* @defaultValue.hint The string to show if the custom HTML snippet does not exist
-	*/
-	any function renderIt(required string slug, string defaultValue){
-		var content = customHTMLService.findWhere({slug=arguments.slug});
-		
-		// Return if found and published
-		if( !isNull( content ) and content.isContentPublished() ){
-			return content.renderContent();
-		}
-
-		// default value
-		if( structKeyExists(arguments, "defaultValue") ){
-			return arguments.defaultValue;
-		}
-
-		throw(message="The content slug '#arguments.slug#' does not exist",type="CustomHTMLWidget.InvalidCustomHTMLSlug");
 	}
 
 }

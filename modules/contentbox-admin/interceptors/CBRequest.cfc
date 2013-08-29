@@ -65,7 +65,8 @@ component extends="coldbox.system.Interceptor"{
 		// Content Tab
 		prc.xehPages		= "#prc.cbAdminEntryPoint#.pages";
 		prc.xehPagesEditor	= "#prc.cbAdminEntryPoint#.pages.editor";
-		prc.xehCustomHTML	= "#prc.cbAdminEntryPoint#.customHTML";
+		prc.xehContentStore	= "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentStoreEditor	= "#prc.cbAdminEntryPoint#.contentStore.editor";
 		prc.xehMediaManager	= "#prc.cbAdminEntryPoint#.mediamanager";
 
 		// Comments Tab
@@ -81,10 +82,11 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehModules = "#prc.cbAdminEntryPoint#.modules";
 
 		// Authors Tab
-		prc.xehAuthors		= "#prc.cbAdminEntryPoint#.authors";
-		prc.xehAuthorEditor	= "#prc.cbAdminEntryPoint#.authors.editor";
+		prc.xehAuthors			= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehAuthorEditor		= "#prc.cbAdminEntryPoint#.authors.editor";
 		prc.xehPermissions		= "#prc.cbAdminEntryPoint#.permissions";
 		prc.xehRoles			= "#prc.cbAdminEntryPoint#.roles";
+		prc.xehAuthorSideBar 	= "#prc.cbAdminEntryPoint#.authors.changeSidebarState";
 
 		// Tools
 		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";
@@ -108,7 +110,6 @@ component extends="coldbox.system.Interceptor"{
 		
 		// Search global
 		prc.xehSearchGlobal 	= "#prc.cbAdminEntryPoint#.content.search";
-		prc.xehCustomHTMLEditor	= "#prc.cbAdminEntryPoint#.customHTML.editor";
 		
 		// Prepare Admin Actions
 		prc.xehAdminActionData = [

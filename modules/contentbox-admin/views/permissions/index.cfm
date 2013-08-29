@@ -25,6 +25,7 @@
 			<!--- Content Bar --->
 			<div class="well well-small">
 				<!--- Command Bar --->
+				<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 				<div class="pull-right">
 					<!---Global --->
 					<div class="btn-group">
@@ -32,7 +33,10 @@
 							Global Actions <span class="caret"></span>
 						</a>
 				    	<ul class="dropdown-menu">
+				    		<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
 				    		<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
 				    		<li class="dropdown-submenu">
 								<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 								<ul class="dropdown-menu text-left">
@@ -40,10 +44,12 @@
 									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 								</ul>
 							</li>
+							</cfif>
 				    	</ul>
 				    </div>
 					<a href="##" onclick="return createPermission();" class="btn btn-danger">Create Permission</a>
 				</div>
+				</cfif>
 				<!--- Filter Bar --->
 				<div class="filterBar">
 					<div>
@@ -66,10 +72,16 @@
 					<tbody>
 						<cfloop array="#prc.permissions#" index="permission">
 						<tr>
-							<td><a href="javascript:edit('#permission.getPermissionID()#',
+							<td>
+								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+								<a href="javascript:edit('#permission.getPermissionID()#',
 								   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
 								   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
-								   title="Edit #permission.getPermission()#">#permission.getPermission()#</a></td>
+								   title="Edit #permission.getPermission()#">#permission.getPermission()#</a>
+								<cfelse>
+									#permission.getPermission()#
+								</cfif>
+							</td>
 							<td>#permission.getDescription()#</td>
 							<td class="center"><span class="badge badge-info">#permission.getNumberOfRoles()#</span></td>
 							<td class="center">
@@ -114,7 +126,8 @@
 	#html.endForm()#
 	</div>
 </div>
-
+</cfif>
+<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
 <!---Import Dialog --->
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">

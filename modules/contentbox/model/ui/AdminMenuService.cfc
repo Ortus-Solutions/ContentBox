@@ -83,7 +83,7 @@ component accessors="true" threadSafe singleton{
 		// Content Tab
 		prc.xehPages		= "#this.ADMIN_ENTRYPOINT#.pages";
 		prc.xehPagesEditor	= "#this.ADMIN_ENTRYPOINT#.pages.editor";
-		prc.xehCustomHTML	= "#this.ADMIN_ENTRYPOINT#.customHTML";
+		prc.xehContentStore	= "#this.ADMIN_ENTRYPOINT#.contentstore";
 		prc.xehMediaManager	= "#this.ADMIN_ENTRYPOINT#.mediamanager";
 
 		// Comments Tab
@@ -114,7 +114,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehRawSettings		= "#this.ADMIN_ENTRYPOINT#.settings.raw";
 		prc.xehEmailTemplates   = "#this.ADMIN_ENTRYPOINT#.emailtemplates";
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
-
+		
 		// Dashboard
 		addTopMenu(name=this.DASHBOARD,label="<i class='icon-dashboard icon-large'></i> Dashboard")
 			.addSubMenu(name="home",label="Home",href="#event.buildLink(prc.xehDashboard)#")
@@ -125,8 +125,8 @@ component accessors="true" threadSafe singleton{
 		addTopMenu(name=this.CONTENT,label="<i class='icon-pencil icon-large'></i> Content")
 			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#")
 			.addSubMenu(topMenu=this.CONTENT,name="Blog",label="Blog",href="#event.buildLink(prc.xehEntries)#")
+			.addSubMenu(name="contentStore",label="Content Store",href="#event.buildLink(prc.xehContentStore)#",permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR")
 			.addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#")
-			.addSubMenu(name="customHTML",label="Custom HTML",href="#event.buildLink(prc.xehCustomHTML)#",permissions="CUSTOMHTML_ADMIN")
 			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",permissions="MEDIAMANAGER_ADMIN");
 
 		// Comments
@@ -193,7 +193,7 @@ component accessors="true" threadSafe singleton{
 	* @permissions.hint The list of permissions needed to view this menu
 	* @data.hint A structure of data attributes to add to the link
 	*/
-	AdminMenuService function addTopMenu(required name, required label, title="", href="##", target="", permissions="", data=structNew() ){
+	AdminMenuService function addTopMenu(required name, required label, title="", href="javascript:null()", target="", permissions="", data=structNew() ){
 		// stash pointer
 		thisTopMenu = arguments.name;
 		// store new top menu

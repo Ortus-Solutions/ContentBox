@@ -1,4 +1,4 @@
-﻿/**
+/**
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -196,7 +196,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Import data from an array of structures of customHTML or just one structure of CustomHTML 
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
-		var allContent = [];
+		var allContent		= [];
+		var badDateRegex  	= " -\d{4}$";
 		
 		// if struct, inflate into an array
 		if( isStruct( arguments.importData ) ){
@@ -207,6 +208,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		for( var thisContent in arguments.importData ){
 			var oCustomHTML = this.findBySlug( slug=thisContent.slug, throwException=false );
 			oCustomHTML = ( isNull( oCustomHTML) ? new() : oCustomHTML );
+			
+			// date conversion tests
+			thisContent.publishedDate 	= reReplace( thisContent.publishedDate, badDateRegex, "" );
+			thisContent.createdDate 	= reReplace( thisContent.createdDate, badDateRegex, "" );
+			if( len( thisContent.expireDate ) ){
+				thisContent.expireDate = reReplace( thisContent.expireDate, badDateRegex, "" );
+			}
 			
 			// populate content from data
 			populator.populateFromStruct( target=oCustomHTML, memento=thisContent, exclude="contentID,creator", composeRelationships=false, nullEmptyInclude="publishedDate,expireDate" );

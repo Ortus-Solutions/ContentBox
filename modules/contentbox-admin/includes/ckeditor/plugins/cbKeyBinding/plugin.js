@@ -9,8 +9,16 @@ CKEDITOR.plugins.add( 'cbKeyBinding', {
 				quickSave();
 			}
 		});
+		// add command for quickPreview
+		editor.addCommand( 'quickPreview', {
+			exec: function( editor ) {
+				previewContent();
+			}
+		});
 
 		// bind keystrokes...can be for ad-hoc commands added above, or event named commands in other plugins
+		// add key stroke -- ctrl+p
+		editor.setKeystroke( CKEDITOR.CTRL+80, 'quickPreview' );
 		// add key stroke -- ctrl+s
 		editor.setKeystroke( CKEDITOR.CTRL+83, 'quickSave' );
 		// add key stroke -- ctrl+shift+p
@@ -18,7 +26,7 @@ CKEDITOR.plugins.add( 'cbKeyBinding', {
 		// add key stroke -- ctrl+shift+b
 		editor.setKeystroke( CKEDITOR.CTRL+CKEDITOR.SHIFT+66, 'cbEntryLinks' );
 		// add key stroke -- ctrl+shift+h
-		editor.setKeystroke( CKEDITOR.CTRL+CKEDITOR.SHIFT+72, 'cbCustomHTML' );
+		editor.setKeystroke( CKEDITOR.CTRL+CKEDITOR.SHIFT+72, 'cbContentStore' );
 		// add key stroke -- ctrl+shift+w
 		editor.setKeystroke( CKEDITOR.CTRL+CKEDITOR.SHIFT+87, 'cbWidgets' );
 	}	

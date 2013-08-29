@@ -1,9 +1,10 @@
 ﻿<cfoutput>
-The following blog entry has been removed from your system by @currentAuthor@ (@currentAuthorEmail@):
+The following blog entry has been removed from your system by @entryAuthor@ (<a href="mailto:@entryAuthorEmail@">@entryAuthorEmail@</a>):
 	
-<br/><br/>
+<hr>
+<p>&nbsp;</p>
 
-Title: @entryTitle@ by @entryAuthor@
+Title: @entryTitle@
 Excerpt: <br/>
 @entryExcerpt@ 
 </cfoutput>

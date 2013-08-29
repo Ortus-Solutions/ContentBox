@@ -1,9 +1,10 @@
 ﻿<cfoutput>
-The following page has been removed from your system by @currentAuthor@ (@currentAuthorEmail@):
+The following page has been removed from your system by @pageAuthor@ (<a href="mailto:@pageAuthorEmail@">@pageAuthorEmail@</a>):
 	
-<br/><br/>
+<hr>
+<p>&nbsp;</p>
 
-Title: @pageTitle@ by @pageAuthor@
-Excerpt: <br/>
+<strong>Title:</strong> @pageTitle@<br/>
+<strong>Excerpt:</strong> <br/>
 @pageExcerpt@ 
 </cfoutput>

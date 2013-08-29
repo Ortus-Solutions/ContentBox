@@ -60,10 +60,10 @@ function flushSettingsCache(){
 		url : '#event.buildLink(prc.xehFlushCache)#',
 		success : function(data){
 			if (data.ERROR) {
-				$("##adminActionNotifier").fadeIn().addClass("alert-error").html(data.MESSAGES).delay( 3000 ).fadeOut();
+				adminNotifier( "error", data.MESSAGES, 3000 );
 			}
 			else{
-				$("##adminActionNotifier").fadeIn().addClass("alert-info").html(data.MESSAGES).delay( 1500 ).fadeOut();
+				adminNotifier( "info", data.MESSAGES );
 			}
 			$("##specialActionsLoader").addClass("hidden");
 		}

@@ -110,7 +110,7 @@ component  implements="ICBImporter" {
 				var entry = entryService.new(properties=props);
 				// Add content versionized!
 				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.created_by_id[x]] ));
-				
+				entry.setCreator( authorService.get( authorMap[q.created_by_id[x]] ) );
 				// entry categories
 				var qCategories = new Query(datasource=arguments.dsn,
 											username=arguments.dsnUsername,

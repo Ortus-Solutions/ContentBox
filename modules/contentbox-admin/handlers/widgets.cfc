@@ -85,7 +85,8 @@ component extends="baseHandler"{
 		// Get all widgets
 		prc.widgets = widgetService.getWidgets();
 		prc.categories = widgetService.getWidgetCategories();
-		event.setView(view="widgets/editorSelector",layout="ajax");
+		// render it out
+		event.setView(view="widgets/editorSelector", layout="ajax");
 	}
 	
 	// Preview Widget
@@ -127,8 +128,8 @@ component extends="baseHandler"{
 
 	function renderArgs( event, rc, prc ) {
 		// get widget
-		var theWidget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
-		prc.md = WidgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
+		var theWidget = widgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
+		prc.md = widgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
 		prc.widget = {
 			name = rc.widgetname,
         	widgetType = rc.widgettype,
@@ -137,7 +138,7 @@ component extends="baseHandler"{
 		};
 		prc.vals = rc;
 		if( event.isAjax() ) {
-			event.renderData( data=renderView( view="widgets/arguments", layout="ajax" ), type="html" );
+			event.renderData( data=renderView( view="widgets/arguments", layout="ajax" ) );
 		}
 		else {
 			event.setView( view="widgets/arguments", layout="ajax" );

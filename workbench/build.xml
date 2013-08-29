@@ -6,6 +6,7 @@
 	<property name="dir.exports"		value="${dir.userlocation}/exports" />
 	<property name="dir.build" 			value="${dir.exports}/gocontentbox" />
 	<property name="colddoc.http"		value="http://cf9contentbox.jfetmac/workbench/api/contentbox.cfm?version=" />
+	<property name="dir.expressroot"	value="/Users/lmajano/Documents/MyDocs/OrtusSolutions/Products/ContentBox/contentbox-express/www/ROOT" />
 		
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>
@@ -83,6 +84,17 @@
 		
 		<!-- Zip Express -->
 		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" basedir="${dir.build}"></zip>
+		
+		<!-- Cleanup Express Edition -->
+		<delete includeemptydirs="true">
+			<fileset dir="${dir.expressroot}">
+				<exclude name="WEB-INF/**"/>
+			</fileset>
+		</delete>
+		<!-- Copy Express Edition in -->
+		<copy todir="${dir.expressroot}">
+			<fileset dir="${dir.build}" />
+		</copy>
 		
 		<delete dir="${dir.build}" />
     </target>

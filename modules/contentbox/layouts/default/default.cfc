@@ -29,6 +29,10 @@ A layout is composed of the following pieces
    + pages.cfm (Mandatory layout used for all pages by convention)
    + maintenance.cfm (Optional used when in maintenance mode)
    + search.cfm (Optional used when doing searches, else defaults to pages)
+   
+   Layouts with print formats just attach a _{format=pdf,doc,print}
+   Example: blog.cfm -> blog_pdf.cfm, blog_print.cfm, blog_doc.cfm
+   
  / views (The folder that contains views for rendering)
    	+ archives.cfm (MANDATORY: The view used to render out blog archives.)
    	+ entry.cfm (MANDATORY: The view used to render out a single blog entry with comments, etc.)

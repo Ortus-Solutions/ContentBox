@@ -30,7 +30,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Admin";
-	this.version			= "1.5.5";
+	this.version			= "1.5.6";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
@@ -61,7 +61,7 @@ component {
 			{pattern="/pages/parent/:parent?",handler="pages"},
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
 			{pattern="/comments/page/:page",handler="comments"},
-			{pattern="/customHTML/page/:page",handler="customHTML"},
+			{pattern="/contentStore/page/:page",handler="contentStore"},
 			{pattern="/mediamanager/library/:library", handler="mediamanager", action="index"},
 			{pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
 			{pattern="/:handler/:action?"}
@@ -77,6 +77,10 @@ component {
 				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove", "cbadmin_onEntryStatusUpdate",
 				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarAccordion", "cbadmin_entryEditorSidebarFooter",
 				"cbadmin_entryEditorFooter", "cbadmin_entryEditorInBody",
+				// ContentStore Events
+				"cbadmin_preContentStoreSave","cbadmin_postContentStoreSave","cbadmin_preContentStoreRemove","cbadmin_postContentStoreRemove", "cbadmin_onContentStoreStatusUpdate",
+				"cbadmin_ContentStoreEditorSidebar", "cbadmin_ContentStoreEditorSidebarAccordion", "cbadmin_ContentStoreEditorSidebarFooter",
+				"cbadmin_ContentStoreEditorFooter", "cbadmin_ContentStoreEditorInBody",
 				// Page Events
 				"cbadmin_prePageSave","cbadmin_postPageSave","cbadmin_prePageRemove","cbadmin_postPageRemove", "cbadmin_onPageStatusUpdate",
 				"cbadmin_pageEditorSidebar", "cbadmin_pageEditorSidebarAccordion", "cbadmin_pageEditorSidebarFooter",
@@ -101,8 +105,6 @@ component {
 				"cbadmin_preSettingsSave","cbadmin_postSettingsSave","cbadmin_preSettingRemove","cbadmin_postSettingRemove","cbadmin_onSettingsNav","cbadmin_onSettingsContent",
 				// Global HTML Events
 				"cbadmin_preGlobalHTMLSave","cbadmin_postGlobalHTMLSave",
-				// Custom HTML Events
-				"cbadmin_preCustomHTMLSave", "cbadmin_postCustomHTMLSave","cbadmin_preCustomHTMLRemove", "cbadmin_postCustomHTMLRemove", "cbadmin_onCustomHTMLStatusUpdate",
 				// Security Rules Events
 				"cbadmin_preSecurityRulesSave", "cbadmin_postSecurityRulesSave", "cbadmin_preSecurityRulesRemove", "cbadmin_postSecurityRulesRemove", "cbadmin_onResetSecurityRules",
 				// Layout Themes

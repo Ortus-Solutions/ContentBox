@@ -99,6 +99,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 				// blogCFC has no concept of authored pages, so we grab the first author we find from blogCFC
 				// This may need revising later.
 				page.addNewContentVersion(content = props.content, changelog = "Imported content", author = defaultAuthor);
+				page.setCreator( defaultAuthor );
 				entitySave( page );
 			}
 			log.info("Pages imported");
@@ -135,7 +136,8 @@ component implements="contentbox.model.importers.ICBImporter" {
 
 				var entry = entryService.new(properties = props);
 				entry.addNewContentVersion(content = props.content, changelog = "Imported content", author = authorService.get( authorMap[q.username[x]] ));
-
+				entry.setCreator( authorService.get( authorMap[q.username[x]] ) );
+				
 				// entry categories
 				var thisSQL = "
 					select		tblBlogCategories.categoryname,categoryId

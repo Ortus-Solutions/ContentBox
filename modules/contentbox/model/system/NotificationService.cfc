@@ -118,7 +118,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when entries are saved
 	*/
-	function cbadmin_postEntrySave(event,interceptData){
+	function cbadmin_postEntrySave(event,interceptData) async="true"{
 		var entry 		= arguments.interceptData.entry;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -133,16 +133,18 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			entryTitle			= entry.getTitle(),
 			entryExcerpt		= "",
-			entryAuthor			= entry.getAuthorName(),
 			entryURL			= CBHelper.linkEntry( entry ),
-			currentAuthor		= currentAuthor.getName(),
-			currentAuthorEmail 	= currentAuthor.getEmail()
+			entryAuthor			= currentAuthor.getName(),
+			entryAuthorEmail 	= currentAuthor.getEmail(),
+			entryIsPublished	= entry.getIsPublished(),
+			entryPublishedDate	= entry.getDisplayPublishedDate(),
+			entryExpireDate		= entry.getDisplayExpireDate()
 		};
 		if( entry.hasExcerpt() ){
 			bodyTokens.entryExcerpt = entry.renderExcerpt();
 		}
 		else{
-			bodyTokens.entryExcerpt = entry.renderContent();
+			bodyTokens.entryExcerpt = entry.renderContentSilent( entry.getContentVersions()[1].getContent() );
 		}
 		
 		var mail = mailservice.newMail(to=settings.cb_site_email,
@@ -182,10 +184,9 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			entryTitle			= entry.getTitle(),
 			entryExcerpt		= "",
-			entryAuthor			= entry.getAuthorName(),
 			entryURL			= CBHelper.linkEntry( entry ),
-			currentAuthor		= currentAuthor.getName(),
-			currentAuthorEmail 	= currentAuthor.getEmail()
+			entryAuthor			= currentAuthor.getName(),
+			entryAuthorEmail 	= currentAuthor.getEmail()
 		};
 		if( entry.hasExcerpt() ){
 			bodyTokens.entryExcerpt = entry.renderExcerpt();
@@ -216,7 +217,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when pages are saved
 	*/
-	function cbadmin_postPageSave(event,interceptData){
+	function cbadmin_postPageSave(event,interceptData) async="true"{
 		var page 		= arguments.interceptData.page;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -230,17 +231,18 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		// get mail payload
 		var bodyTokens = {
 			pageTitle			= page.getTitle(),
-			pageExcerpt			= "",
-			pageAuthor			= page.getAuthorName(),
 			pageURL				= CBHelper.linkPage( page ),
-			currentAuthor		= currentAuthor.getName(),
-			currentAuthorEmail 	= currentAuthor.getEmail()
+			pageAuthor			= currentAuthor.getName(),
+			pageAuthorEmail 	= currentAuthor.getEmail(),
+			pageIsPublished		= page.getIsPublished(),
+			pagePublishedDate	= page.getDisplayPublishedDate(),
+			pageExpireDate		= page.getDisplayExpireDate()
 		};
 		if( page.hasExcerpt() ){
 			bodyTokens.pageExcerpt = page.renderExcerpt();
 		}
 		else{
-			bodyTokens.pageExcerpt = page.renderContent();
+			bodyTokens.pageExcerpt = page.renderContentSilent( page.getContentVersions()[1].getContent() );
 		}
 		
 		var mail = mailservice.newMail(to=settings.cb_site_email,
@@ -280,10 +282,9 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			pageTitle			= page.getTitle(),
 			pageExcerpt			= "",
-			pageAuthor			= page.getAuthorName(),
 			pageURL				= CBHelper.linkPage( page ),
-			currentAuthor		= currentAuthor.getName(),
-			currentAuthorEmail 	= currentAuthor.getEmail()
+			pageAuthor			= currentAuthor.getName(),
+			pageAuthorEmail 	= currentAuthor.getEmail()
 		};
 		if( page.hasExcerpt() ){
 			bodyTokens.pageExcerpt = page.renderExcerpt();
@@ -309,6 +310,9 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		
 		// send it out
 		mailService.send( mail );
+		
+		// evict page
+		settingService.evict( page );
 	}
 	
 }

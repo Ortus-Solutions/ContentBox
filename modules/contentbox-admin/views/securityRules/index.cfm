@@ -37,7 +37,7 @@
 			<!--- Content Bar --->
 			<div class="well well-small" id="contentBar">
 				<!--- Create Butons --->
-				<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
+				<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT")>
 				<div class="buttonBar">
 					<!---Global --->
 					<div class="btn-group">
@@ -45,13 +45,18 @@
 							Global Actions <span class="caret"></span>
 						</a>
 				    	<ul class="dropdown-menu">
-				    		<li><a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt"
+				    		<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
+							<li><a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt"
 								data-title="Really Apply Rules?"
 								data-message="Please be aware that you could be locked out of application if your rules are not correct.">
 								<i class="icon-bolt icon-large"></i> Apply Rules
 								</a>
 							</li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
 							<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
 				    		<li class="dropdown-submenu">
 								<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 								<ul class="dropdown-menu text-left">
@@ -59,12 +64,15 @@
 									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 								</ul>
 							</li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 							<li><a href="#event.buildLink(prc.xehResetRules)#" 
 								data-title="Really Reset All Rules?" class="confirmIt"
 								data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
 								<i class="icon-eraser"></i> Reset Rules
 								</a>
 							</li>
+							</cfif>
 				    	</ul>
 				    </div>
 					<a href="#event.buildLink(prc.xehEditorRule)#" class="btn btn-danger">
@@ -88,7 +96,7 @@
 		</div>
 	</div>
 </div>		
-<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
+<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN,TOOLS_IMPORT")>
 <!---Import Dialog --->
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">

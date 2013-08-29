@@ -28,6 +28,10 @@ component persistent="true" entityname="cbCategory" table="cb_category" cachenam
 	property name="categoryID" fieldtype="id" generator="native" setter="false";
 	property name="category"		notnull="true"  length="200";
 	property name="slug"			notnull="true"  length="200" unique="true" index="idx_slug";
+	
+	// M2M -> Content
+	property name="content" fieldtype="many-to-many" type="array" lazy="extra" cascade="all"
+			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_categoryID" linktable="cb_contentCategories" inversejoincolumn="FK_contentID";
 
 	// Calculated properties
 	property name="numberOfEntries" formula="select count(*) from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
@@ -50,6 +54,18 @@ component persistent="true" entityname="cbCategory" table="cb_category" cachenam
 		return len( getCategoryID() );
 	}
 	
+	/*
+	* I remove all content associations
+	*/
+	Category function removeAllContent(){
+		if ( hasContent() ){
+			variables.content.clear();
+		}
+		else{
+			variables.content = [];
+		}
+		return this;
+	}
 	
 	/**
 	* Get memento representation
