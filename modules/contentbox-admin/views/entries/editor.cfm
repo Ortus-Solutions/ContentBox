@@ -55,23 +55,33 @@
 				<div id="contentToolBar">
 					
 					<!--- editor selector --->
-					<label for="contentEditorChanger" class="inline">Editor: </label>
 					<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
-					#html.select(name="contentEditorChanger", 
-								 options=prc.editors,
-								 column="name",
-								 class="input-medium",
-								 nameColumn="displayName",
-								 selectedValue=prc.defaultEditor,
-								 onchange="switchEditor(this.value)")#
+					<div class="btn-group">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+							Editor
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<cfloop array="#prc.editors#" index="thisEditor">
+								<li><a href="javascript:switchEditor( '#thisEditor.name#' )">#thisEditor.displayName#</li>
+							</cfloop>
+						</ul>
+					</div>
 					</cfif>
 					<!--- markup --->
-					<label for="markup" class="inline">Markup: </label>
-					#html.select(name="markup", 
-								 class="input-medium",
-								 options=prc.markups,
-								 selectedValue=( prc.entry.isLoaded() ? prc.entry.getMarkup() : prc.defaultMarkup ))#
-					
+					#html.hiddenField(name="markup", value=prc.entry.isLoaded() ? prc.entry.getMarkup() : prc.defaultMarkup)#
+					<div class="btn-group">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+							Markup : <span id="markupLabel">#prc.entry.isLoaded() ? prc.entry.getMarkup() : prc.defaultMarkup#</span>
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<cfloop array="#prc.markups#" index="thismarkup">
+								<li><a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</li>
+							</cfloop>
+						</ul>
+					</div>
+
 					<!---Right References Panel --->
 					<div class="floatRight">
 						<a href="javascript:previewContent()" class="btn" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
