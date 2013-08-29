@@ -42,8 +42,10 @@ function quickSave(){
 	}
 	// Activate Loader
 	toggleLoaderBar();
-	// Save current content, just in case
-	//$content.val( getEditorContent() );
+	// Save current content, just in case editor has not saved it
+	if( !$content.val().length ){
+		$content.val( getEditorContent() );	
+	}
 	// Post it
 	$.post($targetEditorSaveURL, $targetEditorForm.serialize(), function(data){
 		// Save new id
