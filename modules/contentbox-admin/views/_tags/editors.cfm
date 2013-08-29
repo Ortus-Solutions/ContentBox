@@ -37,6 +37,7 @@ function quickSave(){
 	}
 	// Validation of Form First before quick save
 	if( !$targetEditorForm.valid() ){
+		adminNotifier( "error", "Form is not valid, please verify." );
 		return false;
 	}
 	// Activate Loader
@@ -50,8 +51,9 @@ function quickSave(){
 		// finalize
 		$changelog.val( '' );
 		$uploaderBarLoader.fadeOut( 1500 );
-		$uploaderBarStatus.html( 'Draft Quick Saved!' );
+		$uploaderBarStatus.html( 'Draft Saved!' );
 		$isPublished.val( 'true' );
+		adminNotifier( "info", "Draft Saved!" );
 	},"json");
 
 	return false;

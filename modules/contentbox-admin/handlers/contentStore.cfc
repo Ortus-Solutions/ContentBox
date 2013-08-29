@@ -276,11 +276,11 @@ component extends="baseHandler"{
 		// Inflate Custom Fields into the page
 		content.inflateCustomFields( rc.customFieldsCount, rc );
 		// announce event
-		announceInterception("cbadmin_preContentStoreSave",{content=content, isNew=isNew});
+		announceInterception("cbadmin_preContentStoreSave", {content=content, isNew=isNew});
 		// save content
 		contentStoreService.saveContent( content );
 		// announce event
-		announceInterception("cbadmin_postContentStoreSave",{content=content,isNew=isNew});
+		announceInterception("cbadmin_postContentStoreSave", {content=content, isNew=isNew});
 
 		// Ajax?
 		if( event.isAjax() ){

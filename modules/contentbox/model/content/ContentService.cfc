@@ -597,6 +597,16 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		return this;
 	}
 
+	/**
+	* Returns an array of slugs of all the content objects in the system.
+	*/
+	array function getAllFlatSlugs(){
+		var c = newCriteria();
+		
+		return c.withProjections( property="slug" )
+			.list( sortOrder="slug asc" );
+	}
+
 /********************************************* PRIVATE *********************************************/
 	
 
