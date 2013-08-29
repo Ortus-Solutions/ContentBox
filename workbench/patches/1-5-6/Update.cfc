@@ -80,6 +80,9 @@ component implements="contentbox.model.updates.IUpdate"{
 			// Update Content Creators
 			updateContentCreators();
 			
+			// Update Permissions
+			updatePermissions();
+						
 			// Clear singletons so they are rebuilt
 			coldbox.setColdboxInitiated( false );
 			
@@ -108,8 +111,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			// Update custom HTML creators
 			updateCustomHTML();
 			
-			// Update Editor and Permissions
-			updatePermissions();
+			// Update Editor
 			updateEditor();
 			
 			// Import new security rules
@@ -235,15 +237,15 @@ component implements="contentbox.model.updates.IUpdate"{
 		log.info("Added EDITORS_EDITOR_SELECTOR permission to editor role");
 		
 		// Add in new permissions
-		thisPerm = permissionService.findWhere({permission="CONTENTSTORE_EDITOR"});
-		if( !isNull( thisPerm ) || !oRole.hasPermission( thisPerm ) ){ oRole.addPermission( thisPerm ); }
+		local.thisPerm = permissionService.findWhere({permission="CONTENTSTORE_EDITOR"});
+		if( structKeyExists(local, "thisPerm") && !oRole.hasPermission( local.thisPerm ) ){ oRole.addPermission( local.thisPerm ); }
 		log.info("Added CONTENTSTORE_EDITOR permission to editor role");
 		
-		// Remove ADMIN Perm for Custom HTML		
-		thisPerm = permissionService.findWhere({permission="CONTENTSTORE_ADMIN"});
+		// Remove ADMIN Perm for Custom HTML	
+		local.thisPerm = permissionService.findWhere({permission="CONTENTSTORE_ADMIN"});
 		// Remove it
-		if( !isNull( thisPerm ) ){
-			oRole.removePermission( thisPerm );
+		if( structKeyExists(local, "thisPerm") ){
+			oRole.removePermission( local.thisPerm );
 		}
 		
 		// save role
