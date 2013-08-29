@@ -26,7 +26,7 @@ DB Structure Changes
 
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
-End Commit Hash: 2ff0cd6f30be95ac35b4c12e4062cdf4704f1fdc
+End Commit Hash: 0d26871be50a1fdfcd05c9221d6bb179ab96b3ba
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -56,7 +56,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	function preInstallation(){
 		var thisPath = getDirectoryFromPath( getMetadata( this ).path );
 		try{
-			var currentVersion = coldbox.getSetting( "modules" ).contentbox.version;
+			var currentVersion = replace( coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
 			
 			log.info("About to begin #version# patching");
 			
