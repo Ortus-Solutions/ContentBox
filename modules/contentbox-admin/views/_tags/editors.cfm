@@ -55,8 +55,6 @@ function quickSave(){
 		$isPublished.val( 'true' );
 		adminNotifier( "info", "Draft Saved!" );
 	},"json");
-
-	return false;
 }
 /**
  * Setup the editors. 

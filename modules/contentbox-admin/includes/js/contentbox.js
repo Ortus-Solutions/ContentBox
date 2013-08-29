@@ -183,7 +183,6 @@ function adminNotifier(type, message, delay){
 		case "error" : { $notifier.addClass( "alert-error" ); break; }
 		case "success" : { $notifier.addClass( "alert-success" ); break; }
 	}
-	console.log( $notifier.attr("class") );
 	// show with message and delay and reset.
 	$notifier.fadeIn().html( message ).delay( delay ).fadeOut();
 }
