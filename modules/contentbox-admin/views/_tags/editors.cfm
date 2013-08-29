@@ -152,13 +152,17 @@ function switchEditor(editorType){
 	// Call change user editor preference
 	$.ajax({
 		url : '#event.buildLink(prc.xehAuthorEditorSave)#',
-		data : {editor: $("##contentEditorChanger").val()},
+		data : {editor: editorType},
 		async : false,
 		success : function(data){
-			// Once changed, reload the page.
 			location.reload();
 		}
 	});
+}
+
+function switchMarkup(markupType){
+	$("##markup").val( markupType );
+	$("##markupLabel").html( markupType );
 }
 
 // Ask for leave confirmations
