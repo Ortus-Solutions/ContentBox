@@ -233,6 +233,7 @@ component accessors="true"{
 			// Admin settings
 			"cb_admin_ssl" = "false",
 			"cb_admin_quicksearch_max" = "5",
+			"cb_admin_theme" = "contentbox-default",
 
 			// Paging Defaults
 			"cb_paging_maxrows" = "20",

@@ -9,6 +9,7 @@ component extends="baseHandler"{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="editorService"		inject="id:editorService@cb";
 	property name="mediaService"		inject="id:mediaService@cb";
+	property name="adminThemeService"	inject="id:adminThemeService@cb";
 	
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -27,6 +28,8 @@ component extends="baseHandler"{
 		prc.pages = pageService.search(sortOrder="slug asc",isPublished=true).pages;
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
+		// Get all registered admin themes
+		prc.adminThemes = adminThemeService.getRegisteredThemesMap();
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// Get all registered media providers so we can display them
