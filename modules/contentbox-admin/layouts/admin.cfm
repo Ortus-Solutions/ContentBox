@@ -22,7 +22,7 @@
 	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
 	<!--- StyleSheets --->
 	#cb.minify(assets="#prc.cbroot#/includes/css/bootstrap.css,
-			    #prc.cbroot#/includes/css/contentbox.css,
+				#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() & ',' : '')#
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
 			    #prc.cbroot#/includes/css/bootstrap-modal.css,
 			    #prc.cbroot#/includes/css/bootstrap-datepicker.css,
@@ -49,6 +49,7 @@
 			    #prc.cbroot#/includes/js/jwerty.js,
 			    #prc.cbroot#/includes/js/jquery.validate.js,
 			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
+			    #( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#
 			    #prc.cbroot#/includes/js/contentbox.js",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- CKEditor Separate --->

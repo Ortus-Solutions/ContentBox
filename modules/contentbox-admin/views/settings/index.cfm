@@ -135,6 +135,18 @@
     								#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
                                 </div>
                             </div>
+							<!--- Default Themes --->
+							<div class="control-group">
+                                <label class="control-label" for="cb_admin_theme">Default Admin Theme:</label>
+                                <div class="controls">
+                                    <small>Choose the theme to use for the ContentBox administrator</small><br/>
+            						#html.select(name="cb_admin_theme", 
+            							 options=prc.adminThemes,
+            							 column="name",
+            							 nameColumn="displayName",
+            							 selectedValue=prc.cbSettings.cb_admin_theme)#
+                                </div>
+                            </div>	
     					</fieldset>
     					<fieldset>
     						<legend><i class="icon-dashboard icon-large"></i>  Dashboard Options</legend>

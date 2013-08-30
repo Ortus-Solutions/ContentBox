@@ -4,9 +4,10 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI
-	property name="securityService" inject="id:securityService@cb";
-	property name="settingService"  inject="id:settingService@cb";
-	property name="adminMenuService"  inject="id:adminMenuService@cb";
+	property name="securityService" 	inject="id:securityService@cb";
+	property name="settingService"  	inject="id:settingService@cb";
+	property name="adminMenuService"  	inject="id:adminMenuService@cb";
+	property name="adminThemeService"  	inject="id:adminThemeService@cb";
 
 	/**
 	* Configure CB Request
@@ -43,6 +44,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.cbWidgetRoot = getContextRoot() & event.getModuleRoot('contentbox') & "/widgets";
 		// store admin menu service
 		prc.adminMenuService = adminMenuService;
+		// Theme service
+		prc.adminThemeService = adminThemeService;
 		
 		/************************************** FORCE SSL *********************************************/
 		
