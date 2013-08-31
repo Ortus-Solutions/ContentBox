@@ -1,6 +1,6 @@
 [
 	{
-        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentstore|securityrules)\.importAll$",
+        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentstore|securityrules)\\.importAll$",
         "roles": "",
         "permissions": "TOOLS_IMPORT",
         "whitelist": "",
@@ -10,7 +10,7 @@
         "useSSL": false
     },
     {
-        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentstore|securityrules)\.(export|exportAll)$",
+        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentstore|securityrules)\\.(export|exportAll)$",
         "roles": "",
         "permissions": "TOOLS_EXPORT",
         "whitelist": "",
