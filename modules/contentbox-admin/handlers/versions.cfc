@@ -94,7 +94,7 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception("cbadmin_postContentVersionRemove",{contentVersionID=rc.versionID});
 			// results
-			results.messages = "Version removed!"
+			results.messages = "Version removed!";
 		}
 		else{
 			results.error = true;
@@ -122,7 +122,7 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception("cbadmin_postContentVersionRollback",{contentVersion=oVersion});
 			// results
-			results.messages = "Version #oVersion.getVersion()# rollback was successfull!"
+			results.messages = "Version #oVersion.getVersion()# rollback was successfull!";
 		}
 		else{
 			results.error = true;
