@@ -26,7 +26,7 @@ DB Structure Changes
 
 
 Start Commit Hash: 3aac5c50a512c893e774257c033c7e235863ad98
-End Commit Hash: ae71470c7e644628f5a43f0288ec7fc570551979
+End Commit Hash: 9b3392cf7d09b663bf41aaeb3a749bd6776eba24
 
 */
 component implements="contentbox.model.updates.IUpdate"{
