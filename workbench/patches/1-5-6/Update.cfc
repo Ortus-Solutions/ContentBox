@@ -309,6 +309,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_page_excerpts", "false" );
 		addSetting( "cb_content_uiexport", "true" );
 		addSetting( "cb_dashboard_recentcontentstore", "5" );
+		addSetting( "cb_admin_theme", "contentbox-default" );
 		
 		// Update contentstore settings
 		var setting = settingService.findWhere( { name = "cb_customHTML_caching" } );
