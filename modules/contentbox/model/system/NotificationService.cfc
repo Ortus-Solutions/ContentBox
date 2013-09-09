@@ -118,7 +118,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when entries are saved
 	*/
-	function cbadmin_postEntrySave(event,interceptData) async="true"{
+	function cbadmin_postEntrySave(event,interceptData){
 		var entry 		= arguments.interceptData.entry;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -217,7 +217,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when pages are saved
 	*/
-	function cbadmin_postPageSave(event,interceptData) async="true"{
+	function cbadmin_postPageSave(event,interceptData){
 		var page 		= arguments.interceptData.page;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
