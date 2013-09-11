@@ -310,9 +310,6 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		
 		// send it out
 		mailService.send( mail );
-		
-		// evict page
-		settingService.evict( page );
 	}
 	
 }
