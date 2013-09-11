@@ -40,6 +40,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	* constructor
 	*/
 	function init(){
+		categories 		= [];
 		customFields	= [];
 		renderedContent = "";
 		renderedExcerpt	= "";
