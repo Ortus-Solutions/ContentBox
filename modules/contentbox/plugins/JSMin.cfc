@@ -75,7 +75,7 @@ component extends="coldbox.system.Plugin" singleton{
 
 		// Plugin Properties
 		setpluginName( "JSMin" );
-		setpluginVersion( "3.0" );
+		setpluginVersion( "3.1" );
 		setpluginDescription( "A plugin that minifies js/css/less files with style!" );
 		setpluginAuthor( "Ortus Solutions, Corp" );
 		setpluginAuthorURL( "http://www.ortussolutions.com" );
@@ -147,16 +147,18 @@ component extends="coldbox.system.Plugin" singleton{
 			return renderLinks( arguments.assets );
 		}
 
-		// check if assets already in cachemap
-		if( structKeyExists( instance.cacheMap, cacheKey ) ){
-			return renderLinks( instance.cacheMap[ cacheKey ] );
+		// check if assets already in cacheMap
+		if( !structKeyExists( instance.cacheMap, cacheKey ) ){
+			lock name="jsmin.#cacheKey#" type="exclusive" timeout="20" throwOntimeout="true"{
+				// double secure lock
+				if( !structKeyExists( instance.cacheMap, cacheKey ) ){
+					//compress assets
+					cachedFile = jsmin( cacheKey, arguments.assets, cacheDiskLocation );
+					// save in cache map
+					instance.cacheMap[ cacheKey ] = cacheIncludeLocation & "/" & cachedFile;
+				}
+			}
 		}
-
-		//compress assets
-		cachedFile = jsmin( cacheKey, arguments.assets, cacheDiskLocation );
-
-		// save in cache map
-		instance.cacheMap[ cacheKey ] = cacheIncludeLocation & "/" & cachedFile;
 
 		//return rendered cache links
 		return renderLinks( instance.cacheMap[ cacheKey ] );
