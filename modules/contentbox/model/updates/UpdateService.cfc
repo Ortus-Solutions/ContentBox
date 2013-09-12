@@ -236,10 +236,12 @@ component accessors="true" threadSafe{
 		var cMajor 		= getToken(arguments.cVersion,1,".");
 		var cMinor		= getToken(arguments.cVersion,2,".");
 		var cRevision	= getToken(arguments.cVersion,3,".");
+		var cBuildID	= getToken(arguments.cVersion,4,".");
 		// new version info
 		var nMajor 		= getToken(arguments.nVersion,1,".");
 		var nMinor		= getToken(arguments.nVersion,2,".");
 		var nRevision	= getToken(arguments.nVersion,3,".");
+		var nBuildID	= getToken(arguments.nVersion,4,".");
 
 		// Major check
 		if( nMajor gt cMajor ){
@@ -253,6 +255,11 @@ component accessors="true" threadSafe{
 
 		// Revision Check
 		if( nMajor eq cMajor AND nMinor eq cMinor AND nRevision gt cRevision){
+			return true;
+		}
+		
+		// BuildID Check
+		if( nMajor eq cMajor AND nMinor eq cMinor AND nRevision eq cRevision AND nBuildID gt cBuildID ){
 			return true;
 		}
 
