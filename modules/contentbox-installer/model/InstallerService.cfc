@@ -145,7 +145,8 @@ component accessors="true"{
 			"EDITORS_HTML_ATTRIBUTES" = "Ability to view the content HTML attributes panel",
 			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor",
 			"TOOLS_EXPORT" = "Ability to export data from ContentBox",
-			"CONTENTSTORE_EDITOR" = "Ability to manage content store elements but not publish them"
+			"CONTENTSTORE_EDITOR" = "Ability to manage content store elements but not publish them",
+			"MEDIAMANAGER_LIBRARY_SWITCHER" = "Ability to switch media manager libraries for management"
 		};
 
 		var allperms = [];
