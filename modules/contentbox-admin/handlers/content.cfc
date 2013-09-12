@@ -54,10 +54,6 @@ component extends="baseHandler"{
 													searchActiveContent=false);
 		prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
 		
-		// Search for Content Store
-		prc.contentStore = contentStoreService.search( search=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
-		prc.minContentStoreCount = ( prc.contentStore.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.contentStore.count : prc.cbSettings.cb_admin_quicksearch_max );
-		
 		// Search for Authors
 		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
 		prc.minAuthorCount = ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );

@@ -113,7 +113,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		numeric offset=0, 
 		boolean asQuery=false, 
 		any sortOrder="publishedDate DESC", 
-		boolean isPublished=true, 
+		any isPublished=true, 
 		boolean searchActiveContent=true){
 
 		var results = {};
