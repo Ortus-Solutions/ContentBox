@@ -62,7 +62,7 @@
 					<p>Please fill in all the required information so we can create the datasource connection for you.</p>
 					
 					<label for="cfpassword">CFML Administrator Password: </label>
-					<small>Your CFML engine administrator password. Contact your hosting provider or system administrator if you do not have one.<br/></small>
+					<small>Your CFML engine administrator password. Contact your hosting provider or system administrator if you do not have one. (If you are using the Express edition use 'contentbox')<br/></small>
 					<input type="password" class="textfield" size="40" name="cfpassword" id="cfpassword" required="required" />
 					
 					<label for="dsnCreateName">Datasource Name:</label>
@@ -75,12 +75,15 @@
 						<!---<option value="derby">Apache Derby</option>--->
 						<option value="mssql">Microsft SQL Server</option>
 						<option value="mysql">MySQL</option>
+						<cfif structKeyExists( server, "railo")>
+						<option value="HSQLDB">HSQLDB (Hypersonic Embedded SQL DB)</option>
+						</cfif>
 						<!---<option value="oracle">Oracle</option>--->
 						<option value="postgresql">PostgreSQL</option>
 					</select>
 					
 					<label for="dbServer">Database Server:</label>
-					<small>Your database host address (localhost, 127.0.0.1 or ip address)<br/></small>
+					<small>Your database host address (localhost, 127.0.0.1 or ip address, leave empty for embedded database)<br/></small>
 					<input type="text" class="textfield" size="40" name="dbServer" id="dbServer" required="required" />
 					
 					<label for="dbName">Database Name:</label>
@@ -88,11 +91,11 @@
 					<input type="text" class="textfield" size="40" name="dbName" id="dbName" required="required" />
 					
 					<label for="dbUsername">Database Username:</label>
-					<small>The name of the database user that will use the connection.<br/></small>
+					<small>The name of the database user that will use the connection. (Use sa for embedded database)<br/></small>
 					<input type="text" class="textfield" size="40" name="dbUsername" id="dbUsername" />
 					
 					<label for="dbUsername">Database Password:</label>
-					<small>The password of the database user that will use the connection.<br/></small>
+					<small>The password of the database user that will use the connection.  (Use empty for embedded database)<br/></small>
 					<input type="password" class="textfield" size="40" name="dbPassword" id="dbPassword" />
 					
 					<div class="actionBar">	

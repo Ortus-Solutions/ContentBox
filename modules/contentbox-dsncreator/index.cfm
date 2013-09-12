@@ -23,6 +23,7 @@
 	<link href="#assetRoot#/includes/css/font-awesome.min.css"		rel="stylesheet"/>
 	<!--- JS --->
 	<script src="#assetRoot#/includes/js/jquery.min.js"></script>
+	<script src="#assetRoot#/includes/js/jwerty.js"></script>
 	<script src="#assetRoot#/includes/js/bootstrap.min.js"></script>
 	<script src="#assetRoot#/includes/js/jquery.validate.js"></script>
 	<script src="#assetRoot#/includes/js/jquery.validate.bootstrap.js"></script>

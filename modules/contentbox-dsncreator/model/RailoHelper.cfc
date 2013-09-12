@@ -106,6 +106,11 @@ limitations under the License.
 					<cfset local.dbPort = "">
 					<cfset local.className = "org.h2.Driver">
 				</cfcase>
+				<cfcase value="HSQLDB">
+					<cfset local.dsnString = "jdbc:hsqldb:file:{database}">
+					<cfset local.dbPort = "">
+					<cfset local.className = "org.hsqldb.jdbcDriver">
+				</cfcase>				
 			</cfswitch>
 
 			<!---Create Datasource --->
@@ -168,61 +173,6 @@ limitations under the License.
 		</cftry>
 
 		<cfreturn results>
-		<cfscript>
-    		try{
-				// Create DSN data struct
-				var data = {
-					name = arguments.dsnName,
-					host = arguments.dbHost,
-					database = arguments.dbName,
-					username = arguments.dbUsername,
-					password = arguments.dbPassword
-				};
-				// Create DSN
-				switch( arguments.dbType ){
-					case "mssql" : {
-						oDSNManager.setMSSQL(argumentCollection=data);
-						break;
-					}
-					case "mysql" : {
-						oDSNManager.setMySQL5(argumentCollection=data);
-						break;
-					}
-					case "postgresql" : {
-						oDSNManager.setPostgreSQL(argumentCollection=data);
-						break;
-					}
-					case "derby" : {
-						data.isnewdb = true;
-						oDSNManager.setDerbyEmbedded(argumentCollection=data);
-						break;
-					}
-					case "oracle" : {
-						oDSNManager.setOracle(argumentCollection=data);
-						break;
-					}
-				}
-
-				// Verify It
-				var isVerified = oDSNManager.verifyDsn( arguments.dsnName );
-				// Check if it verified
-				if( NOT isVerified ){
-					oDSNManager.deleteDatasource( arguments.dsnName );
-					results.error = true;
-					results.messages = "Datasource could not be verified, please check your settings.";
-				}
-				else{
-					results.error = false;
-					results.messages = "DSN created and verified";
-				}
-			}
-			catch(Any e){
-				results.error = true;
-				results.messages = "Error creating DSN: #e.message# #e.detail#";
-			}
-
-			return results;
-    	</cfscript>
     </cffunction>
 
     <!------------------------------------------- PRIVATE ------------------------------------------>
