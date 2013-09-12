@@ -31,7 +31,7 @@ component extends="coldbox.system.Interceptor"{
 		// cb helper
 		prc.CBHelper = getMyPlugin(plugin="CBHelper",module="contentbox");
 		// store admin module entry point
-		prc.cbAdminEntryPoint = getProperty("entryPoint");
+		prc.cbAdminEntryPoint = getModuleSettings("contentbox-admin").entryPoint;
 		// store site entry point
 		prc.cbEntryPoint = getModuleSettings("contentbox-ui").entryPoint;
 		// store filebrowser entry point
