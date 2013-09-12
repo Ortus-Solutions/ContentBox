@@ -10,12 +10,26 @@
 		
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>
-	<property name="build.label" 		value="contentbox-buildID-${start.DSTAMP}${start.TSTAMP}"/>
+	<propertyfile file="workbench/build.number" comment="Build Number for ANT. Edit not!">
+		<entry key="build.number" 
+				type="int" 
+		     	operation="+"
+				pattern="00000"
+		     	default="1" />
+	</propertyfile>
+	<property file="workbench/build.number"/>
 	
 	<!-- Init -->
 	<target name="init" description="Init">
 		<!-- Version -->
 		<input addproperty="contentbox.version" message="ContentBox Version" />
+		<!-- Build ID -->
+		<property name="build.label" 	value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>			
+	</target>
+	
+	<!-- Increase Build Number -->
+	<target name="init-build-number">
+		<echo message="Build ${build.number}" />
 	</target>
 	
 	<!--Build-->
@@ -24,7 +38,7 @@
 		<mkdir dir="${dir.build}"/>
 		
 		<!-- Copy build ID -->
-		<concat destfile="${dir.build}/${build.label}">Built on ${start.TODAY}</concat>
+		<concat destfile="${dir.build}/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
 		
 		<!-- Copy Source -->	
       	<copy todir="${dir.build}">
@@ -44,6 +58,13 @@
       			<exclude name="modules/contentbox/modules/contentbox-codexwiki/**" />
       		</fileset>
         </copy>
+      		
+      	<!-- Replace Build Numbers -->
+		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true">
+		  <fileset dir="${dir.build}/modules/">
+		  	<include name="**/ModuleConfig.cfc" />
+		  </fileset>
+		</replaceregexp>
 		
 		<!-- Execute API Docs -->
 		<get dest="${dir.build}/colddoc.html" src="${colddoc.http}${contentbox.version}" verbose="true"/>
