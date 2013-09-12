@@ -62,7 +62,7 @@
 								<!---Author --->
 								<div id="layout-author">
 									<i class="icon-user"></i>
-									<strong>Author: </strong> <a href="#prc.layouts.authorURL#" title="#prc.layouts.AuthorURL#" target="_blank">#prc.layouts.Author#</a>
+									<strong>Author: </strong> <a href="#prc.activelayout.authorURL#" title="#prc.activelayout.AuthorURL#" target="_blank">#prc.activelayout.Author#</a>
 								</div>
 								<!--- Version --->
 								<div id="layout-version>">
