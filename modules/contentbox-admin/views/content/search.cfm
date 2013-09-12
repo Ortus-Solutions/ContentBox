@@ -1,23 +1,12 @@
 <cfoutput>
 <!--- Content --->
 <span class="floatRight"><button class="btn btn-mini btn-danger" onclick="closeSearchBox()" title="close search panel"><i class="icon-minus-sign"></i></button></span>
-<h2><i class="icon-file-alt"></i> Content ( #prc.minContentCount# of #prc.results.count# )<h2>
+<h2><i class="icon-tasks"></i> Content ( #prc.minContentCount# of #prc.results.count# )<h2>
 <ul>
 <cfloop array="#prc.results.content#" index="thisContent">
 	<li><a title="#thisContent.getSlug()#" href="#linkEditContent( thisContent )#">#thisContent.getTitle()#</a> (#thisContent.getContentType()#)</li>
 </cfloop>
 <cfif !arrayLen( prc.results.content )>
-	<li><em>No Results</em></li>
-</cfif>
-</ul>
-
-<!---ContentStore --->
-<h2><i class="icon-tasks"></i> Content Store ( #prc.minContentStoreCount# of #prc.contentStore.count# )<h2>
-<ul>
-<cfloop array="#prc.contentStore.content#" index="thisContent">
-	<li><a title="#thisContent.getSlug()#" href="#event.buildLInk(linkTo=prc.xehContentStoreEditor, queryString="contentID=#thisContent.getContentID()#" )#">#thisContent.getTitle()#</a></li>
-</cfloop>
-<cfif !arrayLen( prc.contentStore.content )>
 	<li><em>No Results</em></li>
 </cfif>
 </ul>
