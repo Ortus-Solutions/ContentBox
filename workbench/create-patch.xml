@@ -6,7 +6,15 @@
 		
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>
-		
+	<propertyfile file="build.number" comment="Build Number for ANT. Edit not!">
+		<entry key="build.number" 
+				type="int" 
+		     	operation="+"
+				pattern="00000"
+		     	default="1" />
+	</propertyfile>
+	<property file="build.number"/>	
+	
 	<!-- Init -->
 	<target name="init" description="Init">
 		<!-- Version -->
@@ -24,14 +32,17 @@
       	<!-- Create patch folder -->
 		<mkdir dir="${dir.exports}/${contentbox.version}"/>
 		<mkdir dir="${dir.exports}/${contentbox.version}/patch"/>
+		
 		<!-- Copy Update Template -->
 		<copy file="patches/Update.cfc" tofile="${dir.exports}/${contentbox.version}/Update.cfc" overwrite="false" />
+		
 		<!-- Execute patch -->
 		<exec executable="./create-patch.sh">
 	    	<arg value="${contentbox.startgit}"/>
 	    	<arg value="${contentbox.endgit}"/>
 	   	 	<arg value="${contentbox.version}"/>
 	  	</exec>
+		
 		<!--Unzip Patch -->
 		<unzip src="${dir.exports}/${contentbox.version}/patch.zip" dest="${dir.exports}/${contentbox.version}/patch" overwrite="true">
 			<patternset>
@@ -51,6 +62,14 @@
 				<exclude name="handlers/**"/>
 		    </patternset>
 		</unzip>
+		
+		<!-- Replace Build Numbers -->
+		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true">
+		  <fileset dir="${dir.exports}/${contentbox.version}/patch">
+		  	<include name="**/ModuleConfig.cfc" />
+		  </fileset>
+		</replaceregexp>
+		
 		<!-- Delete Patch -->
 		<delete file="${dir.exports}/${contentbox.version}/patch.zip" />
 		<!-- Zip it back up -->
