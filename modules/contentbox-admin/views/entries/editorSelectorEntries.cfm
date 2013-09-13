@@ -14,6 +14,8 @@
 			<td>
 				<!--- Title --->
 				<strong>#entry.getTitle()#</strong>
+				<br>
+				<span class="label">Published: #entry.getDisplayPublishedDate()#</label>
 			</td>
 			<td class="center">
 				<cfif entry.getIsPublished()>

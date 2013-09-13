@@ -432,7 +432,7 @@ component extends="baseHandler"{
 		var entryResults = entryService.search(search=rc.search,
 											   offset=prc.paging.startRow-1,
 											   max=prc.cbSettings.cb_paging_maxrows,
-											   sortOrder="createdDate asc",
+											   sortOrder="publishedDate desc",
 											   searchActiveContent=false);
 
 		prc.entries 		= entryResults.entries;
