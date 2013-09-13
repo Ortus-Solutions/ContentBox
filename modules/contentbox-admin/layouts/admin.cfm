@@ -66,7 +66,7 @@
 	#announceInterception("cbadmin_beforeHeadEnd")#
 </head>
 <!--============================Body============================-->
-<body data-showsidebar="#lcase( yesNoFormat( prc.oAuthor.getPreference( "sidebarState", false ) ) )#">
+<body data-showsidebar="#lcase( yesNoFormat( prc.oAuthor.getPreference( "sidebarState", true ) ) )#">
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_afterBodyStart")#
 	<div id="wrapper">
