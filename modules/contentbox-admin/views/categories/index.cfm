@@ -71,7 +71,7 @@
 						<th>Slug</th>		
 						<th width="75" class="center">Pages</th>
 						<th width="75" class="center">Entries</th>	
-						<th width="75" class="center {sorter:false}">Actions</th>
+						<th width="100" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
 				<tbody>
@@ -88,14 +88,16 @@
 						<td class="center"><span class="badge badge-info">#category.getNumberOfPages()#</span></td>
 						<td class="center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
 						<td class="center">
-							<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
-							<!--- Edit Command --->
-							<a href="javascript:edit('#category.getCategoryID()#',
-							   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-							   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
-							<!--- Delete Command --->
-							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
-							</cfif>
+							<div class="btn-group">
+								<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+								<!--- Edit Command --->
+								<a class="btn" href="javascript:edit('#category.getCategoryID()#',
+								   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+								   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
+								<!--- Delete Command --->
+								<a class="btn" title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
+								</cfif>
+							</div>
 						</td>
 					</tr>
 					</cfloop>
