@@ -105,9 +105,9 @@
 									<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 									<!--- Approve/Unapprove --->
 									<cfif !comment.getIsApproved()>
-										<a class="btn" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-up icon-large"></i></a>
+										<a class="btn" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="icon-thumbs-up icon-large"></i></a>
 									<cfelse>
-										<a class="btn" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-down icon-large"></i></a>
+										<a class="btn" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="icon-thumbs-down icon-large"></i></a>
 									</cfif>
 									<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
 										<i class="icon-cogs icon-large"></i>
