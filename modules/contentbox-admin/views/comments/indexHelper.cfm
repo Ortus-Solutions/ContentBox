@@ -11,7 +11,7 @@ $(document).ready(function() {
 	$commentForm.find("##comments").find("tr").bind("contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if ($(this).attr('data-commentID') != null) {
-				openRemoteModal('#event.buildLink(rc.xehCommentQuickLook)#', {
+				openRemoteModal('#event.buildLink(prc.xehCommentQuickLook)#', {
 					commentID: $(this).attr('data-commentID')
 				});
 				e.preventDefault();

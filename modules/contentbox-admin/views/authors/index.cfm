@@ -138,8 +138,8 @@
 				</table>
 	
 				<!--- Paging --->
-				#prc.pagingPlugin.renderit( prc.authorCount, prc.pagingLink)#
-	
+				#prc.pagingPlugin.renderit(foundRows=prc.authorCount, link=prc.pagingLink, asList=true)#
+
 				#html.endForm()#
 	
 			</div>	<!--- body --->
