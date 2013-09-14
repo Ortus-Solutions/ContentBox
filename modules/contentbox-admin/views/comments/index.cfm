@@ -63,7 +63,7 @@
 							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 							<th width="200">Author</th>
 							<th>Comment</th>
-							<th width="120" class="center">Date</th>			
+							<th width="150" class="center">Date</th>			
 							<th width="100" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
@@ -100,23 +100,30 @@
 								#comment.getDisplayCreatedDate()#
 							</td>
 							<td class="center">
-								<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
-									<!--- Edit Command --->
-									<a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="icon-edit icon-large"></i></a>
-									&nbsp;
+
+								<div class="btn-group">
+									<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 									<!--- Approve/Unapprove --->
 									<cfif !comment.getIsApproved()>
-										<a href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-up icon-large"></i></a>
+										<a class="btn" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-up icon-large"></i></a>
 									<cfelse>
-										<a href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-down icon-large"></i></a>
+										<a class="btn" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-down icon-large"></i></a>
 									</cfif>
-									&nbsp;
-									<!--- Delete Command --->
-									<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="icon-trash icon-large"></i></a>
-									&nbsp;	
-								</cfif>
+									<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+										<i class="icon-cogs icon-large"></i>
+									</a>
+							    	<ul class="dropdown-menu text-left pull-right">
+							    		<!--- Edit Command --->
+										<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="icon-edit icon-large"></i> Edit</a></li>
+										<li><!--- Delete Command --->
+											<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="icon-trash icon-large"></i> Delete</a>
+										</li>
+							    	</ul>
+									</cfif>
 								<!--- View in Site --->
 								<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>
+
+								</div>
 							</td>
 						</tr>
 						</cfloop>

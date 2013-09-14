@@ -23,12 +23,14 @@
 				</cfif>
 			</td>
 			<td class="center">
-				<!--- Edit Command --->
-				<a href="javascript:edit('#setting.getSettingId()#',
-										 '#HTMLEditFormat( setting.getName() )#',
-										 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting"><i class="icon-edit icon-large"></i></a>
-				<!--- Delete Command --->
-				<a title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><i class="icon-trash icon-large" id="delete_#setting.getsettingID()#"></i></a>
+				<div class="btn-group">
+					<!--- Edit Command --->
+					<a class="btn" href="javascript:edit('#setting.getSettingId()#',
+											 '#HTMLEditFormat( setting.getName() )#',
+											 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting"><i class="icon-edit icon-large"></i></a>
+					<!--- Delete Command --->
+					<a class="btn" title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><i class="icon-trash icon-large" id="delete_#setting.getsettingID()#"></i></a>
+				</div>
 			</td>
 		</tr>
 		</cfloop>

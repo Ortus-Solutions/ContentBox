@@ -92,10 +92,11 @@
 						<td class="center"><span class="badge badge-info">#role.getNumberOfPermissions()#</span></td>
 						<td class="center"><span class="badge badge-info">#role.getNumberOfAuthors()#</span></td>
 						<td class="center">
-							<!--- permissions --->
-							<a class="btn" href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" title="Manage Permissions"><i class="icon-lock icon-large"></i></a>
 							<!--- Actions --->
 							<div class="btn-group">
+								<!--- permissions --->
+								<a class="btn" href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" title="Manage Permissions"><i class="icon-lock icon-large"></i></a>
+								<!--- Actions --->	
 						    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
 									<i class="icon-cogs icon-large"></i>
 								</a>

@@ -87,6 +87,7 @@
 								<span class="badge badge-info">#permission.getNumberOfRoles()#</span>
 							</td>
 							<td class="center">
+								<div class="btn-group">
 								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 								<!--- Edit Command --->
 								<a class="btn" href="javascript:edit('#permission.getPermissionID()#',
@@ -96,6 +97,7 @@
 								<!--- Delete Command --->
 								<a class="btn" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-trash icon-large"></i></a>
 								</cfif>
+								</div>
 							</td>
 						</tr>
 						</cfloop>
