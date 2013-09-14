@@ -72,7 +72,7 @@
 						<th>Description</th>		
 						<th width="95" class="center">Permissions</th>
 						<th width="95" class="center">Authors</th>
-						<th width="75" class="center {sorter:false}">Actions</th>
+						<th width="150" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
 				<tbody>
@@ -92,6 +92,8 @@
 						<td class="center"><span class="badge badge-info">#role.getNumberOfPermissions()#</span></td>
 						<td class="center"><span class="badge badge-info">#role.getNumberOfAuthors()#</span></td>
 						<td class="center">
+							<!--- permissions --->
+							<a class="btn" href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" title="Manage Permissions"><i class="icon-lock icon-large"></i></a>
 							<!--- Actions --->
 							<div class="btn-group">
 						    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
@@ -119,8 +121,6 @@
 										</li>
 										</cfif>
 									</cfif>
-									<!--- permissions --->
-									<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );"><i class="icon-lock icon-large"></i> Manage Permissions</a></li>
 						    	</ul>
 						    </div>
 						</td>
