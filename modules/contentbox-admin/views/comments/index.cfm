@@ -6,7 +6,7 @@
 			<!--- Body Header --->
 			<div class="header">
 				<i class="icon-comments icon-large"></i>
-				Comments (#rc.commentsCount#)
+				Comments (#prc.commentsCount#)
 				<cfif len(rc.searchComments)> > Search: #event.getValue("searchComments")#</cfif>
 			</div>
 			<!--- Body --->
@@ -16,7 +16,7 @@
 				#getPlugin("MessageBox").renderit()#
 				
 				<!--- entryForm --->
-				#html.startForm(name="commentForm",action=rc.xehCommentRemove)#
+				#html.startForm(name="commentForm",action=prc.xehCommentRemove)#
 				#html.hiddenField(name="commentStatus",value="")#
 				#html.hiddenField(name="page",value=rc.page)#
 				
@@ -69,7 +69,7 @@
 					</thead>
 					
 					<tbody>
-						<cfloop array="#rc.comments#" index="comment">
+						<cfloop array="#prc.comments#" index="comment">
 						<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
 							<!--- Delete Checkbox with PK--->
 							<td>
@@ -102,7 +102,7 @@
 							<td class="center">
 								<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 									<!--- Edit Command --->
-									<a href="javascript:openRemoteModal('#event.buildLink(rc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="icon-edit icon-large"></i></a>
+									<a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="icon-edit icon-large"></i></a>
 									&nbsp;
 									<!--- Approve/Unapprove --->
 									<cfif !comment.getIsApproved()>
@@ -124,8 +124,8 @@
 				</table>
 				
 				<!--- Paging --->
-				#rc.pagingPlugin.renderit(rc.commentsCount,rc.pagingLink)#
-				
+				#prc.pagingPlugin.renderit(foundRows=prc.commentsCount, link=prc.pagingLink, asList=true)#
+
 				#html.endForm()#
 			</div>	
 		</div>
@@ -157,9 +157,9 @@
 				<!--- Status --->
 				<label for="fStatus">Comment Status: </label>
 				<select name="fStatus" id="fStatus" class="input-block-level">
-					<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status (#rc.countApproved + rc.countUnApproved#)</option>
-					<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Approved (#rc.countApproved#)</option>
-					<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Moderated (#rc.countUnApproved#)</option>				
+					<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status (#prc.countApproved + prc.countUnApproved#)</option>
+					<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Approved (#prc.countApproved#)</option>
+					<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Moderated (#prc.countUnApproved#)</option>				
 				</select>
 				<button type="submit" class="btn btn-danger">Apply Filters</button>
 				<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>				

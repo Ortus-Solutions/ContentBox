@@ -28,34 +28,35 @@ component extend="baseHandler"{
 		event.paramValue("isFiltering",false);
 
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
-		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#prc.xehComments#.page.@page@?');
+		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 		 = prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	 = event.buildLink('#prc.xehComments#.page.@page@?');
 		// Append search to paging link?
-		if( len(rc.searchComments) ){ rc.pagingLink&="&searchComments=#rc.searchComments#"; }
+		if( len(rc.searchComments) ){ prc.pagingLink&="&searchComments=#rc.searchComments#"; }
 		// Append filters to paging link?
-		if( rc.fStatus neq "any" ){ rc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		if( rc.fStatus neq "any" ){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
 		// is Filtering?
 		if( rc.fStatus neq "any" ){ rc.isFiltering = true; }
 
 		// search comments with filters and all
 		var commentResults = commentService.search(search=rc.searchComments,
-											       offset=rc.paging.startRow-1,
+											       offset=prc.paging.startRow-1,
 											       max=prc.cbSettings.cb_paging_maxrows,
 											       isApproved=rc.fStatus);
-		rc.comments 	 	= commentResults.comments;
-		rc.commentsCount 	= commentResults.count;
-		rc.countApproved 	= commentService.getApprovedCommentCount();
-		rc.countUnApproved 	= commentService.getUnApprovedCommentCount();
+		prc.comments 	 	= commentResults.comments;
+		prc.commentsCount 	= commentResults.count;
+		prc.countApproved 	= commentService.getApprovedCommentCount();
+		prc.countUnApproved 	= commentService.getUnApprovedCommentCount();
 
 		// exit Handlers
-		rc.xehCommentEditor 	= "#prc.cbAdminEntryPoint#.comments.editor";
-		rc.xehCommentRemove 	= "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehCommentEditor 	= "#prc.cbAdminEntryPoint#.comments.editor";
+		prc.xehCommentRemove 	= "#prc.cbAdminEntryPoint#.comments.remove";
 		prc.xehCommentstatus 	= "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
-		rc.xehCommentQuickLook	= "#prc.cbAdminEntryPoint#.comments.quicklook";
+		prc.xehCommentQuickLook	= "#prc.cbAdminEntryPoint#.comments.quicklook";
 
 		// tab
 		prc.tabComments_inbox = true;
+		
 		// display
 		event.setView("comments/index");
 	}
