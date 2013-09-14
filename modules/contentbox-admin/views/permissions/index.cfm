@@ -65,8 +65,8 @@
 						<tr>
 							<th>Permission</th>
 							<th>Description</th>
-							<th width="95" class="center">Roles Assigned</th>		
-							<th width="75" class="center {sorter:false}">Actions</th>
+							<th class="center">Roles Assigned</th>		
+							<th width="150" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>				
 					<tbody>
@@ -83,16 +83,18 @@
 								</cfif>
 							</td>
 							<td>#permission.getDescription()#</td>
-							<td class="center"><span class="badge badge-info">#permission.getNumberOfRoles()#</span></td>
+							<td class="center">
+								<span class="badge badge-info">#permission.getNumberOfRoles()#</span>
+							</td>
 							<td class="center">
 								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 								<!--- Edit Command --->
-								<a href="javascript:edit('#permission.getPermissionID()#',
+								<a class="btn" href="javascript:edit('#permission.getPermissionID()#',
 								   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
 								   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
 								   title="Edit #permission.getPermission()#"><i class="icon-edit icon-large"></i></a>
 								<!--- Delete Command --->
-								<a title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-trash icon-large"></i></a>
+								<a class="btn" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-trash icon-large"></i></a>
 								</cfif>
 							</td>
 						</tr>
