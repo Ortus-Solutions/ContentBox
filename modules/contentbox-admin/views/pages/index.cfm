@@ -200,8 +200,8 @@
 			
 			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
 			
-			<label for="overrideContent">Override blog entries?</label>
-			<small>By default all content that exist is not overwritten.</small><br>
+			<label for="overrideContent">Override pages?</label>
+			<small>By default all content that exist is NOT overwritten.</small><br>
 			#html.select(options="true,false", name="overrideContent", selectedValue="false", class="input-block-level", 
 						 wrapper="div class=controls", labelClass="control-label", groupWrapper="div class=control-group")#
 			
