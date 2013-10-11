@@ -208,12 +208,13 @@ component extends="content" singleton{
 
 		// Validate if comment errors exist
 		if( arrayLen( prc.commentErrors ) ){
+			// Flash errors
+			flash.put( "commentErrors", prc.commentErrors );
 			// MessageBox
 			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
-			// put slug in request
-			prc.pageOverride = page.getSlug();
-			// Execute entry again, need to correct form
-			return index(argumentCollection=arguments);
+			// redirect			
+			setNextEvent( URL=CBHelper.linkComments( page ) ) ;
+			return;
 		}
 
 		// Valid commenting, so go and save

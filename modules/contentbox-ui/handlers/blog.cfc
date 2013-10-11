@@ -255,24 +255,24 @@ component extends="content" singleton{
 	function commentPost(event,rc,prc){
 		// incoming params
 		event.paramValue("entrySlug","");
-
+		
 		// Try to retrieve entry by slug
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
 
 		// If null, kick them out
 		if( isNull( thisEntry ) ){ setNextEvent( prc.cbEntryPoint ); }
-
+		
 		// validate incoming comment post
 		prc.commentErrors = validateCommentPost(event,rc,prc,thisEntry);
 
 		// Validate if comment errors exist
 		if( arrayLen( prc.commentErrors ) ){
+			// Flash errors
+			flash.put( "commentErrors", prc.commentErrors );
 			// MessageBox
 			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
-			// put slug in request
-			rc.entrySlug = thisEntry.getSlug();
 			// Execute entry again, need to correct form
-			entry(argumentCollection=arguments);
+			setNextEvent( URL=CBHelper.linkComments( thisEntry ) );
 			return;
 		}
 
