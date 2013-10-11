@@ -118,6 +118,9 @@
 										<li><!--- Delete Command --->
 											<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="icon-trash icon-large"></i> Delete</a>
 										</li>
+										<li>
+											<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open icon-large"></i> View In Site</a>
+										</li>
 							    	</ul>
 									</cfif>
 								<!--- View in Site --->
