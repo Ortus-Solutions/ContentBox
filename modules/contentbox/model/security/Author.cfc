@@ -146,7 +146,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		var lastLogin = getLastLogin();
 
 		if(  NOT isNull(lastLogin) ){
-			return dateFormat( lastLogin, "mm/dd/yyy" ) & " " & timeFormat(lastLogin, "hh:mm:ss tt");
+			return dateFormat( lastLogin, "mm/dd/yyyy" ) & " " & timeFormat(lastLogin, "hh:mm:ss tt");
 		}
 
 		return "Never";
@@ -158,7 +158,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		if( isNull( createdDate ) ){ return ""; }
-		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
 
 	/**

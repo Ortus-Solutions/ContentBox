@@ -108,7 +108,7 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 	*/
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
 
 	/**
