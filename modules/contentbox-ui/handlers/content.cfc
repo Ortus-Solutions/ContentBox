@@ -145,9 +145,12 @@ component{
 		if( !prc.cbSettings.cb_content_uiexport ){
 			rc.format = "contentbox";
 		}
-		
+
 		// Caching Enabled? Then test if data is in cache.
-		var cacheEnabled = ( prc.cbSettings.cb_content_caching AND !structKeyExists(eventArguments, "noCache") AND !event.valueExists( "cbCache" ) );
+		var cacheEnabled = ( prc.cbSettings.cb_content_caching AND 
+							 !structKeyExists(eventArguments, "noCache") AND 
+							 !event.valueExists( "cbCache" ) AND
+							 !flash.exists( "commentErrors" ) );
 		if( cacheEnabled ){
 			// Get appropriate cache provider from settings
 			var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
@@ -245,7 +248,7 @@ component{
 		event.paramValue("authorEmail","");
 		event.paramValue("content","");
 		event.paramValue("captchacode","");
-
+		
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( thisContent ) ){
 			getPlugin("MessageBox").warn("Comments are disabled! So you can't post any!");
