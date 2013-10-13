@@ -102,13 +102,15 @@ component extends="baseHandler"{
 		}
 	}
 
-	// Edit Widget Instance
-	function editInstance( event, rc, prc ) {
+	function viewWidgetInstance( event, rc, prc ) {
+		event.paramValue( "modal", false );
+		event.paramValue( "Test", false );
 		// get widget
 		var widget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
+		prc.md = widgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
 		prc.widget = {
-			name = rc.widgetName,
-        	widgetType = rc.widgetType,
+			name = rc.widgetname,
+        	widgetType = rc.widgettype,
         	plugin = widget,
         	udf = structKeyExists( rc, "widgetudf" ) ? rc.widgetudf : "renderIt",
         	module = find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
@@ -123,25 +125,11 @@ component extends="baseHandler"{
 		prc.metadata = widget.getPublicMethods();
 		prc.vals = rc;
 		prc.vals[ "widgetUDF" ] = prc.widget.udf;
-		event.setView( view="widgets/instanceEditor", layout="ajax" );
-	}
-
-	function renderArgs( event, rc, prc ) {
-		// get widget
-		var theWidget = widgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
-		prc.md = widgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
-		prc.widget = {
-			name = rc.widgetname,
-        	widgetType = rc.widgettype,
-        	plugin = theWidget,
-        	udf = rc.widgetudf
-		};
-		prc.vals = rc;
 		if( event.isAjax() ) {
-			event.renderData( data=renderView( view="widgets/arguments", layout="ajax" ) );
+			event.renderData( data=renderView( view="widgets/instance", layout="ajax" ) );
 		}
 		else {
-			event.setView( view="widgets/arguments", layout="ajax" );
+			event.setView( view="widgets/instance", layout="ajax" );
 		}
 	}
 
@@ -181,10 +169,26 @@ component extends="baseHandler"{
 	function edit(event,rc,prc){
 		// param values
 		event.paramValue( "type", "core" );
+		// get widget
+		var widget = WidgetService.getWidget( name=rc.widget, type=rc.type );
 		// Exit handlers
 		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.save";
-		// Get Widget Code
-		prc.widgetCode = widgetService.getWidgetCode( rc.widget, rc.type );
+		prc.xehWidgetTest = "#prc.cbAdminEntryPoint#.widgets.viewWidgetInstance";
+		// set widget details into prc
+		prc.widget = {
+			name = rc.widget,
+        	widgetType = rc.type,
+        	plugin = widget,
+        	udf = structKeyExists( rc, "widgetudf" ) ? rc.widgetudf : "renderIt",
+        	module = find( "@", rc.widget ) ? listGetAt( rc.widget, 2, '@' ) : "",
+        	category = !isNull( widget.getCategory() ) ? 
+        					widget.getCategory() : 
+        					rc.type=="Core" ?
+                            	"Miscellaneous" :
+                                rc.type,
+        	icon = !isNull( widget.getIcon() ) ? widget.getIcon() : "",
+        	widgetCode = widgetService.getWidgetCode( rc.widget, rc.type )
+		};
 		// view
 		event.setView("widgets/edit");
 	}
