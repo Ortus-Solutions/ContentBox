@@ -23,7 +23,7 @@
 				</p>
 				
 				<!--- Editor --->
-				#html.textarea(name="widgetCode",value=prc.widgetCode,rows=30)#
+				#html.textarea(name="widgetCode",value=prc.widget.widgetCode,rows=30)#
 			
 			</div>	
 		</div>
@@ -41,6 +41,7 @@
 				<div class="actionBar">
 					<div class="btn-group">
 					#html.href(href=prc.xehWidgets,text=html.button(name="cancelButton",value="Cancel",class="btn"))#
+					#html.button(value="Test",class="btn",title="Live-Test Widget",onclick="return testWidgetCode()")#
 					#html.button(value="Save",class="btn btn-danger",title="Save and keep on working",onclick="return saveWidgetCode()")#
 					#html.button(value="Save & Close", type="submit", class="btn btn-danger",title="Save widget and return to listing")#
 					</div>

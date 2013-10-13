@@ -8,7 +8,7 @@ openRemoteModal() is part of contentbox js
 	var insertWidget= {
     		exec:function(editor){
     			// Open the selector widget dialog.
-    			openRemoteModal( getWidgetSelectorURL(), {editorName: editor.name}, 1000, 450 );
+    			openRemoteModal( getWidgetSelectorURL(), {editorName: editor.name}, 1000, 650 );
     		}
     	},
     	updateWidget = {
@@ -23,7 +23,9 @@ openRemoteModal() is part of contentbox js
                     }
                 }
                 attributes.editorName = editor.name;
-    	        openRemoteModal( getWidgetEditorURL(), attributes, 1000, 450 );
+                attributes.modal = true;
+                attributes.mode = "Edit";
+    	        openRemoteModal( getWidgetInstanceURL(), attributes, 1000, 650 );
             }
     	},
         removeWidget = {
