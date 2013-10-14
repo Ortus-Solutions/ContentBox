@@ -82,6 +82,8 @@ component singleton{
 		imgURL = replace( replace( imgURL, "src=", "" ) , '"', "", "all");
 		// deliver image
 		getPageContext().forward( imgURL );
+		// abort so CF does not choke.
+		abort;
 	}
 	
 	/************************************** PRIVATE *********************************************/
