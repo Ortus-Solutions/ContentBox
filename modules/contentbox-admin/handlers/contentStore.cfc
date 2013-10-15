@@ -381,7 +381,7 @@ component extends="baseHandler"{
 
 	// slugify remotely
 	function slugify(event,rc,prc){
-		event.renderData(data=getPlugin("HTMLHelper").slugify( rc.slug ),type="plain");
+		event.renderData(data=trim( getPlugin("HTMLHelper").slugify( rc.slug ) ),type="plain");
 	}
 
 	// editor selector
