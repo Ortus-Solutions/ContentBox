@@ -214,7 +214,9 @@ form textarea,form .wysiwyg { width:98%; }
 .margin10 { margin:10px; }
 .margin0 { margin:0px; }
 .width98{ width: 98%; }
+.width96{ width: 96%; }
 .width95{ width: 95%; }
+.marginRight5{ margin-right:5px}
 .hidden { display:none!important; }
 .show{ display: block; }
 .flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 URL(../images/iinfo_icon.png) no-repeat 2% 50%; }

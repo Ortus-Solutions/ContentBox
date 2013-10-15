@@ -120,14 +120,15 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	}
 	// Activate blur slugify on titles
 	var $title = $targetEditorForm.find("##title");
-	$title.blur(function(){
-		if( $targetEditorForm.find("##slug").size() ){
-			createPermalink( $title.val() );
+	//set up live event for title, do nothing if slug is locked..
+	$title.live('blur', function(){
+		if(!$targetEditorForm.find("##slug").prop("disabled")){
+			createPermalink( $title.val());
 		}
 	});
-	// Activate permalink blur
-	$targetEditorForm.find("##slug").blur(function(){
-		permalinkUniqueCheck()
+	/*for enabled slug, do create and check!*/
+	$targetEditorForm.find('##slug:enabled').live('blur',function(){
+		createPermalink( $targetEditorForm.find("##slug").val());
 	});
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
@@ -175,18 +176,30 @@ function askLeaveConfirmation(){
 }
 
 // Create Permalinks
-function createPermalink(){
-	if( !$("##title").val().length ){ return; }
-	$slug = $("##slug").fadeOut();
-	$.get( '#event.buildLink( prc.xehSlugify )#', {slug:$("##title").val()}, function(data){
-		$slug.fadeIn().val( $.trim(data) );
+function createPermalink(linkToUse){
+	var linkToUse = (typeof linkToUse === "undefined") ? $("##title").val() : linkToUse;
+	if( !linkToUse.length ){ return; }
+	$slug = togglePermalink()
+	$.get( '#event.buildLink( prc.xehSlugify )#', {slug:linkToUse}, function(data){
+		$('##slug').val(data);
+		permalinkUniqueCheck();
+		togglePermalink();
 	} );
-	permalinkUniqueCheck();
 }
-function permalinkUniqueCheck(){
-	if( !$("##slug").val().length ){ return; }
+//disable or enable (toggle) permalink field
+function togglePermalink(){
+	// Toggle lock icon on click..	
+	($('##togglePermalink').hasClass('icon-lock'))? $('##togglePermalink').attr('class','icon-unlock') :$('##togglePermalink').attr('class','icon-lock');
+	//disable input field
+	$('##slug').prop("disabled",!$('##slug').prop("disabled"));
+	return $('##slug');
+}
+function permalinkUniqueCheck(linkToUse){
+	var linkToUse = (typeof linkToUse === "undefined") ? $("##slug").val():linkToUse;
+	linkToUse = $.trim(linkToUse); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
+	if( !linkToUse.length ){ return; }
 	// Verify unique
-	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', {slug:$("##slug").val(), contentID: $("##contentID").val()}, function(data){
+	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', {slug:linkToUse, contentID: $("##contentID").val()}, function(data){
 		if( !data.UNIQUE ){
 			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("alert");
 		}

@@ -48,8 +48,13 @@
     				</label>
                     <div class="controls">
                         <div id='slugCheckErrors'></div>
-						#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
-                    </div>
+						#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width95",title="The URL permalink for this entry", disabled = "#prc.entry.getIsPublished()?'true':'false'#")#
+						<div class="floatLeft marginRight5">
+						<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
+							<i id="togglePermalink" class="icon-#prc.entry.getIsPublished()?'lock':'unlock'#"></i>
+						</a>
+						</div>
+					</div>					
                 </div>			
 				<!---ContentToolBar --->
 				<div id="contentToolBar">
