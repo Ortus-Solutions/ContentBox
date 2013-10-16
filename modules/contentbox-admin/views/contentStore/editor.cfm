@@ -37,15 +37,25 @@
 	
 				<!--- title --->
 				#html.textfield(label="Title:",name="title",bind=prc.content,maxlength="100",required="required",title="The title for this content",class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+				
 				<!--- slug --->
                 <div class="control-group">
                     <label for="slug" class="control-label">Slug:</label>
                     <div class="controls">
                         <div id='slugCheckErrors'></div>
-						#html.textfield(name="slug",bind=prc.content,maxlength="100",class="textfield width98",title="The unique slug for this content, this is how they are retreived")#
+                        <div class="input-append" style="display:inline">
+							#html.textfield(name="slug", bind=prc.content, maxlength="100", class="textfield width94", title="The unique slug for this content, this is how they are retreived",
+											disabled="#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#")#
+							<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
+								<i id="togglePermalink" class="icon-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
+							</a>
+						</div>
                     </div>
                 </div>		
+
+                <!--- Description --->
 				#html.textarea(name="description",label="Short Description:",bind=prc.content,rows=3,class="width98",title="A short description for metadata purposes",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#	
+				
 				<!---ContentToolBar --->
 				<div id="contentToolBar">
 					

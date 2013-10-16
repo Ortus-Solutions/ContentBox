@@ -41,20 +41,21 @@
 			#html.textfield(label="Title:",name="title",bind=prc.page,maxlength="100",required="required",title="The title for this page",class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 			<!--- slug --->
             <div class="control-group">
-                <label for="slug" class="control-label">Permalink:
-					<i class="icon-cloud hand-cursor" title="Convert title to permalink" onclick="createPermalink()"></i>
-    				<small> #prc.CBHelper.linkPageWithSlug('')#</small><cfif prc.page.hasParent()><small>#prc.page.getParent().getSlug()#/</small></cfif>
-    			</label>
-                <div class="controls">
-                    <div id='slugCheckErrors'></div>
-					#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width95",title="The URL permalink for this page", disabled = "#prc.page.getIsPublished()?'true':'false'#")#
-					<div class="floatLeft marginRight5">
+            	<label for="slug" class="control-label">Permalink:
+				<i class="icon-cloud hand-cursor" title="Convert title to permalink" onclick="createPermalink()"></i>
+				<small> #prc.CBHelper.linkPageWithSlug('')#</small><cfif prc.page.hasParent()><small>#prc.page.getParent().getSlug()#/</small></cfif>
+				</label>
+			</div>
+			<div class="controls">
+	            <div id='slugCheckErrors'></div>
+	            <div class="input-append" style="display:inline">
+					#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width94",title="The URL permalink for this page", disabled="#prc.page.isLoaded() && prc.page.getIsPublished() ? 'true' : 'false'#")#
 					<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
-						<i id="togglePermalink" class="icon-#prc.page.getIsPublished()?'lock':'unlock'#"></i>
+						<i id="togglePermalink" class="icon-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
 					</a>
-					</div>
-                </div>
-            </div>
+				</div>
+			</div>
+
 			<!---ContentToolBar --->
 			<div id="contentToolBar">
 				

@@ -39,23 +39,27 @@
 				#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 	
 				<!--- title --->
-				#html.textfield(label="Title:",name="title",bind=prc.entry,maxlength="100",required="required",title="The title for this entry",class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+				#html.textfield(label="Title:",name="title",bind=prc.entry,maxlength="100",required="required",title="The title for this entry",
+								class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+				
 				<!--- slug --->
-                <div class="control-group">
-                    <label for="slug" class="control-label">Permalink:
-                        <i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
-    					<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
-    				</label>
-                    <div class="controls">
-                        <div id='slugCheckErrors'></div>
-						#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width95",title="The URL permalink for this entry", disabled = "#prc.entry.getIsPublished()?'true':'false'#")#
-						<div class="floatLeft marginRight5">
-						<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
-							<i id="togglePermalink" class="icon-#prc.entry.getIsPublished()?'lock':'unlock'#"></i>
-						</a>
+				<div class="control-group">
+	                <label for="slug" class="control-label">Permalink:
+	                    <i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
+						<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
+					</label>
+					<div class="controls">
+	                	<div id='slugCheckErrors'></div>
+						<div class="input-append" style="display:inline">
+		                	#html.textfield(name="slug", bind=prc.entry, maxlength="100", class="textfield width94", 
+											title="The URL permalink for this entry", disabled="#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'true' : 'false'#")#
+							<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink">
+								<i id="togglePermalink" class="icon-#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'lock' : 'unlock'#"></i>
+							</a>
 						</div>
-					</div>					
-                </div>			
+					</div>
+				</div>
+
 				<!---ContentToolBar --->
 				<div id="contentToolBar">
 					
