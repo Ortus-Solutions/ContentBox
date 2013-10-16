@@ -118,18 +118,22 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	if( withChangelogs ){
 		$targetEditorForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
 	}
+
 	// Activate blur slugify on titles
 	var $title = $targetEditorForm.find("##title");
 	//set up live event for title, do nothing if slug is locked..
-	$title.live('blur', function(){
-		if(!$targetEditorForm.find("##slug").prop("disabled")){
+	$title.on('blur', function(){
+		if( !$targetEditorForm.find("##slug").prop("disabled") ){
 			createPermalink( $title.val());
 		}
 	});
-	/*for enabled slug, do create and check!*/
-	$targetEditorForm.find('##slug:enabled').live('blur',function(){
-		createPermalink( $targetEditorForm.find("##slug").val());
+	// Activate permalink blur
+	$targetEditorForm.find('##slug').on('blur',function(){
+		if( !$( this ).prop("disabled") ){
+			permalinkUniqueCheck();
+		}
 	});
+
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
 	needConfirmation = true;
@@ -186,14 +190,16 @@ function createPermalink(linkToUse){
 		togglePermalink();
 	} );
 }
+
 //disable or enable (toggle) permalink field
 function togglePermalink(){
 	// Toggle lock icon on click..	
-	($('##togglePermalink').hasClass('icon-lock'))? $('##togglePermalink').attr('class','icon-unlock') :$('##togglePermalink').attr('class','icon-lock');
+	$('##togglePermalink').hasClass('icon-lock') ? $('##togglePermalink').attr('class', 'icon-unlock') : $('##togglePermalink').attr('class', 'icon-lock');
 	//disable input field
-	$('##slug').prop("disabled",!$('##slug').prop("disabled"));
+	$('##slug').prop("disabled", !$('##slug').prop("disabled") );
 	return $('##slug');
 }
+
 function permalinkUniqueCheck(linkToUse){
 	var linkToUse = (typeof linkToUse === "undefined") ? $("##slug").val():linkToUse;
 	linkToUse = $.trim(linkToUse); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
