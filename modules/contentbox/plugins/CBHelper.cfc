@@ -36,7 +36,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	property name="minifier"			inject="coldbox:myplugin:JSMin@contentbox";
 	
-	function init(controller){
+	// Constructor
+	function init( required controller ){
 		super.init( arguments.controller );
 	}
 
@@ -210,25 +211,20 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return ( setting("cb_comments_enabled") );
 	}
+
 	// determines if a comment form error has ocurred
-	function isCommentFormError(){
-		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"commentErrors") ){
-			return true;
-		}
-		return false;
+	boolean function isCommentFormError(){
+		return getFlash().exists( "commentErrors" );
 	}
+
 	// Determine if you are in printing or exporting format
 	boolean function isPrintFormat(){
 		return ( getRequestContext().getValue("format","contentbox") eq "contentbox" ? false : true );
 	}
+
 	// get comment errors array, usually when the form elements did not validate
 	array function getCommentErrors(){
-		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"commentErrors") ){
-			return prc.commentErrors;
-		}
-		return arrayNew(1);
+		return getFlash().get( "commentErrors", [] );
 	}
 
 	/************************************** Context Methods *********************************************/
@@ -1050,6 +1046,13 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	boolean function isMobile(){
 		return mobileDetector.isMobile();
+	}
+
+	/**
+	* Return the current system flash scope
+	*/
+	any function getFlash(){
+		return controller.getRequestService().getFlashScope();
 	}
 
 	/************************************** PRIVATE *********************************************/
