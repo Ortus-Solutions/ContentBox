@@ -155,7 +155,7 @@ component{
 			// Get appropriate cache provider from settings
 			var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
 			// Do we have an override page setup by the settings?
-			cacheKey = ( !structKeyExists( prc, "pageOverride" ) ? "cb-content-wrapper-#left(event.getCurrentRoutedURL(),255)#.#rc.format#" : "cb-content-wrapper-#prc.pageOverride#/.#rc.format#");
+			cacheKey = ( !structKeyExists( prc, "pageOverride" ) ? "cb-content-wrapper-#left(event.getCurrentRoutedURL(),255)#.#rc.format#.#event.isSSL()#" : "cb-content-wrapper-#prc.pageOverride#/.#rc.format#.#event.isSSL()#");
 			// get content data from cache
 			var data = cache.get( cacheKey );
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
