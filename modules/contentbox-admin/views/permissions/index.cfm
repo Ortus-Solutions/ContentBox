@@ -95,7 +95,7 @@
 								   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
 								   title="Edit #permission.getPermission()#"><i class="icon-edit icon-large"></i></a>
 								<!--- Delete Command --->
-								<a class="btn" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" class="confirmIt" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-trash icon-large"></i></a>
+								<a class="btn confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-trash icon-large"></i></a>
 								</cfif>
 								</div>
 							</td>
