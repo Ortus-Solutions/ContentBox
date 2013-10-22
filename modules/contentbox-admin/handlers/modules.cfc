@@ -55,8 +55,13 @@ component extends="baseHandler"{
 		if( !isNull( results ) ){ return results; }
 		// stash the module view, so it renders in the admin layout
 		prc.viewModule = module.getName();
-		// else normal ColdBox Rendering
-		return controller.getPlugin("Renderer").renderLayout();
+
+		// Check for renderData
+		if( structIsEmpty( event.getRenderData() ) ){
+			// else normal ColdBox Rendering
+			return controller.getPlugin("Renderer").renderLayout();
+		}
+
 	}
 
 	// index
