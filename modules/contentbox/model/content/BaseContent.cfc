@@ -137,6 +137,23 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 	
 	/**
+	* Get custom fields as a structure representation
+	*/
+	struct function getCustomFieldsAsStruct(){
+		var results = {};
+
+		// if no fields, just return empty
+		if( !hasCustomField() ){ return results; }
+
+		// iterate and create
+		for( var thisField in variables.customFields ){
+			results[ thisField.getKey() ] = thisField.getValue();
+		}
+
+		return results;
+	}
+	
+	/**
 	* Override the setContentVersions
 	*/
 	BaseContent function setContentVersions(required array contentVersions){
