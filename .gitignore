@@ -22,3 +22,5 @@ contentbox-codexwiki
 .idea
 modules/contentbox/modules/FuseGuard
 modules/contentbox/modules/FuseGuardUI
+modules/contentbox/modules/CodeEditorManager
+contentbox-akismet

@@ -113,7 +113,7 @@ component {
 				// Code Interception points
 				"cbui_onPageNotFound","cbui_onEntryNotFound","cbui_onError","cbui_preRequest","cbui_postRequest","cbui_onRendererDecoration","cbui_onContentSearch",
 				// Fixed Handler Points
-				"cbui_onIndex","cbui_onArchives","cbui_onEntry","cbui_onPage","cbui_preCommentPost","cbui_onCommentPost",
+				"cbui_onIndex","cbui_onArchives","cbui_onEntry","cbui_onPage","cbui_preCommentPost","cbui_onCommentPost","cbui_onCommentModerationRules",
 				// Fixed HTML Points
 				"cbui_preEntryDisplay","cbui_postEntryDisplay","cbui_preIndexDisplay","cbui_postIndexDisplay","cbui_preCommentForm","cbui_postCommentForm",
 				"cbui_prePageDisplay","cbui_postPageDisplay","cbui_preArchivesDisplay","cbui_postArchivesDisplay",
