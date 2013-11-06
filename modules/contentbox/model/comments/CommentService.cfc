@@ -25,11 +25,12 @@ limitations under the License.
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 	// DI
-	property name="mailService"		inject="coldbox:plugin:MailService";
-	property name="renderer" 		inject="provider:ColdBoxRenderer";
-	property name="settingService"	inject="id:settingService@cb";
-	property name="CBHelper"		inject="id:CBHelper@cb";
-	property name="log"				inject="logbox:logger:{this}";
+	property name="mailService"			inject="coldbox:plugin:MailService";
+	property name="renderer" 			inject="provider:ColdBoxRenderer";
+	property name="settingService"		inject="id:settingService@cb";
+	property name="CBHelper"			inject="id:CBHelper@cb";
+	property name="log"					inject="logbox:logger:{this}";
+	property name="interceptorService"	inject="coldbox:interceptorService";
 
 	/**
 	* Constructor
@@ -141,11 +142,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @comment Comment to moderate check
 	* @settings The contentbox settings to moderate against
 	*/
-	private boolean function runModerationRules(comment,settings){
+	private boolean function runModerationRules( required comment, required settings ){
 		// Comment reference
 		var inComment 	= arguments.comment;
 		var inSettings 	= arguments.settings;
-		var results		= true;
+		var allowSave	= true;
 
 		// Not moderation, just approve and return
 		if( NOT settings.cb_comments_moderation ){
@@ -162,15 +163,21 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Execute moderation queries
 		if( len(inSettings.cb_comments_moderation_blacklist) AND anyKeywordMatch(inComment,inSettings.cb_comments_moderation_blacklist) ){
 			inComment.setIsApproved( false );
+			allowSave = true;
 		}
 
 		// Execute blocking queries
 		if( len(inSettings.cb_comments_moderation_blockedlist) AND anyKeywordMatch(inComment,inSettings.cb_comments_moderation_blockedlist) ){
 			inComment.setIsApproved( false );
-			results = false;
+			allowSave = false;
 		}
 
-		return results;
+		// announce it.
+		var iData = { comment = arguments.comment, settings = arguments.settings, allowSave = allowSave };
+		interceptorService.processState( "cbui_onCommentModerationRules", iData );
+
+		// return if allowed save or block
+		return iData.allowSave;
 	}
 
 	/**
@@ -272,7 +279,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	struct function search(search="",isApproved,contentID,max=0,offset=0){
 		var results = {};
-		var criteria = newCriteria();
+		var criteria = newCriteria(); 
 
 		// isApproved filter
 		if( structKeyExists(arguments,"isApproved") AND arguments.isApproved NEQ "any"){
