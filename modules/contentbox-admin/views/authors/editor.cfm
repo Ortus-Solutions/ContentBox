@@ -25,6 +25,8 @@
 						<li><a href="##pages" data-toggle="tab"><i class="icon-pencil"></i> Pages</a></li>
 						<li><a href="##contentstore" data-toggle="tab"><i class="icon-pencil"></i> Content Store</a></li>
 						</cfif>
+						<!--- cbadmin Event --->
+    					#announceInterception("cbadmin_onAuthorEditorNav")#
 					</ul>
 					<!--- Tab Content --->
 					<div class="tab-content">
@@ -115,6 +117,8 @@
 						#html.endFieldSet()#
 						</div>
 						</cfif>
+						<!--- cbadmin Event --->
+						#announceInterception("cbadmin_onAuthorEditorContent")#
 					</div>
 					<!--- End Tab Content --->
 				</div>
@@ -133,6 +137,7 @@
 				<i class="icon-cogs"></i> Actions
 			</div>
 			<div class="body">
+				#announceInterception("cbadmin_onAuthorEditorActions")#
 				<!--- Back button --->
 				<p class="center">
 					<button class="btn" onclick="return to('#event.buildLink(prc.xehAuthors)#')"><i class="icon-reply"></i> Back To Listing</button>
@@ -188,6 +193,9 @@
 			</div>
 		</div>
 		</cfif>
+		
+		<!--- cbadmin Event --->
+		#announceInterception("cbadmin_onAuthorEditorSidebar")#
 	</div>
 </div>
 </cfoutput>
