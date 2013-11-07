@@ -23,6 +23,7 @@
 						<li><a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="icon-lock"></i> Permissions</a></li>
 						<li><a href="##entries" data-toggle="tab"><i class="icon-quote-left"></i> User Entries</a></li>
 						<li><a href="##pages" data-toggle="tab"><i class="icon-pencil"></i> User Pages</a></li>
+						<li><a href="##contentstore" data-toggle="tab"><i class="icon-pencil"></i> User ContentStore</a></li>
 						</cfif>
 					</ul>
 					<!--- Tab Content --->
@@ -96,7 +97,6 @@
 						<!--- My Entries --->
 						<div class="tab-pane" id="entries">
 						#html.startFieldset(legend="User Entries")#
-							<!--- Entries Pager Viewlet --->
 							#prc.entryViewlet#
 						#html.endFieldSet()#
 						</div>
@@ -104,8 +104,14 @@
 						<!--- My Pages --->
 						<div class="tab-pane" id="pages">
 						#html.startFieldset(legend="User Pages")#
-							<!--- Pages Pager Viewlet --->
 							#prc.pageViewlet#
+						#html.endFieldSet()#
+						</div>
+						
+						<!--- My ContentStore --->
+						<div class="tab-pane" id="contentstore">
+						#html.startFieldset(legend="User Content Store")#
+							#prc.contentStoreViewlet#
 						#html.endFieldSet()#
 						</div>
 						</cfif>

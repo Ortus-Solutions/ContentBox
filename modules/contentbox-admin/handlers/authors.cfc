@@ -90,18 +90,19 @@ component extends="baseHandler"{
 		prc.xehUsernameCheck	 	= "#prc.cbAdminEntryPoint#.authors.usernameCheck";
 
 		// get new or persisted author
-		prc.author  = authorService.get( event.getValue("authorID",0) );
+		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
 		// get roles
-		prc.roles = roleService.list(sortOrder="role",asQuery=false);
+		prc.roles = roleService.list( sortOrder="role", asQuery=false );
 
 		// viewlets
 		prc.entryViewlet = "";
 		prc.pageViewlet  = "";
 		if( prc.author.isLoaded() ){
-			var args = {authorID=rc.authorID, sorting=false};
-			prc.entryViewlet 		= runEvent(event="contentbox-admin:entries.pager",eventArguments=args);
-			prc.pageViewlet  		= runEvent(event="contentbox-admin:pages.pager",eventArguments=args);
-			prc.preferencesViewlet 	= listPreferences(event,rc,prc);
+			var args = { authorID=rc.authorID, sorting=false };
+			prc.entryViewlet 		= runEvent( event="contentbox-admin:entries.pager", eventArguments=args );
+			prc.pageViewlet  		= runEvent( event="contentbox-admin:pages.pager", eventArguments=args );
+			prc.contentStoreViewlet	= runEvent( event="contentbox-admin:contentStore.pager", eventArguments=args );
+			prc.preferencesViewlet 	= listPreferences( event, rc, prc );
 		}
 
 		// Editor
