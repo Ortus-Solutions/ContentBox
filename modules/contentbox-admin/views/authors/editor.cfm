@@ -21,9 +21,9 @@
 						<li><a href="##password" data-toggle="tab"><i class="icon-key"></i> Change Password</a></li>
 						<li><a href="##preferences" data-toggle="tab"><i class="icon-briefcase"></i> Preferences</a></li>
 						<li><a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="icon-lock"></i> Permissions</a></li>
-						<li><a href="##entries" data-toggle="tab"><i class="icon-quote-left"></i> User Entries</a></li>
-						<li><a href="##pages" data-toggle="tab"><i class="icon-pencil"></i> User Pages</a></li>
-						<li><a href="##contentstore" data-toggle="tab"><i class="icon-pencil"></i> User ContentStore</a></li>
+						<li><a href="##entries" data-toggle="tab"><i class="icon-quote-left"></i> Entries</a></li>
+						<li><a href="##pages" data-toggle="tab"><i class="icon-pencil"></i> Pages</a></li>
+						<li><a href="##contentstore" data-toggle="tab"><i class="icon-pencil"></i> Content Store</a></li>
 						</cfif>
 					</ul>
 					<!--- Tab Content --->
