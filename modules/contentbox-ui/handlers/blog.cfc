@@ -272,7 +272,7 @@ component extends="content" singleton{
 			// MessageBox
 			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
 			// Execute entry again, need to correct form
-			setNextEvent( URL=CBHelper.linkComments( thisEntry ) );
+			setNextEvent( URL=CBHelper.linkComments( thisEntry ), persist="author,authorEmail,authorURL,content" );
 			return;
 		}
 
