@@ -282,6 +282,7 @@ component accessors="true"{
 			"cb_notify_author" = "true",
 			"cb_notify_entry"  = "true",
 			"cb_notify_page"   = "true",
+			"cb_notify_contentstore" = "true",
 
 			// Site Layout
 			"cb_site_layout" = "default",
