@@ -27,7 +27,7 @@ component extends="baseHandler"{
 	}
 
 	// index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// params
 		event.paramValue("parent","");
 
@@ -51,7 +51,7 @@ component extends="baseHandler"{
 	}
 	
 	// page tables
-	function pageTable(event,rc,prc){
+	function pageTable( event, rc, prc ){
 		// params
 		event.paramValue("page", 1);
 		event.paramValue("searchPages", "");
@@ -110,14 +110,14 @@ component extends="baseHandler"{
 	}
 
 	// Quick Look
-	function quickLook(event,rc,prc){
+	function quickLook( event, rc, prc ){
 		// get entry
 		prc.page  = pageService.get( event.getValue("contentID",0) );
 		event.setView(view="pages/quickLook",layout="ajax");
 	}
 
 	// editor
-	function editor(event,rc,prc){
+	function editor( event, rc, prc ){
 		// cb helper reference
 		prc.cbHelper = CBHelper;
 		
@@ -179,17 +179,18 @@ component extends="baseHandler"{
 	}
 
 	// save
-	function save(event,rc,prc){
+	function save( event, rc, prc ){
 		// params
-		event.paramValue("allowComments",prc.cbSettings.cb_comments_enabled);
-		event.paramValue("newCategories","");
-		event.paramValue("isPublished",true);
-		event.paramValue("slug","");
-		event.paramValue("creatorID","");
-		event.paramValue("changelog","");
-		event.paramValue("publishedDate",now());
-		event.paramValue("publishedHour", timeFormat(rc.publishedDate,"HH"));
-		event.paramValue("publishedMinute", timeFormat(rc.publishedDate,"mm"));
+		event.paramValue( "allowComments", prc.cbSettings.cb_comments_enabled );
+		event.paramValue( "newCategories", "" );
+		event.paramValue( "isPublished", true );
+		event.paramValue( "slug", "" );
+		event.paramValue( "creatorID", "" );
+		event.paramValue( "changelog", "" );
+		event.paramValue( "publishedDate", now() );
+		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH") );
+		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm") );
+		event.paramValue( "customFieldsCount", 0 );
 
 		// slugify the incoming title or slug
 		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin("HTMLHelper").slugify( rc.slug ) );
@@ -277,7 +278,7 @@ component extends="baseHandler"{
 		}
 	}
 
-	function clone(event,rc,prc){
+	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
 			getPlugin("MessageBox").warn("Can't clone the unclonable, meaning no contentID or title passed.");
@@ -320,7 +321,7 @@ component extends="baseHandler"{
 	}
 
 	// Bulk Status Change
-	function bulkStatus(event,rc,prc){
+	function bulkStatus( event, rc, prc ){
 		event.paramValue("parent","");
 		event.paramValue("contentID","");
 		event.paramValue("contentStatus","draft");
@@ -346,7 +347,7 @@ component extends="baseHandler"{
 	}
 
 	// remove
-	function remove(event,rc,prc){
+	function remove( event, rc, prc ){
 		// params
 		event.paramValue( "contentID", "" );
 		event.paramValue( "parent", "" );
@@ -390,7 +391,7 @@ component extends="baseHandler"{
 	}
 
 	// change order for all pages
-	function changeOrder(event,rc,prc){
+	function changeOrder( event, rc, prc ){
 		event.paramValue("tableID","pages");
 		event.paramValue("newRulesOrder","");
 		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&#rc.tableID#[]=", ",", "all");
@@ -415,7 +416,7 @@ component extends="baseHandler"{
 	}
 
 	// pager viewlet
-	function pager(event,rc,prc,authorID="all",parent,max=0,pagination=true,latest=false,sorting=true){
+	function pager( event, rc, prc ,authorID="all",parent,max=0,pagination=true,latest=false,sorting=true){
 
 		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pager_authorID") ){
@@ -481,12 +482,12 @@ component extends="baseHandler"{
 	}
 
 	// slugify remotely
-	function slugify(event,rc,prc){
+	function slugify( event, rc, prc ){
 		event.renderData(data=trim(getPlugin("HTMLHelper").slugify( rc.slug )),type="plain");
 	}
 
 	// editor selector
-	function editorSelector(event,rc,prc){
+	function editorSelector( event, rc, prc ){
 		// paging default
 		event.paramValue("page",1);
 		event.paramValue("search", "");
@@ -521,7 +522,7 @@ component extends="baseHandler"{
 	}
 	
 	// Export Entry
-	function export(event,rc,prc){
+	function export( event, rc, prc ){
 		event.paramValue("format", "json");
 		// get page
 		prc.page  = pageService.get( event.getValue("contentID",0) );
@@ -546,7 +547,7 @@ component extends="baseHandler"{
 	}
 	
 	// Export All Pages
-	function exportAll(event,rc,prc){
+	function exportAll( event, rc, prc ){
 		event.paramValue("format", "json");
 		// get all prepared content objects
 		var data  = pageService.getAllForExport();
@@ -564,7 +565,7 @@ component extends="baseHandler"{
 	}
 	
 	// import settings
-	function importAll(event,rc,prc){
+	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try{
