@@ -146,7 +146,8 @@ component accessors="true"{
 			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor",
 			"TOOLS_EXPORT" = "Ability to export data from ContentBox",
 			"CONTENTSTORE_EDITOR" = "Ability to manage content store elements but not publish them",
-			"MEDIAMANAGER_LIBRARY_SWITCHER" = "Ability to switch media manager libraries for management"
+			"MEDIAMANAGER_LIBRARY_SWITCHER" = "Ability to switch media manager libraries for management",
+			"EDITORS_CUSTOM_FIELDS" = "Ability to manage custom fields in any content editors"
 		};
 
 		var allperms = [];
@@ -184,6 +185,7 @@ component accessors="true"{
 		oRole.addPermission( permissions["EDITORS_CATEGORIES"] );
 		oRole.addPermission( permissions["EDITORS_HTML_ATTRIBUTES"] );
 		oRole.addPermission( permissions["EDITORS_EDITOR_SELECTOR"] );
+		oRole.addPermission( permissions["EDITORS_CUSTOM_FIELDS"] );
 		roleService.save(entity=oRole, transactional=false);
 
 		// Create Admin

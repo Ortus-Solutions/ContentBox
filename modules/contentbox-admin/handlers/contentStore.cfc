@@ -46,7 +46,7 @@ component extends="baseHandler"{
 	}
 
 	// index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// get all authors
 		prc.authors    = authorService.getAll(sortOrder="lastName");
 		// get all categories
@@ -67,7 +67,7 @@ component extends="baseHandler"{
 	}
 	
 	// contentTable
-	function contentTable(event,rc,prc){
+	function contentTable( event, rc, prc ){
 		// params
 		event.paramValue("page",1);
 		event.paramValue("searchContent","");
@@ -109,7 +109,7 @@ component extends="baseHandler"{
 	}
 
 	// Bulk Status Change
-	function bulkStatus(event,rc,prc){
+	function bulkStatus( event, rc, prc ){
 		event.paramValue("contentID","");
 		event.paramValue("contentStatus","draft");
 
@@ -130,7 +130,7 @@ component extends="baseHandler"{
 	}
 
 	// editor
-	function editor(event,rc,prc){
+	function editor( event, rc, prc ){
 		// cb helper
 		prc.cbHelper = CBHelper;
 		// get all categories
@@ -174,7 +174,7 @@ component extends="baseHandler"{
 	}
 	
 	// clone
-	function clone(event,rc,prc){
+	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
 			getPlugin("MessageBox").warn("Can't clone the unclonable, meaning no contentID or title passed.");
@@ -207,7 +207,7 @@ component extends="baseHandler"{
 	}
 
 	// save
-	function save(event,rc,prc){
+	function save( event, rc, prc){
 		// params
 		event.paramValue( "newCategories", "" );
 		event.paramValue( "isPublished", true );
@@ -221,6 +221,7 @@ component extends="baseHandler"{
 		event.paramValue( "expireMinute", "" );
 		event.paramValue( "content", "" );
 		event.paramValue( "creatorID","" );
+		event.paramValue( "customFieldsCount", 0 );
 
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent") ){
@@ -297,7 +298,7 @@ component extends="baseHandler"{
 	}
 
 	// remove
-	function remove(event,rc,prc){
+	function remove( event, rc, prc ){
 		// params
 		event.paramValue( "contentID", "" );
 		
@@ -337,7 +338,7 @@ component extends="baseHandler"{
 	}
 
 	// pager viewlet
-	function pager(event,rc,prc,authorID="all",max=0,pagination=true,latest=false){
+	function pager( event, rc, prc ,authorID="all",max=0,pagination=true,latest=false){
 
 		// check if authorID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists("pager_authorID") ){
@@ -380,12 +381,12 @@ component extends="baseHandler"{
 	}
 
 	// slugify remotely
-	function slugify(event,rc,prc){
+	function slugify( event, rc, prc ){
 		event.renderData(data=trim( getPlugin("HTMLHelper").slugify( rc.slug ) ),type="plain");
 	}
 
 	// editor selector
-	function editorSelector(event,rc,prc){
+	function editorSelector( event, rc, prc ){
 		// paging default
 		event.paramValue("page",1);
 		event.paramValue("search", "");
@@ -420,7 +421,7 @@ component extends="baseHandler"{
 	}
 
 	// Export content
-	function export(event,rc,prc){
+	function export( event, rc, prc ){
 		event.paramValue("format", "json");
 		// get content
 		prc.content  = contentStoreService.get( event.getValue("contentID",0) );
@@ -445,7 +446,7 @@ component extends="baseHandler"{
 	}
 	
 	// Export All content
-	function exportAll(event,rc,prc){
+	function exportAll( event, rc, prc ){
 		event.paramValue("format", "json");
 		// get all prepared content objects
 		var data  = contentStoreService.getAllForExport();
@@ -464,7 +465,7 @@ component extends="baseHandler"{
 	}
 	
 	// import contentstore
-	function importAll(event,rc,prc){
+	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try{
