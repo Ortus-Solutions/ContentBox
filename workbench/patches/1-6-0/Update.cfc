@@ -232,7 +232,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	
 	private function updateSettings(){
 		// Create New settings
-		// addSetting( "cb_media_provider", "CFContentMediaProvider" );
+		addSetting( "cb_notify_contentstore", "true" );
 	}
 	
 	private function addSetting(name, value){

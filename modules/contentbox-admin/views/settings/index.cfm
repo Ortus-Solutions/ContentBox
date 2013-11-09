@@ -27,16 +27,22 @@
     				<li><a href="##editor_options" data-toggle="tab"><i class="icon-edit icon-large"></i> Editor Options</a></li>
     				<li><a href="##mediamanager" data-toggle="tab"><i class="icon-th icon-large"></i> Media Manager</a></li>
     				<li><a href="##gravatars" data-toggle="tab"><i class="icon-user icon-large"></i> Gravatars</a></li>
-    				<li><a href="##notifications" data-toggle="tab"><i class="icon-envelope-alt icon-large"></i> Notifications</a></li>
+    				<li><a href="##notifications" data-toggle="tab"><i class="icon-bullhorn icon-large"></i> Notifications</a></li>
+                    <li><a href="##email_server" data-toggle="tab"><i class="icon-envelope-alt icon-large"></i> Mail Server</a></li>
     				<li><a href="##search_options" data-toggle="tab"><i class="icon-search icon-large"></i> Search Options</a></li>
-    				<li><a href="##rss_options" data-toggle="tab"><i class="icon-rss icon-large"></i> RSS Options</a></li>
+    				<li><a href="##rss_options" data-toggle="tab"><i class="icon-rss icon-large"></i> RSS</a></li>
     				<!--- cbadmin Event --->
     				#announceInterception("cbadmin_onSettingsNav")#
     			</ul>
 				<!--- Documentation Panes --->
     			<!--- Tab Content --->
     			<div class="tab-content">
-    				<!--- General Options --->
+    				
+
+                    <!--- ********************************************************************* --->
+                    <!---                           SITE OPTIONS                                --->
+                    <!--- ********************************************************************* --->
+                    
     				<div class="tab-pane active" id="site_options">
     					<fieldset>
     					<legend><i class="icon-cog icon-large"></i> <strong>Site Options</strong></legend>
@@ -122,7 +128,11 @@
                             </div>
     					</fieldset>
     				</div>
-    				<!--- Dashboard Options --->
+
+    				<!--- ********************************************************************* --->
+                    <!---                           ADMIN OPTIONS                               --->
+                    <!--- ********************************************************************* --->
+                    
     				<div class="tab-pane" id="dashboard_options">
     					<fieldset>
     						<legend><i class="icon-desktop icon-large"></i> <strong>Admin Options</strong></legend>
@@ -268,10 +278,14 @@
                             </div>
     					</fieldset>
 					</div>
-    				<!--- Content Options --->
+    				
+                    <!--- ********************************************************************* --->
+                    <!---                           CONTENT OPTIONS                             --->
+                    <!--- ********************************************************************* --->
+                    
     				<div class="tab-pane" id="content_options">
     					<fieldset>
-    						<legend><i class="icon-cog icon-large"></i>  Content Options</legend>
+    						<legend><i class="icon-file-alt icon-large"></i>  Content Options</legend>
     
     						<!--- Content Max Versions --->
 							<div class="control-group">
@@ -378,7 +392,11 @@
                             </div>
     					</fieldset>
     				</div>
-    				<!--- Editor Options --->
+    				
+                    <!--- ********************************************************************* --->
+                    <!---                           EDITOR OPTIONS                              --->
+                    <!--- ********************************************************************* --->
+                    
     				<div class="tab-pane" id="editor_options">
     					<fieldset>
     					<legend><i class="icon-edit icon-large"></i> <strong>Editor Options</strong></legend>
@@ -440,7 +458,11 @@
                             </div>
     					</fieldset>
     				</div>
-    				<!--- Media Manager --->
+    				
+                    <!--- ********************************************************************* --->
+                    <!---                           MEDIA MANAGER                                --->
+                    <!--- ********************************************************************* --->
+                    
     				<div class="tab-pane" id="mediamanager">
     					<fieldset>
     					<legend><i class="icon-th icon-large"></i> <strong>Media Manager</strong></legend>
@@ -560,7 +582,11 @@
                             </div>
     					</fieldset>
     				</div>
-    				<!--- Gravatars --->
+    				
+                    <!--- ********************************************************************* --->
+                    <!---                           GRAVATARS                                   --->
+                    <!--- ********************************************************************* --->
+                    
     				<div class="tab-pane" id="gravatars">
     					<fieldset>
     					<legend><i class="icon-user icon-large"></i> <strong>Gravatars</strong></legend>
@@ -596,8 +622,12 @@
 							
     					</fieldset>
     				</div>
-    				<!--- Notifications --->
-    				<div class="tab-pane" id="notifications">
+
+                    <!--- ********************************************************************* --->
+    				<!---                           Notifications                               --->
+                    <!--- ********************************************************************* --->
+    				
+                    <div class="tab-pane" id="notifications">
     					<fieldset>
     					<legend><i class="icon-envelope-alt icon-large"></i> <strong>Notifications</strong></legend>
     						<!--- Site Email --->
@@ -618,93 +648,112 @@
                             </div>
     						<!--- Notification on User Create --->
 							<div class="control-group">
-                                #html.label(class="control-label",field="cb_notify_author",content="Send a notification when a user has been created or removed:")#
+                                #html.label(class="control-label", field="cb_notify_author", content="<i class='icon-user'></i> Send a notification when a user has been created or removed:")#
                                 <div class="controls">
-                                    #html.radioButton(name="cb_notify_author",checked=prc.cbSettings.cb_notify_author,value=true)# Yes
-    								#html.radioButton(name="cb_notify_author",checked=not prc.cbSettings.cb_notify_author,value=false)# No
+                                    #html.radioButton( name="cb_notify_author", checked=prc.cbSettings.cb_notify_author, value=true)# Yes
+    								#html.radioButton( name="cb_notify_author", checked=not prc.cbSettings.cb_notify_author, value=false)# No
                                 </div>
                             </div>    
     						<!--- Notification on Entry Create --->
 							<div class="control-group">
-                                #html.label(class="control-label",field="cb_notify_entry",content="Send a notification when a blog entry has been created or removed:")#
+                                #html.label(class="control-label", field="cb_notify_entry", content="<i class='icon-quote-left'></i> Send a notification when a blog entry has been created or removed:")#
                                 <div class="controls">
-                                    #html.radioButton(name="cb_notify_entry",checked=prc.cbSettings.cb_notify_entry,value=true)# Yes
-    								#html.radioButton(name="cb_notify_entry",checked=not prc.cbSettings.cb_notify_entry,value=false)# No
+                                    #html.radioButton( name="cb_notify_entry", checked=prc.cbSettings.cb_notify_entry, value=true)# Yes
+    								#html.radioButton( name="cb_notify_entry", checked=not prc.cbSettings.cb_notify_entry, value=false)# No
                                 </div>
                             </div>
     						<!--- Notification on Page Create --->
 							<div class="control-group">
-                                #html.label(class="control-label",field="cb_notify_page",content="Send a notification when a page has been created or removed:")#
+                                #html.label(class="control-label", field="cb_notify_page", content="<i class='icon-file-alt'></i> Send a notification when a page has been created or removed:")#
                                 <div class="controls">
-                                    #html.radioButton(name="cb_notify_page",checked=prc.cbSettings.cb_notify_page,value=true)# Yes
-    								#html.radioButton(name="cb_notify_page",checked=not prc.cbSettings.cb_notify_page,value=false)# No
+                                    #html.radioButton( name="cb_notify_page", checked=prc.cbSettings.cb_notify_page, value=true)# Yes
+    								#html.radioButton( name="cb_notify_page", checked=not prc.cbSettings.cb_notify_page, value=false)# No
+                                </div>
+                            </div>
+                            <!--- Notification on ContentStore Create --->
+                            <div class="control-group">
+                                #html.label(class="control-label", field="cb_notify_contentstore", content="<i class='icon-hdd'></i> Send a notification when a content store object has been created or removed:")#
+                                <div class="controls">
+                                    #html.radioButton( name="cb_notify_contentstore", checked=prc.cbSettings.cb_notify_contentstore, value=true )# Yes
+                                    #html.radioButton( name="cb_notify_contentstore", checked=not prc.cbSettings.cb_notify_contentstore, value=false )# No
                                 </div>
                             </div>
     					</fieldset>
-    					<!--- Mail Server Settings --->
-    					<fieldset>
-    					<legend><i class="icon-laptop icon-large"></i> <strong>Mail Server</strong></legend>
-    						<p>By default ContentBox will use the mail settings in your application server.  You can override those settings by completing
-    						   the settings below</p>
-    						<!--- Mail Server --->
-							<div class="control-group">
+    				</div>
+                    
+                    <!--- ********************************************************************* --->
+                    <!---                           EMAIL SERVER                                --->
+                    <!--- ********************************************************************* --->
+                    
+                    <div class="tab-pane" id="email_server">
+                        <!--- Mail Server Settings --->
+                        <fieldset>
+                        <legend><i class="icon-laptop icon-large"></i> <strong>Mail Server</strong></legend>
+                            <p>By default ContentBox will use the mail settings in your application server.  You can override those settings by completing
+                               the settings below</p>
+                            <!--- Mail Server --->
+                            <div class="control-group">
                                 #html.label(class="control-label",field="cb_site_mail_server",content="Mail Server:")#
                                 <div class="controls">
                                     <small>Optional mail server to use or it defaults to the settings in the ColdFusion Administrator</small><br/>
-    								#html.textField(name="cb_site_mail_server",value=prc.cbSettings.cb_site_mail_server,class="textfield width98",title="The complete mail server URL to use.")#
+                                    #html.textField(name="cb_site_mail_server",value=prc.cbSettings.cb_site_mail_server,class="textfield width98",title="The complete mail server URL to use.")#
                                 </div>
                             </div>
-    						<!--- Mail Username --->
-							<div class="control-group">
+                            <!--- Mail Username --->
+                            <div class="control-group">
                                 #html.label(class="control-label",field="cb_site_mail_username",content="Mail Server Username:")#
                                 <div class="controls">
                                     <small>Optional mail server username or it defaults to the settings in the ColdFusion Administrator</small><br/>
-    								#html.textField(name="cb_site_mail_username",value=prc.cbSettings.cb_site_mail_username,class="textfield width98",title="The optional mail server username to use.")#
+                                    #html.textField(name="cb_site_mail_username",value=prc.cbSettings.cb_site_mail_username,class="textfield width98",title="The optional mail server username to use.")#
                                 </div>
                             </div>
-    						<!--- Mail Password --->
-							<div class="control-group">
+                            <!--- Mail Password --->
+                            <div class="control-group">
                                 #html.label(class="control-label",field="cb_site_mail_password",content="Mail Server Password:")#
                                 <div class="controls">
                                     <small>Optional mail server password to use or it defaults to the settings in the ColdFusion Administrator</small><br/>
-    								#html.passwordField(name="cb_site_mail_password",value=prc.cbSettings.cb_site_mail_password,class="textfield width98",title="The optional mail server password to use.")#
+                                    #html.passwordField(name="cb_site_mail_password",value=prc.cbSettings.cb_site_mail_password,class="textfield width98",title="The optional mail server password to use.")#
                                 </div>
                             </div>
-    						<!--- SMTP Port --->
-							<div class="control-group">
+                            <!--- SMTP Port --->
+                            <div class="control-group">
                                 #html.label(class="control-label",field="cb_site_mail_smtp",content="Mail SMTP Port:")#
                                 <div class="controls">
                                     <small>The SMTP mail port to use, defaults to port 25.</small><br/>
-    								#html.inputfield(type="numeric",name="cb_site_mail_smtp",value=prc.cbSettings.cb_site_mail_smtp,class="textfield",size="5",title="The mail SMPT port to use.")#
+                                    #html.inputfield(type="numeric",name="cb_site_mail_smtp",value=prc.cbSettings.cb_site_mail_smtp,class="textfield",size="5",title="The mail SMPT port to use.")#
                                 </div>
                             </div>
-    						<!--- TLS --->
-							<div class="control-group">
+                            <!--- TLS --->
+                            <div class="control-group">
                                 #html.label(class="control-label",field="cb_site_mail_tls",content="Use TLS:")#
                                 <div class="controls">
                                     <small>Whether to use TLS when sending mail or not.</small><br/>
-    								#html.radioButton(name="cb_site_mail_tls",checked=prc.cbSettings.cb_site_mail_tls,value=true)# Yes
-    								#html.radioButton(name="cb_site_mail_tls",checked=not prc.cbSettings.cb_site_mail_tls,value=false)# No
+                                    #html.radioButton(name="cb_site_mail_tls",checked=prc.cbSettings.cb_site_mail_tls,value=true)# Yes
+                                    #html.radioButton(name="cb_site_mail_tls",checked=not prc.cbSettings.cb_site_mail_tls,value=false)# No
                                 </div>
                             </div>
-    						<!--- SSL --->
-							<div class="control-group">
+                            <!--- SSL --->
+                            <div class="control-group">
                                 #html.label(class="control-label",field="cb_site_mail_ssl",content="Use SSL:")#
                                 <div class="controls">
                                     <small>Whether to use SSL when sending mail or not.</small><br/>
-    								#html.radioButton(name="cb_site_mail_ssl",checked=prc.cbSettings.cb_site_mail_ssl,value=true)# Yes
-    								#html.radioButton(name="cb_site_mail_ssl",checked=not prc.cbSettings.cb_site_mail_ssl,value=false)# No
+                                    #html.radioButton(name="cb_site_mail_ssl",checked=prc.cbSettings.cb_site_mail_ssl,value=true)# Yes
+                                    #html.radioButton(name="cb_site_mail_ssl",checked=not prc.cbSettings.cb_site_mail_ssl,value=false)# No
                                 </div>
                             </div>
-    						<!--- Test Connection --->
-    						<hr/>
-    						<div id="emailTestDiv"></div>
-    						<button id="emailTestButton" class="btn btn-primary" title="Send a test email with these settings" onclick="return emailTest()"><i class="icon-spinner icon-large" id="iTest"></i> Test Connection</button>
-    					</fieldset>
+                            <!--- Test Connection --->
+                            <hr/>
+                            <div id="emailTestDiv"></div>
+                            <button id="emailTestButton" class="btn btn-primary" title="Send a test email with these settings" onclick="return emailTest()"><i class="icon-spinner icon-large" id="iTest"></i> Test Connection</button>
+                        </fieldset>
     
     
-    				</div>
-    				<!--- Search Options --->
+                    </div>
+
+    				<!--- ********************************************************************* --->
+                    <!---                           SEARCH OPTIONS                              --->
+                    <!--- ********************************************************************* --->
+                    
     				<div class="tab-pane" id="search_options">
     					<fieldset>
     						<legend><i class="icon-search icon-large"></i>  Search Options</legend>
@@ -738,7 +787,11 @@
                             </div>
     					</fieldset>
     				</div>
-    				<!--- RSS Options --->
+
+    				<!--- ********************************************************************* --->
+                    <!---                           RSS OPTIONS                                 --->
+                    <!--- ********************************************************************* --->
+
     				<div class="tab-pane" id="rss_options">
     					<fieldset>
     						<legend><i class="icon-rss icon-large"></i>  RSS Options</legend>
@@ -813,8 +866,10 @@
                             </div>
     					</fieldset>
     				</div>
+
 					<!--- cbadmin Event --->
 					#announceInterception("cbadmin_onSettingsContent")#
+
 					<!--- Button Bar --->
         			<div class="form-actions">
         				#html.submitButton(value="Save Settings", class="btn btn-danger")#

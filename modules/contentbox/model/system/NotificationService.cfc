@@ -36,7 +36,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when authors are saved
 	*/
-	function cbadmin_postAuthorSave(event,interceptData){
+	function cbadmin_postAuthorSave( event, interceptData, buffer ){
 		var author 		= arguments.interceptData.author;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -78,7 +78,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when authors are removed
 	*/
-	function cbadmin_preAuthorRemove(event,interceptData){
+	function cbadmin_preAuthorRemove( event, interceptData, buffer ){
 		var author 		= arguments.interceptData.author;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -118,7 +118,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when entries are saved
 	*/
-	function cbadmin_postEntrySave(event,interceptData){
+	function cbadmin_postEntrySave( event, interceptData, buffer ){
 		var entry 		= arguments.interceptData.entry;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -169,7 +169,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when entries are removed
 	*/
-	function cbadmin_preEntryRemove(event,interceptData){
+	function cbadmin_preEntryRemove( event, interceptData, buffer ){
 		var entry 		= arguments.interceptData.entry;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -217,7 +217,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when pages are saved
 	*/
-	function cbadmin_postPageSave(event,interceptData){
+	function cbadmin_postPageSave( event, interceptData, buffer ){
 		var page 		= arguments.interceptData.page;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -267,7 +267,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when pages are removed
 	*/
-	function cbadmin_prePageRemove(event,interceptData){
+	function cbadmin_prePageRemove( event, interceptData, buffer ){
 		var page 		= arguments.interceptData.page;
 		// Get settings
 		var settings 	= settingService.getAllSettings(asStruct=true);
@@ -307,6 +307,98 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   
 		// generate content for email from template
 		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/page_remove") );
+		
+		// send it out
+		mailService.send( mail );
+	}
+
+	/**
+	* Listen to when contentstore are saved
+	*/
+	function cbadmin_postContentStoreSave( event, interceptData, buffer ){
+		var content 	= arguments.interceptData.content;
+		// Get settings
+		var settings 	= settingService.getAllSettings( asStruct=true );
+		
+		// Only new pages are announced, not updates, and also verify page notifications are online.
+		if( NOT arguments.interceptData.isNew OR NOT settings.cb_notify_contentstore ){ return; }
+		
+		// get current logged in author performing the action
+		var currentAuthor = securityService.getAuthorSession();
+		
+		// get mail payload
+		var bodyTokens = {
+			contentTitle			= content.getTitle(),
+			contentDescription		= content.getDescription(),
+			contentAuthor			= currentAuthor.getName(),
+			contentAuthorEmail 		= currentAuthor.getEmail(),
+			contentIsPublished		= content.getIsPublished(),
+			contentPublishedDate	= content.getDisplayPublishedDate(),
+			contentExpireDate		= content.getDisplayExpireDate(),
+			contentURL 				= arguments.event.buildLink( "#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#" ),
+			contentExcerpt			= content.renderContentSilent( content.getContentVersions()[ 1 ].getContent() )
+		};
+		
+		var mail = mailservice.newMail( to=settings.cb_site_email,
+									    from=settings.cb_site_outgoingEmail,
+									    subject="#settings.cb_site_name# - ContentStore Created - #bodyTokens.contentTitle#",
+									    bodyTokens=bodyTokens,
+									    type="html",
+									    server=settings.cb_site_mail_server,
+									    username=settings.cb_site_mail_username,
+									    password=settings.cb_site_mail_password,
+									    port=settings.cb_site_mail_smtp,
+									    useTLS=settings.cb_site_mail_tls,
+									    useSSL=settings.cb_site_mail_ssl );
+									   
+		// generate content for email from template
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/contentstore_new") );
+		
+		// send it out
+		mailService.send( mail );
+	}
+	
+	/**
+	* Listen to when content store objects are removed
+	*/
+	function cbadmin_preContentStoreRemove( event, interceptData, buffer ){
+		var content 	= arguments.interceptData.content;
+		// Get settings
+		var settings 	= settingService.getAllSettings( asStruct=true );
+		
+		// Only notify when enabled.
+		if( NOT settings.cb_notify_contentstore ){ return; }
+		
+		// get current logged in author performing the action
+		var currentAuthor = securityService.getAuthorSession();
+		
+		// get mail payload
+		var bodyTokens = {
+			contentTitle			= content.getTitle(),
+			contentDescription		= content.getDescription(),
+			contentAuthor			= currentAuthor.getName(),
+			contentAuthorEmail 		= currentAuthor.getEmail(),
+			contentIsPublished		= content.getIsPublished(),
+			contentPublishedDate	= content.getDisplayPublishedDate(),
+			contentExpireDate		= content.getDisplayExpireDate(),
+			contentURL 				= arguments.event.buildLink( "#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#" ),
+			contentExcerpt			= content.renderContentSilent( content.getContentVersions()[ 1 ].getContent() )
+		};
+		
+		var mail = mailservice.newMail( to=settings.cb_site_email,
+									    from=settings.cb_site_outgoingEmail,
+									    subject="#settings.cb_site_name# - ContentStore Removed - #bodyTokens.contentTitle#",
+									    bodyTokens=bodyTokens,
+									    type="html",
+									    server=settings.cb_site_mail_server,
+									    username=settings.cb_site_mail_username,
+									    password=settings.cb_site_mail_password,
+									    port=settings.cb_site_mail_smtp,
+									    useTLS=settings.cb_site_mail_tls,
+									    useSSL=settings.cb_site_mail_ssl );
+									   
+		// generate content for email from template
+		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/contentstore_remove") );
 		
 		// send it out
 		mailService.send( mail );
