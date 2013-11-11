@@ -98,13 +98,14 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
     		needConfirmation=false; 
     	},
         submitHandler: function( form ) {
-        	// weird issue in jQuery validator where it won't validate hidden fields
-            // so call updateElement() to get content for hidden textarea
-        	CKEDITOR.instances.content.updateElement();
-            // validate element
-    		var el = $( '##content' );
-            // if it's valid, submit form
-            if( el.val().length ) {
+			// Update Editor Content
+        	updateEditorContent();
+			// Update excerpt
+			if( withExcerpt ){
+				updateEditorExcerpt();
+			}
+			// if it's valid, submit form
+            if( $content.val().length ) {
             	form.submit();
             }
             // otherwise, show error

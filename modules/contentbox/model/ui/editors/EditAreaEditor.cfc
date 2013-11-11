@@ -120,7 +120,16 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 				return false;
 			}
 			function getEditorContent(){
-				return editAreaLoader.getValue('content');
+				return editAreaLoader.getValue( 'content' );
+			}
+			function getEditorExcerpt(){
+				return editAreaLoader.getValue( 'excerpt' );
+			}
+			function updateEditorContent(){
+				// not needed
+			}
+			function updateExcerptContent(){
+				// not needed
 			}
 			");
 		}

@@ -105,6 +105,15 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			function getEditorContent(){
 				return $content.ckeditorGet().getData();
 			}
+			function getEditorExcerpt(){
+				return $excerpt.ckeditorGet().getData();
+			}
+			function updateEditorContent(){
+				CKEDITOR.instances.content.updateElement();
+			}
+			function updateEditorExcerpt(){
+				CKEDITOR.instances.excerpt.updateElement();
+			}
 			");
 		}
 		
