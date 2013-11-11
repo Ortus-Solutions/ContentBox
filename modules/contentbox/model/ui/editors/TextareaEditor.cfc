@@ -59,6 +59,15 @@ component implements="contentbox.model.ui.editors.IEditor" singleton{
 			function getEditorContent(){
 				return $('##content').val();
 			}
+			function getEditorExcerpt(){
+				return $('##excerpt').val();
+			}
+			function updateEditorContent(){
+				// not needed
+			}
+			function updateExcerptContent(){
+				// not needed
+			}
 			");
 		}
 		
