@@ -155,7 +155,16 @@ component{
 			// Get appropriate cache provider from settings
 			var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
 			// Do we have an override page setup by the settings?
-			cacheKey = ( !structKeyExists( prc, "pageOverride" ) ? "cb-content-wrapper-#left(event.getCurrentRoutedURL(),255)#.#rc.format#.#event.isSSL()#" : "cb-content-wrapper-#prc.pageOverride#/.#rc.format#.#event.isSSL()#");
+			if( structKeyExists( prc, "pageOverride" ) and len( prc.pageOverride ) ){
+				cacheKey = "cb-content-wrapper-#prc.pageOverride#/";
+			}
+			else{
+				cacheKey = "cb-content-wrapper-#left( event.getCurrentRoutedURL(), 255 )#";
+			}
+			
+			// Incorporate internal hash + rc distinct hash.
+			cacheKey &= hash( ".#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
+			
 			// get content data from cache
 			var data = cache.get( cacheKey );
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
@@ -171,7 +180,7 @@ component{
 		}
 		
 		// execute the wrapped action
-		arguments.action(event,rc,prc);
+		arguments.action( event, rc, prc );
 		
 		// Check for missing page? If so, just return, no need to do multiple formats or caching for a missing page
 		if( structKeyExists( prc, "missingPage" ) ){ return; }
