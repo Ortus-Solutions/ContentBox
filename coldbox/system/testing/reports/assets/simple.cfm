@@ -5,40 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="generator" content="TestBox v#testbox.getVersion()#">
 	<title>Pass: #results.getTotalPass()# Fail: #results.getTotalFail()# Errors: #results.getTotalError()#</title>
-	<style>
-	body{
-		font-family:  Monaco, "Lucida Console", monospace;
-		font-size: 10.5px;
-		line-height: 14px;
-	}
-	h1,h2,h3,h4{ margin-top: 3px;}
-	h1{ font-size: 14px;}
-	h2{ font-size: 13px;}
-	h3{ font-size: 12px;}
-	h4{ font-size: 11px; font-style: italic;}
-	/** status **/
-	.passed { color: green; }
-	.failed { color: orange; }
-	.error { color: red; }
-	.skipped{ color: blue;}
-	/** utility **/
-	.centered { text-align: center !important; }
-	.inline{ display: inline !important; }
-	.margin10{ margin: 10px; }
-	.padding10{ padding: 10px; }
-	.margin0{ margin: 0px; }
-	.padding0{ padding: 0px; }
-	.float-right{ float: right;}
-	.float-left{ float: left;}
-	.box{ border:1px solid gray; margin: 10px 0px; padding: 10px; background-color: ##f5f5f5}
-	##globalStats{ background-color: ##dceef4 }
-	.specStatus, .reset{ cursor:pointer;}
-	.suite{ margin-left: -1px;}
-	ul{ margin-left: -10px;}
-	li{ margin-left: -10px; list-style: none;}
-	a{ text-decoration: none;}
-	a:hover{ text-decoration: underline;}
-	</style>
+	<link href="/coldbox/system/testing/reports/assets/css/simple.css" rel="stylesheet">
 	<script src="/coldbox/system/testing/reports/assets/js/jquery.js"></script>
 	<script>
 	$(document).ready(function() {
@@ -76,6 +43,18 @@
 
 		} );
 	}
+	function toggleDebug( specid ){
+		$("div.debugdata").each( function(){
+			var $this = $( this );
+		
+			// if bundleid passed and not the same bundle
+			if( specid != undefined && $this.attr( "data-specid" ) != specid ){
+				return;
+			}
+			// toggle.
+			$this.fadeToggle();
+		});
+	}
 	</script>
 </head>
 
@@ -86,13 +65,19 @@
 
 <!-- Global Stats --->
 <div class="box" id="globalStats">
+
+<div class="buttonBar">
+	<a href="?"><button title="Run all the tests">Run All</button></a>
+	<button onclick="toggleDebug()" title="Toggle the test debug information">Debug</button>
+</div>
+
 <h2>Global Stats (#results.getTotalDuration()# ms)</h2>
 [ Bundles/Suites/Specs: #results.getTotalBundles()#/#results.getTotalSuites()#/#results.getTotalSpecs()# ]
 [ <span class="specStatus passed" data-status="passed">Pass: #results.getTotalPass()#</span> ]
 [ <span class="specStatus failed" data-status="failed">Failures: #results.getTotalFail()#</span> ]
 [ <span class="specStatus error" data-status="error">Errors: #results.getTotalError()#</span> ]
 [ <span class="specStatus skipped" data-status="skipped">Skipped: #results.getTotalSkipped()#</span> ]
-[ <span class="reset">Reset</span> ]
+[ <span class="reset" title="Clear status filters">Reset</span> ]
 <br>
 <cfif arrayLen( results.getLabels() )>
 [ Labels Applied: #arrayToList( results.getLabels() )# ]
@@ -111,7 +96,7 @@
 		[ <span class="specStatus failed" 	data-status="failed" data-bundleid="#thisBundle.id#">Failures: #thisBundle.totalFail#</span> ]
 		[ <span class="specStatus error" 	data-status="error" data-bundleid="#thisBundle.id#">Errors: #thisBundle.totalError#</span> ]
 		[ <span class="specStatus skipped" 	data-status="skipped" data-bundleid="#thisBundle.id#">Skipped: #thisBundle.totalSkipped#</span> ]
-		[ <span class="reset">Reset</span> ]
+		[ <span class="reset" title="Clear status filters">Reset</span> ]
 		
 		<!-- Iterate over bundle suites -->
 		<cfloop array="#thisBundle.suiteStats#" index="suiteStats">
@@ -147,21 +132,23 @@
 
 				<!--- Spec Results --->
 				<ul>
-				<div class="spec #lcase( local.thisSpec.status )#" data-bundleid="#arguments.bundleStats.id#">
+				<div class="spec #lcase( local.thisSpec.status )#" data-bundleid="#arguments.bundleStats.id#" data-specid="#local.thisSpec.id#">
 					<li>
 						<a href="#baseURL#&testSpecs=#URLEncodedFormat( local.thisSpec.name )#" class="#lcase( local.thisSpec.status )#">#local.thisSpec.name# (#local.thisSpec.totalDuration# ms)</a>
 						
 						<cfif local.thisSpec.status eq "failed">
-							- <strong>#local.thisSpec.failMessage#</strong><br>
-							<div class="box">
-								<cfdump var="#local.thisSpec.failorigin#" expand=false label="Failure Origin">
+							- <strong>#local.thisSpec.failMessage#</strong>
+							  <button onclick="toggleDebug( '#local.thisSpec.id#' )" title="Show more information">+</button><br>
+							<div class="box debugdata" data-specid="#local.thisSpec.id#">
+								<cfdump var="#local.thisSpec.failorigin#" label="Failure Origin">
 							</div>
 						</cfif>
 						
 						<cfif local.thisSpec.status eq "error">
-							- <strong>#local.thisSpec.error.message#</strong><br>
-							<div class="box">
-								<cfdump var="#local.thisSpec.error#" expand=false label="Exception Structure">
+							- <strong>#local.thisSpec.error.message#</strong>
+							  <button onclick="toggleDebug( '#local.thisSpec.id#' )" title="Show more information">+</button><br>
+							<div class="box debugdata" data-specid="#local.thisSpec.id#">
+								<cfdump var="#local.thisSpec.error#" label="Exception Structure">
 							</div>
 						</cfif>
 					</li>
