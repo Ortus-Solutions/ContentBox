@@ -75,7 +75,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			// Update Permissions
 			updatePermissions();
 			
-			// Update Roles
+			// Update Roles with new permissions
 			updateAdmin();
 			updateEditor();
 
