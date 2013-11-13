@@ -5,7 +5,8 @@
 */
 component extends="coldbox.system.testing.BaseSpec"{
 
-	this.$expectException = {};
+	// ExpectedException Annotation
+	this.$exceptionAnnotation	= "mxunit:expectedException";
 
 /*********************************** RUNNER Methods ***********************************/
 
@@ -25,26 +26,30 @@ component extends="coldbox.system.testing.BaseSpec"{
 /*********************************** UTILITY Methods ***********************************/
 
 	/**
-	*  MXUnit style debug
+	* MXUnit style debug
+	* @var.hint The variable to debug
 	*/
-	function debug(required var){
+	function debug( required var ){
 		arguments.deepCopy = true;
 		super.debug( argumentCollection=arguments );
 	}
 
 	/**
 	* Expect an exception from the testing spec
+	* @expectedExceptionType.hint the type to expect
+	* @expectedExceptionMessage.hint Optional exception message
 	*/
-	function expectException(type, message=""){
-		// TODO: implement
+	function expectException( expectedExceptionType, expectedExceptionMessage=".*" ){
+		super.expectedException( arguments.expectedExceptionType, arguments.expectedExceptionMessage );
 	}
 	
 /*********************************** ASSERTION METHODS ***********************************/
 
 	/**
 	* Fail assertion
+	* @message.hint The message to fail with
 	*/
-	function fail(message=""){
+	function fail( message="" ){
 		this.$assert.fail( arguments.message );
 	}
 

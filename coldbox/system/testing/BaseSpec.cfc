@@ -8,9 +8,9 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 component{
 			
 	// MockBox mocking framework
-	this.$mockBox 				= new coldbox.system.testing.MockBox();
+	variables.$mockBox = this.$mockBox 	= new coldbox.system.testing.MockBox();
 	// Assertions object
-	this.$assert				= new coldbox.system.testing.Assertion();
+	variables.$assert = this.$assert = new coldbox.system.testing.Assertion();
 	// Custom Matchers
 	this.$customMatchers 		= {};
 	// Utility object
@@ -21,9 +21,23 @@ component{
 	this.$suiteReverseLookup	= {};
 	// The suite context
 	this.$suiteContext			= "";
-	
+	// ExpectedException Annotation
+	this.$exceptionAnnotation	= "expectedException";
+	// Expected Exception holder, only use on synchronous testing.
+	this.$expectedException		= {};
+
 	/************************************** BDD & EXPECTATIONS METHODS *********************************************/
 	
+	/**
+	* Expect an exception from the testing spec
+	* @type.hint The type to expect
+	* @regex.hint Optional exception message regular expression to match, by default it matches .*
+	*/
+	function expectedException( type="", regex=".*" ){
+		this.$expectedException = arguments;
+		return this;
+	}
+
 	/**
 	* Assert that the passed expression is true
 	* @facade
@@ -116,7 +130,7 @@ component{
 			suite.parent = this.$suiteContext;
 
 			// Build hiearachy slug separated by /
-			suite.slug = this.$suitesReverseLookup[ this.$suiteContext ].parent & "/" & this.$suiteContext;
+			suite.slug = this.$suitesReverseLookup[ this.$suiteContext ].slug & "/" & this.$suiteContext;
 			if( left( suite.slug, 1) != "/" ){ suite.slug = "/" & suite.slug; }
 				
 			// Store parent context
@@ -140,10 +154,11 @@ component{
 			this.$suitesReverseLookup[ arguments.title ] = suite;
 			// execute the test suite definition with this context now.
 			arguments.body();
+			// reset context, finalized it already.
+			this.$suiteContext = "";
 		}
 
-		// Remove suite context
-		this.$suiteContext 		= "";
+		// Restart spec index
 		this.$specOrderIndex 	= 1;
 
 		return this;
@@ -232,18 +247,24 @@ component{
 
 	/**
 	* Start an expectation expression. This returns an instance of Expectation so you can work with its matchers.
+	* @actual.hint The actual value, it is not required as it can be null.
 	*/
-	Expectation function expect( required any actual ){
+	Expectation function expect( any actual ){
 		// build an expectation
 		var oExpectation = new Expectation( spec=this, assertions=this.$assert, mockbox=this.$mockbox );
 
 		// Store the actual data
-		oExpectation.actual = arguments.actual;
+		if( !isNull( arguments.actual ) ){
+			oExpectation.actual = arguments.actual;
+		}
+		else{
+			oExpectation.actual = javacast( "null", "" );
+		}
 
 		// Do we have any custom matchers to add to this expectation?
 		if( !structIsEmpty( this.$customMatchers ) ){
 			for( var thisMatcher in this.$customMatchers ){
-				oExpectation[ thisMatcher ] = this.$customMatchers[ thisMatcher ];
+				oExpectation.registerMatcher( thisMatcher, this.$customMatchers[ thisMatcher ] );
 			}
 		}
 
@@ -333,9 +354,7 @@ component{
 	}
 	
 	/**
-	* Test the incoming spec definition within the context of a base spec for context options. Usually called by a runner.
-	* TODO: Remove from here back to BDD runner once Railo fixes its closure's context bug.
-	* @target.hint The target bundle CFC
+	* Run a BDD test in this target CFC
 	* @spec.hint The spec definition to test
 	* @suite.hint The suite definition this spec belongs to
 	* @testResults.hint The testing results object
@@ -362,13 +381,13 @@ component{
 			){
 
 				// execute beforeEach()
-				arguments.suite.beforeEach();
+				arguments.suite.beforeEach( currentSpec=arguments.spec.name );
 				
 				// Execute the Spec body
 				arguments.spec.body();
 				
 				// execute afterEach()
-				arguments.suite.afterEach();
+				arguments.suite.afterEach( currentSpec=arguments.spec.name );
 				
 				// store spec status
 				specStats.status 	= "Passed";
@@ -383,7 +402,7 @@ component{
 			}
 		}
 		// Catch assertion failures
-		catch("TestBox.AssertionFailed" e){
+		catch( "TestBox.AssertionFailed" e ){
 			// store spec status and debug data
 			specStats.status 		= "Failed";
 			specStats.failMessage 	= e.message;
@@ -392,7 +411,7 @@ component{
 			arguments.testResults.incrementSpecStat( type="fail", stats=specStats );
 		}
 		// Catch errors
-		catch(any e){
+		catch( any e ){
 			// store spec status and debug data
 			specStats.status 		= "Error";
 			specStats.error 		= e;
@@ -405,6 +424,121 @@ component{
 		}
 		
 		return this;
+	}
+
+	/**
+	* Runs a xUnit style test in this target CFC
+	* @spec.hint The spec definition to test
+	* @testResults.hint The testing results object
+	* @suiteStats.hint The suite stats that the incoming spec definition belongs to
+	* @runner.hint The runner calling this BDD test
+	*/
+	function runTest(
+		required spec,
+		required testResults,
+		required suiteStats,
+		required runner
+	){
+			
+		try{
+			
+			// init spec tests
+			var specStats = arguments.testResults.startSpecStats( arguments.spec.name, arguments.suiteStats );
+			
+			// Verify we can execute
+			if( !arguments.spec.skip &&
+				arguments.runner.canRunLabel( arguments.spec.labels, arguments.testResults ) &&
+				arguments.runner.canRunSpec( arguments.spec.name, arguments.testResults )
+			){
+
+				// Reset expected exceptions: Only works on synchronous testing.
+				this.$expectedException = {};
+
+				// execute setup()
+				if( structKeyExists( this, "setup" ) ){ this.setup( currentMethod=arguments.spec.name ); }
+				
+				// Execute Spec
+				try{
+					evaluate( "this.#arguments.spec.name#()" );
+				}
+				catch( Any e ){
+					if( !isExpectedException( e, arguments.spec.name, arguments.runner ) ){ rethrow; }
+				}
+
+				// execute teardown()
+				if( structKeyExists( this, "teardown" ) ){ this.teardown( currentMethod=arguments.spec.name ); }
+				
+				// store spec status
+				specStats.status 	= "Passed";
+				// Increment recursive pass stats
+				arguments.testResults.incrementSpecStat( type="pass", stats=specStats );
+			}
+			else{
+				// store spec status
+				specStats.status = "Skipped";
+				// Increment recursive pass stats
+				arguments.testResults.incrementSpecStat( type="skipped", stats=specStats );
+			}
+		}
+		// Catch assertion failures
+		catch( "TestBox.AssertionFailed" e ){
+			// store spec status and debug data
+			specStats.status 		= "Failed";
+			specStats.failMessage 	= e.message;
+			specStats.failOrigin 	= e.tagContext;
+			// Increment recursive pass stats
+			arguments.testResults.incrementSpecStat( type="fail", stats=specStats );
+		}
+		// Catch errors
+		catch( any e ){
+			// store spec status and debug data
+			specStats.status 		= "Error";
+			specStats.error 		= e;
+			// Increment recursive pass stats
+			arguments.testResults.incrementSpecStat( type="error", stats=specStats );
+		}
+		finally{
+			// Complete spec testing
+			arguments.testResults.endStats( specStats );
+		}
+		
+		return this;
+	}
+
+	/**
+	* Check if the incoming exception is expected or not.
+	*/
+	private boolean function isExpectedException( required exception, required specName, required runner ){
+		var results = false;
+		// do we have an expected annotation?
+		var eAnnotation = arguments.runner.getMethodAnnotation( this[ arguments.specName ], this.$exceptionAnnotation, "false" );
+		if( eAnnotation != false ){
+			// incorporate it.
+			this.$expectedException = {
+				type =  ( eAnnotation == "true" ? "" : listFirst( eAnnotation, ":" ) ),
+				regex = ( find( ":", eAnnotation ) ? listLast( eAnnotation, ":" ) : ".*" )
+			};
+		}
+		
+		// Verify expected exceptions
+		if( !structIsEmpty( this.$expectedException ) ){
+			// If no type, message expectations
+			if( !len( this.$expectedException.type ) && this.$expectedException.regex eq ".*" ){
+				results = true;
+			}
+			// Type expectation then
+			else if( len( this.$expectedException.type ) && 
+					 arguments.exception.type eq this.$expectedException.type && 
+					 reFindNoCase( this.$expectedException.regex, arguments.exception.message ) ){
+				results = true;
+			}
+			// Message regex then only
+			else if( this.$expectedException.regex neq ".*" && reFindNoCase( this.$expectedException.regex, arguments.exception.message ) ){
+				results = true;
+			}
+		}
+
+		return results;
 	}
 
 	/************************************** UTILITY METHODS *********************************************/
