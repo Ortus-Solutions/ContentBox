@@ -1,0 +1,4 @@
+modules/contentbox-admin/includes/css/widgets/style.css
+modules/contentbox-admin/views/widgets/arguments.cfm
+modules/contentbox-admin/views/widgets/instanceEditor.cfm
+modules/contentbox-admin/views/widgets/instanceEditorHelper.cfm
