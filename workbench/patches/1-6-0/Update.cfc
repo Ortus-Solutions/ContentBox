@@ -26,7 +26,7 @@ DB Structure Changes
 
 
 Start Commit Hash: 2169574b2273d57bbf8da8fc04df1d3a7c4b06c1
-End Commit Hash: 1accc845f6b0c902efa4a1fd644f48cfccd962c1
+End Commit Hash: 139f823b7522ec2f6eb6ad1fe842095dfaf33735
 
 */
 component implements="contentbox.model.updates.IUpdate"{
@@ -42,20 +42,21 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="log"						inject="logbox:logger:{this}";
 	property name="contentService" 			inject="contentService@cb";
 	property name="wirebox"					inject="wirebox";
+	property name="coldbox"					inject="coldbox";
 	property name="securityService" 		inject="id:securityService@cb";
 	
 	/**
 	* Constructor
-	* @coldbox.inject coldbox
 	*/
-	function init( required coldbox ){
-		variables.coldbox = arguments.coldbox;
-		// setup update variables.
-		version 		= "1.6.0";
-		currentVersion 	= replace( arguments.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
-		thisPath		= getDirectoryFromPath( getMetadata( this ).path );
-		
+	function init(){
 		return this;
+	}
+	
+	function onDIComplete(){
+		// setup update variables.
+		variables.version 			= "1.6.0";
+		variables.currentVersion 	= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
+		variables.thisPath			= getDirectoryFromPath( getMetadata( this ).path );
 	}
 
 	/**
