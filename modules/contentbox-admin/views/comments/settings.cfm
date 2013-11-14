@@ -93,6 +93,15 @@
 								    </div>
 								</div>	
     							
+                                <!--- Auto-Delete Moderated Comments --->
+                                <div class="control-group">
+                                    #html.label(field="cb_comments_moderation_expiration",content="Number of days before auto-deleting moderated comments:")#
+                                    <div class="controls">
+                                        <small>If a comment has been moderated, it will be auto-deleted after the specified number of days (set to 0 to disable auto-deletion).</small><br/>
+                                        #html.textfield(name="cb_comments_moderation_expiration",value=prc.cbSettings.cb_comments_moderation_expiration)#
+                                    </div>
+                                </div>  
+
     							<!--- Moderated Keywords --->
 								<div class="control-group">
 								    #html.label(field="cb_comments_moderation_blacklist",content="Moderated keywords (Affects content, Author IP, or Author Email):",class="control-label")#

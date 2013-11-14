@@ -92,7 +92,7 @@ component {
 				// Category Events
 				"cbadmin_preCategorySave","cbadmin_postCategorySave","cbadmin_preCategoryRemove","cbadmin_postCategoryRemove",
 				// Comment Events
-				"cbadmin_onCommentStatusUpdate","cbadmin_preCommentSave","cbadmin_postCommentSave","cbadmin_preCommentRemove","cbadmin_postCommentRemove","cbadmin_preCommentSettingsSave","cbadmin_postCommentSettingsSave",
+				"cbadmin_onCommentStatusUpdate","cbadmin_preCommentSave","cbadmin_postCommentSave","cbadmin_preCommentRemove","cbadmin_postCommentRemove","cbadmin_preCommentRemoveAllModerated","cbadmin_postCommentRemoveAllModerated","cbadmin_preCommentSettingsSave","cbadmin_postCommentSettingsSave",
 				"cbadmin_onCommentSettingsNav","cbadmin_onCommentSettingsContent",
 				// Permission events
 				"cbadmin_prePermissionSave", "cbadmin_postPermissionSave", "cbadmin_prePermissionRemove" , "cbadmin_postPermissionRemove" ,
@@ -118,7 +118,8 @@ component {
 		// Custom Declared Interceptors
 		interceptors = [
 			// CB Admin Request Interceptor
-			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" }
+			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
+			{class="#moduleMapping#.interceptors.Comment" }
 		];
 		
 	}

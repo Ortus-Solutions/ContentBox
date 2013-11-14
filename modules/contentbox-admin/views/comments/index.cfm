@@ -42,6 +42,7 @@
 					    		<li><a href="javascript:changeStatus('approve')"><i class="icon-thumbs-up"></i> Approve</a></li>
 								<li><a href="javascript:changeStatus('moderate')"><i class="icon-thumbs-down"></i> Moderate</a></li>
 								<li><a href="javascript:remove()" class="confirmIt"><i class="icon-trash"></i> Remove</a></li>
+								<li><a href="javascript:removeAllModerated()" class="confirmIt"><i class="icon-remove"></i> Remove All Moderated</a></li>
 					    	</ul>
 					    </div>
 					</div>
