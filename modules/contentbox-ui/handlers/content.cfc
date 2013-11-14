@@ -153,7 +153,8 @@ component{
 							 !flash.exists( "commentErrors" ) );
 		if( cacheEnabled ){
 			// Get appropriate cache provider from settings
-			var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
+			var cache 		= cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
+			var cacheKey 	= "";
 			// Do we have an override page setup by the settings?
 			if( structKeyExists( prc, "pageOverride" ) and len( prc.pageOverride ) ){
 				cacheKey = "cb-content-wrapper-#prc.pageOverride#/";
