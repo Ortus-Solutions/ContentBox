@@ -53,6 +53,7 @@ component extend="baseHandler"{
 		prc.xehCommentRemove 	= "#prc.cbAdminEntryPoint#.comments.remove";
 		prc.xehCommentstatus 	= "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
 		prc.xehCommentQuickLook	= "#prc.cbAdminEntryPoint#.comments.quicklook";
+		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// tab
 		prc.tabComments_inbox = true;
@@ -142,6 +143,27 @@ component extend="baseHandler"{
 		setNextEvent(prc.xehComments);
 	}
 
+	function removeAllModerated( event, rc, prc ) {
+		var data = { "ERROR" = false, "MESSAGES" = "" };
+		// announce event
+		announceInterception("cbadmin_preCommentRemoveAllModerated");
+		// passing 0 will delete all unapproved...
+		commentService.deleteUnApprovedComments( 0 );
+		// announce event
+		announceInterception("cbadmin_postCommentRemoveAllModerated");
+		// message
+		data.messages = "Moderated Comment(s) Removed!";
+		getPlugin("MessageBox").info( data.messages );
+		// If ajax call, return as ajax
+		if( event.isAjax() ){
+			event.renderData(data=data, type="json");
+		}
+		else{
+			// relocate back
+			setNextEvent(event=prc.xehComments, queryString="page=1");
+		}
+	}
+
 	// remove
 	function remove(event,rc,prc){
 		// param values
@@ -202,6 +224,7 @@ component extend="baseHandler"{
 		prc.xehCommentPagerQuickLook	= "#prc.cbAdminEntryPoint#.comments.quickLook";
 		prc.xehCommentPagerStatus		= "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
 		prc.xehCommentPagerRemove		= "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// prepare paging plugin
 		prc.commentPager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");

@@ -89,6 +89,23 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 
 	/**
+	 * Deletes unapproved comments
+	 * @expirationDays.hint Required level of staleness in days to delete (0=all unapproved)
+	 */
+	void function deleteUnApprovedComments( numeric expirationDays=0 ) {
+		var hqlQuery = "from cbComment where isApproved = :approved";
+		var params = { "approved" = false };
+		// if we have an expirationDays setting, add it to query
+		if( structKeyExists( arguments, "expirationDays" ) && arguments.expirationDays ) {
+			var expirationDate = dateAdd( "d", -arguments.expirationDays, now() );
+			hqlQuery &= " and createdDate < :expiration";
+			params[ "expiration" ] = expirationDate;
+		}
+		// run the delete
+		deleteByQuery( query=hqlQuery, params=params );
+	}
+
+	/**
 	* Save a comment according to our rules and process it. Returns a structure of information
 	* results = [moderated:boolean,messages:array]
 	* @comment The comment to try to save
