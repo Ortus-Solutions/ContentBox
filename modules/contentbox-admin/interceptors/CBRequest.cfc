@@ -116,13 +116,14 @@ component extends="coldbox.system.Interceptor"{
 		
 		// Prepare Admin Actions
 		prc.xehAdminActionData = [
-			{name="Clear RSS Caches",value="rss-purge"},
-			{name="Clear Content Caches",value="content-purge"},
-			{name="Reload Application",value="app"},
-			{name="Reload ORM",value="orm"},
-			{name="Reload Admin",value="contentbox-admin"},
-			{name="Reload Site",value="contentbox-ui"},
-			{name="Reload FileBrowser",value="contentbox-filebrowser"}
+			{ name="Clear RSS Caches", value="rss-purge" },
+			{ name="Clear Content Caches", value="content-purge" },
+			{ name="Reload Application", value="app" },
+			{ name="Reload ORM", value="orm" },
+			{ name="Reload Admin Module", value="contentbox-admin" },
+			{ name="Reload FileBrowser Module", value="contentbox-filebrowser" },
+			{ name="Reload Security Module", value="contentbox-security" },
+			{ name="Reload Site Module", value="contentbox-ui" }
 		];
 		prc.xehAdminAction	= "#prc.cbAdminEntryPoint#.dashboard.reload";
 
