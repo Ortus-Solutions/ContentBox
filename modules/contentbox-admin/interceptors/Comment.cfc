@@ -1,5 +1,5 @@
 /**
-* This simulates the onRequest start for the admin interface
+* Comment interceptor
 */
 component extends="coldbox.system.Interceptor"{
 
