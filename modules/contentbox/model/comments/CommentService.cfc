@@ -95,8 +95,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	void function deleteUnApprovedComments( numeric expirationDays=0 ) {
 		var hqlQuery = "from cbComment where isApproved = :approved";
 		var params = { "approved" = false };
-		// if we have an expirationDays setting, add it to query
-		if( structKeyExists( arguments, "expirationDays" ) && arguments.expirationDays ) {
+		// if we have an expirationDays setting greater than 0, add it to query for our date filter
+		if( arguments.expirationDays ) {
 			var expirationDate = dateAdd( "d", -arguments.expirationDays, now() );
 			hqlQuery &= " and createdDate < :expiration";
 			params[ "expiration" ] = expirationDate;
