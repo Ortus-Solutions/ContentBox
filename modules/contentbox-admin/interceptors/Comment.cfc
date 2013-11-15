@@ -16,19 +16,17 @@ component extends="coldbox.system.Interceptor"{
     /**
      * If logged in user is an admin, this will asychronously check comment moderation expiration settings and (if applicable ) auto-delete moderated comments
      */
-    public void function cbadmin_onLogin( required any event ) {
-        thread name="cleancomments_#CreateUUID()#" securityService=securityService, settingService=settingService, commentService=commentService {
-            var Author = attributes.securityService.getAuthorSession();
-            var isContentBoxAdmin = Author.checkPermission( "CONTENTBOX_ADMIN" );
-            // if an admin, continue...
-            if( isContentBoxAdmin ) {
-                var commentExpiration = attributes.settingService.getSetting( "cb_comments_moderation_expiration" );
-                // if more than 0
-                if( commentExpiration ) {
-                    // now we have the green light to find and kill any old, moderated comments
-                    attributes.commentService.deleteUnApprovedComments( expirationDays=commentExpiration );
-                    // done!
-                }
+    public void function cbadmin_onLogin( required any event ) async="true" {
+        var author = securityService.getAuthorSession();
+        var isContentBoxAdmin = author.checkPermission( "CONTENTBOX_ADMIN" );
+        // if an admin, continue...
+        if( isContentBoxAdmin ) {
+            var commentExpiration = settingService.getSetting( "cb_comments_moderation_expiration" );
+            // if more than 0
+            if( commentExpiration ) {
+                // now we have the green light to find and kill any old, moderated comments
+                commentService.deleteUnApprovedComments( expirationDays=commentExpiration );
+                // done!
             }
         }
     }
