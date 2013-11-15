@@ -366,14 +366,13 @@ function activateConfirmations(){
 	$('a.confirmIt').click(function(e){
 		// setup the href
 		$confirmIt.data("confirmSrc", $(this).attr('href'));
-		// data-message
-		if( $(this).attr('data-message') ){
-			$confirmIt.find("#confirmItMessage").html( $(this).attr('data-message') );
-		}
-		// data-title
-		if( $(this).attr('data-title') ){
-			$confirmIt.find("#confirmItTitle").html( $(this).attr('data-title') );
-		}
+        // defaults
+        var dataMessage = $(this).attr('data-message') ? $(this).attr('data-message') : 'Are you sure you want to perform this action?';
+        var dataTitle = $(this).attr('data-title') ? $(this).attr('data-title') : 'Are you sure?';
+        // set message
+        $confirmIt.find("#confirmItMessage").html( dataMessage );
+        // set title
+        $confirmIt.find("#confirmItTitle").html( dataTitle );
 		// show the confirmation when clicked
 		//$confirmIt.data("overlay").load();
 		$confirmIt.modal();
