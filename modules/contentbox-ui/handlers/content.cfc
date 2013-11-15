@@ -137,8 +137,18 @@ component{
 
 	/**
 	* Content display around advice that provides caching for content display and multi-format capabilities
+	* @action.hint The action to wrap
+	* @contentCaching Wether content caching is enabled or not
 	*/
-	private function wrapContentAdvice( event, rc, prc ,eventArguments,action){
+	private function wrapContentAdvice( 
+		required event, 
+		required rc, 
+		required prc,
+		required eventArguments,
+		required action,
+		required boolean contentCaching
+	){
+	
 		// param incoming multi UI formats
 		event.paramValue("format", "contentbox");
 		// If UI export is disabled, default to contentbox
@@ -147,8 +157,8 @@ component{
 		}
 
 		// Caching Enabled? Then test if data is in cache.
-		var cacheEnabled = ( prc.cbSettings.cb_content_caching AND 
-							 !structKeyExists(eventArguments, "noCache") AND 
+		var cacheEnabled = ( arguments.contentCaching AND 
+							 !structKeyExists( eventArguments, "noCache" ) AND 
 							 !event.valueExists( "cbCache" ) AND
 							 !flash.exists( "commentErrors" ) );
 		if( cacheEnabled ){
@@ -171,8 +181,8 @@ component{
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
 			if( !isNull( data ) ){
 				// set cache headers
-				event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information")
-					.setHTTPHeader(name="Content-type", value=data.contentType);
+				event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" )
+					.setHTTPHeader( name="Content-type", value=data.contentType );
 				// Store hits
 				contentService.updateHits( data.contentID );
 				// return cache content to be displayed
@@ -181,7 +191,7 @@ component{
 		}
 		
 		// execute the wrapped action
-		arguments.action( event, rc, prc );
+		arguments.action( arguments.event, arguments.rc, arguments.prc );
 		
 		// Check for missing page? If so, just return, no need to do multiple formats or caching for a missing page
 		if( structKeyExists( prc, "missingPage" ) ){ return; }
@@ -189,13 +199,13 @@ component{
 		// Prepare data packet for rendering and caching and more
 		var data = { content = "", contentID = "", contentType="text/html", isBinary=false };
 		// generate content
-		data.content = renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format=rc.format, layout=listLast(event.getCurrentLayout(),'/'))#", 
-									module="contentbox",
-									viewModule="contentbox");
+		data.content = renderLayout( layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
+									 module="contentbox",
+									 viewModule="contentbox" );
 		// Multi format generation
 		switch( rc.format ){
 			case "pdf" : {
-				data.content 		= utility.marshallData(data=data.content, type="pdf");
+				data.content 		= utility.marshallData( data=data.content, type="pdf" );
 				data.contentType 	= "application/pdf";
 				data.isBinary 		= true;
 				break;
@@ -207,7 +217,7 @@ component{
 		}
 		
 		// Tell renderdata to render it
-		event.renderData(data=data.content, contentType=data.contentType, isBinary=data.isBinary);
+		event.renderData( data=data.content, contentType=data.contentType, isBinary=data.isBinary );
 		
 		// Get the content object
 		var oContent = ( structKeyExists( prc, "page" ) ? prc.page : prc.entry ); 
