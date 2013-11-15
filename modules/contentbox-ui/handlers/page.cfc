@@ -43,7 +43,7 @@ component extends="content" singleton{
 	/**
 	* Preview a page
 	*/
-	function preview(event,rc,prc){
+	function preview( event, rc, prc ){
 		// Run parent preview
 		super.preview(argumentCollection=arguments);
 		// Concrete Overrides Below
@@ -69,14 +69,14 @@ component extends="content" singleton{
 	/**
 	* Around entry page advice that provides caching and multi-output format
 	*/
-	function aroundIndex(event,rc,prc,eventArguments){
+	function aroundIndex( event, rc, prc ,eventArguments){
 		return wrapContentAdvice( event, rc, prc, eventArguments, variables.index );
 	}
 	
 	/**
 	* Present pages
 	*/
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// incoming params
 		event.paramValue("pageSlug","");
 		var incomingURL  = "";
@@ -143,7 +143,7 @@ component extends="content" singleton{
 	/**
 	* Content Search
 	*/
-	function search(event,rc,prc){
+	function search( event, rc, prc ){
 		// incoming params
 		event.paramValue("page",1);
 		event.paramValue("q","");
@@ -177,7 +177,7 @@ component extends="content" singleton{
 	/**
 	* Display the RSS feeds
 	*/
-	function rss(event,rc,prc){
+	function rss( event, rc, prc ){
 		// params
 		event.paramValue("category","");
 		event.paramValue("entrySlug","");
@@ -193,9 +193,9 @@ component extends="content" singleton{
 	/**
 	* Comment Form Post
 	*/
-	function commentPost(event,rc,prc){
+	function commentPost( event, rc, prc ){
 		// incoming params
-		event.paramValue("contentID","");
+		event.paramValue( "contentID", "" );
 
 		// Try to retrieve page by contentID
 		var page = pageService.get( rc.contentID );
@@ -204,18 +204,7 @@ component extends="content" singleton{
 		if( isNull( page ) ){ setNextEvent( prc.cbEntryPoint ); }
 
 		// validate incoming comment post
-		prc.commentErrors = validateCommentPost(event,rc,prc,page);
-
-		// Validate if comment errors exist
-		if( arrayLen( prc.commentErrors ) ){
-			// Flash errors
-			flash.put( "commentErrors", prc.commentErrors );
-			// MessageBox
-			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
-			// redirect			
-			setNextEvent( URL=CBHelper.linkComments( page ) ) ;
-			return;
-		}
+		validateCommentPost( event, rc, prc, page );
 
 		// Valid commenting, so go and save
 		saveComment( page );

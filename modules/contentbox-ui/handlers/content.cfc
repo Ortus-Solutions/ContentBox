@@ -38,7 +38,7 @@ component{
 	this.preHandler_except = "previewSite";
 	
 	// pre Handler
-	function preHandler(event,rc,prc,action,eventArguments){
+	function preHandler( event, rc, prc ,action,eventArguments){
 		// Maintenance Mode?
 		if( prc.cbSettings.cb_site_maintenance ){
 			event.overrideEvent("contentbox-ui:page.maintenance");
@@ -59,7 +59,7 @@ component{
 	/**
 	* Preview the site
 	*/
-	function previewSite(event,rc,prc){
+	function previewSite( event, rc, prc ){
 		// Param incoming data
 		event.paramValue("l", "");
 		event.paramValue("h", "");
@@ -101,7 +101,7 @@ component{
 	/**
 	* Go Into maintenance mode.
 	*/
-	function maintenance(event,rc,prc){
+	function maintenance( event, rc, prc ){
 		// If no maintenance view exists, just output data
 		if( !layoutService.themeMaintenanceViewExists() ){
 			event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
@@ -138,7 +138,7 @@ component{
 	/**
 	* Content display around advice that provides caching for content display and multi-format capabilities
 	*/
-	private function wrapContentAdvice(event,rc,prc,eventArguments,action){
+	private function wrapContentAdvice( event, rc, prc ,eventArguments,action){
 		// param incoming multi UI formats
 		event.paramValue("format", "contentbox");
 		// If UI export is disabled, default to contentbox
@@ -227,7 +227,7 @@ component{
 	/**
 	* Preview content page super event. Only called internally
 	*/
-	private function preview(event,rc,prc){
+	private function preview( event, rc, prc ){
 		// Param incoming data
 		event.paramValue("content", "");
 		event.paramValue("contentType", "");
@@ -247,75 +247,100 @@ component{
 	}
 	
 	/**
-	* Validate incoming comment post
+	* Validate incoming comment post, if not valid, it redirects back
+	* @thisContent.hint The content object to validate the comment post for
 	*/
-	private array function validateCommentPost(event,rc,prc,thisContent){
+	private void function validateCommentPost( 
+		required event, 
+		required rc, 
+		required prc, 
+		required thisContent
+	){
 		var commentErrors = [];
 
 		// param values
-		event.paramValue("author","");
-		event.paramValue("authorURL","");
-		event.paramValue("authorEmail","");
-		event.paramValue("content","");
-		event.paramValue("captchacode","");
+		event.paramValue( "author", "" );
+		event.paramValue( "authorURL", "" );
+		event.paramValue( "authorEmail", "" );
+		event.paramValue( "content", "" );
+		event.paramValue( "captchacode", "" );
 		
 		// Check if comments enabled? else kick them out, who knows how they got here
-		if( NOT CBHelper.isCommentsEnabled( thisContent ) ){
-			getPlugin("MessageBox").warn("Comments are disabled! So you can't post any!");
-			setNextEvent( URL=CBHelper.linkContent( thisContent ) );
+		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
+			getPlugin( "MessageBox" ).warn( "Comments are disabled! So you can't post any!" );
+			setNextEvent( URL=CBHelper.linkContent( arguments.thisContent ) );
 		}
 
 		// Trim values & XSS Cleanup of fields
-		var antiSamy 	= getPlugin("AntiSamy");
-		rc.author 		= antiSamy.htmlSanitizer( trim(rc.author) );
-		rc.authorEmail 	= antiSamy.htmlSanitizer( trim(rc.authorEmail) );
-		rc.authorURL 	= antiSamy.htmlSanitizer( trim(rc.authorURL) );
-		rc.captchacode 	= antiSamy.htmlSanitizer( trim(rc.captchacode) );
-		rc.content 		= antiSamy.htmlSanitizer( xmlFormat(trim(rc.content)) );
+		var antiSamy 	= getPlugin( "AntiSamy" );
+		rc.author 		= antiSamy.htmlSanitizer( trim( rc.author ) );
+		rc.authorEmail 	= antiSamy.htmlSanitizer( trim( rc.authorEmail ) );
+		rc.authorURL 	= antiSamy.htmlSanitizer( trim( rc.authorURL ) );
+		rc.captchacode 	= antiSamy.htmlSanitizer( trim( rc.captchacode ) );
+		rc.content 		= antiSamy.htmlSanitizer( xmlFormat( trim( rc.content ) ) );
 
 		// Validate incoming data
 		commentErrors = [];
-		if( !len(rc.author) ){ arrayAppend(commentErrors,"Your name is missing!"); }
-		if( !len(rc.authorEmail) OR NOT validator.checkEmail(rc.authorEmail)){ arrayAppend(commentErrors,"Your email is missing or is invalid!"); }
-		if( len(rc.authorURL) AND NOT validator.checkURL(rc.authorURL) ){ arrayAppend(commentErrors,"Your website URL is invalid!"); }
-		if( !len(rc.content) ){ arrayAppend(commentErrors,"Your URL is invalid!"); }
+		if( !len( rc.author ) ){ arrayAppend( commentErrors, "Your name is missing!" ); }
+		if( !len( rc.authorEmail ) OR NOT validator.checkEmail( rc.authorEmail ) ){ arrayAppend( commentErrors, "Your email is missing or is invalid!" ); }
+		if( len( rc.authorURL ) AND NOT validator.checkURL( rc.authorURL ) ){ arrayAppend( commentErrors, "Your website URL is invalid!" ); }
+		if( !len( rc.content ) ){ arrayAppend( commentErrors, "Your URL is invalid!" ); }
 
 		// Captcha Validation
-		if( prc.cbSettings.cb_comments_captcha AND NOT getMyPlugin(plugin="Captcha",module="contentbox").validate( rc.captchacode ) ){
-			ArrayAppend(commentErrors, "Invalid security code. Please try again.");
+		if( prc.cbSettings.cb_comments_captcha AND NOT getMyPlugin( plugin="Captcha", module="contentbox" ).validate( rc.captchacode ) ){
+			ArrayAppend( commentErrors, "Invalid security code. Please try again." );
 		}
 
 		// announce event
-		announceInterception("cbui_preCommentPost",{commentErrors=commentErrors,content=thisContent,contentType=thisContent.getContentType()});
+		announceInterception( "cbui_preCommentPost", {
+			commentErrors=commentErrors,
+			content=arguments.thisContent,
+			contentType=arguments.thisContent.getContentType()
+		});
 
-		return commentErrors;
+		// Store errors if found
+		if( arrayLen( commentErrors ) ){
+			// Flash errors
+			flash.put( name="commentErrors", value=commentErrors, inflateTOPRC=true );
+			// MessageBox
+			getPlugin( "MessageBox" ).warn( messageArray=commentErrors );
+			// Redirect
+			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ), persist="author,authorEmail,authorURL,content" );
+			return;
+		}
 	}
 
 	/**
-	* Save the comment
+	* Save the comment for a content object
+	* @thisContent.hint The content object
 	*/
-	private function saveComment(thisContent){
+	private function saveComment( required thisContent ){
 		// Get new comment to persist
 		var comment = populateModel( commentService.new() );
 		// relate it to content
-		comment.setRelatedContent( thisContent );
+		comment.setRelatedContent( arguments.thisContent );
 		// save it
 		var results = commentService.saveComment( comment );
 
 		// announce event
-		announceInterception("cbui_onCommentPost",{comment=comment,content=thisContent,moderationResults=results,contentType=thisContent.getContentType()});
+		announceInterception( "cbui_onCommentPost", {
+			comment=comment,
+			content=arguments.thisContent,
+			moderationResults=results,
+			contentType=arguments.thisContent.getContentType()
+		});
 
 		// Check if all good
 		if( results.moderated ){
-			// Message
-			getPlugin("MessageBox").warn(messageArray=results.messages);
-			flash.put(name="commentErrors",value=results.messages,inflateTOPRC=true);
+			// Message that comment was moderated
+			getPlugin( "MessageBox" ).warn( messageArray=results.messages );
+			flash.put( name="commentErrors", value=results.messages, inflateTOPRC=true );
 			// relocate back to comments
-			setNextEvent(URL=CBHelper.linkComments( thisContent ));
+			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ) );
 		}
 		else{
 			// relocate back to comment
-			setNextEvent(URL=CBHelper.linkComment( comment ));
+			setNextEvent( URL=CBHelper.linkComment( comment ) );
 		}
 	}
 
