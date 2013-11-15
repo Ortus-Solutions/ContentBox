@@ -69,8 +69,12 @@ component extends="content" singleton{
 	/**
 	* Around entry page advice that provides caching and multi-output format
 	*/
-	function aroundIndex( event, rc, prc ,eventArguments){
-		return wrapContentAdvice( event, rc, prc, eventArguments, variables.index );
+	function aroundIndex( event, rc, prc , eventArguments ){
+		// setup wrap arguments
+		arguments.contentCaching 	= prc.cbSettings.cb_content_caching;
+		arguments.action 			= variables.index;
+
+		return wrapContentAdvice( argumentCollection=arguments );
 	}
 	
 	/**
