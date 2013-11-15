@@ -17,7 +17,7 @@ component extends="baseHandler"{
 	}
 
 	// dashboard index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 
 		// exit Handlers
 		prc.xehDeleteInstaller 	= "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
@@ -44,7 +44,7 @@ component extends="baseHandler"{
 	}
 	
 	// latest snapshot
-	function latestSnapshot(event,rc,prc){
+	function latestSnapshot( event, rc, prc ){
 		// Few counts
 		prc.entriesCount			= entryService.count();
 		prc.pagesCount 				= pageService.count();
@@ -61,7 +61,7 @@ component extends="baseHandler"{
 	}
 	
 	// Latest Entries
-	function latestEntries(event,rc,prc){
+	function latestEntries( event, rc, prc ){
 		// Get entries viewlet: Stupid cf9 and its local scope blown on argument literals
 		var eArgs = { max=prc.cbSettings.cb_dashboard_recentEntries, pagination=false, latest=true };
 		prc.entriesViewlet = runEvent(event="contentbox-admin:entries.pager", eventArguments=eArgs);
@@ -70,7 +70,7 @@ component extends="baseHandler"{
 	}
 	
 	// Latest ContentStore
-	function latestContentStore(event,rc,prc){
+	function latestContentStore( event, rc, prc ){
 		// Get contentStore viewlet: Stupid cf9 and its local scope blown on argument literals
 		var eArgs = { max=prc.cbSettings.cb_dashboard_recentContentStore, pagination=false, latest=true };
 		prc.contentStoreViewlet = runEvent(event="contentbox-admin:contentstore.pager", eventArguments=eArgs);
@@ -79,7 +79,7 @@ component extends="baseHandler"{
 	}
 	
 	// Latest Pages
-	function latestPages(event,rc,prc){
+	function latestPages( event, rc, prc ){
 		// Get Pages viewlet
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentPages,pagination=false, latest=true, sorting=false};
 		prc.pagesViewlet = runEvent(event="contentbox-admin:pages.pager",eventArguments=eArgs);
@@ -88,7 +88,7 @@ component extends="baseHandler"{
 	}
 	
 	// Latest Comments
-	function latestComments(event,rc,prc){
+	function latestComments( event, rc, prc ){
 		// Get Comments viewlet
 		var eArgs = {max=prc.cbSettings.cb_dashboard_recentComments,pagination=false};
 		prc.commentsViewlet = runEvent(event="contentbox-admin:comments.pager",eventArguments=eArgs);
@@ -97,7 +97,7 @@ component extends="baseHandler"{
 	}
 	
 	// Latest News
-	function latestNews(event,rc,prc){
+	function latestNews( event, rc, prc ){
 		// Get latest ContentBox news
 		try{
 			if( len( prc.cbsettings.cb_dashboard_newsfeed ) ){
@@ -150,16 +150,16 @@ component extends="baseHandler"{
 	}
 
 	// about
-	function about(event,rc,prc){
+	function about( event, rc, prc ){
 		prc.tabDashboard_about = true;
 		event.setView("dashboard/about");
 	}
 
 	// reload modules
-	function reload(event,rc,prc){
+	function reload( event, rc, prc ){
 
 		try{
-			switch(rc.targetModule){
+			switch( rc.targetModule ){
 				// reload application
 				case "app" :{
 					applicationStop();break;
@@ -168,16 +168,17 @@ component extends="baseHandler"{
 					ormReload();break;
 				}
 				case "rss-purge":{
-					getModel("RSSService@cb").clearAllCaches(async=false); break;
+					getModel( "RSSService@cb" ).clearAllCaches( async=false ); break;
 				}
 				case "content-purge":{
-					getModel("ContentService@cb").clearAllCaches(async=false); break;
+					getModel( "ContentService@cb" ).clearAllCaches( async=false ); break;
 				}
-				case "contentbox-admin": case "contentbox-ui" : case "contentbox-filebrowser" : {
+				case "contentbox-admin": case "contentbox-ui" : case "contentbox-filebrowser" : case "contentbox-security" : {
 					// reload the core module first
 					controller.getModuleService().reload( "contentbox" );
 					// reload requested module
 					controller.getModuleService().reload( rc.targetModule );
+					break;
 				}
 				default:{
 					setNextEvent( prc.xehDashboard );
@@ -196,7 +197,7 @@ component extends="baseHandler"{
 				setNextEvent( prc.xehDashboard );
 			}
 		}
-		catch(Any e){
+		catch( Any e ){
 			// Log Exception
 			log.error( "Error running admin reload module action: #e.message# #e.detail#", e );
 			// Ajax requests
@@ -206,13 +207,11 @@ component extends="baseHandler"{
 			}
 			else{
 				// MessageBox
-				getPlugin("MessageBox").error( "Error running admin reload module action: #e.message# #e.detail#" );
+				getPlugin( "MessageBox" ).error( "Error running admin reload module action: #e.message# #e.detail#" );
 				// relocate back to dashboard
 				setNextEvent( prc.xehDashboard );
 			}
 		}
-		
-		
 		
 	}
 
