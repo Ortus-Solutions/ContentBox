@@ -2,7 +2,18 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// form validators
-	$("##commentSettingsForm").validate();
+	$("##commentSettingsForm").validate({
+        rules: {
+            cb_comments_moderation_expiration: {
+                digits: true,
+                required: true,
+                min: 0
+            }
+        },
+        messages: {
+            cb_comments_moderation_expiration: 'Please enter a vaild integer greater than or equal to 0'
+        }
+    });
 });
 </script>
 </cfoutput>
