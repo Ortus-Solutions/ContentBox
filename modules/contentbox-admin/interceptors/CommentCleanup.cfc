@@ -1,12 +1,12 @@
 /**
-* Comment interceptor
+* Comment Cleanup interceptor
 */
 component extends="coldbox.system.Interceptor"{
 
     // DI
     property name="securityService" inject="id:securityService@cb";
-    property name="settingService" inject="id:settingService@cb";
-    property name="commentService" inject="id:commentService@cb";
+    property name="settingService"  inject="id:settingService@cb";
+    property name="commentService"  inject="id:commentService@cb";
 
     /**
     * Configure
@@ -27,6 +27,8 @@ component extends="coldbox.system.Interceptor"{
                 // now we have the green light to find and kill any old, moderated comments
                 commentService.deleteUnApprovedComments( expirationDays=commentExpiration );
                 // done!
+                if( log.canInfo() )
+                    log.info( "Comment moderation executed for the last (#commentExpiration#) days!");
             }
         }
     }

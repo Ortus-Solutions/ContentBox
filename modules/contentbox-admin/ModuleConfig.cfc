@@ -118,8 +118,8 @@ component {
 		// Custom Declared Interceptors
 		interceptors = [
 			// CB Admin Request Interceptor
-			{class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
-			{class="#moduleMapping#.interceptors.Comment" }
+			{ class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
+			{ class="#moduleMapping#.interceptors.CommentCleanup" }
 		];
 		
 	}

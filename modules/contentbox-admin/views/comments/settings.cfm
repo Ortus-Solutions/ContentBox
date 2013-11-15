@@ -8,13 +8,13 @@
 			<div class="header">
 				<i class="icon-comments icon-large"></i>
 				Comment Settings
+
+                <!--- Back To Inbox --->
+                #html.href(text="<i class='icon-reply'></i> Back To Inbox", class="btn btn-inverse pull-right", href=event.buildlink(prc.xehComments), style="margin-top:5px")# 
 			</div>
 			<!--- Body --->
 			<div class="body">	
 	
-				<!--- Back To Inbox --->	
-				#html.href(text="<i class='icon-reply'></i> Back To Inbox", class="btn pull-right", href=event.buildlink(prc.xehComments))#			
-			
 				<!--- messageBox --->
 				#getPlugin("MessageBox").renderit()#
 			

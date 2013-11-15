@@ -269,6 +269,7 @@ component accessors="true"{
 			"cb_comments_moderation_blacklist" = "",
 			"cb_comments_moderation_blockedlist" = "",
 			"cb_comments_captcha" = "true",
+			"cb_comments_moderation_expiration" = "30",
 
 			// Mail Settings
 			"cb_site_mail_server" = setup.getcb_site_mail_server(),

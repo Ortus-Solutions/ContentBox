@@ -234,6 +234,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	private function updateSettings(){
 		// Create New settings
 		addSetting( "cb_notify_contentstore", "true" );
+		addSetting( "cb_comments_moderation_expiration", "30" );
 	}
 	
 	private function addSetting(name, value){
