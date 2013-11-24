@@ -196,7 +196,8 @@ function updateCBWidget() {
  * @element {CKEDITOR.dom.element} The CKEDITOR element to insert into the editor
  */
 function sendEditorText( element ){
-    $("###rc.editorName#").ckeditorGet().insertElement( element );
+    // call via editor interface to insert
+    insertEditorContent( '#rc.editorName#', element );
     closeRemoteModal();
 }
 </script>

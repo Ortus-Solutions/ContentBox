@@ -114,6 +114,14 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			function updateEditorExcerpt(){
 				CKEDITOR.instances.excerpt.updateElement();
 			}
+			function insertEditorContent( editorName, content ){
+				// if simple value, insert as html
+				if( jQuery.type( content ) == 'string' )
+					$( '##' + editorName ).ckeditorGet().insertHtml( content );
+				// else insert as element
+				else
+					$( '##' + editorName ).ckeditorGet().insertElement( content );
+			}
 			");
 		}
 		

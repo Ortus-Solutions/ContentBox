@@ -131,6 +131,9 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			function updateExcerptContent(){
 				// not needed
 			}
+			function insertEditorContent( editorName, content ){
+				// not used yet
+			}
 			");
 		}
 		
