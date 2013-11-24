@@ -32,7 +32,7 @@ function pagerLink(page){
 }
 function insertContentStore(slug){
 	var customContent = "{{{ContentStore slug='"+slug+"'}}}";
-	$("###rc.editorName#").ckeditorGet().insertText( customContent );
+	insertEditorContent( '#rc.editorName#', customContent );
 	closeRemoteModal();
 	return false;
 }

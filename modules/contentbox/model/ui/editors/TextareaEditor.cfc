@@ -68,6 +68,9 @@ component implements="contentbox.model.ui.editors.IEditor" singleton{
 			function updateExcerptContent(){
 				// not needed
 			}
+			function insertEditorContent( editorName, content ){
+				// not used yet
+			}
 			");
 		}
 		
