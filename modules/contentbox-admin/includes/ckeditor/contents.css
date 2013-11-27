@@ -91,6 +91,22 @@ img:hover {
 	opacity: .9;
 	filter: alpha(opacity = 90);
 }
+pre
+{
+    white-space: pre-wrap; /* CSS 2.1 */
+    word-wrap: break-word; /* IE7 */
+}
+
+.marker
+{
+    background-color: Yellow;
+}
+
+span[lang]
+{
+   font-style: italic;
+}
+
 widget {
     width: 85%;
     padding:5px;
