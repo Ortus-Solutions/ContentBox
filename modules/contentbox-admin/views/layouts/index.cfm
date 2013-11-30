@@ -146,7 +146,26 @@
 								#html.startForm(name="layoutUploadForm",action=prc.xehlayoutupload,multipart=true,novalidate="novalidate",class="form-vertical")#
 									<fieldset>
 										<legend>Layout Uploader</legend>
-										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#		
+										<div class="control-group">
+	                                        <div class="controls">
+	                                            <!---label--->
+	                                            #html.label( field="fileLayout", content="Upload Layout (.zip):", class="control-label" )#
+	                                            <div class="fileupload fileupload-new" data-provides="fileupload">
+	                                                <div class="input-append textfield">
+	                                                    <div class="uneditable-input span3">
+	                                                        <i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
+	                                                    </div>
+	                                                    <span class="btn btn-file">
+	                                                        <span class="fileupload-new">Select file</span>
+	                                                        <span class="fileupload-exists">Change</span>
+	                                                        <!---input field--->
+	                                                        #html.fileField( name="fileLayout", required="required" )#		
+	                                                    </span>
+	                                                    <a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+	        							</div>
     									<div id="uploadBar">
     										#html.submitButton(value="Upload & Install",class="btn btn-danger")#
     									</div>
