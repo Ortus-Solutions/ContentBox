@@ -149,26 +149,13 @@
 			</div>
 			<div class="body">
 				#html.startForm(name="moduleUploadForm",action=prc.xehModuleUpload,multipart=true,novalidate="novalidate")#
-					
-					<div class="control-group">
-                        <div class="controls">
-                            <!---label--->
-                            #html.label( field="fileModule", content="Upload Module:", class="control-label" )#
-                            <div class="fileupload fileupload-new" data-provides="fileupload">
-                                <div class="input-append textfield">
-                                    <div class="uneditable-input span2">
-                                        <i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
-                                    </div>
-                                    <span class="btn btn-file">
-                                        <span class="fileupload-new">Select file</span>
-                                        <span class="fileupload-exists">Change</span>
-                                        <!---input field--->
-                                        #html.fileField( name="fileModule", required="required" )#
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-					</div>
+					#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+						name="fileModule",
+						label="Upload Module:",
+						columnWidth=2,
+						useRemoveButton=false,
+						required=true
+					)#
 	
 					<div class="actionBar" id="uploadBar">
 						#html.submitButton(value="Upload & Install",class="btn btn-danger")#

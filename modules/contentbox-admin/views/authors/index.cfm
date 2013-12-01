@@ -177,24 +177,10 @@
         <div class="modal-body">
 			<p>Choose the ContentBox <strong>JSON</strong> users file to import.</p>
 			
-			<div class="control-group">
-                <div class="controls">
-                    <div class="fileupload fileupload-new" data-provides="fileupload">
-                        <div class="input-append textfield">
-                            <div class="uneditable-input span3">
-                                <i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
-                            </div>
-                            <span class="btn btn-file">
-                                <span class="fileupload-new">Select file</span>
-                                <span class="fileupload-exists">Change</span>
-                                <!---input field--->
-                                #html.fileField( name="importFile", required=true )#
-                            </span>
-                            <a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-                        </div>
-                    </div>
-                </div>
-			</div>
+			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+				name="importFile", 
+				required=true
+			)#
 
 			<label for="overrideContent">Override Users?</label>
 			<small>By default all content that exist is not overwritten.</small><br>
