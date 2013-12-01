@@ -145,7 +145,7 @@
 			<p>Choose the ContentBox <strong>JSON</strong> categories file to import.</p>
 			
 			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
-				name="fileupload", 
+				name="importFile", 
 				required=true
 			)#
 			
