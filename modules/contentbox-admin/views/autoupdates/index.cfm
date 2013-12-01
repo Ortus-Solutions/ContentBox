@@ -79,25 +79,11 @@
         						<!--- Upload Form --->
         						#html.startForm(name="uploadNowForm",action=prc.xehUploadUpdate,multipart=true,novalidate="novalidate",class="form-vertical")#
         							<p>You can also apply an update by uploading the update archive.</p>
-        							<div class="control-group">
-                                        <div class="controls">
-                                            #html.label( field="filePatch", content="Upload Patch: ", class="control-label" )#
-                                            <div class="fileupload fileupload-new" data-provides="fileupload">
-                                                <div class="input-append textfield">
-                                                    <div class="uneditable-input span3">
-                                                        <i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
-                                                    </div>
-                                                    <span class="btn btn-file">
-                                                        <span class="fileupload-new">Select file</span>
-                                                        <span class="fileupload-exists">Change</span>
-                                                        <!---input field--->
-                                                        #html.fileField( name="filePatch", required=true )#
-                                                    </span>
-                                                    <a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-                                                </div>
-                                            </div>
-                                        </div>
-        							</div>
+                                    #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+                                        name="filePatch", 
+                                        label="Upload Patch:",
+                                        required=true
+                                    )#
         							#html.submitButton(value="Upload & Install Update",class="btn btn-danger")#
         						#html.endForm()#	
                       		</div>
