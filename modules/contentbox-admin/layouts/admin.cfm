@@ -26,6 +26,7 @@
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
 			    #prc.cbroot#/includes/css/bootstrap-modal.css,
 			    #prc.cbroot#/includes/css/bootstrap-datepicker.css,
+          #prc.cbroot#/includes/css/bootstrap-fileupload.css,
 			    #prc.cbroot#/includes/css/font-awesome.min.css",			    
 			   location="#prc.cbroot#/includes/cache")#
 
@@ -46,6 +47,7 @@
 			    #prc.cbroot#/includes/js/bootstrap-modalmanager.js,
 			    #prc.cbroot#/includes/js/bootstrap-modal.js,
 			    #prc.cbroot#/includes/js/bootstrap-datepicker.js,
+          #prc.cbroot#/includes/js/bootstrap-fileupload.js,
 			    #prc.cbroot#/includes/js/jwerty.js,
 			    #prc.cbroot#/includes/js/jquery.validate.js,
 			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
