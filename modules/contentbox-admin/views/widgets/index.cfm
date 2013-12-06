@@ -65,8 +65,14 @@
 			</div>
 			<div class="body">
 				#html.startForm(name="widgetUploadForm",action=prc.xehWidgetupload,multipart=true,novalidate="novalidate")#
-	
-					#html.fileField(name="filePlugin",label="Upload Widget: ", class="textfield",required="required")#
+					
+					#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+		                name="filePlugin",
+		                label="Upload Widget:",
+		                columnWidth=2,
+		                useRemoveButton=false,
+		                required=true
+		            )#				
 	
 					<div class="actionBar" id="uploadBar">
 						#html.submitButton(value="Upload & Install", class="btn btn-danger")#

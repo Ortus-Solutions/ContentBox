@@ -269,7 +269,10 @@
         <div class="modal-body">
 			<p>Choose the ContentBox <strong>JSON</strong> settings file to import.</p>
 			
-			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
+            #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+                name="importFile",
+                required=true
+            )#			
 			
 			<label for="overrideSettings">Override settings?</label>
 			<small>By default all settings that exist are not overwritten.</small><br>

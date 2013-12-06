@@ -79,8 +79,11 @@
         						<!--- Upload Form --->
         						#html.startForm(name="uploadNowForm",action=prc.xehUploadUpdate,multipart=true,novalidate="novalidate",class="form-vertical")#
         							<p>You can also apply an update by uploading the update archive.</p>
-        							
-        							#html.fileField(name="filePatch",label="Upload Patch: ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#	
+                                    #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+                                        name="filePatch", 
+                                        label="Upload Patch:",
+                                        required=true
+                                    )#
         							#html.submitButton(value="Upload & Install Update",class="btn btn-danger")#
         						#html.endForm()#	
                       		</div>
