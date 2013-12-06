@@ -13,7 +13,7 @@ function previewContent(){
 					 { content: getEditorContent(), 
 					   layout: $("##layout").val(),
 					   title: $("##title").val(),
-					   slug: $("##slug").val(),
+					   slug: $slug.val(),
 					   contentType : $("##contentType").val(),
 					   markup : $("##markup").val() },
 					 "95%",
@@ -46,6 +46,12 @@ function quickSave(){
 	if( !$content.val().length ){
 		$content.val( getEditorContent() );	
 	}
+	// enable for quick save, if disabled
+	var disableSlug = false;
+	if( $slug.prop( "disabled" ) ){ 
+		$slug.prop( "disabled", false );
+		disableSlug = true;
+	}
 	// Post it
 	$.post($targetEditorSaveURL, $targetEditorForm.serialize(), function(data){
 		// Save new id
@@ -55,6 +61,11 @@ function quickSave(){
 		$uploaderBarLoader.fadeOut( 1500 );
 		$uploaderBarStatus.html( 'Draft Saved!' );
 		$isPublished.val( 'true' );
+		// bring back slug if needed.
+		if( disableSlug ){
+			$slug.prop( "disabled", true );
+		}
+		// notify
 		adminNotifier( "info", "Draft Saved!" );
 	},"json");
 }
@@ -77,6 +88,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$isPublished 			= $targetEditorForm.find("##isPublished");
 	$contentID				= $targetEditorForm.find("##contentID");
 	$changelog				= $targetEditorForm.find("##changelog");
+	$slug 					= $targetEditorForm.find('##slug');
 	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
 	// with excerpt
@@ -106,6 +118,9 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 			}
 			// if it's valid, submit form
             if( $content.val().length ) {
+            	// enable slug for saving.
+            	$slug.prop( "disabled", false );
+            	// submit
             	form.submit();
             }
             // otherwise, show error
@@ -121,16 +136,16 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	}
 
 	// Activate blur slugify on titles
-	var $title = $targetEditorForm.find("##title");
-	//set up live event for title, do nothing if slug is locked..
+	var $title = $targetEditorForm.find( "##title" );
+	// set up live event for title, do nothing if slug is locked..
 	$title.on('blur', function(){
-		if( !$targetEditorForm.find("##slug").prop("disabled") ){
-			createPermalink( $title.val());
+		if( !$slug.prop("disabled") ){
+			createPermalink( $title.val() );
 		}
 	});
 	// Activate permalink blur
-	$targetEditorForm.find('##slug').on('blur',function(){
-		if( !$( this ).prop("disabled") ){
+	$slug.on('blur',function(){
+		if( !$( this ).prop( "disabled" ) ){
 			permalinkUniqueCheck();
 		}
 	});
@@ -182,11 +197,11 @@ function askLeaveConfirmation(){
 
 // Create Permalinks
 function createPermalink(linkToUse){
-	var linkToUse = (typeof linkToUse === "undefined") ? $("##title").val() : linkToUse;
+	var linkToUse = ( typeof linkToUse === "undefined" ) ? $( "##title" ).val() : linkToUse;
 	if( !linkToUse.length ){ return; }
-	$slug = togglePermalink()
-	$.get( '#event.buildLink( prc.xehSlugify )#', {slug:linkToUse}, function(data){
-		$('##slug').val(data);
+	togglePermalink()
+	$.get( '#event.buildLink( prc.xehSlugify )#', { slug : linkToUse }, function( data ){
+		$slug.val( data );
 		permalinkUniqueCheck();
 		togglePermalink();
 	} );
@@ -194,19 +209,19 @@ function createPermalink(linkToUse){
 
 //disable or enable (toggle) permalink field
 function togglePermalink(){
+	var toggle = $( '##togglePermalink' );
 	// Toggle lock icon on click..	
-	$('##togglePermalink').hasClass('icon-lock') ? $('##togglePermalink').attr('class', 'icon-unlock') : $('##togglePermalink').attr('class', 'icon-lock');
+	toggle.hasClass( 'icon-lock' ) ? toggle.attr( 'class', 'icon-unlock' ) : toggle.attr( 'class', 'icon-lock' );
 	//disable input field
-	$('##slug').prop("disabled", !$('##slug').prop("disabled") );
-	return $('##slug');
+	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
 }
 
-function permalinkUniqueCheck(linkToUse){
-	var linkToUse = (typeof linkToUse === "undefined") ? $("##slug").val():linkToUse;
-	linkToUse = $.trim(linkToUse); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
+function permalinkUniqueCheck( linkToUse ){
+	var linkToUse = ( typeof linkToUse === "undefined" ) ? $slug.val() : linkToUse;
+	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
 	if( !linkToUse.length ){ return; }
 	// Verify unique
-	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', {slug:linkToUse, contentID: $("##contentID").val()}, function(data){
+	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, contentID: $("##contentID").val() }, function( data ){
 		if( !data.UNIQUE ){
 			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("alert");
 		}
