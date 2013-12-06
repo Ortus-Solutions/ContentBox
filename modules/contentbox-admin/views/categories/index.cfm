@@ -108,7 +108,7 @@
 		</div>	
 	</div>
 </div>
-<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 <!--- Permissions Editor --->
 <div id="categoryEditorContainer" class="modal hide fade">
 	<div id="modalContent">
@@ -131,7 +131,8 @@
 	#html.endForm()#
 	</div>
 </div>
-<cfelseif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+</cfif>
+<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 <!---Import Dialog --->
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">
@@ -143,7 +144,10 @@
         <div class="modal-body">
 			<p>Choose the ContentBox <strong>JSON</strong> categories file to import.</p>
 			
-			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
+			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+				name="importFile", 
+				required=true
+			)#
 			
 			<label for="overrideContent">Override Categories?</label>
 			<small>By default all content that exist is not overwritten.</small><br>

@@ -146,7 +146,11 @@
 								#html.startForm(name="layoutUploadForm",action=prc.xehlayoutupload,multipart=true,novalidate="novalidate",class="form-vertical")#
 									<fieldset>
 										<legend>Layout Uploader</legend>
-										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#		
+										#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+											name="fileLayout",
+											label="Upload Layout (.zip):",
+											required=true
+										)#
     									<div id="uploadBar">
     										#html.submitButton(value="Upload & Install",class="btn btn-danger")#
     									</div>

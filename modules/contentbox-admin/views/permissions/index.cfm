@@ -143,7 +143,10 @@
         <div class="modal-body">
 			<p>Choose the ContentBox <strong>JSON</strong> permissions file to import.</p>
 			
-			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
+			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+				name="importFile",
+				required=true
+			)#
 			
 			<label for="overrideContent">Override Permissions?</label>
 			<small>By default all content that exist is not overwritten.</small><br>

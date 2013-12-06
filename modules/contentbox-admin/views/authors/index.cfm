@@ -177,8 +177,11 @@
         <div class="modal-body">
 			<p>Choose the ContentBox <strong>JSON</strong> users file to import.</p>
 			
-			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
-			
+			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+				name="importFile", 
+				required=true
+			)#
+
 			<label for="overrideContent">Override Users?</label>
 			<small>By default all content that exist is not overwritten.</small><br>
 			#html.select(options="true,false", name="overrideContent", selectedValue="false", class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#

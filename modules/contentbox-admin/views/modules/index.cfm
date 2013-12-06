@@ -149,8 +149,13 @@
 			</div>
 			<div class="body">
 				#html.startForm(name="moduleUploadForm",action=prc.xehModuleUpload,multipart=true,novalidate="novalidate")#
-	
-					#html.fileField(name="fileModule",label="Upload Module: ", class="input-block-level",required="required")#
+					#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+						name="fileModule",
+						label="Upload Module:",
+						columnWidth=2,
+						useRemoveButton=false,
+						required=true
+					)#
 	
 					<div class="actionBar" id="uploadBar">
 						#html.submitButton(value="Upload & Install",class="btn btn-danger")#
