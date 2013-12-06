@@ -289,7 +289,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			}
 			// else only override if true
 			else if( arguments.override ){
-				oSetting.setValue( thisSetting.value );
+				oSetting.setValue( javaCast( "string", thisSetting.value ) );
 				arrayAppend( allSettings, oSetting );
 				importLog.append( "Overriding setting: #thisSetting.name#<br>" );
 			}
