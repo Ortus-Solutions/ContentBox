@@ -55,7 +55,12 @@ $(document).ready(function() {
             error.appendTo( element.parent("div.controls") );
         }
     })	
-    
+    $.fn.resetValidations = function() {
+        // also remove success and error classes
+        this.find( '.control-group' ).each(function() {
+            $( this ).removeClass( 'error' ).removeClass( 'success' );
+        });
+    }
     // simple method to blank out all form fields 
     $.fn.clearForm = function() {
     	if( this.data( 'validator') == undefined ){ return; }
@@ -77,12 +82,16 @@ $(document).ready(function() {
                     this.checked = false;
             }
         });
-        // also remove success and error classes
-        this.find( '.control-group' ).each(function() {
-            $( this ).removeClass( 'error' ).removeClass( 'success' );
-        });
+        this.data( 'validator' ).resetValidations();
     }
-    
+    $.fn.collect = function() {
+        var serializedArrayData = this.serializeArray();
+        var data = {};
+        $.each( serializedArrayData, function( index, obj ) {
+            data[ obj.name ] = obj.value;
+        });
+        return data;
+    }
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
 

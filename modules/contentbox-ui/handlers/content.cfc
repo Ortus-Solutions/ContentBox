@@ -294,7 +294,7 @@ component{
 		if( !len( rc.author ) ){ arrayAppend( commentErrors, "Your name is missing!" ); }
 		if( !len( rc.authorEmail ) OR NOT validator.checkEmail( rc.authorEmail ) ){ arrayAppend( commentErrors, "Your email is missing or is invalid!" ); }
 		if( len( rc.authorURL ) AND NOT validator.checkURL( rc.authorURL ) ){ arrayAppend( commentErrors, "Your website URL is invalid!" ); }
-		if( !len( rc.content ) ){ arrayAppend( commentErrors, "Your URL is invalid!" ); }
+		if( !len( rc.content ) ){ arrayAppend( commentErrors, "Please provide a comment!" ); }
 
 		// Captcha Validation
 		if( prc.cbSettings.cb_comments_captcha AND NOT getMyPlugin( plugin="Captcha", module="contentbox" ).validate( rc.captchacode ) ){

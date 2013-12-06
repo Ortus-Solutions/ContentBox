@@ -143,6 +143,11 @@ component {
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
 		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.BlogCFCImporter");
 		binder.map("machblogImporter@cb").to("contentbox.model.importers.MachBlogImporter");
+		binder.map("ContentBoxImporter@cb").to("contentbox.model.importers.ContentBoxImporter");
+		// exporters
+		binder.map("dataExporter@cb").to("contentbox.model.exporters.DataExporter");
+		binder.map("fileExporter@cb").to("contentbox.model.exporters.FileExporter");
+		binder.map("ContentBoxExporter@cb").to("contentbox.model.exporters.ContentBoxExporter");
 		// ColdBox Integrations
 		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
 		binder.map("SystemUtil@cb").to( "coldbox.system.core.util.Util" );
