@@ -171,7 +171,10 @@
 			content overrides are matched via their <strong>slug</strong>.
 			If the importer cannot find the username from the import file in your installation, then it will ignore the record.</p>
 			
-			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
+			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+				name="importFile", 
+				required=true
+			)#
 			
 			<label for="overrideContent">Override content?</label>
 			<small>By default all content that exist is not overwritten.</small><br>
