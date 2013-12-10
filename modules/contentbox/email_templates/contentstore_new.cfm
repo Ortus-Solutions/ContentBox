@@ -1,13 +1,33 @@
 ﻿<cfoutput>
-A new content store object has been created on your system by @contentAuthor@ (<a href="mailto:@contentAuthorEmail@">@contentAuthorEmail@</a>) : <a href="@contentURL@">@contentTitle@</a>.
-
-<hr>
-<p>&nbsp;</p>
-
-<strong>Title:</strong> @contentTitle@<br>
-<strong>Description:</strong> @contentDescription@</br>
-<strong>Published:</strong> @contentIsPublished@ on @contentPublishedDate@<br>
-<strong>Expires:</strong> @contentExpireDate@<br>
-<strong>Excerpt:</strong> <br>
-@contentExcerpt@
+    <cfset ETH = getPlugin( plugin="EmailTemplateHelper", module="contentbox" )>
+    #ETH.author( email=args.gravatarEmail, content="
+        <strong>@contentAuthor@</strong> created a new content store object:<br /> <a href='@contentURL@'>@contentTitle@</a>
+    ")#
+    #ETH.divider()#
+    #ETH.heading( content="Content Store Object Details" )#
+    #ETH.text("
+        <table cellpadding='3' cellspacing='3'>
+            <tbody>
+                <tr>
+                    <td><strong>Title:</strong></td>
+                    <td>@contentTitle@</td>
+                </tr>
+                <tr>
+                    <td><strong>Description:</strong></td>
+                    <td>@contentDescription@</td>
+                </tr>
+                <tr>
+                    <td><strong>Published:</strong></td>
+                    <td>@contentIsPublished@ on @contentPublishedDate@</td>
+                </tr>
+                <tr>
+                    <td><strong>Expires:</strong></td>
+                    <td>@contentExpireDate@</td>
+                </tr>
+            </tbody>
+        </table>
+    ")#
+    #ETH.divider()#
+    #ETH.heading( content="Excerpt" )#
+    #ETH.text( content="@contentExcerpt@", callout="true" )#
 </cfoutput>

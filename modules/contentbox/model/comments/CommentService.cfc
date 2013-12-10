@@ -278,8 +278,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 									   port=settings.cb_site_mail_smtp,
 									   useTLS=settings.cb_site_mail_tls,
 									   useSSL=settings.cb_site_mail_ssl);
+		
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/#template#") );
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/#template#", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= inComment.getAuthorEmail() }
+		));
 		// send it out
 		mailService.send( mail );
 	}

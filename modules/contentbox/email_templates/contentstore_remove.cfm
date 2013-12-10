@@ -1,11 +1,25 @@
 ﻿<cfoutput>
-The following content store object has been removed from your system by @contentAuthor@ (<a href="mailto:@contentAuthorEmail@">@contentAuthorEmail@</a>):
-	
-<hr>
-<p>&nbsp;</p>
-
-<strong>Title:</strong> @contentTitle@<br/>
-<strong>Description:</strong> @contentDescription@<br/>
-<strong>Excerpt:</strong> <br/>
-@contentExcerpt@ 
+    <cfset ETH = getPlugin( plugin="EmailTemplateHelper", module="contentbox" )>
+    #ETH.author( email=args.gravatarEmail, content="
+        <strong>@contentAuthor@</strong> removed a content store object from your system
+    ")#
+    #ETH.divider()#
+    #ETH.heading( content="Content Store Object Details" )#
+    #ETH.text("
+        <table cellpadding='3' cellspacing='3'>
+            <tbody>
+                <tr>
+                    <td><strong>Title:</strong></td>
+                    <td>@contentTitle@</td>
+                </tr>
+                <tr>
+                    <td><strong>Description:</strong></td>
+                    <td>@contentDescription@</td>
+                </tr>
+            </tbody>
+        </table>
+    ")#
+    #ETH.divider()#
+    #ETH.heading( content="Excerpt" )#
+    #ETH.text( content="@contentExcerpt@", callout="true" )#
 </cfoutput>
