@@ -171,8 +171,9 @@ component implements="ISecurityService" singleton{
 									   password=settings.cb_site_mail_password,
 									   port=settings.cb_site_mail_smtp,
 									   useTLS=settings.cb_site_mail_tls,
-									   useSSL=settings.cb_site_mail_ssl,
-									   body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification"));
+									   useSSL=settings.cb_site_mail_ssl);
+		//body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification")									   
+		mail.setBody( renderer.get().renderLayout( view="/contentbox/email_templates/password_verification", layout="email", module="contentbox-admin" ) );
 		// send it out
 		mailService.send( mail );
 		
@@ -223,8 +224,9 @@ component implements="ISecurityService" singleton{
 									   password=settings.cb_site_mail_password,
 									   port=settings.cb_site_mail_smtp,
 									   useTLS=settings.cb_site_mail_tls,
-									   useSSL=settings.cb_site_mail_ssl,
-									   body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder"));
+									   useSSL=settings.cb_site_mail_ssl);
+		//,body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder")
+		mail.setBody( renderer.get().renderLayout( view="/contentbox/email_templates/password_reminder", layout="email", module="contentbox-admin" ) );
 		// send it out
 		mailService.send( mail );
 		
