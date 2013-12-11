@@ -149,32 +149,36 @@ component extends="content" singleton{
 	*/
 	function search( event, rc, prc ){
 		// incoming params
-		event.paramValue("page",1);
-		event.paramValue("q","");
+		event.paramValue( "page", 1 );
+		event.paramValue( "q", "" );
+
+		// cleanup
+		rc.q = antiSamy.htmlSanitizer( trim( rc.q ) );
 
 		// prepare paging plugin
-		prc.pagingPlugin 		= getMyPlugin(plugin="Paging", module="contentbox");
-		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries(pagingMaxRows=prc.cbSettings.cb_search_maxResults);
-		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat(rc.q)#/@page@";
+		prc.pagingPlugin 		= getMyPlugin( plugin="Paging", module="contentbox" );
+		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
+		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
+		
 		// get search results
-		if( len(rc.q) ){
+		if( len( rc.q ) ){
 			var searchAdapter = searchService.getSearchAdapter();
-			prc.searchResults = searchAdapter.search(offset=prc.pagingBoundaries.startRow-1,
-												     max=prc.cbSettings.cb_search_maxResults,
-												   	 searchTerm=rc.q);
+			prc.searchResults = searchAdapter.search( offset=prc.pagingBoundaries.startRow-1,
+												      max=prc.cbSettings.cb_search_maxResults,
+												   	  searchTerm=rc.q );
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		}
 		else{
-			prc.searchResults = getModel("SearchResults@cb");
+			prc.searchResults = getModel( "SearchResults@cb" );
 			prc.searchResultsContent = "Please enter a search term to search on.";
 		}
 		
 		// set skin search
-		event.setLayout(name="#prc.cbLayout#/layouts/#layoutService.getThemeSearchLayout()#", module="contentbox")
-			.setView(view="#prc.cbLayout#/views/search",module="contentbox");
+		event.setLayout( name="#prc.cbLayout#/layouts/#layoutService.getThemeSearchLayout()#", module="contentbox" )
+			.setView( view="#prc.cbLayout#/views/search", module="contentbox" );
 			
 		// announce event
-		announceInterception("cbui_onContentSearch",{searchResults = prc.searchResults, searchResultsContent = prc.searchResultsContent});
+		announceInterception( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
 	}
 
 
