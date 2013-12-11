@@ -1,16 +1,18 @@
 /*
 * A helper to create standard email template sections
 */
-component extends="coldbox.system.Plugin" {
+component extends="coldbox.system.Plugin" singleton{
     /**
     *  Constructor
     */
     EmailTemplateHelper function init( required controller ){
+
         super.init( controller );
         
         setpluginName( "EmailTemplateHelper" );
         setpluginVersion( "1.0" );
-        setpluginDescription( "A helper to create standard email template sections" );        
+        setpluginDescription( "A helper to create standard email template sections" );      
+  
         //Return instance
         return this;        
     }
