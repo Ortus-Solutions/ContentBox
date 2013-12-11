@@ -69,8 +69,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/author_new") );
-		
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/author_new", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= currentAuthor.getEmail() }
+		));
 		// send it out
 		mailService.send( mail );
 	}
@@ -109,8 +113,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/author_remove") );
-		
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/author_remove", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= currentAuthor.getEmail() } 
+		));
 		// send it out
 		mailService.send( mail );
 	}
@@ -160,8 +168,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/entry_new") );
-		
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/entry_new", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= currentAuthor.getEmail() }
+		));
 		// send it out
 		mailService.send( mail );
 	}
@@ -208,8 +220,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/entry_remove") );
-		
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/entry_remove", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= currentAuthor.getEmail() }
+		));
 		// send it out
 		mailService.send( mail );
 	}
@@ -258,8 +274,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/page_new") );
-		
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/page_new", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= currentAuthor.getEmail() } 
+		));
 		// send it out
 		mailService.send( mail );
 	}
@@ -306,8 +326,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									   useSSL=settings.cb_site_mail_ssl);
 									   
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/page_remove") );
-		
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/page_remove", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= currentAuthor.getEmail() } 
+		));
 		// send it out
 		mailService.send( mail );
 	}
@@ -352,8 +376,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									    useSSL=settings.cb_site_mail_ssl );
 									   
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/contentstore_new") );
-		
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/contentstore_new", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= currentAuthor.getEmail() }
+		));
 		// send it out
 		mailService.send( mail );
 	}
@@ -398,8 +426,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 									    useSSL=settings.cb_site_mail_ssl );
 									   
 		// generate content for email from template
-		mail.setBody( renderer.get().renderExternalView(view="/contentbox/email_templates/contentstore_remove") );
-		
+		mail.setBody( renderer.get().renderLayout( 
+			view="/contentbox/email_templates/contentstore_remove", 
+			layout="email", 
+			module="contentbox-admin",
+			args = { gravatarEmail= currentAuthor.getEmail() } 
+		));
 		// send it out
 		mailService.send( mail );
 	}

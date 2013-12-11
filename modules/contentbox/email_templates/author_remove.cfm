@@ -1,9 +1,26 @@
 ﻿<cfoutput>
-An author has been removed from your system by @currentAuthor@ (@currentAuthorEmail@):
-	
-<br/><br/>
-
-Author: @authorName@ <br/>
-Author Email: @authorEmail@ <br/>
-Author Role: @authorRole@
+    <cfset ETH = getPlugin( plugin="EmailTemplateHelper", module="contentbox" )>
+    #ETH.author( email=args.gravatarEmail, content="
+        <strong>@currentAuthor@</strong> removed an author from your system
+    ")#
+    #ETH.divider()#
+    #ETH.heading( content="Author Details" )#
+    #ETH.text("
+        <table cellpadding='3' cellspacing='3'>
+            <tbody>
+                <tr>
+                    <td><strong>Author:</strong></td>
+                    <td>@authorName@</td>
+                </tr>
+                <tr>
+                    <td><strong>Author Email:</strong></td>
+                    <td>@authorEmail@</td>
+                </tr>
+                <tr>
+                    <td><strong>Author Role:</strong></td>
+                    <td>@authorRole@</td>
+                </tr>
+            </tbody>
+        </table>
+    ")#
 </cfoutput>

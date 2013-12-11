@@ -1,10 +1,20 @@
 ﻿<cfoutput>
-The following page has been removed from your system by @pageAuthor@ (<a href="mailto:@pageAuthorEmail@">@pageAuthorEmail@</a>):
-	
-<hr>
-<p>&nbsp;</p>
-
-<strong>Title:</strong> @pageTitle@<br/>
-<strong>Excerpt:</strong> <br/>
-@pageExcerpt@ 
+    <cfset ETH = getPlugin( plugin="EmailTemplateHelper", module="contentbox" )>
+    #ETH.author( email=args.gravatarEmail, content="
+        <strong>@pageAuthor@</strong> removed a page from your system
+    ")#
+    #ETH.divider()#
+    #ETH.text("
+        <table cellpadding='3' cellspacing='3'>
+            <tbody>
+                <tr>
+                    <td><strong>Title:</strong></td>
+                    <td>@pageTitle@</td>
+                </tr>
+            </tbody>
+        </table>
+    ")#
+    #ETH.divider()#
+    #ETH.heading( content="Excerpt" )#
+    #ETH.text( content="@pageExcerpt@", callout="true" )#
 </cfoutput>
