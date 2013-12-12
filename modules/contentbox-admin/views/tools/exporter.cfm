@@ -1,8 +1,9 @@
 <cfoutput>
 #html.startForm(name="exporterForm", action=rc.xehExport, novalidate="novalidate")#     
 <div class="row-fluid">
+
     <!--- main content --->
-    <div class="span9" id="main-content">
+    <div class="span12" id="main-content">
         <div class="box">
             <!--- Body Header --->
             <div class="header">
@@ -268,22 +269,12 @@
                     </div>
                     <hr>
                 </fieldset>
-            </div>
-        </div>
-    </div>
 
-    <!--- main sidebar --->
-    <div class="span3" id="main-sidebar">
-        <!--- Saerch Box --->
-        <div class="small_box">
-            <div class="header">
-                <i class="icon-cogs"></i> Actions
-            </div>
-            <div class="body">
+
                 <!--- Submit Button --->
                 <div class="actionBar" id="uploadBar">
-                    #html.button(type="button", value="<i class='icon-search'></i> Preview Export", class="btn btn-normal btn-small", onclick="return previewExport()")#
-                    #html.button(type="submit", value="<i class='icon-ok'></i> Start Export", class="btn btn-danger btn-small", onclick="return confirm('Are you sure you want to begin the export?')")#
+                    #html.button( type="button", value="<i class='icon-search'></i> Preview Export", class="btn btn-normal btn-large", onclick="return previewExport()" )#
+                    #html.button( type="submit", value="<i class='icon-ok'></i> Start Export", class="btn btn-danger btn-large", onclick="return confirm('Are you sure you want to begin the export?')" )#
                 </div>
                 
                 <!--- Loader --->
@@ -291,10 +282,12 @@
                     <i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
                     Exporting Content...
                 </div>
-                
+
+
             </div>
-        </div>  
+        </div>
     </div>
+
 </div>
 #html.endForm()#
 
