@@ -2,7 +2,7 @@
 #html.startForm(name="importerForm", action=rc.xehDataImport, novalidate="novalidate",multipart=true)#		
 <div class="row-fluid">
 	<!--- main content --->
-	<div class="span9" id="main-content">
+	<div class="span12" id="main-content">
 		<div class="box">
 			<!--- Body Header --->
 			<div class="header">
@@ -18,15 +18,15 @@
                     <div class="control-group">
                         <div class="controls row-fluid">
                             <div class="span6 well well-small text-center alert-success">
-                                <h2>ContentBox Package</h2>
-                                <small>If you're importing content from another ContentBox site, this option is for you.</small><br />
+                                <h2>ContentBox Package (.cbox)</h2>
+                                <small>If you're importing content from another ContentBox site, this option is for you.</small><br /><br />
                                 <label class="btn btn-success btn-toggle radio" for="import-contentbox">
                                     #html.radioButton(name="importtype",id="import-contentbox",checked=true,value="contentbox")# Import ContentBox Package
                                 </label>
                             </div>
                             <div class="span6 well well-small text-center">
                                 <h2>Database Import</h2>
-                                <small>ContentBox also supports imports from Mango, WordPress, BlogCFC, and MachBlog!</small><br />
+                                <small>ContentBox also supports imports from Mango, WordPress, BlogCFC, and MachBlog databases via Datasource connections!</small><br />
                                 <label class="btn btn-toggle radio clearfix" for="import-database">
                                     #html.radioButton(name="importtype",id="import-database",value="database")# 
                                     Import from Database
@@ -109,21 +109,11 @@
 						</div>
 						<!--- Roles --->
 						#html.select(label="Default Author Role:",name="roleID",options=prc.roles,column="roleID",nameColumn="role",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-					</fieldset>				
-                </div>
-			</div>
-		</div>
-	</div>
+					</fieldset>	
 
-	<!--- main sidebar --->
-	<div class="span3" id="main-sidebar">
-		<!--- Saerch Box --->
-		<div class="small_box">
-			<div class="header">
-				<i class="icon-cogs"></i> Actions
-			</div>
-			<div class="body">
-				<!--- Submit Button --->
+                </div>
+
+                <!--- Submit Button --->
 				<div class="actionBar" id="uploadBar">
 					#html.button(type="submit", id="import_button", value="<i class='icon-ok'></i> Start Import", class="btn btn-danger btn-large")#
 				</div>
@@ -133,10 +123,10 @@
 					<i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
 					Importing Action
 				</div>
-				
 			</div>
-		</div>	
+		</div>
 	</div>
+
 </div>
 #html.endForm()#
 <!---Import Dialog --->
