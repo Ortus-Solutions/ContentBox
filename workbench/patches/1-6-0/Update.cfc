@@ -118,7 +118,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	private function isValidInstall(){
 		// Verify if less than 1.5.7 with message
 		if( replace( currentVersion, ".", "", "all" )  LT 157 ){
-			log.info( "Cannot patch this installation until you upgrade to 1.5.7 first. Then apply this patch." );
+			log.info( "Cannot patch this installation until you upgrade to 1.5.7 first. You can find all of our patches here available for download: https://github.com/Ortus-Solutions/ContentBox/tree/master/workbench/patches. Then apply this patch." );
 			return false;
 		}
 		return true;
@@ -171,15 +171,15 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		// iterate and add
 		for( var thisPermTitle in perms ){
-			var local.thisPerm = permissionService.findWhere( {permission=thisPermTitle} );
+			var local.thisPerm = permissionService.findWhere( { permission=thisPermTitle } );
 			if( structKeyExists( local, "thisPerm" ) and !oRole.hasPermission( local.thisPerm ) ){ 
 				oRole.addPermission( local.thisPerm ); 
-				log.info("Added #thisPermTitle# permission to admin role");
+				log.info( "Added #thisPermTitle# permission to admin role" );
 			}			
 		}
 		
 		// save role
-		roleService.save(entity=oRole, transactional=false);
+		roleService.save( entity=oRole, transactional=false );
 
 		return oRole;
 	}
@@ -202,7 +202,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		
 		// save role
-		roleService.save(entity=oRole, transactional=false);
+		roleService.save( entity=oRole, transactional=false );
 
 		return oRole;
 	}
@@ -227,12 +227,13 @@ component implements="contentbox.model.updates.IUpdate"{
 				log.info("Skipped #key# permission addition as it was already in system");
 			}
 		}
-		permissionService.saveAll(entities=allPerms, transactional=false);
+		permissionService.saveAll( entities=allPerms, transactional=false );
 		
 	}
 	
 	private function updateSettings(){
 		// Create New settings
+		addSetting( "cb_contentstore_caching", "true" );
 		addSetting( "cb_notify_contentstore", "true" );
 		addSetting( "cb_comments_moderation_expiration", "30" );
 	}
