@@ -6,6 +6,23 @@
 	<meta name="generator" content="TestBox v#testbox.getVersion()#">
 	<title>Pass: #results.getTotalPass()# Fail: #results.getTotalFail()# Errors: #results.getTotalError()#</title>
 	<link href="/coldbox/system/testing/reports/assets/css/simple.css" rel="stylesheet">
+	<script src="/coldbox/system/testing/reports/assets/js/jquery.js"></script>
+	<script>
+	$(document).ready(function() {
+	});
+	function toggleDebug( specid ){
+		$("div.debugdata").each( function(){
+			var $this = $( this );
+		
+			// if bundleid passed and not the same bundle
+			if( specid != undefined && $this.attr( "data-specid" ) != specid ){
+				return;
+			}
+			// toggle.
+			$this.fadeToggle();
+		});
+	}
+	</script>
 </head>
 
 <body>
@@ -16,7 +33,7 @@
 <!-- Global Stats --->
 <div class="box" id="globalStats">
 	<div class="buttonBar">
-		<a href="?"><button title="Run all the tests">Run All</button></a>
+		<a href="#baseURL#"><button title="Run all the tests">Run All</button></a>
 	</div>
 
 	<h3>Bundles/Suites/Specs: #results.getTotalBundles()#/#results.getTotalSuites()#/#results.getTotalSpecs()#  (#results.getTotalDuration()# ms)</h3>
@@ -31,4 +48,16 @@
 	</cfif>
 
 </div>
+
+<!--- Debug Panel --->
+<cfloop array="#bundleStats#" index="thisBundle">
+	<!--- Debug Panel --->
+	<cfif arrayLen( thisBundle.debugBuffer )>
+		<h2>Debug Stream: #thisBundle.path# <button onclick="toggleDebug( '#thisBundle.id#' )" title="Toggle the test debug stream">+</button></h2>
+		<div class="debugdata" data-specid="#thisBundle.id#">
+			<p>The following data was collected in order as your tests ran via the <em>debug()</em> method:</p>
+			<cfdump var="#thisBundle.debugBuffer#" />
+		</div>
+	</cfif>
+</cfloop>
 </cfoutput>
