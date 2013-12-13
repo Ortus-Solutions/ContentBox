@@ -28,10 +28,11 @@ component extends="baseHandler"{
 		rc.xehCBImport 	 = "#prc.cbAdminEntryPoint#.tools.doCBImport";
 		// tab
 		prc.tabTools_import = true; 
-		prc.roles = roleService.list(sortOrder="role");
+		prc.roles = roleService.list( sortOrder="role" );
 		// view
-		event.setView("tools/importer");
+		event.setView( "tools/importer" );
 	}
+
 	// preimport check
 	function doCBPreImport( event, rc, prc ) {
 		event.paramValue( "CBUpload", "" );
@@ -52,6 +53,7 @@ component extends="baseHandler"{
 		}
 		event.setView( view="tools/importerPreview", layout="ajax" );
 	}
+
 	// do contentbox package import
 	function doCBImport( event, rc, prc ) {
 		event.paramValue( "CBUpload", "" );
@@ -125,9 +127,9 @@ component extends="baseHandler"{
 	function previewExport( event, rc, prc ) {
 		// get targets
 		var targets = prepareExportTargets( rc );
-		var ContentBoxExporter = getModel( "ContentBoxExporter@cb" );
+		var contentBoxExporter = getModel( "ContentBoxExporter@cb" );
 		// build up exporter instance from targets in rc
-		prc.descriptor = ContentBoxExporter.setup( targets ).getDescriptor();
+		prc.descriptor = contentBoxExporter.setup( targets ).getDescriptor();
 		// render back the descriptor data as json
 		event.setView( view="tools/exporterPreview", layout="ajax" );
 	}
