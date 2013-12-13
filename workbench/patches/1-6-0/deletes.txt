@@ -1,3 +1,9 @@
+coldbox/system/core/cf/CFMLEngine.cfc
+coldbox/system/core/cf/ThreadWrapper.cfc
+coldbox/system/testing/readme.txt
+modules/contentbox-admin/includes/ckeditor/plugins/about/dialogs/about.js
+modules/contentbox-admin/includes/ckeditor/plugins/about/dialogs/logo_ckeditor.png
+modules/contentbox-admin/includes/ckeditor/skins/moono/images/mini.png
 modules/contentbox-admin/includes/css/widgets/style.css
 modules/contentbox-admin/views/widgets/arguments.cfm
 modules/contentbox-admin/views/widgets/instanceEditor.cfm
