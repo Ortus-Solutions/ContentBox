@@ -67,7 +67,7 @@
 <div class="box" id="globalStats">
 
 <div class="buttonBar">
-	<a href="?"><button title="Run all the tests">Run All</button></a>
+	<a href="#baseURL#"><button title="Run all the tests">Run All</button></a>
 	<button onclick="toggleDebug()" title="Toggle the test debug information">Debug</button>
 </div>
 
@@ -90,7 +90,7 @@
 	<div class="box" id="bundleStats_#thisBundle.path#">
 		
 		<!--- bundle stats --->
-		<h2>#thisBundle.path# (#thisBundle.totalDuration# ms)</h2>
+		<h2><a href="#baseURL#&testBundles=#URLEncodedFormat( thisBundle.path )#" title="Run only this bundle">#thisBundle.path#</a> (#thisBundle.totalDuration# ms)</h2>
 		[ Suites/Specs: #thisBundle.totalSuites#/#thisBundle.totalSpecs# ]
 		[ <span class="specStatus passed" 	data-status="passed" data-bundleid="#thisBundle.id#">Pass: #thisBundle.totalPass#</span> ]
 		[ <span class="specStatus failed" 	data-status="failed" data-bundleid="#thisBundle.id#">Failures: #thisBundle.totalFail#</span> ]
@@ -106,6 +106,16 @@
 			</ul>
 			</div>
 		</cfloop>
+
+		<!--- Debug Panel --->
+		<cfif arrayLen( thisBundle.debugBuffer )>
+			<hr>
+			<h2>Debug Stream <button onclick="toggleDebug( '#thisBundle.id#' )" title="Toggle the test debug stream">+</button></h2>
+			<div class="debugdata" data-specid="#thisBundle.id#">
+				<p>The following data was collected in order as your tests ran via the <em>debug()</em> method:</p>
+				<cfdump var="#thisBundle.debugBuffer#" />
+			</div>
+		</cfif>
 		
 	</div>
 </cfloop>
@@ -124,7 +134,7 @@
 		<!--- Suite Results --->
 		<li>
 			<a title="Total: #arguments.suiteStats.totalSpecs# Passed:#arguments.suiteStats.totalPass# Failed:#arguments.suiteStats.totalFail# Errors:#arguments.suiteStats.totalError# Skipped:#arguments.suiteStats.totalSkipped#" 
-			   href="#baseURL#&testSuites=#URLEncodedFormat( arguments.suiteStats.name )#" 
+			   href="#baseURL#&testSuites=#URLEncodedFormat( arguments.suiteStats.name )#&testBundles=#URLEncodedFormat( arguments.bundleStats.path )#" 
 			   class="#lcase( arguments.suiteStats.status )#"><strong>+#arguments.suiteStats.name#</strong></a> 
 			(#arguments.suiteStats.totalDuration# ms)
 		</li>
@@ -134,7 +144,7 @@
 				<ul>
 				<div class="spec #lcase( local.thisSpec.status )#" data-bundleid="#arguments.bundleStats.id#" data-specid="#local.thisSpec.id#">
 					<li>
-						<a href="#baseURL#&testSpecs=#URLEncodedFormat( local.thisSpec.name )#" class="#lcase( local.thisSpec.status )#">#local.thisSpec.name# (#local.thisSpec.totalDuration# ms)</a>
+						<a href="#baseURL#&testSpecs=#URLEncodedFormat( local.thisSpec.name )#&testBundles=#URLEncodedFormat( arguments.bundleStats.path )#" class="#lcase( local.thisSpec.status )#">#local.thisSpec.name# (#local.thisSpec.totalDuration# ms)</a>
 						
 						<cfif local.thisSpec.status eq "failed">
 							- <strong>#local.thisSpec.failMessage#</strong>

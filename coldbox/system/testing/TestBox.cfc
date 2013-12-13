@@ -26,21 +26,21 @@ component accessors="true"{
 	/**
 	* Constructor
 	* @bundles.hint The path, list of paths or array of paths of the spec bundle CFCs to run and test
-	* @directory.hint The directory information struct to test: [ mapping = the path to the directory using dot notation (myapp.testing.specs), recurse = boolean, filter = closure that receives the path of the CFC found, it must return true to process or false to continue process ]
+	* @directory.hint The directory to test which can be a simple mapping path or a struct with the following options: [ mapping = the path to the directory using dot notation (myapp.testing.specs), recurse = boolean, filter = closure that receives the path of the CFC found, it must return true to process or false to continue process ]
 	* @reporter.hint The type of reporter to use for the results, by default is uses our 'simple' report. You can pass in a core reporter string type or an instance of a coldbox.system.testing.reports.IReporter
 	* @labels.hint The list or array of labels that a suite or spec must have in order to execute.
 	* @options.hint A structure of configuration options that are optionally used to configure a runner.
 	*/
 	any function init( 
 		any bundles=[], 
-		struct directory={}, 
+		any directory={}, 
 		any reporter="simple", 
 		any labels=[], 
 		struct options={} 
 	){
 		
 		// TestBox version
-		variables.version 	= "1.0.0.@build.number@";
+		variables.version 	= "1.0.0.00054";
 		variables.codename 	= "";
 		// init util
 		variables.utility = new coldbox.system.core.util.Util();
@@ -50,6 +50,8 @@ component accessors="true"{
 		// options
 		variables.options = arguments.options;
 
+		// inflate directory?
+		if( isSimpleValue( arguments.directory ) ){ arguments.directory = { mapping=arguments.directory, recurse=true }; }
 		// directory passed?
 		if( !structIsEmpty( arguments.directory ) ){
 			arguments.bundles = getSpecPaths( arguments.directory );
@@ -67,19 +69,21 @@ component accessors="true"{
 	* Run me some testing goodness, this can use the constructed object variables or the ones
 	* you can send right here.
 	* @bundles.hint The path, list of paths or array of paths of the spec bundle CFCs to run and test
-	* @directory.hint The directory information struct to test: [ mapping = the path to the directory using dot notation (myapp.testing.specs), recurse = boolean, filter = closure that receives the path of the CFC found, it must return true to process or false to continue process ]	
+	* @directory.hint The directory to test which can be a simple mapping path or a struct with the following options: [ mapping = the path to the directory using dot notation (myapp.testing.specs), recurse = boolean, filter = closure that receives the path of the CFC found, it must return true to process or false to continue process ]
 	* @reporter.hint The type of reporter to use for the results, by default is uses our 'simple' report. You can pass in a core reporter string type or an instance of a coldbox.system.testing.reports.IReporter. You can also pass a struct if the reporter requires options: {type="", options={}}
 	* @labels.hint The list or array of labels that a suite or spec must have in order to execute.
 	* @options.hint A structure of configuration options that are optionally used to configure a runner.
+	* @testBundles.hint A list or array of bundle names that are the ones that will be executed ONLY!
 	* @testSuites.hint A list or array of suite names that are the ones that will be executed ONLY!
 	* @testSpecs.hint A list or array of test names that are the ones that will be executed ONLY!
 	*/
 	any function run( 
 		any bundles,
-		struct directory,
+		any directory,
 		any reporter,
 		any labels,
 		struct options,
+		any testBundles=[],
 		any testSuites=[],
 		any testSpecs=[]
 	){
@@ -93,45 +97,62 @@ component accessors="true"{
 	}
 
 	/**
-	* Run me some testing goodness but give you back the raw TestResults object instead
+	* Run me some testing goodness but give you back the raw TestResults object instead of a report
 	* @bundles.hint The path, list of paths or array of paths of the spec bundle CFCs to run and test
-	* @directory.hint The directory information struct to test: [ mapping = the path to the directory using dot notation (myapp.testing.specs), recurse = boolean, filter = closure that receives the path of the CFC found, it must return true to process or false to continue process ]	
+	* @directory.hint The directory to test which can be a simple mapping path or a struct with the following options: [ mapping = the path to the directory using dot notation (myapp.testing.specs), recurse = boolean, filter = closure that receives the path of the CFC found, it must return true to process or false to continue process ]
 	* @labels.hint The list or array of labels that a suite or spec must have in order to execute.
 	* @options.hint A structure of configuration options that are optionally used to configure a runner.
+	* @testBundles.hint A list or array of bundle names that are the ones that will be executed ONLY!
 	* @testSuites.hint A list or array of suite names that are the ones that will be executed ONLY!
 	* @testSpecs.hint A list or array of test names that are the ones that will be executed ONLY!
 	*/
 	coldbox.system.testing.TestResult function runRaw( 
 		any bundles,
-		struct directory,
+		any directory,
 		any labels,
 		struct options,
+		any testBundles=[],
 		any testSuites=[],
 		any testSpecs=[]
 	){
 		
 		// inflate options if passed
-		if( structKeyExists( arguments, "options" ) ){ 
-			variables.options = arguments.options;
+		if( structKeyExists( arguments, "options" ) ){ variables.options = arguments.options; }
+		// inflate directory?
+		if( structKeyExists( arguments, "directory" ) && isSimpleValue( arguments.directory ) ){ arguments.directory = { mapping=arguments.directory, recurse=true }; }
+		// inflate test bundles, suites and specs from incoming variables.
+		arguments.testBundles 	= ( isSimpleValue( arguments.testBundles ) ? listToArray( arguments.testBundles ) : arguments.testBundles );
+		arguments.testSuites 	= ( isSimpleValue( arguments.testSuites ) ? listToArray( arguments.testSuites ) : arguments.testSuites );
+		arguments.testSpecs 	= ( isSimpleValue( arguments.testSpecs ) ? listToArray( arguments.testSpecs ) : arguments.testSpecs );
+		
+		// Verify URL conventions for bundle, suites and specs exclusions.
+		if( structKeyExists( url, "testBundles") ){
+			testBundles.addAll( listToArray( url.testBundles ) );
+		}
+		if( structKeyExists( url, "testSuites") ){
+			arguments.testSuites.addAll( listToArray( url.testSuites ) );
+		}
+		if( structKeyExists( url, "testSpecs") ){
+			arguments.testSpecs.addAll( listToArray( url.testSpecs ) );
+		}
+		if( structKeyExists( url, "testMethod") ){
+			arguments.testSpecs.addAll( listToArray( url.testMethod ) );
 		}
 
-		// inflate test suites and specs from incoming variables.
-		arguments.testSuites = ( isSimpleValue( arguments.testSuites ) ? listToArray( arguments.testSuites ) : arguments.testSuites );
-		arguments.testSpecs = ( isSimpleValue( arguments.testSpecs ) ? listToArray( arguments.testSpecs ) : arguments.testSpecs );
-		
-		// directory passed?
+		// Using a directory runner?
 		if( structKeyExists( arguments, "directory" ) && !structIsEmpty( arguments.directory ) ){
 			arguments.bundles = getSpecPaths( arguments.directory );
 		}
 
-		// inflate labels if passed
+		// Inflate labels if passed
 		if( structKeyExists( arguments, "labels" ) ){ inflateLabels( arguments.labels ); }
-		// if bundles passed, inflate those as the target
+		// If bundles passed, inflate those as the target
 		if( structKeyExists( arguments, "bundles" ) ){ inflateBundles( arguments.bundles ); }
 		
 		// create results object
 		var results = new coldbox.system.testing.TestResult( bundleCount=arrayLen( variables.bundles ), 
 															 labels=variables.labels,
+															 testBundles=arguments.testBundles,
 															 testSuites=arguments.testSuites,
 															 testSpecs=arguments.testSpecs );
 		
@@ -139,7 +160,7 @@ component accessors="true"{
 		for( var thisBundlePath in variables.bundles ){
 			testBundle( thisBundlePath, results );
 		}
-		
+
 		// mark end of testing bundles
 		results.end();
 		
@@ -155,6 +176,7 @@ component accessors="true"{
 	* @reporterOptions.hint A JSON struct literal of options to pass into the reporter
 	* @labels.hint The list of labels that a suite or spec must have in order to execute.
 	* @options.hint A JSON struct literal of configuration options that are optionally used to configure a runner.
+	* @testBundles.hint A list or array of bundle names that are the ones that will be executed ONLY!
 	* @testSuites.hint A list of suite names that are the ones that will be executed ONLY!
 	* @testSpecs.hint A list of test names that are the ones that will be executed ONLY!
 	*/
@@ -166,6 +188,7 @@ component accessors="true"{
 		string reporterOptions="{}",
 		string labels="",
 		string options,
+		string testBundles="",
 		string testSuites="",
 		string testSpecs=""
 	) output=true {
@@ -174,6 +197,7 @@ component accessors="true"{
 
 		// simple to complex
 		arguments.labels 		= listToArray( arguments.labels );
+		arguments.testBundles	= listToArray( arguments.testBundles );
 		arguments.testSuites 	= listToArray( arguments.testSuites );
 		arguments.testSpecs 	= listToArray( arguments.testSpecs );
 
@@ -263,6 +287,8 @@ component accessors="true"{
 			case "console" : { return new "coldbox.system.testing.reports.ConsoleReporter"(); }
 			case "min" : { return new "coldbox.system.testing.reports.MinReporter"(); }
 			case "tap" : { return new "coldbox.system.testing.reports.TapReporter"(); }
+			case "doc" : { return new "coldbox.system.testing.reports.DocReporter"(); }
+			case "codexwiki" : { return new "coldbox.system.testing.reports.CodexWikiReporter"(); }
 			default: {
 				return new "#arguments.reporter#"();
 			}
@@ -272,7 +298,7 @@ component accessors="true"{
 	/***************************************** PRIVATE ************************************************************ //
 
 	/**
-	* This method tests a bundle CFC according to type
+	* This method executes the tests in a bundle CFC according to type
 	* @bundlePath.hint The path of the Bundle CFC to test.
 	* @testResults.hint The testing results object to keep track of results
 	*/
@@ -286,16 +312,19 @@ component accessors="true"{
 		
 		// Discover type?
 		if( structKeyExists( target, "run" ) ){
-			// BDD Style
+			// Run via BDD Style
 			new coldbox.system.testing.runners.BDDRunner( options=variables.options )
 				.run( target, arguments.testResults );
 		}
 		else{
-			// xUnit Style
+			// Run via xUnit Style
 			new coldbox.system.testing.runners.UnitRunner( options=variables.options )
 				.run( target, arguments.testResults );
 		}
-		
+
+		// Store debug buffer for this bundle
+		arguments.testResults.storeDebugBuffer( target.getDebugBuffer() );
+
 		return this;
 	}
 

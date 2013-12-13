@@ -223,9 +223,12 @@ Properties
 		<cfargument name="objectKey" type="any" required="true" hint="The key of the object to lookup.">
 		<cfscript>
 			var refLocal = {};
+			// cleanup the key
+			arguments.objectKey = lcase( arguments.objectKey );
+
 			// get quietly
-			refLocal.results = getQuiet(arguments.objectKey);
-			if( structKeyExists(refLocal, "results") ){
+			refLocal.results = instance.objectStore.get( arguments.objectKey );
+			if( structKeyExists( refLocal, "results" ) ){
 				getStats().hit();
 				return refLocal.results;
 			}
@@ -242,10 +245,10 @@ Properties
 			var refLocal = {};
 
 			// cleanup the key
-			arguments.objectKey = lcase(arguments.objectKey);
+			arguments.objectKey = lcase( arguments.objectKey );
 
 			// get object from store
-			refLocal.results = instance.objectStore.get( arguments.objectKey );
+			refLocal.results = instance.objectStore.getQuiet( arguments.objectKey );
 			if( structKeyExists(refLocal, "results") ){
 				return refLocal.results;
 			}

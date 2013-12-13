@@ -44,22 +44,27 @@ component extends="coldbox.system.testing.runners.BaseRunner" implements="coldbo
 
 		//#### NOTHING IS TRAPPED BELOW SO AS TO THROW REAL EXCEPTIONS FROM TESTS THAT ARE WRITTEN WRONG
 
-		// execute beforeAll(), beforeTests() for this bundle, no matter how many suites they have.
-		if( structKeyExists( arguments.target, "beforeAll" ) ){ arguments.target.beforeAll(); }
-		if( structKeyExists( arguments.target, "beforeTests" ) ){ arguments.target.beforeTests(); }
+		// Verify we can run this bundle
+		if( canRunBundle( bundlePath=targetMD.name, testResults=arguments.testResults ) ){
+
+			// execute beforeAll(), beforeTests() for this bundle, no matter how many suites they have.
+			if( structKeyExists( arguments.target, "beforeAll" ) ){ arguments.target.beforeAll(); }
+			if( structKeyExists( arguments.target, "beforeTests" ) ){ arguments.target.beforeTests(); }
+			
+			// Iterate over found test suites and test them, if nested suites, then this will recurse as well.
+			for( var thisSuite in testSuites ){
+				testSuite( target=arguments.target, 
+						   suite=thisSuite, 
+						   testResults=arguments.testResults,
+						   bundleStats=bundleStats );
+			}
+
+			// execute afterAll(), afterTests() for this bundle, no matter how many suites they have.
+			if( structKeyExists( arguments.target, "afterAll" ) ){ arguments.target.afterAll(); }
+			if( structKeyExists( arguments.target, "afterTests" ) ){ arguments.target.afterTests(); }
 		
-		// Iterate over found test suites and test them, if nested suites, then this will recurse as well.
-		for( var thisSuite in testSuites ){
-			testSuite( target=arguments.target, 
-					   suite=thisSuite, 
-					   testResults=arguments.testResults,
-					   bundleStats=bundleStats );
 		}
 
-		// execute afterAll(), afterTests() for this bundle, no matter how many suites they have.
-		if( structKeyExists( arguments.target, "afterAll" ) ){ arguments.target.afterAll(); }
-		if( structKeyExists( arguments.target, "afterTests" ) ){ arguments.target.afterTests(); }
-		
 		// finalize the bundle stats
 		arguments.testResults.endStats( bundleStats );
 		
@@ -99,15 +104,43 @@ component extends="coldbox.system.testing.runners.BaseRunner" implements="coldbo
 			canRunSuite( arguments.suite, arguments.testResults )
 		){
 
+			// prepare threaded names
+			var threadNames = [];
+			// threaded variables just in case some suite is async and another is not.
+			thread.testResults 	= arguments.testResults;
+			thread.suiteStats  	= suiteStats;
+			thread.target 		= arguments.target;
+
 			// iterate over suite specs and test them
 			for( var thisSpec in arguments.suite.specs ){
 				
-				arguments.target.runTest( spec=thisSpec, 
-										  testResults=arguments.testResults, 
-						  				  suiteStats=suiteStats,
-						  				  runner=this );
+				// is this async or not?
+				if( arguments.suite.asyncAll ){
+					// prepare thread names
+					var thisThreadName = "tb-suite-#hash( thisSpec.name )#";
+					arrayAppend( threadNames, thisThreadName );
+					// thread it
+					thread name="#thisThreadName#" thisSpec="#thisSpec#" suite="#arguments.suite#" threadName="#thisThreadName#"{
+						// execute the test within the context of the spec target due to railo closure bug, move back once it is resolved.
+						thread.target.runTestMethod( spec=attributes.thisSpec, 
+										  	   		 testResults=thread.testResults, 
+						  				  	   		 suiteStats=thread.suiteStats,
+						  				  	   		 runner=this );
+				
+					}
 
-			}
+				} else {
+					// execute the test within the context of the spec target due to railo closure bug, move back once it is resolved.
+					thread.target.runTestMethod( spec=thisSpec,
+								  		   		 testResults=thread.testResults, 
+								  		   		 suiteStats=thread.suiteStats,
+								  		   		 runner=this );
+				}
+
+			} // end loop over specs
+
+			// join threads if async
+			if( arguments.suite.asyncAll ){ thread action="join" name="#arrayToList( threadNames )#"{}; }
 			
 			// All specs finalized, set suite status according to spec data
 			if( suiteStats.totalError GT 0 ){ suiteStats.status = "Error"; }
@@ -146,7 +179,7 @@ component extends="coldbox.system.testing.runners.BaseRunner" implements="coldbo
 			// suite name
 			name 		= ( structKeyExists( arguments.targetMD, "displayName" ) ? arguments.targetMD.displayname : arguments.targetMD.name ),
 			// async flag
-			asyncAll 	= false,
+			asyncAll 	= ( structKeyExists( arguments.targetMD, "asyncAll" ) ? arguments.targetMD.asyncAll : false ),
 			// skip suite testing flag
 			skip 		= ( structKeyExists( arguments.targetMD, "skip" ) ?  ( len( arguments.targetMD.skip ) ? arguments.targetMD.skip : true ) : false ),
 			// labels attached to the suite for execution
