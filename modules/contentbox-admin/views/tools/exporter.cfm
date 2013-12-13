@@ -1,5 +1,5 @@
 <cfoutput>
-#html.startForm(name="exporterForm", action=rc.xehExport, novalidate="novalidate")#     
+#html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate")#     
 <div class="row-fluid">
 
     <!--- main content --->
@@ -274,13 +274,14 @@
                 <!--- Submit Button --->
                 <div class="actionBar" id="uploadBar">
                     #html.button( type="button", value="<i class='icon-search'></i> Preview Export", class="btn btn-normal btn-large", onclick="return previewExport()" )#
-                    #html.button( type="submit", value="<i class='icon-ok'></i> Start Export", class="btn btn-danger btn-large", onclick="return confirm('Are you sure you want to begin the export?')" )#
+                    #html.button( type="button", value="<i class='icon-download' id='export-icon'></i> Start Export", class="btn btn-danger btn-large", 
+                                   onclick="doExport()" )#
                 </div>
                 
                 <!--- Loader --->
                 <div class="loaders" id="uploadBarLoader">
-                    <i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
-                    Exporting Content...
+                    <i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
+                   <h2> Doing some awesome exporting action, please wait...</h2><br>
                 </div>
 
 

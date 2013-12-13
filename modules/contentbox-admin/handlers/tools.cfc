@@ -107,15 +107,17 @@ component extends="baseHandler"{
 	
 	// exporter
 	function exporter( event, rc, prc ) {
-		// Exit Handler
-		rc.xehExport 	= "#prc.cbAdminEntryPoint#.tools.doExport";
-		rc.xehPreviewExport = "#prc.cbAdminEntryPoint#.tools.previewExport";
+		// Exit Handlers
+		prc.xehExport 			= "#prc.cbAdminEntryPoint#.tools.doExport";
+		prc.xehPreviewExport 	= "#prc.cbAdminEntryPoint#.tools.previewExport";
+		
 		// tab
 		prc.tabTools_export = true;
-		prc.emailTemplates = templateService.getTemplates();
-		prc.modules = moduleService.findModules().modules;
-		prc.layouts = layoutService.getLayouts();
-		prc.widgets = widgetService.getWidgets();
+		prc.emailTemplates 	= templateService.getTemplates();
+		prc.modules 		= moduleService.findModules().modules;
+		prc.layouts 		= layoutService.getLayouts();
+		prc.widgets 		= widgetService.getWidgets();
+		
 		// view
 		event.setView("tools/exporter");
 	}
@@ -129,20 +131,22 @@ component extends="baseHandler"{
 		// render back the descriptor data as json
 		event.setView( view="tools/exporterPreview", layout="ajax" );
 	}
+
 	// do export
 	function doExport( event, rc, prc ) {
 		// get targets
 		var targets = prepareExportTargets( rc );
-		var ContentBoxExporter = getModel( "ContentBoxExporter@cb" );
-		var exportResult = ContentBoxExporter.setup( targets ).export();
+		var contentBoxExporter = getModel( "ContentBoxExporter@cb" );
+		var exportResult = contentBoxExporter.setup( targets ).export();
 		// export the content
 		var exportFilePath = exportResult.exportfile;
-		// read file
-		var targetFile = fileRead( exportFilePath );
 		// save success message
-		var filename = '#settingService.getSetting( "cb_site_name" )#';
+		var filename = getPlugin( "HTMLHelper" ).slugify( settingService.getSetting( "cb_site_name" ) );
+		// send it
 		fileUtils.sendFile( file=exportFilePath, name=fileName, abortAtEnd=true );
 	}
+
+	/**************************************** PRIVATE ****************************************/
 
 	private struct function prepareExportTargets( required struct rc ) {
 		var targets = {};
