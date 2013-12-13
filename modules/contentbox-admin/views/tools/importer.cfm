@@ -39,7 +39,7 @@
                 	<p>
 						With this tool, you can import an existing ContentBox site (created by using the Export Tools). Yes, that's right: an entire ContentBox site! 
 						<br /><br />Simply upload a valid ContentBox export package file (<strong>.cbox</strong>). You'll be shown a handy preview of the import that will occur, and will also have the opportunity to specify whether or not you'd like to overwrite existing content. 
-						<br /><br />Easy, right? Well, what are you waiting for?!?
+						<br /><br />Easy, right? Well, what are you waiting for?
 					</p>
 	                <fieldset>
 	                	<legend><i class="icon-upload icon-large"></i> Import ContentBox Package</legend>
