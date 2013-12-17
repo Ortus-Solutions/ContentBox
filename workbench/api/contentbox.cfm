@@ -1,16 +1,9 @@
 <cfparam name="url.version" default="0">
-<!--- directoryRemove --->
-<cffunction name="directoryRemove" output="false" access="public" returntype="void" hint="Remove an entire directory">
-	<cfargument name="path" type="string" required="true" default="" hint="The full path to remove"/>
-	<cfargument name="recurse" type="boolean" required="false" default="true" hint="Recurse or not"/>
-
-	<cfdirectory action="delete" directory="#arguments.path#" recurse="#arguments.recurse#">
-</cffunction>
 <!---
 Copies a directory.
 @author Joe Rinehart (joe.rinehart@gmail.com), mod by Luis Majano 2010
 --->
-<cffunction name="directoryCopy" output="true" hint="Copies an entire source directory to a destination directory" returntype="void">
+<cffunction name="copyDirectory" output="true" hint="Copies an entire source directory to a destination directory" returntype="void">
 	<cfargument name="source" 		required="true" type="string">
 	<cfargument name="destination" 	required="true" type="string">
 	<cfargument name="nameconflict" required="true" default="overwrite">
@@ -27,7 +20,7 @@ Copies a directory.
 		<cfif contents.type eq "file">
 			<cffile action="copy" source="#arguments.source#/#name#" destination="#arguments.destination#/#name#" nameconflict="#arguments.nameConflict#">
 		<cfelseif contents.type eq "dir">
-			<cfset directoryCopy(arguments.source & "/" & name, arguments.destination & "/" & name, arguments.nameconflict) />
+			<cfset copyDirectory( arguments.source & "/" & name, arguments.destination & "/" & name, arguments.nameconflict ) />
 		</cfif>
 	</cfloop>
 </cffunction>
@@ -36,9 +29,9 @@ Copies a directory.
 	colddoc = new colddoc.ColdDoc();
 
 	// Prepare copy of original source
-	directoryCopy(source=expandPath("../../modules/contentbox"), destination=expandPath("/contentbox"));
+	copyDirectory(source=expandPath("../../modules/contentbox"), destination=expandPath("/contentbox"));
 	// cleanup the modules
-	directoryRemove( expandPath("/contentbox/modules") );
+	directoryDelete( expandPath("/contentbox/modules"), true );
 	// Core
 	docName 	= "ContentBox-API-#version#";
 	docBase		= expandPath("/contentbox");
@@ -48,14 +41,14 @@ Copies a directory.
 	colddoc.generate(inputSource=docBase, outputDir=docOutput, inputMapping="contentbox");
 
 	// remove copy of original source and create it again
-	directoryRemove( expandPath("/contentbox") );
+	directoryDelete( expandPath("/contentbox"), true );
 	directoryCreate( expandPath("/contentbox") );
 </cfscript>
 
 <!--- Zip Files --->
 <cfzip action="zip" file="#docOutput#.zip" source="#docOutput#" overwrite="true" recurse="yes">
 <!--- Remove old files --->
-<cfset directoryRemove( docOutput )>
+<cfset directoryDelete( docOutput, true )>
 
 <cfoutput>
 <h1>Done!</h1>

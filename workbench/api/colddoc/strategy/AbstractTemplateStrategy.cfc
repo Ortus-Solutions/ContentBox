@@ -20,7 +20,8 @@
 
 <cffunction name="init" hint="Constructor" access="private" returntype="void" output="false">
 	<cfscript>
-		setFunctionQueryCache(StructNew());
+		setFunctionQueryCache( structNew() );
+		setPropertyQueryCache( structnew() );
 	</cfscript>
 </cffunction>
 
@@ -138,14 +139,49 @@
 	<cfreturn results />
 </cffunction>
 
+<cffunction name="buildPropertyMetaData" hint="builds a sorted query of property meta" access="public" returntype="query" output="false">
+	<cfargument name="metadata" hint="" type="struct" required="Yes">
+	<cfscript>
+		var qProperties = QueryNew( "name, metadata" );
+		var prop = 0;
+		var result = 0;
+		var cache = getPropertyQueryCache();
+
+		if( StructKeyExists(cache, arguments.metadata.name) )
+		{
+			return cache[arguments.metadata.name];
+		}
+
+		if(NOT StructKeyExists( arguments.metadata, "properties") )
+		{
+			return qProperties;
+		}
+	</cfscript>
+	<cfloop array="#arguments.metadata.properties#" index="prop">
+		<cfscript>
+			QueryAddRow( qProperties );
+			QuerySetCell( qProperties, "name", prop.name );
+			QuerySetCell( qProperties, "metadata", safePropertyMeta(prop, arguments.metadata) );
+		</cfscript>
+	</cfloop>
+
+	<cfset results = getMetaSubQuery( query=qProperties, orderby="name asc" ) />
+
+	<cfset cache[ arguments.metadata.name ] = results />
+
+	<cfreturn results />
+</cffunction>
+
 <cffunction name="getObjectName" hint="returns the simple object name from a full class name" access="private" returntype="string" output="false">
 	<cfargument name="class" hint="the class name" type="string" required="Yes">
 	<cfscript>
-		if( len(arguments.class) ){
+		if(len(arguments.class))
+		{
 			return ListGetAt(arguments.class, ListLen(arguments.class, "."), ".");
 		}
+
 		return arguments.class;
-    </cfscript>
+	</cfscript>
 </cffunction>
 
 <cfscript>
@@ -153,11 +189,15 @@
 	{
 		var objectname = getObjectName(arguments.class);
 		var lenCount = Len(arguments.class) - (Len(objectname) + 1);
-		
+	       
 		if( lenCount gt 0 )
-			return Left(arguments.class, lenCount);
+		{
+		    return Left(arguments.class, lenCount);
+		}
 		else
-			return arguments.class;
+		{
+		    return arguments.class;
+		}
 	}
 </cfscript>
 
@@ -285,6 +325,43 @@
 			}
 		}
 		return arguments.func;
+	</cfscript>
+</cffunction>
+
+<cffunction name="safePropertyMeta" hint="sets default values" access="private" returntype="any" output="false">
+	<cfargument name="prop" hint="the property meta" type="any" required="Yes">
+	<cfargument name="metadata" hint="the original meta data" type="struct" required="Yes">
+	<cfscript>
+		var local = {};
+
+		if(NOT StructKeyExists(arguments.prop, "type"))
+		{
+			arguments.prop.type = "any";
+		}
+
+		if(NOT StructKeyExists(arguments.prop, "required"))
+		{
+			arguments.prop.required = false;
+		}
+		
+		if(NOT StructKeyExists(arguments.prop, "hint"))
+		{
+			arguments.prop.hint = "";
+		}
+		
+		
+		if(NOT StructKeyExists(arguments.prop, "default"))
+		{
+			arguments.prop.default = "";
+		}
+		
+		if(NOT StructKeyExists(arguments.prop, "serializable"))
+		{
+			arguments.prop.serializable = true;
+		}
+		
+		
+		return arguments.prop;
 	</cfscript>
 </cffunction>
 
@@ -419,9 +496,18 @@
 	<cfreturn instance.functionQueryCache />
 </cffunction>
 
+<cffunction name="getPropertyQueryCache" access="private" returntype="struct" output="false" colddoc:generic="string,struct">
+	<cfreturn instance.propertyQueryCache />
+</cffunction>
+
 <cffunction name="setFunctionQueryCache" access="private" returntype="void" output="false">
 	<cfargument name="functionQueryCache" type="struct" required="true" colddoc:generic="string,query">
 	<cfset instance.functionQueryCache = arguments.functionQueryCache />
+</cffunction>
+
+<cffunction name="setPropertyQueryCache" access="private" returntype="void" output="false">
+	<cfargument name="propertyQueryCache" type="struct" required="true" colddoc:generic="string,query">
+	<cfset instance.propertyQueryCache = arguments.propertyQueryCache />
 </cffunction>
 
 <cffunction name="_trace">

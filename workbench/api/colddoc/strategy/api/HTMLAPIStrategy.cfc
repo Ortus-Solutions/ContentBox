@@ -92,6 +92,11 @@
 		var subClass = 0;
 		var safeMeta = 0;
 	</cfscript>
+
+<!---	<cfif arguments.qPackage.package eq "coldspring.aop">
+	<cfdump show="name,package,type" var="#arguments.qPackage#" ><cfabort>
+	</cfif>--->
+
 	<cfloop query="arguments.qPackage">
 		<cfscript>
 			currentDir = getOutputDir() & "/" & replace(package, ".", "/", "all");
@@ -99,25 +104,25 @@
 
 			if(safeMeta.type eq "component")
 			{
-				qSubClass = getMetaSubquery(arguments.qMetaData, "UPPER(extends) = UPPER('#package#.#name#')", "package asc, name asc");
+				qSubClass = getMetaSubquery(arguments.qMetaData, "UPPER(extends) = UPPER('#arguments.qPackage.package#.#arguments.qPackage.name#')", "package asc, name asc");
 				qImplementing = QueryNew("");
 			}
 			else
 			{
 				//all implementing subclasses
-				qSubClass = getMetaSubquery(arguments.qMetaData, "UPPER(fullextends) LIKE UPPER('%:#package#.#name#:%')", "package asc, name asc");
-				qImplementing = getMetaSubquery(arguments.qMetaData, "UPPER(implements) LIKE UPPER('%:#package#.#name#:%')", "package asc, name asc");
+				qSubClass = getMetaSubquery(arguments.qMetaData, "UPPER(fullextends) LIKE UPPER('%:#arguments.qPackage.package#.#arguments.qPackage.name#:%')", "package asc, name asc");
+				qImplementing = getMetaSubquery(arguments.qMetaData, "UPPER(implements) LIKE UPPER('%:#arguments.qPackage.package#.#arguments.qPackage.name#:%')", "package asc, name asc");
 			}
 
 			writeTemplate(path=currentDir & "/#name#.html",
 						template="#instance.static.TEMPLATE_PATH#/class.html",
 						projectTitle = getProjectTitle(),
-						package = package,
-						name = name,
+						package = arguments.qPackage.package,
+						name = arguments.qPackage.name,
 						qSubClass = qSubClass,
 						qImplementing = qImplementing,
 						qMetadata = qMetaData,
-						metadata = metadata
+						metadata = safeMeta
 						);
 		</cfscript>
 	</cfloop>

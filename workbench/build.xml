@@ -1,37 +1,43 @@
 ﻿<?xml version="1.0"?>
-<project name="contentbox.newbuild" default="build" basedir="../">
-
-	<!--Build Properties-->
-	<property name="dir.userlocation"	value="/Users/lmajano" />
-	<property name="dir.exports"		value="${dir.userlocation}/exports" />
-	<property name="dir.build" 			value="${dir.exports}/gocontentbox" />
-	<property name="colddoc.http"		value="http://cf9contentbox.jfetmac/workbench/api/contentbox.cfm?version=" />
-	<property name="dir.expressroot"	value="/Users/lmajano/Documents/MyDocs/OrtusSolutions/Products/ContentBox/contentbox-express/www/ROOT" />
-		
+<!-- ====================================================================== 
+     ContentBox Modular CMS Build (www.gocontentbox.org)                                                               
+     ====================================================================== -->
+ <project name="contentbox-build" default="build" basedir="../">
+ 	<description>
+    	Build a new distribution of ContentBox Modular CMS
+    </description>
+	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
+	<property name="contentbox.version"	value="1.6.0"/>
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>
-	<propertyfile file="workbench/build.number" comment="Build Number for ANT. Edit not!">
-		<entry key="build.number" 
-				type="int" 
-		     	operation="+"
-				pattern="00000"
-		     	default="1" />
-	</propertyfile>
-	<property file="workbench/build.number"/>
 	
 	<!-- Init -->
 	<target name="init" description="Init">
-		<!-- Version -->
-		<input addproperty="contentbox.version" message="ContentBox Version" />
+
+		<!-- Default environment check, if not passed via -Denvironment -->
+    	<condition property="environment" value="local">
+    		<not><isset property="environment" /></not>
+    	</condition>
+    	<echo>Loading from environment: ${environment}</echo>
+		<!-- Load env properties -->
+		<loadproperties srcFile="workbench/build-${environment}.properties"/>
+
+		<propertyfile file="workbench/build.number" comment="Build Number for ANT. Edit not!">
+			<entry key="build.number" 
+					type="int" 
+			     	operation="+"
+					pattern="00000"
+			     	default="1" />
+		</propertyfile>
+		<property file="workbench/build.number"/>
+
 		<!-- Build ID -->
-		<property name="build.label" 	value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>			
+		<property name="build.label" 	value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
+		<!-- Cleanup + Init -->
+		<delete dir="${dir.build}" />
+		<mkdir dir="${dir.build}"/>		
 	</target>
-	
-	<!-- Increase Build Number -->
-	<target name="init-build-number">
-		<echo message="Build ${build.number}" />
-	</target>
-	
+
 	<!--Build-->
 	<target name="build" description="Build a new ContentBox distribution release" depends="init">
       	<!-- Create build directory -->
@@ -43,6 +49,7 @@
 		<!-- Copy Source -->	
       	<copy todir="${dir.build}">
       		<fileset dir=".">
+      			<exclude name=".idea/**" />
       			<exclude name="_paidModules**" />
   				<exclude name=".git/**" />
   				<exclude name=".settings/**" />
@@ -67,7 +74,7 @@
 		</replaceregexp>
 		
 		<!-- Execute API Docs -->
-		<get dest="${dir.build}/colddoc.html" src="${colddoc.http}${contentbox.version}" verbose="true"/>
+		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}" verbose="true"/>
 		<delete file="${dir.build}/colddoc.html" />
 		
 		<!-- Move API archive into distribution -->
@@ -103,19 +110,37 @@
 		<!-- Remove DSN Creator for Express Edition -->
 		<delete dir="${dir.build}/modules/contentbox-dsncreator" />
 		
-		<!-- Zip Express -->
-		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" basedir="${dir.build}"></zip>
+		<!-- Zip Express Source -->
+		<zip destfile="${dir.exports}/contentbox_express_source_${contentbox.version}.zip" basedir="${dir.build}"></zip>
 		
-		<!-- Cleanup Express Edition -->
+		<!-- Cleanup Express Edition Source -->
 		<delete includeemptydirs="true">
 			<fileset dir="${dir.expressroot}">
 				<exclude name="WEB-INF/**"/>
 			</fileset>
 		</delete>
-		<!-- Copy Express Edition in -->
+		<!-- Copy Express Edition into it -->
 		<copy todir="${dir.expressroot}">
-			<fileset dir="${dir.build}" />
+			<fileset dir="${dir.build}">
+				<exclude name="modules/contentbox/modules/*" />
+			</fileset>
 		</copy>
+		<!-- Zip up Express Engine -->
+		<zip destfile="${dir.exports}/contentbox-express_${contentbox.version}.zip" 
+			 preserve0permissions="true">
+			 <fileset dir="${dir.expressroot}">
+        		<exclude name=".settings"/>
+        		<exclude name=".git"/>
+        		<exclude name=".gitignore"/>
+        		<exclude name=".project"/>
+        		<exclude name="logs/*.*"/>        		        		
+        		<exclude name="temp/*.*"/>
+        		<exclude name="settings.xml"/>
+        		<exclude name="build.xml"/>
+        		<exclude name="build-package.xml"/>
+        		<exclude name=".DS_Store"/>
+        	</fileset>
+		</zip>
 		
 		<delete dir="${dir.build}" />
     </target>

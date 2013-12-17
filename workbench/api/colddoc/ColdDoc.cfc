@@ -102,6 +102,12 @@
 	                    meta = getComponentMetaData(cfcName);
 	                }
 
+	                //let's do some cleanup, in case CF sucks.
+	                if(Len (packagePath) AND NOT meta.name contains packagePath)
+	                {
+						meta.name = packagePath & "." & cfcName;
+	                }
+
 					QueryAddRow(qMetaData);
 	                QuerySetCell(qMetaData, "package", packagePath);
 	                QuerySetCell(qMetaData, "name", cfcName);
@@ -132,7 +138,7 @@
 	                }
 	                else
 	                {
-	                    QuerySetCell(qMetaData, "name", "-");
+	                    QuerySetCell(qMetaData, "extends", "-");
 	                }
 
 				}
