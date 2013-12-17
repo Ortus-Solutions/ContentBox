@@ -14,7 +14,7 @@ Callable
 <cfset instance.class.root = RepeatString('../', ListLen(arguments.package, ".")) />
 
 <LINK REL ="stylesheet" TYPE="text/css" HREF="#instance.class.root#stylesheet.css" TITLE="Style">
-
+<link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300,300italic,400italic,700,700italic|Ubuntu+Mono' rel='stylesheet' type='text/css' />
 <SCRIPT type="text/javascript">
 function windowTitle()
 {
@@ -54,6 +54,7 @@ Class
 <cfset local.ls = createObject("java", "java.lang.System").getProperty("line.separator") />
 <cfset local.buffer = createObject("java", "java.lang.StringBuffer").init() />
 <cfset local.thisClass = arguments.package & "." & arguments.name/>
+
 <cfloop array="#getInheritence(arguments.metadata)#" index="className">
 	<cfif local.i++ gt 0>
 		<cfset local.buffer.append('#RepeatString("    ", local.i)#<IMG SRC="#instance.class.root#resources/inherit.gif" ALT="extended by ">') />
@@ -155,18 +156,115 @@ Class
 <P>
 </cfif>
 
-<HR>
-
-<p>
-
 <cfscript>
 	instance.class.cache = StructNew();
 	local.localFunctions = StructNew();
-
+	
 	local.qFunctions = buildFunctionMetaData(arguments.metadata);
+	local.qProperties = buildPropertyMetadata(arguments.metadata);
 
 	local.qInit = getMetaSubQuery(local.qFunctions, "UPPER(name)='INIT'");
 </cfscript>
+
+<cfif local.qProperties.recordCount>
+<!-- ========== METHOD SUMMARY =========== -->
+
+<A NAME="property_summary"><!-- --></A>
+<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
+<TR BGCOLOR="##CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left" COLSPAN="5">
+	<FONT SIZE="+2">
+	<B>Property Summary</B>
+	</FONT>
+</TH>
+</TR>
+
+<TR BGCOLOR="##CCCCFF" CLASS="TableHeadingColor">
+<TH ALIGN="left">
+	<FONT SIZE="+2">
+	<B>Type</B>
+	</FONT>
+</TH>
+<TH ALIGN="left">
+	<FONT SIZE="+2">
+	<B>Property & Description</B>
+	</FONT>
+</TH>
+<TH ALIGN="left">
+	<FONT SIZE="+2">
+	<B>Default</B>
+	</FONT>
+</TH>
+<TH ALIGN="left">
+	<FONT SIZE="+2">
+	<B>Serializable</B>
+	</FONT>
+</TH>
+<TH ALIGN="left">
+	<FONT SIZE="+2">
+	<B>Required</B>
+	</FONT>
+</TH>
+</TR>
+
+<cfloop query="local.qProperties">
+<cfset local.prop = local.qProperties.metadata />
+<cfset local.localProperties[ local.prop.name ] = 1 />
+<TR BGCOLOR="white" CLASS="TableRowColor">
+<TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	<FONT SIZE="-1">
+		<CODE>
+			&nbsp;#writeTypeLink(local.prop.type, arguments.package, arguments.qMetadata, local.prop)#
+		</CODE>
+	</FONT>
+</TD>
+<TD>
+	#writeMethodLink(arguments.name, arguments.package, local.prop, arguments.qMetaData)# 
+	<BR>
+	<cfif StructKeyExists(local.prop, "hint") AND Len(local.prop.hint)>
+	<!--- only grab the first sentence of the hint --->
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#listGetAt(local.prop.hint, 1, ".")#
+	</cfif>
+	
+	<br><br>
+	<strong>Attributes:</strong>
+	<ul>
+	<cfloop collection="#local.prop#" item="local.propmeta">
+		<cfif not listFindNoCase( "hint,name,default,type,serializable,required", local.propmeta ) >
+		<li>#lcase( local.propmeta )# = #local.prop[ local.propmeta ]#</li>
+		</cfif>
+	</cfloop>
+	</ul>
+
+</TD>
+<TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	<FONT SIZE="-1">
+		<CODE>
+			#local.prop.default#
+		</CODE>
+	</FONT>
+</TD>
+<TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	<FONT SIZE="-1">
+		<CODE>
+			#local.prop.serializable#
+		</CODE>
+	</FONT>
+</TD>
+<TD ALIGN="right" VALIGN="top" WIDTH="1%">
+	<FONT SIZE="-1">
+		<CODE>
+			#local.prop.required#
+		</CODE>
+	</FONT>
+</TD>
+</TR>
+</cfloop>
+</TR>
+</TABLE>
+&nbsp;
+</cfif>
+
 
 <cfif local.qInit.recordCount>
 	<cfset local.init = local.qInit.metadata />
@@ -187,8 +285,8 @@ Class
 	<TD>
 		#writeMethodLink(arguments.name, arguments.package, local.init, arguments.qMetaData)#
 	<BR>
-	<cfif StructKeyExists(local.init, "hint") and len(local.init.hint)>
-			<!--- only grab the first sentence of the hint --->
+	<cfif StructKeyExists(local.init, "hint") and len( local.init.hint ) >
+		<!--- only grab the first sentence of the hint --->
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#listGetAt(local.init.hint, 1, ".")#
 	</cfif>
 	</TD>
@@ -265,8 +363,12 @@ Class
 			<cfset local.localFunctions[local.func.name] = 1 />
 			</cfif>
 		</cfloop>
-
-		<code>#local.buffer.toString()#</code>
+		
+		<cfif local.buffer.length()>
+			<code>#local.buffer.toString()#</code>
+		<cfelse>
+			<code><em>None</em></code>
+		</cfif>
 	</td>
 	</tr>
 	</tbody></table>
@@ -310,6 +412,49 @@ Class
 </dd></dl>
 <!--- <hr> --->
 </cfif>
+
+<cfif local.qProperties.recordCount>
+
+<!-- ============ PROPERTY DETAIL ========== -->
+
+<a name="property_detail"><!-- --></a>
+<table summary="" border="1" cellpadding="3" cellspacing="0" width="100%">
+<tbody><tr class="TableHeadingColor" bgcolor="##ccccff">
+<th colspan="1" align="left"><font size="+2">
+<b>Property Detail</b></font></th>
+</tr>
+</tbody></table>
+
+<cfloop query="local.qProperties">
+	<cfset local.prop = local.qProperties.metadata />
+	<a name="#local.prop.name#()"><!-- --></a><h3>
+	#local.prop.name#</h3>
+	<code>#writeTypeLink(local.prop.type, arguments.package, arguments.qMetaData, local.prop)# #writeMethodLink(arguments.name, arguments.package, local.prop, arguments.qMetaData, false)#</code>
+
+	<dl>
+	<dd>
+	<cfif StructKeyExists(local.prop, "hint") AND Len(local.prop.hint)>
+	#local.prop.hint#
+	</cfif>
+	<p>
+	</p></dd>
+
+	<dl>
+	<dt><b>Attributes:</b></dt>
+	<cfloop collection="#local.prop#" item="local.param">
+		<cfif not listFindNoCase( "name,type,hint", local.param )>
+		<dd><code>#lcase( local.param )#</code> - #local.prop[ local.param ]#</dd>
+		</cfif>
+	</cfloop>
+	</dl>
+
+	</dd>
+	</dl>
+	<hr>
+</cfloop>
+</cfif>
+
+
 
 <cfset local.qFunctions = buildFunctionMetaData(arguments.metadata) />
 <cfset local.qFunctions = getMetaSubQuery(local.qFunctions, "UPPER(name)!='INIT'") />
