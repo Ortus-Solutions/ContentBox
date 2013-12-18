@@ -153,7 +153,8 @@ component extends="content" singleton{
 		event.paramValue( "q", "" );
 
 		// cleanup
-		rc.q = antiSamy.htmlSanitizer( trim( rc.q ) );
+		var antiSamy = getPlugin( "AntiSamy" );
+		rc.q 		 = antiSamy.htmlSanitizer( trim( rc.q ) );
 
 		// prepare paging plugin
 		prc.pagingPlugin 		= getMyPlugin( plugin="Paging", module="contentbox" );
