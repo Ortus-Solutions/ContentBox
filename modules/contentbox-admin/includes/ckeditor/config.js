@@ -12,6 +12,8 @@ CKEDITOR.editorConfig = function( config ) {
 	config.entities = false;
 	config.docType = '<!DOCTYPE html>';
 	config.disableNativeSpellChecker = false;
+	config.allowedContent = true;
+	// Allow i,a,span empty tags
+	config.protectedSource.push( /<(i|span|a)[\s\S]*?\>/g );
+	config.protectedSource.push( /<\/(i|span|a)[\s\S]*?\>/g );
 };
-CKEDITOR.dtd.$removeEmpty.span = 0;
-CKEDITOR.dtd.$removeEmpty.i = 0;
