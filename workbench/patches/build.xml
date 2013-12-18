@@ -3,8 +3,8 @@
 
 	<!-- Init -->
 	<target name="init" description="Init">
-		<!-- Version -->
-		<input addproperty="contentbox.version" message="ContentBox Version To Package" />
+		<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
+		<property name="contentbox.version"		value="1-6-0"/>
 	</target>
 	
 	<!--Build-->

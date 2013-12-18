@@ -3,24 +3,25 @@
 
 	<!--Build Properties-->
 	<property name="dir.exports"		value="patches" />
+	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
+	<property name="contentbox.version"		value="1-6-0"/>
+	<!-- Start Hash: UPDATE ON EACH RELEASE AS NEEDED -->
+	<property name="contentbox.startgit" 	value="2169574b2273d57bbf8da8fc04df1d3a7c4b06c1" />
 		
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>
-	<propertyfile file="build.number" comment="Build Number for ANT. Edit not!">
-		<entry key="build.number" 
-				type="int" 
-		     	operation="+"
-				pattern="00000"
-		     	default="1" />
-	</propertyfile>
-	<property file="build.number"/>	
 	
 	<!-- Init -->
 	<target name="init" description="Init">
-		<!-- Version -->
-		<input addproperty="contentbox.version" message="ContentBox Version (no periods, use dashes)" />
-		<!-- Start Commit -->
-		<input addproperty="contentbox.startgit" message="Git Start Commit Hash" />
+		<!-- build number -->
+		<propertyfile file="build.number" comment="Build Number for ANT. Edit not!">
+			<entry key="build.number" 
+					type="int" 
+			     	operation="+"
+					pattern="00000"
+			     	default="1" />
+		</propertyfile>
+		<property file="build.number"/>	
 		<!-- End Commit -->
 		<input addproperty="contentbox.endgit" message="Git End Commit Hash" />
 		<!-- Manual Excludes -->
