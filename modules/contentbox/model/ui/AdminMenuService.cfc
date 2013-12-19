@@ -117,52 +117,52 @@ component accessors="true" threadSafe singleton{
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		
 		// Dashboard
-		addTopMenu(name=this.DASHBOARD,label="<i class='icon-dashboard icon-large'></i> Dashboard")
-			.addSubMenu(name="home",label="Home",href="#event.buildLink(prc.xehDashboard)#")
-			.addSubMenu(name="about",label="About",href="#event.buildLink(prc.xehAbout)#")
-			.addSubMenu(name="updates",label="Updates",href="#event.buildLink(prc.xehAutoUpdater)#",permissions="SYSTEM_UPDATES");
+		addTopMenu( name=this.DASHBOARD, label="<i class='icon-dashboard icon-large'></i> Dashboard" )
+			.addSubMenu( name="home", label="Home", href="#event.buildLink(prc.xehDashboard)#" )
+			.addSubMenu( name="about", label="About", href="#event.buildLink(prc.xehAbout)#" )
+			.addSubMenu( name="updates", label="Updates", href="#event.buildLink(prc.xehAutoUpdater)#", permissions="SYSTEM_UPDATES" );
 
 		// Content
-		addTopMenu(name=this.CONTENT,label="<i class='icon-pencil icon-large'></i> Content")
-			.addSubMenu(name="Pages",label="Pages",href="#event.buildLink(prc.xehPages)#")
-			.addSubMenu(topMenu=this.CONTENT,name="Blog",label="Blog",href="#event.buildLink(prc.xehEntries)#")
-			.addSubMenu(name="contentStore",label="Content Store",href="#event.buildLink(prc.xehContentStore)#",permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR")
-			.addSubMenu(name="Categories",label="Categories",href="#event.buildLink(prc.xehCategories)#")
-			.addSubMenu(name="mediaManager",label="Media Manager",href="#event.buildLink(prc.xehMediaManager)#",permissions="MEDIAMANAGER_ADMIN");
+		addTopMenu( name=this.CONTENT, label="<i class='icon-pencil icon-large'></i> Content" )
+			.addSubMenu( name="Pages", label="Pages", href="#event.buildLink(prc.xehPages)#", permissions="PAGES_ADMIN,PAGES_EDITOR" )
+			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href="#event.buildLink(prc.xehEntries)#", permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
+			.addSubMenu( name="contentStore", label="Content Store", href="#event.buildLink(prc.xehContentStore)#", permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
+			.addSubMenu( name="Categories", label="Categories", href="#event.buildLink(prc.xehCategories)#", permissions="CATEGORIES_ADMIN" )
+			.addSubMenu( name="mediaManager", label="Media Manager", href="#event.buildLink(prc.xehMediaManager)#", permissions="MEDIAMANAGER_ADMIN" );
 
 		// Comments
-		addTopMenu(name=this.COMMENTS,label="<i class='icon-comments icon-large'></i> Comments")
-			.addSubMenu(name="Inbox",label="Inbox",href="#event.buildLink(prc.xehComments)#")
-			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehCommentsettings)#",permissions="COMMENTS_ADMIN");
+		addTopMenu( name=this.COMMENTS, label="<i class='icon-comments icon-large'></i> Comments" )
+			.addSubMenu( name="Inbox", label="Inbox", href="#event.buildLink(prc.xehComments)#", permissions="COMMENTS_ADMIN" )
+			.addSubMenu( name="Settings", label="Settings", href="#event.buildLink(prc.xehCommentsettings)#", permissions="COMMENTS_ADMIN" );
 
 		// Look and Feel
-		addTopMenu(name=this.LOOK_FEEL,label="<i class='icon-tint icon-large'></i> Look & Feel")
-			.addSubMenu(name="Layouts",label="Layouts",href="#event.buildLink(prc.xehLayouts)#",permissions="LAYOUT_ADMIN")
-			.addSubMenu(name="Widgets",label="Widgets",href="#event.buildLink(prc.xehWidgets)#",permissions="WIDGET_ADMIN")
-			.addSubMenu(name="globalHTML",label="Global HTML",href="#event.buildLink(prc.xehGlobalHTML)#",permissions="GLOBALHTML_ADMIN");
+		addTopMenu( name=this.LOOK_FEEL, label="<i class='icon-tint icon-large'></i> Look & Feel" )
+			.addSubMenu( name="Layouts", label="Layouts", href="#event.buildLink(prc.xehLayouts)#", permissions="LAYOUT_ADMIN" )
+			.addSubMenu( name="Widgets", label="Widgets", href="#event.buildLink(prc.xehWidgets)#", permissions="WIDGET_ADMIN" )
+			.addSubMenu( name="globalHTML", label="Global HTML", href="#event.buildLink(prc.xehGlobalHTML)#", permissions="GLOBALHTML_ADMIN" );
 
 		// Modules
-		addTopMenu(name=this.MODULES,label="<i class='icon-bolt icon-large'></i> Modules",permissions="MODULES_ADMIN")
-			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehModules)#");
+		addTopMenu( name=this.MODULES, label="<i class='icon-bolt icon-large'></i> Modules", permissions="MODULES_ADMIN" )
+			.addSubMenu( name="Manage", label="Manage", href="#event.buildLink(prc.xehModules)#" );
 
 		// User
-		addTopMenu(name=this.USERS,label="<i class='icon-group icon-large'></i> Users")
-			.addSubMenu(name="Manage",label="Manage",href="#event.buildLink(prc.xehAuthors)#")
-			.addSubMenu(name="Permissions",label="Permissions",href="#event.buildLink(prc.xehPermissions)#", permissions="PERMISSIONS_ADMIN")
-			.addSubMenu(name="Roles",label="Roles",href="#event.buildLink(prc.xehRoles)#", permissions="ROLES_ADMIN");
+		addTopMenu( name=this.USERS, label="<i class='icon-group icon-large'></i> Users" )
+			.addSubMenu( name="Manage", label="Manage", href="#event.buildLink(prc.xehAuthors)#", permissions="AUTHOR_ADMIN" )
+			.addSubMenu( name="Permissions", label="Permissions", href="#event.buildLink(prc.xehPermissions)#", permissions="PERMISSIONS_ADMIN" )
+			.addSubMenu( name="Roles", label="Roles", href="#event.buildLink(prc.xehRoles)#", permissions="ROLES_ADMIN" );
 
 		// Tools
-		addTopMenu(name=this.TOOLS,label="<i class='icon-wrench icon-large'></i> Tools")
-			.addSubMenu(name="Import",label="Import",href="#event.buildLink(prc.xehToolsImport)#", permissions="TOOLS_IMPORT")
-			.addSubMenu(name="Export",label="Export",href="#event.buildLink(prc.xehToolsExport)#", permissions="TOOLS_EXPORT")
-			.addSubMenu(name="APIDocs",label="API Docs",href="#event.buildLink(prc.xehApiDocs)#");
+		addTopMenu( name=this.TOOLS, label="<i class='icon-wrench icon-large'></i> Tools" )
+			.addSubMenu( name="Import", label="Import", href="#event.buildLink(prc.xehToolsImport)#", permissions="TOOLS_IMPORT" )
+			.addSubMenu( name="Export", label="Export", href="#event.buildLink(prc.xehToolsExport)#", permissions="TOOLS_EXPORT" )
+			.addSubMenu( name="APIDocs", label="API Docs", href="#event.buildLink(prc.xehApiDocs)#", permissions="SYSTEM_TAB" );
 
 		// SYSTEM
-		addTopMenu(name=this.SYSTEM,label="<i class='icon-briefcase icon-large'></i> System",permissions="SYSTEM_TAB")
-			.addSubMenu(name="Settings",label="Settings",href="#event.buildLink(prc.xehSettings)#",data={ "keybinding"="ctrl+shift+c" },title="ctrl+shift+C" )
-			.addSubMenu(name="SecurityRules",label="Security Rules",href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN")
-			.addSubMenu(name="EmailTemplates",label="Email Templates",href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN")
-			.addSubMenu(name="GeekSettings",label="Geek Settings",href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS");
+		addTopMenu( name=this.SYSTEM, label="<i class='icon-briefcase icon-large'></i> System", permissions="SYSTEM_TAB" )
+			.addSubMenu( name="Settings", label="Settings", href="#event.buildLink(prc.xehSettings)#", data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
+			.addSubMenu( name="SecurityRules", label="Security Rules", href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN" )
+			.addSubMenu( name="EmailTemplates", label="Email Templates", href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN" )
+			.addSubMenu( name="GeekSettings", label="Geek Settings", href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS" );
 
 		return this;
 	}
