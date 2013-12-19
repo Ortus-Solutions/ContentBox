@@ -37,8 +37,8 @@ component {
 	function configure(){
 		// contentbox settings
 		settings = {
-			codename = "Psalm 119:73",
-			codenameLink = "https://www.youversion.com/bible/psa.119.73.niv",
+			codename = "Psalm 144:1",
+			codenameLink = "https://www.bible.com/bible/114/psa.144.1.nkjv",
 			// Auto Updates
 			updateSlug_stable 	= "contentbox-stable-updates",
 			updateSlug_beta 	= "contentbox-beta-updates",
