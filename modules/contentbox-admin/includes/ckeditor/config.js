@@ -13,7 +13,10 @@ CKEDITOR.editorConfig = function( config ) {
 	config.docType = '<!DOCTYPE html>';
 	config.disableNativeSpellChecker = false;
 	config.allowedContent = true;
+	config.removePlugins = 'autogrow';
 	// Allow i,a,span empty tags
-	config.protectedSource.push( /<(i|span|a)[\s\S]*?\>/g );
-	config.protectedSource.push( /<\/(i|span|a)[\s\S]*?\>/g );
+	config.protectedSource.push( /<(i|span|a)>/g );
+	config.protectedSource.push( /<\/(i|span|a)>/g );
+	config.protectedSource.push( /<(i|span|a) *?\>/g );
+	config.protectedSource.push( /<\/(i|span|a) *?\>/g );
 };
