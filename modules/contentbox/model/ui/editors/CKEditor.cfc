@@ -169,7 +169,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 					#extraConfig#
 					toolbar: ckToolbar,
 					toolbarCanCollapse: true,
-					height:300,
+					height:400,
 					filebrowserBrowseUrl : '#event.buildLink( xehCKFileBrowserURL )#',
 					filebrowserImageBrowseUrl : '#event.buildLink( xehCKFileBrowserURLIMage )#',
 					filebrowserFlashBrowseUrl : '#event.buildLink( xehCKFileBrowserURLFlash )#',
@@ -182,7 +182,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 					#extraConfig#
 					toolbar: ckExcerptToolbar,
 					toolbarCanCollapse: true,
-					height: 175,
+					height: 200,
 					filebrowserBrowseUrl: '#event.buildLink( xehCKFileBrowserURL )#',
 					baseHref: '#HTML_BASE_URL#/'
 				});
