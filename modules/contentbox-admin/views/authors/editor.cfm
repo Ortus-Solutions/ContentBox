@@ -18,12 +18,18 @@
 					<ul class="nav nav-tabs">
 						<li class="active"><a href="##userDetails" data-toggle="tab"><i class="icon-eye-open"></i> Details</a></li>
 						<cfif prc.author.isLoaded()>
-						<li><a href="##password" data-toggle="tab"><i class="icon-key"></i> Change Password</a></li>
-						<li><a href="##preferences" data-toggle="tab"><i class="icon-briefcase"></i> Preferences</a></li>
-						<li><a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="icon-lock"></i> Permissions</a></li>
-						<li><a href="##entries" data-toggle="tab"><i class="icon-quote-left"></i> Entries</a></li>
-						<li><a href="##pages" data-toggle="tab"><i class="icon-pencil"></i> Pages</a></li>
-						<li><a href="##contentstore" data-toggle="tab"><i class="icon-pencil"></i> Content Store</a></li>
+							<li><a href="##password" data-toggle="tab"><i class="icon-key"></i> Change Password</a></li>
+							<li><a href="##preferences" data-toggle="tab"><i class="icon-briefcase"></i> Preferences</a></li>
+							<li><a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="icon-lock"></i> Permissions</a></li>
+							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+							<li><a href="##entries" data-toggle="tab"><i class="icon-quote-left"></i> Entries</a></li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+							<li><a href="##pages" data-toggle="tab"><i class="icon-pencil"></i> Pages</a></li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+							<li><a href="##contentstore" data-toggle="tab"><i class="icon-pencil"></i> Content Store</a></li>
+							</cfif>
 						</cfif>
 						<!--- cbadmin Event --->
     					#announceInterception("cbadmin_onAuthorEditorNav")#
@@ -97,26 +103,33 @@
 						<div class="tab-pane" id="permissionsTab"></div>
 
 						<!--- My Entries --->
+						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 						<div class="tab-pane" id="entries">
 						#html.startFieldset(legend="User Entries")#
 							#prc.entryViewlet#
 						#html.endFieldSet()#
 						</div>
+						</cfif>
 
 						<!--- My Pages --->
+						<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 						<div class="tab-pane" id="pages">
 						#html.startFieldset(legend="User Pages")#
 							#prc.pageViewlet#
 						#html.endFieldSet()#
 						</div>
+						</cfif>
 						
 						<!--- My ContentStore --->
+						<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 						<div class="tab-pane" id="contentstore">
 						#html.startFieldset(legend="User Content Store")#
 							#prc.contentStoreViewlet#
 						#html.endFieldSet()#
 						</div>
 						</cfif>
+						</cfif>
+
 						<!--- cbadmin Event --->
 						#announceInterception("cbadmin_onAuthorEditorContent")#
 					</div>
