@@ -105,47 +105,49 @@
 							<li title="Open Site" data-placement="left"><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home icon-large"></i></a></li>
 							
 							<!--- New Quick Links --->
-						    	<li class="dropdown" title="Create New..." data-placement="left">
-						    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
-									<ul class="dropdown-menu">
-										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
-											<li>
-												<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
-													<i class="icon-file-alt"></i> New Page
-												</a>
-											</li>
-										</cfif>
-										<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
-											<li>
-												<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
-													<i class="icon-quote-left"></i> New Entry
-												</a>
-											</li>
-										</cfif>
-										<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-											<li>
-												<a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
-													<i class="icon-user"></i> New User
-												</a>
-											</li>
-										</cfif>
-										<cfif prc.oAuthor.checkPermission("MEDIAMANAGER_ADMIN")>
-											<li>
-												<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
-													<i class="icon-th"></i> New Media
-												</a>
-											</li>
-										</cfif>
-									</ul>
-								</li>
+					    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
+					    	<li class="dropdown" title="Create New..." data-placement="left">
+					    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
+								<ul class="dropdown-menu">
+									<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+										<li>
+											<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
+												<i class="icon-file-alt"></i> New Page
+											</a>
+										</li>
+									</cfif>
+									<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+										<li>
+											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
+												<i class="icon-quote-left"></i> New Entry
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+										<li>
+											<a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
+												<i class="icon-user"></i> New User
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
+										<li>
+											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
+												<i class="icon-th"></i> New Media
+											</a>
+										</li>
+									</cfif>
+								</ul>
+							</li>
+							</cfif>
 							
 							<!---Quick Post --->
-							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") AND !prc.cbSettings.cb_site_disable_blog>
+							<cfif prc.oAuthor.checkPermission( "ENTRIES_EDITOR" ) AND !prc.cbSettings.cb_site_disable_blog>
 								<li title="Quick Post (ctrl+shift+Q)" data-placement="left"><a href="javascript:showQuickPost()" data-keybinding="ctrl+shift+Q"><i class="icon-edit icon-large"></i></a></li>
 							</cfif>
 							
 							<!---Admin Actions --->
-							<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
+							<cfif prc.oAuthor.checkPermission( "RELOAD_MODULES" )>
 							<li class="dropdown" title="Admin Actions" data-placement="left">
 								<!---Loader Status --->
 								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cogs icon-large"></i></a>
@@ -161,6 +163,7 @@
 							<li class="divider-vertical"></li>
 							
 							<!---Search --->
+							<cfif prc.oAuthor.checkPermission("GLOBAL_SEARCH")>
 							<span class="navbar-search pull-left" id="div-search" title="ctrl+shift+s" data-placement="right"/>
 								<!---Search Results --->
 								<span id="div-search-results"></span>
@@ -168,6 +171,7 @@
 								<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
 								<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
 							</span>
+							</cfif>
 							
 							<!--- cbadmin event --->
 							#announceInterception("cbadmin_onTopBar")#
@@ -176,6 +180,7 @@
 						<!--- Right NavBar --->
 						<ul class="nav pull-right">
 							<li class="divider-vertical"></li>
+							<cfif prc.oAuthor.checkPermission("SYSTEM_TAB")>
 							<li class="dropdown">
 								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-info-sign"></i> About <b class="icon-caret-down"></b></a>
 								<ul class="dropdown-menu">
@@ -195,6 +200,7 @@
 									</li>
 								</ul>
 							</li>
+							</cfif>
 							<li class="dropdown">
 								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="quickLinksIcon" class="icon-user"></i> #prc.oAuthor.getName()# <b class="icon-caret-down"></b></a>
 								<ul class="dropdown-menu">

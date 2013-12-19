@@ -51,8 +51,10 @@
 				    	</ul>
 				    </div>
 					</cfif>
+					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 					<!--- Create --->
 					<a href="##" onclick="return createCategory();" class="btn btn-danger">Create Category</a>
+					</cfif>
 				</div>
 				<!--- Filter Bar --->
 				<div class="filterBar">

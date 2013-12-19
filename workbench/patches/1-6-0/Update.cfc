@@ -72,10 +72,8 @@ component implements="contentbox.model.updates.IUpdate"{
 			
 			// Update new settings
 			updateSettings();
-			
 			// Update Permissions
 			updatePermissions();
-			
 			// Update Roles with new permissions
 			updateAdmin();
 			updateEditor();
@@ -166,7 +164,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Create new Permissions
 		var perms = [
-			"EDITORS_CUSTOM_FIELDS"
+			"EDITORS_CUSTOM_FIELDS",
+			"GLOBAL_SEARCH"
 		];
 
 		// iterate and add
@@ -189,7 +188,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// Setup Permissions
 		var perms = [
-			"EDITORS_CUSTOM_FIELDS"
+			"EDITORS_CUSTOM_FIELDS",
+			"GLOBAL_SEARCH"
 		];
 
 		// iterate and add
@@ -211,7 +211,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// Create new Permissions
 		var perms = {
-			"EDITORS_CUSTOM_FIELDS" = "Ability to manage custom fields in any content editors"
+			"EDITORS_CUSTOM_FIELDS" = "Ability to manage custom fields in any content editors",
+			"GLOBAL_SEARCH" = "Ability to do global searches in the ContentBox Admin"
 		};
 
 		var allperms = [];

@@ -147,7 +147,8 @@ component accessors="true"{
 			"TOOLS_EXPORT" = "Ability to export data from ContentBox",
 			"CONTENTSTORE_EDITOR" = "Ability to manage content store elements but not publish them",
 			"MEDIAMANAGER_LIBRARY_SWITCHER" = "Ability to switch media manager libraries for management",
-			"EDITORS_CUSTOM_FIELDS" = "Ability to manage custom fields in any content editors"
+			"EDITORS_CUSTOM_FIELDS" = "Ability to manage custom fields in any content editors",
+			"GLOBAL_SEARCH" = "Ability to do global searches in the ContentBox Admin"
 		};
 
 		var allperms = [];
@@ -167,34 +168,35 @@ component accessors="true"{
 		createPermissions( setup );
 
 		// Create Editor
-		var oRole = roleService.new(properties={role="Editor",description="A ContentBox editor"});
+		var oRole = roleService.new( properties={ role="Editor", description="A ContentBox editor" } );
 		// Add Editor Permissions
-		oRole.addPermission( permissions["COMMENTS_ADMIN"] );
-		oRole.addPermission( permissions["CONTENTSTORE_EDITOR"] );
-		oRole.addPermission( permissions["PAGES_EDITOR"] );
-		oRole.addPermission( permissions["CATEGORIES_ADMIN"] );
-		oRole.addPermission( permissions["ENTRIES_EDITOR"] );
-		oRole.addPermission( permissions["LAYOUT_ADMIN"] );
-		oRole.addPermission( permissions["GLOBALHTML_ADMIN"] );
-		oRole.addPermission( permissions["MEDIAMANAGER_ADMIN"] );
-		oRole.addPermission( permissions["VERSIONS_ROLLBACK"] );
-		oRole.addPermission( permissions["CONTENTBOX_ADMIN"] );
-		oRole.addPermission( permissions["EDITORS_DISPLAY_OPTIONS"] );
-		oRole.addPermission( permissions["EDITORS_MODIFIERS"] );
-		oRole.addPermission( permissions["EDITORS_CACHING"] );
-		oRole.addPermission( permissions["EDITORS_CATEGORIES"] );
-		oRole.addPermission( permissions["EDITORS_HTML_ATTRIBUTES"] );
-		oRole.addPermission( permissions["EDITORS_EDITOR_SELECTOR"] );
-		oRole.addPermission( permissions["EDITORS_CUSTOM_FIELDS"] );
-		roleService.save(entity=oRole, transactional=false);
+		oRole.addPermission( permissions[ "COMMENTS_ADMIN"] );
+		oRole.addPermission( permissions[ "CONTENTSTORE_EDITOR"] );
+		oRole.addPermission( permissions[ "PAGES_EDITOR"] );
+		oRole.addPermission( permissions[ "CATEGORIES_ADMIN"] );
+		oRole.addPermission( permissions[ "ENTRIES_EDITOR"] );
+		oRole.addPermission( permissions[ "LAYOUT_ADMIN"] );
+		oRole.addPermission( permissions[ "GLOBALHTML_ADMIN"] );
+		oRole.addPermission( permissions[ "MEDIAMANAGER_ADMIN"] );
+		oRole.addPermission( permissions[ "VERSIONS_ROLLBACK"] );
+		oRole.addPermission( permissions[ "CONTENTBOX_ADMIN"] );
+		oRole.addPermission( permissions[ "EDITORS_DISPLAY_OPTIONS"] );
+		oRole.addPermission( permissions[ "EDITORS_MODIFIERS"] );
+		oRole.addPermission( permissions[ "EDITORS_CACHING"] );
+		oRole.addPermission( permissions[ "EDITORS_CATEGORIES"] );
+		oRole.addPermission( permissions[ "EDITORS_HTML_ATTRIBUTES"] );
+		oRole.addPermission( permissions[ "EDITORS_EDITOR_SELECTOR"] );
+		oRole.addPermission( permissions[ "EDITORS_CUSTOM_FIELDS"] );
+		oRole.addPermission( permissions[ "GLOBAL_SEARCH"] );
+		roleService.save( entity=oRole, transactional=false );
 
 		// Create Admin
-		var oRole = roleService.new(properties={role="Administrator",description="A ContentBox Administrator"});
+		var oRole = roleService.new( properties={ role="Administrator", description="A ContentBox Administrator" } );
 		// Add All Permissions To Admin
-		for(var key in permissions){
-			oRole.addPermission( permissions[key] );
+		for( var key in permissions ){
+			oRole.addPermission( permissions[ key ] );
 		}
-		roleService.save(entity=oRole, transactional=false);
+		roleService.save( entity=oRole, transactional=false );
 
 		return oRole;
 	}
