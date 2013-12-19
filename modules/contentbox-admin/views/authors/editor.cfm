@@ -153,7 +153,11 @@
 				#announceInterception("cbadmin_onAuthorEditorActions")#
 				<!--- Back button --->
 				<p class="center">
-					<button class="btn" onclick="return to('#event.buildLink(prc.xehAuthors)#')"><i class="icon-reply"></i> Back To Listing</button>
+					<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+						<button class="btn" onclick="return to('#event.buildLink( prc.xehAuthors )#')"><i class="icon-reply"></i> Back To Listing</button>
+					<cfelse>
+						<button class="btn" onclick="return to('#event.buildLink( prc.xehDashboard )#')"><i class="icon-reply"></i> Back To Dashboard</button>
+					</cfif>
 				</p>
 			</div>
 		</div>
