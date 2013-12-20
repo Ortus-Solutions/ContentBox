@@ -37,7 +37,7 @@
 				</cfif>
 				
 				<div class="tabbable">
-					<ul class="nav nav-tabs" id"dashboardTabs">
+					<ul class="nav nav-tabs" id="dashboardTabs">
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<li><a href="##recentContentTab" data-toggle="tab"><i class="icon-pencil"></i> Recent Content</a></li>
 						</cfif>
