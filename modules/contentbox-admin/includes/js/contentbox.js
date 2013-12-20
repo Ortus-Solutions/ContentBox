@@ -129,6 +129,13 @@ $(document).ready(function() {
 			} 
 		});
 	});
+
+	// Hide empty menu's due to permissions.
+	$("#adminMenuBarContent li.dropdown").each(function(){
+		if( !$( this ).find( "ul.dropdown-menu li" ).length ){
+			$( this ).hide();
+		}
+	});
 	
 });
 function isSidebarOpen(){

@@ -8,18 +8,19 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>	
+			
 			<div class="nav-collapse collapse" id="adminMenuBarContent">
 			 	<ul class="nav">
 					<!--- Loop over Top Menus --->
 					<cfloop array="#menu#" index="local.topMenu">
-						<cfif !len(local.topMenu.permissions) OR prc.oAuthor.checkPermission( local.topMenu.permissions )>
+						<cfif !len( local.topMenu.permissions ) OR prc.oAuthor.checkPermission( local.topMenu.permissions )>
 						<li class="dropdown<cfif event.getValue(name='tab#local.topMenu.name#',defaultValue=false,private=true)> active</cfif>">
 							<a href="#local.topMenu.href#" class="dropdown-toggle" <cfif arrayLen( local.topMenu.subMenu )>data-toggle="dropdown"</cfif><!---
-							---><cfif len(local.topMenu.title)> title="#local.topMenu.title#"</cfif><!---
-							---><cfif len(local.topMenu.target)> target="#local.topMenu.target#"</cfif><!---
+							---><cfif len( local.topMenu.title )> title="#local.topMenu.title#"</cfif><!---
+							---><cfif len( local.topMenu.target )> target="#local.topMenu.target#"</cfif><!---
 							----><cfif structKeyExists( local.topMenu, "data" ) && structCount( local.topMenu.data )>#parseADataAttributes( local.topMenu.data )#</cfif>>#local.topMenu.label# <cfif arrayLen( local.topMenu.subMenu )><i class="caret"></i></cfif></a>
 							<!--- Do we have submenus --->
-							<cfif arrayLen(local.topMenu.subMenu)>
+							<cfif arrayLen( local.topMenu.subMenu )>
 							<ul class="dropdown-menu">
 							<cfloop array="#local.topMenu.submenu#" index="local.thisSubMenu">
 								<!--- Security --->
