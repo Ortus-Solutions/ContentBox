@@ -78,9 +78,6 @@ component implements="contentbox.model.updates.IUpdate"{
 			updateAdmin();
 			updateEditor();
 
-			// Clear singletons so they are rebuilt
-			coldbox.setColdboxInitiated( false );
-			
 			log.info("Finalized #version# patching");
 		}
 		catch(Any e){
@@ -175,6 +172,9 @@ component implements="contentbox.model.updates.IUpdate"{
 				oRole.addPermission( local.thisPerm ); 
 				log.info( "Added #thisPermTitle# permission to admin role" );
 			}			
+			else{
+				log.info( "Skipped #thisPermTitle# permission to admin role" );
+			}
 		}
 		
 		// save role
