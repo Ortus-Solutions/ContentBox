@@ -178,7 +178,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		
 		// save role
-		roleService.save( entity=oRole, transactional=false );
+		roleService.save( entity=oRole );
 
 		return oRole;
 	}
@@ -198,11 +198,13 @@ component implements="contentbox.model.updates.IUpdate"{
 			if( structKeyExists( local, "thisPerm" ) and !oRole.hasPermission( local.thisPerm ) ){ 
 				oRole.addPermission( local.thisPerm ); 
 				log.info("Added #thisPermTitle# permission to editor role");
-			}			
+			} else {
+				log.info("Skipped #thisPermTitle# permission to editor role");
+			}
 		}
 		
 		// save role
-		roleService.save( entity=oRole, transactional=false );
+		roleService.save( entity=oRole );
 
 		return oRole;
 	}
