@@ -60,12 +60,13 @@ $(document).ready(function() {
         this.find( '.control-group' ).each(function() {
             $( this ).removeClass( 'error' ).removeClass( 'success' );
         });
+        return this;
     }
     // simple method to blank out all form fields 
     $.fn.clearForm = function() {
     	if( this.data( 'validator') == undefined ){ return; }
         // reset classes and what not
-        this.data( 'validator' ).resetForm();
+        $( this.data( 'validator' ) ).resetForm();
         // run over input fields and blank them out
         this.find(':input').each(function() {
             switch(this.type) {
@@ -82,7 +83,8 @@ $(document).ready(function() {
                     this.checked = false;
             }
         });
-        this.data( 'validator' ).resetValidations();
+        $( this.data( 'validator' ) ).resetValidations();
+        return this;
     }
     $.fn.collect = function() {
         var serializedArrayData = this.serializeArray();
@@ -108,12 +110,15 @@ $(document).ready(function() {
 	else{
 		jwerty.key( "ctrl+shift+e" , toggleSidebar );
 	}
+
 	// If the sidebar preference is off, toggle it
 	if( $("body").attr( "data-showsidebar" ) == "no" ){
 		toggleSidebar();
 	}
+
 	// Nav Search Shortcut
 	jwerty.key( "ctrl+shift+s" , function(){ $("#nav-search").focus(); return false;} );
+	
 	// find all links with the key-binding data attribute
 	$( '[data-keybinding]' ).each(function(){
 		var boundItem = $( this );
