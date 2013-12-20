@@ -39,7 +39,6 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="securityRuleService"		inject="securityRuleService@cb";
 	property name="pageService"				inject="pageService@cb";
 	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
-	property name="log"						inject="logbox:logger:{this}";
 	property name="contentService" 			inject="contentService@cb";
 	property name="wirebox"					inject="wirebox";
 	property name="coldbox"					inject="coldbox";
@@ -64,7 +63,9 @@ component implements="contentbox.model.updates.IUpdate"{
 	*/
 	function preInstallation(){
 		try{
-			
+			// get log
+			variables.log = arguments.log;
+
 			log.info("About to begin #version# patching");
 			
 			// Verify if less than 1.5.7 with message

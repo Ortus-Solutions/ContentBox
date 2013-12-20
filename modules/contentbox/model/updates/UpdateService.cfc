@@ -310,7 +310,7 @@ component accessors="true" threadSafe{
 				var updater = buildUpdater();
 
 				// do preInstallation
-				updater.preInstallation();
+				updater.preInstallation( arguments.log );
 				arguments.log.append("Update.cfc - called preInstallation() method.<br/>");
 
 				// Do deletes first
@@ -320,7 +320,7 @@ component accessors="true" threadSafe{
 				processUpdates( getPatchesLocation() & "/patch.zip", log );
 
 				// Post Install
-				updater.postInstallation();
+				updater.postInstallation( arguments.log );
 				arguments.log.append("Update.cfc - called postInstallation() method.<br/>");
 
 				results = true;
