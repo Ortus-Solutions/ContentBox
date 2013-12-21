@@ -238,6 +238,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_contentstore_caching", "true" );
 		addSetting( "cb_notify_contentstore", "true" );
 		addSetting( "cb_comments_moderation_expiration", "30" );
+		addSetting( "cb_dashboard_welcome_title", "Welcome To Your ContentBox Dashboard" );
+		addSetting( "cb_dashboard_welcome_body", "" );
 	}
 	
 	private function addSetting(name, value){
