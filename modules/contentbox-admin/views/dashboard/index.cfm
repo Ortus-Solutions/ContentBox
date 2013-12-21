@@ -45,6 +45,8 @@
 							<li><a href="##latestComments" data-toggle="tab"><i class="icon-comments"></i> Recent Comments</a></li>
 						</cfif>
 						<li><a href="##latestNews" data-toggle="tab"><i class="icon-rss"></i> Recent News</a></li>
+						<!--- cbadmin Event --->
+						#announceInterception("cbadmin_onDashboardTabNav")#
 					</ul>
 					<div class="tab-content">
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
@@ -60,6 +62,8 @@
 						<div class="well well-small tab-pane" id="latestNews"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
 						<p>&nbsp;</p><p>&nbsp;</p>
 					</div>
+					<!--- cbadmin Event --->
+					#announceInterception("cbadmin_onDashboardTabContent")#
 				</div>
 				
 				<!--- Event --->
