@@ -257,6 +257,8 @@ component accessors="true"{
 			"cb_dashboard_recentcontentstore" = "5",
 			"cb_dashboard_newsfeed" = "http://www.gocontentbox.org/blog/rss",
 			"cb_dashboard_newsfeed_count" = "5",
+			"cb_dashboard_welcome_title" = "Welcome To Your ContentBox Dashboard",
+			"cb_dashboard_welcome_body" = "",
 
 			// Comment Settings
 			"cb_comments_whoisURL" = "http://whois.arin.net/ui/query.do?q",

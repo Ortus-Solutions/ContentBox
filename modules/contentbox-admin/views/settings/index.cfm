@@ -161,6 +161,11 @@
     					<fieldset>
     						<legend><i class="icon-dashboard icon-large"></i>  Dashboard Options</legend>
     						
+                            <!--- Tag Line --->
+                            #html.textField( name="cb_dashboard_welcome_title", label="Welcome Title:", value=prc.cbSettings.cb_dashboard_welcome_title, class="textfield width98", wrapper="div class=controls", labelClass="control-label", groupWrapper="div class=control-group")#
+                            <!--- Description --->
+                            #html.textarea(name="cb_dashboard_welcome_body", label="Welcome Body:", value=prc.cbSettings.cb_dashboard_welcome_body,rows="3", wrapper="div class=controls", labelClass="control-label", groupWrapper="div class=control-group")#
+                            
     						<!--- Dashboard Feed --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_dashboard_newsfeed">News Feed</label>

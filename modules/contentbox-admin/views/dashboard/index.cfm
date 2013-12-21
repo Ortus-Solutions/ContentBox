@@ -6,10 +6,14 @@
 			<!--- Body Header --->
 			<div class="header">
 				<i class="icon-dashboard icon-larger"></i>
-				Welcome to your ContentBox Dashboard
+				#prc.cbSettings.cb_dashboard_welcome_title#
 			</div>
 			<!--- Body --->
 			<div class="body" id="mainBody">
+
+				<!--- Dashboard welcome body --->
+				#prc.cbSettings.cb_dashboard_welcome_body#
+
 				<!--- Messagebox --->
 				#getPlugin("MessageBox").renderit()#
 				
