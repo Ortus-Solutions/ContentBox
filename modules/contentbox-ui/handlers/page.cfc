@@ -130,16 +130,16 @@ component extends="content" singleton{
 			// missing page
 			prc.missingPage 	 = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
+			
+			// announce event
+			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
 
 			// set 404 headers
 			event.setHTTPHeader("404","Page not found");
 
 			// set skin not found
 			event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
-				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");
-				
-			// announce event
-			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
+				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");				
 
 		}
 	}
