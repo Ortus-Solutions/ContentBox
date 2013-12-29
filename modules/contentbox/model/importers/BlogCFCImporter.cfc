@@ -175,6 +175,9 @@ component implements="contentbox.model.importers.ICBImporter" {
 				}
 				entry.setCategories(aCategories);
 				entitySave(entry);
+				
+				// Categories won't save in ContentBox Express without this flush :/
+				ORMFlush();
 
 				log.info("Starting to import Entry Comments....");
 				// Import entry comments
