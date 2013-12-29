@@ -609,11 +609,27 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/**
 	* Link to a specific filtered category view of blog entries
-	* @category The category object to link to
+	* @category The category object or slug to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkCategory(required category, boolean ssl=false){
-		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.category.getSlug()#";
+	function linkCategory(required any category, boolean ssl=false){
+		var categorySlug = '';
+		if( isSimpleValue(argument.category) ) {
+			categorySlug = argument.category;
+		} else {
+			categorySlug = arguments.category.getSlug();			
+		}
+		
+		return linkCategoryWithSlug(categorySlug, arguments.ssl );
+	}
+
+	/**
+	* Link to a specific filtered category view of blog entries
+	* @categorySlug The category slug as a string to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
+	*/
+	function linkCategoryWithSlug(required string categorySlug, boolean ssl=false){
+		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.categorySlug#";
 		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
 
@@ -660,7 +676,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		if( isSimpleValue(arguments.entry) ){
-			return linkEntryWithSlug( arguments.entry, arguments.ssl );
+			return linkEntrywithslug( arguments.entry, arguments.ssl );
 		}
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.entry.getSlug()#";
 		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
