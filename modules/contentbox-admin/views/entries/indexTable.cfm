@@ -73,7 +73,7 @@
 					#entry.getActiveContent().getDisplayCreatedDate()#
 					</br>
 					<!--- comments icon --->
-					<cfif !entry.getallowComments()>
+					<cfif entry.getallowComments()>
 						<i class="icon-comments"></i> Open Comments
 					<cfelse>
 						<i class="icon-warning-sign"></i> Closed Comments
