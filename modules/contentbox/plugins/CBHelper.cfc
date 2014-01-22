@@ -337,7 +337,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	// Get the missing page, if any
 	any function getMissingPage(){
 		var event = getRequestContext();
-		return event.getValue(name="missingPage",private="true",default="");
+		return event.getValue(name="missingPage",private="true",defaultValue="");
 	}
 	// Get Home Page slug set up by the administrator.
 	any function getHomePage(){
