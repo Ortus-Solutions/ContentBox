@@ -106,6 +106,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @sortOrder.hint The sorting of the search results, defaults to publishedDate DESC
 	* @isPublished.hint Search for published, non-published or both content objects [true, false, 'all']
 	* @searchActiveContent.hint Search only content titles or both title and active content. Defaults to both.
+	* @contentTypes.hint Limit search to list of content types (comma-delimited). Leave blank to search all content types
 	*/
 	function searchContent(
 		any searchTerm="", 
@@ -114,7 +115,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		boolean asQuery=false, 
 		any sortOrder="publishedDate DESC", 
 		any isPublished=true, 
-		boolean searchActiveContent=true){
+		boolean searchActiveContent=true,
+		string contentTypes=""){
 
 		var results = {};
 		var c = newCriteria();
@@ -143,6 +145,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			else{
 				c.like( "title", "%#arguments.searchTerm#%" ); 
 			}
+		}
+		// Content Types
+		if( len( arguments.contentTypes ) ) {
+			c.isIn( 'contentType', arguments.contentTypes );
 		}
 
 		// run criteria query and projections count

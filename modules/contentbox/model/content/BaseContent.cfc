@@ -65,6 +65,10 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" inverse="true" cascade="all"  
 			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID";
 
+	// M2M -> Related Content
+	property name="relatedContent" fieldtype="many-to-many" type="array" lazy="extra" orderby="title" inverse="true" cascade="all"  
+			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_contentID" linktable="cb_relatedContent" inversejoincolumn="FK_relatedContentID";
+
 	// Calculated Fields
 	property name="numberOfVersions" 			formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" default="0";
 	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" default="0";
@@ -334,6 +338,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			result[ "categories" ] = [];
 		}
 		
+		// Related Content
+		result[ "relatedcontent" ] = [];
+		if( hasRelatedContent() ) {			
+			for( var content in variables.relatedContent ) {
+				arrayAppend( result[ "relatedcontent" ], content.getMemento() );
+			}
+		}
 		return result;
 	}
 	

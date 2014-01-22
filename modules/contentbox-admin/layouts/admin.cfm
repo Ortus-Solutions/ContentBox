@@ -51,6 +51,7 @@
 			    #prc.cbroot#/includes/js/jwerty.js,
 			    #prc.cbroot#/includes/js/jquery.validate.js,
 			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
+			    #prc.cbroot#/includes/js/jquery.cookie.js,
 			    #( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#
 			    #prc.cbroot#/includes/js/contentbox.js",
 			   location="#prc.cbroot#/includes/cache")#

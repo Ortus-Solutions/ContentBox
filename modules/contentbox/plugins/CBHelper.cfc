@@ -343,6 +343,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	any function getHomePage(){
 		return setting("cb_site_homepage");
 	}
+	// Get the the blog categories, else throws exception
+	any function getCurrentRelatedContent(){
+		var relatedContent = [];
+		if( isPageView() ) {
+			relatedContent = getCurrentPage().getRelatedContent();
+		}
+		else if( isEntryView() ) {
+			relatedContent = getCurrentEntry().getRelatedContent();
+		}
+		return relatedContent;
+	}
 	// Get the current page's or blog entrie's custom fields as a struct
 	struct function getCurrentCustomFields(){
 		var fields = "";
@@ -878,6 +889,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	function quickCategories(template="category",collectionAs="category",args=structnew()){
 		var categories = getCurrentCategories();
 		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=categories,collectionAs=arguments.collectionAs,args=arguments.args);
+	}
+
+	/**
+	* Render out related content anywhere using ColdBox collection rendering
+	* @template.hint The name of the template to use, by default it looks in the 'templates/relatedContent.cfm' convention, no '.cfm' please
+	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'relatedContent'
+	* @args.hint A structure of name-value pairs to pass to the template
+	*/
+	function quickRelatedContent( template="relatedContent", collectionAs="relatedContent", args=structnew() ){
+		var relatedContent = getCurrentRelatedContent();
+		return renderView( view="#layoutName()#/templates/#arguments.template#", collection=relatedContent,collectionAs=arguments.collectionAs, args=arguments.args );
 	}
 
 	/**
