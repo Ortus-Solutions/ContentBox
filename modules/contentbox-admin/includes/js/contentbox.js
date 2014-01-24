@@ -66,7 +66,7 @@ $(document).ready(function() {
     $.fn.clearForm = function() {
     	if( this.data( 'validator') == undefined ){ return; }
         // reset classes and what not
-        $( this.data( 'validator' ) ).resetForm();
+        this.data( 'validator' ).resetForm();
         // run over input fields and blank them out
         this.find(':input').each(function() {
             switch(this.type) {
