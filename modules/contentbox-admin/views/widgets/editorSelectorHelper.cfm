@@ -75,7 +75,7 @@ function switchWidgetFormMode( mode ) {
                 widgetDisplayName = detail.find( '##widgetDisplayName' ).val();
                 src = findSelectedWidget().find( 'img' ).attr( 'src' );
                 titleBar.html( '<img width="25" src="' + src + '" /> Insert \'' +widgetDisplayName+ '\' Widget' );
-                updatePreview();
+                //updatePreview();
             })
             break;
     }
