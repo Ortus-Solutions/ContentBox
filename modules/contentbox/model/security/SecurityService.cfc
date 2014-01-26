@@ -159,7 +159,7 @@ component implements="ISecurityService" singleton{
 		// get mail payload
 		var bodyTokens = {
 			name=arguments.author.getName(),
-			linkToken = CBHelper.linkAdmin( "security.verifyReset" ) & "?token=#token#"
+			linkToken = CBHelper.linkAdmin( event="security.verifyReset", ssl=settings.cb_admin_ssl ) & "?token=#token#"
 		};
 		var mail = mailservice.newMail(to=arguments.author.getEmail(),
 									   from=settings.cb_site_outgoingEmail,
@@ -212,7 +212,7 @@ component implements="ISecurityService" singleton{
 		var bodyTokens = {
 			genPassword=genPassword,
 			name=results.author.getName(),
-			linkLogin = CBHelper.linkAdminLogin()
+			linkLogin = CBHelper.linkAdminLogin( ssl=settings.cb_admin_ssl )
 		};
 		var mail = mailservice.newMail(to=results.author.getEmail(),
 									   from=settings.cb_site_outgoingEmail,
