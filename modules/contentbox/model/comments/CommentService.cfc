@@ -249,10 +249,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// get mail payload
 		var bodyTokens = inComment.getMemento();
 		bodyTokens["whoisURL"] 		= inSettings.cb_comments_whoisURL;
-		bodyTokens["commentURL"] 	= CBHelper.linkComment( inComment );
-		bodyTokens["deleteURL"] 	= CBHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
-		bodyTokens["approveURL"] 	= CBHelper.linkAdmin("comments.moderate") & "?commentID=#inComment.getCommentID()#";
-		bodyTokens["contentURL"] 	= CBHelper.linkContent( inComment.getRelatedContent() );
+		bodyTokens["commentURL"] 	= CBHelper.linkComment( comment=inComment, ssl=settings.cb_site_ssl );
+		bodyTokens["deleteURL"] 	= CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
+		bodyTokens["approveURL"] 	= CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
+		bodyTokens["contentURL"] 	= CBHelper.linkContent( content=inComment.getRelatedContent(), ssl=settings.cb_site_ssl );
 		bodyTokens["contentTitle"] 	= inComment.getParentTitle();
 
 		// Moderation Email? Comment is moderated?
