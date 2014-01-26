@@ -617,15 +617,15 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @category The category object or slug to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkCategory(required any category, boolean ssl=false){
+	function linkCategory( required any category, boolean ssl=false ){
 		var categorySlug = '';
-		if( isSimpleValue(argument.category) ) {
-			categorySlug = argument.category;
+		if( isSimpleValue( arguments.category ) ) {
+			categorySlug = arguments.category;
 		} else {
 			categorySlug = arguments.category.getSlug();			
 		}
 		
-		return linkCategoryWithSlug(categorySlug, arguments.ssl );
+		return linkCategoryWithSlug( categorySlug, arguments.ssl );
 	}
 
 	/**
