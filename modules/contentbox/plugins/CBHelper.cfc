@@ -454,38 +454,43 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the admin
-	* event An optional event to link to
+	* @event.hint An optional event to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkAdmin(event=""){
-		return getRequestContext().buildLink(linkto=adminRoot() & ".#arguments.event#");
+	function linkAdmin( event="", boolean ssl=false ){
+		return getRequestContext().buildLink( linkto=adminRoot() & ".#arguments.event#", ssl=arguments.ssl );
 	}
 
 	/**
 	* Link to the admin logout
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkAdminLogout(){
-		return getRequestContext().buildLink(linkto=adminRoot() & "/security/doLogout");
+	function linkAdminLogout( boolean ssl=false ){
+		return getRequestContext().buildLink( linkto=adminRoot() & "/security/doLogout", ssl=arguments.ssl );
 	}
 
 	/**
 	* Link to the admin login
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkAdminLogin(){
-		return getRequestContext().buildLink(linkto=adminRoot() & "/security/login");
+	function linkAdminLogin( boolean ssl=false ){
+		return getRequestContext().buildLink( linkto=adminRoot() & "/security/login", ssl=arguments.ssl );
 	}
 
 	/**
 	* Create a link to your site root or home page entry point for your blog.
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkHome(){
-		return getRequestContext().buildLink(linkto=siteRoot());
+	function linkHome( boolean ssl=false ){
+		return getRequestContext().buildLink( linkto=siteRoot(), ssl=arguments.ssl );
 	}
 
 	/**
 	* Create a link to your site blog
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkBlog(){
-		return getRequestContext().buildLink(linkto="#siteRoot()##sep()##getBlogEntryPoint()#");
+	function linkBlog( boolean ssl=false ){
+		return getRequestContext().buildLink( linkto="#siteRoot()##sep()##getBlogEntryPoint()#", ssl=arguments.ssl );
 	}
 
 	/**
