@@ -193,6 +193,7 @@ component extends="baseHandler"{
 		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH") );
 		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm") );
 		event.paramValue( "customFieldsCount", 0 );
+		event.paramValue( "relatedContentIDs", [] );
 
 		// slugify the incoming title or slug
 		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin("HTMLHelper").slugify( rc.slug ) );
@@ -252,6 +253,8 @@ component extends="baseHandler"{
 		page.setCategories( categories );
 		// Inflate Custom Fields into the page
 		page.inflateCustomFields( rc.customFieldsCount, rc );
+		// Inflate Related Content into the page
+		page.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
 		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
 

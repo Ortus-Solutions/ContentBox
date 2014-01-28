@@ -66,7 +66,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID";
 
 	// M2M -> Related Content
-	property name="relatedContent" fieldtype="many-to-many" type="array" lazy="extra" orderby="title" inverse="true" cascade="all"  
+	property name="relatedContent" fieldtype="many-to-many" type="array" lazy="extra" orderby="title" cascade="all"  
 			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_contentID" linktable="cb_relatedContent" inversejoincolumn="FK_relatedContentID";
 
 	// Calculated Fields
@@ -112,6 +112,46 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		return this;
 	}
 	
+	/**
+	 * Override the setRelatedContent
+	 * @relatedContent.hint The related content to set
+	 */
+	BaseContent function setRelatedContent( required array relatedContent ) {
+		if( hasRelatedContent() ) {
+			variables.relatedContent.clear();
+			variables.relatedContent.addAll( arguments.relatedContent );
+		}
+		else {
+			variables.relatedContent = arguments.relatedContent;
+		}
+		return this;
+	}
+
+	/**
+	* Inflates from comma-delimited list (or array) of id's
+	* @relatedContent.hint The list or array of relatedContent ids
+	*/
+	BaseContent function inflateRelatedContent( required any relatedContent ){
+		var allContent = [];
+		// convert to array
+		if( isSimpleValue( arguments.relatedContent ) ){
+			arguments.relatedContent = listToArray( arguments.relatedContent );
+		}
+		// iterate over array
+		for( var x=1; x <= arrayLen( arguments.relatedContent ); x++){
+			var id 	= trim( arguments.relatedContent[ x ] );
+			// get content from id
+			var extantContent = contentService.get( id );
+			// if found, add to array
+			if( !isNull( extantContent ) ) {
+				// append to array all new relatedContent
+				arrayAppend( allContent, extantContent );
+			}
+		}
+		setRelatedContent( allContent );
+		return this;
+	}
+
 	/**
 	* Override the setComments
 	*/
