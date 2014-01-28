@@ -209,7 +209,7 @@
 				#html.endFieldSet()#
 	
 				<!--- Accordion --->
-				<div id="accordion" class="accordion">
+				<div id="accordion" class="accordion" data-stateful="entrysidebar">
 				    
                     <!---Begin Page Info--->
 					<cfif prc.entry.isLoaded()>	
@@ -277,7 +277,42 @@
                   	</div>
                     </cfif>
                     <!---End Entry Info--->
-						
+					
+                    <!---Begin Related Content--->
+                    <!---<cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>--->
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+                                <i class="icon-picture icon-large"></i> Related Content                                
+                            </a>
+
+                        </div>
+                        <div id="relatedcontent" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <cfset rcArgs = { relatedContent=prc.relatedContent }>
+                                #renderView( view="_tags/relatedContent", args=rcArgs )#
+                                <!---<button class="btn btn-mini btn-success pull-right" type="button">Add Related Content</button>
+                                <table class="table table-hover table-bordered table-striped pull-left">
+                                    <tbody>
+                                        <cfloop array="#prc.relatedContent#" index="content">
+                                            <tr>
+                                                <td></td>
+                                                <td>#content.getTitle()#</td>
+                                                <td>
+                                                    <button class="btn btn-mini btn-danger" type="button">Delete</button>
+                                                </td>
+                                            </tr>
+                                        </cfloop>
+                                    </tbody>
+                                </table>--->
+                            </div>
+                        </div>
+                    </div>
+                    <!---<cfelse>
+                        #html.hiddenField(name="parentPage", value=prc.parentcontentID)#
+                    </cfif>--->
+                    <!---End Related Content--->
+
 					<!---Begin Modifiers--->
 					<cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
                     <div class="accordion-group">
