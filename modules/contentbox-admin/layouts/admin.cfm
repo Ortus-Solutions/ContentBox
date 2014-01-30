@@ -203,12 +203,11 @@
 							</cfif>
 							<li class="dropdown">
 								<a data-toggle="dropdown" class="dropdown-toggle" href="##">
-								#getMyPlugin( plugin="Avatar", module="contentbox" ).renderAvatar( email=prc.oAuthor.getEmail(), size="20" )#
-								#prc.oAuthor.getName()# <b class="icon-caret-down"></b></a>
-								<ul class="dropdown-menu">
-									<li><a data-keybinding="ctrl+shift+a" title="ctrl+shift+A" href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"><i class="icon-camera"></i> My Profile</a></li>
-									<li><a data-keybinding="ctrl+shift+l" title="ctrl+shift+L" href="#event.buildLink( prc.xehDoLogout )#"><i class="icon-off"></i> Logout</a></li>
-								</ul>
+									#getMyPlugin( plugin="Avatar", module="contentbox" ).renderAvatar( email=prc.oAuthor.getEmail(), size="20" )#
+									#prc.oAuthor.getName()# <b class="icon-caret-down"></b>
+								</a>
+								<!--- Profile Generated Menu --->
+								#prc.adminMenuService.generateProfileMenu()#
 							</li>
 	                    </ul>
 					</div>

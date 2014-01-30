@@ -11,7 +11,7 @@ component extends="baseHandler"{
 	property name="editorService"		inject="id:editorService@cb";
 	
 	// pre handler
-	function preHandler(event,rc,prc,action,eventArguments){
+	function preHandler(event, rc, prc,action,eventArguments){
 		// Tab control
 		prc.tabUsers = true;
 		
@@ -31,7 +31,7 @@ component extends="baseHandler"{
 	}
 
 	// index
-	function index(event,rc,prc){
+	function index(event, rc, prc){
 		// paging
 		event.paramValue("page",1);
 
@@ -66,7 +66,7 @@ component extends="baseHandler"{
 	}
 
 	// username check
-	function usernameCheck(event,rc,prc){
+	function usernameCheck(event, rc, prc){
 		var found = true;
 
 		event.paramValue("username","");
@@ -80,7 +80,7 @@ component extends="baseHandler"{
 	}
 
 	// user editor
-	function editor(event,rc,prc){
+	function editor(event, rc, prc){
 		// exit handlers
 		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#.authors.save";
 		prc.xehAuthorPreferences 	= "#prc.cbAdminEntryPoint#.authors.savePreferences";
@@ -111,9 +111,15 @@ component extends="baseHandler"{
 		// view
 		event.setView("authors/editor");
 	}
+
+	// shortcut to your profile
+	function myprofile( event, rc, prc ){
+		rc.authorID = prc.oAuthor.getAuthorID();
+		editor( argumentCollection=arguments );
+	}
 	
 	// List preferences
-	private function listPreferences(event,rc,prc){
+	private function listPreferences(event, rc, prc){
 		// get editors for preferences
 		prc.editors = editorService.getRegisteredEditors();
 		// Get All registered markups so we can display them
@@ -123,7 +129,7 @@ component extends="baseHandler"{
 	}
 	
 	// change user editor preferences
-	function changeEditor(event,rc,prc){
+	function changeEditor(event, rc, prc){
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		try{
 			// store the new author preference	
@@ -142,7 +148,7 @@ component extends="baseHandler"{
 	}
 	
 	// change user sidebar preferences
-	function changeSidebarState(event,rc,prc){
+	function changeSidebarState(event, rc, prc){
 		event.paramvalue( "sidebarState", false );
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		try{
@@ -163,7 +169,7 @@ component extends="baseHandler"{
 	
 
 	// save user
-	function savePreferences(event,rc,prc){
+	function savePreferences(event, rc, prc){
 		var oAuthor 		= authorService.get(id=rc.authorID);
 		var allPreferences 	= {};
 		
@@ -188,7 +194,7 @@ component extends="baseHandler"{
 	}
 	
 	// save raw preferences
-	function saveRawPreferences(event,rc,prc){
+	function saveRawPreferences(event, rc, prc){
 		var oAuthor = authorService.get(id=rc.authorID);
 		// Validate raw preferences
 		var vResult = validateModel(target=rc, constraints={ preferences = {required=true, type="json" } });
@@ -215,7 +221,7 @@ component extends="baseHandler"{
 	}
 	
 	// save user
-	function save(event,rc,prc){
+	function save(event, rc, prc){
 		// Get new or persisted user
 		var oAuthor = authorService.get(id=rc.authorID);
 		// get and populate author
@@ -250,7 +256,7 @@ component extends="baseHandler"{
 	}
 
 	// change passord
-	function passwordChange(event,rc,prc){
+	function passwordChange(event, rc, prc){
 		var oAuthor = authorService.get(id=rc.authorID);
 
 		// validate passwords
@@ -273,7 +279,7 @@ component extends="baseHandler"{
 	}
 
 	// remove user
-	function remove(event,rc,prc){
+	function remove(event, rc, prc){
 		var oAuthor	= authorService.get( rc.authorID );
 
 		if( isNull(oAuthor) ){
@@ -294,7 +300,7 @@ component extends="baseHandler"{
 	}
 
 	// permissions
-	function permissions(event,rc,prc){
+	function permissions(event, rc, prc){
 		// exit Handlers
 		prc.xehPermissionRemove = "#prc.cbAdminEntryPoint#.authors.removePermission";
 		prc.xehPermissionSave 	= "#prc.cbAdminEntryPoint#.authors.savePermission";
@@ -308,7 +314,7 @@ component extends="baseHandler"{
 	}
 
 	// Save permission to the author and gracefully end.
-	function savePermission(event,rc,prc){
+	function savePermission(event, rc, prc){
 		var oAuthor 	= authorService.get( rc.authorID );
 		var oPermission = permissionService.get( rc.permissionID );
 
@@ -323,7 +329,7 @@ component extends="baseHandler"{
 	}
 
 	// remove permission to a author and gracefully end.
-	function removePermission(event,rc,prc){
+	function removePermission(event, rc, prc){
 		var oAuthor 	= authorService.get( rc.authorID );
 		var oPermission = permissionService.get( rc.permissionID );
 
@@ -336,7 +342,7 @@ component extends="baseHandler"{
 	}
 	
 	// Export Entry
-	function export(event,rc,prc){
+	function export(event, rc, prc){
 		event.paramValue("format", "json");
 		// get user
 		prc.user  = authorService.get( event.getValue("authorID",0) );
@@ -361,7 +367,7 @@ component extends="baseHandler"{
 	}
 	
 	// Export All Entries
-	function exportAll(event,rc,prc){
+	function exportAll(event, rc, prc){
 		event.paramValue("format", "json");
 		// get all prepared content objects
 		var data  = authorService.getAllForExport();
@@ -380,7 +386,7 @@ component extends="baseHandler"{
 	}
 	
 	// import entries
-	function importAll(event,rc,prc){
+	function importAll(event, rc, prc){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try{

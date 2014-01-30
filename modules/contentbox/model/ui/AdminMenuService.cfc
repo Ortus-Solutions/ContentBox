@@ -40,6 +40,8 @@ component accessors="true" threadSafe singleton{
 	this.TOOLS			= "tools";
 	this.SYSTEM			= "system";
 	this.ADMIN_ENTRYPOINT = "";
+	// PROFILE MENU, STATIC TOP MENU, ONLY SUB MENUS CAN BE ADDED/MODIFIED
+	this.PROFILE		= "profile";
 
 	/**
 	* Constructor
@@ -61,6 +63,33 @@ component accessors="true" threadSafe singleton{
 		this.ADMIN_ENTRYPOINT = arguments.coldbox.getSetting("modules")["contentbox-admin"].entryPoint;
 		// create default top menus
 		createDefaultMenu();
+		createProfileMenu();
+
+		return this;
+	}
+
+	/**
+	* Create the default ContentBox profile menu
+	*/
+	AdminMenuService function createProfileMenu(){
+		var event 	= requestService.getContext();
+		var prc 	= {};
+		
+		// Exit Handlers
+		prc.xehMyProfile		= "#this.ADMIN_ENTRYPOINT#.authors.myprofile";
+		prc.xehDoLogout			= "#this.ADMIN_ENTRYPOINT#.security.doLogout";
+
+		// Register profile sub menu
+		addTopMenu( name=this.PROFILE, label="Profile" )
+			.addSubMenu( name="myprofile", title="ctrl+shift+A", 
+					     label="<i class='icon-camera'></i> My Profile", 
+					     href="#event.buildLink( prc.xehMyProfile )#",
+						 data={ keybinding="ctrl+shift+a" } )
+			.addSubMenu( name="logout", title="ctrl+shift+L", 
+						 label="<i class='icon-off'></i> Logout", 
+						 href="#event.buildLink( prc.xehDoLogout )#",
+						 data={ keybinding="ctrl+shift+l" } );
+
 		return this;
 	}
 
@@ -271,12 +300,29 @@ component accessors="true" threadSafe singleton{
 	*/
 	any function generateMenu(){
 		var event 	= requestService.getContext();
-		var prc		= event.getCollection(private=true);
+		var prc		= event.getCollection( private=true );
 		var genMenu = "";
 
 		savecontent variable="genMenu"{
 			include "templates/bootstrap-adminMenu.cfm";
 		}
+		// return it
+		return genMenu;
+	}
+
+	/**
+	* Generate profile menu
+	*/
+	any function generateProfileMenu(){
+		var event 	= requestService.getContext();
+		var prc		= event.getCollection( private=true );
+		var genMenu = "";
+		var topMenu = topMenuMap[ 'PROFILE' ];
+
+		savecontent variable="genMenu"{
+			include "templates/bootstrap-profileMenu.cfm";
+		}
+
 		// return it
 		return genMenu;
 	}
