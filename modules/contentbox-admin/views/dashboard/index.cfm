@@ -53,6 +53,8 @@
 						#announceInterception("cbadmin_onDashboardTabNav")#
 					</ul>
 					<div class="tab-content">
+						<!--- cbadmin Event --->
+						#announceInterception("cbadmin_preDashboardTabContent")#
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<div class="tab-pane" id="recentContentTab">
 								<div class="well well-small" id="latestPages"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
@@ -64,10 +66,10 @@
 							<div class="well well-small tab-pane" id="latestComments"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
 						</cfif>
 						<div class="well well-small tab-pane" id="latestNews"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+						<!--- cbadmin Event --->
+						#announceInterception("cbadmin_postDashboardTabContent")#
 						<p>&nbsp;</p><p>&nbsp;</p>
 					</div>
-					<!--- cbadmin Event --->
-					#announceInterception("cbadmin_onDashboardTabContent")#
 				</div>
 				
 				<!--- Event --->
