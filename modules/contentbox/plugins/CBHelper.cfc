@@ -633,7 +633,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @categorySlug The category slug as a string to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkCategoryWithSlug(required string categorySlug, boolean ssl=false){
+	function linkCategoryWithSlug( required string categorySlug, boolean ssl=false ){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.categorySlug#";
 		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
