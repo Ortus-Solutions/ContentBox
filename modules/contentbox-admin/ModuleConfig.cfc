@@ -99,7 +99,8 @@ component {
 				// Roles events
 				"cbadmin_preRoleSave", "cbadmin_postRoleSave", "cbadmin_preRoleRemove" , "cbadmin_postRoleRemove" ,
 				// Dashboard events
-				"cbadmin_onDashboard", "cbadmin_preDashboardContent", "cbadmin_postDashboardContent", "cbadmin_preDashboardSideBar", "cbadmin_postDashboardSideBar", "cbadmin_onDashboardTabNav", "cbadmin_onDashboardTabContent",
+				"cbadmin_onDashboard", "cbadmin_preDashboardContent", "cbadmin_postDashboardContent", "cbadmin_preDashboardSideBar", "cbadmin_postDashboardSideBar", 
+				"cbadmin_onDashboardTabNav", "cbadmin_preDashboardTabContent", "cbadmin_postDashboardTabContent",
 				// Security events
 				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout","cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder", "cbadmin_onPasswordReset", "cbadmin_onInvalidPasswordReset",
 				// Settings events
