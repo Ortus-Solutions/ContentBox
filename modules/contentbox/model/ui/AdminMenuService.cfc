@@ -40,8 +40,6 @@ component accessors="true" threadSafe singleton{
 	this.TOOLS			= "tools";
 	this.SYSTEM			= "system";
 	this.ADMIN_ENTRYPOINT = "";
-	// PROFILE MENU, STATIC TOP MENU, ONLY SUB MENUS CAN BE ADDED/MODIFIED
-	this.PROFILE		= "profile";
 
 	/**
 	* Constructor
@@ -53,6 +51,8 @@ component accessors="true" threadSafe singleton{
 		menu = [];
 		// init top menu structure holders
 		topMenuMap = {};
+		// init profile menu structure
+		profileMenuMap = { submenu=[], name="PROFILE", label="profile" };
 		// top menu pointer
 		thisTopMenu = "";
 		// store request service
@@ -80,15 +80,14 @@ component accessors="true" threadSafe singleton{
 		prc.xehDoLogout			= "#this.ADMIN_ENTRYPOINT#.security.doLogout";
 
 		// Register profile sub menu
-		addTopMenu( name=this.PROFILE, label="Profile" )
-			.addSubMenu( name="myprofile", title="ctrl+shift+A", 
-					     label="<i class='icon-camera'></i> My Profile", 
-					     href="#event.buildLink( prc.xehMyProfile )#",
-						 data={ keybinding="ctrl+shift+a" } )
-			.addSubMenu( name="logout", title="ctrl+shift+L", 
-						 label="<i class='icon-off'></i> Logout", 
-						 href="#event.buildLink( prc.xehDoLogout )#",
-						 data={ keybinding="ctrl+shift+l" } );
+		addProfileSubMenu( name="myprofile", title="ctrl+shift+A", 
+				     	   label="<i class='icon-camera'></i> My Profile", 
+				     	   href="#event.buildLink( prc.xehMyProfile )#",
+					 	   data={ keybinding="ctrl+shift+a" } )
+		.addProfileSubMenu( name="logout", title="ctrl+shift+L", 
+					 		label="<i class='icon-off'></i> Logout", 
+					 		href="#event.buildLink( prc.xehDoLogout )#",
+					 		data={ keybinding="ctrl+shift+l" } );
 
 		return this;
 	}
@@ -294,6 +293,40 @@ component accessors="true" threadSafe singleton{
 		return this;
 	}
 
+	/**
+	* Add a profile sub level menu
+	* @topMenu.hint The optional top menu name to add this sub level menu to or if concatenated then it uses that one.
+	* @name.hint The unique name for this sub level menu
+	* @label.hint The label for the menu item
+	* @title.hint The optional title element
+	* @href.hint The href, if any to locate when clicked
+	* @target.hint The target to execute the link in, default is same page.
+	* @permissions.hint The list of permissions needed to view this menu
+	* @data.hint A structure of data attributes to add to the link
+	*/
+	AdminMenuService function addProfileSubMenu( required name, required label, title="", href="##", target="", permissions="", data=structNew() ){
+		// store in top menu
+		arrayAppend( profileMenuMap.submenu, arguments );
+		// return
+		return this;
+	}
+
+	/**
+	* Remove a profile sub level menu
+	* @name.hint The unique name for this sub level menu
+	*/
+	AdminMenuService function removeProfileSubMenu( required name ){
+
+		for( var x=1; x lte arrayLen( profileMenuMap.subMenu ); x++){
+			if( profileMenuMap.subMenu[x].name eq arguments.name ){
+				arrayDeleteAt( profileMenuMap.subMenu, x );
+				break;
+			}
+		}
+
+		// return
+		return this;
+	}
 
 	/**
 	*  Generate menu from cache or newly generated menu
@@ -317,7 +350,7 @@ component accessors="true" threadSafe singleton{
 		var event 	= requestService.getContext();
 		var prc		= event.getCollection( private=true );
 		var genMenu = "";
-		var topMenu = topMenuMap[ 'PROFILE' ];
+		var topMenu = profileMenuMap;
 
 		savecontent variable="genMenu"{
 			include "templates/bootstrap-profileMenu.cfm";
