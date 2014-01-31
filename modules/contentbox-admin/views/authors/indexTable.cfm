@@ -3,6 +3,7 @@
 <table name="authors" id="authors" class="tablesorter table table-striped table-hover" width="98%">
 	<thead>
 		<tr>
+			<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'authorID')"/></th>
 			<th>Name</th>
 			<th>Email</th>
 			<th>Role</th>
@@ -14,7 +15,11 @@
 
 	<tbody>
 		<cfloop array="#prc.authors#" index="author">
-		<tr<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()> class="success"</cfif>>
+		<tr<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()> class="success"</cfif> data-authorID="#author.getAuthorID()#" >
+			<!--- check box --->
+			<td>
+				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
+			</td>
 			<td>
 				#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=author.getEmail(),size="30")#
 				<!--- Display Link if Admin Or yourself --->
