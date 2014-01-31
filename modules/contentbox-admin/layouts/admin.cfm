@@ -81,7 +81,6 @@
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
 					</a>
 					
 					<!--- Logo --->
@@ -178,37 +177,10 @@
 				    	</ul>
 						
 						<!--- Right NavBar --->
-						<ul class="nav pull-right">
+						<ul class="nav pull-right" id="nav-header-menu">
 							<li class="divider-vertical"></li>
-							<cfif prc.oAuthor.checkPermission("SYSTEM_TAB")>
-							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-info-sign"></i> About <b class="icon-caret-down"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-ambulance"></i> Professional Support</a></li>
-									<li><a href="http://www.gocontentbox.org" target="_blank"><i class="icon-cloud"></i> ContentBox.org</a></li>
-									<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-book"></i> Documentation</a></li>
-									<li><a href="https://groups.google.com/forum/?fromgroups##!forum/contentbox" target="_blank"><i class="icon-envelope"></i> Support Forums</a></li>
-									<li class="divider"></li>
-									<li><a href="https://www.twitter.com/gocontentbox" target="_blank"><i class="icon-twitter"></i> Twitter</a></li>
-									<li><a href="https://www.facebook.com/gocontentbox" target="_blank"><i class="icon-facebook"></i> FaceBook</a></li>
-									<li><a href="https://plus.google.com/u/0/111231811346031749369" target="_blank"><i class="icon-google-plus"></i> Google+</a></li>
-									<li class="divider"></li>
-									<li>
-										<a href="#event.buildLink( prc.xehAutoUpdates )#"><i class="icon-download-alt"></i> Check For Updates</a>
-										<a href="#event.buildLink( prc.xehAbout )#"><i class="icon-info-sign"></i> ContentBox v.#getModuleSettings('contentbox').version# <br>
-										<span class="label label-warning">(Codename: #getModuleSettings("contentbox").settings.codename#)</span></a>
-									</li>
-								</ul>
-							</li>
-							</cfif>
-							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="##">
-									#getMyPlugin( plugin="Avatar", module="contentbox" ).renderAvatar( email=prc.oAuthor.getEmail(), size="20" )#
-									#prc.oAuthor.getName()# <b class="icon-caret-down"></b>
-								</a>
-								<!--- Profile Generated Menu --->
-								#prc.adminMenuService.generateProfileMenu()#
-							</li>
+							<!--- Header Generated Menu --->
+							#prc.adminMenuService.generateHeaderMenu()#
 	                    </ul>
 					</div>
 				</div> <!---end container --->
