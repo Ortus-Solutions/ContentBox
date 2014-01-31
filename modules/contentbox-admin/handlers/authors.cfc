@@ -53,37 +53,47 @@ component extends="baseHandler"{
 
 	// index
 	function index(event, rc, prc){
-		// paging
-		event.paramValue("page",1);
-
-		// prepare paging plugin
-		prc.pagingPlugin = getMyPlugin(plugin="Paging", module="contentbox");
-		prc.paging 		= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	= event.buildLink('#prc.xehAuthors#.page.@page@');
-
-		// exit Handlers
-		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
-		prc.xehAuthorsearch 	= "#prc.cbAdminEntryPoint#.authors";
-		prc.xehExport 			= "#prc.cbAdminEntryPoint#.authors.export";
-		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.authors.exportAll";
-		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.authors.importAll";
-		
-		// Get all authors or search
-		if( len(event.getValue("searchAuthor","")) ){
-			var results 	= authorService.search(searchTerm=rc.searchAuthor);
-			prc.authors 		= results.authors;
-			prc.authorCount 	= results.count;
-		}
-		else{
-			prc.authors		= authorService.list(sortOrder="lastName desc", asQuery=false, offset=prc.paging.startRow-1, max=prc.cbSettings.cb_paging_maxrows);
-			prc.authorCount = authorService.count();
-		}
-
 		// View all tab
 		prc.tabUsers_manage = true;
 
+		// exit handlers
+		prc.xehAuthorTable	 	= "#prc.cbAdminEntryPoint#.authors.indexTable";
+		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.authors.importAll";
+		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.authors.exportAll";
+		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
+
 		// View
 		event.setView("authors/index");
+	}
+
+	// build out user table
+	function indexTable(event, rc, prc){
+		// paging
+		event.paramValue( "page", 1 );
+		event.paramValue( "showAll", false );
+		event.paramValue( "searchAuthors", "" );
+
+		// prepare paging plugin
+		prc.pagingPlugin = getMyPlugin( plugin="Paging", module="contentbox" );
+		prc.paging 		 = prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	 = 'javascript:contentPaginate(@page@)';
+
+		// exit Handlers
+		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
+		//prc.xehAuthorsearch 	= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehExport 			= "#prc.cbAdminEntryPoint#.authors.export";
+		
+		// Get all authors or search
+		var results 		= authorService.search( searchTerm=rc.searchAuthors,
+													offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
+											   		max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
+											   		sortOrder="lastName asc" 
+											   	   );
+		prc.authors 		= results.authors;
+		prc.authorCount 	= results.count;
+
+		// View
+		event.setView( view="authors/indexTable", layout="ajax" );
 	}
 
 	// username check
