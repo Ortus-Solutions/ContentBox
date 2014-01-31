@@ -74,7 +74,35 @@
 
 	<!--- main sidebar --->
 	<div class="span3" id="main-sidebar">
-		
+		<!--- Filter Box --->
+		<div class="small_box">
+			<div class="header">
+				<i class="icon-filter"></i> Filters
+			</div>
+			<div class="body" id="filterBox">
+				#html.startForm( name="filterForm", action=prc.xehAuthorSearch )#
+				<!--- Status --->
+				<label for="fStatus">Status: </label>
+				<select name="fStatus" id="fStatus" class="input-block-level">
+					<option value="any">Any Status</option>
+					<option value="true">Active</option>
+					<option value="false">Deactivated</option>
+				</select>
+
+				<!--- Roles --->
+				<label for="fRole">Roles: </label>
+				<select name="fRole" id="fRole" class="input-block-level">
+					<option value="any">All Roles</option>
+					<cfloop array="#prc.roles#" index="thisRole">
+					<option value="#thisRole.getRoleID()#">#thisRole.getRole()#</option>
+					</cfloop>
+				</select>
+				
+				<a class="btn btn-danger" href="javascript:contentFilter()">Apply Filters</a>
+				<a class="btn" href="javascript:resetFilter( true )">Reset</a>
+				#html.endForm()#
+			</div>
+		</div>
 	</div>
 </div>
 

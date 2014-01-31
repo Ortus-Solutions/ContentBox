@@ -41,12 +41,29 @@ function contentShowAll(){
 	resetFilter();
 	contentLoad ({ showAll: true } );
 }
+// Content filters
+function contentFilter(){
+	if( $("##fStatus").val() != "any" ||
+		$("##fRole").val() != "any" 
+	){
+		$filterBox.addClass( "selected" );
+	} else {
+		$filterBox.removeClass( "selected" );
+	}
+	// load content filtered
+	contentLoad( {
+		fStatus : $( "##fStatus" ).val(),
+		fRole : $( "##fRole" ).val()
+	} );
+}
 // reset filters
 function resetFilter( reload ){
 	// reload check
 	if( reload ){ contentLoad(); }
 	// reload filters
 	$( $filterBox ).removeClass( "selected" );
+	$( "##fStatus" ).val( '' );
+	$( "##fRole" ).val( '' );
 }
 // content paginate
 function contentPaginate(page){
@@ -64,11 +81,15 @@ function contentLoad( criteria ){
 	if( !( "search" in criteria ) ){ criteria.search = ""; }
 	if( !( "page" in criteria ) ){ criteria.page = 1; }
 	if( !( "showAll" in criteria ) ){ criteria.showAll = false; }
+	if( !( "fStatus" in criteria ) ){ criteria.fStatus = "any"; }
+	if( !( "fRole" in criteria ) ){ criteria.fRole = "any"; }
 	// loading effect
 	$tableContainer.css( 'opacity', .60 );
 	var args = {  
 		page: criteria.page, 
-		showAll : criteria.showAll 
+		showAll : criteria.showAll ,
+		fStatus : criteria.fStatus,
+		fRole : criteria.fRole
 	};
 	// Add dynamic search key name
 	args[ $searchName ] = criteria.search;
