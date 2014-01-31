@@ -10,7 +10,11 @@ $(document).ready(function() {
 		contentForm 	: $("##authorForm"),
 		importDialog 	: $("##importDialog"),
 		cloneDialog		: $("##cloneDialog"),
-		filterBox		: $("##filterBox")
+		filterBox		: $("##filterBox"),
+		filters 		: [
+			{ name : "fStatus", defaultValue : "any" },
+			{ name : "fRole", defaultValue : "any" }
+		]
 	});
 
 	// load content on startup
@@ -27,6 +31,9 @@ function setupView( settings ){
 	$importDialog	= settings.importDialog;
 	$cloneDialog	= settings.cloneDialog;
 	$filterBox		= settings.filterBox;
+
+	// setup filters
+	$filters 		= settings.filters;
 	
 	// quick search binding
 	$searchField.keyup(function(){
@@ -43,27 +50,33 @@ function contentShowAll(){
 }
 // Content filters
 function contentFilter(){
-	if( $("##fStatus").val() != "any" ||
-		$("##fRole").val() != "any" 
-	){
-		$filterBox.addClass( "selected" );
-	} else {
-		$filterBox.removeClass( "selected" );
+	// discover if we are filtering
+	var filterArgs 	= {};
+	var isFiltering = false;
+
+	// check for active filters
+	for( var thisFilter in $filters ){
+		var thisValue = $( "##" + $filters[ thisFilter ].name ).val();
+		if( thisValue != $filters[ thisFilter ].defaultValue ){
+			isFiltering = true;
+			break;
+		}
 	}
-	// load content filtered
-	contentLoad( {
-		fStatus : $( "##fStatus" ).val(),
-		fRole : $( "##fRole" ).val()
-	} );
+	// update filter box
+	( isFiltering ? $filterBox.addClass( "selected" ) : $filterBox.removeClass( "selected" ) );
+	// activate filtering
+	contentLoad( {} );
 }
 // reset filters
 function resetFilter( reload ){
+	// reset filters to default values
+	for( var thisFilter in $filters ){
+		$( "##" + $filters[ thisFilter ].name ).val( $filters[ thisFilter ].defaultValue );
+	}
 	// reload check
-	if( reload ){ contentLoad(); }
+	if( reload ){ contentLoad( {} ); }
 	// reload filters
 	$( $filterBox ).removeClass( "selected" );
-	$( "##fStatus" ).val( '' );
-	$( "##fRole" ).val( '' );
 }
 // content paginate
 function contentPaginate(page){
@@ -81,22 +94,24 @@ function contentLoad( criteria ){
 	if( !( "search" in criteria ) ){ criteria.search = ""; }
 	if( !( "page" in criteria ) ){ criteria.page = 1; }
 	if( !( "showAll" in criteria ) ){ criteria.showAll = false; }
-	if( !( "fStatus" in criteria ) ){ criteria.fStatus = "any"; }
-	if( !( "fRole" in criteria ) ){ criteria.fRole = "any"; }
+
 	// loading effect
 	$tableContainer.css( 'opacity', .60 );
+	// setup ajax arguments
 	var args = {  
 		page: criteria.page, 
-		showAll : criteria.showAll ,
-		fStatus : criteria.fStatus,
-		fRole : criteria.fRole
+		showAll : criteria.showAll
 	};
+	// do we have filters, if so apply them to arguments
+	for( var thisFilter in $filters ){
+		args[ $filters[ thisFilter ].name ] = $( "##" + $filters[ thisFilter ].name ).val();
+	}
 	// Add dynamic search key name
 	args[ $searchName ] = criteria.search;
 	// load content
 	$tableContainer.load( $tableURL, args, function(){
-			$tableContainer.css( 'opacity', 1 );
-			$( this ).fadeIn( 'fast' );
+		$tableContainer.css( 'opacity', 1 );
+		$( this ).fadeIn( 'fast' );
 	});
 }
 <cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT")>
