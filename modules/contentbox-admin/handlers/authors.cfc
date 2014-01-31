@@ -61,7 +61,11 @@ component extends="baseHandler"{
 		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.authors.importAll";
 		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.authors.exportAll";
 		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
+		prc.xehAuthorsearch 	= "#prc.cbAdminEntryPoint#.authors";
 
+		// Get Roles
+		prc.roles = roleService.getAll( sortOrder="role" );
+		
 		// View
 		event.setView("authors/index");
 	}
@@ -69,9 +73,12 @@ component extends="baseHandler"{
 	// build out user table
 	function indexTable(event, rc, prc){
 		// paging
-		event.paramValue( "page", 1 );
-		event.paramValue( "showAll", false );
-		event.paramValue( "searchAuthors", "" );
+		event.paramValue( "page", 1 )
+			.paramValue( "showAll", false )
+			.paramValue( "searchAuthors", "" )
+			.paramValue( "isFiltering", false, true )
+			.paramValue( "fStatus", "any" )
+			.paramValue( "fRole", "any" );
 
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin( plugin="Paging", module="contentbox" );
@@ -80,14 +87,20 @@ component extends="baseHandler"{
 
 		// exit Handlers
 		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
-		//prc.xehAuthorsearch 	= "#prc.cbAdminEntryPoint#.authors";
 		prc.xehExport 			= "#prc.cbAdminEntryPoint#.authors.export";
+
+		// is Filtering?
+		if( rc.fRole neq "all" OR rc.fStatus neq "any" or rc.showAll ){ 
+			prc.isFiltering = true;
+		}
 		
 		// Get all authors or search
 		var results 		= authorService.search( searchTerm=rc.searchAuthors,
 													offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
 											   		max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-											   		sortOrder="lastName asc" 
+											   		sortOrder="lastName asc",
+											   		isActive=rc.fStatus,
+											   		role=rc.fRole
 											   	   );
 		prc.authors 		= results.authors;
 		prc.authorCount 	= results.count;

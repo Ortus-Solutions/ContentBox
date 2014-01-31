@@ -58,12 +58,22 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	/**
 	* Author search by name, email or username
 	* @searchTerm.hint Search in firstname, lastname and email fields
+	* @isActive.hint Search with active bit
+	* @role.hint Apply a role filter
 	* @max.hint The max returned objects
 	* @offset.hint The offset for pagination
 	* @asQuery.hint Query or objects
 	* @sortOrder.hint The sort order to apply
 	*/
-	function search(searchTerm="", max=0, offset=0, asQuery=false, sortOrder="lastName"){
+	function search(
+		string searchTerm="", 
+		string isActive,
+		string role,
+		numeric max=0, 
+		numeric offset=0, 
+		boolean asQuery=false, 
+		string sortOrder="lastName"
+	){
 		var results = {};
 		var c = newCriteria();
 		
@@ -72,6 +82,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			c.$or( c.restrictions.like("firstName","%#arguments.searchTerm#%"),
 				   c.restrictions.like("lastName", "%#arguments.searchTerm#%"),
 				   c.restrictions.like("email", "%#arguments.searchTerm#%") );
+		}
+
+		// isActive filter
+		if( structKeyExists( arguments, "isActive" ) AND arguments.isActive NEQ "any"){
+			c.eq( "isActive", javaCast( "boolean", arguments.isActive ) );
+		}
+
+		// role filter
+		if( structKeyExists( arguments, "role" ) AND arguments.role NEQ "any"){
+			c.createAlias( "role", "role" )
+				.isEq( "role.roleID", javaCast( "int", arguments.role ) );
 		}
 
 		// run criteria query and projections count
