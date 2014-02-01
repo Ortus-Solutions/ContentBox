@@ -292,6 +292,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return false;
 	}
+	/**
+	 * Determine if you're in a "preview" mode or not
+	 */
+	boolean function isPreview(){
+		var event = getRequestContext();
+		return reFindNoCase( "contentbox-ui:.*preview", event.getCurrentEvent() ) ? true : false;
+	}
+
 	// Get the index page entries, else throws exception
 	any function getCurrentEntries(){
 		var prc = getRequestCollection(private=true);
@@ -346,10 +354,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	// Get the the blog categories, else throws exception
 	any function getCurrentRelatedContent(){
 		var relatedContent = [];
-		if( isPageView() ) {
+		if( isPageView() && getCurrentPage().hasRelatedContent() ) {
 			relatedContent = getCurrentPage().getRelatedContent();
 		}
-		else if( isEntryView() ) {
+		else if( isEntryView() && getCurrentEntry().hasRelatedContent() ) {
 			relatedContent = getCurrentEntry().getRelatedContent();
 		}
 		return relatedContent;

@@ -165,7 +165,8 @@ component extends="baseHandler"{
 		// get all authors
 		prc.authors = authorService.getAll(sortOrder="lastName");
 		// get related content
-		prc.relatedContent = prc.page.getRelatedContent();
+		prc.relatedContent = prc.page.hasRelatedContent() ? prc.page.getRelatedContent() : [];
+		prc.relatedContentIDs = prc.page.getRelatedContentIDs();
 		// exit handlers
 		prc.xehPageSave 		= "#prc.cbAdminEntryPoint#.pages.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.pages.slugify";

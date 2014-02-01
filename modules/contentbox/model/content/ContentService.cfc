@@ -107,6 +107,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @isPublished.hint Search for published, non-published or both content objects [true, false, 'all']
 	* @searchActiveContent.hint Search only content titles or both title and active content. Defaults to both.
 	* @contentTypes.hint Limit search to list of content types (comma-delimited). Leave blank to search all content types
+	* @excludeIDs.hint List of IDs to exclude from search
 	*/
 	function searchContent(
 		any searchTerm="", 
@@ -116,7 +117,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		any sortOrder="publishedDate DESC", 
 		any isPublished=true, 
 		boolean searchActiveContent=true,
-		string contentTypes=""){
+		string contentTypes="",
+		any excludeIDs=""){
 
 		var results = {};
 		var c = newCriteria();
@@ -149,6 +151,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Content Types
 		if( len( arguments.contentTypes ) ) {
 			c.isIn( 'contentType', arguments.contentTypes );
+		}
+		// excludeIDs
+		if( len( arguments.excludeIDs ) ) {
+			// if not an array, inflate list
+			if( !isArray( arguments.excludeIDs ) ) {
+				arguments.excludeIDs = listToArray( arguments.excludeIDs );
+			}
+			c.isNot( c.restrictions.in( 'contentID', JavaCast( "java.lang.Integer[]", arguments.excludeIDs ) ) );
 		}
 
 		// run criteria query and projections count
@@ -220,6 +230,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 		if( arguments.content.hasCategories() ){
 			arguments.content.removeAllCategories();
+		}
+		if( arguments.content.hasRelatedContent() ) {
+			arguments.content.getRelatedContent().clear();
 		}
 		// now delete it
 		delete( arguments.content );
@@ -534,6 +547,16 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				oContent.setCategories( allCategories );
 			}
 			
+			// RELATED CONTENT
+			if( arrayLen( thisContent.relatedContent ) ) {
+				var allRelatedContent = [];
+				for( var thisRelatedContent in thisContent.relatedContent ) {
+					var inflateResults = inflateFromStruct( contentData = thisRelatedContent, importLog=arguments.importLog );
+					arrayAppend( allRelatedContent, inflateResults.content );
+				}
+				oContent.setRelatedContent( allRelatedContent );
+			}
+
 			// COMMENTS
 			if( arrayLen( thisContent.comments ) ){
 				var allComments = [];
