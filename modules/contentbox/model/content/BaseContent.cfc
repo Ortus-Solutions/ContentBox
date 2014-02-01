@@ -113,6 +113,21 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 	
 	/**
+	 * Returns a list of active related content for this piece of content
+	 */
+	public string function getRelatedContentIDs() {
+		var relatedContentIDs = "";
+		// if we have related content...
+		if( hasRelatedContent() ) {
+			// loop over related content and add ids to list
+			for( var currentContent in getRelatedContent() ) {
+				relatedContentIDs = listAppend( relatedContentIDs, currentContent.getContentID() );
+			}
+		}
+		return relatedContentIDs;
+	}
+
+	/**
 	 * Override the setRelatedContent
 	 * @relatedContent.hint The related content to set
 	 */
@@ -573,6 +588,12 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			addCategories( categoryService.findBySlug( thisCategory.getSlug() ) );
 		}
 		
+		// clone related content
+		var newRelatedContent = arguments.original.getRelatedContent();
+		for( var thisRelatedContent in newRelatedContent ) {
+			addRelatedContent( thisRelatedContent );
+		}
+
 		// now clone children
 		if( original.hasChild() ){
 			var allChildren = original.getChildren();

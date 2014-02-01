@@ -84,6 +84,7 @@ component extends="baseHandler"{
 		event.paramValue( "page", 1 );
 		event.paramValue( "search", "" );
 		event.paramValue( "clear", false );
+		event.paramValue( "excludeIDs", "" );
 
 		// exit handlers
 		prc.xehRelatedContentSelector	= "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
@@ -99,7 +100,8 @@ component extends="baseHandler"{
 											 max=prc.cbSettings.cb_paging_maxrows,
 											 sortOrder="slug asc",
 											 searchActiveContent=false,
-											 contentTypes="Page,Entry");
+											 contentTypes="Page,Entry",
+											 excludeIDs=rc.excludeIDs);
 		// setup data for display
 		prc.content = contentResults.content;
 		prc.contentCount  = contentResults.count;

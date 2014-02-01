@@ -7,10 +7,17 @@
         }
     </style>
     <script>
-        $(document).ready(function() {
+        $( document ).ready(function() {
             // listener for add button
             $( '##add-related-content' ).on( 'click', function() {
-                openRemoteModal( '#event.buildLink( prc.xehRelatedContentSelector )#' );
+                var baseURL = '#event.buildLink( prc.xehRelatedContentSelector )#';
+                var excludeIDs = $( 'input[name=relatedContentIDs]' ).map( function(){
+                    return $( this ).val();
+                }).get();
+                if( excludeIDs.length ) {
+                    baseURL += '?excludeIDs=' + excludeIDs.join( ',' );
+                }
+                openRemoteModal( baseURL );
             });
             $( '##relatedContent-items' ).on( 'click', '.btn', function(){
                 $( this ).closest( 'tr' ).remove();
@@ -63,22 +70,25 @@
             return icon;
         }
     </script>
-    <button class="btn btn-tiny btn-success" type="button" id="add-related-content">
-        <i class="icon-plus icon-small"></i>
+    <button class="btn btn-small btn-success" type="button" id="add-related-content">
+        <i class="icon-plus"></i>  Add related content
     </button>
+    <br /><br />
     <table class="table table-hover table-bordered table-striped" id="relatedContent-items">
         <tbody>
             <cfloop array="#args.relatedContent#" index="content">
-                <tr id="content_#content.getContentID()#" class="related-content">
-                    <td width="14" class="center">
+                <cfset publishedClass = content.isContentPublished() ? "published" : "selected">
+                <cfset publishedTitle = content.isContentPublished() ? "" : "Content is not published!">
+                <tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
+                    <td width="14" class="center #publishedClass#">
                         <cfif content.getContentType() eq "Page">
                             <i class="icon-file-alt icon-small" title="Page"></i>
                         <cfelseif content.getContentType() eq "Entry">
                             <i class="icon-quote-left icon-small" title="Entry"></i>
                         </cfif>
                     </td>
-                    <td>#content.getTitle()#</td>
-                    <td width="14" class="center">
+                    <td class="#publishedClass#">#content.getTitle()#</td>
+                    <td width="14" class="center #publishedClass#">
                         <button class="btn btn-tiny btn-danger" type="button"><i class="icon-minus" title="Remove Related Content"></i></button>
                         <input type="hidden" name="relatedContentIDs" value="#content.getContentID()#" />
                     </td>
