@@ -225,7 +225,7 @@ component accessors="true"{
 			// Installation security salt
 			"cb_salt" = hash( createUUID() & getTickCount() & now(), "SHA-512" ),
 			
-			// User Input Settings
+			// Site Settings
 			"cb_site_name" = setup.getSiteName(),
 			"cb_site_email" = setup.getSiteEmail(),
 			"cb_site_tagline" = setup.getSiteTagLine(),
@@ -236,6 +236,7 @@ component accessors="true"{
 			"cb_site_disable_blog" = "false",
 			"cb_site_blog_entrypoint" = "blog",
 			"cb_site_ssl" = "false",
+			"cb_site_poweredby" = "true",
 			
 			// Admin settings
 			"cb_admin_ssl" = "false",

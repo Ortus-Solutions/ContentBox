@@ -82,6 +82,17 @@
             						#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
                                 </div>
                             </div>	
+
+                            <!--- Powered by Header --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_site_poweredby",content="Send ContentBox Identity Header:")#
+                                <div class="controls">
+                                    <small>ContentBox will emit an indentiy header 'x-powered-by:contentbox' if enabled.</small><br/>
+                                    #html.radioButton(name="cb_site_poweredby",checked=prc.cbSettings.cb_site_poweredby,value=true)# Yes
+                                    #html.radioButton(name="cb_site_poweredby",checked=not prc.cbSettings.cb_site_poweredby,value=false)# No
+                                </div>
+                            </div>
+
     					</fieldset>
     					<!---Blog Entries --->
     					<fieldset>
@@ -364,7 +375,7 @@
                                 </div>
                             </div>
 
-                            <!--- Custom HTML Caching --->
+                            <!--- Content 203 Header --->
                             <div class="control-group">
                                 #html.label(class="control-label",field="cb_content_cachingHeader",content="Send 203 Caching Header:")#
                                 <div class="controls">
