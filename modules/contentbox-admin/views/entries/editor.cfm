@@ -209,7 +209,7 @@
 				#html.endFieldSet()#
 	
 				<!--- Accordion --->
-				<div id="accordion" class="accordion">
+				<div id="accordion" class="accordion" data-stateful="entrysidebar">
 				    
                     <!---Begin Page Info--->
 					<cfif prc.entry.isLoaded()>	

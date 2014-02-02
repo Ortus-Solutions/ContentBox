@@ -219,7 +219,7 @@
 				#html.endFieldSet()#
 				
 				<!---Begin Accordion--->
-				<div class="accordion" id="accordion">
+				<div class="accordion" id="accordion" data-stateful="pagesidebar">
 				    <!---Begin Page info--->
                     <cfif prc.page.isLoaded()>
 					<div class="accordion-group">
