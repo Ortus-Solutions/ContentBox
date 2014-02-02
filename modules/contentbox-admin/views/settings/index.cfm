@@ -363,6 +363,17 @@
     								#html.radioButton(name="cb_contentstore_caching",checked=not prc.cbSettings.cb_contentstore_caching,value=false)# No
                                 </div>
                             </div>
+
+                            <!--- Custom HTML Caching --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_content_cachingHeader",content="Send 203 Caching Header:")#
+                                <div class="controls">
+                                    <small>ContentBox will emit a 203 cache header to indicate that a page is resolved with caching.</small><br/>
+                                    #html.radioButton(name="cb_content_cachingHeader",checked=prc.cbSettings.cb_content_cachingHeader,value=true)# Yes
+                                    #html.radioButton(name="cb_content_cachingHeader",checked=not prc.cbSettings.cb_content_cachingHeader,value=false)# No
+                                </div>
+                            </div>
+
     						<!--- Content Cache Name --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_content_cacheName">Content Cache Provider:</label>
