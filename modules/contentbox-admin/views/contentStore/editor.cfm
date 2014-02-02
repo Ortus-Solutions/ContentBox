@@ -190,7 +190,7 @@
 				#html.endFieldSet()#
 	
 				<!--- Accordion --->
-				<div id="accordion" class="accordion">
+				<div id="accordion" class="accordion" data-stateful="contentstore-sidebar">
 				    
                     <!---Begin Page Info--->
 					<cfif prc.content.isLoaded()>	
