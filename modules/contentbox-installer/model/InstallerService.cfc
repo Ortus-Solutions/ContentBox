@@ -139,6 +139,7 @@ component accessors="true"{
 			"CONTENTBOX_ADMIN" = "Access to the enter the ContentBox administrator console",
 			"FORGEBOX_ADMIN" = "Ability to manage ForgeBox installations and connectivity.",
 			"EDITORS_DISPLAY_OPTIONS" = "Ability to view the content display options panel",
+			"EDITORS_RELATED_CONTENT" = "Ability to view the related content panel",
 			"EDITORS_MODIFIERS" = "Ability to view the content modifiers panel",
 			"EDITORS_CACHING" = "Ability to view the content caching panel",
 			"EDITORS_CATEGORIES" = "Ability to view the content categories panel",
@@ -181,6 +182,7 @@ component accessors="true"{
 		oRole.addPermission( permissions[ "VERSIONS_ROLLBACK"] );
 		oRole.addPermission( permissions[ "CONTENTBOX_ADMIN"] );
 		oRole.addPermission( permissions[ "EDITORS_DISPLAY_OPTIONS"] );
+		oRole.addPermission( permissions[ "EDITORS_RELATED_CONTENT"] );
 		oRole.addPermission( permissions[ "EDITORS_MODIFIERS"] );
 		oRole.addPermission( permissions[ "EDITORS_CACHING"] );
 		oRole.addPermission( permissions[ "EDITORS_CATEGORIES"] );

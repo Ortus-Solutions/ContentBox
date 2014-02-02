@@ -219,7 +219,7 @@
 				#html.endFieldSet()#
 				
 				<!---Begin Accordion--->
-				<div class="accordion" id="accordion">
+				<div class="accordion" id="accordion" data-stateful="pagesidebar">
 				    <!---Begin Page info--->
                     <cfif prc.page.isLoaded()>
 					<div class="accordion-group">
@@ -337,6 +337,27 @@
                     </cfif>
                     <!---End Display Options--->
                     
+                    <!---Begin Related Content--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+                                <i class="icon-sitemap icon-large"></i> Related Content                                
+                            </a>
+
+                        </div>
+                        <div id="relatedcontent" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <cfset rcArgs = { relatedContent=prc.relatedContent }>
+                                #renderView( view="_tags/relatedContent", args=rcArgs )#
+                            </div>
+                        </div>
+                    </div>
+                    <cfelse>
+                        #html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
+                    </cfif>
+                    <!---End Related Content--->
+
                     <!---Begin Modifiers--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
                     <div class="accordion-group">

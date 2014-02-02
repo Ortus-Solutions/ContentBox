@@ -177,12 +177,15 @@ component extends="baseHandler"{
 		
 		// get all authors
 		prc.authors = authorService.getAll(sortOrder="lastName");
-
+		// get related content
+		prc.relatedContent = prc.entry.hasRelatedContent() ? prc.entry.getRelatedContent() : [];
+		prc.relatedContentIDs = prc.entry.getRelatedContentIDs();
 		// exit handlers
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
+		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 
 		// Tab
 		prc.tabContent_blog = true;
@@ -240,6 +243,7 @@ component extends="baseHandler"{
 		event.paramValue( "content", "" );
 		event.paramValue( "creatorID", "" );
 		event.paramValue( "customFieldsCount", 0 );
+		event.paramValue( "relatedContentIDs", [] );
 
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent") ){
@@ -294,6 +298,8 @@ component extends="baseHandler"{
 		entry.setCategories( categories );
 		// Inflate Custom Fields into the page
 		entry.inflateCustomFields( rc.customFieldsCount, rc );
+		// Inflate Related Content into the page
+		entry.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
 		announceInterception("cbadmin_preEntrySave",{entry=entry,isNew=isNew});
 		// save entry
