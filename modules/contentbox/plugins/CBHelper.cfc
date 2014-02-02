@@ -292,6 +292,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return false;
 	}
+	/**
+	 * Determine if you're in a "preview" mode or not
+	 */
+	boolean function isPreview(){
+		var event = getRequestContext();
+		return reFindNoCase( "contentbox-ui:.*preview", event.getCurrentEvent() ) ? true : false;
+	}
+
 	// Get the index page entries, else throws exception
 	any function getCurrentEntries(){
 		var prc = getRequestCollection(private=true);
@@ -342,6 +350,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	// Get Home Page slug set up by the administrator.
 	any function getHomePage(){
 		return setting("cb_site_homepage");
+	}
+	// Get the the blog categories, else throws exception
+	any function getCurrentRelatedContent(){
+		var relatedContent = [];
+		if( isPageView() && getCurrentPage().hasRelatedContent() ) {
+			relatedContent = getCurrentPage().getRelatedContent();
+		}
+		else if( isEntryView() && getCurrentEntry().hasRelatedContent() ) {
+			relatedContent = getCurrentEntry().getRelatedContent();
+		}
+		return relatedContent;
 	}
 	// Get the current page's or blog entrie's custom fields as a struct
 	struct function getCurrentCustomFields(){
@@ -899,6 +918,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	function quickCategories(template="category",collectionAs="category",args=structnew()){
 		var categories = getCurrentCategories();
 		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=categories,collectionAs=arguments.collectionAs,args=arguments.args);
+	}
+
+	/**
+	* Render out related content anywhere using ColdBox collection rendering
+	* @template.hint The name of the template to use, by default it looks in the 'templates/relatedContent.cfm' convention, no '.cfm' please
+	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'relatedContent'
+	* @args.hint A structure of name-value pairs to pass to the template
+	*/
+	function quickRelatedContent( template="relatedContent", collectionAs="relatedContent", args=structnew() ){
+		var relatedContent = getCurrentRelatedContent();
+		return renderView( view="#layoutName()#/templates/#arguments.template#", collection=relatedContent,collectionAs=arguments.collectionAs, args=arguments.args );
 	}
 
 	/**

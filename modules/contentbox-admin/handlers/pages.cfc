@@ -164,12 +164,15 @@ component extends="baseHandler"{
 		}
 		// get all authors
 		prc.authors = authorService.getAll(sortOrder="lastName");
-
+		// get related content
+		prc.relatedContent = prc.page.hasRelatedContent() ? prc.page.getRelatedContent() : [];
+		prc.relatedContentIDs = prc.page.getRelatedContentIDs();
 		// exit handlers
 		prc.xehPageSave 		= "#prc.cbAdminEntryPoint#.pages.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.pages.slugify";
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
+		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 
 		// Turn Tab On
 		prc.tabContent_pages = true;
@@ -191,6 +194,7 @@ component extends="baseHandler"{
 		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH") );
 		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm") );
 		event.paramValue( "customFieldsCount", 0 );
+		event.paramValue( "relatedContentIDs", [] );
 
 		// slugify the incoming title or slug
 		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin("HTMLHelper").slugify( rc.slug ) );
@@ -250,6 +254,8 @@ component extends="baseHandler"{
 		page.setCategories( categories );
 		// Inflate Custom Fields into the page
 		page.inflateCustomFields( rc.customFieldsCount, rc );
+		// Inflate Related Content into the page
+		page.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
 		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
 
