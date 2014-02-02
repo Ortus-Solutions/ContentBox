@@ -311,6 +311,7 @@ component accessors="true"{
 			"cb_content_cacheName" = "Template",
 			"cb_page_excerpts" = "true",
 			"cb_content_uiexport" = "true",
+			"cb_content_cachingHeader" = "true",
 
 			// Global HTML
 			"cb_html_beforeHeadEnd" = "",

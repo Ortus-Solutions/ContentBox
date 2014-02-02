@@ -180,9 +180,12 @@ component{
 			var data = cache.get( cacheKey );
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
 			if( !isNull( data ) ){
-				// set cache headers
-				event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" )
-					.setHTTPHeader( name="Content-type", value=data.contentType );
+				// Set cache headers if allowed
+				if( prc.cbSettings.cb_content_cachingHeader ){
+					event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" );
+				}
+				// Set content type header
+				event.setHTTPHeader( name="Content-type", value=data.contentType );
 				// Store hits
 				contentService.updateHits( data.contentID );
 				// return cache content to be displayed
