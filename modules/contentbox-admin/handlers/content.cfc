@@ -78,4 +78,42 @@ component extends="baseHandler"{
 		event.renderData(data=data, type="json");
 	}
 
+	// related content selector
+	function relatedContentSelector( event, rc, prc ){
+		// paging default
+		event.paramValue( "page", 1 );
+		event.paramValue( "search", "" );
+		event.paramValue( "clear", false );
+		event.paramValue( "excludeIDs", "" );
+
+		// exit handlers
+		prc.xehRelatedContentSelector	= "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+
+		// prepare paging plugin
+		prc.pagingPlugin 	= getMyPlugin( plugin="Paging", module="contentbox" );
+		prc.paging 	  		= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 		= "javascript:pagerLink(@page@)";
+
+		// search entries with filters and all
+		var contentResults = contentService.searchContent(searchTerm=rc.search,
+											 offset=prc.paging.startRow-1,
+											 max=prc.cbSettings.cb_paging_maxrows,
+											 sortOrder="slug asc",
+											 searchActiveContent=false,
+											 contentTypes="Page,Entry",
+											 excludeIDs=rc.excludeIDs);
+		// setup data for display
+		prc.content = contentResults.content;
+		prc.contentCount  = contentResults.count;
+		prc.CBHelper 	= CBHelper;
+
+		// if ajax and searching, just return tables
+		if( event.isAjax() and len( rc.search ) OR rc.clear ){
+			return renderView(view="content/relatedContentResults", module="contentbox-admin");
+		}
+		else{
+			event.setView(view="content/relatedContentSelector",layout="ajax");
+		}
+	}
+
 }
