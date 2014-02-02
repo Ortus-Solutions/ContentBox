@@ -65,6 +65,12 @@ component extends="coldbox.system.Interceptor"{
 		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
 			setNextEvent(event=event.getCurrentRoutedURL(), ssl=true);
 		}
+
+		/************************************** IDENTITY HEADER *********************************************/
+
+		if( prc.cbSettings.cb_site_poweredby ){
+			event.setHTTPHeader( name="X-Powered-By", value="ContentBox Modular CMS" );
+		}
 	}
 
 	/**

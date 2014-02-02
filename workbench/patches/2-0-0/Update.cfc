@@ -195,6 +195,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	private function updateSettings(){
 		// Create New settings
 		addSetting( "cb_content_cachingHeader", "true" );
+		addSetting( "cb_site_poweredby", "true" );
 	}
 	
 	/************************************** DB MIGRATION OPERATIONS *********************************************/
