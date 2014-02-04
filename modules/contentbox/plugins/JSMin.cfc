@@ -75,7 +75,7 @@ component extends="coldbox.system.Plugin" singleton{
 
 		// Plugin Properties
 		setpluginName( "JSMin" );
-		setpluginVersion( "3.1" );
+		setpluginVersion( "4.0" );
 		setpluginDescription( "A plugin that minifies js/css/less files with style!" );
 		setpluginAuthor( "Ortus Solutions, Corp" );
 		setpluginAuthorURL( "http://www.ortussolutions.com" );
@@ -243,7 +243,7 @@ component extends="coldbox.system.Plugin" singleton{
 	* @output.hint The output LESS absolute file location
 	*/
 	function compileLess(required input, output){
-		var compiler = instance.javaLoader.create( "com.asual.lesscss.LessEngine" );
+		var compiler = instance.javaLoader.create( "org.lesscss.LessCompiler" );
 		
 		// Do we have an output file
 		if( structKeyExists( arguments, "output") ){
@@ -272,7 +272,7 @@ component extends="coldbox.system.Plugin" singleton{
 	*/
 	function compileLessSource(required string input, output){
 		// Compile it
-		var results = instance.javaLoader.create( "com.asual.lesscss.LessEngine" ).compile( arguments.input );
+		var results = instance.javaLoader.create( "org.lesscss.LessCompiler" ).compile( arguments.input );
 		// Compile to output?
 		if( structKeyExists( arguments, "output") ){
 			fileWrite( arguments.output, results );
