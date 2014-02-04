@@ -179,6 +179,7 @@ component extends="baseHandler"{
 		prc.authors = authorService.getAll(sortOrder="lastName");
 		// get related content
 		prc.relatedContent = prc.entry.hasRelatedContent() ? prc.entry.getRelatedContent() : [];
+		prc.linkedContent = prc.entry.hasLinkedContent() ? prc.entry.getLinkedContent() : [];
 		prc.relatedContentIDs = prc.entry.getRelatedContentIDs();
 		// exit handlers
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
@@ -186,6 +187,8 @@ component extends="baseHandler"{
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+		prc.xehShowRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector";
+		prc.xehBreakContentLink = "#prc.cbAdminEntryPoint#.content.breakContentLink";
 
 		// Tab
 		prc.tabContent_blog = true;

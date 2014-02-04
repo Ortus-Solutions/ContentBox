@@ -166,6 +166,7 @@ component extends="baseHandler"{
 		prc.authors = authorService.getAll(sortOrder="lastName");
 		// get related content
 		prc.relatedContent = prc.page.hasRelatedContent() ? prc.page.getRelatedContent() : [];
+		prc.linkedContent = prc.page.hasLinkedContent() ? prc.page.getLinkedContent() : [];
 		prc.relatedContentIDs = prc.page.getRelatedContentIDs();
 		// exit handlers
 		prc.xehPageSave 		= "#prc.cbAdminEntryPoint#.pages.save";
@@ -173,6 +174,8 @@ component extends="baseHandler"{
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+		prc.xehShowRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector";
+		prc.xehBreakContentLink = "#prc.cbAdminEntryPoint#.content.breakContentLink";
 
 		// Turn Tab On
 		prc.tabContent_pages = true;
