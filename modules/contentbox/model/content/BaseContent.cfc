@@ -277,7 +277,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	BaseContent function removeAllLinkedContent(){
 		if ( hasLinkedContent() ){
 			for( var item in variables.linkedContent ){
-				item.getRelatedContent().clear();
+				item.removeRelatedContent( this );
 			}
 		}
 		return this;

@@ -25,7 +25,22 @@
 
     <!--- Render tables out --->
     <div id="contentContainer">
-    #renderView(view="content/relatedContentResults", module="contentbox-admin")#
+        <ul class="nav nav-tabs" id="contentTypes">
+            <li class="active">
+                <a href="##Page" data-toggle="tab"><i class="icon-file-alt icon-small" title="Page"></i> Page</a>
+            </li>
+            <li>
+                <a href="##Entry" data-toggle="tab"><i class="icon-quote-left icon-small" title="Entry"></i> Entry</a>
+            </li>
+            <li>
+                <a href="##ContentStore" data-toggle="tab"><i class="icon-hdd icon-small" title="ContentStore"></i> ContentStore</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade active in" id="Page"></div>
+            <div class="tab-pane fade" id="Entry"></div>
+            <div class="tab-pane fade" id="ContentStore"></div>
+        </div>
     </div>
 
 
