@@ -24,6 +24,9 @@ limitations under the License.
 */
 component extends="ContentService" singleton{
 
+	// Inject generic content service
+	property name="contentService" inject="id:ContentService@cb";
+
 	/**
 	* Constructor
 	*/
@@ -37,21 +40,16 @@ component extends="ContentService" singleton{
 	/**
 	* Save an entry
 	*/
-	function saveEntry(entry, boolean transactional=true){
-		var c = newCriteria();
-
-		// Prepare for slug uniqueness
-		c.eq("slug", arguments.entry.getSlug() );
-		if( arguments.entry.isLoaded() ){ c.ne("contentID", arguments.entry.getContentID() ); }
+	function saveEntry( required any entry, boolean transactional=true ){
 
 		// Verify uniqueness of slug
-		if( c.count() GT 0){
+		if( !contentService.isSlugUnique( slug=arguments.entry.getSlug(), contentID=arguments.entry.getContentID() ) ){
 			// make slug unique
-			arguments.entry.setSlug( arguments.entry.getSlug() & "-#left(hash(now()),5)#");
+			arguments.entry.setSlug( arguments.entry.getSlug() & "-#left( hash( now() ), 5 )#");
 		}
 
 		// save entry
-		save(entity=arguments.entry, transactional=arguments.transactional);
+		save( entity=arguments.entry, transactional=arguments.transactional );
 	}
 
 	/**
