@@ -122,7 +122,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Create new Permissions
 		var perms = [
-			"EDITORS_RELATED_CONTENT"
+			"EDITORS_RELATED_CONTENT",
+			"EDITORS_LINKED_CONTENT"
 		];
 
 		// iterate and add
@@ -148,7 +149,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// Setup Permissions
 		var perms = [
-			"EDITORS_RELATED_CONTENT"
+			"EDITORS_RELATED_CONTENT",
+			"EDITORS_LINKED_CONTENT"
 		];
 
 		// iterate and add
@@ -172,7 +174,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		
 		// Create new Permissions
 		var perms = {
-			"EDITORS_RELATED_CONTENT" = "Ability to view the related content panel"
+			"EDITORS_RELATED_CONTENT" = "Ability to view the related content panel",
+			"EDITORS_LINKED_CONTENT" = "Ability to view the linked content panel"
 		};
 
 		var allperms = [];
