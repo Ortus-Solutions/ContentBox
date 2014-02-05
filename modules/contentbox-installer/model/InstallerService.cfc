@@ -149,7 +149,8 @@ component accessors="true"{
 			"CONTENTSTORE_EDITOR" = "Ability to manage content store elements but not publish them",
 			"MEDIAMANAGER_LIBRARY_SWITCHER" = "Ability to switch media manager libraries for management",
 			"EDITORS_CUSTOM_FIELDS" = "Ability to manage custom fields in any content editors",
-			"GLOBAL_SEARCH" = "Ability to do global searches in the ContentBox Admin"
+			"GLOBAL_SEARCH" = "Ability to do global searches in the ContentBox Admin",
+			"EDITORS_LINKED_CONTENT" = "Ability to view the linked content panel"
 		};
 
 		var allperms = [];
@@ -181,6 +182,7 @@ component accessors="true"{
 		oRole.addPermission( permissions[ "MEDIAMANAGER_ADMIN"] );
 		oRole.addPermission( permissions[ "VERSIONS_ROLLBACK"] );
 		oRole.addPermission( permissions[ "CONTENTBOX_ADMIN"] );
+		oRole.addPermission( permissions[ "EDITORS_LINKED_CONTENT"] );
 		oRole.addPermission( permissions[ "EDITORS_DISPLAY_OPTIONS"] );
 		oRole.addPermission( permissions[ "EDITORS_RELATED_CONTENT"] );
 		oRole.addPermission( permissions[ "EDITORS_MODIFIERS"] );
