@@ -160,12 +160,19 @@ component extends="baseHandler"{
 		
 		// get all authors
 		prc.authors = authorService.getAll(sortOrder="lastName");
+		// get related content
+		prc.relatedContent = prc.content.hasRelatedContent() ? prc.content.getRelatedContent() : [];
+		prc.linkedContent = prc.content.hasLinkedContent() ? prc.content.getLinkedContent() : [];
+		prc.relatedContentIDs = prc.content.getRelatedContentIDs();
 
 		// exit handlers
 		prc.xehContentSave 		= "#prc.cbAdminEntryPoint#.contentStore.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.contentStore.slugify";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
+		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+		prc.xehShowRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector";
+		prc.xehBreakContentLink = "#prc.cbAdminEntryPoint#.content.breakContentLink";
 
 		// Tab
 		prc.tabContent_contentStore = true;
@@ -222,6 +229,7 @@ component extends="baseHandler"{
 		event.paramValue( "content", "" );
 		event.paramValue( "creatorID","" );
 		event.paramValue( "customFieldsCount", 0 );
+		event.paramValue( "relatedContentIDs", [] );
 
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent") ){
@@ -276,6 +284,8 @@ component extends="baseHandler"{
 		content.setCategories( categories );
 		// Inflate Custom Fields into the page
 		content.inflateCustomFields( rc.customFieldsCount, rc );
+		// Inflate Related Content into the content
+		content.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
 		announceInterception("cbadmin_preContentStoreSave", {content=content, isNew=isNew});
 		// save content

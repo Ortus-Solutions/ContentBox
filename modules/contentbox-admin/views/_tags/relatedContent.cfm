@@ -13,7 +13,8 @@
             </cfif>
             // listener for add button
             $( '##add-related-content' ).on( 'click', function() {
-                var baseURL = '#event.buildLink( prc.xehRelatedContentSelector )#';
+                var baseURL = '#event.buildLink( prc.xehShowRelatedContentSelector )#';
+                // build up list of excluded IDs
                 var excludeIDs = $( 'input[name=relatedContentIDs]' ).map( function(){
                     return $( this ).val();
                 }).get();
@@ -23,26 +24,40 @@
                 if( excludeIDs.length ) {
                     baseURL += '?excludeIDs=' + excludeIDs.join( ',' );
                 }
-                openRemoteModal( baseURL );
+                openRemoteModal( baseURL, {}, 900, 600 );
             });
+            // remove relatedContent listener
             $( '##relatedContent-items' ).on( 'click', '.btn', function(){
+                // remove row
                 $( this ).closest( 'tr' ).remove();
+                // evaluate if we need to modify the view of the row
                 toggleWarningMessage();
             });
             toggleWarningMessage();
         });
+        /**
+         * Looks at table content to see if we need to hide the table and display a "no content" message or not
+         */
         function toggleWarningMessage() {
             var table = $( '##relatedContent-items' ),
                 warning = $( '##related-content-empty' );
+            // if not empty...
             if( table.find( 'tr' ).length ) {
                 warning.hide();
                 table.show();
             }
+            // otherwise, there's nothing there!
             else {
                 table.hide();
                 warning.show();
             }
         }
+        /**
+         * Handler for selection of related content in modal
+         * @param {Number} id The content's id
+         * @param {String} title The title of the content
+         * @param {String} type The content type
+         */
         function chooseRelatedContent( id, title, type ) {
             var table = $( '##relatedContent-items' ),
                 warning = $( '##related-content-empty' ),
@@ -57,12 +72,16 @@
                     '</tr>'
                 ].join( ' ' ),
                 params = [ id, getIconByContentType( type ), title ];
-
+            // add to table
             table.find( 'tbody:last' ).append( $.validator.format( template, params ) );
             toggleWarningMessage();
             closeRemoteModal();
             return false;
         }
+        /**
+         * Helper for figuring out the correct icon based on content type
+         * @param {String} type The type of the content
+         */
         function getIconByContentType( type ) {
             var icon = '';
             switch( type ) {
@@ -71,6 +90,9 @@
                     break;
                 case 'Entry':
                     icon = '<i class="icon-quote-left icon-small" title="Entry"></i>';
+                    break;
+                case 'ContentStore':
+                    icon = '<i class="icon-hdd icon-small" title="ContentStore"></i>';
                     break;
             }
             return icon;
@@ -91,6 +113,8 @@
                             <i class="icon-file-alt icon-small" title="Page"></i>
                         <cfelseif content.getContentType() eq "Entry">
                             <i class="icon-quote-left icon-small" title="Entry"></i>
+                        <cfelseif content.getContentType() eq "ContentStore">
+                            <i class="icon-hdd icon-small" title="ContentStore"></i>
                         </cfif>
                     </td>
                     <td class="#publishedClass#">#content.getTitle()#</td>
