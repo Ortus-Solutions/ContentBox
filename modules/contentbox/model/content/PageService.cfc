@@ -24,6 +24,9 @@ limitations under the License.
 */
 component extends="ContentService" singleton{
 
+	// Inject generic content service
+	property name="contentService" inject="id:ContentService@cb";
+
 	/**
 	* Constructor
 	*/
@@ -39,27 +42,23 @@ component extends="ContentService" singleton{
 	* @page.hint The page to save or update
 	* @originalSlug.hint If an original slug is passed, then we need to update hierarchy slugs.
 	*/
-	function savePage(required page, string originalSlug="") transactional{
-		var c = newCriteria();
-
-		// Prepare for slug uniqueness
-		c.eq("slug", arguments.page.getSlug() );
-		if( arguments.page.isLoaded() ){ c.ne("contentID", arguments.page.getContentID() ); }
+	function savePage( required any page, string originalSlug="" ) transactional{
 
 		// Verify uniqueness of slug
-		if( c.count() GT 0){
+		if( !contentService.isSlugUnique( slug=arguments.page.getSlug(), contentID=arguments.page.getContentID() ) ){
 			// make slug unique
-			arguments.page.setSlug( arguments.page.getSlug() & "-#left(hash(now()),5)#" );
+			arguments.page.setSlug( arguments.page.getSlug() & "-#left( hash( now() ), 5 )#" );
 		}
+
 		// Save the target page
-		save(entity=arguments.page,transactional=false);
+		save( entity=arguments.page, transactional=false );
 
 		// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
-		if( structKeyExists(arguments, "originalSlug") AND len(arguments.originalSlug) ){
-			var pagesInNeed = newCriteria().like("slug","#arguments.originalSlug#/%").list();
-			for(var thisPage in pagesInNeed){
-				thisPage.setSlug( replaceNoCase(thisPage.getSlug(), arguments.originalSlug, arguments.page.getSlug()) );
-				save(entity=thisPage,transactional=false);
+		if( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ){
+			var pagesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
+			for( var thisPage in pagesInNeed ){
+				thisPage.setSlug( replaceNoCase( thisPage.getSlug(), arguments.originalSlug, arguments.page.getSlug() ) );
+				save( entity=thisPage, transactional=false );
 			}
 		}
 
