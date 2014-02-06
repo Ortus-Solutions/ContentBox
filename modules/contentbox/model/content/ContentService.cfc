@@ -671,6 +671,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 /********************************************* PRIVATE *********************************************/
 	
+	/**
+	* Get a unique slug hash
+	* @slug.hint The slug to unique it
+	*/
+	private function getUniqueSlugHash( required string slug ){
+		return "#arguments.slug#-#lcase( left( hash( now() ), 5 ) )#";
+	}
 
 	/**
 	* Update the content hits
