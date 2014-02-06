@@ -47,7 +47,7 @@ component extends="ContentService" singleton{
 		// Verify uniqueness of slug
 		if( !contentService.isSlugUnique( slug=arguments.page.getSlug(), contentID=arguments.page.getContentID() ) ){
 			// make slug unique
-			arguments.page.setSlug( arguments.page.getSlug() & "-#left( hash( now() ), 5 )#" );
+			arguments.page.setSlug( arguments.page.getSlug() & "-#lcase( left( hash( now() ), 5 ) )#" );
 		}
 
 		// Save the target page
