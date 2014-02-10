@@ -34,6 +34,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	property name="widgetService"		inject="id:widgetService@cb";
 	property name="moduleService"		inject="id:moduleService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
+	property name="menuService"			inject="id:menuService@cb";
+	property name="menuItemService"		inject="id:menuItemService@cb";
 	property name="minifier"			inject="coldbox:myplugin:JSMin@contentbox";
 	
 	// Constructor
@@ -1009,6 +1011,71 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/************************************** MENUS *********************************************/
+	public any function menu( required string slug, required type="html", required array slugCache=[] ) {
+		var result = "";
+		var menu = menuService.findBySlug( arguments.slug );
+		if( !isNull( menu ) ) {
+			if( arguments.type == "data" ) {
+				return menu.getMemento();
+			}
+			else {
+				return buildProviderMenu( menu=menu, slugCache=arguments.slugCache );
+			}
+		}
+	}
+
+	/**
+	 * Builds out a custom menu
+	 * @menu.hint The root menu that should be rendered
+	 * @slugCache.hint The cache of menu slugs already used in this request
+	 */
+	public string function buildProviderMenu( required contentbox.model.menu.Menu menu, required array slugCache=[] ) {
+		var listType = arguments.menu.getListType();
+		//arguments.listType = !reFindNoCase( "^(ul|ol)$", arguments.listType ) ? "<ul>" : arguments.listType;
+		// set start
+		var menuString = "<#listType# class='nav nav-list'>";
+		// now get root items
+		var items = arguments.menu.getRootMenuItems();
+		// create cache of slugs to prevent infinite recursions
+		arrayAppend( arguments.slugCache, menu.getSlug() );
+		// build out this top level
+		menuString &= buildProviderMenuLevel( items=items, listType=listType, slugCache=slugCache );
+		// set end
+		menuString &= "</#listType#>";
+		return menuString;
+	}
+
+	/**
+	 * Builds out a level of a custom menu
+	 * @items.hint An array of menu items for this level
+	 * @listType.hint The type of list to create (derived from owning menu)
+	 * @slugCache.hint The cache of menu slugs already used in this request
+	 */
+	private string function buildProviderMenuLevel( 
+		required array items, 
+		required string listType="ul", 
+		required array slugCache=[] 
+	) {
+		var menuString = "";
+		// loop over items to build out level
+		for( var item in arguments.items ) {
+			var extras = { slugCache=arguments.slugCache, listType=arguments.listType };
+			// check that item can be added
+			if( item.canDisplay( options=extras ) ) {
+				// get template from provider
+				menuString &= '<li #item.getAttributesAsString()#>' & item.getProvider().getDisplayTemplate( item, extras );
+				// if this menu item has children...
+				if( item.hasChild() ) {
+					// recurse, recurse, recurse!
+					menuString &= 	"<#arguments.listType#>" & 
+									buildProviderMenuLevel( items=item.getChildren(), listType=arguments.listType, slugCache=arguments.slugCache ) & 
+									"</#arguments.listType#>";
+				}
+				menuString &= "</li>";
+			}
+		}
+		return menuString;
+	}
 
 	/**
 	* Render out a quick menu for root level pages

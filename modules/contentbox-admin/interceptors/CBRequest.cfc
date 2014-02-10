@@ -71,6 +71,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehContentStore	= "#prc.cbAdminEntryPoint#.contentStore";
 		prc.xehContentStoreEditor	= "#prc.cbAdminEntryPoint#.contentStore.editor";
 		prc.xehMediaManager	= "#prc.cbAdminEntryPoint#.mediamanager";
+		prc.xehMenuManager	= "#prc.cbAdminEntryPoint#.menus";
+		prc.xehMenuManagerEditor	= "#prc.cbAdminEntryPoint#.menus.editor";
 
 		// Comments Tab
 		prc.xehComments			= "#prc.cbAdminEntryPoint#.comments";
