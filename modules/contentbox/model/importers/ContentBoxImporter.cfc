@@ -31,6 +31,7 @@ component accessors=true {
     property name="pageService"         inject="id:pageService@cb";
     property name="categoryService"     inject="id:categoryService@cb";
     property name="contentStoreService" inject="id:contentStoreService@cb";
+    property name="menuService"         inject="id:menuService@cb";
     property name="securityRuleService" inject="id:securityRuleService@cb";
     property name="authorService"       inject="id:authorService@cb";
     property name="roleService"         inject="id:roleService@cb";
@@ -74,6 +75,7 @@ component accessors=true {
                 "Authors" = "authorService",
                 "Categories" = "categoryService",
                 "Content Store" = "contentStoreService",
+                "Menus" = "menuService",
                 "Permissions" = "permissionService",
                 "Roles" = "roleService",
                 "Security Rules" = "securityRuleService",
