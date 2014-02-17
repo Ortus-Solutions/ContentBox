@@ -5,12 +5,12 @@
 	<meta charset="utf-8">
 	<meta name="generator" content="TestBox v#testbox.getVersion()#">
 	<title>Pass: #results.getTotalPass()# Fail: #results.getTotalFail()# Errors: #results.getTotalError()#</title>
-	<link href="/coldbox/system/testing/reports/assets/css/simple.css" rel="stylesheet">
+	<style><cfinclude template="/coldbox/system/testing/reports/assets/css/simple.css"></style>
 	<style>
 	.dots{ font-size: 60px; clear: both; margin-bottom: 20px; }
 	.dots span{ float: left; margin: -6px;}
 	</style>
-	<script src="/coldbox/system/testing/reports/assets/js/jquery.js"></script>
+	<script><cfinclude template="/coldbox/system/testing/reports/assets/js/jquery.js"></script>
 	<script>
 	function showInfo( failMessage, specID, isError ){
 		if( failMessage.length ){
@@ -77,6 +77,13 @@
 
 	<!--- Debug Panel --->
 	<cfloop array="#bundleStats#" index="thisBundle">
+
+		<!-- Global Error --->
+		<cfif !isSimpleValue( thisBundle.globalException )>
+			<h2>Global Bundle (#thisBundle.name#) Exception<h2>
+			<cfdump var="#thisBundle.globalException#" />
+		</cfif>
+
 		<!--- Debug Panel --->
 		<cfif arrayLen( thisBundle.debugBuffer )>
 			<h2>Debug Stream: #thisBundle.path# <button onclick="toggleDebug( '#thisBundle.id#' )" title="Toggle the test debug stream">+</button></h2>
@@ -103,8 +110,8 @@
 			<!--- Iterate over suite specs --->
 			<cfloop array="#arguments.suiteStats.specStats#" index="thisSpec">
 				<a href="javascript:showInfo( '#JSStringFormat( thisSpec.failMessage )#', '#thisSpec.id#', '#lcase( NOT structIsEmpty( thisSpec.error ) )#' )" 
-				   title="#thisSpec.name# (#thisSpec.totalDuration# ms)" 
-				   data-info="#thisSpec.failMessage#"><span class="#lcase( thisSpec.status )#">.</span></a>
+				   title="#htmlEditFormat( thisSpec.name )# (#thisSpec.totalDuration# ms)" 
+				   data-info="#HTMLEditFormat( thisSpec.failMessage )#"><span class="#lcase( thisSpec.status )#">.</span></a>
 				
 				<div style="display:none;" id="error_#thisSpec.id#"><cfdump var="#thisSpec.error#"></div>
 			</cfloop>			

@@ -53,13 +53,13 @@ component{
 	
 	/**
 	* Assert something is equal to each other, no case is required
-	* @actual.hint The actual data to test
 	* @expected.hint The expected data
+	* @actual.hint The actual data to test
 	* @message.hint The message to send in the failure
 	*/
-	function isEqual( required any actual, required any expected, message="" ){
+	function isEqual( required any expected, required any actual, message="" ){
 		// validate equality
-		if( equalize( arguments.actual, arguments.expected ) ){ return this; }
+		if( equalize( arguments.expected, arguments.actual ) ){ return this; }
 		arguments.message = ( len( arguments.message ) ? arguments.message : "Expected [#getStringName( arguments.expected )#] but received [#getStringName( arguments.actual )#]" );
 		// if we reach here, nothing is equal man!
 		fail( arguments.message );
@@ -67,28 +67,28 @@ component{
 
 	/**
 	* Assert something is not equal to each other, no case is required
-	* @actual.hint The actual data to test
 	* @expected.hint The expected data
+	* @actual.hint The actual data to test
 	* @message.hint The message to send in the failure
 	*/
-	function isNotEqual( required any actual, required any expected, message="" ){
+	function isNotEqual( required any expected, required any actual, message="" ){
 		arguments.message = ( len( arguments.message ) ? arguments.message : "Expected [#getStringName( arguments.expected )#] to not be [#getStringName( arguments.actual )#]" );
 		// validate equality
-		if( !equalize( arguments.actual, arguments.expected ) ){ return this; }
+		if( !equalize( arguments.expected, arguments.actual ) ){ return this; }
 		// if we reach here, they are equal!
 		fail( arguments.message );
 	}
 
 	/**
 	* Assert strings are equal to each other with case. 
-	* @actual.hint The actual data to test
 	* @expected.hint The expected data
+	* @actual.hint The actual data to test
 	* @message.hint The message to send in the failure
 	*/
-	function isEqualWithCase( required string actual, required string expected, message="" ){
+	function isEqualWithCase( required string expected, required string actual, message="" ){
 		arguments.message = ( len( arguments.message ) ? arguments.message : "Expected [#getStringName( arguments.expected )#] but received [#getStringName( arguments.actual )#]" );
 		// equalize with case
-		if( compare( arguments.actual, arguments.expected ) eq 0 ){ return this; }
+		if( compare( arguments.expected, arguments.actual ) eq 0 ){ return this; }
 		// if we reach here, nothing is equal man!
 		fail( arguments.message );
 	}
@@ -322,7 +322,7 @@ component{
 	* Assert that the passed in function will throw an exception
 	* @target.hint The target function to execute and check for exceptions
 	* @type.hint Match this type with the exception thrown
-	* @regex.hint Match this regex against the message of the exception
+	* @regex.hint Match this regex against the message + detail of the exception
 	* @message.hint The message to send in the failure
 	*/
 	function throws( required any target, type="", regex=".*", message="" ){
@@ -332,18 +332,26 @@ component{
 			arguments.message = ( len( arguments.message ) ? arguments.message : "The incoming function did not throw an expected exception. Type=[#arguments.type#], Regex=[#arguments.regex#]" );
 		}
 		catch(Any e){
-			// If no type, message expectations
+			// If no type, message expectations, just throw flag
 			if( !len( arguments.type ) && arguments.regex eq ".*" ){ return this; }
-			// Type expectation then
-			if( len( arguments.type ) && e.type eq arguments.type && reFindNoCase( arguments.regex, e.message ) ){
+
+			// Type expectation + message regex, do match no case to account for empty messages
+			if( len( arguments.type ) && 
+				e.type eq arguments.type && 
+				( arrayLen( reMatchNoCase( arguments.regex, e.message ) ) OR arrayLen( reMatchNoCase( arguments.regex, e.detail ) ) )
+			){
 				return this;
 			}
-			// Message regex then only
-			if( arguments.regex neq ".*" && reFindNoCase( arguments.regex, e.message ) ){
+
+			// Message+Detail regex then only
+			if( arguments.regex neq ".*" && 
+				( arrayLen( reMatchNoCase( arguments.regex, e.message ) ) OR arrayLen( reMatchNoCase( arguments.regex, e.detail ) ) )
+			){
 				return this;
 			}
+
 			// diff messsage types
-			arguments.message = ( len( arguments.message ) ? arguments.message : "The incoming function threw exception [#e.type#] [#e.message#] different than expected type=[#arguments.type#], Regex=[#arguments.regex#]" );
+			arguments.message = ( len( arguments.message ) ? arguments.message : "The incoming function threw exception [#e.type#] [#e.message#] [#e.detail#] different than expected params type=[#arguments.type#], regex=[#arguments.regex#]" );
 		}
 
 		// found, so throw it
@@ -354,7 +362,7 @@ component{
 	* Assert that the passed in function will NOT throw an exception, an exception of a specified type or exception message regex
 	* @target.hint The target function to execute and check for exceptions
 	* @type.hint Match this type with the exception thrown
-	* @regex.hint Match this regex against the message of the exception
+	* @regex.hint Match this regex against the message+detail of the exception
 	* @message.hint The message to send in the failure
 	*/
 	function notThrows( required any target, type="", regex="", message="" ){
@@ -362,14 +370,17 @@ component{
 			arguments.target();
 		}
 		catch(Any e){
-			arguments.message = ( len( arguments.message ) ? arguments.message : "The incoming function DID throw an exception of type [#e.type#] with message [#e.message#]" );
+			arguments.message = ( len( arguments.message ) ? arguments.message : "The incoming function DID throw an exception of type [#e.type#] with message [#e.message#] detail [#e.detail#]" );
 		
 			// If type passed and matches, then its ok
-			if( len( arguments.type ) && e.type neq arguments.type ){
+			if( len( arguments.type ) AND e.type neq arguments.type ){
 				return this;
 			}
-			// Message regex must not match
-			if( len( arguments.message) && !reFindNoCase( arguments.regex, e.message ) ){
+
+			// Message+Detail regex must not match
+			if( len( arguments.regex ) AND 
+				( !arrayLen( reMatchNoCase( arguments.regex, e.message ) ) OR !arrayLen( reMatchNoCase( arguments.regex, e.detail ) ) )
+			){
 				return this;
 			}
 
@@ -381,13 +392,13 @@ component{
 
 	/**
 	* Assert that the passed in actual number or date is expected to be close to it within +/- a passed delta and optional datepart
-	* @actual.hint The actual number or date
 	* @expected.hint The expected number or date
+	* @actual.hint The actual number or date
 	* @delta.hint The +/- delta to range it
 	* @datepart.hint If passed in values are dates, then you can use the datepart to evaluate it
 	* @message.hint The message to send in the failure
 	*/
-	function closeTo( required any actual, required any expected, required any delta, datePart="", message=""){
+	function closeTo( required any expected, required any actual, required any delta, datePart="", message=""){
 		arguments.message = ( len( arguments.message ) ? arguments.message : "The actual [#arguments.actual#] is not in range of [#arguments.expected#] by +/- [#arguments.delta#]" );
 		
 		if( isNumeric( arguments.actual ) ){
@@ -598,7 +609,8 @@ component{
 
 /*********************************** PRIVATE Methods ***********************************/	
 
-	private function equalize( required actual, required expected ){
+	private function equalize( required expected, required actual ){
+				
 		// Numerics
 		if( isNumeric( arguments.actual ) && isNumeric( arguments.expected ) && arguments.actual eq arguments.expected ){
 			return true;
@@ -608,12 +620,6 @@ component{
 		if( isSimpleValue( arguments.actual ) && isSimpleValue( arguments.expected ) && arguments.actual eq arguments.expected ){
 			return true;
 		}
-		
-		// Arrays
-		if( isArray( arguments.actual ) && isArray( arguments.expected ) &&
-			createObject("java", "java.util.Arrays").deepEquals( arguments.actual, arguments.expected ) ){
-			return true;
-		}
 
 		// Queries
 		if( isQuery( arguments.actual ) && isQuery( arguments.expected ) &&
@@ -621,23 +627,62 @@ component{
 			return true;
 		}
 
-		// Objects
-		if( isObject( arguments.actual ) && isObject( arguments.expected ) ){
-			var system = createObject("java", "java.lang.System");
-			var aHash = system.identityHashCode( arguments.actual );
-			var eHash = system.identityHashCode( arguments.expected );
-			if( aHash eq eHash ){ return true; }
+		// UDFs
+		if( isCustomFunction(arguments.actual) && isCustomFunction(arguments.expected) && arguments.actual.toString() eq arguments.expected.toString() ) {
+			return true;
 		}
 
-		// Structs
+		// XML
+		if( IsXmlDoc(arguments.actual) && IsXmlDoc(arguments.expected) && toString(arguments.actual) eq toString(arguments.expected) ) {
+			return true;
+		}
+		
+		// Arrays
+		if( isArray( arguments.actual ) && isArray( arguments.expected ) ) {
+			var i = 0;
+			
+			// Confirm both arrays are the same length
+			if( arrayLen(arguments.actual) neq arrayLen(arguments.expected) ) {
+				return false;
+			}
+						
+			// Loop over each item
+			while( ++i lte arrayLen(arguments.actual) ) {
+				// And make sure they match
+				if( !equalize( arguments.actual[i], arguments.expected[i] ) ) {
+					return false;
+				}
+			}
+			
+			// If we made it here, we couldn't find anything different
+			return true;
+		}
+		
+		// Structs / Object
 		if( isStruct( arguments.actual ) && isStruct( arguments.expected ) ){
-			// use ordered trees for not caring about position or case
-			var eTree = createObject("java","java.util.TreeMap").init( arguments.expected );
-			var aTree = createObject("java","java.util.TreeMap").init( arguments.actual );
-			// evaluate them
-			if( eTree.toString() eq aTree.toString() ){ return true; }
+			
+			var actualKeys = listSort(structKeyList(arguments.actual),'textNoCase');
+			var expectedKeys = listSort(structKeyList(arguments.expected),'textNoCase');
+			var key = '';
+			
+			// Confirm both structs have the same keys
+			if( actualKeys neq expectedKeys ) {
+				return false;
+			}
+			
+			// Loop over each key
+			for( key in arguments.actual ) {
+				// And make sure they match
+				if( !equalize( arguments.actual[key], arguments.expected[key] ) ) {
+					return false;
+				}
+			}
+			
+			// If we made it here, we couldn't find anything different
+			return true;
+		
 		}
-
+				
 		return false;
 	}
 	

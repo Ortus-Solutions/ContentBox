@@ -33,6 +33,13 @@ component{
 	/************************************** BDD & EXPECTATIONS METHODS *********************************************/
 	
 	/**
+	* Constructor
+	*/ 
+	remote function init(){
+		return this;
+	}
+
+	/**
 	* Expect an exception from the testing spec
 	* @type.hint The type to expect
 	* @regex.hint Optional exception message regular expression to match, by default it matches .*
@@ -46,7 +53,7 @@ component{
 	* Assert that the passed expression is true
 	* @facade
 	*/
-	function assert(required expression, message=""){
+	function assert( required expression, message="" ){
 		return this.$assert.assert(argumentCollection=arguments);
 	}
 
@@ -54,7 +61,7 @@ component{
 	* Fail an assertion
 	* @facade
 	*/
-	function fail(message=""){
+	function fail( message="" ){
 		this.$assert.fail(argumentCollection=arguments);
 	}
 
@@ -115,6 +122,8 @@ component{
 			afterEach 	= variables.closureStub,
 			// the parent suite
 			parent 		= "",
+			// the parent ref
+			parentRef	= "",
 			// hiearachy slug
 			slug 		= ""
 		};
@@ -131,7 +140,8 @@ component{
 			this.$suitesReverseLookup[ arguments.title ] = suite;
 			
 			// Setup parent reference
-			suite.parent = this.$suiteContext;
+			suite.parent 	= this.$suiteContext;
+			suite.parentRef = this.$suitesReverseLookup[ this.$suiteContext ];
 
 			// Build hiearachy slug separated by /
 			suite.slug = this.$suitesReverseLookup[ this.$suiteContext ].slug & "/" & this.$suiteContext;
@@ -383,15 +393,29 @@ component{
 				arguments.runner.canRunLabel( arguments.spec.labels, arguments.testResults ) &&
 				arguments.runner.canRunSpec( arguments.spec.name, arguments.testResults )
 			){
-
+				
 				// execute beforeEach()
 				arguments.suite.beforeEach( currentSpec=arguments.spec.name );
+				
+				// do we have nested suites? If so, traverse and execute life-cycle methods
+				var parentSuite = arguments.suite.parentRef;
+				while( !isSimpleValue( parentSuite ) ){
+					parentSuite.beforeEach( currentSpec=arguments.spec.name );
+					parentSuite = parentSuite.parentRef;
+				}
 				
 				// Execute the Spec body
 				arguments.spec.body();
 				
 				// execute afterEach()
 				arguments.suite.afterEach( currentSpec=arguments.spec.name );
+
+				// do we have nested suites? If so, traverse and execute life-cycle methods
+				var parentSuite = arguments.suite.parentRef;
+				while( !isSimpleValue( parentSuite ) ){
+					parentSuite.afterEach( currentSpec=arguments.spec.name );
+					parentSuite = parentSuite.parentRef;
+				}
 				
 				// store spec status
 				specStats.status 	= "Passed";
@@ -464,9 +488,21 @@ component{
 				// Execute Spec
 				try{
 					evaluate( "this.#arguments.spec.name#()" );
+
+					// Where we expecting an exception and it did not throw?
+					if( hasExpectedException( arguments.spec.name, arguments.runner ) ){
+						$assert.fail( 'Method did not throw expected exception: [#this.$expectedException.toString()#]' );
+					} // else all good.
 				}
 				catch( Any e ){
-					if( !isExpectedException( e, arguments.spec.name, arguments.runner ) ){ rethrow; }
+					// do we have expected exception? else rethrow it
+					if( !hasExpectedException( arguments.spec.name, arguments.runner ) ){
+						rethrow;
+					}
+					// if not the expected exception, then fail it
+					if( !isExpectedException( e, arguments.spec.name, arguments.runner ) ){ 
+						$assert.fail( 'Method did not throw expected exception: [#this.$expectedException.toString()#], actual exception [type:#e.type#][message:#e.message#]' );
+					}
 				}
 
 				// execute teardown()
@@ -579,10 +615,10 @@ component{
 	*/
 	any function makePublic( required any target, required string method, string newName="" ){
 		
-		// mix it
-		arguments.target.$exposeMixin = this.$utility.getMixerUtil().exposeMixin;
+		// decorate it
+		this.$utility.getMixerUtil().start( arguments.target );
 		// expose it
-		arguments.target.$exposeMixin( arguments.method, arguments.newName );
+		arguments.target.exposeMixin( arguments.method, arguments.newName );
 
 		return arguments.target;
 	}
@@ -664,13 +700,10 @@ component{
 	// Closure Stub
 	function closureStub(){}
 
-	/************************************** PRIVATE METHODS *********************************************/
-
 	/**
-	* Check if the incoming exception is expected or not.
+	* Check if an expected exception is defined
 	*/
-	private boolean function isExpectedException( required exception, required specName, required runner ){
-		var results = false;
+	boolean function hasExpectedException( required specName, required runner ){
 		// do we have an expected annotation?
 		var eAnnotation = arguments.runner.getMethodAnnotation( this[ arguments.specName ], this.$exceptionAnnotation, "false" );
 		if( eAnnotation != false ){
@@ -680,9 +713,18 @@ component{
 				regex = ( find( ":", eAnnotation ) ? listLast( eAnnotation, ":" ) : ".*" )
 			};
 		}
+
+		return ( structIsEmpty( this.$expectedException ) ? false : true );
+	}
+
+	/**
+	* Check if the incoming exception is expected or not.
+	*/
+	boolean function isExpectedException( required exception, required specName, required runner ){
+		var results = false;
 		
-		// Verify expected exceptions
-		if( !structIsEmpty( this.$expectedException ) ){
+		// normalize expected exception
+		if( hasExpectedException( arguments.specName, arguments.runner ) ){
 			// If no type, message expectations
 			if( !len( this.$expectedException.type ) && this.$expectedException.regex eq ".*" ){
 				results = true;
@@ -690,11 +732,14 @@ component{
 			// Type expectation then
 			else if( len( this.$expectedException.type ) && 
 					 arguments.exception.type eq this.$expectedException.type && 
-					 reFindNoCase( this.$expectedException.regex, arguments.exception.message ) ){
+					 arrayLen( reMatchNoCase( this.$expectedException.regex, arguments.exception.message ) ) 
+			){
 				results = true;
 			}
 			// Message regex then only
-			else if( this.$expectedException.regex neq ".*" && reFindNoCase( this.$expectedException.regex, arguments.exception.message ) ){
+			else if( this.$expectedException.regex neq ".*" && 
+				arrayLen( reMatchNoCase( this.$expectedException.regex, arguments.exception.message ) )
+			){
 				results = true;
 			}
 		}
