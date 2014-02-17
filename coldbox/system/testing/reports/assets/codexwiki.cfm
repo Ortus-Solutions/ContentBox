@@ -23,6 +23,13 @@
 
 #chr(10)#
 
+<!-- Global Error --->
+<cfif !isSimpleValue( thisBundle.globalException )>
+== Global Bundle Exception ==
+* #thisBundle.globalException.type#:#thisBundle.globalException.message#:#thisBundle.globalException.detail#
+<pre>#thisBundle.globalException.stacktrace#</pre>
+</cfif>
+
 <cfloop array="#thisBundle.suiteStats#" index="suiteStats">
 #genSuiteReport( suiteStats, thisBundle )#
 </cfloop>
@@ -46,12 +53,12 @@
 <p>#local.thisSpec.name# (#local.thisSpec.totalDuration# ms)</p>
 	
 <cfif local.thisSpec.status eq "failed">
-* '''#local.thisSpec.failMessage#'''
+* '''#htmlEditFormat( local.thisSpec.failMessage )#'''
 <pre>#local.thisSpec.failOrigin.toString()#</pre>
 </cfif>
 
 <cfif local.thisSpec.status eq "error">
-* '''#local.thisSpec.error.message#'''
+* '''#htmlEditFormat( local.thisSpec.error.message )#'''
 <pre>#local.thisSpec.error.stacktrace#</pre>
 </cfif>
 </cfloop>
