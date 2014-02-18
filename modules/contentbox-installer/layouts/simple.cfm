@@ -12,7 +12,7 @@
 	<!--- SES HTML Base --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>ContentBox Installer</title>
+    <title>#cb.r( "layout.installer@installer" )#</title>
 	<!--- Favicon --->
 	<link href="#prc.assetRoot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
@@ -38,7 +38,7 @@
 					<img src="#prc.assetRoot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
 					<!--- Brand, future multi-site switcher --->
 					<a class="brand">
-						ContentBox Installer
+						#cb.r( "layout.installer@installer" )#
 					</a>
 				</div> <!---end container --->
 		    </div> <!--- end navbar-inner --->
@@ -59,7 +59,7 @@
 		</div>
 		Copyright (C) #dateformat(now(),"yyyy")# 
 		<a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>.<br/>
-		<a href="http://www.ortussolutions.com">Need Professional Support, Architecture, Design, or Development?</a>
+		<a href="http://www.ortussolutions.com">#cb.r( "layout.ortus_poss@installer" )#</a>
 	</footer>
 	
 </body>

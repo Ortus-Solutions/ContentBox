@@ -20,6 +20,15 @@ component {
 			defaultLayout = "simple.cfm"
 		};
 		
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"installer" = "#moduleMapping#/includes/i18n/installer"
+		  	},
+		  	defaultLocale = "en_US",
+		  	localeStorage = "cookie"
+		};
+		
 		// SES Routes
 		routes = [
 			{pattern="/", handler="home", action="index"},

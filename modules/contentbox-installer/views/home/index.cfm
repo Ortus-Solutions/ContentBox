@@ -3,7 +3,7 @@
 <div class="row-fluid">
 	<div class="box">
 		<div class="header">
-			<i class="icon-lightbulb icon-large"></i> Install Wizard
+			<i class="icon-lightbulb icon-large"></i> #cb.r( "labels.wizard@installer" )#
 		</div>
         <div class="body">
     		<!--- Vertical Nav --->
