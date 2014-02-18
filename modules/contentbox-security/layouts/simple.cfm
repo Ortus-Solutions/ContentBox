@@ -11,7 +11,7 @@
 	<!--- SES --->
 	<base href="#cb.siteBaseURL()#"/>
 	<!--- Title --->
-    <title>ContentBox Modular CMS - Login</title>
+    <title>ContentBox Modular CMS - #cb.r( "common.login@security" )#</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->

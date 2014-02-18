@@ -1106,6 +1106,29 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		return controller.getRequestService().getFlashScope();
 	}
 
+	/**
+	* Retrieve i18n resources
+	* @resource.hint The resource (key) to retrieve from a loaded bundle or pass a @bundle
+	* @default.hint A default value to send back if the resource (key) not found
+	* @locale.hint Pass in which locale to take the resource from. By default it uses the user's current set locale
+	* @values.hint An array, struct or simple string of value replacements to use on the resource string
+	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
+	*/
+	any function r( 
+		required string resource,
+		string default,
+		string locale,
+		any values,
+		string bundle
+	){
+		// check for resource@bundle convention:
+		if( find( "@", arguments.resource ) ){
+			arguments.bundle 	= listLast( arguments.resource, "@" );
+			arguments.resource 	= listFirst( arguments.resource, "@" );
+		}
+		return getResource( argumentCollection=arguments );
+	}
+
 	/************************************** PRIVATE *********************************************/
 
 	private function buildMenu(pageRecords, excludes="", type="ul", separator="", boolean showNone=true, levels="1", numeric currentLevel="1", parentClass="parent", activeClass="active", activeShowChildren=false){
