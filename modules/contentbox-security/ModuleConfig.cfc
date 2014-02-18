@@ -38,12 +38,21 @@ component {
 
 		// Layout Settings
 		layoutSettings = { defaultLayout = "simple.cfm" };
+	
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"security" = "#moduleMapping#/includes/i18n/security"
+		  	},
+		  	defaultLocale = "en_US",
+		  	localeStorage = "cookie"
+		};
 
 		// SES Routes
 		routes = [
-			{pattern="/", handler="security", action="login" },
-			{pattern="/:action", handler="security"},
-			{pattern="/:handler/:action?"}
+			{ pattern="/", handler="security", action="login" },
+			{ pattern="/:action", handler="security" },
+			{ pattern="/:handler/:action?" }
 		];
 		
 		// Custom Declared Points
@@ -58,13 +67,13 @@ component {
 		// interceptors
 		interceptors = [
 			// ContentBox security
-			{class="coldbox.system.interceptors.Security",
-			 name="security@cb",
-			 properties={
+			{ class="coldbox.system.interceptors.Security",
+			  name="security@cb",
+			  properties={
 			 	 rulesSource 	= "model",
 			 	 rulesModel		= "securityRuleService@cb",
 			 	 rulesModelMethod = "getSecurityRules",
-			 	 validatorModel = "securityService@cb"}
+			 	 validatorModel = "securityService@cb" }
 			}
 		];
 
