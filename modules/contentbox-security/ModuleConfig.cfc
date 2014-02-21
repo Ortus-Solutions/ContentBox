@@ -48,9 +48,15 @@ component {
 		  	localeStorage = "cookie"
 		};
 
+		// Settings
+		settings = {
+			languages = [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
+		};
+
 		// SES Routes
 		routes = [
 			{ pattern="/", handler="security", action="login" },
+			{ pattern="/language/:lang", handler="security", action="changelang" },
 			{ pattern="/:action", handler="security" },
 			{ pattern="/:handler/:action?" }
 		];
