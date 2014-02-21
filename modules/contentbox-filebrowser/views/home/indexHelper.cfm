@@ -5,6 +5,20 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 ----------------------------------------------------------------------->
 <cfscript>
+function r( 
+	required string resource,
+	string default,
+	string locale,
+	any values,
+	string bundle
+){
+	// check for resource@bundle convention:
+	if( find( "@", arguments.resource ) ){
+		arguments.bundle 	= listLast( arguments.resource, "@" );
+		arguments.resource 	= listFirst( arguments.resource, "@" );
+	}
+	return getResource( argumentCollection=arguments );
+}
 function $safe(str){ return urlEncodedFormat(arguments.str); }
 function $validIDName(str){return JSStringFormat( html.slugify( arguments.str )); }
 function $getBackPath(inPath){
@@ -44,9 +58,9 @@ function $getUrlRelativeToPath(required basePath,required filePath, encodeURL=fa
 	URLOut=replacenocase(URLOut,"//","","all");
 	return URLOut;
 }
-function $getURLMediaPath(required fbDirRoot, required filePath) {
-	var URLOut = replaceNoCase(arguments.filePath, arguments.fbDirRoot, "", "all");
-	if(len(URLOut)){
+function $getURLMediaPath( required fbDirRoot, required filePath ){
+	var URLOut = replaceNoCase( arguments.filePath, arguments.fbDirRoot, "", "all" );
+	if( len( URLOut ) ){
 		URLOut = prc.fbSettings.mediaPath & URLOut;
 	}
 	return URLOut;

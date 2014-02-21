@@ -6,7 +6,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ----------------------------------------------------------------------->
 <cfoutput>
 <div id="FileBrowser">
-	#html.startForm(name="filebrowser")#
+	#html.startForm( name="filebrowser" )#
 	<div id="container">
 
 		<!--- Roots
@@ -58,12 +58,12 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<a href="javascript:fbQuickView()" title="QuickView"><img src="#prc.fbModRoot#/includes/images/camera.png"  border="0"></a>&nbsp;&nbsp;
 
 			<!--- Sorting --->
-			#html.label(field="fbSorting",content="Sort By: ")#
-			#html.select(name="fbSorting",options="Name,Size,LastModified",selectedValue=prc.fbPreferences.sorting)#
+			#html.label( field="fbSorting", content="Sort By: ")#
+			#html.select( name="fbSorting", options="Name,Size,LastModified", selectedValue=prc.fbPreferences.sorting)#
 
 			<!--- Quick Filter --->
-			#html.label(field="fbQuickFilter",content="Quick Filter: ")#
-			#html.textField(name="fbQuickFilter",size="20")#
+			#html.label( field="fbQuickFilter", content="Quick Filter: ")#
+			#html.textField( name="fbQuickFilter", size="20")#
 
 			<!---Grid or listing --->
 			&nbsp;
