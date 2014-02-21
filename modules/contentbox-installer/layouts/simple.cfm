@@ -40,6 +40,19 @@
 					<a class="brand">
 						#cb.r( "layout.installer@installer" )#
 					</a>
+					
+					<ul class="nav pull-right">
+						<li class="dropdown">
+							<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
+								<i class="icon-globe"></i> #cb.r( "layout.localize@installer" )# <b class="caret"></b>
+								<ul role="menu" class="dropdown-menu">
+									<cfloop array="#prc.langs#" index="thisLang">
+									<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@installer" )#</a></li>
+									</cfloop>
+								</ul>
+							</a>
+						</li>
+					</ul>
 				</div> <!---end container --->
 		    </div> <!--- end navbar-inner --->
 	    </div> <!---end navbar --->

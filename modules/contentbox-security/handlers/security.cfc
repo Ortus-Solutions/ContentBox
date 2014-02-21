@@ -25,8 +25,8 @@ limitations under the License.
 component{
 
 	// DI
-	property name="securityService" inject="id:securityService@cb";
-	property name="authorService" 	inject="id:authorService@cb";
+	property name="securityService" inject="securityService@cb";
+	property name="authorService" 	inject="authorService@cb";
 	property name="antiSamy"		inject="coldbox:plugin:AntiSamy";
 	property name="cb"				inject="cbhelper@cb";
 	
@@ -35,9 +35,20 @@ component{
 		doLogin = "POST",
 		doLostPassword = "POST"
 	};
+
+	function preHandler( event, currentAction, rc, prc ){
+		prc.langs 		= getModuleSettings( "contentbox-security" ).settings.languages;
+		prc.entryPoint 	= getModuleSettings( "contentbox-security" ).entryPoint;
+		prc.xehLang 	= event.buildLink( "#prc.entryPoint#/language" );
+	}
+
+	function changeLang( event, rc, prc ){
+		event.paramValue( "lang", "en_US" );
+		setFWLocale( rc.lang );
+		setNextEvent( prc.entryPoint );
+	}
 	
-	// login screen
-	function login(event,rc,prc){
+	function login( event, rc, prc ){
 		// exit handlers
 		prc.xehDoLogin 			= "#prc.cbAdminEntryPoint#.security.doLogin";
 		prc.xehLostPassword 	= "#prc.cbAdminEntryPoint#.security.lostPassword";
@@ -50,8 +61,7 @@ component{
 		event.setView(view="security/login");	
 	}
 	
-	// authenticate users
-	function doLogin(event,rc,prc){
+	function doLogin( event, rc, prc ){
 		// params
 		arguments.event.paramValue("rememberMe", false);
 		arguments.event.paramValue("_securedURL", "");
@@ -92,8 +102,7 @@ component{
 		}
 	}
 	
-	// logout users
-	function doLogout(event,rc,prc){
+	function doLogout( event, rc, prc ){
 		// logout
 		securityService.logout();
 		// announce event
@@ -104,15 +113,13 @@ component{
 		setNextEvent("#prc.cbAdminEntryPoint#.security.login");
 	}
 	
-	// lost password screen
-	function lostPassword(event,rc,prc){
+	function lostPassword( event, rc, prc ){
 		prc.xehLogin 			= "#prc.cbAdminEntryPoint#.security.login";
 		prc.xehDoLostPassword 	= "#prc.cbAdminEntryPoint#.security.doLostPassword";
 		event.setView(view="security/lostPassword");	
 	}
 	
-	// do the lost password goodness
-	function doLostPassword(event,rc,prc){
+	function doLostPassword( event, rc, prc ){
 		var errors 	= [];
 		var oAuthor = "";
 		
@@ -154,8 +161,7 @@ component{
 		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
 	
-	// Verify Reset
-	function verifyReset(event,rc,prc){
+	function verifyReset( event, rc, prc ){
 		arguments.event.paramValue("token", "");
 
 		// Validate token

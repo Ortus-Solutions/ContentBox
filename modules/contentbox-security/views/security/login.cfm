@@ -29,7 +29,7 @@
 					<div class="controls">
 						<div class="input-prepend">
 							<span class="add-on"><i class="icon-key"></i></span>
-							#html.passwordField(name="password", required="required", class="input-large", placeholder=cb.r( "common.username@security" ), autocomplete="off")#
+							#html.passwordField(name="password", required="required", class="input-large", placeholder=cb.r( "common.password@security" ), autocomplete="off")#
 						</div>
 					</div>
 				</div>

@@ -7,7 +7,7 @@ $(document).ready(function() {
         showErrors: function( errorMap, errorList ) {
             var errors = this.numberOfInvalids();
             if ( errors ) {
-                var msg = '<p><strong>Please correct the following errors:</strong></p><ul>';
+                var msg = '<p><strong>#cb.r( "validation.errors@installer" )#</strong></p><ul>';
                 for( var i=0; i<errors; i++ ) {
                     var label = $("label[for='"+$(errorList[ i ].element).attr('id')+"']");
                     msg += '<li>' + label.text() + ' ' + errorList[ i ].message + '</li>';
@@ -21,7 +21,7 @@ $(document).ready(function() {
 	// password validator
 	$.validator.addMethod( 'passwordmatch', function( value, element ) {
         return (value==$("[name=password]").val()) ? true : false;
-    }, 'Passwords need to match' );
+    }, '#cb.r( "validation.passwordmatch@installer" )#' );
 });
 
 function nextStep(){
