@@ -42,10 +42,10 @@
     					<!--- Fields --->
     					#html.textField(name="firstName",label=cb.r( "tab.admin.lname@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
     					#html.textField(name="lastName",label=cb.r( "tab.admin.fname@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.inputField(name="email",type="email",label=cb.r( "common.email@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.textField(name="username",label=cb.r( "common.username@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.passwordField(name="password",label=cb.r( "common.password@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="100",class="textfield passwordmatch",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+    					#html.inputField(name="email",type="email",label=cb.r( "tab.admin.emailaddress@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+    					#html.textField(name="username",label=cb.r( "tab.admin.username@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+    					#html.passwordField(name="password",label=cb.r( "tab.admin.password@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+    					#html.passwordField(name="password_confirm",label=cb.r("tab.admin.password_confirm@installer" ),required="required",size="100",class="textfield passwordmatch",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
     					#html.endFieldSet()#
     					
     					<!---Toolbar --->
@@ -102,26 +102,10 @@
     						
     						<!--- Mail Server --->
 							<div class="control-group">
-							    #html.label( class="control-label", field="cb_site_mail_server", content="Email #cb.r( "common.server@installer" )#" )#
+							    #html.label( class="control-label", field="cb_site_mail_server", content=#cb.r( "tab.email.server.hostname@installer" )# )#
                                 <div class="controls">
                                     <small>#cb.r( "tab.email.server.help@installer" )#</small><br/>
     								#html.textField( name="cb_site_mail_server", class="textfield width98", title=cb.r( "tab.email.server.title@installer" ) )#
-                                </div>
-							</div>
-    						<!--- Mail Username --->
-							<div class="control-group">
-							    #html.label(class="control-label",field="cb_site_mail_username",content="Email #cb.r( "common.server@installer" )# #cb.r( "common.username@installer" )#:")#
-                                <div class="controls">
-                                    <small>#cb.r( "tab.email.username.help@installer" )#</small><br/>
-    								#html.textField( name="cb_site_mail_username", class="textfield width98", title=cb.r( "tab.email.username.title@installer" ) )#
-                                </div>
-							</div>
-    						<!--- Mail Password --->
-							<div class="control-group">
-							    #html.label(class="control-label",field="cb_site_mail_password",content="Email #cb.r( "common.server@installer" )# #cb.r( "common.password@installer" )#:")#
-                                <div class="controls">
-                                    <small>#cb.r( "tab.email.password.help@installer" )#</small><br/>
-    								#html.passwordField( name="cb_site_mail_password", class="textfield width98", title=cb.r( "tab.email.password.title@installer" ) )#
                                 </div>
 							</div>
     						<!--- SMTP Port --->
@@ -152,6 +136,23 @@
     								#html.radioButton( name="cb_site_mail_ssl", checked=true, value=false )# #cb.r( "common.no@installer" )# 
                                 </div>
 							</div>
+                            <br />
+                            <!--- Mail Username --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_site_mail_username",content=#cb.r( "tab.email.username@installer" )#)#
+                                <div class="controls">
+                                    <small>#cb.r( "tab.email.username.help@installer" )#</small><br/>
+                                    #html.textField( name="cb_site_mail_username", class="textfield width98", title=cb.r( "tab.email.username.title@installer" ) )#
+                                </div>
+                            </div>
+                            <!--- Mail Password --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_site_mail_password",content=#cb.r( "tab.email.userpassword@installer" )#)#
+                                <div class="controls">
+                                    <small>#cb.r( "tab.email.password.help@installer" )#</small><br/>
+                                    #html.passwordField( name="cb_site_mail_password", class="textfield width98", title=cb.r( "tab.email.password.title@installer" ) )#
+                                </div>
+                            </div>
     					#html.endFieldSet()#
     					
     					<!---Toolbar --->
@@ -170,8 +171,9 @@
     					<p>
     						#cb.r( "tab.rewrites.intro@installer" )#
     						<a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">Apache mod_rewrite</a>, 
-    						<a href="http://www.tuckey.org/urlrewrite/">Tuckey URL Rewrite</a> #cb.r( "common.or@installer" )# 
-    						<a href="http://www.iis.net/download/urlrewrite">IIS 7 Rewrite</a>.
+    						<a href="http://www.tuckey.org/urlrewrite/">Tuckey URL Rewrite</a>, 
+                            <a href="http://www.iis.net/download/urlrewrite">IIS 7 Rewrite</a> #cb.r( "common.or@installer" )#
+                            <a href="http://www.helicontech.com/ape/">Helicon Ape</a>.
     						#cb.r( "tab.rewrites.intro2@installer" )#
     					</p>
     					
