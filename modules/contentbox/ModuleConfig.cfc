@@ -73,14 +73,15 @@ component {
 		// interceptors
 		interceptors = [
 			// CB RSS Cache Cleanup Ghost
-			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
+			{ class="contentbox.model.rss.RSSCacheCleanup", name="RSSCacheCleanup@cb" },
 			// CB Content Cache Cleanup Ghost
-			{class="contentbox.model.content.util.ContentCacheCleanup",name="ContentCacheCleanup@cb" },
+			{ class="contentbox.model.content.util.ContentCacheCleanup", name="ContentCacheCleanup@cb" },
 			// Notification service interceptor
-			{class="contentbox.model.system.NotificationService",name="NotificationService@cb" },
+			{ class="contentbox.model.system.NotificationService", name="NotificationService@cb" },
 			// Content Renderers, remember order is important.
-			{class="contentbox.model.content.renderers.LinkRenderer"},
-			{class="contentbox.model.content.renderers.WidgetRenderer"}
+			{ class="contentbox.model.content.renderers.LinkRenderer", name="LinkRenderer@cb" },
+			{ class="contentbox.model.content.renderers.WidgetRenderer", name="WidgetRenderer@cb" },
+			{ class="contentbox.model.content.renderers.SettingRenderer", name="SettingRenderer@cb" }
 		];
 
 		// Security/System
