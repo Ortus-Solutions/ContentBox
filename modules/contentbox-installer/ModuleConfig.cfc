@@ -24,9 +24,7 @@ component {
 		i18n = {
 			resourceBundles = {
 		    	"installer" = "#moduleMapping#/includes/i18n/installer"
-		  	},
-		  	defaultLocale = "en_US",
-		  	localeStorage = "cookie"
+		  	}
 		};
 		
 		// Settings
