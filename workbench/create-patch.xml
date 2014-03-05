@@ -4,9 +4,9 @@
 	<!--Build Properties-->
 	<property name="dir.exports"		value="patches" />
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.version"		value="1-6-0"/>
+	<property name="contentbox.version"		value="2-0-0"/>
 	<!-- Start Hash: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.startgit" 	value="2169574b2273d57bbf8da8fc04df1d3a7c4b06c1" />
+	<property name="contentbox.startgit" 	value="bbee7a892871478a20c9c15e73053b1f86c85859" />
 		
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>

@@ -1,0 +1,4 @@
+coldbox/coldbox-3.8.0.00054-201312121620
+modules/contentbox/model/ui/templates/bootstrap-adminMenu.cfm
+modules/contentbox/plugins/lib/commons-logging-1.1.1.jar
+modules/contentbox/plugins/lib/lesscss-engine-1.3.3.jar
