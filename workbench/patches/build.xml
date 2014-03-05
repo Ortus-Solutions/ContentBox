@@ -8,10 +8,15 @@
 	</target>
 	
 	<!--Build-->
-	<target name="build" description="Build a new ContentBox distribution release" depends="init">
+	<target name="build" description="Build a new ContentBox patch" depends="init">
       	
-		<!-- Zip Bundle -->
+		<!-- Zip Bundle wit DB updates plus file deletes+additions -->
 		<zip destfile="${contentbox.version}.zip" basedir="${contentbox.version}"></zip>
+
+		<!-- Zip DB Updates Only -->
+		<zip destfile="${contentbox.version}-db.zip" basedir="${contentbox.version}">
+			<include name="**/Update.cfc" />
+		</zip>
     </target>
 	
 </project>
