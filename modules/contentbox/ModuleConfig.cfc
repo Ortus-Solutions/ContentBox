@@ -42,9 +42,20 @@ component {
 			// Auto Updates
 			updateSlug_stable 	= "contentbox-stable-updates",
 			updateSlug_beta 	= "contentbox-beta-updates",
-			updatesURL			= "http://www.coldbox.org/api/forgebox"
+			updatesURL			= "http://www.coldbox.org/api/forgebox",
+			// Officially supported languages for modules
+			languages 			= [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
 		};
 		
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"cbcore" = "#moduleMapping#/i18n/cbcore"
+		  	},
+		  	defaultLocale = "en_US",
+		  	localeStorage = "cookie"
+		};
+
 		// CB Module Conventions
 		conventions = {
 			layoutsLocation = "layouts",

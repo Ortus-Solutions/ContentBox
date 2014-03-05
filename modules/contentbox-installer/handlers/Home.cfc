@@ -13,8 +13,8 @@ component cache="false"{
 		// all things assets :)
 		prc.assetRoot 		= getContextRoot() & getModuleSettings( "contentbox-admin" ).mapping;
 		prc.adminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
-		prc.uiEntryPoint 	= getModuleSettings("contentbox-ui").entryPoint;
-		prc.langs 			= getModuleSettings( "contentbox-installer" ).settings.languages;
+		prc.uiEntryPoint 	= getModuleSettings( "contentbox-ui" ).entryPoint;
+		prc.langs 			= getModuleSettings( "contentbox" ).settings.languages;
 	}
 
 	function index( event, rc, prc ){
