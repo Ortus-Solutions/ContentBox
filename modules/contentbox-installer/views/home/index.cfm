@@ -40,13 +40,57 @@
     						#cb.r( "tab.admin.instructions@installer" )#
     					</p>
     					<!--- Fields --->
-    					#html.textField(name="firstName",label=cb.r( "tab.admin.lname@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.textField(name="lastName",label=cb.r( "tab.admin.fname@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.inputField(name="email",type="email",label=cb.r( "common.email@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.textField(name="username",label=cb.r( "common.username@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.passwordField(name="password",label=cb.r( "common.password@installer" ),required="required",size="100",class="textfield",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="100",class="textfield passwordmatch",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    					#html.endFieldSet()#
+    					#html.textField(name="firstName",
+                                        label=cb.r( "tab.admin.lname@installer" ),
+                                        required="required",
+                                        size="100",
+                                        class="textfield",
+                                        wrapper="div class=controls",
+                                        labelClass="control-label",
+                                        groupWrapper="div class=control-group")#
+    					#html.textField(name="lastName",
+                                        label=cb.r( "tab.admin.fname@installer" ),
+                                        required="required",
+                                        size="100",
+                                        class="textfield",
+                                        wrapper="div class=controls",
+                                        labelClass="control-label",
+                                        groupWrapper="div class=control-group")#
+    					#html.inputField(name="email",
+                                        type="email",
+                                        label=cb.r( "tab.admin.email@installer" ),
+                                        required="required",
+                                        size="100",
+                                        class="textfield",
+                                        wrapper="div class=controls",
+                                        labelClass="control-label",
+                                        groupWrapper="div class=control-group")#
+    					#html.textField(name="username",
+                                        label=cb.r( "tab.admin.username@installer" ),
+                                        required="required",
+                                        size="100",
+                                        class="textfield",
+                                        wrapper="div class=controls",
+                                        labelClass="control-label",
+                                        groupWrapper="div class=control-group")#
+    					#html.passwordField(name="password",
+                                        label=cb.r( "tab.admin.password@installer" ),
+                                        required="required",
+                                        size="100",
+                                        class="textfield",
+                                        wrapper="div class=controls",
+                                        labelClass="control-label",
+                                        groupWrapper="div class=control-group")#
+    					#html.passwordField(name="password_confirm",
+                                        label=cb.r( "tab.admin.password_confirm@installer" ),
+                                        required="required",
+                                        size="100",
+                                        class="textfield passwordmatch",
+                                        wrapper="div class=controls",
+                                        labelClass="control-label",
+                                        groupWrapper="div class=control-group")#
+    					
+                        #html.endFieldSet()#
     					
     					<!---Toolbar --->
     					<div class="form-actions">
@@ -102,34 +146,53 @@
     						
     						<!--- Mail Server --->
 							<div class="control-group">
-							    #html.label( class="control-label", field="cb_site_mail_server", content="Email #cb.r( "common.server@installer" )#" )#
+							    #html.label( class="control-label",
+                                             field="cb_site_mail_server",
+                                             content=cb.r( "tab.email.server.label@installer" ) )#
                                 <div class="controls">
                                     <small>#cb.r( "tab.email.server.help@installer" )#</small><br/>
-    								#html.textField( name="cb_site_mail_server", class="textfield width98", title=cb.r( "tab.email.server.title@installer" ) )#
+    								#html.textField( name="cb_site_mail_server",
+                                                     class="textfield width98",
+                                                     title=cb.r( "tab.email.server.title@installer" ) )#
                                 </div>
 							</div>
     						<!--- Mail Username --->
 							<div class="control-group">
-							    #html.label(class="control-label",field="cb_site_mail_username",content="Email #cb.r( "common.server@installer" )# #cb.r( "common.username@installer" )#:")#
+							    #html.label( class="control-label",
+                                             field="cb_site_mail_username",
+                                             content=cb.r( "tab.email.username.label@installer" ) )#
                                 <div class="controls">
                                     <small>#cb.r( "tab.email.username.help@installer" )#</small><br/>
-    								#html.textField( name="cb_site_mail_username", class="textfield width98", title=cb.r( "tab.email.username.title@installer" ) )#
+    								#html.textField( name="cb_site_mail_username",
+                                                     class="textfield width98",
+                                                     title=cb.r( "tab.email.username.title@installer" ) )#
                                 </div>
 							</div>
     						<!--- Mail Password --->
 							<div class="control-group">
-							    #html.label(class="control-label",field="cb_site_mail_password",content="Email #cb.r( "common.server@installer" )# #cb.r( "common.password@installer" )#:")#
+							    #html.label( class="control-label",
+                                             field="cb_site_mail_password",
+                                             content=cb.r( "tab.email.password.label@installer" ) )#
                                 <div class="controls">
                                     <small>#cb.r( "tab.email.password.help@installer" )#</small><br/>
-    								#html.passwordField( name="cb_site_mail_password", class="textfield width98", title=cb.r( "tab.email.password.title@installer" ) )#
+    								#html.passwordField( name="cb_site_mail_password",
+                                                         class="textfield width98",
+                                                         title=cb.r( "tab.email.password.title@installer" ) )#
                                 </div>
 							</div>
     						<!--- SMTP Port --->
 							<div class="control-group">
-							    #html.label( class="control-label", field="cb_site_mail_smtp", content=cb.r( "tab.email.port@installer" ) )#
+							    #html.label( class="control-label",
+                                             field="cb_site_mail_smtp",
+                                             content=cb.r( "tab.email.port@installer" ) )#
                                 <div class="controls">
                                     <small>#cb.r( "tab.email.port.help@installer" )#</small><br/>
-    								#html.inputfield( type="numeric", value="25", name="cb_site_mail_smtp", class="textfield", size="5", title=cb.r( "tab.email.port.title@installer" ) )#
+    								#html.inputfield( type="numeric",
+                                                      value="25",
+                                                      name="cb_site_mail_smtp",
+                                                      class="textfield",
+                                                      size="5",
+                                                      title=cb.r( "tab.email.port.title@installer" ) )#
                                 </div>
 							</div>
     						
