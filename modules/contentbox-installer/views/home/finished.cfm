@@ -17,13 +17,10 @@
 				<em>/{installed_location}/modules/contentbox-dsncreator</em></strong>
 			</div>
 			<hr>
-			<h2>
-				I am excited, are you? Let's get started!
-			</h2>
-			
-			<p>
-				<a href="#event.buildLink(prc.xehSite)#" class="btn btn-primary">#cb.r( "finished.visit_site@installer" )#</a>
-				<a href="#event.buildLink(prc.xehAdmin)#" class="btn btn-danger">#cb.r( "finished.visit_site@installer" )#</a>
+						
+			<p class="text-center">
+				<a href="#event.buildLink(prc.xehSite)#" class="btn btn-primary btn-large">#cb.r( "finished.visit_site@installer" )#</a>
+				<a href="#event.buildLink(prc.xehAdmin)#" class="btn btn-danger btn-large">#cb.r( "finished.visit_admin@installer" )#</a>
 			</p>
 		</div>
 		<!--- end panel 1 --->

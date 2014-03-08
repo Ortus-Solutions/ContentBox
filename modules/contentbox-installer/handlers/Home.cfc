@@ -45,6 +45,7 @@ component cache="false"{
 	function finished( event, rc, prc ){
 		prc.xehAdmin = prc.adminEntryPoint;
 		prc.xehSite  = prc.uiEntryPoint;
+		prc.xehLang  = event.buildLink( "cbInstaller/language" );
 		
 		event.setView( "home/finished" );
 	}
