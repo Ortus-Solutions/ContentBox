@@ -64,7 +64,7 @@ component output="false" hint="Main filebrowser module handler"{
 		if(arguments.widget) {
 			// merge the settings structs if defined
 			if( !structIsEmpty( arguments.settings ) ){
-				mergeSettings(prc.fbSettings, arguments.settings);
+				mergeSettings( prc.fbSettings, arguments.settings );
 				// clean out the stored settings for this version as we will use passed in settings.
 				flash.remove( "filebrowser" );
 			}
@@ -99,15 +99,15 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// traversal testing
 		if( NOT isTraversalSecure(prc, prc.fbCurrentRoot) ){
-			getPlugin( "MessageBox" ).warn( "Traversal security exception!" );
+			getPlugin( "MessageBox" ).warn( r( "messages.traversal@fb" ) );
 			setNextEvent(prc.xehFBBrowser);
 		}
 
 		// Get storage preferences
 		prc.fbPreferences = getPreferences();
 		prc.fbNameFilter  = prc.fbSettings.nameFilter;
-		if (rc.filterType == "Image" ) {prc.fbNameFilter = prc.fbSettings.imgNameFilter;}
-		if (rc.filterType == "Flash" ) {prc.fbNameFilter = prc.fbSettings.flashNameFilter;}
+		if ( rc.filterType == "Image" ) { prc.fbNameFilter = prc.fbSettings.imgNameFilter; }
+		if ( rc.filterType == "Flash" ) { prc.fbNameFilter = prc.fbSettings.flashNameFilter; }
 
 		// get directory listing.
 		prc.fbqListing = directoryList( prc.fbCurrentRoot, false, "query", prc.fbSettings.extensionFilter, "#prc.fbPreferences.sorting#" );
@@ -148,32 +148,32 @@ component output="false" hint="Main filebrowser module handler"{
 		};
 
 		// param value
-		event.paramValue( "path","" );
-		event.paramValue( "dName","" );
+		event.paramValue( "path", "" );
+		event.paramValue( "dName", "" );
 
 		// Verify credentials else return invalid
 		if( !prc.fbSettings.createFolders ){
 			data.errors = true;
-			data.messages = "CreateFolders permission is disabled.";
-			event.renderData(data=data,type="json" );
+			data.messages = r( "messages.create_folder_disabled@fb" );
+			event.renderData( data=data, type="json" );
 			return;
 		}
 
 		// clean incoming path and names
 		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
 		rc.dName = URLDecode( trim( antiSamy.clean( rc.dName ) ) );
-		if( !len(rc.path) OR !len(rc.dName) ){
+		if( !len( rc.path ) OR !len( rc.dName ) ){
 			data.errors = true;
-			data.messages = "The path and name sent are invalid!";
-			event.renderData(data=data,type="json" );
+			data.messages = r( "messages.invalid_path_name@fb" );
+			event.renderData( data=data, type="json" );
 			return;
 		}
 
 		// Traversal Security
-		if( NOT isTraversalSecure(prc, rc.path) ){
+		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
-			data.messages = "Traversal Exception: The path you sent is outside of the valid application path!";
-			event.renderData(data=data,type="json" );
+			data.messages = r( "messages.traversal_security@fb" );
+			event.renderData( data=data, type="json" );
 			return;
 		}
 
@@ -184,22 +184,21 @@ component output="false" hint="Main filebrowser module handler"{
 				path = rc.path,
 				directoryName = rc.dName
 			};
-			announceInterception( "fb_preFolderCreation",iData);
+			announceInterception( "fb_preFolderCreation", iData );
 
 			fileUtils.directoryCreate( rc.path & "/" & rc.dName );
 			data.errors = false;
-			data.messages = "Folder '#rc.path#/#rc.dName#' created successfully!";
+			data.messages = r( resource="messages.folder_created@fb", values="#rc.path#/#rc.dName#" );
 
 			// Announce it
-			announceInterception( "fb_postFolderCreation",iData);
-		}
-		catch(Any e){
+			announceInterception( "fb_postFolderCreation", iData );
+		} catch( Any e ){
 			data.errors = true;
-			data.messages = "Error creating folder: #e.message# #e.detail#";
-			log.error(data.messages, e);
+			data.messages = r( resource="messages.error_creating_folder@fb", values="#e.message# #e.detail#" );
+			log.error( data.messages, e );
 		}
 		// render stuff out
-		event.renderData(data=data,type="json" );
+		event.renderData( data=data, type="json" );
 	}
 
 	/**
@@ -211,30 +210,30 @@ component output="false" hint="Main filebrowser module handler"{
 			messages = ""
 		};
 		// param value
-		event.paramValue( "path","" );
+		event.paramValue( "path", "" );
 
 		// Verify credentials else return invalid
 		if( !prc.fbSettings.deleteStuff ){
 			data.errors = true;
-			data.messages = "Delete Stuff permission is disabled.";
-			event.renderData(data=data,type="json" );
+			data.messages = r( "messages.delete_disabled@fb" );
+			event.renderData( data=data, type="json" );
 			return;
 		}
 
 		// clean incoming path and names
 		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
-		if( !len(rc.path) ){
+		if( !len( rc.path ) ){
 			data.errors = true;
-			data.messages = "The path sent is invalid!";
-			event.renderData(data=data,type="json" );
+			data.messages = r( "messages.invalid_path@fb" );
+			event.renderData( data=data, type="json" );
 			return;
 		}
 
 		// Traversal Security
-		if( NOT isTraversalSecure(prc, rc.path) ){
+		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
-			data.messages = "Traversal Exception: The path you sent is outside of the valid application path!";
-			event.renderData(data=data,type="json" );
+			data.messages = r( "messages.traversal_security@fb" );
+			event.renderData( data=data, type="json" );
 			return;
 		}
 
@@ -244,27 +243,26 @@ component output="false" hint="Main filebrowser module handler"{
 			var iData = {
 				path = rc.path
 			};
-			announceInterception( "fb_preFileRemoval",iData);
+			announceInterception( "fb_preFileRemoval", iData );
 
 			if( fileExists( rc.path ) ){
 				fileUtils.removeFile( rc.path );
 			}
 			else if( directoryExists( rc.path ) ){
-				fileUtils.directoryRemove(path=rc.path,recurse=true);
+				fileUtils.directoryRemove( path=rc.path, recurse=true );
 			}
 			data.errors = false;
-			data.messages = "'#rc.path#' removed successfully!";
+			data.messages = r( resource="messages.removed@fb", values="#rc.path#" );
 
 			// Announce it
-			announceInterception( "fb_postFileRemoval",iData);
-		}
-		catch(Any e){
+			announceInterception( "fb_postFileRemoval", iData );
+		} catch( Any e ) {
 			data.errors = true;
-			data.messages = "Error removing stuff: #e.message# #e.detail#";
-			log.error(data.messages, e);
+			data.messages = r( resource="messages.error_removing@fb", values="#e.message# #e.detail#" );
+			log.error( data.messages, e );
 		}
 		// render stuff out
-		event.renderData(data=data,type="json" );
+		event.renderData( data=data, type="json" );
 	}
 
 	/**
@@ -597,14 +595,14 @@ component output="false" hint="Main filebrowser module handler"{
 	}
 
 	/**
-	* Retrieve i18n resources
+	* Retrieve i18n resources, this will be in ColdBox soon, remove after.
 	* @resource.hint The resource (key) to retrieve from a loaded bundle or pass a @bundle
 	* @default.hint A default value to send back if the resource (key) not found
 	* @locale.hint Pass in which locale to take the resource from. By default it uses the user's current set locale
 	* @values.hint An array, struct or simple string of value replacements to use on the resource string
 	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
 	*/
-	any function r( 
+	private any function r( 
 		required string resource,
 		string default,
 		string locale,
