@@ -94,6 +94,13 @@ The arguments you can use are:
 			settings.directoryRoot = left(settings.directoryRoot,len(settings.directoryRoot)-1);
 		}
 
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"fb" = "#moduleMapping#/includes/i18n/fb"
+		  	}
+		};
+
 		// Layout Settings
 		layoutSettings = {
 			defaultLayout = "filebrowser.cfm"
