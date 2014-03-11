@@ -3,7 +3,7 @@
     <table name="menu" id="menu" class="tablesorter table table-hover" width="98%">
         <thead>
             <tr>
-                <th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
+                <th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'menuID')"/></th>
                 <th>Name</th>
                 <th>Slug</th>
                 <th width="100" class="center">No. Children</th>
