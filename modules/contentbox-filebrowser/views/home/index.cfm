@@ -286,7 +286,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<li class="quickview">
 			<a href="##quickview">#r( "quickview@fb" )#</a>
 		</li>
-		<cfif len(rc.callback)>
+		<cfif len( rc.callback )>
 		<li class="select">
 			<a href="##select">#r( "select@fb" )#</a>
 		</li>
@@ -309,7 +309,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		</li>
 	</ul>
 	<ul id="fbContextMenuDirectories" class="contextMenu">
-		<cfif len( rc.callbac k)>
+		<cfif len( rc.callback )>
 		<li class="select">
 			<a href="##select">#r( "select@fb" )#</a>
 		</li>
