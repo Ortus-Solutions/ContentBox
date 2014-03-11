@@ -1,3 +1,22 @@
+<cfscript>
+    function getContentTypeIconCls( contentType ) {
+        var iconCls = "";
+        switch( arguments.contentType ) {
+            case 'Page':
+                iconCls = "icon-file-alt";
+                break;
+            case 'Entry':
+                iconCls = "icon-quote-left";
+                break;
+            case 'ContentStore':
+                iconCls = "icon-hdd";
+                break;
+            default:
+                break;
+        }
+        return iconCls;
+    }
+</cfscript>
 <cfoutput>
     <style>
         .tab-content>.active, .pill-content>.active {
