@@ -743,6 +743,18 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		return false;
 	}
 
+	boolean function isPage() {
+		return getContentType()=="Page" ? true : false;
+	}
+
+	boolean function isEntry() {
+		return getContentType()=="Entry" ? true : false;
+	}
+
+	boolean function isContentStore() {
+		return getContentType()=="ContentStore" ? true : false;
+	}
+
 	/**
 	* Render content out using translations, caching, etc.
 	*/
