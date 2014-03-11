@@ -111,10 +111,10 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
     	},
         submitHandler: function( form ) {
 			// Update Editor Content
-        	updateEditorContent();
+        	try{ updateEditorContent(); } catch( err ){ console.log( err ); };
 			// Update excerpt
 			if( withExcerpt ){
-				updateEditorExcerpt();
+				try{ updateEditorExcerpt(); } catch( err ){ console.log( err ); };
 			}
 			// if it's valid, submit form
             if( $content.val().length ) {
@@ -122,9 +122,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
             	$slug.prop( "disabled", false );
             	// submit
             	form.submit();
-            }
-            // otherwise, show error
-            else {
+            } else {
             	alert( 'Please enter some content!' );
            	}
         }
