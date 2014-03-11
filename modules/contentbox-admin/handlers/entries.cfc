@@ -263,7 +263,9 @@ component extends="baseHandler"{
 		}
 
 		// get new/persisted entry and populate it
-		var entry = populateModel( entryService.get( rc.contentID ) )
+		var entry 			= entryService.get( rc.contentID );
+		var originalSlug 	= entry.getSlug();
+		populateModel( entry )
 			.addPublishedtime(rc.publishedHour, rc.publishedMinute)
 			.addExpiredTime( rc.expireHour, rc.expireMinute );
 		var isNew = ( NOT entry.isLoaded() );
@@ -304,11 +306,19 @@ component extends="baseHandler"{
 		// Inflate Related Content into the page
 		entry.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
-		announceInterception("cbadmin_preEntrySave",{entry=entry,isNew=isNew});
+		announceInterception( "cbadmin_preEntrySave", {
+			entry=entry,
+			isNew=isNew,
+			originalSlug=originalSlug
+		});
 		// save entry
 		entryService.saveEntry( entry );
 		// announce event
-		announceInterception("cbadmin_postEntrySave",{entry=entry,isNew=isNew});
+		announceInterception( "cbadmin_postEntrySave", {
+			entry=entry,
+			isNew=isNew,
+			originalSlug=originalSlug
+		});
 
 		// Ajax?
 		if( event.isAjax() ){

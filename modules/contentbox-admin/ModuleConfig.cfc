@@ -62,6 +62,7 @@ component {
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
 			{pattern="/comments/page/:page",handler="comments"},
 			{pattern="/contentStore/page/:page",handler="contentStore"},
+			{pattern="/menus/page/:page",handler="menus"},
 			{pattern="/mediamanager/library/:library", handler="mediamanager", action="index"},
 			{pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
 			{pattern="/:handler/:action?"}
@@ -112,7 +113,9 @@ component {
 				// Layout Themes
 				"cbadmin_onLayoutActivation", "cbadmin_onLayoutDeactivation",
 				// Version Control
-				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback"
+				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback",
+				// Menu events
+				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove"
 			])
 		};
 
@@ -120,7 +123,8 @@ component {
 		interceptors = [
 			// CB Admin Request Interceptor
 			{ class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
-			{ class="#moduleMapping#.interceptors.CommentCleanup" }
+			{ class="#moduleMapping#.interceptors.CommentCleanup" },
+			{ class="#moduleMapping#.interceptors.MenuCleanup" }
 		];
 		
 	}

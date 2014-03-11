@@ -32,6 +32,7 @@ component accessors=true {
     property name="pageService"         inject="id:pageService@cb";
     property name="categoryService"     inject="id:categoryService@cb";
     property name="contentStoreService" inject="id:contentStoreService@cb";
+    property name="menuService"         inject="id:menuService@cb";
     property name="securityRuleService" inject="id:securityRuleService@cb";
     property name="authorService"       inject="id:authorService@cb";
     property name="roleService"         inject="id:roleService@cb";
@@ -82,7 +83,13 @@ component accessors=true {
                 service="contentStoreService",
                 displayName="Content Store",
                 priority=4
-            } ,
+            },
+            "menus" = { 
+                fileName="menus",
+                service="menuService",
+                displayName="Menus",
+                priority=5
+            },
             "permissions" = { 
                 fileName="permissions",
                 service="permissionService",

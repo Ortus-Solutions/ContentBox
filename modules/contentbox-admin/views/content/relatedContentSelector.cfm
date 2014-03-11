@@ -26,7 +26,15 @@
     <!--- Render tables out --->
     <div id="contentContainer">
         <ul class="nav nav-tabs" id="contentTypes">
-            <li class="active">
+            <!---loop over content types--->
+            <cfset types = listToArray( rc.contentType )>
+            <cfloop from="1" to="#arrayLen( types )#" index="i">
+                <cfset ct = types[ i ]>
+                <li <cfif i eq 1> class="active"</cfif>>
+                    <a href="###ct#" data-toggle="tab"><i class="#getContentTypeIconCls( ct )# icon-small" title="#ct#"></i> #ct#</a>
+                </li>
+            </cfloop>
+            <!---<li class="active">
                 <a href="##Page" data-toggle="tab"><i class="icon-file-alt icon-small" title="Page"></i> Page</a>
             </li>
             <li>
@@ -34,12 +42,16 @@
             </li>
             <li>
                 <a href="##ContentStore" data-toggle="tab"><i class="icon-hdd icon-small" title="ContentStore"></i> ContentStore</a>
-            </li>
+            </li>--->
         </ul>
         <div class="tab-content">
-            <div class="tab-pane fade active in" id="Page"></div>
+            <cfloop from="1" to="#arrayLen( types )#" index="i">
+                <cfset ct = types[ i ]>
+                <div class="tab-pane fade<cfif i eq 1> active in</cfif>" id="#ct#"></div>
+            </cfloop>
+            <!---<div class="tab-pane fade active in" id="Page"></div>
             <div class="tab-pane fade" id="Entry"></div>
-            <div class="tab-pane fade" id="ContentStore"></div>
+            <div class="tab-pane fade" id="ContentStore"></div>--->
         </div>
     </div>
 
