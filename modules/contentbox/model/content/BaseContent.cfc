@@ -17,23 +17,23 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	// Properties
 	property name="contentID" 				notnull="true"	fieldtype="id" generator="native" setter="false";
-	property name="contentType" 			setter="false" update="false" insert="false" index="idx_discriminator,idx_published" default="" dbdefault="";
+	property name="contentType" 			setter="false" update="false" insert="false" index="idx_discriminator,idx_published" default="";
 	property name="title"					notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
 	property name="publishedDate"			notnull="false" ormtype="timestamp" index="idx_publishedDate";
 	property name="expireDate"				notnull="false" ormtype="timestamp" default="" index="idx_expireDate";
-	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
-	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
+	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" index="idx_published,idx_search,idx_publishedSlug";
+	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true";
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
 	property name="HTMLKeywords"			notnull="false" length="160" default="";
 	property name="HTMLDescription"			notnull="false" length="160" default="";
-	property name="hits"					notnull="false" ormtype="long" default="0" dbdefault="0";
-	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
-	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cachelayout";
-	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
-	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
-	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
+	property name="hits"					notnull="false" ormtype="long" default="0";
+	property name="cache"					notnull="true"  ormtype="boolean" default="true" index="idx_cache";
+	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" index="idx_cachelayout";
+	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" index="idx_cachetimeout";
+	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" index="idx_cachelastaccesstimeout";
+	property name="markup"					notnull="true" length="100" default="HTML";
 	
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property name="creator" notnull="true" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
@@ -79,6 +79,23 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="numberOfChildren"			formula="select count(*) from cb_content content where content.FK_parentID=contentID" default="0";
 
 	/************************************** VERIONING METHODS *********************************************/
+
+	/**
+	* Base constructor
+	*/
+	function init(){
+		variables.isPublished 		= true;
+		variables.allowComments 	= true;
+		variables.hits 				= 0;
+		variables.cache 			= true;
+		variables.cacheLayout 		= true;
+		variables.cacheTimeout 		= 0;
+		variables.cacheLastAccessTimeout = 0;
+		variables.markup 			= "HTML";
+		variables.contentType 		= "";
+
+		return this;
+	}
 
 	/**
 	* Add a new content version to save for this content object
