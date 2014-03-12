@@ -36,12 +36,15 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 	* constructor
 	*/
 	function init(){
+		super.init();
+
 		categories 		= [];
 		customFields	= [];
 		renderedContent = "";
 		renderedExcerpt	= "";
 		createdDate		= now();
 		contentType		= "Entry";
+		
 		return this;
 	}
 

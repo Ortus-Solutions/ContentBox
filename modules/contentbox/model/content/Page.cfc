@@ -27,8 +27,8 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	// Properties
 	property name="layout"			notnull="false" length="200" default="";
 	property name="mobileLayout"	notnull="false" length="200" default="";
-	property name="order"			notnull="false" ormtype="integer" default="0" dbdefault="0";
-	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
+	property name="order"			notnull="false" ormtype="integer" default="0";
+	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" index="idx_showInMenu";
 	property name="excerpt" 		notnull="false" ormtype="text" default="" length="8000";
 	
 	// Non-Persistable Properties
@@ -40,6 +40,8 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	* constructor
 	*/
 	function init(){
+		super.init();
+
 		categories 		= [];
 		customFields	= [];
 		renderedContent = "";
@@ -49,6 +51,8 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		layout 			= "pages";
 		mobileLayout	= "";
 		contentType		= "Page";
+		order 			= 0;
+		showInMenu 		= true;
 		
 		// INHERITANCE LAYOUT STATIC
 		LAYOUT_INHERITANCE_KEY = "-inherit-";

@@ -28,14 +28,21 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" 
 	property name="ruleID" fieldtype="id" column="ruleID" generator="native" setter="false";
 	
 	// Properties
-	property name="whitelist" 	ormtype="string"  notnull="false" 	default="" length="255";	property name="securelist" 	ormtype="string"  notnull="true" 	default="" length="255";	property name="roles" 		ormtype="string"  notnull="false"  	default="" length="255";	property name="permissions" ormtype="string"  notnull="false"  	default="" length="500";	property name="redirect"	ormtype="string"  notnull="true"  	default="" length="500";
-	property name="useSSL"		ormtype="boolean" notnull="false" 	default="false" dbdefault="0";
-	property name="order"		ormtype="integer" notnull="true" 	default="0" dbdefault="0";
+	property name="whitelist" 	ormtype="string"  notnull="false" 	default="" length="255";
+	property name="securelist" 	ormtype="string"  notnull="true" 	default="" length="255";
+	property name="roles" 		ormtype="string"  notnull="false"  	default="" length="255";
+	property name="permissions" ormtype="string"  notnull="false"  	default="" length="500";
+	property name="redirect"	ormtype="string"  notnull="true"  	default="" length="500";
+	property name="useSSL"		ormtype="boolean" notnull="false" 	default="false";
+	property name="order"		ormtype="integer" notnull="true" 	default="0";
 	property name="match"		ormtype="string"  notnull="false" 	default="" length="50";
 		
 	// Constructor
-	SecurityRule function init(){
+	function init(){
 		setMatch('event');
+		variables.useSSL = false;
+		variables.order  = 0;
+
 		return this;
 	}
 	
