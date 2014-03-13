@@ -47,7 +47,8 @@ component persistent="true" entityName="cbContentMenuItem" table="cb_menuItem" e
         var display = super.canDisplay( argumentCollection=arguments );
         if( display ) {
             var content = contentService.findBySlug( getContentSlug() );
-            return content.isLoaded() && ( content.isPage() || content.isEntry() ) ? true : false;
+            var type = content.getContentType();
+            return content.isLoaded() && ( type=="Page" || type=="Entry" ) ? true : false;
         }
         return display;        
     }
