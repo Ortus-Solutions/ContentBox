@@ -136,10 +136,11 @@ function activateQuickLook( $table, quickLookURL ){
 	});
 }
 // Remove content
-function remove(contentID){
+function remove( contentID, id ){
+	id = typeof id !== 'undefined' ? id : 'contentID';
 	if( contentID != null ){
 		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
-		checkByValue('contentID',contentID);		
+		checkByValue( id, contentID );		
 	}
 	$contentForm.submit();
 }
