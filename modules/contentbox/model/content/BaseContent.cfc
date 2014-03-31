@@ -722,20 +722,24 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* add published timestamp to property
 	*/
-	any function addPublishedTime(required hour, required minute){
+	any function addPublishedTime( required hour, required minute ){
 		if( !isDate( getPublishedDate() ) ){ return this; }
-		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
-		setPublishedDate( getPublishedDate() & " " & time);
+		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
+		setPublishedDate( getPublishedDate() & " " & time );
 		return this;
 	}
 
 	/**
 	* add expired timestamp to property
 	*/
-	any function addExpiredTime(required hour, required minute){
+	any function addExpiredTime( required hour, required minute ){
 		if( !isDate( getExpireDate() ) ){ return this; }
-		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
-		setExpireDate( getExpireDate() & " " & time);
+		// verify time and minute defaults, else default to midnight
+		if( !len( arguments.hour ) ){ arguments.hour = "0"; }
+		if( !len( arguments.minute ) ){ arguments.minute = "00"; }
+		// setup the right time now.
+		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
+		setExpireDate( getExpireDate() & " " & time );
 		return this;
 	}
 
