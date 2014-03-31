@@ -110,13 +110,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* results = [moderated:boolean,messages:array]
 	* @comment The comment to try to save
 	*/
-	struct function saveComment(required comment) transactional{
+	struct function saveComment( required comment ) transactional{
 		// Comment reference
 		var inComment = arguments.comment;
 		// get settings
-		var inSettings = settingService.getAllSettings(asStruct=true);
+		var inSettings = settingService.getAllSettings( asStruct=true );
 		// results
-		var results = {moderated=true,messages=[]};
+		var results = { moderated=true, messages=[] };
 
 		// Log the IP Address
 		inComment.setAuthorIP( cgi.remote_addr );
@@ -129,24 +129,25 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		}
 
 		// Run moderation rules
-		if( runModerationRules(inComment,inSettings) ){
+		if( runModerationRules( inComment, inSettings ) ){
 			// send for saving, finally phew!
 			save( inComment );
 			// Send Notification or Moderation Email?
 			sendNotificationEmails( inComment, inSettings );
 			// Return results
-			if( inComment.getIsApproved() ){ results.moderated = false; }
-			else{ arrayAppend(results.messages,"Comment was moderated! Please wait for the system administrator to approve it."); }
-		}
-		else{
+			if( inComment.getIsApproved() ){ 
+				results.moderated = false; 
+			} else { 
+				arrayAppend( results.messages, "Comment was moderated! Please wait for the system administrator to approve it." ); 
+			}
+		} else {
 			// Messages
-			arrayAppend(results.messages,"Geez! Comment was blocked!");
-
+			arrayAppend( results.messages, "Geez! Comment was blocked!" );
 			// discard it from session
 			evictEntity( inComment );
 			// log it
 			if( log.canWarn() ){
-				log.warn("Incoming comment was blocked!",inComment.getMemento());
+				log.warn( "Incoming comment was blocked!", inComment.getMemento() );
 			}
 		}
 
@@ -233,7 +234,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @comment Comment to moderate check
 	* @settings The contentbox settings to moderate against
 	*/
-	private void function sendNotificationEmails(comment,settings){
+	private void function sendNotificationEmails( required comment, required settings ){
 		// Comment reference
 		var inComment 	= arguments.comment;
 		var inSettings 	= arguments.settings;
@@ -241,8 +242,13 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var subject		= "";
 		var template	= "";
 
-		// More notification emails
-		if( len(inSettings.cb_comments_notifyemails) ){
+		// Verify if we have active notifications, else just quit notification process
+		if( !inSettings.cb_comments_notify ){
+			return;
+		}
+
+		// More notification emails?
+		if( len( inSettings.cb_comments_notifyemails ) ){
 			outEmails &= "," & inSettings.cb_comments_notifyemails;
 		}
 
@@ -259,25 +265,24 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		if( inComment.getIsApproved() eq false AND inSettings.cb_comments_moderation_notify ){
 			subject  = "New comment needs moderation on post: #bodyTokens.contentTitle#";
 			template = "comment_moderation";
-		}
-		// Post Notification Email?
-		else if( inSettings.cb_comments_notify ){
+		} else {
+			// Else, new comment notification
 			subject  = "New comment on post: #bodyTokens.contentTitle#";
 			template = "comment_new";
 		}
 
 		// Send it baby!
-		var mail = mailservice.newMail(to=outEmails,
-									   from=settings.cb_site_outgoingEmail,
-									   subject=subject,
-									   bodyTokens=bodyTokens,
-									   type="html",
-									   server=settings.cb_site_mail_server,
-									   username=settings.cb_site_mail_username,
-									   password=settings.cb_site_mail_password,
-									   port=settings.cb_site_mail_smtp,
-									   useTLS=settings.cb_site_mail_tls,
-									   useSSL=settings.cb_site_mail_ssl);
+		var mail = mailservice.newMail( to=outEmails,
+									    from=settings.cb_site_outgoingEmail,
+									    subject=subject,
+									    bodyTokens=bodyTokens,
+									    type="html",
+									    server=settings.cb_site_mail_server,
+									    username=settings.cb_site_mail_username,
+									    password=settings.cb_site_mail_password,
+									    port=settings.cb_site_mail_smtp,
+									    useTLS=settings.cb_site_mail_tls,
+									    useSSL=settings.cb_site_mail_ssl );
 		
 		// generate content for email from template
 		mail.setBody( renderer.get().renderLayout( 
@@ -286,6 +291,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			module="contentbox-admin",
 			args = { gravatarEmail= inComment.getAuthorEmail() }
 		));
+
 		// send it out
 		mailService.send( mail );
 	}
