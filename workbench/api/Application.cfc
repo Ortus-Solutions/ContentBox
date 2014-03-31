@@ -18,10 +18,9 @@ Description :
 	<cfset this.setClientCookies = true>
 
 	<!---Mappings --->
-	<cfset this.mappings["/colddoc"] 		= getDirectoryFromPath( getCurrentTemplatePath() ) & "/colddoc">
-	<cfset this.mappings["/contentbox"] 	= getDirectoryFromPath( getCurrentTemplatePath() ) & "/contentbox">
-	<cfset this.mappings["/coldbox"] 		= expandPath( "../../coldbox" )>
-	<cfset this.mappings["/mxunit"] 		= "/Users/lmajano/Sites/MyDevelopment/Frameworks/mxunit" >
+	<cfset this.mappings[ "/colddoc" ] 		= getDirectoryFromPath( getCurrentTemplatePath() ) & "/colddoc">
+	<cfset this.mappings[ "/contentbox" ] 	= getDirectoryFromPath( getCurrentTemplatePath() ) & "/contentbox">
+	<cfset this.mappings[ "/coldbox" ] 		= expandPath( "../../coldbox" )>
 
 	<!---<cfset applicationstop()><cfabort>--->
 </cfcomponent>
