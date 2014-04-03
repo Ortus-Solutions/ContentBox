@@ -23,19 +23,58 @@ limitations under the License.
 * Core Menu Entity
 */
 component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMenu" cacheuse="read-write" {
+    
     // DI Injections
-    property name="menuService" inject="menuService@cb" persistent="false";
-    property name="menuItemService" inject="menuItemService@cb" persistent="false";
-    property name="ORMService" inject="coldbox:plugin:ORMService" persistent="false";
+    property name="menuService"     inject="menuService@cb"             persistent="false";
+    property name="menuItemService" inject="menuItemService@cb"         persistent="false";
+    property name="ORMService"      inject="coldbox:plugin:ORMService"  persistent="false";
+    
     // Non-relational Properties
-    property name="menuID" fieldtype="id" generator="native" setter="false";
-    property name="title" notnull="true" ormtype="string" length="200" default="" index="idx_menutitle";
-    property name="slug" notnull="true" ormtype="string" length="200" default="" unique="true" index="idx_menuslug";
-    property name="cls" ormtype="string" length="160" default="";
-    property name="listType" ormtype="string" length="20" default="ul";
-    property name="createdDate" ormtype="timestamp" notnull="true" update="false";
+    property name="menuID"
+             fieldtype="id"
+             generator="native"
+             setter="false";
+
+    property name="title"
+             notnull="true"
+             ormtype="string"
+             length="200"
+             default=""
+             index="idx_menutitle";
+
+    property name="slug"
+             notnull="true"
+             ormtype="string"
+             length="200"
+             default=""
+             unique="true"
+             index="idx_menuslug";
+
+    property name="cls"
+             ormtype="string"
+             length="160"
+             default="";
+
+    property name="listType"
+             ormtype="string"
+             length="20"
+             default="ul";
+
+    property name="createdDate"
+             ormtype="timestamp"
+             notnull="true"
+             update="false";
+    
     // O2M -> Comments
-    property name="menuItems" singularName="menuItem" fieldtype="one-to-many" type="array" cfc="contentbox.model.menu.item.BaseMenuItem" fkcolumn="FK_menuID" cascade="all-delete-orphan" inverse="true" lazy="extra"; 
+    property name="menuItems"
+             singularName="menuItem"
+             fieldtype="one-to-many"
+             type="array"
+             cfc="contentbox.model.menu.item.BaseMenuItem"
+             fkcolumn="FK_menuID"
+             cascade="all-delete-orphan" 
+             inverse="true" 
+             lazy="extra"; 
 
     /************************************** CONSTRUCTOR *********************************************/
 
@@ -43,33 +82,38 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
      * constructor
      */
     Menu function init(){
+        variables.listType      = "ul";
+        variables.menuItems     = [];
+
         return this;
     }
 
+    /************************************** PUBLIC *********************************************/
+    
     /*
      * In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
      */
     public void function preInsert(){
-        setCreatedDate( now() );
+        variables.createdDate = now();
     }
 
-    /************************************** PUBLIC *********************************************/
     /**
     * is loaded?
     */
     public boolean function isLoaded(){
-        return ( len( getMenuID() ) ? true : false );
+        return ( len( variables.menuID ) ? true : false );
     }
 
     /**
      * Creates menu items from raw data object
      * @rawData.hint The raw data from which to create menu items
      */
-    public void function populateMenuItems( required array rawData ) {
+    public Menu function populateMenuItems( required array rawData ) {
         var items = createMenuItems( arguments.rawData );
         for( var item in items ) {
             addMenuItem( item );
         }
+        return this;
     }
     
     /**
@@ -83,34 +127,6 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
                     arrayAppend( items, item );
                 }
             }
-        }
-        return items;
-    }
-
-    /**
-     * Recusive function to build menu items hierarchy
-     * @rawData.hint The raw data definitions for the menu items
-     */
-    private array function createMenuItems( required array rawData ) {
-        var items = [];
-        // loop over rawData and create items :)
-        for( var data in arguments.rawData ) {
-            var provider = menuItemService.getProvider( data.menuType );
-            var entity = ORMService.get( entityName=provider.getEntityName(), id=0 );
-            var newItem = menuItemService.populate( target=entity, memento=data, exclude="children" );
-                newItem.setMenu( this );
-                newItem.setActive( true );
-            if( structKeyExists( data, "children" ) && isArray( data.children ) ) {
-                var children = createMenuItems( data.children );
-                var setter = [];
-                for( child in children ) {
-                    child.setParent( newItem );
-                    arrayAppend( setter, child );
-                }
-                newItem.setChildren( setter );
-            }
-            // add to menu
-            arrayAppend( items, newItem );
         }
         return items;
     }
@@ -148,5 +164,37 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
             result[ "menuItems" ] = [];
         }
         return result;
+    }
+
+    /************************************** PRIVATE *********************************************/
+
+    /**
+    * Recusive function to build menu items hierarchy from raw data
+    * @rawData.hint The raw data definitions for the menu items
+    */
+    private array function createMenuItems( required array rawData ) {
+        var items = [];
+        // loop over rawData and create items :)
+        for( var data in arguments.rawData ) {
+            var provider = menuItemService.getProvider( data.menuType );
+            var entity   = ORMService.get( entityName=provider.getEntityName(), id=0 );
+            var newItem  = menuItemService.populate( target=entity, memento=data, exclude="children" );
+                newItem.setMenu( this );
+                newItem.setActive( true );
+            
+            // populate the children
+            if( structKeyExists( data, "children" ) && isArray( data.children ) ) {
+                var children = createMenuItems( data.children );
+                var setter = [];
+                for( var child in children ) {
+                    child.setParent( newItem );
+                    arrayAppend( setter, child );
+                }
+                newItem.setChildren( setter );
+            }
+            // add to menu
+            arrayAppend( items, newItem );
+        }
+        return items;
     }
 }

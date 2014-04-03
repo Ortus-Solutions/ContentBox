@@ -23,9 +23,10 @@ limitations under the License.
 * Service to handle menu operations.
 */
 component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton {
+    
     // DI
-    property name="populator" inject="wirebox:populator";
-    property name="renderer" inject="provider:ColdBoxRenderer";
+    property name="populator"       inject="wirebox:populator";
+    property name="renderer"        inject="provider:ColdBoxRenderer";
     property name="menuItemService" inject="id:menuItemService@cb";
     
     /**
@@ -73,8 +74,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
         // Search
         if( len( arguments.searchTerm ) ){
             c.$or( 
-                c.restrictions.like("title","%#arguments.searchTerm#%"),
-                c.restrictions.like("slug", "%#arguments.searchTerm#%") 
+                c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
+                c.restrictions.like( "slug", "%#arguments.searchTerm#%" ) 
             );
         }
         // run criteria query and projections count
@@ -90,9 +91,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
      * @slug.hint The slug to search
      */
     function findBySlug( required any slug ){
-        var c = newCriteria();
         // By criteria now
-        var menu = c.isEq( "slug",arguments.slug ).get();
+        var menu = newCriteria().isEq( "slug", arguments.slug ).get();
         // return accordingly
         return ( isNull( menu ) ? new() : menu );
     }
@@ -102,10 +102,12 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
     */
     array function getAllForExport(){
         var result = [];
-        var data = getAll();
+        var data   = getAll();
+        
         for( var menu in data ){
             arrayAppend( result, menu.getMemento() );   
         }
+        
         return result;
     }
     
@@ -150,7 +152,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
             oMenu = ( isNull( oMenu ) ? new() : oMenu );
             
             // date conversion tests
-            menu.createdDate    = reReplace( menu.createdDate, badDateRegex, "" );            
+            menu.createdDate  = reReplace( menu.createdDate, badDateRegex, "" );            
             // populate content from data
             populator.populateFromStruct( target=oMenu, memento=menu, composeRelationships=false, exclude="menuItems" );
             // Compose Menu Items
@@ -175,10 +177,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
         if( arrayLen( allMenus ) ){
             saveAll( allMenus );
             arguments.importLog.append( "Saved all imported and overriden menus!" );
-        }
-        else{
+        } else {
             arguments.importLog.append( "No menus imported as none where found or able to be overriden from the import file." );
         }
+
         return arguments.importLog.toString(); 
     }
 
@@ -191,21 +193,24 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
     public String function buildEditableMenu( required array menu, required string menuString="", boolean inChild=false ) {
         // loop over menu items
         for( var item in arguments.menu ) {
-            var skipItem = false;
+            var providerContent = "";
+            var skipItem        = false;
+            
             // if item has a parent, and it's being evaluated on the same level as its parent, skip it
             if( item.hasParent() && !inChild ) {
                 skipItem = true;
             }
+            
             // build out the item
             if( !skipItem ) {
-                menuString &= '<li id="key_#item.getMenuItemID()#" class="dd-item dd3-item" data-id="#item.getMenuItemID()#">';
+                arguments.menuString &= '<li id="key_#item.getMenuItemID()#" class="dd-item dd3-item" data-id="#item.getMenuItemID()#">';
                 // render default menu item
                 var args = { menuItem=item, provider=item.getProvider() };
                 savecontent variable="providerContent" {
-                    writeOutput( renderer.get().renderView( 
-                        view="menus/provider", 
-                        module="contentbox-admin",
-                        args = args
+                    writeOutput( variables.renderer.get().renderView( 
+                        view   = "menus/provider", 
+                        module = "contentbox-admin",
+                        args   = args
                     ));
                 };
                 menuString &= providerContent;

@@ -22,27 +22,39 @@ limitations under the License.
 ********************************************************************************
 * Service to handle menu items.
 */
-component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton {  
-    property name="providers" type="array";  
+component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton threadSafe{  
+    
+    // DI
     property name="wirebox" inject="wirebox";
+    
+    /**
+    * The providers array holder
+    */
+    property name="providers" type="array";  
+
     /**
     * Constructor
     */
     MenuItemService function init(){
         // init it
         super.init( entityName="cbMenuItem" );
-        this.providers = [];
+        variables.providers = [];
+
         return this;
     }
 
+    /**
+    * Runs after constructor to complete DI
+    */
     function onDIComplete(){
-        registerProvider( type="URL", providerPath="contentbox.model.menu.providers.URLProvider" );
-        registerProvider( type="Content", providerPath="contentbox.model.menu.providers.ContentProvider" );
-        registerProvider( type="JS", providerPath="contentbox.model.menu.providers.JSProvider" );
-        registerProvider( type="Media", providerPath="contentbox.model.menu.providers.MediaProvider" );
-        registerProvider( type="SubMenu", providerPath="contentbox.model.menu.providers.SubMenuProvider" );
-        registerProvider( type="Heading", providerPath="contentbox.model.menu.providers.HeadingProvider" );
+        registerProvider( type="URL",       providerPath="contentbox.model.menu.providers.URLProvider" );
+        registerProvider( type="Content",   providerPath="contentbox.model.menu.providers.ContentProvider" );
+        registerProvider( type="JS",        providerPath="contentbox.model.menu.providers.JSProvider" );
+        registerProvider( type="Media",     providerPath="contentbox.model.menu.providers.MediaProvider" );
+        registerProvider( type="SubMenu",   providerPath="contentbox.model.menu.providers.SubMenuProvider" );
+        registerProvider( type="Heading",   providerPath="contentbox.model.menu.providers.HeadingProvider" );
     }
+
     /**
      * Registers a provider with the service
      * @type.hint The type of provider
@@ -52,6 +64,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
         variables.providers[ arguments.type ] = wirebox.getInstance( arguments.providerPath );
         return this;
     }
+
     /**
      * Unregisters a provider with the service
      * @type.hint The type of provider
@@ -60,6 +73,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
         structDelete( variables.providers, arguments.type );
         return this;
     }
+
     /**
      * Retrieves a registered provider
      * @type.hint The type of provider
@@ -67,4 +81,5 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
     public any function getProvider( required string type ) {
         return variables.providers[ arguments.type ];
     }
+
 }
