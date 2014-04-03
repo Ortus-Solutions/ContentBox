@@ -32,7 +32,7 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	property name="authorEmail"		length="255" 	notnull="true";
 	property name="authorURL"		length="255" 	notnull="false";
 	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_createdDate";
-	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" dbdefault="0" index="idx_contentComment,idx_approved";
+	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" index="idx_contentComment,idx_approved";
 
 	// M20 -> Content loaded as a proxy
 	property name="relatedContent" notnull="true" cfc="contentbox.model.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_contentID" lazy="true" index="idx_contentComment";
@@ -43,7 +43,8 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	* constructor
 	*/
 	function init(){
-		createdDate	= now();
+		variables.isApproved 	= false;
+		variables.createdDate	= now();
 	}
 
 	/************************************** PUBLIC *********************************************/

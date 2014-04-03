@@ -33,6 +33,8 @@ component persistent="true" entityname="cbContentStore" table="cb_contentStore" 
 	* constructor
 	*/
 	function init(){
+		super.init();
+		
 		categories 		= [];
 		customFields	= [];
 		renderedContent = "";
