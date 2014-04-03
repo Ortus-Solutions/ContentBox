@@ -23,22 +23,75 @@ limitations under the License.
 * Base entity for all subclasses of Menu Items
 */
 component persistent="true" entityName="cbMenuItem" table="cb_menuItem" cachename="cbMenuItem" cacheuse="read-write" discriminatorColumn="menuType" {
+    
     // DI Injections
     property name="menuItemService" inject="menuItemService@cb" persistent="false";
+    
     // Non-relational Properties
-    property name="menuItemID" fieldtype="id" generator="native" setter="false";
-    property name="title"   notnull="true"  ormtype="string" length="200" default="" index="idx_menuitemtitle";
-    property name="label"   notnull="false" ormtype="string" length="200" default="";
-    property name="cls"     notnull="false" ormtype="string" length="200" default="";
-    property name="data"    notnull="false" ormtype="string" default="";
-    property name="active"  ormtype="boolean" default="1";
-    property name="menuType" insert="false" update="false";
+    property name="menuItemID"
+             fieldtype="id"
+             generator="native"
+             setter="false";
+
+    property name="title"   
+             notnull="true"  
+             ormtype="string" 
+             length="200" 
+             default="" 
+             index="idx_menuitemtitle";
+
+    property name="label"   
+             notnull="false" 
+             ormtype="string" 
+             length="200" 
+             default="";
+
+    property name="cls"     
+             notnull="false" 
+             ormtype="string" 
+             length="200" 
+             default="";
+
+    property name="data"    
+             notnull="false" 
+             ormtype="string" 
+             default="";
+
+    property name="active"  
+             ormtype="boolean" 
+             default="1";
+
+    property name="menuType" 
+             insert="false" 
+             update="false";
+    
     // M20 - Owning menu
-    property name="menu" cfc="contentbox.model.menu.Menu" fieldtype="many-to-one" fkcolumn="FK_menuID" lazy="true" fetch="join" notnull="true";
+    property name="menu" 
+             cfc="contentbox.model.menu.Menu" 
+             fieldtype="many-to-one" 
+             fkcolumn="FK_menuID" 
+             lazy="true" 
+             fetch="join" 
+             notnull="true";
+    
     // M20 - Parent Menu item
-    property name="parent"  cfc="BaseMenuItem" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
+    property name="parent" 
+             cfc="BaseMenuItem" 
+             fieldtype="many-to-one" 
+             fkcolumn="FK_parentID" 
+             lazy="true";
+    
     // O2M - Child Menu Item
-    property name="children" singularName="child" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" cfc="BaseMenuItem" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
+    property name="children" 
+             singularName="child" 
+             fieldtype="one-to-many" 
+             type="array" 
+             lazy="extra" 
+             batchsize="25" 
+             cfc="BaseMenuItem" 
+             fkcolumn="FK_parentID" 
+             inverse="true" 
+             cascade="all-delete-orphan";
     
     /************************************** CONSTRUCTOR *********************************************/
 
@@ -46,6 +99,9 @@ component persistent="true" entityName="cbMenuItem" table="cb_menuItem" cachenam
     * constructor
     */
     BaseMenuItem function init(){
+        variables.active = true;
+        variables.children = [];
+        
         return this;
     }
 

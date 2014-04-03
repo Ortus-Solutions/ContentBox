@@ -1,6 +1,6 @@
  <cfoutput>
     <style>
-        .dd { width:75%; }
+        .dd { width:95%; }
     </style>
     <script>
         var confirmConfig = {

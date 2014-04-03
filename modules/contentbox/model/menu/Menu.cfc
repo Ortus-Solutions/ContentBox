@@ -79,8 +79,8 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
     /************************************** CONSTRUCTOR *********************************************/
 
     /**
-     * constructor
-     */
+    * constructor
+    */
     Menu function init(){
         variables.listType      = "ul";
         variables.menuItems     = [];
@@ -90,6 +90,32 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
 
     /************************************** PUBLIC *********************************************/
     
+    /**
+    * @Override due to bi-directional relationships 
+    */
+    Menu function addMenuItem( required menuItem ){
+        // add them to the local array
+        arrayAppend( variables.menuItems, arguments.menuItem );
+        // set the bi-directional relation
+        arguments.menuItem.setMenu( this );
+        return this;
+    }
+
+    /**
+    * @Override due to bi-directional relationships
+    */
+    Menu function setMenuItems( required array menuItems ){
+        if( hasMenuItem() ){
+            // manual remove, so hibernate can clear the existing relationships
+            variables.menuItems.clear();
+            // Add the incoming ones to the same array
+            variables.menuItems.addAll( arguments.menuItems );
+        } else {
+            variables.menuItems = arguments.menuItems;
+        }
+        return this;
+    }
+
     /*
      * In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
      */
