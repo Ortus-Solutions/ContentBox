@@ -116,6 +116,7 @@ component extends="baseHandler"{
 		event.paramValue( "search", "" );
 		event.paramValue( "clear", false );
 		event.paramValue( "excludeIDs", "" );
+		event.paramValue( "contentType", "Page,Entry,ContentStore" );
 		// exit handlers
 		prc.xehRelatedContentSelector	= "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 		prc.CBHelper = CBHelper;
