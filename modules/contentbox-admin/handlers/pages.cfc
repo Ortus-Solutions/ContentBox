@@ -260,13 +260,21 @@ component extends="baseHandler"{
 		// Inflate Related Content into the page
 		page.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
-		announceInterception("cbadmin_prePageSave",{page=page,isNew=isNew});
+		announceInterception( "cbadmin_prePageSave", {
+			page=page,
+			isNew=isNew,
+			originalSlug=originalSlug
+		});
 
 		// save entry
 		pageService.savePage( page, originalSlug );
 
 		// announce event
-		announceInterception("cbadmin_postPageSave",{page=page,isNew=isNew});
+		announceInterception( "cbadmin_postPageSave", {
+			page=page,
+			isNew=isNew,
+			originalSlug=originalSlug
+		});
 
 		// Ajax?
 		if( event.isAjax() ){

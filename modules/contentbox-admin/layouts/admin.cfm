@@ -137,6 +137,13 @@
 											</a>
 										</li>
 									</cfif>
+									<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
+										<li>
+											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+U">
+												<i class="icon-list"></i> New Menu
+											</a>
+										</li>
+									</cfif>
 								</ul>
 							</li>
 							</cfif>

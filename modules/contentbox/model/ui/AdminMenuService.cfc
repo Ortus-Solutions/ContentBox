@@ -170,6 +170,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehPagesEditor	= "#this.ADMIN_ENTRYPOINT#.pages.editor";
 		prc.xehContentStore	= "#this.ADMIN_ENTRYPOINT#.contentstore";
 		prc.xehMediaManager	= "#this.ADMIN_ENTRYPOINT#.mediamanager";
+		prc.xehMenuManager	= "#this.ADMIN_ENTRYPOINT#.menus";
 
 		// Comments Tab
 		prc.xehComments			= "#this.ADMIN_ENTRYPOINT#.comments";
@@ -213,7 +214,8 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href="#event.buildLink(prc.xehEntries)#", permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
 			.addSubMenu( name="contentStore", label="Content Store", href="#event.buildLink(prc.xehContentStore)#", permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
 			.addSubMenu( name="Categories", label="Categories", href="#event.buildLink(prc.xehCategories)#", permissions="CATEGORIES_ADMIN" )
-			.addSubMenu( name="mediaManager", label="Media Manager", href="#event.buildLink(prc.xehMediaManager)#", permissions="MEDIAMANAGER_ADMIN" );
+			.addSubMenu( name="mediaManager", label="Media Manager", href="#event.buildLink(prc.xehMediaManager)#", permissions="MEDIAMANAGER_ADMIN" )
+			.addSubMenu( name="menu", label="Menu Manager", href="#event.buildLink(prc.xehMenuManager)#", permissions="MENUS_ADMIN" );
 
 		// Comments
 		addTopMenu( name=this.COMMENTS, label="<i class='icon-comments icon-large'></i> Comments" )
