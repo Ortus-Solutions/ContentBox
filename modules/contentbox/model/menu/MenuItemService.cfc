@@ -22,15 +22,15 @@ limitations under the License.
 ********************************************************************************
 * Service to handle menu items.
 */
-component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton threadSafe{  
+component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors="true" singleton{  
     
     // DI
     property name="wirebox" inject="wirebox";
     
     /**
-    * The providers array holder
+    * The providers struct holder
     */
-    property name="providers" type="array";  
+    property name="providers" type="struct";  
 
     /**
     * Constructor
@@ -38,7 +38,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
     MenuItemService function init(){
         // init it
         super.init( entityName="cbMenuItem" );
-        variables.providers = [];
+        variables.providers = {};
 
         return this;
     }
