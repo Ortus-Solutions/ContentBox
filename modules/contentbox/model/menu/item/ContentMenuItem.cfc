@@ -25,6 +25,8 @@ limitations under the License.
 component persistent="true" entityName="cbContentMenuItem" table="cb_menuItem" extends="contentbox.model.menu.item.BaseMenuItem" discriminatorValue="Content" {
     // simple content
     property name="contentSlug" notnull="false" ormtype="string" default="";
+    property name="target" notnull="false" ormtype="string" default="";
+    property name="urlClass" notnull="false" ormtype="string" default="";
     // di 
     property name="provider" persistent="false" inject="contentbox.model.menu.providers.ContentProvider";
     property name="contentService" persistent="false" inject="id:contentService@cb";
@@ -36,6 +38,8 @@ component persistent="true" entityName="cbContentMenuItem" table="cb_menuItem" e
         var result = super.getMemento();
         // add our subclasses's properties
         result[ "contentSlug" ] = getContentSlug();
+        result[ "urlClass" ] = getURLClass();
+        result[ "target" ] = getTarget();
         return result;
     }
 

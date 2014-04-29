@@ -26,7 +26,7 @@ component accessors=true {
     property name="name" type="string";
     property name="entityName" type="string";
     property name="type" type="string";
-    property name="iconCls" type="string";
+    property name="iconClass" type="string";
     property name="description" type="string";
     property name="renderer" inject="provider:ColdBoxRenderer";
 
@@ -54,8 +54,8 @@ component accessors=true {
     /**
      * Gets the iconCls of the menu item provider
      */
-    public string function getIconCls() {
-        return iconCls;
+    public string function getIconClass() {
+        return iconClass;
     }
 
     /**

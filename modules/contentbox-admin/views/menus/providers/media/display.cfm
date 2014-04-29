@@ -1,3 +1,3 @@
 <cfoutput>
-    <a href="#args.menuItem.getMediaPath()#" target="_blank">#args.menuItem.getLabel()#</a>
+    <a href="#args.menuItem.getMediaPath()#" target="#args.menuItem.getTarget()#" class="#args.menuItem.getURLClass()#">#args.menuItem.getLabel()#</a>
 </cfoutput>

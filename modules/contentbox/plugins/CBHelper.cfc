@@ -1033,13 +1033,13 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		var listType = arguments.menu.getListType();
 		//arguments.listType = !reFindNoCase( "^(ul|ol)$", arguments.listType ) ? "<ul>" : arguments.listType;
 		// set start
-		var menuString = "<#listType# class='nav nav-list'>";
+		var menuString = "<#listType# class='#arguments.menu.getMenuClass()#'>";
 		// now get root items
 		var items = arguments.menu.getRootMenuItems();
 		// create cache of slugs to prevent infinite recursions
 		arrayAppend( arguments.slugCache, menu.getSlug() );
 		// build out this top level
-		menuString &= buildProviderMenuLevel( items=items, listType=listType, slugCache=slugCache );
+		menuString &= buildProviderMenuLevel( items=items, listType=listType, slugCache=slugCache, listClass=arguments.menu.getListClass() );
 		// set end
 		menuString &= "</#listType#>";
 		return menuString;
@@ -1054,7 +1054,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	private string function buildProviderMenuLevel( 
 		required array items, 
 		required string listType="ul", 
-		required array slugCache=[] 
+		required array slugCache=[],
+		string listClass="" 
 	) {
 		var menuString = "";
 		// loop over items to build out level
@@ -1067,7 +1068,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 				// if this menu item has children...
 				if( item.hasChild() ) {
 					// recurse, recurse, recurse!
-					menuString &= 	"<#arguments.listType#>" & 
+					menuString &= 	"<#arguments.listType# class='#arguments.listClass#'>" & 
 									buildProviderMenuLevel( items=item.getChildren(), listType=arguments.listType, slugCache=arguments.slugCache ) & 
 									"</#arguments.listType#>";
 				}

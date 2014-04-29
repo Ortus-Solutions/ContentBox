@@ -52,7 +52,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
         registerProvider( type="JS",        providerPath="contentbox.model.menu.providers.JSProvider" );
         registerProvider( type="Media",     providerPath="contentbox.model.menu.providers.MediaProvider" );
         registerProvider( type="SubMenu",   providerPath="contentbox.model.menu.providers.SubMenuProvider" );
-        registerProvider( type="Heading",   providerPath="contentbox.model.menu.providers.HeadingProvider" );
+        registerProvider( type="Free",      providerPath="contentbox.model.menu.providers.FreeProvider" );
     }
 
     /**

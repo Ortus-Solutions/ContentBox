@@ -50,7 +50,12 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
              unique="true"
              index="idx_menuslug";
 
-    property name="cls"
+    property name="menuClass"
+             ormtype="string"
+             length="160"
+             default="";
+
+    property name="listClass"
              ormtype="string"
              length="160"
              default="";
