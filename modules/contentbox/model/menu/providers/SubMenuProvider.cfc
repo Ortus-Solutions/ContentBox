@@ -32,7 +32,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
     public SubMenuProvider function init() {
         setName( "SubMenu" );
         setType( "SubMenu" );
-        setIconCls( "icon-sort-by-attributes-alt" );
+        setIconClass( "icon-sort-by-attributes-alt" );
         setEntityName( "cbSubMenuItem" );
         setDescription( "A menu item which encapsulates another menu" );
         return this;

@@ -1,7 +1,4 @@
  <cfoutput>
-    <style>
-        .dd { width:95%; }
-    </style>
     <script>
         var confirmConfig = {
             placement: 'right',

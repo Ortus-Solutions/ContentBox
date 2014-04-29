@@ -20,7 +20,7 @@
                 <menu class="well well-small">
                     <p>Click any of the options below to insert a new menu item of that type.</p>
                     <cfloop collection="#prc.providers#" item="provider">
-                        <a class="btn btn-small provider btn-info" data-provider="#provider#"><span style="display:inline-block;" title="#prc.providers[ provider].getDescription()#"><i class="#prc.providers[ provider].getIconCls()#"></i> #provider#</span></a>
+                        <a class="btn btn-small provider btn-info" data-provider="#provider#"><span style="display:inline-block;" title="#prc.providers[ provider].getDescription()#"><i class="#prc.providers[ provider].getIconClass()#"></i> #provider#</span></a>
                     </cfloop>
                     <a class="btn btn-small pull-right" data-action="collapse-all"><span style="display:inline-block;" title="Collapse All"><i class="icon-minus"></i> Collapse All</span></a>
                     <a class="btn btn-small pull-right" data-action="expand-all" style="margin-right:4px;"><span style="display:inline-block;" title="Expand All"><i class="icon-plus"></i> Expand All</span></a>
@@ -91,10 +91,21 @@
                 </div>
                 #html.textfield(
                     label="CSS Classes:",
-                    name="cls",
+                    name="menuClass",
                     bind=prc.menu, 
                     maxlength="100",
                     title="Additional CSS classes to use for the main menu HTML element",
+                    class="textfield width95",
+                    wrapper="div class=controls",
+                    labelClass="control-label",
+                    groupWrapper="div class=control-group"
+                )#
+                #html.textfield(
+                    label="List CSS Classes:",
+                    name="listClass",
+                    bind=prc.menu, 
+                    maxlength="100",
+                    title="CSS classes to apply to all list elements (ul/ol) within this menu",
                     class="textfield width95",
                     wrapper="div class=controls",
                     labelClass="control-label",
@@ -115,7 +126,7 @@
         <cfloop collection="#prc.providers#" item="provider">
             <li>
                 <a tabindex="-1" class="child-provider" data-provider="#provider#" title="#prc.providers[ provider].getDescription()#">
-                    <i class="#prc.providers[ provider].getIconCls()#"></i> Add #provider# Item
+                    <i class="#prc.providers[ provider].getIconClass()#"></i> Add #provider# Item
                 </a>
             </li>
         </cfloop>

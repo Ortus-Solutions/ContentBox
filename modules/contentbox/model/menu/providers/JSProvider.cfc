@@ -30,7 +30,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
     public JSProvider function init() {
         setName( "JS" );
         setType( "JS" );
-        setIconCls( "icon-code" );
+        setIconClass( "icon-code" );
         setEntityName( "cbJSMenuItem" );
         setDescription( "A menu item which executes JavaScript code" );
         return this;

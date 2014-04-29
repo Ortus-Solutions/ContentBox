@@ -46,7 +46,7 @@ component persistent="true" entityName="cbMenuItem" table="cb_menuItem" cachenam
              length="200" 
              default="";
 
-    property name="cls"     
+    property name="itemClass"     
              notnull="false" 
              ormtype="string" 
              length="200" 
@@ -146,7 +146,7 @@ component persistent="true" entityName="cbMenuItem" table="cb_menuItem" cachenam
     public string function getAttributesAsString() {
         var str = "";
         var title = !isNull( getTitle() ) ? getTitle() : "";
-        var cls   = !isNull( getCls() ) ? getCls() : "";
+        var cls   = !isNull( getItemClass() ) ? getItemClass() : "";
         var data  = !isNull( getData() ) ? getData() : "";
         // handle title
         if( len( title ) ) {
