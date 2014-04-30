@@ -32,7 +32,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
     public SubMenuProvider function init() {
         setName( "SubMenu" );
         setType( "SubMenu" );
-        setIconCls( "icon-sort-by-attributes-alt" );
+        setIconClass( "icon-sort-by-attributes-alt" );
         setEntityName( "cbSubMenuItem" );
         setDescription( "A menu item which encapsulates another menu" );
         return this;
@@ -74,9 +74,9 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
             data = arguments.menuItem.getMemento(),
             slugCache = arguments.options.slugCache
         };
-        return renderer.get().renderView( 
-            view="menus/providers/submenu/display", 
-            module="contentbox-admin",
+        return renderer.get().renderExternalView( 
+            view="/contentbox/model/menu/views/submenu/display",
+            module="contentbox",
             args = viewArgs
         );
     }

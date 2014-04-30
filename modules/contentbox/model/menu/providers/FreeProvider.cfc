@@ -20,19 +20,19 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
- * Provider for Heading-type menu items
+ * Provider for Free-type menu items
  */
 component implements="contentbox.model.menu.providers.IMenuItemProvider" extends="contentbox.model.menu.providers.BaseProvider" accessors=true {
 
     /**
      * Constructor
      */
-    public HeadingProvider function init() {
-        setName( "Heading" );
-        setType( "Heading" );
-        setIconCls( "icon-eye-open" );
-        setEntityName( "cbHeadingMenuItem" );
-        setDescription( "A menu item which creates a heading" );
+    public FreeProvider function init() {
+        setName( "Free" );
+        setType( "Free" );
+        setIconClass( "icon-eye-open" );
+        setEntityName( "cbFreeMenuItem" );
+        setDescription( "A menu item which creates a free-text menu item" );
         return this;
     }
 
@@ -55,9 +55,9 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
             menuItem=arguments.menuItem,
             data = arguments.menuItem.getMemento()
         };
-        return renderer.get().renderView( 
-            view="menus/providers/heading/display", 
-            module="contentbox-admin",
+        return renderer.get().renderExternalView( 
+            view="/contentbox/model/menu/views/free/display",
+            module="contentbox",
             args = viewArgs
         );
     }
