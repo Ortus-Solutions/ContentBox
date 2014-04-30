@@ -74,9 +74,9 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
             data = arguments.menuItem.getMemento(),
             slugCache = arguments.options.slugCache
         };
-        return renderer.get().renderView( 
-            view="menus/providers/submenu/display", 
-            module="contentbox-admin",
+        return renderer.get().renderExternalView( 
+            view="/contentbox/model/menu/views/submenu/display",
+            module="contentbox",
             args = viewArgs
         );
     }

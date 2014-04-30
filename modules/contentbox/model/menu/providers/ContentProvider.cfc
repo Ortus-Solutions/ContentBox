@@ -81,9 +81,9 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
             contentLink = CBHelper.linkContent( content=content ),
             data = arguments.menuItem.getMemento()
         };
-        return renderer.get().renderView( 
-            view="menus/providers/content/display", 
-            module="contentbox-admin",
+        return renderer.get().renderExternalView( 
+            view="/contentbox/model/menu/views/content/display", 
+            module="contentbox",
             args = viewArgs
         );
     }

@@ -10,7 +10,6 @@
                 <!--- Quick Actions --->
                 <div class="btn-group pull-right" style="margin-top:5px">
                     <a class="btn btn-inverse" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="icon-reply"></i> Back</a>
-                    <a class="btn" id="preview-button"><i class="icon-eye-open icon-large"></i></a>
                 </div>
             </div>
             <!--- Body --->
@@ -25,17 +24,26 @@
                     <a class="btn btn-small pull-right" data-action="collapse-all"><span style="display:inline-block;" title="Collapse All"><i class="icon-minus"></i> Collapse All</span></a>
                     <a class="btn btn-small pull-right" data-action="expand-all" style="margin-right:4px;"><span style="display:inline-block;" title="Expand All"><i class="icon-plus"></i> Expand All</span></a>
                 </menu>
-                <h3>Menu Sandbox</h3>
-                <p>Insert new menu items and then drag-and-drop to get them in the perfect order.</p>
-                <div class="alert alert-error" id="menuErrors" style="display:none;">
-                    Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
-                </div>
-                <div class="designer well well-small">
-                    <div class="dd" id="nestable">
-                        <ol class="dd-list">
-                            #prc.menuItems#
-                        </ol>
-                    </div>
+                <div class="row-fluid">
+                    <span class="span7">
+                        <h3>Menu Sandbox</h3>
+                        <p>Insert new menu items and then drag-and-drop to get them in the perfect order.</p>
+                        <div class="alert alert-error" id="menuErrors" style="display:none;">
+                            Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
+                        </div>
+                        <div class="designer well well-small">
+                            <div class="dd" id="nestable">
+                                <ol class="dd-list">
+                                    #prc.menuItems#
+                                </ol>
+                            </div>
+                        </div>
+                    </span>
+                    <span class="span5">
+                        <h3>Preview <a class="btn btn-small" id="preview-button"><i class="icon-refresh"></i></a></h3>
+                        <p>Here's an instant preview of your menu.</p>
+                        <div id="preview-panel" class="well well-small">No Preview Available</div>
+                    </span>
                 </div>
             </div>
         </div>
@@ -60,7 +68,7 @@
                     maxlength="100",
                     required="required",
                     title="The title for this menu",
-                    class="textfield width95",
+                    class="textfield input-block-level",
                     wrapper="div class=controls",
                     labelClass="control-label",
                     groupWrapper="div class=control-group"
@@ -72,7 +80,7 @@
                     bind=prc.menu,
                     required="required",
                     title="Select the type of list (ordered or unordered)",
-                    class="textfield width98",
+                    class="textfield input-block-level",
                     wrapper="div class=controls",
                     labelClass="control-label",
                     groupWrapper="div class=control-group"
@@ -81,9 +89,9 @@
                     <label for="slug" class="control-label">Menu Slug:</label>
                     <div class="controls">
                         <div id='slugCheckErrors'></div>
-                        <div class="input-append" style="display:inline">
-                            #html.textfield(name="slug",value=prc.menu.getSlug(),maxlength="100",class="textfield width75",title="The unique slug for this menu", disabled="#prc.menu.isLoaded() ? 'true' : 'false'#")#
-                            <a title="" class="btn" href="javascript:void(0)" onclick="toggleSlug(); return false;" data-original-title="Lock/Unlock Menu Slug">
+                        <div class="input-append input-block-level">
+                            #html.textfield(name="slug",value=prc.menu.getSlug(),maxlength="100",class="textfield input-block-level",title="The unique slug for this menu", disabled="#prc.menu.isLoaded() ? 'true' : 'false'#")#
+                            <a title="" class="btn add-on" href="javascript:void(0)" onclick="toggleSlug(); return false;" data-original-title="Lock/Unlock Menu Slug">
                                 <i id="toggleSlug" class="icon-#prc.menu.isLoaded() ? 'lock' : 'unlock'#"></i>
                             </a>
                         </div>
@@ -95,7 +103,7 @@
                     bind=prc.menu, 
                     maxlength="100",
                     title="Additional CSS classes to use for the main menu HTML element",
-                    class="textfield width95",
+                    class="textfield input-block-level",
                     wrapper="div class=controls",
                     labelClass="control-label",
                     groupWrapper="div class=control-group"
@@ -106,7 +114,7 @@
                     bind=prc.menu, 
                     maxlength="100",
                     title="CSS classes to apply to all list elements (ul/ol) within this menu",
-                    class="textfield width95",
+                    class="textfield input-block-level",
                     wrapper="div class=controls",
                     labelClass="control-label",
                     groupWrapper="div class=control-group"

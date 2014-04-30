@@ -10,7 +10,8 @@
         #html.hiddenField( name="menuType", value=args.provider.getType(), id="" )# 
         
         <fieldset>
-            <legend>Common LI Attributes</legend>
+            <legend>Common Attributes</legend>
+            <p>These attributes will be applied to the main &lt;li&gt; element</p>
             <div class="row-fluid">
                 <span class="span6">
                     #html.textfield(
@@ -21,7 +22,7 @@
                         maxlength="100",
                         required="required",
                         title="The content for this menu item",
-                        class="textfield width95",
+                        class="textfield input-block-level",
                         wrapper="div class=controls",
                         labelClass="control-label",
                         groupWrapper="div class=control-group"
@@ -36,7 +37,7 @@
                         bind=args.menuItem, 
                         maxlength="100",
                         title="The title for this menu item",
-                        class="textfield width95",
+                        class="textfield input-block-level",
                         wrapper="div class=controls",
                         labelClass="control-label",
                         groupWrapper="div class=control-group"
@@ -51,8 +52,8 @@
                         id="",
                         bind=args.menuItem, 
                         maxlength="100",
-                        title="Data attributes to set on this menu item's HTML element",
-                        class="textfield width95",
+                        title="Data attributes: You can use JSON ( {""me"":""you""} ) or a comma-delimited list ( me=you,icecream=awesome )",
+                        class="textfield input-block-level",
                         wrapper="div class=controls",
                         labelClass="control-label",
                         groupWrapper="div class=control-group"
@@ -66,7 +67,7 @@
                         bind=args.menuItem, 
                         maxlength="100",
                         title="Additional CSS classes to use for this menu item's HTML element",
-                        class="textfield width95",
+                        class="textfield input-block-level",
                         wrapper="div class=controls",
                         labelClass="control-label",
                         groupWrapper="div class=control-group"
@@ -75,11 +76,14 @@
             </div>
         </fieldset>
         <!---End default fields--->
-        <fieldset>
-            <legend>#args.provider.getName()#</legend>
-            <!---do provider thing--->
-            #args.provider.getAdminTemplate( menuItem=args.menuItem )#
-        </fieldset>
+        <cfif len( args.provider.getAdminTemplate( menuItem=args.menuItem ) )>
+            <fieldset>
+                <legend>#args.provider.getName()# Attributes</legend>
+                <p>These attributes can be used to customize the item's content</p>
+                <!---do provider thing--->
+                #args.provider.getAdminTemplate( menuItem=args.menuItem )#
+            </fieldset>
+        </cfif>
         <!---end provider thing--->
     </div>
     <a class="dd3-expand btn" title="Edit Details"><i class="icon-edit icon-large"></i></a>

@@ -9,7 +9,7 @@
                 maxlength="100",
                 required="required",
                 title="JavaScript to be executed when this item is clicked",
-                class="textfield width95",
+                class="textfield input-block-level",
                 wrapper="div class=controls",
                 labelClass="control-label",
                 groupWrapper="div class=control-group"
@@ -25,7 +25,7 @@
                 bind=args.menuItem, 
                 maxlength="100",
                 title="Extra CSS classes to add to this menu item",
-                class="textfield width95",
+                class="textfield input-block-level",
                 wrapper="div class=controls",
                 labelClass="control-label",
                 groupWrapper="div class=control-group"
