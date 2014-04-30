@@ -3,10 +3,10 @@
         <div class="control-group span12">
             <label for="submenu" class="control-label">Select Content Item:</label>
             <div class="controls">
-                <div class="input-prepend width95" style="display:block;">
+                <div class="input-prepend input-block-level">
                     <span class="select-content add-on btn-info"><i class="icon-file-alt"></i></span>
                     <input type="hidden" name="contentSlug" class="textfield" required="true" value="#args.slug#" />
-                    <input type="text" name="contentTitle" class="textfield" required="true" title="Select a content item" readonly=true value="#args.title#" />
+                    <input type="text" name="contentTitle" class="textfield input-block-level" required="true" title="Select a content item" readonly=true value="#args.title#" />
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
                 bind=args.menuItem, 
                 maxlength="100",
                 title="Extra CSS classes to add to this menu item",
-                class="textfield width95",
+                class="textfield input-block-level",
                 wrapper="div class=controls",
                 labelClass="control-label",
                 groupWrapper="div class=control-group"
@@ -35,7 +35,7 @@
                 bind=args.menuItem, 
                 required="required",
                 title="Where URL should be opened",
-                class="textfield width95",
+                class="textfield input-block-level",
                 wrapper="div class=controls",
                 labelClass="control-label",
                 groupWrapper="div class=control-group"

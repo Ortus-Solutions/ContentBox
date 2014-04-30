@@ -193,9 +193,8 @@
                     type: 'POST',
                     data: form.serialize(),
                     success: function( data, textStatus, jqXHR ){
-                        var $modal = $( '##previewDialog' );
-                            $modal.find( '.modal-body' ).html( data );
-                        openModal( $modal, 500 );
+                        var $panel = $( '##preview-panel' );
+                            $panel.html( data );
                     }
                 });
             }
@@ -264,6 +263,9 @@
             $( '##nestable' ).on('keyup change focus blur', 'input[name^=label]', function() {
                 updateLabel( this );
             });
+            $( '##nestable' ).on('blur', 'input', function() {
+                previewMenu();
+            });
             // provider buttons
             $( '.provider' ).click(function( e ) {
                 e.preventDefault();
@@ -304,6 +306,7 @@
             });
             //******** setup nestable menu items **************//
             $( '##nestable' ).nestable({});
+            previewMenu();
         });
     </script>
 </cfoutput>

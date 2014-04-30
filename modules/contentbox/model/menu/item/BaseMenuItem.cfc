@@ -157,14 +157,28 @@ component persistent="true" entityName="cbMenuItem" table="cb_menuItem" cachenam
             str &= ' class="#HTMLEditFormat( cls )#"';
         }
         // handle data
-        if( len( data ) && isJSON( data ) ) {
-            // deserialize so we can handle as object
-            var pairs = deserializeJSON( data );
-            // append all data attributes
-            if( isStruct( pairs ) ) {
-                for( dataKey in pairs ){
-                    if( isSimplevalue( pairs[ dataKey ] ) && len( pairs[ dataKey ] ) ){
-                        str &= ' data-#lcase( dataKey )#="#HTMLEditFormat( pairs[ datakey ] )#"';
+        if( len( data ) ) {
+            // try json first
+            if( isJSON( data ) ) {
+                // deserialize so we can handle as object
+                var pairs = deserializeJSON( data );
+                // append all data attributes
+                if( isStruct( pairs ) ) {
+                    for( dataKey in pairs ){
+                        if( isSimplevalue( pairs[ dataKey ] ) && len( pairs[ dataKey ] ) ){
+                            str &= ' data-#lcase( dataKey )#="#HTMLEditFormat( pairs[ datakey ] )#"';
+                        }
+                    }
+                }
+            }
+            // try alternate format
+            if( listLen( data, "," ) ) {
+                for( var item in listToArray( data, "," ) ) {
+                    var splitVal = listToArray( item, "=" );
+                    if( arrayLen( splitVal ) > 1 ) {
+                        if( isSimplevalue( splitVal[ 2 ] ) ){
+                            str &= ' data-#lcase( splitVal[ 1 ] )#="#HTMLEditFormat( splitVal[ 2 ] )#"';
+                        }
                     }
                 }
             }

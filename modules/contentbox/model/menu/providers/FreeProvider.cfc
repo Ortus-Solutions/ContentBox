@@ -20,36 +20,29 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and 
 limitations under the License.
 ********************************************************************************
- * Provider for URL-type menu items
+ * Provider for Free-type menu items
  */
 component implements="contentbox.model.menu.providers.IMenuItemProvider" extends="contentbox.model.menu.providers.BaseProvider" accessors=true {
 
     /**
      * Constructor
      */
-    public URLProvider function init() {
-        setName( "URL" );
-        setType( "URL" );
-        setIconClass( "icon-link" );
-        setEntityName( "cbURLMenuItem" );
-        setDescription( "A menu item to a URL" );
+    public FreeProvider function init() {
+        setName( "Free" );
+        setType( "Free" );
+        setIconClass( "icon-eye-open" );
+        setEntityName( "cbFreeMenuItem" );
+        setDescription( "A menu item which creates a free-text menu item" );
         return this;
     }
-    
+
     /**
      * Retrieves template for use in admin screens for this type of menu item provider
      * @menuItem.hint The menu item object
      * @options.hint Additional arguments to be used in the method
      */ 
     public string function getAdminTemplate( required any menuItem, required struct options={} ) {
-        var viewArgs = { 
-            menuItem=arguments.menuItem
-        };
-        return renderer.get().renderView( 
-            view="menus/providers/url/admin", 
-            module="contentbox-admin",
-            args = viewArgs
-        );
+        return "";
     }
 
     /**
@@ -63,7 +56,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
             data = arguments.menuItem.getMemento()
         };
         return renderer.get().renderExternalView( 
-            view="/contentbox/model/menu/views/url/display",
+            view="/contentbox/model/menu/views/free/display",
             module="contentbox",
             args = viewArgs
         );
