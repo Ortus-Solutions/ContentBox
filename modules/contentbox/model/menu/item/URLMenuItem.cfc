@@ -24,6 +24,8 @@ limitations under the License.
 */
 component persistent="true" entityName="cbURLMenuItem" table="cb_menuItem" extends="contentbox.model.menu.item.BaseMenuItem" discriminatorValue="URL" {
     property name="url" notnull="false" ormtype="string" default="";
+    property name="target" notnull="false" ormtype="string" default="";
+    property name="urlClass" notnull="false" ormtype="string" default="";
     // DI
     property name="provider" persistent="false" inject="contentbox.model.menu.providers.URLProvider";
 
@@ -34,6 +36,8 @@ component persistent="true" entityName="cbURLMenuItem" table="cb_menuItem" exten
         var result = super.getMemento();
         // add our subclasses's properties
         result[ "url" ] = getURL();
+        result[ "urlClass" ] = getURLClass();
+        result[ "target" ] = getTarget();
         return result;
     }
 }

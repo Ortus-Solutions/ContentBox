@@ -30,7 +30,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
     public URLProvider function init() {
         setName( "URL" );
         setType( "URL" );
-        setIconCls( "icon-link" );
+        setIconClass( "icon-link" );
         setEntityName( "cbURLMenuItem" );
         setDescription( "A menu item to a URL" );
         return this;
@@ -62,9 +62,9 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
             menuItem=arguments.menuItem,
             data = arguments.menuItem.getMemento()
         };
-        return renderer.get().renderView( 
-            view="menus/providers/url/display", 
-            module="contentbox-admin",
+        return renderer.get().renderExternalView( 
+            view="/contentbox/model/menu/views/url/display",
+            module="contentbox",
             args = viewArgs
         );
     }

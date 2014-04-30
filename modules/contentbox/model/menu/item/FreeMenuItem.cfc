@@ -22,9 +22,9 @@ limitations under the License.
 ********************************************************************************
 * A Heading-based Menu Item
 */
-component persistent="true" entityName="cbHeadingMenuItem" table="cb_menuItem" extends="contentbox.model.menu.item.BaseMenuItem" discriminatorValue="Heading" {
+component persistent="true" entityName="cbFreeMenuItem" table="cb_menuItem" extends="contentbox.model.menu.item.BaseMenuItem" discriminatorValue="Free" {
     // DI
-    property name="provider" persistent="false" inject="contentbox.model.menu.providers.HeadingProvider";
+    property name="provider" persistent="false" inject="contentbox.model.menu.providers.FreeProvider";
 
     /**
      * Get a flat representation of this menu item

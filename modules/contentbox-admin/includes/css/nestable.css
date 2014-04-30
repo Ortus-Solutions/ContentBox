@@ -1,7 +1,7 @@
 /**
  * Custom stuff
  */
-.placeholder {width:400px;border: 1px dashed #4183C4;margin-bottom:5px;border-radius:3px;}
+.placeholder {width:250px;border: 1px dashed #4183C4;margin-bottom:5px;border-radius:3px;}
 /**
  * Nestable
  */
@@ -11,7 +11,7 @@
     display: block; 
     margin: 0; 
     padding: 0; 
-    max-width: 600px; 
+    /*max-width: 600px; */
     list-style: none; 
     font-size: 13px; 
     line-height: 20px; 
@@ -199,3 +199,13 @@
     border-top-left-radius: 0px;
 }
 i.emptytext {color: #999;font-weight: normal;}
+.input-prepend.input-block-level,.input-append.input-block-level {
+    display: table; 
+}
+.input-prepend.input-block-level .add-on, .input-append.input-block-level .add-on {
+  display: table-cell;
+  width: 24px;
+}
+.input-prepend.input-block-level > input, .input-append.input-block-level > input {
+  width: 100%;
+}
