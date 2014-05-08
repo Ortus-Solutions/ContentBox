@@ -32,7 +32,7 @@
 		<property file="workbench/build.number"/>
 
 		<!-- Build ID -->
-		<property name="build.label" 	value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
+		<property name="build.label" value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
 		<!-- Cleanup + Init -->
 		<delete dir="${dir.build}" />
 		<mkdir dir="${dir.build}"/>		
@@ -83,7 +83,10 @@
 		</move>
 		
 		<!-- Activate DSN creator link -->
-		<replace file="${dir.build}/Application.cfc" value='location("modules/contentbox-dsncreator");' summary="true" token='//location("modules/contentbox-dsncreator");' />
+		<replace file="${dir.build}/Application.cfc" 
+				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 summary="true" 
+				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
 		
 		<!-- Zip Bundle -->
 		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}"></zip>
