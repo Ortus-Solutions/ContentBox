@@ -103,6 +103,20 @@ component extends="coldbox.system.remote.ColdboxProxy" implements="CFIDE.orm.IEv
 	}
 
 	/**
+    * Called before the session is flushed. 
+    */
+    public void function preFlush(any entities){
+    	announceInterception("ORMPreFlush", {entities=arguments.entities});
+    }
+
+    /**
+    * Called after the session is flushed. 
+    */
+    public void function postFlush(any entities){
+    	announceInterception("ORMPostFlush", {entities=arguments.entities});
+    }
+
+	/**
 	* Get the system Event Manager
 	*/
 	public any function getEventManager(){
