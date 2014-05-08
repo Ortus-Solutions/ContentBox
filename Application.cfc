@@ -23,8 +23,9 @@ limitations under the License.
 */
 component{
 	// THIS LOADS THE DSN CREATOR WHEN INSTALLING CONTENTBOX FOR THE FIRST TIME
-	// THIS CAN BE REMOVED AFTER INSTALLATION
-	//location("modules/contentbox-dsncreator");
+	// THIS CAN BE REMOVED AFTER INSTALLATION, USUALLY IT IS REMOVED BY THE INSTALLER
+	//include "modules/contentbox-installer/includes/dsn_relocation.cfm";
+	
 	// Application properties, modify as you see fit
 	this.name 				= "ContentBox-Shell-" & hash( getCurrentTemplatePath() );
 	this.sessionManagement 	= true;
@@ -54,7 +55,7 @@ component{
 	this.ormEnabled = true;
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
-		cfclocation=["model","modules"],
+		cfclocation=[ "model", "modules" ],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.

@@ -96,7 +96,7 @@ component{
 			// announce event
 			announceInterception("cbadmin_onBadLogin");
 			// message and redirect
-			getPlugin("MessageBox").warn( cb.r( "invalid_credentials@security" ));
+			getPlugin("MessageBox").warn( cb.r( "messages.invalid_credentials@security" ));
 			// Relocate
 			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 		}

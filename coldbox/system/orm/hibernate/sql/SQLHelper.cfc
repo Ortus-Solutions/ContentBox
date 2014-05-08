@@ -38,8 +38,14 @@ component displayName="SQLHelper" accessors="true" {
         variables.criteriaImpl  = cb.getNativeCriteria();
         variables.ormSession    = criteriaImpl.getSession();
         variables.factory       = ormSession.getFactory();
+       
         // get formatter for sql string beautification
-        variables.formatter     = createObject( "java", "org.hibernate.jdbc.util.BasicFormatterImpl" );
+        if( !structKeyExists( server, "railo") AND listFirst( server.coldfusion.productVersion ) gte 11 ){
+            variables.formatter  = createObject( "java", "org.hibernate.engine.jdbc.internal.BasicFormatterImpl" );
+        } else {
+            variables.formatter  = createObject( "java", "org.hibernate.jdbc.util.BasicFormatterImpl" );
+        }
+        
         // set properties
         variables.log           = [];
         variables.formatSQL     = arguments.formatSQL;
