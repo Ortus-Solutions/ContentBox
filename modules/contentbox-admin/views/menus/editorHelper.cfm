@@ -7,6 +7,7 @@
             href: 'javascript:void(0);',
             onConfirm: function() {
                 $( this ).closest( '.dd3-item' ).remove();
+                togglePlaceholderMessage();
             }
         };
         // Create Slug
@@ -32,6 +33,21 @@
             toggle.hasClass( 'icon-lock' ) ? toggle.attr( 'class', 'icon-unlock' ) : toggle.attr( 'class', 'icon-lock' );
             //disable input field
             $slug.prop( "disabled", !$slug.prop( 'disabled' ) );
+        }
+
+        function togglePlaceholderMessage() {
+            var $placeholderMessage = $( '##placeholder-message' );
+            var $nestable = $( '##nestable' );
+            var count = 0;
+            $( '##nestable li' ).each(function() {
+                count++;
+            });
+            if( count ) {
+                $placeholderMessage.hide();
+            }
+            else {
+                $placeholderMessage.show();
+            }
         }
         /**
          * Checks slug for uniqueness
@@ -116,13 +132,17 @@
                 $errors = $( '##menuErrors' );
             switch( dir ) {
                 case 'on':
+                    var count = 0;
                     // highlight errors
                     $nestable .find( 'div.error' ).each(function() {
                         $( this ).closest( '.dd3-item' ).children( '.dd3-type' ).removeClass( 'btn-inverse' ).addClass( 'btn-danger' );
+                            count++;
                     });
                     // expand so we can see nested errors
                     $( '.dd' ).nestable( 'expandAll' );
-                    $errors.show();
+                    if( count ) {
+                        $errors.show();
+                    }
                     break;
                 case 'off':
                     // remove error highlights
@@ -233,6 +253,7 @@
                     data: { type: provider },
                     success: function( data, textStatus, jqXHR ){
                         addMenuItem( data, context );
+                        togglePlaceholderMessage();
                     }
                 })
                 $contextMenu.hide();
@@ -275,6 +296,7 @@
                     data: { type: provider, menuID: '#rc.menuID#' },
                     success: function( data, textStatus, jqXHR ){
                         addMenuItem( data );
+                        togglePlaceholderMessage();
                     }
                 })
             });
@@ -307,6 +329,7 @@
             //******** setup nestable menu items **************//
             $( '##nestable' ).nestable({});
             previewMenu();
+            togglePlaceholderMessage();
         });
     </script>
 </cfoutput>
