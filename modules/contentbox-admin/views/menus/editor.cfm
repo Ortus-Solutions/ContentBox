@@ -35,6 +35,7 @@
                             <div class="dd" id="nestable">
                                 <ol class="dd-list">
                                     #prc.menuItems#
+                                    <div id="placeholder-message">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
                                 </ol>
                             </div>
                         </div>

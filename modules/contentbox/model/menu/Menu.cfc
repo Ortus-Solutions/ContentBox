@@ -132,7 +132,7 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
     * is loaded?
     */
     public boolean function isLoaded(){
-        return ( len( variables.menuID ) ? true : false );
+        return ( len( getMenuID() ) ? true : false );
     }
 
     /**
