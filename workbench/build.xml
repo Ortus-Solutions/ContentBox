@@ -108,7 +108,10 @@
 		<delete dir="${dir.build}/WEB-INF" />
 		
 		<!-- Remove DSN creator link For Express Edition -->
-		<replace file="${dir.build}/Application.cfc" value="" summary="true" token='location("modules/contentbox-dsncreator");' />
+		<replace file="${dir.build}/Application.cfc" 
+				 value="" 
+				 summary="true" 
+				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
 				
 		<!-- Remove DSN Creator for Express Edition -->
 		<delete dir="${dir.build}/modules/contentbox-dsncreator" />
@@ -131,8 +134,8 @@
 		<!-- Zip up Express Engine -->
 		<zip destfile="${dir.exports}/contentbox-express_${contentbox.version}.zip" 
 			 preserve0permissions="true">
-			 <fileset dir="${dir.expressroot}">
-        		<exclude name=".settings"/>
+			 <fileset dir="${dir.express}">
+        		<exclude name=".settings/**"/>
         		<exclude name=".git"/>
         		<exclude name=".gitignore"/>
         		<exclude name=".project"/>
@@ -141,6 +144,7 @@
         		<exclude name="settings.xml"/>
         		<exclude name="build.xml"/>
         		<exclude name="build-package.xml"/>
+        		<exclude name=".dropbox.attr"/>
         		<exclude name=".DS_Store"/>
         	</fileset>
 		</zip>
