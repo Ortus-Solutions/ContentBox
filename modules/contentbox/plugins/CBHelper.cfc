@@ -26,6 +26,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// DI
 	property name="categoryService"		inject="id:categoryService@cb";
+	property name="settingService"		inject="id:settingService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
 	property name="authorService"		inject="id:authorService@cb";
@@ -231,6 +232,48 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/************************************** Context Methods *********************************************/
 
+	/**
+	* Prepare a ContentBox UI request. This sets ups settings, layout, etc. This method is usualy called
+	* automatically for you on the UI module. However, you can use it a-la-carte if you are building
+	* ajax or module extensions
+	*/
+	CBHelper function prepareUIRequest(){
+		var event 	= getRequestContext();
+		var prc 	= getRequestCollection( private=true );
+		var rc		= getRequestCollection();
+		
+		// store UI module root
+		prc.cbRoot = getContextRoot() & event.getModuleRoot( 'contentbox' );
+		// store module entry point
+		prc.cbEntryPoint = getModuleSettings( "contentbox-ui" ).entryPoint
+		// store site entry point
+		prc.cbAdminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
+		// Place global cb options on scope
+		prc.cbSettings = settingService.getAllSettings( asStruct=true );
+		// Place the default layout on scope
+		prc.cbLayout = prc.cbSettings.cb_site_layout;
+		// Place layout root location
+		prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & prc.cbLayout;
+		// Place widgets root location
+		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
+		// announce event
+		announceInterception( "cbui_preRequest" );
+		
+		/************************************** FORCE SITE WIDE SSL *********************************************/
+		
+		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
+			setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
+		}
+
+		/************************************** IDENTITY HEADER *********************************************/
+
+		if( prc.cbSettings.cb_site_poweredby ){
+			event.setHTTPHeader( name="X-Powered-By", value="ContentBox Modular CMS" );
+		}
+
+		return this;
+	}
+	
 	// Determine if you have a category filter
 	boolean function categoryFilterExists(){
 		var rc = getRequestCollection();
