@@ -19,12 +19,11 @@ function verifyDSN(){
 		async:false,
 		success: function(data){
 			if( data.ERROR || !data.EXISTS ){
+				$("##createButton").fadeOut();
 				alert("Error verifying datasource: " + data.MESSAGES );
 			}
 			else{
-				$("##verifyButton").fadeOut();
 				$("##createButton").fadeIn();
-				$("##dsnName").attr("readonly", true);
 			}
 		},
 		dataType:"json"
