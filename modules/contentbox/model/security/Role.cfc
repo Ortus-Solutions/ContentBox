@@ -50,6 +50,13 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 		permissionList	= '';
 		return this;
 	}
+
+	/**
+	* Get the role name, same as getRole()
+	*/
+	string function getName(){
+		return variables.role;
+	}
 	
 	/**
 	* Check for permission
