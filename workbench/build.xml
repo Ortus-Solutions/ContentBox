@@ -6,22 +6,41 @@
  	<description>
     	Build a new distribution of ContentBox Modular CMS
     </description>
-	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.version"	value="2.0.0"/>
-	<!-- Build Labels -->
-	<tstamp prefix="start"/>
 	
+ 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
+	<property name="contentbox.version"	value="2.0.0"/>
+ 	<property name="contentbox.slug"	value="contentbox"/>
+	
+ 	<!-- Build Labels -->
+	<tstamp prefix="start"/>
+ 	<!-- Load Contrib Tasks -->
+	<path id="cp">
+		<fileset dir="workbench/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<!-- Define Tasks -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
+
 	<!-- Init -->
 	<target name="init" description="Init">
-
 		<!-- Default environment check, if not passed via -Denvironment -->
-    	<condition property="environment" value="local">
-    		<not><isset property="environment" /></not>
-    	</condition>
-    	<echo>Loading from environment: ${environment}</echo>
-		<!-- Load env properties -->
-		<loadproperties srcFile="workbench/build-${environment}.properties"/>
+		<condition property="environment" value="local">
+			<not><isset property="environment" /></not>
+		</condition>
+		<if>
+			<available file="workbench/build-${environment}.properties" />
+			<then>
+				<!-- Load env properties -->
+				<echo>Loading properties from environment: ${environment}</echo>
+				<loadproperties srcFile="workbench/build-${environment}.properties"/>
+			</then>
+		</if>
+		<!-- Load root properties -->
+		<echo>Loading base properties</echo>
+		<loadproperties srcFile="workbench/build.properties"/>
 
+		<!-- Build Number -->
 		<propertyfile file="workbench/build.number" comment="Build Number for ANT. Edit not!">
 			<entry key="build.number" 
 					type="int" 
@@ -36,13 +55,21 @@
 		<!-- Cleanup + Init -->
 		<delete dir="${dir.build}" />
 		<mkdir dir="${dir.build}"/>		
+		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
+		<!-- If stg, change perms and owners -->
+		<if>
+			<equals arg1="${environment}" arg2="auto" />
+			<then>
+				<chmod file="${dir.build}/**" perm="o+wrs" type="both" verbose="true" />
+				<chown owner="stg-ortus" verbose="true">
+					<fileset dir="${dir.build}" />
+				</chown>
+			</then>
+		</if>
 	</target>
 
 	<!--Build-->
 	<target name="build" description="Build a new ContentBox distribution release" depends="init">
-      	<!-- Create build directory -->
-		<mkdir dir="${dir.build}"/>
-		
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
 		
@@ -77,9 +104,9 @@
 		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}" verbose="true"/>
 		<delete file="${dir.build}/colddoc.html" />
 		
-		<!-- Move API archive into distribution -->
-		<move todir="${dir.build}">
-			<fileset file="workbench/api/exports/ContentBox-API-${contentbox.version}.zip" />
+		<!-- Move API archive into exports -->
+		<move todir="${dir.exports}">
+			<fileset file="workbench/api/exports/ContentBox_API_${contentbox.version}.zip" />
 		</move>
 		
 		<!-- Activate DSN creator link -->
@@ -88,7 +115,7 @@
 				 summary="true" 
 				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
 		
-		<!-- Zip Bundle -->
+		<!-- Zip Source Release -->
 		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}"></zip>
 		
 		<!-- Refactor indexes from Source For Express Edition: only use if derby else leave as is
@@ -104,7 +131,8 @@
 		<copy todir="${dir.build}/WEB-INF">
       		<fileset dir="workbench/resources/WEB-INF" />
         </copy>
-		<zip destfile="${dir.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}"></zip>
+		<!-- Create War Release -->
+		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.war" basedir="${dir.build}"></zip>
 		<delete dir="${dir.build}/WEB-INF" />
 		
 		<!-- Remove DSN creator link For Express Edition -->
@@ -112,27 +140,25 @@
 				 value="" 
 				 summary="true" 
 				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
-				
-		<!-- Remove DSN Creator for Express Edition -->
+		<!-- Remove DSN Creator Module for Express Edition -->
 		<delete dir="${dir.build}/modules/contentbox-dsncreator" />
-		
-		<!-- Zip Express Source -->
+		<!-- Zip Express Edition Source -->
 		<zip destfile="${dir.exports}/contentbox_express_source_${contentbox.version}.zip" basedir="${dir.build}"></zip>
 		
-		<!-- Cleanup Express Edition Source -->
+		<!-- Cleanup Express Server -->
 		<delete includeemptydirs="true">
 			<fileset dir="${dir.expressroot}">
 				<exclude name="WEB-INF/**"/>
 			</fileset>
 		</delete>
-		<!-- Copy Express Edition into it -->
+		<!-- Copy Express Edition Source into it -->
 		<copy todir="${dir.expressroot}">
 			<fileset dir="${dir.build}">
 				<exclude name="modules/contentbox/modules/*" />
 			</fileset>
 		</copy>
 		<!-- Zip up Express Engine -->
-		<zip destfile="${dir.exports}/contentbox-express_${contentbox.version}.zip" 
+		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" 
 			 preserve0permissions="true">
 			 <fileset dir="${dir.express}">
         		<exclude name=".settings/**"/>
@@ -148,6 +174,28 @@
         		<exclude name=".DS_Store"/>
         	</fileset>
 		</zip>
+		
+		<!-- Build Checksum -->
+		<checksum forceoverwrite="true" fileext=".md5">
+			<fileset dir="${dir.exports}">
+				<include name="*.zip" />
+				<include name="*.war" />
+			</fileset>
+		</checksum>
+		
+		<!-- Perms for automated builds -->
+		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
+		<!-- Move BE to root -->
+		<if>
+			<equals arg1="${be.name}" arg2="" />
+			<then></then>
+			<else>
+				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip" tofile="${be.exports}/${be.name}.zip" />
+				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip.md5" tofile="${be.exports}/${be.name}.zip.md5" />
+				<copy file="${dir.exports}/contentbox_${contentbox.version}.war" tofile="${be.exports}/${be.name}.war" />
+				<copy file="${dir.exports}/contentbox_${contentbox.version}.war.md5" tofile="${be.exports}/${be.name}.war.md5" />
+			</else>
+		</if>
 		
 		<delete dir="${dir.build}" />
     </target>
