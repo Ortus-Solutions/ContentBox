@@ -14,10 +14,10 @@
 	}
 
 	// Core
-	docName 	= "ContentBox-API-#version#";
+	docName 	= "ContentBox_API_#version#";
 	docBase		= expandPath( "/contentbox" );
 	docOutput 	= expandPath( "exports/" & docName );
-	strategy 	= new ColdDoc.strategy.api.HTMLAPIStrategy( docOutput, "ContentBox API #version#" );
+	strategy 	= new ColdDoc.strategy.api.HTMLAPIStrategy( docOutput, "ContentBox Modular CMS v#version#" );
 	colddoc.setStrategy( strategy );
 	colddoc.generate( inputSource=docBase, outputDir=docOutput, inputMapping="contentbox" );
 
