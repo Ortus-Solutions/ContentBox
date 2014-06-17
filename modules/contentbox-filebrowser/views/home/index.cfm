@@ -127,8 +127,17 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<cfif prc.fbqListing.recordcount>
 			<cfloop query="prc.fbqListing">
 
-				<!--- Check Name Filter --->
-				<cfif NOT reFindNoCase( prc.fbNameFilter, prc.fbqListing.name )> <cfcontinue> </cfif>
+				<!--- Skip Exclude Filters --->
+				<cfset skipExcludes = false>
+				<cfloop array="#listToArray( prc.fbSettings.excludeFilter )#" index="thisFilter">
+					<cfif reFindNoCase( thisFilter, prc.fbqListing.name )>
+						<cfset skipExcludes = true><cfbreak>
+					</cfif>
+				</cfloop>
+				<cfif skipExcludes><cfcontinue></cfif>
+
+				<!--- Include Filters --->
+				<cfif NOT reFindNoCase( prc.fbNameFilter, prc.fbqListing.name )><cfcontinue></cfif>
 
 				<!--- ID Name of the div --->
 				<cfset validIDName = $validIDName( prc.fbqListing.name ) >
@@ -140,14 +149,14 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				<!---Grid or List --->
 				<cfif prc.fbPreferences.listType eq "grid">
 					<!---Grid Listing --->
-					<div class="fbItemBox">
+					<div class="fbItemBox filterDiv">
 						<div class="fbItemBoxPreview">
 							<!--- Directory or File --->
 							<cfif prc.fbqListing.type eq "Dir">
 								<!--- Folder --->
 								<div id="#validIDName#"
 									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-									 class="folders filterDiv"
+									 class="folders"
 									 data-type="dir"
 									 data-name="#prc.fbqListing.Name#"
 									 data-fullURL="#plainURL#"
@@ -163,7 +172,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							<cfelseif prc.fbSettings.showFiles>
 								<!--- Display the DiV --->
 								<div id="#validIDName#"
-									 class="files filterDiv"
+									 class="files"
 									 data-type="file"
 									 data-name="#prc.fbqListing.Name#"
 									 data-fullURL="#plainURL#"

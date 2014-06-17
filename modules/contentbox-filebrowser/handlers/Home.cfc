@@ -552,7 +552,7 @@ component output="false" hint="Main filebrowser module handler"{
 		// Mrege Settings
 		structAppend( arguments.oldSettings, arguments.settings, true );
 		// clean directory root
-		if(structKeyExists( arguments.settings, "directoryRoot" ) ) {
+		if( structKeyExists( arguments.settings, "directoryRoot" ) ) {
 			arguments.oldSettings.directoryRoot = REReplace( arguments.settings.directoryRoot,"\\","/","all" );
 			if ( right( arguments.oldSettings.directoryRoot, 1 ) EQ "/" ) {
 				arguments.oldSettings.directoryRoot = left( arguments.oldSettings.directoryRoot, len( arguments.oldSettings.directoryRoot ) - 1 );
