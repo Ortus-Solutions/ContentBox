@@ -25,13 +25,19 @@ component{
 	// THIS LOADS THE DSN CREATOR WHEN INSTALLING CONTENTBOX FOR THE FIRST TIME
 	// THIS CAN BE REMOVED AFTER INSTALLATION, USUALLY IT IS REMOVED BY THE INSTALLER
 	//include "modules/contentbox-installer/includes/dsn_relocation.cfm";
-	
+
 	// Application properties, modify as you see fit
 	this.name 				= "ContentBox-Shell-" & hash( getCurrentTemplatePath() );
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;
 	this.scriptProtect		= false;
+	// Railo Specific Settings
+	// buffer the output of a tag/function body to output in case of a exception
+	this.bufferOutput = true;
+	this.compression = true;
+	this.whiteSpaceManagement = "smart";
+	this.suppressRemoteComponentContent = false;
 
 	// Mapping Imports
 	import coldbox.system.*;
@@ -41,7 +47,7 @@ component{
 	COLDBOX_APP_MAPPING		= "";
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
-	
+
 	// LOCATION MAPPINGS
 	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
@@ -119,6 +125,6 @@ component{
 	public boolean function onMissingTemplate(template){
 		return application.cbBootstrap.onMissingTemplate(argumentCollection=arguments);
 	}
-	
+
 	//@cf9-onError@
 }
