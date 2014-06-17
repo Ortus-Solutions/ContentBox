@@ -231,6 +231,22 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 		return results;
 	}
+
+	/**
+	* Shortcut to get a custom field value
+	* @key.hint The custom field key to get
+	* @defaultValue.hint The default value if the key is not found.
+	*/
+	any function getCustomField( required key, defaultValue ){
+		var fields = getCustomFieldsAsStruct();
+		if( structKeyExists( fields, arguments.key ) ){
+			return fields[ arguments.key ];
+		}
+		if( structKeyExists(arguments,"defaultValue") ){
+			return arguments.defaultValue;
+		}
+		throw(message="No custom field with key: #arguments.key# found", detail="The keys are #structKeyList( fields )#", type="InvalidCustomField");
+	}
 	
 	/**
 	* Override the setContentVersions
