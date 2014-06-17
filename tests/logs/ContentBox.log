@@ -1,0 +1,8 @@
+"Severity","Appender","Date","Time","Category","Message"
+"INFO","FILES","09/19/2012","08:58:49","coldbox.system.cache.providers.CacheBoxColdBoxProvider","CacheBox Cache: default has been initialized successfully for operation"
+"INFO","FILES","09/19/2012","08:58:49","coldbox.system.cache.providers.CacheBoxColdBoxProvider","CacheBox Cache: TEMPLATE has been initialized successfully for operation"
+"WARN","FILES","09/19/2012","08:58:49","coldbox.system.web.services.ModuleService","The module (_gsdata_) cannot be loaded as it does not have a ModuleConfig.cfc in its root. Path Checked: /Users/lmajano/Sites/contentbox/www/modules/_gsdata_"
+"INFO","FILES","09/19/2012","08:58:50","root.workbench.patches.1-0-7.Update","About to beggin 1.0.7 patching"
+"INFO","FILES","09/19/2012","08:58:50","root.workbench.patches.1-0-7.Update","Added column for user preferences"
+"INFO","FILES","09/19/2012","08:58:50","root.workbench.patches.1-0-7.Update","Added blog entry point setting"
+"INFO","FILES","09/19/2012","08:58:50","root.workbench.patches.1-0-7.Update","Finalized 1.0.7 patching"

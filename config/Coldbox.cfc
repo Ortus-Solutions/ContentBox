@@ -48,7 +48,7 @@ limitations under the License.
 			missingTemplateHandler	= "",
 
 			//Extension Points
-			UDFLibraryFile 				= "includes/helpers/ApplicationHelper.cfm",
+			UDFLibraryFile 				= "",
 			coldboxExtensionsLocation 	= "",
 			modulesExternalLocation		= [],
 			pluginsExternalLocation 	= "",
@@ -122,7 +122,7 @@ limitations under the License.
 
 	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
 	function development(){
-		
+
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching = false;
