@@ -57,6 +57,8 @@
                                 extraClasses &= currentRow mod 3!=1 ? "spacer" : "";
                             }
                         </cfscript>
+                        <cfset hasProtocol = reFindNoCase( "\b(?:https?):?", p.getPluginAuthorURL() )>
+                        <cfset pluginURL = hasProtocol ? p.getPluginAuthorURL() : "http://" & p.getPluginAuthorURL()>
                         <div class="widget-content pull-left #extraClasses#" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getPluginName()#">
                             <cfif isSimpleValue( p )>
                                 <div class="alert alert-error">Error loading widget: #widgetName#<br>
@@ -72,7 +74,7 @@
                                 <div class="widget-teaser">#p.getPluginDescription()#</div>
                                 <div class="widget-actions">
                                     v#p.getPluginVersion()#
-                                    By <a href="#p.getPluginAuthorURL()#" target="_blank">#p.getPluginAuthor()#</a>
+                                    By <a href="#pluginURL#" target="_blank">#p.getPluginAuthor()#</a>
                                     <cfif args.mode eq "edit">
                                         <span class="widget-type">
                                             <div class=" btn-group">
