@@ -392,6 +392,7 @@ component output="false" hint="Main filebrowser module handler"{
 	function upload( event, rc, prc ){
 		// param values
 		event.paramValue( "path", "" );
+		event.paramValue( "manual", false );
 		// clean incoming path for destination directory
 		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
 		// traversal test
@@ -447,9 +448,13 @@ component output="false" hint="Main filebrowser module handler"{
 			};
 			announceInterception( "fb_onFileUploadError", iData );
 		}
-
-		// render stuff out
-		event.renderData( data=data, type="json" );
+		if( manual ) {
+			event.renderData( data="<textarea id='data_result'='upload'>#serializeJSON( data )#</textarea>", type="text" );
+		}
+		else {	
+			// render stuff out
+			event.renderData( data=data, type="json" );
+		}
 	}
 
 	/************************************** PRIVATE *********************************************/

@@ -262,6 +262,35 @@ function fbChoose(){
 <cfif prc.fbSettings.allowUploads>
 <script type="text/javascript">
 $(document).ready(function() {
+	$( '##file_uploader_button' ).on('click', function() {
+		var iframe = $( '##upload-iframe' );
+		var form = $( '##upload-form' );
+		var field = $( '##filewrapper' );
+		var wrapper = $( '##manual_upload_wrapper' );
+		wrapper.append( '<p id="upload_message">Uploading your file...</p>' );
+		// move to target form
+		field.appendTo( form );
+		field.hide();
+		// submit the form; it's target is the iframe, so AJAX-ish upload style
+		form.submit();
+		// handle load method of iframe
+		iframe.load(function() {
+			try {
+				// try to get JSON response from server in textfield
+				var result = $( iframe.contents().text() );
+				var JSON = $.parseJSON( result.val() );
+				if( !JSON.ERRORS ) {
+					fbRefresh();
+				}
+			}
+			// errors? reset stuff and allow to try again
+			catch( e ) {
+				$( '##upload_message' ).remove();
+				field.prependTo( wrapper );
+				field.show();
+			}
+		});
+	});
 	$('##file_upload').uploadify({
 	    'swf'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
 	    //'cancelImg' : '#prc.fbModRoot#/includes/uploadify/uploadify-cancel.png',

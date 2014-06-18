@@ -78,7 +78,26 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<!--- UploadBar --->
 		<div id="uploadBar">
 			#announceInterception( "fb_preUploadBar" )#
-			<input id="file_upload" name="file_upload" type="file" />
+			<div id="manual_upload_wrapper" style="text-align:left;">
+				<div class="fileupload fileupload-new" data-provides="fileupload" id="filewrapper">
+					<div class="input-append textfield">
+						<div class="uneditable-input span3">
+							<i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
+						</div>
+						<span class="btn btn-file">
+							<span class="fileupload-new">Select file</span>
+							<span class="fileupload-exists">Change</span>
+							<input type="file" name="FILEDATA" id="file_uploader" />
+							#html.hiddenField(name="validated",value="false")#
+							#html.hiddenField(name="overwrite",id="overwrite",value="false")#
+						</span>
+						<a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<span id="file_uploader_button" class="btn btn-small btn-primary">Upload</span>
+					</div>
+				</div>
+				
+
+			</div>
 			#announceInterception( "fb_postUploadBar" )#
 		</div>
 
@@ -333,7 +352,11 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		</cfif>
 	</ul>
 </div>
-
+<iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
+<form id="upload-form" name="upload-form" enctype="multipart/form-data" method="POST" target="upload-iframe" action="#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#&folder=#prc.fbSafeCurrentRoot#">
+	<input type="hidden" name="path" value='#prc.fbSafeCurrentRoot#' />
+	<input type="hidden" name="manual" value="true" />
+</form>
 <!---Cancel: #rc.cancelCallBack#, Choose: #rc.callBack#
 <cfdump var="#flash.getScope()#">--->
 
