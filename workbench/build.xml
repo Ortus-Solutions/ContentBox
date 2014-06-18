@@ -2,7 +2,7 @@
 <!-- ====================================================================== 
      ContentBox Modular CMS Build (www.gocontentbox.org)                                                               
      ====================================================================== -->
- <project name="contentbox-build" default="build" basedir="../">
+ <project name="contentbox-build" default="build.all" basedir="../">
  	<description>
     	Build a new distribution of ContentBox Modular CMS
     </description>
@@ -23,7 +23,7 @@
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
 
 	<!-- Init -->
-	<target name="init" description="Init">
+	<target name="init" description="Init build">
 		<!-- Default environment check, if not passed via -Denvironment -->
 		<condition property="environment" value="local">
 			<not><isset property="environment" /></not>
@@ -54,6 +54,9 @@
 		<property name="build.label" value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
 		<!-- Cleanup + Init -->
 		<delete dir="${dir.build}" />
+		<delete verbose="true" failonerror="false">
+			<fileset dir="${dir.exports}" />
+		</delete>
 		<mkdir dir="${dir.build}"/>		
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
 		<!-- If stg, change perms and owners -->
@@ -66,13 +69,14 @@
 				</chown>
 			</then>
 		</if>
+		<!-- Get Build Dependencies -->
+ 		<antcall target="getDependencies" />
 	</target>
-
-	<!--Build-->
-	<target name="build" description="Build a new ContentBox distribution release" depends="init">
+	
+ 	<!-- Build source distro -->
+	<target name="build.source" description="Build a new ContentBox source release" depends="init" unless="src.isBuilt">
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
-		
 		<!-- Copy Source -->	
       	<copy todir="${dir.build}">
       		<fileset dir=".">
@@ -81,19 +85,15 @@
   				<exclude name=".git/**" />
   				<exclude name=".settings/**" />
       			<exclude name="workbench/**" />
-      			<exclude name="test/**" />
+      			<exclude name="tests/**" />
       			<exclude name="WEB-INF/**" />
-      			<exclude name="modules/_gsdata_/**" />
-      			<exclude name="mxunit/**" />
       			<exclude name=".gitignore" />
       			<exclude name=".DS_Store" />
       			<exclude name="settings.xml" />
       			<exclude name=".project" />
-      			<exclude name="modules/contentbox/modules/contentbox-codexwiki/**" />
       		</fileset>
         </copy>
-      		
-      	<!-- Replace Build Numbers -->
+		<!-- Replace Build Numbers -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true">
 		  <fileset dir="${dir.build}/modules/">
 		  	<include name="**/ModuleConfig.cfc" />
@@ -103,20 +103,26 @@
 		<!-- Execute API Docs -->
 		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}" verbose="true"/>
 		<delete file="${dir.build}/colddoc.html" />
-		
 		<!-- Move API archive into exports -->
 		<move todir="${dir.exports}">
 			<fileset file="workbench/api/exports/ContentBox_API_${contentbox.version}.zip" />
 		</move>
 		
-		<!-- Activate DSN creator link -->
+		<!-- Activate DSN Creator link -->
 		<replace file="${dir.build}/Application.cfc" 
 				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
 				 summary="true" 
 				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
 		
 		<!-- Zip Source Release -->
-		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}"></zip>
+		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}" />
+		
+		<!-- Build Checksum -->
+		<checksum forceoverwrite="true" fileext=".md5">
+			<fileset dir="${dir.exports}">
+				<include name="*.zip" />
+			</fileset>
+		</checksum>
 		
 		<!-- Refactor indexes from Source For Express Edition: only use if derby else leave as is
 		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
@@ -126,16 +132,31 @@
 		</replaceregexp>
 		-->
 		
-		<!-- Copy in WEB-INF and create WAR -->
-		<mkdir dir="${dir.build}/WEB-INF" />
-		<copy todir="${dir.build}/WEB-INF">
-      		<fileset dir="workbench/resources/WEB-INF" />
-        </copy>
+		<!-- Mark as Built -->
+		<property name="src.isBuilt" value="true" />
+	</target>
+ 	
+ 	<!-- Build war -->
+ 	<target name="build.war" description="Build a new ContentBox WAR distribution" depends="build.source">
+ 		<!-- Unzip Railo War -->
+ 		<unzip dest="${dir.build}" src="${dir.dependencies}/railo-${railo.version}.war" overwrite="true"/>
+ 		<!-- Replace web.xml -->
+ 		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/WEB-INF" overwrite="true"/>
+ 		<!-- Copy Tuckey -->
+ 		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true"/>
+ 		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/WEB-INF/lib" overwrite="true"/>
+ 		
 		<!-- Create War Release -->
 		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.war" basedir="${dir.build}"></zip>
-		<delete dir="${dir.build}/WEB-INF" />
-		
-		<!-- Remove DSN creator link For Express Edition -->
+ 		<!-- Build Checksum -->
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_${contentbox.version}.war" />
+ 		<!-- Cleanup INF like a ninja -->
+ 		<delete dir="${dir.build}/WEB-INF" />
+ 	</target>
+ 	
+ 	<!-- Build Express -->
+ 	<target name="build.express" description="Build an express server" depends="build.source">
+ 		<!-- Remove DSN creator link For Express Edition -->
 		<replace file="${dir.build}/Application.cfc" 
 				 value="" 
 				 summary="true" 
@@ -144,8 +165,9 @@
 		<delete dir="${dir.build}/modules/contentbox-dsncreator" />
 		<!-- Zip Express Edition Source -->
 		<zip destfile="${dir.exports}/contentbox_express_source_${contentbox.version}.zip" basedir="${dir.build}"></zip>
-		
-		<!-- Cleanup Express Server -->
+ 		<!-- Build Checksum -->
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_express_source_${contentbox.version}.zip" />
+ 		<!-- Cleanup Express Server -->
 		<delete includeemptydirs="true">
 			<fileset dir="${dir.expressroot}">
 				<exclude name="WEB-INF/**"/>
@@ -173,31 +195,56 @@
         		<exclude name=".dropbox.attr"/>
         		<exclude name=".DS_Store"/>
         	</fileset>
-		</zip>
-		
-		<!-- Build Checksum -->
-		<checksum forceoverwrite="true" fileext=".md5">
-			<fileset dir="${dir.exports}">
-				<include name="*.zip" />
-				<include name="*.war" />
-			</fileset>
-		</checksum>
-		
+		</zip>	
+ 		<!-- Build Checksum -->
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_express_${contentbox.version}.zip" />
+ 	</target>
+ 	
+	<!-- Build all releases-->
+	<target name="build.all" description="Builds All ContentBox Release Flavors" depends="build.war,build.express">
 		<!-- Perms for automated builds -->
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
-		<!-- Move BE to root -->
+		<!-- Move BE to Artifacts if on staging -->
 		<if>
 			<equals arg1="${be.name}" arg2="" />
 			<then></then>
 			<else>
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip" tofile="${be.exports}/${be.name}.zip" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip.md5" tofile="${be.exports}/${be.name}.zip.md5" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.war" tofile="${be.exports}/${be.name}.war" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.war.md5" tofile="${be.exports}/${be.name}.war.md5" />
+				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip" 	 		 tofile="${be.exports}/${be.name}.zip" />
+				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip.md5" 		 tofile="${be.exports}/${be.name}.zip.md5" />
+				<copy file="${dir.exports}/contentbox_${contentbox.version}.war" 	 		 tofile="${be.exports}/${be.name}.war" />
+				<copy file="${dir.exports}/contentbox_${contentbox.version}.war.md5" 		 tofile="${be.exports}/${be.name}.war.md5" />
+				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip" 	 tofile="${be.exports}/${be.name}-express.zip" />
+				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip.md5" tofile="${be.exports}/${be.name}-express.zip.md5" />
 			</else>
 		</if>
-		
+		<!-- Cleanup -->
 		<delete dir="${dir.build}" />
     </target>
+ 	
+ 	<!-- Get Dependencies -->
+	<target name="getDependencies" description="Get all the necessary dependencies for the build process">
+		<mkdir dir="${dir.dependencies}" />
+		<!-- do a check -->
+		<if>
+	        <available file="${dir.dependencies}/railo-${railo.version}.war" />
+	        <then><echo>Railo ${railo.version} dependency found!</echo></then>
+	        <else>
+	            <echo>Railo ${railo.version} not found, getting artifact from ${ortus.repoURL}</echo>
+				<get src="${ortus.repoURL}/railo/${railo.version}/railo-${railo.version}.war" 
+					 dest="${dir.dependencies}"
+					 verbose="true" />
+	        </else>
+	    </if>
+		<if>
+	        <available file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" />
+	        <then><echo>Tuckey ${tuckey.version} dependency found!</echo></then>
+	        <else>
+	            <echo>Tuckey ${tucky.version} not found, getting artifact from ${ortus.repoURL}</echo>
+				<get src="${ortus.repoURL}/tuckey/${tuckey.version}/urlrewritefilter-${tuckey.version}.jar" 
+					 dest="${dir.dependencies}"
+					 verbose="true" />
+	        </else>
+	    </if>
+	</target>
 	
 </project>

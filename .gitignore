@@ -24,3 +24,5 @@ modules/contentbox/modules/FuseGuard
 modules/contentbox/modules/FuseGuardUI
 modules/contentbox/modules/CodeEditorManager
 contentbox-akismet
+workbench/build-contentbox/**
+workbench/dependencies
