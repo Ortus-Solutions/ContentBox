@@ -155,53 +155,51 @@
  	</target>
  	
  	<!-- Build Express -->
- 	<target name="build.express" description="Build an express server" depends="build.source">
+ 	<target name="build.express" description="Build an express server" depends="build.war">
+ 		<!-- Unzip tomcat -->
+ 		<unzip dest="${dir.build}" src="${dir.dependencies}/apache-tomcat-${express.server.version}.zip"/>
+ 		<move todir="${dir.build}/express">
+			<fileset dir="${dir.build}/apache-tomcat-${express.server.version}"/>
+  		</move>
+ 		<!-- Remove current webapps -->
+ 		<delete includeemptydirs="true" >
+ 			<fileset dir="${dir.build}/express/webapps" />
+ 		</delete>
+ 		<!-- create root app -->
+ 		<mkdir dir="${dir.build}/express/webapps/ROOT" />
+ 		
+ 		<!-- unzip ContentBox war into it -->
+ 		<unzip src="${dir.exports}/contentbox_${contentbox.version}.war" dest="${dir.build}/express/webapps/ROOT" overwrite="true" />
  		<!-- Remove DSN creator link For Express Edition -->
-		<replace file="${dir.build}/Application.cfc" 
+		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
 				 value="" 
 				 summary="true" 
 				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
 		<!-- Remove DSN Creator Module for Express Edition -->
-		<delete dir="${dir.build}/modules/contentbox-dsncreator" />
-		<!-- Zip Express Edition Source -->
-		<zip destfile="${dir.exports}/contentbox_express_source_${contentbox.version}.zip" basedir="${dir.build}"></zip>
- 		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_express_source_${contentbox.version}.zip" />
- 		<!-- Cleanup Express Server -->
-		<delete includeemptydirs="true">
-			<fileset dir="${dir.expressroot}">
-				<exclude name="WEB-INF/**"/>
-			</fileset>
-		</delete>
-		<!-- Copy Express Edition Source into it -->
-		<copy todir="${dir.expressroot}">
-			<fileset dir="${dir.build}">
-				<exclude name="modules/contentbox/modules/*" />
-			</fileset>
-		</copy>
-		<!-- Zip up Express Engine -->
-		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" 
-			 preserve0permissions="true">
-			 <fileset dir="${dir.express}">
-        		<exclude name=".settings/**"/>
-        		<exclude name=".git"/>
-        		<exclude name=".gitignore"/>
-        		<exclude name=".project"/>
-        		<exclude name="logs/*.*"/>        		        		
-        		<exclude name="temp/*.*"/>
-        		<exclude name="settings.xml"/>
-        		<exclude name="build.xml"/>
-        		<exclude name="build-package.xml"/>
-        		<exclude name=".dropbox.attr"/>
-        		<exclude name=".DS_Store"/>
-        	</fileset>
-		</zip>	
+		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
+ 		<!-- Create embedded datasource in Application.cfc -->
+ 		<loadfile property="express.appdsn" srcFile="${dir.resources}/express-dsn.txt" />
+ 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
+ 						 value="${express.appdsn}" 
+ 						 summary="true" 
+ 						 token='this.datasource = "contentbox";' />
+ 				
+ 		<!-- Custom Server Config -->
+ 		<copy todir="${dir.build}/express" overwrite="true">
+ 			<fileset dir="${dir.resources}/express" />
+ 		</copy>
+ 		<!-- add execution perms -->
+ 		<chmod dir="${dir.build}/express/bin" perm="ugo+rx" includes="*"/>
+ 		<!-- Zip server up -->
+ 		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" basedir="${dir.build}/express"></zip>
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_express_${contentbox.version}.zip" />
+ 		<!-- cleanup -->
+ 		<delete dir="${dir.build}/express" />
  	</target>
  	
 	<!-- Build all releases-->
-	<target name="build.all" description="Builds All ContentBox Release Flavors" depends="build.war,build.express">
+	<target name="build.all" description="Builds All ContentBox Release Flavors" depends="build.express">
 		<!-- Perms for automated builds -->
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
 		<!-- Move BE to Artifacts if on staging -->
@@ -241,6 +239,16 @@
 	        <else>
 	            <echo>Tuckey ${tucky.version} not found, getting artifact from ${ortus.repoURL}</echo>
 				<get src="${ortus.repoURL}/tuckey/${tuckey.version}/urlrewritefilter-${tuckey.version}.jar" 
+					 dest="${dir.dependencies}"
+					 verbose="true" />
+	        </else>
+	    </if>
+		<if>
+	        <available file="${dir.dependencies}/apache-tomcat-${express.server.version}.zip" />
+	        <then><echo>Apache Tomcat ${express.server.version} dependency found!</echo></then>
+	        <else>
+	            <echo>Apache Tomcat ${express.server.version} not found, getting artifact from ${ortus.repoURL}</echo>
+				<get src="${ortus.repoURL}/apache/tomcat/${express.server.version}/apache-tomcat-${express.server.version}.zip" 
 					 dest="${dir.dependencies}"
 					 verbose="true" />
 	        </else>
