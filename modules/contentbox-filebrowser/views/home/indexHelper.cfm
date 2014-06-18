@@ -291,25 +291,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-	$('##file_upload').uploadify({
-	    'swf'  : '#prc.fbModRoot#/includes/uploadify/uploadify.swf',
-	    //'cancelImg' : '#prc.fbModRoot#/includes/uploadify/uploadify-cancel.png',
-	   	'uploader'    : '#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#&folder=#prc.fbSafeCurrentRoot#',
-		'formData': {path: '#prc.fbSafeCurrentRoot#'},
-	    'auto'      : true,
-		'multi'  	: #prc.fbSettings.uploadify.multi#,
-		'fileTypeDesc'	: '#prc.fbSettings.uploadify.fileDesc#',
-	    'fileTypeExts'		: '#prc.fbSettings.uploadify.fileExt#',
-		<cfif isNumeric( prc.fbSettings.uploadify.sizeLimit )>
-		'fileSizeLimit'	: #prc.fbSettings.uploadify.sizeLimit#,
-		</cfif>
-		'onQueueComplete': function(queueData){
-			//alert(data.filesUploaded + ' file(s) uploaded successfully!');
-			$( "##uploadBar" ).slideUp();
-			fbRefresh();
-		}
-		<cfif len( prc.fbSettings.uploadify.customJSONOptions )>#prc.fbSettings.uploadify.customJSONOptions#</cfif>
-	});
 	
 	// File drag and drop	
 	var dropbox = $fileBrowser;

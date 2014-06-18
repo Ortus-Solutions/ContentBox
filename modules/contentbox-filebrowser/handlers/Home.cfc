@@ -488,10 +488,8 @@ component output="false" hint="Main filebrowser module handler"{
 			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.uidivfilter.js" );
 			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.contextMenu.min.js" );
 
-			// uploadify if uploads enabled
+			// if uploads enabled
 			if( prc.fbSettings.allowUploads ){
-				addAsset( "#prc.fbModRoot#/includes/uploadify/uploadify.css" );
-				addAsset( "#prc.fbModRoot#/includes/uploadify/jquery.uploadify.min.js" );
 				addAsset( "#prc.fbModRoot#/includes/javascript/jquery.filedrop.js" );
 			}
 			
