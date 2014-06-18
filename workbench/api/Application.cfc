@@ -1,26 +1,22 @@
-<!-----------------------------------------------------------------------
-********************************************************************************
-Copyright 2005-2007 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldboxframework.com | www.luismajano.com | www.ortussolutions.com
-********************************************************************************
-
-Author     :	Luis Majano
-Date        :	10/16/2007
-Description :
-	Application.cfc for generation API Docs
------------------------------------------------------------------------>
 <cfcomponent output="false">
+	<cfscript>
+	this.name = "ContentBox-Docs" & hash(getCurrentTemplatePath());
+	this.sessionManagement 	= true;
+	this.sessionTimeout 	= createTimeSpan(0,0,1,0);
+	this.setClientCookies 	= true;
 
-	<!--- APPLICATION CFC PROPERTIES --->
-	<cfset this.name = "ContentBox-Docs" & hash(getCurrentTemplatePath())>
-	<cfset this.sessionManagement = true>
-	<cfset this.sessionTimeout = createTimeSpan(0,0,10,0)>
-	<cfset this.setClientCookies = true>
+	// API Root
+	API_ROOT = getDirectoryFromPath( getCurrentTemplatePath() );
 
-	<!---Mappings --->
-	<cfset this.mappings[ "/colddoc" ] 		= getDirectoryFromPath( getCurrentTemplatePath() ) & "/colddoc">
-	<cfset this.mappings[ "/contentbox" ] 	= getDirectoryFromPath( getCurrentTemplatePath() ) & "/contentbox">
-	<cfset this.mappings[ "/coldbox" ] 		= expandPath( "../../coldbox" )>
+	// Core Mappings
+	this.mappings[ "/colddoc" ]  	= API_ROOT & "colddoc";
+	// Standlone mappings
+	this.mappings[ "/coldbox" ]  	= expandPath( "../../coldbox" );
+	this.mappings[ "/contentbox" ]  = API_ROOT & "contentbox";
 
-	<!---<cfset applicationstop()><cfabort>--->
+
+	function onRequestStart( required targetPage ){
+		return true;
+	}
+	</cfscript>
 </cfcomponent>
