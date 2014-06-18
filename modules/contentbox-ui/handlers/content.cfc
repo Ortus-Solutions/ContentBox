@@ -327,7 +327,7 @@ component{
 	* Save the comment for a content object
 	* @thisContent.hint The content object
 	*/
-	private function saveComment( required thisContent ){
+	private function saveComment( required thisContent, required subscribe=false ){
 		// Get new comment to persist
 		var comment = populateModel( commentService.new() );
 		// relate it to content
@@ -340,7 +340,8 @@ component{
 			comment=comment,
 			content=arguments.thisContent,
 			moderationResults=results,
-			contentType=arguments.thisContent.getContentType()
+			contentType=arguments.thisContent.getContentType(),
+			subscribe = arguments.subscribe
 		});
 
 		// Check if all good

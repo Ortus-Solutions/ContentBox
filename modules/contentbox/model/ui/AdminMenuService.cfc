@@ -55,6 +55,7 @@ component accessors="true" threadSafe singleton{
 	this.USERS			= "users";
 	this.TOOLS			= "tools";
 	this.SYSTEM			= "system";
+	this.STATS			= "stats";
 	this.ADMIN_ENTRYPOINT = "";
 
 	// Header Menu Slugs
@@ -202,6 +203,9 @@ component accessors="true" threadSafe singleton{
 		prc.xehEmailTemplates   = "#this.ADMIN_ENTRYPOINT#.emailtemplates";
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		
+		// Stats
+		prc.xehSubscribers		= "#this.ADMIN_ENTRYPOINT#.subscribers";
+
 		// Dashboard
 		addTopMenu( name=this.DASHBOARD, label="<i class='icon-dashboard icon-large'></i> Dashboard" )
 			.addSubMenu( name="home", label="Home", href="#event.buildLink(prc.xehDashboard)#" )
@@ -250,6 +254,9 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( name="SecurityRules", label="Security Rules", href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN" )
 			.addSubMenu( name="EmailTemplates", label="Email Templates", href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN" )
 			.addSubMenu( name="GeekSettings", label="Geek Settings", href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS" );
+		// STATS
+		addTopMenu( name=this.STATS, label="<i class='icon-bar-chart icon-large'></i> Stats" )
+			.addSubMenu( name="Subscribers", label="Subscribers", href="#event.buildLink( prc.xehSubscribers )#", title="View Subscribers" );
 
 		return this;
 	}
