@@ -245,7 +245,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		// store UI module root
 		prc.cbRoot = getContextRoot() & event.getModuleRoot( 'contentbox' );
 		// store module entry point
-		prc.cbEntryPoint = getModuleSettings( "contentbox-ui" ).entryPoint
+		prc.cbEntryPoint = getModuleSettings( "contentbox-ui" ).entryPoint;
 		// store site entry point
 		prc.cbAdminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
 		// Place global cb options on scope
@@ -733,6 +733,24 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	function linkContentSearch(boolean ssl=false){
 		var xeh = siteRoot() & sep() & "__search";
 		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
+	}
+
+	/**
+	* Link to the content subscription route
+	* @ssl.hint	Use SSL or not, defaults to false.
+	*/
+	function linkContentSubscription( boolean ssl=false ){
+		var xeh = siteRoot() & sep() & "__subscribe";
+		return getRequestContext().buildLink( linkto=xeh, ssl=arguments.ssl );
+	}
+
+	/**
+	* Link to the ContentBox Content Subscription unsubscribe URL
+	* @token.hint The token to use for unsubscribing
+	*/
+	function linkContentUnsubscribe( required string token, boolean ssl=false ){
+		var xehUnsubscribe = siteRoot() & sep() & "__unsubscribe/#arguments.token#";
+		return getRequestContext().buildLink( linkto=xehUnsubscribe, ssl=arguments.ssl );
 	}
 
 	/**

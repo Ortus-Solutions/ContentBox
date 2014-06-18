@@ -124,6 +124,7 @@ component {
 			// CB Admin Request Interceptor
 			{ class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
 			{ class="#moduleMapping#.interceptors.CommentCleanup" },
+			{ class="#moduleMapping#.interceptors.Subscription" },
 			{ class="#moduleMapping#.interceptors.MenuCleanup" }
 		];
 		
