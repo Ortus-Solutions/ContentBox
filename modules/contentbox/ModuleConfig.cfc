@@ -163,6 +163,10 @@ component {
 		binder.map("dataExporter@cb").to("contentbox.model.exporters.DataExporter");
 		binder.map("fileExporter@cb").to("contentbox.model.exporters.FileExporter");
 		binder.map("ContentBoxExporter@cb").to("contentbox.model.exporters.ContentBoxExporter");
+		// Subscription services
+		binder.map( "subscriberService@cb" ).to( "contentbox.model.subscriptions.SubscriberService" );
+		binder.map( "subscriptionService@cb" ).to( "contentbox.model.subscriptions.SubscriptionService" );
+		binder.map( "commentSubscriptionService@cb" ).to( "contentbox.model.subscriptions.CommentSubscriptionService");
 		// ColdBox Integrations
 		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
 		binder.map("SystemUtil@cb").to( "coldbox.system.core.util.Util" );

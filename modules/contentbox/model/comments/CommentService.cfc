@@ -155,6 +155,54 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 
 	/**
+     * Sends subscription emails to subscribers of the content
+     * @comment.hint The comment object
+     */
+    public void function sendSubscriptionNotifications( required any comment ) {
+        var content = arguments.comment.getRelatedContent();
+        // get subscribers for this content item
+        var subscriptions = content.getCommentSubscriptions();
+        var settings = settingService.getAllSettings( asStruct=true );
+        var commentAuthorEmail = arguments.comment.getAuthorEmail();
+        // get body tokens; can reuse most for all emails
+        var bodyTokens = arguments.comment.getMemento();
+        	bodyTokens[ "contentURL" ]    = CBHelper.linkContent( content );
+            bodyTokens[ "contentTitle" ]  = arguments.comment.getParentTitle();
+        // loop over subscribers
+        for( var subscription in subscriptions ) {
+        	var subscriber = subscription.getSubscriber();
+            // don't send email if the comment author is also subscribed... 
+            if( subscriber.getSubscriberEmail() != commentAuthorEmail ) {
+                // get mail payload
+                bodyTokens[ "unsubscribeURL" ]= CBHelper.linkContentUnsubscribe( subscription.getSubscriptionToken() );
+                // Send it baby!
+                var mail = mailService.newMail(to=subscriber.getSubscriberEmail(),
+                                               from=settings.cb_site_outgoingEmail,
+                                               subject="New comment was added",
+                                               bodyTokens=bodyTokens,
+                                               type="html",
+                                               server=settings.cb_site_mail_server,
+                                               username=settings.cb_site_mail_username,
+                                               password=settings.cb_site_mail_password,
+                                               port=settings.cb_site_mail_smtp,
+                                               useTLS=settings.cb_site_mail_tls,
+                                               useSSL=settings.cb_site_mail_ssl);
+				
+				var args = { gravatarEmail= commentAuthorEmail };                                             
+                // generate content for email from template
+                mail.setBody( renderer.get().renderLayout( 
+                    view="/contentbox/email_templates/comment_notification", 
+                    layout="email", 
+                    module="contentbox-admin",
+                    args = args
+                ));
+                // send it out
+                mailService.send( mail );
+            }            
+        } 
+    }
+
+	/**
 	* Run moderation rules on an incoming comment and set of contentbox settings. If this method returns a false then the comment is moderated
 	* and can continue to be saved. If returns false, then it is blocked and must NOT be saved.
 	* @comment Comment to moderate check

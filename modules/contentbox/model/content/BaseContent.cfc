@@ -60,6 +60,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	// O2M -> Sub Content Inverse
 	property name="children" singularName="child" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
+	// O2M -> Comment Subscribers
+	property name="commentSubscriptions" singularName="commentSubscription" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" cfc="contentbox.model.subscriptions.CommentSubscription" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
 
 	// M2M -> Categories
 	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" inverse="true" cascade="all"  
