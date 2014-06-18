@@ -100,13 +100,13 @@
 		  </fileset>
 		</replaceregexp>
 		
-		<!-- Execute API Docs -->
+		<!-- Execute API Docs 
 		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}" verbose="true"/>
-		<delete file="${dir.build}/colddoc.html" />
-		<!-- Move API archive into exports -->
+		<delete file="${dir.build}/colddoc.html" />-->
+		<!-- Move API archive into exports 
 		<move todir="${dir.exports}">
 			<fileset file="workbench/api/exports/ContentBox_API_${contentbox.version}.zip" />
-		</move>
+		</move>-->
 		
 		<!-- Activate DSN Creator link -->
 		<replace file="${dir.build}/Application.cfc" 
