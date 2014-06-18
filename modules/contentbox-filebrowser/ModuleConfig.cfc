@@ -78,14 +78,6 @@ The arguments you can use are:
 				// max multiple upload files
 				maxfiles = 25	
 			},
-			// Uploadify Settings
-			uploadify = {
-				fileDesc = "All Files",
-				fileExt	 = "*.*;",
-				multi 	 = true,
-				sizeLimit = 0,
-				customJSONOptions = ""
-			},
 			useMediaPath = false,
 			mediaPath = "__media"
 		};

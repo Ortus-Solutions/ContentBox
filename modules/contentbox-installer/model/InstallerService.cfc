@@ -384,13 +384,6 @@ component accessors="true"{
 ]' ,
 			"cb_editors_ckeditor_extraplugins" = "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre",
 
-			// Uploadify Integration
-			"cb_media_uplodify_fileDesc" = "All Files",
-			"cb_media_uplodify_fileExt" = "*.*;",
-			"cb_media_uploadify_allowMulti" = "true",
-			"cb_media_uploadify_sizeLimit" = "0",
-			"cb_media_uploadify_customOptions" = "",
-
 			// Search Settings
 			"cb_search_adapter" = "contentbox.model.search.DBSearch",
 			"cb_search_maxResults" = "20",
