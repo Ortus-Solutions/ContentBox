@@ -78,7 +78,7 @@
                         <td><span class="label label-info">#prc.commentSubscriptionCount#</span></td>
                     </tr>
                     <tr class="info">
-                        <td><strong>Unique Subscibers:</strong></td>
+                        <td><strong>Unique Subscribers:</strong></td>
                         <td><span class="label label-info">#prc.uniqueSubscriberCount#</span></td>
                     </tr>
                 </table>
