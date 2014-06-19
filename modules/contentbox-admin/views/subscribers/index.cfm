@@ -42,19 +42,6 @@
                             <div class="span6">
                                 <h3>Top #prc.maxCommentSubscriptions# Comment Subscriptions</h3>
                                 <div id="commentchart"></div>
-                                <script>
-                                    Morris.Donut({
-                                        element: 'commentchart',
-                                        data: #serializeJSON( prc.topCommentSubscriptions )#,
-                                        colors: [
-                                            '##f1c40f','##2dcc70','##e84c3d','##0099FF','##993399','##FF9900'
-                                        ],
-                                        formatter: function ( x ) { 
-                                            var pluralized = x>1 ? 's' : '';
-                                            return x + " Subscriber" + pluralized;
-                                        }
-                                    });
-                                </script>
                             </div>
                             <cfelse>
                                 <p class="label label-info">No subscriptions yet!</p>

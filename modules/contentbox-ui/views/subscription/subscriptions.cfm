@@ -1,5 +1,5 @@
 <cfoutput>
-    <h2>Manage My Subscriptions</h2>
+    <h1>Manage My Subscriptions</h1>
     <!--- MessageBox --->
     #getPlugin("MessageBox").renderit()#
     <cfif structCount( prc.subscriptions )>
