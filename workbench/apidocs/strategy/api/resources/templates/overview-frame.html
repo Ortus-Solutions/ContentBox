@@ -4,7 +4,7 @@
 <head>
 	<title>	overview </title>
 	<meta name="keywords" content="overview">
-	<cfmodule template="inc/common.html" rootPath="">
+	<cfmodule template="inc/common.cfm" rootPath="">
 </head>
 
 <body>

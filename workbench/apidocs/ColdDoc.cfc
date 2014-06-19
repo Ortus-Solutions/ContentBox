@@ -78,6 +78,11 @@
 
         <cfloop query="qFiles">
             <cfscript>
+            	// skip Application.cfc
+            	if( qFiles.name contains "Application.cfc" ){
+            		continue;
+            	}
+            	// get paths.
                 currentPath = replace(directory, arguments.inputSource[i].inputDir, "");
                 currentPath = reReplace(currentPath, "[/\\]", "");
                 currentPath = reReplace(currentPath, "[/\\]", ".", "all");
@@ -150,7 +155,6 @@
         </cfloop>
 
 	</cfloop>
-
 	<cfreturn qMetaData />
 </cffunction>
 
