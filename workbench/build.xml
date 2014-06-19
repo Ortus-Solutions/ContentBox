@@ -23,7 +23,7 @@
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
 
 	<!-- Init -->
-	<target name="init" description="Init build">
+	<target name="init" description="Init build" unless="src.isInit">
 		<!-- Default environment check, if not passed via -Denvironment -->
 		<condition property="environment" value="local">
 			<not><isset property="environment" /></not>
@@ -71,6 +71,8 @@
 		</if>
 		<!-- Get Build Dependencies -->
  		<antcall target="getDependencies" />
+		<!-- Mark as init -->
+		<property name="src.isInit" value="true" />
 	</target>
 	
  	<!-- Build source distro -->
@@ -100,14 +102,9 @@
 		  </fileset>
 		</replaceregexp>
 		
-		<!-- Execute API Docs 
-		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}" verbose="true"/>
-		<delete file="${dir.build}/colddoc.html" />-->
-		<!-- Move API archive into exports 
-		<move todir="${dir.exports}">
-			<fileset file="workbench/api/exports/ContentBox_API_${contentbox.version}.zip" />
-		</move>-->
-		
+		<!-- API Docs -->
+		<antcall target="build.apidocs" />
+				
 		<!-- Activate DSN Creator link -->
 		<replace file="${dir.build}/Application.cfc" 
 				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
@@ -116,13 +113,8 @@
 		
 		<!-- Zip Source Release -->
 		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}" />
-		
 		<!-- Build Checksum -->
-		<checksum forceoverwrite="true" fileext=".md5">
-			<fileset dir="${dir.exports}">
-				<include name="*.zip" />
-			</fileset>
-		</checksum>
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_${contentbox.version}.zip" />
 		
 		<!-- Refactor indexes from Source For Express Edition: only use if derby else leave as is
 		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
@@ -135,6 +127,17 @@
 		<!-- Mark as Built -->
 		<property name="src.isBuilt" value="true" />
 	</target>
+ 	
+ 	<!-- Build API Docs -->
+ 	<target name="build.apidocs" description="Builds the api docs" depends="init">
+ 		<!-- Execute DocBox -->
+		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}&amp;path=${dir.api}" verbose="true"/>
+		<delete file="${dir.build}/colddoc.html" />
+		<!-- Zip API Docs -->
+		<zip destfile="${dir.exports}/ContentBoxDocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
+ 		<!-- Build Checksum -->
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/ContentBoxDocs-${contentbox.version}.zip" />
+ 	</target>
  	
  	<!-- Build war -->
  	<target name="build.war" description="Build a new ContentBox WAR distribution" depends="build.source">
@@ -200,8 +203,8 @@
  	
 	<!-- Build all releases-->
 	<target name="build.all" description="Builds All ContentBox Release Flavors" depends="build.express">
-		<!-- Perms for automated builds -->
-		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
+		<!-- Perms for automated builds
+		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" /> -->
 		<!-- Move BE to Artifacts if on staging -->
 		<if>
 			<equals arg1="${be.name}" arg2="" />
