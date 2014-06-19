@@ -31,10 +31,10 @@
 			   location="#prc.cbroot#/includes/cache")#
 
 	<!--- loop around the cssAppendList, to add page specific css --->
-	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
+	<cfloop list="#event.getValue( "cssAppendList", "", true )#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
 	</cfloop>
-	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
+	<cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 	<!--- JS --->
@@ -59,10 +59,10 @@
 	<script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
 	<script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
-	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
+	<cfloop list="#event.getValue( "jsAppendList", "", true )#" index="js">
 		<cfset addAsset("#prc.cbroot#/includes/js/#js#.js")>
 	</cfloop>
-	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
+	<cfloop list="#event.getValue( "jsFullAppendList", "", true )#" index="js">
 		<cfset addAsset("#js#.js")>
 	</cfloop>
 	<!--- cbadmin Event --->

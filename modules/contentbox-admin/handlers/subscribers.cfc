@@ -1,16 +1,14 @@
 /**
-* Manage system settings
+* Manage subscriptions
 */
 component extends="baseHandler"{
 
     // Dependencies
-    property name="commentSubscriptionService"     inject="id:commentSubscriptionService@cb";
-    property name="subscriberService" inject="id:subscriberService@cb";
+    property name="commentSubscriptionService"      inject="id:commentSubscriptionService@cb";
+    property name="subscriberService"               inject="id:subscriberService@cb";
     
     // pre handler
-    function preHandler(event,action,eventArguments){
-        var rc  = event.getCollection();
-        var prc = event.getCollection(private=true);
+    function preHandler( event, action, eventArguments, rc, prc ){
         // Tab control
         prc.tabStats = true;
     }
@@ -23,8 +21,8 @@ component extends="baseHandler"{
         prc.commentSubscriptions = commentSubscriptionService.getGroupedSubscriptions();
         prc.commentSubscriptionCount = commentSubscriptionService.getGroupedSubscriptionCount();
         prc.uniqueSubscriberCount = subscriberService.getUniqueSubscriberCount();
-        rc.cssAppendList = "../js/morris.js/morris";
-        rc.jsAppendList  = "morris.js/raphael-min,morris.js/morris.min";
+        prc.cssAppendList = "../js/morris.js/morris";
+        prc.jsAppendList  = "morris.js/raphael-min,morris.js/morris.min";
         // view
         event.setView( "subscribers/index" );
     }

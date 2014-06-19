@@ -16,14 +16,9 @@
             	</div>
             	<div id="topvisited" class="accordion-body collapse in">
               		<div class="accordion-inner">
-						<cfchart chartwidth="265" format="png" tipstyle="mouseOver" showlegend="false" >
-							<cfchartseries type="pie" colorlist="##B22222,##FF69B4,##FF8C00, ##1E90FF,##ADFF2F" datalabelstyle="value"  >
-								<cfloop array="#prc.topContent#" index="topContent">
-									<cfchartdata item="#topContent.getTitle()#.."  value="#topContent.getHits()#">
-								</cfloop>
-							</cfchartseries>
-						</cfchart>
-						
+						<!--- Top Visited Content Chart --->
+              			<div id="top-visited-chart"></div>
+              			<!--- Table Report --->
 						<table class="table table-condensed table-hover table-striped tablesorter" width="100%">
 							<thead>
 								<tr>
@@ -56,14 +51,9 @@
             	</div>
             	<div id="topcommented" class="accordion-body collapse">
               		<div class="accordion-inner">
-						<cfchart chartwidth="265" format="png" tipstyle="none" >
-							<cfchartseries type="bar" colorlist="##B22222,##FF69B4,##FF8C00, ##1E90FF,##ADFF2F" datalabelstyle="value">
-								<cfloop array="#prc.topCommented#" index="topCommented">
-									<cfchartdata item="#topCommented.getTitle()#"  value="#topCommented.getNumberOfComments()#">
-								</cfloop>
-							</cfchartseries>
-						</cfchart>
-						
+						<!--- Top Visited Content Chart --->
+              			<div id="top-commented-chart"></div>
+              			<!--- Table Report --->
 						<table class="table table-condensed table-hover table-striped tablesorter" width="100%">
 							<thead>
 								<tr>

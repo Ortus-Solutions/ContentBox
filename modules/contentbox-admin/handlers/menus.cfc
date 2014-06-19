@@ -95,8 +95,8 @@ component extends="baseHandler" {
         // get registered providers
         prc.providers = menuItemService.getProviders();
         // add assets
-        rc.cssAppendList = "nestable";       
-        rc.jsAppendList  = "jquery.nestable,bootstrap-confirmation";        
+        prc.cssAppendList = "nestable";       
+        prc.jsAppendList  = "jquery.nestable,bootstrap-confirmation";        
         // view
         event.setView( "menus/editor" );
     }
