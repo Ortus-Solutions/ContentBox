@@ -12,7 +12,7 @@
 	<!--- SES HTML Base --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>ContentBox Installer</title>
+    <title>#cb.r( "layout.installer@installer" )#</title>
 	<!--- Favicon --->
 	<link href="#prc.assetRoot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- StyleSheets --->
@@ -38,8 +38,21 @@
 					<img src="#prc.assetRoot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
 					<!--- Brand, future multi-site switcher --->
 					<a class="brand">
-						ContentBox Installer
+						#cb.r( "layout.installer@installer" )#
 					</a>
+					
+					<ul class="nav pull-right">
+						<li class="dropdown">
+							<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
+								<i class="icon-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
+								<ul role="menu" class="dropdown-menu">
+									<cfloop array="#prc.langs#" index="thisLang">
+									<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>
+									</cfloop>
+								</ul>
+							</a>
+						</li>
+					</ul>
 				</div> <!---end container --->
 		    </div> <!--- end navbar-inner --->
 	    </div> <!---end navbar --->
@@ -59,7 +72,7 @@
 		</div>
 		Copyright (C) #dateformat(now(),"yyyy")# 
 		<a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>.<br/>
-		<a href="http://www.ortussolutions.com">Need Professional Support, Architecture, Design, or Development?</a>
+		<a href="http://www.ortussolutions.com">#cb.r( "layout.ortus_poss@installer" )#</a>
 	</footer>
 	
 </body>

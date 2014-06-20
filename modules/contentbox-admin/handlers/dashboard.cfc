@@ -30,6 +30,10 @@ component extends="baseHandler"{
 		prc.xehLatestNews			= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
 		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
 		
+		// Extra JS/CSS
+		prc.cssAppendList = "../js/morris.js/morris";
+        prc.jsAppendList  = "morris.js/raphael-min,morris.js/morris.min";
+        
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
 		
@@ -56,8 +60,21 @@ component extends="baseHandler"{
 		// Few Reports
 		prc.topContent 		= contentService.getTopVisitedContent();
 		prc.topCommented 	= contentService.getTopCommentedContent();
-		
-		event.setView(view="dashboard/latestSnapshot", layout="ajax");
+
+		// convert report to chart data
+		prc.aTopContent = [];
+		for( var thisContent in prc.topContent ){
+			arrayAppend( prc.aTopContent, { "label" = thisContent.getTitle(), "value" = thisContent.gethits() } );
+		}
+		prc.aTopContent = serializeJSON( prc.aTopContent );
+		prc.aTopCommented = [];
+		for( var thisContent in prc.topCommented ){
+			arrayAppend( prc.aTopCommented, { "label" = thisContent.getTitle(), "value" = thisContent.getNumberOfComments() } );
+		}
+		prc.aTopCommented = serializeJSON( prc.aTopCommented );
+
+		// render view out.
+		event.setView( view="dashboard/latestSnapshot", layout="ajax" );
 	}
 	
 	// Latest Entries

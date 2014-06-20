@@ -16,10 +16,8 @@
 			    	<span class="icon-cog"></span>
 				    </button>
 			   		<ul class="dropdown-menu">
-			   			<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
-						<li><a href="javascript:quickPublish(false)"><i class="icon-globe"></i> Publish</a></li>
-						</cfif>
-						<li><a href="javascript:quickPublish(true)"><i class="icon-eraser"></i> Publish as Draft</a></li>
+						<li><a href="javascript:quickPublish( false )"><i class="icon-globe"></i> Publish</a></li>
+						<li><a href="javascript:quickPublish( true )"><i class="icon-eraser"></i> Publish as Draft</a></li>
 						<li><a href="javascript:quickSave()"><i class="icon-save"></i> Quick Save</a></li>
 			   		</ul>
 			    </div>
@@ -175,9 +173,7 @@
 						<div class="btn-group">
 						&nbsp;<input type="button" class="btn" value="Save" data-keybinding="ctrl+s" onclick="quickSave()">
 						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
-						<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
-						</cfif>
 						</div>
 					</div>
 	
@@ -190,7 +186,7 @@
 				#html.endFieldSet()#
 	
 				<!--- Accordion --->
-				<div id="accordion" class="accordion">
+				<div id="accordion" class="accordion" data-stateful="contentstore-sidebar">
 				    
                     <!---Begin Page Info--->
 					<cfif prc.content.isLoaded()>	
@@ -246,7 +242,46 @@
                   	</div>
                     </cfif>
                     <!---End content Info--->
-						
+					
+                    <!---Begin Related Content--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+                                <i class="icon-sitemap icon-large"></i> Related Content                                
+                            </a>
+
+                        </div>
+                        <div id="relatedcontent" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <cfset rcArgs = { relatedContent=prc.relatedContent }>
+                                #renderView( view="_tags/relatedContent", args=rcArgs )#
+                            </div>
+                        </div>
+                    </div>
+                    <cfelse>
+                        #html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
+                    </cfif>
+
+                    <!---Begin Linked Content--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_LINKED_CONTENT")>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
+                                <i class="icon-link icon-large"></i> Linked Content                                
+                            </a>
+
+                        </div>
+                        <div id="linkedcontent" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <cfset rcArgs = { linkedContent=prc.linkedContent, contentType=prc.content.getContentType() }>
+                                #renderView( view="_tags/linkedContent", args=rcArgs )#
+                            </div>
+                        </div>
+                    </div>
+                    </cfif>
+                    <!---End Linked Content--->
+
 					<!---Begin Modifiers--->
 					<cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS") AND prc.content.isLoaded()>
                     <div class="accordion-group">

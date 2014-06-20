@@ -25,18 +25,30 @@ limitations under the License.
 component{
 
 	// DI
-	property name="securityService" inject="id:securityService@cb";
-	property name="authorService" 	inject="id:authorService@cb";
+	property name="securityService" inject="securityService@cb";
+	property name="authorService" 	inject="authorService@cb";
 	property name="antiSamy"		inject="coldbox:plugin:AntiSamy";
+	property name="cb"				inject="cbhelper@cb";
 	
 	// Method Security
 	this.allowedMethods = {
 		doLogin = "POST",
 		doLostPassword = "POST"
 	};
+
+	function preHandler( event, currentAction, rc, prc ){
+		prc.langs 		= getModuleSettings( "contentbox" ).settings.languages;
+		prc.entryPoint 	= getModuleSettings( "contentbox-security" ).entryPoint;
+		prc.xehLang 	= event.buildLink( "#prc.entryPoint#/language" );
+	}
+
+	function changeLang( event, rc, prc ){
+		event.paramValue( "lang", "en_US" );
+		setFWLocale( rc.lang );
+		setNextEvent( prc.entryPoint );
+	}
 	
-	// login screen
-	function login(event,rc,prc){
+	function login( event, rc, prc ){
 		// exit handlers
 		prc.xehDoLogin 			= "#prc.cbAdminEntryPoint#.security.doLogin";
 		prc.xehLostPassword 	= "#prc.cbAdminEntryPoint#.security.lostPassword";
@@ -49,8 +61,7 @@ component{
 		event.setView(view="security/login");	
 	}
 	
-	// authenticate users
-	function doLogin(event,rc,prc){
+	function doLogin( event, rc, prc ){
 		// params
 		arguments.event.paramValue("rememberMe", false);
 		arguments.event.paramValue("_securedURL", "");
@@ -85,14 +96,13 @@ component{
 			// announce event
 			announceInterception("cbadmin_onBadLogin");
 			// message and redirect
-			getPlugin("MessageBox").warn("Invalid Credentials, try it again!");
+			getPlugin("MessageBox").warn( cb.r( "messages.invalid_credentials@security" ));
 			// Relocate
 			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
 	
-	// logout users
-	function doLogout(event,rc,prc){
+	function doLogout( event, rc, prc ){
 		// logout
 		securityService.logout();
 		// announce event
@@ -103,15 +113,13 @@ component{
 		setNextEvent("#prc.cbAdminEntryPoint#.security.login");
 	}
 	
-	// lost password screen
-	function lostPassword(event,rc,prc){
+	function lostPassword( event, rc, prc ){
 		prc.xehLogin 			= "#prc.cbAdminEntryPoint#.security.login";
 		prc.xehDoLostPassword 	= "#prc.cbAdminEntryPoint#.security.doLostPassword";
 		event.setView(view="security/lostPassword");	
 	}
 	
-	// do the lost password goodness
-	function doLostPassword(event,rc,prc){
+	function doLostPassword( event, rc, prc ){
 		var errors 	= [];
 		var oAuthor = "";
 		
@@ -122,14 +130,14 @@ component{
 		
 		// Validate email
 		if( NOT trim( rc.email ).length() ){
-			arrayAppend( errors, "Please enter an email address<br />" );	
+			arrayAppend( errors, "#cb.r( 'validation.need_email@security' )#<br />" );	
 		}
 		else{
 			// Try To get the Author
 			oAuthor = authorService.findWhere( { email = rc.email } );
 			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
 				// Don't give away that the email did not exist.
-				getPlugin("MessageBox").info( "Please check your inbox for our reset email that must be used within the next 15 minutes" );
+				getPlugin("MessageBox").info( cb.r( resource='messages.lostpassword_check', values="15" ) );
 				setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			}
 		}			
@@ -141,7 +149,7 @@ component{
 			// announce event
 			announceInterception( "cbadmin_onPasswordReminder", { author = oAuthor } );
 			// messagebox
-			getPlugin("MessageBox").info( "Password reminder sent! Please check your inbox for our reset email that must be used within the next 15 minutes" );
+			getPlugin("MessageBox").info( cb.r( resource='messages.reminder_sent', values="15" ) );
 		}
 		else{
 			// announce event
@@ -153,8 +161,7 @@ component{
 		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
 	
-	// Verify Reset
-	function verifyReset(event,rc,prc){
+	function verifyReset( event, rc, prc ){
 		arguments.event.paramValue("token", "");
 
 		// Validate token
@@ -163,13 +170,13 @@ component{
 			// announce event
 			announceInterception( "cbadmin_onPasswordReset", { author = results.author } );
 			// Messagebox
-			getPlugin("MessageBox").info( "Wohoo! Your password has been reset and you will receive an email with your new security password." );
+			getPlugin("MessageBox").info( cb.r( "messages.password_reset@security" ) );
 		}
 		else{
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
 			// messagebox
-			getPlugin("MessageBox").error( "The security reset token passed is invalid or has expired." );
+			getPlugin("MessageBox").error( cb.r( "messages.invalid_token@security" ) );
 		}
 		
 		// Relcoate to login

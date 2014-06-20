@@ -81,7 +81,7 @@ GOD
 - Sana Ullah
 - Josh Giese
 - Kalen Gibbons
-- Veronica Monedero & Alexia Majano (Thanks babes!)
+- Veronica Monedero, Lucas & Alexia Majano (Thanks babes!)
 
 ********************************************************************************
 CONTENTBOX IMPORTANT LINKS

@@ -30,7 +30,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Admin";
-	this.version			= "1.6.0.@build.number@";
+	this.version			= "2.0.0.@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
@@ -62,6 +62,7 @@ component {
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
 			{pattern="/comments/page/:page",handler="comments"},
 			{pattern="/contentStore/page/:page",handler="contentStore"},
+			{pattern="/menus/page/:page",handler="menus"},
 			{pattern="/mediamanager/library/:library", handler="mediamanager", action="index"},
 			{pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
 			{pattern="/:handler/:action?"}
@@ -99,7 +100,8 @@ component {
 				// Roles events
 				"cbadmin_preRoleSave", "cbadmin_postRoleSave", "cbadmin_preRoleRemove" , "cbadmin_postRoleRemove" ,
 				// Dashboard events
-				"cbadmin_onDashboard", "cbadmin_preDashboardContent", "cbadmin_postDashboardContent", "cbadmin_preDashboardSideBar", "cbadmin_postDashboardSideBar", "cbadmin_onDashboardTabNav", "cbadmin_onDashboardTabContent",
+				"cbadmin_onDashboard", "cbadmin_preDashboardContent", "cbadmin_postDashboardContent", "cbadmin_preDashboardSideBar", "cbadmin_postDashboardSideBar", 
+				"cbadmin_onDashboardTabNav", "cbadmin_preDashboardTabContent", "cbadmin_postDashboardTabContent",
 				// Security events
 				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout","cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder", "cbadmin_onPasswordReset", "cbadmin_onInvalidPasswordReset",
 				// Settings events
@@ -111,7 +113,9 @@ component {
 				// Layout Themes
 				"cbadmin_onLayoutActivation", "cbadmin_onLayoutDeactivation",
 				// Version Control
-				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback"
+				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback",
+				// Menu events
+				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove"
 			])
 		};
 
@@ -119,7 +123,9 @@ component {
 		interceptors = [
 			// CB Admin Request Interceptor
 			{ class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
-			{ class="#moduleMapping#.interceptors.CommentCleanup" }
+			{ class="#moduleMapping#.interceptors.CommentCleanup" },
+			{ class="#moduleMapping#.interceptors.Subscription" },
+			{ class="#moduleMapping#.interceptors.MenuCleanup" }
 		];
 		
 	}

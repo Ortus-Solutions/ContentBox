@@ -23,7 +23,7 @@ The arguments you can use are:
 	this.author 			= "Ortus Solutions";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "A file-directory browser and selector";
-	this.version			= "1.8";
+	this.version			= "1.9.0";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -36,9 +36,9 @@ The arguments you can use are:
 		// module settings - stored in modules.name.settings
 		settings = {
 			// The title name for usage inline and the layout
-			title = "ColdBox FileBrowser v#this.version#",
+			title = "ContentBox FileBrowser v#this.version#",
 			// the directory root path to start the visualizer on, absolute path, set it to contentbox default location
-			directoryRoot = expandPath("/contentbox/content"),
+			directoryRoot = expandPath( "/contentbox/content" ),
 			// Secure the visualization or creation of stuff above the directory root or not
 			traversalSecurity = true,
 			// Show files on the visualizer or not
@@ -55,6 +55,8 @@ The arguments you can use are:
 			acceptMimeTypes = "",
 			// Name filtering applies to both files and directories. This is also a regex
 			nameFilter = ".*",
+			// Exclusion Filter: A list of files/directory regex names to exclude from showing
+			excludeFilter = "Application\.cfc",
 			// Extension filtering that applies to file extensions to display, matches the filter argument to directoryList()
 			extensionFilter = "",
 			// Image Name filtering applies to both files and directories. This is also a regex.  Where the filterType=image.
@@ -76,14 +78,6 @@ The arguments you can use are:
 				// max multiple upload files
 				maxfiles = 25	
 			},
-			// Uploadify Settings
-			uploadify = {
-				fileDesc = "All Files",
-				fileExt	 = "*.*;",
-				multi 	 = true,
-				sizeLimit = 0,
-				customJSONOptions = ""
-			},
 			useMediaPath = false,
 			mediaPath = "__media"
 		};
@@ -93,6 +87,13 @@ The arguments you can use are:
 		if (right(settings.directoryRoot,1) EQ "/") {
 			settings.directoryRoot = left(settings.directoryRoot,len(settings.directoryRoot)-1);
 		}
+
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"fb" = "#moduleMapping#/includes/i18n/fb"
+		  	}
+		};
 
 		// Layout Settings
 		layoutSettings = {

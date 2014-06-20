@@ -8,7 +8,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "The ContentBox installer module";
-	this.version			= "1.6.0.@build.number@";
+	this.version			= "2.0.0.@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbinstaller";
@@ -20,17 +20,30 @@ component {
 			defaultLayout = "simple.cfm"
 		};
 		
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"installer" = "#moduleMapping#/includes/i18n/installer"
+		  	}
+		};
+		
+		// Settings
+		settings = {
+			languages = [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
+		};
+		
 		// SES Routes
 		routes = [
-			{pattern="/", handler="home", action="index"},
-			{pattern="/install", handler="home", action="install"},
-			{pattern="/finished", handler="home", action="finished"},
-			{pattern="/:handler/:action?"}	
+			{ pattern="/", handler="home", action="index" },
+			{ pattern="/language/:lang", handler="home", action="changelang" },
+			{ pattern="/install", handler="home", action="install" },
+			{ pattern="/finished", handler="home", action="finished" },
+			{ pattern="/:handler/:action?" }	
 		];
 		
 		// Binder
-		binder.map("InstallerService@cbi").to("#moduleMapping#.model.InstallerService");
-		binder.map("SetupBean@cbi").to("#moduleMapping#.model.Setup");
+		binder.map( "InstallerService@cbi" ).to( "#moduleMapping#.model.InstallerService" );
+		binder.map( "SetupBean@cbi" ).to( "#moduleMapping#.model.Setup" );
 	}
 	
 	/**

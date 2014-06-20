@@ -97,10 +97,11 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	
 	/**
 	* Get a flat representation of this page
+	* slugCache.hint Cache of slugs to prevent infinite recursions
 	*/
-	function getMemento(){
+	function getMemento( array slugCache=[] ){
 		var pList = listToArray( "layout,mobileLayout,order,showInMenu,excerpt" );
-		var result = super.getMemento();
+		var result = super.getMemento( argumentCollection=arguments );
 		
 		// Local Memento Properties
 		for(var thisProp in pList ){

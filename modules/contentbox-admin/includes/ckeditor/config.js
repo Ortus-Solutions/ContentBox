@@ -15,7 +15,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.allowedContent = true;
 	config.removePlugins = 'autogrow';
 	// Allow i,a,span empty tags
-	config.protectedSource.push( /<(i|span|a)[^>]*><\/(i|span|a)>/g );
+	config.protectedSource.push( /<(i|span|a) [^>]*><\/(i|span|a)>/g );
 	//config.protectedSource.push( /<\/(i|span|a)>/g );
 	//config.protectedSource.push( /<(i|span|a) *?\>/g );
 };

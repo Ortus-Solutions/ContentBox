@@ -48,7 +48,7 @@ Description :
 				// Scope Storages
 				scopeStorage = createObject("component","coldbox.system.core.collections.ScopeStorage").init(),
 				// Version
-				version  = "1.8.0.00054",
+				version  = "1.8.0.00076",
 				// The Configuration Binder object
 				binder   = "",
 				// ColdBox Application Link

@@ -11,9 +11,9 @@
 <script type="text/javascript">
 $( document ).ready( function() {
     // register listeners
-    $( '##widget-button-insert' ).on( 'click', insertCBWidget );
-    $( '##widget-button-update' ).on( 'click', updateCBWidget );
-    $( '.widget-preview-refresh' ).on( 'click', updatePreview );
+    $( '##widget-button-insert' ).off( 'click.inWidget' ).on( 'click.inWidget', insertCBWidget );
+    $( '##widget-button-update' ).off( 'click.upWidget' ).on( 'click.upWidget', updateCBWidget );
+    $( '.widget-preview-refresh' ).off( 'click.refWidget' ).on( 'click.refWidget', updatePreview );
     $( '.widget-arguments' ).delegate( 'input,select', 'change', function(){
         if( !$( this ).hasClass( 'renderMethodSelect' ) ) {
             updatePreview();
@@ -58,10 +58,6 @@ function updateArgs( select ) {
             modal: false
         },
         success: function( data ) {
-            // before updating content, unregister listeners
-            $( '##widget-button-insert' ).off( 'click', insertCBWidget );
-            $( '##widget-button-update' ).off( 'click', updateCBWidget );
-            $( '.widget-preview-refresh' ).off( 'click', updatePreview );
             // update content
             $( '##widget-preview-wrapper' ).parent().html( data );
         }

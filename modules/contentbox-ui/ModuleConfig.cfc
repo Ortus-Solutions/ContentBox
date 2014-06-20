@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox UI Module";
-	this.version			= "1.6.0.@build.number@";
+	this.version			= "2.0.0.@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 
@@ -59,7 +59,15 @@ component {
 			{pattern="/__media", handler="media", action="index"},
 			// captcha delivery
 			{pattern="/__captcha", handler="media", action="captcha"},
-			
+			// subscribe link
+			{pattern="/__subscribe", handler="subscription", action="subscribe"},
+			// manage subscriptions
+			{pattern="/__subscriptions/:subscribertoken", handler="subscription", action="getSubscriptions"},
+			// remove subscriptions
+			{pattern="/__removesubscriptions/", handler="subscription", action="removeSubscriptions"},
+			// unsubscribe link for single subscription
+			{pattern="/__unsubscribe/:subscriptionToken", handler="subscription", action="unsubscribe" },
+
 			/************************************** RSS ROUTES *********************************************/
 
 			// Global Page RSS feeds with filtering

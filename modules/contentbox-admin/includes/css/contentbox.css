@@ -330,3 +330,10 @@ a.accordion-toggle { text-decoration:none; }
 	#simple-container { padding-top: 0; }
 	.navbar-fixed-top { margin-bottom: 0 !important; }
 }
+@media (max-width: 1024px) and (min-width:979px) {
+    #adminMenuBarContent.collapse{ width: 990px;}
+}
+@media (min-width: 768px) and (max-width: 820px){
+    #main-sidebar{ width: 30%}
+    #main-content{ width: 100%}
+}

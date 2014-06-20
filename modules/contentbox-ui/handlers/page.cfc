@@ -130,16 +130,16 @@ component extends="content" singleton{
 			// missing page
 			prc.missingPage 	 = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
+			
+			// announce event
+			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
 
 			// set 404 headers
 			event.setHTTPHeader("404","Page not found");
 
 			// set skin not found
 			event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
-				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");
-				
-			// announce event
-			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
+				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");				
 
 		}
 	}
@@ -204,7 +204,7 @@ component extends="content" singleton{
 	function commentPost( event, rc, prc ){
 		// incoming params
 		event.paramValue( "contentID", "" );
-
+		event.paramValue( "subscribe", false );
 		// Try to retrieve page by contentID
 		var page = pageService.get( rc.contentID );
 
@@ -215,7 +215,7 @@ component extends="content" singleton{
 		validateCommentPost( event, rc, prc, page );
 
 		// Valid commenting, so go and save
-		saveComment( page );
+		saveComment( page, rc.subscribe );
 	}
 
 	/************************************** PRIVATE *********************************************/

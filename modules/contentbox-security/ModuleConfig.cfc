@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Security Module";
-	this.version			= "1.6.0.@build.number@";
+	this.version			= "2.0.0.@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbAdmin/security";
@@ -38,12 +38,20 @@ component {
 
 		// Layout Settings
 		layoutSettings = { defaultLayout = "simple.cfm" };
+	
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"security" = "#moduleMapping#/includes/i18n/security"
+		  	}
+		};
 
 		// SES Routes
 		routes = [
-			{pattern="/", handler="security", action="login" },
-			{pattern="/:action", handler="security"},
-			{pattern="/:handler/:action?"}
+			{ pattern="/", handler="security", action="login" },
+			{ pattern="/language/:lang", handler="security", action="changelang" },
+			{ pattern="/:action", handler="security" },
+			{ pattern="/:handler/:action?" }
 		];
 		
 		// Custom Declared Points
@@ -58,13 +66,13 @@ component {
 		// interceptors
 		interceptors = [
 			// ContentBox security
-			{class="coldbox.system.interceptors.Security",
-			 name="security@cb",
-			 properties={
+			{ class="coldbox.system.interceptors.Security",
+			  name="security@cb",
+			  properties={
 			 	 rulesSource 	= "model",
 			 	 rulesModel		= "securityRuleService@cb",
 			 	 rulesModelMethod = "getSecurityRules",
-			 	 validatorModel = "securityService@cb"}
+			 	 validatorModel = "securityService@cb" }
 			}
 		];
 
