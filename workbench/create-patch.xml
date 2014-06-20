@@ -62,7 +62,7 @@
 			<arg value="log" />
 			<arg value="-n" />
 			<arg value="1" />
-			<arg value='--pretty=format:"%H"' />
+			<arg value='--pretty=format:%H' />
 		</exec>
 	</target>
 	
