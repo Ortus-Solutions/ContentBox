@@ -266,14 +266,10 @@ Quick and Dirty Feed Dump:
 			<!--- Secure cache read --->
 			<cflock name="#getLockName()#" type="exclusive" timeout="30" throwontimeout="true">
 				<cfif isFeedCached(arguments.feedURL)>
-					<cfif structKeyExists(server,"railo")>
-						<cfset results = evaluate(fileRead('#cacheFile#.xml'))>
-					<cfelse>
-						<cfset fileIn = CreateObject("java","java.io.FileInputStream").init('#cacheFile#.xml')>
-						<cfset objectIn = CreateObject("java","java.io.ObjectInputStream").init(fileIn)>
-						<cfset results = objectIn.readObject()>
-						<cfset objectIn.close()>
-					</cfif>
+					<cfset fileIn = CreateObject("java","java.io.FileInputStream").init('#cacheFile#.xml')>
+					<cfset objectIn = CreateObject("java","java.io.ObjectInputStream").init(fileIn)>
+					<cfset results = objectIn.readObject()>
+					<cfset objectIn.close()>
 				</cfif>
 			</cflock>
 		</cfif>
@@ -298,14 +294,10 @@ Quick and Dirty Feed Dump:
 			<cfset cacheFile = getCacheLocation() & "/" & cacheKey>
 			<!--- Secure cache write --->
 			<cflock name="#getLockName()#" type="exclusive" timeout="30" throwontimeout="true">
-				<cfif structKeyExists(server,"railo")>
-					<cfset fileWrite('#cacheFile#.xml', serialize(arguments.feedStruct))>
-				<cfelse>
-					<cfset fileOut = CreateObject("java","java.io.FileOutputStream").init('#cacheFile#.xml')>
-					<cfset objectOut = CreateObject("java","java.io.ObjectOutputStream").init(fileOut)>
-					<cfset objectOut.writeObject(arguments.feedStruct)>
-					<cfset objectOut.close()>
-				</cfif>
+				<cfset fileOut = CreateObject("java","java.io.FileOutputStream").init('#cacheFile#.xml')>
+				<cfset objectOut = CreateObject("java","java.io.ObjectOutputStream").init(fileOut)>
+				<cfset objectOut.writeObject(arguments.feedStruct)>
+				<cfset objectOut.close()>
 			</cflock>
 		</cfif>
 	</cffunction>

@@ -25,6 +25,7 @@ limitations under the License.
 component extends="coldbox.system.Interceptor"{
 
 	property name="settingService"  inject="id:settingService@cb";
+	property name="CBHelper"  		inject="id:CBHelper@cb";
 
 	/**
 	* Configure CB Request
@@ -34,54 +35,28 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess(event, interceptData) eventPattern="^contentbox-ui"{
-		var prc = event.getCollection(private=true);
-		var rc	= event.getCollection();
-		
+	function preProcess( event, interceptData, buffer ) eventPattern="^contentbox-ui"{
 		// Verify ContentBox installer has been ran?
 		if( !settingService.isCBReady() ){
-			setNextEvent('cbInstaller');
+			setNextEvent( "cbInstaller" );
 		}
 		
-		// store module root
-		prc.cbRoot = getContextRoot() & event.getModuleRoot('contentbox');
-		// store module entry point
-		prc.cbEntryPoint = getProperty("entryPoint");
-		// store site entry point
-		prc.cbAdminEntryPoint = getModuleSettings("contentbox-admin").entryPoint;
-		// Place global cb options on scope
-		prc.cbSettings = settingService.getAllSettings(asStruct=true);
-		// Place the default layout on scope
-		prc.cbLayout = prc.cbSettings.cb_site_layout;
-		// Place layout root location
-		prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & prc.cbLayout;
-		// Place widgets root location
-		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
-		// announce event
-		announceInterception("cbui_preRequest");
-		
-		/************************************** FORCE SSL *********************************************/
-		
-		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
-			setNextEvent(event=event.getCurrentRoutedURL(), ssl=true);
-		}
+		// Prepare UI Request
+		CBHelper.prepareUIRequest();
 	}
 
 	/**
 	* Fired on contentbox requests
 	*/
-	function postProcess(event, interceptData) eventPattern="^contentbox-ui"{
-		var prc = event.getCollection(private=true);
-		var rc	= event.getCollection();
-
+	function postProcess(  event, interceptData, buffer ) eventPattern="^contentbox-ui"{
 		// announce event
-		announceInterception("cbui_postRequest");
+		announceInterception( "cbui_postRequest" );
 	}
 
 	/*
 	* Renderer helper injection
 	*/
-	function afterPluginCreation(event,interceptData){
+	function afterPluginCreation( event, interceptData, buffer ){
 		var prc = event.getCollection(private=true);
 		
 		// check for renderer

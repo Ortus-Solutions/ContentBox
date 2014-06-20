@@ -5,16 +5,16 @@
 <cfscript>
 	// Asset root
 	assetRoot = "../contentbox-admin";
-	
+
 	// Create or Use
 	if( action eq "process" ){
-		
+
 		// Process or create?
 		if( dsnCreated ){
 			// Update datasource
 			request.cfHelper.updateAPP( dsnName );
 			// Relocate to installer now
-			location("../../index.cfm");
+			location( url="../../index.cfm", addToken="false");
 		}
 		// Create new DSN
 		else{
@@ -30,7 +30,7 @@
 				// Update APP DSN Now!
 				request.cfHelper.updateAPP( dsnCreateName );
 				// Relocate to installer now
-				location("../../index.cfm?cbInstaller=true");
+				location( url="../../index.cfm?cbInstaller=true", addToken="false" );
 			}
 			else{
 				// Mark Errors
@@ -38,5 +38,4 @@
 			}
 		}
 	}
-
 </cfscript>

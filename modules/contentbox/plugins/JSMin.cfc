@@ -75,7 +75,7 @@ component extends="coldbox.system.Plugin" singleton{
 
 		// Plugin Properties
 		setpluginName( "JSMin" );
-		setpluginVersion( "3.1" );
+		setpluginVersion( "4.1" );
 		setpluginDescription( "A plugin that minifies js/css/less files with style!" );
 		setpluginAuthor( "Ortus Solutions, Corp" );
 		setpluginAuthorURL( "http://www.ortussolutions.com" );
@@ -141,7 +141,7 @@ component extends="coldbox.system.Plugin" singleton{
 				   "Please use the jsmin_cacheLocation setting or the 'location' arguments",
 				   "JSMin.InvalidCacheLocations");
 		}
-		
+
 		// enabled? If not, just render out links
 		if( not getSetting( "jsmin_enable" ) ){
 			return renderLinks( arguments.assets );
@@ -243,7 +243,7 @@ component extends="coldbox.system.Plugin" singleton{
 	* @output.hint The output LESS absolute file location
 	*/
 	function compileLess(required input, output){
-		var compiler = instance.javaLoader.create( "com.asual.lesscss.LessEngine" );
+		var compiler = instance.javaLoader.create( "org.lesscss.LessCompiler" );
 		
 		// Do we have an output file
 		if( structKeyExists( arguments, "output") ){
@@ -272,7 +272,7 @@ component extends="coldbox.system.Plugin" singleton{
 	*/
 	function compileLessSource(required string input, output){
 		// Compile it
-		var results = instance.javaLoader.create( "com.asual.lesscss.LessEngine" ).compile( arguments.input );
+		var results = instance.javaLoader.create( "org.lesscss.LessCompiler" ).compile( arguments.input );
 		// Compile to output?
 		if( structKeyExists( arguments, "output") ){
 			fileWrite( arguments.output, results );
@@ -364,7 +364,7 @@ component extends="coldbox.system.Plugin" singleton{
 			// Media Query Fix
 			var sbString = trim( replace( sb.toString(), " and(", " and (", "all" ) );
 			// Class Select Fix
-			sbString = trim( REreplace( sb.toString(), "\b\[class", " [class", "all" ) );
+			sbString = trim( REreplace( sbString, "\b\[class", " [class", "all" ) );
 			
 			// Write it out
 			tempFileName = hash( sbString, "MD5" ) & ".cache." & listLast( compressedFiles[ 1 ], "." );

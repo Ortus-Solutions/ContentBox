@@ -52,7 +52,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			authorName	= author.getName(),
 			authorRole	= author.getRole().getRole(),
 			authorEmail	= author.getEmail(),
-			authorURL 	= CBHelper.linkAdmin("authors.editor.authorID.#author.getAuthorID()#"),
+			authorURL 	= CBHelper.linkAdmin( event="authors.editor.authorID.#author.getAuthorID()#", ssl=settings.cb_admin_ssl ),
 			currentAuthor		= currentAuthor.getName(),
 			currentAuthorEmail 	= currentAuthor.getEmail()
 		};
@@ -141,7 +141,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			entryTitle			= entry.getTitle(),
 			entryExcerpt		= "",
-			entryURL			= CBHelper.linkEntry( entry ),
+			entryURL			= CBHelper.linkEntry( entry=entry, ssl=settings.cb_site_ssl ),
 			entryAuthor			= currentAuthor.getName(),
 			entryAuthorEmail 	= currentAuthor.getEmail(),
 			entryIsPublished	= entry.getIsPublished(),
@@ -196,7 +196,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			entryTitle			= entry.getTitle(),
 			entryExcerpt		= "",
-			entryURL			= CBHelper.linkEntry( entry ),
+			entryURL			= CBHelper.linkEntry( entry=entry, ssl=settings.cb_site_ssl ),
 			entryAuthor			= currentAuthor.getName(),
 			entryAuthorEmail 	= currentAuthor.getEmail()
 		};
@@ -247,7 +247,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		// get mail payload
 		var bodyTokens = {
 			pageTitle			= page.getTitle(),
-			pageURL				= CBHelper.linkPage( page ),
+			pageURL				= CBHelper.linkPage( page=page, ssl=settings.cb_site_ssl ),
 			pageAuthor			= currentAuthor.getName(),
 			pageAuthorEmail 	= currentAuthor.getEmail(),
 			pageIsPublished		= page.getIsPublished(),
@@ -302,7 +302,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			pageTitle			= page.getTitle(),
 			pageExcerpt			= "",
-			pageURL				= CBHelper.linkPage( page ),
+			pageURL				= CBHelper.linkPage( page=page, ssl=settings.cb_site_ssl ),
 			pageAuthor			= currentAuthor.getName(),
 			pageAuthorEmail 	= currentAuthor.getEmail()
 		};
@@ -359,7 +359,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			contentIsPublished		= content.getIsPublished(),
 			contentPublishedDate	= content.getDisplayPublishedDate(),
 			contentExpireDate		= content.getDisplayExpireDate(),
-			contentURL 				= arguments.event.buildLink( "#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#" ),
+			contentURL 				= arguments.event.buildLink( linkto="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
 			contentExcerpt			= content.renderContentSilent( content.getContentVersions()[ 1 ].getContent() )
 		};
 		
@@ -409,7 +409,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			contentIsPublished		= content.getIsPublished(),
 			contentPublishedDate	= content.getDisplayPublishedDate(),
 			contentExpireDate		= content.getDisplayExpireDate(),
-			contentURL 				= arguments.event.buildLink( "#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#" ),
+			contentURL 				= arguments.event.buildLink( linkto="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
 			contentExcerpt			= content.renderContentSilent( content.getContentVersions()[ 1 ].getContent() )
 		};
 		

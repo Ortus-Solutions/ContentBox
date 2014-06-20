@@ -5,8 +5,8 @@
 	<meta charset="utf-8">
 	<meta name="generator" content="TestBox v#testbox.getVersion()#">
 	<title>Pass: #results.getTotalPass()# Fail: #results.getTotalFail()# Errors: #results.getTotalError()#</title>
-	<link href="/coldbox/system/testing/reports/assets/css/simple.css" rel="stylesheet">
-	<script src="/coldbox/system/testing/reports/assets/js/jquery.js"></script>
+	<script><cfinclude template="/coldbox/system/testing/reports/assets/js/jquery.js"></script>
+	<style><cfinclude template="/coldbox/system/testing/reports/assets/css/simple.css"></style>
 	<script>
 	$(document).ready(function() {
 		// spec toggler
@@ -87,6 +87,11 @@
 
 <!--- Bundle Info --->
 <cfloop array="#bundleStats#" index="thisBundle">
+	<!--- Skip if not in the includes list --->
+	<cfif len( url.testBundles ) and !listFindNoCase( url.testBundles, thisBundle.path )>
+		<cfcontinue>
+	</cfif>
+	<!--- Bundle div --->
 	<div class="box" id="bundleStats_#thisBundle.path#">
 		
 		<!--- bundle stats --->
@@ -98,6 +103,12 @@
 		[ <span class="specStatus skipped" 	data-status="skipped" data-bundleid="#thisBundle.id#">Skipped: #thisBundle.totalSkipped#</span> ]
 		[ <span class="reset" title="Clear status filters">Reset</span> ]
 		
+		<!-- Globa Error --->
+		<cfif !isSimpleValue( thisBundle.globalException )>
+			<h2>Global Bundle Exception<h2>
+			<cfdump var="#thisBundle.globalException#" />
+		</cfif>
+
 		<!-- Iterate over bundle suites -->
 		<cfloop array="#thisBundle.suiteStats#" index="suiteStats">
 			<div class="suite #lcase( suiteStats.status)#" data-bundleid="#thisBundle.id#">
@@ -147,7 +158,7 @@
 						<a href="#baseURL#&testSpecs=#URLEncodedFormat( local.thisSpec.name )#&testBundles=#URLEncodedFormat( arguments.bundleStats.path )#" class="#lcase( local.thisSpec.status )#">#local.thisSpec.name# (#local.thisSpec.totalDuration# ms)</a>
 						
 						<cfif local.thisSpec.status eq "failed">
-							- <strong>#local.thisSpec.failMessage#</strong>
+							- <strong>#htmlEditFormat( local.thisSpec.failMessage )#</strong>
 							  <button onclick="toggleDebug( '#local.thisSpec.id#' )" title="Show more information">+</button><br>
 							<div class="box debugdata" data-specid="#local.thisSpec.id#">
 								<cfdump var="#local.thisSpec.failorigin#" label="Failure Origin">
@@ -155,7 +166,7 @@
 						</cfif>
 						
 						<cfif local.thisSpec.status eq "error">
-							- <strong>#local.thisSpec.error.message#</strong>
+							- <strong>#htmlEditFormat( local.thisSpec.error.message )#</strong>
 							  <button onclick="toggleDebug( '#local.thisSpec.id#' )" title="Show more information">+</button><br>
 							<div class="box debugdata" data-specid="#local.thisSpec.id#">
 								<cfdump var="#local.thisSpec.error#" label="Exception Structure">

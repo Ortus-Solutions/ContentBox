@@ -22,6 +22,8 @@ component accessors="true"{
 	property name="reporter";
 	// The configuration options attached to this runner
 	property name="options";
+    // Last TestResult in case runner wants to inspect it
+    property name="result";
 			
 	/**
 	* Constructor
@@ -40,7 +42,7 @@ component accessors="true"{
 	){
 		
 		// TestBox version
-		variables.version 	= "1.0.0.00054";
+		variables.version 	= "1.1.0.00076";
 		variables.codename 	= "";
 		// init util
 		variables.utility = new coldbox.system.core.util.Util();
@@ -92,6 +94,8 @@ component accessors="true"{
 		if( structKeyExists( arguments, "reporter" ) ){ variables.reporter = arguments.reporter; }
 		// run it and get results
 		var results = runRaw( argumentCollection=arguments );
+		// store latest results
+        variables.result = results;
 		// return report
 		return produceReport( results );
 	}
@@ -284,6 +288,7 @@ component accessors="true"{
 			case "dot" : { return new "coldbox.system.testing.reports.DotReporter"(); }
 			case "text" : { return new "coldbox.system.testing.reports.TextReporter"(); }
 			case "junit" : { return new "coldbox.system.testing.reports.JUnitReporter"(); }
+			case "antjunit" : { return new "coldbox.system.testing.reports.ANTJUnitReporter"(); }
 			case "console" : { return new "coldbox.system.testing.reports.ConsoleReporter"(); }
 			case "min" : { return new "coldbox.system.testing.reports.MinReporter"(); }
 			case "tap" : { return new "coldbox.system.testing.reports.TapReporter"(); }
@@ -333,7 +338,7 @@ component accessors="true"{
 	* @bundlePath.hint The path to the Bundle CFC
 	*/ 
 	private any function getBundle( required bundlePath ){
-		var bundle		= new "#arguments.bundlePath#"();
+		var bundle		= createObject( "component", "#arguments.bundlePath#" );
 		var familyPath 	= "coldbox.system.testing.BaseSpec";
 		
 		// check if base spec assigned

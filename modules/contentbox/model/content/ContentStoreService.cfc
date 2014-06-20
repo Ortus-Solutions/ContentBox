@@ -24,6 +24,9 @@ limitations under the License.
 */
 component extends="ContentService" singleton{
 
+	// Inject generic content service
+	property name="contentService" inject="id:ContentService@cb";
+
 	/**
 	* Constructor
 	*/
@@ -35,28 +38,20 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* Save content
-	* @content.hint The content object
+	* Save content store object
+	* @content.hint The content store object
 	* @transactional.hint Use a transaction or not.
 	*/
-	function saveContent(
-		any content, 
-		boolean transactional=true){
+	function saveContent( required any content, boolean transactional=true ){
 		
-		var c = newCriteria();
-
-		// Prepare for slug uniqueness
-		c.eq("slug", arguments.content.getSlug() );
-		if( arguments.content.isLoaded() ){ c.ne("contentID", arguments.content.getContentID() ); }
-
 		// Verify uniqueness of slug
-		if( c.count() GT 0){
+		if( !contentService.isSlugUnique( slug=arguments.content.getSlug(), contentID=arguments.content.getContentID() ) ){
 			// make slug unique
-			arguments.content.setSlug( arguments.content.getSlug() & "-#left(hash(now()),5)#");
+			arguments.content.setSlug( getUniqueSlugHash( arguments.content.getSlug() ) );
 		}
 
 		// save entry
-		save(entity=arguments.content, transactional=arguments.transactional);
+		save( entity=arguments.content, transactional=arguments.transactional );
 	}
 
 	/**

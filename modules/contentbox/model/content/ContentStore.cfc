@@ -49,11 +49,12 @@ component persistent="true" entityname="cbContentStore" table="cb_contentStore" 
 	/************************************** PUBLIC *********************************************/
 	
 	/**
-	* Get a flat representation of this page
+	* Get a flat representation of this contentStore
+	* slugCache.hint Cache of slugs to prevent infinite recursions
 	*/
-	function getMemento(){
+	function getMemento( array slugCache=[] ){
 		var pList = listToArray( "description" );
-		var result = super.getMemento();
+		var result = super.getMemento( argumentCollection=arguments );
 		
 		// Local Memento Properties
 		for(var thisProp in pList ){

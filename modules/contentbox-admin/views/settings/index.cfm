@@ -82,6 +82,17 @@
             						#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
                                 </div>
                             </div>	
+
+                            <!--- Powered by Header --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_site_poweredby",content="Send ContentBox Identity Header:")#
+                                <div class="controls">
+                                    <small>ContentBox will emit an indentiy header 'x-powered-by:contentbox' if enabled.</small><br/>
+                                    #html.radioButton(name="cb_site_poweredby",checked=prc.cbSettings.cb_site_poweredby,value=true)# Yes
+                                    #html.radioButton(name="cb_site_poweredby",checked=not prc.cbSettings.cb_site_poweredby,value=false)# No
+                                </div>
+                            </div>
+
     					</fieldset>
     					<!---Blog Entries --->
     					<fieldset>
@@ -363,6 +374,17 @@
     								#html.radioButton(name="cb_contentstore_caching",checked=not prc.cbSettings.cb_contentstore_caching,value=false)# No
                                 </div>
                             </div>
+
+                            <!--- Content 203 Header --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_content_cachingHeader",content="Send 203 Caching Header:")#
+                                <div class="controls">
+                                    <small>ContentBox will emit a 203 cache header to indicate that a page is resolved with caching.</small><br/>
+                                    #html.radioButton(name="cb_content_cachingHeader",checked=prc.cbSettings.cb_content_cachingHeader,value=true)# Yes
+                                    #html.radioButton(name="cb_content_cachingHeader",checked=not prc.cbSettings.cb_content_cachingHeader,value=false)# No
+                                </div>
+                            </div>
+
     						<!--- Content Cache Name --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_content_cacheName">Content Cache Provider:</label>
@@ -557,34 +579,6 @@
     						<!--- Quick View --->
     						#html.inputField(type="numeric",name="cb_media_quickViewWidth",label="Quick View Image Width: (pixels)",value=prc.cbSettings.cb_media_quickViewWidth,class="textfield width98",title="The width in pixels of the quick view dialog",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
     						
-    					</fieldset>
-    					<!--- Uplodify --->
-    					<fieldset>
-    					<legend><i class="icon-upload-alt icon-large"></i> <strong>Uploadify Integration</strong></legend>
-    						<p>From here you control the <a href="http://www.uploadify.com/" target="_blank">Uploadify</a> integration settings.</p>
-    
-    						<!--- descrip[tion] --->
-    						#html.textField(name="cb_media_uplodify_fileDesc",label="File Description Dialog:",required="required",value=prc.cbSettings.cb_media_uplodify_fileDesc,class="textfield width98",title="The text used in the selection dialog window",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    						<!--- file extensions --->
-    						#html.textField(name="cb_media_uplodify_fileExt",label="File Extensions To Show:",required="required",value=prc.cbSettings.cb_media_uplodify_fileExt,class="textfield width98",title="The extensions to show in the selection dialog window",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    						<!--- multi --->
-							<div class="control-group">
-                                #html.label(class="control-label",field="cb_media_uploadify_allowMulti",content="Allow Multiple Uploads:")#
-                                <div class="controls">
-                                    #html.radioButton(name="cb_media_uploadify_allowMulti",checked=prc.cbSettings.cb_media_uploadify_allowMulti,value=true)# Yes
-    								#html.radioButton(name="cb_media_uploadify_allowMulti",checked=not prc.cbSettings.cb_media_uploadify_allowMulti,value=false)# No
-                                </div>
-                            </div>
-    						<!--- size limit --->
-    						#html.textField(name="cb_media_uploadify_sizeLimit",label="Size Limit in bytes (0=no limit):",required="required",value=prc.cbSettings.cb_media_uploadify_sizeLimit,class="textfield width98",title="The size limit of the uploads. 0 Means no limit",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-    						<!--- Custom JSON Options --->
-    						<div class="control-group">
-                                #html.label(class="control-label",field="cb_media_uploadify_customOptions",content="Custom JSON Options: ")#
-                                <div class="controls">
-                                    <small>The following must be valid JSON name value pairs of custom <a href="http://www.uploadify.com/documentation/" target="_blank">uploadify settings</a>.</small><br/>
-    								#html.textarea(name="cb_media_uploadify_customOptions",value=prc.cbSettings.cb_media_uploadify_customOptions,rows="2",title="Please remember this must be a valid JSON name value pairs")#
-                                </div>
-                            </div>
     					</fieldset>
     				</div>
     				

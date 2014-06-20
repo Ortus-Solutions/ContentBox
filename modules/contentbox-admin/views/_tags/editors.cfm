@@ -30,7 +30,7 @@ function publishNow(){
 // quick save for pages
 function quickSave(){
 	// Draft it
-	$isPublished.val('false');
+	$isPublished.val( "false" );
 	// Commit Changelog default it to quick save if not set
 	if( !$changelog.val().length ){
 		$changelog.val( "quick save" );
@@ -39,6 +39,11 @@ function quickSave(){
 	if( !$targetEditorForm.valid() ){
 		adminNotifier( "error", "Form is not valid, please verify." );
 		return false;
+	}
+	// Verify Content
+	if( !getEditorContent().length ){
+		alert( "Please enter content before saving." );
+		return;
 	}
 	// Activate Loader
 	toggleLoaderBar();
@@ -111,10 +116,10 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
     	},
         submitHandler: function( form ) {
 			// Update Editor Content
-        	updateEditorContent();
+        	try{ updateEditorContent(); } catch( err ){ console.log( err ); };
 			// Update excerpt
 			if( withExcerpt ){
-				updateEditorExcerpt();
+				try{ updateEditorExcerpt(); } catch( err ){ console.log( err ); };
 			}
 			// if it's valid, submit form
             if( $content.val().length ) {
@@ -122,9 +127,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
             	$slug.prop( "disabled", false );
             	// submit
             	form.submit();
-            }
-            // otherwise, show error
-            else {
+            } else {
             	alert( 'Please enter some content!' );
            	}
         }

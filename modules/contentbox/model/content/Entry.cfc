@@ -52,9 +52,10 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 	
 	/**
 	* Get a flat representation of this entry
+	* slugCache.hint Cache of slugs to prevent infinite recursions
 	*/
-	function getMemento(){
-		var result = super.getMemento();
+	function getMemento( array slugCache=[] ){
+		var result = super.getMemento( argumentCollection=arguments );
 		
 		// Local Memento Properties
 		result[ "excerpt" ] = variables.excerpt;

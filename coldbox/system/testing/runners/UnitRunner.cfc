@@ -42,27 +42,31 @@ component extends="coldbox.system.testing.runners.BaseRunner" implements="coldbo
 		// Start recording stats for this bundle
 		var bundleStats = arguments.testResults.startBundleStats( bundlePath=targetMD.name, name=bundleName );
 
-		//#### NOTHING IS TRAPPED BELOW SO AS TO THROW REAL EXCEPTIONS FROM TESTS THAT ARE WRITTEN WRONG
-
 		// Verify we can run this bundle
 		if( canRunBundle( bundlePath=targetMD.name, testResults=arguments.testResults ) ){
+			try{
+				// execute beforeAll(), beforeTests() for this bundle, no matter how many suites they have.
+				if( structKeyExists( arguments.target, "beforeAll" ) ){ arguments.target.beforeAll(); }
+				if( structKeyExists( arguments.target, "beforeTests" ) ){ arguments.target.beforeTests(); }
+				
+				// Iterate over found test suites and test them, if nested suites, then this will recurse as well.
+				for( var thisSuite in testSuites ){
+					testSuite( target=arguments.target, 
+							   suite=thisSuite, 
+							   testResults=arguments.testResults,
+							   bundleStats=bundleStats );
+				}
 
-			// execute beforeAll(), beforeTests() for this bundle, no matter how many suites they have.
-			if( structKeyExists( arguments.target, "beforeAll" ) ){ arguments.target.beforeAll(); }
-			if( structKeyExists( arguments.target, "beforeTests" ) ){ arguments.target.beforeTests(); }
-			
-			// Iterate over found test suites and test them, if nested suites, then this will recurse as well.
-			for( var thisSuite in testSuites ){
-				testSuite( target=arguments.target, 
-						   suite=thisSuite, 
-						   testResults=arguments.testResults,
-						   bundleStats=bundleStats );
+				// execute afterAll(), afterTests() for this bundle, no matter how many suites they have.
+				if( structKeyExists( arguments.target, "afterAll" ) ){ arguments.target.afterAll(); }
+				if( structKeyExists( arguments.target, "afterTests" ) ){ arguments.target.afterTests(); }
+			} catch(Any e) {
+				bundleStats.globalException = e;
+				// For a righteous man falls seven times, and rises (tests) again :)
+				// The amount doesn't matter, nothing can run at this point, failure with before/after aspects that need fixing
+				bundleStats.totalFail = 7;
+				arguments.testResults.incrementSpecStat( type="error", stats=bundleStats.totalFail );
 			}
-
-			// execute afterAll(), afterTests() for this bundle, no matter how many suites they have.
-			if( structKeyExists( arguments.target, "afterAll" ) ){ arguments.target.afterAll(); }
-			if( structKeyExists( arguments.target, "afterTests" ) ){ arguments.target.afterTests(); }
-		
 		}
 
 		// finalize the bundle stats
@@ -218,7 +222,7 @@ component extends="coldbox.system.testing.runners.BaseRunner" implements="coldbo
 		for( var thisMethod in methodArray ) {
 			// only valid functions and test functions allowed
 			if( isCustomFunction( arguments.target[ thisMethod ] ) &&
-				isValidTestMethod( thisMethod ) ) {
+				isValidTestMethod( thisMethod, arguments.target ) ) {
 				// Build the spec data packet
 				var specMD = getMetadata( arguments.target[ thisMethod ] );
 				var spec = {

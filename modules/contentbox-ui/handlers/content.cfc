@@ -180,9 +180,12 @@ component{
 			var data = cache.get( cacheKey );
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
 			if( !isNull( data ) ){
-				// set cache headers
-				event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" )
-					.setHTTPHeader( name="Content-type", value=data.contentType );
+				// Set cache headers if allowed
+				if( prc.cbSettings.cb_content_cachingHeader ){
+					event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" );
+				}
+				// Set content type header
+				event.setHTTPHeader( name="Content-type", value=data.contentType );
 				// Store hits
 				contentService.updateHits( data.contentID );
 				// return cache content to be displayed
@@ -324,7 +327,7 @@ component{
 	* Save the comment for a content object
 	* @thisContent.hint The content object
 	*/
-	private function saveComment( required thisContent ){
+	private function saveComment( required thisContent, required subscribe=false ){
 		// Get new comment to persist
 		var comment = populateModel( commentService.new() );
 		// relate it to content
@@ -337,7 +340,8 @@ component{
 			comment=comment,
 			content=arguments.thisContent,
 			moderationResults=results,
-			contentType=arguments.thisContent.getContentType()
+			contentType=arguments.thisContent.getContentType(),
+			subscribe = arguments.subscribe
 		});
 
 		// Check if all good

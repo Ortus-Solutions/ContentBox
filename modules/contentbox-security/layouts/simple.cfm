@@ -11,7 +11,7 @@
 	<!--- SES --->
 	<base href="#cb.siteBaseURL()#"/>
 	<!--- Title --->
-    <title>ContentBox Modular CMS - Login</title>
+    <title>ContentBox Modular CMS - #cb.r( "common.login@security" )#</title>
 	<!--- Favicon --->
 	<link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 	<!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->
@@ -53,6 +53,19 @@
 					<a class="brand">
 						ContentBox Modular CMS
 					</a>
+					<!--- i18n navbar --->
+					<ul class="nav pull-right">
+						<li class="dropdown">
+							<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
+								<i class="icon-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
+								<ul role="menu" class="dropdown-menu">
+									<cfloop array="#prc.langs#" index="thisLang">
+									<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>
+									</cfloop>
+								</ul>
+							</a>
+						</li>
+					</ul>
 				</div> <!---end container --->
 		    </div> <!--- end navbar-inner --->
 	    </div> <!---end navbar --->

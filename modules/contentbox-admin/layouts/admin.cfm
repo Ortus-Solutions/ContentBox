@@ -31,10 +31,10 @@
 			   location="#prc.cbroot#/includes/cache")#
 
 	<!--- loop around the cssAppendList, to add page specific css --->
-	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
+	<cfloop list="#event.getValue( "cssAppendList", "", true )#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
 	</cfloop>
-	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
+	<cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 	<!--- JS --->
@@ -51,6 +51,7 @@
 			    #prc.cbroot#/includes/js/jwerty.js,
 			    #prc.cbroot#/includes/js/jquery.validate.js,
 			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
+			    #prc.cbroot#/includes/js/jquery.cookie.js,
 			    #( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#
 			    #prc.cbroot#/includes/js/contentbox.js",
 			   location="#prc.cbroot#/includes/cache")#
@@ -58,10 +59,10 @@
 	<script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
 	<script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
-	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
+	<cfloop list="#event.getValue( "jsAppendList", "", true )#" index="js">
 		<cfset addAsset("#prc.cbroot#/includes/js/#js#.js")>
 	</cfloop>
-	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
+	<cfloop list="#event.getValue( "jsFullAppendList", "", true )#" index="js">
 		<cfset addAsset("#js#.js")>
 	</cfloop>
 	<!--- cbadmin Event --->
@@ -79,7 +80,6 @@
 		    		
 					<!--- Responsive --->
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
@@ -137,6 +137,13 @@
 											</a>
 										</li>
 									</cfif>
+									<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
+										<li>
+											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+U">
+												<i class="icon-list"></i> New Menu
+											</a>
+										</li>
+									</cfif>
 								</ul>
 							</li>
 							</cfif>
@@ -178,36 +185,10 @@
 				    	</ul>
 						
 						<!--- Right NavBar --->
-						<ul class="nav pull-right">
+						<ul class="nav pull-right" id="nav-header-menu">
 							<li class="divider-vertical"></li>
-							<cfif prc.oAuthor.checkPermission("SYSTEM_TAB")>
-							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-info-sign"></i> About <b class="icon-caret-down"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-ambulance"></i> Professional Support</a></li>
-									<li><a href="http://www.gocontentbox.org" target="_blank"><i class="icon-cloud"></i> ContentBox.org</a></li>
-									<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-book"></i> Documentation</a></li>
-									<li><a href="https://groups.google.com/forum/?fromgroups##!forum/contentbox" target="_blank"><i class="icon-envelope"></i> Support Forums</a></li>
-									<li class="divider"></li>
-									<li><a href="https://www.twitter.com/gocontentbox" target="_blank"><i class="icon-twitter"></i> Twitter</a></li>
-									<li><a href="https://www.facebook.com/gocontentbox" target="_blank"><i class="icon-facebook"></i> FaceBook</a></li>
-									<li><a href="https://plus.google.com/u/0/111231811346031749369" target="_blank"><i class="icon-google-plus"></i> Google+</a></li>
-									<li class="divider"></li>
-									<li>
-										<a href="#event.buildLink( prc.xehAutoUpdates )#"><i class="icon-download-alt"></i> Check For Updates</a>
-										<a href="#event.buildLink( prc.xehAbout )#"><i class="icon-info-sign"></i> ContentBox v.#getModuleSettings('contentbox').version# <br>
-										<span class="label label-warning">(Codename: #getModuleSettings("contentbox").settings.codename#)</span></a>
-									</li>
-								</ul>
-							</li>
-							</cfif>
-							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="quickLinksIcon" class="icon-user"></i> #prc.oAuthor.getName()# <b class="icon-caret-down"></b></a>
-								<ul class="dropdown-menu">
-									<li><a data-keybinding="ctrl+shift+a" title="ctrl+shift+A" href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"><i class="icon-camera"></i> My Profile</a></li>
-									<li><a data-keybinding="ctrl+shift+l" title="ctrl+shift+L" href="#event.buildLink( prc.xehDoLogout )#"><i class="icon-off"></i> Logout</a></li>
-								</ul>
-							</li>
+							<!--- Header Generated Menu --->
+							#prc.adminMenuService.generateHeaderMenu()#
 	                    </ul>
 					</div>
 				</div> <!---end container --->

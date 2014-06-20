@@ -177,12 +177,18 @@ component extends="baseHandler"{
 		
 		// get all authors
 		prc.authors = authorService.getAll(sortOrder="lastName");
-
+		// get related content
+		prc.relatedContent = prc.entry.hasRelatedContent() ? prc.entry.getRelatedContent() : [];
+		prc.linkedContent = prc.entry.hasLinkedContent() ? prc.entry.getLinkedContent() : [];
+		prc.relatedContentIDs = prc.entry.getRelatedContentIDs();
 		// exit handlers
 		prc.xehEntrySave 		= "#prc.cbAdminEntryPoint#.entries.save";
 		prc.xehSlugify			= "#prc.cbAdminEntryPoint#.entries.slugify";
 		prc.xehAuthorEditorSave = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 		prc.xehSlugCheck		= "#prc.cbAdminEntryPoint#.content.slugUnique";
+		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+		prc.xehShowRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector";
+		prc.xehBreakContentLink = "#prc.cbAdminEntryPoint#.content.breakContentLink";
 
 		// Tab
 		prc.tabContent_blog = true;
@@ -240,6 +246,7 @@ component extends="baseHandler"{
 		event.paramValue( "content", "" );
 		event.paramValue( "creatorID", "" );
 		event.paramValue( "customFieldsCount", 0 );
+		event.paramValue( "relatedContentIDs", [] );
 
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent") ){
@@ -256,7 +263,9 @@ component extends="baseHandler"{
 		}
 
 		// get new/persisted entry and populate it
-		var entry = populateModel( entryService.get( rc.contentID ) )
+		var entry 			= entryService.get( rc.contentID );
+		var originalSlug 	= entry.getSlug();
+		populateModel( entry )
 			.addPublishedtime(rc.publishedHour, rc.publishedMinute)
 			.addExpiredTime( rc.expireHour, rc.expireMinute );
 		var isNew = ( NOT entry.isLoaded() );
@@ -294,12 +303,22 @@ component extends="baseHandler"{
 		entry.setCategories( categories );
 		// Inflate Custom Fields into the page
 		entry.inflateCustomFields( rc.customFieldsCount, rc );
+		// Inflate Related Content into the page
+		entry.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
-		announceInterception("cbadmin_preEntrySave",{entry=entry,isNew=isNew});
+		announceInterception( "cbadmin_preEntrySave", {
+			entry=entry,
+			isNew=isNew,
+			originalSlug=originalSlug
+		});
 		// save entry
 		entryService.saveEntry( entry );
 		// announce event
-		announceInterception("cbadmin_postEntrySave",{entry=entry,isNew=isNew});
+		announceInterception( "cbadmin_postEntrySave", {
+			entry=entry,
+			isNew=isNew,
+			originalSlug=originalSlug
+		});
 
 		// Ajax?
 		if( event.isAjax() ){

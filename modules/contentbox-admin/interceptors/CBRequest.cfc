@@ -71,6 +71,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehContentStore	= "#prc.cbAdminEntryPoint#.contentStore";
 		prc.xehContentStoreEditor	= "#prc.cbAdminEntryPoint#.contentStore.editor";
 		prc.xehMediaManager	= "#prc.cbAdminEntryPoint#.mediamanager";
+		prc.xehMenuManager	= "#prc.cbAdminEntryPoint#.menus";
+		prc.xehMenuManagerEditor	= "#prc.cbAdminEntryPoint#.menus.editor";
 
 		// Comments Tab
 		prc.xehComments			= "#prc.cbAdminEntryPoint#.comments";
@@ -101,7 +103,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehRawSettings		= "#prc.cbAdminEntryPoint#.settings.raw";
 		prc.xehEmailTemplates   = "#prc.cbAdminEntryPoint#.emailtemplates";
 		prc.xehAutoUpdater	    = "#prc.cbAdminEntryPoint#.autoupdates";
-
+		// Stats
+		prc.xehSubscribers 		= "#prc.cbAdminEntryPoint#.subscribers";
 		// Login/Logout
 		prc.xehDoLogout 	= "#prc.cbAdminEntryPoint#.security.doLogout";
 		prc.xehLogin 		= "#prc.cbAdminEntryPoint#.security.login";

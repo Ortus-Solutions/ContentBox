@@ -66,7 +66,7 @@ $(document).ready(function() {
     $.fn.clearForm = function() {
     	if( this.data( 'validator') == undefined ){ return; }
         // reset classes and what not
-        $( this.data( 'validator' ) ).resetForm();
+        this.data( 'validator' ).resetForm();
         // run over input fields and blank them out
         this.find(':input').each(function() {
             switch(this.type) {
@@ -141,7 +141,30 @@ $(document).ready(function() {
 			$( this ).hide();
 		}
 	});
-	
+    // match stateful accordions
+    $( '.accordion[data-stateful]' ).each(function() {
+        var accordion = $( this ),
+            data = accordion.data( 'stateful' ),
+            match;
+        if( data ) {
+            // try to retrieve cookie that matches accordion panel id
+            match = $.cookie( data );
+            // if a match was found...
+            if ( match != null ) {
+                // wax defaults that are hardcoded on the template
+                accordion.find( '.collapse' ).removeClass( 'in' );
+                //show the matched group
+                $( '#' + match ).addClass( 'in' );
+            }
+        }
+        // bind listener for state changes
+        accordion.bind( 'shown', function(){
+            // grab id from expanded accordion panel
+            var active = accordion.find( '.in' ).attr( 'id' );
+            // set cookie
+            $.cookie( data, active );
+        })            
+    })
 });
 function isSidebarOpen(){
 	var sidebar = $("#main-sidebar");

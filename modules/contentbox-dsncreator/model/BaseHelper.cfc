@@ -1,4 +1,4 @@
-<!--- 
+<!---
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -22,59 +22,59 @@ limitations under the License.
 ********************************************************************************
 --->
 <cfcomponent output="false" hint="ContentBox DSN Base helper">
-	
+
 	<!--- Constructor --->
 	<cffunction name="init" output="false" returntype="BaseHelper" hint="constructor" access="public">
 		<cfscript>
 			return this;
 		</cfscript>
-	</cffunction> 
-	
-	<!--- verifyDSN --->    
-    <cffunction name="verifyDSN" output="false" access="public" returntype="struct" hint="Verify the DSN exists, returns struct: {error:boolean, exists:boolean, messages:string}">    
+	</cffunction>
+
+	<!--- verifyDSN --->
+    <cffunction name="verifyDSN" output="false" access="public" returntype="struct" hint="Verify the DSN exists, returns struct: {error:boolean, exists:boolean, messages:string}">
     	<cfargument name="dsnName" required="true"/>
-    	
+
     	<cfset var results = { "ERROR" = false, "EXISTS" = false, "MESSAGES" = "" }>
     	<cftry>
-			
+
 			<cfdbinfo type="version" name="dbResults" datasource="#arguments.dsnName#">
 			<cfset results.messages = "Datasource verified">
 			<cfset results.exists = true>
-			
+
 			<cfcatch type="any">
 				<cfset results.error = true>
 				<cfset results.exists = false>
 				<cfset results.messages = "#cfcatch.message# #cfcatch.detail#">
 			</cfcatch>
 		</cftry>
-		
+
 		<cfreturn results>
     </cffunction>
-    
-    <!--- updateAPP --->    
-    <cffunction name="updateAPP" output="false" access="public" returntype="any" hint="Update the application's DSN and data">    
+
+    <!--- updateAPP --->
+    <cffunction name="updateAPP" output="false" access="public" returntype="any" hint="Update the application's DSN and data">
     	<cfargument name="dsnName" required="true"/>
-    	<cfscript>	    
+    	<cfscript>
 			var appCFCPath = expandPath( "/appShell/Application.cfc" );
 			var c = fileRead( appCFCPath );
-			
+
 			// Update DSN
 			c = replacenocase( c, 'this.datasource = "contentbox"','this.datasource = "#arguments.dsnName#"' );
 			// Update relocations
-			c = replacenocase( c, 'location("modules/contentbox-dsncreator")','//location("modules/contentbox-dsncreator")' );
-			
+			c = replacenocase( c, 'include "modules/contentbox-installer/includes/dsn_relocation.cfm"','' );
+
 			// CF9 stupid cached dsn
 			if( listFirst( server.coldfusion.productVersion ) eq 9 ){
 				var cf9OnErrorPath = getDirectoryFromPath( getMetadata( this ).path ) & "cf9-OnError.txt";
 				c = replacenocase( c, '//@cf9-onError@', fileRead( cf9OnErrorPath ) );
 			}
-			
+
 			// Write out new Application.cfc
 			fileWrite( appCFCPath, c );
-			
-    	</cfscript>    
+
+    	</cfscript>
     </cffunction>
-     
+
     <!------------------------------------------- PRIVATE ------------------------------------------>
-			
+
 </cfcomponent>

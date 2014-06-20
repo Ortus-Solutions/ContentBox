@@ -86,7 +86,6 @@ component{
 				skipped="#thisSuite.totalSkipped#"
 				timestamp="#dateFormat(now(),"mm/dd/yy")# #timeFormat(now(),"medium")#"
 				hostname="#xmlFormat( cgi.remote_host )#"
-				id="#thisSuite.id#"
 				package="#xmlFormat( arguments.bundleStats.path )#"
 				>');
 
