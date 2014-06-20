@@ -41,7 +41,7 @@
 		<loadproperties srcFile="workbench/build.properties"/>
 		
 		<!-- build number for patch, use what normal build uses -->
-		<property file="build.number"/>
+		<property file="workbench/build.number"/>
 		
 		<!-- Cleanup patches -->
 		<delete>
@@ -85,6 +85,7 @@
 				<exclude name="readme.txt"/>
 				<exclude name="favicon.ico"/>
 				<exclude name=".htaccess"/>
+				<exclude name="build.number"/>
 				<exclude name="modules/contentbox-dsncreator/**"/>
 				<exclude name="modules/contentbox-installer/**"/>
 				<exclude name="layouts/**"/>
