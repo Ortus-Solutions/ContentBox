@@ -64,7 +64,6 @@
 			<arg value="1" />
 			<arg value='--pretty=format:"%H"' />
 		</exec>
-		<echo>Building patch with end commit: ${patch.endgit}</echo>
 	</target>
 	
 	<!--Build-->

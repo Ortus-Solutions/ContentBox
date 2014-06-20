@@ -31,6 +31,8 @@ else
 fi
 
 echo "Running commands from: " `pwd`
+echo "Start Commit: $1"
+echo "End Commit: $2"
 
 # create and tar up a release
 #git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | xargs tar -rf $SCRIPTDIR/patches/$3/patch.tar
