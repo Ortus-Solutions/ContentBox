@@ -40,14 +40,7 @@
 		<echo>Loading base properties</echo>
 		<loadproperties srcFile="workbench/build.properties"/>
 		
-		<!-- build number for patch -->
-		<propertyfile file="build.number" comment="Build Number for ANT. Edit not!">
-			<entry key="build.number" 
-					type="int" 
-			     	operation="+"
-					pattern="00000"
-			     	default="1" />
-		</propertyfile>
+		<!-- build number for patch, use what normal build uses -->
 		<property file="build.number"/>
 		
 		<!-- Cleanup patches -->
@@ -143,7 +136,6 @@
 			</fileset>
 		</checksum>
 		
-						
     </target>
 	
 </project>
