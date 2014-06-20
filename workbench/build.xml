@@ -8,7 +8,7 @@
     </description>
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.version"	value="2.0.0"/>
+	<property name="contentbox.version"	value="2.1.0"/>
  	<property name="contentbox.slug"	value="contentbox"/>
 	
  	<!-- Build Labels -->
