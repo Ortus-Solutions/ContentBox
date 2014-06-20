@@ -210,12 +210,17 @@
 			<equals arg1="${be.name}" arg2="" />
 			<then></then>
 			<else>
+				<delete>
+					<fileset dir="${be.exports}">
+						<include name="${be.name}*" />
+					</fileset>
+				</delete>
 				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip" 	 		 tofile="${be.exports}/${be.name}.zip" />
 				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip.md5" 		 tofile="${be.exports}/${be.name}.zip.md5" />
 				<copy file="${dir.exports}/contentbox_${contentbox.version}.war" 	 		 tofile="${be.exports}/${be.name}.war" />
 				<copy file="${dir.exports}/contentbox_${contentbox.version}.war.md5" 		 tofile="${be.exports}/${be.name}.war.md5" />
-				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip" 	 tofile="${be.exports}/${be.name}-express.zip" />
-				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip.md5" tofile="${be.exports}/${be.name}-express.zip.md5" />
+				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip" 	 tofile="${be.exports}/${be.name}_express.zip" />
+				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip.md5" tofile="${be.exports}/${be.name}_express.zip.md5" />
 			</else>
 		</if>
 		<!-- Cleanup -->
