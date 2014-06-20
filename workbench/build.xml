@@ -134,9 +134,9 @@
 		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}&amp;path=${dir.api}" verbose="true"/>
 		<delete file="${dir.build}/colddoc.html" />
 		<!-- Zip API Docs -->
-		<zip destfile="${dir.exports}/ContentBoxDocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
+		<zip destfile="${dir.exports}/contentbox_apidocs_${contentbox.version}.zip" basedir="${dir.api}"></zip>
  		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/ContentBoxDocs-${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_apidocs_${contentbox.version}.zip" />
  	</target>
  	
  	<!-- Build war -->
@@ -202,7 +202,7 @@
  	</target>
  	
 	<!-- Build all releases-->
-	<target name="build.all" description="Builds All ContentBox Release Flavors" depends="build.express">
+	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.patch">
 		<!-- Perms for automated builds
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" /> -->
 		<!-- Move BE to Artifacts if on staging -->
@@ -220,6 +220,14 @@
 		</if>
 		<!-- Cleanup -->
 		<delete dir="${dir.build}" />
+    </target>
+ 	
+ 	<!-- Build Patches -->
+    <target name="build.patch">
+        <subant target="build">
+          	<fileset dir="workbench" includes="create-patch.xml"/>
+    		<property name="environment" value="${environment}" />
+        </subant>
     </target>
  	
  	<!-- Get Dependencies -->
