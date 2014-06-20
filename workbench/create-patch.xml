@@ -117,7 +117,11 @@
 		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
 		
 		<!-- Zip Bundle with DB updates plus file deletes+additions -->
-		<zip destfile="${dir.exports}/contentbox_patch_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}"></zip>
+		<zip destfile="${dir.exports}/contentbox_patch_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
+			<patternset>
+		        <exclude name="patch/**"/>
+		    </patternset>
+		</zip>
 
 		<!-- Zip DB Updates Only Now -->
 		<zip destfile="${dir.exports}/contentbox_patch_db_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
@@ -128,6 +132,8 @@
 		<delete dir="${dir.patches}/${contentbox.version}/patch/coldbox" includeemptydirs="true"/>
 		<!-- Zip patch.zip -->
 		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
+		<!-- Delete Patch unzipped Folder -->
+		<delete dir="${dir.patches}/${contentbox.version}/patch" />
 		<!-- Zip Bundle with DB updates plus file deletes+additions -->
 		<zip destfile="${dir.exports}/contentbox_patch_nocoldbox_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}"></zip>
 		<!-- Build Checksum -->
@@ -137,8 +143,7 @@
 			</fileset>
 		</checksum>
 		
-		<!-- Delete Patch unzipped Folder -->
-		<delete dir="${dir.patches}/${contentbox.version}/patch" />				
+						
     </target>
 	
 </project>
