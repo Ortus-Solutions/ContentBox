@@ -64,6 +64,7 @@
 			<arg value="1" />
 			<arg value='--pretty=format:"%H"' />
 		</exec>
+		<echo>Building patch with end commit: ${patch.endgit}</echo>
 	</target>
 	
 	<!--Build-->
@@ -79,6 +80,7 @@
 	    	<arg value="${patch.startgit}"/>
 	    	<arg value="${patch.endgit}"/>
 	   	 	<arg value="${contentbox.version}"/>
+			<arg value="${basedir}"/>
 	  	</exec>
 		
 		<!--Unzip Patch To remove excludes -->

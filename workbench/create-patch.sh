@@ -1,8 +1,6 @@
 #!/bin/sh
 echo Creating ContentBox Release Updates Patch
-SCRIPTDIR=`pwd`
-# go back to root for diff of project
-cd ..
+
 # check params
 if [ -z "$1" ]
 then
@@ -22,6 +20,17 @@ then
 	echo "Usage:$0 startCommitHash endCommitHash ContentBoxVersion"
 	exit
 fi
+if [ -z "$4" ]
+then
+	# default to script dir
+	SCRIPTDIR=`pwd`
+	# go back to root for diff of project
+	cd ..
+else
+	cd $4
+fi
+
+echo "Running commands from: " `pwd`
 
 # create and tar up a release
 #git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | xargs tar -rf $SCRIPTDIR/patches/$3/patch.tar
