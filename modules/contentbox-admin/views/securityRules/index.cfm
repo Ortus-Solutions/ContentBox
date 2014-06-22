@@ -18,7 +18,7 @@
 		</cfif>
 		
 		<!--- Usage --->
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<i class="icon-warning-sign icon-large"></i>
 			Please remember that the security rules are fired in the order shown. You can drag and drop
 			the rows to the desired order of firing. Be careful with security rules as with much power comes great responsibility!

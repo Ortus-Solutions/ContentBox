@@ -38,7 +38,7 @@ component {
 	function configure(){
 
 		// Layout Settings
-		layoutSettings = { defaultLayout = "admin.cfm" };
+		layoutSettings = { defaultLayout = "admin_spacelab.cfm" };
 
 		// Module Settings
 		settings = {

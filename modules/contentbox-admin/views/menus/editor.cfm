@@ -28,7 +28,7 @@
                     <span class="span7">
                         <h3>Menu Sandbox</h3>
                         <p>Insert new menu items and then drag-and-drop to get them in the perfect order.</p>
-                        <div class="alert alert-error" id="menuErrors" style="display:none;">
+                        <div class="alert alert-danger" id="menuErrors" style="display:none;">
                             Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
                         </div>
                         <div class="designer well well-small">

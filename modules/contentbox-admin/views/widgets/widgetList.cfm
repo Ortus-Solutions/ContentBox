@@ -61,7 +61,7 @@
                         <cfset pluginURL = hasProtocol ? p.getPluginAuthorURL() : "http://" & p.getPluginAuthorURL()>
                         <div class="widget-content pull-left #extraClasses#" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getPluginName()#">
                             <cfif isSimpleValue( p )>
-                                <div class="alert alert-error">Error loading widget: #widgetName#<br>
+                                <div class="alert alert-danger">Error loading widget: #widgetName#<br>
                                     <p>Debugging:</p>
                                     #prc.widgets.debug#
                                 </div>

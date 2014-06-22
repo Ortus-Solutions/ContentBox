@@ -1,4 +1,8 @@
 <cfoutput>
+	<ul class="nano-content">
+		<cfinclude template="nav.cfm">
+	</ul>
+<!---
 <div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuBar">
 	<div class="navbar-inner">
 		<div class="container">
@@ -20,4 +24,5 @@
 		</div>
 	</div>
 </div>
+--->
 </cfoutput>

@@ -10,7 +10,7 @@
 			#cb.r( "finished.message@installer" )#
 			
 			<!--- Info Panel --->
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 				<i class="icon-warning-sign icon-large icon-4x pull-left"></i>
 				<strong>#cb.r( "finished.warning@installer" )# <br/>
 				<em>/{installed_location}/modules/contentbox-installer</em><br/>
