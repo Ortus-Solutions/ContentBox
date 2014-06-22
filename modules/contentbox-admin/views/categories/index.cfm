@@ -1,115 +1,103 @@
 ﻿<cfoutput>
-<div class="row-fluid" id="main-content">
-	<div class="box">
-		<!--- Body Header --->
-		<div class="header">
-			<i class="icon-tags icon-large"></i>
-			Content Categories
-		</div>
-		<!--- Body --->
-		<div class="body">
-			
-			<!--- MessageBox --->
-			#getPlugin("MessageBox").renderit()#
-			
-			<!---Import Log --->
-			<cfif flash.exists( "importLog" )>
-			<div class="consoleLog">#flash.get( "importLog" )#</div>
-			</cfif>
-			
-			<!--- CategoryForm --->
-			#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical")#
-			<input type="hidden" name="categoryID" id="categoryID" value="" />
-			
-			<!--- Content Bar --->
-			<div class="well well-small">
-				<!--- Command Bar --->
-				<div class="pull-right">
-					<!---Global --->
-					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-					<div class="btn-group">
-				    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
-							Global Actions <span class="caret"></span>
-						</a>
-				    	<ul class="dropdown-menu">
-				    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
-				    		<li><a href="javascript:bulkRemove()" class="confirmIt"
-									data-title="Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="icon-trash"></i> Delete Selected</a></li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-				    		<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
-				    		<li class="dropdown-submenu">
-								<a href="##"><i class="icon-download icon-large"></i> Export All</a>
-								<ul class="dropdown-menu text-left">
-									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
-									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
-								</ul>
-							</li>
-							</cfif>
-				    	</ul>
-				    </div>
-					</cfif>
-					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
-					<!--- Create --->
-					<a href="##" onclick="return createCategory();" class="btn btn-danger">Create Category</a>
-					</cfif>
-				</div>
-				<!--- Filter Bar --->
-				<div class="filterBar">
-					<div>
-						#html.textField(name="categoryFilter",size="30", class="textfield", label="Quick Filter: ", labelClass="inline")#
-					</div>
-				</div>
-			</div>
-			
-			<!--- categories --->
-			<table name="categories" id="categories" class="tablesorter table table-striped table-hover" width="98%">
-				<thead>
-					<tr>
-						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
-						<th>Category Name</th>
-						<th>Slug</th>		
-						<th width="75" class="center">Pages</th>
-						<th width="75" class="center">Entries</th>	
-						<th width="100" class="center {sorter:false}">Actions</th>
-					</tr>
-				</thead>				
-				<tbody>
-					<cfloop array="#prc.categories#" index="category">
-					<tr id="categoryID-#category.getCategoryID()#" data-categoryID="#category.getCategoryID()#">
-						<!--- check box --->
-						<td>
-							<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
-						</td>
-						<td><a href="javascript:edit('#category.getCategoryID()#',
-							   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-							   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
-						<td>#category.getSlug()#</td>
-						<td class="center"><span class="badge badge-info">#category.getNumberOfPages()#</span></td>
-						<td class="center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
-						<td class="center">
-							<div class="btn-group">
-								<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
-								<!--- Edit Command --->
-								<a class="btn" href="javascript:edit('#category.getCategoryID()#',
-								   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-								   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
-								<!--- Delete Command --->
-								<a class="btn" title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
-								</cfif>
-							</div>
-						</td>
-					</tr>
-					</cfloop>
-				</tbody>
-			</table>
-			#html.endForm()#
-		
-		</div>	
+<div class="row">
+	<div class="col-md-12">
+		<h1 class="h1"><i class="fa fa-tag"></i> Content Categories</h1>
 	</div>
 </div>
+<div class="row">
+	<div class="col-md-12">
+		<!--- MessageBox --->
+		#getPlugin("MessageBox").renderit()#
+		
+		<!---Import Log --->
+		<cfif flash.exists( "importLog" )>
+		<div class="consoleLog">#flash.get( "importLog" )#</div>
+		</cfif>
+	</div>
+</div>
+#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical")#
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Data Tables</h3>
+				<div class="actions pull-right">
+					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+						<div class="btn-group btn-group-sm">
+					    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+								Global Actions <span class="caret"></span>
+							</button>
+					    	<ul class="dropdown-menu">
+					    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+					    		<li><a href="javascript:bulkRemove()" class="confirmIt"
+										data-title="Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+					    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
+					    		<li class="dropdown-submenu">
+									<a href="##"><i class="fa fa-download icon-large"></i> Export All</a>
+									<ul class="dropdown-menu text-left">
+										<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
+										<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
+									</ul>
+								</li>
+								</cfif>
+					    	</ul>
+					    </div>
+					</cfif>
+					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+						<!--- Create --->
+						<button onclick="return createCategory();" class="btn btn-primary btn-sm">Create Category</button>
+					</cfif>
+				</div>
+			</div>
+			<div class="panel-body">
+				<table id="categories" class="table table-striped table-bordered" cellspacing="0" width="100%">
+					<thead>
+						<tr>
+							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
+							<th>Category Name</th>
+							<th>Slug</th>		
+							<th width="75" class="center">Pages</th>
+							<th width="75" class="center">Entries</th>	
+							<th width="100" class="center {sorter:false}">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<cfloop array="#prc.categories#" index="category">
+						<tr id="categoryID-#category.getCategoryID()#" data-categoryID="#category.getCategoryID()#">
+							<!--- check box --->
+							<td>
+								<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
+							</td>
+							<td><a href="javascript:edit('#category.getCategoryID()#',
+								   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+								   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
+							<td>#category.getSlug()#</td>
+							<td class="center"><span class="badge badge-info">#category.getNumberOfPages()#</span></td>
+							<td class="center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
+							<td class="center">
+								<div class="btn-group">
+									<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+									<!--- Edit Command --->
+									<button type="button" class="btn btn-primary btn-sm" onclick="javascript:edit('#category.getCategoryID()#','#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="fa fa-edit"></i></button>
+									<!--- Delete Command --->
+									<button type="button" class="btn btn-danger btn-sm" title="Delete Category" onclick="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="fa fa-trash-o" id="delete_#category.getCategoryID()#"></i></button>
+									</cfif>
+								</div>
+							</td>
+						</tr>
+						</cfloop>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+#html.endForm()#
 <cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 <!--- Permissions Editor --->
 <div id="categoryEditorContainer" class="modal hide fade">

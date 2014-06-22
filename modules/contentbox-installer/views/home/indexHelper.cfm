@@ -13,7 +13,7 @@ $(document).ready(function() {
                     msg += '<li>' + label.text() + ' ' + errorList[ i ].message + '</li>';
                 }
                 msg += '</ul>';
-                var wall = $("##errorBar").addClass("alert alert-error").fadeIn().html( msg );
+                var wall = $("##errorBar").addClass("alert alert-danger").fadeIn().html( msg );
             }
         }
     });

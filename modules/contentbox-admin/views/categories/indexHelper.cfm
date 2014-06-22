@@ -6,16 +6,17 @@ $(document).ready(function() {
 	$categoryEditor = $("##categoryEditor");
 	$importDialog = $("##importDialog");
 	// table sorting + filtering
-	$("##categories").tablesorter();
+	/*$("##categories").tablesorter();
 	$("##categoryFilter").keyup(function(){
 		$.uiTableFilter( $("##categories"), this.value );
-	});
+	});*/
 	// form validator
 	$categoryEditor.validate();
 	// reset
 	$('##btnReset').click(function() {
 		$categoryEditor.find("##categoryID").val( '' );
 	});
+	$('##categories').dataTable();
 });
 <cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN,TOOLS_IMPORT")>
 function bulkRemove(){

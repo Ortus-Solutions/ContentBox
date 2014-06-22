@@ -129,7 +129,8 @@ component extends="coldbox.system.Interceptor"{
 			{ name="Reload Site Module", value="contentbox-ui" }
 		];
 		prc.xehAdminAction	= "#prc.cbAdminEntryPoint#.dashboard.reload";
-
+		// Installer Check
+		prc.installerCheck = settingService.isInstallationPresent();
 	}
 
 }

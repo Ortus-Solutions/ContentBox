@@ -23,19 +23,19 @@
 				<!--- Installer Checks --->
 				<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
 				<cfif prc.installerCheck.installer>
-					<div class="alert alert-error" id="installerCheck">
-						<a href="##" class="close" data-dismiss="alert">&times;</a>
-						<i class="icon-warning-sign icon-large icon-2x"></i>
+					<div class="alert alert-danger" id="installerCheck">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<i class="fa fa-exclamation-triangle fa-2x"></i>
 						The installer module still exists! Please delete it from your server as leaving it online is a security risk.
-						<button class="btn btn-danger" onclick="deleteInstaller()">Delete Installer</button>
+						<button class="btn btn-danger btn-sm" onclick="deleteInstaller()">Delete Installer</button>
 					</div>
 				</cfif>
 				<cfif prc.installerCheck.dsncreator>
-					<div class="alert alert-error" id="dsnCreatorCheck">
-						<a href="##" class="close" data-dismiss="alert">&times;</a>
-						<i class="icon-warning-sign icon-large icon-2x"></i>
+					<div class="alert alert-danger" id="dsnCreatorCheck">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<i class="fa fa-exclamation-triangle fa-2x"></i>
 						The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.
-						<button class="btn btn-danger" onclick="deleteDSNCreator()">Delete DSN Creator</button>
+						<button class="btn btn-danger btn-sm" onclick="deleteDSNCreator()">Delete DSN Creator</button>
 					</div>
 				</cfif>
 				</cfif>

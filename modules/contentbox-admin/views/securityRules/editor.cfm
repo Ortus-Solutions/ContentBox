@@ -17,7 +17,7 @@
     			<!--- fields --->
     			#html.startFieldset(legend="<strong>Rule Match</strong>")#
     				<!--- Usage --->
-    				<div class="alert alert-error">
+    				<div class="alert alert-danger">
     					<i class="icon-warning-sign icon-large"></i>
     					Please remember that the secure and white lists are lists of 
     					<a href="http://www.regular-expressions.info/reference.html" target="_blank">regular expressions</a> that will match against an incoming
