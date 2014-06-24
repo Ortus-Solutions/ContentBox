@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "An enterprise modular content platform";
-	this.version			= "2.0.0.@build.number@";
+	this.version			= "2.1.0.@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
@@ -42,9 +42,20 @@ component {
 			// Auto Updates
 			updateSlug_stable 	= "contentbox-stable-updates",
 			updateSlug_beta 	= "contentbox-beta-updates",
-			updatesURL			= "http://www.coldbox.org/api/forgebox"
+			updatesURL			= "http://www.coldbox.org/api/forgebox",
+			// Officially supported languages for modules
+			languages 			= [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
 		};
 		
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"cbcore" = "#moduleMapping#/i18n/cbcore"
+		  	},
+		  	defaultLocale = "en_US",
+		  	localeStorage = "cookie"
+		};
+
 		// CB Module Conventions
 		conventions = {
 			layoutsLocation = "layouts",
@@ -73,14 +84,15 @@ component {
 		// interceptors
 		interceptors = [
 			// CB RSS Cache Cleanup Ghost
-			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
+			{ class="contentbox.model.rss.RSSCacheCleanup", name="RSSCacheCleanup@cb" },
 			// CB Content Cache Cleanup Ghost
-			{class="contentbox.model.content.util.ContentCacheCleanup",name="ContentCacheCleanup@cb" },
+			{ class="contentbox.model.content.util.ContentCacheCleanup", name="ContentCacheCleanup@cb" },
 			// Notification service interceptor
-			{class="contentbox.model.system.NotificationService",name="NotificationService@cb" },
+			{ class="contentbox.model.system.NotificationService", name="NotificationService@cb" },
 			// Content Renderers, remember order is important.
-			{class="contentbox.model.content.renderers.LinkRenderer"},
-			{class="contentbox.model.content.renderers.WidgetRenderer"}
+			{ class="contentbox.model.content.renderers.LinkRenderer", name="LinkRenderer@cb" },
+			{ class="contentbox.model.content.renderers.WidgetRenderer", name="WidgetRenderer@cb" },
+			{ class="contentbox.model.content.renderers.SettingRenderer", name="SettingRenderer@cb" }
 		];
 
 		// Security/System
@@ -115,6 +127,9 @@ component {
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
 		binder.map("AdminMenuService@cb").to("contentbox.model.ui.AdminMenuService");
+		// Menus
+		binder.map("MenuService@cb").to("contentbox.model.menu.MenuService");
+		binder.map("MenuItemService@cb").to("contentbox.model.menu.MenuItemService");
 		// Editors
 		binder.map("EditorService@cb").to("contentbox.model.ui.editors.EditorService");
 		binder.map("TextareaEditor@cb").to("contentbox.model.ui.editors.TextareaEditor");
@@ -148,6 +163,10 @@ component {
 		binder.map("dataExporter@cb").to("contentbox.model.exporters.DataExporter");
 		binder.map("fileExporter@cb").to("contentbox.model.exporters.FileExporter");
 		binder.map("ContentBoxExporter@cb").to("contentbox.model.exporters.ContentBoxExporter");
+		// Subscription services
+		binder.map( "subscriberService@cb" ).to( "contentbox.model.subscriptions.SubscriberService" );
+		binder.map( "subscriptionService@cb" ).to( "contentbox.model.subscriptions.SubscriptionService" );
+		binder.map( "commentSubscriptionService@cb" ).to( "contentbox.model.subscriptions.CommentSubscriptionService");
 		// ColdBox Integrations
 		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
 		binder.map("SystemUtil@cb").to( "coldbox.system.core.util.Util" );

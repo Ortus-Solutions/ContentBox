@@ -33,12 +33,16 @@
                         requiredText = "";
                         requiredValidator = "";
                         // Verify attributes
-                        if( !structKeyExists(thisArg,"required") ){ thisArg.required = false; }
-                        if( !structKeyExists(thisArg,"hint") ){ thisArg.hint = ""; }
-                        if( !structKeyExists(thisArg,"type") ){ thisArg.type = "any"; }
-                        if( !structKeyExists(thisArg,"default") ){ thisArg.default = ""; }
-                        if( !structKeyExists(thisArg,"options") ){ thisArg.options = ""; }
-                        if( !structKeyExists(thisArg,"optionsUDF") ){ thisArg.optionsUDF = ""; }
+                        if( !structKeyExists( thisArg, "label" ) ){ thisArg.label = thisArg.name; }
+                        if( !structKeyExists( thisArg, "required" ) ){ thisArg.required = false; }
+                        if( !structKeyExists( thisArg, "hint" ) ){ thisArg.hint = ""; }
+                        if( !structKeyExists( thisArg, "type" ) ){ thisArg.type = "any"; }
+                        if( !structKeyExists( thisArg, "default" ) ){ thisArg.default = ""; }
+                        if( !structKeyExists( thisArg, "options" ) ){ thisArg.options = ""; }
+                        if( !structKeyExists( thisArg, "optionsUDF" ) ){ thisArg.optionsUDF = ""; }
+                        if( !structKeyExists( thisArg, "multiOptions" ) ){ thisArg.multiOptions = ""; }
+                        if( !structKeyExists( thisArg, "multiOptionsUDF" ) ){ thisArg.multiOptionsUDF = ""; }
+                        // calculate default value
                         thisArg.value = structKeyExists( prc.vals, thisArg.name ) ? prc.vals[ thisArg.name ] == "" ? thisArg.default : prc.vals[ thisArg.name ] : thisArg.default;
                         // required stuff
                         if( thisarg.required ){
@@ -49,7 +53,9 @@
                     <!--- control group --->
                     <div class="control-group">
                         <!--- label --->
-                        #html.label( field=thisArg.name, content="#thisArg.name# (Type=#thisArg.type#) #requiredText#", class="control-label" )#
+                        #html.label( field=thisArg.name, 
+                                     content="#thisArg.label# (#thisArg.type#) #requiredText#", 
+                                     class="control-label" )#
                         <div class="controls">
                             <!--- argument hint --->
                             <cfif len( thisArg.hint )><small>#thisArg.hint#</small><br/></cfif>
@@ -66,6 +72,13 @@
                             <cfelseif listLen( thisArg.optionsUDF )>
                                 <cfset options = evaluate( "prc.widget.plugin.#thisArg.optionsUDF#()" )>
                                 #html.select( name=thisArg.name, options=options, selectedValue=thisArg.value, class="input-block-level" )#
+                            <!--- Options --->
+                            <cfelseif listLen( thisArg.multiOptions )>
+                                #html.select( name=thisArg.name, options=thisArg.multiOptions, selectedValue=thisArg.value, class="input-block-level", multiple="true", size="5" )#
+                            <!--- MultiOptionsUDF --->
+                            <cfelseif listLen( thisArg.multiOptionsUDF )>
+                                <cfset options = evaluate( "prc.widget.plugin.#thisArg.multiOptionsUDF#()" )>
+                                #html.select( name=thisArg.name, options=options, selectedValue=thisArg.value, class="input-block-level", multiple="true", size="5" )#
                             <!--- Default --->
                             <cfelse>
                                 #html.textfield( name=thisArg.name, size="35", class="input-block-level", required=requiredValidator, title=thisArg.hint, value=thisArg.value )#

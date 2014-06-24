@@ -17,23 +17,23 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	// Properties
 	property name="contentID" 				notnull="true"	fieldtype="id" generator="native" setter="false";
-	property name="contentType" 			setter="false" update="false" insert="false" index="idx_discriminator,idx_published" default="" dbdefault="";
+	property name="contentType" 			setter="false" update="false" insert="false" index="idx_discriminator,idx_published" default="";
 	property name="title"					notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
 	property name="publishedDate"			notnull="false" ormtype="timestamp" index="idx_publishedDate";
 	property name="expireDate"				notnull="false" ormtype="timestamp" default="" index="idx_expireDate";
-	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
-	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
+	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" index="idx_published,idx_search,idx_publishedSlug";
+	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true";
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
 	property name="HTMLKeywords"			notnull="false" length="160" default="";
 	property name="HTMLDescription"			notnull="false" length="160" default="";
-	property name="hits"					notnull="false" ormtype="long" default="0" dbdefault="0";
-	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
-	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cachelayout";
-	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
-	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
-	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
+	property name="hits"					notnull="false" ormtype="long" default="0";
+	property name="cache"					notnull="true"  ormtype="boolean" default="true" index="idx_cache";
+	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" index="idx_cachelayout";
+	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" index="idx_cachetimeout";
+	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" index="idx_cachelastaccesstimeout";
+	property name="markup"					notnull="true" length="100" default="HTML";
 	
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property name="creator" notnull="true" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
@@ -60,6 +60,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	// O2M -> Sub Content Inverse
 	property name="children" singularName="child" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
+	// O2M -> Comment Subscribers
+	property name="commentSubscriptions" singularName="commentSubscription" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" cfc="contentbox.model.subscriptions.CommentSubscription" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
 
 	// M2M -> Categories
 	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" inverse="true" cascade="all"  
@@ -79,6 +81,23 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="numberOfChildren"			formula="select count(*) from cb_content content where content.FK_parentID=contentID" default="0";
 
 	/************************************** VERIONING METHODS *********************************************/
+
+	/**
+	* Base constructor
+	*/
+	function init(){
+		variables.isPublished 		= true;
+		variables.allowComments 	= true;
+		variables.hits 				= 0;
+		variables.cache 			= true;
+		variables.cacheLayout 		= true;
+		variables.cacheTimeout 		= 0;
+		variables.cacheLastAccessTimeout = 0;
+		variables.markup 			= "HTML";
+		variables.contentType 		= "";
+
+		return this;
+	}
 
 	/**
 	* Add a new content version to save for this content object
@@ -213,6 +232,22 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 
 		return results;
+	}
+
+	/**
+	* Shortcut to get a custom field value
+	* @key.hint The custom field key to get
+	* @defaultValue.hint The default value if the key is not found.
+	*/
+	any function getCustomField( required key, defaultValue ){
+		var fields = getCustomFieldsAsStruct();
+		if( structKeyExists( fields, arguments.key ) ){
+			return fields[ arguments.key ];
+		}
+		if( structKeyExists(arguments,"defaultValue") ){
+			return arguments.defaultValue;
+		}
+		throw(message="No custom field with key: #arguments.key# found", detail="The keys are #structKeyList( fields )#", type="InvalidCustomField");
 	}
 	
 	/**
@@ -705,20 +740,24 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* add published timestamp to property
 	*/
-	any function addPublishedTime(required hour, required minute){
+	any function addPublishedTime( required hour, required minute ){
 		if( !isDate( getPublishedDate() ) ){ return this; }
-		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
-		setPublishedDate( getPublishedDate() & " " & time);
+		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
+		setPublishedDate( getPublishedDate() & " " & time );
 		return this;
 	}
 
 	/**
 	* add expired timestamp to property
 	*/
-	any function addExpiredTime(required hour, required minute){
+	any function addExpiredTime( required hour, required minute ){
 		if( !isDate( getExpireDate() ) ){ return this; }
-		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
-		setExpireDate( getExpireDate() & " " & time);
+		// verify time and minute defaults, else default to midnight
+		if( !len( arguments.hour ) ){ arguments.hour = "0"; }
+		if( !len( arguments.minute ) ){ arguments.minute = "00"; }
+		// setup the right time now.
+		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
+		setExpireDate( getExpireDate() & " " & time );
 		return this;
 	}
 

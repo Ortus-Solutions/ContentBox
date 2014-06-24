@@ -112,6 +112,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			.list(sortOrder="category");
 			 
 	}
+
+	/**
+	* Get an array of names of all categories in the system
+	*/
+	array function getAllNames(){
+		var c = newCriteria();
+		
+		return c.withProjections( property="category" )
+			//.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list( sortOrder="category" );
+	}
 	
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log

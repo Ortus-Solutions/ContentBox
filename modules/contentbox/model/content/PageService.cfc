@@ -137,54 +137,74 @@ component extends="ContentService" singleton{
 		return results;
 	}
 
-	// Page listing for UI
-	function findPublishedPages(max=0,offset=0,searchTerm="",category="",asQuery=false,parent,boolean showInMenu){
+	/**
+	* Find published pages in ContentBox that have no passwords
+	* @max.hint The max number of pages to return, defaults to 0=all
+	* @offset.hint The pagination offset
+	* @searchTerm.hint Pass a search term to narrow down results
+	* @category.hint Pass a list of categories to narrow down results
+	* @asQuery.hint Return results as array of objects or query, default is array of objects
+	* @parent.hint The parent ID to restrict the search on
+	* @showInMenu.hint If passed, it limits the search to this content property
+	* @sortOrder.hint The sort order string, defaults to publisedDate DESC
+	*/
+	function findPublishedPages(
+		numeric max=0,
+		numeric offset=0,
+		string searchTerm="",
+		string category="",
+		boolean asQuery=false,
+		string parent,
+		boolean showInMenu,
+		string sortOrder="publishedDate DESC"
+	){
 		var results = {};
 		var c = newCriteria();
-		// sorting
-		var sortOrder = "publishedDate DESC";
 
 		// only published pages
-		c.isTrue("isPublished")
-			.isLT("publishedDate", Now())
-			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
+		c.isTrue( "isPublished" )
+			.isLT( "publishedDate", Now() )
+			.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
 			// only non-password pages
-			.isEq("passwordProtection","");
+			.isEq( "passwordProtection", "" );
 
 		// Show only pages with showInMenu criteria?
-		if( structKeyExists(arguments,"showInMenu") ){
-			c.isTrue("showInMenu");
+		if( structKeyExists( arguments, "showInMenu" ) ){
+			c.isEq( "showInMenu", javaCast( "boolean", arguments.showInMenu ) );
 		}
 
 		// Category Filter
-		if( len(arguments.category) ){
+		if( len( arguments.category ) ){
 			// create association with categories by slug.
-			c.createAlias("categories","cats").isIn("cats.slug", listToArray( arguments.category ) );
+			c.createAlias( "categories", "cats" ).isIn( "cats.slug", listToArray( arguments.category ) );
 		}
 
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac");
-			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
+			c.createAlias( "activeContent", "ac" );
+			c.or( c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
+				  c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" ) );
 		}
 
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
-			if( len( trim(arguments.parent) ) ){
-				c.eq("parent.contentID", javaCast("int",arguments.parent) );
+			if( len( trim( arguments.parent ) ) ){
+				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
+			} else {
+				c.isNull( "parent" );
 			}
-			else{
-				c.isNull("parent");
-			}
-			sortOrder = "order asc";
+			// change sort by parent
+			arguments.sortOrder = "order asc";
 		}
 
 		// run criteria query and projections count
 		results.count 	= c.count("contentID");
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
+							.list( offset=arguments.offset,
+								   max=arguments.max,
+								   sortOrder=arguments.sortOrder,
+								   asQuery=arguments.asQuery);
 
 		return results;
 	}

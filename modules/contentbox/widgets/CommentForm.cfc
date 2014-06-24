@@ -55,7 +55,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 				#html.inputField(name="authorURL",type="url",label="Website:",size="50",value=event.getValue("authorURL",""))#
 
 				#html.textArea(name="content",label="Comment:",required="required",value=event.getValue("content",""))#
-
+				#html.checkBox( name="subscribe", label="Notify me of follow-up comments by email." )#
 				#captcha#
 
 				#cb.event("cbui_postCommentForm")#

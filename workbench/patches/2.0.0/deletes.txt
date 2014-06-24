@@ -1,0 +1,11 @@
+coldbox/coldbox-3.8.0.00054-201312121620
+modules/contentbox-filebrowser/includes/uploadify/jquery.uploadify.min.js
+modules/contentbox-filebrowser/includes/uploadify/license.txt
+modules/contentbox-filebrowser/includes/uploadify/uploadify-cancel.png
+modules/contentbox-filebrowser/includes/uploadify/uploadify.css
+modules/contentbox-filebrowser/includes/uploadify/uploadify.swf
+modules/contentbox/model/content/CustomHTML.cfc
+modules/contentbox/model/content/CustomHTMLService.cfc
+modules/contentbox/model/ui/templates/bootstrap-adminMenu.cfm
+modules/contentbox/plugins/lib/commons-logging-1.1.1.jar
+modules/contentbox/plugins/lib/lesscss-engine-1.3.3.jar

@@ -27,7 +27,7 @@
 				<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
 			</td>
 			<td>
-				<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+				<cfif prc.oAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 					<a href="#event.buildLink(prc.xehBlogEditor)#/contentID/#entry.getContentID()#" title="Edit Entry">#entry.getTitle()#</a>
 				<cfelse>
 					#entry.getTitle()#

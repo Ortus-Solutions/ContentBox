@@ -87,6 +87,18 @@
                     <hr>
                     <div class="row-fluid">
                         <div class="span3">
+                            <h4><i class="icon-sort-by-attributes-alt icon-large"></i> Menus</h4>
+                            <small class="muted">Export menus</small>
+                        </div>
+                        <div class="span9">
+                            <div class="controls checkbox-spacer">
+                                <label for="export_menus" class="checkbox">#html.checkbox(name="export_menus",checked=true)# All Menus</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row-fluid">
+                        <div class="span3">
                             <h4><i class="icon-user icon-large"></i> Authors</h4>
                             <small class="muted">Export all site authors</small>
                         </div>

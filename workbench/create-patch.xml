@@ -1,82 +1,142 @@
 ﻿<?xml version="1.0"?>
-<project name="contentbox.create-patch" default="build" basedir=".">
-
-	<!--Build Properties-->
-	<property name="dir.exports"		value="patches" />
+<!-- ====================================================================== 
+     ContentBox Modular CMS Build (www.gocontentbox.org)                                                               
+     ====================================================================== -->
+<project name="contentbox.create-patch" default="build" basedir="../">
+	<description>
+    	Build a new patch of ContentBox Modular CMS
+    </description>
+	
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.version"		value="1-6-0"/>
-	<!-- Start Hash: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.startgit" 	value="2169574b2273d57bbf8da8fc04df1d3a7c4b06c1" />
-		
+	<property name="contentbox.version"	value="2.1.0"/>
+ 	<property name="contentbox.slug"	value="contentbox"/>		
+	
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>
+	<!-- Load Contrib Tasks -->
+	<path id="cp">
+		<fileset dir="workbench/lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<!-- Define Tasks -->
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
 	
 	<!-- Init -->
 	<target name="init" description="Init">
-		<!-- build number -->
-		<propertyfile file="build.number" comment="Build Number for ANT. Edit not!">
-			<entry key="build.number" 
-					type="int" 
-			     	operation="+"
-					pattern="00000"
-			     	default="1" />
-		</propertyfile>
-		<property file="build.number"/>	
-		<!-- End Commit -->
-		<input addproperty="contentbox.endgit" message="Git End Commit Hash" />
-		<!-- Manual Excludes -->
-		<input addproperty="patch.excludes" message="Manual Excludes Pattern" />
+		<!-- Default environment check, if not passed via -Denvironment -->
+		<condition property="environment" value="local">
+			<not><isset property="environment" /></not>
+		</condition>
+		<if>
+			<available file="workbench/build-${environment}.properties" />
+			<then>
+				<!-- Load env properties -->
+				<echo>Loading properties from environment: ${environment}</echo>
+				<loadproperties srcFile="workbench/build-${environment}.properties"/>
+			</then>
+		</if>
+		<!-- Load root properties -->
+		<echo>Loading base properties</echo>
+		<loadproperties srcFile="workbench/build.properties"/>
+		
+		<!-- build number for patch, use what normal build uses -->
+		<property file="workbench/build.number"/>
+		
+		<!-- Cleanup patches -->
+		<delete>
+			<fileset dir="${dir.exports}">
+				<include name="contentbox_patch*" />
+			</fileset>
+		</delete>
+		
+		<!-- Get latest commit hash from repo and load it -->
+		<exec executable="${git.executable}" outputproperty="patch.endgit">
+			<arg value="log" />
+			<arg value="-n" />
+			<arg value="1" />
+			<arg value='--pretty=format:%H' />
+		</exec>
 	</target>
 	
 	<!--Build-->
 	<target name="build" description="Build a new ContentBox patch release" depends="init">
-      	<!-- Create patch folder -->
-		<mkdir dir="${dir.exports}/${contentbox.version}"/>
-		<mkdir dir="${dir.exports}/${contentbox.version}/patch"/>
+      	<!-- Create patch folder according to version -->
+		<mkdir dir="${dir.patches}/${contentbox.version}/patch"/>
 		
-		<!-- Copy Update Template -->
-		<copy file="patches/Update.cfc" tofile="${dir.exports}/${contentbox.version}/Update.cfc" overwrite="false" />
+		<!-- Copy Update Template, just in case -->
+		<copy file="${dir.resources}/Update.cfc" tofile="${dir.patches}/${contentbox.version}/Update.cfc" overwrite="false" />
 		
-		<!-- Execute patch -->
-		<exec executable="./create-patch.sh">
-	    	<arg value="${contentbox.startgit}"/>
-	    	<arg value="${contentbox.endgit}"/>
+		<!-- Execute git patch -->
+		<exec executable="workbench/create-patch.sh">
+	    	<arg value="${patch.startgit}"/>
+	    	<arg value="${patch.endgit}"/>
 	   	 	<arg value="${contentbox.version}"/>
+			<arg value="${basedir}"/>
 	  	</exec>
 		
-		<!--Unzip Patch -->
-		<unzip src="${dir.exports}/${contentbox.version}/patch.zip" dest="${dir.exports}/${contentbox.version}/patch" overwrite="true">
+		<!--Unzip Patch To remove excludes -->
+		<unzip src="${dir.patches}/${contentbox.version}/patch.zip" dest="${dir.patches}/${contentbox.version}/patch" overwrite="true">
 			<patternset>
 		        <exclude name="workbench/**"/>
-				<exclude name="test/"/>
+				<exclude name="tests/"/>
 				<exclude name="config/"/>
 				<exclude name="Application.cfc"/>
 				<exclude name="readme.txt"/>
 				<exclude name="favicon.ico"/>
 				<exclude name=".htaccess"/>
-				<exclude name="${patch.excludes}"/>
+				<exclude name="build.number"/>
 				<exclude name="modules/contentbox-dsncreator/**"/>
 				<exclude name="modules/contentbox-installer/**"/>
 				<exclude name="layouts/**"/>
 				<exclude name="views/**"/>
 				<exclude name="includes/**"/>
 				<exclude name="handlers/**"/>
+				<exclude name="box.json"/>
+				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
 		
-		<!-- Replace Build Numbers -->
+		<!-- Replace Build Numbers For Patch -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true">
-		  <fileset dir="${dir.exports}/${contentbox.version}/patch">
+		  <fileset dir="${dir.patches}/${contentbox.version}/patch">
 		  	<include name="**/ModuleConfig.cfc" />
 		  </fileset>
 		</replaceregexp>
 		
-		<!-- Delete Patch -->
-		<delete file="${dir.exports}/${contentbox.version}/patch.zip" />
-		<!-- Zip it back up -->
-		<zip basedir="${dir.exports}/${contentbox.version}/patch" destfile="${dir.exports}/${contentbox.version}/patch.zip"/>
-		<!-- Delete Folder -->
-		<delete dir="${dir.exports}/${contentbox.version}/patch" />				
+		<!-- Delete original patch for cleanup -->
+		<delete file="${dir.patches}/${contentbox.version}/patch.zip" />
+		
+		<!-- Zip now as excludes removed. -->
+		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
+		
+		<!-- Zip Bundle with DB updates plus file deletes+additions -->
+		<zip destfile="${dir.exports}/contentbox_patch_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
+			<patternset>
+		        <exclude name="patch/**"/>
+		    </patternset>
+		</zip>
+
+		<!-- Zip DB Updates Only Now -->
+		<zip destfile="${dir.exports}/contentbox_patch_db_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
+			<include name="**/Update.cfc" />
+		</zip>
+		
+		<!-- Remove coldbox entries for non-coldbox patch -->
+		<delete dir="${dir.patches}/${contentbox.version}/patch/coldbox" includeemptydirs="true"/>
+		<!-- Zip patch.zip -->
+		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
+		<!-- Delete Patch unzipped Folder -->
+		<delete dir="${dir.patches}/${contentbox.version}/patch" />
+		<!-- Zip Bundle with DB updates plus file deletes+additions -->
+		<zip destfile="${dir.exports}/contentbox_patch_nocoldbox_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}"></zip>
+		<!-- Build Checksum -->
+		<checksum forceoverwrite="true" fileext=".md5">
+			<fileset dir="${dir.exports}">
+				<include name="contentbox_patch_*.zip" />
+			</fileset>
+		</checksum>
+		
     </target>
 	
 </project>
