@@ -223,6 +223,8 @@
 				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip.md5" tofile="${be.exports}/${be.name}_express.zip.md5" />
 			</else>
 		</if>
+		<!-- Move build.number for info purposes -->
+		<copy file="workbench/build.number" toDir="${dir.exports}" />
 		<!-- Cleanup -->
 		<delete dir="${dir.build}" />
     </target>
