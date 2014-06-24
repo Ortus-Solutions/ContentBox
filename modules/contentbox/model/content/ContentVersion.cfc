@@ -31,9 +31,9 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 	property name="contentVersionID" fieldtype="id" generator="native" setter="false";
 	property name="content"    		notnull="true"  ormtype="text" length="8000" default="";
 	property name="changelog"  		notnull="false" ormtype="text" length="8000" default="";
-	property name="version"			notnull="true"  ormtype="integer"	default="1" dbdefalt="1" index="idx_version";
+	property name="version"			notnull="true"  ormtype="integer"	default="1" index="idx_version";
 	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_createdDate";
-	property name="isActive" 		notnull="true"  ormtype="boolean"   	default="true" dbdefault="0" index="idx_active,idx_contentVersions";
+	property name="isActive" 		notnull="true"  ormtype="boolean"   	default="false" index="idx_active,idx_contentVersions";
 
 	// M20 -> Author loaded as a proxy and fetched immediately
 	property name="author" notnull="true" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";

@@ -13,8 +13,8 @@ component cache="false"{
 		// all things assets :)
 		prc.assetRoot 		= getContextRoot() & getModuleSettings( "contentbox-admin" ).mapping;
 		prc.adminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
-		prc.uiEntryPoint 	= getModuleSettings("contentbox-ui").entryPoint;
-		prc.langs 			= getModuleSettings( "contentbox-installer" ).settings.languages;
+		prc.uiEntryPoint 	= getModuleSettings( "contentbox-ui" ).entryPoint;
+		prc.langs 			= getModuleSettings( "contentbox" ).settings.languages;
 	}
 
 	function index( event, rc, prc ){
@@ -45,6 +45,7 @@ component cache="false"{
 	function finished( event, rc, prc ){
 		prc.xehAdmin = prc.adminEntryPoint;
 		prc.xehSite  = prc.uiEntryPoint;
+		prc.xehLang  = event.buildLink( "cbInstaller/language" );
 		
 		event.setView( "home/finished" );
 	}

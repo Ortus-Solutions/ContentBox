@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Security Module";
-	this.version			= "2.0.0.@build.number@";
+	this.version			= "2.1.0.@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbAdmin/security";
@@ -43,14 +43,7 @@ component {
 		i18n = {
 			resourceBundles = {
 		    	"security" = "#moduleMapping#/includes/i18n/security"
-		  	},
-		  	defaultLocale = "en_US",
-		  	localeStorage = "cookie"
-		};
-
-		// Settings
-		settings = {
-			languages = [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
+		  	}
 		};
 
 		// SES Routes

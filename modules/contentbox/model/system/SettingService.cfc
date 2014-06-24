@@ -195,13 +195,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			quickViewWidth	= cbSettings.cb_media_quickViewWidth,
 			loadJQuery 		= false,
 			useMediaPath	= true,
-			uploadify = {
-				fileDesc 	= cbSettings.cb_media_uplodify_fileDesc,
-				fileExt 	= cbSettings.cb_media_uplodify_fileExt,
-				multi 		= cbSettings.cb_media_uploadify_allowMulti,
-				sizeLimit 	= cbSettings.cb_media_uploadify_sizeLimit,
-				customJSONOptions = cbSettings.cb_media_uploadify_customOptions
-			},
 			html5uploads = {
 				maxFileSize = cbSettings.cb_media_html5uploads_maxFileSize,
 				maxFiles	= cbSettings.cb_media_html5uploads_maxFiles

@@ -86,7 +86,7 @@ component accessors="true"{
 		var c = fileRead(routesPath);
 		c = replacenocase(c, "index.cfm","","all");
 		fileWrite(routesPath, c);
-		
+
 		// determine engine and setup the appropriate file for the rewrite engine
 		switch( arguments.setup.getRewrite_Engine() ){
 			case "mod_rewrite" :{
@@ -150,7 +150,8 @@ component accessors="true"{
 			"MEDIAMANAGER_LIBRARY_SWITCHER" = "Ability to switch media manager libraries for management",
 			"EDITORS_CUSTOM_FIELDS" = "Ability to manage custom fields in any content editors",
 			"GLOBAL_SEARCH" = "Ability to do global searches in the ContentBox Admin",
-			"EDITORS_LINKED_CONTENT" = "Ability to view the linked content panel"
+			"EDITORS_LINKED_CONTENT" = "Ability to view the linked content panel",
+			"MENUS_ADMIN" = "Ability to manage the menu builder"
 		};
 
 		var allperms = [];
@@ -192,6 +193,7 @@ component accessors="true"{
 		oRole.addPermission( permissions[ "EDITORS_EDITOR_SELECTOR"] );
 		oRole.addPermission( permissions[ "EDITORS_CUSTOM_FIELDS"] );
 		oRole.addPermission( permissions[ "GLOBAL_SEARCH"] );
+		oRole.addPermission( permissions[ "MENUS_ADMIN"] );
 		roleService.save( entity=oRole, transactional=false );
 
 		// Create Admin
@@ -226,7 +228,7 @@ component accessors="true"{
 		var settings = {
 			// Installation security salt
 			"cb_salt" = hash( createUUID() & getTickCount() & now(), "SHA-512" ),
-			
+
 			// Site Settings
 			"cb_site_name" = setup.getSiteName(),
 			"cb_site_email" = setup.getSiteEmail(),
@@ -239,7 +241,7 @@ component accessors="true"{
 			"cb_site_blog_entrypoint" = "blog",
 			"cb_site_ssl" = "false",
 			"cb_site_poweredby" = "true",
-			
+
 			// Admin settings
 			"cb_admin_ssl" = "false",
 			"cb_admin_quicksearch_max" = "5",
@@ -344,15 +346,15 @@ component accessors="true"{
 			"cb_media_allowUploads" = "true",
 			"cb_media_acceptMimeTypes" = "",
 			"cb_media_quickViewWidth" = "400",
-			
+
 			// HTML5 Media Manager
 			"cb_media_html5uploads_maxFileSize" = "100",
 			"cb_media_html5uploads_maxFiles" 	= "25",
-			
+
 			// Media Services
 			"cb_media_provider" = "CFContentMediaProvider",
 			"cb_media_provider_caching" = "true",
-			
+
 			// Editor Manager
 			"cb_editors_default" = "ckeditor",
 			"cb_editors_markup" = "HTML",
@@ -381,13 +383,6 @@ component accessors="true"{
     { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbContentStore","cbLinks","cbEntryLinks" ] }
 ]' ,
 			"cb_editors_ckeditor_extraplugins" = "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre",
-
-			// Uploadify Integration
-			"cb_media_uplodify_fileDesc" = "All Files",
-			"cb_media_uplodify_fileExt" = "*.*;",
-			"cb_media_uploadify_allowMulti" = "true",
-			"cb_media_uploadify_sizeLimit" = "0",
-			"cb_media_uploadify_customOptions" = "",
 
 			// Search Settings
 			"cb_search_adapter" = "contentbox.model.search.DBSearch",

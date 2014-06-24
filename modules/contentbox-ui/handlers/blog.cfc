@@ -199,31 +199,6 @@ component extends="content" singleton{
 			// set skin view
 			event.setLayout(name="#prc.cbLayout#/layouts/blog", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/entry",module="contentbox");
-			// Different display formats if enabled?
-			if( prc.cbSettings.cb_content_uiexport ){
-				event.paramValue("format", "contentbox");
-				switch( rc.format ){
-					case "pdf" : {
-						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='pdf', layout='blog')#", 
-														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
-							type="pdf");
-						break;
-					}
-					case "print" : case "html" : {
-						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='print', layout='blog')#", 
-														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
-							type="html");
-						break;
-					}
-					case "doc" : {
-						event.renderData(data=renderLayout(layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout(format='doc', layout='blog')#", 
-														   view="#prc.cbLayout#/views/entry", module="contentbox", viewModule="contentbox"), 
-							contentType="application/msword")
-							.setHTTPHeader(name="Content-Disposition", value="inline; filename=#prc.entry.getSlug()#.doc");
-						break;
-					}
-				} // end switch
-			} // end if formats enabled
 		}
 		else{
 			// announce event
@@ -260,6 +235,7 @@ component extends="content" singleton{
 	function commentPost( event, rc, prc ){
 		// incoming params
 		event.paramValue( "entrySlug", "" );
+		event.paramValue( "subscribe", false );
 		
 		// Try to retrieve entry by slug
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
@@ -271,7 +247,7 @@ component extends="content" singleton{
 		validateCommentPost( event, rc, prc, thisEntry );
 
 		// Valid commenting, so go and save
-		saveComment( thisEntry );
+		saveComment( thisEntry, rc.subscribe );
 	}
 
 }

@@ -26,6 +26,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// DI
 	property name="categoryService"		inject="id:categoryService@cb";
+	property name="settingService"		inject="id:settingService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
 	property name="authorService"		inject="id:authorService@cb";
@@ -34,6 +35,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	property name="widgetService"		inject="id:widgetService@cb";
 	property name="moduleService"		inject="id:moduleService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
+	property name="menuService"			inject="id:menuService@cb";
+	property name="menuItemService"		inject="id:menuItemService@cb";
 	property name="minifier"			inject="coldbox:myplugin:JSMin@contentbox";
 	
 	// Constructor
@@ -229,6 +232,48 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/************************************** Context Methods *********************************************/
 
+	/**
+	* Prepare a ContentBox UI request. This sets ups settings, layout, etc. This method is usualy called
+	* automatically for you on the UI module. However, you can use it a-la-carte if you are building
+	* ajax or module extensions
+	*/
+	CBHelper function prepareUIRequest(){
+		var event 	= getRequestContext();
+		var prc 	= getRequestCollection( private=true );
+		var rc		= getRequestCollection();
+		
+		// store UI module root
+		prc.cbRoot = getContextRoot() & event.getModuleRoot( 'contentbox' );
+		// store module entry point
+		prc.cbEntryPoint = getModuleSettings( "contentbox-ui" ).entryPoint;
+		// store site entry point
+		prc.cbAdminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
+		// Place global cb options on scope
+		prc.cbSettings = settingService.getAllSettings( asStruct=true );
+		// Place the default layout on scope
+		prc.cbLayout = prc.cbSettings.cb_site_layout;
+		// Place layout root location
+		prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & prc.cbLayout;
+		// Place widgets root location
+		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
+		// announce event
+		announceInterception( "cbui_preRequest" );
+		
+		/************************************** FORCE SITE WIDE SSL *********************************************/
+		
+		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
+			setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
+		}
+
+		/************************************** IDENTITY HEADER *********************************************/
+
+		if( prc.cbSettings.cb_site_poweredby ){
+			event.setHTTPHeader( name="X-Powered-By", value="ContentBox Modular CMS" );
+		}
+
+		return this;
+	}
+	
 	// Determine if you have a category filter
 	boolean function categoryFilterExists(){
 		var rc = getRequestCollection();
@@ -691,6 +736,24 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/**
+	* Link to the content subscription route
+	* @ssl.hint	Use SSL or not, defaults to false.
+	*/
+	function linkContentSubscription( boolean ssl=false ){
+		var xeh = siteRoot() & sep() & "__subscribe";
+		return getRequestContext().buildLink( linkto=xeh, ssl=arguments.ssl );
+	}
+
+	/**
+	* Link to the ContentBox Content Subscription unsubscribe URL
+	* @token.hint The token to use for unsubscribing
+	*/
+	function linkContentUnsubscribe( required string token, boolean ssl=false ){
+		var xehUnsubscribe = siteRoot() & sep() & "__unsubscribe/#arguments.token#";
+		return getRequestContext().buildLink( linkto=xehUnsubscribe, ssl=arguments.ssl );
+	}
+
+	/**
 	* Link to a specific blog entry's page
 	* @entry The entry to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
@@ -1009,6 +1072,72 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/************************************** MENUS *********************************************/
+	public any function menu( required string slug, required type="html", required array slugCache=[] ) {
+		var result = "";
+		var menu = menuService.findBySlug( arguments.slug );
+		if( !isNull( menu ) ) {
+			if( arguments.type == "data" ) {
+				return menu.getMemento();
+			}
+			else {
+				return buildProviderMenu( menu=menu, slugCache=arguments.slugCache );
+			}
+		}
+	}
+
+	/**
+	 * Builds out a custom menu
+	 * @menu.hint The root menu that should be rendered
+	 * @slugCache.hint The cache of menu slugs already used in this request
+	 */
+	public string function buildProviderMenu( required contentbox.model.menu.Menu menu, required array slugCache=[] ) {
+		var listType = arguments.menu.getListType();
+		//arguments.listType = !reFindNoCase( "^(ul|ol)$", arguments.listType ) ? "<ul>" : arguments.listType;
+		// set start
+		var menuString = "<#listType# class='#arguments.menu.getMenuClass()#'>";
+		// now get root items
+		var items = arguments.menu.getRootMenuItems();
+		// create cache of slugs to prevent infinite recursions
+		arrayAppend( arguments.slugCache, menu.getSlug() );
+		// build out this top level
+		menuString &= buildProviderMenuLevel( items=items, listType=listType, slugCache=slugCache, listClass=arguments.menu.getListClass() );
+		// set end
+		menuString &= "</#listType#>";
+		return menuString;
+	}
+
+	/**
+	 * Builds out a level of a custom menu
+	 * @items.hint An array of menu items for this level
+	 * @listType.hint The type of list to create (derived from owning menu)
+	 * @slugCache.hint The cache of menu slugs already used in this request
+	 */
+	private string function buildProviderMenuLevel( 
+		required array items, 
+		required string listType="ul", 
+		required array slugCache=[],
+		string listClass="" 
+	) {
+		var menuString = "";
+		// loop over items to build out level
+		for( var item in arguments.items ) {
+			var extras = { slugCache=arguments.slugCache, listType=arguments.listType };
+			// check that item can be added
+			if( item.canDisplay( options=extras ) ) {
+				// get template from provider
+				menuString &= '<li #item.getAttributesAsString()#>' & item.getProvider().getDisplayTemplate( item, extras );
+				// if this menu item has children...
+				if( item.hasChild() ) {
+					// recurse, recurse, recurse!
+					menuString &= 	"<#arguments.listType# class='#arguments.listClass#'>" & 
+									buildProviderMenuLevel( items=item.getChildren(), listType=arguments.listType, slugCache=arguments.slugCache ) & 
+									"</#arguments.listType#>";
+				}
+				menuString &= "</li>";
+			}
+		}
+		return menuString;
+	}
 
 	/**
 	* Render out a quick menu for root level pages

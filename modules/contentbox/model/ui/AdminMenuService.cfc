@@ -55,6 +55,7 @@ component accessors="true" threadSafe singleton{
 	this.USERS			= "users";
 	this.TOOLS			= "tools";
 	this.SYSTEM			= "system";
+	this.STATS			= "stats";
 	this.ADMIN_ENTRYPOINT = "";
 
 	// Header Menu Slugs
@@ -170,6 +171,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehPagesEditor	= "#this.ADMIN_ENTRYPOINT#.pages.editor";
 		prc.xehContentStore	= "#this.ADMIN_ENTRYPOINT#.contentstore";
 		prc.xehMediaManager	= "#this.ADMIN_ENTRYPOINT#.mediamanager";
+		prc.xehMenuManager	= "#this.ADMIN_ENTRYPOINT#.menus";
 
 		// Comments Tab
 		prc.xehComments			= "#this.ADMIN_ENTRYPOINT#.comments";
@@ -201,6 +203,9 @@ component accessors="true" threadSafe singleton{
 		prc.xehEmailTemplates   = "#this.ADMIN_ENTRYPOINT#.emailtemplates";
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		
+		// Stats
+		prc.xehSubscribers		= "#this.ADMIN_ENTRYPOINT#.subscribers";
+
 		// Dashboard
 		addTopMenu( name=this.DASHBOARD, label="<i class='icon-dashboard icon-large'></i> Dashboard" )
 			.addSubMenu( name="home", label="Home", href="#event.buildLink(prc.xehDashboard)#" )
@@ -213,7 +218,8 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href="#event.buildLink(prc.xehEntries)#", permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
 			.addSubMenu( name="contentStore", label="Content Store", href="#event.buildLink(prc.xehContentStore)#", permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
 			.addSubMenu( name="Categories", label="Categories", href="#event.buildLink(prc.xehCategories)#", permissions="CATEGORIES_ADMIN" )
-			.addSubMenu( name="mediaManager", label="Media Manager", href="#event.buildLink(prc.xehMediaManager)#", permissions="MEDIAMANAGER_ADMIN" );
+			.addSubMenu( name="mediaManager", label="Media Manager", href="#event.buildLink(prc.xehMediaManager)#", permissions="MEDIAMANAGER_ADMIN" )
+			.addSubMenu( name="menu", label="Menu Manager", href="#event.buildLink(prc.xehMenuManager)#", permissions="MENUS_ADMIN" );
 
 		// Comments
 		addTopMenu( name=this.COMMENTS, label="<i class='icon-comments icon-large'></i> Comments" )
@@ -248,6 +254,9 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( name="SecurityRules", label="Security Rules", href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN" )
 			.addSubMenu( name="EmailTemplates", label="Email Templates", href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN" )
 			.addSubMenu( name="GeekSettings", label="Geek Settings", href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS" );
+		// STATS
+		addTopMenu( name=this.STATS, label="<i class='icon-bar-chart icon-large'></i> Stats" )
+			.addSubMenu( name="Subscribers", label="Subscribers", href="#event.buildLink( prc.xehSubscribers )#", title="View Subscribers" );
 
 		return this;
 	}

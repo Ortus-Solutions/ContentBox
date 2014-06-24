@@ -29,7 +29,7 @@
                 </td>
                 <td class="center">
                     <div class="btn-group">
-                    <button class="btn" onclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#' )" title="Link"><i class="icon-check icon-large"></i></button>
+                    <button class="btn" onclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )" title="Link"><i class="icon-check icon-large"></i></button>
                     </div>
                 </td>
             </tr>

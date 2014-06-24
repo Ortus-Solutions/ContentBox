@@ -34,9 +34,17 @@ component persistent="true" entityname="cbModule" table="cb_module" cachename="c
 	property name="webURL" 			notnull="false" length="500" default="";
 	property name="forgeBoxSlug" 	notnull="false" length="255" default="";
 	property name="description"		notnull="false"  ormtype="text" length="8000" default="";
-	property name="isActive"		notnull="true"  ormtype="boolean" default="false" dbdefault="0" index="idx_active";
+	property name="isActive"		notnull="true"  ormtype="boolean" default="false" index="idx_active";
 
 	/************************************** PUBLIC *********************************************/
+
+	/**
+	* Constructor
+	*/
+	function init(){
+		variables.isActive = false;
+		return this;
+	}
 
 	/**
 	* Check for updates
