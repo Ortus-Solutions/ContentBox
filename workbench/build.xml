@@ -127,6 +127,9 @@
 		</replaceregexp>
 		-->
 		
+		<!-- copy box.json -->
+		<copy file="box.json" toFile="${dir.contentbox.exports}" overwrite="true" />
+		
 		<!-- Mark as Built -->
 		<property name="src.isBuilt" value="true" />
 	</target>
