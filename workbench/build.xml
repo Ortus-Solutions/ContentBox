@@ -22,9 +22,9 @@
 	</path>
 	<!-- Define Tasks -->
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
- 	<!-- Import Box-repo tasks -->
- 	<import file="lib/box-repo.xml"/>
-
+ 	<!-- Import Box-Repo Tasks -->
+	<import><url url="https://raw.githubusercontent.com/Ortus-Solutions/box-tasks/master/box-repo.xml"/></import>
+ 	
 	<!-- Init -->
 	<target name="init" description="Init build" unless="src.isInit">
 		<!-- Default environment check, if not passed via -Denvironment -->
@@ -225,6 +225,7 @@
 		<box-repo location="${be.exports}" 
 				  artifactID="${contentbox.slug}" 
 				  groupID="${groupID}"
+				  buildID="${build.number}"
 				  latest="${contentbox.version}"
 				  classifiers="express,war,apidocs,path,patch-db,patch-nocoldbox"/>
 		
@@ -241,39 +242,24 @@
     </target>
  	
  	<!-- Get Dependencies -->
-	<target name="getDependencies" description="Get all the necessary dependencies for the build process">
-		<mkdir dir="${dir.dependencies}" />
-		<!-- do a check -->
-		<if>
-	        <available file="${dir.dependencies}/railo-${railo.version}.war" />
-	        <then><echo>Railo ${railo.version} dependency found!</echo></then>
-	        <else>
-	            <echo>Railo ${railo.version} not found, getting artifact from ${ortus.repoURL}</echo>
-				<get src="${ortus.repoURL}/railo/${railo.version}/railo-${railo.version}.war" 
-					 dest="${dir.dependencies}"
-					 verbose="true" />
-	        </else>
-	    </if>
-		<if>
-	        <available file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" />
-	        <then><echo>Tuckey ${tuckey.version} dependency found!</echo></then>
-	        <else>
-	            <echo>Tuckey ${tucky.version} not found, getting artifact from ${ortus.repoURL}</echo>
-				<get src="${ortus.repoURL}/tuckey/${tuckey.version}/urlrewritefilter-${tuckey.version}.jar" 
-					 dest="${dir.dependencies}"
-					 verbose="true" />
-	        </else>
-	    </if>
-		<if>
-	        <available file="${dir.dependencies}/apache-tomcat-${express.server.version}.zip" />
-	        <then><echo>Apache Tomcat ${express.server.version} dependency found!</echo></then>
-	        <else>
-	            <echo>Apache Tomcat ${express.server.version} not found, getting artifact from ${ortus.repoURL}</echo>
-				<get src="${ortus.repoURL}/apache/tomcat/${express.server.version}/apache-tomcat-${express.server.version}.zip" 
-					 dest="${dir.dependencies}"
-					 verbose="true" />
-	        </else>
-	    </if>
+	<target name="getDependencies" description="Get all the necessary dependencies for the build process using: box.repo.url">
+		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="railo" 
+ 						artifactID="railo" 
+ 						version="${railo.version}"
+ 						extension="war"
+ 						destination="${dir.dependencies}"/>
+ 		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="tuckey" 
+ 						artifactID="urlrewritefilter" 
+ 						version="${tuckey.version}"
+ 						extension="jar"
+ 						destination="${dir.dependencies}"/>
+ 		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="apache" 
+ 						artifactID="apache-tomcat" 
+ 						version="${express.server.version}"
+ 						destination="${dir.dependencies}"/>
 	</target>
 	
 </project>
