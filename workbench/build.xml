@@ -8,7 +8,8 @@
     </description>
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.version"	value="2.1.0"/>
+ 	<property name="groupID"			value="ortussolutions" />
+ 	<property name="contentbox.version"	value="2.1.0"/>
  	<property name="contentbox.slug"	value="contentbox"/>
 	
  	<!-- Build Labels -->
@@ -21,6 +22,8 @@
 	</path>
 	<!-- Define Tasks -->
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
+ 	<!-- Import Box-repo tasks -->
+ 	<import file="lib/box-repo.xml"/>
 
 	<!-- Init -->
 	<target name="init" description="Init build" unless="src.isInit">
@@ -55,7 +58,7 @@
 		<!-- Cleanup + Init -->
 		<delete dir="${dir.build}" />
 		<delete verbose="true" failonerror="false">
-			<fileset dir="${dir.exports}" />
+			<fileset dir="${dir.contentbox.exports}" />
 		</delete>
 		<mkdir dir="${dir.build}"/>		
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
@@ -112,9 +115,9 @@
 				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
 		
 		<!-- Zip Source Release -->
-		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}" />
+		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" basedir="${dir.build}" />
 		<!-- Build Checksum -->
-		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
 		
 		<!-- Refactor indexes from Source For Express Edition: only use if derby else leave as is
 		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
@@ -134,9 +137,9 @@
 		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}&amp;path=${dir.api}" verbose="true"/>
 		<delete file="${dir.build}/colddoc.html" />
 		<!-- Zip API Docs -->
-		<zip destfile="${dir.exports}/contentbox_apidocs_${contentbox.version}.zip" basedir="${dir.api}"></zip>
+		<zip destfile="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
  		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_apidocs_${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
  	</target>
  	
  	<!-- Build war -->
@@ -149,10 +152,14 @@
  		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true"/>
  		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/WEB-INF/lib" overwrite="true"/>
  		
-		<!-- Create War Release -->
-		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.war" basedir="${dir.build}"></zip>
+		<!-- Create War -->
+		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}" />
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip">
+			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" /> 			
+ 		</zip>
+ 		<delete file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />
  		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_${contentbox.version}.war" />
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  		<!-- Cleanup INF like a ninja -->
  		<delete dir="${dir.build}/WEB-INF" />
  	</target>
@@ -172,7 +179,8 @@
  		<mkdir dir="${dir.build}/express/webapps/ROOT" />
  		
  		<!-- unzip ContentBox war into it -->
- 		<unzip src="${dir.exports}/contentbox_${contentbox.version}.war" dest="${dir.build}/express/webapps/ROOT" overwrite="true" />
+ 		<unzip src="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" dest="${dir.build}/war" overwrite="true" />
+ 		<unzip src="${dir.build}/war/contentbox-${contentbox.version}.war" dest="${dir.build}/express/webapps/ROOT" overwrite="true" />
  		<!-- Remove DSN creator link For Express Edition -->
 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
 				 value="" 
@@ -194,37 +202,29 @@
  		<!-- add execution perms -->
  		<chmod dir="${dir.build}/express/bin" perm="ugo+rx" includes="*"/>
  		<!-- Zip server up -->
- 		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" basedir="${dir.build}/express"></zip>
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express"></zip>
  		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_express_${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" />
  		<!-- cleanup -->
  		<delete dir="${dir.build}/express" />
  	</target>
  	
 	<!-- Build all releases-->
 	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.patch">
-		<!-- Perms for automated builds
-		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" /> -->
-		<!-- Move BE to Artifacts if on staging -->
-		<if>
-			<equals arg1="${be.name}" arg2="" />
-			<then></then>
-			<else>
-				<delete>
-					<fileset dir="${be.exports}">
-						<include name="${be.name}*" />
-					</fileset>
-				</delete>
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip" 	 		 tofile="${be.exports}/${be.name}.zip" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip.md5" 		 tofile="${be.exports}/${be.name}.zip.md5" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.war" 	 		 tofile="${be.exports}/${be.name}.war" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.war.md5" 		 tofile="${be.exports}/${be.name}.war.md5" />
-				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip" 	 tofile="${be.exports}/${be.name}_express.zip" />
-				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip.md5" tofile="${be.exports}/${be.name}_express.zip.md5" />
-			</else>
-		</if>
-		<!-- Move build.number for info purposes -->
-		<copy file="workbench/build.number" toDir="${dir.exports}" />
+		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 	 		 tofile="${be.exports}/contentbox-be.zip" overwrite="true" />
+		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip.md5" 		 tofile="${be.exports}/contentbox-be.zip.md5" overwrite="true"/>
+		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" 	 	 tofile="${be.exports}/contentbox-war-be.zip" overwrite="true"/>
+		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip.md5" 	 tofile="${be.exports}/contentbox-war-be.zip.md5" overwrite="true"/>
+		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" 	 tofile="${be.exports}/contentbox-express-be.zip" overwrite="true"/>
+		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip.md5" tofile="${be.exports}/contentbox-express-be.zip.md5" overwrite="true"/>
+		
+		<!-- Create Box Repo From macrodef -->
+		<box-repo location="${dir.exports}/${contentbox.slug}" 
+				  artifactID="${contentbox.slug}" 
+				  groupID="${groupID}"
+				  latest="${contentbox.version}"
+				  classifiers="express,war,apidocs,path,patch-db,patch-nocoldbox"/>
+		
 		<!-- Cleanup -->
 		<delete dir="${dir.build}" />
     </target>
