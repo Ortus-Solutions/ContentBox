@@ -219,7 +219,7 @@
 		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip.md5" tofile="${be.exports}/contentbox-express-be.zip.md5" overwrite="true"/>
 		
 		<!-- Create Box Repo From macrodef -->
-		<box-repo location="${dir.exports}/${contentbox.slug}" 
+		<box-repo location="${be.exports}" 
 				  artifactID="${contentbox.slug}" 
 				  groupID="${groupID}"
 				  latest="${contentbox.version}"
