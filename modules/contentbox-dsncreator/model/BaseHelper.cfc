@@ -61,7 +61,7 @@ limitations under the License.
 			// Update DSN
 			c = replacenocase( c, 'this.datasource = "contentbox"','this.datasource = "#arguments.dsnName#"' );
 			// Update relocations
-			c = replacenocase( c, 'include "modules/contentbox-installer/includes/dsn_relocation.cfm"','' );
+			c = replacenocase( c, 'include "modules/contentbox-installer/includes/dsn_relocation.cfm";','' );
 
 			// CF9 stupid cached dsn
 			if( listFirst( server.coldfusion.productVersion ) eq 9 ){
