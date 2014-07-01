@@ -69,32 +69,37 @@ component extends="baseHandler"{
 	// contentTable
 	function contentTable( event, rc, prc ){
 		// params
-		event.paramValue("page",1);
-		event.paramValue("searchContent","");
-		event.paramValue("fAuthors","all");
-		event.paramValue("fCategories","all");
-		event.paramValue("fStatus","any");
-		event.paramValue("isFiltering", false, true);
-		event.paramValue("showAll", false);
+		event.paramValue( "page", 1 )
+			.paramValue( "searchContent", "" )
+			.paramValue( "fAuthors", "all" )
+			.paramValue( "fCategories", "all" )
+			.paramValue( "fStatus", "any" )
+			.paramValue( "isFiltering", false, true )
+			.paramValue( "showAll", false );
 
 		// prepare paging plugin
-		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pagingPlugin 	= getMyPlugin( plugin="Paging", module="contentbox" );
 		prc.paging 			= prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 		= "javascript:contentPaginate(@page@)";
 		
 		// is Filtering?
-		if( rc.fAuthors neq "all" OR rc.fStatus neq "any" OR rc.fCategories neq "all" or rc.showAll ){ 
+		if( rc.fAuthors neq "all" OR 
+			rc.fStatus neq "any" OR 
+			rc.fCategories neq "all" OR 
+			rc.fCreators neq "all" OR
+			rc.showAll ){ 
 			prc.isFiltering = true;
 		}
 		
 		// search content with filters and all
-		var contentResults = contentStoreService.search(search=rc.searchContent,
-											   offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
-											   max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-											   isPublished=rc.fStatus,
-											   category=rc.fCategories,
-											   author=rc.fAuthors,
-											   sortOrder="createdDate desc");
+		var contentResults = contentStoreService.search( search=rc.searchContent,
+													   	 isPublished=rc.fStatus,
+													   	 category=rc.fCategories,
+													   	 author=rc.fAuthors,
+													   	 creator=rc.fCreators,
+													   	 offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
+													   	 max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
+													   	 sortOrder="createdDate desc" );
 		prc.content 	 = contentResults.content;
 		prc.contentCount = contentResults.count;
 
@@ -105,13 +110,13 @@ component extends="baseHandler"{
 		prc.xehContentClone 		= "#prc.cbAdminEntryPoint#.contentStore.clone";
 		
 		// view
-		event.setView(view="contentStore/indexTable", layout="ajax");
+		event.setView( view="contentStore/indexTable", layout="ajax" );
 	}
 
 	// Bulk Status Change
 	function bulkStatus( event, rc, prc ){
-		event.paramValue("contentID","");
-		event.paramValue("contentStatus","draft");
+		event.paramValue("contentID","")
+			.paramValue("contentStatus","draft");
 
 		// check if id list has length
 		if( len( rc.contentID ) ){
@@ -119,10 +124,10 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception("cbadmin_onContentStoreStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus});
 			// Message
-			getPlugin("MessageBox").info("#listLen(rc.contentID)# content where set to '#rc.contentStatus#'");
+			getPlugin( "MessageBox" ).info("#listLen(rc.contentID)# content where set to '#rc.contentStatus#'");
 		}
 		else{
-			getPlugin("MessageBox").warn("No content selected!");
+			getPlugin( "MessageBox" ).warn("No content selected!");
 		}
 
 		// relocate back
@@ -184,7 +189,7 @@ component extends="baseHandler"{
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
-			getPlugin("MessageBox").warn("Can't clone the unclonable, meaning no contentID or title passed.");
+			getPlugin( "MessageBox" ).warn("Can't clone the unclonable, meaning no contentID or title passed.");
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
@@ -209,7 +214,7 @@ component extends="baseHandler"{
 		// clone this sucker now!
 		contentStoreService.saveContent( clone );
 		// relocate
-		getPlugin("MessageBox").info("Content Cloned, isn't that cool!");
+		getPlugin( "MessageBox" ).info("Content Cloned, isn't that cool!");
 		setNextEvent(event=prc.xehContentStore);
 	}
 
@@ -257,7 +262,7 @@ component extends="baseHandler"{
 			arrayAppend(errors, "Please enter the content to save!");
 		}
 		if( arrayLen(errors) ){
-			getPlugin("MessageBox").warn(messageArray=errors);
+			getPlugin( "MessageBox" ).warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
@@ -302,7 +307,7 @@ component extends="baseHandler"{
 		}
 		else{
 			// relocate
-			getPlugin("MessageBox").info("content Saved!");
+			getPlugin( "MessageBox" ).info("content Saved!");
 			setNextEvent( prc.xehContentStore );
 		}
 	}
@@ -314,7 +319,7 @@ component extends="baseHandler"{
 		
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
-			getPlugin("MessageBox").warn( "No content sent to delete!" );
+			getPlugin( "MessageBox" ).warn( "No content sent to delete!" );
 			setNextEvent( prc.xehContentStore );
 		}
 		
@@ -342,7 +347,7 @@ component extends="baseHandler"{
 			}
 		}
 		// messagebox
-		getPlugin("MessageBox").info(messageArray=messages);
+		getPlugin( "MessageBox" ).info(messageArray=messages);
 		// relocate
 		setNextEvent(event=prc.xehContentStore);
 	}
@@ -438,7 +443,7 @@ component extends="baseHandler"{
 		
 		// relocate if not existent
 		if( !prc.content.isLoaded() ){
-			getPlugin("MessageBox").warn("ContentID sent is not valid");
+			getPlugin( "MessageBox" ).warn("ContentID sent is not valid");
 			setNextEvent( prc.xehContentStore );
 		}
 		
@@ -481,17 +486,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = contentStoreService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin("MessageBox").info( "Content imported sucessfully!" );
+				getPlugin( "MessageBox" ).info( "Content imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin("MessageBox").error( errorMessage );
+			getPlugin( "MessageBox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehContentStore );
 	}

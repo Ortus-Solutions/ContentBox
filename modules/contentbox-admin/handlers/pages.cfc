@@ -53,25 +53,30 @@ component extends="baseHandler"{
 	// page tables
 	function pageTable( event, rc, prc ){
 		// params
-		event.paramValue("page", 1);
-		event.paramValue("searchPages", "");
-		event.paramValue("fAuthors", "all");
-		event.paramValue("fStatus", "any");
-		event.paramValue("fCategories", "all");
-		event.paramValue("isFiltering", false,true);
-		event.paramValue("parent", "");
-		event.paramValue("showAll", false);
+		event.paramValue( "page", 1 )
+			.paramValue( "searchPages", "" )
+			.paramValue( "fAuthors", "all" )
+			.paramValue( "fStatus", "any" )
+			.paramValue( "fCategories", "all" )
+			.paramValue( "fCreators", "all" )
+			.paramValue( "isFiltering", false,true )
+			.paramValue( "parent", "" )
+			.paramValue( "showAll", false );
 		
 		// JS null checks
 		if( rc.parent eq "undefined" ){ rc.parent = ""; }
 		
 		// prepare paging plugin
-		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pagingPlugin = getMyPlugin( plugin="Paging", module="contentbox" );
 		prc.paging 		 = prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 	 = "javascript:contentPaginate(@page@)";
 		
 		// is Filtering?
-		if( rc.fAuthors neq "all" OR rc.fStatus neq "any" OR rc.fCategories neq "all" or rc.showAll ){ 
+		if( rc.fAuthors neq "all" OR 
+			rc.fStatus neq "any" OR 
+			rc.fCategories neq "all" OR 
+			rc.fCreators neq "all" OR
+			rc.showAll ){ 
 			prc.isFiltering = true;
 		}
 
@@ -82,18 +87,20 @@ component extends="baseHandler"{
 		}
 		
 		// search entries with filters and all
-		var pageResults = pageService.search(search=rc.searchPages,
-											 offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
-											 max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-											 isPublished=rc.fStatus,
-											 category=rc.fCategories,
-											 author=rc.fAuthors,
-											 parent=( !isNull( rc.parent ) ? rc.parent : javaCast("null","") ));
+		var pageResults = pageService.search( search=rc.searchPages,
+											  isPublished=rc.fStatus,
+											  category=rc.fCategories,
+											  author=rc.fAuthors,
+											  creator=rc.fCreators,
+											  parent=( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
+											  max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
+											  offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
+											  sortOrder="order asc" );
 		prc.pages 		= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
 
 		// Do we have a parent?
-		if( structKeyExists(rc, "parent") ){
+		if( structKeyExists( rc, "parent" ) ){
 			prc.page = pageService.get( rc.parent );
 		}
 
@@ -106,7 +113,7 @@ component extends="baseHandler"{
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
 
 		// view
-		event.setView(view="pages/indexTable", layout="ajax");
+		event.setView( view="pages/indexTable", layout="ajax" );
 	}
 
 	// Quick Look
@@ -221,7 +228,7 @@ component extends="baseHandler"{
 			arrayAppend(errors, "Please enter the content to save!");
 		}
 		if( arrayLen( errors ) ){
-			getPlugin("MessageBox").warn(messageArray=errors);
+			getPlugin( "MessageBox" ).warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
@@ -285,7 +292,7 @@ component extends="baseHandler"{
 		}
 		else{
 			// relocate
-			getPlugin("MessageBox").info("Page Saved!");
+			getPlugin( "MessageBox" ).info("Page Saved!");
 			if( page.hasParent() ){
 				setNextEvent(event=prc.xehPages,querystring="parent=#page.getParent().getContentID()#");
 			}
@@ -298,7 +305,7 @@ component extends="baseHandler"{
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
-			getPlugin("MessageBox").warn("Can't clone the unclonable, meaning no contentID or title passed.");
+			getPlugin( "MessageBox" ).warn("Can't clone the unclonable, meaning no contentID or title passed.");
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
@@ -328,7 +335,7 @@ component extends="baseHandler"{
 		// clone this sucker now!
 		pageService.savePage( clone );
 		// relocate
-		getPlugin("MessageBox").info("Page Cloned, isn't that cool!");
+		getPlugin( "MessageBox" ).info("Page Cloned, isn't that cool!");
 		if( clone.hasParent() ){
 			setNextEvent(event=prc.xehPages,querystring="parent=#clone.getParent().getContentID()#");
 		}
@@ -349,10 +356,10 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception("cbadmin_onPageStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus});
 			// Message
-			getPlugin("MessageBox").info("#listLen(rc.contentID)# Pages(s) where set to '#rc.contentStatus#'");
+			getPlugin( "MessageBox" ).info("#listLen(rc.contentID)# Pages(s) where set to '#rc.contentStatus#'");
 		}
 		else{
-			getPlugin("MessageBox").warn("No pages selected!");
+			getPlugin( "MessageBox" ).warn("No pages selected!");
 		}
 		// relocate back
 		if( len(rc.parent) ){
@@ -371,7 +378,7 @@ component extends="baseHandler"{
 		
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
-			getPlugin("MessageBox").warn( "No pages sent to delete!" );
+			getPlugin( "MessageBox" ).warn( "No pages sent to delete!" );
 			setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#");
 		}
 		
@@ -402,7 +409,7 @@ component extends="baseHandler"{
 			}
 		}
 		// messagebox
-		getPlugin("MessageBox").info(messageArray=messages);
+		getPlugin( "MessageBox" ).info(messageArray=messages);
 		// relocate
 		setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#");
 	}
@@ -476,11 +483,11 @@ component extends="baseHandler"{
 		if( arguments.latest ){ sortOrder = "modifiedDate desc"; }
 
 		// search entries with filters and all
-		var pageResults = pageService.search(author=arguments.authorID,
-											 parent=( structKeyExists(arguments, "parent") ? arguments.parent : javaCast("null","") ),
-											 offset=prc.pagePager_paging.startRow-1,
-											 max=arguments.max,
-											 sortOrder=sortOrder);
+		var pageResults = pageService.search( author=arguments.authorID,
+											  parent=( structKeyExists( arguments, "parent" ) ? arguments.parent : javaCast( "null", "" ) ),
+											  offset=prc.pagePager_paging.startRow-1,
+											  max=arguments.max,
+											  sortOrder=sortOrder );
 
 		prc.pager_pages 	  = pageResults.pages;
 		prc.pager_pagesCount  = pageResults.count;
@@ -490,17 +497,17 @@ component extends="baseHandler"{
 		// Sorting
 		prc.pagePager_sorting = arguments.sorting;
 		// parent 
-		event.paramValue("pagePager_parentID","",true);
+		event.paramValue( "pagePager_parentID", "", true );
 		if( structKeyExists( arguments, "parent" ) ){
 			prc.pagePager_parentID = arguments.parent;
 		}
 		// view pager
-		return renderView(view="pages/pager",module="contentbox-admin");
+		return renderView( view="pages/pager", module="contentbox-admin" );
 	}
 
 	// slugify remotely
 	function slugify( event, rc, prc ){
-		event.renderData(data=trim(getPlugin("HTMLHelper").slugify( rc.slug )),type="plain");
+		event.renderData( data=trim( getPlugin( "HTMLHelper" ).slugify( rc.slug ) ), type="plain" );
 	}
 
 	// editor selector
@@ -546,7 +553,7 @@ component extends="baseHandler"{
 		
 		// relocate if not existent
 		if( !prc.page.isLoaded() ){
-			getPlugin("MessageBox").warn("ContentID sent is not valid");
+			getPlugin( "MessageBox" ).warn("ContentID sent is not valid");
 			setNextEvent( "#prc.cbAdminEntryPoint#.pages" );
 		}
 		
@@ -588,17 +595,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = pageService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin("MessageBox").info( "Pages imported sucessfully!" );
+				getPlugin( "MessageBox" ).info( "Pages imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin("MessageBox").error( errorMessage );
+			getPlugin( "MessageBox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehPages );
 	}
