@@ -51,13 +51,15 @@ component extends="baseHandler"{
 													max=prc.cbSettings.cb_admin_quicksearch_max, 
 													sortOrder="title", 
 													isPublished="all",
-													searchActiveContent=false);
+													searchActiveContent=false );
 		prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
 		
 		// Search for Authors
 		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
 		prc.minAuthorCount = ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
 		
+		// cb helper
+		prc.cb = variables.CBHelper;
 		// renderdata
 		event.renderdata( data = renderView( "content/search" ) );
 	}
