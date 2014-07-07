@@ -85,7 +85,7 @@ component extends="ContentService" singleton{
 		string isPublished="any",
 		string author="all",
 		string creator="all",
-		string parent="",
+		string parent,
 		string category="all",
 		numeric max=0,
 		numeric offset=0,
@@ -129,10 +129,12 @@ component extends="ContentService" singleton{
 			}
 		}
 		// parent filter
-		if( len( trim( arguments.parent ) ) ){
-			c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
-		} else {
-			c.isNull( "parent" );
+		if( structKeyExists(arguments,"parent") ){
+			if( len( trim( arguments.parent ) ) ){
+				c.eq("parent.contentID", javaCast("int",arguments.parent) );
+			} else {
+				c.isNull("parent");
+			}
 		}
 		
 		// Category Filter
