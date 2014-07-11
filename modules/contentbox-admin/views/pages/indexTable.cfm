@@ -58,7 +58,11 @@
 				</cfif>
 				<!--- password protected --->
 				<cfif page.isPasswordProtected()>
-					<i class="icon-lock"></i>
+					<i class="icon-lock" title="Password Protected"></i>
+				</cfif>
+				<!--- ssl protected --->
+				<cfif page.getSSLOnly()>
+					<i class="icon-shield" title="SSL Enabled"></i>
 				</cfif>
 			</td>
 			<td class="center">
