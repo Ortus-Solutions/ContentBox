@@ -25,11 +25,37 @@ limitations under the License.
 component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" cachename="cbPage" cacheuse="read-write" extends="BaseContent" joinColumn="contentID" discriminatorValue="Page"{
 
 	// Properties
-	property name="layout"			notnull="false" length="200" default="";
-	property name="mobileLayout"	notnull="false" length="200" default="";
-	property name="order"			notnull="false" ormtype="integer" default="0";
-	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" index="idx_showInMenu";
-	property name="excerpt" 		notnull="false" ormtype="text" default="" length="8000";
+	property 	name="layout"			
+				notnull="false" 	
+				length="200" 
+				default="";
+	
+	property 	name="mobileLayout"	notnull="false" 	
+				length="200" 
+				default="";
+	
+	property 	name="order"			
+				notnull="false" 	
+				ormtype="integer" 
+				default="0";
+	
+	property 	name="showInMenu" 		
+				notnull="true"  	
+				ormtype="boolean" 
+				default="true" 
+				index="idx_showInMenu";
+	
+	property 	name="excerpt" 		
+				notnull="false" 	
+				ormtype="text" 
+				default="" 
+				length="8000";
+	
+	property 	name="SSLOnly" 		
+				notnull="true"  	
+				ormtype="boolean" 
+				default="false" 
+				index="idx_ssl";
 	
 	// Non-Persistable Properties
 	property name="renderedExcerpt" persistent="false";
@@ -53,6 +79,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		contentType		= "Page";
 		order 			= 0;
 		showInMenu 		= true;
+		SSLOnly			= false;
 		
 		// INHERITANCE LAYOUT STATIC
 		LAYOUT_INHERITANCE_KEY = "-inherit-";

@@ -393,12 +393,19 @@
 									</cfloop>
 								</select>
 								</cfif>
+
                         		<!--- Allow Comments --->
         						<cfif prc.cbSettings.cb_comments_enabled>
         						<i class="icon-comments icon-large"></i>
         						#html.label(field="allowComments",content="Allow Comments:",class="inline")#
         						#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()), class="input-block-level")#
         						</cfif>
+        						
+        						<!--- SSL Only --->
+        						<i class="icon-shield icon-large"></i>
+        						#html.label(field="sslOnly",content="SSL Only:",class="inline")#
+        						#html.select(name="sslOnly",options="Yes,No", selectedValue=yesNoFormat( prc.page.getSSLOnly() ), class="input-block-level")#
+        						
         						<!--- Password Protection --->
         						<label for="passwordProtection"><i class="icon-lock icon-large"></i> Password Protection:</label>
         						#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="input-block-level",size="25",maxlength="100")#
