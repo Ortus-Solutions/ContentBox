@@ -8,9 +8,10 @@
     </description>
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
- 	<property name="groupID"			value="ortussolutions" />
- 	<property name="contentbox.version"	value="2.1.0"/>
- 	<property name="contentbox.slug"	value="contentbox"/>
+ 	<property name="groupID"					value="ortussolutions" />
+ 	<property name="contentbox.version"			value="2.1.0"/>
+ 	<property name="contentbox.stableversion" 	value="2.0.0" />
+ 	<property name="contentbox.slug"			value="contentbox"/>
 	
  	<!-- Build Labels -->
 	<tstamp prefix="start"/>
@@ -227,6 +228,7 @@
 				  groupID="${groupID}"
 				  buildID="${build.number}"
 				  latest="${contentbox.version}"
+				  stableVersion="${contentbox.stableversion}"
 				  classifiers="express,war,apidocs,path,patch-db,patch-nocoldbox"/>
 		
 		<!-- Cleanup -->
