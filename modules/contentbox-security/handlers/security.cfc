@@ -63,7 +63,7 @@ component{
 	
 	function doLogin( event, rc, prc ){
 		// params
-		arguments.event.paramValue("rememberMe", false);
+		arguments.event.paramValue("rememberMe", 0);
 		arguments.event.paramValue("_securedURL", "");
 		// announce event
 		announceInterception("cbadmin_preLogin");
@@ -77,9 +77,7 @@ component{
 		// authenticate users
 		if( securityService.authenticate( rc.username, rc.password ) ){
 			// set remember me
-			if( rc.rememberMe ){
-				securityService.setRememberMe( rc.username );
-			}
+			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
 			
 			// announce event
 			announceInterception("cbadmin_onLogin");
