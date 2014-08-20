@@ -36,7 +36,7 @@
 				
 				<div class="control-group">
 					<label class="checkbox inline">
-						#cb.r( "rememberme@security" )#
+						#cb.r( "rememberme@security" )#<br>
 						#html.select(
 							name="rememberMe",
 							class="form-control",
