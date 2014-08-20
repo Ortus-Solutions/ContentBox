@@ -76,32 +76,38 @@ component extends="baseHandler"{
 	// entriesTable
 	function entriesTable( event, rc, prc ){
 		// params
-		event.paramValue("page",1);
-		event.paramValue("searchEntries","");
-		event.paramValue("fAuthors","all");
-		event.paramValue("fCategories","all");
-		event.paramValue("fStatus","any");
-		event.paramValue("isFiltering", false, true);
-		event.paramValue("showAll", false);
+		event.paramValue( "page",1 )
+			.paramValue( "searchEntries","" )
+			.paramValue( "fAuthors","all" )
+			.paramValue( "fCreators","all" )
+			.paramValue( "fCategories","all" )
+			.paramValue( "fStatus","any" )
+			.paramValue( "isFiltering", false, true )
+			.paramValue( "showAll", false );
 
 		// prepare paging plugin
-		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pagingPlugin 	= getMyPlugin( plugin="Paging", module="contentbox" );
 		prc.paging 			= prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 		= "javascript:contentPaginate(@page@)";
 		
 		// is Filtering?
-		if( rc.fAuthors neq "all" OR rc.fStatus neq "any" OR rc.fCategories neq "all" or rc.showAll ){ 
+		if( rc.fAuthors neq "all" OR 
+			rc.fStatus neq "any" OR 
+			rc.fCategories neq "all" OR 
+			rc.fCreators neq "all" OR
+			rc.showAll ){ 
 			prc.isFiltering = true;
 		}
 		
 		// search entries with filters and all
-		var entryResults = entryService.search(search=rc.searchEntries,
-											   offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
-											   max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-											   isPublished=rc.fStatus,
-											   category=rc.fCategories,
-											   author=rc.fAuthors,
-											   sortOrder="createdDate desc");
+		var entryResults = entryService.search(	search=rc.searchEntries,
+											   	isPublished=rc.fStatus,
+											   	category=rc.fCategories,
+											   	author=rc.fAuthors,
+											   	creator=rc.fCreators,
+											   	offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
+											   	max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
+											   	sortOrder="createdDate desc" );
 		prc.entries 	 = entryResults.entries;
 		prc.entriesCount = entryResults.count;
 
@@ -113,14 +119,14 @@ component extends="baseHandler"{
 		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		
 		// view
-		event.setView(view="entries/indexTable", layout="ajax");
+		event.setView( view="entries/indexTable", layout="ajax" );
 	}
 
 	// Quick Look
 	function quickLook( event, rc, prc ){
 		// get entry
 		prc.entry  = entryService.get( event.getValue("contentID",0) );
-		event.setView(view="entries/quickLook",layout="ajax");
+		event.setView( view="entries/quickLook", layout="ajax" );
 	}
 
 	// Bulk Status Change

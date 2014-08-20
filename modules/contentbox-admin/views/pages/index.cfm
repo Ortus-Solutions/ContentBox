@@ -6,7 +6,7 @@
 			<!--- Body Header --->
 			<div class="header">
 				<i class="icon-file-alt icon-large"></i>
-				Pages
+				Sitemap
 			</div>
 			<!--- Body --->
 			<div class="body">
@@ -99,8 +99,16 @@
 				#html.startForm(name="pageFilterForm", action=prc.xehPageSearch)#
 				<!--- Authors --->
 				<label for="fAuthors">Authors: </label>
-				<select name="fAuthors" id="fAuthors" class="input-block-level">
+				<select name="fAuthors" id="fAuthors" class="input-block-level" title="Filter on who edited content">
 					<option value="all" selected="selected">All Authors</option>
+					<cfloop array="#prc.authors#" index="author">
+					<option value="#author.getAuthorID()#">#author.getName()#</option>
+					</cfloop>
+				</select>
+				<!--- Creators --->
+				<label for="fCreators">Creators: </label>
+				<select name="fCreators" id="fCreators" class="input-block-level" title="Filter on who created content">
+					<option value="all" selected="selected">All Creators</option>
 					<cfloop array="#prc.authors#" index="author">
 					<option value="#author.getAuthorID()#">#author.getName()#</option>
 					</cfloop>
@@ -136,8 +144,6 @@
 			<div class="body">
 				<ul class="tipList unstyled">
 					<li><i class="icon-lightbulb icon-larg"></i> Right click on a row to activate quick look!</li>
-					<li><i class="icon-lightbulb icon-larg"></i> Sorting is only done within your paging window</li>
-					<li><i class="icon-lightbulb icon-larg"></i> Quick Filtering is only for viewed results</li>
 					<li><i class="icon-lightbulb icon-larg"></i> Cloning does not copy comments or version history</li>
 					<li><i class="icon-lightbulb icon-larg"></i> You can quickly order the pages by dragging the rows</li>
 				</ul>

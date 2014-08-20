@@ -7,7 +7,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 <cfscript>
 function r( 
 	required string resource,
-	string default,
+	string defaultValue,
 	string locale,
 	any values,
 	string bundle
@@ -16,6 +16,10 @@ function r(
 	if( find( "@", arguments.resource ) ){
 		arguments.bundle 	= listLast( arguments.resource, "@" );
 		arguments.resource 	= listFirst( arguments.resource, "@" );
+	}
+	// hack for cf 9.02 stupid cfscript bug
+	if( structKeyExists( arguments, "defaultValue" ) ){
+		arguments.default = arguments.defaultValue;
 	}
 	return getResource( argumentCollection=arguments );
 }
