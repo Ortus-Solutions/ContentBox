@@ -6,7 +6,7 @@
 			<!--- Body Header --->
 			<div class="header">
 				<i class="icon-file-alt icon-large"></i>
-				Pages
+				Sitemap
 			</div>
 			<!--- Body --->
 			<div class="body">
@@ -144,8 +144,6 @@
 			<div class="body">
 				<ul class="tipList unstyled">
 					<li><i class="icon-lightbulb icon-larg"></i> Right click on a row to activate quick look!</li>
-					<li><i class="icon-lightbulb icon-larg"></i> Sorting is only done within your paging window</li>
-					<li><i class="icon-lightbulb icon-larg"></i> Quick Filtering is only for viewed results</li>
 					<li><i class="icon-lightbulb icon-larg"></i> Cloning does not copy comments or version history</li>
 					<li><i class="icon-lightbulb icon-larg"></i> You can quickly order the pages by dragging the rows</li>
 				</ul>
