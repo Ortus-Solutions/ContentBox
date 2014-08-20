@@ -67,73 +67,104 @@ component extends="ContentService" singleton{
 
 	/**
 	* page search returns struct with keys [pages,count]
-	* @parent.hint If empty, then looks for empty parent nodes. If you do not want to attach it, send as null
+	* @search.hint The search term to search on
+	* @isPublished.hint Boolean bit to search if page is published or not, pass 'any' or not to ignore.
+	* @author.hint The authorID to filter on, pass 'all' to ignore filter
+	* @parent.hint The parentID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	* @creator.hint The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	* @category.hint The categorie(s) to filter on. You can also pass 'all' or 'none'
+	* @max.hint The maximum records to return
+	* @offset.hint The offset on the pagination
+	* @sortOrder.hint Sorting of the results, defaults to page title asc
+	* @searchActiveContent.hint If true, it searches title and content on the page, else it just searches on title
+	* 
+	* @returns struct = [pages,count]
 	*/
-	struct function search(search="",isPublished,author,parent,category,max=0,offset=0,sortOrder="title asc",boolean searchActiveContent=true){
+	struct function search(
+		string search="",
+		string isPublished="any",
+		string author="all",
+		string creator="all",
+		string parent,
+		string category="all",
+		numeric max=0,
+		numeric offset=0,
+		string sortOrder="",
+		boolean searchActiveContent=true
+	){
+		
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
 		// stub out activeContent alias based on potential conditions...
 		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
 		if(
-			( structKeyExists(arguments,"author") AND arguments.author NEQ "all" ) ||
-			( len(arguments.search) ) ||
+			( arguments.author NEQ "all" ) ||
+			( len( arguments.search ) ) ||
 			( findNoCase( "modifiedDate", arguments.sortOrder ) )
 		) {
 			c.createAlias( "activeContent", "ac" );
 		}
-		// create sort order for aliased property
-		if( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
-			sortOrder = replaceNoCase( arguments.sortOrder, "modifiedDate", "ac.createdDate" );
-		}
 		// isPublished filter
-		if( structKeyExists(arguments,"isPublished") AND arguments.isPublished NEQ "any"){
-			c.eq("isPublished", javaCast("boolean",arguments.isPublished));
+		if( arguments.isPublished NEQ "any" ){
+			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
 		}
 		// Author Filter
-		if( structKeyExists(arguments,"author") AND arguments.author NEQ "all"){
-			c.isEq("ac.author.authorID", javaCast("int",arguments.author) );
+		if( arguments.author NEQ "all" ){
+			c.isEq( "ac.author.authorID", javaCast( "int", arguments.author ) );
+		}
+		// Creator Filter
+		if( arguments.creator NEQ "all" ){
+			c.isEq( "creator.authorID", javaCast( "int", arguments.creator ) );
 		}
 		// Search Criteria	
-		if( len(arguments.search) ){
+		if( len( arguments.search ) ){
 			// Search with active content
 			if( arguments.searchActiveContent ){
 				// like disjunctions
-				c.or( c.restrictions.like("title","%#arguments.search#%"),
-					  c.restrictions.like("ac.content", "%#arguments.search#%") );
-			}
-			else{
-				c.like("title","%#arguments.search#%");
+				c.or( c.restrictions.like( "title", "%#arguments.search#%" ),
+					  c.restrictions.like( "ac.content", "%#arguments.search#%" ) );
+			} else {
+				c.like( "title", "%#arguments.search#%" );
 			}
 		}
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
-			if( len( trim(arguments.parent) ) ){
+			if( len( trim( arguments.parent ) ) ){
 				c.eq("parent.contentID", javaCast("int",arguments.parent) );
-			}
-			else{
+			} else {
 				c.isNull("parent");
 			}
-			sortOrder = "order asc";
 		}
+		
 		// Category Filter
-		if( structKeyExists(arguments,"category") AND arguments.category NEQ "all"){
+		if( arguments.category NEQ "all" ){
 			// Uncategorized?
 			if( arguments.category eq "none" ){
-				c.isEmpty("categories");
+				c.isEmpty( "categories" );
 			}
 			// With categories
 			else{
 				// search the association
-				c.createAlias("categories","cats")
-					.isIn("cats.categoryID", JavaCast("java.lang.Integer[]",[arguments.category]) );
+				c.createAlias( "categories", "cats" )
+					.isIn( "cats.categoryID", JavaCast( "java.lang.Integer[]", [ arguments.category ] ) );
 			}
+		}
+
+		// DETERMINE SORT ORDERS
+		// If modified Date
+		if( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
+			sortOrder = replaceNoCase( arguments.sortOrder, "modifiedDate", "ac.createdDate" );
+		} 
+		// default to title sorting
+		else if( !len( arguments.sortOrder ) ){
+			sortOrder = "title asc";
 		}
 		
 		// run criteria query and projections count
-		results.count 	= c.count("contentID");
+		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false);
+							.list( offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false );
 		return results;
 	}
 
@@ -180,7 +211,7 @@ component extends="ContentService" singleton{
 		}
 
 		// Search Criteria
-		if( len(arguments.searchTerm) ){
+		if( len( arguments.searchTerm ) ){
 			// like disjunctions
 			c.createAlias( "activeContent", "ac" );
 			c.or( c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
@@ -188,7 +219,7 @@ component extends="ContentService" singleton{
 		}
 
 		// parent filter
-		if( structKeyExists(arguments,"parent") ){
+		if( structKeyExists( arguments, "parent" ) ){
 			if( len( trim( arguments.parent ) ) ){
 				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
 			} else {
@@ -199,12 +230,12 @@ component extends="ContentService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count("contentID");
+		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list( offset=arguments.offset,
 								   max=arguments.max,
 								   sortOrder=arguments.sortOrder,
-								   asQuery=arguments.asQuery);
+								   asQuery=arguments.asQuery );
 
 		return results;
 	}
@@ -215,10 +246,9 @@ component extends="ContentService" singleton{
 	array function getAllFlatPages(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="contentID,title,slug")
+		return c.withProjections( property="contentID,title,slug" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="title asc");
-			 
+			.list( sortOrder="title asc" );
 	}
 	
 	/**

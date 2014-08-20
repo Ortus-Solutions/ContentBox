@@ -101,19 +101,18 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 				writeOutput('
 				<li>
 					<a href="#cb.linkContent(item)#">#item.getTitle()#</a><br/>
-					#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ))#					 
-				</li>
-				<cite>#item.getContentType()# -> <a href="#cb.linkContent(item)#">#cb.linkContent(item)#</a></cite><br/>
+					<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ))#</p>			 
+					<cite>#item.getContentType()# -> <a href="#cb.linkContent(item)#">#cb.linkContent(item)#</a></cite><br/>
 				');
 				
 				
-				if(item.hasCategories()) {
+				if( item.hasCategories() ){
 					writeOutput('
 					<cite>Categories: #item.getCategoriesList()#</cite><br />
 					');	
 				}
-				
-				writeOutput('<br />');
+
+				writeOutput('</li>');
 								
 			};
 

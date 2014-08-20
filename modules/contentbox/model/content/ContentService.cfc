@@ -54,7 +54,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Clear all content caches
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearAllCaches(boolean async=false){
+	function clearAllCaches( boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
@@ -66,7 +66,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Clear all page wrapper caches
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearAllPageWrapperCaches(boolean async=false){
+	function clearAllPageWrapperCaches( boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
@@ -79,7 +79,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @slug.hint The slug partial to clean on
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearPageWrapperCaches(required any slug, boolean async=false){
+	function clearPageWrapperCaches( required any slug, boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
@@ -92,7 +92,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @slug.hint The slug to clean
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearPageWrapper(required any slug, boolean async=false){
+	function clearPageWrapper( required any slug, boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
@@ -666,6 +666,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var c = newCriteria();
 		
 		return c.withProjections( property="slug" )
+			.list( sortOrder="slug asc" );
+	}
+
+	/**
+	* Returns an array of [contentID, title, slug] structures of all the content in the system
+	*/
+	array function getAllFlatContent(){
+		var c = newCriteria();
+		
+		return c.withProjections( property="contentID,title,slug" )
+			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder="slug asc" );
 	}
 
