@@ -39,6 +39,10 @@
 				<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
 			</td>
 			<td>
+				<!--- Home Page --->
+				<cfif prc.cbSettings.cb_site_homepage eq page.getSlug()>
+					<i class="icon-home" title="Current Homepage"></i>
+				</cfif>
 				<!--- Children Dig Deeper --->
 				<cfif page.getNumberOfChildren()>
 					<a href="javascript:contentDrilldown( '#page.getContentID()#' )" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="icon-plus-sign icon-large text"></i></a>
