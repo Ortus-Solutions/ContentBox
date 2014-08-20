@@ -31,6 +31,10 @@
 						Comments are currently disabled site-wide!
 					</div>
 				</cfif>
+
+				<div class="lead">
+					<i class="icon-home"></i> Homepage: <strong>#prc.cbSettings.cb_site_homepage eq "cbBlog" ? 'Blog' : prc.cbSettings.cb_site_homepage#</strong>
+				</div>
 	
 				<!--- Content Bar --->
 				<div class="well well-small" id="contentBar">
@@ -78,7 +82,7 @@
 						</div>
 					</div>
 				</div>
-	
+				
 				<!--- pages container --->
     			<div id="pagesTableContainer"><p class="text-center"><i id="pageLoader" class="icon-spinner icon-spin icon-large icon-4x"></i></p></div>
 	
