@@ -63,20 +63,28 @@
 		</delete>
 		<mkdir dir="${dir.build}"/>		
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
-		<!-- If stg, change perms and owners -->
-		<if>
-			<equals arg1="${environment}" arg2="auto" />
-			<then>
-				<chmod file="${dir.build}/**" perm="o+wrs" type="both" verbose="true" />
-				<chown owner="stg-ortus" verbose="true">
-					<fileset dir="${dir.build}" />
-				</chown>
-			</then>
-		</if>
+		<!-- Permissions -->
+		<antcall target="update.permissions" />
 		<!-- Get Build Dependencies -->
  		<antcall target="getDependencies" />
 		<!-- Mark as init -->
 		<property name="src.isInit" value="true" />
+	</target>
+
+	<!-- update permissions on reports -->
+	<target name="update.permissions" description="Update staging server permissions">
+		<!-- Integration permissions -->
+		<if>
+			<equals arg1="${environment}" arg2="auto" />
+			<then>
+				<chmod file="${dir.build}/**" perm="go+wrs" type="both" verbose="true" />
+				<chown owner="stg-ortus" verbose="true">
+					<fileset dir="${dir.build}" />
+				</chown>
+			</then>
+			<else>
+			</else>
+		</if>
 	</target>
 	
  	<!-- Build source distro -->
@@ -137,6 +145,8 @@
  	
  	<!-- Build API Docs -->
  	<target name="build.apidocs" description="Builds the api docs" depends="init">
+ 		<mkdir dir="${dir.api}"/>
+ 		<antcall target="update.permissions" />
  		<!-- Execute DocBox -->
 		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}&amp;path=${dir.api}" verbose="true"/>
 		<delete file="${dir.build}/colddoc.html" />
