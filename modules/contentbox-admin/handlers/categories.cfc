@@ -86,8 +86,8 @@ component extends="baseHandler"{
 				var title		= category.getSlug();
 				// announce event
 				announceInterception("cbadmin_preCategoryRemove", { category=category, categoryID=categoryID } );
-				// Delete it
-				categoryService.delete( category.removeAllContent() ); 
+				// Delete category via service
+				categoryService.deleteCategory( category ); 
 				arrayAppend( messages, "Category '#title#' removed" );
 				// announce event
 				announceInterception("cbadmin_postCategoryRemove", { categoryID=categoryID });

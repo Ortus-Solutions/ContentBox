@@ -64,7 +64,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="commentSubscriptions" singularName="commentSubscription" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" cfc="contentbox.model.subscriptions.CommentSubscription" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
 
 	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" inverse="true" cascade="all"  
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"  
 			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID";
 
 	// M2M -> Related Content - Content related from this content to other content
@@ -265,42 +265,32 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 	
 	/**
-	* Override the setCategories
+	* Only adds it if not found in content object
 	*/
-	BaseContent function setCategories(required array categories){
-		
-		// Relate the incoming suckers
-		for( var oCat in arguments.categories ){
-			if( !oCat.hasContent( this ) ){
-				oCat.addContent( this );
-			}
+	BaseContent function addCategories(required category){
+		if( !hasCategories( arguments.category ) ){
+			arrayAppend( variables.categories, arguments.category );
 		}
-		
-		if( hasCategories() ){
-			// loop and remove yourself from categories
-			for( var oCat in variables.categories ){
-				if( !arrayContains( arguments.categories, oCat ) ){
-					oCat.removeContent( this );
-				}
-			}
-		}
-		
-		variables.categories = arguments.categories;
-		
 		return this;
 	}
 	
+	/**
+	* Remove only if it's found in the content object
+	*/
+	BaseContent function removeCategories(required category){
+		if( hasCategories( arguments.category ) ){
+			arrayDelete( variables.categories, arguments.category );
+		}
+		return this;
+	}
+
 	/*
 	* I remove all category associations
 	*/
 	BaseContent function removeAllCategories(){
 		if ( hasCategories() ){
-			for(var oCat in variables.categories ){
-				oCat.removeContent( this );
-			}
 			variables.categories.clear();
-		}
-		else{
+		} else {
 			variables.categories = [];
 		}
 		return this;
@@ -318,28 +308,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		return this;
 	}
 
-	/**
-	* Bi directional add
-	*/
-	BaseContent function addCategories(required category){
-		if( !hasCategories( arguments.category ) ){
-			arguments.category.addContent( this );
-			arrayAppend( variables.categories, arguments.category );
-		}
-		return this;
-	}
-	
-	/**
-	* Bi directional remove
-	*/
-	BaseContent function removeCategories(required category){
-		if( hasCategories( arguments.category ) ){
-			arguments.category.removeContent( this );
-			arrayDelete( variables.categories, arguments.category );
-		}
-		return this;
-	}
-	
 	/**
 	* Override the setChildren
 	*/
@@ -873,12 +841,11 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	function getCategoriesList(){
 		if( NOT hasCategories() ){ return "Uncategorized"; }
-		var cats 	= getCategories();
 		var catList = [];
-		for(var x=1; x lte arrayLen(cats); x++){
-			arrayAppend( catList , cats[x].getCategory() );
+		for( var x=1; x lte arrayLen( variables.categories ); x++ ){
+			arrayAppend( catList , variables.categories[ x ].getCategory() );
 		}
-		return replace(arrayToList( catList ), ",",", ","all");
+		return replace( arrayToList( catList ), ",", ", ", "all" );
 	}
 
 }
