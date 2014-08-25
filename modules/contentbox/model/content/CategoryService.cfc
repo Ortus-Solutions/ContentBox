@@ -27,6 +27,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	// Dependencies
 	property name="htmlHelper" 		inject="coldbox:plugin:HTMLHelper";
 	property name="populator"  		inject="wirebox:populator";
+	property name="contentService"	inject="contentService@cb";
 	
 	/**
 	* Constructor
@@ -72,18 +73,21 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Inflate categories from a collection via 'category_X' pattern
+	* Inflate categories from a collection via 'category_X' pattern and returns an array of category objects 
+	* as its representation
+	* 
+	* @return array of categories
 	*/
-	array function inflateCategories(struct memento){
+	array function inflateCategories( struct memento ){
 		var categories = [];
 		// iterate all memento keys
-		for(var key in arguments.memento){
+		for( var key in arguments.memento ){
 			// match our prefix
-			if( findNoCase("category_", key) ){
+			if( findNoCase( "category_", key ) ){
 				// inflate key
 				var thisCat = get( arguments.memento[key] );
 				// validate it
-				if( !isNull(thisCat) ){ arrayAppend(categories, thisCat); }
+				if( !isNull( thisCat ) ){ arrayAppend( categories, thisCat ); }
 			}
 		}
 		return categories;
@@ -91,14 +95,39 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 	/**
 	* Delete a category which also removes itself from all many-to-many relationships
+	* @category.hint The category object to remove from the system
 	*/
-	boolean function deleteCategory(required categoryID){
-		var oCategory = get( arguments.categoryID ).removeAllContent();
-		delete( oCategory );
+	boolean function deleteCategory( required category ) transactional{
+		// Remove content relationships
+		var aRelatedContent = removeAllRelatedContent( arguments.category );
+		// Save the related content
+		if( arrayLen( aRelatedContent ) ){
+			contentService.saveAll( entities=aRelatedContent, transactional=false );
+		}
+		// Remove it
+		delete( entity=arguments.category, transactional=false );
 		// evict queries
 		ORMEvictQueries( getQueryCacheRegion() );
 		// return results
 		return true;
+	}
+
+	/*
+	* Remove all content associations from a category and returns all the content objects it was removed from
+	* @category.hint The category object
+	*/
+	array function removeAllRelatedContent( required category ){
+		var aRelatedContent = contentService.newCriteria()
+			.createAlias( "categories", "c" )
+			.isEq( "c.categoryID", arguments.category.getCategoryID() )
+			.list();
+
+		// Remove associations
+		for( var thisContent in aRelatedContent ){
+			thisContent.removeCategories( arguments.category );
+		}
+
+		return aRelatedContent;
 	}
 
 	/**

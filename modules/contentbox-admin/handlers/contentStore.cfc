@@ -285,8 +285,8 @@ component extends="baseHandler"{
 		}
 		// Inflate sent categories from collection
 		categories.addAll( categoryService.inflateCategories( rc ) );
-		// detach categories and re-attach
-		content.setCategories( categories );
+		// Add categories to page
+		content.removeAllCategories().setCategories( categories );
 		// Inflate Custom Fields into the page
 		content.inflateCustomFields( rc.customFieldsCount, rc );
 		// Inflate Related Content into the content
