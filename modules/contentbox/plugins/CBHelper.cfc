@@ -1262,22 +1262,18 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/**
 	* Retrieve i18n resources
 	* @resource.hint The resource (key) to retrieve from a loaded bundle or pass a @bundle
-	* @defaultValue.hint A default value to send back if the resource (key) not found
+	* @default.hint A default value to send back if the resource (key) not found
 	* @locale.hint Pass in which locale to take the resource from. By default it uses the user's current set locale
 	* @values.hint An array, struct or simple string of value replacements to use on the resource string
 	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
 	*/
 	any function r( 
 		required string resource,
-		string defaultValue,
+		string default,
 		string locale,
 		any values,
 		string bundle
 	){
-		// default value conversion
-		if( structKeyExists( arguments, "defaultValue" ) ){
-			arguments.default = arguments.defaultValue;
-		}
 		// check for resource@bundle convention:
 		if( find( "@", arguments.resource ) ){
 			arguments.bundle 	= listLast( arguments.resource, "@" );
@@ -1316,22 +1312,25 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		var locPage = "";
 		// class text
 		var classtext = [];
+		var currentPageID = 0;
 
 		// Get contentID
-		if( structKeyExists( prc,"page" ) and prc.page.isLoaded() ){
+		if( structKeyExists( prc, "page" ) and prc.page.isLoaded() ){
 			locPage = getCurrentPage();
+			currentPageID = locPage.getContentID();
 			pageAncestorContentIDs = locPage.getContentID();
 			// If this is subnav, add ancestry trail
 			while( locPage.hasParent() ) {
 				locPage = locPage.getParent();
 				pageAncestorContentIDs = ListAppend( pageAncestorContentIDs, locPage.getContentID() );
-			}			
+			}	
 		}
+
 		// list start
 		if( !listFindNoCase("li,none,data", arguments.type) ){
 			b.append( '<#arguments.type# class="#arguments.typeClass#">' );
 		}
-
+		// data setup
 		if( arguments.type eq "data" ){
 			var dataMenu = [];
 		}
@@ -1340,24 +1339,25 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		for(var x=1; x lte pageResults.count; x++ ){
 			// Build up the element class into the current classText array list
 			if( isSimpleValue( arguments.elementClass ) ){ arguments.elementClass = listToArray( arguments.elementClass ); }
-			classText = arguments.elementClass;
+			classText = duplicate( arguments.elementClass );
 
 			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[x].getTitle() )){
 				// Do we need to nest?
-				var doNesting 		= ( arguments.currentLevel lt arguments.levels AND pageResults.pages[x].hasChild() );
+				var doNesting = ( arguments.currentLevel lt arguments.levels AND pageResults.pages[x].hasChild() );
 				// Is element active (or one of its decendants)
-				var isElementActive = ( listFindNoCase(pageAncestorContentIDs, pageResults.pages[x].getContentID()) );
+				var isElementActive 		= currentPageID eq pageResults.pages[ x ].getContentID();
+				var isElementActiveAncestor = ( listFindNoCase( pageAncestorContentIDs, pageResults.pages[ x ].getContentID() ) );
 				// class = active? Then add to class text
 				if( isElementActive ){ arrayAppend( classText, arguments.activeClass); }
-				// class = parent nesting?
-				if( doNesting ){ arrayAppend( classText, arguments.parentClass ); }
 
 				// list
 				if( arguments.type neq "none" and arguments.type neq "data" ){
-					// Start Embedded List
-					b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
 					// Nested Levels?
 					if( doNesting ){
+						// Setup Parent class, we are going down the wormhole
+						arrayAppend( classText, arguments.parentClass );
+						// Start Embedded List
+						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
 						// If type is "li" then guess to do a nested ul list
 						b.append( buildMenu(
 							pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
@@ -1367,11 +1367,16 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 							elementClass=arguments.elementClass,
 							showNone=arguments.showNone,
 							levels=arguments.levels,
-							currentLevel=arguments.currentLevel+1
+							currentLevel=arguments.currentLevel+1,
+							activeShowChildren=arguments.activeShowChildren
 						) );
 					}
 					// Do we nest active and activeShowChildren flag is activated?
-					else if( activeShowChildren AND isElementActive AND pageResults.pages[x].hasChild() ){
+					else if( activeShowChildren AND ( isElementActive OR isElementActiveAncestor ) AND pageResults.pages[x].hasChild() ){
+						// Setup Parent class, we are going down the wormhole
+						arrayAppend( classText, arguments.parentClass );
+						// Start Embedded List
+						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
 						// If type is "li" then guess to do a nested ul list
 						b.append( buildMenu(
 							pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
@@ -1381,8 +1386,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 							showNone=arguments.showNone,
 							levels=1,
 							elementClass=arguments.elementClass,
-							currentLevel=arguments.currentLevel+1
+							currentLevel=arguments.currentLevel+1,
+							activeShowChildren=activeShowChildren
 						) );
+					} else {
+						// Start Embedded List
+						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
 					}
 
 					// Close it
@@ -1401,7 +1410,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 							showNone=arguments.showNone,
 							elementClass=arguments.elementClass,
 							levels=arguments.levels,
-							currentLevel=arguments.currentLevel+1);
+							currentLevel=arguments.currentLevel+1,
+							activeShowChildren=arguments.activeShowChildren
+						);
 					}
 					// Do we nest active and activeShowChildren flag is activated?
 					else if( activeShowChildren AND isElementActive AND pageResults.pages[x].hasChild() ){
@@ -1413,7 +1424,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 							showNone=arguments.showNone,
 							elementClass=arguments.elementClass,
 							levels=1,
-							currentLevel=arguments.currentLevel+1);
+							currentLevel=arguments.currentLevel+1,
+							activeShowChildren=arguments.activeShowChildren
+						);
 					}
 					arrayAppend(dataMenu,pageData);
 				} else {
