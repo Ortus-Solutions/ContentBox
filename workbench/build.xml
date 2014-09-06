@@ -92,7 +92,7 @@
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
 		<!-- Copy Source -->	
-      	<copy todir="${dir.build}">
+      	<copy todir="${dir.build}" encoding="UTF-8">
       		<fileset dir=".">
       			<exclude name=".idea/**" />
       			<exclude name="_paidModules**" />
@@ -108,7 +108,7 @@
       		</fileset>
         </copy>
 		<!-- Replace Build Numbers -->
-		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true">
+		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 		  <fileset dir="${dir.build}/modules/">
 		  	<include name="**/ModuleConfig.cfc" />
 		  </fileset>
@@ -121,7 +121,8 @@
 		<replace file="${dir.build}/Application.cfc" 
 				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
 				 summary="true" 
-				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
+				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 encoding="UTF-8"/>
 		
 		<!-- Zip Source Release -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" basedir="${dir.build}" />
@@ -137,7 +138,7 @@
 		-->
 		
 		<!-- copy box.json -->
-		<copy file="box.json" toFile="${dir.contentbox.exports}/box.json" overwrite="true" />
+		<copy file="box.json" toFile="${dir.contentbox.exports}/box.json" overwrite="true"  encoding="UTF-8"/>
 		
 		<!-- Mark as Built -->
 		<property name="src.isBuilt" value="true" />
@@ -161,10 +162,10 @@
  		<!-- Unzip Railo War -->
  		<unzip dest="${dir.build}" src="${dir.dependencies}/railo-${railo.version}.war" overwrite="true"/>
  		<!-- Replace web.xml -->
- 		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/WEB-INF" overwrite="true"/>
+ 		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
  		<!-- Copy Tuckey -->
- 		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true"/>
- 		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/WEB-INF/lib" overwrite="true"/>
+ 		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
+ 		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/WEB-INF/lib" overwrite="true" encoding="UTF-8"/>
  		
 		<!-- Create War -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}" />
@@ -199,18 +200,20 @@
 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
 				 value="" 
 				 summary="true" 
-				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
+				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 encoding="UTF-8"/>
 		<!-- Remove DSN Creator Module for Express Edition -->
 		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
  		<!-- Create embedded datasource in Application.cfc -->
  		<loadfile property="express.appdsn" srcFile="${dir.resources}/express-dsn.txt" />
  		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
- 						 value="${express.appdsn}" 
- 						 summary="true" 
- 						 token='this.datasource = "contentbox";' />
+ 				 value="${express.appdsn}" 
+ 				 summary="true" 
+ 				 token='this.datasource = "contentbox";' 
+ 				 encoding="UTF-8"/>
  				
  		<!-- Custom Server Config -->
- 		<copy todir="${dir.build}/express" overwrite="true">
+ 		<copy todir="${dir.build}/express" overwrite="true" encoding="UTF-8">
  			<fileset dir="${dir.resources}/express" />
  		</copy>
  		<!-- add execution perms -->
@@ -225,12 +228,30 @@
  	
 	<!-- Build all releases-->
 	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.patch">
-		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 	 		 tofile="${be.exports}/contentbox-be.zip" overwrite="true" />
-		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip.md5" 		 tofile="${be.exports}/contentbox-be.zip.md5" overwrite="true"/>
-		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" 	 	 tofile="${be.exports}/contentbox-war-be.zip" overwrite="true"/>
-		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip.md5" 	 tofile="${be.exports}/contentbox-war-be.zip.md5" overwrite="true"/>
-		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" 	 tofile="${be.exports}/contentbox-express-be.zip" overwrite="true"/>
-		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip.md5" tofile="${be.exports}/contentbox-express-be.zip.md5" overwrite="true"/>
+		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 	 		 
+			  tofile="${be.exports}/contentbox-be.zip" 
+			  overwrite="true" 
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip.md5" 		 
+			  tofile="${be.exports}/contentbox-be.zip.md5" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" 	 	 
+			  tofile="${be.exports}/contentbox-war-be.zip" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip.md5" 	 
+			  tofile="${be.exports}/contentbox-war-be.zip.md5" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" 	 
+			  tofile="${be.exports}/contentbox-express-be.zip" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip.md5" 
+			  tofile="${be.exports}/contentbox-express-be.zip.md5" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
 		
 		<!-- Create Box Repo From macrodef -->
 		<box-repo location="${be.exports}" 
