@@ -6,20 +6,19 @@ component extend="baseHandler"{
 	// Dependencies
 	property name="commentService"		inject="id:commentService@cb";
 	property name="settingsService"		inject="id:settingService@cb";
+	property name="messagebox"			inject="coldbox:plugin:MessageBox";
 
 	// Public properties
 	this.preHandler_except = "pager";
 
 	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
-		// Tab
+	function preHandler( event, action, eventArguments, rc, prc ){
+		// Tab selection
 		prc.tabComments = true;
 	}
 
 	// index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// params
 		event.paramValue("page",1);
 		event.paramValue("searchComments","");
@@ -63,7 +62,7 @@ component extend="baseHandler"{
 	}
 
 	// change status
-	function doStatusUpdate(event,rc,prc){
+	function doStatusUpdate( event, rc, prc ){
 		// param values
 		event.paramValue("commentID","");
 		event.paramValue("page","1");
@@ -75,12 +74,12 @@ component extend="baseHandler"{
 			announceInterception( "cbadmin_onCommentStatusUpdate", {commentID=rc.commentID,status=rc.commentStatus} );
 			// Message
 			data.messages = "#listLen(rc.commentID)# Comment(s) #rc.commentStatus#d";
-			getPlugin("MessageBox").info( data.messages );
+			messagebox.info( data.messages );
 		}
 		else{
 			data.messages = "No comments selected!";
 			data.error = true;
-			getPlugin("MessageBox").warn( data.messages );
+			messagebox.warn( data.messages );
 		}
 		
 		// If ajax call, return as ajax
@@ -94,7 +93,7 @@ component extend="baseHandler"{
 	}
 
 	// editor
-	function editor(event,rc,prc){
+	function editor( event, rc, prc ){
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue("commentID",0) );
 		// exit handlers
@@ -104,11 +103,11 @@ component extend="baseHandler"{
 	}
 
 	// comment moderators
-	function moderate(event,rc,prc){
+	function moderate( event, rc, prc ){
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue("commentID",0) );
 		if( isNull(rc.Comment) ){
-			getPlugin("MessageBox").error("The commentID #rc.commentID# is invalid.");
+			messagebox.error("The commentID #rc.commentID# is invalid.");
 			setNextEvent(prc.xehComments);
 			return;
 		}
@@ -120,7 +119,7 @@ component extend="baseHandler"{
 	}
 
 	// quick look
-	function quickLook(event,rc,prc){
+	function quickLook( event, rc, prc ){
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue("commentID",0) );
 		// view
@@ -128,7 +127,7 @@ component extend="baseHandler"{
 	}
 
 	// save
-	function save(event,rc,prc){
+	function save( event, rc, prc ){
 		// populate and get comment
 		var oComment = populateModel( commentService.get(id=rc.commentID) );
 		// announce event
@@ -138,7 +137,7 @@ component extend="baseHandler"{
 		// announce event
 		announceInterception("cbadmin_postCommentSave",{comment=oComment});
 		// messagebox
-		getPlugin("MessageBox").setMessage("info","Comment saved!");
+		messagebox.setMessage("info","Comment saved!");
 		// relocate
 		setNextEvent(prc.xehComments);
 	}
@@ -153,7 +152,7 @@ component extend="baseHandler"{
 		announceInterception("cbadmin_postCommentRemoveAllModerated");
 		// message
 		data.messages = "Moderated Comment(s) Removed!";
-		getPlugin("MessageBox").info( data.messages );
+		messagebox.info( data.messages );
 		// If ajax call, return as ajax
 		if( event.isAjax() ){
 			event.renderData(data=data, type="json");
@@ -164,36 +163,47 @@ component extend="baseHandler"{
 		}
 	}
 
-	// remove
-	function remove(event,rc,prc){
+	// remove a comment
+	function remove( event, rc, prc ){
 		// param values
-		event.paramValue("commentID","");
-		event.paramValue("page","1");
-		var data = { "ERROR" = false, "MESSAGES" = "" };
-		// check for length
-		if( len(rc.commentID) ){
-			// announce event
-			announceInterception("cbadmin_preCommentRemove",{commentID=rc.commentID});
-			// remove using hibernate bulk
-			var deleted = commentService.deleteByID( listToArray(rc.commentID) );
-			// announce event
-			announceInterception("cbadmin_postCommentRemove",{commentID=rc.commentID});
-			// message
-			data.messages = "#deleted# Comment(s) Removed!";
-			getPlugin("MessageBox").info( data.messages );
+		event.paramValue( "commentID", "" )
+			.paramValue( "page", "1" );
+
+		// prepare data return object
+		var data = { "ERROR" = false, "MESSAGES" = [] };
+		// Inflate Ids to array
+		rc.commentID = listToArray( rc.commentID );
+
+		// Iterate and remove
+		for( var thisCommentID in rc.commentID ){
+			var oComment = commentService.get( thisCommentID );
+			// null checks
+			if( isNull( oComment ) ){
+				arrayAppend( data.messages, "Invalid commentID sent: #thisCommentID#, so skipped removal" );
+			} else {
+				// announce event
+				announceInterception( "cbadmin_preCommentRemove", { comment=oComment, commentID=thisCommentID } );
+				// remove
+				commentService.delete( oComment ); 
+				arrayAppend( data.messages, "Comment #thisCommentID# removed" );
+				// announce event
+				announceInterception( "cbadmin_postCommentRemove", { commentID=thisCommentID });
+			}
 		}
-		else{
-			data.messages = "No comments selected!";
+
+		// No comments selected
+		if( arrayLen( rc.commentID ) eq 0 ){
+			arrayAppend( data.message, "No comments selected!" );
 			data.error = true;
-			getPlugin("MessageBox").warn( data.messages );
+			messagebox.warn( messageArray=data.messages );
 		}
+
 		// If ajax call, return as ajax
 		if( event.isAjax() ){
-			event.renderData(data=data, type="json");
-		}
-		else{
+			event.renderData( data=data, type="json" );
+		} else {
 			// relocate back
-			setNextEvent(event=prc.xehComments, queryString="page=#rc.page#");
+			setNextEvent( event=prc.xehComments, queryString="page=#rc.page#" );
 		}
 	}
 
@@ -248,14 +258,14 @@ component extend="baseHandler"{
 	}
 
 	// settings
-	function settings(event,rc,prc){
+	function settings( event, rc, prc ){
 		rc.xehSaveSettings = "#prc.cbAdminEntryPoint#.comments.saveSettings";
 		prc.tabComments_settings = true;
 		event.setView("comments/settings");
 	}
 
 	// save settings
-	function saveSettings(event,rc,prc){
+	function saveSettings( event, rc, prc ){
 
 		// announce event
 		announceInterception("cbadmin_preCommentSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc});
@@ -267,7 +277,7 @@ component extend="baseHandler"{
 		announceInterception("cbadmin_postCommentSettingsSave");
 
 		// relocate back to editor
-		getPlugin("MessageBox").info("All comment settings updated!");
+		messagebox.info("All comment settings updated!");
 		setNextEvent(prc.xehCommentsettings);
 	}
 }
