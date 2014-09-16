@@ -138,7 +138,7 @@
 		-->
 		
 		<!-- copy box.json -->
-		<copy file="box.json" toFile="${dir.contentbox.exports}/box.json" overwrite="true"  encoding="UTF-8"/>
+		<copy file="${dir.build}/box.json" toFile="${dir.contentbox.exports}/box.json" overwrite="true"  encoding="UTF-8"/>
 		
 		<!-- Mark as Built -->
 		<property name="src.isBuilt" value="true" />
