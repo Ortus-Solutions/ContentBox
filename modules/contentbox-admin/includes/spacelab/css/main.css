@@ -78,15 +78,18 @@ img {
   float: left;
   width: 240px;
   min-height: 80px;
-  padding: 0 0 0 10px;
+  padding: 0 10px 0 10px;
   position: relative;
-  background: #1abc9c url('../../images/ContentBox_30.png') no-repeat 25px 26px;
+  background: #1abc9c ;
+  /*url('../../images/ContentBox_30.png') no-repeat 25px 26px*/
 }
 #header .logo {
   color: #fff;
   font-size: 1.7em;
   text-transform: uppercase;
-  padding: 23px 0 0 63px;
+  /*padding: 23px 0 0 63px;*/
+  padding: 23px 0 0 0;
+  text-align: center;
   display: inline-block;
 }
 #header .logo span {
@@ -118,7 +121,8 @@ img {
   height: 35px;
 }
 #header .btn-default .fa-bars,
-#header .btn-default .fa-comment {
+#header .btn-default .fa-comment,
+#header .btn-default .fa-bullhorn {
   cursor: pointer;
   color: #797979;
 }
@@ -190,7 +194,10 @@ img {
 .messages {
   margin: 0 15px;
 }
-.messages .badge {
+.notifications {
+    position:relative;
+}
+.messages .badge,.notifications .badge {
   position: absolute;
   top: -10px;
   left: -5px;
@@ -422,7 +429,7 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
   padding: 10px;
   text-transform: uppercase;
 }
-.sidebarRight a.list-item:hover {
+.sidebarRight .list-item:hover {
   background: #23313f;
 }
 .sidebarRight .sidebar-title {
@@ -466,6 +473,16 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
   font-weight: 600;
   padding: 0px;
   margin: 0px;
+}
+.sidebarRight .list-contacts .list-item .list-item-content .dropdown-toggle {
+  background:#293949;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  border-radius: 50%;
+  border:none;
+  padding:5px;
 }
 .sidebarRight .list-contacts .list-item .list-item-content p {
   padding: 0px;
@@ -1644,6 +1661,9 @@ fieldset[disabled] .btn-warning.active {
 }
 .panel .actions i:hover {
   cursor: pointer;
+}
+.panel .actions > .btn-group, .panel .actions > .btn {
+  margin-top: -8px;
 }
 .panel > .panel-footer {
   font-size: 13px;
