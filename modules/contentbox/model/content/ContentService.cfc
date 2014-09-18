@@ -533,7 +533,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				if( oContent.hasCustomField() ){ oContent.getCustomFields().clear(); }
 				// add new custom fields
 				for( var thisCF in thisContent.customfields ){
-					var args = { key = thisCF.key, value = thisCF.value };
+					// explicitly convert value to string...
+					// ACF doesn't handle string values well when they look like numbers :)
+					var args = { key = thisCF.key, value = toString( thisCF.value ) };
 					var oField = customFieldService.new(properties=args);
 					oField.setRelatedContent( oContent );
 					oContent.addCustomField( oField );

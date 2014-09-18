@@ -43,6 +43,9 @@ component extends="baseHandler"{
 			// check validity of package
 			if( ContentBoxImporter.isValid() ) {
 				prc.contents = deserializeJSON( ContentBoxImporter.getDescriptorContents() );
+				// railo and acf dates don't get along...let's normalize them first
+				var badDateRegex = " -\d{4}$";
+				prc.contents.exportDate = reReplace( prc.contents.exportDate, badDateRegex, "" );
 			}
 			else {
 				getPlugin( "MessageBox" ).error( "Sorry, the imported ContentBox package was not valid. Please verify you have the right file and try again." );
