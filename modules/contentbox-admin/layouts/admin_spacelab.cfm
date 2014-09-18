@@ -117,10 +117,11 @@
                             #getMyPlugin( plugin="Avatar",module="contentbox" ).renderAvatar( email=prc.oAuthor.getEmail(),size="40", class="img-circle" )#
                         </li>
                         #prc.adminMenuService.generateProfileMenu()#
-                        <li>
+                        <li class="notifications">
+                            <span class="badge badge-danager animated bounceIn" id="new-messages">5</span>
                             <div class="toggle-navigation toggle-right">
                                 <button type="button" class="btn btn-default" id="toggle-right">
-                                    <i class="fa fa-comment"></i>
+                                    <i class="fa fa-bullhorn"></i>
                                 </button>                        
                             </div>
                         </li>
@@ -158,15 +159,12 @@
                                 <div class="list-item-image">
                                     <i class="fa fa-warning img-circle"></i>
                                 </div>
-                                <!---<div class="list-item-image">
-                                    <button class="btn btn-danger btn-xs pull-right" onclick="deleteInstaller()">Delete</button>
-                                </div>--->
                                 <div class="list-item-content">
                                     <h4>
                                         Installer Module
-                                        <span class="actions dropdown">
-                                            <button class="fa fa-cog pull-right dropdown-toggle" data-toggle="dropdown"></button>
-                                            <ul class="dropdown-menu" role="menu">
+                                        <span class="actions dropdown pull-right">
+                                            <button class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></button>
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                                 <li role="presentation">
                                                     <a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteInstaller()">
                                                         <i class="fa fa-trash-o"></i> Delete Installer
@@ -180,18 +178,27 @@
                             </div>
                         </cfif>
                         <cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.dsncreator>
-                            <a href="javascript:void(0)" class="list-item">
+                            <div class="list-item">
                                 <div class="list-item-image">
                                     <i class="fa fa-warning img-circle"></i>
                                 </div>
-                                <!---<div class="list-item-image">
-                                    <button class="btn btn-danger btn-xs pull-right" onclick="deleteDSNCreator()">Delete</button>
-                                </div>--->
                                 <div class="list-item-content">
-                                    <h4>DSN Creator Module</h4>
+                                    <h4>
+                                        DSN Creator Module
+                                        <span class="actions dropdown pull-right">
+                                            <button class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></button>
+                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                                                <li role="presentation">
+                                                    <a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteDSNCreator()">
+                                                        <i class="fa fa-trash-o"></i> Delete DSN Creator
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </span>
+                                    </h4>
                                     <p>The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.</p>
                                 </div>
-                            </a>
+                            </div>
                         </cfif>
                     </div>
                 </div>

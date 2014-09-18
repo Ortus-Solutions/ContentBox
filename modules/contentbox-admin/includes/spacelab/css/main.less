@@ -121,7 +121,7 @@ img {
     width: 35px;
     height: 35px;
 }
-#header .btn-default .fa-bars, #header .btn-default .fa-comment {
+#header .btn-default .fa-bars, #header .btn-default .fa-comment, #header .btn-default .fa-bullhorn {
     cursor: pointer;
     color:#797979;
 }
@@ -187,7 +187,10 @@ img {
 .messages {
     margin: 0 15px;
 }
-.messages .badge {
+.notifications {
+    position:relative;
+}
+.messages .badge, .notifications .badge {
     position: absolute;
     top: -10px;
     left: -5px;
@@ -386,7 +389,7 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
     padding: 10px;
     text-transform: uppercase;
 }
-.sidebarRight a.list-item:hover {
+.sidebarRight .list-item:hover {
     background: #23313F
 }
 .sidebarRight .sidebar-title {
@@ -409,11 +412,19 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
 .sidebarRight .list-contacts a.list-item, .sidebarRight .list-contacts .list-item {
     color: #fff !important;
 }
-.sidebarRight .list-contacts .list-item .list-item-image img {
+.sidebarRight .list-contacts .list-item .list-item-image img, .sidebarRight .list-contacts .list-item .list-item-image i {
     float: left;
     width: 30px;
     height: 30px;
     margin-right: 5px;
+}
+.sidebarRight .list-contacts .list-item .list-item-image i {
+  background:#f6f6f6;
+  border-radius: 50%;
+  color:@primaryColor;
+  font-size: 18px;
+  text-align: center;
+  padding-top: 6px;
 }
 .sidebarRight .list-contacts .list-item .list-item-content h4 {
     font-size: 12px;
@@ -427,6 +438,7 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
     margin: 0px;
     line-height: 13px;
     font-size: 11px;
+    margin-left:35px;
 }
 .sidebarRight .list-contacts .list-item .item-status.item-status-online {
     background: #27ae61;
@@ -1362,6 +1374,9 @@ a.btn-info:hover, a.btn-info:active {
 }
 .panel .actions i:hover {
     cursor:pointer;
+}
+.panel .actions > .btn-group, .panel .actions > .btn {
+  margin-top: -8px;
 }
 .panel>.panel-footer {
     font-size: 13px;
