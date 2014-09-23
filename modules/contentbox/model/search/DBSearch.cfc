@@ -101,19 +101,19 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 				writeOutput('
 				<li>
 					<a href="#cb.linkContent(item)#">#item.getTitle()#</a><br/>
-					<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ))#</p>			 
+					<p>#highlightSearchTerm( searchTerm, stripHTML( item.getContent() ))#</p>
 					<cite>#item.getContentType()# -> <a href="#cb.linkContent(item)#">#cb.linkContent(item)#</a></cite><br/>
 				');
-				
-				
+
+
 				if( item.hasCategories() ){
 					writeOutput('
 					<cite>Categories: #item.getCategoriesList()#</cite><br />
-					');	
+					');
 				}
 
 				writeOutput('</li>');
-								
+
 			};
 
 			writeOutput("</ul></div>");
@@ -126,7 +126,7 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 	* utility to strip HTML
 	*/
 	private function stripHTML(stringTarget){
-		return REReplaceNoCase(arguments.stringTarget,"<[^>]*>","","ALL");		 											 
+		return REReplaceNoCase(arguments.stringTarget,"<[^>]*>","","ALL");
 	}
 
 	/**
