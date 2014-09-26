@@ -24,18 +24,18 @@
 			</div>
 			<!--- Body --->
 			<div class="body">
-	
+
 				<!--- MessageBox --->
 				#getPlugin("MessageBox").renderit()#
-	
+
 				<!--- id --->
 				#html.hiddenField(name="contentID",bind=prc.content)#
 				#html.hiddenField(name="contentType",bind=prc.content)#
 				#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
-	
+
 				<!--- title --->
 				#html.textfield(label="Title:",name="title",bind=prc.content,maxlength="100",required="required",title="The title for this content",class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-				
+
 				<!--- slug --->
                 <div class="control-group">
                     <label for="slug" class="control-label">Slug:</label>
@@ -49,14 +49,14 @@
 							</a>
 						</div>
                     </div>
-                </div>		
+                </div>
 
                 <!--- Description --->
-				#html.textarea(name="description",label="Short Description:",bind=prc.content,rows=3,class="width98",title="A short description for metadata purposes",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#	
-				
+				#html.textarea(name="description",label="Short Description:",bind=prc.content,rows=3,class="width98",title="A short description for metadata purposes",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+
 				<!---ContentToolBar --->
 				<div id="contentToolBar">
-					
+
 					<!--- editor selector --->
 					<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
 					<div class="btn-group">
@@ -92,20 +92,20 @@
 						</a>
 					</div>
 				</div>
-				
+
 				<!--- content --->
 				#html.textarea(name="content", value=htmlEditFormat( prc.content.getContent() ), rows="25", class="width98 content")#
-	
+
 				<!--- Custom Fields --->
 				<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
 				<cfset mArgs = {fieldType="content", customFields=prc.content.getCustomFields()}>
 				#renderView(view="_tags/customFields",args=mArgs)#
-	
+
 				<!--- Event --->
 				#announceInterception("cbadmin_contentStoreEditorInBody")#
 			</div>
 		</div>
-	
+
 		<!---Loaded Panels--->
 		<cfif prc.content.isLoaded()>
 			<!--- Versions --->
@@ -119,7 +119,7 @@
 				</div>
 			</div>
 		</cfif>
-	
+
 		<!--- Event --->
 		#announceInterception("cbadmin_contentStoreEditorFooter")#
 	</div>
@@ -136,13 +136,13 @@
 				<!--- Publish Info --->
 				#html.startFieldset(legend='<i class="icon-calendar"></i> Publishing',
 					class="#prc.content.getIsPublished()?'':'selected'#")#
-	
+
 					<!--- Published? --->
 					<cfif prc.content.isLoaded()>
 					<label class="inline">Status: </label>
 					<cfif !prc.content.getIsPublished()><div class="textRed inline">Draft!</div><cfelse>Published</cfif>
 					</cfif>
-	
+
 					<!--- is Published --->
 					#html.hiddenField(name="isPublished",value=true)#
 					<!--- publish date --->
@@ -164,10 +164,10 @@
         					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.content.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.content.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
                         </div>
-					</div>	
+					</div>
 					<!--- Changelog --->
 					#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-	
+
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
@@ -176,20 +176,20 @@
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
 						</div>
 					</div>
-	
+
 					<!--- Loader --->
 					<div class="loaders" id="uploadBarLoader">
 						<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 						<div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
 					</div>
-	
+
 				#html.endFieldSet()#
-	
+
 				<!--- Accordion --->
 				<div id="accordion" class="accordion" data-stateful="contentstore-sidebar">
-				    
+
                     <!---Begin Page Info--->
-					<cfif prc.content.isLoaded()>	
+					<cfif prc.content.isLoaded()>
 				    <div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
@@ -242,13 +242,13 @@
                   	</div>
                     </cfif>
                     <!---End content Info--->
-					
+
                     <!---Begin Related Content--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
                     <div class="accordion-group">
                         <div class="accordion-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                <i class="icon-sitemap icon-large"></i> Related Content                                
+                                <i class="icon-sitemap icon-large"></i> Related Content
                             </a>
 
                         </div>
@@ -268,7 +268,7 @@
                     <div class="accordion-group">
                         <div class="accordion-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                <i class="icon-link icon-large"></i> Linked Content                                
+                                <i class="icon-link icon-large"></i> Linked Content
                             </a>
 
                         </div>
@@ -283,7 +283,7 @@
                     <!---End Linked Content--->
 
 					<!---Begin Modifiers--->
-					<cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS") AND prc.content.isLoaded()>
+					<cfif prc.oAuthor.checkPermission( "EDITORS_MODIFIERS" )>
                     <div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
@@ -302,12 +302,16 @@
 									</cfloop>
 								</select>
 								</cfif>
+
+								<!--- Show in Search --->
+        						<i class="icon-search icon-large"></i>
+        						#html.select(name="showInSearch",label="Show In Search:",labelClass="inline",class="input-block-level",options="Yes,No",selectedValue=yesNoFormat(prc.content.getShowInSearch()))#
                       		</div>
                     	</div>
                   	</div>
                     </cfif>
                     <!---End Modfiers--->
-						
+
 					<!---Begin Cache Settings--->
 					<cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
                     <div class="accordion-group">
@@ -329,7 +333,7 @@
                   	</div>
                     </cfif>
                     <!---End Cache Settings--->
-						
+
 					<!---Begin Categories--->
 					<cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
                     <div class="accordion-group">
@@ -349,7 +353,7 @@
         							</label>
         						</cfloop>
         						</div>
-        	
+
         						<!--- New Categories --->
         						#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="input-block-level")#
 							</div>
@@ -357,12 +361,12 @@
                   	</div>
                     </cfif>
                     <!---End Categories--->
-						
+
                     <!--- Event --->
-					#announceInterception("cbadmin_contentStoreEditorSidebarAccordion")#			
-				</div>	
+					#announceInterception("cbadmin_contentStoreEditorSidebarAccordion")#
+				</div>
 				<!--- End Accordion --->
-	
+
 				<!--- Event --->
 				#announceInterception("cbadmin_contentStoreEditorSidebar")#
 			</div>
