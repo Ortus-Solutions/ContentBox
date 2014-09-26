@@ -35,7 +35,7 @@ component accessors="true" threadSafe singleton{
 	* Constructor
 	* @wirebox.inject wirebox
 	*/
-	EditorService function init(required wirebox){
+	EditorService function init( required wirebox ){
 		// init editors and markups
 		editors = {};
 		markups = [];
@@ -44,57 +44,62 @@ component accessors="true" threadSafe singleton{
 		variables.wirebox = arguments.wirebox;
 		
 		// register core editors
-		registerEditor( arguments.wirebox.getInstance("CKEditor@cb") );
-		registerEditor( arguments.wirebox.getInstance("EditAreaEditor@cb") );
-		registerEditor( arguments.wirebox.getInstance("TextareaEditor@cb") );
+		registerEditor( arguments.wirebox.getInstance( "CKEditor@cb" ) );
+		registerEditor( arguments.wirebox.getInstance( "EditAreaEditor@cb" ) );
+		registerEditor( arguments.wirebox.getInstance( "TextareaEditor@cb" ) );
 		
 		// register default markup
 		registerMarkup( "HTML" );
+
 		return this;
 	}
 	
 	/**
 	* Get the default system editor
 	*/
-	function getDefaultEditor(){
+	string function getDefaultEditor(){
 		return settingService.getSetting( "cb_editors_default" );
 	}
 	
 	/**
 	* Get the default system markup
 	*/
-	function getDefaultMarkup(){
+	string function getDefaultMarkup(){
 		return settingService.getSetting( "cb_editors_markup" );
 	}
 
 	/**
 	* Register a new editor in ContentBox
+	* @editor.hint The editor instance to register
 	*/
-	EditorService function registerEditor(required contentbox.model.ui.editors.IEditor editor){
+	EditorService function registerEditor( required contentbox.model.ui.editors.IEditor editor ){
 		editors[ arguments.editor.getName() ] = arguments.editor;	
 		return this;
 	}
 	
 	/**
 	* Register a new markup in ContentBox
+	* @markup.hint The markup name to register
 	*/
-	EditorService function registerMarkup(required string markup){
+	EditorService function registerMarkup( required markup ){
 		arrayAppend( markups, arguments.markup );	
 		return this;
 	}
 	
 	/**
 	* UnRegister an editor in ContentBox
+	* @name.hint The name of the editor to unregister
 	*/
-	EditorService function unRegisterEditor(required name){
+	EditorService function unRegisterEditor( required name ){
 		structDelete( editors, arguments.name );	
 		return this;
 	}
 	
 	/**
 	* UnRegister a markup in ContentBox
+	* @markup.hint The markup name to unregister
 	*/
-	EditorService function unRegisterMarkup(required string markup){
+	EditorService function unRegisterMarkup( required markup ){
 		arrayDeleteAt( markups, arrayFindNoCase( markups, arguments.markup ) );
 		return this;
 	}
@@ -128,9 +133,26 @@ component accessors="true" threadSafe singleton{
 	
 	/**
 	* Get a registered editor instance
+	* @name.hint The name of the editor
 	*/
-	contentbox.model.ui.editors.IEditor function getEditor(required name){
+	contentbox.model.ui.editors.IEditor function getEditor( required name ){
 		return editors[ arguments.name ];
+	}
+
+	/**
+	* Check if an editor exists or not
+	* @name.hint The name of the editor
+	*/
+	boolean function hasEditor( required name ){
+		return structKeyExists( editors, arguments.name );
+	}
+
+	/**
+	* Check if an markup exists or not
+	* @markup.hint The name of the markup
+	*/
+	boolean function hasMarkup( required markup ){
+		return structKeyExists( markups, arguments.name );
 	}
 
 }
