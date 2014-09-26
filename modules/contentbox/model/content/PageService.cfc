@@ -42,7 +42,7 @@ component extends="ContentService" singleton{
 	* @page.hint The page to save or update
 	* @originalSlug.hint If an original slug is passed, then we need to update hierarchy slugs.
 	*/
-	function savePage( required any page, string originalSlug="" ) transactional{
+	PageService function savePage( required any page, string originalSlug="" ) transactional{
 
 		// Verify uniqueness of slug
 		if( !contentService.isSlugUnique( slug=arguments.page.getSlug(), contentID=arguments.page.getContentID() ) ){
@@ -129,9 +129,11 @@ component extends="ContentService" singleton{
 			if( arguments.searchActiveContent ){
 				// like disjunctions
 				c.or( c.restrictions.like( "title", "%#arguments.search#%" ),
+					  c.restrictions.like( "slug", "%#arguments.search#%" ),
 					  c.restrictions.like( "ac.content", "%#arguments.search#%" ) );
 			} else {
-				c.like( "title", "%#arguments.search#%" );
+				c.or( c.restrictions.like( "title","%#arguments.search#%" ),
+					  c.restrictions.like( "slug","%#arguments.search#%" ) );
 			}
 		}
 		// parent filter

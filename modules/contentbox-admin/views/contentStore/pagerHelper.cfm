@@ -8,7 +8,7 @@ $(document).ready(function() {
 function pagerLink(page){
 	$("##contentPagerLoader").fadeIn("fast");
 	$('##pagerContent')
-		.load('#event.buildLink(prc.xehPager)#/pager_authorID/#prc.pager_authorID#/page/' + page, function() {
+		.load('#event.buildLink(prc.xehPager)#/pager_authorID/#prc.pager_authorID#/page/' + page + '/pager_parentID/#prc.pagePager_parentID#', function() {
 			$("##contentPagerLoader").fadeOut();
 			hideAllTooltips();
 			activateTooltips();

@@ -11,7 +11,7 @@
 				Content Store Editor
 				<!--- Quick Actions  --->
 				<div class="btn-group pull-right" style="margin-top:5px">
-				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehContentStore)#';return false;"><i class="icon-reply"></i> Back</button>
+				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehContentStore)#/parent/#prc.parentcontentID#';return false;"><i class="icon-reply"></i> Back</button>
 					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
 			    	<span class="icon-cog"></span>
 				    </button>
@@ -38,11 +38,14 @@
 
 				<!--- slug --->
                 <div class="control-group">
-                    <label for="slug" class="control-label">Slug:</label>
+                    <label for="slug" class="control-label">Slug:
+                    	<i class="icon-cloud hand-cursor" title="Convert title to slug" onclick="createPermalink()"></i>
+                    	<cfif prc.content.hasParent()><span title="Complete content store slug">#prc.content.getSlug()#</span></cfif>
+                    </label>
                     <div class="controls">
                         <div id='slugCheckErrors'></div>
                         <div class="input-append" style="display:inline">
-							#html.textfield(name="slug", bind=prc.content, maxlength="100", class="textfield width94", title="The unique slug for this content, this is how they are retreived",
+							#html.textfield(name="slug", value=listLast(prc.content.getSlug(),"/"), maxlength="100", class="textfield width94", title="The unique slug for this content, this is how they are retreived",
 											disabled="#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#")#
 							<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
 								<i id="togglePermalink" class="icon-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
@@ -116,6 +119,17 @@
 				</div>
 				<div class="body">
 					#prc.versionsViewlet#
+				</div>
+			</div>
+
+			<!--- Child Content --->
+			<div class="box">
+				<div class="header">
+					<i class="icon-sitemap icon-large"></i>
+					Child Content
+				</div>
+				<div class="body">
+					#prc.childViewlet#
 				</div>
 			</div>
 		</cfif>
@@ -292,6 +306,13 @@
                     	</div>
                     	<div id="modifiers" class="accordion-body collapse">
                       		<div class="accordion-inner">
+                        		<!--- Parent Content --->
+        						#html.label(field="parentContent",content='Parent:')#
+        						<select name="parentContent" id="parentContent" class="input-block-level">
+        							<option value="null">No Parent</option>
+        							#html.options(values=prc.allContent,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
+        						</select>
+
                         		<!--- Creator --->
 								<cfif prc.content.isLoaded() and prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
 								<i class="icon-user icon-large"></i>
@@ -309,6 +330,8 @@
                       		</div>
                     	</div>
                   	</div>
+                  	<cfelse>
+                  		#html.hiddenField(name="parentContent", value=prc.parentcontentID)#
                     </cfif>
                     <!---End Modfiers--->
 
