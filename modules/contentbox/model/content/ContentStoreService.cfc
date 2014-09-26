@@ -43,7 +43,7 @@ component extends="ContentService" singleton{
 	* @transactional.hint Use a transaction or not.
 	*/
 	function saveContent( required any content, boolean transactional=true ){
-		
+
 		// Verify uniqueness of slug
 		if( !contentService.isSlugUnique( slug=arguments.content.getSlug(), contentID=arguments.content.getContentID() ) ){
 			// make slug unique
@@ -66,7 +66,8 @@ component extends="ContentService" singleton{
 	* @offset.hint The offset on the pagination
 	* @sortOrder.hint Sorting of the results, defaults to page title asc
 	* @searchActiveContent.hint If true, it searches title and content on the page, else it just searches on title
-	* 
+	* @showInSearch.hint If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	*
 	* @returns struct = [pages,count]
 	*/
 	struct function search(
@@ -79,7 +80,8 @@ component extends="ContentService" singleton{
 		numeric max=0,
 		numeric offset=0,
 		string sortOrder="",
-		boolean searchActiveContent=true
+		boolean searchActiveContent=true,
+		boolean showInSearch=false
 	){
 
 		var results = {};
@@ -93,6 +95,10 @@ component extends="ContentService" singleton{
 			( findNoCase( "modifiedDate", arguments.sortOrder ) )
 		) {
 			c.createAlias( "activeContent", "ac" );
+		}
+		// only search shownInSearch bits
+		if( arguments.showInSearch ){
+			c.isTrue( "showInSearch" );
 		}
 		// isPublished filter
 		if( arguments.isPublished NEQ "any" ){
@@ -114,7 +120,7 @@ component extends="ContentService" singleton{
 				c.or( c.restrictions.like( "title","%#arguments.search#%" ),
 					  c.restrictions.like( "slug","%#arguments.search#%" ),
 					  c.restrictions.like( "description","%#arguments.search#%" ),
-					  c.restrictions.like( "ac.content", "%#arguments.search#%" ) 
+					  c.restrictions.like( "ac.content", "%#arguments.search#%" )
 					 );
 			}
 			else{
@@ -141,7 +147,7 @@ component extends="ContentService" singleton{
 		// If modified Date
 		if( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
 			sortOrder = replaceNoCase( arguments.sortOrder, "modifiedDate", "ac.createdDate" );
-		} 
+		}
 		// default to title sorting
 		else if( !len( arguments.sortOrder ) ){
 			sortOrder = "title asc";
@@ -200,20 +206,20 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset, 
-								   max=arguments.max, 
-								   sortOrder=arguments.sortOrder, 
+							.list( offset=arguments.offset,
+								   max=arguments.max,
+								   sortOrder=arguments.sortOrder,
 								   asQuery=arguments.asQuery );
 
 		return results;
 	}
-	
+
 	/**
 	* Returns an array of [contentID, title, slug] structures of all the content store items in the system
 	*/
 	array function getAllFlatEntries(){
 		var c = newCriteria();
-		
+
 		return c.withProjections( property="contentID,title,slug" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder="title asc" );
@@ -225,5 +231,5 @@ component extends="ContentService" singleton{
 	array function getAllForExport(){
 		return super.getAllForExport( getAll() );
 	}
-	
+
 }

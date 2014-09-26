@@ -69,7 +69,6 @@ component implements="contentbox.model.updates.IUpdate"{
 
 			// Verify if less than 1.6.0 with message
 			if( !isValidInstall() ){ return; }
-
 			// Update new settings
 			updateSettings();
 			// Update Permissions
@@ -77,6 +76,8 @@ component implements="contentbox.model.updates.IUpdate"{
 			// Update Roles with new permissions
 			updateAdmin();
 			updateEditor();
+
+			// TODO: Add showInSearch bit
 
 			log.info("Finalized #version# patching");
 		}

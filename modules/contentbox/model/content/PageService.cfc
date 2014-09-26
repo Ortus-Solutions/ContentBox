@@ -77,7 +77,8 @@ component extends="ContentService" singleton{
 	* @offset.hint The offset on the pagination
 	* @sortOrder.hint Sorting of the results, defaults to page title asc
 	* @searchActiveContent.hint If true, it searches title and content on the page, else it just searches on title
-	* 
+	* @showInSearch.hint If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	*
 	* @returns struct = [pages,count]
 	*/
 	struct function search(
@@ -90,9 +91,10 @@ component extends="ContentService" singleton{
 		numeric max=0,
 		numeric offset=0,
 		string sortOrder="",
-		boolean searchActiveContent=true
+		boolean searchActiveContent=true,
+		boolean showInSearch=false
 	){
-		
+
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
@@ -104,6 +106,10 @@ component extends="ContentService" singleton{
 			( findNoCase( "modifiedDate", arguments.sortOrder ) )
 		) {
 			c.createAlias( "activeContent", "ac" );
+		}
+		// only search shownInSearch bits
+		if( arguments.showInSearch ){
+			c.isTrue( "showInSearch" );
 		}
 		// isPublished filter
 		if( arguments.isPublished NEQ "any" ){
@@ -117,7 +123,7 @@ component extends="ContentService" singleton{
 		if( arguments.creator NEQ "all" ){
 			c.isEq( "creator.authorID", javaCast( "int", arguments.creator ) );
 		}
-		// Search Criteria	
+		// Search Criteria
 		if( len( arguments.search ) ){
 			// Search with active content
 			if( arguments.searchActiveContent ){
@@ -136,7 +142,7 @@ component extends="ContentService" singleton{
 				c.isNull("parent");
 			}
 		}
-		
+
 		// Category Filter
 		if( arguments.category NEQ "all" ){
 			// Uncategorized?
@@ -155,12 +161,12 @@ component extends="ContentService" singleton{
 		// If modified Date
 		if( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
 			sortOrder = replaceNoCase( arguments.sortOrder, "modifiedDate", "ac.createdDate" );
-		} 
+		}
 		// default to title sorting
 		else if( !len( arguments.sortOrder ) ){
 			sortOrder = "title asc";
 		}
-		
+
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
@@ -239,18 +245,18 @@ component extends="ContentService" singleton{
 
 		return results;
 	}
-	
+
 	/**
 	* Returns an array of [contentID, title, slug] structures of all the pages in the system
 	*/
 	array function getAllFlatPages(){
 		var c = newCriteria();
-		
+
 		return c.withProjections( property="contentID,title,slug" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder="title asc" );
 	}
-	
+
 	/**
 	* Get all content for export as flat data
 	*/
