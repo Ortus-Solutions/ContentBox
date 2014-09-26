@@ -105,7 +105,7 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 				writeOutput('
 				<li>
 					<a href="#cb.linkContent(item)#">#item.getTitle()#</a><br/>
-					<p>#highlightSearchTerm( searchTerm, stripHTML( item.getContent() ))#</p>
+					<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ))#</p>
 					<cite>#item.getContentType()# -> <a href="#cb.linkContent(item)#">#cb.linkContent(item)#</a></cite><br/>
 				');
 
