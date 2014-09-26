@@ -40,9 +40,11 @@ component extends="ContentService" singleton{
 	/**
 	* Save content store object
 	* @content.hint The content store object
-	* @transactional.hint Use a transaction or not.
+	* @originalSlug.hint If an original slug is passed, then we need to update hierarchy slugs.
+	*
+	* @returns ContentStoreService
 	*/
-	function saveContent( required any content, boolean transactional=true ){
+	function saveContent( required any content, string originalSlug="" ) transactional{
 
 		// Verify uniqueness of slug
 		if( !contentService.isSlugUnique( slug=arguments.content.getSlug(), contentID=arguments.content.getContentID() ) ){
@@ -51,7 +53,18 @@ component extends="ContentService" singleton{
 		}
 
 		// save entry
-		save( entity=arguments.content, transactional=arguments.transactional );
+		save( entity=arguments.content, transactional=false );
+
+		// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
+		if( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ){
+			var entriesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
+			for( var thisContent in entriesInNeed ){
+				thisContent.setSlug( replaceNoCase( thisContent.getSlug(), arguments.originalSlug, arguments.content.getSlug() ) );
+				save( entity=thisContent, transactional=false );
+			}
+		}
+
+		return this;
 	}
 
 	/**
@@ -113,7 +126,7 @@ component extends="ContentService" singleton{
 			c.isEq( "creator.authorID", javaCast( "int", arguments.creator ) );
 		}
 		// Search Criteria
-		if( len(arguments.search) ){
+		if( len( arguments.search ) ){
 			// Search with active content
 			if( arguments.searchActiveContent ){
 				// like disjunctions
@@ -127,6 +140,14 @@ component extends="ContentService" singleton{
 				c.or( c.restrictions.like( "title","%#arguments.search#%" ),
 					  c.restrictions.like( "slug","%#arguments.search#%" ),
 					  c.restrictions.like( "description","%#arguments.search#%" ) );
+			}
+		}
+		// parent filter
+		if( structKeyExists(arguments,"parent") ){
+			if( len( trim( arguments.parent ) ) ){
+				c.eq("parent.contentID", javaCast("int",arguments.parent) );
+			} else {
+				c.isNull("parent");
 			}
 		}
 		// Category Filter
@@ -165,17 +186,19 @@ component extends="ContentService" singleton{
 	* Find published contentstore entries by filters
 	* @max.hint The maximum number of records to retrieve
 	* @offset.hint Where to start in the pagination
-	* @category.hint One or more categories to filter on
 	* @searchTerm.hint The search term to use for search
+	* @category.hint One or more categories to filter on
 	* @asQuery.hint Return results as query or array of objects. Defaults to false
+	* @parent.hint The parent ID to restrict the search on
 	* @sortOrder.hint The sort order string, defaults to publisedDate DESC
 	*/
 	function findPublishedEntries(
 		numeric max=0,
 		numeric offset=0,
-		any category="",
 		any searchTerm="",
+		any category="",
 		boolean asQuery=false,
+		string parent,
 		string sortOrder="publishedDate DESC"
 	){
 
@@ -201,6 +224,17 @@ component extends="ContentService" singleton{
 			c.createAlias( "activeContent", "ac" );
 			c.or( c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
 				  c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" ) );
+		}
+
+		// parent filter
+		if( structKeyExists( arguments, "parent" ) ){
+			if( len( trim( arguments.parent ) ) ){
+				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
+			} else {
+				c.isNull( "parent" );
+			}
+			// change sort by parent
+			arguments.sortOrder = "order asc";
 		}
 
 		// run criteria query and projections count
@@ -229,7 +263,7 @@ component extends="ContentService" singleton{
 	* Get all content for export as flat data
 	*/
 	array function getAllForExport(){
-		return super.getAllForExport( getAll() );
+		return super.getAllForExport( newCriteria().isNull( "parent" ).list() );
 	}
 
 }
