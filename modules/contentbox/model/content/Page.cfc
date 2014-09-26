@@ -22,7 +22,15 @@ limitations under the License.
 ********************************************************************************
 * I am a cms page entity that totally rocks
 */
-component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" cachename="cbPage" cacheuse="read-write" extends="BaseContent" joinColumn="contentID" discriminatorValue="Page"{
+component 	persistent="true" 
+			entityname="cbPage" 
+			table="cb_page" 
+			batchsize="25" 
+			cachename="cbPage" 
+			cacheuse="read-write" 
+			extends="BaseContent" 
+			joinColumn="contentID" 
+			discriminatorValue="Page"{
 
 	// Properties
 	property 	name="layout"			
@@ -30,7 +38,8 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 				length="200" 
 				default="";
 	
-	property 	name="mobileLayout"	notnull="false" 	
+	property 	name="mobileLayout"	
+				notnull="false" 	
 				length="200" 
 				default="";
 	
@@ -58,7 +67,8 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 				index="idx_ssl";
 	
 	// Non-Persistable Properties
-	property name="renderedExcerpt" persistent="false";
+	property 	name="renderedExcerpt" 
+			 	persistent="false";
 
 	/************************************** CONSTRUCTOR *********************************************/
 
@@ -147,7 +157,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	* Get the layout or if empty the default convention of "pages"
 	*/
 	function getLayoutWithDefault(){
-		if( len(getLayout()) ){ return getLayout(); }
+		if( len( getLayout() ) ){ return getLayout(); }
 		return "pages";
 	}
 	
@@ -186,12 +196,14 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
 	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
 	*/
-	BaseContent function prepareForClone(required any author, 
-										 required any original, 
-										 required any originalService, 
-										 required boolean publish,
-										 required any originalSlugRoot,
-										 required any newSlugRoot){
+	BaseContent function prepareForClone(
+		required any author, 
+		required any original, 
+		required any originalService, 
+		required boolean publish,
+		required any originalSlugRoot,
+		required any newSlugRoot
+	){
 		// do layout
 		setLayout( arguments.original.getLayout() );
 		// do excerpts
@@ -199,7 +211,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 			setExcerpt( arguments.original.getExcerpt() );
 		}
 		// do core
-		return super.prepareForClone(argumentCollection=arguments);
+		return super.prepareForClone( argumentCollection=arguments );
 	}
 
 	/*

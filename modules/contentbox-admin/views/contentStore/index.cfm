@@ -57,7 +57,7 @@
 					    	</ul>
 					    </div>
 						</cfif>
-						<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehContentEditor)#');">Create Content</button>
+						<button class="btn btn-danger" onclick="return to('#event.buildLink(linkTo=prc.xehContentEditor)#/parentID/' + getParentContentID() );">Create Content</button>
 					</div>
 					
 					<!--- Filter Bar --->

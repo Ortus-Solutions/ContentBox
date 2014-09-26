@@ -22,28 +22,22 @@ limitations under the License.
 ********************************************************************************
 * Manage blog entries
 */
-component extends="baseHandler"{
+component extends="baseContentHandler"{
 
 	// Dependencies
-	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
-	property name="authorService"		inject="id:authorService@cb";
-	property name="CBHelper"			inject="id:CBHelper@cb";
-	property name="editorService"		inject="id:editorService@cb";
 
 	// Public properties
 	this.preHandler_except = "pager";
 
 	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+	function preHandler( event, action, eventArguments, rc, prc ){
+		super.preHandler( argumentCollection=arguments );
+
 		// exit Handlers
 		prc.xehEntries 		= "#prc.cbAdminEntryPoint#.entries";
 		prc.xehEntryEditor 	= "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehEntryRemove 	= "#prc.cbAdminEntryPoint#.entries.remove";
-		// Tab control
-		prc.tabContent = true;
 
 		// Verify if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
@@ -66,13 +60,13 @@ component extends="baseHandler"{
 		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
 		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
 		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
-		
+
 		// Tab
 		prc.tabContent_blog = true;
 		// view
 		event.setView("entries/index");
 	}
-	
+
 	// entriesTable
 	function entriesTable( event, rc, prc ){
 		// params
@@ -89,16 +83,16 @@ component extends="baseHandler"{
 		prc.pagingPlugin 	= getMyPlugin( plugin="Paging", module="contentbox" );
 		prc.paging 			= prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 		= "javascript:contentPaginate(@page@)";
-		
+
 		// is Filtering?
-		if( rc.fAuthors neq "all" OR 
-			rc.fStatus neq "any" OR 
-			rc.fCategories neq "all" OR 
+		if( rc.fAuthors neq "all" OR
+			rc.fStatus neq "any" OR
+			rc.fCategories neq "all" OR
 			rc.fCreators neq "all" OR
-			rc.showAll ){ 
+			rc.showAll ){
 			prc.isFiltering = true;
 		}
-		
+
 		// search entries with filters and all
 		var entryResults = entryService.search(	search=rc.searchEntries,
 											   	isPublished=rc.fStatus,
@@ -117,7 +111,7 @@ component extends="baseHandler"{
 		prc.xehEntryHistory  	= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehEntryExport 		= "#prc.cbAdminEntryPoint#.entries.export";
 		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
-		
+
 		// view
 		event.setView( view="entries/indexTable", layout="ajax" );
 	}
@@ -168,19 +162,19 @@ component extends="baseHandler"{
 		}
 		// CK Editor Helper
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
-		
+
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
 		// Get User's default editor
-		prc.defaultEditor = prc.oAuthor.getPreference("editor", editorService.getDefaultEditor() );
+		prc.defaultEditor = getUserDefaultEditor( prc.oAuthor );
 		// Get the editor driver object
 		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
-		
+
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// Get User's default markup
 		prc.defaultMarkup = prc.oAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
-		
+
 		// get all authors
 		prc.authors = authorService.getAll(sortOrder="lastName");
 		// get related content
@@ -201,7 +195,7 @@ component extends="baseHandler"{
 		// view
 		event.setView("entries/editor");
 	}
-	
+
 	// clone
 	function clone( event, rc, prc ){
 		// validation
@@ -222,10 +216,10 @@ component extends="baseHandler"{
 		var clone = entryService.new( { title=rc.title, slug=getPlugin("HTMLHelper").slugify( rc.title ) } );
 		clone.setCreator( prc.oAuthor );
 		// prepare for clone
-		clone.prepareForClone(author=prc.oAuthor, 
-							  original=original, 
-							  originalService=entryService, 
-							  publish=rc.entryStatus, 
+		clone.prepareForClone(author=prc.oAuthor,
+							  original=original,
+							  originalService=entryService,
+							  publish=rc.entryStatus,
 							  originalSlugRoot=original.getSlug(),
 							  newSlugRoot=clone.getSlug());
 		// clone this sucker now!
@@ -286,10 +280,10 @@ component extends="baseHandler"{
 			editor(argumentCollection=arguments);
 			return;
 		}
-		
+
 		// Attach creator if new page
 		if( isNew ){ entry.setCreator( prc.oAuthor ); }
-		
+
 		// Override creator?
 		if( !isNew and prc.oAuthor.checkPermission("ENTRIES_ADMIN") and len( rc.creatorID ) and entry.getCreator().getAuthorID() NEQ rc.creatorID ){
 			entry.setCreator( authorService.get( rc.creatorID ) );
@@ -344,17 +338,17 @@ component extends="baseHandler"{
 	function remove( event, rc, prc ){
 		// params
 		event.paramValue( "contentID", "" );
-		
+
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
 			getPlugin("MessageBox").warn( "No entries sent to delete!" );
 			setNextEvent(event=prc.xehEntries);
 		}
-		
+
 		// Inflate to array
 		rc.contentID = listToArray( rc.contentID );
 		var messages = [];
-		
+
 		// Iterate and remove
 		for( var thisContentID in rc.contentID ){
 			var entry = entryService.get( thisContentID );
@@ -404,11 +398,11 @@ component extends="baseHandler"{
 		prc.pager_paging 	  	= prc.pager_pagingPlugin.getBoundaries();
 		prc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pager_pagination	= arguments.pagination;
-		
+
 		// Sorting
 		var sortOrder = "publishedDate DESC";
 		if( arguments.latest ){ sortOrder = "modifiedDate desc"; }
-		
+
 		// search entries with filters and all
 		var entryResults = entryService.search(author=arguments.authorID,
 											   offset=prc.pager_paging.startRow-1,
@@ -464,7 +458,7 @@ component extends="baseHandler"{
 		prc.entries 		= entryResults.entries;
 		prc.entriesCount  	= entryResults.count;
 		prc.CBHelper 		= CBHelper;
-		
+
 		// if ajax and searching, just return tables
 		if( event.isAjax() and len( rc.search ) OR rc.clear ){
 			return renderView(view="entries/editorSelectorEntries", module="contentbox-admin");
@@ -479,18 +473,18 @@ component extends="baseHandler"{
 		event.paramValue("format", "json");
 		// get entry
 		prc.entry  = entryService.get( event.getValue("contentID",0) );
-		
+
 		// relocate if not existent
 		if( !prc.entry.isLoaded() ){
 			getPlugin("MessageBox").warn("ContentID sent is not valid");
 			setNextEvent( "#prc.cbAdminEntryPoint#.entries" );
 		}
-		
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.entry.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=prc.entry.getMemento(), type=rc.format, xmlRootName="entry")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#");
 				break;
 			}
 			default:{
@@ -498,18 +492,18 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	// Export All Entries
 	function exportAll( event, rc, prc ){
 		event.paramValue("format", "json");
 		// get all prepared content objects
 		var data  = entryService.getAllForExport();
-		
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Entries." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=data, type=rc.format, xmlRootName="entries")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#");
 				break;
 			}
 			default:{
@@ -517,7 +511,7 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	// import entries
 	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
@@ -539,5 +533,5 @@ component extends="baseHandler"{
 		}
 		setNextEvent( prc.xehEntries );
 	}
-	
+
 }
