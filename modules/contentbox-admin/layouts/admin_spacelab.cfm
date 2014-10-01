@@ -42,6 +42,8 @@
                 "#prc.cbroot#/includes/spacelab/css/font-awesome.min.css",
                 // css animate
                 "#prc.cbroot#/includes/spacelab/css/animate.css",
+                // fileupload
+                "#prc.cbroot#/includes/css/bootstrap-fileupload.css",
                 // custom styles for spacelab
                 "#prc.cbroot#/includes/spacelab/css/main.css"
             ];
@@ -54,6 +56,8 @@
                 "#prc.cbroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js",
                 // spacelab js
                 "#prc.cbroot#/includes/spacelab/js/application.js",
+                // fileupload
+                "#prc.cbroot#/includes/js/bootstrap-fileupload.js",
                 // validation
                 "#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js",
                 // jwerty
@@ -95,7 +99,7 @@
         <!--- cbadmin Event --->
         #announceInterception("cbadmin_beforeHeadEnd")#
     </head>
-    <body class="animated fadeIn">
+    <body class="animated">
         <!--- cbadmin Event --->
         #announceInterception("cbadmin_afterBodyStart")#
         <section id="container">
@@ -112,6 +116,7 @@
                 </div>
                 <div class="user-nav">
                     <ul>
+                        #prc.adminMenuService.generateUtilsMenu()#
                         #prc.adminMenuService.generateSupportMenu()#
                         <li class="profile-photo">
                             #getMyPlugin( plugin="Avatar",module="contentbox" ).renderAvatar( email=prc.oAuthor.getEmail(),size="40", class="img-circle" )#
@@ -204,7 +209,34 @@
                 </div>
             </aside>
             <!--sidebar right end-->
-        </section>       
+        </section>  
+        <!--- Footer --->
+        #renderView( view="_tags/footer", module="contentbox-admin" )#
+        <!--- ConfirmIt modal --->
+        <div id="confirmIt" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmItTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!--header-->
+                    <div class="modal-header">
+                        <!--if dismissable-->
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="confirmItTitle">Are you sure?</h4>
+                    </div>
+                    <!--body-->
+                    <div class="modal-body">
+                        <p id="confirmItMessage">Are you sure you want to perform this action?</p>
+                    </div>
+                    <!-- footer -->
+                    <div class="modal-footer">
+                        <span id="confirmItLoader" class="hide"><i class="icon-spinner icon-spin icon-large icon-2x"></i></span>
+                        <span id="confirmItButtons">
+                            <button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Cancel</button>
+                            <button class="btn btn-danger" data-action="confirm"><i class="icon-check"></i>  Confirm </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
 </cfoutput>

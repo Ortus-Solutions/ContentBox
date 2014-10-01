@@ -50,9 +50,9 @@ function edit(categoryID,category,slug){
 	$categoryEditor.find("##category").val( category );
 	$categoryEditor.find("##slug").val( slug );
 }
-function remove(categoryID){
+function removeCategory(categoryID){
 	var $categoryForm = $("##categoryForm");
-	$("##delete_"+ categoryID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+	$("##delete_"+ categoryID).removeClass( "fa-trash-o" ).addClass( "fa-spin fa-spinner" );
 	$categoryForm.find("##categoryID").val( categoryID );
 	$categoryForm.submit();
 }

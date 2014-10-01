@@ -46,6 +46,8 @@ component extends="baseHandler"{
 
 		// Tab
 		prc.tabContent_pages = true;
+		prc.cssAppendList = "../spacelab/plugins/dataTables/css/dataTables";
+        prc.jsAppendList  = "../spacelab/plugins/dataTables/js/jquery.dataTables,../spacelab/plugins/dataTables/js/dataTables.bootstrap";
 		// view
 		event.setView("pages/index");
 	}

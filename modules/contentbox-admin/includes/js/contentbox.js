@@ -41,15 +41,16 @@ $(document).ready(function() {
         // seriously???
         // anyway, setting ignore: [] fixes it
         ignore:[],
-        errorElement: 'span',
-        errorClass: 'help-block',
+        //errorElement: 'span',
+        //errorClass: 'help-block',
         highlight: function(element) {
-            $(element).closest('.control-group').removeClass('success').addClass('error');
+            $(element).closest('.form-group').removeClass('success').addClass('error');
         },
         success: function(element) {
             element
+                .text( 'Field is valid' )
                 .addClass('valid')
-                .closest('.control-group').removeClass('error').addClass('success');
+                .closest('.form-group').removeClass('error').addClass('success');
         },
         errorPlacement: function(error, element) {
             error.appendTo( element.parent("div.controls") );
@@ -57,7 +58,7 @@ $(document).ready(function() {
     })	
     $.fn.resetValidations = function() {
         // also remove success and error classes
-        this.find( '.control-group' ).each(function() {
+        this.find( '.form-group' ).each(function() {
             $( this ).removeClass( 'error' ).removeClass( 'success' );
         });
         return this;
