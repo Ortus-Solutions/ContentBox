@@ -4,7 +4,10 @@ $(document).ready(function() {
 	// tables references
 	$content = $("##content");
 	// sorting
-	$content.tablesorter();
+	$content.dataTable({
+		"paging": false,
+		"info": false
+	});
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
