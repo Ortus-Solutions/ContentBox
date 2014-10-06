@@ -2,7 +2,7 @@
 <!--- content --->
 <table name="content" id="content" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 			<th>Name</th>
 			<th>Slug/Categories</th>
@@ -49,7 +49,7 @@
 					<i class="fa fa-check icon-large textGreen" title="Content Published!"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="fa fa-remove icon-large textRed" title="Content Draft!"></i>
+					<i class="fa fa-times icon-large textRed" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>

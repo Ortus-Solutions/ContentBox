@@ -52,7 +52,7 @@
 		                	#html.textfield(name="slug", bind=prc.entry, maxlength="100", class="textfield width94", 
 											title="The URL permalink for this entry", disabled="#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'true' : 'false'#")#
 							<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink">
-								<i id="togglePermalink" class="icon-#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'lock' : 'unlock'#"></i>
+								<i id="togglePermalink" class="fa fa-#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'lock' : 'unlock'#"></i>
 							</a>
 						</div>
 					</div>

@@ -1,11 +1,11 @@
 ﻿<cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-hdd"></i> Content Store</h1>
+		<h1 class="h1"><i class="fa fa-hdd-o"></i> Content Store</h1>
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-8">
 		<!--- MessageBox --->
 		#getPlugin( "MessageBox" ).renderit()#
 		<!---Import Log --->
@@ -35,41 +35,50 @@
 						    		<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
 										<li>
 											<a href="javascript:bulkRemove()" class="confirmIt"
-											data-title="Delete Selected Content?" data-message="This will delete the content, are you sure?"><i class="icon-trash"></i> Delete Selected</a>
-										</li>
-										<li>
-											<a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected
+											data-title="Delete Selected Content?" data-message="This will delete the content, are you sure?">
+												<i class="fa fa-trash-o"></i> Delete Selected
 											</a>
 										</li>
 										<li>
-											<a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected
+											<a href="javascript:bulkChangeStatus('draft')">
+												<i class="fa fa-ban"></i> Draft Selected
+											</a>
+										</li>
+										<li>
+											<a href="javascript:bulkChangeStatus('publish')">
+												<i class="fa fa-check"></i> Publish Selected
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_IMPORT")>
 										<li>
-											<a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import
+											<a href="javascript:importContent()">
+												<i class="fa fa-upload"></i> Import
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_EXPORT")>
 										<li class="dropdown-submenu">
-											<a href="##"><i class="icon-download icon-large"></i> Export All
+											<a href="##">
+												<i class="fa fa-download icon-large"></i> Export All
 											</a>
 											<ul class="dropdown-menu text-left">
 												<li>
-													<a href="#event.buildLink(linkto=prc.xehContentExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON
+													<a href="#event.buildLink(linkto=prc.xehContentExportAll)#.json" target="_blank">
+														<i class="fa fa-code"></i> as JSON
 													</a>
 												</li>
 												<li>
-													<a href="#event.buildLink(linkto=prc.xehContentExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML
+													<a href="#event.buildLink(linkto=prc.xehContentExportAll)#.xml" target="_blank">	<i class="fa fa-sitemap"></i> as XML
 													</a>
 												</li>
 											</ul>
 										</li>
 									</cfif>
 									<li>
-										<a href="javascript:contentShowAll()"><i class="icon-list"></i> Show All</a>
+										<a href="javascript:contentShowAll()">
+											<i class="fa fa-list"></i> Show All
+										</a>
 									</li>
 						    	</ul>
 						    </div>
@@ -86,8 +95,8 @@
 			</div>
 		#html.endForm()#
 	</div>
-	<div class="col-md-3">
-		<div class="panel panel-default">
+	<div class="col-md-4">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>

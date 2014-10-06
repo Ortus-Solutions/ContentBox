@@ -102,7 +102,7 @@
 <!---only show if user has rights to categories admin--->
 <cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 	<!--- Category Editor --->
-	<div id="categoryEditorContainer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="categoryLabel" aria-hidden="true">
+	<div id="categoryEditorContainer" class="modal fade" tabindex="-1" role="" aria-labelledby="categoryLabel" aria-hidden="true">
 		<div class="modal-dialog">
 	        <div class="modal-content" id="modalContent">
 				<div class="modal-header">

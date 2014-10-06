@@ -49,7 +49,7 @@
 					<i class="fa fa-check icon-large textGreen" title="Entry Published!"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="fa fa-remove icon-large textRed" title="Entry Draft!"></i>
+					<i class="fa fa-times icon-large textRed" title="Entry Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
