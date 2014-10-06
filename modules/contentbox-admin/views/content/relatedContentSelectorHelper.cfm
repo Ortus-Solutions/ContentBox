@@ -3,13 +3,13 @@
         var iconCls = "";
         switch( arguments.contentType ) {
             case 'Page':
-                iconCls = "icon-file-alt";
+                iconCls = "fa fa-file";
                 break;
             case 'Entry':
-                iconCls = "icon-quote-left";
+                iconCls = "fa fa-quote-left";
                 break;
             case 'ContentStore':
-                iconCls = "icon-hdd";
+                iconCls = "fa fa-hdd-o";
                 break;
             default:
                 break;

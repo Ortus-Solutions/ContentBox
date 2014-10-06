@@ -66,7 +66,7 @@
 					<cfif page.getShowInMenu()>
 						<i class="fa fa-check icon-large textGreen"></i>
 					<cfelse>
-						<i class="fa fa-remove icon-large textRed"></i>
+						<i class="fa fa-times icon-large textRed"></i>
 					</cfif>
 				</td>
 				<td class="center">
@@ -80,7 +80,7 @@
 						<i class="fa fa-check icon-large textGreen" title="Page Published"></i>
 						<span class="hidden">published in future</span>
 					<cfelse>
-						<i class="fa fa-remove icon-large textRed" title="Page Draft"></i>
+						<i class="fa fa-times icon-large textRed" title="Page Draft"></i>
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>

@@ -49,7 +49,7 @@
 	            <div class="input-append" style="display:inline">
 					#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width94",title="The URL permalink for this page", disabled="#prc.page.isLoaded() && prc.page.getIsPublished() ? 'true' : 'false'#")#
 					<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
-						<i id="togglePermalink" class="icon-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
+						<i id="togglePermalink" class="fa fa-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
 					</a>
 				</div>
 			</div>

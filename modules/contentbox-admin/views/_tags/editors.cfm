@@ -214,7 +214,7 @@ function createPermalink(linkToUse){
 function togglePermalink(){
 	var toggle = $( '##togglePermalink' );
 	// Toggle lock icon on click..	
-	toggle.hasClass( 'icon-lock' ) ? toggle.attr( 'class', 'icon-unlock' ) : toggle.attr( 'class', 'icon-lock' );
+	toggle.hasClass( 'fa fa-lock' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fa fa-lock' );
 	//disable input field
 	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
 }

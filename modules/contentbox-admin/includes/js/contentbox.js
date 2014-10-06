@@ -17,7 +17,7 @@ $(document).ready(function() {
     // reset modal content when hidden
 	$remoteModal.on( 'hidden', function() {
         var modal = $remoteModal;
-        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body"><i class="icon-spinner icon-spin icon-large icon-4x"></i></div>' );
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin icon-large icon-4x"></i></div>' );
     })
     
 	// Global Tool Tip Settings
@@ -159,7 +159,7 @@ $(document).ready(function() {
             }
         }
         // bind listener for state changes
-        accordion.bind( 'shown', function(){
+        accordion.bind( 'shown.bs.collapse', function(){
             // grab id from expanded accordion panel
             var active = accordion.find( '.in' ).attr( 'id' );
             // set cookie
@@ -329,7 +329,7 @@ function openModal(div, w, h){
     div.modal({
         width: w,
         height: h
-    })
+    });
     // attach a listener to clear form when modal closes
     $( div ).on( 'hidden', function() {
         if( !$( this ).hasClass( 'in' ) ) {
@@ -351,6 +351,8 @@ function openModal(div, w, h){
  */
 function openRemoteModal(url,params,w,h,delay){
     var modal = $remoteModal;
+    var args = {};
+    var maxHeight = ($( window ).height() -360);
     // set data values
     modal.data( 'url', url )
 	modal.data( 'params', params );
@@ -364,15 +366,16 @@ function openRemoteModal(url,params,w,h,delay){
         if( height.search && height.search( '%' )!=-1 ) {
             height = height.replace( '%', '' ) / 100.00;
             height = $( window ).height() * height;
-            modal.data( 'height', height )
+            //modal.data( 'height', height )
         }
         // set delay data in element
         modal.data( 'delay', true );
+        args.width = modal.data( 'width' );
+        if( height < maxHeight ) {
+            args.height = maxHeight;
+        }
         // show modal
-        modal.modal({
-            height: modal.data( 'height' ),
-            width: modal.data( 'width' )
-        });
+        modal.modal( args );
     }
     // otherwise, front-load the request and then create modal
     else {
@@ -380,11 +383,17 @@ function openRemoteModal(url,params,w,h,delay){
         modal.load( url, params, function() {
             // in callback, show modal
             var maxHeight = ($( window ).height() -360);
-            modal.modal({
-                height: h!=undefined ? h : modal.height() < maxHeight ? modal.height() : maxHeight,
-                width: w!=undefined ? w : $( window ).width() * .80,
-                maxHeight: maxHeight
-            })
+            var currentHeight = modal.height();
+            args.width = w!=undefined ? w : $( window ).width() * .80;
+            args.maxHeight = maxHeight;
+            if( currentHeight && currentHeight < maxHeight ) {
+                args.height = currentHeight;
+            }
+            if( !currentHeight ) {
+                args.height = maxHeight;
+            }
+            console.log( args )
+            modal.modal( args )
         }) 
     }
     return;

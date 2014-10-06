@@ -44,6 +44,13 @@
                 "#prc.cbroot#/includes/spacelab/css/animate.css",
                 // fileupload
                 "#prc.cbroot#/includes/css/bootstrap-fileupload.css",
+                // modal
+                "#prc.cbroot#/includes/css/bootstrap-modal-bs3patch.css",
+                "#prc.cbroot#/includes/css/bootstrap-modal.css",
+                // datepicker
+                "#prc.cbroot#/includes/css/bootstrap-datepicker.css",
+                // datatables
+                "#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css",
                 // custom styles for spacelab
                 "#prc.cbroot#/includes/spacelab/css/main.css"
             ];
@@ -58,10 +65,20 @@
                 "#prc.cbroot#/includes/spacelab/js/application.js",
                 // fileupload
                 "#prc.cbroot#/includes/js/bootstrap-fileupload.js",
+                // modal
+                "#prc.cbroot#/includes/js/bootstrap-modalmanager.js",
+                "#prc.cbroot#/includes/js/bootstrap-modal.js",
+                // datepicker
+                "#prc.cbroot#/includes/js/bootstrap-datepicker.js",
+                // cookie helper
+                "#prc.cbroot#/includes/js/jquery.cookie.js",
                 // validation
                 "#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js",
                 // jwerty
                 "#prc.cbroot#/includes/js/jwerty.js",
+                // datatables
+                "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js",
+                "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js",
                 // custom admintheme js
                 "#( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#",
                 // main ContentBox scripts
@@ -70,6 +87,9 @@
         </cfscript>
         #cb.minify( assets=arrayToList( cssFiles ), location="#prc.cbroot#/includes/cache" )#
         #cb.minify( assets=arrayToList( jsFiles ), location="#prc.cbroot#/includes/cache" )#
+        <!--- CKEditor Separate --->
+        <script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
+        <script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
         <cfscript>
             cssList = listToArray( event.getValue( "cssAppendList", "", true ) );
             for( css in cssList ) {
@@ -235,6 +255,14 @@
                         </span>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+            <div class="modal-header">
+                <h3>Loading...</h3>
+            </div>
+            <div class="modal-body" id="remoteModelContent">
+                <i class="fa fa-spinner fa fa-spin icon-large icon-4x"></i>
             </div>
         </div>
     </body>

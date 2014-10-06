@@ -45,7 +45,7 @@ function importContent(){
 	});
 }
 function edit(categoryID,category,slug){
-	openModal( $("##categoryEditorContainer"), 500, 200 );
+	openModal( $("##categoryEditorContainer") );
 	$categoryEditor.find("##categoryID").val( categoryID );
 	$categoryEditor.find("##category").val( category );
 	$categoryEditor.find("##slug").val( slug );
