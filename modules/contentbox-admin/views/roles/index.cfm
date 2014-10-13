@@ -158,45 +158,14 @@
 </div>
 </cfif>
 <cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
-<!---Import Dialog --->
-<div id="importDialog" class="modal hide fade">
-	<div id="modalContent">
-	    <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h3><i class="icon-copy"></i> Import Roles</h3>
-	    </div>
-        #html.startForm(name="importForm", action=prc.xehImportAll, class="form-vertical", multipart=true)#
-        <div class="modal-body">
-			<p>Choose the ContentBox <strong>JSON</strong> roles file to import.</p>
-			
-			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
-				name="importFile",
-				required=true
-			)#
-			
-			<label for="overrideContent">Override Roles?</label>
-			<small>By default all content that exist is not overwritten.</small><br>
-			#html.select(options="true,false", name="overrideContent", selectedValue="false", class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-			
-			<!---Notice --->
-			<div class="alert alert-info">
-				<i class="icon-info-sign icon-large"></i> Please note that import is an expensive process, so please be patient when importing.
-			</div>
-		</div>
-        <div class="modal-footer">
-            <!--- Button Bar --->
-        	<div id="importButtonBar">
-          		<button class="btn" id="closeButton"> Cancel </button>
-          		<button class="btn btn-danger" id="importButton"> Import </button>
-            </div>
-			<!--- Loader --->
-			<div class="center loaders" id="importBarLoader">
-				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
-				<br>Please wait, doing some hardcore importing action...
-			</div>
-        </div>
-		#html.endForm()#
-	</div>
-</div>
+	<cfscript>
+		dialogArgs = {
+			title = "Import Roles",
+			contentArea = "roles",
+			action = prc.xehImportAll,
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> roles file to import."
+		};
+	</cfscript>
+	#renderView( view="_tags/dialog/import", args=dialogArgs )#
 </cfif>
 </cfoutput>

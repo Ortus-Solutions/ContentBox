@@ -79,6 +79,8 @@
                 // datatables
                 "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js",
                 "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js",
+                // table filter
+                "#prc.cbroot#/includes/js/jquery.uitablefilter.js",
                 // drag and drop
                 "#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",
                 // custom admintheme js
