@@ -11,16 +11,14 @@
                 <!--body-->
                 #html.startForm(name="importForm", action="#args.action#", class="form-vertical", multipart=true, role="form")#
                     <div class="modal-body">
-                        <p>Choose the ContentBox <strong>JSON</strong> #args.contentArea#s file to import. The creator of the #args.contentArea# is matched via their <strong>username</strong> and 
-                #args.contentArea# overrides are matched via their <strong>slug</strong>.
-                If the importer cannot find the username from the import file in your installation, then it will ignore the record.</p>
+                        <p>#args.contentInfo#</p>
                 
                         #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
                             name="importFile",
                             required=true
                         )#      
                         
-                        <label for="overrideContent">Override pages?</label>
+                        <label for="overrideContent">Override content?</label>
                         <small>By default all content that exist are NOT overwritten.</small><br>
                         #html.select(
                             options="true,false", 

@@ -194,7 +194,10 @@
 		dialogArgs = {
 			title = "Import Pages",
 			contentArea = "page",
-			action = prc.xehPageImport
+			action = prc.xehPageImport,
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> pages file to import. The creator of the page is matched via their <strong>username</strong> and 
+                page overrides are matched via their <strong>slug</strong>.
+                If the importer cannot find the username from the import file in your installation, then it will ignore the record."
 		};
 	</cfscript>
 	#renderView( view="_tags/dialog/import", args=dialogArgs )#

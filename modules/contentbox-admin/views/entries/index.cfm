@@ -182,7 +182,10 @@
 		dialogArgs = {
 			title = "Import Blog Entries",
 			contentArea = "entry",
-			action = prc.xehEntryImport
+			action = prc.xehEntryImport,
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> entries file to import. The creator of the entry is matched via their <strong>username</strong> and 
+                entry overrides are matched via their <strong>slug</strong>.
+                If the importer cannot find the username from the import file in your installation, then it will ignore the record."
 		};
 	</cfscript>
 	#renderView( view="_tags/dialog/import", args=dialogArgs )#

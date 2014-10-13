@@ -148,7 +148,7 @@
 </cfif>
 <!---only show if user has rights to categories admin and tool import--->
 <cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-	<div id="importDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{idOfModalTitle}" aria-hidden="true">
+	<div id="importDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="importDiaglogTitle" aria-hidden="true">
 	    <div class="modal-dialog">
 	        <div class="modal-content">
 	            <!--header-->
