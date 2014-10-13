@@ -2,6 +2,11 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
+	$("##roles").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false
+	});
 	<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 	$importDialog = $("##importDialog");
 	$roleEditor = $("##roleEditor");
