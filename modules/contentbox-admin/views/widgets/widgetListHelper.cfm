@@ -30,7 +30,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     // table sorting + filtering
-    $("##widgets").tablesorter();
+    //$("##widgets").tablesorter();
     $("##widgetFilter").keyup(function(){
         $.uiTableFilter( $("##widgets"), this.value );
     });

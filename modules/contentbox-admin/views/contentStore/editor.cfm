@@ -139,27 +139,27 @@
                         )#
                     </div>
                 </div>
-                <!--- Custom Fields --->
-                <!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
-                <cfset mArgs = {fieldType="content", customFields=prc.content.getCustomFields()}>
-                #renderView(view="_tags/customFields",args=mArgs)#
                 <!--- Event --->
                 #announceInterception("cbadmin_contentStoreEditorInBody")#
-                <!---Loaded Panels--->
-                <cfif prc.content.isLoaded()>
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-clock-o icon-large"></i> Versions</h3>
-                        </div>
-                        <div class="panel-body">
-                            #prc.versionsViewlet#
-                        </div>
-                    </div>
-                </cfif>
-            
-                <!--- Event --->
-                #announceInterception("cbadmin_contentStoreEditorFooter")#
             </div>
+            <!--- Custom Fields --->
+            <!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
+            <cfset mArgs = {fieldType="content", customFields=prc.content.getCustomFields()}>
+            #renderView(view="_tags/customFields",args=mArgs)#
+            <!---Loaded Panels--->
+            <cfif prc.content.isLoaded()>
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><i class="fa fa-clock-o icon-large"></i> Versions</h3>
+                    </div>
+                    <div class="panel-body">
+                        #prc.versionsViewlet#
+                    </div>
+                </div>
+            </cfif>
+        
+            <!--- Event --->
+            #announceInterception("cbadmin_contentStoreEditorFooter")#
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
@@ -167,109 +167,9 @@
                     <h3 class="panel-title"><i class="fa fa-info-circle"></i> Content Details</h3>
                 </div>
                 <div class="panel-body">
-                    <h4><i class="fa fa-calendar"></i> Publishing</h4>        
-                        <!--- Published? --->
-                    <cfif prc.content.isLoaded()>
-                    <label class="inline">Status: </label>
-                    <cfif !prc.content.getIsPublished()><div class="textRed inline">Draft!</div><cfelse>Published</cfif>
-                    </cfif>
-    
-                    <!--- is Published --->
-                    #html.hiddenField(name="isPublished",value=true)#
-                    <!--- publish date --->
-                    <div class="form-group form-inline">
-                        #html.label(class="control-label",field="publishedDate",content="Publish Date (<a href='javascript:publishNow()'>Now</a>)")#
-                        <div class="controls">
-                            #html.inputField(
-                                size="9", name="publishedDate",
-                                value=prc.content.getPublishedDateForEditor(), 
-                                class="form-control datepicker"
-                            )#
-                            @
-                            #html.inputField(
-                                type="number",
-                                name="publishedHour",
-                                value=prc.ckHelper.ckHour( prc.content.getPublishedDateForEditor(showTime=true) ),
-                                size=2,
-                                maxlength="2",
-                                min="0",
-                                max="24",
-                                title="Hour in 24 format",
-                                class="form-control editorTime"
-                            )#
-                            #html.inputField(
-                                type="number",
-                                name="publishedMinute",
-                                value=prc.ckHelper.ckMinute( prc.content.getPublishedDateForEditor(showTime=true) ),
-                                size=2,
-                                maxlength="2",
-                                min="0",
-                                max="60", 
-                                title="Minute",
-                                class="form-control editorTime"
-                            )#
-                        </div>
-                    </div>
-                    <!--- expire date --->
-                    <div class="form-group form-inline">
-                        #html.label(class="control-label",field="expireDate",content="")#
-                        <div class="controls">
-                            #html.inputField(
-                                size="9", 
-                                name="expireDate",
-                                value=prc.content.getExpireDateForEditor(), 
-                                class="form-control datepicker"
-                            )#
-                            @
-                            #html.inputField(
-                                type="number",
-                                name="expireHour",
-                                value=prc.ckHelper.ckHour( prc.content.getExpireDateForEditor(showTime=true) ),
-                                size=2,
-                                maxlength="2",
-                                min="0",
-                                max="24",
-                                title="Hour in 24 format",
-                                class="form-control editorTime"
-                            )#
-                            #html.inputField(
-                                type="number",
-                                name="expireMinute",
-                                value=prc.ckHelper.ckMinute( prc.content.getExpireDateForEditor(showTime=true) ),
-                                size=2,
-                                maxlength="2",
-                                min="0",
-                                max="60", 
-                                title="Minute",
-                                class="form-control editorTime"
-                            )#
-                        </div>
-                    </div>  
-                    <!--- Changelog --->
-                    #html.textField(
-                        name="changelog",
-                        label="Commit Changelog",
-                        class="form-control",
-                        title="A quick description of what this commit is all about.",
-                        wrapper="div class=controls",
-                        labelClass="control-label",
-                        groupWrapper="div class=form-group"
-                    )#
-    
-                    <!--- Action Bar --->
-                    <div class="actionBar">
-                        <div class="btn-group btn-group">
-                        &nbsp;<input type="button" class="btn" value="Save" data-keybinding="ctrl+s" onclick="quickSave()">
-                        &nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
-                        &nbsp;<input type="submit" class="btn btn-danger" value="Publish">
-                        </div>
-                    </div>
-    
-                    <!--- Loader --->
-                    <div class="loaders" id="uploadBarLoader">
-                        <i class="icon-spinner icon-spin icon-large icon-2x"></i>
-                        <div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
-                    </div>
+                    <cfset pArgs = { content=prc.content }>
+                    #renderView( view="_tags/content/publishing", args=pArgs )#
+                   
         
                     <!--- Accordion --->
                     <div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
@@ -386,13 +286,15 @@
                                 <div class="panel-body">
                                     <!--- Creator --->
                                     <cfif prc.content.isLoaded() and prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
-                                    <i class="fa fa-user icon-large"></i>
-                                    #html.label(field="creatorID",content="Creator:",class="inline")#
-                                    <select name="creatorID" id="creatorID" class="form-control input-sm">
-                                        <cfloop array="#prc.authors#" index="author">
-                                        <option value="#author.getAuthorID()#" <cfif prc.content.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
-                                        </cfloop>
-                                    </select>
+                                        <div class="form-group">
+                                            <i class="fa fa-user icon-large"></i>
+                                            #html.label(field="creatorID",content="Creator:",class="inline")#
+                                            <select name="creatorID" id="creatorID" class="form-control input-sm">
+                                                <cfloop array="#prc.authors#" index="author">
+                                                <option value="#author.getAuthorID()#" <cfif prc.content.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+                                                </cfloop>
+                                            </select>
+                                        </div>
                                     </cfif>
                                 </div>
                             </div>
@@ -497,7 +399,7 @@
                         <!---End Categories--->
                             
                         <!--- Event --->
-                        #announceInterception("cbadmin_contentStoreEditorSidebarAccordion")#            
+                        #announceInterception("cbadmin_contentStoreEditorSidebarAccordion")#     
                     </div>  
                     <!--- End Accordion --->
         
@@ -507,8 +409,6 @@
             </div>
             <!--- Event --->
             #announceInterception("cbadmin_contentStoreEditorSidebarFooter")#
-                </div>
-            </div>
         </div>
     </div>
 #html.endForm()#

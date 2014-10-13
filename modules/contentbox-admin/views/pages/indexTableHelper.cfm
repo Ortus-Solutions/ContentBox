@@ -6,7 +6,8 @@ $(document).ready(function() {
 	// sorting
 	$pages.dataTable({
 		"paging": false,
-		"info": false
+		"info": false,
+		"searching": false
 	});
 	// activate confirmations
 	activateConfirmations();

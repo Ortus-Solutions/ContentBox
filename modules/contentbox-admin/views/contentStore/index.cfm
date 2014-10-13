@@ -24,66 +24,75 @@
 			#html.hiddenField(name="contentID",value="")#
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">&nbsp;</h3>
-					<div class="actions pull-right">
-						<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
-							<div class="btn-group btn-group-sm">
-						    	<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="##">
-									Global Actions <span class="caret"></span>
-								</a>
-						    	<ul class="dropdown-menu">
-						    		<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
-										<li>
-											<a href="javascript:bulkRemove()" class="confirmIt"
-											data-title="Delete Selected Content?" data-message="This will delete the content, are you sure?">
-												<i class="fa fa-trash-o"></i> Delete Selected
-											</a>
-										</li>
-										<li>
-											<a href="javascript:bulkChangeStatus('draft')">
-												<i class="fa fa-ban"></i> Draft Selected
-											</a>
-										</li>
-										<li>
-											<a href="javascript:bulkChangeStatus('publish')">
-												<i class="fa fa-check"></i> Publish Selected
-											</a>
-										</li>
-									</cfif>
-									<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_IMPORT")>
-										<li>
-											<a href="javascript:importContent()">
-												<i class="fa fa-upload"></i> Import
-											</a>
-										</li>
-									</cfif>
-									<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_EXPORT")>
-										<li class="dropdown-submenu">
-											<a href="##">
-												<i class="fa fa-download icon-large"></i> Export All
-											</a>
-											<ul class="dropdown-menu text-left">
-												<li>
-													<a href="#event.buildLink(linkto=prc.xehContentExportAll)#.json" target="_blank">
-														<i class="fa fa-code"></i> as JSON
-													</a>
-												</li>
-												<li>
-													<a href="#event.buildLink(linkto=prc.xehContentExportAll)#.xml" target="_blank">	<i class="fa fa-sitemap"></i> as XML
-													</a>
-												</li>
-											</ul>
-										</li>
-									</cfif>
-									<li>
-										<a href="javascript:contentShowAll()">
-											<i class="fa fa-list"></i> Show All
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group form-inline no-margin">
+								#html.label(field="contentSearch",content="Quick Search:",class="inline control-label")#
+								#html.textField( name="contentSearch",class="form-control" )#
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="pull-right">
+								<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+									<div class="btn-group btn-group-sm">
+								    	<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="##">
+											Global Actions <span class="caret"></span>
 										</a>
-									</li>
-						    	</ul>
-						    </div>
-						</cfif>
-						<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(linkTo=prc.xehContentEditor)#');">Create Content</button>
+								    	<ul class="dropdown-menu">
+								    		<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
+												<li>
+													<a href="javascript:bulkRemove()" class="confirmIt"
+													data-title="Delete Selected Content?" data-message="This will delete the content, are you sure?">
+														<i class="fa fa-trash-o"></i> Delete Selected
+													</a>
+												</li>
+												<li>
+													<a href="javascript:bulkChangeStatus('draft')">
+														<i class="fa fa-ban"></i> Draft Selected
+													</a>
+												</li>
+												<li>
+													<a href="javascript:bulkChangeStatus('publish')">
+														<i class="fa fa-check"></i> Publish Selected
+													</a>
+												</li>
+											</cfif>
+											<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_IMPORT")>
+												<li>
+													<a href="javascript:importContent()">
+														<i class="fa fa-upload"></i> Import
+													</a>
+												</li>
+											</cfif>
+											<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_EXPORT")>
+												<li class="dropdown-submenu">
+													<a href="##">
+														<i class="fa fa-download icon-large"></i> Export All
+													</a>
+													<ul class="dropdown-menu text-left">
+														<li>
+															<a href="#event.buildLink(linkto=prc.xehContentExportAll)#.json" target="_blank">
+																<i class="fa fa-code"></i> as JSON
+															</a>
+														</li>
+														<li>
+															<a href="#event.buildLink(linkto=prc.xehContentExportAll)#.xml" target="_blank">	<i class="fa fa-sitemap"></i> as XML
+															</a>
+														</li>
+													</ul>
+												</li>
+											</cfif>
+											<li>
+												<a href="javascript:contentShowAll()">
+													<i class="fa fa-list"></i> Show All
+												</a>
+											</li>
+								    	</ul>
+								    </div>
+								</cfif>
+								<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(linkTo=prc.xehContentEditor)#');">Create Content</button>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="panel-body">

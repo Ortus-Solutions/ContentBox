@@ -110,7 +110,7 @@
                 <tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
                     <td width="14" class="center #publishedClass#">
                         <cfif content.getContentType() eq "Page">
-                            <i class="fa fa-file-alt icon-small" title="Page"></i>
+                            <i class="fa fa-file icon-small" title="Page"></i>
                         <cfelseif content.getContentType() eq "Entry">
                             <i class="fa fa-quote-left icon-small" title="Entry"></i>
                         <cfelseif content.getContentType() eq "ContentStore">
