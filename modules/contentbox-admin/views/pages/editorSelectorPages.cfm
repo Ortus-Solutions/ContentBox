@@ -1,8 +1,8 @@
 <cfoutput>
 <!--- pages --->
-<table name="pages" id="pages" class="tablesorter table table-condensed table-striped table-hover" width="98%">
+<table name="pages" id="pages" class="table table-bordered table-condensed table-striped table-hover" width="100%">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th>Page Name</th>
 			<th width="40" class="center"><i class="icon-globe icon-large"></i></th>
 			<th width="120" class="center">Select</th>
@@ -17,18 +17,16 @@
 			</td>
 			<td class="center">
 				<cfif page.getIsPublished()>
-					<i class="icon-ok icon-large textGreen"></i>
+					<i class="fa fa-check icon-large textGreen"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="icon-remove icon-large textRed"></i>
+					<i class="fa fa-times icon-large textRed"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
 			<td class="center">
-				<div class="btn-group">
-				<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
-				<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )" title="Link"><i class="icon-link icon-large"></i></button>
-				</div>
+				<button class="btn btn-sm" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )" title="SSL Link"><i class="fa fa-lock icon-large"></i></button>
+				<button class="btn btn-sm" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )" title="Link"><i class="fa fa-link icon-large"></i></button>
 			</td>
 		</tr>
 		</cfloop>

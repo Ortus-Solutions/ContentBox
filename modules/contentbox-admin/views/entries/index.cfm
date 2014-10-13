@@ -5,7 +5,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-9">
+	<div class="col-md-8">
 		<!--- MessageBox --->
 		#getPlugin( "MessageBox" ).renderit()#
 		<!---Import Log --->
@@ -24,59 +24,68 @@
 			#html.hiddenField(name="contentID",value="")#
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">&nbsp;</h3>
-					<div class="actions pull-right">
-						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
-							<div class="btn-group btn-group-sm">
-						    	<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="##">
-									Global Actions <span class="caret"></span>
-								</a>
-						    	<ul class="dropdown-menu">
-						    		<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
-										<li>
-											<a href="javascript:bulkRemove()" class="confirmIt"
-										data-title="Delete Selected Entries?" data-message="This will delete the entries, are you sure?">
-												<i class="icon-trash"></i> Delete selected
-											</a>
-										</li>
-										<li>
-											<a href="javascript:bulkChangeStatus('draft')"><i class="icon-ban-circle"></i> Draft Selected
-											</a>
-										</li>
-										<li>
-											<a href="javascript:bulkChangeStatus('publish')"><i class="icon-ok-sign"></i> Publish Selected
-											</a>
-										</li>
-									</cfif>
-									<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT")>
-										<li>
-											<a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import
-											</a>
-										</li>
-										</cfif>
-										<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_EXPORT")>
-											<li class="dropdown-submenu">
-												<a href="##"><i class="icon-download icon-large"></i> Export All</a>
-												<ul class="dropdown-menu text-left">
-													<li>
-														<a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON
-														</a>
-													</li>
-													<li>
-														<a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML
-														</a>
-													</li>
-												</ul>
-											</li>
-									</cfif>
-									<li>
-										<a href="javascript:contentShowAll()"><i class="icon-list"></i> Show All
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group form-inline no-margin">
+								#html.label(field="entrySearch",content="Quick Search:",class="inline control-label")#
+								#html.textField( name="entrySearch",class="form-control" )#
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="pull-right">
+								<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+									<div class="btn-group btn-group-sm">
+								    	<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="##">
+											Global Actions <span class="caret"></span>
 										</a>
-									</li>
-						    	</ul>
-						    </div>
-						</cfif>
-						<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(linkTo=prc.xehEntryEditor)#');">Create Entry</button>
+								    	<ul class="dropdown-menu">
+								    		<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+												<li>
+													<a href="javascript:bulkRemove()" class="confirmIt"
+												data-title="Delete Selected Entries?" data-message="This will delete the entries, are you sure?">
+														<i class="fa fa-trash-o"></i> Delete selected
+													</a>
+												</li>
+												<li>
+													<a href="javascript:bulkChangeStatus('draft')"><i class="fa fa-ban"></i> Draft Selected
+													</a>
+												</li>
+												<li>
+													<a href="javascript:bulkChangeStatus('publish')"><i class="fa fa-check"></i> Publish Selected
+													</a>
+												</li>
+											</cfif>
+											<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT")>
+												<li>
+													<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import
+													</a>
+												</li>
+												</cfif>
+												<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_EXPORT")>
+													<li class="dropdown-submenu">
+														<a href="##"><i class="fa fa-download icon-large"></i> Export All</a>
+														<ul class="dropdown-menu text-left">
+															<li>
+																<a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON
+																</a>
+															</li>
+															<li>
+																<a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.xml" target="_blank"><i class="fa-fa-sitemap"></i> as XML
+																</a>
+															</li>
+														</ul>
+													</li>
+											</cfif>
+											<li>
+												<a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All
+												</a>
+											</li>
+								    	</ul>
+								    </div>
+								</cfif>
+								<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(linkTo=prc.xehEntryEditor)#');">Create Entry</button>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="panel-body">
@@ -88,8 +97,8 @@
 			</div>
 		#html.endForm()#
 	</div>
-	<div class="col-md-3">
-		<div class="panel panel-default">
+	<div class="col-md-4">
+		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>
@@ -140,7 +149,7 @@
 		</div>
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-question-circle"></i> Help Tips</h3>
+		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Help Tips</h3>
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="tipList unstyled">

@@ -697,6 +697,9 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
   padding-bottom: 15px;
   margin-bottom: 15px;
 }
+.form-group.no-margin {
+  margin-bottom:0px;
+}
 .input-group {
   margin-bottom: 15px;
 }

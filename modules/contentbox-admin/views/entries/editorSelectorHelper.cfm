@@ -15,7 +15,7 @@ $(document).ready(function() {
 		$('##entriesContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
 			{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
 			function(){
-				$pageEditorSelectorLoader.fadeOut();
+				$entryEditorSelectorLoader.fadeOut();
 		});
 		
 	});

@@ -1,8 +1,8 @@
 <cfoutput>
 <!--- entries --->
-<table name="entries" id="entries" class="tablesorter table table-hover table-striped table-condensed" width="98%">
+<table name="entries" id="entries" class="table table-bordered table-condensed table-striped table-hover" width="100%">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th>Entry Title</th>
 			<th width="40" class="center"><i class="icon-globe icon-large"></i></th>
 			<th width="120" class="center">Select</th>
@@ -15,22 +15,20 @@
 				<!--- Title --->
 				<strong>#entry.getTitle()#</strong>
 				<br>
-				<span class="label">Published: #entry.getDisplayPublishedDate()#</label>
+				<span class="label label-primary">Published: #entry.getDisplayPublishedDate()#</label>
 			</td>
 			<td class="center">
 				<cfif entry.getIsPublished()>
-					<i class="icon-ok icon-large textGreen"></i>
+					<i class="fa fa-check icon-large textGreen"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="icon-remove icon-large textRed"></i>
+					<i class="fa fa-times icon-large textRed"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
 			<td class="center">
-				<div class="btn-group">
-				<button class="btn" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
-				<button class="btn" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="icon-link icon-large"></i></button>
-				</div>
+				<button class="btn btn-sm" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="fa fa-lock icon-large"></i></button>
+				<button class="btn btn-sm" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="fa fa-link icon-large"></i></button>
 			</td>
 		</tr>
 		</cfloop>

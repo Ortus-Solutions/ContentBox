@@ -79,6 +79,8 @@
                 // datatables
                 "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js",
                 "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js",
+                // drag and drop
+                "#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",
                 // custom admintheme js
                 "#( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#",
                 // main ContentBox scripts
