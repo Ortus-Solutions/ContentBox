@@ -3,7 +3,7 @@
 $(document).ready(function() {
 	// tables references
 	$pages = $("##pages");
-	// sorting
+	// datatable
 	$pages.dataTable({
 		"paging": false,
 		"info": false,
