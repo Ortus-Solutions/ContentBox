@@ -19,9 +19,9 @@
 					<!--- Back button --->
 					<p class="center">
 						<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
-							<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink( prc.xehAuthors )#')"><i class="fa fa-reply"></i> Back To Listing</button>
+							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehAuthors )#')"><i class="fa fa-reply"></i> Back To Listing</button>
 						<cfelse>
-							<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink( prc.xehDashboard )#')"><i class="fa fa-reply"></i> Back To Dashboard</button>
+							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehDashboard )#')"><i class="fa fa-reply"></i> Back To Dashboard</button>
 						</cfif>
 					</p>
                 </div>
