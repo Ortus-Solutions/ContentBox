@@ -3,7 +3,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// table sorting
-	$("##templates").tablesorter();
+	//$("##templates").tablesorter();
+    $("##templates").dataTable({
+        "paging": false,
+        "info": false,
+        "searching": false
+    });
 });
 </script>
 </cfoutput>

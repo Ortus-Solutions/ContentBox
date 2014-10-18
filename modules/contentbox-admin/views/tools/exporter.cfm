@@ -19,7 +19,7 @@
                     <div class="row" style="margin: 0px 1px;">
                         <div class="col-md-6 well well-small text-center alert-success">
                             <h2>Option ##1: Everything!</h2>
-                            <small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br />
+                            <small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />
                             <label class="btn btn-success btn-toggle radio" for="export_everything">
                                 #html.radioButton(name="export_type",id="export_everything",checked=true,value="everything")# Export Everything
                             </label>

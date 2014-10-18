@@ -4,7 +4,11 @@ $(document).ready(function() {
 	$importDialog = $("##importDialog");
 	$ruleForm = $("##ruleForm");
 	$rulesTable = $ruleForm.find("##rulesTable");
-	$ruleForm.find("##rules").tablesorter();
+	$ruleForm.find("##rules").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false
+	});
 	$ruleForm.find("##ruleFilter").keyup(function(){
 		$.uiTableFilter( $("##rules"), this.value );
 	});
