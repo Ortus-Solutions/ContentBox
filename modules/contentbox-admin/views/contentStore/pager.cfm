@@ -10,7 +10,7 @@
 	<thead>
 		<tr>
 			<th>Title</th>
-			<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
+			<th width="40" class="center"><i class="fa fa-globe icon-large" title="Published Status"></i></th>
 			<th width="50" class="center">Actions</th>
 		</tr>
 	</thead>
@@ -28,37 +28,37 @@
 			<td>
 				<a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#" title="Edit #content.getTitle()#">#content.getTitle()#</a><br/>
 				<small>
-				<i class="icon-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on #content.getActiveContent().getDisplayCreatedDate()#
+				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on #content.getActiveContent().getDisplayCreatedDate()#
 				</small>
 			</td>
 			<td class="center">
 				<cfif content.isExpired()>
-					<i class="icon-time icon-large textRed" title="Content has expired!"></i>
+					<i class="fa fa-clock-o icon-large textRed" title="Content has expired!"></i>
 					<span class="hidden">expired</span>
 				<cfelseif content.isPublishedInFuture()>
-					<i class="icon-fighter-jet icon-large textBlue" title="Content Publishes in the future!"></i>
+					<i class="fa fa-fighter-jet icon-large textBlue" title="Content Publishes in the future!"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif content.isContentPublished()>
-					<i class="icon-ok icon-large textGreen" title="Content Published!"></i>
+					<i class="fa fa-check icon-large textGreen" title="Content Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
-					<i class="icon-remove icon-large textRed" title="Content Draft!"></i>
+					<i class="fa fa-check icon-large textRed" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
 			<td class="center">
 				<!--- content Actions --->
-				<div class="btn-group">
-			    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
-						<i class="icon-cogs icon-large"></i>
+				<div class="btn-group btn-group-xs">
+			    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
+						<i class="fa fa-cogs icon-large"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oAuthor.checkPermission("CONTENTSOTE_EDITOR,CONTENTSTORE_ADMIN")>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
+						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fa fa-clock-o icon-large"></i> History</a></li>
 			    	</ul>
 			    </div>
 			</td>
