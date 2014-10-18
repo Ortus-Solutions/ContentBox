@@ -48,7 +48,7 @@
                             <!--- comment options --->
                             <div class="tab-pane active" id="general_options">
                                 <fieldset>
-                                    <legend><i class="fa fa-cog icon-large"></i> <strong>Comment Options</strong></legend>
+                                    <legend><i class="fa fa-cog icon-large"></i> Comment Options</legend>
                                         <!--- Activate Comments  --->
                                         <div class="form-group">
                                             #html.label(
@@ -128,7 +128,7 @@
                             <!--- Comment Moderation --->
                             <div class="tab-pane" id="moderation">
                                 <fieldset>
-                                    <legend><i class="fa fa-unlock icon-large"></i> <strong>Before A Comment Appears</strong></legend>
+                                    <legend><i class="fa fa-unlock icon-large"></i> Before A Comment Appears</legend>
                                     <!--- Enable Moderation --->
                                     <div class="form-group">
                                         #html.label(
@@ -229,7 +229,7 @@
                             <!--- Notifications --->
                             <div class="tab-pane" id="notifications">
                                 <fieldset>
-                                    <legend><i class="fa fa-envelope icon-large"></i> <strong>Notifications</strong></legend>
+                                    <legend><i class="fa fa-envelope icon-large"></i> Notifications</legend>
                                     <p>
                                         By default all comment notifications are sent to the system email: <a href="mailto:#prc.cbSettings.cb_site_email#">#prc.cbSettings.cb_site_email#</a>, 
                                     but you can add more emails separated by commas, ohh goody!

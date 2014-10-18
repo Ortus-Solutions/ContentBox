@@ -37,7 +37,7 @@
 							<div class="pull-right">
 								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 									<div class="btn-group btn-group-sm">
-								    	<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Global Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
