@@ -5,12 +5,20 @@ $(document).ready(function() {
 	$settingEditor = $("##settingEditor");
 	$importDialog = $("##importDialog");
 	// settings sorting
-	$("##settings").tablesorter();
+	$("##settings").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false
+	});
 	$("##eventFilter").keyup(function(){
 		$.uiTableFilter( $("##eventsList"), this.value );
 	});
 	// singletons sorting + filter
-	$("##singletons").tablesorter({ sortList: [[0,0]] });
+	$("##singletons").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false
+	});
 	$("##singletonsFilter").keyup(function(){
 		$.uiTableFilter( $("##singletons"), this.value );
 	});
