@@ -6,7 +6,11 @@ $(document).ready(function() {
 	$layoutForm = $("##layoutForm");
 	$forgebox   = $("##forgeboxPane");
 	// table sorting + filtering
-	$("##layouts").tablesorter();
+	$("##layouts").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false
+	});
 	$("##layoutFilter").keyup(function(){
 		$.uiTableFilter( $("##layouts"), this.value );
 	});
