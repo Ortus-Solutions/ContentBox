@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3><span id="widget-title-bar"><i class="icon-magic"></i> Select a Widget</span></h3>
+    <h4><span id="widget-title-bar"><i class="icon-magic"></i> Select a Widget</span></h4>
 </div>
 <div class="modal-body">
     <div class="widget-detail" id="widget-detail" style="display:none;"></div>
@@ -12,8 +12,8 @@
         <a id="widget-button-back" style="display:none;" href="javascript:void(0);" class="btn btn-primary"><i class="icon-reply"></i> Back to Widgets</a>&nbsp;
     </div>
     <div class="widget-footer-right">
-        <a id="widget-button-cancel" href="javascript:void(0);" class="btn" onclick="closeRemoteModal()">Cancel</a>
-		<button class="btn btn-danger" style="display:none;" id="widget-button-insert">Insert Widget</button>
+        <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Cancel</a>
+		<button class="btn btn-primary" style="display:none;" id="widget-button-insert">Insert Widget</button>
     </div>
 </div>
 </cfoutput>
