@@ -422,27 +422,39 @@ component extends="baseContentHandler"{
 
 	// change order for all pages
 	function changeOrder( event, rc, prc ){
-		event.paramValue("tableID","pages");
-		event.paramValue("newRulesOrder","");
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&#rc.tableID#[]=", ",", "all");
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "#rc.tableID#[]=,", "", "all");
-		for(var i=1;i lte listLen(rc.newRulesOrder);i++) {
-			contentID = listGetAt(rc.newRulesOrder,i);
-			var page = pageService.get(contentID);
-			if( !isNull( page ) ){
-				page.setOrder( i );
-				pageService.savePage( page );
-				pageService.clearPageWrapper( page.getSlug() );
+		// param values
+		event.paramValue( "tableID", "pages" )
+			.paramValue( "newRulesOrder", "" );
+
+		// decode + cleanup incoming rules data
+		rc.newRulesOrder = URLDecode( rc.newRulesOrder );
+		rc.newRulesOrder = listToArray( REReplaceNoCase( rc.newRulesOrder, "&?#rc.tableID#\[\]\=", ",", "all" ) );
+
+		// iterate and perform ordering
+		var index 	= 1;
+		var aPages 	= [];
+		for( var thisPageID in rc.newRulesOrder ){
+			var oPage = pageService.get( thisPageID );
+			if( !isNull( oPage ) ){
+				arrayAppend( aPages, oPage );
+				// Update order
+				oPage.setOrder( index++ );
+				// remove caching
+				pageService.clearPageWrapper( oPage.getSlug() );
+				// Do we have a parent?
+				if( oPage.hasParent() ){
+					pageService.clearPageWrapperCaches( slug=oPage.getParent().getSlug() );
+				}
 			}
 		}
 
-		// Do we have a parent?
-		if( !isNull( page ) AND page.hasParent() ){
-			pageService.clearPageWrapperCaches(slug=page.getParent().getSlug());
+		// save them
+		if( arrayLen( aPages ) ){
+			pageService.saveAll( aPages );
 		}
 
 		// render data back
-		event.renderData(type="json",data='true');
+		event.renderData( type="json", data='true' );
 	}
 
 	// pager viewlet
