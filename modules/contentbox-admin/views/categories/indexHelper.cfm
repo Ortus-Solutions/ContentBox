@@ -16,7 +16,15 @@ $(document).ready(function() {
 	$('##btnReset').click(function() {
 		$categoryEditor.find("##categoryID").val( '' );
 	});
-	$('##categories').dataTable();
+	$('##categories').dataTable({
+		"columnDefs": [
+    		{ 
+    			"orderable": false, 
+    			"targets": '{sorter:false}' 
+    		}
+  		],
+  		"order": []
+	});
 });
 <cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN,TOOLS_IMPORT")>
 function bulkRemove(){

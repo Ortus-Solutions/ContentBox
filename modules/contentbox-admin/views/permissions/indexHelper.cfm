@@ -8,7 +8,14 @@ $(document).ready(function() {
 	$("##permissions").dataTable({
 		"paging": false,
 		"info": false,
-		"searching": false
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
 	});
 	$("##permissionFilter").keyup(function(){
 		$.uiTableFilter( $("##permissions"), this.value );

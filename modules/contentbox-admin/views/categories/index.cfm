@@ -57,7 +57,7 @@
 				<table id="categories" class="table table-striped table-bordered" cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
+							<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
 							<th>Category Name</th>
 							<th>Slug</th>		
 							<th width="75" class="text-center">Pages</th>
@@ -69,7 +69,7 @@
 						<cfloop array="#prc.categories#" index="category">
 						<tr id="categoryID-#category.getCategoryID()#" data-categoryID="#category.getCategoryID()#">
 							<!--- check box --->
-							<td>
+							<td class="text-center">
 								<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
 							</td>
 							<td><a href="javascript:edit('#category.getCategoryID()#',

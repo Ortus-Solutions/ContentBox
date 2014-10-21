@@ -7,7 +7,14 @@ $(document).ready(function() {
 	$ruleForm.find("##rules").dataTable({
 		"paging": false,
 		"info": false,
-		"searching": false
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
 	});
 	$ruleForm.find("##ruleFilter").keyup(function(){
 		$.uiTableFilter( $("##rules"), this.value );
