@@ -6,14 +6,14 @@
 </div>
 
 <!--- entries --->
-<table name="entries_pager" id="entries_pager" class="tablesorter table table-hover table-condensed table-striped table-bordered" width="100%">
+<table name="entries_pager" id="entries_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th>Title</th>
-			<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
-			<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
-			<th width="40" class="center"><i class="icon-comments icon-large" title="Comments"></i></th>
-			<th width="50" class="center">Actions</th>
+			<th width="40" class="text-center"><i class="fa fa-globe icon-large" title="Published Status"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-comments icon-large" title="Comments"></i></th>
+			<th width="50" class="text-center">Actions</th>
 		</tr>
 	</thead>
 
@@ -33,7 +33,7 @@
 				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on #entry.getActiveContent().getDisplayCreatedDate()#
 				</small>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif entry.isExpired()>
 					<i class="fa fa-clock-o icon-large textRed" title="Entry has expired!"></i>
 					<span class="hidden">expired</span>
@@ -48,9 +48,9 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center"><span class="badge badge-info">#entry.getHits()#</span></td>
-			<td class="center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
-			<td class="center">
+			<td class="text-center"><span class="badge badge-info">#entry.getHits()#</span></td>
+			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
+			<td class="text-center">
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-xs">
 			    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">

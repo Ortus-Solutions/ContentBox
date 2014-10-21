@@ -3,12 +3,12 @@
 <table name="entries" id="entries" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 			<th>Name</th>
-			<th width="40" class="center"><i class="fa fa-globe icon-large" title="Published Status"></i></th>
-			<th width="40" class="center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
-			<th width="40" class="center"><i class="fa fa-comments icon-large" title="Comments"></i></th>
-			<th width="100" class="center {sorter:false}">Actions</th>
+			<th width="40" class="text-center"><i class="fa fa-globe icon-large" title="Published Status"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-comments icon-large" title="Comments"></i></th>
+			<th width="100" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
 	
@@ -23,7 +23,7 @@
 				class="selected"
 			</cfif>>
 			<!--- check box --->
-			<td>
+			<td class="text-center">
 				<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
 			</td>
 			<td>
@@ -38,7 +38,7 @@
 				</cfif>
 				<br/><small><i class="fa fa-tag"></i> #entry.getCategoriesList()#</small>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif entry.isExpired()>
 					<i class="fa fa-time icon-large textRed" title="Entry has expired on ( (#entry.getDisplayExpireDate()#))"></i>
 					<span class="hidden">expired</span>
@@ -53,9 +53,9 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center"><span class="badge badge-info">#entry.getHits()#</span></td>
-			<td class="center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
-			<td class="center">
+			<td class="text-center"><span class="badge badge-info">#entry.getHits()#</span></td>
+			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
+			<td class="text-center">
 				<!---Info Panel --->
 				<a 	class="btn popovers" 
 					data-contentID="#entry.getContentID()#"

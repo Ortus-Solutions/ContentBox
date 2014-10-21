@@ -8,11 +8,11 @@
 	<!--- entries --->
 	<table name="pages_pager" id="pages_pager" class="tablesorter table table-hover table-condensed table-striped table-bordered" width="100%">
 		<thead>
-			<tr>
+			<tr class="info">
 				<th>Page</th>
-				<th width="40" class="center"><i class="fa fa-globe icon-large" title="Published"></i></th>
-				<th width="40" class="center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
-				<th width="50" class="center">Actions</th>
+				<th width="40" class="text-center"><i class="fa fa-globe icon-large" title="Published"></i></th>
+				<th width="40" class="text-center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
+				<th width="50" class="text-center">Actions</th>
 			</tr>
 		</thead>
 
@@ -33,7 +33,7 @@
 					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#">#page.getSlug()#</a><br>
 					<small><i class="fa fa-user" title="last edit by"></i> <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on #page.getActiveContent().getDisplayCreatedDate()#</small>
 				</td>
-				<td class="center">
+				<td class="text-center">
 					<cfif page.isExpired()>
 						<i class="fa fa-clock-o icon-large textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
@@ -48,8 +48,8 @@
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
-				<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
-				<td class="center">
+				<td class="text-center"><span class="badge badge-info">#page.getHits()#</span></td>
+				<td class="text-center">
 					<!--- Page Actions --->
 					<div class="btn-group btn-xs">
 				    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">

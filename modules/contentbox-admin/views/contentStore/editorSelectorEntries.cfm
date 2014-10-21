@@ -4,8 +4,8 @@
 	<thead>
 		<tr class="info">
 			<th>Title</th>
-			<th width="40" class="center"><i class="fa fa-globe icon-large"></i></th>
-			<th width="120" class="center">Insert</th>
+			<th width="40" class="text-center"><i class="fa fa-globe icon-large"></i></th>
+			<th width="120" class="text-center">Insert</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -16,7 +16,7 @@
 				<strong>#entry.getTitle()#</strong><br>
 				#entry.getDescription()#
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif entry.getIsPublished()>
 					<i class="fa fa-check icon-large textGreen"></i>
 					<span class="hidden">published</span>
@@ -25,7 +25,7 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<button class="btn btn-sm" onclick="return insertContentStore('#entry.getSlug()#')">Insert</button>
 			</td>
 		</tr>

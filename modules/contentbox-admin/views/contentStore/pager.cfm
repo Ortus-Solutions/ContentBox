@@ -6,12 +6,12 @@
 </div>
 
 <!--- content --->
-<table name="content_pager" id="content_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
+<table name="content_pager" id="content_pager" class="table-bordered table table-hover table-condensed table-striped" width="100%">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th>Title</th>
-			<th width="40" class="center"><i class="fa fa-globe icon-large" title="Published Status"></i></th>
-			<th width="50" class="center">Actions</th>
+			<th width="40" class="text-center"><i class="fa fa-globe icon-large" title="Published Status"></i></th>
+			<th width="50" class="text-center">Actions</th>
 		</tr>
 	</thead>
 
@@ -31,7 +31,7 @@
 				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on #content.getActiveContent().getDisplayCreatedDate()#
 				</small>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif content.isExpired()>
 					<i class="fa fa-clock-o icon-large textRed" title="Content has expired!"></i>
 					<span class="hidden">expired</span>
@@ -46,7 +46,7 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<!--- content Actions --->
 				<div class="btn-group btn-group-xs">
 			    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">

@@ -8,8 +8,8 @@
 			<th>Email</th>
 			<th>Role</th>
 			<th>Last Login</th>
-			<th width="40" class="center"><i class="icon-thumbs-up icon-large" title="Active User?"></i></th>
-			<th width="65" class="center {sorter: false}">Actions</th>
+			<th width="40" class="text-center"><i class="icon-thumbs-up icon-large" title="Active User?"></i></th>
+			<th width="65" class="text-center {sorter: false}">Actions</th>
 		</tr>
 	</thead>
 
@@ -35,14 +35,14 @@
 			<td>#author.getEmail()#</td>
 			<td>#author.getRole().getRole()#</td>
 			<td>#author.getDisplayLastLogin()#</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif author.getIsActive()>
 					<i class="fa fa-check icon-large textGreen" title="User Active"></i>
 				<cfelse>
 					<i class="fa fa-times icon-large textRed" title="User Deactivated"></i>
 				</cfif>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">

@@ -36,14 +36,14 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Content</th>     
-                                                        <th width="75" class="center">Followers</th>
+                                                        <th width="75" class="text-center">Followers</th>
                                                     </tr>
                                                 </thead>                
                                                 <tbody>
                                                     <cfloop array="#prc.commentSubscriptions#" index="subscription">
                                                     <tr>
                                                         <td><a href="#cb.linkContent( subscription[ 'relatedContent' ] )#" target="_blank">#subscription[ "title" ]#</a></td>
-                                                        <td class="center">#subscription[ "subscriberCount" ]#</td>
+                                                        <td class="text-center">#subscription[ "subscriberCount" ]#</td>
                                                     </tr>
                                                     </cfloop>
                                                 </tbody>

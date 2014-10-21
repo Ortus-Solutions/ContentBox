@@ -75,9 +75,9 @@
 							<tr class="info">
 								<th>Role</th>
 								<th>Description</th>		
-								<th width="95" class="center">Permissions</th>
-								<th width="95" class="center">Authors</th>
-								<th width="150" class="center {sorter:false}">Actions</th>
+								<th width="95" class="text-center">Permissions</th>
+								<th width="95" class="text-center">Authors</th>
+								<th width="150" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>				
 						<tbody>
@@ -94,9 +94,9 @@
 									</cfif>
 								</td>
 								<td>#role.getDescription()#</td>
-								<td class="center"><span class="badge badge-info">#role.getNumberOfPermissions()#</span></td>
-								<td class="center"><span class="badge badge-info">#role.getNumberOfAuthors()#</span></td>
-								<td class="center">
+								<td class="text-center"><span class="badge badge-info">#role.getNumberOfPermissions()#</span></td>
+								<td class="text-center"><span class="badge badge-info">#role.getNumberOfAuthors()#</span></td>
+								<td class="text-center">
 									<!--- Actions --->
 
 									<!--- permissions --->

@@ -32,7 +32,7 @@
 							<td>
 								#prc.templates.datelastModified#
 							</td>
-							<td class="center">
+							<td class="text-center">
 								<!--- Editor --->
 								<a class="btn btn-sm btn-primary" title="Edit Template" href="#event.buildLink(linkTo=prc.xehTemplateEditor,queryString='template=#URLEncodedFormat( listFirst( prc.templates.name, ".") )#')#"><i class="fa fa-edit icon-large"></i></a>
 							</td>

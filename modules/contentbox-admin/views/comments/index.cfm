@@ -61,8 +61,8 @@
 								<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 								<th width="200">Author</th>
 								<th>Comment</th>
-								<th width="150" class="center">Date</th>			
-								<th width="100" class="center {sorter:false}">Actions</th>
+								<th width="150" class="text-center">Date</th>			
+								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
 						
@@ -78,13 +78,13 @@
 									&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 									<br/>
 									<cfif len(comment.getAuthorURL())>
-										<i class="icon-cloud"></i>
+										<i class="fa fa-cloud"></i>
 										<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
 											#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 										</a>
 										<br />
 									</cfif>
-									<i class="icon-laptop"></i> 
+									<i class="fa fa-laptop"></i> 
 									<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
 								</td>
 								<td>
@@ -94,10 +94,10 @@
 									#left(comment.getContent(),prc.cbSettings.cb_comments_maxDisplayChars)#
 									<cfif len(comment.getContent()) gt prc.cbSettings.cb_comments_maxDisplayChars>....<strong>more</strong></cfif>
 								</td>
-								<td class="center">
+								<td class="text-center">
 									#comment.getDisplayCreatedDate()#
 								</td>
-								<td class="center">
+								<td class="text-center">
 									<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>

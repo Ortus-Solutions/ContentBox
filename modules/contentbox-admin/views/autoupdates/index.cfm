@@ -130,7 +130,7 @@
                     <thead>
                         <tr class="info">
                             <th>Module</th> 
-                            <th width="100" class="center">Version</th>
+                            <th width="100" class="text-center">Version</th>
                         </tr>
                     </thead>
                     
@@ -140,19 +140,19 @@
                                 ContentBox Core <br/>
                                 (Codename: <a href="#getModuleSettings("contentbox").settings.codenameLink#" target="_blank">#getModuleSettings("contentbox").settings.codename#</a>)
                             </th>
-                            <th class="center">v.#getModuleSettings('contentbox').version#</th>
+                            <th class="text-center">v.#getModuleSettings('contentbox').version#</th>
                         </tr>
                         <tr>
                             <th>ContentBox Admin</th>
-                            <th class="center">v.#getModuleSettings('contentbox-admin').version#</th>
+                            <th class="text-center">v.#getModuleSettings('contentbox-admin').version#</th>
                         </tr>
                         <tr>
                             <th>ContentBox UI</th>
-                            <th class="center">v.#getModuleSettings('contentbox-ui').version#</th>
+                            <th class="text-center">v.#getModuleSettings('contentbox-ui').version#</th>
                         </tr>
                         <tr>
                             <th>ColdBox Platform</th>
-                            <th class="center">v.#getSetting("Version",1)#</th>
+                            <th class="text-center">v.#getSetting("Version",1)#</th>
                         </tr>
                     </tbody>
                 </table>

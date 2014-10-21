@@ -5,8 +5,8 @@
 		<tr class="info">
 			<th>Secured</th>
 			<th>Credentials</th>
-			<th class="center"><i class="icon-reorder icon-large"></i></th>
-			<th class="center {sorter:false}">Actions</th>
+			<th class="text-center"><i class="icon-reorder icon-large"></i></th>
+			<th class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
 
@@ -23,12 +23,12 @@
 				<strong>Permissions:</strong>#rule.getPermissions()#<br/>
 				<strong>Roles:</strong>#rule.getRoles()#
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<div id="ruleid-#rule.getRuleID()#_order">
 					<span class="badge badge-info">#rule.getOrder()#</span>
 				</div>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">

@@ -7,7 +7,14 @@ $(document).ready(function() {
 	$entries.dataTable({
 		"paging": false,
 		"info": false,
-		"searching": false
+		"searching": false,
+		"columnDefs": [
+    		{ 
+    			"orderable": false, 
+    			"targets": '{sorter:false}' 
+    		}
+  		],
+  		"order": []
 	});
 	// activate confirmations
 	activateConfirmations();

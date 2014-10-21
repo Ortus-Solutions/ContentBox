@@ -13,15 +13,15 @@
 <!--- pages --->
 <table id="pages" name="pages" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
-        <tr>
-            <th id="checkboxHolder" class="{sorter:false}" width="20">
+        <tr class="info">
+            <th id="checkboxHolder" class="{sorter:false} text-center" width="20">
             	<input type="checkbox" onClick="checkAll(this.checked,'contentID')"/>
             </th>
 			<th>Name</th>
-			<th width="40" class="center"><i class="fa fa-th-list icon-large" title="Show in Menu"></i></th>
-			<th width="40" class="center"><i class="fa fa-globe icon-large" title="Published"></i></th>
-			<th width="40" class="center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
-			<th width="100" class="center {sorter:false}">Actions</th>
+			<th width="40" class="text-center"><i class="fa fa-th-list icon-large" title="Show in Menu"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-globe icon-large" title="Published"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
+			<th width="100" class="text-center {sorter:false}">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -37,7 +37,7 @@
 				<!--- double click drill down --->
 				<cfif page.getNumberOfChildren()>ondblclick="contentDrilldown( '#page.getContentID()#' )"</cfif>>
 				<!--- check box --->
-				<td>
+				<td class="text-center">
 					<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
 				</td>
 				<td>
@@ -62,14 +62,14 @@
 						<i class="fa fa-lock"></i>
 					</cfif>
 				</td>
-				<td class="center">
+				<td class="text-center">
 					<cfif page.getShowInMenu()>
 						<i class="fa fa-check icon-large textGreen"></i>
 					<cfelse>
 						<i class="fa fa-times icon-large textRed"></i>
 					</cfif>
 				</td>
-				<td class="center">
+				<td class="text-center">
 					<cfif page.isExpired()>
 						<i class="fa fa-time icon-large textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
@@ -84,10 +84,10 @@
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
-				<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
-				<td class="center">
+				<td class="text-center"><span class="badge badge-info">#page.getHits()#</span></td>
+				<td class="text-center">
 					<!---Info Panel --->
-					<a 	class="btn popovers" 
+					<a 	class="btn btn-info btn-sm popovers" 
 						data-contentID="#page.getContentID()#"
 						data-toggle="popover"><i class="fa fa-info-circle icon-large"></i></a>
 					<!---Info Panel --->
@@ -120,8 +120,8 @@
 					</div>
 					
 					<!--- Page Actions --->
-					<div class="btn-group">
-				    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
+					<div class="btn-group btn-group-sm">
+				    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
 							<i class="fa fa-cogs fa fa-large"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">
