@@ -9,7 +9,14 @@ $(document).ready(function() {
 	$("##layouts").dataTable({
 		"paging": false,
 		"info": false,
-		"searching": false
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
 	});
 	$("##layoutFilter").keyup(function(){
 		$.uiTableFilter( $("##layouts"), this.value );

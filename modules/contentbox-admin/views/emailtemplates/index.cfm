@@ -17,10 +17,10 @@
 		    	<!--- templates --->
 				<table name="templates" id="templates" class="table-bordered table table-hover table-striped" width="100%">
 					<thead>
-						<tr>
+						<tr class="info">
 							<th>Template</th>
 							<th width="150">Last Modified</th>
-							<th width="50" class="center {sorter:false}">Actions</th>
+							<th width="50" class="text-center {sorter:false}">Actions</th>
 						</tr>
 					</thead>				
 					<tbody>

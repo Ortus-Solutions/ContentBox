@@ -18,6 +18,18 @@ $(document).ready(function() {
 			}
 	    }
 	});
+	$commentForm.find("##comments").dataTable({
+	    "paging": false,
+	    "info": false,
+	    "searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
+	});
 });
 <cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 function changeStatus(status,recordID){

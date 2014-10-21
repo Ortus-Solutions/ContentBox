@@ -5,7 +5,14 @@ $(document).ready(function() {
 	$("##roles").dataTable({
 		"paging": false,
 		"info": false,
-		"searching": false
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
 	});
 	<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
 	$importDialog = $("##importDialog");

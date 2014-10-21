@@ -58,7 +58,7 @@
 					<table name="comments" id="comments" class="table table-bordered table-striped table-hover tablesorter table-condensed" width="98%">
 						<thead>
 							<tr class="info">
-								<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
+								<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 								<th width="200">Author</th>
 								<th>Comment</th>
 								<th width="150" class="text-center">Date</th>			
@@ -70,7 +70,7 @@
 							<cfloop array="#prc.comments#" index="comment">
 							<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
 								<!--- Delete Checkbox with PK--->
-								<td>
+								<td class="text-center">
 									<input type="checkbox" name="commentID" id="commentID" value="#comment.getCommentID()#" />
 								</td>
 								<td>

@@ -8,7 +8,14 @@ $(document).ready(function() {
 	$("##settings").dataTable({
 		"paging": false,
 		"info": false,
-		"searching": false
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
 	});
 	$("##eventFilter").keyup(function(){
 		$.uiTableFilter( $("##eventsList"), this.value );
@@ -17,7 +24,14 @@ $(document).ready(function() {
 	$("##singletons").dataTable({
 		"paging": false,
 		"info": false,
-		"searching": false
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
 	});
 	$("##singletonsFilter").keyup(function(){
 		$.uiTableFilter( $("##singletons"), this.value );

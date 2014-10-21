@@ -8,7 +8,14 @@ $(document).ready(function() {
 	$("##modules").dataTable({
 		"paging": false,
 		"info": false,
-		"searching": false
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
 	});
 	$("##moduleFilter").keyup(function(){
 		$.uiTableFilter( $("##modules"), this.value );

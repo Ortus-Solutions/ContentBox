@@ -3,7 +3,7 @@
 <table name="authors" id="authors" class="table table-striped table-hover table-bordered" width="100%">
 	<thead>
 		<tr>
-			<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'authorID')"/></th>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'authorID')"/></th>
 			<th>Name</th>
 			<th>Email</th>
 			<th>Role</th>
@@ -17,7 +17,7 @@
 		<cfloop array="#prc.authors#" index="author">
 		<tr<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()> class="success"</cfif> data-authorID="#author.getAuthorID()#" >
 			<!--- check box --->
-			<td>
+			<td class="text-center">
 				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
 			</td>
 			<td>
