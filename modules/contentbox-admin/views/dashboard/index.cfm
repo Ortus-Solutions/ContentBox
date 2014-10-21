@@ -113,10 +113,10 @@
 		        <h3 class="panel-title"><i class="fa fa-question-circle"></i> Help Tips</h3>
 		    </div>
 		    <div class="panel-body">
-		    	<ul class="unstyled tipList">
-					<li><i class="icon-lightbulb icon-large"></i> Right click on a row to activate quick look!</li>
-					<li><i class="icon-lightbulb icon-large"></i> 'Quick Post' is a minimalistic editing machine</li>
-					<li><i class="icon-lightbulb icon-large"></i> 'Create Entry' is a full blown editing machine</li>
+		    	<ul class="list-unstyled tipList">
+					<li><i class="fa fa-lightbulb-o icon-large"></i> Right click on a row to activate quick look!</li>
+					<li><i class="fa fa-lightbulb-o icon-large"></i> 'Quick Post' is a minimalistic editing machine</li>
+					<li><i class="fa fa-lightbulb-o icon-large"></i> 'Create Entry' is a full blown editing machine</li>
 				</ul>
 		    </div>
 		</div>
