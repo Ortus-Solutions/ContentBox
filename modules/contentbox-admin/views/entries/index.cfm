@@ -152,7 +152,7 @@
 		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Help Tips</h3>
 		    </div>
 		    <div class="panel-body">
-		    	<ul class="tipList unstyled">
+		    	<ul class="tipList list-unstyled">
 					<li><i class="fa fa-lightbulb-o"></i> Right click on a row to activate quick look!</li>
 					<li><i class="fa fa-lightbulb-o"></i> Sorting is only done within your paging window</li>
 					<li><i class="fa fa-lightbulb-o"></i> Quick Filtering is only for viewed results</li>
