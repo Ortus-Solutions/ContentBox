@@ -15,8 +15,8 @@
 		<tr class="info">
 			<th width="200">Author</th>
 			<th>Comment</th>
-			<th width="135" class="center">Date</th>			
-			<th width="90" class="center">Actions</th>
+			<th width="135" class="text-center">Date</th>			
+			<th width="90" class="text-center">Actions</th>
 		</tr>
 	</thead>
 	
@@ -28,13 +28,13 @@
 				&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 				<br/>
 				<cfif len(comment.getAuthorURL())>
-					<i class="icon-cloud"></i> 
+					<i class="fa fa-cloud"></i> 
 					<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" target="_blank">
 						#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 					</a>
 					<br />
 				</cfif>
-				<i class="icon-laptop"></i> 
+				<i class="fa fa-laptop"></i> 
 				<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
 			</td>
 			<td>
@@ -43,24 +43,24 @@
 				#left(comment.getContent(),prc.cbSettings.cb_comments_maxDisplayChars)#
 				<cfif len(comment.getContent()) gt prc.cbSettings.cb_comments_maxDisplayChars>....<strong>more</strong></cfif>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				#comment.getDisplayCreatedDate()#
 			</td>
-			<td class="center">
-				<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
-					<!--- Approve/Unapprove --->
-					<cfif !comment.getIsApproved()>
-						<a href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-up icon-large" ></i></a>
-					<cfelse>
-						<a href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-down icon-large"></i></a>
+			<td class="text-center">
+				<div class="btn-group btn-xs">
+					<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+						<!--- Approve/Unapprove --->
+						<cfif !comment.getIsApproved()>
+							<a class="btn btn-xs btn-primary" href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up icon-large" ></i></a>
+						<cfelse>
+							<a class="btn btn-xs btn-primary" href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down icon-large"></i></a>
+						</cfif>
+						<!--- Delete Command --->
+						<a class="btn btn-xs btn-danger" title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o icon-large" ></i></a>
 					</cfif>
-					&nbsp;	
-					<!--- Delete Command --->
-					<a title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="icon-trash icon-large" ></i></a>
-					&nbsp;
-				</cfif>
-				<!--- View in Site --->
-				<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>
+					<!--- View in Site --->
+					<a class="btn btn-xs btn-primary" href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye icon-large"></i></a>
+				</div>
 			</td>
 		</tr>
 		</cfloop>

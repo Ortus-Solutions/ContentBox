@@ -5,8 +5,8 @@
         <thead>
             <tr class="info">
                 <th>Content Title</th>
-                <th width="40" class="center"><i class="fa fa-globe icon-large"></i></th>
-                <th width="120" class="center">Select</th>
+                <th width="40" class="text-center"><i class="fa fa-globe icon-large"></i></th>
+                <th width="120" class="text-center">Select</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
                     <br>
                     <span class="label label-primary">Published: #content.getDisplayPublishedDate()#</span>
                 </td>
-                <td class="center">
+                <td class="text-center">
                     <cfif content.getIsPublished()>
                         <i class="fa fa-check icon-large textGreen"></i>
                         <span class="hidden">published</span>
@@ -27,7 +27,7 @@
                         <span class="hidden">draft</span>
                     </cfif>
                 </td>
-                <td class="center">
+                <td class="text-center">
                     <div class="btn-group">
                         <button class="btn btn-sm btn-success" onclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )" title="Link">
                             <i class="fa fa-check icon-large"></i>

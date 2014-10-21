@@ -25,12 +25,12 @@
 	<table id="versionsHistoryTable" width="100%" class="tablesorter table table-hover table-condensed table-striped table-bordered" border="0">
 		<thead>
 			<tr class="info">
-				<th width="50" class="center">Diff</th>
-				<th width="50" class="center">Version</th>
-				<th width="140" class="center">Date</th>
-				<th width="90" class="center">Author</th>
+				<th width="50" class="text-center">Diff</th>
+				<th width="50" class="text-center">Version</th>
+				<th width="140" class="text-center">Date</th>
+				<th width="90" class="text-center">Author</th>
 				<th>Comment</th>
-				<th width="135" class="center">Actions</th>
+				<th width="135" class="text-center">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -48,14 +48,14 @@
 					<input type="radio" class="rb_version" value="#thisVersion.getContentVersionID()#"
 						   name="version" id="version" <cfif thisVersion.getIsActive()>checked="checked"</cfif>>
 				</td>
-				<td class="center">
+				<td class="text-center">
 					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehVersionQuickLook)#/versionID/#thisVersion.getContentVersionID()#')">#thisVersion.getVersion()#</a>
 				</td>
-				<td class="center">#thisVersion.getDisplayCreatedDate()#</td>
-				<td class="center"><a href="mailto:#thisVersion.getAuthorEmail()#">#thisVersion.getAuthorName()#</a></td>
+				<td class="text-center">#thisVersion.getDisplayCreatedDate()#</td>
+				<td class="text-center"><a href="mailto:#thisVersion.getAuthorEmail()#">#thisVersion.getAuthorName()#</a></td>
 				<td>#thisVersion.getChangeLog()#</td>
 
-				<td class="center">
+				<td class="text-center">
 					<!--- ACTIVE INDICATOR --->
 					<cfif thisVersion.getIsActive()>
 						<span class="label label-warning">Active</span>

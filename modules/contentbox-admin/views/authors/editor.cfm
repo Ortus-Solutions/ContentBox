@@ -17,7 +17,7 @@
                     <!--- Back To Inbox --->
                     #announceInterception("cbadmin_onAuthorEditorActions")#
 					<!--- Back button --->
-					<p class="center">
+					<p class="text-center">
 						<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
 							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehAuthors )#')"><i class="fa fa-reply"></i> Back To Listing</button>
 						<cfelse>
@@ -139,10 +139,10 @@
 									#html.select(
 										label="Active User:",
 										name="isActive",
-										options="yes,
-										no",
+										options="yes,no",
 										style="width:200px",
 										bind=prc.author,
+										class="form-control input-sm",
 										wrapper="div class=controls",
 										labelClass="control-label",
 										groupWrapper="div class=form-group"
@@ -156,6 +156,7 @@
 										nameColumn="role",
 										bind=prc.author.getRole(),
 										style="width:200px",
+										class="form-control input-sm",
 										wrapper="div class=controls",
 										labelClass="control-label",
 										groupWrapper="div class=form-group"

@@ -219,7 +219,8 @@ function adminAction( action, actionURL ){
  * @param delay The delay of the message, defaults to 1500 ms
  */
 function adminNotifier(type, message, delay){
-	var $notifier = $("#adminActionNotifier").attr( "class", "alert hide" );
+	/*
+    var $notifier = $("#adminActionNotifier").attr( "class", "alert hide" );
 	if( type == null ){ type = "warn";  }
 	if( delay == null ){ delay = 1500;  }
 	// add type css
@@ -230,6 +231,13 @@ function adminNotifier(type, message, delay){
 	}
 	// show with message and delay and reset.
 	$notifier.fadeIn().html( message ).delay( delay ).fadeOut();
+    */
+    switch( type ){
+        case "info" : { toastr.info( message ); break; }
+        case "error" : { toastr.error( message ); break; }
+        case "success" : { toastr.success( message ); break; }
+    }
+    
 }
 function activateContentSearch(){
 	// local refs

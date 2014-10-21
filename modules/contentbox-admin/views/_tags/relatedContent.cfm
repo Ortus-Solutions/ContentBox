@@ -63,9 +63,9 @@
                 warning = $( '##related-content-empty' ),
                 template = [
                     '<tr id="content_{0}" class="related-content">',
-                        '<td width="14" class="center">{1}</td>',
+                        '<td width="14" class="text-center">{1}</td>',
                         '<td>{2}</td>',
-                        '<td width="14" class="center">',
+                        '<td width="14" class="text-center">',
                             '<button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>',
                             '<input type="hidden" name="relatedContentIDs" value="{0}" />',
                         '</td>',

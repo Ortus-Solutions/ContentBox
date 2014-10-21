@@ -51,6 +51,8 @@
                 "#prc.cbroot#/includes/css/bootstrap-datepicker.css",
                 // datatables
                 "#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css",
+                // toastr
+                "#prc.cbroot#/includes/css/toastr.min.css",
                 // custom styles for spacelab
                 "#prc.cbroot#/includes/spacelab/css/main.css"
             ];
@@ -83,6 +85,8 @@
                 "#prc.cbroot#/includes/js/jquery.uitablefilter.js",
                 // drag and drop
                 "#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",
+                // toastr
+                "#prc.cbroot#/includes/js/toastr.min.js",
                 // custom admintheme js
                 "#( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#",
                 // main ContentBox scripts
@@ -177,6 +181,8 @@
                 </section>
             </section>
             <!--main content end-->
+            <!--- Footer --->
+        #renderView( view="_tags/footer", module="contentbox-admin" )#
             <!--sidebar right start-->
             <aside class="sidebarRight">
                 <div id="rightside-navigation ">
@@ -234,8 +240,6 @@
             </aside>
             <!--sidebar right end-->
         </section>  
-        <!--- Footer --->
-        #renderView( view="_tags/footer", module="contentbox-admin" )#
         <!--- ConfirmIt modal --->
         <div id="confirmIt" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmItTitle" aria-hidden="true">
             <div class="modal-dialog">

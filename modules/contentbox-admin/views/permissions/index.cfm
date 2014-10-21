@@ -68,8 +68,8 @@
 							<tr class="info">
 								<th>Permission</th>
 								<th>Description</th>
-								<th class="center">Roles Assigned</th>		
-								<th width="150" class="center {sorter:false}">Actions</th>
+								<th class="text-center">Roles Assigned</th>		
+								<th width="150" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>				
 						<tbody>
@@ -86,10 +86,10 @@
 									</cfif>
 								</td>
 								<td>#permission.getDescription()#</td>
-								<td class="center">
+								<td class="text-center">
 									<span class="badge badge-info">#permission.getNumberOfRoles()#</span>
 								</td>
-								<td class="center">
+								<td class="text-center">
 									<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 										<!--- Edit Command --->
 										<a class="btn btn-sm btn-primary" href="javascript:edit('#permission.getPermissionID()#',

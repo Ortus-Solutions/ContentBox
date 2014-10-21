@@ -4,8 +4,8 @@
 	<thead>
 		<tr class="info">
 			<th>Entry Title</th>
-			<th width="40" class="center"><i class="icon-globe icon-large"></i></th>
-			<th width="120" class="center">Select</th>
+			<th width="40" class="text-center"><i class="icon-globe icon-large"></i></th>
+			<th width="120" class="text-center">Select</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -17,7 +17,7 @@
 				<br>
 				<span class="label label-primary">Published: #entry.getDisplayPublishedDate()#</label>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif entry.getIsPublished()>
 					<i class="fa fa-check icon-large textGreen"></i>
 					<span class="hidden">published</span>
@@ -26,7 +26,7 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<button class="btn btn-sm" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="fa fa-lock icon-large"></i></button>
 				<button class="btn btn-sm" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="fa fa-link icon-large"></i></button>
 			</td>

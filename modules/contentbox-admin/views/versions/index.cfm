@@ -51,7 +51,7 @@
 						</td>
 					</tr>
 				</table>
-				<div class="center">
+				<div class="text-center">
 					<button class="btn btn-primary btn-sm" onclick="to('#event.buildLink( prc.xehBackTrack )#/parent/#prc.content.getParentID()#');return false;"><i class="fa fa-reply"></i> Back</button>
 					<cfif len( prc.xehOpenContent )>
 						<button class="btn btn-primary btn-sm" onclick="window.open('#prc.xehOpenContent#');return false;"><i class="fa fa-eye"></i> Open</button>

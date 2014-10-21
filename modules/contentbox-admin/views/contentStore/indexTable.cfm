@@ -3,11 +3,11 @@
 <table name="content" id="content" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	<thead>
 		<tr class="info">
-			<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 			<th>Name</th>
 			<th>Slug/Categories</th>
-			<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
-			<th width="100" class="center {sorter:false}">Actions</th>
+			<th width="40" class="text-center"><i class="icon-globe icon-large" title="Published Status"></i></th>
+			<th width="100" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
 	
@@ -22,7 +22,7 @@
 				class="selected"
 			</cfif>>
 			<!--- check box --->
-			<td>
+			<td class="text-center">
 				<input type="checkbox" name="contentID" id="contentID" value="#content.getContentID()#" />
 			</td>
 			<td>
@@ -38,7 +38,7 @@
 				#content.getSlug()#
 				<br/><small><i class="fa fa-tag"></i> #content.getCategoriesList()#</small>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif content.isExpired()>
 					<i class="fa fa-clock-o icon-large textRed" title="Content has expired on ( (#content.getDisplayExpireDate()#))"></i>
 					<span class="hidden">expired</span>
@@ -53,7 +53,7 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<!---Info Panel --->
 				<a 	class="btn popovers" 
 					data-contentID="#content.getContentID()#"

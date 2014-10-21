@@ -17,9 +17,9 @@
 				<table class="table table-hover table-condensed table-bordered">
 					<tbody>
 					<tr class="info">
-						<th class="center" width="100">Info</th>
-						<th class="center">Version #prc.oldVersion#</th>
-						<th class="center">Version #prc.currentVersion#</th>
+						<th class="text-center" width="100">Info</th>
+						<th class="text-center">Version #prc.oldVersion#</th>
+						<th class="text-center">Version #prc.currentVersion#</th>
 					</tr>
 					<tr>
 						<td><strong>Author</strong></td>
@@ -56,8 +56,8 @@
 				<table class="diff tablesorter">
 					<thead>
 						<tr>
-							<th colspan="2" class="center">Version #prc.oldVersion#</th>
-							<th colspan="2" class="center">Version #prc.currentVersion#</th>
+							<th colspan="2" class="text-center">Version #prc.oldVersion#</th>
+							<th colspan="2" class="text-center">Version #prc.currentVersion#</th>
 						</tr>
 					</thead>
 					<tbody>
