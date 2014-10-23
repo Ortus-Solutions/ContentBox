@@ -33,6 +33,8 @@ component{
 	property name="rssService"			inject="id:rssService@cb";
 	property name="validator"			inject="id:Validator@cb";
 	property name="layoutService"		inject="id:layoutService@cb";
+	property name="antiSamy"			inject="coldbox:plugin:AntiSamy";
+	property name="messagebox"			inject="coldbox:plugin:MessageBox";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -261,9 +263,11 @@ component{
 	
 	/**
 	* Validate incoming comment post, if not valid, it redirects back
-	* @thisContent.hint The content object to validate the comment post for
+	* @thisContent The content object to validate the comment post for
+	* 
+	* @return content handler
 	*/
-	private void function validateCommentPost( 
+	private function validateCommentPost( 
 		required event, 
 		required rc, 
 		required prc, 
@@ -273,23 +277,23 @@ component{
 
 		// param values
 		event.paramValue( "author", "" );
-		event.paramValue( "authorURL", "" );
-		event.paramValue( "authorEmail", "" );
-		event.paramValue( "content", "" );
-		event.paramValue( "captchacode", "" );
+			.paramValue( "authorURL", "" )
+			.paramValue( "authorEmail", "" )
+			.paramValue( "content", "" )
+			.paramValue( "captchacode", "" )
+			.paramValue( "subscribe", false )
 		
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
-			getPlugin( "MessageBox" ).warn( "Comments are disabled! So you can't post any!" );
+			messagebox.warn( "Comments are disabled! So you can't post any!" );
 			setNextEvent( URL=CBHelper.linkContent( arguments.thisContent ) );
 		}
 
 		// Trim values & XSS Cleanup of fields
-		var antiSamy 	= getPlugin( "AntiSamy" );
-		rc.author 		= antiSamy.htmlSanitizer( trim( rc.author ) );
-		rc.authorEmail 	= antiSamy.htmlSanitizer( trim( rc.authorEmail ) );
-		rc.authorURL 	= antiSamy.htmlSanitizer( trim( rc.authorURL ) );
-		rc.captchacode 	= antiSamy.htmlSanitizer( trim( rc.captchacode ) );
+		rc.author 		= left( antiSamy.htmlSanitizer( trim( rc.author ) ), 100 );
+		rc.authorEmail 	= left( antiSamy.htmlSanitizer( trim( rc.authorEmail ) ), 255 );
+		rc.authorURL 	= left( antiSamy.htmlSanitizer( trim( rc.authorURL ) ), 255 );
+		rc.captchacode 	= left( antiSamy.htmlSanitizer( trim( rc.captchacode ) ), 100 );
 		rc.content 		= antiSamy.htmlSanitizer( xmlFormat( trim( rc.content ) ) );
 
 		// Validate incoming data
@@ -306,9 +310,9 @@ component{
 
 		// announce event
 		announceInterception( "cbui_preCommentPost", {
-			commentErrors=commentErrors,
-			content=arguments.thisContent,
-			contentType=arguments.thisContent.getContentType()
+			commentErrors	= commentErrors,
+			content			= arguments.thisContent,
+			contentType		= arguments.thisContent.getContentType()
 		});
 
 		// Store errors if found
@@ -316,7 +320,7 @@ component{
 			// Flash errors
 			flash.put( name="commentErrors", value=commentErrors, inflateTOPRC=true );
 			// MessageBox
-			getPlugin( "MessageBox" ).warn( messageArray=commentErrors );
+			messagebox.warn( messageArray=commentErrors );
 			// Redirect
 			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ), persist="author,authorEmail,authorURL,content" );
 			return;
@@ -347,7 +351,7 @@ component{
 		// Check if all good
 		if( results.moderated ){
 			// Message that comment was moderated
-			getPlugin( "MessageBox" ).warn( messageArray=results.messages );
+			messagebox.warn( messageArray=results.messages );
 			flash.put( name="commentErrors", value=results.messages, inflateTOPRC=true );
 			// relocate back to comments
 			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ) );
