@@ -207,16 +207,12 @@ component extends="content" singleton{
 	function commentPost( event, rc, prc ){
 		// incoming params
 		event.paramValue( "contentID", "" );
-		event.paramValue( "subscribe", false );
 		// Try to retrieve page by contentID
 		var page = pageService.get( rc.contentID );
-
 		// If null, kick them out
 		if( isNull( page ) ){ setNextEvent( prc.cbEntryPoint ); }
-
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, page );
-
 		// Valid commenting, so go and save
 		saveComment( page, rc.subscribe );
 	}
