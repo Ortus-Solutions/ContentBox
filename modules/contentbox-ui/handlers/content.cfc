@@ -276,12 +276,12 @@ component{
 		var commentErrors = [];
 
 		// param values
-		event.paramValue( "author", "" );
+		event.paramValue( "author", "" )
 			.paramValue( "authorURL", "" )
 			.paramValue( "authorEmail", "" )
 			.paramValue( "content", "" )
 			.paramValue( "captchacode", "" )
-			.paramValue( "subscribe", false )
+			.paramValue( "subscribe", false );
 		
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
