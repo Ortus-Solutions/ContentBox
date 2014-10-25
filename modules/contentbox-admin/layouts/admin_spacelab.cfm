@@ -37,7 +37,7 @@
                 // Bootstrap core CSS
                 "#prc.cbroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css",
                 // custom admintheme files
-                //"#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() & ',' : '')#",
+                "#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() & ',' : '')#",
                 // fonts from font awesome
                 "#prc.cbroot#/includes/spacelab/css/font-awesome.min.css",
                 // css animate

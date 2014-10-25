@@ -2137,6 +2137,7 @@ fieldset[disabled] .btn-warning.active {
   top: 11px;
 }
 #login-wrapper #email,
+#login-wrapper #username,
 #login-wrapper #password {
   padding-left: 32px;
 }
