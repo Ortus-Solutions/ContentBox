@@ -1,57 +1,74 @@
 ﻿<cfoutput>
-<div class="row" id="main-login">
+<div class="row">
+    <div class="col-md-3" id="login-wrapper">
+        <div class="panel panel-primary animated flipInY">
+            <div class="panel-heading">
+                <h3 class="panel-title">     
+                   <i class="fa fa-key"></i> Login
+                </h3>      
+            </div>
+            <div class="panel-body">
+            	<!--- Render Messagebox. --->
+				#getPlugin("MessageBox").renderit()#
 
-	<div class="well" id="loginBox">
-		<!---Login Header --->
-		<h2><i class="icon-key icon-"></i> #cb.r( "common.login@security" )#</h2>
-		
-		<!---Body --->
-		<div class="body">
-			
-			<!--- Render Messagebox. --->
-			#getPlugin("MessageBox").renderit()#
-			
-			<div id="loginContent">
-			#html.startForm(action=prc.xehDoLogin, name="loginForm", novalidate="novalidate", class="form-vertical")#
-				#html.hiddenField(name="_securedURL", value=rc._securedURL)#
-				
-				
-				<div class="control-group">
-					<div class="input-prepend controls">
-						<div class="input-prepend">
-							<span class="add-on"><i class="icon-user"></i></span>
-							#html.textfield(name="username", required="required", class="input-large", value=prc.rememberMe, placeholder=cb.r( "common.username@security" ), autocomplete="off")#
-						</div>
+                #html.startForm(
+                	action=prc.xehDoLogin, 
+                	name="loginForm", 
+                	novalidate="novalidate", 
+                	class="form-horizontal"
+                )#
+					#html.hiddenField(name="_securedURL", value=rc._securedURL)#
+                    <div class="form-group">
+                        <div class="col-md-12 controls">
+                            #html.textfield(
+                            	name="username", 
+                            	required="required", 
+                            	class="form-control", 
+                            	value=prc.rememberMe, 
+                            	placeholder=cb.r( "common.username@security" ), 
+                            	autocomplete="off"
+                            )#
+                            <i class="fa fa-lock"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                       <div class="col-md-12 controls">
+                            #html.passwordField(
+                            	name="password", 
+                            	required="required", 
+                            	class="form-control", 
+                            	placeholder=cb.r( "common.password@security" ), 
+                            	autocomplete="off"
+                            )#
+                            <i class="fa fa-lock"></i>
+                            
+                        </div>
+                        <div class="col-md-12">
+							<a href="#event.buildLink( prc.xehLostPassword )#" class="help-block">#cb.r( "lostpassword@security" )#?</a>
+						</div>		
+                    </div>
+                    <div class="form-group">
+                    	<div class="col-md-12">
+							<label class="checkbox">
+								#html.checkBox(
+									name="rememberMe", 
+									value=true, 
+									checked=( len( prc.rememberMe ) )
+								)#
+								#cb.r( "rememberme@security" )#
+							</label>
+						</div>		
 					</div>
-				</div>
-
-				<div class="control-group">
-					<div class="controls">
-						<div class="input-prepend">
-							<span class="add-on"><i class="icon-key"></i></span>
-							#html.passwordField(name="password", required="required", class="input-large", placeholder=cb.r( "common.password@security" ), autocomplete="off")#
-						</div>
-					</div>
-				</div>
-				
-				<div class="control-group">
-					<label class="checkbox inline">
-						#html.checkBox(name="rememberMe", value=true, checked=( len( prc.rememberMe ) ))#
-						#cb.r( "rememberme@security" )#
-					</label>		
-				</div>
-				
-				<div id="loginButtonbar">
-					#html.button(type="submit", value="<i class='icon-signin'></i> #cb.r( "common.login@security" )#&nbsp;&nbsp;", class="btn btn-danger btn-large")#
-				</div>
-				
-				<br/>
-				<a href="#event.buildLink( prc.xehLostPassword )#" class="btn btn-mini"><i class="icon-question-sign"></i> #cb.r( "lostpassword@security" )#?</a> 
-				
-			#html.endForm()#
-			</div>
-		
-		</div>
-	</div>
+                    <div class="form-group">
+                       <div class="col-md-12 text-center">
+                       		<button type="submit" class="btn btn-primary">
+                       			#cb.r( "common.login@security" )#
+                       		</button>
+                        </div>
+                    </div>
+                #html.endForm()#
+            </div>
+        </div>
+    </div>
 </div>
 </cfoutput>
