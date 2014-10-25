@@ -45,14 +45,10 @@
                                 <div class="row well well-sm">
                                     <div class="col-md-6">
                                         <div class="form-group form-inline no-margin">
-                                            #html.label(
-                                                field="settingSearch",
-                                                content="Quick Search:",
-                                                class="inline control-label"
-                                            )#
                                             #html.textField(
                                                 name="settingSearch",
-                                                class="form-control"
+                                                class="form-control",
+                                                placeholder="Quick Search"
                                             )#
                                         </div>
                                     </div>
@@ -72,7 +68,7 @@
                                                     </cfif>
                                                     <cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS,TOOLS_EXPORT")>
                                                     <li class="dropdown-submenu">
-                                                        <a href="##"><i class="fa fa-download"></i> Export All</a>
+                                                        <a href="javascript:null"><i class="fa fa-download"></i> Export All</a>
                                                         <ul class="dropdown-menu text-left">
                                                             <li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
                                                             <li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>

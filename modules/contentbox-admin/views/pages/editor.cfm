@@ -8,7 +8,7 @@
 )#
     <div class="row">
         <div class="col-md-12">
-            <h1 class="h1"><i class="fa fa-edit"></i> page Editor</h1>
+            <h1 class="h1"><i class="fa fa-edit"></i> Page Editor</h1>
         </div>
     </div>
     <div class="row">

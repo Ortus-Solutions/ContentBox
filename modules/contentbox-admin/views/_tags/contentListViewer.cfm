@@ -45,9 +45,9 @@ function resetFilter( reload ){
 	}
 	// reload filters
 	$("##filterBox").removeClass("selected");
-	$("##fAuthors").val( '' );
-	$("##fCategories").val( '' );
-	$("##fStatus").val( '' );
+	$("##fAuthors").val( 'all' );
+	$("##fCategories").val( 'all' );
+	$("##fStatus").val( 'any' );
 }
 // Content drill down
 function contentDrilldown(parent){

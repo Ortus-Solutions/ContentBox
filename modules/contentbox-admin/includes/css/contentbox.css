@@ -56,25 +56,7 @@ input, textarea, .uneditable-input { width: inherit; }
 /**============================== Page Layout with Sidebar ==============================**/
 .main_column { margin-right: 312px; }
 /**============================== Form Styling ==============================**/
-form label { font-size:1em; font-weight:bold; }
 fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
-fieldset legend { border-bottom: none;font-weight:bold; font-size:16px; width: inherit; line-height:20px; margin-bottom: 0px}
-fieldset legend + .control-group { margin-top: 5px; }
-form textarea,form .wysiwyg { width:98%; }
-.modal form { margin:0px !important; }
-.form-vertical .control-label {
-  float: none;
-  padding-top: inherit;
-  text-align: inherit;
-  width: auto;
-}
-.form-vertical .controls {
-  margin-left: inherit;
-}
-.well .form-actions {
-    padding-left: 0px;
-    padding-bottom:0px;
-}
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
@@ -96,12 +78,7 @@ form textarea,form .wysiwyg { width:98%; }
 	max-width: 400px;
 	max-height: 200px;
 }
-/** ============================== PAGING TABS =============================== **/
-.pagingTabs a:hover { color:#000; background-color:#FCF9C3; }
-.pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }
-.pagingTabsCarrousel { margin-top:5px; }
 /**============================== Utility Classes ==============================**/
-.inline { display:inline; margin:5px 0; }
 .floatLeft { float:left!important; }
 .floatRight { float:right!important; }
 .text{ color: #333333}
@@ -128,36 +105,6 @@ form textarea,form .wysiwyg { width:98%; }
 .cachebox_debugContentCell{clear: none !important;}
 .grabCursors{cursor:grab !important;cursor:-moz-grab !important;cursor:-webkit-grab !important;}
 .hand-cursor{cursor:pointer !important;}
-/**============================== Table Listings ==============================**/
-td,th { font-size: 12px; padding:5px; display:table-cell; vertical-align:middle !important; }
-.selected{ background-color: #fcdddb !important; }
-.table { margin-bottom: 5px;}
-.table-hover tbody tr:hover > td,
-.table-hover tbody tr:hover > th { background-color: #d7eafe; }
-.table tr.success > th {
-  background-color: #dff0d8;
-}
-.table tr.error > th {
-  background-color: #f2dede;
-}
-.table tr.warning > th {
-  background-color: #fcf8e3;
-}
-.table tr.info > th {
-  background-color: #d9edf7;
-}
-.table-hover tr.success:hover > th {
-  background-color: #d0e9c6;
-}
-.table-hover tr.error:hover > th {
-  background-color: #ebcccc;
-}
-.table-hover tr.warning:hover > th {
-  background-color: #faf2cc;
-}
-.table-hover tr.info:hover > th {
-  background-color: #c4e3f3;
-}
 /************** Error styles ***************/ 
 form input.error, form select.error, form textarea.error, form .wysiwyg.error, form input.error:focus, form select.error:focus, form textarea.error:focus, form .wysiwyg.error:focus { border: 1px solid #ff8388; }
 /**============================== FORGEBOX CSS ==============================**/

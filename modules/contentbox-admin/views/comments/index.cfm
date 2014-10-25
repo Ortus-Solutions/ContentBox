@@ -30,8 +30,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
-								#html.label(field="commentSearch",content="Quick Search:",class="inline control-label")#
-								#html.textField( name="commentSearch",class="form-control" )#
+								#html.textField( 
+									name="commentSearch",
+									class="form-control",
+									placeholder="Quick Search" 
+								)#
 							</div>
 						</div>
 						<div class="col-md-6">

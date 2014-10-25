@@ -28,8 +28,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
-								#html.label(field="roleFilter",content="Quick Filter:",class="inline control-label")#
-								#html.textField(name="roleFilter",size="30",class="form-control")#
+								#html.textField(
+									name="roleFilter",
+									class="form-control",
+									placeholder="Quick Search"
+								)#
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -47,7 +50,7 @@
 											</cfif>
 											<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
 								    		<li class="dropdown-submenu">
-												<a href="##"><i class="fa fa-download icon-large"></i> Export All</a>
+												<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
 												<ul class="dropdown-menu text-left">
 													<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
 													<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>

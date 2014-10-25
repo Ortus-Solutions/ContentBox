@@ -9,15 +9,11 @@
             </div>
         </cfif>
         <div class="form-group form-inline no-margin">
-            #html.label(
-                field="widgetFilter",
-                content="Quick Filter:",
-                class="inline control-label"
-            )#
             #html.textField(
                 name="widgetFilter",
                 size="30",
-                class="form-control"
+                class="form-control",
+                placeholder="Quick Filter"
             )#
         </div>
     </div>

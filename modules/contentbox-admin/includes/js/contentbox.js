@@ -400,7 +400,6 @@ function openRemoteModal(url,params,w,h,delay){
             if( !currentHeight ) {
                 args.height = maxHeight;
             }
-            console.log( args )
             modal.modal( args )
         }) 
     }

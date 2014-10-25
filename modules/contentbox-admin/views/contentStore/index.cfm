@@ -27,8 +27,11 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
-								#html.label(field="contentSearch",content="Quick Search:",class="inline control-label")#
-								#html.textField( name="contentSearch",class="form-control" )#
+								#html.textField( 
+									name="contentSearch",
+									class="form-control",
+									placeholder="Quick Search" 
+								)#
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -66,7 +69,7 @@
 											</cfif>
 											<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_EXPORT")>
 												<li class="dropdown-submenu">
-													<a href="##">
+													<a href="javascript:null">
 														<i class="fa fa-download icon-large"></i> Export All
 													</a>
 													<ul class="dropdown-menu text-left">

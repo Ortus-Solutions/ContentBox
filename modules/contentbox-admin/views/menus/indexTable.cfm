@@ -45,7 +45,7 @@
                                 <cfif prc.oAuthor.checkPermission("TOOLS_EXPORT")>
                                     <!--- Export --->
                                     <li class="dropdown-submenu pull-left">
-                                        <a href="##"><i class="icon-download icon-large"></i> Export</a>
+                                        <a href="javascript:null"><i class="icon-download icon-large"></i> Export</a>
                                         <ul class="dropdown-menu text-left">
                                             <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
                                             <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>

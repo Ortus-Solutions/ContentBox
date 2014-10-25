@@ -243,7 +243,8 @@ component accessors="true" threadSafe singleton{
 		.addHeaderSubMenu( 
 			name="buildid", 
 			label='ContentBox v.#variables.moduleConfig.version# <br /><span class="label label-warning">(Codename: #variables.moduleConfig.settings.codename#)</span>', 
-			href="#event.buildLink( xehAbout )#"
+			href="#event.buildLink( xehAbout )#",
+			class="last"
 		);
 
 		// Register Profile Menu
