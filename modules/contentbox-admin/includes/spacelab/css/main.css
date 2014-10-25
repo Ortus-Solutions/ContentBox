@@ -149,7 +149,7 @@ img {
   vertical-align: middle;
 }
 .user-nav ul li.dropdown.messages .dropdown-menu {
-  width: 350px;
+  width: 300px;
 }
 .user-nav ul li.dropdown.settings .dropdown-menu {
   width: 125px;
@@ -174,7 +174,7 @@ img {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  left: -150px;
+  left: -126px;
   top: 48px;
   background-color: #F6F6F6;
   border: none;
@@ -182,7 +182,6 @@ img {
   -moz-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
   -o-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
   box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
-  padding: 0;
 }
 .user-nav ul li.dropdown.messages .dropdown-menu:before {
   bottom: 100%;
@@ -286,7 +285,7 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
   font-weight: 400;
   color: white;
 }
-.user-nav ul li.dropdown.messages .dropdown-menu > li:last-child a {
+.user-nav ul li.dropdown.messages .dropdown-menu > li.last a {
   background-color: white;
   font-weight: 400;
   font-size: 12px;
@@ -299,19 +298,19 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
   text-align: right;
   padding: 10px 15px;
 }
-.user-nav ul li.dropdown.messages .dropdown-menu > li:last-child a:hover {
+.user-nav ul li.dropdown.messages .dropdown-menu > li.last a:hover {
   background: #1abc9c;
   color: #fff;
 }
 .user-nav ul li.dropdown.messages .dropdown-menu > li > a {
-  margin: 10px;
+  /*margin: 10px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
   background-color: #fcfcfc;
-  color: #797979;
+  color: #797979;*/
 }
 .user-nav ul li.dropdown.messages .dropdown-menu > li > a .message-info {
   vertical-align: top;
@@ -403,6 +402,8 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
 #leftside-navigation ul li.active > a {
   color: #1abc9c;
 }
+.btn-primary + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:hover,
+.btn-primary + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:active,
 .btn-primary + .dropdown-menu > li > a:hover,
 .btn-primary + .dropdown-menu > li > a:active {
   background-color: #16a086;
@@ -1481,29 +1482,39 @@ fieldset[disabled] .btn-warning.active {
 .dropdown-menu .divider {
   background-color: rgba(255, 255, 255, 0.05);
 }
+.btn-default + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:hover,
+.btn-default + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:focus,
 .btn-default + .dropdown-menu > li > a:hover,
 .btn-default + .dropdown-menu > li > a:focus {
   text-decoration: none;
   background-color: #A1A6A9;
   color: #fff;
 }
+.btn-primary + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:hover,
+.btn-primary + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:focus,
 .btn-primary + .dropdown-menu > li > a:hover,
 .btn-primary + .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #fff;
 }
+.btn-info + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:hover,
+.btn-info + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:focus,
 .btn-info + .dropdown-menu > li > a:hover,
 .btn-info + .dropdown-menu > li > a:focus {
   text-decoration: none;
   background-color: #2C81BA;
   color: #fff;
 }
+.btn-warning + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:hover,
+.btn-warning + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:focus,
 .btn-warning + .dropdown-menu > li > a:hover,
 .btn-warning + .dropdown-menu > li > a:focus {
   text-decoration: none;
   background-color: #CDA70D;
   color: #fff;
 }
+.btn-danger + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:hover,
+.btn-danger + .dropdown-menu .dropdown-submenu .dropdown-menu > li > a:focus,
 .btn-danger + .dropdown-menu > li > a:hover,
 .btn-danger + .dropdown-menu > li > a:focus {
   text-decoration: none;
@@ -1659,6 +1670,9 @@ fieldset[disabled] .btn-warning.active {
   font-weight: 400;
   text-transform: uppercase;
   padding: 15px;
+}
+.panel > .panel-heading .dropdown-menu a {
+  text-transform: none;
 }
 .panel .actions {
   position: absolute;
@@ -2539,6 +2553,50 @@ h3.timeline-title {
   #header .dropdown.messages {
     display: none;
   }
+}
+/* ==========================================================================
+   SUBMENUS
+   ========================================================================*/
+.dropdown-submenu {
+    position:relative;
+}
+.dropdown-submenu>.dropdown-menu {
+    top:0;
+    left:100%;
+    margin-top:-6px;
+    margin-left:-1px;
+    -webkit-border-radius:0 6px 6px 6px;
+    -moz-border-radius:0 6px 6px 6px;
+    border-radius:0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+    display:block;
+}
+.dropdown-submenu>a:after {
+    display:block;
+    content:" ";
+    float:right;
+    width:0;
+    height:0;
+    border-color:transparent;
+    border-style:solid;
+    border-width:5px 0 5px 5px;
+    border-left-color:#cccccc;
+    margin-top:5px;
+    margin-right:-10px;
+}
+.dropdown-submenu:hover>a:after {
+    border-left-color:#ffffff;
+}
+.dropdown-submenu.pull-left {
+    float:none !important;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left:92%;
+    margin-left:10px;
+    -webkit-border-radius:6px 0 6px 6px;
+    -moz-border-radius:6px 0 6px 6px;
+    border-radius:6px 0 6px 6px;
 }
 /* ==========================================================================
    CONTENTBOX
