@@ -46,15 +46,11 @@
 								<!--- Content Bar --->
 								<div class="well well-sm">
 									<div class="form-group form-inline no-margin">
-										#html.label(
-											field="moduleFilter",
-											content="Quick Filter:",
-											class="inline control-label"
-										)#
 										#html.textField(
 											name="moduleFilter",
 											size="30",
-											class="form-control"
+											class="form-control",
+											placeholder="Quick Search"
 										)#
 									</div>
 								</div>

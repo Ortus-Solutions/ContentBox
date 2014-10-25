@@ -42,15 +42,11 @@
 			    </ul>
 		    </div>
 			<div class="form-group form-inline no-margin">
-				#html.label(
-					field="entryFilter",
-					content="Quick Filter:",
-					class="inline control-label"
-				)#
 				#html.textField(
 					name="entryFilter",
 					size="30",
-					class="form-control"
+					class="form-control",
+					placeholder="Quick Search"
 				)#
 			</div>
 		</div>

@@ -57,7 +57,7 @@
 			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
 			<td class="text-center">
 				<!---Info Panel --->
-				<a 	class="btn popovers" 
+				<a 	class="btn btn-sm btn-info popovers" 
 					data-contentID="#entry.getContentID()#"
 					data-toggle="popover"><i class="fa fa-info-circle icon-large"></i></a>
 				<!---Info Panel --->
@@ -81,8 +81,8 @@
 				</div>
 				
 				<!--- Entry Actions --->
-				<div class="btn-group">
-			    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
+				<div class="btn-group btn-group-sm">
+			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
 						<i class="fa fa-cogs icon-large"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
@@ -101,7 +101,7 @@
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_EXPORT")>
 						<!--- Export --->
 						<li class="dropdown-submenu pull-left">
-							<a href="##"><i class="fa fa-download icon-large"></i> Export</a>
+							<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>
 							<ul class="dropdown-menu text-left">
 								<li><a href="#event.buildLink(linkto=prc.xehEntryExport)#/contentID/#entry.getContentID()#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
 								<li><a href="#event.buildLink(linkto=prc.xehEntryExport)#/contentID/#entry.getContentID()#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>

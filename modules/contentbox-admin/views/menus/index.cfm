@@ -43,7 +43,7 @@
                                         </cfif>
                                         <cfif prc.oAuthor.checkPermission("MENUS_ADMIN,TOOLS_EXPORT")>
                                             <li class="dropdown-submenu">
-                                                <a href="##"><i class="icon-download icon-large"></i> Export All</a>
+                                                <a href="javascript:null"><i class="icon-download icon-large"></i> Export All</a>
                                                 <ul class="dropdown-menu text-left">
                                                     <li><a href="#event.buildLink( linkto=prc.xehMenuExportAll )#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
                                                     <li><a href="#event.buildLink( linkto=prc.xehMenuExportAll )#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
