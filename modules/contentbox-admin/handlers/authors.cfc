@@ -132,7 +132,9 @@ component extends="baseHandler"{
 		prc.xehAuthorChangePassword = "#prc.cbAdminEntryPoint#.authors.passwordChange";
 		prc.xehAuthorPermissions 	= "#prc.cbAdminEntryPoint#.authors.permissions";
 		prc.xehUsernameCheck	 	= "#prc.cbAdminEntryPoint#.authors.usernameCheck";
-
+		prc.xehEntriesManager  		= "#prc.cbAdminEntryPoint#.entries.index";
+		prc.xehPagesManager  		= "#prc.cbAdminEntryPoint#.pages.index";
+		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#.contentStore.index";
 		// get new or persisted author
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
 		// get roles
@@ -142,7 +144,7 @@ component extends="baseHandler"{
 		prc.entryViewlet = "";
 		prc.pageViewlet  = "";
 		if( prc.author.isLoaded() ){
-			var args = { authorID=rc.authorID, sorting=false };
+			var args = { authorID=rc.authorID, sorting=false, max=5, pagination=false, latest=true };
 			prc.entryViewlet 		= runEvent( event="contentbox-admin:entries.pager", eventArguments=args );
 			prc.pageViewlet  		= runEvent( event="contentbox-admin:pages.pager", eventArguments=args );
 			prc.contentStoreViewlet	= runEvent( event="contentbox-admin:contentStore.pager", eventArguments=args );
