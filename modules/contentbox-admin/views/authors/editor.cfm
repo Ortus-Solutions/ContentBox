@@ -221,6 +221,7 @@
 									#html.startFieldset(legend="User Entries")#
 										#prc.entryViewlet#
 									#html.endFieldSet()#
+									<a href="#event.buildLink( prc.xehEntriesManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
 								</div>
 							</cfif>
 
@@ -230,6 +231,7 @@
 									#html.startFieldset(legend="User Pages")#
 										#prc.pageViewlet#
 									#html.endFieldSet()#
+									<a href="#event.buildLink( prc.xehPagesManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
 								</div>
 							</cfif>
 							
@@ -239,6 +241,7 @@
 									#html.startFieldset(legend="User Content Store")#
 										#prc.contentStoreViewlet#
 									#html.endFieldSet()#
+									<a href="#event.buildLink( prc.xehContentStoreManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
 								</div>
 							</cfif>
 						</cfif>
