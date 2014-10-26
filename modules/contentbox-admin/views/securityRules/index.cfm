@@ -43,11 +43,10 @@
 				<div class="row">
 					<div class="col-md-7">
 						<div class="form-group form-inline no-margin">
-							#html.label(field="ruleFilter",content="Quick Filter:",class="inline control-label")#
 							#html.textField(
 								name="ruleFilter",
 								class="form-control",
-								placeholder="Quick Search"
+								placeholder="Quick Filter"
 							)#
 						</div>
 					</div>
@@ -83,7 +82,7 @@
 											</cfif>
 											<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
 											<li><a href="#event.buildLink(prc.xehResetRules)#" 
-												data-title="Really Reset All Rules?" class="confirmIt"
+												data-title="<i class='fa fa-refresh'></i> Really Reset All Rules?" class="confirmIt"
 												data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
 												<i class="fa fa-eraser"></i> Reset Rules
 												</a>

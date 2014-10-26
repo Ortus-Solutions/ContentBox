@@ -147,15 +147,11 @@
 											</cfif>
 											<!--- Filter Bar --->
 											<div class="form-group form-inline no-margin">
-												#html.label(
-													field="layoutFilter",
-													content="Quick Filter:",
-													class="inline control-label"
-												)#
 												#html.textField(
 													name="layoutFilter",
 													size="30",
-													class="form-control"
+													class="form-control",
+													placeholder="Quick Filter"
 												)#
 											</div>
 										</div>
@@ -183,7 +179,7 @@
 			    										)#
 			    									</div>
 			    									<div class="loaders" id="uploadBarLoader">
-			    										<i class="icon-spinner icon-spin icon-large"></i>
+			    										<i class="fa fa-spinner fa-spin icon-large"></i>
 			    									</div>
 			                                	</fieldset>
 											#html.endForm()#
@@ -251,7 +247,7 @@
 															<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN")>
 															<!--- Delete Command --->
 															<a href="javascript:remove('#JSStringFormat(prc.layouts.name)#')" 
-															   class="confirmIt btn btn-sm btn-danger" data-title="Delete layout?" data-message="This will permanently remove all layout associated files!"><i class="fa fa-trash-o icon-large"></i></a>
+															   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete layout?" data-message="This will permanently remove all layout associated files!"><i class="fa fa-trash-o icon-large"></i></a>
 															</cfif>
 														</td>
 													</tr>
@@ -270,7 +266,7 @@
 		                <!--- ForgeBox Pane --->
 						<div id="forgeboxPane" class="tab-pane">
 							<div class="text-center">
-								<i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
+								<i class="fa fa-spinner fa-spin icon-large icon-4x"></i><br/>
 								Please wait, connecting to ForgeBox...
 							</div>
 						</div>

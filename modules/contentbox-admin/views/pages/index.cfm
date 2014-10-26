@@ -104,7 +104,7 @@
 				<div class="panel-body">
 					<!--- pages container --->
     				<div id="pagesTableContainer">
-    					<p class="text-center"><i id="pageLoader" class="icon-spinner icon-spin icon-large icon-4x"></i></p>
+    					<p class="text-center"><i id="pageLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i></p>
     				</div>
 				</div>
 			</div>

@@ -3,7 +3,7 @@
 
 	<!--- Loader --->
 	<div class="loaders floatRight" id="versionsPagerLoader">
-		<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+		<i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
 	</div>
 
 	<p>Here are the past versions of your content. You can compare previous versions and even right click on the rows to get a quick peek at the versioned
@@ -72,7 +72,7 @@
 						<cfif prc.oAuthor.checkPermission("VERSIONS_DELETE")>
 						<!--- DELETE VERSION --->
 						<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
-						   data-title="Remove Content Version"
+						   data-title="<i class='fa fa-trash-o'></i> Remove Content Version"
 						   data-message="Do you really want to remove this content version?"><i class="fa fa-trash-o icon-large" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
 						</cfif>
 					</cfif>

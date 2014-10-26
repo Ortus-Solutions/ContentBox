@@ -60,7 +60,7 @@
             </div>
             <!--- Loader --->
             <div class="center loaders" id="importBarLoader">
-                <i class="icon-spinner icon-spin icon-large icon-2x"></i>
+                <i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
                 <br>Please wait, doing some hardcore importing action...
             </div>
         </div>

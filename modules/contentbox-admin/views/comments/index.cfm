@@ -108,19 +108,21 @@
 										<cfelse>
 											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down icon-large"></i></a>
 										</cfif>
-										<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
-											<i class="fa fa-cogs icon-large"></i>
-										</a>
-								    	<ul class="dropdown-menu text-left pull-right">
-								    		<!--- Edit Command --->
-											<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="fa fa-edit icon-large"></i> Edit</a></li>
-											<li><!--- Delete Command --->
-												<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o icon-large"></i> Delete</a>
-											</li>
-											<li>
-												<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye icon-large"></i> View In Site</a>
-											</li>
-								    	</ul>
+										<div class="btn-group">
+											<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+												<i class="fa fa-cogs icon-large"></i>
+											</a>
+									    	<ul class="dropdown-menu text-left pull-right">
+									    		<!--- Edit Command --->
+												<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="fa fa-edit icon-large"></i> Edit</a></li>
+												<li><!--- Delete Command --->
+													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Comment?"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o icon-large"></i> Delete</a>
+												</li>
+												<li>
+													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye icon-large"></i> View In Site</a>
+												</li>
+									    	</ul>
+									    </div>
 									</cfif>
 									<!--- View in Site --->
 									<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>

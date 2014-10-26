@@ -2,7 +2,7 @@
 <div id="pagerComments">
 <!--- Loader --->
 <div class="loaders floatRight" id="commentsPagerLoader">
-	<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+	<i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
 </div>
 <!--- Paging --->
 <cfif prc.commentPager_pagination>

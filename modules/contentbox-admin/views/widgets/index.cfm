@@ -51,7 +51,7 @@
 						<!--- ForgeBox --->
 						<div id="forgeboxPane" class="tab-pane">
 							<div class="text-center">
-								<i class="icon-spinner icon-spin icon-large icon-4x"></i> <br/>
+								<i class="fa fa-spinner fa-spin icon-large icon-4x"></i> <br/>
 								Please wait, connecting to ForgeBox...
 							</div>
 						</div>
@@ -90,7 +90,7 @@
 		
 						<!--- Loader --->
 						<div class="loaders" id="uploadBarLoader">
-							<i class="icon-spinner icon-spin icon-large icon-2x"></i> <br>
+							<i class="fa fa-spinner fa-spin icon-large icon-2x"></i> <br>
 							Uploading & Installing
 						</div>
 					#html.endForm()#

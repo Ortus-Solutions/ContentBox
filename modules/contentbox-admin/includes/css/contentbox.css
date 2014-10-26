@@ -55,8 +55,6 @@ input, textarea, .uneditable-input { width: inherit; }
 }
 /**============================== Page Layout with Sidebar ==============================**/
 .main_column { margin-right: 312px; }
-/**============================== Form Styling ==============================**/
-fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
@@ -67,17 +65,6 @@ fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; marg
 #FileBrowser #fileListing{min-height: 350px !important ;}
 /**============================== DIFF CSS ==============================**/
 .consoleLog{ border:2px solid #eaeaea;padding:5px;font-size:11px;font-family: courier;background-color:black;color:#66E10D}
-/** ============================== ConfirmIt ============================== **/
-#confirmIt {
-	box-shadow:0 0 15px #ccc;
-	-moz-box-shadow:0 0 15px #ccc; 
-	-webkit-box-shadow:0 0 15px #ccc; 
-	border-radius: 6px;
-	-moz-border-radius:6px; 
-	-webkit-border-radius:6px; 
-	max-width: 400px;
-	max-height: 200px;
-}
 /**============================== Utility Classes ==============================**/
 .floatLeft { float:left!important; }
 .floatRight { float:right!important; }

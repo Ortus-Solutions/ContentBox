@@ -45,7 +45,7 @@
 								    		<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 												<li>
 													<a href="javascript:bulkRemove()" class="confirmIt"
-												data-title="Delete Selected Entries?" data-message="This will delete the entries, are you sure?">
+												data-title="<i class='fa fa-trash-o'></i> Delete Selected Entries?" data-message="This will delete the entries, are you sure?">
 														<i class="fa fa-trash-o"></i> Delete selected
 													</a>
 												</li>
@@ -94,7 +94,7 @@
 				<div class="panel-body">
 					<!--- entries container --->
     				<div id="entriesTableContainer">
-    					<p class="text-center"><i id="entryLoader" class="icon-spinner icon-spin icon-large icon-4x"></i></p>
+    					<p class="text-center"><i id="entryLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i></p>
     				</div>
 				</div>
 			</div>

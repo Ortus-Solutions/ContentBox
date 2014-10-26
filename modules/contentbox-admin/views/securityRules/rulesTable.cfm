@@ -37,7 +37,7 @@
 			    	<ul class="dropdown-menu text-left pull-right">
 						<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN")>
 							<!--- Delete Command --->
-							<li><a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="Delete Rule?"><i class="fa fa-trash-o icon-large" id="delete_#rule.getRuleID()#"></i> Delete</a></li>
+							<li><a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Rule?"><i class="fa fa-trash-o icon-large" id="delete_#rule.getRuleID()#"></i> Delete</a></li>
 							<!--- Edit Command --->
 							<li><a href="#event.buildLink(prc.xehEditorRule)#/ruleID/#rule.getRuleID()#" title="Edit Rule"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 							<!--- Export --->

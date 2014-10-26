@@ -45,7 +45,7 @@
 								    		<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
 												<li>
 													<a href="javascript:bulkRemove()" class="confirmIt"
-													data-title="Delete Selected Content?" data-message="This will delete the content, are you sure?">
+													data-title="<i class='fa fa-trash-o'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
 														<i class="fa fa-trash-o"></i> Delete Selected
 													</a>
 												</li>
@@ -101,7 +101,7 @@
 				<div class="panel-body">
 					<!--- entries container --->
     				<div id="contentTableContainer">
-    					<p class="text-center"><i id="entryLoader" class="icon-spinner icon-spin icon-large icon-4x"></i></p>
+    					<p class="text-center"><i id="entryLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i></p>
     				</div>
 				</div>
 			</div>

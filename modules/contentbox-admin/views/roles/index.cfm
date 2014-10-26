@@ -105,33 +105,34 @@
 									<!--- permissions --->
 									<a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" title="Manage Permissions"><i class="fa fa-lock icon-large"></i></a>
 									<!--- Actions --->	
-							    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-										<i class="fa fa-cogs icon-large"></i>
-									</a>
-							    	<ul class="dropdown-menu text-left pull-right">
-										<cfif prc.oAuthor.checkPermission("ROLES_ADMIN,TOOLS_EXPORT")>
-											<!--- Delete Command --->
-											<cfif role.getNumberOfAuthors() eq 0>
-											<li><a href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="Delete Role?"><i class="fa fa-trash-o icon-large" id="delete_#role.getRoleID()#"></i> Delete</a></li>
+									<div class="btn-group">
+								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
+											<i class="fa fa-cogs icon-large"></i>
+										</a>
+								    	<ul class="dropdown-menu text-left pull-right">
+											<cfif prc.oAuthor.checkPermission("ROLES_ADMIN,TOOLS_EXPORT")>
+												<!--- Delete Command --->
+												<cfif role.getNumberOfAuthors() eq 0>
+												<li><a href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Role?"><i class="fa fa-trash-o icon-large" id="delete_#role.getRoleID()#"></i> Delete</a></li>
+												</cfif>
+												<!--- Edit Command --->
+												<li><a href="javascript:edit('#role.getRoleID()#',
+											   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
+											   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="fa fa-edit icon-large"></i> Edit</a></li>
+											
+												<!--- Export --->
+												<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
+												<li class="dropdown-submenu pull-left">
+													<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>
+													<ul class="dropdown-menu text-left">
+														<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
+														<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
+													</ul>
+												</li>
+												</cfif>
 											</cfif>
-											<!--- Edit Command --->
-											<li><a href="javascript:edit('#role.getRoleID()#',
-										   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
-										   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="fa fa-edit icon-large"></i> Edit</a></li>
-										
-											<!--- Export --->
-											<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
-											<li class="dropdown-submenu pull-left">
-												<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>
-												<ul class="dropdown-menu text-left">
-													<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
-													<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
-												</ul>
-											</li>
-											</cfif>
-										</cfif>
-							    	</ul>
-
+								    	</ul>
+							    	</div>
 								</td>
 							</tr>
 							</cfloop>

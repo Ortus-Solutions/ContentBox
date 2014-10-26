@@ -61,7 +61,7 @@ function edit(roleID,role,description){
 }
 function remove(roleID){
 	var $roleForm = $("##roleForm");
-	$("##delete_"+ roleID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+	$("##delete_"+ roleID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 	$roleForm.find("##roleID").val( roleID );
 	$roleForm.submit();
 }

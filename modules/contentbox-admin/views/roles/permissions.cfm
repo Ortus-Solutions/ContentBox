@@ -10,7 +10,7 @@
 		#html.startFieldset( legend="Available Permissions" )#
 			<!--- Loader --->
 			<div class="loaders floatRight" id="permissionLoader">
-				<i class="icon-spinner icon-spin icon-large icon-2x"></i><br/>
+				<i class="fa fa-spinner fa-spin icon-large icon-2x"></i><br/>
 				<div class="text-center"><small>Please Wait...</small></div>
 			</div>
 			

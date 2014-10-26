@@ -139,7 +139,7 @@ function activateQuickLook( $table, quickLookURL ){
 function remove( contentID, id ){
 	id = typeof id !== 'undefined' ? id : 'contentID';
 	if( contentID != null ){
-		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue( id, contentID );		
 	}
 	$contentForm.submit();
@@ -155,7 +155,7 @@ function bulkChangeStatus(status, contentID){
 	$contentForm.find("##contentStatus").val( status );
 	// only submit if something selected
 	if( contentID != null ){
-		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('contentID',contentID);	
 	}
 	$contentForm.submit();
