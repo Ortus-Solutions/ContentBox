@@ -164,6 +164,7 @@
 }
 .dd3-type {
     left: 30px;
+    border: none;
     border-radius: 0px;
     border-left: 0px !important;
     border-right-color:#999;
@@ -173,19 +174,19 @@
     border-right: 1px solid #999;
     color: #555 !important;
 }
-.dd3-expand [class^="icon-"], .dd3-expand [class*=" icon-"],
-.dd3-handle [class^="icon-"], .dd3-handle [class*=" icon-"],
-.dd3-delete [class^="icon-"], .dd3-delete [class*=" icon-"],
-.dd3-type [class^="icon-"], .dd3-type [class*=" icon-"]  {
+.dd3-expand [class^="fa-"], .dd3-expand [class*=" fa-"],
+.dd3-handle [class^="fa-"], .dd3-handle [class*=" fa-"],
+.dd3-delete [class^="fa-"], .dd3-delete [class*=" fa-"],
+.dd3-type [class^="fa-"], .dd3-type [class*=" fa-"]  {
     position: absolute;
-    left: 0;
-    top: 9px;
+    left: 1px;
+    top: 7px;
     width: 0px;
 }
-.dd3-type [class^="icon-"], .dd3-type [class*=" icon-"] {
-    top: 8px;
+.dd3-type [class^="fa-"], .dd3-type [class*=" fa-"] {
+    top: 7px;
     color: #fafafa;
-    left: 1px;
+    left: 0px;
 }
 /*.dd3-handle:before { content: 'f047'; display: block; position: absolute; left: 0; top: 3px; width: 100%; text-align: center; text-indent: 0; color: #fff; font-size: 20px; font-weight: normal; }
 */

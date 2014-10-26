@@ -31,7 +31,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
     public MediaProvider function init() {
         setName( "Media" );
         setType( "Media" );
-        setIconClass( "icon-picture" );
+        setIconClass( "fa fa-picture-o" );
         setEntityName( "cbMediaMenuItem" );
         setDescription( "A menu item to a media item" );
         return this;

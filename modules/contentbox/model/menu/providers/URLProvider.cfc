@@ -30,7 +30,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
     public URLProvider function init() {
         setName( "URL" );
         setType( "URL" );
-        setIconClass( "icon-link" );
+        setIconClass( "fa fa-link" );
         setEntityName( "cbURLMenuItem" );
         setDescription( "A menu item to a URL" );
         return this;
