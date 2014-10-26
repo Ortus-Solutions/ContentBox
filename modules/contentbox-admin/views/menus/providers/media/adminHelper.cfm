@@ -7,8 +7,8 @@
         var win = null;
         $( document ).ready(function() {
             $( '.select-media' ).on( 'click', function() {
-                input = $( this ).siblings( 'input[name^=media]' );
-                hidden= $( this ).siblings( 'input[name^=mediaPath]' );
+                input = $( this ).closest( '.input-group-btn' ).siblings( 'input[name^=media]' );
+                hidden= $( this ).closest( '.input-group-btn' ).siblings( 'input[name^=mediaPath]' );
                 label = $( this ).closest( '.dd3-extracontent' ).find( 'input[name^=label]' );
                 typeIcon = $( this ).closest( '.dd3-item' ).find( '.dd3-type' );
                 var baseURL = '#args.xehMediaSelector#';

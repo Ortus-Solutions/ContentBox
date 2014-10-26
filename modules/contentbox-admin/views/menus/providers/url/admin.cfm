@@ -1,6 +1,6 @@
 <cfoutput>
-    <div class="row-fluid">
-        <span class="span6">
+    <div class="row">
+        <span class="col-md-6">
             #html.textfield(
                 label="URL:",
                 name="url",
@@ -9,13 +9,13 @@
                 maxlength="100",
                 required="required",
                 title="The URL for this menu item",
-                class="textfield input-block-level",
+                class="form-control",
                 wrapper="div class=controls",
                 labelClass="control-label",
-                groupWrapper="div class=control-group"
+                groupWrapper="div class=form-group"
             )#
         </span>
-        <span class="span6">
+        <span class="col-md-6">
             #html.textfield(
                 label="URL Classes:",
                 name="urlClass",
@@ -23,15 +23,15 @@
                 bind=args.menuItem, 
                 maxlength="100",
                 title="Extra CSS classes to add to this menu item",
-                class="textfield input-block-level",
+                class="form-control",
                 wrapper="div class=controls",
                 labelClass="control-label",
-                groupWrapper="div class=control-group"
+                groupWrapper="div class=form-group"
             )#
         </span>
     </div>
-    <div class="row-fluid">
-        <span class="span12">
+    <div class="row">
+        <span class="col-md-12">
             #html.select(
                 options="_blank,_self,_parent,_top", 
                 name="target",
@@ -40,10 +40,10 @@
                 bind=args.menuItem, 
                 required="required",
                 title="Where URL should be opened",
-                class="textfield input-block-level",
+                class="form-control input-sm",
                 wrapper="div class=controls",
                 labelClass="control-label",
-                groupWrapper="div class=control-group"
+                groupWrapper="div class=form-group"
             )#
         </span>
     </div>
