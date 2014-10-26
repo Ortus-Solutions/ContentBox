@@ -256,7 +256,7 @@
                     </div>
                     <!-- footer -->
                     <div class="modal-footer">
-                        <span id="confirmItLoader" class="hide"><i class="icon-spinner icon-spin icon-large icon-2x"></i></span>
+                        <span id="confirmItLoader" class="hide"><i class="fa fa-spinner fa-spin icon-large icon-2x"></i></span>
                         <span id="confirmItButtons">
                             <button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Cancel</button>
                             <button class="btn btn-danger" data-action="confirm"><i class="icon-check"></i>  Confirm </button>

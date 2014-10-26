@@ -2603,3 +2603,4 @@ h3.timeline-title {
    ========================================================================== */
 .loaders { margin:10px; display:none; text-align:center; }
 .tipList li{ padding: 5px 0px 0px 0px; }
+.tab-pane .row.well.well-sm {margin: 0 1px 10px;}

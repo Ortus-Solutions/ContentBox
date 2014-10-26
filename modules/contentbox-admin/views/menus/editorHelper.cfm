@@ -183,7 +183,7 @@
                     processItem( $( this ) );
                 });
                 // get serialized data
-                $( '##submitMenu' ).attr( 'disabled', true ).html( '<i class="icon-spinner icon-spin"></i> Saving...' );
+                $( '##submitMenu' ).attr( 'disabled', true ).html( '<i class="fa fa-spinner fa-spin"></i> Saving...' );
                 $( '##menuItems' ).val( JSON.stringify( nestable.nestable( 'serialize' ) ) );
                 form.submit();
             }

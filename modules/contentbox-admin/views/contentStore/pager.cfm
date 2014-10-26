@@ -2,7 +2,7 @@
 <div id="pagerContent">
 <!--- Loader --->
 <div class="loaders floatRight" id="contentPagerLoader">
-	<i class="icon-spinner icon-spin icon-large"></i>
+	<i class="fa fa-spinner fa-spin icon-large"></i>
 </div>
 
 <!--- content --->

@@ -35,7 +35,7 @@
                                     <ul class="dropdown-menu">
                                         <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
                                             <li>
-                                                <a href="javascript:bulkRemove()" class="confirmIt" data-title="Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="icon-trash"></i> Delete Selected</a>
+                                                <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="icon-trash"></i> Delete Selected</a>
                                             </li>
                                         </cfif>
                                         <cfif prc.oAuthor.checkPermission("MENUS_ADMIN,TOOLS_IMPORT")>
@@ -68,7 +68,7 @@
                     
                     <!--- menu container --->
                     <div id="menuTableContainer">
-                        <p class="text-center"><i id="contentLoader" class="icon-spinner icon-spin icon-large icon-4x"></i></p>
+                        <p class="text-center"><i id="contentLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i></p>
                     </div>                
                     #html.endForm()#
                 </div>  
@@ -107,7 +107,7 @@
                     </div>
                     <!--- Loader --->
                     <div class="center loaders" id="importBarLoader">
-                        <i class="icon-spinner icon-spin icon-large icon-2x"></i>
+                        <i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
                         <br>Please wait, doing some hardcore importing action...
                     </div>
                 </div>

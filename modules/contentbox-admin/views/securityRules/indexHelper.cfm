@@ -67,7 +67,7 @@ function importContent(){
 }
 function remove(recordID){
 	if( recordID != null ){
-		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		$("##ruleID").val( recordID );
 	}
 	//Submit Form

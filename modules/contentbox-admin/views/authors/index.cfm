@@ -60,7 +60,7 @@
 				<div class="panel-body">
 					<!--- container --->
 					<div id="authorTableContainer">
-						<p class="text-center"><i id="userLoader" class="icon-spinner icon-spin icon-large icon-4x"></i>
+						<p class="text-center"><i id="userLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i>
 						</p>
 					</div>
 				</div>

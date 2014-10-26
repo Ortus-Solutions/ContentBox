@@ -102,7 +102,7 @@
 										   	<i class="fa fa-edit icon-large"></i>
 										</a>
 										<!--- Delete Command --->
-										<a class="btn btn-sm btn-danger confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
+										<a class="btn btn-sm btn-danger confirmIt" title="<i class='fa fa-trash-o'></i> Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
 											<i id="delete_#permission.getPermissionID()#" class="fa fa-trash-o icon-large"></i>
 										</a>
 									</cfif>

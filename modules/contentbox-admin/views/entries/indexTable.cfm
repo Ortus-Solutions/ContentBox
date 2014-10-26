@@ -92,7 +92,7 @@
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 						<!--- Delete Command --->
 						<li>
-							<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="Delete Entry?"><i id="delete_#entry.getContentID()#" class="fa fa-trash-o icon-large" ></i> Delete</a>
+							<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Entry?"><i id="delete_#entry.getContentID()#" class="fa fa-trash-o icon-large" ></i> Delete</a>
 						</li>
 						</cfif>
 						<!--- Edit Command --->

@@ -299,7 +299,7 @@
                     
                     <!--- Loader --->
                     <div class="loaders" id="uploadBarLoader">
-                        <i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
+                        <i class="fa fa-spinner fa-spin icon-large icon-4x"></i><br/>
                        <h2> Doing some awesome exporting action, please wait...</h2><br>
                     </div>
                 </div>

@@ -56,7 +56,7 @@
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
                                                 <a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
-                                                    <i class="icon-spinner icon-spin icon-large hidden" id="specialActionsLoader"></i>
+                                                    <i class="fa fa-spinner fa-spin icon-large hidden" id="specialActionsLoader"></i>
                                                     Special Actions
                                                     <span class="caret"></span>
                                                 </a>
@@ -92,7 +92,7 @@
                                 </div>
                                 <!---settings load --->
                                 <div id="settingsTableContainer">
-                                    <i class="icon-spinner icon-spin icon-large icon-2x"></i>
+                                    <i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
                                 </div>
                             #html.endForm()#
 
@@ -151,15 +151,11 @@
                             <div class="row well well-sm">
                                 <div class="col-md-6">
                                     <div class="form-group form-inline no-margin">
-                                        #html.label(
-                                            field="singletonsFilter",
-                                            content="Quick Filter:",
-                                            class="inline control-label"
-                                        )#
                                         #html.textField(
                                             name="singletonsFilter",
                                             size="30",
-                                            class="form-control"
+                                            class="form-control",
+                                            placeholder="Quick Filter"
                                         )#
                                     </div>
                                 </div>
@@ -215,15 +211,11 @@
                             <div class="row well well-sm">
                                 <div class="col-md-6">
                                     <div class="form-group form-inline no-margin">
-                                        #html.label(
-                                            field="eventFilter",
-                                            content="Quick Filter:",
-                                            class="inline control-label"
-                                        )#
                                         #html.textField(
                                             name="eventFilter",
                                             size="30",
-                                            class="form-control"
+                                            class="form-control",
+                                            placeholder="Quick Filter"
                                         )#
                                     </div>
                                 </div>

@@ -30,7 +30,7 @@
 					    	<ul class="dropdown-menu">
 					    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 					    		<li><a href="javascript:bulkRemove()" class="confirmIt"
-										data-title="Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a></li>
+										data-title="<i class='fa fa-trash-o'></i> Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a></li>
 								</cfif>
 								<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 					    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
@@ -190,7 +190,7 @@
 			            </div>
 						<!--- Loader --->
 						<div class="center loaders" id="importBarLoader">
-							<i class="icon-spinner icon-spin icon-large icon-2x"></i>
+							<i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
 							<br>Please wait, doing some hardcore importing action...
 						</div>
 	                </div>

@@ -101,7 +101,7 @@
 													&nbsp;
 													<!--- Delete Module --->
 													<a class="btn btn-sm btn-danger" title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
-														data-title="Delete #module.getName()#?"><i class="fa fa-trash-o icon-large"></i></a>
+														data-title="<i class='fa fa-trash-o'></i> Delete #module.getName()#?"><i class="fa fa-trash-o icon-large"></i></a>
 												</cfif>
 												</div>
 											</cfif>
@@ -117,7 +117,7 @@
 							<!--- ForgeBox --->
 							<div id="forgeboxPane" class="tab-pane">
 								<div class="text-center">
-									<i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
+									<i class="fa fa-spinner fa-spin icon-large icon-4x"></i><br/>
 									Please wait, connecting to ForgeBox...
 								</div>
 							</div>
@@ -166,7 +166,7 @@
 						</div>
 						<!--- Loader --->
 						<div class="loaders" id="uploadBarLoader">
-							<i class="icon-spinner icon-spin icon-large icon-2x"></i> Uploading...
+							<i class="fa fa-spinner fa-spin icon-large icon-2x"></i> Uploading...
 						</div>
 					#html.endForm()#
 			    </div>

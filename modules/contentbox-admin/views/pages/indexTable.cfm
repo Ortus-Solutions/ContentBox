@@ -133,7 +133,7 @@
 							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 							<!--- Delete Command --->
 							<li><a href="javascript:remove('#page.getContentID()#')" class="confirmIt"
-							  data-title="Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="fa fa-trash-o icon-large"></i> Delete</a></li>
+							  data-title="<i class='fa fa-trash-o'></i> Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="fa fa-trash-o icon-large"></i> Delete</a></li>
 							</cfif>
 							<!--- Edit Command --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
