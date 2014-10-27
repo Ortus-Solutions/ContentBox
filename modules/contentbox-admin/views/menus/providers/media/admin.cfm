@@ -4,10 +4,8 @@
             <label for="media" class="control-label">Select Media Item:</label>
             <div class="controls">
                 <div class="input-group">
-                    <span class="input-group-btn">
-                        <button title="" class="btn btn-info select-media">
-                            <i class="fa fa-file"></i>
-                        </button>
+                    <span class="input-group-addon btn-info select-media">
+                       <i class="fa fa-picture-o"></i>
                     </span>
                     <input type="hidden" name="mediaPath" class="textfield" required="true" value="#args.menuItem.getMediaPath()#" />
                     <input type="text" name="media" class="form-control" required="true" title="Select a media item" readonly=true value="#args.menuItem.getMediaPath()#" />

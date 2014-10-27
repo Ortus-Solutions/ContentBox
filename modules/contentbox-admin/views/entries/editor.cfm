@@ -75,10 +75,9 @@
                                     title="The URL permalink for this entry", 
                                     disabled="#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'true' : 'false'#"
                                 )#
-                                <span class="input-group-btn">
-                                    <button title="" class="btn btn-search" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink">
-                                        <i id="togglePermalink" class="fa fa-#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'lock' : 'unlock'#"></i>
-                                </button>
+                                <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink" data-container="body">
+                                    <i id="togglePermalink" class="fa fa-#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'lock' : 'unlock'#"></i>
+                                </a>
                             </div>
                         </div>
                     </div>

@@ -12,8 +12,6 @@ component extends="baseHandler"{
 		var prc = event.getCollection(private=true);
 		// Tab control
 		prc.tabContent = true;
-		prc.cssAppendList = "../spacelab/plugins/dataTables/css/dataTables";
-        prc.jsAppendList  = "../spacelab/plugins/dataTables/js/jquery.dataTables,../spacelab/plugins/dataTables/js/dataTables.bootstrap";
 	}
 	
 	// index

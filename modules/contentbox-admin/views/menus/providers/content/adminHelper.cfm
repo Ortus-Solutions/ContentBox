@@ -6,8 +6,8 @@
         var typeIcon = null;
         $( document ).ready(function() {
             $( '.select-content' ).on( 'click', function() {
-                input = $( this ).closest( '.input-group-btn' ).siblings( 'input[name^=contentTitle]' );
-                hidden= $( this ).closest( '.input-group-btn' ).siblings( 'input[name^=contentSlug]' );
+                input = $( this ).siblings( 'input[name^=contentTitle]' );
+                hidden= $( this ).siblings( 'input[name^=contentSlug]' );
                 label = $( this ).closest( '.dd3-extracontent' ).find( 'input[name^=label]' );
                 typeIcon = $( this ).closest( '.dd3-item' ).find( '.dd3-type' );
                 var baseURL = '#event.buildLink( args.xehContentSelector )#';
