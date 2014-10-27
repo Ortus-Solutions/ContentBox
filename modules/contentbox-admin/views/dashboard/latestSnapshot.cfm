@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- Snapshot Box --->
-<div class="panel panel-default">
+<div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-camera"></i> Data Snapshots</h3>
     </div>

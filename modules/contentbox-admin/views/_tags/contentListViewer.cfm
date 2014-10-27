@@ -47,16 +47,10 @@ function resetFilter( reload ){
 	}
 	// reload filters
 	$("##filterBox").removeClass("selected");
-<<<<<<< .merge_file_4H0s2a
 	$("##fAuthors").val( 'all' );
 	$("##fCategories").val( 'all' );
 	$("##fStatus").val( 'any' );
-=======
-	$("##fAuthors").val( '' );
-	$("##fCategories").val( '' );
-	$("##fStatus").val( '' );
-	$("##fCreators").val( '' );
->>>>>>> .merge_file_M3k2iz
+	$("##fCreators").val( 'all' );
 }
 // Content drill down
 function contentDrilldown(parent){

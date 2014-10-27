@@ -3,8 +3,9 @@
     <div class="col-md-12">
         <h1 class="h1">
             <img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" height="30" style="height: 30px;" />
-            Geek Panel <span class="label label-inverse">Environment: #getSetting('Environment')#</span>
+            Geek Panel
         </h1>
+        <span class="label label-warning">Environment: #getSetting('Environment')#</span>
         <!--- messageBox --->
         #getPlugin("MessageBox").renderit()#
         <!---Import Log --->

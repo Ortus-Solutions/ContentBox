@@ -31,12 +31,14 @@ $(document).ready(function() {
 		dragHandle : ".dragHandle",
 		onDragClass: "selected",
 		onDragStart : function(table,row){
+			var $rowContainer = $( row ).closest( 'tr' );
 			this.movedHash = $( table ).tableDnDSerialize();
 			$( row ).removeClass( "btn-default" )
 				.addClass( "btn-primary" )
 				.css( "cursor", "grab" )
 				.css( "cursor", "-moz-grabbing" )
 				.css( "cursor", "-webkit-grabbing" );
+			$rowContainer.addClass( "dotted" );
 		},
 		onDrop: function( table, row ){
 			var newRulesOrder = $( table ).tableDnDSerialize();
@@ -58,6 +60,7 @@ $(document).ready(function() {
 				.css( "cursor", "pointer" )
 				.removeClass( "btn-primary" )
 				.addClass( "btn-default" );
+			$( row ).removeClass( "dotted" );
 		}
 	});
 	</cfif>
