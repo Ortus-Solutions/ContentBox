@@ -120,6 +120,16 @@
 								</select>
 							</div>
 					    </div>
+					    <!--- Creators --->
+					    <div class="form-group">
+							<label for="fCreators" class="form-control">Creators: </label>
+							<select name="fCreators" id="fCreators" class="form-control input-sm" title="Filter on who created content">
+								<option value="all" selected="selected">All Creators</option>
+								<cfloop array="#prc.authors#" index="author">
+								<option value="#author.getAuthorID()#">#author.getName()#</option>
+								</cfloop>
+							</select>
+						</div>
 						<!--- Categories --->
 						<div class="form-group">
 					        <label for="fCategories" class="control-label">Categories:</label>

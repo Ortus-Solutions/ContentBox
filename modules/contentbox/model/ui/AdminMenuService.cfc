@@ -397,7 +397,7 @@ component accessors="true" threadSafe singleton{
 
 		// Content
 		addTopMenu( name=this.CONTENT, label="<i class='fa fa-pencil'></i> Content" )
-			.addSubMenu( name="Pages", label="Pages", href="#event.buildLink(prc.xehPages)#", permissions="PAGES_ADMIN,PAGES_EDITOR" )
+			.addSubMenu( name="Pages", label="Sitemap", href="#event.buildLink(prc.xehPages)#", permissions="PAGES_ADMIN,PAGES_EDITOR" )
 			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href="#event.buildLink(prc.xehEntries)#", permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
 			.addSubMenu( name="contentStore", label="Content Store", href="#event.buildLink(prc.xehContentStore)#", permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
 			.addSubMenu( name="Categories", label="Categories", href="#event.buildLink(prc.xehCategories)#", permissions="CATEGORIES_ADMIN" )

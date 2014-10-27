@@ -23,10 +23,11 @@ function setupContentView( settings ){
 }
 // Content filters
 function contentFilter(){
-	if ($("##fAuthors").val() != "all" ||
-		$("##fCategories").val() != "all" ||
-		$("##fStatus").val() != "any") {
-		$("##filterBox").addClass("selected");
+	if ( $("##fAuthors").val() != "all" ||
+		 $("##fCreators").val() != "all" ||
+		 $("##fCategories").val() != "all" ||
+		 $("##fStatus").val() != "any") {
+		 $("##filterBox").addClass("selected");
 	}
 	else{
 		$("##filterBox").removeClass("selected");
@@ -34,7 +35,8 @@ function contentFilter(){
 	contentLoad( {
 		fAuthors : $("##fAuthors").val(),
 		fCategories : $("##fCategories").val(),
-		fStatus : $("##fStatus").val()
+		fStatus : $("##fStatus").val(),
+		fCreators : $("##fCreators").val()
 	} );
 }
 // reset filters
@@ -45,9 +47,16 @@ function resetFilter( reload ){
 	}
 	// reload filters
 	$("##filterBox").removeClass("selected");
+<<<<<<< .merge_file_4H0s2a
 	$("##fAuthors").val( 'all' );
 	$("##fCategories").val( 'all' );
 	$("##fStatus").val( 'any' );
+=======
+	$("##fAuthors").val( '' );
+	$("##fCategories").val( '' );
+	$("##fStatus").val( '' );
+	$("##fCreators").val( '' );
+>>>>>>> .merge_file_M3k2iz
 }
 // Content drill down
 function contentDrilldown(parent){
@@ -74,7 +83,8 @@ function contentPaginate(page){
 		parent: getParentContentID(),
 		fAuthors : $("##fAuthors").val(),
 		fCategories : $("##fCategories").val(),
-		fStatus : $("##fStatus").val()
+		fStatus : $("##fStatus").val(),
+		fCreators : $("##fCreators").val()
 	} );
 }
 // Content load
@@ -86,6 +96,7 @@ function contentLoad(criteria){
 	if( !("page" in criteria) ){ criteria.page = 1; }
 	if( !("parent" in criteria) ){ criteria.parent = ""; }
 	if( !("fAuthors" in criteria) ){ criteria.fAuthors = "all"; }
+	if( !("fCreators" in criteria) ){ criteria.fCreators = "all"; }
 	if( !("fCategories" in criteria) ){ criteria.fCategories = "all"; }
 	if( !("fStatus" in criteria) ){ criteria.fStatus = "any"; }
 	if( !("showAll" in criteria) ){ criteria.showAll = false; }
@@ -97,7 +108,8 @@ function contentLoad(criteria){
 		fAuthors : criteria.fAuthors,
 		fCategories : criteria.fCategories,
 		fStatus : criteria.fStatus,
-		showAll : criteria.showAll 
+		showAll : criteria.showAll,
+		fCreators : criteria.fCreators,
 	};
 	// Add dynamic search key name
 	args[ $searchName ] = criteria.search;

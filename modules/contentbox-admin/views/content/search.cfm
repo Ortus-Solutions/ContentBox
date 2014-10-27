@@ -4,7 +4,11 @@
 <h2><i class="icon-tasks"></i> Content ( #prc.minContentCount# of #prc.results.count# )<h2>
 <ul>
 <cfloop array="#prc.results.content#" index="thisContent">
-	<li><a title="#thisContent.getSlug()#" href="#linkEditContent( thisContent )#">#thisContent.getTitle()#</a> (#thisContent.getContentType()#)</li>
+	<cfif thisContent.getContentType() eq "contentStore">
+		<li><a title="#thisContent.getSlug()#" href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#">#thisContent.getTitle()#</a> (#thisContent.getContentType()#)</li>
+	<cfelse>
+		<li><a title="#thisContent.getSlug()#" href="#prc.cb.linkContent( thisContent )#">#thisContent.getTitle()#</a> (#thisContent.getContentType()#)</li>
+	</cfif>
 </cfloop>
 <cfif !arrayLen( prc.results.content )>
 	<li><em>No Results</em></li>

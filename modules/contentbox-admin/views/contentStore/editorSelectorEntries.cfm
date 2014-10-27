@@ -10,7 +10,8 @@
 	</thead>
 	<tbody>
 		<cfloop array="#prc.content#" index="entry">
-		<tr id="contentID-#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="warning"</cfif>>
+		<tr id="contentID-#entry.getContentID()#" <cfif NOT entry.getIsPublished()>class="warning"</cfif>
+			ondblclick="return insertContentStore('#entry.getSlug()#')">
 			<td>
 				<!--- Title --->
 				<strong>#entry.getTitle()#</strong><br>

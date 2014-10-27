@@ -50,12 +50,16 @@
                     <div class="form-group">
                     	<div class="col-md-12">
 							<label class="checkbox">
-								#html.checkBox(
-									name="rememberMe", 
-									value=true, 
-									checked=( len( prc.rememberMe ) )
-								)#
-								#cb.r( "rememberme@security" )#
+								#cb.r( "rememberme@security" )#<br>
+                                #html.select(
+                                    name="rememberMe",
+                                    class="input-sm",
+                                    options=html.option( value="0", content=cb.r( "rememberme.session@security" ) ) &
+                                            html.option( value="1", content=cb.r( "rememberme.day@security" ) ) &
+                                            html.option( value="7", content=cb.r( "rememberme.week@security" ) ) &
+                                            html.option( value="30", content=cb.r( "rememberme.month@security" ) ) &
+                                            html.option( value="365", content=cb.r( "rememberme.year@security" ) )
+                                )#
 							</label>
 						</div>		
 					</div>

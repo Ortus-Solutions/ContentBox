@@ -8,8 +8,10 @@
     </description>
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.version"	value="2.0.0"/>
- 	<property name="contentbox.slug"	value="contentbox"/>
+ 	<property name="groupID"					value="ortussolutions" />
+ 	<property name="contentbox.version"			value="2.1.0"/>
+ 	<property name="contentbox.stableversion" 	value="2.0.0" />
+ 	<property name="contentbox.slug"			value="contentbox"/>
 	
  	<!-- Build Labels -->
 	<tstamp prefix="start"/>
@@ -21,7 +23,9 @@
 	</path>
 	<!-- Define Tasks -->
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
-
+ 	<!-- Import Box-Repo Tasks -->
+	<import><url url="https://raw.githubusercontent.com/Ortus-Solutions/box-tasks/master/box-repo.xml"/></import>
+ 	
 	<!-- Init -->
 	<target name="init" description="Init build" unless="src.isInit">
 		<!-- Default environment check, if not passed via -Denvironment -->
@@ -55,24 +59,32 @@
 		<!-- Cleanup + Init -->
 		<delete dir="${dir.build}" />
 		<delete verbose="true" failonerror="false">
-			<fileset dir="${dir.exports}" />
+			<fileset dir="${dir.contentbox.exports}" />
 		</delete>
 		<mkdir dir="${dir.build}"/>		
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
-		<!-- If stg, change perms and owners -->
-		<if>
-			<equals arg1="${environment}" arg2="auto" />
-			<then>
-				<chmod file="${dir.build}/**" perm="o+wrs" type="both" verbose="true" />
-				<chown owner="stg-ortus" verbose="true">
-					<fileset dir="${dir.build}" />
-				</chown>
-			</then>
-		</if>
+		<!-- Permissions -->
+		<antcall target="update.permissions" />
 		<!-- Get Build Dependencies -->
  		<antcall target="getDependencies" />
 		<!-- Mark as init -->
 		<property name="src.isInit" value="true" />
+	</target>
+
+	<!-- update permissions on reports -->
+	<target name="update.permissions" description="Update staging server permissions">
+		<!-- Integration permissions -->
+		<if>
+			<equals arg1="${environment}" arg2="auto" />
+			<then>
+				<chmod file="${dir.build}/**" perm="go+wrs" type="both" verbose="true" />
+				<chown owner="stg-ortus" verbose="true">
+					<fileset dir="${dir.build}" />
+				</chown>
+			</then>
+			<else>
+			</else>
+		</if>
 	</target>
 	
  	<!-- Build source distro -->
@@ -80,7 +92,7 @@
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
 		<!-- Copy Source -->	
-      	<copy todir="${dir.build}">
+      	<copy todir="${dir.build}" encoding="UTF-8">
       		<fileset dir=".">
       			<exclude name=".idea/**" />
       			<exclude name="_paidModules**" />
@@ -96,7 +108,7 @@
       		</fileset>
         </copy>
 		<!-- Replace Build Numbers -->
-		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true">
+		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 		  <fileset dir="${dir.build}/modules/">
 		  	<include name="**/ModuleConfig.cfc" />
 		  </fileset>
@@ -109,12 +121,13 @@
 		<replace file="${dir.build}/Application.cfc" 
 				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
 				 summary="true" 
-				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
+				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 encoding="UTF-8"/>
 		
 		<!-- Zip Source Release -->
-		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.zip" basedir="${dir.build}" />
+		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" basedir="${dir.build}" />
 		<!-- Build Checksum -->
-		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
 		
 		<!-- Refactor indexes from Source For Express Edition: only use if derby else leave as is
 		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
@@ -124,19 +137,24 @@
 		</replaceregexp>
 		-->
 		
+		<!-- copy box.json -->
+		<copy file="${dir.build}/box.json" toFile="${dir.contentbox.exports}/box.json" overwrite="true"  encoding="UTF-8"/>
+		
 		<!-- Mark as Built -->
 		<property name="src.isBuilt" value="true" />
 	</target>
  	
  	<!-- Build API Docs -->
  	<target name="build.apidocs" description="Builds the api docs" depends="init">
+ 		<mkdir dir="${dir.api}"/>
+ 		<antcall target="update.permissions" />
  		<!-- Execute DocBox -->
 		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}&amp;path=${dir.api}" verbose="true"/>
 		<delete file="${dir.build}/colddoc.html" />
 		<!-- Zip API Docs -->
-		<zip destfile="${dir.exports}/contentbox_apidocs_${contentbox.version}.zip" basedir="${dir.api}"></zip>
+		<zip destfile="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
  		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_apidocs_${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
  	</target>
  	
  	<!-- Build war -->
@@ -144,15 +162,19 @@
  		<!-- Unzip Railo War -->
  		<unzip dest="${dir.build}" src="${dir.dependencies}/railo-${railo.version}.war" overwrite="true"/>
  		<!-- Replace web.xml -->
- 		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/WEB-INF" overwrite="true"/>
+ 		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
  		<!-- Copy Tuckey -->
- 		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true"/>
- 		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/WEB-INF/lib" overwrite="true"/>
+ 		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
+ 		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/WEB-INF/lib" overwrite="true" encoding="UTF-8"/>
  		
-		<!-- Create War Release -->
-		<zip destfile="${dir.exports}/contentbox_${contentbox.version}.war" basedir="${dir.build}"></zip>
+		<!-- Create War -->
+		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}" />
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip">
+			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" /> 			
+ 		</zip>
+ 		<delete file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />
  		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_${contentbox.version}.war" />
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  		<!-- Cleanup INF like a ninja -->
  		<delete dir="${dir.build}/WEB-INF" />
  	</target>
@@ -172,52 +194,74 @@
  		<mkdir dir="${dir.build}/express/webapps/ROOT" />
  		
  		<!-- unzip ContentBox war into it -->
- 		<unzip src="${dir.exports}/contentbox_${contentbox.version}.war" dest="${dir.build}/express/webapps/ROOT" overwrite="true" />
+ 		<unzip src="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" dest="${dir.build}/war" overwrite="true" />
+ 		<unzip src="${dir.build}/war/contentbox-${contentbox.version}.war" dest="${dir.build}/express/webapps/ROOT" overwrite="true" />
  		<!-- Remove DSN creator link For Express Edition -->
 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
 				 value="" 
 				 summary="true" 
-				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' />
+				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 encoding="UTF-8"/>
 		<!-- Remove DSN Creator Module for Express Edition -->
 		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
  		<!-- Create embedded datasource in Application.cfc -->
  		<loadfile property="express.appdsn" srcFile="${dir.resources}/express-dsn.txt" />
  		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
- 						 value="${express.appdsn}" 
- 						 summary="true" 
- 						 token='this.datasource = "contentbox";' />
+ 				 value="${express.appdsn}" 
+ 				 summary="true" 
+ 				 token='this.datasource = "contentbox";' 
+ 				 encoding="UTF-8"/>
  				
  		<!-- Custom Server Config -->
- 		<copy todir="${dir.build}/express" overwrite="true">
+ 		<copy todir="${dir.build}/express" overwrite="true" encoding="UTF-8">
  			<fileset dir="${dir.resources}/express" />
  		</copy>
  		<!-- add execution perms -->
  		<chmod dir="${dir.build}/express/bin" perm="ugo+rx" includes="*"/>
  		<!-- Zip server up -->
- 		<zip destfile="${dir.exports}/contentbox_express_${contentbox.version}.zip" basedir="${dir.build}/express"></zip>
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express"></zip>
  		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.exports}/contentbox_express_${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" />
  		<!-- cleanup -->
  		<delete dir="${dir.build}/express" />
  	</target>
  	
 	<!-- Build all releases-->
 	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.patch">
-		<!-- Perms for automated builds
-		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" /> -->
-		<!-- Move BE to Artifacts if on staging -->
-		<if>
-			<equals arg1="${be.name}" arg2="" />
-			<then></then>
-			<else>
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip" 	 		 tofile="${be.exports}/${be.name}.zip" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.zip.md5" 		 tofile="${be.exports}/${be.name}.zip.md5" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.war" 	 		 tofile="${be.exports}/${be.name}.war" />
-				<copy file="${dir.exports}/contentbox_${contentbox.version}.war.md5" 		 tofile="${be.exports}/${be.name}.war.md5" />
-				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip" 	 tofile="${be.exports}/${be.name}-express.zip" />
-				<copy file="${dir.exports}/contentbox_express_${contentbox.version}.zip.md5" tofile="${be.exports}/${be.name}-express.zip.md5" />
-			</else>
-		</if>
+		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 	 		 
+			  tofile="${be.exports}/contentbox-be.zip" 
+			  overwrite="true" 
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip.md5" 		 
+			  tofile="${be.exports}/contentbox-be.zip.md5" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" 	 	 
+			  tofile="${be.exports}/contentbox-war-be.zip" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip.md5" 	 
+			  tofile="${be.exports}/contentbox-war-be.zip.md5" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" 	 
+			  tofile="${be.exports}/contentbox-express-be.zip" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip.md5" 
+			  tofile="${be.exports}/contentbox-express-be.zip.md5" 
+			  overwrite="true"
+			  encoding="UTF-8"/>
+		
+		<!-- Create Box Repo From macrodef -->
+		<box-repo location="${be.exports}" 
+				  artifactID="${contentbox.slug}" 
+				  groupID="${groupID}"
+				  buildID="${build.number}"
+				  latest="${contentbox.version}"
+				  stableVersion="${contentbox.stableversion}"
+				  classifiers="express,war,apidocs,path,patch-db,patch-nocoldbox"/>
+		
 		<!-- Cleanup -->
 		<delete dir="${dir.build}" />
     </target>
@@ -231,39 +275,24 @@
     </target>
  	
  	<!-- Get Dependencies -->
-	<target name="getDependencies" description="Get all the necessary dependencies for the build process">
-		<mkdir dir="${dir.dependencies}" />
-		<!-- do a check -->
-		<if>
-	        <available file="${dir.dependencies}/railo-${railo.version}.war" />
-	        <then><echo>Railo ${railo.version} dependency found!</echo></then>
-	        <else>
-	            <echo>Railo ${railo.version} not found, getting artifact from ${ortus.repoURL}</echo>
-				<get src="${ortus.repoURL}/railo/${railo.version}/railo-${railo.version}.war" 
-					 dest="${dir.dependencies}"
-					 verbose="true" />
-	        </else>
-	    </if>
-		<if>
-	        <available file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" />
-	        <then><echo>Tuckey ${tuckey.version} dependency found!</echo></then>
-	        <else>
-	            <echo>Tuckey ${tucky.version} not found, getting artifact from ${ortus.repoURL}</echo>
-				<get src="${ortus.repoURL}/tuckey/${tuckey.version}/urlrewritefilter-${tuckey.version}.jar" 
-					 dest="${dir.dependencies}"
-					 verbose="true" />
-	        </else>
-	    </if>
-		<if>
-	        <available file="${dir.dependencies}/apache-tomcat-${express.server.version}.zip" />
-	        <then><echo>Apache Tomcat ${express.server.version} dependency found!</echo></then>
-	        <else>
-	            <echo>Apache Tomcat ${express.server.version} not found, getting artifact from ${ortus.repoURL}</echo>
-				<get src="${ortus.repoURL}/apache/tomcat/${express.server.version}/apache-tomcat-${express.server.version}.zip" 
-					 dest="${dir.dependencies}"
-					 verbose="true" />
-	        </else>
-	    </if>
+	<target name="getDependencies" description="Get all the necessary dependencies for the build process using: box.repo.url">
+		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="railo" 
+ 						artifactID="railo" 
+ 						version="${railo.version}"
+ 						extension="war"
+ 						destination="${dir.dependencies}"/>
+ 		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="tuckey" 
+ 						artifactID="urlrewritefilter" 
+ 						version="${tuckey.version}"
+ 						extension="jar"
+ 						destination="${dir.dependencies}"/>
+ 		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="apache" 
+ 						artifactID="apache-tomcat" 
+ 						version="${express.server.version}"
+ 						destination="${dir.dependencies}"/>
 	</target>
 	
 </project>

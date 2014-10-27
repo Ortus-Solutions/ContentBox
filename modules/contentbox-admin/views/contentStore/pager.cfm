@@ -56,6 +56,8 @@
 			    		<cfif prc.oAuthor.checkPermission("CONTENTSOTE_EDITOR,CONTENTSTORE_ADMIN")>
 						<!--- Edit Command --->
 						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
+						<!--- Create Child --->
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fa fa-sitemap icon-large"></i> Create Child</a></li>
 						</cfif>
 						<!--- History Command --->
 						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fa fa-clock-o icon-large"></i> History</a></li>
