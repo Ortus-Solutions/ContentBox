@@ -27,7 +27,7 @@
 			    #prc.cbroot#/includes/css/bootstrap-modal.css,
 			    #prc.cbroot#/includes/css/bootstrap-datepicker.css,
           #prc.cbroot#/includes/css/bootstrap-fileupload.css,
-			    #prc.cbroot#/includes/css/font-awesome.min.css",			    
+			    #prc.cbroot#/includes/css/font-awesome.min.css",
 			   location="#prc.cbroot#/includes/cache")#
 
 	<!--- loop around the cssAppendList, to add page specific css --->
@@ -77,33 +77,33 @@
 		<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
 		    <div class="navbar-inner">
 		    	<div class="container">
-		    		
+
 					<!--- Responsive --->
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					
+
 					<!--- Logo --->
 					<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
-					
+
 					<!--- Brand, future multi-site switcher --->
 					<a class="brand" data-keybinding="ctrl+shift+d" title="ctrl+shift+D" href="#event.buildLink( prc.xehDashboard )#">
 						#prc.cbSettings.cb_site_name#
 					</a>
-					
+
 					<!--- cbadmin event --->
 					#announceInterception("cbadmin_onTagline")#
-			    	
+
 					<!--- Main Menu bar --->
 					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<!--- Spacer --->
 							<li class="divider-vertical"></li>
-							
+
 							<!--- View Site --->
 							<li title="Open Site" data-placement="left"><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home icon-large"></i></a></li>
-							
+
 							<!--- New Quick Links --->
 					    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
 					    	<li class="dropdown" title="Create New..." data-placement="left">
@@ -120,6 +120,13 @@
 										<li>
 											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
 												<i class="icon-quote-left"></i> New Entry
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+										<li>
+											<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
+												<i class="icon-hdd"></i> New Content Store
 											</a>
 										</li>
 									</cfif>
@@ -147,12 +154,12 @@
 								</ul>
 							</li>
 							</cfif>
-							
+
 							<!---Quick Post --->
 							<cfif prc.oAuthor.checkPermission( "ENTRIES_EDITOR" ) AND !prc.cbSettings.cb_site_disable_blog>
 								<li title="Quick Post (ctrl+shift+Q)" data-placement="left"><a href="javascript:showQuickPost()" data-keybinding="ctrl+shift+Q"><i class="icon-edit icon-large"></i></a></li>
 							</cfif>
-							
+
 							<!---Admin Actions --->
 							<cfif prc.oAuthor.checkPermission( "RELOAD_MODULES" )>
 							<li class="dropdown" title="Admin Actions" data-placement="left">
@@ -165,10 +172,10 @@
 								</ul>
 							</li>
 							</cfif>
-							
+
 							<!---Divider --->
 							<li class="divider-vertical"></li>
-							
+
 							<!---Search --->
 							<cfif prc.oAuthor.checkPermission("GLOBAL_SEARCH")>
 							<span class="navbar-search pull-left" id="div-search" title="ctrl+shift+s" data-placement="right"/>
@@ -179,11 +186,11 @@
 								<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
 							</span>
 							</cfif>
-							
+
 							<!--- cbadmin event --->
 							#announceInterception("cbadmin_onTopBar")#
 				    	</ul>
-						
+
 						<!--- Right NavBar --->
 						<ul class="nav pull-right" id="nav-header-menu">
 							<li class="divider-vertical"></li>
@@ -194,14 +201,14 @@
 				</div> <!---end container --->
 		    </div> <!--- end navbar-inner --->
 	    </div> <!---end navbar --->
-			
+
 		<!---Admin Notifier --->
 		<span id="adminActionNotifier" class="alert hide"></span>
 		<!--- Main Generated Menu --->
 		#prc.adminMenuService.generateMenu()#
-			
+
 		<!---Container --->
-		<div id="main-container" class="container-fluid clearfix">					
+		<div id="main-container" class="container-fluid clearfix">
 			<!--- cbadmin event --->
 			#announceInterception("cbadmin_beforeContent")#
 			<!--- Main Content --->
@@ -220,14 +227,14 @@
 	<!--- ============================ confirm it modal dialog ============================ --->
 	<div id="confirmIt" class="modal hide fade">
 		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>	
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			<h3 id="confirmItTitle">Are you sure?</h3>
 		</div>
-		
+
 		<div class="modal-body">
 			<p id="confirmItMessage">Are you sure you want to perform this action?</p>
 		</div>
-		
+
 		<div class="modal-footer">
 			<p class="text-center">
 				<span id="confirmItLoader" class="hide"><i class="icon-spinner icon-spin icon-large icon-2x"></i></span>
@@ -251,7 +258,7 @@
 
 	<!--- ============================ QuickPost ============================ --->
 	#runEvent(event="contentbox-admin:entries.quickPost",prePostExempt=true)#
-	
+
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeBodyEnd")#
 </body>

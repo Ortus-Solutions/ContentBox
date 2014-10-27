@@ -13,7 +13,8 @@
 		<tr id="contentID-#page.getContentID()#" <cfif NOT page.getIsPublished()>class="alert"</cfif>>
 			<td>
 				<!--- Title --->
-				<strong>#page.getSlug()#</strong>
+				<strong>#page.getTitle()#</strong><br>
+				<span class="label label-success">#page.getSlug()#</span>
 			</td>
 			<td class="text-center">
 				<cfif page.getIsPublished()>

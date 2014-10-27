@@ -61,6 +61,10 @@
 					<cfif page.isPasswordProtected()>
 						<i class="fa fa-lock"></i>
 					</cfif>
+					<!--- ssl protected --->
+					<cfif page.getSSLOnly()>
+						<i class="fa fa-shield" title="SSL Enabled"></i>
+					</cfif>
 				</td>
 				<td class="text-center">
 					<cfif page.getShowInMenu()>
@@ -154,6 +158,8 @@
 							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye icon-large"></i> Open In Site</a></li>
 				    	</ul>
 				    </div>	
+				    <!--- Drag Handle --->
+					<a href="javascript:null" class="dragHandle btn btn-default" title="Click and drag to change menu order"><i class="icon-move"></i></a>
 				</td>
 			</tr>
 		</cfloop>

@@ -30,7 +30,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Admin";
-	this.version			= "2.0.0.@build.number@";
+	this.version			= "2.1.0+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
@@ -61,6 +61,7 @@ component {
 			{pattern="/pages/parent/:parent?",handler="pages"},
 			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
 			{pattern="/comments/page/:page",handler="comments"},
+			{pattern="/contentStore/parent/:parent?",handler="contentStore"},
 			{pattern="/contentStore/page/:page",handler="contentStore"},
 			{pattern="/menus/page/:page",handler="menus"},
 			{pattern="/mediamanager/library/:library", handler="mediamanager", action="index"},
@@ -87,7 +88,7 @@ component {
 				"cbadmin_pageEditorSidebar", "cbadmin_pageEditorSidebarAccordion", "cbadmin_pageEditorSidebarFooter",
 				"cbadmin_pageEditorFooter", "cbadmin_pageEditorInBody",
 				// Author Events
-				"cbadmin_preAuthorSave","cbadmin_postAuthorSave","cbadmin_onAuthorPasswordChange","cbadmin_preAuthorRemove","cbadmin_postAuthorRemove", 
+				"cbadmin_preAuthorSave","cbadmin_postAuthorSave","cbadmin_onAuthorPasswordChange","cbadmin_preAuthorRemove","cbadmin_postAuthorRemove",
 				"cbadmin_preAuthorPreferencesSave" , "cbadmin_postAuthorPreferencesSave", "cbadmin_UserPreferencePanel",
 				"cbadmin_onAuthorEditorNav", "cbadmin_onAuthorEditorContent", "cbadmin_onAuthorEditorSidebar", "cbadmin_onAuthorEditorActions",
 				// Category Events
@@ -100,7 +101,7 @@ component {
 				// Roles events
 				"cbadmin_preRoleSave", "cbadmin_postRoleSave", "cbadmin_preRoleRemove" , "cbadmin_postRoleRemove" ,
 				// Dashboard events
-				"cbadmin_onDashboard", "cbadmin_preDashboardContent", "cbadmin_postDashboardContent", "cbadmin_preDashboardSideBar", "cbadmin_postDashboardSideBar", 
+				"cbadmin_onDashboard", "cbadmin_preDashboardContent", "cbadmin_postDashboardContent", "cbadmin_preDashboardSideBar", "cbadmin_postDashboardSideBar",
 				"cbadmin_onDashboardTabNav", "cbadmin_preDashboardTabContent", "cbadmin_postDashboardTabContent",
 				// Security events
 				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout","cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder", "cbadmin_onPasswordReset", "cbadmin_onInvalidPasswordReset",
@@ -114,6 +115,8 @@ component {
 				"cbadmin_onLayoutActivation", "cbadmin_onLayoutDeactivation",
 				// Version Control
 				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback",
+				// Version Screens
+				"cbadmin_onVersionIndex", "cbadmin_onVersionDiff",
 				// Menu events
 				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove"
 			])
@@ -127,9 +130,9 @@ component {
 			{ class="#moduleMapping#.interceptors.Subscription" },
 			{ class="#moduleMapping#.interceptors.MenuCleanup" }
 		];
-		
+
 	}
-	
+
 	/*
 	* On Module Load
 	*/

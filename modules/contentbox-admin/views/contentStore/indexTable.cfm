@@ -1,4 +1,15 @@
 <cfoutput>
+<!--- Location Bar --->
+<cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
+<div class="breadcrumb">
+  <a href="javascript:contentDrilldown()"><i class="fa fa-home icon-large"></i></a>
+  #getMyPlugin( plugin="PageBreadcrumbVisitor", module="contentbox-admin" ).visit( prc.oParent )#
+</div>
+</cfif>
+
+<!--- Hidden Elements --->
+#html.hiddenField( name="parent", value=event.getValue( "parent", "") )#
+
 <!--- content --->
 <table name="content" id="content" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	<thead>
@@ -10,10 +21,14 @@
 			<th width="100" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
-	
+
 	<tbody>
 		<cfloop array="#prc.content#" index="content">
-		<tr data-contentID="#content.getContentID()#" 
+		<tr id="contentID-#content.getContentID()#"
+			data-contentID="#content.getContentID()#"
+			<!--- double click drill down --->
+			<cfif content.getNumberOfChildren()>ondblclick="contentDrilldown( '#content.getContentID()#' )"</cfif>
+			<!---Status bits --->
 			<cfif content.isExpired()>
 				class="expired"
 			<cfelseif content.isPublishedInFuture()>
@@ -26,6 +41,13 @@
 				<input type="checkbox" name="contentID" id="contentID" value="#content.getContentID()#" />
 			</td>
 			<td>
+				<!--- Children Dig Deeper --->
+				<cfif content.getNumberOfChildren()>
+					<a href="javascript:contentDrilldown( '#content.getContentID()#' )" class="hand-cursor" title="View Children (#content.getNumberOfChildren()#)"><i class="icon-plus-sign icon-large text"></i></a>
+				<cfelse>
+					<i class="fa fa-circle-blank icon-large"></i>
+				</cfif>
+				<!--- Title --->
 				<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 					<a href="#event.buildLink(prc.xehContentStoreEditor)#/contentID/#content.getContentID()#" title="Edit content">#content.getTitle()#</a>
 				<cfelse>
@@ -70,7 +92,6 @@
 					Last edit by <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on 
 					#content.getActiveContent().getDisplayCreatedDate()#
 				</div>
-				
 				<!--- content Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
@@ -80,6 +101,8 @@
 			    		<cfif prc.oAuthor.checkPermission("CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN")>
 						<!--- Clone Command --->
 						<li><a href="javascript:openCloneDialog('#content.getContentID()#','#URLEncodedFormat(content.getTitle())#')"><i class="fa fa-copy icon-large"></i> Clone</a></li>
+						<!--- Create Child --->
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fa fa-sitemap icon-large"></i> Create Child</a></li>
 						<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
 						<!--- Delete Command --->
 						<li>
@@ -103,7 +126,7 @@
 						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fa fa-clock-o icon-large"></i> History</a></li>
 			    	</ul>
 			    </div>
-				
+
 			</td>
 		</tr>
 		</cfloop>
