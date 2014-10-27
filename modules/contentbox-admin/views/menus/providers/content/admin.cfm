@@ -4,10 +4,8 @@
             <label for="contentTitle" class="control-label">Select Content Item:</label>
             <div class="controls">
                 <div class="input-group">
-                    <span class="input-group-btn">
-                        <button title="" class="btn btn-info select-content">
-                            <i class="fa fa-file"></i>
-                        </button>
+                    <span class="input-group-addon btn-info select-content">
+                       <i class="fa fa-file"></i>
                     </span>
                     <input type="hidden" name="contentSlug" class="textfield" required="true" value="#args.slug#" />
                     <input type="text" name="contentTitle" class="form-control" required="true" title="Select a content item" readonly=true value="#args.title#" />

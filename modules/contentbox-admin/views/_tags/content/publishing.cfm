@@ -15,20 +15,26 @@
         #html.hiddenField(
             name="isPublished",value=true)#
         <!--- publish date --->
-        <div class="form-group form-inline">
+        <div class="form-group">
             #html.label(
                 class="control-label",
                 field="publishedDate",
                 content="Publish Date (<a href='javascript:publishNow()'>Now</a>)"
             )#
-            <div class="controls">
-                #html.inputField(
-                    size="9", name="publishedDate",
-                    value=args.content.getPublishedDateForEditor(), 
-                    class="form-control datepicker"
-                )#
-                @
-                #html.inputField(
+            <div class="controls row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        #html.inputField(
+                            size="9", name="publishedDate",
+                            value=args.content.getPublishedDateForEditor(), 
+                            class="form-control datepicker"
+                        )#
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <!---#html.inputField(
                     type="number",
                     name="publishedHour",
                     value=prc.ckHelper.ckHour( args.content.getPublishedDateForEditor(showTime=true) ),
@@ -49,20 +55,43 @@
                     max="60", 
                     title="Minute",
                     class="form-control editorTime"
-                )#
+                )#--->
+                <cfscript>
+                    theTime = "";
+                    hour = prc.ckHelper.ckHour( args.content.getPublishedDateForEditor(showTime=true) );
+                    minute = prc.ckHelper.ckMinute( args.content.getPublishedDateForEditor(showTime=true) );
+                    if( len( hour ) && len( minute ) ) {
+                        theTime = hour & ":" & minute;
+                    }
+                </cfscript>
+                <div class="col-md-6">
+                    <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                        <input type="text" class="form-control inline" value="#theTime#" name="publishedTime">
+                        <span class="input-group-addon">
+                            <span class="fa fa-clock-o"></span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
         <!--- expire date --->
-        <div class="form-group form-inline">
-            #html.label(class="control-label",field="expireDate",content="")#
-            <div class="controls">
-                #html.inputField(
-                    size="9", 
-                    name="expireDate",
-                    value=args.content.getExpireDateForEditor(), 
-                    class="form-control datepicker"
-                )#
-                @
+        <div class="form-group">
+            #html.label(class="control-label",field="expireDate",content="Expiration Date")#
+            <div class="controls row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        #html.inputField(
+                            size="9", 
+                            name="expireDate",
+                            value=args.content.getExpireDateForEditor(), 
+                            class="form-control datepicker"
+                        )#
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <!---
                 #html.inputField(
                     type="number",
                     name="expireHour",
@@ -85,6 +114,23 @@
                     title="Minute",
                     class="form-control editorTime"
                 )#
+                --->
+                <cfscript>
+                    theTime = "";
+                    hour = prc.ckHelper.ckHour( args.content.getExpireDateForEditor(showTime=true) );
+                    minute = prc.ckHelper.ckMinute( args.content.getExpireDateForEditor(showTime=true) );
+                    if( len( hour ) && len( minute ) ) {
+                        theTime = hour & ":" & minute;
+                    }
+                </cfscript>
+                <div class="col-md-6">
+                    <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
+                        <input type="text" class="form-control inline" value="#theTime#" name="expireTime">
+                        <span class="input-group-addon">
+                            <span class="fa fa-clock-o"></span>
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>  
         <!--- Changelog --->

@@ -197,6 +197,8 @@ component extends="baseContentHandler"{
 
 		// Turn Tab On
 		prc.tabContent_pages = true;
+		prc.cssAppendList = "../spacelab/plugins/clockpicker/clockpicker";
+        prc.jsAppendList  = "../spacelab/plugins/clockpicker/clockpicker";
 
 		// view
 		event.setView("pages/editor");
@@ -214,6 +216,10 @@ component extends="baseContentHandler"{
 		event.paramValue( "publishedDate", now() );
 		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH") );
 		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm") );
+		event.paramValue( "publishedTime", event.getValue( "publishedHour") & ":" & event.getValue( "publishedMinute" ) );
+		event.paramValue( "expireHour", "" );
+		event.paramValue( "expireMinute", "" );
+		event.paramValue( "expireTime", "" );
 		event.paramValue( "customFieldsCount", 0 );
 		event.paramValue( "relatedContentIDs", [] );
 
@@ -229,8 +235,8 @@ component extends="baseContentHandler"{
 		var page 			= pageService.get( rc.contentID );
 		var originalSlug 	= page.getSlug();
 		populateModel( page )
-			.addPublishedtime( rc.publishedHour, rc.publishedMinute )
-			.addExpiredTime( rc.expireHour, rc.expireMinute );
+			.addJoinedPublishedtime( rc.publishedTime )
+			.addJoinedExpiredTime( rc.expireTime );
 		var isNew = ( NOT page.isLoaded() );
 
 		// Validate Page And Incoming Data

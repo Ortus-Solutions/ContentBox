@@ -67,10 +67,9 @@
                                     title="The unique slug for this content, this is how they are retreived",
                                     disabled="#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
                                 )#
-                                <span class="input-group-btn">
-                                    <button title="" class="btn btn-search" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
-                                        <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i></button>
-                                </span>
+                                <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink" data-container="body">
+                                        <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
+                                </a>
                             </div>
                         </div>
                     </div>      

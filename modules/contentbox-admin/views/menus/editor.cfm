@@ -105,10 +105,9 @@
                                     title="The unique slug for this menu", 
                                     disabled="#prc.menu.isLoaded() ? 'true' : 'false'#"
                                 )#
-                                <span class="input-group-btn">
-                                    <button title="" class="btn add-on" href="javascript:void(0)" onclick="toggleSlug(); return false;" data-original-title="Lock/Unlock Menu Slug">
-                                        <i id="toggleSlug" class="fa fa-#prc.menu.isLoaded() ? 'lock' : 'unlock'#"></i>
-                                </button>
+                                <a title="" class="input-group-addon" href="javascript:void(0)" onclick="toggleSlug(); return false;" data-original-title="Lock/Unlock Menu Slug" data-container="body">
+                                    <i id="toggleSlug" class="fa fa-#prc.menu.isLoaded() ? 'lock' : 'unlock'#"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
