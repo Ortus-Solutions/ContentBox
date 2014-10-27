@@ -335,7 +335,7 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
 /* Sidebar */
 .sidebar {
   width: 240px;
-  height: 100%;
+  /*height: 100%;*/
   background: #293949;
   position: absolute;
   -webkit-transition: all 0.3s ease-in-out;
@@ -2658,4 +2658,7 @@ h3.timeline-title {
 .tab-pane .row.well.well-sm {margin: 0 1px 10px;}
 a.btn.btn-danger:link, a.btn.btn-danger:visited {
   color:white !important;
+}
+tr.dotted {
+  border: dotted 2px #c1c1c1;
 }

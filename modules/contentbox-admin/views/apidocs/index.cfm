@@ -45,20 +45,4 @@
 		</div>
     </div>
 </div>
-<div class="row-fluid">
-
-	<!--- main sidebar --->
-	<div class="span3" id="main-sidebar">
-		<div class="small_box">
-			<div class="header">
-				<i class="icon-cogs"></i> Actions
-			</div>
-			<div class="body">
-			
-				
-				
-			</div>
-		</div>	
-	</div>
-</div>
 </cfoutput>
