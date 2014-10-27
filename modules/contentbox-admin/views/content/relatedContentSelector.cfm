@@ -18,7 +18,7 @@
     </div>
 
     <!--- Render tables out --->
-    <div id="contentContainer">
+    <div id="contentContainer" class="tab-wrapper tab-top tab-primary">
         <ul class="nav nav-tabs" id="contentTypes">
             <!---loop over content types--->
             <cfset types = listToArray( rc.contentType )>

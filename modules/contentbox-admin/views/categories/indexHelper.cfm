@@ -65,7 +65,7 @@ function removeCategory(categoryID){
 	$categoryForm.submit();
 }
 function createCategory(){
-	openModal( $("##categoryEditorContainer"), 500, 200 );
+	openModal( $("##categoryEditorContainer"), 500, 250 );
 	$categoryEditor.find("##categoryID").val( '' );
 	$categoryEditor.find("##category").val( '' );
 	$categoryEditor.find("##slug").val( '' );

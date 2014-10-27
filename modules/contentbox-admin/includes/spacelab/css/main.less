@@ -136,6 +136,7 @@ img {
 }
 .footer-content {
   padding:20px 0 0 20px;
+  color:white;
 }
 .user-nav ul li {
     display: inline-block;
@@ -640,26 +641,83 @@ li.dropdown ul.dropdown-menu.alert > li h1 {
 .input-group {
     margin-bottom: 15px;
 }
-.control-group.error input, .control-group.error select, .control-group.error textarea {
-    border-color: #b94a48;
-    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+.form-group.error input,
+.form-group.error select,
+.form-group.error textarea {
+  border-color: #b94a48;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
-.control-group.error .checkbox, .control-group.error .radio, .control-group.error input, .control-group.error select, .control-group.error textarea {
-    color: #b94a48;
+
+.form-group.error input:focus,
+.form-group.error select:focus,
+.form-group.error textarea:focus {
+  border-color: #953b39;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+}
+
+.form-group.error .input-prepend .add-on,
+.form-group.error .input-append .add-on {
+  color: #b94a48;
+  background-color: #f2dede;
+  border-color: #b94a48;
+}
+
+.form-group.success .control-label,
+.form-group.success .help-block,
+.form-group.success .help-inline {
+  color: #468847;
+}
+
+.form-group.success .checkbox,
+.form-group.success .radio,
+.form-group.success input,
+.form-group.success select,
+.form-group.success textarea {
+  color: #468847;
+}
+
+.form-group.success input,
+.form-group.success select,
+.form-group.success textarea {
+  border-color: #468847;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.form-group.success input:focus,
+.form-group.success select:focus,
+.form-group.success textarea:focus {
+  border-color: #356635;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;
+}
+
+.form-group.success .input-prepend .add-on,
+.form-group.success .input-append .add-on {
+  color: #468847;
+  background-color: #dff0d8;
+  border-color: #468847;
 }
 label.error {
     color:#fff;
     background:#b94a48;
     border:solid thin #fff;
     padding:3px 5px;
+    font-size: 11px;
+    margin-bottom:0px !important;
 }
 label.valid {
     color:#fff;
     background:#5CB85C;
     border:solid thin #fff;
     padding:3px 5px;
+    display:none;
 }
 .icheck div, .icheck .disabled {
     float:left;
@@ -2226,4 +2284,10 @@ h3.timeline-title {
 }
 .tipList li { 
     padding: 5px 0px 0px 0px; 
+}
+.tab-pane .row.well.well-sm {
+    margin: 0 1px 10px;
+}
+a.btn.btn-danger:link, a.btn.btn-danger:visited {
+    color:white !important;
 }

@@ -15,7 +15,7 @@ $(document).ready(function() {
     });
 
     // reset modal content when hidden
-	$remoteModal.on( 'hidden', function() {
+	$remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
         modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin icon-large icon-4x"></i></div>' );
     })
@@ -51,15 +51,20 @@ $(document).ready(function() {
                 .text( 'Field is valid' )
                 .addClass('valid')
                 .closest('.form-group').removeClass('error').addClass('success');
+            element.remove();
         },
         errorPlacement: function(error, element) {
             error.appendTo( element.parent("div.controls") );
         }
     })	
     $.fn.resetValidations = function() {
+        var form = this[ 0 ].currentForm;
         // also remove success and error classes
-        this.find( '.form-group' ).each(function() {
+        $( form ).find( '.form-group' ).each(function() {
             $( this ).removeClass( 'error' ).removeClass( 'success' );
+        });
+        $( form ).find( ':input' ).each(function() {
+            $( this ).removeClass( 'error' ).removeClass( 'valid' );
         });
         return this;
     }
@@ -339,7 +344,7 @@ function openModal(div, w, h){
         height: h
     });
     // attach a listener to clear form when modal closes
-    $( div ).on( 'hidden', function() {
+    $( div ).on( 'hidden.bs.modal', function() {
         if( !$( this ).hasClass( 'in' ) ) {
             var frm = $( this ).find( 'form' );
             if( frm.length ) {
