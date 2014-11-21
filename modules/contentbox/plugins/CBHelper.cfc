@@ -1262,14 +1262,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/**
 	* Retrieve i18n resources
 	* @resource.hint The resource (key) to retrieve from a loaded bundle or pass a @bundle
-	* @default.hint A default value to send back if the resource (key) not found
+	* @defaultValue.hint A default value to send back if the resource (key) not found
 	* @locale.hint Pass in which locale to take the resource from. By default it uses the user's current set locale
 	* @values.hint An array, struct or simple string of value replacements to use on the resource string
 	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
 	*/
 	any function r( 
 		required string resource,
-		string default,
+		string defaultValue,
 		string locale,
 		any values,
 		string bundle
@@ -1279,6 +1279,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			arguments.bundle 	= listLast( arguments.resource, "@" );
 			arguments.resource 	= listFirst( arguments.resource, "@" );
 		}
+		// Stupid CF9 Hack.
+		if( structKeyExists( arguments, "defaultValue" ) ){ arguments.default = arguments.defaultValue; }
 		return getResource( argumentCollection=arguments );
 	}
 
