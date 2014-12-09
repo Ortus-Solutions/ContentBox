@@ -159,7 +159,7 @@ component implements="ISecurityService" singleton{
 		// get mail payload
 		var bodyTokens = {
 			name=arguments.author.getName(),
-			linkToken = CBHelper.linkAdmin( "security.verifyReset" ) & "?token=#token#"
+			linkToken = CBHelper.linkAdmin( event="security.verifyReset", ssl=settings.cb_admin_ssl ) & "?token=#token#"
 		};
 		var mail = mailservice.newMail(to=arguments.author.getEmail(),
 									   from=settings.cb_site_outgoingEmail,
@@ -171,8 +171,9 @@ component implements="ISecurityService" singleton{
 									   password=settings.cb_site_mail_password,
 									   port=settings.cb_site_mail_smtp,
 									   useTLS=settings.cb_site_mail_tls,
-									   useSSL=settings.cb_site_mail_ssl,
-									   body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification"));
+									   useSSL=settings.cb_site_mail_ssl);
+		//body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification")									   
+		mail.setBody( renderer.get().renderLayout( view="/contentbox/email_templates/password_verification", layout="email", module="contentbox-admin" ) );
 		// send it out
 		mailService.send( mail );
 		
@@ -211,7 +212,7 @@ component implements="ISecurityService" singleton{
 		var bodyTokens = {
 			genPassword=genPassword,
 			name=results.author.getName(),
-			linkLogin = CBHelper.linkAdminLogin()
+			linkLogin = CBHelper.linkAdminLogin( ssl=settings.cb_admin_ssl )
 		};
 		var mail = mailservice.newMail(to=results.author.getEmail(),
 									   from=settings.cb_site_outgoingEmail,
@@ -223,8 +224,9 @@ component implements="ISecurityService" singleton{
 									   password=settings.cb_site_mail_password,
 									   port=settings.cb_site_mail_smtp,
 									   useTLS=settings.cb_site_mail_tls,
-									   useSSL=settings.cb_site_mail_ssl,
-									   body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder"));
+									   useSSL=settings.cb_site_mail_ssl);
+		//,body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder")
+		mail.setBody( renderer.get().renderLayout( view="/contentbox/email_templates/password_reminder", layout="email", module="contentbox-admin" ) );
 		// send it out
 		mailService.send( mail );
 		

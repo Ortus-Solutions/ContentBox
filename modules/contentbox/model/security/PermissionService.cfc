@@ -44,14 +44,18 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// We do SQL deletions as those relationships are not bi-directional
 		// delete role relationships
 		var q = new Query(sql="delete from cb_rolePermissions where FK_permissionID = :permissionID");
-		q.addParam(name="permissionID",value=arguments.permissionID,cfsqltype="numeric");
+		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric");
 		q.execute();
 		// delete user relationships
 		var q = new Query(sql="delete from cb_authorPermissions where FK_permissionID = :permissionID");
-		q.addParam(name="permissionID",value=arguments.permissionID,cfsqltype="numeric");
+		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric");
 		q.execute();
 		// delete permission now
-		return deleteById( arguments.permissionID );
+		var q = new Query(sql="delete from cb_permission where permissionID = :permissionID");
+		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric");
+		q.execute();
+		
+		return true;
 	}
 	
 	/**
@@ -82,7 +86,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 	
 	/**
-	* Import data from an array of structures of customHTML or just one structure of CustomHTML 
+	* Import data from an array of structures of permissions or just one structure of permissions 
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
 		var allPermissions = [];

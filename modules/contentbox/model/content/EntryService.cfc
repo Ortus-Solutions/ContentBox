@@ -24,6 +24,9 @@ limitations under the License.
 */
 component extends="ContentService" singleton{
 
+	// Inject generic content service
+	property name="contentService" inject="id:ContentService@cb";
+
 	/**
 	* Constructor
 	*/
@@ -37,21 +40,16 @@ component extends="ContentService" singleton{
 	/**
 	* Save an entry
 	*/
-	function saveEntry(entry, boolean transactional=true){
-		var c = newCriteria();
-
-		// Prepare for slug uniqueness
-		c.eq("slug", arguments.entry.getSlug() );
-		if( arguments.entry.isLoaded() ){ c.ne("contentID", arguments.entry.getContentID() ); }
+	function saveEntry( required any entry, boolean transactional=true ){
 
 		// Verify uniqueness of slug
-		if( c.count() GT 0){
+		if( !contentService.isSlugUnique( slug=arguments.entry.getSlug(), contentID=arguments.entry.getContentID() ) ){
 			// make slug unique
-			arguments.entry.setSlug( arguments.entry.getSlug() & "-#left(hash(now()),5)#");
+			arguments.entry.setSlug( getUniqueSlugHash( arguments.entry.getSlug() ) );
 		}
 
 		// save entry
-		save(entity=arguments.entry, transactional=arguments.transactional);
+		save( entity=arguments.entry, transactional=arguments.transactional );
 	}
 
 	/**
@@ -167,36 +165,54 @@ component extends="ContentService" singleton{
 		return results;
 	}
 
-	// Entry listing for UI
-	function findPublishedEntries(max=0,offset=0,category="",searchTerm="",asQuery=false){
+	/**
+	* Find published entries in ContentBox that have no passwords
+	* @max.hint The max number of pages to return, defaults to 0=all
+	* @offset.hint The pagination offset
+	* @searchTerm.hint Pass a search term to narrow down results
+	* @category.hint Pass a list of categories to narrow down results
+	* @asQuery.hint Return results as array of objects or query, default is array of objects
+	* @sortOrder.hint The sort order string, defaults to publisedDate DESC
+	*/
+	function findPublishedEntries(
+		numeric max=0,
+		numeric offset=0,
+		string searchTerm="",
+		string category="",
+		boolean asQuery=false,
+		string sortOrder="publishedDate DESC"
+	){
 		var results = {};
 		var c = newCriteria();
 
-		// only published entries
-		c.isTrue("isPublished")
-			.isLt("publishedDate", now() )
-			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
-			// only non-password protected ones
-			.isEq("passwordProtection","");
+		// only published pages
+		c.isTrue( "isPublished" )
+			.isLT( "publishedDate", Now() )
+			.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
+			// only non-password pages
+			.isEq( "passwordProtection", "" );
 
 		// Category Filter
-		if( len(arguments.category) ){
+		if( len( arguments.category ) ){
 			// create association with categories by slug.
-			c.createAlias("categories","cats").isIn("cats.slug", listToArray( arguments.category ) );
+			c.createAlias( "categories", "cats" ).isIn( "cats.slug", listToArray( arguments.category ) );
 		}
 
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac");
-			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
+			c.createAlias( "activeContent", "ac" );
+			c.or( c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
+				  c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" ) );
 		}
 
 		// run criteria query and projections count
 		results.count 	= c.count("contentID");
 		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(offset=arguments.offset,max=arguments.max,sortOrder="publishedDate DESC",asQuery=arguments.asQuery);
+							.list( offset=arguments.offset,
+								   max=arguments.max,
+								   sortOrder=arguments.sortOrder,
+								   asQuery=arguments.asQuery );
 
 		return results;
 	}

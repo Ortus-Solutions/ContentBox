@@ -9,16 +9,20 @@
 			<div class="header">
 				<i class="icon-edit icon-large"></i>
 				Entry Editor
+				<!--- Quick Actions  --->
 				<div class="btn-group pull-right" style="margin-top:5px">
 				    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;"><i class="icon-reply"></i> Back</button>
-				    <cfif prc.entry.isLoaded()>
-					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
-				    	<span class="caret"></span>
+					<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
+			    	<span class="icon-cog"></span>
 				    </button>
-				   		<ul class="dropdown-menu">
-				    			<li><li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li></li>
-				   		 </ul>
-					</cfif>
+			   		<ul class="dropdown-menu">
+						<li><a href="javascript:quickPublish( false )"><i class="icon-globe"></i> Publish</a></li>
+						<li><a href="javascript:quickPublish( true )"><i class="icon-eraser"></i> Publish as Draft</a></li>
+						<li><a href="javascript:quickSave()"><i class="icon-save"></i> Quick Save</a></li>
+						<cfif prc.entry.isLoaded()>
+			    		<li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li>
+						</cfif>
+			   		</ul>
 			    </div>
 			</div>
 			<!--- Body --->
@@ -33,39 +37,58 @@
 				#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 	
 				<!--- title --->
-				#html.textfield(label="Title:",name="title",bind=prc.entry,maxlength="100",required="required",title="The title for this entry",class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+				#html.textfield(label="Title:",name="title",bind=prc.entry,maxlength="100",required="required",title="The title for this entry",
+								class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+				
 				<!--- slug --->
-                <div class="control-group">
-                    <label for="slug" class="control-label">Permalink:
-                        <i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
-    					<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
-    				</label>
-                    <div class="controls">
-                        <div id='slugCheckErrors'></div>
-						#html.textfield(name="slug",bind=prc.entry,maxlength="100",class="textfield width98",title="The URL permalink for this entry")#
-                    </div>
-                </div>			
+				<div class="control-group">
+	                <label for="slug" class="control-label">Permalink:
+	                    <i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
+						<small> #prc.CBHelper.linkEntryWithSlug('')#</small>
+					</label>
+					<div class="controls">
+	                	<div id='slugCheckErrors'></div>
+						<div class="input-append" style="display:inline">
+		                	#html.textfield(name="slug", bind=prc.entry, maxlength="100", class="textfield width94", 
+											title="The URL permalink for this entry", disabled="#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'true' : 'false'#")#
+							<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink">
+								<i id="togglePermalink" class="icon-#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'lock' : 'unlock'#"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+
 				<!---ContentToolBar --->
 				<div id="contentToolBar">
 					
 					<!--- editor selector --->
-					<label for="contentEditorChanger" class="inline">Editor: </label>
 					<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
-					#html.select(name="contentEditorChanger", 
-								 options=prc.editors,
-								 column="name",
-								 class="input-medium",
-								 nameColumn="displayName",
-								 selectedValue=prc.defaultEditor,
-								 onchange="switchEditor(this.value)")#
+					<div class="btn-group">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+							Editor
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<cfloop array="#prc.editors#" index="thisEditor">
+								<li><a href="javascript:switchEditor( '#thisEditor.name#' )">#thisEditor.displayName#</li>
+							</cfloop>
+						</ul>
+					</div>
 					</cfif>
 					<!--- markup --->
-					<label for="markup" class="inline">Markup: </label>
-					#html.select(name="markup", 
-								 class="input-medium",
-								 options=prc.markups,
-								 selectedValue=( prc.entry.isLoaded() ? prc.entry.getMarkup() : prc.defaultMarkup ))#
-					
+					#html.hiddenField(name="markup", value=prc.entry.isLoaded() ? prc.entry.getMarkup() : prc.defaultMarkup)#
+					<div class="btn-group">
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+							Markup : <span id="markupLabel">#prc.entry.isLoaded() ? prc.entry.getMarkup() : prc.defaultMarkup#</span>
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<cfloop array="#prc.markups#" index="thismarkup">
+								<li><a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</li>
+							</cfloop>
+						</ul>
+					</div>
+
 					<!---Right References Panel --->
 					<div class="floatRight">
 						<a href="javascript:previewContent()" class="btn" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
@@ -167,11 +190,9 @@
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-						&nbsp;<input type="submit" class="btn" value="Save" data-keybinding="ctrl+s" onclick="return quickSave()">
+						&nbsp;<input type="button" class="btn" value="Save" data-keybinding="ctrl+s" onclick="quickSave()">
 						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
-						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
-						</cfif>
 						</div>
 					</div>
 	
@@ -184,7 +205,7 @@
 				#html.endFieldSet()#
 	
 				<!--- Accordion --->
-				<div id="accordion" class="accordion">
+				<div id="accordion" class="accordion" data-stateful="entry-sidebar">
 				    
                     <!---Begin Page Info--->
 					<cfif prc.entry.isLoaded()>	
@@ -252,7 +273,47 @@
                   	</div>
                     </cfif>
                     <!---End Entry Info--->
-						
+					
+                    <!---Begin Related Content--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+                                <i class="icon-sitemap icon-large"></i> Related Content                                
+                            </a>
+
+                        </div>
+                        <div id="relatedcontent" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <cfset rcArgs = { relatedContent=prc.relatedContent }>
+                                #renderView( view="_tags/relatedContent", args=rcArgs )#
+                            </div>
+                        </div>
+                    </div>
+                    <cfelse>
+                        #html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
+                    </cfif>
+                    <!---End Related Content--->
+
+                    <!---Begin Linked Content--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_LINKED_CONTENT")>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
+                                <i class="icon-link icon-large"></i> Linked Content                                
+                            </a>
+
+                        </div>
+                        <div id="linkedcontent" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <cfset rcArgs = { linkedContent=prc.linkedContent, contentType=prc.entry.getContentType() }>
+                                #renderView( view="_tags/linkedContent", args=rcArgs )#
+                            </div>
+                        </div>
+                    </div>
+                    </cfif>
+                    <!---End Linked Content--->
+
 					<!---Begin Modifiers--->
 					<cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
                     <div class="accordion-group">

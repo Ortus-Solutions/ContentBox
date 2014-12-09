@@ -12,23 +12,16 @@ component accessors="true"{
 	/**
 	* Execute on content translations for pages and blog entries
 	*/
-	void function cb_onContentRendering(event,struct interceptData){
-		translateContent(builder=arguments.interceptData.builder,content=arguments.interceptData.content);
+	void function cb_onContentRendering(event, struct interceptData){
+		translateContent(builder=arguments.interceptData.builder, content=arguments.interceptData.content);
 	}
-	
-	/**
-	* Execute on content translations for custom HTML
-	*/
-	void function cb_onCustomHTMLRendering(event,struct interceptData){
-		translateContent(builder=arguments.interceptData.builder,customHTML=arguments.interceptData.customHTML);
-	}	
 
 	private function determineSlug(required tagString){
 		var slug = reReplaceNoCase(arguments.tagString,"(page|entry|pagessl|entryssl)\:\[","");
 		return reReplaceNoCase(slug,"\]$","");
 	}
 
-	private function translateContent(required builder, content, customHTML){
+	private function translateContent(required builder, content){
 		// our mustaches pattern
 		var regex 		= "(page|pagessl|entry|entryssl|root)\:\[[^\]]*]";
 		// match contentbox links in our incoming builder and build our targets array and len

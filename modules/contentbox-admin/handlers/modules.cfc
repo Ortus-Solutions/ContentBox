@@ -7,10 +7,10 @@ component extends="baseHandler"{
 	property name="moduleService"	inject="id:moduleService@cb";
 	property name="cb" 				inject="cbHelper@cb";
 
+	this.prehandler_except = "execute";
+
 	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+	function preHandler(event,action,eventArguments,rc,prc){
 		// Tab control
 		prc.tabModules = true;
 	}
@@ -55,8 +55,13 @@ component extends="baseHandler"{
 		if( !isNull( results ) ){ return results; }
 		// stash the module view, so it renders in the admin layout
 		prc.viewModule = module.getName();
-		// else normal ColdBox Rendering
-		return controller.getPlugin("Renderer").renderLayout();
+
+		// Check for renderData
+		if( structIsEmpty( event.getRenderData() ) ){
+			// else normal ColdBox Rendering
+			return controller.getPlugin("Renderer").renderLayout();
+		}
+
 	}
 
 	// index

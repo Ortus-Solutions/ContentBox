@@ -22,18 +22,19 @@
 	<link href="#prc.cbroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
 	<!--- StyleSheets --->
 	#cb.minify(assets="#prc.cbroot#/includes/css/bootstrap.css,
-			    #prc.cbroot#/includes/css/contentbox.css,
+				#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() & ',' : '')#
 			    #prc.cbroot#/includes/css/bootstrap-responsive.css,
 			    #prc.cbroot#/includes/css/bootstrap-modal.css,
 			    #prc.cbroot#/includes/css/bootstrap-datepicker.css,
+          #prc.cbroot#/includes/css/bootstrap-fileupload.css,
 			    #prc.cbroot#/includes/css/font-awesome.min.css",			    
 			   location="#prc.cbroot#/includes/cache")#
 
 	<!--- loop around the cssAppendList, to add page specific css --->
-	<cfloop list="#event.getValue("cssAppendList","")#" index="css">
+	<cfloop list="#event.getValue( "cssAppendList", "", true )#" index="css">
 		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
 	</cfloop>
-	<cfloop list="#event.getValue("cssFullAppendList","")#" index="css">
+	<cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
 		<cfset addAsset("#css#.css")>
 	</cfloop>
 	<!--- JS --->
@@ -46,26 +47,29 @@
 			    #prc.cbroot#/includes/js/bootstrap-modalmanager.js,
 			    #prc.cbroot#/includes/js/bootstrap-modal.js,
 			    #prc.cbroot#/includes/js/bootstrap-datepicker.js,
+          #prc.cbroot#/includes/js/bootstrap-fileupload.js,
 			    #prc.cbroot#/includes/js/jwerty.js,
 			    #prc.cbroot#/includes/js/jquery.validate.js,
 			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
+			    #prc.cbroot#/includes/js/jquery.cookie.js,
+			    #( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#
 			    #prc.cbroot#/includes/js/contentbox.js",
 			   location="#prc.cbroot#/includes/cache")#
 	<!--- CKEditor Separate --->
 	<script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
 	<script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
-	<cfloop list="#event.getValue("jsAppendList", "")#" index="js">
+	<cfloop list="#event.getValue( "jsAppendList", "", true )#" index="js">
 		<cfset addAsset("#prc.cbroot#/includes/js/#js#.js")>
 	</cfloop>
-	<cfloop list="#event.getValue("jsFullAppendList", "")#" index="js">
+	<cfloop list="#event.getValue( "jsFullAppendList", "", true )#" index="js">
 		<cfset addAsset("#js#.js")>
 	</cfloop>
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_beforeHeadEnd")#
 </head>
 <!--============================Body============================-->
-<body>
+<body data-showsidebar="#lcase( yesNoFormat( prc.oAuthor.getPreference( "sidebarState", true ) ) )#">
 	<!--- cbadmin Event --->
 	#announceInterception("cbadmin_afterBodyStart")#
 	<div id="wrapper">
@@ -76,7 +80,6 @@
 		    		
 					<!--- Responsive --->
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
@@ -102,47 +105,56 @@
 							<li title="Open Site" data-placement="left"><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home icon-large"></i></a></li>
 							
 							<!--- New Quick Links --->
-						    	<li class="dropdown" title="Create New..." data-placement="left">
-						    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
-									<ul class="dropdown-menu">
-										<cfif prc.oAuthor.checkPermission("PAGES_ADMIN") OR prc.oAuthor.checkPermission("PAGES_EDITOR")>
-											<li>
-												<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
-													<i class="icon-file-alt"></i> New Page
-												</a>
-											</li>
-										</cfif>
-										<cfif !prc.cbSettings.cb_site_disable_blog AND ( prc.oAuthor.checkPermission("ENTRIES_ADMIN") OR prc.oAuthor.checkPermission("ENTRIES_EDITOR") )>
-											<li>
-												<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
-													<i class="icon-quote-left"></i> New Entry
-												</a>
-											</li>
-										</cfif>
-										<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-											<li>
-												<a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
-													<i class="icon-user"></i> New User
-												</a>
-											</li>
-										</cfif>
-										<cfif prc.oAuthor.checkPermission("MEDIAMANAGER_ADMIN")>
-											<li>
-												<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
-													<i class="icon-th"></i> New Media
-												</a>
-											</li>
-										</cfif>
-									</ul>
-								</li>
+					    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
+					    	<li class="dropdown" title="Create New..." data-placement="left">
+					    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
+								<ul class="dropdown-menu">
+									<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+										<li>
+											<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
+												<i class="icon-file-alt"></i> New Page
+											</a>
+										</li>
+									</cfif>
+									<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+										<li>
+											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
+												<i class="icon-quote-left"></i> New Entry
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+										<li>
+											<a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
+												<i class="icon-user"></i> New User
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
+										<li>
+											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
+												<i class="icon-th"></i> New Media
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
+										<li>
+											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+U">
+												<i class="icon-list"></i> New Menu
+											</a>
+										</li>
+									</cfif>
+								</ul>
+							</li>
+							</cfif>
 							
 							<!---Quick Post --->
-							<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") AND !prc.cbSettings.cb_site_disable_blog>
+							<cfif prc.oAuthor.checkPermission( "ENTRIES_EDITOR" ) AND !prc.cbSettings.cb_site_disable_blog>
 								<li title="Quick Post (ctrl+shift+Q)" data-placement="left"><a href="javascript:showQuickPost()" data-keybinding="ctrl+shift+Q"><i class="icon-edit icon-large"></i></a></li>
 							</cfif>
 							
 							<!---Admin Actions --->
-							<cfif prc.oAuthor.checkPermission("RELOAD_MODULES")>
+							<cfif prc.oAuthor.checkPermission( "RELOAD_MODULES" )>
 							<li class="dropdown" title="Admin Actions" data-placement="left">
 								<!---Loader Status --->
 								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cogs icon-large"></i></a>
@@ -158,6 +170,7 @@
 							<li class="divider-vertical"></li>
 							
 							<!---Search --->
+							<cfif prc.oAuthor.checkPermission("GLOBAL_SEARCH")>
 							<span class="navbar-search pull-left" id="div-search" title="ctrl+shift+s" data-placement="right"/>
 								<!---Search Results --->
 								<span id="div-search-results"></span>
@@ -165,40 +178,17 @@
 								<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
 								<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
 							</span>
+							</cfif>
 							
 							<!--- cbadmin event --->
 							#announceInterception("cbadmin_onTopBar")#
 				    	</ul>
 						
 						<!--- Right NavBar --->
-						<ul class="nav pull-right">
+						<ul class="nav pull-right" id="nav-header-menu">
 							<li class="divider-vertical"></li>
-							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-info-sign"></i> About <b class="icon-caret-down"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-ambulance"></i> Professional Support</a></li>
-									<li><a href="http://www.gocontentbox.org" target="_blank"><i class="icon-cloud"></i> ContentBox.org</a></li>
-									<li><a href="http://www.gocontentbox.org/services/support" target="_blank"><i class="icon-book"></i> Documentation</a></li>
-									<li><a href="https://groups.google.com/forum/?fromgroups##!forum/contentbox" target="_blank"><i class="icon-envelope"></i> Support Forums</a></li>
-									<li class="divider"></li>
-									<li><a href="https://www.twitter.com/gocontentbox" target="_blank"><i class="icon-twitter"></i> Twitter</a></li>
-									<li><a href="https://www.facebook.com/gocontentbox" target="_blank"><i class="icon-facebook"></i> FaceBook</a></li>
-									<li><a href="https://plus.google.com/u/0/111231811346031749369" target="_blank"><i class="icon-google-plus"></i> Google+</a></li>
-									<li class="divider"></li>
-									<li>
-										<a href="#event.buildLink( prc.xehAutoUpdates )#"><i class="icon-download-alt"></i> Check For Updates</a>
-										<a href="#event.buildLink( prc.xehAbout )#"><i class="icon-info-sign"></i> ContentBox v.#getModuleSettings('contentbox').version# <br>
-										<span class="label label-warning">(Codename: #getModuleSettings("contentbox").settings.codename#)</span></a>
-									</li>
-								</ul>
-							</li>
-							<li class="dropdown">
-								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="quickLinksIcon" class="icon-user"></i> #prc.oAuthor.getName()# <b class="icon-caret-down"></b></a>
-								<ul class="dropdown-menu">
-									<li><a data-keybinding="ctrl+shift+a" title="ctrl+shift+A" href="#event.buildLink(linkto=prc.xehAuthorEditor,querystring="authorID="&prc.oAuthor.getAuthorID())#"><i class="icon-camera"></i> My Profile</a></li>
-									<li><a data-keybinding="ctrl+shift+l" title="ctrl+shift+L" href="#event.buildLink( prc.xehDoLogout )#"><i class="icon-off"></i> Logout</a></li>
-								</ul>
-							</li>
+							<!--- Header Generated Menu --->
+							#prc.adminMenuService.generateHeaderMenu()#
 	                    </ul>
 					</div>
 				</div> <!---end container --->

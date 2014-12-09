@@ -55,7 +55,13 @@ $(document).ready(function() {
             error.appendTo( element.parent("div.controls") );
         }
     })	
-    
+    $.fn.resetValidations = function() {
+        // also remove success and error classes
+        this.find( '.control-group' ).each(function() {
+            $( this ).removeClass( 'error' ).removeClass( 'success' );
+        });
+        return this;
+    }
     // simple method to blank out all form fields 
     $.fn.clearForm = function() {
     	if( this.data( 'validator') == undefined ){ return; }
@@ -77,12 +83,17 @@ $(document).ready(function() {
                     this.checked = false;
             }
         });
-        // also remove success and error classes
-        this.find( '.control-group' ).each(function() {
-            $( this ).removeClass( 'error' ).removeClass( 'success' );
-        });
+        $( this.data( 'validator' ) ).resetValidations();
+        return this;
     }
-    
+    $.fn.collect = function() {
+        var serializedArrayData = this.serializeArray();
+        var data = {};
+        $.each( serializedArrayData, function( index, obj ) {
+            data[ obj.name ] = obj.value;
+        });
+        return data;
+    }
 	// flicker messages
 	var t=setTimeout("toggleFlickers()",5000);
 
@@ -92,9 +103,22 @@ $(document).ready(function() {
 	   activeTab && activeTab.tab('show');
 	});
 	
-	// Shortcut key bindings
-	jwerty.key( "ctrl+shift+e" , toggleSidebar );
+	// Sidebar shortcut keys
+	if( $("#main-sidebar").attr( "id" ) == undefined ){
+		$("#sidebar-toggle").hide();
+	}
+	else{
+		jwerty.key( "ctrl+shift+e" , toggleSidebar );
+	}
+
+	// If the sidebar preference is off, toggle it
+	if( $("body").attr( "data-showsidebar" ) == "no" ){
+		toggleSidebar();
+	}
+
+	// Nav Search Shortcut
 	jwerty.key( "ctrl+shift+s" , function(){ $("#nav-search").focus(); return false;} );
+	
 	// find all links with the key-binding data attribute
 	$( '[data-keybinding]' ).each(function(){
 		var boundItem = $( this );
@@ -110,11 +134,46 @@ $(document).ready(function() {
 			} 
 		});
 	});
-	
+
+	// Hide empty menu's due to permissions.
+	$("#adminMenuBarContent li.dropdown").each(function(){
+		if( !$( this ).find( "ul.dropdown-menu li" ).length ){
+			$( this ).hide();
+		}
+	});
+    // match stateful accordions
+    $( '.accordion[data-stateful]' ).each(function() {
+        var accordion = $( this ),
+            data = accordion.data( 'stateful' ),
+            match;
+        if( data ) {
+            // try to retrieve cookie that matches accordion panel id
+            match = $.cookie( data );
+            // if a match was found...
+            if ( match != null ) {
+                // wax defaults that are hardcoded on the template
+                accordion.find( '.collapse' ).removeClass( 'in' );
+                //show the matched group
+                $( '#' + match ).addClass( 'in' );
+            }
+        }
+        // bind listener for state changes
+        accordion.bind( 'shown', function(){
+            // grab id from expanded accordion panel
+            var active = accordion.find( '.in' ).attr( 'id' );
+            // set cookie
+            $.cookie( data, active );
+        })            
+    })
 });
+function isSidebarOpen(){
+	var sidebar = $("#main-sidebar");
+	return ( sidebar.attr( "id" ) != undefined && sidebar.css( "display" ) == "block"  ? true : false );
+}
 function toggleSidebar(){
 	var sidebar = $("#main-sidebar");
-	var type = sidebar.css( "display" );
+	var type 	= sidebar.css( "display" );
+	var sidebarState = false;
 	// nosidebar exit
 	if( type == undefined ){ return; }
 	// toggles
@@ -127,24 +186,49 @@ function toggleSidebar(){
 		$("#sidebar_trigger").removeClass("icon-expand-alt").addClass("icon-collapse-alt");
 		sidebar.fadeIn();
 		$("#main-content").removeClass("span12").addClass("span9");
-		
+		sidebarState = true;
 	}
+	// Call change user editor preference
+	$.ajax({
+		url : $("#sidebar-toggle").attr( "data-stateurl" ),
+		data : { sidebarState: sidebarState },
+		async : true
+	});
 }
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
 		$("#adminActionsIcon").addClass( "icon-spin textOrange" );
 		// Run Action Dispatch
 		$.post( actionURL , {targetModule: action}, function(data){
-			$("#adminActionNotifier").addClass( "alert-info" );
-			var message = "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>";
 			if( data.ERROR ){
-				$("#adminActionNotifier").addClass( "alert-danger" );
-				message = "<i class='icon-exclamation-sign'></i> <strong>Error running action, check logs!</strong>";
+				adminNotifier( "error", "<i class='icon-exclamation-sign'></i> <strong>Error running action, check logs!</strong>" );
+			}
+			else{
+				adminNotifier( "info", "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>" );
 			}
 			$("#adminActionsIcon").removeClass( "icon-spin textOrange" );
-			$("#adminActionNotifier").fadeIn().html( message ).delay( 1500 ).fadeOut();
+			
 		} );
 	}
+}
+/**
+ * Send an admin notifier popup for a few seconds
+ * @param type The type to send: Defaults to warn, available are warn, info, error, success
+ * @param message The message to display in the notifier
+ * @param delay The delay of the message, defaults to 1500 ms
+ */
+function adminNotifier(type, message, delay){
+	var $notifier = $("#adminActionNotifier").attr( "class", "alert hide" );
+	if( type == null ){ type = "warn";  }
+	if( delay == null ){ delay = 1500;  }
+	// add type css
+	switch( type ){
+		case "info" : { $notifier.addClass( "alert-info" ); break; }
+		case "error" : { $notifier.addClass( "alert-error" ); break; }
+		case "success" : { $notifier.addClass( "alert-success" ); break; }
+	}
+	// show with message and delay and reset.
+	$notifier.fadeIn().html( message ).delay( delay ).fadeOut();
 }
 function activateContentSearch(){
 	// local refs
@@ -154,6 +238,7 @@ function activateContentSearch(){
 	$nav_search.css("opacity","0.8");
 	// focus effects
 	$nav_search.focusin(function() {
+		if( $nav_search.is(":focus") ){ return; }
     	$(this).animate({
 		    opacity: 1.0,
 		    width: '+=95',
@@ -325,14 +410,13 @@ function activateConfirmations(){
 	$('a.confirmIt').click(function(e){
 		// setup the href
 		$confirmIt.data("confirmSrc", $(this).attr('href'));
-		// data-message
-		if( $(this).attr('data-message') ){
-			$confirmIt.find("#confirmItMessage").html( $(this).attr('data-message') );
-		}
-		// data-title
-		if( $(this).attr('data-title') ){
-			$confirmIt.find("#confirmItTitle").html( $(this).attr('data-title') );
-		}
+        // defaults
+        var dataMessage = $(this).attr('data-message') ? $(this).attr('data-message') : 'Are you sure you want to perform this action?';
+        var dataTitle = $(this).attr('data-title') ? $(this).attr('data-title') : 'Are you sure?';
+        // set message
+        $confirmIt.find("#confirmItMessage").html( dataMessage );
+        // set title
+        $confirmIt.find("#confirmItTitle").html( dataTitle );
 		// show the confirmation when clicked
 		//$confirmIt.data("overlay").load();
 		$confirmIt.modal();

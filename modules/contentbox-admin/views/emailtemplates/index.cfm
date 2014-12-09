@@ -36,7 +36,7 @@
 							</td>
 							<td class="center">
 								<!--- Editor --->
-								<a title="Edit Template" href="#event.buildLink(linkTo=prc.xehTemplateEditor,queryString='template=#URLEncodedFormat( listFirst( prc.templates.name, ".") )#')#"><i class="icon-edit icon-large"></i></a>
+								<a class="btn" title="Edit Template" href="#event.buildLink(linkTo=prc.xehTemplateEditor,queryString='template=#URLEncodedFormat( listFirst( prc.templates.name, ".") )#')#"><i class="icon-edit icon-large"></i></a>
 							</td>
 						</tr>
 						</cfloop>

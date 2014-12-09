@@ -31,7 +31,7 @@ component extends="content" singleton{
 	this.preHandler_except = "preview";
 
 	// pre Handler
-	function preHandler(event,rc,prc,action,eventArguments){
+	function preHandler( event, rc, prc ,action,eventArguments){
 		// Check if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
 			event.overrideEvent("contentbox-ui:blog.disabled");
@@ -40,7 +40,7 @@ component extends="content" singleton{
 		super.preHandler(argumentCollection=arguments);
 	}
 
-	function disabled(event,rc,prc){
+	function disabled( event, rc, prc ){
 		// missing page, the blog as it does not exist
 		prc.missingPage 	 = event.getCurrentRoutedURL();
 		prc.missingRoutedURL = event.getCurrentRoutedURL();
@@ -56,7 +56,7 @@ component extends="content" singleton{
 	/**
 	* Preview a blog entry
 	*/
-	function preview(event,rc,prc){
+	function preview( event, rc, prc ){
 		// Run parent preview
 		super.preview(argumentCollection=arguments);
 		// Concrete Overrides Below
@@ -80,9 +80,9 @@ component extends="content" singleton{
 	}
 
 	/**
-	* The home page
+	* The blog home page
 	*/
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// incoming params
 		event.paramValue("page",1);
 		event.paramValue("category","");
@@ -125,7 +125,7 @@ component extends="content" singleton{
 	/**
 	* The archives
 	*/
-	function archives(event,rc,prc){
+	function archives( event, rc, prc ){
 		// incoming params
 		event.paramValue("page",1);
 		// archived params
@@ -159,9 +159,21 @@ component extends="content" singleton{
 	}
 
 	/**
+	* Around entry page advice that provides caching and multi-output format
+	*/
+	function aroundEntry( event, rc, prc , eventArguments ){
+		
+		// setup wrap arguments
+		arguments.contentCaching 	= prc.cbSettings.cb_entry_caching;
+		arguments.action 			= variables.entry;
+
+		return wrapContentAdvice( argumentCollection=arguments );
+	}
+
+	/**
 	* An entry page
 	*/
-	function entry(event,rc,prc){
+	function entry( event, rc, prc ){
 		// incoming params
 		event.paramValue("entrySlug","");
 
@@ -176,7 +188,7 @@ component extends="content" singleton{
 		// Check if loaded, else not found
 		if( prc.entry.isLoaded() ){
 			// Record hit
-			prc.entry.updateHits();
+			entryService.updateHits( prc.entry.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults 	= commentService.findApprovedComments(contentID=prc.entry.getContentID(),sortOrder="asc");
@@ -204,7 +216,7 @@ component extends="content" singleton{
 	/**
 	* Display the RSS feeds for the blog
 	*/
-	function rss(event,rc,prc){
+	function rss( event, rc, prc ){
 		// params
 		event.paramValue("category","");
 		event.paramValue("entrySlug","");
@@ -220,32 +232,22 @@ component extends="content" singleton{
 	/**
 	* Comment Form Post
 	*/
-	function commentPost(event,rc,prc){
+	function commentPost( event, rc, prc ){
 		// incoming params
-		event.paramValue("entrySlug","");
-
+		event.paramValue( "entrySlug", "" );
+		event.paramValue( "subscribe", false );
+		
 		// Try to retrieve entry by slug
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
 
 		// If null, kick them out
 		if( isNull( thisEntry ) ){ setNextEvent( prc.cbEntryPoint ); }
-
+		
 		// validate incoming comment post
-		prc.commentErrors = validateCommentPost(event,rc,prc,thisEntry);
-
-		// Validate if comment errors exist
-		if( arrayLen( prc.commentErrors ) ){
-			// MessageBox
-			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
-			// put slug in request
-			rc.entrySlug = thisEntry.getSlug();
-			// Execute entry again, need to correct form
-			entry(argumentCollection=arguments);
-			return;
-		}
+		validateCommentPost( event, rc, prc, thisEntry );
 
 		// Valid commenting, so go and save
-		saveComment( thisEntry );
+		saveComment( thisEntry, rc.subscribe );
 	}
 
 }

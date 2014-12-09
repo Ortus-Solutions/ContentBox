@@ -19,3 +19,11 @@ workbench/resources/WEB-INF/railo/cfclasses
 workbench/resources/WEB-INF/railo/temp
 workbench/resources/WEB-INF/railo/logs
 contentbox-codexwiki
+.idea
+modules/contentbox/modules/FuseGuard
+modules/contentbox/modules/FuseGuardUI
+modules/contentbox/modules/CodeEditorManager
+contentbox-akismet
+workbench/build-contentbox/**
+workbench/dependencies
+Icon?

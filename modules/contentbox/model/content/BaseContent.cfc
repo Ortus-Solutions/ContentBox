@@ -17,23 +17,23 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	// Properties
 	property name="contentID" 				notnull="true"	fieldtype="id" generator="native" setter="false";
-	property name="contentType" 			setter="false" update="false" insert="false" index="idx_discriminator,idx_published" default="" dbdefault="";
+	property name="contentType" 			setter="false" update="false" insert="false" index="idx_discriminator,idx_published" default="";
 	property name="title"					notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
 	property name="createdDate" 			notnull="true"  ormtype="timestamp" update="false" index="idx_createdDate";
 	property name="publishedDate"			notnull="false" ormtype="timestamp" index="idx_publishedDate";
 	property name="expireDate"				notnull="false" ormtype="timestamp" default="" index="idx_expireDate";
-	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_published,idx_search,idx_publishedSlug";
-	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true" dbdefault="1";
+	property name="isPublished" 			notnull="true"  ormtype="boolean" default="true" index="idx_published,idx_search,idx_publishedSlug";
+	property name="allowComments" 			notnull="true"  ormtype="boolean" default="true";
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
 	property name="HTMLKeywords"			notnull="false" length="160" default="";
 	property name="HTMLDescription"			notnull="false" length="160" default="";
-	property name="hits"					notnull="false" ormtype="long" default="0" dbdefault="0";
-	property name="cache"					notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cache";
-	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_cachelayout";
-	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachetimeout";
-	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" dbdefault="0" index="idx_cachelastaccesstimeout";
-	property name="markup"					notnull="true" length="100" default="html" dbdefault="'HTML'";
+	property name="hits"					notnull="false" ormtype="long" default="0";
+	property name="cache"					notnull="true"  ormtype="boolean" default="true" index="idx_cache";
+	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" index="idx_cachelayout";
+	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" index="idx_cachetimeout";
+	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" index="idx_cachelastaccesstimeout";
+	property name="markup"					notnull="true" length="100" default="HTML";
 	
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property name="creator" notnull="true" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
@@ -60,10 +60,19 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	// O2M -> Sub Content Inverse
 	property name="children" singularName="child" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			 cfc="contentbox.model.content.BaseContent" fkcolumn="FK_parentID" inverse="true" cascade="all-delete-orphan";
+	// O2M -> Comment Subscribers
+	property name="commentSubscriptions" singularName="commentSubscription" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" cfc="contentbox.model.subscriptions.CommentSubscription" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
 
 	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category"
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" inverse="true" cascade="all"  
 			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID";
+
+	// M2M -> Related Content - Content related from this content to other content
+	property name="relatedContent" fieldtype="many-to-many" type="array" lazy="extra" orderby="title" cascade="all"  
+			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_contentID" linktable="cb_relatedContent" inversejoincolumn="FK_relatedContentID";
+	// M2M -> Linked Content - Content related to this content from other content
+	property name="linkedContent" fieldtype="many-to-many" type="array" lazy="extra" inverse="true" orderby="title" 
+			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_relatedContentID" linktable="cb_relatedContent" inversejoincolumn="FK_contentID";
 
 	// Calculated Fields
 	property name="numberOfVersions" 			formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" default="0";
@@ -72,6 +81,23 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="numberOfChildren"			formula="select count(*) from cb_content content where content.FK_parentID=contentID" default="0";
 
 	/************************************** VERIONING METHODS *********************************************/
+
+	/**
+	* Base constructor
+	*/
+	function init(){
+		variables.isPublished 		= true;
+		variables.allowComments 	= true;
+		variables.hits 				= 0;
+		variables.cache 			= true;
+		variables.cacheLayout 		= true;
+		variables.cacheTimeout 		= 0;
+		variables.cacheLastAccessTimeout = 0;
+		variables.markup 			= "HTML";
+		variables.contentType 		= "";
+
+		return this;
+	}
 
 	/**
 	* Add a new content version to save for this content object
@@ -109,6 +135,61 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 	
 	/**
+	 * Returns a list of active related content for this piece of content
+	 */
+	public string function getRelatedContentIDs() {
+		var relatedContentIDs = "";
+		// if we have related content...
+		if( hasRelatedContent() ) {
+			// loop over related content and add ids to list
+			for( var currentContent in getRelatedContent() ) {
+				relatedContentIDs = listAppend( relatedContentIDs, currentContent.getContentID() );
+			}
+		}
+		return relatedContentIDs;
+	}
+
+	/**
+	 * Override the setRelatedContent
+	 * @relatedContent.hint The related content to set
+	 */
+	BaseContent function setRelatedContent( required array relatedContent ) {
+		if( hasRelatedContent() ) {
+			variables.relatedContent.clear();
+			variables.relatedContent.addAll( arguments.relatedContent );
+		}
+		else {
+			variables.relatedContent = arguments.relatedContent;
+		}
+		return this;
+	}
+
+	/**
+	* Inflates from comma-delimited list (or array) of id's
+	* @relatedContent.hint The list or array of relatedContent ids
+	*/
+	BaseContent function inflateRelatedContent( required any relatedContent ){
+		var allContent = [];
+		// convert to array
+		if( isSimpleValue( arguments.relatedContent ) ){
+			arguments.relatedContent = listToArray( arguments.relatedContent );
+		}
+		// iterate over array
+		for( var x=1; x <= arrayLen( arguments.relatedContent ); x++){
+			var id 	= trim( arguments.relatedContent[ x ] );
+			// get content from id
+			var extantContent = contentService.get( id );
+			// if found, add to array
+			if( !isNull( extantContent ) ) {
+				// append to array all new relatedContent
+				arrayAppend( allContent, extantContent );
+			}
+		}
+		setRelatedContent( allContent );
+		return this;
+	}
+
+	/**
 	* Override the setComments
 	*/
 	BaseContent function setComments(required array comments){
@@ -137,6 +218,39 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 	
 	/**
+	* Get custom fields as a structure representation
+	*/
+	struct function getCustomFieldsAsStruct(){
+		var results = {};
+
+		// if no fields, just return empty
+		if( !hasCustomField() ){ return results; }
+
+		// iterate and create
+		for( var thisField in variables.customFields ){
+			results[ thisField.getKey() ] = thisField.getValue();
+		}
+
+		return results;
+	}
+
+	/**
+	* Shortcut to get a custom field value
+	* @key.hint The custom field key to get
+	* @defaultValue.hint The default value if the key is not found.
+	*/
+	any function getCustomField( required key, defaultValue ){
+		var fields = getCustomFieldsAsStruct();
+		if( structKeyExists( fields, arguments.key ) ){
+			return fields[ arguments.key ];
+		}
+		if( structKeyExists(arguments,"defaultValue") ){
+			return arguments.defaultValue;
+		}
+		throw(message="No custom field with key: #arguments.key# found", detail="The keys are #structKeyList( fields )#", type="InvalidCustomField");
+	}
+	
+	/**
 	* Override the setContentVersions
 	*/
 	BaseContent function setContentVersions(required array contentVersions){
@@ -146,6 +260,82 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		else{
 			variables.contentVersions = arguments.contentVersions;
+		}
+		return this;
+	}
+	
+	/**
+	* Override the setCategories
+	*/
+	BaseContent function setCategories(required array categories){
+		
+		// Relate the incoming suckers
+		for( var oCat in arguments.categories ){
+			if( !oCat.hasContent( this ) ){
+				oCat.addContent( this );
+			}
+		}
+		
+		if( hasCategories() ){
+			// loop and remove yourself from categories
+			for( var oCat in variables.categories ){
+				if( !arrayContains( arguments.categories, oCat ) ){
+					oCat.removeContent( this );
+				}
+			}
+		}
+		
+		variables.categories = arguments.categories;
+		
+		return this;
+	}
+	
+	/*
+	* I remove all category associations
+	*/
+	BaseContent function removeAllCategories(){
+		if ( hasCategories() ){
+			for(var oCat in variables.categories ){
+				oCat.removeContent( this );
+			}
+			variables.categories.clear();
+		}
+		else{
+			variables.categories = [];
+		}
+		return this;
+	}
+
+	/*
+	* I remove all linked content associations
+	*/
+	BaseContent function removeAllLinkedContent(){
+		if ( hasLinkedContent() ){
+			for( var item in variables.linkedContent ){
+				item.removeRelatedContent( this );
+			}
+		}
+		return this;
+	}
+
+	/**
+	* Bi directional add
+	*/
+	BaseContent function addCategories(required category){
+		if( !hasCategories( arguments.category ) ){
+			arguments.category.addContent( this );
+			arrayAppend( variables.categories, arguments.category );
+		}
+		return this;
+	}
+	
+	/**
+	* Bi directional remove
+	*/
+	BaseContent function removeCategories(required category){
+		if( hasCategories( arguments.category ) ){
+			arguments.category.removeContent( this );
+			arrayDelete( variables.categories, arguments.category );
 		}
 		return this;
 	}
@@ -166,8 +356,9 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	
 	/**
 	* Get a flat representation of this entry
+	* slugCache.hint Cache of slugs to prevent infinite recursions
 	*/
-	function getMemento(){
+	function getMemento( required array slugCache=[], counter=0 ){
 		var pList = contentService.getPropertyNames();
 		var result = {};
 		
@@ -182,7 +373,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 				result[ pList[ x ] ] = "";
 			}
 		}
-
+		
 		// Do Author Relationship
 		if( hasCreator() ){
 			result[ "creator" ] = {
@@ -253,6 +444,15 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			result[ "categories" ] = [];
 		}
 		
+		// Related Content
+		result[ "relatedcontent" ] = [];
+		if( hasRelatedContent() && !arrayFindNoCase( arguments.slugCache, getSlug() ) ) {	
+			// add slug to cache
+			arrayAppend( arguments.slugCache, getSlug() );		
+			for( var content in variables.relatedContent ) {
+				arrayAppend( result[ "relatedcontent" ], content.getMemento( slugCache=arguments.slugCache ) );
+			}
+		}
 		return result;
 	}
 	
@@ -441,6 +641,12 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			addCategories( categoryService.findBySlug( thisCategory.getSlug() ) );
 		}
 		
+		// clone related content
+		var newRelatedContent = arguments.original.getRelatedContent();
+		for( var thisRelatedContent in newRelatedContent ) {
+			addRelatedContent( thisRelatedContent );
+		}
+
 		// now clone children
 		if( original.hasChild() ){
 			var allChildren = original.getChildren();
@@ -534,20 +740,24 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	/**
 	* add published timestamp to property
 	*/
-	any function addPublishedTime(required hour, required minute){
+	any function addPublishedTime( required hour, required minute ){
 		if( !isDate( getPublishedDate() ) ){ return this; }
-		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
-		setPublishedDate( getPublishedDate() & " " & time);
+		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
+		setPublishedDate( getPublishedDate() & " " & time );
 		return this;
 	}
 
 	/**
 	* add expired timestamp to property
 	*/
-	any function addExpiredTime(required hour, required minute){
+	any function addExpiredTime( required hour, required minute ){
 		if( !isDate( getExpireDate() ) ){ return this; }
-		var time = timeformat("#arguments.hour#:#arguments.minute#", "hh:MM:SS tt");
-		setExpireDate( getExpireDate() & " " & time);
+		// verify time and minute defaults, else default to midnight
+		if( !len( arguments.hour ) ){ arguments.hour = "0"; }
+		if( !len( arguments.minute ) ){ arguments.minute = "00"; }
+		// setup the right time now.
+		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
+		setExpireDate( getExpireDate() & " " & time );
 		return this;
 	}
 
@@ -655,24 +865,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			}
 		}
 
-		return this;
-	}
-
-	/**
-	* Update a content's hits
-	*/
-	any function updateHits(){
-		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #getContentID()#").execute();
-		return this;
-	}
-
-	/*
-	* I remove all category associations
-	*/
-	any function removeAllCategories(){
-		if ( hasCategories() ){
-			variables.categories = [];
-		}
 		return this;
 	}
 

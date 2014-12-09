@@ -26,17 +26,21 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	// DI
 	property name="categoryService"		inject="id:categoryService@cb";
+	property name="settingService"		inject="id:settingService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="commentService"		inject="id:commentService@cb";
-	property name="customHTMLService"	inject="id:customHTMLService@cb";
+	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="widgetService"		inject="id:widgetService@cb";
 	property name="moduleService"		inject="id:moduleService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
+	property name="menuService"			inject="id:menuService@cb";
+	property name="menuItemService"		inject="id:menuItemService@cb";
 	property name="minifier"			inject="coldbox:myplugin:JSMin@contentbox";
 	
-	function init(controller){
+	// Constructor
+	function init( required controller ){
 		super.init( arguments.controller );
 	}
 
@@ -80,15 +84,32 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Get custom HTML content pieces by slug
-	* @slug The content slug to retrieve
+	* Get a published custom HTML content pieces by slug: DEPRECATED, use contentStore() instead
+	* @see contentStore
+	* @deprecated
+	* @slug.hint The content slug to retrieve
+	* @defaultValue.hint The default value to use if custom html element not found.
 	*/
-	function customHTML(required slug){
-		var content = customHTMLService.findWhere({slug=arguments.slug});
-		if( isNull(content) ){
-			throw(message="The content slug '#arguments.slug#' does not exist",type="ContentBox.CBHelper.InvalidCustomHTMLSlug");
-		}
-		return content.renderContent();
+	function customHTML(required slug, defaultValue=""){
+		return contentStore(argumentCollection=arguments);
+	}
+
+	/**
+	* Get a published content store and return its latest active content
+	* @slug.hint The content slug to retrieve
+	* @defaultValue.hint The default value to use if the content element not found.
+	*/
+	function contentStore(required slug, defaultValue=""){
+		var content = contentStoreService.findBySlug( arguments.slug );
+		return ( !content.isLoaded() ? arguments.defaultValue : content.renderContent() );
+	}
+
+	/**
+	* Get a content store object by slug, if not found it returns null.
+	* @slug.hint The content slug to retrieve
+	*/
+	function contentStoreObject(required slug){
+		return contentStoreService.findBySlug( slug=arguments.slug, showUnpublished=true );
 	}
 	
 	/************************************** Minify methods *********************************************/
@@ -193,26 +214,66 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return ( setting("cb_comments_enabled") );
 	}
+
 	// determines if a comment form error has ocurred
-	function isCommentFormError(){
-		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"commentErrors") ){
-			return true;
-		}
-		return false;
+	boolean function isCommentFormError(){
+		return getFlash().exists( "commentErrors" );
+	}
+
+	// Determine if you are in printing or exporting format
+	boolean function isPrintFormat(){
+		return ( getRequestContext().getValue("format","contentbox") eq "contentbox" ? false : true );
 	}
 
 	// get comment errors array, usually when the form elements did not validate
 	array function getCommentErrors(){
-		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"commentErrors") ){
-			return prc.commentErrors;
-		}
-		return arrayNew(1);
+		return getFlash().get( "commentErrors", [] );
 	}
 
 	/************************************** Context Methods *********************************************/
 
+	/**
+	* Prepare a ContentBox UI request. This sets ups settings, layout, etc. This method is usualy called
+	* automatically for you on the UI module. However, you can use it a-la-carte if you are building
+	* ajax or module extensions
+	*/
+	CBHelper function prepareUIRequest(){
+		var event 	= getRequestContext();
+		var prc 	= getRequestCollection( private=true );
+		var rc		= getRequestCollection();
+		
+		// store UI module root
+		prc.cbRoot = getContextRoot() & event.getModuleRoot( 'contentbox' );
+		// store module entry point
+		prc.cbEntryPoint = getModuleSettings( "contentbox-ui" ).entryPoint;
+		// store site entry point
+		prc.cbAdminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
+		// Place global cb options on scope
+		prc.cbSettings = settingService.getAllSettings( asStruct=true );
+		// Place the default layout on scope
+		prc.cbLayout = prc.cbSettings.cb_site_layout;
+		// Place layout root location
+		prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & prc.cbLayout;
+		// Place widgets root location
+		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
+		// announce event
+		announceInterception( "cbui_preRequest" );
+		
+		/************************************** FORCE SITE WIDE SSL *********************************************/
+		
+		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
+			setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
+		}
+
+		/************************************** IDENTITY HEADER *********************************************/
+
+		if( prc.cbSettings.cb_site_poweredby ){
+			event.setHTTPHeader( name="X-Powered-By", value="ContentBox Modular CMS" );
+		}
+
+		return this;
+	}
+	
 	// Determine if you have a category filter
 	boolean function categoryFilterExists(){
 		var rc = getRequestCollection();
@@ -276,6 +337,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		}
 		return false;
 	}
+	/**
+	 * Determine if you're in a "preview" mode or not
+	 */
+	boolean function isPreview(){
+		var event = getRequestContext();
+		return reFindNoCase( "contentbox-ui:.*preview", event.getCurrentEvent() ) ? true : false;
+	}
+
 	// Get the index page entries, else throws exception
 	any function getCurrentEntries(){
 		var prc = getRequestCollection(private=true);
@@ -321,11 +390,22 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	// Get the missing page, if any
 	any function getMissingPage(){
 		var event = getRequestContext();
-		return event.getValue(name="missingPage",private="true",default="");
+		return event.getValue(name="missingPage",private="true",defaultValue="");
 	}
 	// Get Home Page slug set up by the administrator.
 	any function getHomePage(){
 		return setting("cb_site_homepage");
+	}
+	// Get the the blog categories, else throws exception
+	any function getCurrentRelatedContent(){
+		var relatedContent = [];
+		if( isPageView() && getCurrentPage().hasRelatedContent() ) {
+			relatedContent = getCurrentPage().getRelatedContent();
+		}
+		else if( isEntryView() && getCurrentEntry().hasRelatedContent() ) {
+			relatedContent = getCurrentEntry().getRelatedContent();
+		}
+		return relatedContent;
 	}
 	// Get the current page's or blog entrie's custom fields as a struct
 	struct function getCurrentCustomFields(){
@@ -438,38 +518,43 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the admin
-	* event An optional event to link to
+	* @event.hint An optional event to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkAdmin(event=""){
-		return getRequestContext().buildLink(linkto=adminRoot() & ".#arguments.event#");
+	function linkAdmin( event="", boolean ssl=false ){
+		return getRequestContext().buildLink( linkto=adminRoot() & ".#arguments.event#", ssl=arguments.ssl );
 	}
 
 	/**
 	* Link to the admin logout
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkAdminLogout(){
-		return getRequestContext().buildLink(linkto=adminRoot() & "/security/doLogout");
+	function linkAdminLogout( boolean ssl=false ){
+		return getRequestContext().buildLink( linkto=adminRoot() & "/security/doLogout", ssl=arguments.ssl );
 	}
 
 	/**
 	* Link to the admin login
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkAdminLogin(){
-		return getRequestContext().buildLink(linkto=adminRoot() & "/security/login");
+	function linkAdminLogin( boolean ssl=false ){
+		return getRequestContext().buildLink( linkto=adminRoot() & "/security/login", ssl=arguments.ssl );
 	}
 
 	/**
 	* Create a link to your site root or home page entry point for your blog.
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkHome(){
-		return getRequestContext().buildLink(linkto=siteRoot());
+	function linkHome( boolean ssl=false ){
+		return getRequestContext().buildLink( linkto=siteRoot(), ssl=arguments.ssl );
 	}
 
 	/**
 	* Create a link to your site blog
+	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkBlog(){
-		return getRequestContext().buildLink(linkto="#siteRoot()##sep()##getBlogEntryPoint()#");
+	function linkBlog( boolean ssl=false ){
+		return getRequestContext().buildLink( linkto="#siteRoot()##sep()##getBlogEntryPoint()#", ssl=arguments.ssl );
 	}
 
 	/**
@@ -593,11 +678,27 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/**
 	* Link to a specific filtered category view of blog entries
-	* @category The category object to link to
+	* @category The category object or slug to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
 	*/
-	function linkCategory(required category, boolean ssl=false){
-		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.category.getSlug()#";
+	function linkCategory( required any category, boolean ssl=false ){
+		var categorySlug = '';
+		if( isSimpleValue( arguments.category ) ) {
+			categorySlug = arguments.category;
+		} else {
+			categorySlug = arguments.category.getSlug();			
+		}
+		
+		return linkCategoryWithSlug( categorySlug, arguments.ssl );
+	}
+
+	/**
+	* Link to a specific filtered category view of blog entries
+	* @categorySlug The category slug as a string to link to
+	* @ssl.hint	Use SSL or not, defaults to false.
+	*/
+	function linkCategoryWithSlug( required string categorySlug, boolean ssl=false ){
+		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.categorySlug#";
 		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
 
@@ -635,61 +736,93 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/**
+	* Link to the content subscription route
+	* @ssl.hint	Use SSL or not, defaults to false.
+	*/
+	function linkContentSubscription( boolean ssl=false ){
+		var xeh = siteRoot() & sep() & "__subscribe";
+		return getRequestContext().buildLink( linkto=xeh, ssl=arguments.ssl );
+	}
+
+	/**
+	* Link to the ContentBox Content Subscription unsubscribe URL
+	* @token.hint The token to use for unsubscribing
+	*/
+	function linkContentUnsubscribe( required string token, boolean ssl=false ){
+		var xehUnsubscribe = siteRoot() & sep() & "__unsubscribe/#arguments.token#";
+		return getRequestContext().buildLink( linkto=xehUnsubscribe, ssl=arguments.ssl );
+	}
+
+	/**
 	* Link to a specific blog entry's page
 	* @entry The entry to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkEntry(required entry, boolean ssl=false){
+	function linkEntry(required entry, boolean ssl=false, format="html"){
+		// format?
+		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		if( isSimpleValue(arguments.entry) ){
-			return linkEntryWithSlug( arguments.entry, arguments.ssl );
+			return linkEntrywithslug( arguments.entry, arguments.ssl );
 		}
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.entry.getSlug()#";
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
 
 	/**
 	* Link to a specific entry's page using a slug only
 	* @slug The entry slug to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkEntryWithSlug(required slug, boolean ssl=false){
+	function linkEntryWithSlug(required slug, boolean ssl=false, format="html"){
+		// format?
+		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.slug#";
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
 
 	/**
 	* Link to a specific content object
 	* @content.hint The content object to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkContent(required content, boolean ssl=false){
-		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl ); }
-		if( arguments.content.getContentType() eq "page" ){ return linkPage( arguments.content, arguments.ssl); }
+	function linkContent(required content, boolean ssl=false, format="html"){
+		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl, arguments.format ); }
+		if( arguments.content.getContentType() eq "page" ){ return linkPage( arguments.content, arguments.ssl, arguments.format ); }
 	}
 
 	/**
 	* Link to a specific page
 	* @page.hint The page to link to. This can be a simple value or a page object
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkPage(required page, boolean ssl=false){
-		if( isSimpleValue(arguments.page) ){
-			return linkPageWithSlug( arguments.page, arguments.ssl );
+	function linkPage(required page, boolean ssl=false, format="html"){
+		// format?
+		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+		// link directly or with slug
+		if( isSimpleValue( arguments.page ) ){
+			return linkPageWithSlug( arguments.page, arguments.ssl, arguments.format );
 		}
 		var xeh = siteRoot() & sep() & arguments.page.getSlug();
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
 
 	/**
 	* Link to a specific page using a slug only
 	* @slug.hint The page slug to link to
 	* @ssl.hint	Use SSL or not, defaults to false.
+	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkPageWithSlug(required slug, boolean ssl=false){
+	function linkPageWithSlug(required slug, boolean ssl=false, format="html"){
+		// format?
+		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
 		var xeh = siteRoot() & sep() & "#arguments.slug#";
-		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
 
 	/**
@@ -851,6 +984,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/**
+	* Render out related content anywhere using ColdBox collection rendering
+	* @template.hint The name of the template to use, by default it looks in the 'templates/relatedContent.cfm' convention, no '.cfm' please
+	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'relatedContent'
+	* @args.hint A structure of name-value pairs to pass to the template
+	*/
+	function quickRelatedContent( template="relatedContent", collectionAs="relatedContent", args=structnew() ){
+		var relatedContent = getCurrentRelatedContent();
+		return renderView( view="#layoutName()#/templates/#arguments.template#", collection=relatedContent,collectionAs=arguments.collectionAs, args=arguments.args );
+	}
+
+	/**
 	* Render out custom fields for the current content
 	*/
 	function quickCustomFields(){
@@ -928,6 +1072,72 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 
 	/************************************** MENUS *********************************************/
+	public any function menu( required string slug, required type="html", required array slugCache=[] ) {
+		var result = "";
+		var menu = menuService.findBySlug( arguments.slug );
+		if( !isNull( menu ) ) {
+			if( arguments.type == "data" ) {
+				return menu.getMemento();
+			}
+			else {
+				return buildProviderMenu( menu=menu, slugCache=arguments.slugCache );
+			}
+		}
+	}
+
+	/**
+	 * Builds out a custom menu
+	 * @menu.hint The root menu that should be rendered
+	 * @slugCache.hint The cache of menu slugs already used in this request
+	 */
+	public string function buildProviderMenu( required contentbox.model.menu.Menu menu, required array slugCache=[] ) {
+		var listType = arguments.menu.getListType();
+		//arguments.listType = !reFindNoCase( "^(ul|ol)$", arguments.listType ) ? "<ul>" : arguments.listType;
+		// set start
+		var menuString = "<#listType# class='#arguments.menu.getMenuClass()#'>";
+		// now get root items
+		var items = arguments.menu.getRootMenuItems();
+		// create cache of slugs to prevent infinite recursions
+		arrayAppend( arguments.slugCache, menu.getSlug() );
+		// build out this top level
+		menuString &= buildProviderMenuLevel( items=items, listType=listType, slugCache=slugCache, listClass=arguments.menu.getListClass() );
+		// set end
+		menuString &= "</#listType#>";
+		return menuString;
+	}
+
+	/**
+	 * Builds out a level of a custom menu
+	 * @items.hint An array of menu items for this level
+	 * @listType.hint The type of list to create (derived from owning menu)
+	 * @slugCache.hint The cache of menu slugs already used in this request
+	 */
+	private string function buildProviderMenuLevel( 
+		required array items, 
+		required string listType="ul", 
+		required array slugCache=[],
+		string listClass="" 
+	) {
+		var menuString = "";
+		// loop over items to build out level
+		for( var item in arguments.items ) {
+			var extras = { slugCache=arguments.slugCache, listType=arguments.listType };
+			// check that item can be added
+			if( item.canDisplay( options=extras ) ) {
+				// get template from provider
+				menuString &= '<li #item.getAttributesAsString()#>' & item.getProvider().getDisplayTemplate( item, extras );
+				// if this menu item has children...
+				if( item.hasChild() ) {
+					// recurse, recurse, recurse!
+					menuString &= 	"<#arguments.listType# class='#arguments.listClass#'>" & 
+									buildProviderMenuLevel( items=item.getChildren(), listType=arguments.listType, slugCache=arguments.slugCache ) & 
+									"</#arguments.listType#>";
+				}
+				menuString &= "</li>";
+			}
+		}
+		return menuString;
+	}
 
 	/**
 	* Render out a quick menu for root level pages
@@ -1016,6 +1226,36 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	boolean function isMobile(){
 		return mobileDetector.isMobile();
+	}
+
+	/**
+	* Return the current system flash scope
+	*/
+	any function getFlash(){
+		return controller.getRequestService().getFlashScope();
+	}
+
+	/**
+	* Retrieve i18n resources
+	* @resource.hint The resource (key) to retrieve from a loaded bundle or pass a @bundle
+	* @default.hint A default value to send back if the resource (key) not found
+	* @locale.hint Pass in which locale to take the resource from. By default it uses the user's current set locale
+	* @values.hint An array, struct or simple string of value replacements to use on the resource string
+	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
+	*/
+	any function r( 
+		required string resource,
+		string default,
+		string locale,
+		any values,
+		string bundle
+	){
+		// check for resource@bundle convention:
+		if( find( "@", arguments.resource ) ){
+			arguments.bundle 	= listLast( arguments.resource, "@" );
+			arguments.resource 	= listFirst( arguments.resource, "@" );
+		}
+		return getResource( argumentCollection=arguments );
 	}
 
 	/************************************** PRIVATE *********************************************/

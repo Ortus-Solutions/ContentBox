@@ -27,8 +27,8 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	// Properties
 	property name="layout"			notnull="false" length="200" default="";
 	property name="mobileLayout"	notnull="false" length="200" default="";
-	property name="order"			notnull="false" ormtype="integer" default="0" dbdefault="0";
-	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" dbdefault="1" index="idx_showInMenu";
+	property name="order"			notnull="false" ormtype="integer" default="0";
+	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" index="idx_showInMenu";
 	property name="excerpt" 		notnull="false" ormtype="text" default="" length="8000";
 	
 	// Non-Persistable Properties
@@ -40,6 +40,9 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	* constructor
 	*/
 	function init(){
+		super.init();
+
+		categories 		= [];
 		customFields	= [];
 		renderedContent = "";
 		renderedExcerpt	= "";
@@ -48,6 +51,8 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		layout 			= "pages";
 		mobileLayout	= "";
 		contentType		= "Page";
+		order 			= 0;
+		showInMenu 		= true;
 		
 		// INHERITANCE LAYOUT STATIC
 		LAYOUT_INHERITANCE_KEY = "-inherit-";
@@ -92,14 +97,20 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	
 	/**
 	* Get a flat representation of this page
+	* slugCache.hint Cache of slugs to prevent infinite recursions
 	*/
-	function getMemento(){
+	function getMemento( array slugCache=[] ){
 		var pList = listToArray( "layout,mobileLayout,order,showInMenu,excerpt" );
-		var result = super.getMemento();
+		var result = super.getMemento( argumentCollection=arguments );
 		
 		// Local Memento Properties
 		for(var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			}
+			else{
+				result[ thisProp ] = "";
+			}
 		}
 		
 		return result;

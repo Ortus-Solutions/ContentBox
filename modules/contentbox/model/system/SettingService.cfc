@@ -195,13 +195,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			quickViewWidth	= cbSettings.cb_media_quickViewWidth,
 			loadJQuery 		= false,
 			useMediaPath	= true,
-			uploadify = {
-				fileDesc 	= cbSettings.cb_media_uplodify_fileDesc,
-				fileExt 	= cbSettings.cb_media_uplodify_fileExt,
-				multi 		= cbSettings.cb_media_uploadify_allowMulti,
-				sizeLimit 	= cbSettings.cb_media_uploadify_sizeLimit,
-				customJSONOptions = cbSettings.cb_media_uploadify_customOptions
-			},
 			html5uploads = {
 				maxFileSize = cbSettings.cb_media_html5uploads_maxFileSize,
 				maxFiles	= cbSettings.cb_media_html5uploads_maxFiles
@@ -282,14 +275,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			var oSetting = findWhere( criteria=args );
 			// if null, then create it
 			if( isNull( oSetting ) ){
-				var args = { name = thisSetting.name, value = thisSetting.value };
+				var args = { name = thisSetting.name, value = javaCast( "string", thisSetting.value ) };
 				arrayAppend( allSettings, new( properties=args ) );
 				// logs
 				importLog.append( "New setting imported: #thisSetting.name#<br>" );
 			}
 			// else only override if true
 			else if( arguments.override ){
-				oSetting.setValue( thisSetting.value );
+				oSetting.setValue( javaCast( "string", thisSetting.value ) );
 				arrayAppend( allSettings, oSetting );
 				importLog.append( "Overriding setting: #thisSetting.name#<br>" );
 			}

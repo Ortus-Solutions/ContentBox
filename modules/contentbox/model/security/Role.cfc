@@ -30,7 +30,9 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 	property name="roleID" fieldtype="id" generator="native" setter="false";
 	
 	// Properties
-	property name="role"  		ormtype="string" notnull="true" length="255" unique="true" default="";	property name="description" ormtype="string" notnull="false" default="" length="500";	
+	property name="role"  		ormtype="string" notnull="true" length="255" unique="true" default="";
+	property name="description" ormtype="string" notnull="false" default="" length="500";
+	
 	// M2M -> Permissions
 	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra" orderby="permission" cascade="all" cacheuse="read-write"  
 			  cfc="contentbox.model.security.Permission" fkcolumn="FK_roleID" linktable="cb_rolePermissions" inversejoincolumn="FK_permissionID"; 
@@ -48,11 +50,17 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 		permissionList	= '';
 		return this;
 	}
-	
+
+	/**
+	* Get the role name, same as getRole()
+	*/
+	string function getName(){
+		return variables.role;
+	}
 	
 	/**
 	* Check for permission
-	* @slug.hint the slug of the permission to check.
+	* @slug.hint The permission slug or list of slugs to validate the role has. If it's a list then they are ORed together
 	*/
 	boolean function checkPermission(required slug){
 		// cache list
@@ -60,12 +68,19 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 			var q = entityToQuery( getPermissions() );
 			permissionList = valueList( q.permission );	
 		}
-		// checks
-		if( listFindNoCase(permissionList, arguments.slug) ){
-			return true;
+		
+		// Do verification checks
+		var aList = listToArray( arguments.slug );
+		var isFound = false;
+		
+		for( var thisPerm in aList ){
+			if( listFindNoCase( permissionList, trim( thisPerm ) ) ){
+				isFound = true;
+				break;
+			}
 		}
 		
-		return false;
+		return isFound;
 	}
 	
 	/**

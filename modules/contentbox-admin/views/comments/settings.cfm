@@ -8,13 +8,13 @@
 			<div class="header">
 				<i class="icon-comments icon-large"></i>
 				Comment Settings
+
+                <!--- Back To Inbox --->
+                #html.href(text="<i class='icon-reply'></i> Back To Inbox", class="btn btn-inverse pull-right", href=event.buildlink(prc.xehComments), style="margin-top:5px")# 
 			</div>
 			<!--- Body --->
 			<div class="body">	
 	
-				<!--- Back To Inbox --->	
-				#html.href(text="<i class='icon-reply'></i> Back To Inbox", class="btn pull-right", href=event.buildlink(prc.xehComments))#			
-			
 				<!--- messageBox --->
 				#getPlugin("MessageBox").renderit()#
 			
@@ -93,6 +93,15 @@
 								    </div>
 								</div>	
     							
+                                <!--- Auto-Delete Moderated Comments --->
+                                <div class="control-group">
+                                    #html.label(field="cb_comments_moderation_expiration",content="Number of days before auto-deleting moderated comments:")#
+                                    <div class="controls">
+                                        <small>If a comment has been moderated, it will be auto-deleted after the specified number of days (set to 0 to disable auto-deletion).</small><br/>
+                                        #html.inputField(name="cb_comments_moderation_expiration",value=prc.cbSettings.cb_comments_moderation_expiration,type="number")#
+                                    </div>
+                                </div>  
+
     							<!--- Moderated Keywords --->
 								<div class="control-group">
 								    #html.label(field="cb_comments_moderation_blacklist",content="Moderated keywords (Affects content, Author IP, or Author Email):",class="control-label")#

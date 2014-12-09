@@ -18,7 +18,7 @@
 			</cfif>
 			
 			<!--- CategoryForm --->
-			#html.startForm(name="categoryForm",action=prc.xehCategoryRemove,class="form-vertical")#
+			#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical")#
 			<input type="hidden" name="categoryID" id="categoryID" value="" />
 			
 			<!--- Content Bar --->
@@ -26,12 +26,20 @@
 				<!--- Command Bar --->
 				<div class="pull-right">
 					<!---Global --->
+					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 					<div class="btn-group">
 				    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
 							Global Actions <span class="caret"></span>
 						</a>
 				    	<ul class="dropdown-menu">
+				    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+				    		<li><a href="javascript:bulkRemove()" class="confirmIt"
+									data-title="Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="icon-trash"></i> Delete Selected</a></li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 				    		<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 				    		<li class="dropdown-submenu">
 								<a href="##"><i class="icon-download icon-large"></i> Export All</a>
 								<ul class="dropdown-menu text-left">
@@ -39,10 +47,14 @@
 									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 								</ul>
 							</li>
+							</cfif>
 				    	</ul>
 				    </div>
+					</cfif>
+					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 					<!--- Create --->
 					<a href="##" onclick="return createCategory();" class="btn btn-danger">Create Category</a>
+					</cfif>
 				</div>
 				<!--- Filter Bar --->
 				<div class="filterBar">
@@ -56,16 +68,21 @@
 			<table name="categories" id="categories" class="tablesorter table table-striped table-hover" width="98%">
 				<thead>
 					<tr>
+						<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
 						<th>Category Name</th>
 						<th>Slug</th>		
 						<th width="75" class="center">Pages</th>
 						<th width="75" class="center">Entries</th>	
-						<th width="75" class="center {sorter:false}">Actions</th>
+						<th width="100" class="center {sorter:false}">Actions</th>
 					</tr>
 				</thead>				
 				<tbody>
 					<cfloop array="#prc.categories#" index="category">
-					<tr>
+					<tr id="categoryID-#category.getCategoryID()#" data-categoryID="#category.getCategoryID()#">
+						<!--- check box --->
+						<td>
+							<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
+						</td>
 						<td><a href="javascript:edit('#category.getCategoryID()#',
 							   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
 							   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
@@ -73,14 +90,16 @@
 						<td class="center"><span class="badge badge-info">#category.getNumberOfPages()#</span></td>
 						<td class="center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
 						<td class="center">
-							<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
-							<!--- Edit Command --->
-							<a href="javascript:edit('#category.getCategoryID()#',
-							   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-							   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
-							<!--- Delete Command --->
-							<a title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
-							</cfif>
+							<div class="btn-group">
+								<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+								<!--- Edit Command --->
+								<a class="btn" href="javascript:edit('#category.getCategoryID()#',
+								   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+								   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
+								<!--- Delete Command --->
+								<a class="btn" title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
+								</cfif>
+							</div>
 						</td>
 					</tr>
 					</cfloop>
@@ -91,7 +110,7 @@
 		</div>	
 	</div>
 </div>
-<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 <!--- Permissions Editor --->
 <div id="categoryEditorContainer" class="modal hide fade">
 	<div id="modalContent">
@@ -114,7 +133,8 @@
 	#html.endForm()#
 	</div>
 </div>
-
+</cfif>
+<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 <!---Import Dialog --->
 <div id="importDialog" class="modal hide fade">
 	<div id="modalContent">
@@ -126,7 +146,10 @@
         <div class="modal-body">
 			<p>Choose the ContentBox <strong>JSON</strong> categories file to import.</p>
 			
-			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
+			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+				name="importFile", 
+				required=true
+			)#
 			
 			<label for="overrideContent">Override Categories?</label>
 			<small>By default all content that exist is not overwritten.</small><br>

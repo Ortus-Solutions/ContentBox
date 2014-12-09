@@ -28,55 +28,69 @@ component extend="baseHandler"{
 		event.paramValue("isFiltering",false);
 
 		// prepare paging plugin
-		rc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
-		rc.paging 		= rc.pagingPlugin.getBoundaries();
-		rc.pagingLink 	= event.buildLink('#prc.xehComments#.page.@page@?');
+		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
+		prc.paging 		 = prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 	 = event.buildLink('#prc.xehComments#.page.@page@?');
 		// Append search to paging link?
-		if( len(rc.searchComments) ){ rc.pagingLink&="&searchComments=#rc.searchComments#"; }
+		if( len(rc.searchComments) ){ prc.pagingLink&="&searchComments=#rc.searchComments#"; }
 		// Append filters to paging link?
-		if( rc.fStatus neq "any" ){ rc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		if( rc.fStatus neq "any" ){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
 		// is Filtering?
 		if( rc.fStatus neq "any" ){ rc.isFiltering = true; }
 
 		// search comments with filters and all
 		var commentResults = commentService.search(search=rc.searchComments,
-											       offset=rc.paging.startRow-1,
+											       offset=prc.paging.startRow-1,
 											       max=prc.cbSettings.cb_paging_maxrows,
 											       isApproved=rc.fStatus);
-		rc.comments 	 	= commentResults.comments;
-		rc.commentsCount 	= commentResults.count;
-		rc.countApproved 	= commentService.getApprovedCommentCount();
-		rc.countUnApproved 	= commentService.getUnApprovedCommentCount();
+		prc.comments 	 	= commentResults.comments;
+		prc.commentsCount 	= commentResults.count;
+		prc.countApproved 	= commentService.getApprovedCommentCount();
+		prc.countUnApproved 	= commentService.getUnApprovedCommentCount();
 
 		// exit Handlers
-		rc.xehCommentEditor 	= "#prc.cbAdminEntryPoint#.comments.editor";
-		rc.xehCommentRemove 	= "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehCommentEditor 	= "#prc.cbAdminEntryPoint#.comments.editor";
+		prc.xehCommentRemove 	= "#prc.cbAdminEntryPoint#.comments.remove";
 		prc.xehCommentstatus 	= "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
-		rc.xehCommentQuickLook	= "#prc.cbAdminEntryPoint#.comments.quicklook";
+		prc.xehCommentQuickLook	= "#prc.cbAdminEntryPoint#.comments.quicklook";
+		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// tab
 		prc.tabComments_inbox = true;
+		
 		// display
 		event.setView("comments/index");
 	}
 
 	// change status
 	function doStatusUpdate(event,rc,prc){
+		// param values
 		event.paramValue("commentID","");
 		event.paramValue("page","1");
+		var data = { "ERROR" = false, "MESSAGES" = "" };
 		// check if comment id list has length
-		if( len(rc.commentID) ){
-			commentService.bulkStatus(commentID=rc.commentID,status=rc.commentStatus);
+		if( len( rc.commentID ) ){
+			commentService.bulkStatus(commentID=rc.commentID, status=rc.commentStatus);
 			// announce event
-			announceInterception("cbadmin_onCommentStatusUpdate",{commentID=rc.commentID,status=rc.commentStatus});
+			announceInterception( "cbadmin_onCommentStatusUpdate", {commentID=rc.commentID,status=rc.commentStatus} );
 			// Message
-			getPlugin("MessageBox").info("#listLen(rc.commentID)# Comment(s) #rc.commentStatus#d");
+			data.messages = "#listLen(rc.commentID)# Comment(s) #rc.commentStatus#d";
+			getPlugin("MessageBox").info( data.messages );
 		}
 		else{
-			getPlugin("MessageBox").warn("No comments selected!");
+			data.messages = "No comments selected!";
+			data.error = true;
+			getPlugin("MessageBox").warn( data.messages );
 		}
-		// relocate back
-		setNextEvent(event=prc.xehComments, queryString="page=#rc.page#");
+		
+		// If ajax call, return as ajax
+		if( event.isAjax() ){
+			event.renderData(data=data, type="json");
+		}
+		else{
+			// relocate back
+			setNextEvent(event=prc.xehComments, queryString="page=#rc.page#");
+		}
 	}
 
 	// editor
@@ -129,10 +143,33 @@ component extend="baseHandler"{
 		setNextEvent(prc.xehComments);
 	}
 
+	function removeAllModerated( event, rc, prc ) {
+		var data = { "ERROR" = false, "MESSAGES" = "" };
+		// announce event
+		announceInterception("cbadmin_preCommentRemoveAllModerated");
+		// passing 0 will delete all unapproved...
+		commentService.deleteUnApprovedComments( 0 );
+		// announce event
+		announceInterception("cbadmin_postCommentRemoveAllModerated");
+		// message
+		data.messages = "Moderated Comment(s) Removed!";
+		getPlugin("MessageBox").info( data.messages );
+		// If ajax call, return as ajax
+		if( event.isAjax() ){
+			event.renderData(data=data, type="json");
+		}
+		else{
+			// relocate back
+			setNextEvent(event=prc.xehComments, queryString="page=1");
+		}
+	}
+
 	// remove
 	function remove(event,rc,prc){
+		// param values
 		event.paramValue("commentID","");
 		event.paramValue("page","1");
+		var data = { "ERROR" = false, "MESSAGES" = "" };
 		// check for length
 		if( len(rc.commentID) ){
 			// announce event
@@ -142,12 +179,22 @@ component extend="baseHandler"{
 			// announce event
 			announceInterception("cbadmin_postCommentRemove",{commentID=rc.commentID});
 			// message
-			getPlugin("MessageBox").info("#deleted# Comment(s) Removed!");
+			data.messages = "#deleted# Comment(s) Removed!";
+			getPlugin("MessageBox").info( data.messages );
 		}
 		else{
-			getPlugin("MessageBox").warn("No comments selected!");
+			data.messages = "No comments selected!";
+			data.error = true;
+			getPlugin("MessageBox").warn( data.messages );
 		}
-		setNextEvent(event=prc.xehComments,queryString="page=#rc.page#");
+		// If ajax call, return as ajax
+		if( event.isAjax() ){
+			event.renderData(data=data, type="json");
+		}
+		else{
+			// relocate back
+			setNextEvent(event=prc.xehComments, queryString="page=#rc.page#");
+		}
 	}
 
 	// pager viewlet
@@ -177,6 +224,7 @@ component extend="baseHandler"{
 		prc.xehCommentPagerQuickLook	= "#prc.cbAdminEntryPoint#.comments.quickLook";
 		prc.xehCommentPagerStatus		= "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
 		prc.xehCommentPagerRemove		= "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// prepare paging plugin
 		prc.commentPager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");

@@ -27,12 +27,12 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		var cbSettings 	= event.getValue(name="cbSettings",private=true);
 		var captcha		= "";
 		var commentForm = "";
-
+		
 		// captcha?
 		if( cbSettings.cb_comments_captcha ){
 			saveContent variable="captcha"{
 				writeOutput("
-					#getMyPlugin(plugin="Captcha",module="contentbox").display()#<br />
+					<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
 					#html.textField(name="captchacode",label="Enter the security code shown above:",required="required",size="50")#
 				");
 			}
@@ -55,7 +55,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 				#html.inputField(name="authorURL",type="url",label="Website:",size="50",value=event.getValue("authorURL",""))#
 
 				#html.textArea(name="content",label="Comment:",required="required",value=event.getValue("content",""))#
-
+				#html.checkBox( name="subscribe", label="Notify me of follow-up comments by email." )#
 				#captcha#
 
 				#cb.event("cbui_postCommentForm")#

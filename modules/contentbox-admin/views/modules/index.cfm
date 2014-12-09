@@ -56,7 +56,7 @@
 							<tr>
 								<th>Module</th>
 								<th>Description</th>
-								<th width="75" class="center">Activated</th>
+								<th class="center">Activated</th>
 								<th width="100" class="center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
@@ -85,18 +85,20 @@
 								</td>
 								<td class="center">
 								<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
+									<div class="btn-group">
 									<!--- Check if active --->
 									<cfif module.getIsActive()>
 										<!--- Update Check --->
-										<a title="Deactivate Module" href="javascript:deactivate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-down icon-large"></i></a>
+										<a class="btn" title="Deactivate Module" href="javascript:deactivate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-down icon-large"></i></a>
 										&nbsp;
 									<cfelse>
-										<a title="Activate Module" href="javascript:activate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-up icon-large"></i></a>
+										<a class="btn" title="Activate Module" href="javascript:activate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-up icon-large"></i></a>
 										&nbsp;
 										<!--- Delete Module --->
-										<a title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
+										<a class="btn" title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
 											data-title="Delete #module.getName()#?"><i class="icon-trash icon-large"></i></a>
 									</cfif>
+									</div>
 								</cfif>
 								</td>
 							</tr>
@@ -147,8 +149,13 @@
 			</div>
 			<div class="body">
 				#html.startForm(name="moduleUploadForm",action=prc.xehModuleUpload,multipart=true,novalidate="novalidate")#
-	
-					#html.fileField(name="fileModule",label="Upload Module: ", class="input-block-level",required="required")#
+					#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+						name="fileModule",
+						label="Upload Module:",
+						columnWidth=2,
+						useRemoveButton=false,
+						required=true
+					)#
 	
 					<div class="actionBar" id="uploadBar">
 						#html.submitButton(value="Upload & Install",class="btn btn-danger")#

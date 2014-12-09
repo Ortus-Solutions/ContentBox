@@ -37,7 +37,12 @@ interface{
 	/**
 	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc. 
 	* return the appropriate JavaScript.
-	* Each editor must implement the following JS functions: checkIsDirty(), getEditorContent()
+	* Each editor must implement the following JS functions: 
+	* checkIsDirty() - Checks if the editor has detected any changes<br>
+	* getEditorContent() - Get's the HTML value of the content field<br>
+	* getEditorExcerpt() - Get's the HTML value of the excerpt field<br>
+	* updateEditorContent() - Updates the HTML value of the content field from the editor (if editor supports it)<br>
+	* updateEditorExcerpt() - Updates the HTML value of the excerpt field from the editor (if editor supports it)<br>
 	*/
 	function loadAssets();
 	

@@ -1,28 +1,38 @@
 /**
 * The ContentBox installer handler
 */
-component{
+component cache="false"{
 
 	// DI
-	property name="installerService" inject="id:installerService@cbi";
-	property name="settingService" 	 inject="id:settingService@cb";
+	property name="installerService" 	inject="installerService@cbi";
+	property name="settingService" 	 	inject="settingService@cb";
+	property name="cb"					inject="cbhelper@cb";
 	
-	function preHandler(event,currentAction){
-		var prc = event.getCollection(private=true);
+	function preHandler( event, currentAction, rc, prc ){
 		// setup asset root from administrator as that is the holder of 
 		// all things assets :)
-		prc.assetRoot = GetContextRoot() & getModuleSettings("contentbox-admin").mapping;
+		prc.assetRoot 		= getContextRoot() & getModuleSettings( "contentbox-admin" ).mapping;
+		prc.adminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
+		prc.uiEntryPoint 	= getModuleSettings( "contentbox-ui" ).entryPoint;
+		prc.langs 			= getModuleSettings( "contentbox" ).settings.languages;
 	}
 
-	function index(event,rc,prc){
-		event.setView("home/index");
+	function index( event, rc, prc ){
+		prc.xehLang = event.buildLink( "cbInstaller/language" );
+		event.setView( "home/index" );
 	}
 	
-	function install(event,rc,prc){
+	function changeLang( event, rc, prc ){
+		event.paramValue( "lang", "en_US" );
+		setFWLocale( rc.lang );
+		setNextEvent( "cbInstaller" );
+	}
+	
+	function install( event, rc, prc ){
 		// Verify installed?
 		if( settingService.isCBReady() ){
-			getPlugin("MessageBox").warn("Cannot run installer again as ContentBox is already installed.");
-			setNextEvent(  getModuleSettings("contentbox-admin").entryPoint );
+			getPlugin( "MessageBox" ).warn( cb.r( "validation.alreadyinstalled@installer" ) );
+			setNextEvent(  prc.adminEntryPoint );
 		}
 		// start installation
 		installerService.execute( populateModel("SetupBean@cbi") );
@@ -32,11 +42,12 @@ component{
 		setNextEvent("cbinstaller/finished");
 	}
 	
-	function finished(event,rc,prc){
-		prc.xehAdmin = getModuleSettings("contentbox-admin").entryPoint;
-		prc.xehSite  = getModuleSettings("contentbox-ui").entryPoint;
+	function finished( event, rc, prc ){
+		prc.xehAdmin = prc.adminEntryPoint;
+		prc.xehSite  = prc.uiEntryPoint;
+		prc.xehLang  = event.buildLink( "cbInstaller/language" );
 		
-		event.setView("home/finished");
+		event.setView( "home/finished" );
 	}
 
 }

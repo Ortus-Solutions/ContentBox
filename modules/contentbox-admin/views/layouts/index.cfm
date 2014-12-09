@@ -62,7 +62,7 @@
 								<!---Author --->
 								<div id="layout-author">
 									<i class="icon-user"></i>
-									<strong>Author: </strong> <a href="#prc.layouts.authorURL#" title="#prc.layouts.AuthorURL#" target="_blank">#prc.layouts.Author#</a>
+									<strong>Author: </strong> <a href="#prc.activelayout.authorURL#" title="#prc.activelayout.AuthorURL#" target="_blank">#prc.activelayout.Author#</a>
 								</div>
 								<!--- Version --->
 								<div id="layout-version>">
@@ -146,7 +146,11 @@
 								#html.startForm(name="layoutUploadForm",action=prc.xehlayoutupload,multipart=true,novalidate="novalidate",class="form-vertical")#
 									<fieldset>
 										<legend>Layout Uploader</legend>
-										#html.fileField(name="fileLayout",label="Upload Layout (.zip): ", class="textfield",required="required", size="50",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#		
+										#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+											name="fileLayout",
+											label="Upload Layout (.zip):",
+											required=true
+										)#
     									<div id="uploadBar">
     										#html.submitButton(value="Upload & Install",class="btn btn-danger")#
     									</div>
@@ -186,8 +190,10 @@
 												<br/>
 												<!--- Button Bar --->
 												<cfif prc.oAuthor.checkPermission("LAYOUT_ADMIN") AND prc.cbSettings.cb_site_layout NEQ prc.layouts.name>
+													<div class="btn-group">
 													<button class="btn btn-primary" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.layouts.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;">Preview</button>
 													<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehActivate)#?layoutname=#prc.layouts.name#')">Activate</button>
+													</div>
 												</cfif>		
 											</td>
 											<td>

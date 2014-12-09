@@ -34,8 +34,8 @@ Description		:
 				instance.generationPath = instance.generationPath & "/";
 			}
 			
-			instance.version 		= "2.0";
-			instance.mockGenerator 	= createObject("component","coldbox.system.testing.mockutils.MockGenerator").init(this);
+			instance.version 		= "2.3.0.00076";
+			instance.mockGenerator 	= createObject("component","coldbox.system.testing.mockutils.MockGenerator").init( this, true );
 			
 			return this;
 		</cfscript>
@@ -243,16 +243,17 @@ Description		:
 	<!--- $results --->
 	<cffunction name="$results" output="false" access="public" returntype="any" hint="Use this method to mock more than 1 result as passed in arguments.  Can only be called when chained to a $() or $().$args() call.  Results will be recycled on a multiple of their lengths according to how many times they are called, simulating a state-machine algorithm. Injected as: $results()">
 		<!--- Check if current method set? --->
-		<cfif len(this._mockCurrentMethod)>
+		<cfif len( this._mockCurrentMethod )>
 			<cfscript>
 				// Check if arguments hash is set
-				if( len(this._mockCurrentArgsHash) ){
-					this._mockArgResults[this._mockCurrentArgsHash] = arguments;
+				if( len( this._mockCurrentArgsHash ) ){
+					this._mockArgResults[ this._mockCurrentArgsHash ] = arguments;
 				}
 				else{
 					// Save incoming results array
-					this._mockResults[this._mockCurrentMethod] = arguments;
+					this._mockResults[ this._mockCurrentMethod ] = arguments;
 				}
+
 				// Cleanup
 				this._mockCurrentMethod = "";
 				this._mockCurrentArgsHash = "";
@@ -263,7 +264,36 @@ Description		:
 		
 		<cfthrow type="MockFactory.IllegalStateException"
 			     message="No current method name set"
-			     detail="This method was probably called without chaining it to a mockMethod() call. Ex: obj.$().mockResults(), or obj.$('method').mockArgs().mockResults()">
+			     detail="This method was probably called without chaining it to a $() call. Ex: obj.$().$results(), or obj.$('method').$args().$results()">
+	</cffunction>
+
+	<!--- $callback --->
+	<cffunction name="$callback" output="false" access="public" returntype="any" hint="Use this method to mock more than 1 result as passed in arguments.  Can only be called when chained to a $() or $().$args() call. Results will be determined by the callback sent in. Basically the method will call this callback and return its results)">
+		<cfargument name="target" type="any" required="true" hint="The UDF or closure to execute as a callback">
+
+		<!--- Check if current method set? --->
+		<cfif len( this._mockCurrentMethod )>
+			<cfscript>
+				// Check if arguments hash is set
+				if( len( this._mockCurrentArgsHash ) ){
+					this._mockArgResults[ this._mockCurrentArgsHash ] = { type="callback", target=arguments.target };
+				}
+				else{
+					// Save incoming callback as what it should return
+					this._mockCallbacks[ this._mockCurrentMethod ][ 1 ] = arguments.target;
+				}
+				
+				// Cleanup
+				this._mockCurrentMethod = "";
+				this._mockCurrentArgsHash = "";
+				
+				return this;
+			</cfscript>
+		</cfif>
+		
+		<cfthrow type="MockFactory.IllegalStateException"
+			     message="No current method name set"
+			     detail="This method was probably called without chaining it to a $() call. Ex: obj.$().$callback(), or obj.$('method').$args().$callback()">
 	</cffunction>
 	
 	<!--- $args --->
@@ -289,14 +319,16 @@ Description		:
 	<!--- $ --->
 	<cffunction name="$" output="false" access="public" returntype="any" hint="Mock a Method, simple but magical Injected as: $()">
 		<!--- ************************************************************* --->
-		<cfargument name="method" 	type="string" 	required="true" hint="The method you want to mock or spy on"/>
-		<cfargument name="returns" 	type="any" 		required="false" hint="The results it must return, if not passed it returns void or you will have to do the mockResults() chain"/>
-		<cfargument name="preserveReturnType" type="boolean" required="true" default="true" hint="If false, the mock will make the returntype of the method equal to ANY"/>
-		<cfargument name="throwException" type="boolean" required="false" default="false" hint="If you want the method call to throw an exception"/>
-		<cfargument name="throwType" 	  type="string"  required="false" default="" hint="The type of the exception to throw"/>
-		<cfargument name="throwDetail" 	  type="string"  required="false" default="" hint="The detail of the exception to throw"/>
-		<cfargument name="throwMessage"	  type="string"  required="false" default="" hint="The message of the exception to throw"/>
-		<cfargument name="callLogging" 	  type="boolean" required="false" default="false" hint="Will add the machinery to also log the incoming arguments to each subsequent calls to this method"/>
+		<cfargument name="method" 				type="string" 	required="true"  hint="The method you want to mock or spy on"/>
+		<cfargument name="returns" 				type="any" 		required="false" hint="The results it must return, if not passed it returns void or you will have to do the mockResults() chain"/>
+		<cfargument name="preserveReturnType" 	type="boolean"  required="true"  default="true" hint="If false, the mock will make the returntype of the method equal to ANY"/>
+		<cfargument name="throwException" 		type="boolean"  required="false" default="false" hint="If you want the method call to throw an exception"/>
+		<cfargument name="throwType" 	  		type="string"   required="false" default="" hint="The type of the exception to throw"/>
+		<cfargument name="throwDetail" 	  		type="string"   required="false" default="" hint="The detail of the exception to throw"/>
+		<cfargument name="throwMessage"	  		type="string"   required="false" default="" hint="The message of the exception to throw"/>
+		<cfargument name="callLogging" 	  		type="boolean"  required="false" default="false" hint="Will add the machinery to also log the incoming arguments to each subsequent calls to this method"/>
+		<cfargument name="preserveArguments" 	type="boolean"  required="false" default="false" hint="If true, argument signatures are kept, else they are ignored. If true, BEWARE with $args() matching as default values and missing arguments need to be passed too."/>
+		<cfargument name="callback" 			type="any" 		required="false" hint="A callback to execute that should return the desired results, this can be a UDF or closure."/>
 		<!--- ************************************************************* --->
 		<cfscript>
 			var fncMD = structnew();
@@ -328,24 +360,34 @@ Description		:
 			}
 			
 			// Remove Method From Object
-			structDelete(this,arguments.method);
-			structDelete(variables,arguments.method);
+			structDelete( this,arguments.method );
+			structDelete( variables,arguments.method );
 			
 			// Generate Mock Method
 			arguments.metadata = fncMD;
 			arguments.targetObject = this;
-			oMockGenerator.generate(argumentCollection=arguments);
+			oMockGenerator.generate( argumentCollection=arguments );
 			
 			// Results Setup For No Argument Definitions or base results
-			if( structKeyExists(arguments, "returns") ){
-				this._mockResults[arguments.method] = ArrayNew(1);
-				this._mockResults[arguments.method][1] = arguments.returns;
+			if( structKeyExists( arguments, "returns" ) ){
+				this._mockResults[ arguments.method ] = ArrayNew( 1 );
+				this._mockResults[ arguments.method ][ 1 ] = arguments.returns;
 			}
 			else{
-				this._mockResults[arguments.method] = ArrayNew(1);
+				this._mockResults[ arguments.method ] = ArrayNew( 1 );
 			}
+
+			// Callbacks Setup For No Argument Definitions or base results
+			if( structKeyExists( arguments, "callback" ) ){
+				this._mockCallbacks[ arguments.method ] = ArrayNew( 1 );
+				this._mockCallbacks[ arguments.method ][ 1 ] = arguments.callback;
+			}
+			else{
+				this._mockCallbacks[ arguments.method ] = ArrayNew( 1 );
+			}
+
 			// Create Mock Call Counters
-			this._mockMethodCallCounters["#arguments.method#"] = 0;
+			this._mockMethodCallCounters[ "#arguments.method#" ] = 0;
 			
 			// Save method name for concatenation
 			this._mockCurrentMethod = arguments.method;
@@ -368,6 +410,7 @@ Description		:
 	<cfscript>
 		var rtn 					= structnew();
 		rtn.mockResults 			= this._mockResults;
+		rtn.mockCallBacks 			= this._mockCallbacks;
 		rtn.mockArgResults 			= this._mockArgResults;
 		rtn.mockMethodCallCounters 	= this._mockMethodCallCounters;
 		rtn.mockCallLoggingActive 	= this._mockCallLoggingActive;
@@ -381,8 +424,10 @@ Description		:
 	<!--- $reset --->
     <cffunction name="$reset" output="false" access="public" returntype="any" hint="Reset all mock counters and logs on the targeted mock. Injected as $reset">
     	<cfscript>
-    		this._mockMethodCallCounters = structnew();
-			this._mockCallLoggers 		 = structnew();
+			for( var item in this._mockMethodCallCounters ){
+				this._mockMethodCallCounters[ item ]	= 0;
+				this._mockCallLoggers[ item ]			= [];
+            }
 			return this;
 		</cfscript>
     </cffunction>
@@ -394,51 +439,48 @@ Description		:
 		<cfargument name="queryData"  type="string" required="true" hint="The data to create queries">
 		<cfscript>
 		/**
-		* Accepts a specifically formatted chunk of text, and returns it as a query object.
-		* v2 rewrite by Jamie Jackson
-		*
-		* @param queryData      Specifically format chunk of text to convert to a query. (Required)
-		* @return Returns a query object.
-		* @author Bert Dawson (bert@redbanner.com)
-		* @version 2, December 18, 2007
-		* 
-		*/
+		 * Accepts a specifically formatted chunk of text, and returns it as a query object.
+		 * v2 rewrite by Jamie Jackson
+		 * v3 rewrite by James Davis
+		 *
+		 * @param queryData      Specifically format chunk of text to convert to a query. (Required)
+		 * @return Returns a query object.
+		 * @author Bert Dawson (bert@redbanner.com)
+		 * @version 3, June 25, 2013
+		 *
+		 */
 		var fieldsDelimiter="|";
-	    var colnamesDelimiter=",";
-	    var listOfColumns="";
-	    var tmpQuery="";
-	    var numLines="";
-	    var cellValue="";
-	    var cellValues="";
-	    var colName="";
-	    var lineDelimiter=chr(10) & chr(13);
-	    var lineNum=0;
-	    var colPosition=0;
-	
-	    // the first line is the column list, eg "column1,column2,column3"
-	    listOfColumns = Trim(ListGetAt(queryData, 1, lineDelimiter));
-	    
-	    // create a temporary Query
-	    tmpQuery = QueryNew(listOfColumns);
-	
-	    // the number of lines in the queryData
-	    numLines = ListLen(queryData, lineDelimiter);
-	    
-	    // loop though the queryData starting at the second line
-	    for(lineNum=2; lineNum LTE numLines; lineNum = lineNum + 1) {
-	     cellValues = ListGetAt(queryData, lineNum, lineDelimiter);
-	
-	        if (ListLen(cellValues, fieldsDelimiter) IS ListLen(listOfColumns,",")) {
-	            QueryAddRow(tmpQuery);
-	            for (colPosition=1; colPosition LTE ListLen(listOfColumns); colPosition = colPosition + 1){
-	                cellValue = Trim(ListGetAt(cellValues, colPosition, fieldsDelimiter));
-	                colName = Trim(ListGetAt(listOfColumns,colPosition));
-	                QuerySetCell(tmpQuery, colName, cellValue);
-	            }
-	        }
-	    }
-	    
-	    return( tmpQuery );
+		var listOfColumns="";
+		var tmpQuery="";
+		var cellValues="";
+		var lineDelimiter=chr(10) & chr(13);
+		var lineNum=0;
+		var colPosition=0;
+		var queryRows = "";
+		var columnArray = '';
+
+		// the first line is the column list, eg "column1,column2,column3"
+		listOfColumns = Trim(ListFirst(queryData, lineDelimiter));
+		columnArray = ListToArray(listOfColumns);
+
+		// create a temporary Query
+		tmpQuery = QueryNew(listOfColumns);
+
+		// Array of rows (ignoring empty rows)
+		queryRows = ListToArray(queryData,lineDelimiter);
+
+		// loop though the queryData starting at the second line
+		for(lineNum=2; lineNum <= ArrayLen(queryRows); lineNum = lineNum + 1) {
+			cellValues = ListToArray(queryRows[lineNum], fieldsDelimiter, true); // Array of cell values, not ignoring empty values.
+			if (ArrayLen(cellValues) == listLen(listOfColumns)) {
+				QueryAddRow(tmpQuery);
+				for (colPosition=1; colPosition <= ArrayLen(cellValues); colPosition++){
+					QuerySetCell(tmpQuery,Trim(columnArray[colPosition]), Trim(cellValues[colPosition]));
+				}
+			}
+		}
+
+		return( tmpQuery );
 		</cfscript>
 	</cffunction>
 	
@@ -452,13 +494,13 @@ Description		:
 			var arg = "";
 			
 			for(arg in argOrderedTree) {
-				if(NOT structKeyExists(argOrderedTree, arg)) {
+				if( NOT structKeyExists( argOrderedTree, arg ) ){
 					/* we aren't going to be able to serialize an undefined variable, this might occur if an arguments structure
 					 * containing optional parameters is passed by argumentCollection=arguments to the mocked method.
 					 */
-					 
+					 continue;
 				}
-				else if(isSimpleValue(argOrderedTree[arg])) {
+				else if( isSimpleValue( argOrderedTree[ arg ] ) ){
 					/* toString() works best for simple values.  It is equivalent in the following scenario
 					 * i = 1;
 					 * j = i; j++; j--;
@@ -468,19 +510,22 @@ Description		:
 					 * 
 					 * Strangely, it converts a literal real number 1.0 to the string "1.0".
 					 */
-					serializedArgs &= toString(argOrderedTree[arg]);
+					serializedArgs &= toString( argOrderedTree[ arg ] );
 				}
-				else {
-					/* serializeJSON works for complex datatypes, but Objects have to be the same instance not just the same component in equivalent state
-					 */
-					serializedArgs &= serializeJSON(argOrderedTree[arg]);
+				else if( isObject( argOrderedTree[ arg ] ) and isInstanceOf( argOrderedTree[ arg ], "Component" ) ){
+					// If an object and CFC, just use serializeJSON 
+					serializedArgs &= serializeJSON( argOrderedTree[ arg ] );
+				}
+				else{
+					// Get obj rep
+					serializedArgs &= argOrderedTree[ arg ].toString();
 				}
 				
 			}
 			/* ColdFusion isn't case sensitive, so case of string values shouldn't matter.  We do it after serializing all args 
 			 * to catch any values deep in complex variables.
 			 */
-			return hash(lcase(serializedArgs));
+			return hash( lcase( serializedArgs ) );
 		</cfscript>
 	</cffunction>
 
@@ -493,26 +538,22 @@ Description		:
 			var obj = target;
 			
 			// Mock Method Results Holder
-			obj._mockResults = structnew();
+			obj._mockResults 	= structnew();
+			obj._mockCallbacks 	= structnew();
 			obj._mockArgResults = structnew();
 			// Call Counters
 			obj._mockMethodCallCounters = structnew();
 			// Call Logging
 			obj._mockCallLoggingActive = false;
-			
 			// Mock Method Call Logger
 			obj._mockCallLoggers = structnew();
-			
 			// Mock Generation Path
 			obj._mockGenerationPath = getGenerationPath();
-			
 			// Original Metadata
 			obj._mockOriginalMD = getMetadata(obj);
-			
 			// Chanining Properties
 			obj._mockCurrentMethod = "";
 			obj._mockCurrentArgsHash = "";
-			
 			// Mock Method
 			obj.$ 					= variables.$;
 			// Mock Property
@@ -520,6 +561,7 @@ Description		:
 			obj.$getProperty	 	= variables.$getProperty;
 			// Mock Results
 			obj.$results			= variables.$results;
+			obj.$callback 			= variables.$callback;
 			// Mock Arguments
 			obj.$args				= variables.$args;
 			// CallLog
@@ -543,13 +585,6 @@ Description		:
 	<!--- Get ColdBox Util --->
 	<cffunction name="getUtil" access="private" output="false" returntype="coldbox.system.core.util.Util" hint="Create and return a util object">
 		<cfreturn createObject("component","coldbox.system.core.util.Util")/>
-	</cffunction>
-	
-	<cffunction name="maildump">
-		<cfargument name="content" default="failure">
-		<cfargument name="to" default="safeldkamp@natsem.com">
-		<cfargument name="subject" default="MockBox.cfc">
-		<cfmail from="webalerts@natsem.com" to="#to#" subject="#subject#" type=HTML><cfdump var="#arguments.content#" expand="true"></cfmail>
 	</cffunction>
 	
 </cfcomponent>

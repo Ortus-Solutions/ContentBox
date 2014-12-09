@@ -6,17 +6,19 @@
 			<i class="icon-th icon-large"></i>
 			Media Manager <span class="label">#rc.library#</span>
 			
-			<div class="btn-group pull-right">
-			    <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="##">
-			    	<i class="icon-exchange"></i> Switch Library
-			    	<span class="caret"></span>
-			    </a>
-				<ul class="dropdown-menu">
-					<cfloop array="#prc.libraryOptions#" index="thisCollection">
-					<li><a href="javascript:switchLibrary( '#thisCollection.value#' )">#thisCollection.name#</a>	
-					</cfloop>
-				</ul>
-		    </div>
+			<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
+				<div class="btn-group pull-right">
+				    <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="##">
+				    	<i class="icon-exchange"></i> Switch Library
+				    	<span class="caret"></span>
+				    </a>
+					<ul class="dropdown-menu">
+						<cfloop array="#prc.libraryOptions#" index="thisCollection">
+						<li><a href="javascript:switchLibrary( '#thisCollection.value#' )">#thisCollection.name#</a>	
+						</cfloop>
+					</ul>
+			    </div>
+		    </cfif>
 		</div>
 		
 		<!--- Body --->

@@ -15,6 +15,20 @@ $(document).ready(function() {
 		toolbar: "search, go_to_line, fullscreen, |, undo, redo, |, select_font,|, syntax_selection,|, change_smooth_selection, highlight, reset_highlight, word_wrap, |, help"
 	});
 });
+function getWidgetPreviewURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#'; }
+function getWidgetInstanceURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#'; }
+function testWidgetCode(){
+	$widgetEditorForm = $("##widgetEditForm");
+	var attributes = {
+		modal: true,
+		mode: 'Test',
+		widgetName: '#prc.widget.name#',
+		widgetType: '#prc.widget.widgetType#',
+		widgetUDF: '#prc.widget.udf#'
+	};
+    openRemoteModal( '#event.buildLink( prc.xehWidgetTest )#', attributes, 1000, 650 );
+	return false;
+}
 function saveWidgetCode(){
 	var $uploader = $("##uploadBarLoader");
 	var $status = $("##uploadBarLoaderStatus");

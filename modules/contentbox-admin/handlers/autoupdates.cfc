@@ -23,7 +23,7 @@ component extends="baseHandler"{
 		prc.updateSlugBeta 		= getModuleSettings("contentbox").settings.updateSlug_beta;
 
 		// keep logs for review
-		flash.keep("udpateLog");
+		flash.keep("updateLog");
 		// issue application stop
 		if( flash.exists("updateRestart") and flash.get("updateRestart") ){
 			flash.saveFlash();

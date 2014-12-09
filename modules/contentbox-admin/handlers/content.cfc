@@ -5,7 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="contentService"		inject="id:contentService@cb";
-	property name="customHTMLService"	inject="id:customHTMLService@cb";
+	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 
@@ -30,9 +30,8 @@ component extends="baseHandler"{
 				rc.layout = "blog";
 				break; 
 			}
-			case "CustomHTML" : {
-				var oContent = customHTMLService.new();
-				oContent.setMarkup( rc.markup );
+			case "ContentStore" : { 
+				var oContent = contentStoreService.new();
 				prc.preview = oContent.renderContentSilent( rc.content );
 				event.setView(view="content/simplePreview", layout="ajax");
 				return;
@@ -54,10 +53,6 @@ component extends="baseHandler"{
 													isPublished="all",
 													searchActiveContent=false);
 		prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
-		
-		// Search for Custom HTML
-		prc.customHTML = customHTMLService.search( search=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
-		prc.minCustomHTMLCount = ( prc.customHTML.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.customHTML.count : prc.cbSettings.cb_admin_quicksearch_max );
 		
 		// Search for Authors
 		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
@@ -83,4 +78,62 @@ component extends="baseHandler"{
 		event.renderData(data=data, type="json");
 	}
 
+	// related content selector
+	function relatedContentSelector( event, rc, prc ){
+		// paging default
+		event.paramValue( "page", 1 );
+		event.paramValue( "search", "" );
+		event.paramValue( "clear", false );
+		event.paramValue( "excludeIDs", "" );
+		event.paramValue( "contentType", "" );
+
+		// exit handlers
+		prc.xehRelatedContentSelector	= "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+
+		// prepare paging plugin
+		prc.pagingPlugin 	= getMyPlugin( plugin="Paging", module="contentbox" );
+		prc.paging 	  		= prc.pagingPlugin.getBoundaries();
+		prc.pagingLink 		= "javascript:pagerLink( @page@, '#rc.contentType#' )";
+
+		// search entries with filters and all
+		var contentResults = contentService.searchContent(searchTerm=rc.search,
+											 offset=prc.paging.startRow-1,
+											 max=prc.cbSettings.cb_paging_maxrows,
+											 sortOrder="slug asc",
+											 searchActiveContent=false,
+											 contentTypes=rc.contentType,
+											 excludeIDs=rc.excludeIDs);
+		// setup data for display
+		prc.content = contentResults.content;
+		prc.contentCount  = contentResults.count;
+		prc.CBHelper 	= CBHelper;
+
+		// if ajax and searching, just return tables
+		return renderView(view="content/relatedContentResults", module="contentbox-admin");
+	}
+
+	function showRelatedContentSelector( event, rc, prc ) {
+		event.paramValue( "search", "" );
+		event.paramValue( "clear", false );
+		event.paramValue( "excludeIDs", "" );
+		event.paramValue( "contentType", "Page,Entry,ContentStore" );
+		// exit handlers
+		prc.xehRelatedContentSelector	= "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+		prc.CBHelper = CBHelper;
+		event.setView(view="content/relatedContentSelector",layout="ajax");
+	}
+
+	function breakContentLink( event, rc, prc ) {
+		event.paramValue( "contentID", "" );
+		event.paramValue( "linkedID", "" );
+		var data = {};
+		if( len( rc.contentID ) && len( rc.linkedID ) ) {
+			var currentContent = ContentService.get( rc.contentID );
+			var linkedContent = ContentService.get( rc.linkedID );
+			linkedContent.removeRelatedContent( currentContent );
+			ContentService.save( linkedContent );
+			data[ "SUCCESS" ] = true;
+		}
+		event.renderData( data=data, type="json" );
+	}
 }

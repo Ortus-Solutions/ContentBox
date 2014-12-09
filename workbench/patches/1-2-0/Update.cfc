@@ -168,7 +168,7 @@ component implements="contentbox.model.updates.IUpdate"{
     { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
     { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbCustomHTML","cbLinks","cbEntryLinks" ] }
 ]' );
-		addSetting( "cb_editors_ckeditor_extraplugins", "cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre" );
+		addSetting( "cb_editors_ckeditor_extraplugins", "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,wsc,mediaembed,insertpre" );
 
 
 	}

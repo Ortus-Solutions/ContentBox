@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox UI Module";
-	this.version			= "1.5.5";
+	this.version			= "2.0.0.@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 
@@ -57,7 +57,17 @@ component {
 			{pattern="/__page_preview", handler="page", action="preview" },
 			// media delivery
 			{pattern="/__media", handler="media", action="index"},
-			
+			// captcha delivery
+			{pattern="/__captcha", handler="media", action="captcha"},
+			// subscribe link
+			{pattern="/__subscribe", handler="subscription", action="subscribe"},
+			// manage subscriptions
+			{pattern="/__subscriptions/:subscribertoken", handler="subscription", action="getSubscriptions"},
+			// remove subscriptions
+			{pattern="/__removesubscriptions/", handler="subscription", action="removeSubscriptions"},
+			// unsubscribe link for single subscription
+			{pattern="/__unsubscribe/:subscriptionToken", handler="subscription", action="unsubscribe" },
+
 			/************************************** RSS ROUTES *********************************************/
 
 			// Global Page RSS feeds with filtering
@@ -111,7 +121,7 @@ component {
 				// Code Interception points
 				"cbui_onPageNotFound","cbui_onEntryNotFound","cbui_onError","cbui_preRequest","cbui_postRequest","cbui_onRendererDecoration","cbui_onContentSearch",
 				// Fixed Handler Points
-				"cbui_onIndex","cbui_onArchives","cbui_onEntry","cbui_onPage","cbui_preCommentPost","cbui_onCommentPost",
+				"cbui_onIndex","cbui_onArchives","cbui_onEntry","cbui_onPage","cbui_preCommentPost","cbui_onCommentPost","cbui_onCommentModerationRules",
 				// Fixed HTML Points
 				"cbui_preEntryDisplay","cbui_postEntryDisplay","cbui_preIndexDisplay","cbui_postIndexDisplay","cbui_preCommentForm","cbui_postCommentForm",
 				"cbui_prePageDisplay","cbui_postPageDisplay","cbui_preArchivesDisplay","cbui_postArchivesDisplay",

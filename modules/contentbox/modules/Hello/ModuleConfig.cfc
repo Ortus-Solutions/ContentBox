@@ -134,7 +134,7 @@ Optional Methods
 		// Let's add ourselves to the main menu in the Modules section
 		var menuService = controller.getWireBox().getInstance("AdminMenuService@cb");
 		// Add Menu Contribution
-		menuService.addSubMenu(topMenu=menuService.MODULES,name="HelloContentBox",label="Hello ContentBox",href="#menuService.buildModuleLink('helloContentBox','home')#");
+		menuService.addSubMenu(topMenu=menuService.MODULES,name="HelloContentBox",label="Hello ContentBox",href="#menuService.buildModuleLink('HelloContentBox','home')#");
 	}
 
 	/**

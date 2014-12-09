@@ -19,7 +19,7 @@ $(document).ready(function() {
 	});
 	</cfif>
 });
-<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
+<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
 function edit(permissionID,permission,description){
 	openModal( $("##permissionEditorContainer"), 500, 200 );
 	$permissionEditor.find("##permissionID").val( permissionID );

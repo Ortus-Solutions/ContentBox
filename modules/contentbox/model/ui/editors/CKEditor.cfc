@@ -105,6 +105,23 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 			function getEditorContent(){
 				return $content.ckeditorGet().getData();
 			}
+			function getEditorExcerpt(){
+				return $excerpt.ckeditorGet().getData();
+			}
+			function updateEditorContent(){
+				CKEDITOR.instances.content.updateElement();
+			}
+			function updateEditorExcerpt(){
+				CKEDITOR.instances.excerpt.updateElement();
+			}
+			function insertEditorContent( editorName, content ){
+				// if simple value, insert as html
+				if( jQuery.type( content ) == 'string' )
+					$( '##' + editorName ).ckeditorGet().insertHtml( content );
+				// else insert as element
+				else
+					$( '##' + editorName ).ckeditorGet().insertElement( content );
+			}
 			");
 		}
 		
@@ -152,7 +169,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 					#extraConfig#
 					toolbar: ckToolbar,
 					toolbarCanCollapse: true,
-					height:300,
+					height:400,
 					filebrowserBrowseUrl : '#event.buildLink( xehCKFileBrowserURL )#',
 					filebrowserImageBrowseUrl : '#event.buildLink( xehCKFileBrowserURLIMage )#',
 					filebrowserFlashBrowseUrl : '#event.buildLink( xehCKFileBrowserURLFlash )#',
@@ -165,7 +182,7 @@ component implements="contentbox.model.ui.editors.IEditor" accessors="true" sing
 					#extraConfig#
 					toolbar: ckExcerptToolbar,
 					toolbarCanCollapse: true,
-					height: 175,
+					height: 200,
 					filebrowserBrowseUrl: '#event.buildLink( xehCKFileBrowserURL )#',
 					baseHref: '#HTML_BASE_URL#/'
 				});

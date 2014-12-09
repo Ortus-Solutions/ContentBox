@@ -6,7 +6,7 @@
 			<!--- Body Header --->
 			<div class="header">
 				<i class="icon-comments icon-large"></i>
-				Comments (#rc.commentsCount#)
+				Comments (#prc.commentsCount#)
 				<cfif len(rc.searchComments)> > Search: #event.getValue("searchComments")#</cfif>
 			</div>
 			<!--- Body --->
@@ -16,7 +16,7 @@
 				#getPlugin("MessageBox").renderit()#
 				
 				<!--- entryForm --->
-				#html.startForm(name="commentForm",action=rc.xehCommentRemove)#
+				#html.startForm(name="commentForm",action=prc.xehCommentRemove)#
 				#html.hiddenField(name="commentStatus",value="")#
 				#html.hiddenField(name="page",value=rc.page)#
 				
@@ -39,9 +39,10 @@
 								Global Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
-					    		<li><a href="javascript:changeStatus('approve')"><i class="icon-thumbs-up"></i> Approve</a></li>
-								<li><a href="javascript:changeStatus('moderate')"><i class="icon-thumbs-down"></i> Moderate</a></li>
-								<li><a href="javascript:remove()" class="confirmIt"><i class="icon-trash"></i> Remove</a></li>
+					    		<li><a href="javascript:changeStatus('approve')"><i class="icon-thumbs-up"></i> Approve Selected</a></li>
+								<li><a href="javascript:changeStatus('moderate')"><i class="icon-thumbs-down"></i> Moderate Selected</a></li>
+								<li><a href="javascript:remove()" class="confirmIt"><i class="icon-trash"></i> Remove Selected</a></li>
+								<li><a href="javascript:removeAllModerated()" class="confirmIt" data-message="Are you sure you want to delete all moderated comments?" title="Nuclear: Delete all moderated comments!"><i class="icon-remove"></i> Remove All Moderated</a></li>
 					    	</ul>
 					    </div>
 					</div>
@@ -63,13 +64,13 @@
 							<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 							<th width="200">Author</th>
 							<th>Comment</th>
-							<th width="120" class="center">Date</th>			
+							<th width="150" class="center">Date</th>			
 							<th width="100" class="center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
 					
 					<tbody>
-						<cfloop array="#rc.comments#" index="comment">
+						<cfloop array="#prc.comments#" index="comment">
 						<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
 							<!--- Delete Checkbox with PK--->
 							<td>
@@ -100,23 +101,33 @@
 								#comment.getDisplayCreatedDate()#
 							</td>
 							<td class="center">
-								<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
-									<!--- Edit Command --->
-									<a href="javascript:openRemoteModal('#event.buildLink(rc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="icon-edit icon-large"></i></a>
-									&nbsp;
+
+								<div class="btn-group">
+									<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 									<!--- Approve/Unapprove --->
 									<cfif !comment.getIsApproved()>
-										<a href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-up icon-large"></i></a>
+										<a class="btn" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="icon-thumbs-up icon-large"></i></a>
 									<cfelse>
-										<a href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="icon-thumbs-down icon-large"></i></a>
+										<a class="btn" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="icon-thumbs-down icon-large"></i></a>
 									</cfif>
-									&nbsp;
-									<!--- Delete Command --->
-									<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="icon-trash icon-large"></i></a>
-									&nbsp;	
-								</cfif>
+									<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+										<i class="icon-cogs icon-large"></i>
+									</a>
+							    	<ul class="dropdown-menu text-left pull-right">
+							    		<!--- Edit Command --->
+										<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="icon-edit icon-large"></i> Edit</a></li>
+										<li><!--- Delete Command --->
+											<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?"><i id="delete_#comment.getCommentID()#" class="icon-trash icon-large"></i> Delete</a>
+										</li>
+										<li>
+											<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open icon-large"></i> View In Site</a>
+										</li>
+							    	</ul>
+									</cfif>
 								<!--- View in Site --->
 								<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>
+
+								</div>
 							</td>
 						</tr>
 						</cfloop>
@@ -124,8 +135,8 @@
 				</table>
 				
 				<!--- Paging --->
-				#rc.pagingPlugin.renderit(rc.commentsCount,rc.pagingLink)#
-				
+				#prc.pagingPlugin.renderit(foundRows=prc.commentsCount, link=prc.pagingLink, asList=true)#
+
 				#html.endForm()#
 			</div>	
 		</div>
@@ -157,9 +168,9 @@
 				<!--- Status --->
 				<label for="fStatus">Comment Status: </label>
 				<select name="fStatus" id="fStatus" class="input-block-level">
-					<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status (#rc.countApproved + rc.countUnApproved#)</option>
-					<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Approved (#rc.countApproved#)</option>
-					<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Moderated (#rc.countUnApproved#)</option>				
+					<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status (#prc.countApproved + prc.countUnApproved#)</option>
+					<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Approved (#prc.countApproved#)</option>
+					<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Moderated (#prc.countUnApproved#)</option>				
 				</select>
 				<button type="submit" class="btn btn-danger">Apply Filters</button>
 				<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>				

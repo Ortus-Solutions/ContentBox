@@ -214,7 +214,10 @@ form textarea,form .wysiwyg { width:98%; }
 .margin10 { margin:10px; }
 .margin0 { margin:0px; }
 .width98{ width: 98%; }
+.width96{ width: 96%; }
 .width95{ width: 95%; }
+.width94{ width: 94%; }
+.marginRight5{ margin-right:5px}
 .hidden { display:none!important; }
 .show{ display: block; }
 .flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 URL(../images/iinfo_icon.png) no-repeat 2% 50%; }
@@ -326,4 +329,11 @@ a.accordion-toggle { text-decoration:none; }
 	#main-container { padding-top: 20px; }
 	#simple-container { padding-top: 0; }
 	.navbar-fixed-top { margin-bottom: 0 !important; }
+}
+@media (max-width: 1024px) and (min-width:979px) {
+    #adminMenuBarContent.collapse{ width: 990px;}
+}
+@media (min-width: 768px) and (max-width: 820px){
+    #main-sidebar{ width: 30%}
+    #main-content{ width: 100%}
 }

@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "An enterprise modular content platform";
-	this.version			= "1.5.5";
+	this.version			= "2.0.0.@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
@@ -37,14 +37,25 @@ component {
 	function configure(){
 		// contentbox settings
 		settings = {
-			codename = "Psalm 119:73",
-			codenameLink = "https://www.youversion.com/bible/psa.119.73.niv",
+			codename = "Psalm 144:1",
+			codenameLink = "https://www.bible.com/bible/114/psa.144.1.nkjv",
 			// Auto Updates
 			updateSlug_stable 	= "contentbox-stable-updates",
 			updateSlug_beta 	= "contentbox-beta-updates",
-			updatesURL			= "http://www.coldbox.org/api/forgebox"
+			updatesURL			= "http://www.coldbox.org/api/forgebox",
+			// Officially supported languages for modules
+			languages 			= [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
 		};
 		
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"cbcore" = "#moduleMapping#/i18n/cbcore"
+		  	},
+		  	defaultLocale = "en_US",
+		  	localeStorage = "cookie"
+		};
+
 		// CB Module Conventions
 		conventions = {
 			layoutsLocation = "layouts",
@@ -66,21 +77,22 @@ component {
 			// ContentBox Custom Events
 			customInterceptionPoints = arrayToList([
 				// Code Rendering
-				"cb_onContentRendering","cb_onCustomHTMLRendering"
+				"cb_onContentRendering","cb_onContentStoreRendering"
 			])
 		};
 
 		// interceptors
 		interceptors = [
 			// CB RSS Cache Cleanup Ghost
-			{class="contentbox.model.rss.RSSCacheCleanup",name="RSSCacheCleanup@cb" },
+			{ class="contentbox.model.rss.RSSCacheCleanup", name="RSSCacheCleanup@cb" },
 			// CB Content Cache Cleanup Ghost
-			{class="contentbox.model.content.util.ContentCacheCleanup",name="ContentCacheCleanup@cb" },
+			{ class="contentbox.model.content.util.ContentCacheCleanup", name="ContentCacheCleanup@cb" },
 			// Notification service interceptor
-			{class="contentbox.model.system.NotificationService",name="NotificationService@cb" },
+			{ class="contentbox.model.system.NotificationService", name="NotificationService@cb" },
 			// Content Renderers, remember order is important.
-			{class="contentbox.model.content.renderers.LinkRenderer"},
-			{class="contentbox.model.content.renderers.WidgetRenderer"}
+			{ class="contentbox.model.content.renderers.LinkRenderer", name="LinkRenderer@cb" },
+			{ class="contentbox.model.content.renderers.WidgetRenderer", name="WidgetRenderer@cb" },
+			{ class="contentbox.model.content.renderers.SettingRenderer", name="SettingRenderer@cb" }
 		];
 
 		// Security/System
@@ -101,7 +113,7 @@ component {
 		// Page services
 		binder.map("pageService@cb").to("contentbox.model.content.PageService");
 		// Content
-		binder.map("customHTMLService@cb").to("contentbox.model.content.CustomHTMLService");
+		binder.map("contentStoreService@cb").to("contentbox.model.content.ContentStoreService");
 		binder.map("contentVersionService@cb").to("contentbox.model.content.ContentVersionService");
 		binder.map("contentService@cb").to("contentbox.model.content.ContentService");
 		// Commenting services
@@ -115,11 +127,17 @@ component {
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
 		binder.map("AdminMenuService@cb").to("contentbox.model.ui.AdminMenuService");
+		// Menus
+		binder.map("MenuService@cb").to("contentbox.model.menu.MenuService");
+		binder.map("MenuItemService@cb").to("contentbox.model.menu.MenuItemService");
 		// Editors
 		binder.map("EditorService@cb").to("contentbox.model.ui.editors.EditorService");
 		binder.map("TextareaEditor@cb").to("contentbox.model.ui.editors.TextareaEditor");
 		binder.map("CKEditor@cb").to("contentbox.model.ui.editors.CKEditor");
 		binder.map("EditAreaEditor@cb").to("contentbox.model.ui.editors.EditAreaEditor");
+		// Admin Themes
+		binder.map("AdminThemeService@cb").to("contentbox.model.ui.admin.AdminThemeService");
+		binder.map("AdminDefaultTheme@cb").to("contentbox.model.ui.admin.DefaultTheme");
 		// Modules
 		binder.map("moduleService@cb").to("contentbox.model.modules.ModuleService");
 		// utils
@@ -140,8 +158,18 @@ component {
 		binder.map("wordpressImporter@cb").to("contentbox.model.importers.WordpressImporter");
 		binder.map("blogcfcImporter@cb").to("contentbox.model.importers.BlogCFCImporter");
 		binder.map("machblogImporter@cb").to("contentbox.model.importers.MachBlogImporter");
+		binder.map("ContentBoxImporter@cb").to("contentbox.model.importers.ContentBoxImporter");
+		// exporters
+		binder.map("dataExporter@cb").to("contentbox.model.exporters.DataExporter");
+		binder.map("fileExporter@cb").to("contentbox.model.exporters.FileExporter");
+		binder.map("ContentBoxExporter@cb").to("contentbox.model.exporters.ContentBoxExporter");
+		// Subscription services
+		binder.map( "subscriberService@cb" ).to( "contentbox.model.subscriptions.SubscriberService" );
+		binder.map( "subscriptionService@cb" ).to( "contentbox.model.subscriptions.SubscriptionService" );
+		binder.map( "commentSubscriptionService@cb" ).to( "contentbox.model.subscriptions.CommentSubscriptionService");
 		// ColdBox Integrations
 		binder.map("ColdBoxRenderer").toDSL("coldbox:plugin:Renderer");
+		binder.map("SystemUtil@cb").to( "coldbox.system.core.util.Util" );
 		
 		// Verify if the AOP mixer is loaded, if not, load it
 		if( !isAOPMixerLoaded() ){

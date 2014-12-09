@@ -30,6 +30,7 @@ component extends="content" singleton{
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	property name="layoutService"		inject="id:LayoutService@cb";
+	property name="utility"				inject="coldbox:plugin:Utilities";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -40,56 +41,9 @@ component extends="content" singleton{
 	}
 
 	/**
-	* Around index to enable the caching aspects
-	*/
-	function aroundIndex(event,rc,prc,eventArguments){
-
-		// if not caching, just return
-		if( !prc.cbSettings.cb_content_caching OR 
-			structKeyExists(eventArguments, "noCache") OR
-			event.valueExists("cbCache") ){
-			return index(event,rc,prc);
-		}
-
-		// Get appropriate cache provider
-		var cache = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-		// Do we have an override page setup by the settings?
-		if( !structKeyExists(prc,"pageOverride") ){
-			// Try slug parsing for hiearchical URLs
-			cacheKey = "cb-content-pagewrapper-#left(event.getCurrentRoutedURL(),255)#";
-		}
-		else{
-			cacheKey = "cb-content-pagewrapper-#prc.pageOverride#/";
-		}
-
-		// verify page wrapper
-		var data = cache.get( cacheKey );
-		if( !isNull(data) ){
-			// set cache header
-			event.setHTTPHeader(statusCode="203",statustext="ContentBoxCache Non-Authoritative Information");
-			// return cache content
-			return data;
-		}
-
-		// execute index
-		index(event,rc,prc);
-
-		// verify if caching is possible by testing the page, also, page with comments are not cached.
-		if( prc.page.isLoaded() AND !prc.page.getAllowComments() AND prc.page.getCacheLayout() AND prc.page.getIsPublished() ){
-			var data = controller.getPlugin("Renderer")
-				.renderLayout(module=event.getCurrentLayoutModule(), viewModule=event.getCurrentViewModule());
-			cache.set(cachekey,
-					  data,
-					  (prc.page.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : prc.page.getCacheTimeout()),
-					  (prc.page.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : prc.page.getCacheLastAccessTimeout()) );
-			return data;
-		}
-	}
-	
-	/**
 	* Preview a page
 	*/
-	function preview(event,rc,prc){
+	function preview( event, rc, prc ){
 		// Run parent preview
 		super.preview(argumentCollection=arguments);
 		// Concrete Overrides Below
@@ -111,11 +65,22 @@ component extends="content" singleton{
 		event.setLayout(name="#prc.cbLayout#/layouts/#rc.layout#", module="contentbox")
 			.setView(view="#prc.cbLayout#/views/page", module="contentbox");
 	}
+	
+	/**
+	* Around entry page advice that provides caching and multi-output format
+	*/
+	function aroundIndex( event, rc, prc , eventArguments ){
+		// setup wrap arguments
+		arguments.contentCaching 	= prc.cbSettings.cb_content_caching;
+		arguments.action 			= variables.index;
 
+		return wrapContentAdvice( argumentCollection=arguments );
+	}
+	
 	/**
 	* Present pages
 	*/
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// incoming params
 		event.paramValue("pageSlug","");
 		var incomingURL  = "";
@@ -143,7 +108,7 @@ component extends="content" singleton{
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if( prc.page.isLoaded() ){
 			// Record hit
-			prc.page.updateHits();
+			pageService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID(),sortOrder="asc");
@@ -160,22 +125,21 @@ component extends="content" singleton{
 			// set skin view
 			event.setLayout(name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
-
 		}
 		else{
 			// missing page
 			prc.missingPage 	 = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
+			
+			// announce event
+			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
 
 			// set 404 headers
 			event.setHTTPHeader("404","Page not found");
 
 			// set skin not found
 			event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
-				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");
-				
-			// announce event
-			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
+				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");				
 
 		}
 	}
@@ -183,41 +147,45 @@ component extends="content" singleton{
 	/**
 	* Content Search
 	*/
-	function search(event,rc,prc){
+	function search( event, rc, prc ){
 		// incoming params
-		event.paramValue("page",1);
-		event.paramValue("q","");
+		event.paramValue( "page", 1 );
+		event.paramValue( "q", "" );
+
+		// cleanup
+		rc.q = HTMLEditFormat( trim( rc.q ) );
 
 		// prepare paging plugin
-		prc.pagingPlugin 		= getMyPlugin(plugin="Paging", module="contentbox");
-		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries(pagingMaxRows=prc.cbSettings.cb_search_maxResults);
-		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat(rc.q)#/@page@";
+		prc.pagingPlugin 		= getMyPlugin( plugin="Paging", module="contentbox" );
+		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
+		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
+		
 		// get search results
-		if( len(rc.q) ){
+		if( len( rc.q ) ){
 			var searchAdapter = searchService.getSearchAdapter();
-			prc.searchResults = searchAdapter.search(offset=prc.pagingBoundaries.startRow-1,
-												     max=prc.cbSettings.cb_search_maxResults,
-												   	 searchTerm=rc.q);
+			prc.searchResults = searchAdapter.search( offset=prc.pagingBoundaries.startRow-1,
+												      max=prc.cbSettings.cb_search_maxResults,
+												   	  searchTerm=rc.q );
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		}
 		else{
-			prc.searchResults = getModel("SearchResults@cb");
+			prc.searchResults = getModel( "SearchResults@cb" );
 			prc.searchResultsContent = "Please enter a search term to search on.";
 		}
 		
 		// set skin search
-		event.setLayout(name="#prc.cbLayout#/layouts/#layoutService.getThemeSearchLayout()#", module="contentbox")
-			.setView(view="#prc.cbLayout#/views/search",module="contentbox");
+		event.setLayout( name="#prc.cbLayout#/layouts/#layoutService.getThemeSearchLayout()#", module="contentbox" )
+			.setView( view="#prc.cbLayout#/views/search", module="contentbox" );
 			
 		// announce event
-		announceInterception("cbui_onContentSearch",{searchResults = prc.searchResults, searchResultsContent = prc.searchResultsContent});
+		announceInterception( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
 	}
 
 
 	/**
 	* Display the RSS feeds
 	*/
-	function rss(event,rc,prc){
+	function rss( event, rc, prc ){
 		// params
 		event.paramValue("category","");
 		event.paramValue("entrySlug","");
@@ -233,10 +201,10 @@ component extends="content" singleton{
 	/**
 	* Comment Form Post
 	*/
-	function commentPost(event,rc,prc){
+	function commentPost( event, rc, prc ){
 		// incoming params
-		event.paramValue("contentID","");
-
+		event.paramValue( "contentID", "" );
+		event.paramValue( "subscribe", false );
 		// Try to retrieve page by contentID
 		var page = pageService.get( rc.contentID );
 
@@ -244,20 +212,10 @@ component extends="content" singleton{
 		if( isNull( page ) ){ setNextEvent( prc.cbEntryPoint ); }
 
 		// validate incoming comment post
-		prc.commentErrors = validateCommentPost(event,rc,prc,page);
-
-		// Validate if comment errors exist
-		if( arrayLen( prc.commentErrors ) ){
-			// MessageBox
-			getPlugin("MessageBox").warn(messageArray=prc.commentErrors);
-			// put slug in request
-			prc.pageOverride = page.getSlug();
-			// Execute entry again, need to correct form
-			return index(argumentCollection=arguments);
-		}
+		validateCommentPost( event, rc, prc, page );
 
 		// Valid commenting, so go and save
-		saveComment( page );
+		saveComment( page, rc.subscribe );
 	}
 
 	/************************************** PRIVATE *********************************************/

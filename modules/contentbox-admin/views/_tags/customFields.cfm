@@ -1,4 +1,5 @@
 <cfoutput>
+<cfif prc.oAuthor.checkPermission("EDITORS_CUSTOM_FIELDS")>
 #html.startFieldSet(legend='<i class="icon-hdd icon-large"></i> Custom Fields:')#
 	<p>
 		You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via 
@@ -88,4 +89,5 @@ function idCustomFields(){
 	});
 }
 </script>
+</cfif>
 </cfoutput>

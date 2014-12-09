@@ -6,12 +6,16 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-	config.extraPlugins = 'cbWidgets,cbLinks,cbEntryLinks,cbCustomHTML,cbIpsumLorem,mediaembed,insertpre'; 
+	config.extraPlugins = 'cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre'; 
 	config.tabSpaces = 4;
 	config.enableTabKeyTools = true;
 	config.entities = false;
 	config.docType = '<!DOCTYPE html>';
 	config.disableNativeSpellChecker = false;
+	config.allowedContent = true;
+	config.removePlugins = 'autogrow';
+	// Allow i,a,span empty tags
+	config.protectedSource.push( /<(i|span|a) [^>]*><\/(i|span|a)>/g );
+	//config.protectedSource.push( /<\/(i|span|a)>/g );
+	//config.protectedSource.push( /<(i|span|a) *?\>/g );
 };
-CKEDITOR.dtd.$removeEmpty.span = 0;
-CKEDITOR.dtd.$removeEmpty.i = 0;

@@ -9,16 +9,20 @@
 		<div class="header">
 			<i class="icon-edit icon-large"></i>
 			Page Editor
+			<!--- Quick Actions --->
 			<div class="btn-group pull-right" style="margin-top:5px">
-			    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.page.getParentID()#';return false;"><i class="icon-reply"></i> Back</button>
-			    <cfif prc.page.isLoaded()>
-				<button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">
-			    		<span class="caret"></span>
+			    <button class="btn btn-inverse" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.parentcontentID#';return false;"><i class="icon-reply"></i> Back</button>
+			    <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
+			    	<span class="icon-cog"></span>
 			    </button>
-			   		<ul class="dropdown-menu">
-			    			<li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="icon-eye-open"></i> Open In Site</a></li>
-			    		</ul>
-				</cfif>
+		   		<ul class="dropdown-menu">
+					<li><a href="javascript:quickPublish( false )"><i class="icon-globe"></i> Publish</a></li>
+					<li><a href="javascript:quickPublish( true )"><i class="icon-eraser"></i> Publish as Draft</a></li>
+					<li><a href="javascript:quickSave()"><i class="icon-save"></i> Quick Save</a></li>
+					<cfif prc.page.isLoaded()>
+					<li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="icon-eye-open"></i> View In Site</a></li>
+					</cfif>
+		    	</ul>
 		    </div>
 		</div>
 		<!--- Body --->
@@ -35,36 +39,52 @@
 			#html.textfield(label="Title:",name="title",bind=prc.page,maxlength="100",required="required",title="The title for this page",class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
 			<!--- slug --->
             <div class="control-group">
-                <label for="slug" class="control-label">Permalink:
-    				<i class="icon-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
-    				<small> #prc.CBHelper.linkPageWithSlug('')#</small><cfif prc.page.hasParent()><small>#prc.page.getParent().getSlug()#/</small></cfif>
-    			</label>
-                <div class="controls">
-                    <div id='slugCheckErrors'></div>
-					#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width98",title="The URL permalink for this page")#
-                </div>
-            </div>
+            	<label for="slug" class="control-label">Permalink:
+				<i class="icon-cloud hand-cursor" title="Convert title to permalink" onclick="createPermalink()"></i>
+				<small> #prc.CBHelper.linkPageWithSlug('')#</small><cfif prc.page.hasParent()><small>#prc.page.getParent().getSlug()#/</small></cfif>
+				</label>
+			</div>
+			<div class="controls">
+	            <div id='slugCheckErrors'></div>
+	            <div class="input-append" style="display:inline">
+					#html.textfield(name="slug",value=listLast(prc.page.getSlug(),"/"),maxlength="100",class="textfield width94",title="The URL permalink for this page", disabled="#prc.page.isLoaded() && prc.page.getIsPublished() ? 'true' : 'false'#")#
+					<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink">
+						<i id="togglePermalink" class="icon-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
+					</a>
+				</div>
+			</div>
+
 			<!---ContentToolBar --->
 			<div id="contentToolBar">
 				
 				<!--- editor selector --->
-				<label for="contentEditorChanger" class="inline">Editor: </label>
 				<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
-				#html.select(name="contentEditorChanger", 
-							 options=prc.editors,
-							 column="name",
-							 class="input-medium",
-							 nameColumn="displayName",
-							 selectedValue=prc.defaultEditor,
-							 onchange="switchEditor(this.value)")#
+				<div class="btn-group">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+						Editor
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<cfloop array="#prc.editors#" index="thisEditor">
+							<li><a href="javascript:switchEditor( '#thisEditor.name#' )">#thisEditor.displayName#</li>
+						</cfloop>
+					</ul>
+				</div>
 				</cfif>
 				<!--- markup --->
-				<label for="markup" class="inline">Markup: </label>
-				#html.select(name="markup", 
-							 class="input-medium",
-							 options=prc.markups,
-							 selectedValue=( prc.page.isLoaded() ? prc.page.getMarkup() : prc.defaultMarkup ))#
-				
+				#html.hiddenField(name="markup", value=prc.page.isLoaded() ? prc.page.getMarkup() : prc.defaultMarkup)#
+				<div class="btn-group">
+					<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
+						Markup : <span id="markupLabel">#prc.page.isLoaded() ? prc.page.getMarkup() : prc.defaultMarkup#</span>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<cfloop array="#prc.markups#" index="thismarkup">
+							<li><a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</li>
+						</cfloop>
+					</ul>
+				</div>
+
 				<!---Right References Panel --->
 				<div class="floatRight">
 					<a href="javascript:previewContent()" class="btn" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
@@ -180,11 +200,9 @@
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
-						&nbsp;<input type="submit" class="btn" value="Save" data-keybinding="ctrl+s" onclick="return quickSave()">
+						&nbsp;<input type="button" class="btn" value="Save" data-keybinding="ctrl+s" onclick="quickSave()">
 						&nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
-						<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
-						</cfif>
 						</div>
 					</div>
 	
@@ -197,7 +215,7 @@
 				#html.endFieldSet()#
 				
 				<!---Begin Accordion--->
-				<div class="accordion" id="accordion">
+				<div class="accordion" id="accordion" data-stateful="page-sidebar">
 				    <!---Begin Page info--->
                     <cfif prc.page.isLoaded()>
 					<div class="accordion-group">
@@ -315,6 +333,46 @@
                     </cfif>
                     <!---End Display Options--->
                     
+                    <!---Begin Related Content--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+                                <i class="icon-sitemap icon-large"></i> Related Content                                
+                            </a>
+
+                        </div>
+                        <div id="relatedcontent" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <cfset rcArgs = { relatedContent=prc.relatedContent }>
+                                #renderView( view="_tags/relatedContent", args=rcArgs )#
+                            </div>
+                        </div>
+                    </div>
+                    <cfelse>
+                        #html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
+                    </cfif>
+                    <!---End Related Content--->
+
+                    <!---Begin Linked Content--->
+                    <cfif prc.oAuthor.checkPermission("EDITORS_LINKED_CONTENT")>
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
+                                <i class="icon-link icon-large"></i> Linked Content                                
+                            </a>
+
+                        </div>
+                        <div id="linkedcontent" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <cfset rcArgs = { linkedContent=prc.linkedContent, contentType=prc.page.getContentType() }>
+                                #renderView( view="_tags/linkedContent", args=rcArgs )#
+                            </div>
+                        </div>
+                    </div>
+                    </cfif>
+                    <!---End Linked Content--->
+
                     <!---Begin Modifiers--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
                     <div class="accordion-group">
@@ -378,6 +436,7 @@
                     <!---End Cache Settings--->
                     
                     <!---Begin Categories--->
+					<cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
                     <div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
@@ -401,10 +460,12 @@
                       		</div>
                     	</div>
                   	</div>
-                    <!---End HTML Attributes--->
+					</cfif>
+                    <!---End HTML categories--->
                     
                     <!---Begin HTML Attributes--->
-                    <div class="accordion-group">
+                    <cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>
+					<div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##htmlattributes">
                         		<i class="icon-cloud icon-large"></i> HTML Attributes
@@ -417,6 +478,7 @@
                       		</div>
                     	</div>
                   	</div>
+					</cfif>
                     <!---End HTML Attributes--->
                     
                     <!--- Event --->

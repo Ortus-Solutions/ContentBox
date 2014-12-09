@@ -170,9 +170,9 @@
         "useSSL": false
     },
     {
-        "securelist": "^contentbox-admin:customHTML\\.(editor|remove|save)",
+        "securelist": "^contentbox-admin:contentStore\\.(editor|remove|save)",
         "roles": "",
-        "permissions": "CUSTOMHTML_ADMIN",
+        "permissions": "CONTENTSTORE_ADMIN",
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "14",
@@ -226,6 +226,26 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "19",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.importAll$",
+        "roles": "",
+        "permissions": "TOOLS_IMPORT",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "20",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.(export|exportAll)$",
+        "roles": "",
+        "permissions": "TOOLS_EXPORT",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "20",
         "match": "event",
         "useSSL": false
     }

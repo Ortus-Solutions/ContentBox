@@ -125,15 +125,11 @@ Description :
 					routedStruct[ key ] = aRoute[ key ];
 				}
 			}
-
+				
 			// Create Event To Dispatch if handler key exists
 			if( structKeyExists( aRoute,"handler" ) ){
-				// If no action found, default to the convention of the framework, must likely 'index'
-				if( NOT structKeyExists(aRoute,"action") ){
-					aRoute.action = getDefaultFrameworkAction();
-				}
-				// else check if using HTTP method actions via struct
-				else if( isStruct(aRoute.action) ){
+				// Check if using HTTP method actions via struct
+				if( structKeyExists(aRoute,"action") && isStruct(aRoute.action) ){
 					// Verify HTTP method used is valid, else throw exception and 403 error
 					if( structKeyExists(aRoute.action,HTTPMethod) ){
 						aRoute.action = aRoute.action[HTTPMethod];
@@ -150,9 +146,12 @@ Description :
 					}
 				}
 				// Create routed event
-				rc[ instance.eventName ] = aRoute.handler & "." & aRoute.action;
+				rc[ instance.eventName ] = aRoute.handler;
+				if( structKeyExists(aRoute,"action") ){
+					rc[ instance.eventName ] &= "." & aRoute.action;
+				}
  
-				// Do we have a module?If so, create routed module event.
+				// Do we have a module? If so, create routed module event.
 				if( len( aRoute.module ) ){
 					rc[ instance.eventName ] = aRoute.module & ":" & rc[ instance.eventName ];
 				}
@@ -775,11 +774,6 @@ Description :
 		<cfset instance.routes = arguments.routes/>
 	</cffunction>
 
-	<!--- Get Default Framework Action --->
-	<cffunction name="getDefaultFrameworkAction" access="private" returntype="string" hint="Get the default framework action" output="false" >
-		<cfreturn getController().getSetting("eventAction",1)>
-	</cffunction>
-
 	<!--- CGI Element Facade. --->
 	<cffunction name="getCGIElement" access="private" returntype="any" hint="The cgi element facade method" output="true" >
 		<cfargument name="cgielement" required="true" hint="The cgi element to retrieve">
@@ -951,9 +945,7 @@ Description :
 					<cfset newpath = "/" & handler />
 				</cfif>
 				<!--- route path with handler + action if not the default event action --->
-				<cfif len(handler)
-					  AND len(action)
-					  AND action NEQ getDefaultFrameworkAction()>
+				<cfif len(handler) AND len(action)>
 					<cfset newpath = newpath & "/" & action />
 				</cfif>
 			</cfif>
@@ -1230,7 +1222,7 @@ Description :
 
 			// Clean ContextRoots
 			if( len( getContextRoot() ) ){
-				items["pathInfo"] 	= replacenocase(items["pathInfo"],getContextRoot(),"");
+				//items["pathInfo"] 	= replacenocase(items["pathInfo"],getContextRoot(),"");
 				items["scriptName"] = replacenocase(items["scriptName"],getContextRoot(),"");
 			}
 

@@ -13,7 +13,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	property name="email"		length="255" notnull="true" index="idx_email";
 	property name="username"	length="100" notnull="true" index="idx_login" unique="true";
 	property name="password"	length="100" notnull="true" index="idx_login";
-	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" dbdefault="0" index="idx_login,idx_active";
+	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" index="idx_login,idx_active";
 	property name="lastLogin" 	ormtype="timestamp" notnull="false";
 	property name="createdDate" ormtype="timestamp" notnull="true" update="false";
 	property name="biography"   ormtype="text" 		notnull="false" length="8000" default="";
@@ -71,12 +71,14 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		setPermissionList( '' );
 		setLoggedIn( false );
 		setPreferences( {} );
+		variables.isActive = true;
 		
 		return this;
 	}
 
 	/**
 	* Check for permission
+	* @slug.hint The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
 	*/
 	boolean function checkPermission(required slug){
 		// cache list
@@ -85,11 +87,28 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 			permissionList = valueList( q.permission );
 		}
 		// checks via role and local
-		if( getRole().checkPermission( arguments.slug ) OR listFindNoCase(permissionList, arguments.slug) ){
+		if( getRole().checkPermission( arguments.slug ) OR inPermissionList( arguments.slug ) ){
 			return true;
 		}
 
 		return false;
+	}
+	
+	/**
+	* Verify that a passed in list of perms the user can use 
+	*/
+	public function inPermissionList( required list ){
+		var aList = listToArray( arguments.list );
+		var isFound = false;
+		
+		for( var thisPerm in aList ){
+			if( listFindNoCase( permissionList, trim( thisPerm ) ) ){
+				isFound = true;
+				break;
+			}
+		}
+		
+		return isFound;
 	}
 	
 	/**
@@ -128,7 +147,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		var lastLogin = getLastLogin();
 
 		if(  NOT isNull(lastLogin) ){
-			return dateFormat( lastLogin, "mm/dd/yyy" ) & " " & timeFormat(lastLogin, "hh:mm:ss tt");
+			return dateFormat( lastLogin, "mm/dd/yyyy" ) & " " & timeFormat(lastLogin, "hh:mm:ss tt");
 		}
 
 		return "Never";
@@ -140,7 +159,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		if( isNull( createdDate ) ){ return ""; }
-		return dateFormat( createdDate, "mm/dd/yyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
 	}
 
 	/**

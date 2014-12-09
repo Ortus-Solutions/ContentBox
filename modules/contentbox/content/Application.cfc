@@ -1,3 +1,3 @@
 component{
-abort;
+	abort;
 }

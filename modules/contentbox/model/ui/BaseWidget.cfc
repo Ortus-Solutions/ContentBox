@@ -32,7 +32,8 @@ component extends="coldbox.system.Plugin" accessors="true"{
 	property name="contentVersionService"	inject="id:contentVersionService@cb";
 	property name="authorService"			inject="id:authorService@cb";
 	property name="commentService"			inject="id:commentService@cb";
-	property name="customHTMLService"		inject="id:customHTMLService@cb";
+	property name="contentStoreService"		inject="id:contentStoreService@cb";
+	property name="menuService"				inject="id:menuService@cb";
 	property name="cb"						inject="id:CBHelper@cb";
 	property name="securityService" 		inject="id:securityService@cb";
 	property name="html"					inject="coldbox:plugin:HTMLHelper";
@@ -53,12 +54,17 @@ component extends="coldbox.system.Plugin" accessors="true"{
      * Get this widget's public methods'
      * return array
      */
-	public array function getPublicMethods() {
+	array function getPublicMethods() {
 		var publicMethods = [];
 		var meta = getMetadata( this );
 		var method = "";
-		for( var i=1; i<=arrayLen( meta.functions ); i++ ) {
+		for( var i=1; i <= arrayLen( meta.functions ); i++ ){
 			method = meta.functions[ i ];
+			// ignores?
+			if( structKeyExists( method, "cbignore" ) ){
+				continue;
+			}
+			// Add conditions
 			if( !listContains( "init,onMissingMethod", method.name ) ) {
 				if( !structKeyExists( method, "access" ) || ( structKeyExists( method, "access" ) && !listContains( "private,package", method.access ) ) ) {
 					arrayAppend( publicMethods, method );

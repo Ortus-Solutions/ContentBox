@@ -84,7 +84,10 @@
     								<ul class="dropdown-menu">
     									<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="icon-hdd"></i> View Cached Settings</a></li>
     									<li><a href="javascript:flushSettingsCache()"><i class="icon-refresh"></i> Flush Settings Cache</a></li>
+										<cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS,TOOLS_IMPORT")>
 										<li><a href="javascript:importSettings()"><i class="icon-upload-alt"></i> Import Settings</a></li>
+										</cfif>
+										<cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS,TOOLS_EXPORT")>
 										<li class="dropdown-submenu">
 											<a href="##"><i class="icon-download"></i> Export All</a>
 											<ul class="dropdown-menu text-left">
@@ -92,6 +95,7 @@
 												<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
 											</ul>
 										</li>
+										</cfif>
     								</ul>
     							</div>
     							
@@ -162,7 +166,7 @@
     									#wirebox.getBinder().getMapping(target).getPath()#
     								</td>
     								<td class="center">
-    									<a href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'})" title="Dump Mapping Memento"><i class="icon-eye-open icon-large"></i> </a>
+    									<a class="btn" href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'})" title="Dump Mapping Memento"><i class="icon-eye-open icon-large"></i> </a>
     								</td>
     							</tr>
     							</cfloop>
@@ -265,7 +269,10 @@
         <div class="modal-body">
 			<p>Choose the ContentBox <strong>JSON</strong> settings file to import.</p>
 			
-			#html.fileField(name="importFile", required=true, wrapper="div class=controls")#
+            #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+                name="importFile",
+                required=true
+            )#			
 			
 			<label for="overrideSettings">Override settings?</label>
 			<small>By default all settings that exist are not overwritten.</small><br>

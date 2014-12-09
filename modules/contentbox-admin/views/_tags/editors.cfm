@@ -13,7 +13,7 @@ function previewContent(){
 					 { content: getEditorContent(), 
 					   layout: $("##layout").val(),
 					   title: $("##title").val(),
-					   slug: $("##slug").val(),
+					   slug: $slug.val(),
 					   contentType : $("##contentType").val(),
 					   markup : $("##markup").val() },
 					 "95%",
@@ -30,19 +30,33 @@ function publishNow(){
 // quick save for pages
 function quickSave(){
 	// Draft it
-	$isPublished.val('false');
-	// Validation of Form First before quick save
-	if( !$targetEditorForm.valid() ){
-		return false;
-	}
-	// Commit Changelog default if none specified, most likely changelogs are not mandatory
+	$isPublished.val( "false" );
+	// Commit Changelog default it to quick save if not set
 	if( !$changelog.val().length ){
 		$changelog.val( "quick save" );
 	}
+	// Validation of Form First before quick save
+	if( !$targetEditorForm.valid() ){
+		adminNotifier( "error", "Form is not valid, please verify." );
+		return false;
+	}
+	// Verify Content
+	if( !getEditorContent().length ){
+		alert( "Please enter content before saving." );
+		return;
+	}
 	// Activate Loader
 	toggleLoaderBar();
-	// Save current content, just in case
-	$content.val( getEditorContent() );
+	// Save current content, just in case editor has not saved it
+	if( !$content.val().length ){
+		$content.val( getEditorContent() );	
+	}
+	// enable for quick save, if disabled
+	var disableSlug = false;
+	if( $slug.prop( "disabled" ) ){ 
+		$slug.prop( "disabled", false );
+		disableSlug = true;
+	}
 	// Post it
 	$.post($targetEditorSaveURL, $targetEditorForm.serialize(), function(data){
 		// Save new id
@@ -50,11 +64,15 @@ function quickSave(){
 		// finalize
 		$changelog.val( '' );
 		$uploaderBarLoader.fadeOut( 1500 );
-		$uploaderBarStatus.html( 'Draft Quick Saved!' );
+		$uploaderBarStatus.html( 'Draft Saved!' );
 		$isPublished.val( 'true' );
+		// bring back slug if needed.
+		if( disableSlug ){
+			$slug.prop( "disabled", true );
+		}
+		// notify
+		adminNotifier( "info", "Draft Saved!" );
 	},"json");
-
-	return false;
 }
 /**
  * Setup the editors. 
@@ -75,6 +93,8 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$isPublished 			= $targetEditorForm.find("##isPublished");
 	$contentID				= $targetEditorForm.find("##contentID");
 	$changelog				= $targetEditorForm.find("##changelog");
+	$slug 					= $targetEditorForm.find('##slug');
+	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
@@ -95,17 +115,19 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
     		needConfirmation=false; 
     	},
         submitHandler: function( form ) {
-        	// weird issue in jQuery validator where it won't validate hidden fields
-            // so call updateElement() to get content for hidden textarea
-        	CKEDITOR.instances.content.updateElement();
-            // validate element
-    		var el = $( '##content' );
-            // if it's valid, submit form
-            if( el.val().length ) {
+			// Update Editor Content
+        	try{ updateEditorContent(); } catch( err ){ console.log( err ); };
+			// Update excerpt
+			if( withExcerpt ){
+				try{ updateEditorExcerpt(); } catch( err ){ console.log( err ); };
+			}
+			// if it's valid, submit form
+            if( $content.val().length ) {
+            	// enable slug for saving.
+            	$slug.prop( "disabled", false );
+            	// submit
             	form.submit();
-            }
-            // otherwise, show error
-            else {
+            } else {
             	alert( 'Please enter some content!' );
            	}
         }
@@ -115,17 +137,22 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	if( withChangelogs ){
 		$targetEditorForm.find( "##changelog" ).attr( "required", #prc.cbSettings.cb_versions_commit_mandatory# );
 	}
+
 	// Activate blur slugify on titles
-	var $title = $targetEditorForm.find("##title");
-	$title.blur(function(){
-		if( $targetEditorForm.find("##slug").size() ){
+	var $title = $targetEditorForm.find( "##title" );
+	// set up live event for title, do nothing if slug is locked..
+	$title.on('blur', function(){
+		if( !$slug.prop("disabled") ){
 			createPermalink( $title.val() );
 		}
 	});
 	// Activate permalink blur
-	$targetEditorForm.find("##slug").blur(function(){
-		permalinkUniqueCheck()
+	$slug.on('blur',function(){
+		if( !$( this ).prop( "disabled" ) ){
+			permalinkUniqueCheck();
+		}
 	});
+
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
 	needConfirmation = true;
@@ -136,6 +163,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$("##htmlDescription").keyup(function(){
 		$("##html_description_count").html( $("##htmlDescription").val().length );
 	});
+	
 }
 
 // Switch Editors
@@ -150,13 +178,17 @@ function switchEditor(editorType){
 	// Call change user editor preference
 	$.ajax({
 		url : '#event.buildLink(prc.xehAuthorEditorSave)#',
-		data : {editor: $("##contentEditorChanger").val()},
+		data : {editor: editorType},
 		async : false,
 		success : function(data){
-			// Once changed, reload the page.
 			location.reload();
 		}
 	});
+}
+
+function switchMarkup(markupType){
+	$("##markup").val( markupType );
+	$("##markupLabel").html( markupType );
 }
 
 // Ask for leave confirmations
@@ -167,18 +199,32 @@ function askLeaveConfirmation(){
 }
 
 // Create Permalinks
-function createPermalink(){
-	if( !$("##title").val().length ){ return; }
-	$slug = $("##slug").fadeOut();
-	$.get( '#event.buildLink( prc.xehSlugify )#', {slug:$("##title").val()}, function(data){
-		$slug.fadeIn().val( $.trim(data) );
+function createPermalink(linkToUse){
+	var linkToUse = ( typeof linkToUse === "undefined" ) ? $( "##title" ).val() : linkToUse;
+	if( !linkToUse.length ){ return; }
+	togglePermalink()
+	$.get( '#event.buildLink( prc.xehSlugify )#', { slug : linkToUse }, function( data ){
+		$slug.val( data );
+		permalinkUniqueCheck();
+		togglePermalink();
 	} );
-	permalinkUniqueCheck();
 }
-function permalinkUniqueCheck(){
-	if( !$("##slug").val().length ){ return; }
+
+//disable or enable (toggle) permalink field
+function togglePermalink(){
+	var toggle = $( '##togglePermalink' );
+	// Toggle lock icon on click..	
+	toggle.hasClass( 'icon-lock' ) ? toggle.attr( 'class', 'icon-unlock' ) : toggle.attr( 'class', 'icon-lock' );
+	//disable input field
+	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
+}
+
+function permalinkUniqueCheck( linkToUse ){
+	var linkToUse = ( typeof linkToUse === "undefined" ) ? $slug.val() : linkToUse;
+	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
+	if( !linkToUse.length ){ return; }
 	// Verify unique
-	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', {slug:$("##slug").val(), contentID: $("##contentID").val()}, function(data){
+	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, contentID: $("##contentID").val() }, function( data ){
 		if( !data.UNIQUE ){
 			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("alert");
 		}
@@ -187,27 +233,37 @@ function permalinkUniqueCheck(){
 		}
 	} );
 }
-
 // Toggle drafts on for saving
 function toggleDraft(){
 	needConfirmation = false;
 	$isPublished.val('false');
 }
-
+// Quick Publish Action
+function quickPublish(isDraft){
+	if( isDraft ){
+		toggleDraft();
+	}
+	// Verify changelogs and open sidebar if closed:
+	if( $changelogMandatory && !isSidebarOpen() ){
+		toggleSidebar();
+	}
+	// submit form
+	$targetEditorForm.submit();
+}
 // Widget Plugin Integration
 function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
 // Widget Preview Integration
 function getWidgetPreviewURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#'; }
 // Widget Editor Integration
 function getWidgetEditorURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.editinstance" )#'; }
-// Widget Args Integration
-function getWidgetRenderArgsURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.renderargs" )#'; }
+// Widget Instance Integration
+function getWidgetInstanceURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#'; }
 // Page Selection Integration
 function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
 // Entry Selection Integration
 function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector")#';}
-// Custom HTML Selection Integration
-function getCustomHTMLSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".customHTML.editorselector")#';}
+// ContentStore Selection Integration
+function getContentStoreSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".contentStore.editorselector")#';}
 // Preview Integration
 function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".content.preview")#';}
 // Module Link Building

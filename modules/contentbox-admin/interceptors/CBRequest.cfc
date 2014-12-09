@@ -4,9 +4,10 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI
-	property name="securityService" inject="id:securityService@cb";
-	property name="settingService"  inject="id:settingService@cb";
-	property name="adminMenuService"  inject="id:adminMenuService@cb";
+	property name="securityService" 	inject="id:securityService@cb";
+	property name="settingService"  	inject="id:settingService@cb";
+	property name="adminMenuService"  	inject="id:adminMenuService@cb";
+	property name="adminThemeService"  	inject="id:adminThemeService@cb";
 
 	/**
 	* Configure CB Request
@@ -30,7 +31,7 @@ component extends="coldbox.system.Interceptor"{
 		// cb helper
 		prc.CBHelper = getMyPlugin(plugin="CBHelper",module="contentbox");
 		// store admin module entry point
-		prc.cbAdminEntryPoint = getProperty("entryPoint");
+		prc.cbAdminEntryPoint = getModuleSettings("contentbox-admin").entryPoint;
 		// store site entry point
 		prc.cbEntryPoint = getModuleSettings("contentbox-ui").entryPoint;
 		// store filebrowser entry point
@@ -43,6 +44,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.cbWidgetRoot = getContextRoot() & event.getModuleRoot('contentbox') & "/widgets";
 		// store admin menu service
 		prc.adminMenuService = adminMenuService;
+		// Theme service
+		prc.adminThemeService = adminThemeService;
 		
 		/************************************** FORCE SSL *********************************************/
 		
@@ -65,8 +68,11 @@ component extends="coldbox.system.Interceptor"{
 		// Content Tab
 		prc.xehPages		= "#prc.cbAdminEntryPoint#.pages";
 		prc.xehPagesEditor	= "#prc.cbAdminEntryPoint#.pages.editor";
-		prc.xehCustomHTML	= "#prc.cbAdminEntryPoint#.customHTML";
+		prc.xehContentStore	= "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentStoreEditor	= "#prc.cbAdminEntryPoint#.contentStore.editor";
 		prc.xehMediaManager	= "#prc.cbAdminEntryPoint#.mediamanager";
+		prc.xehMenuManager	= "#prc.cbAdminEntryPoint#.menus";
+		prc.xehMenuManagerEditor	= "#prc.cbAdminEntryPoint#.menus.editor";
 
 		// Comments Tab
 		prc.xehComments			= "#prc.cbAdminEntryPoint#.comments";
@@ -81,10 +87,11 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehModules = "#prc.cbAdminEntryPoint#.modules";
 
 		// Authors Tab
-		prc.xehAuthors		= "#prc.cbAdminEntryPoint#.authors";
-		prc.xehAuthorEditor	= "#prc.cbAdminEntryPoint#.authors.editor";
+		prc.xehAuthors			= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehAuthorEditor		= "#prc.cbAdminEntryPoint#.authors.editor";
 		prc.xehPermissions		= "#prc.cbAdminEntryPoint#.permissions";
 		prc.xehRoles			= "#prc.cbAdminEntryPoint#.roles";
+		prc.xehAuthorSideBar 	= "#prc.cbAdminEntryPoint#.authors.changeSidebarState";
 
 		// Tools
 		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";
@@ -96,7 +103,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehRawSettings		= "#prc.cbAdminEntryPoint#.settings.raw";
 		prc.xehEmailTemplates   = "#prc.cbAdminEntryPoint#.emailtemplates";
 		prc.xehAutoUpdater	    = "#prc.cbAdminEntryPoint#.autoupdates";
-
+		// Stats
+		prc.xehSubscribers 		= "#prc.cbAdminEntryPoint#.subscribers";
 		// Login/Logout
 		prc.xehDoLogout 	= "#prc.cbAdminEntryPoint#.security.doLogout";
 		prc.xehLogin 		= "#prc.cbAdminEntryPoint#.security.login";
@@ -108,17 +116,17 @@ component extends="coldbox.system.Interceptor"{
 		
 		// Search global
 		prc.xehSearchGlobal 	= "#prc.cbAdminEntryPoint#.content.search";
-		prc.xehCustomHTMLEditor	= "#prc.cbAdminEntryPoint#.customHTML.editor";
 		
 		// Prepare Admin Actions
 		prc.xehAdminActionData = [
-			{name="Clear RSS Caches",value="rss-purge"},
-			{name="Clear Content Caches",value="content-purge"},
-			{name="Reload Application",value="app"},
-			{name="Reload ORM",value="orm"},
-			{name="Reload Admin",value="contentbox-admin"},
-			{name="Reload Site",value="contentbox-ui"},
-			{name="Reload FileBrowser",value="contentbox-filebrowser"}
+			{ name="Clear RSS Caches", value="rss-purge" },
+			{ name="Clear Content Caches", value="content-purge" },
+			{ name="Reload Application", value="app" },
+			{ name="Reload ORM", value="orm" },
+			{ name="Reload Admin Module", value="contentbox-admin" },
+			{ name="Reload FileBrowser Module", value="contentbox-filebrowser" },
+			{ name="Reload Security Module", value="contentbox-security" },
+			{ name="Reload Site Module", value="contentbox-ui" }
 		];
 		prc.xehAdminAction	= "#prc.cbAdminEntryPoint#.dashboard.reload";
 

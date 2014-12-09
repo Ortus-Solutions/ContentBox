@@ -41,6 +41,9 @@ component singleton{
 		prc.mediaPath = trim( replacenocase( event.getCurrentRoutedURL(), replacePath, "" ) );
 		prc.mediaPath = reReplace( prc.mediaPath, "\/$", "" );
 		
+		// Determine if ColdBox is doing a format extension detection?
+		if( structKeyExists( rc, "format" ) && len( rc.format ) ){ prc.mediaPath &= ".#rc.format#"; }
+
 		// Get the media provider
 		var mediaProvider = mediaService.getDefaultProvider();
 		// Check if media path detected
@@ -68,6 +71,19 @@ component singleton{
 				
 		// Deliver it baby!
 		mediaProvider.deliverMedia( prc.mediaPath );
+	}
+	
+	/**
+	* Deliver Captcha
+	*/
+	function captcha(event,rc,prc){
+		var data = getMyPlugin(plugin="Captcha",module="contentbox").display();
+		var imgURL = arrayToList( reMatchNoCase( 'src="([^"]*)"', data ) );
+		imgURL = replace( replace( imgURL, "src=", "" ) , '"', "", "all");
+		// deliver image
+		getPageContext().forward( imgURL );
+		// abort so CF does not choke.
+		abort;
 	}
 	
 	/************************************** PRIVATE *********************************************/

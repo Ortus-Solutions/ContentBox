@@ -44,7 +44,7 @@
 					<i class="icon-ok icon-large textGreen" title="Entry Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
-					<i class="icon-remove icon-large textRed" title="Entry Published!"></i>
+					<i class="icon-remove icon-large textRed" title="Entry Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
@@ -75,7 +75,7 @@
 
 <!--- Paging --->
 <cfif prc.pager_pagination>
-	#prc.pager_pagingPlugin.renderit(prc.pager_entriesCount,prc.pager_pagingLink)#
+	#prc.pager_pagingPlugin.renderit(foundRows=prc.pager_entriesCount, link=prc.pager_pagingLink, asList=true)#
 </cfif>
 </div>
 </cfoutput>

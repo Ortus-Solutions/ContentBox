@@ -1,31 +1,14 @@
-﻿User-agent: Slurp
-Crawl-delay: 100
-Disallow:
-
-User-agent: gsa-crawler-www 
-Crawl-delay: 100
-
-User-agent: Googlebot
-Crawl-delay: 100
-
-User-agent: Mediapartners-Google
-Disallow:
-
-User-agent: Yahoo-NewsCrawler
-Disallow:
-
-User-Agent: msnbot
-Crawl-delay: 100
-Disallow:
-
-User-Agent: *
+﻿User-agent: *
+Disallow: 
+Crawl-delay: 60
+Disallow: /coldbox/
 Disallow: /config/
 Disallow: /handlers/
 Disallow: /includes/
-Disallow: /interceptors/
 Disallow: /layouts/
+Disallow: /interceptors/
 Disallow: /logs/
 Disallow: /model/
+Disallow: /modules/
 Disallow: /plugins/
 Disallow: /views/
-Allow: /

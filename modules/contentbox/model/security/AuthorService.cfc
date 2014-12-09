@@ -57,20 +57,48 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	
 	/**
 	* Author search by name, email or username
+	* @searchTerm.hint Search in firstname, lastname and email fields
+	* @isActive.hint Search with active bit
+	* @role.hint Apply a role filter
+	* @max.hint The max returned objects
+	* @offset.hint The offset for pagination
+	* @asQuery.hint Query or objects
+	* @sortOrder.hint The sort order to apply
 	*/
-	function search(searchTerm="", max=0, offset=0, asQuery=false, sortOrder="lastName"){
+	function search(
+		string searchTerm="", 
+		string isActive,
+		string role,
+		numeric max=0, 
+		numeric offset=0, 
+		boolean asQuery=false, 
+		string sortOrder="lastName"
+	){
 		var results = {};
 		var c = newCriteria();
 		
 		// Search
-		c.$or( c.restrictions.like("firstName","%#arguments.searchTerm#%"),
-			   c.restrictions.like("lastName", "%#arguments.searchTerm#%"),
-			   c.restrictions.like("email", "%#arguments.searchTerm#%") );
+		if( len( arguments.searchTerm ) ){
+			c.$or( c.restrictions.like("firstName","%#arguments.searchTerm#%"),
+				   c.restrictions.like("lastName", "%#arguments.searchTerm#%"),
+				   c.restrictions.like("email", "%#arguments.searchTerm#%") );
+		}
+
+		// isActive filter
+		if( structKeyExists( arguments, "isActive" ) AND arguments.isActive NEQ "any"){
+			c.eq( "isActive", javaCast( "boolean", arguments.isActive ) );
+		}
+
+		// role filter
+		if( structKeyExists( arguments, "role" ) AND arguments.role NEQ "any"){
+			c.createAlias( "role", "role" )
+				.isEq( "role.roleID", javaCast( "int", arguments.role ) );
+		}
 
 		// run criteria query and projections count
 		results.count = c.count( "authorID" );
 		results.authors = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery);
+			.list( offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery );
 	
 		
 		
@@ -118,7 +146,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 	* Import data from an array of structures of authors or just one structure of author 
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
-		var allUsers = [];
+		var allUsers 		= [];
+		var badDateRegex  	= " -\d{4}$";
 		
 		// if struct, inflate into an array
 		if( isStruct( arguments.importData ) ){
@@ -131,9 +160,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 			var oUser = this.findByUsername( thisUser.username );
 			oUser = ( isNull( oUser ) ? new() : oUser );
 			
+			// date conversion tests
+			thisUser.createdDate 	= reReplace( thisUser.createdDate, badDateRegex, "" );
+			if( len( thisUser.lastLogin ) ){
+				thisUser.lastLogin = reReplace( thisUser.lastLogin, badDateRegex, "" );
+			}
+			
 			// populate content from data
 			populator.populateFromStruct( target=oUser, memento=thisUser, exclude="role,authorID,permissions", composeRelationships=false );
-			
 			
 			// A-LA-CARTE PERMISSIONS
 			if( arrayLen( thisUser.permissions ) ){
