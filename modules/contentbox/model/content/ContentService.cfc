@@ -38,6 +38,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	property name="entryService"			inject="entryService@cb";
 	property name="populator"				inject="wirebox:populator";
 	property name="systemUtil"				inject="SystemUtil@cb";
+	property name="statsService"			inject="statsService@cb";
 	
 	/**
 	* Constructor
@@ -347,7 +348,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	array function getTopVisitedContent(numeric max=5){
 		var c = newCriteria()
-			.list(max=arguments.max, sortOrder="hits desc", asQuery=false);
+			.list(max=arguments.max, sortOrder="numberOfHits desc", asQuery=false);
 		return c;
 	}
 	
@@ -647,14 +648,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @async.hint Async or not
 	*/
 	ContentService function updateHits(required contentID, boolean async=true){
-		// if in thread already or not async
-		if( systemUtil.inThread() OR !arguments.async ){
-			return syncUpdateHits( arguments.contentID );
+			// if in thread already or not async
+		if( systemUtil.inThread() OR !arguments.async){
+			
+			statsService.syncUpdateHits( arguments.contentID );
 		}
 		
 		var threadName = "updateHits_#hash( arguments.contentID & now() )#";
 		thread name="#threadName#" contentID="#arguments.contentID#"{
-			variables.syncUpdateHits( attributes.contentID );
+			statsService.syncUpdateHits( attributes.contentID );
 		}
 		return this;
 	}
@@ -683,9 +685,19 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Update the content hits
 	* @contentID.hint The content id to update
 	*/
+	/*
 	private function syncUpdateHits(required contentID){
-		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.contentID#").execute();
+		
+		if(settingService.getSetting('cb_content_hit_count')) {
+			try {
+				if(settingService.getSetting('cb_content_hit_ignore_bots') OR !statsService.isUserAgentABot()) {
+					var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.contentID#").execute();
+				}
+			} catch (any e) {
+				
+			}
+		}
 		return this;
 	}
-	
+	*/
 }

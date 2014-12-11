@@ -343,6 +343,29 @@
             						#html.radioButton(name="cb_content_uiexport",checked=not prc.cbSettings.cb_content_uiexport,value=false)# No
                                 </div>
                             </div>
+						</fieldset>
+						<fieldset>
+    						<legend><i class="icon-file-alt icon-large"></i> Hit count options</legend>		
+							<!--- Hit Count --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="cb_content_hit_count",content="Content hit count:")#
+                                <div class="controls">
+                                    <small>Enable/Disabled content hit count.</small><br/>
+            						#html.radioButton(name="cb_content_hit_count",checked=prc.cbSettings.cb_content_hit_count,value=true)# Yes
+            						#html.radioButton(name="cb_content_hit_count",checked=not prc.cbSettings.cb_content_hit_count,value=false)# No
+                                </div>
+                            </div>
+							<!--- Hit Count Ignore bots --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="cb_content_hit_count",content="Content hit count ignore bots:")#
+                                <div class="controls">
+                                    <small>Enable/Disabled content hit count ignore bots.</small><br/>
+            						#html.radioButton(name="cb_content_hit_ignore_bots",checked=prc.cbSettings.cb_content_hit_ignore_bots,value=true)# Yes
+            						#html.radioButton(name="cb_content_hit_ignore_bots",checked=not prc.cbSettings.cb_content_hit_ignore_bots,value=false)# No
+                                </div>
+                            </div>
+							<!--- Bot regex  --->
+                            #html.textarea(name="cb_content_bot_regex", label="Bots regex:", value=prc.cbSettings.cb_content_bot_regex,rows="3", wrapper="div class=controls", labelClass="control-label", groupWrapper="div class=control-group")#
     					</fieldset>
     					<fieldset>
     						<legend><i class="icon-hdd icon-large"></i>  Content Caching</legend>
