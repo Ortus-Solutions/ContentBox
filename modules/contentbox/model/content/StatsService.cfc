@@ -19,8 +19,8 @@
 		var arr = ListToArray(settingService.getSetting('cb_content_bot_regex'), chr(13));
 		
 		for(var i=1; i LTE ArrayLen(arr); i=i+1){
-    		var found = reMatch(arr[i], userAgent);
-    		if(ArrayLen(found) > 0) return true;
+			var found = reMatch(arr[i], userAgent);
+			if(ArrayLen(found) > 0) return true;
 		}
 
 		return false;
@@ -39,7 +39,6 @@
 						var q = new Query(sql="INSERT INTO cb_stats (hits,FK_contentID) VALUES (1, #arguments.contentID#)").execute();
 				}
 			} catch (any e) {
-				writeDump(e.getMessage());
 			}
 		}
 		return this;
