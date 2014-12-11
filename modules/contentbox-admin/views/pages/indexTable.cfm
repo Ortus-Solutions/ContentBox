@@ -83,7 +83,7 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
+			<td class="center"><span class="badge badge-info">#page.getNumberOfHits()#</span></td>
 			<td class="center">
 				<!---Info Panel --->
 				<a 	class="btn popovers" 
