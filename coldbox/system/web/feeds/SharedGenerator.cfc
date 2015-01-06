@@ -299,7 +299,7 @@ License		: 	Apache 2 License
 	<cffunction name="validatePerson" output="false" access="private" returntype="boolean" hint="Validate string object against the RSS person scheme containing an e-mail and an optional name">
 		<cfargument name="targetString" type="string" required="true" hint="The target string"/>
 		<cfscript>
-			var result = yesNoFormat(reFind('^(\w+\.)*\w+@((((\d{1,2})|(1\d{2})|(2[0-4]\d)|(25[0-5]))\.){3}((\d{1,2})|(1\d{2})|(2[0-4]\d)|(25[0-5]))|(\w+\.)+[A-Za-z]+)( \(.*\))?$', arguments.targetString));
+			var result = yesNoFormat(reFind('^(\w+\.)*\w+@((((\d{1,2})|(1\d{2})|(2[0-4]\d)|(25[0-5]))\.){3}((\d{1,2})|(1\d{2})|(2[0-4]\d)|(25[0-5]))|([\w\-]+\.)+[A-Za-z]+)( \(.*\))?$', arguments.targetString));
 			return result;
 		</cfscript>
 	</cffunction>
