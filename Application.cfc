@@ -115,7 +115,9 @@ component{
 	}
 
 	public void function onSessionStart(){
-		application.cbBootStrap.onSessionStart();
+		if( structKeyExists( application, "cbBootstrap") ){
+			application.cbBootStrap.onSessionStart();
+		}
 	}
 
 	public void function onSessionEnd(struct sessionScope, struct appScope){
