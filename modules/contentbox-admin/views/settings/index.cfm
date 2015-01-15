@@ -818,7 +818,48 @@
     					<fieldset>
     						<legend><i class="icon-rss icon-large"></i>  RSS Options</legend>
     
-    						<!--- Max RSS Entries --->
+							<!--- RSS title --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="",content="Feed title: ")#
+                                <div class="controls">
+                                    <small>The title of the rss feed.</small></br>
+    								#html.textField(name="cb_rss_title",required="required",value=prc.cbSettings.cb_rss_title,class="textfield width98",title="The title of the rss feed.")#
+                                </div>
+                            </div>
+							<!--- RSS feed generator --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="",content="Feed generator: ")#
+                                <div class="controls">
+                                    <small>RSS feed generator.</small></br>
+    								#html.textField(name="cb_rss_generator",required="required",value=prc.cbSettings.cb_rss_generator,class="textfield width98",title="The generator of the rss feed.")#
+                                </div>
+                            </div>
+							<!--- RSS feed copyright --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="",content="Feed copyright: ")#
+                                <div class="controls">
+                                    <small>RSS feed copyright.</small></br>
+    								#html.textField(name="cb_rss_copyright",required="required",value=prc.cbSettings.cb_rss_copyright,class="textfield width98",title="Copyright.")#
+                                </div>
+                            </div>
+							<!--- RSS feed description --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="",content="Feed description: ")#
+                                <div class="controls">
+                                    <small>RSS feed description.</small></br>
+    								#html.textField(name="cb_rss_description",required="required",value=prc.cbSettings.cb_rss_description,class="textfield width98",title="RSS feed description.")#
+                                </div>
+                            </div>
+							<!--- RSS feed webmaster --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="",content="Feed webmaster: ")#
+                                <div class="controls">
+                                    <small>RSS feed webmaster.</small></br>
+    								#html.textField(name="cb_rss_webmaster",required="required",value=prc.cbSettings.cb_rss_webmaster,class="textfield width98",title="RSS feed webmaster.")#
+                                </div>
+                            </div>
+							
+							<!--- Max RSS Entries --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_rss_maxEntries">Max RSS Content Items:</label>
                                 <div class="controls">
