@@ -306,19 +306,17 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
-			if( len( trim(arguments.parent) ) ){
-				c.eq("parent.contentID", javaCast("int",arguments.parent) );
+			if( len( trim( arguments.parent ) ) ){
+				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
+			} else {
+				c.isNull( "parent" );
 			}
-			else{
-				c.isNull("parent");
-			}
-			sortOrder = "order asc";
 		}
 
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
+							.list( offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=arguments.asQuery );
 
 		return results;
 	}
