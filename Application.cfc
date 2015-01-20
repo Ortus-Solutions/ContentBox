@@ -32,11 +32,17 @@ component{
 	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;
 	this.scriptProtect		= false;
-	// Railo Specific Settings
+	
+	/**************************************
+	Railo Specific Settings
+	**************************************/
 	// buffer the output of a tag/function body to output in case of a exception
 	this.bufferOutput 					= true;
-	this.compression 					= true;
+	// Activate Railo Gzip Compression
+	this.compression 					= false;
+	// Turn on/off white space managemetn
 	this.whiteSpaceManagement 			= "smart";
+	// Turn on/off remote cfc content whitespace
 	this.suppressRemoteComponentContent = false;
 
 	// ColdBox Application Specific, Modify if you need to
@@ -44,7 +50,6 @@ component{
 	COLDBOX_APP_MAPPING		= "";
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
-
 	// LOCATION MAPPINGS
 	this.mappings["/contentbox"] 		= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings["/contentbox-ui"] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
