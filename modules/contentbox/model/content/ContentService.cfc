@@ -312,7 +312,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			else{
 				c.isNull("parent");
 			}
-			sortOrder = "order asc";
+			// if the current context's entity contains an orderable
+			if( entityHasProperty( propertyName="order" ) ) {
+				sortOrder = "order asc";
+			}
 		}
 
 		// run criteria query and projections count
@@ -321,6 +324,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 							.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
 
 		return results;
+	}
+
+	/**
+	 * Determine if the entity bound to the current service has a particular property, by name
+	 * @propertyName.hint The property name to match against
+	 */
+	boolean function entityHasProperty( required string propertyName ) {
+		var propertyNames = getPropertyNames();
+		return arrayFindNoCase( propertyNames, arguments.propertyName );
 	}
 
 	/**
