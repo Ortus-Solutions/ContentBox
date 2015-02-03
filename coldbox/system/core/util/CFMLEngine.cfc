@@ -18,7 +18,7 @@ Description :
 			//setup the engine properties
 			this.ADOBE = "ADOBE";
 			this.RAILO = "RAILO";
-			this.RAILO = "LUCEE";
+			this.LUCEE = "LUCEE";
 
 			// JDK Version
 			this.JDK_VERSION = CreateObject("java", "java.lang.System").getProperty("java.version");
