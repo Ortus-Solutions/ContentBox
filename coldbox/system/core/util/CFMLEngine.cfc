@@ -17,8 +17,8 @@ Description :
 		<cfscript>
 			//setup the engine properties
 			this.ADOBE = "ADOBE";
-			this.BLUEDRAGON = "BLUEDRAGON";
 			this.RAILO = "RAILO";
+			this.RAILO = "LUCEE";
 
 			// JDK Version
 			this.JDK_VERSION = CreateObject("java", "java.lang.System").getProperty("java.version");
@@ -41,14 +41,7 @@ Description :
 			instance.railo.onmm 		= true;
 			instance.railo.validation	= true;
 			instance.railo.instanceCheck = true;
-
-			instance.bluedragon 			= structnew();
-			instance.bluedragon.mt 			= true;
-			instance.bluedragon.json 		= true;
-			instance.bluedragon.ramResource = false;
-			instance.bluedragon.onmm 		= true;
-			instance.bluedragon.validation		= false;
-			instance.bluedragon.instanceCheck = true;
+			instance.lucee = instance.railo;
 
 			return this;
 		</cfscript>
@@ -59,7 +52,6 @@ Description :
 	<!--- Get the current CFML Version --->
 	<cffunction name="getVersion" access="public" returntype="numeric" hint="Returns the current running CFML version" output="false" >
 		<cfscript>
-			if ( server.coldfusion.productname eq "BlueDragon" ){ return server.bluedragon.edition; }
 			return listfirst(server.coldfusion.productversion);
 		</cfscript>
 	</cffunction>
@@ -69,8 +61,8 @@ Description :
 		<cfscript>
 			var engine = "ADOBE";
 
-			if ( server.coldfusion.productname eq "BlueDragon" ){
-				engine = "BLUEDRAGON";
+			if ( server.coldfusion.productname eq "Lucee" ){
+				engine = "LUCEE";
 			}
 			else if ( server.coldfusion.productname eq "Railo" ){
 				engine = "RAILO";
@@ -84,10 +76,11 @@ Description :
 	<cffunction name="isRAMResource" output="false" access="public" returntype="boolean" hint="Check if the engine supports RAM writing">
 		<cfscript>
 			var version = getVersion();
-			var engine = getEngine();
+			var engine  = getEngine();
 
 			if ( (engine eq this.ADOBE and version gte 9) or
-				 (engine eq this.RAILO) ){
+				 (engine eq this.RAILO) or
+				 (engine eq this.LUCEE) ){
 				return (true AND featureCheck("ramResource",engine));
 			}
 			else{
@@ -103,7 +96,7 @@ Description :
 			var engine = getEngine();
 
 			if ( (engine eq this.ADOBE and version gte 8) or
-				 (engine eq this.BLUEDRAGON and version gte 7) or
+				 (engine eq this.LUCEE) or
 				 (engine eq this.RAILO) ){
 				return (true AND featureCheck("onmm",engine));
 			}
@@ -122,7 +115,7 @@ Description :
 
 			if ( (engine eq this.ADOBE and version gte 9 and getToken(server.coldfusion.productversion,3,",") gte 1) or
 				 (engine eq this.ADOBE and version gte 10) or
-				 (engine eq this.BLUEDRAGON and version gte 7) or
+				 (engine eq this.LUCEE) or
 				 (engine eq this.RAILO) ){
 				return (true AND featureCheck("validation",engine));
 			}
@@ -139,7 +132,7 @@ Description :
 			var engine = getEngine();
 
 			if ( (engine eq this.ADOBE and version gte 8) or
-				 (engine eq this.BLUEDRAGON and version gte 7) or
+				 (engine eq this.LUCEE) or
 				 (engine eq this.RAILO) ){
 				return (true AND featureCheck("mt",engine));
 			}
@@ -156,7 +149,7 @@ Description :
 			var engine  = getEngine();
 
 			if ( (engine eq this.ADOBE and version gte 8) or
-				 (engine eq this.BLUEDRAGON and version gte 7) or
+				 (engine eq this.LUCEE) or
 				 (engine eq this.RAILO) ){
 				return (true AND featureCheck("instanceCheck",engine));
 			}
@@ -173,7 +166,7 @@ Description :
 			var engine = getEngine();
 
 			if ( (engine eq this.ADOBE and version gte 8) or
-				 (engine eq this.RAILO and version gte 8) ){
+				 (engine eq this.RAILO or engine eq this.LUCEE) ){
 				return (true AND featureCheck("json",engine));
 			}
 			else{
@@ -189,7 +182,7 @@ Description :
 			var engine = getEngine();
 
 			if ( (engine eq this.ADOBE and version gte 8) or
-				 (engine eq this.RAILO) ){
+				 (engine eq this.RAILO or engine eq this.LUCEE) ){
 				return true;
 			}
 			else{
