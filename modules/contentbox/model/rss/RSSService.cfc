@@ -210,6 +210,7 @@ component singleton{
 			else{
 				qEntries.content[i]	= entryResults.entries[i].getActiveContent().renderContent();
 			}
+			qEntries.content[ i ] = cleanupContent( qEntries.content[ i ] );
 		}
 
 		// Generate feed items
@@ -267,15 +268,14 @@ component singleton{
 			qPages.author[i]			= "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
 			qPages.linkComments[i]		= CBHelper.linkComments( pageResults.pages[i] );
 			qPages.categories[i]		= pageResults.pages[i].getCategoriesList();
-			qPages.content[i]			= pageResults.pages[i].getActiveContent().renderContent();
 			qPages.guid_permalink[i] 	= false;
 			qPages.guid_string[i] 		= CBHelper.linkPage( qPages.slug );
 			if( pageResults.pages[i].hasExcerpt() ){
-				qEntries.content[i]	= pageResults.pages[i].renderExcerpt();
+				qPages.content[i]	= pageResults.pages[i].renderExcerpt();
+			} else {
+				qPages.content[i]	= pageResults.pages[i].getActiveContent().renderContent();
 			}
-			else{
-				qEntries.content[i]	= pageResults.pages[i].getActiveContent().renderContent();
-			}
+			qPages.content[ i ] = cleanupContent( qPages.content[ i ] );
 		}
 
 		// Generate feed items
@@ -333,7 +333,7 @@ component singleton{
 			qContent.author[i]			= "#contentResults.content[i].getAuthorEmail()# (#contentResults.content[i].getAuthorName()#)";
 			qContent.linkComments[i]	= CBHelper.linkComments( contentResults.content[i] );
 			qContent.categories[i]		= contentResults.content[i].getCategoriesList();
-			qContent.content[i]			= contentResults.content[i].getActiveContent().renderContent();
+			qContent.content[i]			= cleanupContent( contentResults.content[i].getActiveContent().renderContent() );
 			qContent.guid_permalink[i] 	= false;
 			qContent.guid_string[i] 	= CBHelper.linkContent( contentResults.content[i] );
 
@@ -387,7 +387,7 @@ component singleton{
 			qComments.title[i] 			= "Comment by #qComments.author[i]# on #commentResults.comments[i].getParentTitle()#";
 			qComments.rssAuthor[i]		= "#qComments.authorEmail# (#qComments.author#)";
 			qComments.linkComments[i]	= CBHelper.linkComment( commentResults.comments[i] );
-			qComments.content[i]		= qComments.content[i];
+			qComments.content[i]		= cleanupContent( qComments.content[i] );
 			qComments.guid_permalink[i]	= false;
 			qComments.guid_string[i]	= CBHelper.linkComment( commentResults.comments[i] );
 		}
@@ -404,6 +404,13 @@ component singleton{
 		feedStruct.items 		= qComments;
 
 		return feedGenerator.createFeed(feedStruct,columnMap);
+	}
+
+	/**
+	* Cleanup HTML to normal strings to avoid parsing issues
+	*/
+	private function cleanupContent( required content ){
+		return reReplacenocase( arguments.content, "<[^>]*>", "", "all" )
 	}
 
 }

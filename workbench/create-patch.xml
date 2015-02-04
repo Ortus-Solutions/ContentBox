@@ -66,7 +66,7 @@
 		<mkdir dir="${dir.patches}/${contentbox.version}/patch"/>
 		
 		<!-- Copy Update Template, just in case -->
-		<copy file="${dir.resources}/Update.cfc" tofile="${dir.patches}/${contentbox.version}/Update.cfc" overwrite="false" />
+		<copy file="${dir.resources}/Update.cfc" tofile="${dir.patches}/${contentbox.version}/Update.cfc" overwrite="false" encoding="UTF-8"/>
 		
 		<!-- Execute git patch -->
 		<exec executable="workbench/create-patch.sh">
@@ -99,7 +99,7 @@
 		</unzip>
 		
 		<!-- Replace Build Numbers For Patch -->
-		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true">
+		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 		  <fileset dir="${dir.patches}/${contentbox.version}/patch">
 		  	<include name="**/ModuleConfig.cfc" />
 		  </fileset>

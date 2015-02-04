@@ -237,31 +237,31 @@ component accessors="true" threadSafe{
 		Semantic version: major.minor.revision-alpha.1+build
 		**/
 
-		var cVersion 	= parseSemanticVersion( trim( arguments.cVersion ) );
-		var nVersion 	= parseSemanticVersion( trim( arguments.nVersion ) );
+		var cVersionData 	= parseSemanticVersion( trim( arguments.cVersion ) );
+		var nVersionData 	= parseSemanticVersion( trim( arguments.nVersion ) );
 
 		// Major check
-		if( nVersion.major gt cVersion.major ){
+		if( nVersionData.major gt cVersionData.major ){
 			return true;
 		}
 
 		// Minor Check
-		if( nVersion.major eq cVersion.major AND nVersion.minor gt cVersion.minor ){
+		if( nVersionData.major eq cVersionData.major AND nVersionData.minor gt cVersionData.minor ){
 			return true;
 		}
 
 		// Revision Check
-		if( nVersion.major eq cVersion.major AND
-			nVersion.minor gt cVersion.minor AND
-			nVersion.revision gt cVersion.revision ){
+		if( nVersionData.major eq cVersionData.major AND
+			nVersionData.minor gt cVersionData.minor AND
+			nVersionData.revision gt cVersionData.revision ){
 			return true;
 		}
 
 		// BuildID Check
-		if( nVersion.major eq cVersion.major AND
-			nVersion.minor gt cVersion.minor AND
-			nVersion.revision gt cVersion.revision AND
-			nVersion.buildID gt cVersion.buildID ){
+		if( nVersionData.major eq cVersionData.major AND
+			nVersionData.minor gt cVersionData.minor AND
+			nVersionData.revision gt cVersionData.revision AND
+			nVersionData.buildID gt cVersionData.buildID ){
 			return true;
 		}
 
