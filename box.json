@@ -1,6 +1,6 @@
 {
     "name"              : "ContentBox Modular CMS",
-    "version"           : "2.1.0.@build.number@",
+    "version"           : "2.1.0+@build.number@",
     "author"            : "Ortus Solutions <info@ortussolutions.com>",
     "slug"              : "contentbox",
     "type"              : "cms",
@@ -13,6 +13,7 @@
     "createPackageDirectory" : false,
     "engines"           : [
         { "type" : "railo", "version" : ">4.1" },
+        { "type" : "lucee", "version" : ">4.5" },
         { "type" : "adobe", "version" : ">9.0.2" }
     ],
     "license"           : [ 

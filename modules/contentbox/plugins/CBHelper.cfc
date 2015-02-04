@@ -307,17 +307,17 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	// Determine if you are in the archives view
 	boolean function isArchivesView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.archives" AND event.valueExists("entry",true) );
+		return ( event.getCurrentEvent() eq "contentbox-ui:blog.archives" );
 	}
 	// Determine if you are in the index view
 	boolean function isIndexView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.index");
+		return ( event.getCurrentEvent() eq "contentbox-ui:blog.index" );
 	}
 	// Determine if you are in the entry view
 	boolean function isEntryView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:blog.entry" AND event.valueExists("entry",true) );
+		return ( event.getCurrentEvent() eq "contentbox-ui:blog.entry" );
 	}
 	/**
 	* Determine if you are in the page view
@@ -325,12 +325,12 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	boolean function isPageView(page=""){
 		var event = getRequestContext();
-		if( findNoCase("contentbox-ui:page", event.getCurrentEvent() ) AND event.valueExists("page",true) ){
+		if( findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND event.valueExists( "page", true ) ){
 			// slug check
-			if( len(arguments.page) AND getCurrentPage().getSlug() eq arguments.page ){
+			if( len( arguments.page ) AND getCurrentPage().getSlug() eq arguments.page ){
 				return true;
 			}
-			else if( !len(arguments.page) ){
+			else if( !len( arguments.page ) ){
 				return true;
 			}
 			return false;
@@ -1262,14 +1262,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/**
 	* Retrieve i18n resources
 	* @resource.hint The resource (key) to retrieve from a loaded bundle or pass a @bundle
-	* @default.hint A default value to send back if the resource (key) not found
+	* @defaultValue.hint A default value to send back if the resource (key) not found
 	* @locale.hint Pass in which locale to take the resource from. By default it uses the user's current set locale
 	* @values.hint An array, struct or simple string of value replacements to use on the resource string
 	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
 	*/
 	any function r( 
 		required string resource,
-		string default,
+		string defaultValue,
 		string locale,
 		any values,
 		string bundle
@@ -1279,6 +1279,8 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			arguments.bundle 	= listLast( arguments.resource, "@" );
 			arguments.resource 	= listFirst( arguments.resource, "@" );
 		}
+		// Stupid CF9 Hack.
+		if( structKeyExists( arguments, "defaultValue" ) ){ arguments.default = arguments.defaultValue; }
 		return getResource( argumentCollection=arguments );
 	}
 

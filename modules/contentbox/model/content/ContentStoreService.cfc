@@ -233,8 +233,6 @@ component extends="ContentService" singleton{
 			} else {
 				c.isNull( "parent" );
 			}
-			// change sort by parent
-			arguments.sortOrder = "order asc";
 		}
 
 		// run criteria query and projections count

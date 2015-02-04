@@ -394,7 +394,7 @@ component extends="baseContentHandler"{
 				announceInterception("cbadmin_preContentStoreRemove", { content=content } );
 				// Diassociate it
 				if( content.hasParent() ){
-					content.getParent().removeChild( page );
+					content.getParent().removeChild( content );
 				}
 				// Delete it
 				contentStoreService.deleteContent( content );

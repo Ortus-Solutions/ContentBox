@@ -32,32 +32,34 @@ component{
 	this.sessionTimeout 	= createTimeSpan(0,0,45,0);
 	this.setClientCookies 	= true;
 	this.scriptProtect		= false;
-	// Railo Specific Settings
+	
+	/**************************************
+	Railo Specific Settings
+	**************************************/
 	// buffer the output of a tag/function body to output in case of a exception
-	this.bufferOutput = true;
-	this.compression = true;
-	this.whiteSpaceManagement = "smart";
+	this.bufferOutput 					= true;
+	// Activate Railo Gzip Compression
+	this.compression 					= false;
+	// Turn on/off white space managemetn
+	this.whiteSpaceManagement 			= "smart";
+	// Turn on/off remote cfc content whitespace
 	this.suppressRemoteComponentContent = false;
-
-	// Mapping Imports
-	import coldbox.system.*;
 
 	// ColdBox Application Specific, Modify if you need to
 	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
 	COLDBOX_APP_MAPPING		= "";
 	COLDBOX_CONFIG_FILE 	= "";
 	COLDBOX_APP_KEY 		= "";
-
 	// LOCATION MAPPINGS
-	this.mappings["/contentbox"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
-	this.mappings["/contentbox-ui"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
-	this.mappings["/contentbox-admin"] = COLDBOX_APP_ROOT_PATH & "modules/contentbox-admin";
+	this.mappings["/contentbox"] 		= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
+	this.mappings["/contentbox-ui"] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox-ui";
+	this.mappings["/contentbox-admin"] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox-admin";
 	// THE LOCATION OF EMBEDDED COLDBOX
-	this.mappings["/coldbox"] 	 = COLDBOX_APP_ROOT_PATH & "coldbox";
+	this.mappings["/coldbox"] = COLDBOX_APP_ROOT_PATH & "coldbox";
 
 	// THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";
-	// CONTENTBOX ORM SETTINGS
+	// ORM SETTINGS
 	this.ormEnabled = true;
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
@@ -84,13 +86,13 @@ component{
 
 	// application start
 	public boolean function onApplicationStart(){
-		application.cbBootstrap = new Coldbox(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH,COLDBOX_APP_KEY);
+		application.cbBootstrap = new coldbox.system.Coldbox( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
 		application.cbBootstrap.loadColdbox();
 		return true;
 	}
 
 	// request start
-	public boolean function onRequestStart(String targetPage){
+	public boolean function onRequestStart( string targetPage ){
 
 		//if( structKeyExists(url,"ormReload") ){ ormReload(); }
 		//applicationstop();abort;
@@ -99,7 +101,7 @@ component{
 		if( not structKeyExists(application,"cbBootstrap") or application.cbBootStrap.isfwReinit() ){
 			lock name="coldbox.bootstrap_#this.name#" type="exclusive" timeout="5" throwonTimeout=true{
 				structDelete(application,"cbBootStrap");
-				application.cbBootstrap = new ColdBox(COLDBOX_CONFIG_FILE,COLDBOX_APP_ROOT_PATH,COLDBOX_APP_KEY,COLDBOX_APP_MAPPING);
+				application.cbBootstrap = new coldbox.system.ColdBox( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
 			}
 		}
 
@@ -107,7 +109,7 @@ component{
 		application.cbBootStrap.reloadChecks();
 
 		//Process a ColdBox request only
-		if( findNoCase('index.cfm',listLast(arguments.targetPage,"/")) ){
+		if( findNoCase( 'index.cfm', listLast( arguments.targetPage, "/" ) ) ){
 			application.cbBootStrap.processColdBoxRequest();
 		}
 
@@ -115,15 +117,17 @@ component{
 	}
 
 	public void function onSessionStart(){
-		application.cbBootStrap.onSessionStart();
+		if( structKeyExists( application, "cbBootstrap") ){
+			application.cbBootStrap.onSessionStart();
+		}
 	}
 
-	public void function onSessionEnd(struct sessionScope, struct appScope){
-		arguments.appScope.cbBootStrap.onSessionEnd(argumentCollection=arguments);
+	public void function onSessionEnd( struct sessionScope, struct appScope ){
+		arguments.appScope.cbBootStrap.onSessionEnd( argumentCollection=arguments );
 	}
 
 	public boolean function onMissingTemplate(template){
-		return application.cbBootstrap.onMissingTemplate(argumentCollection=arguments);
+		return application.cbBootstrap.onMissingTemplate( argumentCollection=arguments );
 	}
 
 	//@cf9-onError@

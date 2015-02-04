@@ -50,7 +50,7 @@
 					type="int" 
 			     	operation="+"
 					pattern="00000"
-			     	default="1" />
+			     	default="00200" />
 		</propertyfile>
 		<property file="workbench/build.number"/>
 

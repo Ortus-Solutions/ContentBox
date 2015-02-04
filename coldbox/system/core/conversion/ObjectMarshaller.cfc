@@ -24,6 +24,7 @@ Description :
 			instance = structnew();
 			instance.algorithm = "generic";
 			if( engine eq CFMLEngine.RAILO ){ instance.algorithm = "railo"; }
+			if( engine eq CFMLEngine.LUCEE ){ instance.algorithm = "railo"; }
 			if( engine eq CFMLEngine.ADOBE and version GTE 9 ){ instance.algorithm = "objectSave"; }
 
 			return this;
