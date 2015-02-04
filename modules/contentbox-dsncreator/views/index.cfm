@@ -84,7 +84,7 @@
 								<!---<option value="derby">Apache Derby</option>--->
 								<option value="mssql">Microsft SQL Server</option>
 								<option value="mysql">MySQL</option>
-								<cfif structKeyExists( server, "railo")>
+								<cfif listFindNoCase( "railo,lucee", server.coldfusion.productname )>
 								<option value="HSQLDB">HSQLDB (Hypersonic Embedded SQL DB)</option>
 								</cfif>
 								<!---<option value="oracle">Oracle</option>--->
