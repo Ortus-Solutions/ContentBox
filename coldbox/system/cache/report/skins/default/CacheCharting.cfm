@@ -23,7 +23,7 @@
 		</td>
 		<td align="center">
 		<cfif structKeyExists( cacheConfig, "maxObjects" )>
-		<cfchart format="png" show3d="#show3d#" title="Cache Fullness" backgroundcolor="##ffffff" chartheight="250" chartwidth="250">
+		<cfchart format="png" show3d="false" title="Cache Fullness" backgroundcolor="##ffffff" chartheight="250" chartwidth="250">
 			<cfchartseries type="pie" colorlist="00ff00, 0000ff" >
 				<cfchartdata item="Max Size"  value="#cacheConfig.maxObjects#">
 				<cfchartdata item="Used Size" value="#cacheSize#">
@@ -31,7 +31,7 @@
 		</cfchart>
 		</cfif> 
 		
-		<cfchart format="png" show3d="#show3d#" backgroundcolor="##ffffff" 
+		<cfchart format="png" show3d="false" backgroundcolor="##ffffff" 
 				 chartwidth="275" chartheight="275" showlegend="true" title="Cache Performance Report">
 			<cfchartseries type="bar" colorlist="131cd7,ED2939,gray,d47f00">
 				<cfchartdata item="Hits" value="#cacheStats.getHits()#">

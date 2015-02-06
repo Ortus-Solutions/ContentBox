@@ -169,10 +169,9 @@ component{
 			var cacheKey 	= "";
 			// Do we have an override page setup by the settings?
 			if( structKeyExists( prc, "pageOverride" ) and len( prc.pageOverride ) ){
-				cacheKey = "cb-content-wrapper-#prc.pageOverride#/";
-			}
-			else{
-				cacheKey = "cb-content-wrapper-#left( event.getCurrentRoutedURL(), 255 )#";
+				cacheKey = "cb-content-wrapper-#cgi.http_host#-#prc.pageOverride#/";
+			} else {
+				cacheKey = "cb-content-wrapper-#cgi.http_host#-#left( event.getCurrentRoutedURL(), 255 )#";
 			}
 			
 			// Incorporate internal hash + rc distinct hash.
