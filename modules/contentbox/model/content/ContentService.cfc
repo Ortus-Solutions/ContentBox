@@ -70,7 +70,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content-pagewrapper",async=arguments.async);
+		cache.clearByKeySnippet(keySnippet="cb-content-wrapper",async=arguments.async);
 		return this;
 	}
 
@@ -83,7 +83,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content-pagewrapper-#arguments.slug#",async=arguments.async);
+		cache.clearByKeySnippet(keySnippet="cb-content-wrapper-#cgi.http_host#-#arguments.slug#",async=arguments.async);
 		return this;
 	}
 
@@ -96,7 +96,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clear("cb-content-pagewrapper-#arguments.slug#/");
+		cache.clear("cb-content-wrapper-#cgi.http_host#-#arguments.slug#/");
 		return this;
 	}
 
