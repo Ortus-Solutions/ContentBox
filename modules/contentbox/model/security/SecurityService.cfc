@@ -161,7 +161,7 @@ component implements="ISecurityService" singleton{
 	ISecurityService function sendPasswordReminder(required Author author){
 		// Store Security Token For 15 minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
-		cache.set( "reset-token-#token#", arguments.author.getAuthorID(), 15, 15 );
+		cache.set( "reset-token-#cgi.http_host#-#token#", arguments.author.getAuthorID(), 15, 15 );
 		
 		// get settings
 		var settings = settingService.getAllSettings(asStruct=true);
@@ -196,7 +196,7 @@ component implements="ISecurityService" singleton{
 	*/
 	struct function resetUserPassword(required token){
 		var results = { error = false, author = "" };
-		var cacheKey = "reset-token-#arguments.token#";
+		var cacheKey = "reset-token-#cgi.http_host#-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back

@@ -735,7 +735,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Build content cache keys according to sent content object
 	*/
 	string function buildContentCacheKey(){
-		return "cb-content-#getContentType()#-#getContentID()#";
+		return "cb-content-#cgi.http_host#-#getContentType()#-#getContentID()#";
 	}
 
 	/**
