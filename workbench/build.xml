@@ -45,14 +45,14 @@
 		<loadproperties srcFile="workbench/build.properties"/>
 
 		<!-- Build Number -->
-		<propertyfile file="workbench/build.number" comment="Build Number for ANT. Edit not!">
+		<propertyfile file="${be.exports}/build.number" comment="Build Number for ANT. Edit not!">
 			<entry key="build.number" 
 					type="int" 
 			     	operation="+"
 					pattern="00000"
-			     	default="00200" />
+			     	default="00210" />
 		</propertyfile>
-		<property file="workbench/build.number"/>
+		<property file="${be.exports}/build.number"/>
 
 		<!-- Build ID -->
 		<property name="build.label" value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
