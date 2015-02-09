@@ -40,11 +40,25 @@
 				<loadproperties srcFile="workbench/build-${environment}.properties"/>
 			</then>
 		</if>
+		
 		<!-- Load root properties -->
 		<echo>Loading base properties</echo>
 		<loadproperties srcFile="workbench/build.properties"/>
 
+		<!-- Cleanup + Init -->
+		<delete dir="${dir.build}" />
+		<delete verbose="true" failonerror="false">
+			<fileset dir="${dir.contentbox.exports}" />
+		</delete>
+		<mkdir dir="${dir.build}"/>
+		<mkdir dir="${be.exports}"/>
+		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
+		
 		<!-- Build Number -->
+		<if>
+			<not><available file="${be.exports}/build.number" /></not>
+			<then><touch file="${be.exports}/build.number" /></then>
+		</if>
 		<propertyfile file="${be.exports}/build.number" comment="Build Number for ANT. Edit not!">
 			<entry key="build.number" 
 					type="int" 
@@ -56,17 +70,12 @@
 
 		<!-- Build ID -->
 		<property name="build.label" value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
-		<!-- Cleanup + Init -->
-		<delete dir="${dir.build}" />
-		<delete verbose="true" failonerror="false">
-			<fileset dir="${dir.contentbox.exports}" />
-		</delete>
-		<mkdir dir="${dir.build}"/>		
-		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
+		
 		<!-- Permissions -->
 		<antcall target="update.permissions" />
 		<!-- Get Build Dependencies -->
  		<antcall target="getDependencies" />
+		
 		<!-- Mark as init -->
 		<property name="src.isInit" value="true" />
 	</target>
