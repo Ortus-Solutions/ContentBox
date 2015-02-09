@@ -91,6 +91,7 @@
 	<target name="build.source" description="Build a new ContentBox source release" depends="init" unless="src.isBuilt">
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
+		
 		<!-- Copy Source -->	
       	<copy todir="${dir.build}" encoding="UTF-8">
       		<fileset dir=".">
@@ -107,11 +108,13 @@
       			<exclude name=".project" />
       		</fileset>
         </copy>
+        
 		<!-- Replace Build Numbers -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 		  <fileset dir="${dir.build}/modules/">
 		  	<include name="**/ModuleConfig.cfc" />
 		  </fileset>
+		  <fileset file="${dir.build}/box.json" />
 		</replaceregexp>
 		
 		<!-- API Docs -->
