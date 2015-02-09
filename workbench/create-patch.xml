@@ -42,7 +42,7 @@
 		<loadproperties srcFile="workbench/build.properties"/>
 		
 		<!-- build number for patch, use what normal build uses -->
-		<property file="workbench/build.number"/>
+		<property file="${be.exports}/build.number"/>
 		
 		<!-- Cleanup patches -->
 		<delete>
