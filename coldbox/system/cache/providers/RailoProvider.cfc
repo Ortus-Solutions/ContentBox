@@ -454,7 +454,7 @@ component serializable="false" implements="coldbox.system.cache.ICacheProvider"{
 		// Async? IF so, do checks
 		if( arguments.async AND NOT instance.utility.inThread() ){
 			thread name="#threadName#" keySnippet="#arguments.keySnippet#" regex="#arguments.regex#"{
-				instance.elementCleaner.clearByKeySnippet( attribues.keySnippet, attribues.regex );
+				instance.elementCleaner.clearByKeySnippet( attributes.keySnippet, attributes.regex );
 			}
 		}
 		else{
