@@ -409,7 +409,7 @@ component singleton{
 	* Cleanup HTML to normal strings to avoid parsing issues
 	*/
 	private function cleanupContent( required content ){
-		return reReplacenocase( arguments.content, "<[^>]*>", "", "all" )
+		return reReplacenocase( arguments.content, "<[^>]*>", "", "all" );
 	}
 
 }
