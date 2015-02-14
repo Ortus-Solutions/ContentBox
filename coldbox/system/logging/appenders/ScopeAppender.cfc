@@ -98,7 +98,7 @@ Properties:
 
 	<!--- getStorage --->
 	<cffunction name="getStorage" output="false" access="private" returntype="any" hint="Get the storage">
-		<cflock name="#getname()#.scopeoperation" type="exclusive" timeout="20" throwOnTimeout="true">
+		<cflock name="#instance._hash & getname()#.scopeoperation" type="exclusive" timeout="20" throwOnTimeout="true">
 			<cfreturn instance.scopeStorage.get(getProperty('key'), getProperty('scope'))>
 		</cflock>
 	</cffunction>
@@ -106,7 +106,7 @@ Properties:
 	<!--- saveStorage --->
 	<cffunction name="saveStorage" output="false" access="private" returntype="void" hint="Save Storage">
 		<cfargument name="data" required="true" hint="Data to save"/>
-		<cflock name="#getname()#.scopeoperation" type="exclusive" timeout="20" throwOnTimeout="true">
+		<cflock name="#instance._hash & getname()#.scopeoperation" type="exclusive" timeout="20" throwOnTimeout="true">
 			<cfset instance.scopeStorage.put(getProperty('key'), arguments.data, getProperty('scope'))>
 		</cflock>
 	</cffunction>

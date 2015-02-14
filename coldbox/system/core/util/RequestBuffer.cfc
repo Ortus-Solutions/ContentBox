@@ -17,9 +17,10 @@ Description :
 	<cffunction name="init" output="false" access="public" returntype="RequestBuffer" hint="Constructor">
 		<cfscript>
 			instance = structnew();
-			/* Setup properties */
-			instance.bufferKey = "_cbox_request_buffer";
-
+			
+			instance.bufferKey  = "_cbox_request_buffer";
+			instance.classID 	= createObject("java", "java.lang.System").identityHashCode( this ); 
+			
 			return this;
 		</cfscript>
 	</cffunction>
@@ -61,7 +62,7 @@ Description :
 
 		<!--- Double Lock --->
 		<cfif not isBufferInScope()>
-			<cflock name="#instance.bufferkey#" type="exclusive" timeout="10" throwontimeout="true">
+			<cflock name="#instance.classID#.#instance.bufferkey#" type="exclusive" timeout="10" throwontimeout="true">
 				<cfif not isBufferInScope()>
 					<!--- Create Buffer --->
 					<cfset oBuffer = createObject("java","java.lang.StringBuffer").init('')>
