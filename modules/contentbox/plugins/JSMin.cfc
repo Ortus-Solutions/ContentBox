@@ -147,11 +147,15 @@ component extends="coldbox.system.Plugin" singleton{
 			return renderLinks( arguments.assets );
 		}
 
-		// check if assets already in cacheMap
-		if( !structKeyExists( instance.cacheMap, cacheKey ) ){
-			lock name="jsmin.#cacheKey#" type="exclusive" timeout="20" throwOntimeout="true"{
+		// check if assets already in cacheMap or on disk
+		if( !structKeyExists( instance.cacheMap, cacheKey ) OR 
+			!fileExists( expandPath( instance.cacheMap[ cacheKey ] ) ) 
+		){
+			lock name="jsmin.#controller.getAppHash()#.#cacheKey#" type="exclusive" timeout="20" throwOntimeout="true"{
 				// double secure lock
-				if( !structKeyExists( instance.cacheMap, cacheKey ) ){
+				if( !structKeyExists( instance.cacheMap, cacheKey ) OR 
+					!fileExists( expandPath( instance.cacheMap[ cacheKey ] ) ) 
+				){
 					//compress assets
 					cachedFile = jsmin( cacheKey, arguments.assets, cacheDiskLocation );
 					// save in cache map
