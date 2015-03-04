@@ -162,7 +162,7 @@
 			    	</ul>
 			    </div>
 			    <!--- Drag Handle --->
-				<a href="javascript:null" class="dragHandle btn btn-default" title="Click and drag to change menu order"><i class="icon-move"></i></a>
+				<a href="##" onclick="return false;" class="dragHandle btn btn-default" title="Click and drag to change menu order"><i class="icon-move"></i></a>
 				</td>
 		</tr>
 		</cfloop>
