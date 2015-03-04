@@ -27,8 +27,8 @@
 			</td>
 			<td class="center">
 				<div class="btn-group">
-				<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
-				<button class="btn" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )" title="Link"><i class="icon-link icon-large"></i></button>
+				<button class="btn" onclick="return selectCBContent( '#JSStringFormat( page.getSlug() )#', '#JSStringFormat( page.getTitle() )#', 'pagessl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
+				<button class="btn" onclick="return selectCBContent( '#JSStringFormat( page.getSlug() )#', '#JSStringFormat( page.getTitle() )#', 'page' )" title="Link"><i class="icon-link icon-large"></i></button>
 				</div>
 			</td>
 		</tr>
