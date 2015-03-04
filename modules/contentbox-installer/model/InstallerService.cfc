@@ -306,6 +306,11 @@ component accessors="true"{
 			"cb_rss_cachingTimeout" = "60",
 			"cb_rss_cachingTimeoutIdle" = "15",
 			"cb_rss_cacheName" = "Template",
+			"cb_rss_title" = "RSS Feed by ContentBox",
+			"cb_rss_generator" = "ContentBox by Ortus Solutions",
+			"cb_rss_copyright" = "Ortus Solutions, Corp (www.ortussolutions.com)",
+			"cb_rss_description" = "ContentBox RSS Feed",
+			"cb_rss_webmaster" = "",
 
 			// Content Caching and options
 			"cb_content_caching" = "true",
