@@ -229,7 +229,7 @@ For the latest usage, please visit the wiki.
 						//Redirect
 						if( arguments.event.isSES() ){
 							// Save the secured URL
-							rc._securedURL = arguments.event.buildLink( linkTo=reReplace( cgi.path_info, "^/", "" ) );
+							rc._securedURL = arguments.event.buildLink( URI=reReplace( cgi.path_info, "^/", "" ) );
 						}
 						else{ 
 							// Save the secured URL
