@@ -229,15 +229,15 @@ For the latest usage, please visit the wiki.
 						//Redirect
 						if( arguments.event.isSES() ){
 							// Save the secured URL
-							rc._securedURL = arguments.event.buildLink( URI=reReplace( cgi.path_info, "^/", "" ) );
+							rc._securedURL = arguments.event.buildLink( event.getCurrentRoutedURL() );
 						}
 						else{ 
 							// Save the secured URL
 							rc._securedURL = "#cgi.script_name#";							
 						}
-						
+
 						// Check query string for secure URL
-						if( cgi.query_string neq ""){
+						if( cgi.query_string neq "" ){
 							rc._securedURL = rc._securedURL & "?#cgi.query_string#";
 						}
 						
