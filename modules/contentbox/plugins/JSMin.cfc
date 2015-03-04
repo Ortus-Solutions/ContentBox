@@ -367,8 +367,9 @@ component extends="coldbox.system.Plugin" singleton{
 			// Create concatenated file according to content.
 			// Media Query Fix
 			var sbString = trim( replace( sb.toString(), " and(", " and (", "all" ) );
-			// Class Select Fix
+			// Class Selectors Fix
 			sbString = trim( REreplace( sbString, "\b\[class", " [class", "all" ) );
+			sbString = trim( REreplace( sbString, "\b\*\[", " *[", "all" ) );
 			
 			// Write it out
 			tempFileName = hash( sbString, "MD5" ) & ".cache." & listLast( compressedFiles[ 1 ], "." );
