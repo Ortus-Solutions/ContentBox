@@ -344,6 +344,37 @@
                                 </div>
                             </div>
     					</fieldset>
+
+                        <fieldset>
+                            <legend><i class="icon-bar-chart icon-large"></i>  Content Stats Tracking</legend>
+                            <!--- Hit Count --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_content_hit_count",content="Content Hit Count Tracking:")#
+                                <div class="controls">
+                                    <small>Enable/Disable content hit count tracking</small><br/>
+                                    #html.radioButton(name="cb_content_hit_count",checked=prc.cbSettings.cb_content_hit_count,value=true)# Yes
+                                    #html.radioButton(name="cb_content_hit_count",checked=not prc.cbSettings.cb_content_hit_count,value=false)# No
+                                </div>
+                            </div>
+                            <!--- Hit Count Ignore bots --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_content_hit_ignore_bots",content="Ignore Bots Regex Matching:")#
+                                <div class="controls">
+                                    <small>If enabled, the bot regex matching is ignored and hit tracking for bots is allowed </small><br/>
+                                    #html.radioButton(name="cb_content_hit_ignore_bots",checked=prc.cbSettings.cb_content_hit_ignore_bots,value=true)# Yes
+                                    #html.radioButton(name="cb_content_hit_ignore_bots",checked=not prc.cbSettings.cb_content_hit_ignore_bots,value=false)# No
+                                </div>
+                            </div>
+                            <!--- Bot Regex Matching --->
+                            <div class="control-group">
+                                    #html.label(field="cb_content_bot_regex",content="Bot Regex Matchers:")#
+                                    <div class="controls">
+                                        <small>A carriage return list of regular expressions to match against browser user agents. If it matches a bot, the hit count is ignored</small>
+                                        #html.textarea(name="cb_content_bot_regex",value=prc.cbSettings.cb_content_bot_regex,rows="4",title="One regex per line please")#     
+                                    </div>
+                                </div>  
+                        </fieldset>
+
     					<fieldset>
     						<legend><i class="icon-hdd icon-large"></i>  Content Caching</legend>
     
@@ -833,7 +864,7 @@
                                  #html.label(class="control-label",field="",content="Feed Webmaster: ")#
                                  <div class="controls">
                                      <small>RSS feed webmaster. Ex: myemail@mysite.com (Site Administrator)</small></br>
-                                     #html.textField(name="cb_rss_webmaster",required="required",value=prc.cbSettings.cb_rss_webmaster,class="textfield width98",title="RSS feed webmaster.")#
+                                     #html.textField(name="cb_rss_webmaster", value=prc.cbSettings.cb_rss_webmaster,class="textfield width98",title="RSS feed webmaster.")#
                                  </div>
                              </div>
 

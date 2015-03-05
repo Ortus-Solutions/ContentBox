@@ -38,6 +38,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	property name="entryService"			inject="entryService@cb";
 	property name="populator"				inject="wirebox:populator";
 	property name="systemUtil"				inject="SystemUtil@cb";
+	property name="statsService"			inject="statsService@cb";
 
 	/**
 	* Constructor
@@ -351,9 +352,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Get the top visited content entries
 	* @max.hint The maximum to retrieve, defaults to 5 entries
 	*/
-	array function getTopVisitedContent(numeric max=5){
+	array function getTopVisitedContent( numeric max=5 ){
 		var c = newCriteria()
-			.list(max=arguments.max, sortOrder="hits desc", asQuery=false);
+			.list( max=arguments.max, sortOrder="numberOfHits desc", asQuery=false );
 		return c;
 	}
 
@@ -361,9 +362,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Get the top commented content entries
 	* @max.hint The maximum to retrieve, defaults to 5 entries
 	*/
-	array function getTopCommentedContent(numeric max=5){
+	array function getTopCommentedContent( numeric max=5 ){
 		var c = newCriteria()
-			.list(max=arguments.max, sortOrder="numberOfComments desc", asQuery=false);
+			.list( max=arguments.max, sortOrder="numberOfComments desc", asQuery=false );
 		return c;
 	}
 
@@ -657,13 +658,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	ContentService function updateHits(required contentID, boolean async=true){
 		// if in thread already or not async
 		if( systemUtil.inThread() OR !arguments.async ){
-			return syncUpdateHits( arguments.contentID );
+			return statsService.syncUpdateHits( arguments.contentID );
 		}
 
 		var threadName = "updateHits_#hash( arguments.contentID & now() )#";
 		thread name="#threadName#" contentID="#arguments.contentID#"{
-			variables.syncUpdateHits( attributes.contentID );
+			statsService.syncUpdateHits( attributes.contentID );
 		}
+
 		return this;
 	}
 
@@ -696,15 +698,6 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	private function getUniqueSlugHash( required string slug ){
 		return "#arguments.slug#-#lcase( left( hash( now() ), 5 ) )#";
-	}
-
-	/**
-	* Update the content hits
-	* @contentID.hint The content id to update
-	*/
-	private function syncUpdateHits(required contentID){
-		var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.contentID#").execute();
-		return this;
 	}
 
 }

@@ -123,7 +123,7 @@
 					<i class="icon-tablet"></i> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
 					</cfif>
 					<br>
-					<i class="icon-signal icon-large" title="Hits"></i> Hits: <strong>#page.gethits()#</strong>
+					<i class="icon-signal icon-large" title="Hits"></i> Hits: <strong>#page.getNumberOfHits()#</strong>
 				</div>
 				
 				<!--- Page Actions --->

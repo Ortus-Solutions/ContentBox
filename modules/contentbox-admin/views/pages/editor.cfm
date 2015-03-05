@@ -273,7 +273,7 @@
         							<tr>
         								<th class="textRight">Views:</th>
         								<td>
-        									#prc.page.getHits()#
+        									#prc.page.getNumberOfHits()#
         								</td>
         							</tr>
         							<tr>
