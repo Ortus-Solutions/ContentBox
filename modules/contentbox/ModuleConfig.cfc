@@ -116,6 +116,7 @@ component {
 		binder.map("contentStoreService@cb").to("contentbox.model.content.ContentStoreService");
 		binder.map("contentVersionService@cb").to("contentbox.model.content.ContentVersionService");
 		binder.map("contentService@cb").to("contentbox.model.content.ContentService");
+		binder.map("statsService@cb").to("contentbox.model.content.StatsService");
 		// Commenting services
 		binder.map("commentService@cb").to("contentbox.model.comments.CommentService");
 		// RSS services

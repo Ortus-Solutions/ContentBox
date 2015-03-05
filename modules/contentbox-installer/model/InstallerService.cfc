@@ -323,6 +323,11 @@ component accessors="true"{
 			"cb_content_uiexport" = "true",
 			"cb_content_cachingHeader" = "true",
 
+			// Content Hit Tracking
+			"cb_content_hit_count" = "true",
+			"cb_content_hit_ignore_bots" = "false",
+			"cb_content_bot_regex" = "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby",			
+
 			// Global HTML
 			"cb_html_beforeHeadEnd" = "",
 			"cb_html_afterBodyStart" = "",
