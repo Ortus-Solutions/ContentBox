@@ -89,7 +89,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	function init(){
 		variables.isPublished 		= true;
 		variables.allowComments 	= true;
-		variables.numberOfHits 		= 0;
 		variables.cache 			= true;
 		variables.cacheLayout 		= true;
 		variables.cacheTimeout 		= 0;
@@ -99,6 +98,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		variables.showInSearch		= true;
 
 		return this;
+	}
+
+	/**
+	* Getter override to allow for null values
+	*/
+	numeric function getNumberOfHits(){
+		return isNull( variables.numberOfHits ) ? 0 : variables.numberOfHits;
 	}
 
 	/**

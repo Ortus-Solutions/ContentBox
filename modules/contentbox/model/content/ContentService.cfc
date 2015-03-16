@@ -658,7 +658,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	ContentService function updateHits(required contentID, boolean async=true){
 		// if in thread already or not async
 		if( systemUtil.inThread() OR !arguments.async ){
-			return statsService.syncUpdateHits( arguments.contentID );
+			statsService.syncUpdateHits( arguments.contentID );
+			return this;
 		}
 
 		var threadName = "updateHits_#hash( arguments.contentID & now() )#";
