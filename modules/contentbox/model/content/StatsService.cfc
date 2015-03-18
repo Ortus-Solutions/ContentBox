@@ -46,7 +46,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var aBotRegex 	= ListToArray( settingService.getSetting( 'cb_content_bot_regex' ), chr(13) );
 		// iterate and try to match
 		for( var thisBot in aBotRegex ){
-			if( reMatch( thisBot, userAgent ) gt 0 ){ 
+			if( arrayLen( reMatch( thisBot, userAgent ) ) gt 0 ){ 
 				return true; 
 			}
 		}
