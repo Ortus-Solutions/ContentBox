@@ -20,7 +20,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
-* Page service for contentbox
+* Service layer for all Page operations
 */
 component extends="ContentService" singleton{
 
@@ -32,7 +32,7 @@ component extends="ContentService" singleton{
 	*/
 	PageService function init(){
 		// init it
-		super.init(entityName="cbPage", useQueryCaching=true);
+		super.init( entityName="cbPage", useQueryCaching=true );
 
 		return this;
 	}
@@ -41,8 +41,10 @@ component extends="ContentService" singleton{
 	* Save a page and do necessary updates
 	* @page.hint The page to save or update
 	* @originalSlug.hint If an original slug is passed, then we need to update hierarchy slugs.
+	* 
+	* @return PageService
 	*/
-	PageService function savePage( required any page, string originalSlug="" ) transactional{
+	function savePage( required any page, string originalSlug="" ) transactional{
 
 		// Verify uniqueness of slug
 		if( !contentService.isSlugUnique( slug=arguments.page.getSlug(), contentID=arguments.page.getContentID() ) ){
