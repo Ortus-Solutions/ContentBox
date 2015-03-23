@@ -39,6 +39,8 @@ component extends="ContentService" singleton{
 
 	/**
 	* Save an entry
+	* 
+	* @return EntryService
 	*/
 	function saveEntry( required any entry, boolean transactional=true ){
 
@@ -50,6 +52,8 @@ component extends="ContentService" singleton{
 
 		// save entry
 		save( entity=arguments.entry, transactional=arguments.transactional );
+
+		return this;
 	}
 
 	/**
