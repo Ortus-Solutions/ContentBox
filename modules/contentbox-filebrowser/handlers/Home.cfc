@@ -39,12 +39,12 @@ component output="false" hint="Main filebrowser module handler"{
 	* @widget.hint Determines if this will run as a viewlet or normal MVC
 	* @settings.hint A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	*/
-	function index( 
-		event, 
-		rc, 
-		prc , 
-		boolean widget=false, 
-		struct settings={} 
+	function index(
+		event,
+		rc,
+		prc ,
+		boolean widget=false,
+		struct settings={}
 	){
 		// params
 		event.paramValue( "path","" );
@@ -391,8 +391,9 @@ component output="false" hint="Main filebrowser module handler"{
 	*/
 	function upload( event, rc, prc ){
 		// param values
-		event.paramValue( "path", "" );
-		event.paramValue( "manual", false );
+		event.paramValue( "path", "" )
+			.paramValue( "manual", false );
+
 		// clean incoming path for destination directory
 		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
 		// traversal test
@@ -448,10 +449,10 @@ component output="false" hint="Main filebrowser module handler"{
 			};
 			announceInterception( "fb_onFileUploadError", iData );
 		}
-		if( manual ) {
+		// Manual uploader?
+		if( rc.manual ) {
 			event.renderData( data="<textarea id='data_result'='upload'>#serializeJSON( data )#</textarea>", type="text" );
-		}
-		else {	
+		} else {
 			// render stuff out
 			event.renderData( data=data, type="json" );
 		}
@@ -483,7 +484,7 @@ component output="false" hint="Main filebrowser module handler"{
 			if( prc.fbSettings.loadJquery ){
 				addAsset( "#prc.fbModRoot#/includes/javascript/jquery.min.js" );
 			}
-			
+
 			// Add additional JS
 			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.uidivfilter.js" );
 			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.contextMenu.min.js" );
@@ -492,7 +493,7 @@ component output="false" hint="Main filebrowser module handler"{
 			if( prc.fbSettings.allowUploads ){
 				addAsset( "#prc.fbModRoot#/includes/javascript/jquery.filedrop.js" );
 			}
-			
+
 			// load selection callbacks
 			if( prc.fbSettings.loadSelectCallbacks ){
 				addAsset( "#prc.fbModRoot#/includes/javascript/fbSelectCallbacks.js" );
@@ -506,7 +507,7 @@ component output="false" hint="Main filebrowser module handler"{
 	private function getPreferences(){
 		// Get preferences
 		var prefs = cookieStorage.getVar( "fileBrowserPrefs", "" );
-		
+
 		// not found or not JSON setup defaults
 		if( !len( prefs ) OR NOT isJSON( prefs ) ){
 			prefs = {
@@ -605,7 +606,7 @@ component output="false" hint="Main filebrowser module handler"{
 	* @values.hint An array, struct or simple string of value replacements to use on the resource string
 	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
 	*/
-	private any function r( 
+	private any function r(
 		required string resource,
 		string default,
 		string locale,

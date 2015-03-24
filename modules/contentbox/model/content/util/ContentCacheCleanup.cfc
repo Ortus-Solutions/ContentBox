@@ -59,7 +59,7 @@ component extends="coldbox.system.Interceptor"{
 		cache.clearByKeySnippet(keySnippet=arguments.cacheKey, async=true);
 		// clear ancestry caches
 		var blogPrefix = ( arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : "" );
-		cache.clearByKeySnippet(keySnippet="cb-content-wrapper-#blogPrefix##replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#", async=true);
+		cache.clearByKeySnippet(keySnippet="cb-content-wrapper-#cgi.http_host#-#blogPrefix##replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/"),"")#", async=true);
 		// log
 		if( log.canInfo() ){
 			log.info("Sent clear command using the following content key: #arguments.cacheKey# from provider: #settings.cb_content_cacheName#");

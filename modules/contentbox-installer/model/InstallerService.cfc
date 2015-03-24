@@ -306,6 +306,11 @@ component accessors="true"{
 			"cb_rss_cachingTimeout" = "60",
 			"cb_rss_cachingTimeoutIdle" = "15",
 			"cb_rss_cacheName" = "Template",
+			"cb_rss_title" = "RSS Feed by ContentBox",
+			"cb_rss_generator" = "ContentBox by Ortus Solutions",
+			"cb_rss_copyright" = "Ortus Solutions, Corp (www.ortussolutions.com)",
+			"cb_rss_description" = "ContentBox RSS Feed",
+			"cb_rss_webmaster" = "",
 
 			// Content Caching and options
 			"cb_content_caching" = "true",
@@ -317,6 +322,11 @@ component accessors="true"{
 			"cb_page_excerpts" = "true",
 			"cb_content_uiexport" = "true",
 			"cb_content_cachingHeader" = "true",
+
+			// Content Hit Tracking
+			"cb_content_hit_count" = "true",
+			"cb_content_hit_ignore_bots" = "false",
+			"cb_content_bot_regex" = "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby",			
 
 			// Global HTML
 			"cb_html_beforeHeadEnd" = "",

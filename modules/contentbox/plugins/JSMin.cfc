@@ -147,11 +147,15 @@ component extends="coldbox.system.Plugin" singleton{
 			return renderLinks( arguments.assets );
 		}
 
-		// check if assets already in cacheMap
-		if( !structKeyExists( instance.cacheMap, cacheKey ) ){
-			lock name="jsmin.#cacheKey#" type="exclusive" timeout="20" throwOntimeout="true"{
+		// check if assets already in cacheMap or on disk
+		if( !structKeyExists( instance.cacheMap, cacheKey ) OR 
+			!fileExists( expandPath( instance.cacheMap[ cacheKey ] ) ) 
+		){
+			lock name="jsmin.#controller.getAppHash()#.#cacheKey#" type="exclusive" timeout="20" throwOntimeout="true"{
 				// double secure lock
-				if( !structKeyExists( instance.cacheMap, cacheKey ) ){
+				if( !structKeyExists( instance.cacheMap, cacheKey ) OR 
+					!fileExists( expandPath( instance.cacheMap[ cacheKey ] ) ) 
+				){
 					//compress assets
 					cachedFile = jsmin( cacheKey, arguments.assets, cacheDiskLocation );
 					// save in cache map
@@ -363,8 +367,9 @@ component extends="coldbox.system.Plugin" singleton{
 			// Create concatenated file according to content.
 			// Media Query Fix
 			var sbString = trim( replace( sb.toString(), " and(", " and (", "all" ) );
-			// Class Select Fix
+			// Class Selectors Fix
 			sbString = trim( REreplace( sbString, "\b\[class", " [class", "all" ) );
+			sbString = trim( REreplace( sbString, "\b\*\[", " *[", "all" ) );
 			
 			// Write it out
 			tempFileName = hash( sbString, "MD5" ) & ".cache." & listLast( compressedFiles[ 1 ], "." );

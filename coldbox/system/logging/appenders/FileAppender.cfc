@@ -63,8 +63,9 @@ Properties:
 				instance.logFullPath = expandPath(instance.logFullpath);
 			}
 
+
 			//lock information
-			instance.lockName = getname() & "logOperation";
+			instance.lockName = instance._hash & getname() & "logOperation";
 			instance.lockTimeout = 25;
 
 			return this;

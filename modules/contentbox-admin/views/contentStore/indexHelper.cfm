@@ -17,7 +17,7 @@ $(document).ready(function() {
 	});
 	
 	// load content on startup, using default parents if passed.
-	contentLoad( {} );
+	contentLoad( { parent: '#rc.parent#' } );
 	
 });
 </script>

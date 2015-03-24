@@ -235,17 +235,12 @@ component extends="content" singleton{
 	function commentPost( event, rc, prc ){
 		// incoming params
 		event.paramValue( "entrySlug", "" );
-		event.paramValue( "subscribe", false );
-		
 		// Try to retrieve entry by slug
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
-
 		// If null, kick them out
 		if( isNull( thisEntry ) ){ setNextEvent( prc.cbEntryPoint ); }
-		
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, thisEntry );
-
 		// Valid commenting, so go and save
 		saveComment( thisEntry, rc.subscribe );
 	}

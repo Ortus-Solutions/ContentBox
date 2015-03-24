@@ -14,12 +14,11 @@
 <table name="pages" id="pages" class="tablesorter table table-hover" width="98%">
 	<thead>
 		<tr>
-			<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
+			<th id="checkboxHolder" class="{sorter:false}" width="10"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 			<th>Name</th>
 			<th width="40" class="center"><i class="icon-th-list icon-large" title="Show in Menu"></i></th>
 			<th width="40" class="center"><i class="icon-globe icon-large" title="Published"></i></th>
-			<th width="40" class="center"><i class="icon-signal icon-large" title="Hits"></i></th>
-			<th width="100" class="center {sorter:false}">Actions</th>
+			<th width="135" class="center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
 
@@ -40,6 +39,10 @@
 				<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
 			</td>
 			<td>
+				<!--- Home Page --->
+				<cfif prc.cbSettings.cb_site_homepage eq page.getSlug()>
+					<i class="icon-home" title="Current Homepage"></i>
+				</cfif>
 				<!--- Children Dig Deeper --->
 				<cfif page.getNumberOfChildren()>
 					<a href="javascript:contentDrilldown( '#page.getContentID()#' )" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="icon-plus-sign icon-large text"></i></a>
@@ -58,7 +61,11 @@
 				</cfif>
 				<!--- password protected --->
 				<cfif page.isPasswordProtected()>
-					<i class="icon-lock"></i>
+					<i class="icon-lock" title="Password Protected"></i>
+				</cfif>
+				<!--- ssl protected --->
+				<cfif page.getSSLOnly()>
+					<i class="icon-shield" title="SSL Enabled"></i>
 				</cfif>
 			</td>
 			<td class="center">
@@ -116,6 +123,8 @@
 					<br/>
 					<i class="icon-tablet"></i> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
 					</cfif>
+					<br>
+					<i class="icon-signal icon-large" title="Hits"></i> Hits: <strong>#page.getNumberOfHits()#</strong>
 				</div>
 				
 				<!--- Page Actions --->
@@ -153,7 +162,8 @@
 						<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="icon-eye-open icon-large"></i> Open In Site</a></li>
 			    	</ul>
 			    </div>
-				
+			    <!--- Drag Handle --->
+				<a href="##" onclick="return false;" class="dragHandle btn btn-default" title="Click and drag to change menu order"><i class="icon-move"></i></a>
 				</td>
 		</tr>
 		</cfloop>

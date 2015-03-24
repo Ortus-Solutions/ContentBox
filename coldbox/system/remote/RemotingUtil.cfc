@@ -34,29 +34,17 @@ A cool remoting utililty component
 	
 			</cfcase>
 	
-			<cfcase value="BlueDragon">
+			<cfcase value="Lucee">
 	
-				<cfset my.resp = getPageContext().getResponse() />
+				<cfset my.out = getPageContext().getOut() />
 	
-				<cfloop condition="true">
-					<cfset my.parentf = my.resp.getClass().getDeclaredField('parent') />
-					<cfset my.parentf.setAccessible(true) />
-					<cfset my.parent = my.parentf.get(my.resp) />
-	
-					<cfif isObject(my.parent) AND getMetaData(my.parent).getName() is 'com.naryx.tagfusion.cfm.engine.cfHttpServletResponse'>
-						<cfset my.resp = my.parent />
-					<cfelse>
-						<cfbreak />
-					</cfif>
+				<cfloop condition="getMetaData(my.out).getName() is 'lucee.runtime.writer.BodyContentImpl'">
+					<cfset my.out = my.out.getEnclosingWriter() />
 				</cfloop>
 	
-				<cfset my.writer = my.resp.getClass().getDeclaredField('writer') />
-				<cfset my.writer.setAccessible(true) />
-				<cfset my.writer = my.writer.get(my.resp) />
-	
-				<cfset my.headbuf = my.writer.getClass().getDeclaredField('headElement') />
-				<cfset my.headbuf.setAccessible(true) />
-				<cfset my.headbuf.get(my.writer).setLength(0) />
+				<cfset my.headData = my.out.getClass().getDeclaredField("headData") />
+				<cfset my.headData.setAccessible(true) />
+				<cfset my.headData.set(my.out, createObject("java", "java.lang.String").init("")) />
 	
 			</cfcase>
 	

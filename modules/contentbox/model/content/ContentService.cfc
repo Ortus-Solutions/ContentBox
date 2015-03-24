@@ -55,7 +55,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Clear all content caches
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearAllCaches(boolean async=false){
+	function clearAllCaches( boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
@@ -67,11 +67,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* Clear all page wrapper caches
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearAllPageWrapperCaches(boolean async=false){
+	function clearAllPageWrapperCaches( boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content-pagewrapper",async=arguments.async);
+		cache.clearByKeySnippet(keySnippet="cb-content-wrapper",async=arguments.async);
 		return this;
 	}
 
@@ -80,11 +80,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @slug.hint The slug partial to clean on
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearPageWrapperCaches(required any slug, boolean async=false){
+	function clearPageWrapperCaches( required any slug, boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content-pagewrapper-#arguments.slug#",async=arguments.async);
+		cache.clearByKeySnippet(keySnippet="cb-content-wrapper-#cgi.http_host#-#arguments.slug#",async=arguments.async);
 		return this;
 	}
 
@@ -93,11 +93,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @slug.hint The slug to clean
 	* @async.hint Run it asynchronously or not, defaults to false
 	*/
-	function clearPageWrapper(required any slug, boolean async=false){
+	function clearPageWrapper( required any slug, boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clear("cb-content-pagewrapper-#arguments.slug#/");
+		cache.clear("cb-content-wrapper-#cgi.http_host#-#arguments.slug#/");
 		return this;
 	}
 
@@ -112,17 +112,20 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @searchActiveContent.hint Search only content titles or both title and active content. Defaults to both.
 	* @contentTypes.hint Limit search to list of content types (comma-delimited). Leave blank to search all content types
 	* @excludeIDs.hint List of IDs to exclude from search
+	* @showInSearch.hint If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	*/
 	function searchContent(
-		any searchTerm="", 
-		numeric max=0, 
-		numeric offset=0, 
-		boolean asQuery=false, 
-		any sortOrder="publishedDate DESC", 
-		any isPublished=true, 
+		any searchTerm="",
+		numeric max=0,
+		numeric offset=0,
+		boolean asQuery=false,
+		any sortOrder="publishedDate DESC",
+		any isPublished=true,
 		boolean searchActiveContent=true,
 		string contentTypes="",
-		any excludeIDs=""){
+		any excludeIDs="",
+		boolean showInSearch=false
+	){
 
 		var results = {};
 		var c = newCriteria();
@@ -139,6 +142,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			}
 		}
 
+		// only search shownInSearch bits
+		if( arguments.showInSearch ){
+			c.isTrue( "showInSearch" );
+		}
+
 		// Search Criteria
 		if( len( arguments.searchTerm ) ){
 			// like disjunctions
@@ -149,7 +157,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				  	  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
 			}
 			else{
-				c.like( "title", "%#arguments.searchTerm#%" ); 
+				c.like( "title", "%#arguments.searchTerm#%" );
 			}
 		}
 		// Content Types
@@ -169,7 +177,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		results.count = c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery);
-	
+
 		return results;
 	}
 
@@ -206,7 +214,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// return accordingly
 		return ( isNull( content ) ? new() : content );
 	}
-	
+
 	/**
 	* Verify an incoming slug is unique or not
 	* @slug.hint The slug to search for uniqueness
@@ -215,7 +223,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	function isSlugUnique(required any slug, any contentID=""){
 		var c = newCriteria()
 			.isEq( "slug", arguments.slug );
-		
+
 		if( len( arguments.contentID ) ){
 			c.ne( "contentID", javaCast( "int", arguments.contentID ) );
 		}
@@ -299,23 +307,21 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		// parent filter
 		if( structKeyExists(arguments,"parent") ){
-			if( len( trim(arguments.parent) ) ){
-				c.eq("parent.contentID", javaCast("int",arguments.parent) );
+			if( len( trim( arguments.parent ) ) ){
+				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
+			} else {
+				c.isNull( "parent" );
 			}
-			else{
-				c.isNull("parent");
-			}
-			sortOrder = "order asc";
 		}
 
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(offset=arguments.offset,max=arguments.max,sortOrder=sortOrder,asQuery=arguments.asQuery);
+							.list( offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=arguments.asQuery );
 
 		return results;
 	}
-	
+
 	/**
 	* Bulk Publish Status Updates
 	* @contentID.hint The list or array of ID's to bulk update
@@ -335,40 +341,40 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			contentObjects[x].setpublishedDate( now() );
 			contentObjects[x].setisPublished( publish );
 		}
-		
+
 		// transaction the save of all the content objects
 		saveAll( contentObjects );
 
 		return this;
 	}
-	
+
 	/**
 	* Get the top visited content entries
 	* @max.hint The maximum to retrieve, defaults to 5 entries
 	*/
-	array function getTopVisitedContent(numeric max=5){
+	array function getTopVisitedContent( numeric max=5 ){
 		var c = newCriteria()
-			.list(max=arguments.max, sortOrder="numberOfHits desc", asQuery=false);
+			.list( max=arguments.max, sortOrder="numberOfHits desc", asQuery=false );
 		return c;
 	}
-	
+
 	/**
 	* Get the top commented content entries
 	* @max.hint The maximum to retrieve, defaults to 5 entries
 	*/
-	array function getTopCommentedContent(numeric max=5){
+	array function getTopCommentedContent( numeric max=5 ){
 		var c = newCriteria()
-			.list(max=arguments.max, sortOrder="numberOfComments desc", asQuery=false);
+			.list( max=arguments.max, sortOrder="numberOfComments desc", asQuery=false );
 		return c;
 	}
-	
+
 	/**
 	* Get all content for export as flat data
 	* @inData.hint The data to use for exporting, usually concrete implementtions can override this.
 	*/
 	array function getAllForExport(any inData){
 		var result = [];
-		
+
 		if( !structKeyExists( arguments, "inData") ){
 			// export from the root node, instead of everything.
 			var data = newCriteria().isNull( "parent" ).list();
@@ -376,14 +382,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		else{
 			data = arguments.inData;
 		}
-		
+
 		for( var thisItem in data ){
-			arrayAppend( result, thisItem.getMemento() );	
+			arrayAppend( result, thisItem.getMemento() );
 		}
-		
+
 		return result;
 	}
-	
+
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
 	* @importFile.hint The absolute file path to use for importing
@@ -392,42 +398,42 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
 		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
-		
+
 		if( !isJSON( data ) ){
 			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
 		}
-		
+
 		// deserialize packet: Should be array of { settingID, name, value }
 		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
 	}
-	
+
 	/**
-	* Import data from an array of structures of content or just one structure of a content entry 
+	* Import data from an array of structures of content or just one structure of a content entry
 	* @importData.hint The data to import
 	* @override.hint Override records or not
 	* @importLog.hint The import log buffer
 	*/
 	string function importFromData(
-		required any importData, 
-		boolean override=false, 
+		required any importData,
+		boolean override=false,
 		required any importLog){
-		
+
 		var allContent = [];
-		
+
 		// if struct, inflate into an array
 		if( isStruct( arguments.importData ) ){
 			arguments.importData = [ arguments.importData ];
 		}
-		
+
 		// iterate and import
 		for( var thisContent in arguments.importData ){
-				
+
 			// Inflate content from data
 			var inflateResults = inflateFromStruct( thisContent, arguments.importLog );
-			
+
 			// continue to next record if author not found
 			if( !inflateResults.authorFound ){ continue; }
-			
+
 			// if new or persisted with override then save.
 			if( !inflateResults.content.isLoaded() ){
 				arguments.importLog.append( "New content imported: #thisContent.slug#<br>" );
@@ -440,9 +446,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			else{
 				arguments.importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
 			}
-			
+
 		} // end import loop
-		
+
 		// Save content
 		if( arrayLen( allContent ) ){
 			saveAll( allContent );
@@ -451,10 +457,10 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		else{
 			arguments.importLog.append( "No content imported as none where found or able to be overriden from the import file." );
 		}
-		
-		return arguments.importLog.toString(); 
+
+		return arguments.importLog.toString();
 	}
-	
+
 	/**
 	* Inflate a content object from a ContentBox JSON structure
 	* @contentData.hint The content structure inflated from JSON
@@ -463,11 +469,11 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @newContent.hint Map of new content by slug; useful for avoiding new content collisions with recusive relationships
 	*/
 	public function inflateFromStruct(
-		required any contentData, 
-		required any importLog, 
+		required any contentData,
+		required any importLog,
 		any parent,
 		struct newContent={}){
-		
+
 		// setup
 		var thisContent 	= arguments.contentData;
 		var badDateRegex  = " -\d{4}$";
@@ -481,22 +487,22 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		if( len( thisContent.expireDate ) ){
 			thisContent.expireDate = reReplace( thisContent.expireDate, badDateRegex, "" );
 		}
-		
+
 		// populate content from data and ignore relationships, we need to build those manually.
-		populator.populateFromStruct( target=oContent, 
-									  memento=thisContent, 
-									  exclude="creator,parent,children,categories,customfields,contentversions,comments", 
+		populator.populateFromStruct( target=oContent,
+									  memento=thisContent,
+									  exclude="creator,parent,children,categories,customfields,contentversions,comments",
 									  composeRelationships=false,
 									  nullEmptyInclude="publishedDate,expireDate" );
-									  
+
 		// determine author else ignore import
 		var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
 		if( !isNull( oAuthor ) ){
-			
+
 			// AUTHOR CREATOR
 			oContent.setCreator( oAuthor );
 			arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
-			
+
 			// PARENT
 			if( structKeyExists( arguments, "parent") and isObject( arguments.parent ) ){
 				oContent.setParent( arguments.parent );
@@ -505,15 +511,15 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 			else if( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ){
 				var oParent = findBySlug( slug=thisContent.parent.slug, showUnpublished=true );
 				// assign if persisted
-				if( oParent.isLoaded() ){ 
-					oContent.setParent( oParent ); 
+				if( oParent.isLoaded() ){
+					oContent.setParent( oParent );
 					arguments.importLog.append( "Content parent found and linked: #thisContent.parent.slug#<br>" );
 				}
 				else{
 					arguments.importLog.append( "Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>" );
 				}
 			}
-			
+
 			// CHILDREN
 			if( arrayLen( thisContent.children ) ){
 				var allChildren = [];
@@ -527,27 +533,29 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				}
 				oContent.setChildren( allChildren );
 			}
-			
+
 			// CUSTOM FIELDS
 			if( arrayLen( thisContent.customfields ) ){
 				// wipe out custom fileds if they exist
 				if( oContent.hasCustomField() ){ oContent.getCustomFields().clear(); }
 				// add new custom fields
 				for( var thisCF in thisContent.customfields ){
-					var args = { key = thisCF.key, value = thisCF.value };
+					// explicitly convert value to string...
+					// ACF doesn't handle string values well when they look like numbers :)
+					var args = { key = thisCF.key, value = toString( thisCF.value ) };
 					var oField = customFieldService.new(properties=args);
 					oField.setRelatedContent( oContent );
 					oContent.addCustomField( oField );
 				}
 			}
-			
+
 			// CATEGORIES
 			if( arrayLen( thisContent.categories ) ){
 				// Create categories that don't exist first
 				var allCategories = [];
 				for( var thisCategory in thisContent.categories ){
 					var oCategory = categoryService.findBySlug( thisCategory.slug );
-					oCategory = ( isNull( oCategory ) ? populator.populateFromStruct( target=categoryService.new(), memento=thisCategory, exclude="categoryID" ) : oCategory );	
+					oCategory = ( isNull( oCategory ) ? populator.populateFromStruct( target=categoryService.new(), memento=thisCategory, exclude="categoryID" ) : oCategory );
 					// save category if new only
 					if( !oCategory.isLoaded() ){ categoryService.save( entity=oCategory ); }
 					// append to add.
@@ -556,7 +564,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 				// detach categories and re-attach
 				oContent.setCategories( allCategories );
 			}
-			
+
 			// RELATED CONTENT
 			if( arrayLen( thisContent.relatedContent ) ) {
 				var allRelatedContent = [];
@@ -579,14 +587,14 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 					}
 					// otherwise, we need to inflate the new instance
 					else {
-						var inflateResults = instanceService.inflateFromStruct( 
-							contentData = thisRelatedContent, 
-							importLog=arguments.importLog, 
-							newContent=newContent 
+						var inflateResults = instanceService.inflateFromStruct(
+							contentData = thisRelatedContent,
+							importLog=arguments.importLog,
+							newContent=newContent
 						);
 						arrayAppend( allRelatedContent, inflateResults.content );
 					}
-					
+
 				}
 				oContent.setRelatedContent( allRelatedContent );
 			}
@@ -598,27 +606,27 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 					// some conversions
 					thisComment.createdDate = reReplace( thisComment.createdDate, badDateRegex, "" );
 					// population
-					var oComment = populator.populateFromStruct( target=commentService.new(), 
-															 	 memento=thisComment, 
-															 	 exclude="commentID", 
+					var oComment = populator.populateFromStruct( target=commentService.new(),
+															 	 memento=thisComment,
+															 	 exclude="commentID",
 															 	 composeRelationships=false );
 					oComment.setRelatedContent( oContent );
 					arrayAppend( allComments, oComment );
-				}	
-				oContent.setComments( allComments );		
+				}
+				oContent.setComments( allComments );
 			}
-			
+
 			// CONTENT VERSIONS
 			if( arrayLen( thisContent.contentversions ) ){
 				var allContentVersions = [];
 				for( var thisVersion in thisContent.contentversions ){
 					// some conversions
 					thisVersion.createdDate = reReplace( thisVersion.createdDate, badDateRegex, "" );
-					
+
 					// population
-					var oVersion = populator.populateFromStruct( target=contentVersionService.new(), 
-																 memento=thisVersion, 
-																 exclude="contentVersionID,author", 
+					var oVersion = populator.populateFromStruct( target=contentVersionService.new(),
+																 memento=thisVersion,
+																 exclude="contentVersionID,author",
 																 composeRelationships=false );
 					// Get author
 					var oAuthor = authorService.findByUsername( thisVersion.author.username );
@@ -630,34 +638,36 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 					}
 					else{
 						arguments.importLog.append( "Skipping importing version content #thisVersion.version# as author (#thisVersion.author.toString()#) not found!<br>" );
-					}						
-				}	
-				oContent.setContentVersions( allContentVersions );	
+					}
+				}
+				oContent.setContentVersions( allContentVersions );
 			}
 		} // end if author found
 		else{
 			arguments.importLog.append( "Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>" );
 		}
-		
+
 		return { content=oContent, authorFound=( !isNull( oAuthor ) ) };
 	}
-	
+
 	/**
 	* Update a content's hits with some async flava
 	* @contentID.hint The content id to update
 	* @async.hint Async or not
 	*/
 	ContentService function updateHits(required contentID, boolean async=true){
-			// if in thread already or not async
-		if( systemUtil.inThread() OR !arguments.async){
-			
+
+		// if in thread already or not async
+		if( systemUtil.inThread() OR !arguments.async ){
 			statsService.syncUpdateHits( arguments.contentID );
+			return this;
 		}
-		
+
 		var threadName = "updateHits_#hash( arguments.contentID & now() )#";
 		thread name="#threadName#" contentID="#arguments.contentID#"{
 			statsService.syncUpdateHits( attributes.contentID );
 		}
+
 		return this;
 	}
 
@@ -666,13 +676,24 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	*/
 	array function getAllFlatSlugs(){
 		var c = newCriteria();
-		
+
 		return c.withProjections( property="slug" )
 			.list( sortOrder="slug asc" );
 	}
 
+	/**
+	* Returns an array of [contentID, title, slug] structures of all the content in the system
+	*/
+	array function getAllFlatContent(){
+		var c = newCriteria();
+
+		return c.withProjections( property="contentID,title,slug" )
+			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list( sortOrder="slug asc" );
+	}
+
 /********************************************* PRIVATE *********************************************/
-	
+
 	/**
 	* Get a unique slug hash
 	* @slug.hint The slug to unique it
