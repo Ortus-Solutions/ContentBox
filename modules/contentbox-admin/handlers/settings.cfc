@@ -10,6 +10,7 @@ component extends="baseHandler"{
 	property name="editorService"		inject="id:editorService@cb";
 	property name="mediaService"		inject="id:mediaService@cb";
 	property name="adminThemeService"	inject="id:adminThemeService@cb";
+	property name="LoginTracker" 		inject="id:LoginTracker@cb";
 	
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -108,6 +109,15 @@ component extends="baseHandler"{
 		// view
 		event.setView("settings/raw");
 	}
+	//Show full Auth Logs
+	function authLogs(event,rc,prc){
+		prc.featureEnable = true;
+		if(settingsService.findWhere( { name = 'cb_security_login_blocker'} ).getValue())
+			prc.logs = LoginTracker.getAll(sortOrder="attempts",asQuery=false);
+		else
+			prc.featureEnable = false;
+		event.setView("settings/authLogs");
+	}
 	
 	// Export All settings
 	function exportAll(event,rc,prc){
@@ -149,7 +159,6 @@ component extends="baseHandler"{
 		event.paramValue( "page", 1 );
 		event.paramValue( "search", "" );
 		event.paramValue( "viewAll", false );
-		
 		// prepare paging plugin
 		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox");
 		prc.paging 		= prc.pagingPlugin.getBoundaries();

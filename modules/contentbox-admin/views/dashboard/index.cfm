@@ -88,6 +88,19 @@
 		<div id="latestSnapshot"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>	
 		</cfif>
 		
+		<!--- Recent Logins --->
+		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
+			<div class="small_box">
+				<div class="header">
+					<i class="icon-bar-chart icon-small"></i> Recent Logins
+				</div>
+				<div class="body">
+					<div id="recentLogins"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>	
+				</div>
+			</div>			
+		
+		</cfif>		
+		
 		<!--- Info Box --->
 		<div class="small_box">
 			<div class="header">
@@ -97,6 +110,10 @@
 				#renderview(view="_tags/needhelp", module="contentbox-admin")#
 			</div>
 		</div>	
+
+
+		
+
 
 		<!--- Help Box--->
 		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>

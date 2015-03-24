@@ -11,6 +11,7 @@ component extends="baseHandler"{
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="settingService"		inject="id:settingService@cb";
 	property name="feedReader"			inject="coldbox:plugin:FeedReader";
+	property name="LoginTracker" 		inject="id:LoginTracker@cb";
 
 	function preHandler(event,action,eventArguments,rc,prc){
 		prc.tabDashboard	  = true;
@@ -29,6 +30,7 @@ component extends="baseHandler"{
 		prc.xehLatestComments		= "#prc.cbAdminEntryPoint#.dashboard.latestComments";
 		prc.xehLatestNews			= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
 		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
+		prc.xehRecentLogins			= "#prc.cbAdminEntryPoint#.dashboard.recentLogins";
 		
 		// Extra JS/CSS
 		prc.cssAppendList = "../js/morris.js/morris";
@@ -75,6 +77,12 @@ component extends="baseHandler"{
 
 		// render view out.
 		event.setView( view="dashboard/latestSnapshot", layout="ajax" );
+	}
+	
+	function recentLogins( event, rc, prc ){
+		prc.lastLogins = arraynew(1);
+		prc.lastLogins =LoginTracker.getLastLogins(max = 4);
+		event.setView( view="dashboard/recentLogins", layout="ajax" );
 	}
 	
 	// Latest Entries

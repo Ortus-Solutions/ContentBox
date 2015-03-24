@@ -13,6 +13,7 @@ $(document).ready(function() {
 	</cfif>
 	<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 	$("##latestSnapshot").load( '#event.buildLink( prc.xehLatestSnapshot )#' );
+	$("##recentLogins").load( '#event.buildLink( prc.xehRecentLogins )#' );
 	</cfif>
 	$("##dashboardTabs a:first").tab( 'show' )
 });
