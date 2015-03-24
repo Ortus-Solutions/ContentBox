@@ -26,6 +26,7 @@ Description :
 			// Setup properties of the event manager
 			instance.eventStates 			= arrayToList( arguments.eventStates );
 			instance.stopRecursionClasses   = arguments.stopRecursionClasses;
+			instance.classID 				= createObject("java", "java.lang.System").identityHashCode( this );
 
 			// Init event pool container
 			instance.eventPoolContainer 	= structnew();
@@ -76,7 +77,7 @@ Description :
 		</cfscript>
 
 		<!--- Lock this registration --->
-		<cflock name="EventPoolManager.RegisterObject.#objectName#" type="exclusive" throwontimeout="true" timeout="30">
+		<cflock name="EventPoolManager.#instance.classID#.RegisterObject.#objectName#" type="exclusive" throwontimeout="true" timeout="30">
 			<cfscript>
 				// Append Custom Statess
 				appendInterceptionPoints(arguments.customStates);

@@ -42,23 +42,27 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 	*/
 	contentbox.model.search.SearchResults function search(required string searchTerm, numeric max=0, numeric offset=0){
 		// get new search results object
-		var searchResults = wirebox.getInstance("SearchResults@cb");
-		var sTime = getTickCount();
+		var searchResults 	= wirebox.getInstance( "SearchResults@cb" );
+		var sTime 			= getTickCount();
 
 		try{
-			var results = contentService.searchContent(offset=arguments.offset, max=arguments.max, searchTerm=arguments.searchTerm);
+			var results = contentService.searchContent(
+				offset			= arguments.offset,
+				max				= arguments.max,
+				searchTerm		= arguments.searchTerm,
+				showInSearch	= true
+			);
 			var args = {
-				results = results.content,
-				total = results.count,
-				searchTime = getTickCount() - sTime,
-				searchTerm = arguments.searchTerm,
-				error = false
+				results 	= results.content,
+				total 		= results.count,
+				searchTime 	= getTickCount() - sTime,
+				searchTerm 	= arguments.searchTerm,
+				error 		= false
 			};
 			searchResults.populate( args );
-		}
-		catch(Any e){
+		} catch( Any e ) {
 			searchResults.setError( true );
-			searchResults.setErrorMessages( ["Error executing content search: #e.detail# #e.message#"] );
+			searchResults.setErrorMessages( [ "Error executing content search: #e.detail# #e.message#" ] );
 		}
 
 		return searchResults;
@@ -101,20 +105,19 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 				writeOutput('
 				<li>
 					<a href="#cb.linkContent(item)#">#item.getTitle()#</a><br/>
-					#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ))#					 
-				</li>
-				<cite>#item.getContentType()# -> <a href="#cb.linkContent(item)#">#cb.linkContent(item)#</a></cite><br/>
+					<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ))#</p>
+					<cite>#item.getContentType()# -> <a href="#cb.linkContent(item)#">#cb.linkContent(item)#</a></cite><br/>
 				');
-				
-				
-				if(item.hasCategories()) {
+
+
+				if( item.hasCategories() ){
 					writeOutput('
 					<cite>Categories: #item.getCategoriesList()#</cite><br />
-					');	
+					');
 				}
-				
-				writeOutput('<br />');
-								
+
+				writeOutput('</li>');
+
 			};
 
 			writeOutput("</ul></div>");
@@ -127,7 +130,7 @@ component accessors="true" implements="contentbox.model.search.ISearchAdapter" s
 	* utility to strip HTML
 	*/
 	private function stripHTML(stringTarget){
-		return REReplaceNoCase(arguments.stringTarget,"<[^>]*>","","ALL");		 											 
+		return REReplaceNoCase(arguments.stringTarget,"<[^>]*>","","ALL");
 	}
 
 	/**

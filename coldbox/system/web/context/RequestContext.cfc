@@ -811,7 +811,10 @@ Description :
 
 	<cffunction name="isSSL" access="public" returntype="boolean" hint="Returns boolean result whether current request is in ssl or not" output="false">
 	    <cfscript>
-			if (isBoolean(cgi.server_port_secure) AND cgi.server_port_secure) { return true; }
+			if( isBoolean( cgi.server_port_secure ) AND cgi.server_port_secure){ return true; }
+			// Add typical proxy headers for SSL
+			if( getHTTPHeader( "x-forwarded-proto", "http" ) eq "https" ){ return true; }
+			if( getHTTPHeader( "x-scheme", "http" ) eq "https" ){ return true; }
 			return false;
 		</cfscript>
 	</cffunction>

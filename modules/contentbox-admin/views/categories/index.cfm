@@ -97,7 +97,7 @@
 								   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
 								   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="icon-edit icon-large"></i></a>
 								<!--- Delete Command --->
-								<a class="btn" title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
+								<a class="btn btn-default confirmIt" title="Delete Category" href="javascript:remove('#category.getcategoryID()#')" data-title="Delete Category?"><i class="icon-trash icon-large" id="delete_#category.getCategoryID()#"></i></a>
 								</cfif>
 							</div>
 						</td>

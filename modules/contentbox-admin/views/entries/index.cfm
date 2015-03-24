@@ -97,8 +97,16 @@
 				#html.startForm(name="entryFilterForm", action=prc.xehEntrySearch)#
 				<!--- Authors --->
 				<label for="fAuthors">Authors: </label>
-				<select name="fAuthors" id="fAuthors" class="input-block-level">
+				<select name="fAuthors" id="fAuthors" class="input-block-level" title="Filter on who edited content">
 					<option value="all" selected="selected">All Authors</option>
+					<cfloop array="#prc.authors#" index="author">
+					<option value="#author.getAuthorID()#">#author.getName()#</option>
+					</cfloop>
+				</select>
+				<!--- Creators --->
+				<label for="fCreators">Creators: </label>
+				<select name="fCreators" id="fCreators" class="input-block-level" title="Filter on who created content">
+					<option value="all" selected="selected">All Creators</option>
 					<cfloop array="#prc.authors#" index="author">
 					<option value="#author.getAuthorID()#">#author.getName()#</option>
 					</cfloop>

@@ -1,18 +1,19 @@
 {
     "name"              : "ContentBox Modular CMS",
-    "version"           : "2.0.0",
+    "version"           : "2.1.0+@build.number@",
     "author"            : "Ortus Solutions <info@ortussolutions.com>",
     "slug"              : "contentbox",
     "type"              : "cms",
     "keywords"          : "cms,content management,modular cms",
-    "directory"         : "/",
     "homepage"          : "http://www.gocontentbox.org",
     "documentation"     : "http://www.gocontentbox.org/docs",
     "repository"        : { "type" : "git", "url" : "https://github.com/Ortus-Solutions/ContentBox" },
     "bugs"              : "https://ortussolutions.atlassian.net/browse/CONTENTBOX",
     "shortDescription"  : "A Modular Content Management System",
+    "createPackageDirectory" : false,
     "engines"           : [
         { "type" : "railo", "version" : ">4.1" },
+        { "type" : "lucee", "version" : ">4.5" },
         { "type" : "adobe", "version" : ">9.0.2" }
     ],
     "license"           : [ 
@@ -21,7 +22,6 @@
     "contributors"      : [
         "Joel Watson <existdissolve@gmail.com>", "Brad Wood <bdw429s@gmail.com>", "Curt Gratz <gratz@computerknowhow.com>"
     ],
-    "ignore"            : [],
     "testbox"           : {
         "runner" : [
             { "cf10"    : "http://cf10contentbox.jfetmac/tests/runner.cfm" },

@@ -33,10 +33,11 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" index="idx_cachetimeout";
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="HTML";
-	
+	property name="showInSearch"	 		notnull="true"  ormtype="boolean" default="true" index="idx_showInSearch" dbdefault="1";
+
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property name="creator" notnull="true" cfc="contentbox.model.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
-	
+
 	// O2M -> Comments
 	property name="comments" singularName="comment" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate"
 			  cfc="contentbox.model.comments.Comment" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
@@ -63,14 +64,14 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="commentSubscriptions" singularName="commentSubscription" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" cfc="contentbox.model.subscriptions.CommentSubscription" fkcolumn="FK_contentID" inverse="true" cascade="all-delete-orphan";
 
 	// M2M -> Categories
-	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" inverse="true" cascade="all"  
+	property name="categories" fieldtype="many-to-many" type="array" lazy="extra" orderby="category" cascade="all"
 			  cfc="contentbox.model.content.Category" fkcolumn="FK_contentID" linktable="cb_contentCategories" inversejoincolumn="FK_categoryID";
 
 	// M2M -> Related Content - Content related from this content to other content
-	property name="relatedContent" fieldtype="many-to-many" type="array" lazy="extra" orderby="title" cascade="all"  
+	property name="relatedContent" fieldtype="many-to-many" type="array" lazy="extra" orderby="title" cascade="all"
 			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_contentID" linktable="cb_relatedContent" inversejoincolumn="FK_relatedContentID";
 	// M2M -> Linked Content - Content related to this content from other content
-	property name="linkedContent" fieldtype="many-to-many" type="array" lazy="extra" inverse="true" orderby="title" 
+	property name="linkedContent" fieldtype="many-to-many" type="array" lazy="extra" inverse="true" orderby="title"
 			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_relatedContentID" linktable="cb_relatedContent" inversejoincolumn="FK_contentID";
 
 	// Calculated Fields
@@ -95,8 +96,16 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		variables.cacheLastAccessTimeout = 0;
 		variables.markup 			= "HTML";
 		variables.contentType 		= "";
+		variables.showInSearch		= true;
 
 		return this;
+	}
+
+	/**
+	* Getter override to allow for null values
+	*/
+	numeric function getNumberOfHits(){
+		return isNull( variables.numberOfHits ) ? 0 : variables.numberOfHits;
 	}
 
 	/**
@@ -133,7 +142,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		return this;
 	}
-	
+
 	/**
 	 * Returns a list of active related content for this piece of content
 	 */
@@ -202,7 +211,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		return this;
 	}
-	
+
 	/**
 	* Override the setCustomFields
 	*/
@@ -216,7 +225,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		return this;
 	}
-	
+
 	/**
 	* Get custom fields as a structure representation
 	*/
@@ -249,7 +258,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		throw(message="No custom field with key: #arguments.key# found", detail="The keys are #structKeyList( fields )#", type="InvalidCustomField");
 	}
-	
+
 	/**
 	* Override the setContentVersions
 	*/
@@ -263,44 +272,34 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		return this;
 	}
-	
+
 	/**
-	* Override the setCategories
+	* Only adds it if not found in content object
 	*/
-	BaseContent function setCategories(required array categories){
-		
-		// Relate the incoming suckers
-		for( var oCat in arguments.categories ){
-			if( !oCat.hasContent( this ) ){
-				oCat.addContent( this );
-			}
+	BaseContent function addCategories(required category){
+		if( !hasCategories( arguments.category ) ){
+			arrayAppend( variables.categories, arguments.category );
 		}
-		
-		if( hasCategories() ){
-			// loop and remove yourself from categories
-			for( var oCat in variables.categories ){
-				if( !arrayContains( arguments.categories, oCat ) ){
-					oCat.removeContent( this );
-				}
-			}
-		}
-		
-		variables.categories = arguments.categories;
-		
 		return this;
 	}
-	
+
+	/**
+	* Remove only if it's found in the content object
+	*/
+	BaseContent function removeCategories(required category){
+		if( hasCategories( arguments.category ) ){
+			arrayDelete( variables.categories, arguments.category );
+		}
+		return this;
+	}
+
 	/*
 	* I remove all category associations
 	*/
 	BaseContent function removeAllCategories(){
 		if ( hasCategories() ){
-			for(var oCat in variables.categories ){
-				oCat.removeContent( this );
-			}
 			variables.categories.clear();
-		}
-		else{
+		} else {
 			variables.categories = [];
 		}
 		return this;
@@ -319,28 +318,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 
 	/**
-	* Bi directional add
-	*/
-	BaseContent function addCategories(required category){
-		if( !hasCategories( arguments.category ) ){
-			arguments.category.addContent( this );
-			arrayAppend( variables.categories, arguments.category );
-		}
-		return this;
-	}
-	
-	/**
-	* Bi directional remove
-	*/
-	BaseContent function removeCategories(required category){
-		if( hasCategories( arguments.category ) ){
-			arguments.category.removeContent( this );
-			arrayDelete( variables.categories, arguments.category );
-		}
-		return this;
-	}
-	
-	/**
 	* Override the setChildren
 	*/
 	BaseContent function setChildren(required array children){
@@ -353,7 +330,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		}
 		return this;
 	}
-	
+
 	/**
 	* Get a flat representation of this entry
 	* slugCache.hint Cache of slugs to prevent infinite recursions
@@ -361,19 +338,19 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	function getMemento( required array slugCache=[], counter=0 ){
 		var pList = contentService.getPropertyNames();
 		var result = {};
-		
+
 		// Do simple properties only
 		for(var x=1; x lte arrayLen( pList ); x++ ){
 			if( structKeyExists( variables, pList[ x ] ) ){
 				if( isSimpleValue( variables[ pList[ x ] ] ) ){
-					result[ pList[ x ] ] = variables[ pList[ x ] ];	
+					result[ pList[ x ] ] = variables[ pList[ x ] ];
 				}
 			}
 			else{
 				result[ pList[ x ] ] = "";
 			}
 		}
-		
+
 		// Do Author Relationship
 		if( hasCreator() ){
 			result[ "creator" ] = {
@@ -389,7 +366,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( hasComment() ){
 			result[ "comments" ] = [];
 			for( var thisComment in variables.comments ){
-				arrayAppend( result[ "comments" ], thisComment.getMemento() );	
+				arrayAppend( result[ "comments" ], thisComment.getMemento() );
 			}
 		}
 		else{
@@ -399,7 +376,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( hasCustomField() ){
 			result[ "customfields" ] = [];
 			for( var thisField in variables.customfields ){
-				arrayAppend( result[ "customfields" ], thisField.getMemento() );	
+				arrayAppend( result[ "customfields" ], thisField.getMemento() );
 			}
 		}
 		else{
@@ -409,7 +386,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( hasContentVersion() ){
 			result[ "contentversions" ] = [];
 			for( var thisVersion in variables.contentversions ){
-				arrayAppend( result[ "contentversions" ], thisVersion.getMemento() );	
+				arrayAppend( result[ "contentversions" ], thisVersion.getMemento() );
 			}
 		}
 		else{
@@ -427,7 +404,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( hasChild() ){
 			result[ "children" ] = [];
 			for( var thisChild in variables.children ){
-				arrayAppend( result[ "children" ], thisChild.getMemento() );	
+				arrayAppend( result[ "children" ], thisChild.getMemento() );
 			}
 		}
 		else{
@@ -443,19 +420,19 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		else{
 			result[ "categories" ] = [];
 		}
-		
+
 		// Related Content
 		result[ "relatedcontent" ] = [];
-		if( hasRelatedContent() && !arrayFindNoCase( arguments.slugCache, getSlug() ) ) {	
+		if( hasRelatedContent() && !arrayFindNoCase( arguments.slugCache, getSlug() ) ) {
 			// add slug to cache
-			arrayAppend( arguments.slugCache, getSlug() );		
+			arrayAppend( arguments.slugCache, getSlug() );
 			for( var content in variables.relatedContent ) {
 				arrayAppend( result[ "relatedcontent" ], content.getMemento( slugCache=arguments.slugCache ) );
 			}
 		}
 		return result;
 	}
-	
+
 	private function maxContentVersionChecks(){
 		if( !len( settingService.getSetting( "cb_versions_max_history" ) )  ){ return; }
 
@@ -500,7 +477,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			return activeContent[1];
 		}
 	}
-	
+
 	/**
 	* Shorthand Creator name
 	*/
@@ -626,7 +603,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all");
 		// reset versioning, and start with one
 		addNewContentVersion(content=latestContent, changelog="Content Cloned!", author=arguments.author);
-		
+
 		// safe clone custom fields
 		var newFields = arguments.original.getCustomFields();
 		for(var thisField in newFields){
@@ -634,13 +611,13 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			newField.setRelatedContent( this );
 			addCustomField( newField );
 		}
-		
+
 		// safe clone categories
 		var newCategories = arguments.original.getCategories();
 		for(var thisCategory in newCategories){
 			addCategories( categoryService.findBySlug( thisCategory.getSlug() ) );
 		}
-		
+
 		// clone related content
 		var newRelatedContent = arguments.original.getRelatedContent();
 		for( var thisRelatedContent in newRelatedContent ) {
@@ -765,7 +742,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Build content cache keys according to sent content object
 	*/
 	string function buildContentCacheKey(){
-		return "cb-content-#getContentType()#-#getContentID()#";
+		return "cb-content-#cgi.http_host#-#getContentType()#-#getContentID()#";
 	}
 
 	/**
@@ -873,12 +850,11 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	function getCategoriesList(){
 		if( NOT hasCategories() ){ return "Uncategorized"; }
-		var cats 	= getCategories();
 		var catList = [];
-		for(var x=1; x lte arrayLen(cats); x++){
-			arrayAppend( catList , cats[x].getCategory() );
+		for( var x=1; x lte arrayLen( variables.categories ); x++ ){
+			arrayAppend( catList , variables.categories[ x ].getCategory() );
 		}
-		return replace(arrayToList( catList ), ",",", ","all");
+		return replace( arrayToList( catList ), ",", ", ", "all" );
 	}
 
 }

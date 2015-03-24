@@ -95,17 +95,25 @@ component implements="ISecurityService" singleton{
 	*/
 	Author function getAuthorSession(){
 		
-		// Check if valid user id in session?
-		if( sessionStorage.exists("loggedInAuthorID") ){
+		// Check if valid user id in session
+		var authorID = val( sessionStorage.getVar("loggedInAuthorID", "") );
+		
+		// If that fails, check for a cookie
+		if( !authorID ) {
+			authorID = getKeepMeLoggedIn();
+		}	
+			
+		// If we found an authorID, load it up
+		if( authorID ){
 			// try to get it with that ID
-			var author = authorService.findWhere({authorID=sessionStorage.getVar("loggedInAuthorID"),isActive=true});
+			var author = authorService.findWhere( { authorID=authorID, isActive=true } );
 			// If user found?
 			if( NOT isNull(author) ){
 				author.setLoggedIn( true );
 				return author;
 			}
 		}
-		
+				
 		// return new author, not found or not valid
 		return authorService.new();
 	}
@@ -123,6 +131,8 @@ component implements="ISecurityService" singleton{
 	*/
 	ISecurityService function logout(){
 		sessionStorage.clearAll();
+		cookieStorage.deleteVar( name="contentbox_keep_logged_in" );
+		
 		return this;
 	}
 
@@ -151,7 +161,7 @@ component implements="ISecurityService" singleton{
 	ISecurityService function sendPasswordReminder(required Author author){
 		// Store Security Token For 15 minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
-		cache.set( "reset-token-#token#", arguments.author.getAuthorID(), 15, 15 );
+		cache.set( "reset-token-#cgi.http_host#-#token#", arguments.author.getAuthorID(), 15, 15 );
 		
 		// get settings
 		var settings = settingService.getAllSettings(asStruct=true);
@@ -186,7 +196,7 @@ component implements="ISecurityService" singleton{
 	*/
 	struct function resetUserPassword(required token){
 		var results = { error = false, author = "" };
-		var cacheKey = "reset-token-#arguments.token#";
+		var cacheKey = "reset-token-#cgi.http_host#-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back
@@ -286,11 +296,51 @@ component implements="ISecurityService" singleton{
 		return results;
 	}
 	
+	
+	/**
+	* Get remember me cookie
+	*/
+	any function getKeepMeLoggedIn(){
+		var results = 0;
+		var cookieValue = cookieStorage.getVar(name="contentbox_keep_logged_in", default="");
+		
+		try{
+			// Decrypted value should be a number representing the authorID
+			results = val( decryptIt(  cookieValue ) );
+		}
+		catch(Any e){
+			// Errors on decryption
+			log.error("Error decrypting Keep Me Logged in key: #e.message# #e.detail#", cookieValue );
+			cookieStorage.deleteVar(name="contentbox_keep_logged_in");
+			results = 0;
+		}
+		
+		return results;
+	}
+	
+	
 	/**
 	* Set remember me cookie
 	*/
-	ISecurityService function setRememberMe(required username){
-		cookieStorage.setVar(name="contentbox_remember_me", value=encryptIt( arguments.username ));
+	ISecurityService function setRememberMe(required username, required numeric days=0 ){
+				
+		// If the user now only wants to be remembered for this session, remove any existing cookies.
+		if( !arguments.days ) {
+			cookieStorage.deleteVar( name="contentbox_remember_me" );
+			cookieStorage.deleteVar( name="contentbox_keep_logged_in" );
+			return this;
+		}
+		
+		// Save the username to pre-populate the login field after their login expires for up to a year.
+		cookieStorage.setVar(name="contentbox_remember_me", value=encryptIt( arguments.username ), expires=365 );
+		
+		// Look up the user ID and store for the duration specified
+		var author = authorService.findWhere( { username=arguments.username, isActive=true } );
+		if( !isNull( author ) ) {
+			// The user will be auto-logged in as long as this cookie exists
+			cookieStorage.setVar(name="contentbox_keep_logged_in", value=encryptIt( author.getAuthorID() ), expires=arguments.days );			
+		}
+		
 		return this;
 	}
 	

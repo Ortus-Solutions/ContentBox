@@ -62,10 +62,9 @@ component singleton{
 
 		// compose cache key
 		if( arguments.comments ){
-			cacheKey = "cb-feeds-content-comments-";
-		}
-		else{
-			cacheKey = "cb-feeds-content";
+			cacheKey = "cb-feeds-#cgi.http_host#-content-comments-";
+		} else {
+			cacheKey = "cb-feeds-#cgi.http_host#-content";
 		}
 		// clear by snippet
 		cache.clearByKeySnippet(keySnippet=cacheKey,async=false);
@@ -98,11 +97,11 @@ component singleton{
 
 		// Comments cache Key
 		if( arguments.comments ){
-			cacheKey 	= "cb-feeds-content-comments-#arguments.slug#";
+			cacheKey 	= "cb-feeds-#cgi.http_host#-content-comments-#arguments.slug#";
 		}
 		// Entries cache Key
 		else{
-			cacheKey 	= "cb-feeds-content-#hash(arguments.category & arguments.contentType)#";
+			cacheKey 	= "cb-feeds-#cgi.http_host#-content-#hash(arguments.category & arguments.contentType)#";
 		}
 
 		// Retrieve via caching? and caching active
@@ -210,14 +209,16 @@ component singleton{
 			else{
 				qEntries.content[i]	= entryResults.entries[i].getActiveContent().renderContent();
 			}
+			qEntries.content[ i ] = cleanupContent( qEntries.content[ i ] );
 		}
 
 		// Generate feed items
-		feedStruct.title 		= settings.cb_rss_title;
+		feedStruct.title 		= "Blog " & settings.cb_rss_title;
 		feedStruct.generator	= settings.cb_rss_generator;
 		feedStruct.copyright	= settings.cb_rss_copyright;
 		feedStruct.description	= settings.cb_rss_description;
-		feedStruct.webmaster	= settings.cb_rss_webmaster;
+		if( len( settings.cb_rss_webmaster ) )
+			feedStruct.webmaster	= settings.cb_rss_webmaster;
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -267,23 +268,23 @@ component singleton{
 			qPages.author[i]			= "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
 			qPages.linkComments[i]		= CBHelper.linkComments( pageResults.pages[i] );
 			qPages.categories[i]		= pageResults.pages[i].getCategoriesList();
-			qPages.content[i]			= pageResults.pages[i].getActiveContent().renderContent();
 			qPages.guid_permalink[i] 	= false;
 			qPages.guid_string[i] 		= CBHelper.linkPage( qPages.slug );
 			if( pageResults.pages[i].hasExcerpt() ){
-				qEntries.content[i]	= pageResults.pages[i].renderExcerpt();
+				qPages.content[i]	= pageResults.pages[i].renderExcerpt();
+			} else {
+				qPages.content[i]	= pageResults.pages[i].getActiveContent().renderContent();
 			}
-			else{
-				qEntries.content[i]	= pageResults.pages[i].getActiveContent().renderContent();
-			}
+			qPages.content[ i ] = cleanupContent( qPages.content[ i ] );
 		}
 
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " Page RSS Feed by ContentBox";
-		feedStruct.generator	= "ContentBox by ColdBox Platform";
-		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
-		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
+		feedStruct.title 		= "Page " & settings.cb_rss_title;
+		feedStruct.generator	= settings.cb_rss_generator;
+		feedStruct.copyright	= settings.cb_rss_copyright;
+		feedStruct.description	= settings.cb_rss_description;
+		if( len( settings.cb_rss_webmaster ) )
+			feedStruct.webmaster	= settings.cb_rss_webmaster;
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -333,18 +334,19 @@ component singleton{
 			qContent.author[i]			= "#contentResults.content[i].getAuthorEmail()# (#contentResults.content[i].getAuthorName()#)";
 			qContent.linkComments[i]	= CBHelper.linkComments( contentResults.content[i] );
 			qContent.categories[i]		= contentResults.content[i].getCategoriesList();
-			qContent.content[i]			= contentResults.content[i].getActiveContent().renderContent();
+			qContent.content[i]			= cleanupContent( contentResults.content[i].getActiveContent().renderContent() );
 			qContent.guid_permalink[i] 	= false;
 			qContent.guid_string[i] 	= CBHelper.linkContent( contentResults.content[i] );
 
 		}
 
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " Content RSS Feed by ContentBox";
-		feedStruct.generator	= "ContentBox by ColdBox Platform";
-		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
-		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
+		feedStruct.title 		= "Content " & settings.cb_rss_title;
+		feedStruct.generator	= settings.cb_rss_generator;
+		feedStruct.copyright	= settings.cb_rss_copyright;
+		feedStruct.description	= settings.cb_rss_description;
+		if( len( settings.cb_rss_webmaster ) )
+			feedStruct.webmaster	= settings.cb_rss_webmaster;
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -387,23 +389,31 @@ component singleton{
 			qComments.title[i] 			= "Comment by #qComments.author[i]# on #commentResults.comments[i].getParentTitle()#";
 			qComments.rssAuthor[i]		= "#qComments.authorEmail# (#qComments.author#)";
 			qComments.linkComments[i]	= CBHelper.linkComment( commentResults.comments[i] );
-			qComments.content[i]		= qComments.content[i];
+			qComments.content[i]		= cleanupContent( qComments.content[i] );
 			qComments.guid_permalink[i]	= false;
 			qComments.guid_string[i]	= CBHelper.linkComment( commentResults.comments[i] );
 		}
 
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " Comments RSS Feed by ContentBox";
-		feedStruct.generator	= "ContentBox by ColdBox Platform";
-		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
-		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
+		feedStruct.title 		= "Comments " & settings.cb_rss_title;
+		feedStruct.generator	= settings.cb_rss_generator;
+		feedStruct.copyright	= settings.cb_rss_copyright;
+		feedStruct.description	= settings.cb_rss_description;
+		if( len( settings.cb_rss_webmaster ) )
+			feedStruct.webmaster	= settings.cb_rss_webmaster;
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
 		feedStruct.items 		= qComments;
 
 		return feedGenerator.createFeed(feedStruct,columnMap);
+	}
+
+	/**
+	* Cleanup HTML to normal strings to avoid parsing issues
+	*/
+	private function cleanupContent( required content ){
+		return reReplacenocase( arguments.content, "<[^>]*>", "", "all" );
 	}
 
 }

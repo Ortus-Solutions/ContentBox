@@ -40,7 +40,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		// init it
 		super.init(entityName="cbSetting");
 		// settings cache key
-		setSettingsCacheKey("cb-settings");
+		setSettingsCacheKey( "cb-settings-#cgi.http_host#" );
 		return this;
 	}
 	

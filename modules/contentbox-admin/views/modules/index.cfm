@@ -89,13 +89,13 @@
 									<!--- Check if active --->
 									<cfif module.getIsActive()>
 										<!--- Update Check --->
-										<a class="btn" title="Deactivate Module" href="javascript:deactivate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-down icon-large"></i></a>
+										<a class="btn btn-default" title="Deactivate Module" href="javascript:deactivate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-down icon-large"></i></a>
 										&nbsp;
 									<cfelse>
-										<a class="btn" title="Activate Module" href="javascript:activate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-up icon-large"></i></a>
+										<a class="btn btn-default" title="Activate Module" href="javascript:activate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-up icon-large"></i></a>
 										&nbsp;
 										<!--- Delete Module --->
-										<a class="btn" title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
+										<a class="btn btn-default confirmIt" title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')"
 											data-title="Delete #module.getName()#?"><i class="icon-trash icon-large"></i></a>
 									</cfif>
 									</div>

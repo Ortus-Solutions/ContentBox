@@ -163,7 +163,7 @@ I oversee and manage ColdBox modules
 			modLocation				= modulesPath & "/" & modName;
 		</cfscript>
 			
-		<cflock name="module.registration.#arguments.modulename#" type="exclusive" throwontimeout="true" timeout="20">
+		<cflock name="module.#controller.getAppHash()#.registration.#arguments.modulename#" type="exclusive" throwontimeout="true" timeout="20">
 			<cfscript>
 			//Check if module config exists, else skip and exit and log
 			if( NOT fileExists(modLocation & "/ModuleConfig.cfc") ){
@@ -290,7 +290,7 @@ I oversee and manage ColdBox modules
 			}
 		</cfscript>
 
-		<cflock name="module.activation.#arguments.moduleName#" type="exclusive" timeout="20" throwontimeout="true">
+		<cflock name="module.#controller.getAppHash()#.activation.#arguments.moduleName#" type="exclusive" timeout="20" throwontimeout="true">
 		<cfscript>
 			// Get module settings
 			mConfig = modules[ arguments.moduleName ];
@@ -416,7 +416,7 @@ I oversee and manage ColdBox modules
 
 		</cfscript>
 
-		<cflock name="module.unload.#arguments.moduleName#" type="exclusive" timeout="20" throwontimeout="true">
+		<cflock name="module.#controller.getAppHash()#.unload.#arguments.moduleName#" type="exclusive" timeout="20" throwontimeout="true">
 		<cfscript>
 			// Check if module is loaded?
 			if( NOT structKeyExists(appConfig.modules,arguments.moduleName) ){ return false; }

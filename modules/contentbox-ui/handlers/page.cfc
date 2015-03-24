@@ -36,8 +36,8 @@ component extends="content" singleton{
 	this.preHandler_except = "preview";
 	
 	// pre Handler
-	function preHandler(event,action,eventArguments){
-		super.preHandler(argumentCollection=arguments);
+	function preHandler(event, action, eventArguments, rc, prc ){
+		super.preHandler( argumentCollection=arguments );
 	}
 
 	/**
@@ -82,17 +82,15 @@ component extends="content" singleton{
 	*/
 	function index( event, rc, prc ){
 		// incoming params
-		event.paramValue("pageSlug","");
+		event.paramValue( "pageSlug", "" );
 		var incomingURL  = "";
 		// Do we have an override page setup by the settings?
-		if( !structKeyExists(prc,"pageOverride") ){
+		if( !structKeyExists( prc, "pageOverride" ) ){
 			// Try slug parsing for hiearchical URLs
-			incomingURL  = rereplaceNoCase(event.getCurrentRoutedURL(), "\/$","");
-		}
-		else{
+			incomingURL  = rereplaceNoCase( event.getCurrentRoutedURL(), "\/$", "" );
+		} else {
 			incomingURL	 = prc.pageOverride;
 		}
-		
 		// Entry point cleanup
 		if( len( prc.cbEntryPoint ) ){
 			incomingURL = replacenocase( incomingURL, prc.cbEntryPoint & "/", "" );
@@ -107,6 +105,12 @@ component extends="content" singleton{
 		prc.page = pageService.findBySlug( incomingURL, showUnpublished );
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if( prc.page.isLoaded() ){
+			// Verify SSL?
+			if( prc.page.getSSLOnly() and !event.isSSL() ){
+				log.info( "Page requested: #incomingURL# without SSL and SSL required. Relocating..." );
+				setNextEvent( event=incomingURL, ssl=true );
+				return;
+			}
 			// Record hit
 			pageService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
@@ -125,8 +129,7 @@ component extends="content" singleton{
 			// set skin view
 			event.setLayout(name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox")
 				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
-		}
-		else{
+		} else {
 			// missing page
 			prc.missingPage 	 = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
@@ -204,16 +207,12 @@ component extends="content" singleton{
 	function commentPost( event, rc, prc ){
 		// incoming params
 		event.paramValue( "contentID", "" );
-		event.paramValue( "subscribe", false );
 		// Try to retrieve page by contentID
 		var page = pageService.get( rc.contentID );
-
 		// If null, kick them out
 		if( isNull( page ) ){ setNextEvent( prc.cbEntryPoint ); }
-
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, page );
-
 		// Valid commenting, so go and save
 		saveComment( page, rc.subscribe );
 	}

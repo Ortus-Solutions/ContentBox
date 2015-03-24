@@ -40,7 +40,9 @@ component displayName="SQLHelper" accessors="true" {
         variables.factory       = ormSession.getFactory();
        
         // get formatter for sql string beautification
-        if( !structKeyExists( server, "railo") AND listFirst( server.coldfusion.productVersion ) gte 11 ){
+        if( findNoCase( "coldfusion", server.coldfusion.productName ) AND 
+            listFirst( server.coldfusion.productVersion ) gte 11
+        ){
             variables.formatter  = createObject( "java", "org.hibernate.engine.jdbc.internal.BasicFormatterImpl" );
         } else {
             variables.formatter  = createObject( "java", "org.hibernate.jdbc.util.BasicFormatterImpl" );
