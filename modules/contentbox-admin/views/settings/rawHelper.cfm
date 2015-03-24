@@ -29,8 +29,8 @@ $(document).ready(function() {
 		// ajax search
 		settingsLoad( $this.val() );
 	});
-	// Load settings
-	settingsLoad();
+	// Load settings with keyword if already there on page load
+	settingsLoad($("##settingSearch").val());
 });
 function importSettings(){
 	// local id's

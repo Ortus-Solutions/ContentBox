@@ -29,6 +29,7 @@ component persistent="true" entityname="cbStats" table="cb_stats" batchsize="25"
 	* constructor
 	*/
 	function init(){
+		super.init();
 		return this;
 	}
 

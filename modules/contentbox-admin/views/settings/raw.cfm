@@ -115,7 +115,7 @@
     						<div class="filterBar">
     							<div>
     								#html.label(field="settingSearch",content="Quick Search:",class="inline")#
-    								#html.textField(name="settingSearch",size="30",class="textfield")#
+    								#html.textField(name="settingSearch",size="30",class="textfield",value=event.getValue('search',''))#
     							</div>
     						</div>
     					</div>

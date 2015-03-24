@@ -39,7 +39,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	property name="populator"				inject="wirebox:populator";
 	property name="systemUtil"				inject="SystemUtil@cb";
 	property name="statsService"			inject="statsService@cb";
-
+	
 	/**
 	* Constructor
 	* @entityName.hint The content entity name to bind this service to.
@@ -656,6 +656,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	* @async.hint Async or not
 	*/
 	ContentService function updateHits(required contentID, boolean async=true){
+
 		// if in thread already or not async
 		if( systemUtil.inThread() OR !arguments.async ){
 			statsService.syncUpdateHits( arguments.contentID );
@@ -701,4 +702,23 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		return "#arguments.slug#-#lcase( left( hash( now() ), 5 ) )#";
 	}
 
+	/**
+	* Update the content hits
+	* @contentID.hint The content id to update
+	*/
+	/*
+	private function syncUpdateHits(required contentID){
+		
+		if(settingService.getSetting('cb_content_hit_count')) {
+			try {
+				if(settingService.getSetting('cb_content_hit_ignore_bots') OR !statsService.isUserAgentABot()) {
+					var q = new Query(sql="UPDATE cb_content SET hits = hits + 1 WHERE contentID = #arguments.contentID#").execute();
+				}
+			} catch (any e) {
+				
+			}
+		}
+		return this;
+	}
+	*/
 }

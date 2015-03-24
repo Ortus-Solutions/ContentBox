@@ -89,6 +89,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	function init(){
 		variables.isPublished 		= true;
 		variables.allowComments 	= true;
+		variables.numberOfHits		= 0;
 		variables.cache 			= true;
 		variables.cacheLayout 		= true;
 		variables.cacheTimeout 		= 0;

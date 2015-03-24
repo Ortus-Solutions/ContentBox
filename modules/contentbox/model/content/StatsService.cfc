@@ -77,5 +77,4 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		return this;
 	}
-
 }
