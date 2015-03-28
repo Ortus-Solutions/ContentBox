@@ -112,8 +112,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		var maxLogs 	= 4;
 		var totalLogs  	= count();
 
-		// only if we have gone above max logs, let's truncate
-		if( totalLogs > maxLogs ){
+		// only if we have a max logs and we have gone above max logs, let's truncate
+		if( len( maxLogs ) && totalLogs > maxLogs ){
 			var c = newCriteria();
 			// Get IDs to delete
 			var aToDelete = c.withProjections( property="loginAttemptsID" )
