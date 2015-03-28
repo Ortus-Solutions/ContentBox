@@ -10,17 +10,16 @@ component extends="baseHandler"{
 	property name="editorService"		inject="id:editorService@cb";
 	property name="mediaService"		inject="id:mediaService@cb";
 	property name="adminThemeService"	inject="id:adminThemeService@cb";
+	property name="LoginTrackerService"	inject="id:LoginTrackerService@cb";
 	
 	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+	function preHandler( event, rc, prc, action, eventArguments ){
 		// Tab control
 		prc.tabSystem = true;
 	}
 
 	// index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// Exit Handler
 		prc.xehSaveSettings = "#prc.cbAdminEntryPoint#.settings.save";
 		prc.xehEmailTest	= "#prc.cbAdminEntryPoint#.settings.emailTest";
@@ -45,7 +44,7 @@ component extends="baseHandler"{
 	}
 	
 	// email test
-	function emailTest(event,rc,prc){
+	function emailTest( event, rc, prc ){
 		var mailService = getPlugin( "MailService" );
 		var mail = mailservice.newMail(to=rc.cb_site_outgoingEmail,
 									   from=rc.cb_site_outgoingEmail,
@@ -64,7 +63,7 @@ component extends="baseHandler"{
 	}
 
 	// save settings
-	function save(event,rc,prc){
+	function save( event, rc, prc ){
 		// announce event
 		announceInterception("cbadmin_preSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc});
 		// bulk save the options
@@ -86,7 +85,7 @@ component extends="baseHandler"{
 	}
 
 	// raw settings manager
-	function raw(event,rc,prc){
+	function raw( event, rc, prc ){
 		// exit Handlers
 		prc.xehSettingRemove 	= "#prc.cbAdminEntryPoint#.settings.remove";
 		prc.xehSettingsave 		= "#prc.cbAdminEntryPoint#.settings.saveRaw";
@@ -110,7 +109,7 @@ component extends="baseHandler"{
 	}
 	
 	// Export All settings
-	function exportAll(event,rc,prc){
+	function exportAll( event, rc, prc ){
 		event.paramValue("format", "json");
 		
 		// get all prepared content objects
@@ -122,7 +121,7 @@ component extends="baseHandler"{
 	}
 
 	// import settings
-	function importAll(event,rc,prc){
+	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideSettings", false );
 		try{
@@ -144,7 +143,7 @@ component extends="baseHandler"{
 	}
 
 	// retrieve raw settings table
-	function rawtable(event,rc,prc){
+	function rawtable( event, rc, prc ){
 		// params
 		event.paramValue( "page", 1 );
 		event.paramValue( "search", "" );
@@ -170,7 +169,7 @@ component extends="baseHandler"{
 	}
 
 	// mappingDump
-	function mappingDump(event,rc,prc){
+	function mappingDump( event, rc, prc ){
 		// params
 		event.paramValue("id","");
 		prc.mapping = wirebox.getBinder().getMapping( rc.id );
@@ -178,7 +177,7 @@ component extends="baseHandler"{
 	}
 
 	// saveRaw
-	function saveRaw(event,rc,prc){
+	function saveRaw( event, rc, prc ){
 		// params
 		event.paramValue("page",1);
 
@@ -194,7 +193,7 @@ component extends="baseHandler"{
 	}
 
 	// remove
-	function remove(event,rc,prc){
+	function remove( event, rc, prc ){
 		// announce event
 		announceInterception("cbadmin_preSettingRemove",{settingID=rc.settingID});
 		// delete by id
@@ -212,7 +211,7 @@ component extends="baseHandler"{
 	}
 
 	// flush cache
-	function flushCache(event,rc,prc){
+	function flushCache( event, rc, prc ){
 		var data = { error = false, messages = "" };
 		try{
 			settingsService.flushSettingsCache();
@@ -227,18 +226,40 @@ component extends="baseHandler"{
 	}
 
 	// flush singletons
-	function flushSingletons(event,rc,prc){
+	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
 		getPlugin("MessageBox").setMessage("info","All singletons flushed and awaiting re-creation.");
 		setNextEvent(event=prc.xehRawSettings,queryString="##wirebox");
 	}
 
 	// View cached Keys
-	function viewCached(event,rc,prc){
+	function viewCached( event, rc, prc ){
 		var key = settingsService.getSettingsCacheKey();
 		rc.settings = getColdBoxOCM().get( key );
 		rc.metadata = getColdBoxOCM().getCachedObjectMetadata( key );
 		event.setView(view="settings/viewCached",layout="ajax");
+	}
+
+	// Show full Auth Logs
+	function authLogs( event, rc, prc ){
+		prc.featureEnabled 	= prc.cbsettings.cb_security_login_blocker;
+		prc.xehTruncate 	= "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
+
+		if( prc.featureEnabled ){
+			prc.logs = loginTrackerService.getAll( sortOrder="attempts", asQuery=false );
+		} else {
+			prc.featureEnabled = false;
+		}
+
+		event.setView( "settings/authLogs" );
+	}
+
+	/**
+	* truncateAuthLogs
+	*/
+	any function truncateAuthLogs( event, rc, prc ){
+		loginTrackerService.truncate();
+		setNextEvent( "#prc.cbAdminEntryPoint#.settings.authLogs" );
 	}
 
 }

@@ -114,6 +114,7 @@ component accessors="true"{
 			"SYSTEM_TAB" = "Access to the ContentBox System tools",
 			"SYSTEM_SAVE_CONFIGURATION" = "Ability to update global configuration data",
 			"SYSTEM_RAW_SETTINGS" = "Access to the ContentBox raw geek settings panel",
+			"SYSTEM_AUTH_LOGS"	= "Access to the system auth logs",
 			"TOOLS_IMPORT" = "Ability to import data into ContentBox",
 			"ROLES_ADMIN" = "Ability to manage roles, default is view only",
 			"PERMISSIONS_ADMIN" = "Ability to manage permissions, default is view only",
@@ -230,17 +231,24 @@ component accessors="true"{
 			"cb_salt" = hash( createUUID() & getTickCount() & now(), "SHA-512" ),
 
 			// Site Settings
-			"cb_site_name" = setup.getSiteName(),
-			"cb_site_email" = setup.getSiteEmail(),
-			"cb_site_tagline" = setup.getSiteTagLine(),
-			"cb_site_description" = setup.getSiteDescription(),
-			"cb_site_keywords" = setup.getSiteKeyWords(),
-			"cb_site_outgoingEmail" = setup.getSiteOutgoingEmail(),
-			"cb_site_homepage" = "cbBlog",
-			"cb_site_disable_blog" = "false",
-			"cb_site_blog_entrypoint" = "blog",
-			"cb_site_ssl" = "false",
-			"cb_site_poweredby" = "true",
+			"cb_site_name" 				= setup.getSiteName(),
+			"cb_site_email" 			= setup.getSiteEmail(),
+			"cb_site_tagline" 			= setup.getSiteTagLine(),
+			"cb_site_description" 		= setup.getSiteDescription(),
+			"cb_site_keywords" 			= setup.getSiteKeyWords(),
+			"cb_site_outgoingEmail" 	= setup.getSiteOutgoingEmail(),
+			"cb_site_homepage" 			= "cbBlog",
+			"cb_site_disable_blog" 		= "false",
+			"cb_site_blog_entrypoint" 	= "blog",
+			"cb_site_ssl" 				= "false",
+			"cb_site_poweredby" 		= "true",
+
+			// Security Settings
+			"cb_security_login_blocker" = "true",
+			"cb_security_max_attempts"	= "5",
+			"cb_security_blocktime"		= "5",
+			"cb_security_max_auth_logs"	= "500",
+			"cb_security_latest_logins"	= "10",
 
 			// Admin settings
 			"cb_admin_ssl" = "false",
