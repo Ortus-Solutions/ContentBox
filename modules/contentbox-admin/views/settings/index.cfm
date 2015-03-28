@@ -23,6 +23,7 @@
     			<ul class="nav nav-tabs">
     				<li class="active"><a href="##site_options" data-toggle="tab"><i class="icon-cog icon-large"></i> Site Options</a></li>
     				<li><a href="##dashboard_options" data-toggle="tab"><i class="icon-desktop icon-large"></i> Admin Options</a></li>
+    				<li><a href="##security_options" data-toggle="tab"><i class="icon-lock icon-large"></i> Security Options</a></li>
     				<li><a href="##content_options" data-toggle="tab"><i class="icon-file-alt icon-large"></i> Content Options</a></li>
     				<li><a href="##editor_options" data-toggle="tab"><i class="icon-edit icon-large"></i> Editor Options</a></li>
     				<li><a href="##mediamanager" data-toggle="tab"><i class="icon-th icon-large"></i> Media Manager</a></li>
@@ -71,15 +72,6 @@
             							<option value="#thispage.getSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getSlug()>selected="selected"</cfif>>#thisPage.getSlug()#</option>
             							</cfloop>
             						</select>
-                                </div>
-                            </div>	
-    						<!--- Site SSL --->
-							<div class="control-group">
-                                #html.label(class="control-label",field="cb_site_ssl",content="Site Force SSL (Secure Sockets Layer):")#
-                                <div class="controls">
-                                    <small>You can enable SSL encryption for the entire site.</small><br/>
-            						#html.radioButton(name="cb_site_ssl",checked=prc.cbSettings.cb_site_ssl,value=true)# Yes
-            						#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
                                 </div>
                             </div>	
 
@@ -147,15 +139,6 @@
     				<div class="tab-pane" id="dashboard_options">
     					<fieldset>
     						<legend><i class="icon-desktop icon-large"></i> <strong>Admin Options</strong></legend>
-    					 	<!--- Admin SSL --->
-							<div class="control-group">
-                                #html.label(class="control-label",field="cb_admin_ssl",content="Admin Force SSL (Secure Sockets Layer):")#
-                                <div class="controls">
-                                    <small>You can enable SSL encryption for the administrator module.</small><br/>
-    								#html.radioButton(name="cb_admin_ssl",checked=prc.cbSettings.cb_admin_ssl,value=true)# Yes
-    								#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
-                                </div>
-                            </div>
 							<!--- Default Themes --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_admin_theme">Default Admin Theme:</label>
@@ -240,6 +223,19 @@
             						</select>
                                 </div>
                             </div>
+
+                            <!--- Reecent Entries --->
+							<div class="control-group">
+                                <label class="control-label" for="cb_security_latest_logins">Recent Logins Count:</label>
+                                <div class="controls">
+                                    <small>The number of entries to show on the blog before paging is done.</small><br/>
+                					<select name="cb_security_latest_logins" id="cb_security_latest_logins">
+                						<cfloop from="5" to="50" step="5" index="i">
+                							<option value="#i#" <cfif i eq prc.cbSettings.cb_security_latest_logins>selected="selected"</cfif>>#i#</option>
+                						</cfloop>
+                					</select>
+                                </div>
+                            </div>
     					</fieldset>
     					<fieldset>
         					<legend><i class="icon-copy icon-large"></i>  Paging Options</legend>
@@ -294,7 +290,90 @@
                             </div>
     					</fieldset>
 					</div>
-    				
+
+					<!--- ********************************************************************* --->
+                    <!---                           SECURITY OPTIONS                                --->
+                    <!--- ********************************************************************* --->
+                    
+    				<div class="tab-pane active" id="security_options">
+    					<fieldset>
+    					<legend><i class="icon-lock icon-large"></i> <strong>Login Tracker</strong></legend>
+    					
+    					<!--- Login Blocker --->
+						<div class="control-group">
+                            #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:")#
+                            <div class="controls">
+                                <small>When enabled, all logins attempts will by tracked and blocking is enabled if too many attempts occur.</small><br/>
+        						#html.radioButton(name="cb_security_login_blocker",checked=prc.cbSettings.cb_security_login_blocker,value=true)# Yes
+        						#html.radioButton(name="cb_security_login_blocker",checked=not prc.cbSettings.cb_security_login_blocker,value=false)# No
+                            </div>
+                        </div>
+
+                        <!--- Max Attempts --->
+						<div class="control-group">
+                            <label class="control-label" for="cb_security_max_attempts">Max Invalid Attempts To Block:</label>
+                            <div class="controls">
+                                <small>The number of invalid login attempts before a user is blocked.</small><br/>
+        						<select name="cb_security_max_attempts" id="cb_security_max_attempts">
+        							<cfloop from="5" to="50" step="5" index="i">
+        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_attempts>selected="selected"</cfif>>#i#</option>
+        							</cfloop>
+        						</select>
+                            </div>
+                        </div>
+
+                        <!--- Block Time--->
+						<div class="control-group">
+                            <label class="control-label" for="cb_security_blocktime">Minutes To Block:</label>
+                            <div class="controls">
+                                <small>The number of minutes a user will be blocked if max attempts is triggered.</small><br/>
+        						<select name="cb_security_blocktime" id="cb_security_blocktime">
+        							<cfloop from="5" to="60" step="5" index="i">
+        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_blocktime>selected="selected"</cfif>>#i#</option>
+        							</cfloop>
+        						</select>
+                            </div>
+                        </div>
+
+                        <!--- Max Auth Logs --->
+						<div class="control-group">
+                            <label class="control-label" for="cb_security_max_auth_logs">Max Auth Logs:</label>
+                            <div class="controls">
+                                <small>The number of log entries to keep before rotating logs.</small><br/>
+        						<select name="cb_security_max_auth_logs" id="cb_security_max_auth_logs">
+        							<cfloop from="100" to="2000" step="100" index="i">
+        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_auth_logs>selected="selected"</cfif>>#i#</option>
+        							</cfloop>
+        							<option value="" <cfif prc.cbSettings.cb_security_max_auth_logs eq "">selected="selected"</cfif>>Unlimited</option>
+        						</select>
+                            </div>
+                        </div>
+
+    					</fieldset>
+
+    					<fieldset>
+    					<legend><i class="icon-lock icon-large"></i> <strong>Secure Sockets Layer (SSL) Encryption</strong></legend>
+    						<!--- Admin SSL --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="cb_admin_ssl",content="Admin Force SSL:")#
+                                <div class="controls">
+                                    <small>You can force SSL encryption for the administrator module.</small><br/>
+    								#html.radioButton(name="cb_admin_ssl",checked=prc.cbSettings.cb_admin_ssl,value=true)# Yes
+    								#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
+                                </div>
+                            </div>
+    						<!--- Site SSL --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="cb_site_ssl",content="Public Site Force SSL:")#
+                                <div class="controls">
+                                    <small>You can force SSL encryption for the entire public site.</small><br/>
+            						#html.radioButton(name="cb_site_ssl",checked=prc.cbSettings.cb_site_ssl,value=true)# Yes
+            						#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
+                                </div>
+                            </div>	
+
+    					</fieldset>
+    				</div>
                     <!--- ********************************************************************* --->
                     <!---                           CONTENT OPTIONS                             --->
                     <!--- ********************************************************************* --->
