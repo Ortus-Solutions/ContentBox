@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -92,7 +92,8 @@ component {
 			// Content Renderers, remember order is important.
 			{ class="contentbox.model.content.renderers.LinkRenderer", name="LinkRenderer@cb" },
 			{ class="contentbox.model.content.renderers.WidgetRenderer", name="WidgetRenderer@cb" },
-			{ class="contentbox.model.content.renderers.SettingRenderer", name="SettingRenderer@cb" }
+			{ class="contentbox.model.content.renderers.SettingRenderer", name="SettingRenderer@cb" },
+			{ class="contentbox.model.security.LoginTracker", name="LoginTracker@cb" }
 		];
 
 		// Security/System
@@ -104,6 +105,7 @@ component {
 		binder.map("roleService@cb").to("contentbox.model.security.RoleService");
 		binder.map("securityRuleService@cb").to("contentbox.model.security.SecurityRuleService");
 		binder.map("securityInterceptor@cb").toDSL("coldbox:interceptor:security@cb");
+		binder.map("LoginTrackerService@cb").to("contentbox.model.security.LoginTrackerService");
 		// Updates
 		binder.map("ForgeBox@cb").to("contentbox.model.updates.ForgeBox");
 		binder.map("UpdateService@cb").to("contentbox.model.updates.UpdateService");
