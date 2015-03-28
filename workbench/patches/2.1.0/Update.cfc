@@ -146,7 +146,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		var perms = [
 			"EDITORS_RELATED_CONTENT",
 			"EDITORS_LINKED_CONTENT",
-			"MENUS_ADMIN"
+			"MENUS_ADMIN",
+			"SYSTEM_AUTH_LOGS"
 		];
 
 		// iterate and add
@@ -200,7 +201,8 @@ component implements="contentbox.model.updates.IUpdate"{
 		var perms = {
 			"EDITORS_RELATED_CONTENT" = "Ability to view the related content panel",
 			"EDITORS_LINKED_CONTENT" = "Ability to view the linked content panel",
-			"MENUS_ADMIN" = "Ability to manage the menu builder"
+			"MENUS_ADMIN" = "Ability to manage the menu builder",
+			"SYSTEM_AUTH_LOGS"	= "Access to the system auth logs"
 		};
 
 		var allperms = [];
@@ -234,6 +236,12 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_content_hit_count", "true" );
 		addSetting( "cb_content_hit_ignore_bots", "false" );
 		addSetting( "cb_content_bot_regex", "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby" );
+		// Security Settings
+		addSetting( "cb_security_login_blocker", "true" );
+		addSetting( "cb_security_max_attempts", "5" );
+		addSetting( "cb_security_blocktime", "5" );
+		addSetting( "cb_security_max_auth_logs", "500" );
+		addSetting( "cb_security_latest_logins", "10" );
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/

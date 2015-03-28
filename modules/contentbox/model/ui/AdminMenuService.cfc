@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -383,6 +383,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehSettings			= "#this.ADMIN_ENTRYPOINT#.settings";
 		prc.xehSecurityRules	= "#this.ADMIN_ENTRYPOINT#.securityrules";
 		prc.xehRawSettings		= "#this.ADMIN_ENTRYPOINT#.settings.raw";
+		prc.xehAuthLogs			= "#this.ADMIN_ENTRYPOINT#.settings.authLogs";
 		prc.xehEmailTemplates   = "#this.ADMIN_ENTRYPOINT#.emailtemplates";
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		
@@ -436,7 +437,9 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( name="Settings", label="Settings", href="#event.buildLink(prc.xehSettings)#", data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
 			.addSubMenu( name="SecurityRules", label="Security Rules", href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN" )
 			.addSubMenu( name="EmailTemplates", label="Email Templates", href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN" )
-			.addSubMenu( name="GeekSettings", label="Geek Settings", href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS" );
+			.addSubMenu( name="GeekSettings", label="Geek Settings", href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS" )
+			.addSubMenu( name="AuthLogs", label="Auth Logs", href="#event.buildLink(prc.xehAuthLogs)#", permissions="SYSTEM_AUTH_LOGS" );
+		
 		// STATS
 		addTopMenu( name=this.STATS, label="<i class='fa fa-bar-chart-o'></i> Stats" )
 			.addSubMenu( name="Subscribers", label="Subscribers", href="#event.buildLink( prc.xehSubscribers )#", title="View Subscribers" );

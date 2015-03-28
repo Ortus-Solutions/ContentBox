@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -66,14 +66,15 @@ component{
 		// params
 		event.paramValue( "rememberMe", 0 )
 			.paramValue( "_securedURL", "" );
-		// announce event
-		announceInterception( "cbadmin_preLogin" );
 
 		// Sanitize
 		rc.username 	= antiSamy.htmlSanitizer( rc.username );
 		rc.password 	= antiSamy.htmlSanitizer( rc.password );
 		rc.rememberMe 	= antiSamy.htmlSanitizer( rc.rememberMe );
 		rc._securedURL 	= antiSamy.htmlSanitizer( rc._securedURL );
+
+		// announce event
+		announceInterception( "cbadmin_preLogin" );
 
 		// authenticate users
 		if( securityService.authenticate( rc.username, rc.password ) ){

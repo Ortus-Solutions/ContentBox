@@ -47,7 +47,7 @@
                     <i class="fa fa-bar-chart-o icon-large"></i> Top Commented Content
                 </a>
             </div>
-            <div id="topcommented" class="panel-collapse collapse in">
+            <div id="topcommented" class="panel-collapse collapse">
                 <div class="panel-body">
                     <!--- Top Visited Content Chart --->
                     <div id="top-commented-chart"></div>
