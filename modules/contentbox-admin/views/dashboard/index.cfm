@@ -87,6 +87,18 @@
 		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 		<div id="latestSnapshot"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>	
 		</cfif>
+
+		<!--- Latest Logins --->
+		<cfif prc.oAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
+			<div class="small_box">
+				<div class="header">
+					<i class="icon-bar-chart icon-small"></i> Latest Logins
+				</div>
+				<div class="body">
+					<div id="latestLogins"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+				</div>
+			</div>
+		</cfif> 
 		
 		<!--- Info Box --->
 		<div class="small_box">
