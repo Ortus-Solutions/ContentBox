@@ -63,23 +63,23 @@
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<div class="tab-pane" id="recentContentTab">
 								<div class="" id="latestPages">
-									<i class="icon-spin icon-spinner icon-large icon-2x"></i>
+									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 								</div>
 								<div class="" id="latestEntries">
-									<i class="icon-spin icon-spinner icon-large icon-2x"></i>
+									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 								</div>
 								<div class="" id="latestContentStore">
-									<i class="icon-spin icon-spinner icon-large icon-2x"></i>
+									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 								</div>
 							</div>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 							<div class="tab-pane" id="latestComments">
-								<i class="icon-spin icon-spinner icon-large icon-2x"></i>
+								<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 							</div>
 						</cfif>
 						<div class="tab-pane" id="latestNews">
-							<i class="icon-spin icon-spinner icon-large icon-2x"></i>
+							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 						</div>
 						<!--- cbadmin Event --->
 						#announceInterception("cbadmin_postDashboardTabContent")#
@@ -94,12 +94,27 @@
     <div class="col-md-4">
         <!--- Event --->
 		#announceInterception("cbadmin_preDashboardSideBar")#
+		
 		<!---Latest Snapshot --->
 		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 			<div id="latestSnapshot">
-				<i class="icon-spin icon-spinner icon-large icon-2x"></i>
+				<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 			</div>	
 		</cfif>
+
+		<!--- Latest Logins --->
+		<cfif prc.oAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
+			<div class="panel panel-primary">
+			    <div class="panel-heading">
+			        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Latest Logins</h3>
+			    </div>
+			    <div class="panel-body">
+			    	<div id="latestLogins"><i class="fa fa-spin fa-spinner fa-lg -2x"></i></div>
+			    </div>
+			</div>
+		</cfif> 
+
+		<!--- Info Box --->
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
 		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Need Help?</h3>
