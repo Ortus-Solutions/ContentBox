@@ -45,8 +45,7 @@ component extends="content" singleton{
 	*/
 	function preview( event, rc, prc ){
 		// Run parent preview
-		super.preview(argumentCollection=arguments);
-		// Concrete Overrides Below
+		super.preview( argumentCollection = arguments );
 		
 		// Construct the preview entry according to passed arguments
 		prc.page = pageService.new();
@@ -56,14 +55,26 @@ component extends="content" singleton{
 		prc.page.setAllowComments( false );
 		prc.page.setCache( false );
 		prc.page.setMarkup( rc.markup );
+		prc.page.setLayout( rc.layout );
 		// Comments need to be empty
 		prc.comments = [];
 		// Create preview version
-		prc.page.addNewContentVersion(content=URLDecode( rc.content ), author=prc.author)
+		prc.page.addNewContentVersion( content=URLDecode( rc.content ), author=prc.author )
 			.setActiveContent( prc.page.getContentVersions() );
+		// Do we have a parent?
+		if( len( rc.parentPage ) ){
+			prc.page.setParent( pageService.get( rc.parentPage ) );
+		}
 		// set skin view
-		event.setLayout(name="#prc.cbLayout#/layouts/#rc.layout#", module="contentbox")
-			.setView(view="#prc.cbLayout#/views/page", module="contentbox");
+		switch( rc.layout ){
+			case "-no-layout-" : {
+				return prc.page.renderContent();
+			}
+			default : {
+				event.setLayout( name="#prc.cbLayout#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox" )
+					.setView( view="#prc.cbLayout#/views/page", module="contentbox" );
+			}
+		} 
 	}
 	
 	/**
@@ -128,7 +139,7 @@ component extends="content" singleton{
 			verifyPageLayout( thisLayout );
 			// Verify No Layout
 			if( thisLayout eq '-no-layout-' ){
-				return renderView( view="#prc.cbLayout#/views/page", module="contentbox" );
+				return prc.page.renderContent();
 			} else {
 				// set skin view
 				event.setLayout( name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox" )
@@ -144,7 +155,6 @@ component extends="content" singleton{
 			event.setLayout( name="#prc.cbLayout#/layouts/pages", module="contentbox" )
 				.setView( view="#prc.cbLayout#/views/notfound", module="contentbox" )
 				.setHTTPHeader( "404", "Page not found" );				
-
 		}
 	}
 
