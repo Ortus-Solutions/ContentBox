@@ -31,7 +31,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton {
     * @activeShowChildren.hint If true, then we will show the children of the active menu element, else we just show the active element
     */
     any function renderIt(
-        string page
+        string page,
         string excludes,
         string type="ul",
         string separator="",
