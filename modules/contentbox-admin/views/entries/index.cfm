@@ -39,7 +39,7 @@
 								<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 									<div class="btn-group btn-group-sm">
 								    	<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="##">
-											Global Actions <span class="caret"></span>
+											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
@@ -79,6 +79,7 @@
 														</ul>
 													</li>
 											</cfif>
+											<li><a href="javascript:resetBulkHits()"><i class="fa fa-refresh"></i> Reset Hits Selected</a></li>
 											<li>
 												<a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All
 												</a>

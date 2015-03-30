@@ -53,7 +53,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		return false;
 	}
-	
+
 	/**
 	* Update the content hits
 	* @contentID.hint The content id to update
