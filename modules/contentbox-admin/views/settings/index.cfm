@@ -23,7 +23,7 @@
     			<ul class="nav nav-tabs">
     				<li class="active"><a href="##site_options" data-toggle="tab"><i class="icon-cog icon-large"></i> Site Options</a></li>
     				<li><a href="##dashboard_options" data-toggle="tab"><i class="icon-desktop icon-large"></i> Admin Options</a></li>
-    				<li><a href="##security_options" data-toggle="tab"><i class="icon-lock icon-large"></i> Security Options</a></li>
+    				<li><a href="##security_options" data-toggle="tab"><i class="icon-shield icon-large"></i> Security Options</a></li>
     				<li><a href="##content_options" data-toggle="tab"><i class="icon-file-alt icon-large"></i> Content Options</a></li>
     				<li><a href="##editor_options" data-toggle="tab"><i class="icon-edit icon-large"></i> Editor Options</a></li>
     				<li><a href="##mediamanager" data-toggle="tab"><i class="icon-th icon-large"></i> Media Manager</a></li>
@@ -297,13 +297,13 @@
                     
     				<div class="tab-pane active" id="security_options">
     					<fieldset>
-    					<legend><i class="icon-lock icon-large"></i> <strong>Login Tracker</strong></legend>
+    					<legend><i class="icon-signin icon-large"></i> <strong>Login Tracker</strong></legend>
     					
     					<!--- Login Blocker --->
 						<div class="control-group">
                             #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:")#
                             <div class="controls">
-                                <small>When enabled, all logins attempts will by tracked and blocking is enabled if too many attempts occur.</small><br/>
+                                <small>When enabled, all logins attempts will be tracked and blocking is enabled if too many attempts occur within a certain timespan.</small><br/>
         						#html.radioButton(name="cb_security_login_blocker",checked=prc.cbSettings.cb_security_login_blocker,value=true)# Yes
         						#html.radioButton(name="cb_security_login_blocker",checked=not prc.cbSettings.cb_security_login_blocker,value=false)# No
                             </div>
@@ -339,7 +339,7 @@
 						<div class="control-group">
                             <label class="control-label" for="cb_security_max_auth_logs">Max Auth Logs:</label>
                             <div class="controls">
-                                <small>The number of log entries to keep before rotating logs.</small><br/>
+                                <small>The number of log entries to keep before rotating auth logs in the database.</small><br/>
         						<select name="cb_security_max_auth_logs" id="cb_security_max_auth_logs">
         							<cfloop from="100" to="2000" step="100" index="i">
         								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_auth_logs>selected="selected"</cfif>>#i#</option>
@@ -348,6 +348,69 @@
         						</select>
                             </div>
                         </div>
+
+    					</fieldset>
+
+    					<fieldset>
+    					<legend><i class="icon-filter icon-large"></i> <strong>Rate Limiter</strong></legend>
+    						<!--- Rate Limiter --->
+							<div class="control-group">
+	                            #html.label(class="control-label",field="cb_security_rate_limiter",content="Enable Rate Limiter:")#
+	                            <div class="controls">
+	                                <small>When enabled, it will keep track of requests and apply rate limiting according to count and duration settings according to client IP Address.</small><br/>
+	        						#html.radioButton(name="cb_security_rate_limiter",checked=prc.cbSettings.cb_security_rate_limiter,value=true)# Yes
+	        						#html.radioButton(name="cb_security_rate_limiter",checked=not prc.cbSettings.cb_security_rate_limiter,value=false)# No
+	                            </div>
+	                        </div>
+
+	                        <!--- Bot Limiter --->
+							<div class="control-group">
+	                            #html.label(class="control-label",field="cb_security_rate_limiter_bots_only",content="Enable For Automated Requets Only:")#
+	                            <div class="controls">
+	                                <small>When enabled, it will apply rate limiting only for cookie-less requests. If disabled, it will limit ALL requests, including "legit" user requests. Usually, automated scripts and DOS attacks have no cookies enabled.</small><br/>
+	        						#html.radioButton(name="cb_security_rate_limiter_bots_only",checked=prc.cbSettings.cb_security_rate_limiter_bots_only,value=true)# Yes
+	        						#html.radioButton(name="cb_security_rate_limiter_bots_only",checked=not prc.cbSettings.cb_security_rate_limiter_bots_only,value=false)# No
+	                            </div>
+	                        </div>
+
+	                        <!--- Limiter Count --->
+	                        <div class="control-group">
+		                        <label class="control-label" for="cb_security_rate_limiter_count">Limiter Count:</label>
+	                            <div class="controls">
+	                                <small>Throttle requests made more than this count in the duration specified.</small><br/>
+	        						<select name="cb_security_rate_limiter_count" id="cb_security_rate_limiter_count">
+	        							<cfloop from="1" to="25" step="1" index="i">
+	        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_count>selected="selected"</cfif>>#i#</option>
+	        							</cfloop>
+	        						</select>
+	                            </div>
+                        	</div>
+
+                        	<!--- Limiter Duration --->
+	                        <div class="control-group">
+		                        <label class="control-label" for="cb_security_rate_limiter_duration">Limiter Duration (Seconds):</label>
+	                            <div class="controls">
+	                                <small>Throttle requests made more than the count above in the span of this setting in seconds.</small><br/>
+	        						<select name="cb_security_rate_limiter_duration" id="cb_security_rate_limiter_duration">
+	        							<cfloop from="1" to="25" step="1" index="i">
+	        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_duration>selected="selected"</cfif>>#i#</option>
+	        							</cfloop>
+	        						</select>
+	                            </div>
+                        	</div>
+
+	                        <!--- Bot Regex Matching --->
+                            <div class="control-group">
+                                #html.label( field="cb_security_rate_limiter_message", content="Limiter Message:")#
+                                <div class="controls">
+                                    <small>The message displayed to users when the rate limit has been exceeded. A 503 status header is also sent in the response.The <code>{duration}</code> element will be replaced with the setting at runtime.</small>
+                                    #html.textarea(
+                                    	name="cb_security_rate_limiter_message",
+                                    	value=prc.cbSettings.cb_security_rate_limiter_message,
+                                    	rows="4"
+                                    )#     
+                                </div>
+                            </div>  
 
     					</fieldset>
 
@@ -446,12 +509,12 @@
                             </div>
                             <!--- Bot Regex Matching --->
                             <div class="control-group">
-                                    #html.label(field="cb_content_bot_regex",content="Bot Regex Matchers:")#
-                                    <div class="controls">
-                                        <small>A carriage return list of regular expressions to match against browser user agents. If it matches a bot, the hit count is ignored</small>
-                                        #html.textarea(name="cb_content_bot_regex",value=prc.cbSettings.cb_content_bot_regex,rows="4",title="One regex per line please")#     
-                                    </div>
-                                </div>  
+                                #html.label(field="cb_content_bot_regex",content="Bot Regex Matchers:")#
+                                <div class="controls">
+                                    <small>A carriage return list of regular expressions to match against browser user agents. If it matches a bot, the hit count is ignored</small>
+                                    #html.textarea(name="cb_content_bot_regex",value=prc.cbSettings.cb_content_bot_regex,rows="4",title="One regex per line please")#     
+                                </div>
+                            </div>  
                         </fieldset>
 
     					<fieldset>
