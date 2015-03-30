@@ -242,6 +242,12 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_security_blocktime", "5" );
 		addSetting( "cb_security_max_auth_logs", "500" );
 		addSetting( "cb_security_latest_logins", "10" );
+		// Rate Limiter
+		addSetting( "cb_security_rate_limiter", "true" );
+		addSetting( "cb_security_rate_limiter_count", "4" );
+		addSetting( "cb_security_rate_limiter_duration", "1" );
+		addSetting( "cb_security_rate_limiter_bots_only", "true" );
+		addSetting( "cb_security_rate_limiter_message", "<p>You are making too many requests too fast, please slow down and wait {duration} seconds</p>" );
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/

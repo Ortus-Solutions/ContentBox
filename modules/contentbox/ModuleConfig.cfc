@@ -83,6 +83,8 @@ component {
 
 		// interceptors
 		interceptors = [
+			// Rate Limiter
+			{ class="contentbox.model.security.RateLimiter", name="RateLimiter@cb" },
 			// CB RSS Cache Cleanup Ghost
 			{ class="contentbox.model.rss.RSSCacheCleanup", name="RSSCacheCleanup@cb" },
 			// CB Content Cache Cleanup Ghost
