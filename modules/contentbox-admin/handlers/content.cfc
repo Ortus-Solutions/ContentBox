@@ -12,35 +12,36 @@ component extends="baseHandler"{
 	// content preview
 	function preview(event,rc,prc){
 		// param incoming data
-		event.paramValue("layout","pages");
-		event.paramValue("content","");
-		event.paramValue("contentType","");
-		event.paramValue("title","");
-		event.paramValue("slug","");
-		event.paramValue("markup","HTML");
+		event.paramValue( "layout","pages" )
+			.paramValue( "content","" )
+			.paramValue( "contentType","" )
+			.paramValue( "title","" )
+			.paramValue( "slug","" )
+			.paramValue( "markup","HTML" )
+			.paramValue( "parentPage", "" );
 		
 		// Determine Type
 		switch( rc.contentType ){
 			case "Page" 	: { 
-				prc.xehPreview = CBHelper.linkPage("__page_preview"); 
+				prc.xehPreview = CBHelper.linkPage( "__page_preview" ); 
 				break; 
 			}
 			case "Entry" : { 
-				prc.xehPreview = CBHelper.linkPage("__entry_preview"); 
+				prc.xehPreview = CBHelper.linkPage( "__entry_preview" ); 
 				rc.layout = "blog";
 				break; 
 			}
 			case "ContentStore" : { 
 				var oContent = contentStoreService.new();
-				prc.preview = oContent.renderContentSilent( rc.content );
-				event.setView(view="content/simplePreview", layout="ajax");
+				prc.preview  = oContent.renderContentSilent( rc.content );
+				event.setView( view="content/simplePreview", layout="ajax" );
 				return;
 			}
 		}
 		// author security hash
 		prc.h = hash( prc.oAuthor.getAuthorID() );
 		// full preview view
-		event.setView(view="content/preview",layout="ajax");
+		event.setView( view="content/preview", layout="ajax" );
 	}
 	
 	function search(event,rc,prc){
