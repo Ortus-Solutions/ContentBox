@@ -18,6 +18,9 @@ $(document).ready(function() {
 function getWidgetPreviewURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#'; }
 function getWidgetInstanceURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#'; }
 function testWidgetCode(){
+	// save content first
+	saveWidgetCode();
+	// Test it
 	$widgetEditorForm = $("##widgetEditForm");
 	var attributes = {
 		modal: true,
