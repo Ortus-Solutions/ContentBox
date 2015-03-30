@@ -254,7 +254,10 @@
                                         #html.label(field="layout",content='Layout:',
                                             class="control-label")#
                                         <select name="layout" id="layout" class="form-control input-sm">
+                                            <!--- Core Layouts --->
                                             <option value="-inherit-" <cfif prc.page.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+                                            <option value="-no-layout-" <cfif prc.page.getLayoutWithDefault() eq "-no-layout-">selected="selected"</cfif>>-no-layout-</option>
+                                            <!-- Custom Layouts -->
                                             #html.options(
                                                 values=prc.availableLayouts, 
                                                 selectedValue=prc.page.getLayoutWithDefault()

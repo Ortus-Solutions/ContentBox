@@ -37,7 +37,7 @@ component extends="content" singleton{
 	
 	// pre Handler
 	function preHandler(event, action, eventArguments, rc, prc ){
-		super.preHandler( argumentCollection=arguments );
+		super.preHandler( argumentCollection = arguments );
 	}
 
 	/**
@@ -74,7 +74,7 @@ component extends="content" singleton{
 		arguments.contentCaching 	= prc.cbSettings.cb_content_caching;
 		arguments.action 			= variables.index;
 
-		return wrapContentAdvice( argumentCollection=arguments );
+		return wrapContentAdvice( argumentCollection = arguments );
 	}
 	
 	/**
@@ -107,7 +107,7 @@ component extends="content" singleton{
 		if( prc.page.isLoaded() ){
 			// Verify SSL?
 			if( prc.page.getSSLOnly() and !event.isSSL() ){
-				log.info( "Page requested: #incomingURL# without SSL and SSL required. Relocating..." );
+				log.warn( "Page requested: #incomingURL# without SSL and SSL required. Relocating..." );
 				setNextEvent( event=incomingURL, ssl=true );
 				return;
 			}
@@ -115,34 +115,35 @@ component extends="content" singleton{
 			pageService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
-			var commentResults 	= commentService.findApprovedComments(contentID=prc.page.getContentID(),sortOrder="asc");
+			var commentResults 	= commentService.findApprovedComments( contentID=prc.page.getContentID(), sortOrder="asc" );
 			prc.comments 		= commentResults.comments;
 			prc.commentsCount 	= commentResults.count;
 			// Detect Mobile Device
-			var isMobileDevice = mobileDetector.isMobile();
+			var isMobileDevice 	= mobileDetector.isMobile();
 			// announce event
-			announceInterception("cbui_onPage",{page=prc.page, isMobile=isMobileDevice});
-			// Verify chosen page layout exists in theme, just in case they moved theme so we can produce a good error message
-			verifyPageLayout( prc.page );
+			announceInterception( "cbui_onPage", { page=prc.page, isMobile=isMobileDevice } );
 			// Use the mobile or standard layout
 			var thisLayout = ( isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance() );
-			// set skin view
-			event.setLayout(name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox")
-				.setView(view="#prc.cbLayout#/views/page", module="contentbox");
+			// Verify chosen page layout exists in theme, just in case they moved theme so we can produce a good error message
+			verifyPageLayout( thisLayout );
+			// Verify No Layout
+			if( thisLayout eq '-no-layout-' ){
+				return renderView( view="#prc.cbLayout#/views/page", module="contentbox" );
+			} else {
+				// set skin view
+				event.setLayout( name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox" )
+					.setView( view="#prc.cbLayout#/views/page", module="contentbox" );
+			}
 		} else {
 			// missing page
 			prc.missingPage 	 = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
-			
 			// announce event
-			announceInterception("cbui_onPageNotFound",{page=prc.page,missingPage=prc.missingPage,routedURL=prc.missingRoutedURL});
-
-			// set 404 headers
-			event.setHTTPHeader("404","Page not found");
-
+			announceInterception( "cbui_onPageNotFound", {page=prc.page, missingPage=prc.missingPage, routedURL=prc.missingRoutedURL} );
 			// set skin not found
-			event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
-				.setView(view="#prc.cbLayout#/views/notfound", module="contentbox");				
+			event.setLayout( name="#prc.cbLayout#/layouts/pages", module="contentbox" )
+				.setView( view="#prc.cbLayout#/views/notfound", module="contentbox" )
+				.setHTTPHeader( "404", "Page not found" );				
 
 		}
 	}
@@ -221,12 +222,19 @@ component extends="content" singleton{
 
 	/**
 	* Verify if a chosen page layout exists or not.
+	* @layout The layout to verify
 	*/
-	private function verifyPageLayout(page){
-		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.page.getLayoutWithInheritance()#.cfm" ) ) ){
-			throw(message="The layout of the page: '#arguments.page.getLayoutWithInheritance()#' does not exist in the current theme.",
-			      detail="Please verify your page layout settings",
-				  type="ContentBox.InvalidPageLayout");
+	private function verifyPageLayout( required layout ){
+		var excluded = "-no-layout-";
+		// Verify exclusions
+		if( listFindNoCase( excluded, arguments.layout ) ){ return; }
+		// Verify layout
+		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.layout#.cfm" ) ) ){
+			throw( 
+				message	= "The layout of the page: '#arguments.layout#' does not exist in the current theme.",
+			    detail	= "Please verify your page layout settings",
+				type 	= "ContentBox.InvalidPageLayout"
+			);
 		}
 	}
 

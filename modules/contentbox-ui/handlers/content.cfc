@@ -194,18 +194,23 @@ component{
 			}
 		}
 		
+		// Prepare data packet for rendering and caching and more
+		var data = { contentID = "", contentType="text/html", isBinary=false };
 		// execute the wrapped action
-		arguments.action( arguments.event, arguments.rc, arguments.prc );
+		data.content = arguments.action( arguments.event, arguments.rc, arguments.prc );
 		
 		// Check for missing page? If so, just return, no need to do multiple formats or caching for a missing page
 		if( structKeyExists( prc, "missingPage" ) ){ return; }
 		
-		// Prepare data packet for rendering and caching and more
-		var data = { content = "", contentID = "", contentType="text/html", isBinary=false };
-		// generate content
-		data.content = renderLayout( layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
-									 module="contentbox",
-									 viewModule="contentbox" );
+		// generate content only if content is not set, else means handler generated content.
+		if ( isNull( data.content ) ){
+			data.content = renderLayout( 
+				layout 		= "#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
+				module 		= "contentbox",
+				viewModule 	= "contentbox" 
+			);
+		}
+
 		// Multi format generation
 		switch( rc.format ){
 			case "pdf" : {
@@ -215,7 +220,7 @@ component{
 				break;
 			}
 			case "doc" : {
-				data.contentType = "application/msword";
+				data.contentType	= "application/msword";
 				break;
 			}
 		}
