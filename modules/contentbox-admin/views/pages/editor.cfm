@@ -309,7 +309,10 @@
         						<!--- layout --->
         						#html.label(field="layout",content='Layout:')#
         						<select name="layout" id="layout" class="width98">
+        							<!--- Core Layouts --->
         							<option value="-inherit-" <cfif prc.page.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+        							<option value="-no-layout-" <cfif prc.page.getLayoutWithDefault() eq "-no-layout-">selected="selected"</cfif>>-no-layout-</option>
+        							<!--- Custom Layouts --->
         							#html.options(values=prc.availableLayouts, selectedValue=prc.page.getLayoutWithDefault())#
         						</select>
 
