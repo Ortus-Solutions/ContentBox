@@ -74,6 +74,15 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="linkedContent" fieldtype="many-to-many" type="array" lazy="extra" inverse="true" orderby="title"
 			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_relatedContentID" linktable="cb_relatedContent" inversejoincolumn="FK_contentID";
 
+	// O2O -> Content
+	property 	name="stats" 
+				notnull="true" 
+				cfc="contentbox.model.content.Stats" 
+				fieldtype="one-to-one" 
+				mappedBy="relatedContent"
+				lazy="true"
+				fetch="join";
+
 	// Calculated Fields
 	property name="numberOfHits" 				formula="select cs.hits from cb_stats cs where cs.FK_contentID=contentID" default="0";
 	property name="numberOfVersions" 			formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" default="0";
