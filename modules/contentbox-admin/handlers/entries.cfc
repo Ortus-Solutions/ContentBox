@@ -60,6 +60,7 @@ component extends="baseContentHandler"{
 		prc.xehEntryExportAll 	= "#prc.cbAdminEntryPoint#.entries.exportAll";
 		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
 		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
+		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
 
 		// Tab
 		prc.tabContent_blog = true;

@@ -213,5 +213,30 @@ function openCloneDialog(contentID, title){
 		$cloneForm.submit();
 	});
 }
+// Reset Hits
+function resetHits( contentID ){
+	if( !contentID.length ){ return; }
+	// Post it
+	$.post( 
+		'#event.buildLink( prc.xehResetHits )#',
+		{ contentID: contentID }
+	).done( function( data ){
+		if( data.error ){
+			window.alert( "Error Reseting Hits: " + data.messages.join( ',' ) );
+		} else {
+			adminNotifier( 'info', data.messages.join( '<br>' ), 3000 );
+			// reload content
+			contentFilter();
+		}
+	} );
+}
+// Reset Hits
+function resetBulkHits(  ){
+	var selected = [];
+	$( "##contentID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){ resetHits( selected.join( "," ) ); }
+}
 </script>
 </cfoutput>

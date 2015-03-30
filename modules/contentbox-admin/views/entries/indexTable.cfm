@@ -110,6 +110,8 @@
 						</cfif>
 						<!--- History Command --->
 						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="fa fa-clock-o icon-large"></i> History</a></li>
+						<!-- Reset hits --->
+						<li><a href="javascript:resetHits( '#entry.getContentID()#' )"><i class="fa fa-refresh icon-large"></i> Reset Hits</a></li>
 						<!--- View in Site --->
 						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="fa fa-eye icon-large"></i> Open In Site</a></li>
 			    	</ul>

@@ -57,6 +57,7 @@ component extends="baseContentHandler"{
 		prc.xehPageExportAll 	= "#prc.cbAdminEntryPoint#.pages.exportAll";
 		prc.xehPageImport		= "#prc.cbAdminEntryPoint#.pages.importAll";
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
+		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
 
 		// Tab
 		prc.tabContent_pages = true;
@@ -127,7 +128,7 @@ component extends="baseContentHandler"{
 		prc.xehPageHistory 		= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehPageExport 		= "#prc.cbAdminEntryPoint#.pages.export";
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
-
+		
 		// view
 		event.setView( view="pages/indexTable", layout="ajax" );
 	}
