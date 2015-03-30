@@ -61,6 +61,7 @@
 									</ul>
 								</li>
 								</cfif>
+								<li><a href="javascript:resetBulkHits()"><i class="icon-refresh"></i> Reset Hits Selected</a></li>
 								<li><a href="javascript:contentShowAll()"><i class="icon-list"></i> Show All</a></li>
 					    	</ul>
 					    </div>

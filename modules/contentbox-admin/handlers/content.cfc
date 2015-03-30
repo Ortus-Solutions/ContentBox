@@ -5,6 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="contentService"		inject="id:contentService@cb";
+	property name="statsService"		inject="id:statsService@cb";
 	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
@@ -139,4 +140,43 @@ component extends="baseHandler"{
 		}
 		event.renderData( data=data, type="json" );
 	}
+
+	/**
+	* Reset Content Hits
+	*/
+	any function resetHits( event, rc, prc ){
+		event.paramValue( "contentID", 0 );
+		var response = { 
+			"data" 			= { "data" = "", "error" = false, "messages" = [] },
+			"statusCode" 	= "200", 
+			"statusText" 	= "Ok" 
+		};
+		// build to array and iterate
+		rc.contentID = listToArray( rc.contentID );
+		for( var thisID in rc.contentID ){
+			var oContent = contentService.get( thisID );
+			// check if loaded
+			if( !isNull( oContent ) and oContent.isLoaded() ){
+				// Only update if it has stats
+				if( oContent.hasStats() ){
+					oContent.getStats().setHits( 0 );
+					contentService.save( oContent );
+				}
+				arrayAppend( response.data.messages, "Hits reset for '#oContent.getTitle()#'" );
+			} else {
+				response.data.error = true;
+				response.statusCode	= 400;
+				arrayAppend( response.data.messages, "The contentID '#thisContentID#' requested does not exist" );
+
+			}
+		}
+		// Render it out
+		event.renderData( 
+			data		= response.data, 
+			type		= "json", 
+			statusCode	= response.statusCode, 
+			statusText	= ( arrayLen( response.data.messages ) ? 'Error processing request please look at data messages' : 'Ok' ) 
+		);
+	}
+
 }
