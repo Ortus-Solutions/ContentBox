@@ -386,13 +386,12 @@ component extends="baseContentHandler"{
 			var content = contentStoreService.get( thisContentID );
 			if( isNull( content ) ){
 				arrayAppend( messages, "Invalid content contentID sent: #thisContentID#, so skipped removal" );
-			}
-			else{
+			} else {
 				// GET id to be sent for announcing later
 				var contentID 	= content.getContentID();
 				var title		= content.getTitle();
 				// announce event
-				announceInterception("cbadmin_preContentStoreRemove", { content=content } );
+				announceInterception( "cbadmin_preContentStoreRemove", { content=content } );
 				// Diassociate it
 				if( content.hasParent() ){
 					content.getParent().removeChild( content );
@@ -401,11 +400,11 @@ component extends="baseContentHandler"{
 				contentStoreService.deleteContent( content );
 				arrayAppend( messages, "content '#title#' removed" );
 				// announce event
-				announceInterception("cbadmin_postContentStoreRemove", { contentID=contentID });
+				announceInterception( "cbadmin_postContentStoreRemove", { contentID=contentID } );
 			}
 		}
 		// messagebox
-		getPlugin( "MessageBox" ).info(messageArray=messages);
+		getPlugin( "MessageBox" ).info( messageArray=messages );
 		// relocate
 		setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 	}
