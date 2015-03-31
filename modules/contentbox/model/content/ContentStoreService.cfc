@@ -249,12 +249,12 @@ component extends="ContentService" singleton{
 	/**
 	* Returns an array of [contentID, title, slug] structures of all the content store items in the system
 	*/
-	array function getAllFlatEntries(){
+	array function getAllFlatEntries( sortOrder="title asc" ){
 		var c = newCriteria();
 
 		return c.withProjections( property="contentID,title,slug" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder="title asc" );
+			.list( sortOrder=arguments.sortOrder );
 	}
 
 	/**
