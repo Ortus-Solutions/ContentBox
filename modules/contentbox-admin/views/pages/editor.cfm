@@ -303,7 +303,7 @@
         						#html.label(field="parentPage",content='Parent:')#
         						<select name="parentPage" id="parentPage" class="input-block-level">
         							<option value="null">No Parent</option>
-        							#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
+        							#html.options(values=prc.pages,column="contentID",nameColumn="slug",selectedValue=prc.parentcontentID)#
         						</select>
 
         						<!--- layout --->

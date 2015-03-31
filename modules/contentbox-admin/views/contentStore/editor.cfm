@@ -310,7 +310,7 @@
         						#html.label(field="parentContent",content='Parent:')#
         						<select name="parentContent" id="parentContent" class="input-block-level">
         							<option value="null">No Parent</option>
-        							#html.options(values=prc.allContent,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
+        							#html.options(values=prc.allContent,column="contentID",nameColumn="slug",selectedValue=prc.parentcontentID)#
         						</select>
 
                         		<!--- Creator --->
