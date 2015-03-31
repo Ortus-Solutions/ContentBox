@@ -27,6 +27,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	// DI
 	property name="settingService"		inject="id:settingService@cb";
 	property name="cb"					inject="cbhelper@cb";
+	property name="log"					inject="logbox:logger:{this}";
 	
 	/**
 	* Constructor
@@ -105,7 +106,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 	}
 
 	/*
-	* Truncate table, purge entries that are expired
+	* Rotate auth logs
 	*/
 	LoginTrackerService function rotate(){
 		var maxLogs 	= settingService.getSetting( "cb_security_max_auth_logs" );
@@ -130,6 +131,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 			// run it
 			var results = executeQuery( query=hql, params=params, asQuery=false );
+			// log it
+			log.info( "Rotated auth logs", results );
 		}
 
 		return this;
