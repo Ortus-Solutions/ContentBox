@@ -168,7 +168,7 @@ component extends="baseContentHandler"{
 			prc.versionsViewlet = runEvent(event="contentbox-admin:versions.pager",eventArguments=args);
 		}
 		// Get all page names for parent drop downs
-		prc.allContent = contentStoreService.getAllFlatEntries();
+		prc.allContent = contentStoreService.getAllFlatEntries( sortOrder="slug asc" );
 		// CK Editor Helper
 		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
 		// Get All registered editors so we can display them

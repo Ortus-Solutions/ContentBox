@@ -171,7 +171,7 @@ component extends="baseContentHandler"{
 			prc.versionsViewlet = runEvent(event="contentbox-admin:versions.pager",eventArguments=args);
 		}
 		// Get all page names for parent drop downs
-		prc.pages = pageService.getAllFlatPages();
+		prc.pages = pageService.getAllFlatPages( sortOrder="slug asc" );
 		// Get active layout record and available page only layouts
 		prc.themeRecord = layoutService.getActiveLayout();
 		prc.availableLayouts = REreplacenocase( prc.themeRecord.layouts,"blog,?","");
