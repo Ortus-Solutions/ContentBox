@@ -55,6 +55,7 @@ component extends="baseContentHandler"{
 		prc.xehContentExportAll 	= "#prc.cbAdminEntryPoint#.contentStore.exportAll";
 		prc.xehContentImport		= "#prc.cbAdminEntryPoint#.contentStore.importAll";
 		prc.xehContentClone 		= "#prc.cbAdminEntryPoint#.contentStore.clone";
+		prc.xehResetHits 			= "#prc.cbAdminEntryPoint#.content.resetHits";
 
 		// Tab
 		prc.tabContent_contentStore = true;
