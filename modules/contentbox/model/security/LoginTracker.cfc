@@ -29,12 +29,21 @@ component extends="coldbox.system.Interceptor"{
 	property name="securityService"		inject="id:securityService@cb";
 	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
 	property name="cb"					inject="cbhelper@cb";
-	
+	property name="systemUtil"			inject="SystemUtil@cb";
+
 	/**
 	* Configure interceptor
 	*/
 	function configure(){
 		return this;
+	}
+
+	/**
+	* Listen to end of requests to do log rotation for auth logs for login events only.
+	*/
+	function postProcess( event, interceptData ) async="true" eventPattern="security\.doLogin"{
+		// Do log rotation
+		loginTrackerService.rotate();
 	}
 
 	/**
@@ -44,11 +53,8 @@ component extends="coldbox.system.Interceptor"{
 	function cbadmin_preLogin( event, interceptData, buffer ){
 		// if disabled, we do not track logins
 		if( !settingService.getSetting( "cb_security_login_blocker" ) ){ return; }
-		// reset attempts if time has expired
+		// reset attempts if time has expired for current user.
 		loginTrackerService.reset();
-		// rotate records
-		// TODO: run this in a thread.
-		loginTrackerService.rotate();
 
 		// prepare collections
 		var prc 			= event.getCollection( private = true );
@@ -73,13 +79,14 @@ component extends="coldbox.system.Interceptor"{
 		}
 
 		// If blocked, relocate
-		// TODO: Add logging
 		if( isblocked ){
 			if( byIP ){
 				getPlugin( "MessageBox" ).warn( cb.r( "messages.ip_blocked@security" ) );
 			} else {
 				getPlugin( "MessageBox" ).warn( cb.r( "messages.user_blocked@security" ) );
 			}
+			// Log it
+			log.warn( "Request blocked (#realIP#;#realUsername#) via login tracker" );
 			// Relocate
 			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );			
 		}
