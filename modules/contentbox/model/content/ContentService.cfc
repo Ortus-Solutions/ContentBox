@@ -249,8 +249,12 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		if( arguments.content.hasLinkedContent() ) {
 			arguments.content.removeAllLinkedContent();
 		}
+		if( arguments.content.hasStats() ){
+			delete( arguments.content.getStats() );
+		}
 		// now delete it
 		delete( arguments.content );
+
 		// return service
 		return this;
 	}
