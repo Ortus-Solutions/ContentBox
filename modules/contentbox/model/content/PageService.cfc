@@ -253,12 +253,12 @@ component extends="ContentService" singleton{
 	/**
 	* Returns an array of [contentID, title, slug] structures of all the pages in the system
 	*/
-	array function getAllFlatPages(){
+	array function getAllFlatPages( sortOrder="title asc" ){
 		var c = newCriteria();
 
 		return c.withProjections( property="contentID,title,slug" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder="title asc" );
+			.list( sortOrder=arguments.sortOrder );
 	}
 
 	/**
