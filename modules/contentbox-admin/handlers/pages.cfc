@@ -392,18 +392,18 @@ component extends="baseContentHandler"{
 		// Inflate to array
 		rc.contentID = listToArray( rc.contentID );
 		var messages = [];
+
 		// Iterate and remove
 		for( var thisContentID in rc.contentID ){
 			var page = pageService.get( thisContentID );
 			if( isNull( page ) ){
 				arrayAppend( messages, "Invalid page contentID sent: #thisContentID#, so skipped removal" );
-			}
-			else{
+			} else {
 				// GET id to be sent for announcing later
 				var contentID 	= page.getContentID();
 				var title		= page.getTitle();
 				// announce event
-				announceInterception("cbadmin_prePageRemove", { page=page } );
+				announceInterception( "cbadmin_prePageRemove", { page=page } );
 				// Diassociate it
 				if( page.hasParent() ){
 					page.getParent().removeChild( page );
@@ -412,13 +412,13 @@ component extends="baseContentHandler"{
 				pageService.deleteContent( page );
 				arrayAppend( messages, "Page '#title#' removed" );
 				// announce event
-				announceInterception("cbadmin_postPageRemove", { contentID=contentID });
+				announceInterception( "cbadmin_postPageRemove", { contentID=contentID } );
 			}
 		}
 		// messagebox
-		getPlugin( "MessageBox" ).info(messageArray=messages);
+		getPlugin( "MessageBox" ).info( messageArray=messages );
 		// relocate
-		setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#");
+		setNextEvent( event=prc.xehPages, queryString="parent=#rc.parent#" );
 	}
 
 	// change order for all pages
