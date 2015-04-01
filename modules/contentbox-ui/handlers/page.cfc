@@ -62,8 +62,9 @@ component extends="content" singleton{
 		prc.page.addNewContentVersion( content=URLDecode( rc.content ), author=prc.author )
 			.setActiveContent( prc.page.getContentVersions() );
 		// Do we have a parent?
-		if( len( rc.parentPage ) ){
-			prc.page.setParent( pageService.get( rc.parentPage ) );
+		if( len( rc.parentPage ) && isNumeric( rc.parentPage ) ){
+			var parent = pageService.get( rc.parentPage );
+			if( !isNull( parent ) ){ prc.page.setParent( parent ); }
 		}
 		// set skin view
 		switch( rc.layout ){
