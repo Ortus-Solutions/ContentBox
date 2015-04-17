@@ -27,7 +27,7 @@ component singleton{
 	// DI
 	property name="mediaService" 	inject="mediaService@cb";
 	property name="settingService"  inject="id:settingService@cb";
-	property name="captcha"			inject="coldbox:myplugin:captcha@contentbox";
+	property name="captcha"			inject="coldbox:myplugin:Captcha@contentbox";
 
 	/**
 	* Deliver Media
