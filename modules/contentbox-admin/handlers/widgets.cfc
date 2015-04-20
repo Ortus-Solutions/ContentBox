@@ -14,7 +14,7 @@ component extends="baseHandler"{
 	}
 
 	// index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehWidgetRemove	= "#prc.cbAdminEntryPoint#.widgets.remove";
 		prc.xehWidgetUpload = "#prc.cbAdminEntryPoint#.widgets.upload";
@@ -38,7 +38,7 @@ component extends="baseHandler"{
 	}
 
 	//docs
-	function docs(event,rc,prc){
+	function docs( event, rc, prc ){
 		prc.widgetName = widgetService.ripExtension( urlDecode( rc.widget ) );
 		prc.widgetType = urlDecode( rc.type );
 		prc.icon = widgetService.getWidgetIcon( rc.widget, rc.type );
@@ -51,14 +51,14 @@ component extends="baseHandler"{
 	}
 
 	//Remove
-	function remove(event,rc,prc){
+	function remove( event, rc, prc ){
 		widgetService.removeWidget( rc.widgetFile );
 		getPlugin("MessageBox").info("Widget Removed Forever!");
 		setNextEvent(prc.xehWidgets);
 	}
 
 	//upload
-	function upload(event,rc,prc){
+	function upload( event, rc, prc ){
 		var fp = event.getTrimValue("filePlugin","");
 
 		// Verify
@@ -81,12 +81,13 @@ component extends="baseHandler"{
 	}
 
 	// Editor Selector
-	function editorSelector(event,rc,prc){
-		// Get all widgets
-		prc.widgets = widgetService.getWidgets();
-		prc.categories = widgetService.getWidgetCategories();
+	function editorSelector( event, rc, prc ){
+		// Get all widgets, categories and setup the service on context
+		prc.widgets 		= widgetService.getWidgets();
+		prc.categories 		= widgetService.getWidgetCategories();
+		prc.widgetService 	= widgetService;
 		// render it out
-		event.setView(view="widgets/editorSelector", layout="ajax");
+		event.setView( view="widgets/editorSelector", layout="ajax" );
 	}
 	
 	// Preview Widget
@@ -134,7 +135,7 @@ component extends="baseHandler"{
 	}
 
 	// Create New Widget wizard
-	function create(event,rc,prc){
+	function create( event, rc, prc ){
 		// exit handler
 		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.doCreate";
 		// widget path
@@ -147,7 +148,7 @@ component extends="baseHandler"{
 		event.setView(view="widgets/create",layout="ajax");
 	}
 	// Create the new widget
-	function doCreate(event,rc,prc){
+	function doCreate( event, rc, prc ){
 		// slugify name
 		rc.name = getPlugin("HTMLHelper").slugify( rc.name );
 		// get and populate widget
@@ -166,7 +167,7 @@ component extends="baseHandler"{
 	}
 
 	// Editor
-	function edit(event,rc,prc){
+	function edit( event, rc, prc ){
 		// param values
 		event.paramValue( "type", "core" );
 		// get widget
@@ -194,7 +195,7 @@ component extends="baseHandler"{
 	}
 
 	// Save Widget Code
-	function save(event,rc,prc){
+	function save( event, rc, prc ){
 		// Save the widget code
 		widgetService.saveWidgetCode( rc.widget, rc.widgetCode, rc.type );
 		// stay or relocate?
