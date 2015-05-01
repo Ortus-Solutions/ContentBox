@@ -41,7 +41,7 @@ component extends="coldbox.system.Interceptor"{
 	*/
 	function onRequestCapture( event, interceptData, buffer ){
 		// If turned off, just exist
-		if( !settingService.getSetting( "cb_security_rate_limiter" ) ){ return false; }
+		if( !settingService.getSetting( "cb_security_rate_limiter", false ) ){ return false; }
 		// do we limit bot OR normal requests as well?
 		if( !len( cgi.http_cookie ) OR !settingService.getSetting( "cb_security_rate_limiter_bots_only" ) ) {
 			// limit it now.
