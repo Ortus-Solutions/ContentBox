@@ -188,7 +188,7 @@
  		<!-- Create Patch directory-->
  		<mkdir dir="${dir.build}/WEB-INF/lib/lucee-server/patches"/>
  		<!-- Deliver Patch -->
- 		<copy file="${dir.dependencies}/${lucee.patch}.lco" toDir="${dir.build}/WEB-INF/lib/lucee-server/patches" encoding="UTF-8" />
+ 		<copy file="${dir.dependencies}/lucee-${lucee.patch}.lco" toFile="${dir.build}/WEB-INF/lib/lucee-server/patches/{lucee.patch}.lco" encoding="UTF-8" />
  		
  		<!-- Copy Tuckey -->
  		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
