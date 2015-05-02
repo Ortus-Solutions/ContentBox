@@ -26,7 +26,7 @@
 
 	<rule>
 		<note>Generic Pretty URLs Pass-through</note>
-		<condition type="request-uri" operator="notequal">/(index.cfm|robots.txt|osd.xml|flex2gateway|cfide|cfformgateway|railo-context|admin-context|modules/contentbox-dsncreator|modules/contentbox-installer|modules/contentbox|files|images|js|javascripts|css|styles|config).*</condition>
+		<condition type="request-uri" operator="notequal">/(index.cfm|robots.txt|osd.xml|cfide|cfformgateway|lucee|modules/contentbox-dsncreator|modules/contentbox-installer|modules/contentbox|files|images|js|javascripts|css|styles|config).*</condition>
 		<condition type="request-uri" operator="notequal">\.(bmp|gif|jpe?g|png|css|js|txt|xls|ico|swf)$</condition>
 		<from>^/(.*)$</from>
 		<to type="passthrough">/index.cfm/$1</to>
