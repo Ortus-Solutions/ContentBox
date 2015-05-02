@@ -171,20 +171,36 @@
  	
  	<!-- Build war -->
  	<target name="build.war" description="Build a new ContentBox WAR distribution" depends="build.source">
- 		<!-- Unzip Railo War -->
- 		<unzip dest="${dir.build}" src="${dir.dependencies}/railo-${railo.version}.war" overwrite="true"/>
+ 		<!-- Unzip War -->
+ 		<unzip dest="${dir.build}" src="${dir.dependencies}/lucee-${lucee.version}.war" overwrite="true">
+			<patternset>
+		        <exclude name="Application.cfc"/>
+				<exclude name="index.cfm"/>
+				<exclude name="favicon.ico"/>
+				<exclude name="License.txt"/>
+				<exclude name="assets/**"/>
+		    </patternset>
+ 		</unzip>
+ 		
  		<!-- Replace web.xml -->
  		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
+ 		
+ 		<!-- Create Patch directory-->
+ 		<mkdir dir="${dir.build}/WEB-INF/lib/lucee-server/patches"/>
+ 		<!-- Deliver Patch -->
+ 		<copy file="${dir.dependencies}/${lucee.patch}.lco" toDir="${dir.build}/WEB-INF/lib/lucee-server/patches" encoding="UTF-8" />
+ 		
  		<!-- Copy Tuckey -->
  		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
  		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/WEB-INF/lib" overwrite="true" encoding="UTF-8"/>
- 		
-		<!-- Create War -->
+		
+ 		<!-- Create War -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}" />
  		<zip destfile="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip">
-			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" /> 			
+			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />		
  		</zip>
  		<delete file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />
+ 		
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  		<!-- Cleanup INF like a ninja -->
@@ -289,9 +305,9 @@
  	<!-- Get Dependencies -->
 	<target name="getDependencies" description="Get all the necessary dependencies for the build process using: box.repo.url">
 		<!-- Download Dependency via box task-->
- 		<box-dependency groupID="railo" 
- 						artifactID="railo" 
- 						version="${railo.version}"
+ 		<box-dependency groupID="lucee" 
+ 						artifactID="lucee" 
+ 						version="${lucee.version}"
  						extension="war"
  						destination="${dir.dependencies}"/>
  		<!-- Download Dependency via box task-->
@@ -304,6 +320,12 @@
  		<box-dependency groupID="apache" 
  						artifactID="apache-tomcat" 
  						version="${express.server.version}"
+ 						destination="${dir.dependencies}"/>
+		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="lucee" 
+ 						artifactID="lucee"
+ 						version="${lucee.patch}"
+ 						extension="lco"
  						destination="${dir.dependencies}"/>
 	</target>
 	
