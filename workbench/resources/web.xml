@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	metadata-complete="true"
 	version="2.5">
-
+	
 	<!-- Tuckey Rewrite -->
 	<filter>
        <filter-name>UrlRewriteFilter</filter-name>
@@ -25,118 +25,94 @@
        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
 	  
-  <!-- ********************************************************************* -->
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <!-- Railo Servlet Definitions (Servlet Spec. Version 2.5 or greater req.) -->
-  
-
-  <!-- ===================================================================== -->
-  <!-- Railo CFML Servlet - this is the main Railo servlet                   -->
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <servlet id="Railo">
-    <description>Railo CFML Engine</description>
-    <servlet-name>CFMLServlet</servlet-name>    
-    <servlet-class>railo.loader.servlet.CFMLServlet</servlet-class>
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- to specify the location of the Railo Server config and libraries,   -->
-    <!-- uncomment the init-param below.  make sure that the param-value     -->
-    <!-- points to a valid folder, and that the process that runs Railo has  -->
-    <!-- write permissions to that folder.  leave commented for defaults.    -->
-    <!--
-    <init-param>
-      <param-name>railo-server-directory</param-name>
-      <param-value>/var/Railo/config/server/</param-value>
-      <description>Railo Server configuration directory (for Server-wide configurations, settings, and libraries)</description>
-    </init-param>
-    !-->
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-    <!-- to specify the location of the Web Contexts' config and libraries,  -->
-    <!-- uncomment the init-param below.  make sure that the param-value     -->
-    <!-- points to a valid folder, and that the process that runs Railo has  -->
-    <!-- write permissions to that folder.  the {web-context-label} can be   -->
-    <!-- set in Railo Server Admin homepage.  leave commented for defaults.  -->
-    <!--
-    <init-param>
-      <param-name>railo-web-directory</param-name>
-      <param-value>/var/Railo/config/web/{web-context-label}/</param-value> 
-      <description>Railo Web Directory (for Website-specific configurations, settings, and libraries)</description>
-    </init-param>
-    !-->
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>CFMLServlet</servlet-name>
-    <url-pattern>*.cfc</url-pattern>
-    <url-pattern>*.cfm</url-pattern>
-    <url-pattern>*.cfml</url-pattern>   
-    <url-pattern>/index.cfc/*</url-pattern>
-    <url-pattern>/index.cfm/*</url-pattern>
-    <url-pattern>/index.cfml/*</url-pattern>
-    
-    <!-- url-pattern>*.cfm/*</url-pattern !-->
-    <!-- url-pattern>*.cfml/*</url-pattern !-->
-    <!-- url-pattern>*.cfc/*</url-pattern !-->
-    <!-- url-pattern>*.htm</url-pattern !-->
-    <!-- url-pattern>*.jsp</url-pattern !-->
-  </servlet-mapping>
-  
-
-  <!-- ===================================================================== -->
-  <!-- Railo REST Servlet - handles Railo's RESTful web services             -->
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <servlet id="RESTServlet">
-    <description>Railo Servlet for RESTful services</description>
-    <servlet-name>RESTServlet</servlet-name>    
-    <servlet-class>railo.loader.servlet.RestServlet</servlet-class>
-    <load-on-startup>2</load-on-startup>
-  </servlet>  
-
-  <servlet-mapping>
-    <servlet-name>RESTServlet</servlet-name>
-    <url-pattern>/rest/*</url-pattern>
-  </servlet-mapping>
-
-
-  <!-- ===================================================================== -->
-  <!-- Railo MessageBroker Servlet - Flex Gateway                            -->
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <!-- * ATTENTION - ATENCION - ACHTUNG  -  ATTENTION - ATENCION - ACHTUNG * -->
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <!-- messageBrokerId must be unique for each defintion of the MessageBroker-->
-  <!-- Servlet.  if you use the MessageBroker Servlet and define it in more  -->
-  <!-- than one xml file, you must uncomment the messageBrokerId init-param  -->
-  <!-- and set a different value in each definition.                         -->
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <servlet id="MessageBrokerServlet">
-    <description>Railo Servlet for Flex Gateway</description>
-    <servlet-name>MessageBrokerServlet</servlet-name>
-    <servlet-class>flex.messaging.MessageBrokerServlet</servlet-class>
-    <!-- init-param>
-      <param-name>services.configuration.file</param-name>
-      <param-value>/WEB-INF/flex/services-config.xml</param-value>
-    </init-param !-->
-    <!-- init-param>
-      <param-name>messageBrokerId</param-name>
-      <param-value>_default_</param-value>
-    </init-param !-->
-    <!-- load-on-startup>2</load-on-startup !-->
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>MessageBrokerServlet</servlet-name>
-    <url-pattern>/flex2gateway/*</url-pattern>
-    <url-pattern>/flashservices/gateway/*</url-pattern>
-    <url-pattern>/messagebroker/*</url-pattern>
-  </servlet-mapping>
-
-
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  <!--                                                 Railo Definitions End -->  
-  <!-- ===================================================================== -->
-  <!-- _____________________________________________________________________ -->
-
-
+	<servlet>
+		<servlet-name>CFMLServlet</servlet-name>
+		<servlet-class>lucee.loader.servlet.CFMLServlet</servlet-class>
+		
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- to specify the location of the Lucee Server config and libraries,   -->
+		<!-- uncomment the init-param below.  make sure that the param-value     -->
+		<!-- points to a valid folder, and that the process that runs Lucee has  -->
+		<!-- write permissions to that folder.  leave commented for defaults.    -->
+		<!--
+		<init-param>
+		  <param-name>lucee-server-directory</param-name>
+		  <param-value>/var/Lucee/config/server/</param-value>
+		  <description>Lucee Server configuration directory (for Server-wide configurations, settings, and libraries)</description>
+		</init-param>
+		!-->
+		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		<!-- to specify the location of the Web Contexts' config and libraries,  -->
+		<!-- uncomment the init-param below.  make sure that the param-value     -->
+		<!-- points to a valid folder, and that the process that runs Lucee has  -->
+		<!-- write permissions to that folder.  the {web-context-label} can be   -->
+		<!-- set in Lucee Server Admin homepage.  leave commented for defaults.  -->
+		<!--
+		<init-param>
+		  <param-name>lucee-web-directory</param-name>
+		  <param-value>/var/Lucee/config/web/{web-context-label}/</param-value> 
+		  <description>Lucee Web Directory (for Website-specific configurations, settings, and libraries)</description>
+		</init-param>
+		!-->
+		<load-on-startup>1</load-on-startup>
+		
+		</servlet>
+		
+		
+		  <!-- ===================================================================== -->
+		  <!-- Lucee REST Servlet - handles Lucee's RESTful web services             -->
+		  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		  <servlet>
+		<servlet-name>RESTServlet</servlet-name>    
+		<servlet-class>lucee.loader.servlet.RestServlet</servlet-class>
+		<load-on-startup>2</load-on-startup>
+		  </servlet> 
+		
+		  <!-- ===================================================================== -->
+		  <!-- Lucee MessageBroker Servlet - Flex Gateway                            -->
+		  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		  <!-- * ATTENTION - ATENCION - ACHTUNG  -  ATTENTION - ATENCION - ACHTUNG * -->
+		  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		  <!-- messageBrokerId must be unique for each defintion of the MessageBroker-->
+		  <!-- Servlet.  if you use the MessageBroker Servlet and define it in more  -->
+		  <!-- than one xml file, you must uncomment the messageBrokerId init-param  -->
+		  <!-- and set a different value in each definition.                         -->
+		  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+		  <!-- <servlet>
+		    <description>Lucee Servlet for Flex Gateway</description>
+		    <servlet-name>MessageBrokerServlet</servlet-name>
+		    <servlet-class>flex.messaging.MessageBrokerServlet</servlet-class>
+		    <init-param>
+		      <param-name>services.configuration.file</param-name>
+		      <param-value>/WEB-INF/flex/services-config.xml</param-value>
+		    </init-param>
+		    <init-param>
+		      <param-name>messageBrokerId</param-name>
+		      <param-value>_default_</param-value>
+		    </init-param>
+		    <load-on-startup>3</load-on-startup>
+		  </servlet> -->
+		  
+		  <servlet-mapping>
+		<servlet-name>CFMLServlet</servlet-name>
+		<url-pattern>*.cfc</url-pattern>
+		<url-pattern>*.cfm</url-pattern>
+		<url-pattern>*.cfml</url-pattern>   
+		<url-pattern>/index.cfc/*</url-pattern>
+		<url-pattern>/index.cfm/*</url-pattern>
+		<url-pattern>/index.cfml/*</url-pattern>
+		
+		<!-- url-pattern>*.cfm/*</url-pattern !-->
+		<!-- url-pattern>*.cfml/*</url-pattern !-->
+		<!-- url-pattern>*.cfc/*</url-pattern !-->
+		<!-- url-pattern>*.htm</url-pattern !-->
+		<!-- url-pattern>*.jsp</url-pattern !-->
+		  </servlet-mapping>
+		  
+		  <servlet-mapping>
+		<servlet-name>RESTServlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
 
 	<!-- default file to execute if directory is called with no file name, e.g. http://mysite.com/ !-->
 	<welcome-file-list>
