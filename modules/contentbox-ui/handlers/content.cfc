@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -33,6 +33,8 @@ component{
 	property name="rssService"			inject="id:rssService@cb";
 	property name="validator"			inject="id:Validator@cb";
 	property name="layoutService"		inject="id:layoutService@cb";
+	property name="antiSamy"			inject="coldbox:plugin:AntiSamy";
+	property name="messagebox"			inject="coldbox:plugin:MessageBox";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -167,10 +169,9 @@ component{
 			var cacheKey 	= "";
 			// Do we have an override page setup by the settings?
 			if( structKeyExists( prc, "pageOverride" ) and len( prc.pageOverride ) ){
-				cacheKey = "cb-content-wrapper-#prc.pageOverride#/";
-			}
-			else{
-				cacheKey = "cb-content-wrapper-#left( event.getCurrentRoutedURL(), 255 )#";
+				cacheKey = "cb-content-wrapper-#cgi.http_host#-#prc.pageOverride#/";
+			} else {
+				cacheKey = "cb-content-wrapper-#cgi.http_host#-#left( event.getCurrentRoutedURL(), 255 )#";
 			}
 			
 			// Incorporate internal hash + rc distinct hash.
@@ -193,18 +194,23 @@ component{
 			}
 		}
 		
+		// Prepare data packet for rendering and caching and more
+		var data = { contentID = "", contentType="text/html", isBinary=false };
 		// execute the wrapped action
-		arguments.action( arguments.event, arguments.rc, arguments.prc );
+		data.content = arguments.action( arguments.event, arguments.rc, arguments.prc );
 		
 		// Check for missing page? If so, just return, no need to do multiple formats or caching for a missing page
 		if( structKeyExists( prc, "missingPage" ) ){ return; }
 		
-		// Prepare data packet for rendering and caching and more
-		var data = { content = "", contentID = "", contentType="text/html", isBinary=false };
-		// generate content
-		data.content = renderLayout( layout="#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
-									 module="contentbox",
-									 viewModule="contentbox" );
+		// generate content only if content is not set, else means handler generated content.
+		if ( isNull( data.content ) ){
+			data.content = renderLayout( 
+				layout 		= "#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
+				module 		= "contentbox",
+				viewModule 	= "contentbox" 
+			);
+		}
+
 		// Multi format generation
 		switch( rc.format ){
 			case "pdf" : {
@@ -214,7 +220,7 @@ component{
 				break;
 			}
 			case "doc" : {
-				data.contentType = "application/msword";
+				data.contentType	= "application/msword";
 				break;
 			}
 		}
@@ -261,9 +267,11 @@ component{
 	
 	/**
 	* Validate incoming comment post, if not valid, it redirects back
-	* @thisContent.hint The content object to validate the comment post for
+	* @thisContent The content object to validate the comment post for
+	* 
+	* @return content handler
 	*/
-	private void function validateCommentPost( 
+	private function validateCommentPost( 
 		required event, 
 		required rc, 
 		required prc, 
@@ -272,24 +280,24 @@ component{
 		var commentErrors = [];
 
 		// param values
-		event.paramValue( "author", "" );
-		event.paramValue( "authorURL", "" );
-		event.paramValue( "authorEmail", "" );
-		event.paramValue( "content", "" );
-		event.paramValue( "captchacode", "" );
+		event.paramValue( "author", "" )
+			.paramValue( "authorURL", "" )
+			.paramValue( "authorEmail", "" )
+			.paramValue( "content", "" )
+			.paramValue( "captchacode", "" )
+			.paramValue( "subscribe", false );
 		
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
-			getPlugin( "MessageBox" ).warn( "Comments are disabled! So you can't post any!" );
+			messagebox.warn( "Comments are disabled! So you can't post any!" );
 			setNextEvent( URL=CBHelper.linkContent( arguments.thisContent ) );
 		}
 
 		// Trim values & XSS Cleanup of fields
-		var antiSamy 	= getPlugin( "AntiSamy" );
-		rc.author 		= antiSamy.htmlSanitizer( trim( rc.author ) );
-		rc.authorEmail 	= antiSamy.htmlSanitizer( trim( rc.authorEmail ) );
-		rc.authorURL 	= antiSamy.htmlSanitizer( trim( rc.authorURL ) );
-		rc.captchacode 	= antiSamy.htmlSanitizer( trim( rc.captchacode ) );
+		rc.author 		= left( antiSamy.htmlSanitizer( trim( rc.author ) ), 100 );
+		rc.authorEmail 	= left( antiSamy.htmlSanitizer( trim( rc.authorEmail ) ), 255 );
+		rc.authorURL 	= left( antiSamy.htmlSanitizer( trim( rc.authorURL ) ), 255 );
+		rc.captchacode 	= left( antiSamy.htmlSanitizer( trim( rc.captchacode ) ), 100 );
 		rc.content 		= antiSamy.htmlSanitizer( xmlFormat( trim( rc.content ) ) );
 
 		// Validate incoming data
@@ -306,9 +314,9 @@ component{
 
 		// announce event
 		announceInterception( "cbui_preCommentPost", {
-			commentErrors=commentErrors,
-			content=arguments.thisContent,
-			contentType=arguments.thisContent.getContentType()
+			commentErrors	= commentErrors,
+			content			= arguments.thisContent,
+			contentType		= arguments.thisContent.getContentType()
 		});
 
 		// Store errors if found
@@ -316,7 +324,7 @@ component{
 			// Flash errors
 			flash.put( name="commentErrors", value=commentErrors, inflateTOPRC=true );
 			// MessageBox
-			getPlugin( "MessageBox" ).warn( messageArray=commentErrors );
+			messagebox.warn( messageArray=commentErrors );
 			// Redirect
 			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ), persist="author,authorEmail,authorURL,content" );
 			return;
@@ -347,7 +355,7 @@ component{
 		// Check if all good
 		if( results.moderated ){
 			// Message that comment was moderated
-			getPlugin( "MessageBox" ).warn( messageArray=results.messages );
+			messagebox.warn( messageArray=results.messages );
 			flash.put( name="commentErrors", value=results.messages, inflateTOPRC=true );
 			// relocate back to comments
 			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ) );

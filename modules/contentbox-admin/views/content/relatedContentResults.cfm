@@ -5,18 +5,23 @@
         <thead>
             <tr>
                 <th>Content Title</th>
-                <th width="40" class="center"><i class="icon-globe icon-large"></i></th>
+                <th width="40" class="center"><i class="icon-globe icon-large" title="Published?"></i></th>
                 <th width="120" class="center">Select</th>
             </tr>
         </thead>
         <tbody>
             <cfloop array="#prc.content#" index="content">
-            <tr id="contentID-#content.getContentID()#" <cfif NOT content.getIsPublished()>class="warning"</cfif>>
+            <tr id="contentID-#content.getContentID()#" <cfif NOT content.getIsPublished()>class="warning"</cfif>
+            ondblclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )">
                 <td>
                     <!--- Title --->
                     <strong>#content.getTitle()#</strong>
                     <br>
-                    <span class="label">Published: #content.getDisplayPublishedDate()#</label>
+                    <cfif content.getContentType() eq "page">
+                        <span class="label label-success">#content.getSlug()#</span>
+                    <cfelseif content.getContentType() eq "contentStore">
+                        #content.getDescription()#
+                    </cfif>
                 </td>
                 <td class="center">
                     <cfif content.getIsPublished()>

@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -232,38 +232,67 @@ component accessors="true" threadSafe{
 	* cVersion.hint The current version of the system
 	* nVersion.hint The newer version received
 	*/
-	function isNewVersion(cVersion, nVersion){
-		var cMajor 		= getToken(arguments.cVersion,1,".");
-		var cMinor		= getToken(arguments.cVersion,2,".");
-		var cRevision	= getToken(arguments.cVersion,3,".");
-		var cBuildID	= getToken(arguments.cVersion,4,".");
-		// new version info
-		var nMajor 		= getToken(arguments.nVersion,1,".");
-		var nMinor		= getToken(arguments.nVersion,2,".");
-		var nRevision	= getToken(arguments.nVersion,3,".");
-		var nBuildID	= getToken(arguments.nVersion,4,".");
+	function isNewVersion( cVersion, nVersion ){
+		/**
+		Semantic version: major.minor.revision-alpha.1+build
+		**/
+
+		var cVersionData 	= parseSemanticVersion( trim( arguments.cVersion ) );
+		var nVersionData 	= parseSemanticVersion( trim( arguments.nVersion ) );
 
 		// Major check
-		if( nMajor gt cMajor ){
+		if( nVersionData.major gt cVersionData.major ){
 			return true;
 		}
 
 		// Minor Check
-		if( nMajor eq cMajor AND nMinor gt cMinor ){
+		if( nVersionData.major eq cVersionData.major AND nVersionData.minor gt cVersionData.minor ){
 			return true;
 		}
 
 		// Revision Check
-		if( nMajor eq cMajor AND nMinor eq cMinor AND nRevision gt cRevision){
+		if( nVersionData.major eq cVersionData.major AND
+			nVersionData.minor gt cVersionData.minor AND
+			nVersionData.revision gt cVersionData.revision ){
 			return true;
 		}
-		
+
 		// BuildID Check
-		if( nMajor eq cMajor AND nMinor eq cMinor AND nRevision eq cRevision AND nBuildID gt cBuildID ){
+		if( nVersionData.major eq cVersionData.major AND
+			nVersionData.minor gt cVersionData.minor AND
+			nVersionData.revision gt cVersionData.revision AND
+			nVersionData.buildID gt cVersionData.buildID ){
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	* Parse the semantic version
+	* @return struct:{major,minor,revision,beid,buildid}
+	*/
+	private struct function parseSemanticVersion( required string version ){
+		var results = { major = 1, minor = 0, revision = 0, beID = "", buildID = 0 };
+
+		// Get build ID first
+		results.buildID		= find( "+", arguments.version ) ? listLast( arguments.version, "+" ) : '0';
+		// REmove build ID
+		arguments.version 	= reReplace( arguments.version, "\+([^\+]*).$", "" );
+		// Get BE ID Formalized Now we have major.minor.revision-alpha.1
+		results.beID		= find( "-", arguments.version ) ? listLast( arguments.version, "-" ) : '';
+		// Remove beID
+		arguments.version 	= reReplace( arguments.version, "\-([^\-]*).$", "" );
+		// Get Revision
+		results.revision	= getToken( arguments.version, 3, "." );
+		if( results.revision == "" ){ results.revision = 0; }
+
+		// Get Minor + Major
+		results.minor		= getToken( arguments.version, 2, "." );
+		if( results.minor == "" ){ results.minor = 0; }
+		results.major 		= getToken( arguments.version, 1, "." );
+
+		return results;
 	}
 
 	/**

@@ -9,16 +9,21 @@
 // Quick preview for content
 function previewContent(){
 	// Open the preview window for content
-	openRemoteModal( getPreviewSelectorURL(), 
-					 { content: getEditorContent(), 
-					   layout: $("##layout").val(),
-					   title: $("##title").val(),
-					   slug: $slug.val(),
-					   contentType : $("##contentType").val(),
-					   markup : $("##markup").val() },
-					 "95%",
-					 "85%",
-                     true);
+	openRemoteModal( 
+		getPreviewSelectorURL(), 
+		{ 
+			content		: getEditorContent(), 
+			layout		: $( "##layout" ).val(),
+			title		: $( "##title" ).val(),
+			slug		: $slug.val(),
+			contentType : $( "##contentType" ).val(),
+			markup 		: $( "##markup" ).val(),
+			parentPage	: $( "##parentPage" ).val() || ''
+		},
+		"95%",
+		"85%",
+        true
+	);
 }
 // Set the actual publishing date to now
 function publishNow(){

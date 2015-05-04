@@ -30,7 +30,7 @@ $(document).ready(function() {
 		settingsLoad( $this.val() );
 	});
 	// Load settings
-	settingsLoad();
+	settingsLoad( $("##settingSearch").val() );
 });
 function importSettings(){
 	// local id's

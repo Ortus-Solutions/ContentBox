@@ -36,7 +36,7 @@
 					<div class="buttonBar">
 						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
-								Global Actions <span class="caret"></span>
+								Bulk Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
 					    		<li><a href="javascript:changeStatus('approve')"><i class="icon-thumbs-up"></i> Approve Selected</a></li>

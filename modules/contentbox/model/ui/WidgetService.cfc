@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -22,6 +22,7 @@ limitations under the License.
 ********************************************************************************
 */
 component accessors="true" singleton threadSafe{
+
 	// Dependecnies
 	property name="settingService"		inject="id:settingService@cb";
 	property name="moduleSettings"		inject="coldbox:setting:modules";
@@ -35,6 +36,9 @@ component accessors="true" singleton threadSafe{
 	property name="widgetsIconsPath" 		type="string";
 	property name="widgetsIconsIncludePath" type="string";
 
+	/**
+	* Constructor
+	*/
 	WidgetService function init(){
 		return this;
 	}
@@ -43,10 +47,10 @@ component accessors="true" singleton threadSafe{
 	* onDIComplete
 	*/
 	function onDIComplete(){
-		widgetsPath 			= moduleSettings["contentbox"].path & "/widgets";
-		widgetsIconsPath 		= moduleSettings["contentbox-admin"].path & "/includes/images/widgets";
-		widgetsIconsPath 		= moduleSettings["contentbox-admin"].path & "/includes/images/widgets";
-		widgetsIconsIncludePath = moduleSettings["contentbox-admin"].mapping & "/includes/images/widgets";
+		widgetsPath 			= moduleSettings[ "contentbox" ].path & "/widgets";
+		widgetsIconsPath 		= moduleSettings[ "contentbox-admin" ].path & "/includes/images/widgets";
+		widgetsIconsPath 		= moduleSettings[ "contentbox-admin" ].path & "/includes/images/widgets";
+		widgetsIconsIncludePath = moduleSettings[ "contentbox-admin" ].mapping & "/includes/images/widgets";
 	}
 
 	/**
@@ -111,7 +115,7 @@ component accessors="true" singleton threadSafe{
 	 */
 	public query function getWidgetCategories() {
 		var widgets = getWidgets();
-		var q = new query();
+		var q = new Query();
 			q.setDbType( 'query' );
 			q.setAttributes( QoQ=widgets );
 			q.setSQL( 'select distinct category from QoQ order by category ASC' );
@@ -129,32 +133,32 @@ component accessors="true" singleton threadSafe{
 		var layoutWidgets = layoutService.getLayoutWidgetCache();
 
 		// Add custom columns
-		QueryAddColumn(widgets,"filename",[]);
-		QueryAddColumn(widgets,"plugin",[]);
-		QueryAddColumn(widgets,"widgettype",[]);
-		QueryAddColumn(widgets,"module",[]);
-		QueryAddColumn(widgets,"category",[]);
-		QueryAddColumn(widgets,"icon",[]);
-		QueryAddColumn(widgets,"debug",[]);
+		QueryAddColumn( widgets, "filename", [] );
+		QueryAddColumn( widgets, "plugin", [] );
+		QueryAddColumn( widgets, "widgettype", [] );
+		QueryAddColumn( widgets, "module", [] );
+		QueryAddColumn( widgets, "category", [] );
+		QueryAddColumn( widgets, "icon", [] );
+		QueryAddColumn( widgets, "debug", [] );
 		// cleanup and more stuff
 
 		// add core widgets
-		for(var x=1; x lte widgets.recordCount; x++){
+		for( var x=1; x lte widgets.recordCount; x++ ){
 			// filename
-			widgets.fileName[x] = widgets.name[x];
-			// name only
-			widgets.name[x] = ripExtension( widgets.name[x] );
+			widgets.fileName[ x ] = widgets.name[ x ];
+			// rip extension name only
+			widgets.name[ x ] = ripExtension( widgets.name[ x ] );
 			// try to create the plugin
-			widgets.plugin[x] = "";
+			widgets.plugin[ x ] = "";
 			// set the type
-			widgets.widgettype[x] = "Core";
+			widgets.widgettype[ x ] = "Core";
 			try{
-				widgets.plugin[x] = getWidget( widgets.name[x], widgets.widgettype[x] );
-				widgets.category[x] = getWidgetCategory( widgets.name[x], widgets.widgettype[x] );
-				widgets.icon[x] = getWidgetIcon( widgets.name[x], widgets.widgettype[x] );
+				//widgets.plugin[ x ] = getWidget( widgets.name[ x ], widgets.widgettype[ x ] );
+				widgets.category[ x ] = getWidgetCategory( widgets.name[ x ], widgets.widgettype[ x ] );
+				widgets.icon[ x ] = getWidgetIcon( widgets.name[ x ], widgets.widgettype[ x ] );
 			}
 			catch(any e){
-				log.error("Error creating widget plugin: #widgets.name[x]#",e);
+				log.error("Error creating widget plugin: #widgets.name[ x ]#",e);
 			}
 		}
 		// add module widgets
@@ -168,10 +172,10 @@ component accessors="true" singleton threadSafe{
 			querySetCell( widgets, "module", moduleName );
 
 			try{
-				var mplugin = getWidget( name=widget, type="module" );
+				//var mplugin = getWidget( name=widget, type="module" );
 				var category = getWidgetCategory( name=widget, type="module" );
 				var icon = getWidgetIcon( name=widget, type="module" );
-				querySetCell( widgets, "plugin", mplugin );
+				//querySetCell( widgets, "plugin", mplugin );
 				querySetCell( widgets, "category", category );
 				querySetCell( widgets, "icon", icon );
 			}
@@ -189,10 +193,10 @@ component accessors="true" singleton threadSafe{
 			querySetCell( widgets, "widgettype", "Layout" );
 
 			try{
-				var lplugin = getWidget( name=widget, type="layout" );
+				//var lplugin = getWidget( name=widget, type="layout" );
 				var category = getWidgetCategory( name=widget, type="layout" );
 				var icon = getWidgetIcon( name=widget, type="layout" );
-				querySetCell( widgets, "plugin", lplugin );
+				//querySetCell( widgets, "plugin", lplugin );
 				querySetCell( widgets, "category", category );
 				querySetCell( widgets, "icon", icon );
 			}
@@ -205,6 +209,8 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Get a widget by name
+	* @name
+	* @type This can be one of the following: core, layout, module
 	*/
 	any function getWidget( required name, required string type="core" ){
 		var path = "";
@@ -220,10 +226,15 @@ component accessors="true" singleton threadSafe{
 				break;
 		}
 		if( len( path ) ) {
-			return coldbox.getPlugin(plugin=path, customPlugin=true);
+			return coldbox.getPlugin( plugin=path, customPlugin=true );
 		}
 	}
 
+	/**
+	* Get a widget icon representation
+	* @name The name of the widget
+	* @type This can be one of the following: core, layout, module
+	*/
 	string function getWidgetIcon( required name, required string type="core" ) {
 		var widget = getWidget( argumentCollection=arguments );
 		var icon = widget.getIcon();
@@ -243,6 +254,11 @@ component accessors="true" singleton threadSafe{
 		return icon;
 	}
 
+	/**
+	* Get a widget category
+	* @name The name of the widget
+	* @type This can be one of the following: core, layout, module
+	*/
 	string function getWidgetCategory( required name, required string type="core" ) {
 		var widget = getWidget( argumentCollection=arguments );
 		var category = widget.getCategory();

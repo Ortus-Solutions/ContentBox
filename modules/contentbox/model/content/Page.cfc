@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -22,17 +22,53 @@ limitations under the License.
 ********************************************************************************
 * I am a cms page entity that totally rocks
 */
-component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" cachename="cbPage" cacheuse="read-write" extends="BaseContent" joinColumn="contentID" discriminatorValue="Page"{
+component 	persistent="true" 
+			entityname="cbPage" 
+			table="cb_page" 
+			batchsize="25" 
+			cachename="cbPage" 
+			cacheuse="read-write" 
+			extends="BaseContent" 
+			joinColumn="contentID" 
+			discriminatorValue="Page"{
 
 	// Properties
-	property name="layout"			notnull="false" length="200" default="";
-	property name="mobileLayout"	notnull="false" length="200" default="";
-	property name="order"			notnull="false" ormtype="integer" default="0";
-	property name="showInMenu" 		notnull="true"  ormtype="boolean" default="true" index="idx_showInMenu";
-	property name="excerpt" 		notnull="false" ormtype="text" default="" length="8000";
+	property 	name="layout"			
+				notnull="false" 	
+				length="200" 
+				default="";
+	
+	property 	name="mobileLayout"	
+				notnull="false" 	
+				length="200" 
+				default="";
+	
+	property 	name="order"			
+				notnull="false" 	
+				ormtype="integer" 
+				default="0";
+	
+	property 	name="showInMenu" 		
+				notnull="true"  	
+				ormtype="boolean" 
+				default="true" 
+				index="idx_showInMenu";
+	
+	property 	name="excerpt" 		
+				notnull="false" 	
+				ormtype="text" 
+				default="" 
+				length="8000";
+	
+	property 	name="SSLOnly" 		
+				notnull="true"  	
+				ormtype="boolean" 
+				default="false" 
+				index="idx_ssl";
 	
 	// Non-Persistable Properties
-	property name="renderedExcerpt" persistent="false";
+	property 	name="renderedExcerpt" 
+			 	persistent="false";
 
 	/************************************** CONSTRUCTOR *********************************************/
 
@@ -53,6 +89,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 		contentType		= "Page";
 		order 			= 0;
 		showInMenu 		= true;
+		SSLOnly			= false;
 		
 		// INHERITANCE LAYOUT STATIC
 		LAYOUT_INHERITANCE_KEY = "-inherit-";
@@ -120,7 +157,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	* Get the layout or if empty the default convention of "pages"
 	*/
 	function getLayoutWithDefault(){
-		if( len(getLayout()) ){ return getLayout(); }
+		if( len( getLayout() ) ){ return getLayout(); }
 		return "pages";
 	}
 	
@@ -159,12 +196,14 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
 	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
 	*/
-	BaseContent function prepareForClone(required any author, 
-										 required any original, 
-										 required any originalService, 
-										 required boolean publish,
-										 required any originalSlugRoot,
-										 required any newSlugRoot){
+	BaseContent function prepareForClone(
+		required any author, 
+		required any original, 
+		required any originalService, 
+		required boolean publish,
+		required any originalSlugRoot,
+		required any newSlugRoot
+	){
 		// do layout
 		setLayout( arguments.original.getLayout() );
 		// do excerpts
@@ -172,7 +211,7 @@ component persistent="true" entityname="cbPage" table="cb_page" batchsize="25" c
 			setExcerpt( arguments.original.getExcerpt() );
 		}
 		// do core
-		return super.prepareForClone(argumentCollection=arguments);
+		return super.prepareForClone( argumentCollection=arguments );
 	}
 
 	/*

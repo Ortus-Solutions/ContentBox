@@ -303,7 +303,7 @@ Purpose:    Utlitity class for loading Java Classes
 	</cfscript>
 
 	<cfif NOT StructKeyExists(server, key)>
-    	<cflock name="javaloader.networkclassloader" throwontimeout="true" timeout="60">
+    	<cflock name="javaloader.#application.applicationName#.networkclassloader" throwontimeout="true" timeout="60">
     	<cfscript>
     		if(NOT StructKeyExists(server, key))
     		{

@@ -14,6 +14,9 @@ $(document).ready(function() {
 	<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 	$("##latestSnapshot").load( '#event.buildLink( prc.xehLatestSnapshot )#' );
 	</cfif>
+	<cfif prc.oAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
+		$("##latestLogins").load( '#event.buildLink( prc.xehLatestLogins )#' );		
+	</cfif>
 	$("##dashboardTabs a:first").tab( 'show' )
 });
 <cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>

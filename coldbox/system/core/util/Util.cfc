@@ -71,7 +71,7 @@ Description :
 			var engine = "ADOBE";
 
 			if ( server.coldfusion.productname eq "Railo" ){ engine = "RAILO"; }
-			if ( server.coldfusion.productname eq "BlueDragon" ){ engine = "BD"; }
+			if ( server.coldfusion.productname eq "Lucee" ){ engine = "Lucee"; }
 
 			switch(engine){
 				case "ADOBE"	: {
@@ -85,11 +85,8 @@ Description :
 					return getPageContext().hasFamily();
 				}
 
-				case "BD"		: {
-					if( findNoCase("cfthread",createObject("java","java.lang.Thread").currentThread().getThreadGroup().getName()) ){
-						return true;
-					}
-					break;
+				case "Lucee"		: {
+					return getPageContext().hasFamily();
 				}
 			} //end switch statement.
 

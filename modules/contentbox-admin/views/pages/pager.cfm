@@ -48,7 +48,7 @@
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
-				<td class="center"><span class="badge badge-info">#page.getHits()#</span></td>
+				<td class="center"><span class="badge badge-info">#page.getNumberOfHits()#</span></td>
 				<td class="center">
 					<!--- Page Actions --->
 					<div class="btn-group">

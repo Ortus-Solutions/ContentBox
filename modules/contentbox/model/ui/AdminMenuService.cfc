@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -200,6 +200,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehSettings			= "#this.ADMIN_ENTRYPOINT#.settings";
 		prc.xehSecurityRules	= "#this.ADMIN_ENTRYPOINT#.securityrules";
 		prc.xehRawSettings		= "#this.ADMIN_ENTRYPOINT#.settings.raw";
+		prc.xehAuthLogs			= "#this.ADMIN_ENTRYPOINT#.settings.authLogs";
 		prc.xehEmailTemplates   = "#this.ADMIN_ENTRYPOINT#.emailtemplates";
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		
@@ -214,7 +215,7 @@ component accessors="true" threadSafe singleton{
 
 		// Content
 		addTopMenu( name=this.CONTENT, label="<i class='icon-pencil icon-large'></i> Content" )
-			.addSubMenu( name="Pages", label="Pages", href="#event.buildLink(prc.xehPages)#", permissions="PAGES_ADMIN,PAGES_EDITOR" )
+			.addSubMenu( name="Pages", label="Sitemap", href="#event.buildLink(prc.xehPages)#", permissions="PAGES_ADMIN,PAGES_EDITOR" )
 			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href="#event.buildLink(prc.xehEntries)#", permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
 			.addSubMenu( name="contentStore", label="Content Store", href="#event.buildLink(prc.xehContentStore)#", permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
 			.addSubMenu( name="Categories", label="Categories", href="#event.buildLink(prc.xehCategories)#", permissions="CATEGORIES_ADMIN" )
@@ -253,7 +254,9 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( name="Settings", label="Settings", href="#event.buildLink(prc.xehSettings)#", data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
 			.addSubMenu( name="SecurityRules", label="Security Rules", href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN" )
 			.addSubMenu( name="EmailTemplates", label="Email Templates", href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN" )
-			.addSubMenu( name="GeekSettings", label="Geek Settings", href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS" );
+			.addSubMenu( name="GeekSettings", label="Geek Settings", href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS" )
+			.addSubMenu( name="AuthLogs", label="Auth Logs", href="#event.buildLink(prc.xehAuthLogs)#", permissions="SYSTEM_AUTH_LOGS" );
+		
 		// STATS
 		addTopMenu( name=this.STATS, label="<i class='icon-bar-chart icon-large'></i> Stats" )
 			.addSubMenu( name="Subscribers", label="Subscribers", href="#event.buildLink( prc.xehSubscribers )#", title="View Subscribers" );

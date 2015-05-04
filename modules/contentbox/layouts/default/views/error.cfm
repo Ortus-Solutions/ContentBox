@@ -16,7 +16,7 @@
 		#prc.exception.message# #prc.exception.detail#
 	</div>
 	
-	<cfif getDebugMode()>
+	<cfif controller.getSetting( 'environment' ) eq "development" >
 	<div class="contentBar">
 		<strong>More Information:</strong> <br/>
 		#prc.exception.stackTrace#

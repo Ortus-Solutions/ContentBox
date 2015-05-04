@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -22,10 +22,21 @@ limitations under the License.
 ********************************************************************************
 * I represent a content value store
 */
-component persistent="true" entityname="cbContentStore" table="cb_contentStore" batchsize="25" cachename="cbContentStore" cacheuse="read-write" extends="BaseContent" joinColumn="contentID" discriminatorValue="ContentStore"{
+component 	persistent="true" 
+			entityname="cbContentStore" 
+			table="cb_contentStore" 
+			batchsize="25" 
+			cachename="cbContentStore" 
+			cacheuse="read-write" 
+			extends="BaseContent" 
+			joinColumn="contentID" 
+			discriminatorValue="ContentStore"{
 
 	// Properties
-	property name="description"				notnull="false" length="500" default="";
+	property name="description"				
+			 notnull="false" 
+			 length="500" 
+			 default="";
 	
 	/************************************** CONSTRUCTOR *********************************************/
 
@@ -78,12 +89,14 @@ component persistent="true" entityname="cbContentStore" table="cb_contentStore" 
 	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
 	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
 	*/
-	BaseContent function prepareForClone(required any author, 
-										 required any original, 
-										 required any originalService, 
-										 required boolean publish,
-										 required any originalSlugRoot,
-										 required any newSlugRoot){
+	BaseContent function prepareForClone(
+		required any author, 
+		required any original, 
+		required any originalService, 
+		required boolean publish,
+		required any originalSlugRoot,
+		required any newSlugRoot
+	){
 		// description
 		setDescription( arguments.original.getDescription() );
 		// do core

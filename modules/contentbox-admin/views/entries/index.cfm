@@ -40,7 +40,7 @@
 						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
-								Global Actions <span class="caret"></span>
+								Bulk Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
 					    		<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
@@ -61,6 +61,7 @@
 									</ul>
 								</li>
 								</cfif>
+								<li><a href="javascript:resetBulkHits()"><i class="icon-refresh"></i> Reset Hits Selected</a></li>
 								<li><a href="javascript:contentShowAll()"><i class="icon-list"></i> Show All</a></li>
 					    	</ul>
 					    </div>
@@ -97,8 +98,16 @@
 				#html.startForm(name="entryFilterForm", action=prc.xehEntrySearch)#
 				<!--- Authors --->
 				<label for="fAuthors">Authors: </label>
-				<select name="fAuthors" id="fAuthors" class="input-block-level">
+				<select name="fAuthors" id="fAuthors" class="input-block-level" title="Filter on who edited content">
 					<option value="all" selected="selected">All Authors</option>
+					<cfloop array="#prc.authors#" index="author">
+					<option value="#author.getAuthorID()#">#author.getName()#</option>
+					</cfloop>
+				</select>
+				<!--- Creators --->
+				<label for="fCreators">Creators: </label>
+				<select name="fCreators" id="fCreators" class="input-block-level" title="Filter on who created content">
+					<option value="all" selected="selected">All Creators</option>
 					<cfloop array="#prc.authors#" index="author">
 					<option value="#author.getAuthorID()#">#author.getName()#</option>
 					</cfloop>

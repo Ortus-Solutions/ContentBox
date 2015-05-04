@@ -27,19 +27,19 @@
 			</div>
 			<!--- Body --->
 			<div class="body">
-	
+
 				<!--- MessageBox --->
 				#getPlugin("MessageBox").renderit()#
-	
+
 				<!--- id --->
 				#html.hiddenField(name="contentID",bind=prc.entry)#
 				#html.hiddenField(name="contentType",bind=prc.entry)#
 				#html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
-	
+
 				<!--- title --->
 				#html.textfield(label="Title:",name="title",bind=prc.entry,maxlength="100",required="required",title="The title for this entry",
 								class="textfield width98",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-				
+
 				<!--- slug --->
 				<div class="control-group">
 	                <label for="slug" class="control-label">Permalink:
@@ -49,7 +49,7 @@
 					<div class="controls">
 	                	<div id='slugCheckErrors'></div>
 						<div class="input-append" style="display:inline">
-		                	#html.textfield(name="slug", bind=prc.entry, maxlength="100", class="textfield width94", 
+		                	#html.textfield(name="slug", bind=prc.entry, maxlength="100", class="textfield width94",
 											title="The URL permalink for this entry", disabled="#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'true' : 'false'#")#
 							<a title="" class="btn" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink">
 								<i id="togglePermalink" class="icon-#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'lock' : 'unlock'#"></i>
@@ -60,7 +60,7 @@
 
 				<!---ContentToolBar --->
 				<div id="contentToolBar">
-					
+
 					<!--- editor selector --->
 					<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
 					<div class="btn-group">
@@ -96,22 +96,22 @@
 						</a>
 					</div>
 				</div>
-				
+
 				<!--- content --->
 				#html.textarea(name="content", value=htmlEditFormat( prc.entry.getContent() ), rows="25", class="width98 content")#
 				<!--- excerpt --->
 				#html.textarea(label="Excerpt:", name="excerpt", bind=prc.entry, rows="10", class="width98")#
-	
+
 				<!--- Custom Fields --->
 				<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
 				<cfset mArgs = {fieldType="Entry", customFields=prc.entry.getCustomFields()}>
 				#renderView(view="_tags/customFields",args=mArgs)#
-	
+
 				<!--- Event --->
 				#announceInterception("cbadmin_entryEditorInBody")#
 			</div>
 		</div>
-	
+
 		<!---Loaded Panels--->
 		<cfif prc.entry.isLoaded()>
 			<!--- Versions --->
@@ -124,7 +124,7 @@
 					#prc.versionsViewlet#
 				</div>
 			</div>
-	
+
 			<!--- Entry Comments --->
 			<div class="box">
 				<cfif structKeyExists(prc,"commentsViewlet")>
@@ -138,7 +138,7 @@
 				</cfif>
 			</div>
 		</cfif>
-	
+
 		<!--- Event --->
 		#announceInterception("cbadmin_entryEditorFooter")#
 	</div>
@@ -155,13 +155,13 @@
 				<!--- Publish Info --->
 				#html.startFieldset(legend='<i class="icon-calendar"></i> Publishing',
 					class="#prc.entry.getIsPublished()?'':'selected'#")#
-	
+
 					<!--- Published? --->
 					<cfif prc.entry.isLoaded()>
 					<label class="inline">Status: </label>
 					<cfif !prc.entry.getIsPublished()><div class="textRed inline">Draft!</div><cfelse>Published</cfif>
 					</cfif>
-	
+
 					<!--- is Published --->
 					#html.hiddenField(name="isPublished",value=true)#
 					<!--- publish date --->
@@ -183,10 +183,10 @@
         					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.entry.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
                         </div>
-					</div>	
+					</div>
 					<!--- Changelog --->
 					#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-	
+
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
@@ -195,20 +195,20 @@
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
 						</div>
 					</div>
-	
+
 					<!--- Loader --->
 					<div class="loaders" id="uploadBarLoader">
 						<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 						<div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
 					</div>
-	
+
 				#html.endFieldSet()#
-	
+
 				<!--- Accordion --->
 				<div id="accordion" class="accordion" data-stateful="entry-sidebar">
-				    
+
                     <!---Begin Page Info--->
-					<cfif prc.entry.isLoaded()>	
+					<cfif prc.entry.isLoaded()>
 				    <div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
@@ -258,7 +258,7 @@
         							<tr>
         								<th class="textRight">Views:</th>
         								<td>
-        									#prc.entry.getHits()#
+        									#prc.entry.getNumberOfHits()#
         								</td>
         							</tr>
         							<tr>
@@ -273,13 +273,13 @@
                   	</div>
                     </cfif>
                     <!---End Entry Info--->
-					
+
                     <!---Begin Related Content--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
                     <div class="accordion-group">
                         <div class="accordion-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                <i class="icon-sitemap icon-large"></i> Related Content                                
+                                <i class="icon-sitemap icon-large"></i> Related Content
                             </a>
 
                         </div>
@@ -300,7 +300,7 @@
                     <div class="accordion-group">
                         <div class="accordion-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                <i class="icon-link icon-large"></i> Linked Content                                
+                                <i class="icon-link icon-large"></i> Linked Content
                             </a>
 
                         </div>
@@ -334,14 +334,18 @@
 									</cfloop>
 								</select>
 								</cfif>
-								
+
 								<!--- Allow Comments --->
         						<cfif prc.cbSettings.cb_comments_enabled>
-        						<i class="icon-comments icon-large"></i> 
+        						<i class="icon-comments icon-large"></i>
         						#html.label(field="allowComments",content="Allow Comments:",class="inline")#
         						#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.entry.getAllowComments()), class="input-block-level")#
         						</cfif>
-        	
+
+        						<!--- Show in Search --->
+        						<i class="icon-search icon-large"></i>
+        						#html.select(name="showInSearch",label="Show In Search:",labelClass="inline",class="input-block-level",options="Yes,No",selectedValue=yesNoFormat(prc.entry.getShowInSearch()))#
+
         						<!--- Password Protection --->
         						<label for="passwordProtection"><i class="icon-lock icon-large"></i> Password Protection:</label>
         						#html.textfield(name="passwordProtection",bind=prc.entry,title="Password protect your entry, leave empty for none", class="input-block-level", maxlength="100")#
@@ -350,7 +354,7 @@
                   	</div>
                     </cfif>
                     <!---End Modfiers--->
-						
+
 					<!---Begin Cache Settings--->
 					<cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
                     <div class="accordion-group">
@@ -372,7 +376,7 @@
                   	</div>
                     </cfif>
                     <!---End Cache Settings--->
-						
+
 					<!---Begin Categories--->
 					<cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
                     <div class="accordion-group">
@@ -392,7 +396,7 @@
         							</label>
         						</cfloop>
         						</div>
-        	
+
         						<!--- New Categories --->
         						#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="input-block-level")#
 							</div>
@@ -400,9 +404,9 @@
                   	</div>
                     </cfif>
                     <!---End Categories--->
-						
+
 					<!---Begin HTML Attributes--->
-					<cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>	
+					<cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>
                     <div class="accordion-group">
                     	<div class="accordion-heading">
                       		<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##htmlattributes">
@@ -417,13 +421,13 @@
                     	</div>
                   	</div>
                     </cfif>
-                    <!---End HTML Attributes--->	
-                    
+                    <!---End HTML Attributes--->
+
                     <!--- Event --->
-					#announceInterception("cbadmin_entryEditorSidebarAccordion")#			
-				</div>	
+					#announceInterception("cbadmin_entryEditorSidebarAccordion")#
+				</div>
 				<!--- End Accordion --->
-	
+
 				<!--- Event --->
 				#announceInterception("cbadmin_entryEditorSidebar")#
 			</div>

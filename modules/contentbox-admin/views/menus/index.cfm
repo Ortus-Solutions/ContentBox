@@ -30,7 +30,7 @@
                             <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
                                 <div class="btn-group">
                                     <a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
-                                        Global Actions <span class="caret"></span>
+                                        Bulk Actions <span class="caret"></span>
                                     </a>
                                     <ul class="dropdown-menu">
                                         <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
