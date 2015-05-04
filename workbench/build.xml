@@ -224,6 +224,7 @@
  		<!-- unzip ContentBox war into it -->
  		<unzip src="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" dest="${dir.build}/war" overwrite="true" />
  		<unzip src="${dir.build}/war/contentbox-${contentbox.version}.war" dest="${dir.build}/express/webapps/ROOT" overwrite="true" />
+ 		
  		<!-- Remove DSN creator link For Express Edition -->
 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
 				 value="" 
@@ -232,17 +233,21 @@
 				 encoding="UTF-8"/>
 		<!-- Remove DSN Creator Module for Express Edition -->
 		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
- 		<!-- Create embedded datasource in Application.cfc -->
+ 		
+ 		<!-- Create embedded datasource in Application.cfc 
  		<loadfile property="express.appdsn" srcFile="${dir.resources}/express-dsn.txt" />
  		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
  				 value="${express.appdsn}" 
  				 summary="true" 
- 				 token='this.datasource = "contentbox";' 
- 				 encoding="UTF-8"/>
+ 				 token='this.datasource = "contentbox";'
+ 				 encoding="UTF-8"/>-->
  				
  		<!-- Custom Server Config -->
  		<copy todir="${dir.build}/express" overwrite="true" encoding="UTF-8">
  			<fileset dir="${dir.resources}/express" />
+ 		</copy>
+ 		<copy todir="${dir.build}/express/webapps/ROOT/WEB-INF/lucee" overwrite="true" encoding="UTF-8">
+ 			<fileset file="${dir.resources}/lucee-web.xml.cfm" />
  		</copy>
  		<!-- add execution perms -->
  		<chmod dir="${dir.build}/express/bin" perm="ugo+rx" includes="*"/>
