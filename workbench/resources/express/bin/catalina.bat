@@ -201,7 +201,7 @@ set LOGGING_MANAGER=-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogMa
 set JAVA_OPTS=%JAVA_OPTS% %LOGGING_MANAGER%
 
 rem CONTENTBOX ADDITIONS
-set JAVA_OPTS=%JAVA_OPTS% -Xmx512m -Xmx512m -XX:MaxPermSize=192m -XX:PermSize=192m -javaagent:$CATALINA_BASE/webapps/ROOT/WEB-INF/lib/railo-inst.jar
+set JAVA_OPTS=%JAVA_OPTS% -Xmx512m -Xmx512m -XX:MaxPermSize=192m -XX:PermSize=192m -javaagent:%CATALINA_BASE%/webapps/ROOT/WEB-INF/lib/lucee-inst.jar
 
 rem ----- Execute The Requested Command ---------------------------------------
 

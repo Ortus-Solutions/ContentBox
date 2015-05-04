@@ -18,7 +18,7 @@ Updates
 			 hint="plugin for CF8 built in captcha functionality" 
 			 extends="coldbox.system.Plugin" 
 			 output="false"
-			 cache="true">
+			 singleton>
   
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    

@@ -27,3 +27,4 @@ contentbox-akismet
 workbench/build-contentbox/**
 workbench/dependencies
 Icon?
+workbench/build.number

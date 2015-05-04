@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -282,7 +282,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		var results 		= {error=true, logInfo=""};
 
 		// Upload the module zip
-		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream,application/x-zip-compressed", "overwrite");
+		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream,application/x-zip-compressed,application/zip", "overwrite");
 
 		// Unzip File?
 		if ( listLast(fileResults.clientFile, ".") eq "zip" ){

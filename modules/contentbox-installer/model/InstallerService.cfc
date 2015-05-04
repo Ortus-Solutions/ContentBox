@@ -114,6 +114,7 @@ component accessors="true"{
 			"SYSTEM_TAB" = "Access to the ContentBox System tools",
 			"SYSTEM_SAVE_CONFIGURATION" = "Ability to update global configuration data",
 			"SYSTEM_RAW_SETTINGS" = "Access to the ContentBox raw geek settings panel",
+			"SYSTEM_AUTH_LOGS"	= "Access to the system auth logs",
 			"TOOLS_IMPORT" = "Ability to import data into ContentBox",
 			"ROLES_ADMIN" = "Ability to manage roles, default is view only",
 			"PERMISSIONS_ADMIN" = "Ability to manage permissions, default is view only",
@@ -230,17 +231,29 @@ component accessors="true"{
 			"cb_salt" = hash( createUUID() & getTickCount() & now(), "SHA-512" ),
 
 			// Site Settings
-			"cb_site_name" = setup.getSiteName(),
-			"cb_site_email" = setup.getSiteEmail(),
-			"cb_site_tagline" = setup.getSiteTagLine(),
-			"cb_site_description" = setup.getSiteDescription(),
-			"cb_site_keywords" = setup.getSiteKeyWords(),
-			"cb_site_outgoingEmail" = setup.getSiteOutgoingEmail(),
-			"cb_site_homepage" = "cbBlog",
-			"cb_site_disable_blog" = "false",
-			"cb_site_blog_entrypoint" = "blog",
-			"cb_site_ssl" = "false",
-			"cb_site_poweredby" = "true",
+			"cb_site_name" 				= setup.getSiteName(),
+			"cb_site_email" 			= setup.getSiteEmail(),
+			"cb_site_tagline" 			= setup.getSiteTagLine(),
+			"cb_site_description" 		= setup.getSiteDescription(),
+			"cb_site_keywords" 			= setup.getSiteKeyWords(),
+			"cb_site_outgoingEmail" 	= setup.getSiteOutgoingEmail(),
+			"cb_site_homepage" 			= "cbBlog",
+			"cb_site_disable_blog" 		= "false",
+			"cb_site_blog_entrypoint" 	= "blog",
+			"cb_site_ssl" 				= "false",
+			"cb_site_poweredby" 		= "true",
+
+			// Security Settings
+			"cb_security_login_blocker" 			= "true",
+			"cb_security_max_attempts"				= "5",
+			"cb_security_blocktime"					= "5",
+			"cb_security_max_auth_logs"				= "500",
+			"cb_security_latest_logins"				= "10",
+			"cb_security_rate_limiter"				= "true",
+			"cb_security_rate_limiter_count"		= "4",
+			"cb_security_rate_limiter_duration"		= "1",
+			"cb_security_rate_limiter_bots_only"	= "true",
+			"cb_security_rate_limiter_message"		= "<p>You are making too many requests too fast, please slow down and wait {duration} seconds</p>",
 
 			// Admin settings
 			"cb_admin_ssl" = "false",
@@ -306,6 +319,11 @@ component accessors="true"{
 			"cb_rss_cachingTimeout" = "60",
 			"cb_rss_cachingTimeoutIdle" = "15",
 			"cb_rss_cacheName" = "Template",
+			"cb_rss_title" = "RSS Feed by ContentBox",
+			"cb_rss_generator" = "ContentBox by Ortus Solutions",
+			"cb_rss_copyright" = "Ortus Solutions, Corp (www.ortussolutions.com)",
+			"cb_rss_description" = "ContentBox RSS Feed",
+			"cb_rss_webmaster" = "",
 
 			// Content Caching and options
 			"cb_content_caching" = "true",
@@ -317,6 +335,11 @@ component accessors="true"{
 			"cb_page_excerpts" = "true",
 			"cb_content_uiexport" = "true",
 			"cb_content_cachingHeader" = "true",
+
+			// Content Hit Tracking
+			"cb_content_hit_count" = "true",
+			"cb_content_hit_ignore_bots" = "false",
+			"cb_content_bot_regex" = "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby",			
 
 			// Global HTML
 			"cb_html_beforeHeadEnd" = "",

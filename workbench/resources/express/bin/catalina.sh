@@ -248,7 +248,7 @@ fi
 #JAVA_OPTS="$JAVA_OPTS -Dorg.apache.catalina.security.SecurityListener.UMASK=`umask`"
 
 #CONTENTBOX ADDITIONS
-JAVA_OPTS="$JAVA_OPTS -Xmx512m -Xmx512m -XX:MaxPermSize=192m -XX:PermSize=192m -javaagent:$CATALINA_BASE/webapps/ROOT/WEB-INF/lib/railo-inst.jar"
+JAVA_OPTS="$JAVA_OPTS -Xmx512m -Xmx512m -XX:MaxPermSize=192m -XX:PermSize=192m -javaagent:$CATALINA_BASE/webapps/ROOT/WEB-INF/lib/lucee-inst.jar"
 
 # ----- Execute The Requested Command -----------------------------------------
 

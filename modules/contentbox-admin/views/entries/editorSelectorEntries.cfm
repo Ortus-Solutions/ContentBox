@@ -28,8 +28,8 @@
 			</td>
 			<td class="center">
 				<div class="btn-group">
-				<button class="btn" onclick="return selectCBContent( '#entry.getSlug()#', '#entry.getTitle()#', 'entryssl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
-				<button class="btn" onclick="return selectCBContent( '#entry.getSlug()#','#entry.getTitle()#','entry' )" title="Link"><i class="icon-link icon-large"></i></button>
+				<button class="btn" onclick="return selectCBContent( '#JSStringFormat( entry.getSlug() )#', '#JSStringFormat( entry.getTitle() )#', 'entryssl' )" title="SSL Link"><i class="icon-lock icon-large"></i></button>
+				<button class="btn" onclick="return selectCBContent( '#JSStringFormat( entry.getSlug() )#','#JSStringFormat( entry.getTitle() )#','entry' )" title="Link"><i class="icon-link icon-large"></i></button>
 				</div>
 			</td>
 		</tr>

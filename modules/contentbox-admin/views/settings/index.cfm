@@ -23,6 +23,7 @@
     			<ul class="nav nav-tabs">
     				<li class="active"><a href="##site_options" data-toggle="tab"><i class="icon-cog icon-large"></i> Site Options</a></li>
     				<li><a href="##dashboard_options" data-toggle="tab"><i class="icon-desktop icon-large"></i> Admin Options</a></li>
+    				<li><a href="##security_options" data-toggle="tab"><i class="icon-shield icon-large"></i> Security Options</a></li>
     				<li><a href="##content_options" data-toggle="tab"><i class="icon-file-alt icon-large"></i> Content Options</a></li>
     				<li><a href="##editor_options" data-toggle="tab"><i class="icon-edit icon-large"></i> Editor Options</a></li>
     				<li><a href="##mediamanager" data-toggle="tab"><i class="icon-th icon-large"></i> Media Manager</a></li>
@@ -71,15 +72,6 @@
             							<option value="#thispage.getSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getSlug()>selected="selected"</cfif>>#thisPage.getSlug()#</option>
             							</cfloop>
             						</select>
-                                </div>
-                            </div>	
-    						<!--- Site SSL --->
-							<div class="control-group">
-                                #html.label(class="control-label",field="cb_site_ssl",content="Site Force SSL (Secure Sockets Layer):")#
-                                <div class="controls">
-                                    <small>You can enable SSL encryption for the entire site.</small><br/>
-            						#html.radioButton(name="cb_site_ssl",checked=prc.cbSettings.cb_site_ssl,value=true)# Yes
-            						#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
                                 </div>
                             </div>	
 
@@ -147,15 +139,6 @@
     				<div class="tab-pane" id="dashboard_options">
     					<fieldset>
     						<legend><i class="icon-desktop icon-large"></i> <strong>Admin Options</strong></legend>
-    					 	<!--- Admin SSL --->
-							<div class="control-group">
-                                #html.label(class="control-label",field="cb_admin_ssl",content="Admin Force SSL (Secure Sockets Layer):")#
-                                <div class="controls">
-                                    <small>You can enable SSL encryption for the administrator module.</small><br/>
-    								#html.radioButton(name="cb_admin_ssl",checked=prc.cbSettings.cb_admin_ssl,value=true)# Yes
-    								#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
-                                </div>
-                            </div>
 							<!--- Default Themes --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_admin_theme">Default Admin Theme:</label>
@@ -240,6 +223,19 @@
             						</select>
                                 </div>
                             </div>
+
+                            <!--- Reecent Entries --->
+							<div class="control-group">
+                                <label class="control-label" for="cb_security_latest_logins">Recent Logins Count:</label>
+                                <div class="controls">
+                                    <small>The number of entries to show on the blog before paging is done.</small><br/>
+                					<select name="cb_security_latest_logins" id="cb_security_latest_logins">
+                						<cfloop from="5" to="50" step="5" index="i">
+                							<option value="#i#" <cfif i eq prc.cbSettings.cb_security_latest_logins>selected="selected"</cfif>>#i#</option>
+                						</cfloop>
+                					</select>
+                                </div>
+                            </div>
     					</fieldset>
     					<fieldset>
         					<legend><i class="icon-copy icon-large"></i>  Paging Options</legend>
@@ -294,7 +290,153 @@
                             </div>
     					</fieldset>
 					</div>
-    				
+
+					<!--- ********************************************************************* --->
+                    <!---                           SECURITY OPTIONS                                --->
+                    <!--- ********************************************************************* --->
+                    
+    				<div class="tab-pane active" id="security_options">
+    					<fieldset>
+    					<legend><i class="icon-signin icon-large"></i> <strong>Login Tracker</strong></legend>
+    					
+    					<!--- Login Blocker --->
+						<div class="control-group">
+                            #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:")#
+                            <div class="controls">
+                                <small>When enabled, all logins attempts will be tracked and blocking is enabled if too many attempts occur within a certain timespan.</small><br/>
+        						#html.radioButton(name="cb_security_login_blocker",checked=prc.cbSettings.cb_security_login_blocker,value=true)# Yes
+        						#html.radioButton(name="cb_security_login_blocker",checked=not prc.cbSettings.cb_security_login_blocker,value=false)# No
+                            </div>
+                        </div>
+
+                        <!--- Max Attempts --->
+						<div class="control-group">
+                            <label class="control-label" for="cb_security_max_attempts">Max Invalid Attempts To Block:</label>
+                            <div class="controls">
+                                <small>The number of invalid login attempts before a user is blocked.</small><br/>
+        						<select name="cb_security_max_attempts" id="cb_security_max_attempts">
+        							<cfloop from="5" to="50" step="5" index="i">
+        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_attempts>selected="selected"</cfif>>#i#</option>
+        							</cfloop>
+        						</select>
+                            </div>
+                        </div>
+
+                        <!--- Block Time--->
+						<div class="control-group">
+                            <label class="control-label" for="cb_security_blocktime">Minutes To Block:</label>
+                            <div class="controls">
+                                <small>The number of minutes a user will be blocked if max attempts is triggered.</small><br/>
+        						<select name="cb_security_blocktime" id="cb_security_blocktime">
+        							<cfloop from="5" to="60" step="5" index="i">
+        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_blocktime>selected="selected"</cfif>>#i#</option>
+        							</cfloop>
+        						</select>
+                            </div>
+                        </div>
+
+                        <!--- Max Auth Logs --->
+						<div class="control-group">
+                            <label class="control-label" for="cb_security_max_auth_logs">Max Auth Logs:</label>
+                            <div class="controls">
+                                <small>The number of log entries to keep before rotating auth logs in the database.</small><br/>
+        						<select name="cb_security_max_auth_logs" id="cb_security_max_auth_logs">
+        							<cfloop from="100" to="2000" step="100" index="i">
+        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_auth_logs>selected="selected"</cfif>>#i#</option>
+        							</cfloop>
+        							<option value="" <cfif prc.cbSettings.cb_security_max_auth_logs eq "">selected="selected"</cfif>>Unlimited</option>
+        						</select>
+                            </div>
+                        </div>
+
+    					</fieldset>
+
+    					<fieldset>
+    					<legend><i class="icon-filter icon-large"></i> <strong>Rate Limiter</strong></legend>
+    						<!--- Rate Limiter --->
+							<div class="control-group">
+	                            #html.label(class="control-label",field="cb_security_rate_limiter",content="Enable Rate Limiter:")#
+	                            <div class="controls">
+	                                <small>When enabled, it will keep track of requests and apply rate limiting according to count and duration settings according to client IP Address.</small><br/>
+	        						#html.radioButton(name="cb_security_rate_limiter",checked=prc.cbSettings.cb_security_rate_limiter,value=true)# Yes
+	        						#html.radioButton(name="cb_security_rate_limiter",checked=not prc.cbSettings.cb_security_rate_limiter,value=false)# No
+	                            </div>
+	                        </div>
+
+	                        <!--- Bot Limiter --->
+							<div class="control-group">
+	                            #html.label(class="control-label",field="cb_security_rate_limiter_bots_only",content="Enable For Automated Requets Only:")#
+	                            <div class="controls">
+	                                <small>When enabled, it will apply rate limiting only for cookie-less requests. If disabled, it will limit ALL requests, including "legit" user requests. Usually, automated scripts and DOS attacks have no cookies enabled.</small><br/>
+	        						#html.radioButton(name="cb_security_rate_limiter_bots_only",checked=prc.cbSettings.cb_security_rate_limiter_bots_only,value=true)# Yes
+	        						#html.radioButton(name="cb_security_rate_limiter_bots_only",checked=not prc.cbSettings.cb_security_rate_limiter_bots_only,value=false)# No
+	                            </div>
+	                        </div>
+
+	                        <!--- Limiter Count --->
+	                        <div class="control-group">
+		                        <label class="control-label" for="cb_security_rate_limiter_count">Limiter Count:</label>
+	                            <div class="controls">
+	                                <small>Throttle requests made more than this count in the duration specified.</small><br/>
+	        						<select name="cb_security_rate_limiter_count" id="cb_security_rate_limiter_count">
+	        							<cfloop from="1" to="25" step="1" index="i">
+	        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_count>selected="selected"</cfif>>#i#</option>
+	        							</cfloop>
+	        						</select>
+	                            </div>
+                        	</div>
+
+                        	<!--- Limiter Duration --->
+	                        <div class="control-group">
+		                        <label class="control-label" for="cb_security_rate_limiter_duration">Limiter Duration (Seconds):</label>
+	                            <div class="controls">
+	                                <small>Throttle requests made more than the count above in the span of this setting in seconds.</small><br/>
+	        						<select name="cb_security_rate_limiter_duration" id="cb_security_rate_limiter_duration">
+	        							<cfloop from="1" to="25" step="1" index="i">
+	        								<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_duration>selected="selected"</cfif>>#i#</option>
+	        							</cfloop>
+	        						</select>
+	                            </div>
+                        	</div>
+
+	                        <!--- Bot Regex Matching --->
+                            <div class="control-group">
+                                #html.label( field="cb_security_rate_limiter_message", content="Limiter Message:")#
+                                <div class="controls">
+                                    <small>The message displayed to users when the rate limit has been exceeded. A 503 status header is also sent in the response.The <code>{duration}</code> element will be replaced with the setting at runtime.</small>
+                                    #html.textarea(
+                                    	name="cb_security_rate_limiter_message",
+                                    	value=prc.cbSettings.cb_security_rate_limiter_message,
+                                    	rows="4"
+                                    )#     
+                                </div>
+                            </div>  
+
+    					</fieldset>
+
+    					<fieldset>
+    					<legend><i class="icon-lock icon-large"></i> <strong>Secure Sockets Layer (SSL) Encryption</strong></legend>
+    						<!--- Admin SSL --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="cb_admin_ssl",content="Admin Force SSL:")#
+                                <div class="controls">
+                                    <small>You can force SSL encryption for the administrator module.</small><br/>
+    								#html.radioButton(name="cb_admin_ssl",checked=prc.cbSettings.cb_admin_ssl,value=true)# Yes
+    								#html.radioButton(name="cb_admin_ssl",checked=not prc.cbSettings.cb_admin_ssl,value=false)# No
+                                </div>
+                            </div>
+    						<!--- Site SSL --->
+							<div class="control-group">
+                                #html.label(class="control-label",field="cb_site_ssl",content="Public Site Force SSL:")#
+                                <div class="controls">
+                                    <small>You can force SSL encryption for the entire public site.</small><br/>
+            						#html.radioButton(name="cb_site_ssl",checked=prc.cbSettings.cb_site_ssl,value=true)# Yes
+            						#html.radioButton(name="cb_site_ssl",checked=not prc.cbSettings.cb_site_ssl,value=false)# No
+                                </div>
+                            </div>	
+
+    					</fieldset>
+    				</div>
                     <!--- ********************************************************************* --->
                     <!---                           CONTENT OPTIONS                             --->
                     <!--- ********************************************************************* --->
@@ -344,6 +486,37 @@
                                 </div>
                             </div>
     					</fieldset>
+
+                        <fieldset>
+                            <legend><i class="icon-bar-chart icon-large"></i>  Content Stats Tracking</legend>
+                            <!--- Hit Count --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_content_hit_count",content="Content Hit Count Tracking:")#
+                                <div class="controls">
+                                    <small>Enable/Disable content hit count tracking</small><br/>
+                                    #html.radioButton(name="cb_content_hit_count",checked=prc.cbSettings.cb_content_hit_count,value=true)# Yes
+                                    #html.radioButton(name="cb_content_hit_count",checked=not prc.cbSettings.cb_content_hit_count,value=false)# No
+                                </div>
+                            </div>
+                            <!--- Hit Count Ignore bots --->
+                            <div class="control-group">
+                                #html.label(class="control-label",field="cb_content_hit_ignore_bots",content="Ignore Bots Regex Matching:")#
+                                <div class="controls">
+                                    <small>If enabled, the bot regex matching is ignored and hit tracking for bots is allowed </small><br/>
+                                    #html.radioButton(name="cb_content_hit_ignore_bots",checked=prc.cbSettings.cb_content_hit_ignore_bots,value=true)# Yes
+                                    #html.radioButton(name="cb_content_hit_ignore_bots",checked=not prc.cbSettings.cb_content_hit_ignore_bots,value=false)# No
+                                </div>
+                            </div>
+                            <!--- Bot Regex Matching --->
+                            <div class="control-group">
+                                #html.label(field="cb_content_bot_regex",content="Bot Regex Matchers:")#
+                                <div class="controls">
+                                    <small>A carriage return list of regular expressions to match against browser user agents. If it matches a bot, the hit count is ignored</small>
+                                    #html.textarea(name="cb_content_bot_regex",value=prc.cbSettings.cb_content_bot_regex,rows="4",title="One regex per line please")#     
+                                </div>
+                            </div>  
+                        </fieldset>
+
     					<fieldset>
     						<legend><i class="icon-hdd icon-large"></i>  Content Caching</legend>
     
@@ -794,7 +967,49 @@
     				<div class="tab-pane" id="rss_options">
     					<fieldset>
     						<legend><i class="icon-rss icon-large"></i>  RSS Options</legend>
-    
+                            
+
+                            <!--- RSS title --->
+                             <div class="control-group">
+                                 #html.label(class="control-label",field="",content="Feed Title: ")#
+                                 <div class="controls">
+                                     <small>The title of the rss feeds</small></br>
+                                     #html.textField(name="cb_rss_title",required="required",value=prc.cbSettings.cb_rss_title,class="textfield width98",title="The title of the rss feed.")#
+                                 </div>
+                             </div>
+                             <!--- RSS feed generator --->
+                             <div class="control-group">
+                                 #html.label(class="control-label",field="",content="Feed Generator: ")#
+                                 <div class="controls">
+                                     <small>RSS feed generator</small></br>
+                                     #html.textField(name="cb_rss_generator",required="required",value=prc.cbSettings.cb_rss_generator,class="textfield width98",title="The generator of the rss feed.")#
+                                 </div>
+                             </div>
+                             <!--- RSS feed copyright --->
+                             <div class="control-group">
+                                 #html.label(class="control-label",field="",content="Feed Copyright: ")#
+                                 <div class="controls">
+                                     <small>RSS feed copyright</small></br>
+                                     #html.textField(name="cb_rss_copyright",required="required",value=prc.cbSettings.cb_rss_copyright,class="textfield width98",title="Copyright.")#
+                                 </div>
+                             </div>
+                             <!--- RSS feed description --->
+                             <div class="control-group">
+                                 #html.label(class="control-label",field="",content="Feed Description: ")#
+                                 <div class="controls">
+                                     <small>RSS feed description</small></br>
+                                     #html.textField(name="cb_rss_description",required="required",value=prc.cbSettings.cb_rss_description,class="textfield width98",title="RSS feed description.")#
+                                 </div>
+                             </div>
+                             <!--- RSS feed webmaster --->
+                             <div class="control-group">
+                                 #html.label(class="control-label",field="",content="Feed Webmaster: ")#
+                                 <div class="controls">
+                                     <small>RSS feed webmaster. Ex: myemail@mysite.com (Site Administrator)</small></br>
+                                     #html.textField(name="cb_rss_webmaster", value=prc.cbSettings.cb_rss_webmaster,class="textfield width98",title="RSS feed webmaster.")#
+                                 </div>
+                             </div>
+
     						<!--- Max RSS Entries --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_rss_maxEntries">Max RSS Content Items:</label>
@@ -807,6 +1022,7 @@
             						</select>
                                 </div>
                             </div>    
+
     						<!--- Max RSS Comments --->
 							<div class="control-group">
                                 <label class="control-label" for="cb_rss_maxComments">Max RSS Content Comments:</label>

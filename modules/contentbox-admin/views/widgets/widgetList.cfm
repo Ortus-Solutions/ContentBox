@@ -33,7 +33,13 @@
                     <!--- Widgets --->
                     <cfloop query="prc.widgets">
                         <cfscript>
-                            p = prc.widgets.plugin;
+                        	try{
+                            	p = prc.widgetService.getWidget( name=prc.widgets.name, type=prc.widgets.widgetType );
+                        	} catch( Any e ){
+                        		log.error( 'Error Building #prc.widgets.toString()#. #e.message# #e.detail#', e );
+                        		writeOutput( "<div class='alert alert-danger'>Error building '#prc.widgets.name#' widget: #e.message# #e.detail#</div>" );
+                        		continue;
+                        	}
                             widgetName = prc.widgets.name;
                             widgetSelector = prc.widgets.name;
                             category = prc.widgets.category;    

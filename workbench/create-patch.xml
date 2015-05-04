@@ -8,7 +8,8 @@
     </description>
 	
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
-	<property name="contentbox.version"	value="2.0.0"/>
+	<property name="groupID"			value="ortussolutions" />
+	<property name="contentbox.version"	value="2.1.0"/>
  	<property name="contentbox.slug"	value="contentbox"/>		
 	
 	<!-- Build Labels -->
@@ -41,12 +42,12 @@
 		<loadproperties srcFile="workbench/build.properties"/>
 		
 		<!-- build number for patch, use what normal build uses -->
-		<property file="workbench/build.number"/>
+		<property file="${be.exports}/build.number"/>
 		
 		<!-- Cleanup patches -->
 		<delete>
-			<fileset dir="${dir.exports}">
-				<include name="contentbox_patch*" />
+			<fileset dir="${dir.contentbox.exports}">
+				<include name="contentbox-patch*" />
 			</fileset>
 		</delete>
 		
@@ -65,7 +66,7 @@
 		<mkdir dir="${dir.patches}/${contentbox.version}/patch"/>
 		
 		<!-- Copy Update Template, just in case -->
-		<copy file="${dir.resources}/Update.cfc" tofile="${dir.patches}/${contentbox.version}/Update.cfc" overwrite="false" />
+		<copy file="${dir.resources}/Update.cfc" tofile="${dir.patches}/${contentbox.version}/Update.cfc" overwrite="false" encoding="UTF-8"/>
 		
 		<!-- Execute git patch -->
 		<exec executable="workbench/create-patch.sh">
@@ -98,7 +99,7 @@
 		</unzip>
 		
 		<!-- Replace Build Numbers For Patch -->
-		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true">
+		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 		  <fileset dir="${dir.patches}/${contentbox.version}/patch">
 		  	<include name="**/ModuleConfig.cfc" />
 		  </fileset>
@@ -111,14 +112,14 @@
 		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
 		
 		<!-- Zip Bundle with DB updates plus file deletes+additions -->
-		<zip destfile="${dir.exports}/contentbox_patch_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
+		<zip destfile="${dir.contentbox.exports}/contentbox-patch-${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
 			<patternset>
 		        <exclude name="patch/**"/>
 		    </patternset>
 		</zip>
 
 		<!-- Zip DB Updates Only Now -->
-		<zip destfile="${dir.exports}/contentbox_patch_db_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
+		<zip destfile="${dir.contentbox.exports}/contentbox-patch-db-${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
 			<include name="**/Update.cfc" />
 		</zip>
 		
@@ -129,11 +130,11 @@
 		<!-- Delete Patch unzipped Folder -->
 		<delete dir="${dir.patches}/${contentbox.version}/patch" />
 		<!-- Zip Bundle with DB updates plus file deletes+additions -->
-		<zip destfile="${dir.exports}/contentbox_patch_nocoldbox_${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}"></zip>
+		<zip destfile="${dir.contentbox.exports}/contentbox-patch-nocoldbox-${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}"></zip>
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5">
-			<fileset dir="${dir.exports}">
-				<include name="contentbox_patch_*.zip" />
+			<fileset dir="${dir.contentbox.exports}">
+				<include name="contentbox-patch-*.zip" />
 			</fileset>
 		</checksum>
 		

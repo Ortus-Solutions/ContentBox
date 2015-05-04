@@ -6,7 +6,7 @@
 			<!--- Body Header --->
 			<div class="header">
 				<i class="icon-file-alt icon-large"></i>
-				Pages
+				Sitemap
 			</div>
 			<!--- Body --->
 			<div class="body">
@@ -31,6 +31,10 @@
 						Comments are currently disabled site-wide!
 					</div>
 				</cfif>
+
+				<div class="lead">
+					<i class="icon-home"></i> Homepage: <strong>#prc.cbSettings.cb_site_homepage eq "cbBlog" ? 'Blog' : prc.cbSettings.cb_site_homepage#</strong>
+				</div>
 	
 				<!--- Content Bar --->
 				<div class="well well-small" id="contentBar">
@@ -40,7 +44,7 @@
 					    <cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
 						<div class="btn-group">
 					    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
-								Global Actions <span class="caret"></span>
+								Bulk Actions <span class="caret"></span>
 							</a>
 					    	<ul class="dropdown-menu">
 					    		<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
@@ -61,6 +65,7 @@
 									</ul>
 								</li>
 								</cfif>
+								<li><a href="javascript:resetBulkHits()"><i class="icon-refresh"></i> Reset Hits Selected</a></li>
 								<li><a href="javascript:contentShowAll()"><i class="icon-list"></i> Show All</a></li>
 					    	</ul>
 					    </div>
@@ -78,7 +83,7 @@
 						</div>
 					</div>
 				</div>
-	
+				
 				<!--- pages container --->
     			<div id="pagesTableContainer"><p class="text-center"><i id="pageLoader" class="icon-spinner icon-spin icon-large icon-4x"></i></p></div>
 	
@@ -99,8 +104,16 @@
 				#html.startForm(name="pageFilterForm", action=prc.xehPageSearch)#
 				<!--- Authors --->
 				<label for="fAuthors">Authors: </label>
-				<select name="fAuthors" id="fAuthors" class="input-block-level">
+				<select name="fAuthors" id="fAuthors" class="input-block-level" title="Filter on who edited content">
 					<option value="all" selected="selected">All Authors</option>
+					<cfloop array="#prc.authors#" index="author">
+					<option value="#author.getAuthorID()#">#author.getName()#</option>
+					</cfloop>
+				</select>
+				<!--- Creators --->
+				<label for="fCreators">Creators: </label>
+				<select name="fCreators" id="fCreators" class="input-block-level" title="Filter on who created content">
+					<option value="all" selected="selected">All Creators</option>
 					<cfloop array="#prc.authors#" index="author">
 					<option value="#author.getAuthorID()#">#author.getName()#</option>
 					</cfloop>
@@ -136,8 +149,6 @@
 			<div class="body">
 				<ul class="tipList unstyled">
 					<li><i class="icon-lightbulb icon-larg"></i> Right click on a row to activate quick look!</li>
-					<li><i class="icon-lightbulb icon-larg"></i> Sorting is only done within your paging window</li>
-					<li><i class="icon-lightbulb icon-larg"></i> Quick Filtering is only for viewed results</li>
 					<li><i class="icon-lightbulb icon-larg"></i> Cloning does not copy comments or version history</li>
 					<li><i class="icon-lightbulb icon-larg"></i> You can quickly order the pages by dragging the rows</li>
 				</ul>

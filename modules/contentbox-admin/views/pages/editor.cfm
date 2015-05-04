@@ -56,7 +56,7 @@
 
 			<!---ContentToolBar --->
 			<div id="contentToolBar">
-				
+
 				<!--- editor selector --->
 				<cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
 				<div class="btn-group">
@@ -92,14 +92,14 @@
 					</a>
 				</div>
 			</div>
-			
+
 			<!---Content TextArea --->
 			#html.textarea(name="content", value=htmleditFormat( prc.page.getContent() ), rows="25", class="width98 content")#
 			<cfif prc.cbSettings.cb_page_excerpts>
 				<!--- excerpt --->
 				#html.textarea(label="Excerpt:", name="excerpt", bind=prc.page, rows="10", class="width98")#
 			</cfif>
-			
+
 			<!--- Custom Fields --->
 			<!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
 			<cfset mArgs = {fieldType="Page", customFields=prc.page.getCustomFields()}>
@@ -137,6 +137,7 @@
 			</cfif>
 		</div>
 		</cfif>
+
 		<!--- Sub Pages --->
 		<div class="box">
 			<div class="header">
@@ -162,16 +163,16 @@
 				Page Details
 			</div>
 			<div class="body">
-	
+
 				<!--- Publish Info --->
 				#html.startFieldset(legend='<i class="icon-calendar"></i> Publishing',class="#prc.page.getIsPublished()?'':'selected'#")#
-	
+
 					<!--- Published? --->
 					<cfif prc.page.isLoaded()>
 					<label class="inline">Status: </label>
 					<cfif !prc.page.getIsPublished()><div class="textRed inline">Draft!</div><cfelse>Published</cfif>
 					</cfif>
-	
+
 					<!--- is Published --->
 					#html.hiddenField(name="isPublished",value=true)#
 					<!--- publish date --->
@@ -193,10 +194,10 @@
         					#html.inputField(type="number",name="expireHour",value=prc.ckHelper.ckHour( prc.page.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="24",title="Hour in 24 format",class="textfield editorTime")#
         					#html.inputField(type="number",name="expireMinute",value=prc.ckHelper.ckMinute( prc.page.getExpireDateForEditor(showTime=true) ),size=2,maxlength="2",min="0",max="60", title="Minute",class="textfield editorTime")#
                         </div>
-					</div>	
+					</div>
 					<!--- Changelog --->
 					#html.textField(name="changelog",label="Commit Changelog",class="textfield width95",title="A quick description of what this commit is all about.",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-	
+
 					<!--- Action Bar --->
 					<div class="actionBar">
 						<div class="btn-group">
@@ -205,15 +206,15 @@
 						&nbsp;<input type="submit" class="btn btn-danger" value="Publish">
 						</div>
 					</div>
-	
+
 					<!--- Loader --->
 					<div class="loaders" id="uploadBarLoader">
 						<i class="icon-spinner icon-spin icon-large icon-2x"></i>
 						<div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
 					</div>
-	
+
 				#html.endFieldSet()#
-				
+
 				<!---Begin Accordion--->
 				<div class="accordion" id="accordion" data-stateful="page-sidebar">
 				    <!---Begin Page info--->
@@ -272,7 +273,7 @@
         							<tr>
         								<th class="textRight">Views:</th>
         								<td>
-        									#prc.page.getHits()#
+        									#prc.page.getNumberOfHits()#
         								</td>
         							</tr>
         							<tr>
@@ -287,7 +288,7 @@
                   	</div>
                     </cfif>
                     <!---End Page Info--->
-                    
+
                     <!---Begin Display Options--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_DISPLAY_OPTIONS")>
                   	<div class="accordion-group">
@@ -302,16 +303,19 @@
         						#html.label(field="parentPage",content='Parent:')#
         						<select name="parentPage" id="parentPage" class="input-block-level">
         							<option value="null">No Parent</option>
-        							#html.options(values=prc.pages,column="contentID",nameColumn="title",selectedValue=prc.parentcontentID)#
+        							#html.options(values=prc.pages,column="contentID",nameColumn="slug",selectedValue=prc.parentcontentID)#
         						</select>
-        	
+
         						<!--- layout --->
         						#html.label(field="layout",content='Layout:')#
         						<select name="layout" id="layout" class="width98">
+        							<!--- Core Layouts --->
         							<option value="-inherit-" <cfif prc.page.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+        							<option value="-no-layout-" <cfif prc.page.getLayoutWithDefault() eq "-no-layout-">selected="selected"</cfif>>-no-layout-</option>
+        							<!--- Custom Layouts --->
         							#html.options(values=prc.availableLayouts, selectedValue=prc.page.getLayoutWithDefault())#
         						</select>
-        						
+
         						<!--- mobile layout --->
         						#html.label(field="mobileLayout",content='Mobile Layout:')#
         						<select name="mobileLayout" id="mobileLayout" class="input-block-level">
@@ -319,10 +323,13 @@
         							<option value="-inherit-" <cfif prc.page.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
         							#html.options(values=prc.availableLayouts, selectedValue=prc.page.getMobileLayout())#
         						</select>
-        	
+
         						<!--- Show in Menu Builders --->
         						#html.select(name="showInMenu",label="Show In Menus:",class="input-block-level",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInMenu()))#
-        	
+
+        						<!--- Show in Search --->
+        						#html.select(name="showInSearch",label="Show In Search:",class="input-block-level",options="Yes,No",selectedValue=yesNoFormat(prc.page.getShowInSearch()))#
+
         						<!--- menu order --->
         						#html.inputfield(type="number",label="Menu Order: (0-99)",name="order",bind=prc.page,title="The ordering index used when building menus",class="input-block-level",size="5",maxlength="2",min="0",max="99")#
                       		</div>
@@ -332,13 +339,13 @@
 						#html.hiddenField(name="parentPage", value=prc.parentcontentID)#
                     </cfif>
                     <!---End Display Options--->
-                    
+
                     <!---Begin Related Content--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
                     <div class="accordion-group">
                         <div class="accordion-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                <i class="icon-sitemap icon-large"></i> Related Content                                
+                                <i class="icon-sitemap icon-large"></i> Related Content
                             </a>
 
                         </div>
@@ -359,7 +366,7 @@
                     <div class="accordion-group">
                         <div class="accordion-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                <i class="icon-link icon-large"></i> Linked Content                                
+                                <i class="icon-link icon-large"></i> Linked Content
                             </a>
 
                         </div>
@@ -393,12 +400,19 @@
 									</cfloop>
 								</select>
 								</cfif>
+
                         		<!--- Allow Comments --->
         						<cfif prc.cbSettings.cb_comments_enabled>
         						<i class="icon-comments icon-large"></i>
         						#html.label(field="allowComments",content="Allow Comments:",class="inline")#
         						#html.select(name="allowComments",options="Yes,No",selectedValue=yesNoFormat(prc.page.getAllowComments()), class="input-block-level")#
         						</cfif>
+
+        						<!--- SSL Only --->
+        						<i class="icon-shield icon-large"></i>
+        						#html.label(field="sslOnly",content="SSL Only:",class="inline")#
+        						#html.select(name="sslOnly",options="Yes,No", selectedValue=yesNoFormat( prc.page.getSSLOnly() ), class="input-block-level")#
+
         						<!--- Password Protection --->
         						<label for="passwordProtection"><i class="icon-lock icon-large"></i> Password Protection:</label>
         						#html.textfield(name="passwordProtection",bind=prc.page,title="Password protect your page, leave empty for none",class="input-block-level",size="25",maxlength="100")#
@@ -407,7 +421,7 @@
                   	</div>
                     </cfif>
                     <!---End Modifiers--->
-                    
+
                     <!---Begin Cache Settings--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
                     <div class="accordion-group">
@@ -422,11 +436,11 @@
         						#html.label(field="cache",content="Cache Page Content: (fast)")#
         						<small>Caches content translation only</small><Br/>
         						#html.select(name="cache",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCache()), class="input-block-level")#
-        	
+
         						#html.label(field="cacheLayout",content="Cache Page Layout: (faster)")#
         						<small>Caches all generated page+layout HTML</small><br/>
         						#html.select(name="cacheLayout",options="Yes,No",selectedValue=yesNoFormat(prc.page.getCacheLayout()), class="input-block-level")#
-        	
+
         						#html.inputField(type="numeric",name="cacheTimeout",label="Cache Timeout (0=Use Global):",bind=prc.page,title="Enter the number of minutes to cache your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
         						#html.inputField(type="numeric",name="cacheLastAccessTimeout",label="Idle Timeout: (0=Use Global)",bind=prc.page,title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",class="input-block-level",size="10",maxlength="100")#
                       		</div>
@@ -434,7 +448,7 @@
                   	</div>
                     </cfif>
                     <!---End Cache Settings--->
-                    
+
                     <!---Begin Categories--->
 					<cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
                     <div class="accordion-group">
@@ -454,7 +468,7 @@
         							</label>
         						</cfloop>
         						</div>
-        	
+
         						<!--- New Categories --->
         						#html.textField(name="newCategories",label="New Categories",size="30",title="Comma delimited list of new categories to create",class="input-block-level")#
                       		</div>
@@ -462,7 +476,7 @@
                   	</div>
 					</cfif>
                     <!---End HTML categories--->
-                    
+
                     <!---Begin HTML Attributes--->
                     <cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>
 					<div class="accordion-group">
@@ -480,12 +494,12 @@
                   	</div>
 					</cfif>
                     <!---End HTML Attributes--->
-                    
+
                     <!--- Event --->
 					#announceInterception("cbadmin_pageEditorSidebarAccordion")#
 				</div>
 				<!--- End Accordion --->
-	
+
 				<!--- Event --->
 				#announceInterception("cbadmin_pageEditorSidebar")#
 			</div>

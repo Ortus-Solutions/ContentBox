@@ -1,5 +1,7 @@
 /**
 * A content renderer that transforms ${setting} into the actual setting displayed
+* You can also prefix the markup with rc or prc to render from the request contexts as well:
+* ${rc:key} ${prc:key}
 */
 component accessors="true"{
 	
@@ -17,13 +19,17 @@ component accessors="true"{
 	* Execute on content translations for pages and blog entries
 	*/
 	void function cb_onContentRendering( required event, struct interceptData={} ){
-		translateContent( builder=arguments.interceptData.builder, content=arguments.interceptData.content );
+		translateContent( 
+			builder	= arguments.interceptData.builder, 
+			content = arguments.interceptData.content, 
+			event	= arguments.event 
+		);
 	}
 
 	/**
 	* Translate the content
 	*/
-	private function translateContent( required builder, required content ){
+	private function translateContent( required builder, required content, required event ){
 		// our mustaches pattern
 		var regex 		= "\$\{([^\}])+\}";
 		// match contentbox links in our incoming builder and build our targets array and len
@@ -38,7 +44,19 @@ component accessors="true"{
 			try{
 				// get the setting defined in ${}
 				thisSetting = mid( targets[ x ], 3, len( targets[ x ] ) - 3 );
-				thisValue 	= settingService.getSetting( name=thisSetting, defaultValue="${Setting: #thisSetting# not found}" );
+				// Do we have rc or prc prefix?
+				if( reFindNoCase( "^p?rc\:", thisSetting ) ){
+
+					thisValue = event.getValue( 
+						name 	= listLast( thisSetting, ":" ), 
+						private = ( listFirst( thisSetting, ":" ) eq "rc" ? false : true )
+					);
+
+				} 
+				// Normal Setting
+				else {
+					thisValue = settingService.getSetting( name=thisSetting, defaultValue="${Setting: #thisSetting# not found}" );
+				}
 			}
 			catch(Any e){
 				thisValue = "Error translating setting on target #targets[ x ]#: #e.message# #e.detail#";

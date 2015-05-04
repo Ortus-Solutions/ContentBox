@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "An enterprise modular content platform";
-	this.version			= "2.0.0.@build.number@";
+	this.version			= "2.1.0+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
@@ -83,6 +83,8 @@ component {
 
 		// interceptors
 		interceptors = [
+			// Rate Limiter
+			{ class="contentbox.model.security.RateLimiter", name="RateLimiter@cb" },
 			// CB RSS Cache Cleanup Ghost
 			{ class="contentbox.model.rss.RSSCacheCleanup", name="RSSCacheCleanup@cb" },
 			// CB Content Cache Cleanup Ghost
@@ -92,7 +94,8 @@ component {
 			// Content Renderers, remember order is important.
 			{ class="contentbox.model.content.renderers.LinkRenderer", name="LinkRenderer@cb" },
 			{ class="contentbox.model.content.renderers.WidgetRenderer", name="WidgetRenderer@cb" },
-			{ class="contentbox.model.content.renderers.SettingRenderer", name="SettingRenderer@cb" }
+			{ class="contentbox.model.content.renderers.SettingRenderer", name="SettingRenderer@cb" },
+			{ class="contentbox.model.security.LoginTracker", name="LoginTracker@cb" }
 		];
 
 		// Security/System
@@ -104,6 +107,7 @@ component {
 		binder.map("roleService@cb").to("contentbox.model.security.RoleService");
 		binder.map("securityRuleService@cb").to("contentbox.model.security.SecurityRuleService");
 		binder.map("securityInterceptor@cb").toDSL("coldbox:interceptor:security@cb");
+		binder.map("LoginTrackerService@cb").to("contentbox.model.security.LoginTrackerService");
 		// Updates
 		binder.map("ForgeBox@cb").to("contentbox.model.updates.ForgeBox");
 		binder.map("UpdateService@cb").to("contentbox.model.updates.UpdateService");
@@ -116,6 +120,7 @@ component {
 		binder.map("contentStoreService@cb").to("contentbox.model.content.ContentStoreService");
 		binder.map("contentVersionService@cb").to("contentbox.model.content.ContentVersionService");
 		binder.map("contentService@cb").to("contentbox.model.content.ContentService");
+		binder.map("statsService@cb").to("contentbox.model.content.StatsService");
 		// Commenting services
 		binder.map("commentService@cb").to("contentbox.model.comments.CommentService");
 		// RSS services

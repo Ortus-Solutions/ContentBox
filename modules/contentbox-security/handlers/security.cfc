@@ -2,7 +2,7 @@
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.gocontentbox.org | www.luismajano.com | www.ortussolutions.com
+www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
@@ -29,7 +29,8 @@ component{
 	property name="authorService" 	inject="authorService@cb";
 	property name="antiSamy"		inject="coldbox:plugin:AntiSamy";
 	property name="cb"				inject="cbhelper@cb";
-	
+	property name="messagebox"		inject="coldbox:plugin:MessageBox";
+
 	// Method Security
 	this.allowedMethods = {
 		doLogin = "POST",
@@ -47,7 +48,7 @@ component{
 		setFWLocale( rc.lang );
 		setNextEvent( prc.entryPoint );
 	}
-	
+
 	function login( event, rc, prc ){
 		// exit handlers
 		prc.xehDoLogin 			= "#prc.cbAdminEntryPoint#.security.doLogin";
@@ -55,93 +56,89 @@ component{
 		// remember me
 		prc.rememberMe = antiSamy.htmlSanitizer( securityService.getRememberMe() );
 		// secured URL from security interceptor
-		arguments.event.paramValue("_securedURL", "");
+		arguments.event.paramValue( "_securedURL", "" );
 		rc._securedURL = antiSamy.htmlSanitizer( rc._securedURL );
 		// view
-		event.setView(view="security/login");	
+		event.setView( view="security/login" );
 	}
-	
+
 	function doLogin( event, rc, prc ){
 		// params
-		arguments.event.paramValue("rememberMe", false);
-		arguments.event.paramValue("_securedURL", "");
-		// announce event
-		announceInterception("cbadmin_preLogin");
-		
+		event.paramValue( "rememberMe", 0 )
+			.paramValue( "_securedURL", "" );
+
 		// Sanitize
 		rc.username 	= antiSamy.htmlSanitizer( rc.username );
 		rc.password 	= antiSamy.htmlSanitizer( rc.password );
 		rc.rememberMe 	= antiSamy.htmlSanitizer( rc.rememberMe );
 		rc._securedURL 	= antiSamy.htmlSanitizer( rc._securedURL );
-		
+
+		// announce event
+		announceInterception( "cbadmin_preLogin" );
+
 		// authenticate users
 		if( securityService.authenticate( rc.username, rc.password ) ){
 			// set remember me
-			if( rc.rememberMe ){
-				securityService.setRememberMe( rc.username );
-			}
-			
+			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
 			// announce event
-			announceInterception("cbadmin_onLogin");
-		
+			announceInterception( "cbadmin_onLogin" );
 			// check if securedURL came in?
 			if( len( rc._securedURL ) ){
 				setNextEvent( uri=rc._securedURL );
-			}
-			else{
+			} else {
 				setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
 			}
-		}
-		else{
+		} else {
 			// announce event
-			announceInterception("cbadmin_onBadLogin");
+			announceInterception( "cbadmin_onBadLogin" );
 			// message and redirect
-			getPlugin("MessageBox").warn( cb.r( "messages.invalid_credentials@security" ));
+			messagebox.warn( cb.r( "messages.invalid_credentials@security" ));
 			// Relocate
 			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
-	
+
 	function doLogout( event, rc, prc ){
 		// logout
 		securityService.logout();
 		// announce event
-		announceInterception("cbadmin_onLogout");
-		// message redirect	
-		getPlugin("MessageBox").info("See you later!");
+		announceInterception( "cbadmin_onLogout" );
+		// message redirect
+		messagebox.info( cb.r( "messages.seeyou@security" ) );
 		// relocate
-		setNextEvent("#prc.cbAdminEntryPoint#.security.login");
+		setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 	}
-	
+
 	function lostPassword( event, rc, prc ){
 		prc.xehLogin 			= "#prc.cbAdminEntryPoint#.security.login";
 		prc.xehDoLostPassword 	= "#prc.cbAdminEntryPoint#.security.doLostPassword";
-		event.setView(view="security/lostPassword");	
+
+		event.setView( view="security/lostPassword" );
 	}
-	
+
 	function doLostPassword( event, rc, prc ){
 		var errors 	= [];
 		var oAuthor = "";
-		
+
 		// Param email
-		arguments.event.paramValue("email", "");
+		event.paramValue( "email", "" );
 
 		rc.email = antiSamy.htmlSanitizer( rc.email );
-		
+
 		// Validate email
 		if( NOT trim( rc.email ).length() ){
-			arrayAppend( errors, "#cb.r( 'validation.need_email@security' )#<br />" );	
+			arrayAppend( errors, "#cb.r( 'validation.need_email@security' )#<br />" );
 		}
 		else{
 			// Try To get the Author
 			oAuthor = authorService.findWhere( { email = rc.email } );
 			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
 				// Don't give away that the email did not exist.
-				getPlugin("MessageBox").info( cb.r( resource='messages.lostpassword_check', values="15" ) );
+				messagebox.info( cb.r( resource='messages.lostpassword_check@security', values="5" ) );
 				setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			}
-		}			
-		
+		}
+
 		// Check if Errors
 		if( NOT arrayLen( errors ) ){
 			// Send Reminder
@@ -149,18 +146,18 @@ component{
 			// announce event
 			announceInterception( "cbadmin_onPasswordReminder", { author = oAuthor } );
 			// messagebox
-			getPlugin("MessageBox").info( cb.r( resource='messages.reminder_sent', values="15" ) );
+			messagebox.info( cb.r( resource='messages.reminder_sent@security', values="15" ) );
 		}
 		else{
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReminder", { errors = errors, email = rc.email } );
 			// messagebox
-			getPlugin("MessageBox").error( messageArray=errors );
+			messagebox.error( messageArray=errors );
 		}
 		// Re Route
 		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
-	
+
 	function verifyReset( event, rc, prc ){
 		arguments.event.paramValue("token", "");
 
@@ -170,17 +167,17 @@ component{
 			// announce event
 			announceInterception( "cbadmin_onPasswordReset", { author = results.author } );
 			// Messagebox
-			getPlugin("MessageBox").info( cb.r( "messages.password_reset@security" ) );
+			messagebox.info( cb.r( "messages.password_reset@security" ) );
 		}
 		else{
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
 			// messagebox
-			getPlugin("MessageBox").error( cb.r( "messages.invalid_token@security" ) );
+			messagebox.error( cb.r( "messages.invalid_token@security" ) );
 		}
-		
+
 		// Relcoate to login
 		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
-	
+
 }

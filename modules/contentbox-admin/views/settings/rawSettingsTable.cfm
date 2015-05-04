@@ -29,7 +29,7 @@
 											 '#HTMLEditFormat( setting.getName() )#',
 											 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting"><i class="icon-edit icon-large"></i></a>
 					<!--- Delete Command --->
-					<a class="btn" title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="Delete Setting?"><i class="icon-trash icon-large" id="delete_#setting.getsettingID()#"></i></a>
+					<a class="btn btn-default confirmIt" title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" data-title="Delete Setting?"><i class="icon-trash icon-large" id="delete_#setting.getsettingID()#"></i></a>
 				</div>
 			</td>
 		</tr>
