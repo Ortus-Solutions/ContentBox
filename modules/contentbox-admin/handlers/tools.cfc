@@ -122,6 +122,7 @@ component extends="baseHandler"{
 		prc.modules 		= moduleService.findModules().modules;
 		prc.layouts 		= layoutService.getLayouts();
 		prc.widgets 		= widgetService.getWidgets();
+		prc.widgetService 	= widgetService;
 		
 		// view
 		event.setView("tools/exporter");

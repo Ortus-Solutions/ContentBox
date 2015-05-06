@@ -18,9 +18,14 @@
         <!--- Title --->
         <title>ContentBox Modular CMS - #cb.r( "common.login@security" )#</title>
         <!--- Description --->
-        <meta name="description" content="">
+        <meta name="description" content="ContentBox Modular CMS - Admin">
         <!--- Viewport for scaling --->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <!--- ********************************************************************* --->
+        <!---                           FAVICONS                                    --->
+        <!--- ********************************************************************* --->
+
         <!--- Favicon --->
         <link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->
@@ -31,6 +36,11 @@
         <link href="#prc.cbroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
         <!-- Favicon -->
         <link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        
+        <!--- ********************************************************************* --->
+        <!---                           CSS 	                                    --->
+        <!--- ********************************************************************* --->
+
         <!--// Bootstrap core CSS-->
         <link href="#prc.cbroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
         <!--// custom admintheme files-->
@@ -43,7 +53,11 @@
         <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
         <!--// custom styles for spacelab-->
         <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
-        <!--- JS --->
+        
+       	<!--- ********************************************************************* --->
+        <!---                           JAVASCRIPT                                  --->
+        <!--- ********************************************************************* --->
+
         <!--// modernizr for feature detection-->
         <script src="#prc.cbroot#/includes/spacelab/js/modernizr-2.6.2.min.js"></script>
         <!--// jquery main-->
@@ -62,9 +76,14 @@
         <script src="#prc.cbroot#/includes/js/toastr.min.js"></script>
         <!--// main ContentBox scripts-->
         <script src="#prc.cbroot#/includes/js/contentbox.js"></script>
-	    <!-- Fonts -->
+	    
+	    <!--- ********************************************************************* --->
+        <!---                           FONTS 	                                    --->
+        <!--- ********************************************************************* --->
+
 	    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
 	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	   
 	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!--[if lt IE 9]>
 	    <script src="assets/js/html5shiv.js"></script>
@@ -87,13 +106,13 @@
 						<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
 						<!--- Brand, future multi-site switcher --->
 						<a class="brand">
-							ContentBox Modular CMS
+							ContentBox
 						</a>
 						<!--- i18n navbar --->
 						<ul class="nav pull-right">
 							<li class="dropdown">
 								<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
-									<i class="icon-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
+									<i class="fa fa-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
 									<ul role="menu" class="dropdown-menu">
 										<cfloop array="#prc.langs#" index="thisLang">
 										<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>

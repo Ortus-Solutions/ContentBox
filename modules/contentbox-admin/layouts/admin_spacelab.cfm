@@ -18,9 +18,14 @@
         <!--- Title --->
         <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>
         <!--- Description --->
-        <meta name="description" content="">
+        <meta name="description" content="ContentBox Modular CMS - Admin">
         <!--- Viewport for scaling --->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <!--- ********************************************************************* --->
+        <!---                           FAVICONS                                    --->
+        <!--- ********************************************************************* --->
+
         <!--- Favicon --->
         <link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->
@@ -31,6 +36,11 @@
         <link href="#prc.cbroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
         <!-- Favicon -->
         <link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        
+        <!--- ********************************************************************* --->
+        <!---                           CSS + JAVASCRIPT                            --->
+        <!--- ********************************************************************* --->
+
         <!---Minify global CSS includes--->
         <cfscript>
             cssFiles = [
@@ -95,6 +105,7 @@
         </cfscript>
         #cb.minify( assets=arrayToList( cssFiles ), location="#prc.cbroot#/includes/cache" )#
         #cb.minify( assets=arrayToList( jsFiles ), location="#prc.cbroot#/includes/cache" )#
+        
         <!--- CKEditor Separate --->
         <script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
         <script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
@@ -116,9 +127,14 @@
                 addAsset( "#js#.js" );
             }
         </cfscript>
-        <!-- Fonts -->
+
+        <!--- ********************************************************************* --->
+        <!---                           FONTS 	                                    --->
+        <!--- ********************************************************************* --->
+
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
         <script src="#prc.cbroot#/includes/spacelab/js/html5shiv.js"></script>
