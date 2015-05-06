@@ -26,8 +26,8 @@
 				</cfif>
 			</td>
 			<td class="text-center">
-				<button class="btn btn-sm" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'pagessl' )" title="SSL Link"><i class="fa fa-lock icon-large"></i></button>
-				<button class="btn btn-sm" onclick="return selectCBContent( '#page.getSlug()#', '#page.getTitle()#', 'page' )" title="Link"><i class="fa fa-link icon-large"></i></button>
+				<button class="btn" onclick="return selectCBContent( '#JSStringFormat( page.getSlug() )#', '#JSStringFormat( page.getTitle() )#', 'pagessl' )" title="SSL Link"><i class="fa fa-lock"></i></button>
+				<button class="btn" onclick="return selectCBContent( '#JSStringFormat( page.getSlug() )#', '#JSStringFormat( page.getTitle() )#', 'page' )" title="Link"><i class="fa fa-link"></i></button>
 			</td>
 		</tr>
 		</cfloop>

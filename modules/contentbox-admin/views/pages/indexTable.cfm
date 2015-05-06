@@ -88,7 +88,7 @@
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
-				<td class="text-center"><span class="badge badge-info">#page.getHits()#</span></td>
+				<td class="text-center"><span class="badge badge-info">#page.getNumberOfHits()#</span></td>
 				<td class="text-center">
 					<!---Info Panel --->
 					<a 	class="btn btn-info btn-sm popovers" 
@@ -158,8 +158,10 @@
 							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye icon-large"></i> Open In Site</a></li>
 				    	</ul>
 				    </div>	
+				    
 				    <!--- Drag Handle --->
-					<a href="javascript:null" class="dragHandle btn btn-sm btn-default" title="Click and drag to change menu order"><i class="fa fa-crosshairs"></i></a>
+				    &nbsp;
+					<a href="##" onclick="return false;" class="dragHandle btn btn-default btn-sm" title="Click and drag to change menu order"><i class="fa fa-arrows-v"></i></a>
 				</td>
 			</tr>
 		</cfloop>
