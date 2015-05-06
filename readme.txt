@@ -107,10 +107,9 @@ CONTENTBOX INSTALLATION
 ********************************************************************************
 SYSTEM REQUIREMENTS
 ********************************************************************************
-- Adobe ColdFusion 9.0.1 >
-- Railo Latest
+- Adobe ColdFusion 9.0.1+
+- Lucee 4.5+
 - Session Scope Enabled
-
 
 AS ALWAYS, VISIT THE SITE FOR THE LATEST DOCUMENTATION
 
