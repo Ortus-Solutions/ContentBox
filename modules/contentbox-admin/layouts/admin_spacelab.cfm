@@ -60,7 +60,7 @@
                 // modernizr for feature detection
                 "#prc.cbroot#/includes/spacelab/js/modernizr-2.6.2.min.js",
                 // jquery main
-                "#prc.cbroot#/includes/spacelab/js/jquery-1.10.2.min.js",
+                "#prc.cbroot#/includes/spacelab/js/jquery.min.js",
                 // bootstrap js
                 "#prc.cbroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js",
                 // spacelab js
@@ -134,8 +134,9 @@
             <header id="header">
                 <!--logo start-->
                 <div class="brand">
-                    <a href="index.html" class="logo">#prc.cbSettings.cb_site_name#</a>
+                    <a data-keybinding="ctrl+shift+d" title="ctrl+shift+D" href="#event.buildLink( prc.xehDashboard )#" class="logo">#prc.cbSettings.cb_site_name#</a>
                 </div>
+
                 <!--logo end-->
                 <div class="toggle-navigation toggle-left">
                     <button type="button" class="btn btn-default" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation">
@@ -144,12 +145,21 @@
                 </div>
                 <div class="user-nav">
                     <ul>
+                    	<!--- View Site --->
+                    	<li class="messages">
+                    		<a class="btn btn-default options" href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="fa fa-home" style="margin-top:6px"></i></a>
+                    	</li>
+                    	<!--- Utils --->
                         #prc.adminMenuService.generateUtilsMenu()#
+                       	<!--- Support Menu --->
                         #prc.adminMenuService.generateSupportMenu()#
+                        <!--- Profile --->
                         <li class="profile-photo">
-                            #getMyPlugin( plugin="Avatar",module="contentbox" ).renderAvatar( email=prc.oAuthor.getEmail(),size="40", class="img-circle" )#
+                            #getMyPlugin( plugin="Avatar",module="contentbox" )
+                            	.renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
                         </li>
                         #prc.adminMenuService.generateProfileMenu()#
+                        <!--- Notifications --->
                         <li class="notifications">
                             <span class="badge badge-danager animated bounceIn" id="new-messages">5</span>
                             <div class="toggle-navigation toggle-right">
