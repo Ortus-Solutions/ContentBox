@@ -16,24 +16,25 @@
     <div class="col-md-12">
     	<div class="panel panel-default">
     		<div class="panel-body">
+
+    			<!-- Buttons -->
+				<div class="pull-right padding10">
+					<a href="#event.buildLink( prc.xehSettings )###security_options" class="btn btn-default">Configure Tracker</a>
+					<a href="#event.buildLink( prc.xehTruncate )#" class="btn btn-danger confirmIt">Truncate Logs</a>
+				</div>
+
 				<p>Here you see all recent Logins and as well the login attempts to your system</p>
 				<cfif prc.featureEnabled>
-
-					<div class="pull-right padding10">
-						<a href="#event.buildLink( prc.xehTruncate )#" class="btn btn-danger confirmIt">Truncate Logs</a>
-					</div>
-
-					<p>Click <a href="#event.buildLink( prc.xehRawSettings )#?search=cb_security_">here</a> to change Settings</p> 
 
 					<!--- templates --->
 					<table name="templates" id="templates" class="table table-bordered table-hover table-striped">
 						<thead>
 							<tr class="info">
 								<th>Username / IP</th>
-								<th>Attempts</th>
-								<th>Date</th>
-								<th>Successfull IP</th>
-								<th>Status</th>
+								<th width="75">Attempts</th>
+								<th width="200">Date</th>
+								<th width="200">Successfull IP</th>
+								<th width="100" class="textCenter">Status</th>
 							</tr>
 						</thead>				
 						<tbody>
@@ -54,17 +55,17 @@
 								</td>
 								<td>#thisLog.getDisplayCreatedDate()#</td>
 								<td>
-									<cfif thisLog.getLastLoginSuccessIP() neq ''>
+									<cfif len( thisLog.getLastLoginSuccessIP() )>
 										<a href="#prc.cbSettings.cb_comments_whoisURL#=#thisLog.getLastLoginSuccessIP()#" title="Get IP Information" target="_blank">#thisLog.getLastLoginSuccessIP()#</a>	
 									<cfelse>
 										-
 									</cfif>
 								</td>
-								<td>
+								<td class="text-center">
 									<cfif thisLog.getIsBlocked()>
-										<i title="" class="icon-remove icon-large textRed" data-original-title="Blocked"></i>
+										<i class="fa fa-times icon-large textRed" data-original-title="Blocked"></i>
 									<cfelse>
-										<i class="icon-ok icon-large textGreen"></i>
+										<i class="fa fa-check icon-large textGreen" data-original-title="All Ok"></i>
 									</cfif>
 								</td>
 							</tr>
@@ -72,7 +73,9 @@
 						</tbody>
 					</table>
 				<cfelse>
-					This feature is disabled! Click <a href="#event.buildLink(prc.xehRawSettings)#?search=cb_security_">here</a> to enable it.
+					<div class="alert alert-warning">
+						Login Tracker is disabled! Click <a href="#event.buildLink( prc.xehSettings )###security_options">here</a> to enable it.
+					</div>
 				</cfif>
 			</div> <!-- end panel body -->
 		</div> <!-- end panel -->
