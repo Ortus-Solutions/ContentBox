@@ -64,7 +64,7 @@ component extends="baseHandler"{
 		// convert report to chart data
 		prc.aTopContent = [];
 		for( var thisContent in prc.topContent ){
-			arrayAppend( prc.aTopContent, { "label" = thisContent.getTitle(), "value" = thisContent.gethits() } );
+			arrayAppend( prc.aTopContent, { "label" = thisContent.getTitle(), "value" = thisContent.getNumberOfHits() } );
 		}
 		prc.aTopContent = serializeJSON( prc.aTopContent );
 		prc.aTopCommented = [];
