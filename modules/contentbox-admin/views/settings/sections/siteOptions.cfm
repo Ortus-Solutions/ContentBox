@@ -62,27 +62,6 @@
                 </select>
             </div>
         </div>  
-        <!--- Site SSL --->
-        <div class="form-group">
-            #html.label(
-                class="control-label",
-                field="cb_site_ssl",
-                content="Site Force SSL (Secure Sockets Layer):"
-            )#
-            <div class="controls">
-                <small>You can enable SSL encryption for the entire site.</small><br/>
-                #html.radioButton(
-                    name="cb_site_ssl",
-                    checked=prc.cbSettings.cb_site_ssl,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_site_ssl",
-                    checked=not prc.cbSettings.cb_site_ssl,
-                    value=false
-                )# No
-            </div>
-        </div>  
 
         <!--- Powered by Header --->
         <div class="form-group">

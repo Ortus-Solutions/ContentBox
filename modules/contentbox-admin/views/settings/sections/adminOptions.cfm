@@ -1,27 +1,6 @@
 <cfoutput>
 <fieldset>
     <legend><i class="fa fa-desktop icon-large"></i> Admin Options</legend>
-    <!--- Admin SSL --->
-    <div class="form-group">
-        #html.label(
-            class="control-label",
-            field="cb_admin_ssl",
-            content="Admin Force SSL (Secure Sockets Layer):"
-        )#
-        <div class="controls">
-            <small>You can enable SSL encryption for the administrator module.</small><br/>
-            #html.radioButton(
-                name="cb_admin_ssl",
-                checked=prc.cbSettings.cb_admin_ssl,
-                value=true
-            )# Yes
-            #html.radioButton(
-                name="cb_admin_ssl",
-                checked=not prc.cbSettings.cb_admin_ssl,
-                value=false
-            )# No
-        </div>
-    </div>
     <!--- Default Themes --->
     <div class="form-group">
         <label class="control-label" for="cb_admin_theme">Default Admin Theme:</label>
@@ -127,6 +106,17 @@
             <select name="cb_dashboard_recentComments" id="cb_dashboard_recentComments" class="form-control input-sm">
                 <cfloop from="5" to="50" step="5" index="i">
                     <option value="#i#" <cfif i eq prc.cbSettings.cb_dashboard_recentComments>selected="selected"</cfif>>#i#</option>
+                </cfloop>
+            </select>
+        </div>
+    </div>
+    <!--- Recent Logins--->
+    <div class="form-group">
+        <label class="control-label" for="cb_security_latest_logins">Recent Logins Count</label>
+        <div class="controls">
+            <select name="cb_security_latest_logins" id="cb_security_latest_logins" class="form-control input-sm">
+                <cfloop from="5" to="50" step="5" index="i">
+                    <option value="#i#" <cfif i eq prc.cbSettings.cb_security_latest_logins>selected="selected"</cfif>>#i#</option>
                 </cfloop>
             </select>
         </div>
