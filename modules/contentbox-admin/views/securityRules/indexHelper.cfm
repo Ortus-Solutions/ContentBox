@@ -4,7 +4,18 @@ $(document).ready(function() {
 	$importDialog = $("##importDialog");
 	$ruleForm = $("##ruleForm");
 	$rulesTable = $ruleForm.find("##rulesTable");
-	$ruleForm.find("##rules").tablesorter();
+	$ruleForm.find("##rules").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
+	});
 	$ruleForm.find("##ruleFilter").keyup(function(){
 		$.uiTableFilter( $("##rules"), this.value );
 	});
@@ -56,7 +67,7 @@ function importContent(){
 }
 function remove(recordID){
 	if( recordID != null ){
-		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		$("##ruleID").val( recordID );
 	}
 	//Submit Form

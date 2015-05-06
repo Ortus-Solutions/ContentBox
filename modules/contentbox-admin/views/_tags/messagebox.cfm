@@ -6,7 +6,7 @@
 			break;
 		}	
 		case "error" : {
-			local.cssType = " alert-error";
+			local.cssType = " alert-danger";
 			local.iconType = "icon-minus-sign";
 			break;
 		}	

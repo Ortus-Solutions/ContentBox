@@ -15,9 +15,9 @@ $(document).ready(function() {
     });
 
     // reset modal content when hidden
-	$remoteModal.on( 'hidden', function() {
+	$remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
-        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body"><i class="icon-spinner icon-spin icon-large icon-4x"></i></div>' );
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin icon-large icon-4x"></i></div>' );
     })
     
 	// Global Tool Tip Settings
@@ -41,24 +41,30 @@ $(document).ready(function() {
         // seriously???
         // anyway, setting ignore: [] fixes it
         ignore:[],
-        errorElement: 'span',
-        errorClass: 'help-block',
+        //errorElement: 'span',
+        //errorClass: 'help-block',
         highlight: function(element) {
-            $(element).closest('.control-group').removeClass('success').addClass('error');
+            $(element).closest('.form-group').removeClass('success').addClass('error');
         },
         success: function(element) {
             element
+                .text( 'Field is valid' )
                 .addClass('valid')
-                .closest('.control-group').removeClass('error').addClass('success');
+                .closest('.form-group').removeClass('error').addClass('success');
+            element.remove();
         },
         errorPlacement: function(error, element) {
             error.appendTo( element.parent("div.controls") );
         }
     })	
     $.fn.resetValidations = function() {
+        var form = this[ 0 ].currentForm;
         // also remove success and error classes
-        this.find( '.control-group' ).each(function() {
+        $( form ).find( '.form-group' ).each(function() {
             $( this ).removeClass( 'error' ).removeClass( 'success' );
+        });
+        $( form ).find( ':input' ).each(function() {
+            $( this ).removeClass( 'error' ).removeClass( 'valid' );
         });
         return this;
     }
@@ -158,7 +164,7 @@ $(document).ready(function() {
             }
         }
         // bind listener for state changes
-        accordion.bind( 'shown', function(){
+        accordion.bind( 'shown.bs.collapse', function(){
             // grab id from expanded accordion panel
             var active = accordion.find( '.in' ).attr( 'id' );
             // set cookie
@@ -218,7 +224,8 @@ function adminAction( action, actionURL ){
  * @param delay The delay of the message, defaults to 1500 ms
  */
 function adminNotifier(type, message, delay){
-	var $notifier = $("#adminActionNotifier").attr( "class", "alert hide" );
+	/*
+    var $notifier = $("#adminActionNotifier").attr( "class", "alert hide" );
 	if( type == null ){ type = "warn";  }
 	if( delay == null ){ delay = 1500;  }
 	// add type css
@@ -229,6 +236,13 @@ function adminNotifier(type, message, delay){
 	}
 	// show with message and delay and reset.
 	$notifier.fadeIn().html( message ).delay( delay ).fadeOut();
+    */
+    switch( type ){
+        case "info" : { toastr.info( message ); break; }
+        case "error" : { toastr.error( message ); break; }
+        case "success" : { toastr.success( message ); break; }
+    }
+    
 }
 function activateContentSearch(){
 	// local refs
@@ -328,9 +342,9 @@ function openModal(div, w, h){
     div.modal({
         width: w,
         height: h
-    })
+    });
     // attach a listener to clear form when modal closes
-    $( div ).on( 'hidden', function() {
+    $( div ).on( 'hidden.bs.modal', function() {
         if( !$( this ).hasClass( 'in' ) ) {
             var frm = $( this ).find( 'form' );
             if( frm.length ) {
@@ -350,6 +364,8 @@ function openModal(div, w, h){
  */
 function openRemoteModal(url,params,w,h,delay){
     var modal = $remoteModal;
+    var args = {};
+    var maxHeight = ($( window ).height() -360);
     // set data values
     modal.data( 'url', url )
 	modal.data( 'params', params );
@@ -363,15 +379,16 @@ function openRemoteModal(url,params,w,h,delay){
         if( height.search && height.search( '%' )!=-1 ) {
             height = height.replace( '%', '' ) / 100.00;
             height = $( window ).height() * height;
-            modal.data( 'height', height )
+            //modal.data( 'height', height )
         }
         // set delay data in element
         modal.data( 'delay', true );
+        args.width = modal.data( 'width' );
+        if( height < maxHeight ) {
+            args.height = maxHeight;
+        }
         // show modal
-        modal.modal({
-            height: modal.data( 'height' ),
-            width: modal.data( 'width' )
-        });
+        modal.modal( args );
     }
     // otherwise, front-load the request and then create modal
     else {
@@ -379,11 +396,16 @@ function openRemoteModal(url,params,w,h,delay){
         modal.load( url, params, function() {
             // in callback, show modal
             var maxHeight = ($( window ).height() -360);
-            modal.modal({
-                height: h!=undefined ? h : modal.height() < maxHeight ? modal.height() : maxHeight,
-                width: w!=undefined ? w : $( window ).width() * .80,
-                maxHeight: maxHeight
-            })
+            var currentHeight = modal.height();
+            args.width = w!=undefined ? w : $( window ).width() * .80;
+            args.maxHeight = maxHeight;
+            if( currentHeight && currentHeight < maxHeight ) {
+                args.height = currentHeight;
+            }
+            if( !currentHeight ) {
+                args.height = maxHeight;
+            }
+            modal.modal( args )
         }) 
     }
     return;

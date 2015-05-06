@@ -4,9 +4,11 @@
             placement: 'right',
             title: 'Are you sure you want to remove this menu item and all its descendants?',
             singleton: true,
+            container: 'body',
             href: 'javascript:void(0);',
-            onConfirm: function() {
-                $( this ).closest( '.dd3-item' ).remove();
+            onConfirm: function( e, target ) {
+                $( target ).confirmation('destroy')
+                $( target ).closest( '.dd3-item' ).remove();
                 togglePlaceholderMessage();
             }
         };
@@ -30,7 +32,7 @@
             var toggle = $( '##toggleSlug' ),
                 $slug = $( '##slug' );
             // Toggle lock icon on click..  
-            toggle.hasClass( 'icon-lock' ) ? toggle.attr( 'class', 'icon-unlock' ) : toggle.attr( 'class', 'icon-lock' );
+            toggle.hasClass( 'fa fa-lock' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fa fa-lock' );
             //disable input field
             $slug.prop( "disabled", !$slug.prop( 'disabled' ) );
         }
@@ -183,7 +185,7 @@
                     processItem( $( this ) );
                 });
                 // get serialized data
-                $( '##submitMenu' ).attr( 'disabled', true ).html( '<i class="icon-spinner icon-spin"></i> Saving...' );
+                $( '##submitMenu' ).attr( 'disabled', true ).html( '<i class="fa fa-spinner fa-spin"></i> Saving...' );
                 $( '##menuItems' ).val( JSON.stringify( nestable.nestable( 'serialize' ) ) );
                 form.submit();
             }

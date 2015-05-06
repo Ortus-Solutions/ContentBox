@@ -4,7 +4,18 @@ $(document).ready(function() {
 	// tables references
 	$entries = $("##entries");
 	// sorting
-	$entries.tablesorter();
+	$entries.dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false,
+		"columnDefs": [
+    		{ 
+    			"orderable": false, 
+    			"targets": '{sorter:false}' 
+    		}
+  		],
+  		"order": []
+	});
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips

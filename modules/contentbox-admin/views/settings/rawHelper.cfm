@@ -5,12 +5,34 @@ $(document).ready(function() {
 	$settingEditor = $("##settingEditor");
 	$importDialog = $("##importDialog");
 	// settings sorting
-	$("##settings").tablesorter();
+	$("##settings").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
+	});
 	$("##eventFilter").keyup(function(){
 		$.uiTableFilter( $("##eventsList"), this.value );
 	});
 	// singletons sorting + filter
-	$("##singletons").tablesorter({ sortList: [[0,0]] });
+	$("##singletons").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
+	});
 	$("##singletonsFilter").keyup(function(){
 		$.uiTableFilter( $("##singletons"), this.value );
 	});
@@ -30,7 +52,7 @@ $(document).ready(function() {
 		settingsLoad( $this.val() );
 	});
 	// Load settings
-	settingsLoad( $("##settingSearch").val() );
+	settingsLoad( $( "##settingSearch" ).val() );
 });
 function importSettings(){
 	// local id's
@@ -99,7 +121,7 @@ function edit(settingID,name,value){
 }
 function remove(settingID){
 	var $settingForm = $("##settingForm");
-	$("##delete_"+ settingID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+	$("##delete_"+ settingID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 	$settingForm.find("##settingID").val( settingID );
 	$settingForm.submit();
 }

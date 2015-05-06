@@ -49,16 +49,16 @@
                 <tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
                     <td width="14" class="center #publishedClass#">
                         <cfif content.getContentType() eq "Page">
-                            <i class="icon-file-alt icon-small" title="Page"></i>
+                            <i class="fa fa-file-alt icon-small" title="Page"></i>
                         <cfelseif content.getContentType() eq "Entry">
-                            <i class="icon-quote-left icon-small" title="Entry"></i>
+                            <i class="fa fa-quote-left icon-small" title="Entry"></i>
                         <cfelseif content.getContentType() eq "ContentStore">
-                            <i class="icon-hdd icon-small" title="ContentStore"></i>
+                            <i class="fa fa-hdd-o icon-small" title="ContentStore"></i>
                         </cfif>
                     </td>
                     <td class="#publishedClass#">#content.getTitle()#</td>
                     <td width="14" class="center #publishedClass#">
-                        <button id="#content.getContentID()#" class="btn btn-tiny btn-danger" type="button"><i class="icon-unlink" title="Break Link to Content"></i></button>
+                        <button id="#content.getContentID()#" class="btn btn-tiny btn-danger" type="button"><i class="fa fa-unlink" title="Break Link to Content"></i></button>
                     </td>
                 </tr>
             </cfloop>

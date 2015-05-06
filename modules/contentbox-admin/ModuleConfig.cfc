@@ -30,7 +30,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Admin";
-	this.version			= "2.1.0+@build.number@";
+	this.version			= "3.0.0-alpha+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
@@ -38,7 +38,7 @@ component {
 	function configure(){
 
 		// Layout Settings
-		layoutSettings = { defaultLayout = "admin.cfm" };
+		layoutSettings = { defaultLayout = "admin_spacelab.cfm" };
 
 		// Module Settings
 		settings = {

@@ -1,32 +1,35 @@
 <cfoutput>
-<div class="row-fluid">
-	<!--- main content --->
-	<div class="span12" id="main-content">
-		<div class="box">
-			<!--- Body Header --->
-			<div class="header">
-				<i class="icon-bar-chart icon-large"></i>
-				Authentication Logs
-			</div>
-			<!--- Body --->
-			<div class="body">
-				
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1">
+            <i class="fa fa-bar-chart-o icon-large"></i>
+            Authentication Logs
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        #getPlugin( "MessageBox" ).renderit()#
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+    	<div class="panel panel-default">
+    		<div class="panel-body">
+
+    			<!-- Buttons -->
+				<div class="pull-right padding10">
+					<a href="#event.buildLink( prc.xehSettings )###security_options" class="btn btn-default">Configure Tracker</a>
+					<a href="#event.buildLink( prc.xehTruncate )#" class="btn btn-danger confirmIt">Truncate Logs</a>
+				</div>
+
+				<p>Here you see all recent Logins and as well the login attempts to your system</p>
 				<cfif prc.featureEnabled>
 
-					<!-- Buttons -->
-					<div class="pull-right padding10">
-						<a href="#event.buildLink( prc.xehSettings )###security_options" class="btn btn-default">Configure Tracker</a>
-						<a href="#event.buildLink( prc.xehTruncate )#" class="btn btn-danger confirmIt">Truncate Logs</a>
-					</div>
-				
-					<!--- MessageBox --->
-					#getPlugin("MessageBox").renderit()#
-					<p>Here you see all recent system logins and as well the login attempts to your system.</p>
-
 					<!--- templates --->
-					<table name="templates" id="templates" class="tablesorter table table-hover table-striped" width="98%">
+					<table name="templates" id="templates" class="table table-bordered table-hover table-striped">
 						<thead>
-							<tr>
+							<tr class="info">
 								<th>Username / IP</th>
 								<th width="75">Attempts</th>
 								<th width="200">Date</th>
@@ -58,11 +61,11 @@
 										-
 									</cfif>
 								</td>
-								<td class="textCenter">
+								<td class="text-center">
 									<cfif thisLog.getIsBlocked()>
-										<i class="icon-remove icon-large textRed" data-original-title="Blocked"></i>
+										<i class="fa fa-times icon-large textRed" data-original-title="Blocked"></i>
 									<cfelse>
-										<i class="icon-ok icon-large textGreen" data-original-title="All Ok"></i>
+										<i class="fa fa-check icon-large textGreen" data-original-title="All Ok"></i>
 									</cfif>
 								</td>
 							</tr>
@@ -71,11 +74,11 @@
 					</table>
 				<cfelse>
 					<div class="alert alert-warning">
-					Login Tracker is disabled! Click <a href="#event.buildLink( prc.xehSettings )###security_options">here</a> to enable it.
+						Login Tracker is disabled! Click <a href="#event.buildLink( prc.xehSettings )###security_options">here</a> to enable it.
 					</div>
 				</cfif>
-			</div>	
-		</div>	
+			</div> <!-- end panel body -->
+		</div> <!-- end panel -->
 	</div>
 </div>
 </cfoutput>

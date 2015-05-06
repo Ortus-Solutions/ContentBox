@@ -20,7 +20,7 @@
             hidden.val( slug );
             label.val( title );
             updateLabel( label );
-            typeIcon.removeClass( 'btn-danger' ).addClass( 'btn-info' );
+            typeIcon.removeClass( 'btn-danger' ).addClass( 'btn-primary' );
             return false;
         }
     </script>
