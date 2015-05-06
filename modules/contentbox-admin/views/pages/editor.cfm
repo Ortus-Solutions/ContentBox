@@ -244,7 +244,7 @@
                                             #html.options(
                                                 values=prc.pages,
                                                 column="contentID",
-                                                nameColumn="title",
+                                                nameColumn="slug",
                                                 selectedValue=prc.parentcontentID
                                             )#
                                         </select>

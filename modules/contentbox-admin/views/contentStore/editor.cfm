@@ -283,6 +283,28 @@
                             </div>
                             <div id="modifiers" class="panel-collapse collapse">
                                 <div class="panel-body">
+
+									<!--- Parent Content --->
+									<div class="form-group">
+										<i class="fa fa-sitemap icon-large"></i>
+		         						#html.label( field="parentContent",content='Parent:' )#
+		         						<select name="parentContent" id="parentContent" class="form-control input-sm">
+		         							<option value="null">No Parent</option>
+		        							#html.options(
+		        								values=prc.allContent,
+		        								column="contentID",
+		        								nameColumn="title",
+		        								selectedValue=prc.parentcontentID
+		        							)#>
+		        							#html.options(
+		        								values=prc.allContent,
+		        								column="contentID",
+		        								nameColumn="slug",
+		        								selectedValue=prc.parentcontentID
+		        							)#
+		         						</select>
+	         						</div>
+
                                     <!--- Creator --->
                                     <cfif prc.content.isLoaded() and prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
                                         <div class="form-group">
