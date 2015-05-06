@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <div class="row">
-    <div class="col-md-3" id="login-wrapper">
+    <div class="col-md-4" id="login-wrapper">
         <div class="panel panel-primary animated flipInY">
             <div class="panel-heading">
                 <h3 class="panel-title">     
@@ -28,7 +28,7 @@
                             	placeholder=cb.r( "common.username@security" ), 
                             	autocomplete="off"
                             )#
-                            <i class="fa fa-lock"></i>
+                            <i class="fa fa-user"></i>
                         </div>
                     </div>
                     <div class="form-group">
@@ -53,7 +53,7 @@
 								#cb.r( "rememberme@security" )#<br>
                                 #html.select(
                                     name="rememberMe",
-                                    class="input-sm",
+                                    class="form-control input-sm",
                                     options=html.option( value="0", content=cb.r( "rememberme.session@security" ) ) &
                                             html.option( value="1", content=cb.r( "rememberme.day@security" ) ) &
                                             html.option( value="7", content=cb.r( "rememberme.week@security" ) ) &

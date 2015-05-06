@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <div class="row">
-    <div class="col-md-3" id="login-wrapper">
+    <div class="col-md-4" id="login-wrapper">
         <div class="panel panel-primary animated flipInY">
             <div class="panel-heading">
                 <h3 class="panel-title">     

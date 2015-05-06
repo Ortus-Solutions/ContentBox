@@ -262,9 +262,23 @@
                                         <cfloop query="prc.widgets">
                                             <cfif prc.widgets.widgettype eq "Core">
                                                 <div class="col-md-6">
-                                                    <cfset p = prc.widgets.plugin>
-                                                    <cfset name = prc.widgets.name>
-                                                    <label for="export_widgets_#name#" class="checkbox">#html.checkbox(name="export_widgets",id="export_widgets_#name#",value="#name#",checked=true,data={alacarte=true})# #p.getPluginName()#</label>
+                                                    <cfscript>
+                                                    try{
+						                            	p = prc.widgetService.getWidget( name=prc.widgets.name, type=prc.widgets.widgetType );
+						                        	} catch( Any e ){
+						                        		log.error( 'Error Building #prc.widgets.toString()#. #e.message# #e.detail#', e );
+						                        		writeOutput( "<div class='alert alert-danger'>Error building '#prc.widgets.name#' widget: #e.message# #e.detail#</div>" );
+						                        		continue;
+						                        	}
+                                                    </cfscript>
+                                                    <label for="export_widgets_#prc.widgets.name#" class="checkbox">
+                                                    	#html.checkbox(
+                                                    		name="export_widgets",
+                                                    		id="export_widgets_#prc.widgets.name#",
+                                                    		value="#prc.widgets.name#",
+                                                    		checked=true,data={alacarte=true}
+                                                    	)# #p.getPluginName()#
+                                                   	</label>
                                                 </div>
                                                 <cfif counter MOD 2 eq 0>
                                                     </div>
