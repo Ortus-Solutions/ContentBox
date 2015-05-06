@@ -25,7 +25,7 @@
 					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 						<div class="btn-group btn-group-sm">
 					    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
-								Global Actions <span class="caret"></span>
+								Bulk Actions <span class="caret"></span>
 							</button>
 					    	<ul class="dropdown-menu">
 					    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
