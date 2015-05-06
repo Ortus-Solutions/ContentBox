@@ -59,8 +59,8 @@ component accessors="true"{
 				}
 			}
 			catch(Any e){
-				thisValue = "Error translating setting on target #targets[ x ]#: #e.message# #e.detail#";
-				log.error( "Error translating setting on target: #targets[ x ]#", e );
+				thisValue = "Error translating setting on target #thisSetting#: #e.message# #e.detail#";
+				log.error( "Error translating setting on target: #thisSetting#", e );
 			}
 			
 			// PROCESS REPLACING 
