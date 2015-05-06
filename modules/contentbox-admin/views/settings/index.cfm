@@ -29,6 +29,9 @@
                                 <a href="##dashboard_options" data-toggle="tab"><i class="fa fa-desktop icon-large"></i> Admin Options</a>
                             </li>
                             <li>
+                                <a href="##security_options" data-toggle="tab"><i class="fa fa-lock icon-large"></i> Security Options</a>
+                            </li>
+                            <li>
                                 <a href="##content_options" data-toggle="tab"><i class="fa fa-file icon-large"></i> Content Options</a>
                             </li>
                             <li>
@@ -72,6 +75,14 @@
                             
                             <div class="tab-pane" id="dashboard_options">
                                 #renderView( "settings/sections/adminOptions" )#
+                            </div>
+
+                            <!--- ********************************************************************* --->
+                            <!---                           SECURITY OPTIONS                               --->
+                            <!--- ********************************************************************* --->
+                            
+                            <div class="tab-pane" id="security_options">
+                                #renderView( "settings/sections/securityOptions" )#
                             </div>
                             
                             <!--- ********************************************************************* --->
