@@ -53,7 +53,7 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="text-center"><span class="badge badge-info">#entry.getHits()#</span></td>
+			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfHits()#</span></td>
 			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
 			<td class="text-center">
 				<!---Info Panel --->

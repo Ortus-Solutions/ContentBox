@@ -203,6 +203,12 @@ component implements="contentbox.model.updates.IUpdate"{
 		// Create New settings
 		addSetting( "cb_content_cachingHeader", "true" );
 		addSetting( "cb_site_poweredby", "true" );
+		// RSS New Feed Items
+		addSetting( "cb_rss_title" , "RSS Feed by ContentBox" );
+		addSetting( "cb_rss_generator" , "ContentBox by Ortus Solutions" );
+		addSetting( "cb_rss_copyright" , "Ortus Solutions, Corp (www.ortussolutions.com)" );
+		addSetting( "cb_rss_description" , "ContentBox RSS Feed" );
+		addSetting( "cb_rss_webmaster" , "" );
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/

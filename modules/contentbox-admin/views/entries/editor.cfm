@@ -195,7 +195,7 @@
                                         <tr>
                                             <th class="textRight">Views:</th>
                                             <td>
-                                                #prc.entry.getHits()#
+                                                #prc.entry.getNumberOfHits()#
                                             </td>
                                         </tr>
                                         <tr>

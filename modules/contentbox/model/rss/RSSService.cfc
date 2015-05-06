@@ -213,11 +213,12 @@ component singleton{
 		}
 
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " Blog RSS Feed by ContentBox";
-		feedStruct.generator	= "ContentBox by ColdBox Platform";
-		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
-		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
+		feedStruct.title 		= "Blog " & settings.cb_rss_title;
+		feedStruct.generator	= settings.cb_rss_generator;
+		feedStruct.copyright	= settings.cb_rss_copyright;
+		feedStruct.description	= settings.cb_rss_description;
+		if( len( settings.cb_rss_webmaster ) )
+			feedStruct.webmaster	= settings.cb_rss_webmaster;
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -278,11 +279,12 @@ component singleton{
 		}
 
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " Page RSS Feed by ContentBox";
-		feedStruct.generator	= "ContentBox by ColdBox Platform";
-		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
-		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
+		feedStruct.title 		= "Page " & settings.cb_rss_title;
+		feedStruct.generator	= settings.cb_rss_generator;
+		feedStruct.copyright	= settings.cb_rss_copyright;
+		feedStruct.description	= settings.cb_rss_description;
+		if( len( settings.cb_rss_webmaster ) )
+			feedStruct.webmaster	= settings.cb_rss_webmaster;
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -339,11 +341,12 @@ component singleton{
 		}
 
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " Content RSS Feed by ContentBox";
-		feedStruct.generator	= "ContentBox by ColdBox Platform";
-		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
-		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
+		feedStruct.title 		= "Content " & settings.cb_rss_title;
+		feedStruct.generator	= settings.cb_rss_generator;
+		feedStruct.copyright	= settings.cb_rss_copyright;
+		feedStruct.description	= settings.cb_rss_description;
+		if( len( settings.cb_rss_webmaster ) )
+			feedStruct.webmaster	= settings.cb_rss_webmaster;
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();
@@ -392,11 +395,12 @@ component singleton{
 		}
 
 		// Generate feed items
-		feedStruct.title 		= CBHelper.siteName() & " Comments RSS Feed by ContentBox";
-		feedStruct.generator	= "ContentBox by ColdBox Platform";
-		feedStruct.copyright	= "Ortus Solutions, Corp (www.ortussolutions.com)";
-		feedStruct.description	= CBHelper.siteDescription();
-		feedStruct.webmaster	= listFirst( settings.cb_site_email ) & " (Site Administrator)";
+		feedStruct.title 		= "Comments " & settings.cb_rss_title;
+		feedStruct.generator	= settings.cb_rss_generator;
+		feedStruct.copyright	= settings.cb_rss_copyright;
+		feedStruct.description	= settings.cb_rss_description;
+		if( len( settings.cb_rss_webmaster ) )
+			feedStruct.webmaster	= settings.cb_rss_webmaster;
 		feedStruct.pubDate 		= now();
 		feedStruct.lastbuilddate = now();
 		feedStruct.link 		= CBHelper.linkHome();

@@ -30,7 +30,7 @@
                                     <td>
                                         <a href="#prc.CBHelper.linkContent( topContent )#">#topContent.getTitle()#</a>
                                     </td>
-                                    <td class="text-center">#topContent.getHits()#</td>
+                                    <td class="text-center">#topContent.getNumberOfHits()#</td>
                                 </tr>
                             </cfloop>
                         </tbody>
