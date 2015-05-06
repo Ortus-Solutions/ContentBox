@@ -49,7 +49,8 @@
                                             #html.textField(
                                                 name="settingSearch",
                                                 class="form-control",
-                                                placeholder="Quick Search"
+                                                placeholder="Quick Search",
+                                                value=event.getValue( "search", "" )
                                             )#
                                         </div>
                                     </div>
