@@ -77,8 +77,6 @@ component implements="contentbox.model.updates.IUpdate"{
 			updateAdmin();
 			updateEditor();
 
-			// TODO: Add showInSearch bit
-
 			log.info("Finalized #version# patching");
 		}
 		catch(Any e){
@@ -94,11 +92,14 @@ component implements="contentbox.model.updates.IUpdate"{
 	*/
 	function postInstallation(){
 		try{
-			// Verify if less than 1.5.7 with message
+			// Verify if less than 1.6.0 with message
 			if( !isValidInstall() ){ return; }
 
 			// Make changes on disk take effect
 			ORMREload();
+
+			// Migrate Hits
+			migrateHits();
 
 		}
 		catch(Any e){
@@ -110,8 +111,28 @@ component implements="contentbox.model.updates.IUpdate"{
 
 	/************************************** PRIVATE *********************************************/
 
+	private function migrateHits(){
+		try{
+			var qContent 	= new Query( sql="select contentID, hits from cb_content" ).execute().getResult();
+			var hitsFound	= new Query( sql="SELECT count( hits ) AS count FROM cb_stats" ).execute().getResult().count;
+
+			// only migrate if no migration yet.
+			if( hitsFound eq 0 ){
+				for( var x=1; x lte qContent.recordcount; x++ ){
+					var q = new Query( sql="INSERT INTO cb_stats (hits,FK_contentID) VALUES (#qContent.hits[ x ]#, #qContent.contentID[ x ]#)" ).execute();
+				}
+				log.info( "Migrated hit counts to new table system" );
+			} else {
+				log.info( "No migration for hits counts needed" );
+			}
+
+		} catch (Any e ){
+			log.error( "Error migrating hit counts: #e.message# #e.detail#" );
+		}
+	}
+
 	private function isValidInstall(){
-		// Verify if less than 1.5.7 with message
+		// Verify if less than 1.6.0 with message
 		if( replace( currentVersion, ".", "", "all" )  LT 160 ){
 			log.info( "Cannot patch this installation until you upgrade to 1.6.0 first. You can find all of our patches here available for download: http://www.gocontentbox.org/download. Then apply this patch." );
 			return false;
@@ -209,6 +230,10 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_rss_copyright" , "Ortus Solutions, Corp (www.ortussolutions.com)" );
 		addSetting( "cb_rss_description" , "ContentBox RSS Feed" );
 		addSetting( "cb_rss_webmaster" , "" );
+		// Content Tracking
+		addSetting( "cb_content_hit_count", "true" );
+		addSetting( "cb_content_hit_ignore_bots", "false" );
+		addSetting( "cb_content_bot_regex", "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby" );
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/

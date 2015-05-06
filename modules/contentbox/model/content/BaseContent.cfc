@@ -28,7 +28,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="passwordProtection"		notnull="false" length="100" default="" index="idx_published";
 	property name="HTMLKeywords"			notnull="false" length="160" default="";
 	property name="HTMLDescription"			notnull="false" length="160" default="";
-	property name="hits"					notnull="false" ormtype="long" default="0";
 	property name="cache"					notnull="true"  ormtype="boolean" default="true" index="idx_cache";
 	property name="cacheLayout"				notnull="true"  ormtype="boolean" default="true" index="idx_cachelayout";
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" index="idx_cachetimeout";
@@ -76,6 +75,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			  cfc="contentbox.model.content.BaseContent" fkcolumn="FK_relatedContentID" linktable="cb_relatedContent" inversejoincolumn="FK_contentID";
 
 	// Calculated Fields
+	property name="numberOfHits" 				formula="select cs.hits from cb_stats cs where cs.FK_contentID=contentID" default="0";
 	property name="numberOfVersions" 			formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" default="0";
 	property name="numberOfComments" 			formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" default="0";
 	property name="numberOfApprovedComments" 	formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID and comment.isApproved = 1" default="0";
@@ -89,7 +89,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	function init(){
 		variables.isPublished 		= true;
 		variables.allowComments 	= true;
-		variables.hits 				= 0;
+		variables.numberOfHits 		= 0;
 		variables.cache 			= true;
 		variables.cacheLayout 		= true;
 		variables.cacheTimeout 		= 0;
@@ -587,7 +587,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		setCreatedDate( now() );
 		setPublishedDate( now() );
 		// reset hits
-		hits = 0;
+		numberOfHits = 0;
 		// remove all comments
 		comments = [];
 		// get latest content versioning
@@ -718,20 +718,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 
 	/**
-	* add published timestamp to property
-	* @timeString.hint The joined time string (e.g., 12:00)
-	*/
-	any function addJoinedPublishedTime( required string timeString ){
-		var splitTime = listToArray( arguments.timeString, ":" );
-		if( arrayLen( splitTime )==2 ) {
-			return addPublishedTime( splitTime[ 1 ], splitTime[ 2 ] );
-		}
-		else {
-			return this;
-		}
-	}
-
-	/**
 	* add expired timestamp to property
 	*/
 	any function addExpiredTime( required hour, required minute ){
@@ -743,20 +729,6 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
 		setExpireDate( getExpireDate() & " " & time );
 		return this;
-	}
-
-	/**
-	* add expired timestamp to property
-	* @timeString.hint The joined time string (e.g., 12:00)
-	*/
-	any function addJoinedExpiredTime( required string timeString ){
-		var splitTime = listToArray( arguments.timeString, ":" );
-		if( arrayLen( splitTime )==2 ) {
-			return addExpiredTime( splitTime[ 1 ], splitTime[ 2 ] );
-		}
-		else {
-			return this;
-		}
 	}
 
 	/**
