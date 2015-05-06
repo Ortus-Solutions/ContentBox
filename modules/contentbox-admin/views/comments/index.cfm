@@ -42,7 +42,7 @@
 								<div class="pull-right">
 									<div class="btn-group btn-sm">
 								    	<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
-											Global Actions <span class="caret"></span>
+											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
 								    		<li><a href="javascript:changeStatus('approve')"><i class="fa fa-thumbs-up"></i> Approve Selected</a></li>
