@@ -5,8 +5,18 @@ $(document).ready(function() {
 	$uploadForm = $("##moduleUploadForm");
 	$moduleForm = $("##moduleForm");
 	$forgebox   = $("##forgeboxPane");
-	// table sorting + filtering
-	$("##modules").tablesorter();
+	$("##modules").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
+	});
 	$("##moduleFilter").keyup(function(){
 		$.uiTableFilter( $("##modules"), this.value );
 	});

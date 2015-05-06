@@ -13,7 +13,7 @@ $(document).ready(function() {
                     msg += '<li>' + label.text() + ' ' + errorList[ i ].message + '</li>';
                 }
                 msg += '</ul>';
-                var wall = $("##errorBar").addClass("alert alert-error").fadeIn().html( msg );
+                var wall = $("##errorBar").addClass("alert alert-danger").fadeIn().html( msg );
             }
         }
     });
@@ -25,11 +25,11 @@ $(document).ready(function() {
 });
 
 function nextStep(){
-    var $tabs = $('.tabbable li');
+    var $tabs = $('.tab-wrapper li');
 	$tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
 }
 function prevStep(){
-    var $tabs = $('.tabbable li');
+    var $tabs = $('.tab-wrapper li');
 	$tabs.filter('.active').prev('li').find('a[data-toggle="tab"]').tab('show');
 }
 </script>

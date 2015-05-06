@@ -4,7 +4,19 @@
 $(document).ready(function() {
 	$importDialog = $("##importDialog");
 	// table sorting + filtering
-	$("##permissions").tablesorter();
+	//$("##permissions").tablesorter();
+	$("##permissions").dataTable({
+		"paging": false,
+		"info": false,
+		"searching": false,
+	    "columnDefs": [
+	        { 
+	            "orderable": false, 
+	            "targets": '{sorter:false}' 
+	        }
+	    ],
+	    "order": []
+	});
 	$("##permissionFilter").keyup(function(){
 		$.uiTableFilter( $("##permissions"), this.value );
 	});
@@ -50,7 +62,7 @@ function importContent(){
 }
 function remove(permissionID){
 	var $permissionForm = $("##permissionForm");
-	$("##delete_"+ permissionID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+	$("##delete_"+ permissionID).removeClass( "fa-times" ).addClass( "fa fa-spinner icon-spin" );
 	$permissionForm.find("##permissionID").val( permissionID );
 	$permissionForm.submit();
 }

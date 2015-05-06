@@ -15,7 +15,7 @@ $(document).ready(function() {
 <cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
 function commentPagerChangeStatus(status,recordID){
 	// update icon
-	$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+	$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 	// ajax status change
 	$.post("#event.buildlink(linkTo=prc.xehCommentPagerStatus)#",{commentStatus:status, commentID:recordID},function(data){
 		if( data.ERROR ){
@@ -30,7 +30,7 @@ function commentPagerChangeStatus(status,recordID){
 }
 function commentPagerRemove(recordID){
 	if( !confirm("Really permanently delete comment?") ){ return; }
-	$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+	$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 	// ajax remove change
 	$.post("#event.buildlink(linkTo=prc.xehCommentPagerRemove)#",{commentID:recordID},function(data){
 		hideAllTooltips();

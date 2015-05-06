@@ -33,7 +33,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
     public ContentProvider function init() {
         setName( "Content" );
         setType( "Content" );
-        setIconClass( "icon-file-alt" );
+        setIconClass( "fa fa-file" );
         setEntityName( "cbContentMenuItem" );
         setDescription( "A menu item based on existing pages or blog entries" );
         return this;

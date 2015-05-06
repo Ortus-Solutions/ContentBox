@@ -206,6 +206,8 @@ component extends="baseContentHandler"{
 
 		// Tab
 		prc.tabContent_contentStore = true;
+		prc.cssAppendList = "../spacelab/plugins/clockpicker/clockpicker";
+        prc.jsAppendList  = "../spacelab/plugins/clockpicker/clockpicker";
 		// view
 		event.setView("contentStore/editor");
 	}
@@ -263,8 +265,10 @@ component extends="baseContentHandler"{
 		event.paramValue( "publishedDate", now() );
 		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH") );
 		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm") );
+		event.paramValue( "publishedTime", event.getValue( "publishedHour") & ":" & event.getValue( "publishedMinute" ) );
 		event.paramValue( "expireHour", "" );
 		event.paramValue( "expireMinute", "" );
+		event.paramValue( "expireTime", "" );
 		event.paramValue( "content", "" );
 		event.paramValue( "creatorID","" );
 		event.paramValue( "customFieldsCount", 0 );
@@ -286,8 +290,8 @@ component extends="baseContentHandler"{
 
 		// get new/persisted content and populate it
 		var content = populateModel( contentStoreService.get( rc.contentID ) )
-			.addPublishedtime( rc.publishedHour, rc.publishedMinute)
-			.addExpiredTime( rc.expireHour, rc.expireMinute );
+			.addJoinedPublishedtime( rc.publishedTime )
+			.addJoinedExpiredTime( rc.expireTime );
 		var isNew = ( NOT content.isLoaded() );
 
 		// Validate it

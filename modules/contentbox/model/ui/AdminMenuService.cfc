@@ -37,6 +37,18 @@ component accessors="true" threadSafe singleton{
 	*/
 	property name="headerMenu"		type="array";
 	/**
+	* This holds the support menu structure
+	*/
+	property name="supportMenu"		type="array";
+	/**
+	* This holds the utils menu structure
+	*/
+	property name="utilsMenu"		type="array";
+	/**
+	* This holds the profile menu structure
+	*/
+	property name="profileMenu"		type="array";
+	/**
 	* This is a reference map of the headerMenu array
 	*/
 	property name="headerMenuMap"	type="struct";
@@ -74,6 +86,12 @@ component accessors="true" threadSafe singleton{
 		variables.topMenuMap = {};
 		// init header menu array
 		variables.headerMenu = [];
+		// init header menu array
+		variables.supportMenu = [];
+		// init header menu array
+		variables.utilsMenu = [];
+		// init header menu array
+		variables.profileMenu = [];
 		// init profile menu structure
 		variables.headerMenuMap = {};
 		// top menu pointer
@@ -91,9 +109,62 @@ component accessors="true" threadSafe singleton{
 		// create default menus
 		createHeaderMenu();
 		createDefaultMenu();
-		
 		return this;
 	}
+
+	function buildLIAttributes( required any event, required any menu ) {
+        var attributes = {
+            "class" = "#menu.class#",
+            "data-name" = "#menu.name#"
+        };
+        if( structKeyExists( menu, "id" ) && len( menu.id ) ) {
+    		attributes[ "id" ] = menu.id;
+    	}
+        if( event.getValue( name='tab#menu.name#', defaultValue=false, private=true ) ) {
+            listAppend( attributes.class, "active", " " );
+        }
+        return createAttributeList( attributes );
+    }
+
+    function buildItemAttributes( required any event, required any menu, structDefaults={} ) {
+    	var attributes = {
+    		"class" = structKeyExists( structDefaults, "class" ) ? structDefaults.class : ""
+    	};
+    	if( len( menu.itemClass ) ) {
+    		attributes.class &= " #menu.itemClass#";
+    	}
+    	if( len( menu.itemId ) ) {
+    		attributes[ "id" ] = menu.itemId;
+    	}
+    	if( structKeyExists( menu, "subMenu" ) && arrayLen( menu.subMenu ) ) {
+    		attributes[ "data-toggle" ] = "dropdown";
+    	}	
+    	if( menu.itemType=="a" ) {
+    		attributes[ "href" ] = "#( isCustomFunction( menu.href ) ? menu.href() : menu.href )#";
+    	}
+    	if( menu.itemType=="button" ) {
+    		attributes[ "onclick" ] = "#( isCustomFunction( menu.href ) ? menu.href() : menu.href )#";
+    	}
+    	if( len( menu.title ) ) {
+    		attributes[ "title" ] = "#menu.title#";
+    	}
+    	if( menu.itemType=="a" && len( menu.target ) ) {
+    		attributes[ "target" ] = "#menu.target#";
+    	}
+    	var attributeList = createAttributeList( attributes );
+    	if( structKeyExists( menu, "data" ) && structCount( menu.data ) ) {
+    		attributeList &= " " & parseADataAttributes( menu.data );
+    	}
+    	return attributeList;
+	}
+
+    function createAttributeList( required struct attributes ) {
+        var attributeList = "";
+        for( var key in arguments.attributes ) {
+            attributeList &= '#key#="#attributes[ key ]#"';
+        }
+        return attributeList;
+    }
 
 	/**
 	* Create the default ContentBox header menu contributions
@@ -106,33 +177,145 @@ component accessors="true" threadSafe singleton{
 		var xehDoLogout			= "#this.ADMIN_ENTRYPOINT#.security.doLogout";
 		var xehAutoUpdates		= "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		var xehAbout			= "#this.ADMIN_ENTRYPOINT#.dashboard.about";
+		var xehAdminAction		= "#this.ADMIN_ENTRYPOINT#.dashboard.reload";
 
 		// Register About Menu
-		addHeaderMenu( name="about", label='<i class="icon-info-sign"></i> About', permissions="SYSTEM_TAB" )
-			.addHeaderSubMenu( name="support", label='<i class="icon-ambulance"></i> Professional Support', href="http://www.gocontentbox.org/services/support", target="_blank" )
-			.addHeaderSubMenu( name="docs", label='<i class="icon-book"></i> Documentation', href="http://www.gocontentbox.org/resources/docs", target="_blank" )
-			.addHeaderSubMenu( name="forums", label='<i class="icon-envelope"></i> Support Forums', href="https://groups.google.com/forum/?fromgroups##!forum/contentbox", target="_blank" )
-			.addHeaderSubMenu( name="divider", class="divider", label="" )
-			.addHeaderSubMenu( name="twitter", label='<i class="icon-twitter"></i> Twitter', href="https://www.twitter.com/gocontentbox", target="_blank" )
-			.addHeaderSubMenu( name="facebook", label='<i class="icon-facebook"></i> Facebook', href="https://www.facebook.com/gocontentbox", target="_blank" )
-			.addHeaderSubMenu( name="google", label='<i class="icon-google-plus"></i> Google+', href="https://plus.google.com/u/0/111231811346031749369", target="_blank" )
-			.addHeaderSubMenu( name="divider", class="divider", label="" )
-			.addHeaderSubMenu( name="updates", label='<i class="icon-download-alt"></i> Check for Updates', href="#event.buildLink( xehAutoUpdates )#" )
-			.addHeaderSubMenu( name="buildid", label='<i class="icon-info-sign"></i> ContentBox v.#variables.moduleConfig.version# <br>
-										<span class="label label-warning">(Codename: #variables.moduleConfig.settings.codename#)</span>', href="#event.buildLink( xehAbout )#" );
-			
-		// Register Profile Menu
-		addHeaderMenu( name="profile", 
-					   label=variables.buildProfileLabel )
-			.addHeaderSubMenu( name="myprofile", title="ctrl+shift+A", 
-				     	   	   label="<i class='icon-camera'></i> My Profile", 
-				     	   	   href="#event.buildLink( xehMyProfile )#",
-					 	   	   data={ keybinding="ctrl+shift+a" } )
-			.addHeaderSubMenu( name="logout", title="ctrl+shift+L", 
-					 		   label="<i class='icon-off'></i> Logout", 
-					 		   href="#event.buildLink( xehDoLogout )#",
-					 		   data={ keybinding="ctrl+shift+l" } );
+		addHeaderMenu( 
+			name="about", 
+			label='<i class="fa fa-info"></i>', 
+			permissions="SYSTEM_TAB", 
+			class="dropdown messages", 
+			itemType="button", 
+			itemClass="btn btn-default options", 
+			href="javascript:void(0)", 
+			itemId="toggle-mail" 
+		)
+		.addHeaderSubMenu( 
+			name="support", 
+			label='<i class="fa fa-ambulance"></i> Professional Support', 
+			href="http://www.gocontentbox.org/services/support", 
+			target="_blank" 
+		)
+		.addHeaderSubMenu( 
+			name="docs", 
+			label='<i class="fa fa-book"></i> Documentation', 
+			href="http://www.gocontentbox.org/resources/docs", 
+			target="_blank" 
+		)
+		.addHeaderSubMenu( 
+			name="forums", 
+			label='<i class="fa fa-envelope"></i> Support Forums', 
+			href="https://groups.google.com/forum/?fromgroups##!forum/contentbox", 
+			target="_blank" 
+		)
+		.addHeaderSubMenu( 
+			name="divider", 
+			class="divider", 
+			label="" )
+		.addHeaderSubMenu( 
+			name="twitter", 
+			label='<i class="fa fa-twitter"></i> Twitter', 
+			href="https://www.twitter.com/gocontentbox", 
+			target="_blank" 
+		)
+		.addHeaderSubMenu( 
+			name="facebook", 
+			label='<i class="fa fa-facebook"></i> Facebook', 
+			href="https://www.facebook.com/gocontentbox", 
+			target="_blank" 
+		)
+		.addHeaderSubMenu( 
+			name="google", 
+			label='<i class="fa fa-google-plus"></i> Google+', 
+			href="https://plus.google.com/u/0/111231811346031749369", 
+			target="_blank" 
+		)
+		.addHeaderSubMenu( 
+			name="divider", 
+			class="divider", 
+			label="" 
+		)
+		.addHeaderSubMenu( 
+			name="updates", 
+			label='<i class="fa fa-download"></i> Check for Updates', 
+			href="#event.buildLink( xehAutoUpdates )#" 
+		)
+		.addHeaderSubMenu( 
+			name="buildid", 
+			label='ContentBox v.#variables.moduleConfig.version# <br /><span class="label label-warning">(Codename: #variables.moduleConfig.settings.codename#)</span>', 
+			href="#event.buildLink( xehAbout )#",
+			class="last"
+		);
 
+		// Register Profile Menu
+		addHeaderMenu( 
+			name="profile", 
+			label=variables.buildProfileLabel, 
+			class="dropdown settings" 
+		)
+		.addHeaderSubMenu( 
+			name="myprofile", 
+			title="ctrl+shift+A", 
+			label="<i class='fa fa-camera'></i> My Profile", 
+			href="#event.buildLink( xehMyProfile )#",
+			data={ keybinding="ctrl+shift+a" } 
+		)
+		.addHeaderSubMenu( 
+			name="logout", 
+			title="ctrl+shift+L", 
+			label="<i class='fa fa-power-off'></i> Logout", 
+			href="#event.buildLink( xehDoLogout )#",
+			data={ keybinding="ctrl+shift+l" } 
+		);
+		// Register modules reload menu
+		addHeaderMenu( 
+			name="utils", 
+			label='<i class="fa fa-cog"></i>', 
+			class="dropdown messages", 
+			itemType="button", 
+			itemClass="btn btn-default options", 
+			permissions="RELOAD_MODULES" 
+		)
+		.addHeaderSubMenu( 
+			name="rsscache", 
+			label="Clear RSS Caches", 
+			href="javascript:adminAction( 'rss-purge', '#event.buildLink( xehAdminAction )#' )" 
+		)
+		.addHeaderSubMenu( 
+			name="contentpurge", 
+			label="Clear Content Caches", 
+			href="javascript:adminAction( 'content-purge', '#event.buildLink( xehAdminAction )#' )" 
+		)
+		.addHeaderSubMenu( 
+			name="app", 
+			label="Reload Application", 
+			href="javascript:adminAction( 'app', '#event.buildLink( xehAdminAction )#' )" 
+		)
+		.addHeaderSubMenu( 
+			name="orm", 
+			label="Reload ORM", 
+			href="javascript:adminAction( 'orm', '#event.buildLink( xehAdminAction )#' )" 
+		)
+		.addHeaderSubMenu( 
+			name="contentboxadmin", 
+			label="Reload Admin Module", 
+			href="javascript:adminAction( 'contentbox-admin', '#event.buildLink( xehAdminAction )#' )" 
+		)
+		.addHeaderSubMenu( 
+			name="contentboxfilebrowser", 
+			label="Reload FileBrowser Module", 
+			href="javascript:adminAction( 'contentbox-filebrowser', '#event.buildLink( xehAdminAction )#' )" 
+		)
+		.addHeaderSubMenu( 
+			name="contentboxsecurity", 
+			label="Reload Security Module", 
+			href="javascript:adminAction( 'contentbox-security', '#event.buildLink( xehAdminAction )#' )" 
+		)
+		.addHeaderSubMenu( 
+			name="contentboxui", 
+			label="Reload Site Module", 
+			href="javascript:adminAction( 'contentbox-ui', '#event.buildLink( xehAdminAction )#' )" 
+		);
 		return this;
 	}
 
@@ -143,8 +326,8 @@ component accessors="true" threadSafe singleton{
 		var event 	= requestService.getContext();
 		var prc		= event.getCollection( private=true );
 		
-		savecontent variable="profileLabel"{
-			writeOutput( '#variables.avatar.renderAvatar( email=prc.oAuthor.getEmail(), size="20" )# #prc.oAuthor.getName()#' );
+		savecontent variable="profileLabel" {
+			writeOutput( '#prc.oAuthor.getName()#' );
 		}
 
 		return profileLabel;
@@ -208,13 +391,13 @@ component accessors="true" threadSafe singleton{
 		prc.xehSubscribers		= "#this.ADMIN_ENTRYPOINT#.subscribers";
 
 		// Dashboard
-		addTopMenu( name=this.DASHBOARD, label="<i class='icon-dashboard icon-large'></i> Dashboard" )
+		addTopMenu( name=this.DASHBOARD, label="<i class='fa fa-dashboard'></i> Dashboard" )
 			.addSubMenu( name="home", label="Home", href="#event.buildLink(prc.xehDashboard)#" )
 			.addSubMenu( name="about", label="About", href="#event.buildLink(prc.xehAbout)#" )
 			.addSubMenu( name="updates", label="Updates", href="#event.buildLink(prc.xehAutoUpdater)#", permissions="SYSTEM_UPDATES" );
 
 		// Content
-		addTopMenu( name=this.CONTENT, label="<i class='icon-pencil icon-large'></i> Content" )
+		addTopMenu( name=this.CONTENT, label="<i class='fa fa-pencil'></i> Content" )
 			.addSubMenu( name="Pages", label="Sitemap", href="#event.buildLink(prc.xehPages)#", permissions="PAGES_ADMIN,PAGES_EDITOR" )
 			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href="#event.buildLink(prc.xehEntries)#", permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
 			.addSubMenu( name="contentStore", label="Content Store", href="#event.buildLink(prc.xehContentStore)#", permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
@@ -223,34 +406,34 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( name="menu", label="Menu Manager", href="#event.buildLink(prc.xehMenuManager)#", permissions="MENUS_ADMIN" );
 
 		// Comments
-		addTopMenu( name=this.COMMENTS, label="<i class='icon-comments icon-large'></i> Comments" )
+		addTopMenu( name=this.COMMENTS, label="<i class='fa fa-comment'></i> Comments" )
 			.addSubMenu( name="Inbox", label="Inbox", href="#event.buildLink(prc.xehComments)#", permissions="COMMENTS_ADMIN" )
 			.addSubMenu( name="Settings", label="Settings", href="#event.buildLink(prc.xehCommentsettings)#", permissions="COMMENTS_ADMIN" );
 
 		// Look and Feel
-		addTopMenu( name=this.LOOK_FEEL, label="<i class='icon-tint icon-large'></i> Look & Feel" )
+		addTopMenu( name=this.LOOK_FEEL, label="<i class='fa fa-tint'></i> Look & Feel" )
 			.addSubMenu( name="Layouts", label="Layouts", href="#event.buildLink(prc.xehLayouts)#", permissions="LAYOUT_ADMIN" )
 			.addSubMenu( name="Widgets", label="Widgets", href="#event.buildLink(prc.xehWidgets)#", permissions="WIDGET_ADMIN" )
 			.addSubMenu( name="globalHTML", label="Global HTML", href="#event.buildLink(prc.xehGlobalHTML)#", permissions="GLOBALHTML_ADMIN" );
 
 		// Modules
-		addTopMenu( name=this.MODULES, label="<i class='icon-bolt icon-large'></i> Modules", permissions="MODULES_ADMIN" )
+		addTopMenu( name=this.MODULES, label="<i class='fa fa-bolt'></i> Modules", permissions="MODULES_ADMIN" )
 			.addSubMenu( name="Manage", label="Manage", href="#event.buildLink(prc.xehModules)#" );
 
 		// User
-		addTopMenu( name=this.USERS, label="<i class='icon-group icon-large'></i> Users" )
+		addTopMenu( name=this.USERS, label="<i class='fa fa-user'></i> Users" )
 			.addSubMenu( name="Manage", label="Manage", href="#event.buildLink(prc.xehAuthors)#", permissions="AUTHOR_ADMIN" )
 			.addSubMenu( name="Permissions", label="Permissions", href="#event.buildLink(prc.xehPermissions)#", permissions="PERMISSIONS_ADMIN" )
 			.addSubMenu( name="Roles", label="Roles", href="#event.buildLink(prc.xehRoles)#", permissions="ROLES_ADMIN" );
 
 		// Tools
-		addTopMenu( name=this.TOOLS, label="<i class='icon-wrench icon-large'></i> Tools" )
+		addTopMenu( name=this.TOOLS, label="<i class='fa fa-wrench'></i> Tools" )
 			.addSubMenu( name="Import", label="Import", href="#event.buildLink(prc.xehToolsImport)#", permissions="TOOLS_IMPORT" )
 			.addSubMenu( name="Export", label="Export", href="#event.buildLink(prc.xehToolsExport)#", permissions="TOOLS_EXPORT" )
 			.addSubMenu( name="APIDocs", label="API Docs", href="#event.buildLink(prc.xehApiDocs)#", permissions="SYSTEM_TAB" );
 
 		// SYSTEM
-		addTopMenu( name=this.SYSTEM, label="<i class='icon-briefcase icon-large'></i> System", permissions="SYSTEM_TAB" )
+		addTopMenu( name=this.SYSTEM, label="<i class='fa fa-briefcase'></i> System", permissions="SYSTEM_TAB" )
 			.addSubMenu( name="Settings", label="Settings", href="#event.buildLink(prc.xehSettings)#", data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
 			.addSubMenu( name="SecurityRules", label="Security Rules", href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN" )
 			.addSubMenu( name="EmailTemplates", label="Email Templates", href="#event.buildLink(prc.xehEmailTemplates)#", permissions="EMAIL_TEMPLATE_ADMIN" )
@@ -258,7 +441,7 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( name="AuthLogs", label="Auth Logs", href="#event.buildLink(prc.xehAuthLogs)#", permissions="SYSTEM_AUTH_LOGS" );
 		
 		// STATS
-		addTopMenu( name=this.STATS, label="<i class='icon-bar-chart icon-large'></i> Stats" )
+		addTopMenu( name=this.STATS, label="<i class='fa fa-bar-chart-o'></i> Stats" )
 			.addSubMenu( name="Subscribers", label="Subscribers", href="#event.buildLink( prc.xehSubscribers )#", title="View Subscribers" );
 
 		return this;
@@ -300,8 +483,13 @@ component accessors="true" threadSafe singleton{
 	* @target.hint The target to execute the link in, default is same page.
 	* @permissions.hint The list of permissions needed to view this menu
 	* @data.hint A structure of data attributes to add to the link
+	* @class.hint A CSS class list to append to the element
+	* @id.hint An id to apply to the element
+	* @itemType.hint The type of element to create (e.g., a tag, button, etc.)
+	* @itemClass.hint A CSS class list to append to the element
+	* @itemId.hint An id to apply to the item element
 	*/
-	AdminMenuService function addTopMenu( required name, required label, title="", href="javascript:null()", target="", permissions="", data=structNew(), class="" ){
+	AdminMenuService function addTopMenu( required name, required label, title="", href="javascript:void( null )", target="", permissions="", data=structNew(), class="", id="", itemType="a", itemClass="", itemId=""  ){
 		// stash pointer
 		variables.thisTopMenu = arguments.name;
 		// store new top menu in reference map
@@ -322,12 +510,18 @@ component accessors="true" threadSafe singleton{
 	* @target.hint The target to execute the link in, default is same page.
 	* @permissions.hint The list of permissions needed to view this menu
 	* @data.hint A structure of data attributes to add to the link
+	* @class.hint A CSS class list to append to the element
+	* @id.hint An id to apply to the element
+	* @itemType.hint The type of element to create (e.g., a tag, button, etc.)
+	* @itemClass.hint A CSS class list to append to the element
+	* @itemId.hint An id to apply to the item element
 	*/
-	AdminMenuService function addHeaderMenu( required name, required label, title="", href="javascript:null()", target="", permissions="", data=structNew(), class="" ){
+	AdminMenuService function addHeaderMenu( required name, required label, title="", href="javascript:void( null )", target="", permissions="", data=structNew(), class="", id="", itemType="a", itemClass="", itemId="" ){
 		// stash pointer
 		variables.thisHeaderMenu = arguments.name;
 		// store new top menu in reference map
 		variables.headerMenuMap[ arguments.name ] = { submenu = [] };
+
 		structAppend( variables.headerMenuMap[ arguments.name ], arguments, true );
 		// store in menu container
 		arrayAppend( variables.headerMenu, variables.headerMenuMap[ arguments.name ] );
@@ -345,8 +539,13 @@ component accessors="true" threadSafe singleton{
 	* @target.hint The target to execute the link in, default is same page.
 	* @permissions.hint The list of permissions needed to view this menu
 	* @data.hint A structure of data attributes to add to the link
+	* @class.hint A CSS class list to append to the element
+	* @id.hint An id to apply to the element
+	* @itemType.hint The type of element to create (e.g., a tag, button, etc.)
+	* @itemClass.hint A CSS class list to append to the element
+	* @itemId.hint An id to apply to the item element
 	*/
-	AdminMenuService function addSubMenu(topMenu, required name, required label, title="", href="##", target="", permissions="", data=structNew(), class="" ){
+	AdminMenuService function addSubMenu(topMenu, required name, required label, title="", href="##", target="", permissions="", data=structNew(), class="", id="", itemType="a", itemClass="", itemId="" ){
 		// Check if thisTopMenu set?
 		if( !len(thisTopMenu) AND !structKeyExists(arguments,"topMenu") ){ throw("No top menu passed or concatenated with"); }
 		// check this pointer
@@ -367,8 +566,13 @@ component accessors="true" threadSafe singleton{
 	* @target.hint The target to execute the link in, default is same page.
 	* @permissions.hint The list of permissions needed to view this menu
 	* @data.hint A structure of data attributes to add to the link
+	* @class.hint A CSS class list to append to the element
+	* @id.hint An id to apply to the element
+	* @itemType.hint The type of element to create (e.g., a tag, button, etc.)
+	* @itemClass.hint A CSS class list to append to the element
+	* @itemId.hint An id to apply to the item element
 	*/
-	AdminMenuService function addHeaderSubMenu( headerMenu, required name, required label, title="", href="##", target="", permissions="", data=structNew(), class="" ){
+	AdminMenuService function addHeaderSubMenu( headerMenu, required name, required label, title="", href="##", target="", permissions="", data=structNew(), class="", iid="", itemType="a", itemClass="", itemId="" ){
 		// Check if thisTopMenu set?
 		if( !len( thisHeaderMenu ) AND !structKeyExists( arguments, "headerMenu" ) ){ throw( "No header menu passed or concatenated with" ); }
 		// check this pointer
@@ -485,7 +689,47 @@ component accessors="true" threadSafe singleton{
 		return genMenu;
 	}
 
+	any function generateSupportMenu() {
+		var event 		= requestService.getContext();
+		var prc			= event.getCollection( private=true );
+		var genMenu 	= "";
+		var thisMenu 	= variables.headerMenuMap[ "about" ];
 
+		savecontent variable="genMenu"{
+			include "templates/subNav.cfm";
+		}
+
+		// return it
+		return genMenu;
+	}
+
+	any function generateUtilsMenu() {
+		var event 		= requestService.getContext();
+		var prc			= event.getCollection( private=true );
+		var genMenu 	= "";
+		var thisMenu 	= variables.headerMenuMap[ "utils" ];
+
+		savecontent variable="genMenu"{
+			include "templates/subNav.cfm";
+		}
+
+		// return it
+		return genMenu;
+	}
+
+	any function generateProfileMenu() {
+		var event 		= requestService.getContext();
+		var prc			= event.getCollection( private=true );
+		var genMenu 	= "";
+		var thisMenu 	= variables.headerMenuMap[ "profile" ];
+
+		savecontent variable="genMenu"{
+			include "templates/subNav.cfm";
+		}
+
+		// return it
+		return genMenu;
+	}
 
 	/**
 	* Generate a flat representation of data elements

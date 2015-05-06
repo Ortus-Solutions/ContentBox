@@ -42,7 +42,7 @@ component extends="coldbox.system.Plugin" {
     ) {
         savecontent variable="renderedContent" {
             writeoutput(
-                '<div class="control-group"><div class="controls">'
+                '<div class="form-group"><div class="controls">'
             );
             if( structKeyExists( arguments, "label" ) and len( arguments.label ) ) {
                 writeoutput(
@@ -50,24 +50,23 @@ component extends="coldbox.system.Plugin" {
                 );
             }
             writeoutput('
-                <div class="fileupload fileupload-new" data-provides="fileupload">
-                    <div class="input-append textfield">
-                        <div class="uneditable-input span#arguments.columnWidth#">
-                            <i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
-                        </div>
-                        <span class="btn btn-file">
-                            <span class="fileupload-new">#arguments.selectButtonText#</span>
-                            <span class="fileupload-exists">#arguments.changeButtonText#</span>
-                            #html.fileField( name="#arguments.name#", required=arguments.required, id="#arguments.id#" )#
-                        </span>
+                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                    <div class="form-control" data-trigger="fileinput">
+                        <i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span>
+                    </div>
+                    <span class="input-group-addon btn btn-default btn-file">
+                        <span class="fileinput-new">#arguments.selectButtonText#</span>
+                        <span class="fileinput-exists">#arguments.changeButtonText#</span>
+                        #html.fileField( name="#arguments.name#", required=arguments.required, id="#arguments.id#" )#
+                    </span>
             ');
             if( arguments.useRemoveButton ) {
                 writeoutput(
-                    '<a href="##" class="btn fileupload-exists" data-dismiss="fileupload">#arguments.removeButtonText#</a>'
+                    '<a href="##" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">#arguments.removeButtonText#</a>'
                 );                
             }
             writeoutput(
-                '</div></div></div></div>'
+                '</div></div></div>'
             );
         }
         return renderedContent;

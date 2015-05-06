@@ -30,7 +30,7 @@ component implements="contentbox.model.menu.providers.IMenuItemProvider" extends
     public FreeProvider function init() {
         setName( "Free" );
         setType( "Free" );
-        setIconClass( "icon-eye-open" );
+        setIconClass( "fa fa-eye" );
         setEntityName( "cbFreeMenuItem" );
         setDescription( "A menu item which creates a free-text menu item" );
         return this;

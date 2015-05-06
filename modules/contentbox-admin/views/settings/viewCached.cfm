@@ -19,12 +19,12 @@
     	</thead>
     	<tbody>
     		<tr>
-    			<td class="center">#rc.metadata.hits#</td>
-    			<td class="center">#rc.metadata.isExpired#</td>
-    			<td class="center">#rc.metadata.created#</td>
-    			<td class="center">#rc.metadata.lastAccessed#</td>
-    			<td class="center">#rc.metadata.timeout#</td>
-    			<td class="center">#rc.metadata.lastAccessTimeout#</td>
+    			<td class="text-center">#rc.metadata.hits#</td>
+    			<td class="text-center">#rc.metadata.isExpired#</td>
+    			<td class="text-center">#rc.metadata.created#</td>
+    			<td class="text-center">#rc.metadata.lastAccessed#</td>
+    			<td class="text-center">#rc.metadata.timeout#</td>
+    			<td class="text-center">#rc.metadata.lastAccessTimeout#</td>
     		</tr>
     	</tbody>
     </table>

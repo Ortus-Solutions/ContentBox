@@ -47,10 +47,10 @@ function resetFilter( reload ){
 	}
 	// reload filters
 	$("##filterBox").removeClass("selected");
-	$("##fAuthors").val( '' );
-	$("##fCategories").val( '' );
-	$("##fStatus").val( '' );
-	$("##fCreators").val( '' );
+	$("##fAuthors").val( 'all' );
+	$("##fCategories").val( 'all' );
+	$("##fStatus").val( 'any' );
+	$("##fCreators").val( 'all' );
 }
 // Content drill down
 function contentDrilldown(parent){
@@ -145,7 +145,7 @@ function activateQuickLook( $table, quickLookURL ){
 function remove( contentID, id ){
 	id = typeof id !== 'undefined' ? id : 'contentID';
 	if( contentID != null ){
-		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue( id, contentID );		
 	}
 	$contentForm.submit();
@@ -161,7 +161,7 @@ function bulkChangeStatus(status, contentID){
 	$contentForm.find("##contentStatus").val( status );
 	// only submit if something selected
 	if( contentID != null ){
-		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
+		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('contentID',contentID);	
 	}
 	$contentForm.submit();
