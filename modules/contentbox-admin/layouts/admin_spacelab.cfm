@@ -38,77 +38,78 @@
         <link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         
         <!--- ********************************************************************* --->
-        <!---                           CSS + JAVASCRIPT                            --->
+        <!---                           CSS 	                                    --->
         <!--- ********************************************************************* --->
 
-        <!---Minify global CSS includes--->
-        <cfscript>
-            cssFiles = [
-                // Bootstrap core CSS
-                "#prc.cbroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css",
-                // custom admintheme files
-                "#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() & ',' : '')#",
-                // fonts from font awesome
-                "#prc.cbroot#/includes/spacelab/css/font-awesome.min.css",
-                // css animate
-                "#prc.cbroot#/includes/spacelab/css/animate.css",
-                // fileupload
-                "#prc.cbroot#/includes/css/bootstrap-fileupload.css",
-                // modal
-                "#prc.cbroot#/includes/css/bootstrap-modal-bs3patch.css",
-                "#prc.cbroot#/includes/css/bootstrap-modal.css",
-                // datepicker
-                "#prc.cbroot#/includes/css/bootstrap-datepicker.css",
-                // datatables
-                "#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css",
-                // toastr
-                "#prc.cbroot#/includes/css/toastr.min.css",
-                // custom styles for spacelab
-                "#prc.cbroot#/includes/spacelab/css/main.css"
-            ];
-            jsFiles = [
-                // modernizr for feature detection
-                "#prc.cbroot#/includes/spacelab/js/modernizr-2.6.2.min.js",
-                // jquery main
-                "#prc.cbroot#/includes/spacelab/js/jquery.min.js",
-                // bootstrap js
-                "#prc.cbroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js",
-                // spacelab js
-                "#prc.cbroot#/includes/spacelab/js/application.js",
-                // fileupload
-                "#prc.cbroot#/includes/js/bootstrap-fileupload.js",
-                // modal
-                "#prc.cbroot#/includes/js/bootstrap-modalmanager.js",
-                "#prc.cbroot#/includes/js/bootstrap-modal.js",
-                // datepicker
-                "#prc.cbroot#/includes/js/bootstrap-datepicker.js",
-                // cookie helper
-                "#prc.cbroot#/includes/js/jquery.cookie.js",
-                // validation
-                "#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js",
-                // jwerty
-                "#prc.cbroot#/includes/js/jwerty.js",
-                // datatables
-                "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js",
-                "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js",
-                // table filter
-                "#prc.cbroot#/includes/js/jquery.uitablefilter.js",
-                // drag and drop
-                "#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",
-                // toastr
-                "#prc.cbroot#/includes/js/toastr.min.js",
-                // custom admintheme js
-                "#( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#",
-                // main ContentBox scripts
-                "#prc.cbroot#/includes/js/contentbox.js"
-            ];
-        </cfscript>
-        #cb.minify( assets=arrayToList( cssFiles ), location="#prc.cbroot#/includes/cache" )#
-        #cb.minify( assets=arrayToList( jsFiles ), location="#prc.cbroot#/includes/cache" )#
-        
+        <!-- Bootstrap core CSS -->
+        <link href="#prc.cbroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <!-- custom admintheme files -->
+        <link href="#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() : '' )#" rel="stylesheet" />
+        <!-- fonts from font awesome -->
+        <link href="#prc.cbroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />
+        <!-- css animate -->
+        <link href="#prc.cbroot#/includes/spacelab/css/animate.css" rel="stylesheet" />
+        <!-- file upload -->
+        <link href="#prc.cbroot#/includes/css/bootstrap-fileupload.css" rel="stylesheet" />
+        <!-- modal -->
+        <link href="#prc.cbroot#/includes/css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
+        <link href="#prc.cbroot#/includes/css/bootstrap-modal.css" rel="stylesheet" />
+        <!-- datepicker -->
+        <link href="#prc.cbroot#/includes/css/bootstrap-datepicker.css" rel="stylesheet" />
+        <!-- datatables -->
+        <link href="#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css" rel="stylesheet" />
+        <!-- toastr -->
+        <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
+        <!-- custom styles for spacelab -->
+        <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
+
+        <!--- ********************************************************************* --->
+        <!---                           JAVASCRIPT                                  --->
+        <!--- ********************************************************************* --->
+
+        <!-- modernizr for feature detection -->
+        <script src="#prc.cbroot#/includes/spacelab/js/modernizr-2.6.2.min.js"></script>
+        <!-- jquery main -->
+        <script src="#prc.cbroot#/includes/spacelab/js/jquery.min.js"></script>
+        <!-- bootstrap js -->
+        <script src="#prc.cbroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <!-- spacelab js -->
+        <script src="#prc.cbroot#/includes/spacelab/js/application.js"></script>
+        <!-- file upload -->
+        <script src="#prc.cbroot#/includes/js/bootstrap-fileupload.js"></script>
+       	<!-- modal -->
+        <script "#prc.cbroot#/includes/js/bootstrap-modalmanager.js",></script>
+        <script "#prc.cbroot#/includes/js/bootstrap-modal.js"></script>
+        <!-- datepicker -->
+        <script "#prc.cbroot#/includes/js/bootstrap-datepicker.js",></script>
+        <!-- cookie helper -->
+        <script "#prc.cbroot#/includes/js/jquery.cookie.js",></script>
+        <!-- validation -->
+        <script "#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js",></script>
+        <!-- jwerty -->
+        <script "#prc.cbroot#/includes/js/jwerty.js"></script>
+        <!-- datatables -->
+        <script "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js",></script>
+        <script "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+        <!-- table filter -->
+        <script "#prc.cbroot#/includes/js/jquery.uitablefilter.js",></script>
+        <!-- drag and drop -->
+        <script "#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",></script>
+        <!-- toastr -->
+        <script "#prc.cbroot#/includes/js/toastr.min.js",></script>
+        <!-- custom admintheme js -->
+        <script "#( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#",></script>
+        <!-- main ContentBox scripts -->
+        <script "#prc.cbroot#/includes/js/contentbox.js"></script>
+
         <!--- CKEditor Separate --->
         <script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
         <script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
+
+        <!--- ********************************************************************* --->
+        <!---                           A-LA-CARTE                                  --->
+        <!--- ********************************************************************* --->
+
         <cfscript>
             cssList = listToArray( event.getValue( "cssAppendList", "", true ) );
             for( css in cssList ) {
