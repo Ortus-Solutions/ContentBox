@@ -186,9 +186,10 @@ component accessors="true" threadSafe singleton{
 			permissions="SYSTEM_TAB", 
 			class="dropdown messages", 
 			itemType="button", 
-			itemClass="btn btn-default options", 
-			href="javascript:void(0)", 
-			itemId="toggle-mail" 
+			itemClass="btn btn-default options toggle", 
+			href="javascript:void(0)",
+			data={ placement = "right" },
+			title="About ContentBox"
 		)
 		.addHeaderSubMenu( 
 			name="support", 
@@ -273,8 +274,10 @@ component accessors="true" threadSafe singleton{
 			label='<i class="fa fa-cog"></i>', 
 			class="dropdown messages", 
 			itemType="button", 
-			itemClass="btn btn-default options", 
-			permissions="RELOAD_MODULES" 
+			itemClass="btn btn-default options toggle", 
+			permissions="RELOAD_MODULES",
+			data={ placement = "right" },
+			title="Admin Actions"
 		)
 		.addHeaderSubMenu( 
 			name="rsscache", 

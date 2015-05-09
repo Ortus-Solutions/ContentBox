@@ -2,14 +2,11 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fa fa-th"></i> Media Manager 
+			<i class="fa fa-picture-o"></i> Media Manager 
 		</h1>
 		<span class="label label-warning">#rc.library#</span>
-	</div>
-</div>
-<div class="row">
-	<div class="col-md-12">
-    	<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
+
+		<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
 			<div class="pull-right">
 				<div class="btn-group btn-group-sm">
 				    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
@@ -24,6 +21,11 @@
 			    </div>
 			</div>
 	    </cfif>
+	    
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
 		    
     	<!--- messageBox --->
 		#getPlugin("MessageBox").renderit()#

@@ -156,16 +156,70 @@
 
                 <!--logo end-->
                 <div class="toggle-navigation toggle-left">
-                    <button type="button" class="btn btn-default" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation">
-                        <i class="fa fa-bars"></i>
-                    </button>
+                    <a onclick="app.toggleMenuLeft()" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+                    	<i class="fa fa-bars"></i>
+                    </a>
                 </div>
                 <div class="user-nav">
                     <ul>
                     	<!--- View Site --->
-                    	<li class="messages">
-                    		<a class="btn btn-default options" href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="fa fa-home" style="margin-top:6px"></i></a>
+                    	<li class="messages" data-placement="right" title="Visit Site">
+                    		<a class="btn btn-default options toggle" href="#event.buildLink( prc.cbEntryPoint )#" target="_blank">
+                    			<i class="fa fa-home"></i>
+                    		</a>
                     	</li>
+                    	<!--- New Quick Links --->
+				    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
+				    	<li class="dropdown messages" title="Create New..." data-name="create-new" data-placement="right">
+				    		<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
+				    			<i class="fa fa-plus"></i>
+				    		</button>
+							<ul class="dropdown-menu animated fadeInDown">
+								<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+									<li>
+										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
+											<i class="fa fa-file-o"></i> New Page
+										</a>
+									</li>
+								</cfif>
+								<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+									<li>
+										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
+											<i class="fa fa-quote-left"></i> New Entry
+										</a>
+									</li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+									<li>
+										<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
+											<i class="fa fa-hdd-o"></i> New Content Store
+										</a>
+									</li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+									<li>
+										<a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
+											<i class="fa fa-user"></i> New User
+										</a>
+									</li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
+									<li>
+										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
+											<i class="fa fa-picture-o"></i> New Media
+										</a>
+									</li>
+								</cfif>
+								<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
+									<li>
+										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+U">
+											<i class="fa fa-list"></i> New Menu
+										</a>
+									</li>
+								</cfif>
+							</ul>
+						</li>
+						</cfif>
                     	<!--- Utils --->
                         #prc.adminMenuService.generateUtilsMenu()#
                        	<!--- Support Menu --->
