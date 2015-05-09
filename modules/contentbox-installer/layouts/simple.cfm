@@ -87,7 +87,7 @@
 						<ul class="nav pull-right">
 							<li class="dropdown">
 								<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
-									<i class="icon-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
+									<i class="fa fa-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
 									<ul role="menu" class="dropdown-menu">
 										<cfloop array="#prc.langs#" index="thisLang">
 										<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>
