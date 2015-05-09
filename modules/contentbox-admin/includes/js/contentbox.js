@@ -105,7 +105,7 @@ $(document).ready(function() {
 
 	// Tab link detector
 	$(function () {
-	   var activeTab = $('[href=' + location.hash + ']');
+	   var activeTab = $('[href="' + location.hash + '"]');
 	   activeTab && activeTab.tab('show');
 	});
 	

@@ -78,29 +78,29 @@
         <!-- file upload -->
         <script src="#prc.cbroot#/includes/js/bootstrap-fileupload.js"></script>
        	<!-- modal -->
-        <script "#prc.cbroot#/includes/js/bootstrap-modalmanager.js",></script>
-        <script "#prc.cbroot#/includes/js/bootstrap-modal.js"></script>
+        <script src="#prc.cbroot#/includes/js/bootstrap-modalmanager.js",></script>
+        <script src="#prc.cbroot#/includes/js/bootstrap-modal.js"></script>
         <!-- datepicker -->
-        <script "#prc.cbroot#/includes/js/bootstrap-datepicker.js",></script>
+        <script src="#prc.cbroot#/includes/js/bootstrap-datepicker.js",></script>
         <!-- cookie helper -->
-        <script "#prc.cbroot#/includes/js/jquery.cookie.js",></script>
+        <script src="#prc.cbroot#/includes/js/jquery.cookie.js",></script>
         <!-- validation -->
-        <script "#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js",></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js",></script>
         <!-- jwerty -->
-        <script "#prc.cbroot#/includes/js/jwerty.js"></script>
+        <script src="#prc.cbroot#/includes/js/jwerty.js"></script>
         <!-- datatables -->
-        <script "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js",></script>
-        <script "#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js",></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js"></script>
         <!-- table filter -->
-        <script "#prc.cbroot#/includes/js/jquery.uitablefilter.js",></script>
+        <script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js",></script>
         <!-- drag and drop -->
-        <script "#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",></script>
+        <script src="#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",></script>
         <!-- toastr -->
-        <script "#prc.cbroot#/includes/js/toastr.min.js",></script>
+        <script src="#prc.cbroot#/includes/js/toastr.min.js",></script>
         <!-- custom admintheme js -->
-        <script "#( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#",></script>
+        <script src="#( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#",></script>
         <!-- main ContentBox scripts -->
-        <script "#prc.cbroot#/includes/js/contentbox.js"></script>
+        <script src="#prc.cbroot#/includes/js/contentbox.js"></script>
 
         <!--- CKEditor Separate --->
         <script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
