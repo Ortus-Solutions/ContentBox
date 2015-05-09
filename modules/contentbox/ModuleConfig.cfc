@@ -189,7 +189,7 @@ component {
 	* Development tier
 	*/
 	function development(){
-		parentSettings.jsmin_enable = false;
+		//parentSettings.jsmin_enable = false;
 	}
 
 	/**

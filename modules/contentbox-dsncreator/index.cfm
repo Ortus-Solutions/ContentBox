@@ -49,7 +49,7 @@
 		<!--// modernizr for feature detection-->
         <script src="#assetroot#/includes/spacelab/js/modernizr-2.6.2.min.js"></script>
         <!--// jquery main-->
-        <script src="#assetroot#/includes/spacelab/js/jquery-1.10.2.min.js"></script>
+        <script src="#assetroot#/includes/spacelab/js/jquery.min.js"></script>
         <!--// bootstrap js-->
         <script src="#assetroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"></script>
         <!--// spacelab js-->
