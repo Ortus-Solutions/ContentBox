@@ -47,7 +47,7 @@
         <link href="#assetroot#/includes/spacelab/css/main.css" rel="stylesheet" />
 		<!--- JS --->
 		<!--// modernizr for feature detection-->
-        <script src="#assetroot#/includes/spacelab/js/modernizr-2.6.2.min.js"></script>
+        <script src="#assetroot#/includes/spacelab/js/modernizr.min.js"></script>
         <!--// jquery main-->
         <script src="#assetroot#/includes/spacelab/js/jquery.min.js"></script>
         <!--// bootstrap js-->

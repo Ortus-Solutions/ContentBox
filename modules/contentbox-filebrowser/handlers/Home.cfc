@@ -486,6 +486,7 @@ component output="false" hint="Main filebrowser module handler"{
 			}
 
 			// Add additional JS
+			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.migrate.js" );
 			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.uidivfilter.js" );
 			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.contextMenu.min.js" );
 
