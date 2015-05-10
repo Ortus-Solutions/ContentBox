@@ -21,15 +21,15 @@
                             <h2>Option ##1: Everything!</h2>
                             <small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />
                             <label class="btn btn-success btn-toggle radio" for="export_everything">
-                                #html.radioButton(name="export_type",id="export_everything",checked=true,value="everything")# Export Everything
+                                #html.radioButton( name="export_type", id="export_everything", checked=true, value="everything" )# Export Everything
                             </label>
                         </div>
                         <div class="col-md-1">&nbsp;</div>
                         <div class="col-md-5 well well-small text-center">
                             <h2>Option ##2: Mr. Picky</h2>
                             <small>For the more discriminating, select only the bits that you want to export.</small><br />
-                            <label class="btn btn-toggle radio clearfix" for="export_selective">
-                                #html.radioButton(name="export_type",id="export_selective",value="selective")# 
+                            <label class="btn btn-toggle radio" for="export_selective">
+                                #html.radioButton( name="export_type", id="export_selective", value="selective" )# 
                                 Export a-la-carte
                             </label>
                         </div>
