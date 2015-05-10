@@ -130,15 +130,15 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				<cfif prc.fbPreferences.listType eq "grid">
 					<div class="fbItemBox">
 						<div class="fbItemBoxPreview">
-							<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#r( "goback@fb" )#"><img src="#prc.fbModRoot#/includes/images/directory.png" border="0"  alt="Folder"></a>
+							<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#r( "back@fb" )#"><img src="#prc.fbModRoot#/includes/images/directory.png" border="0"  alt="Folder"></a>
 							<br>
-							<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="Go Back"> <- #r( "goback@fb" )#
+							<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="Go Back"> <- #r( "back@fb" )#
 							</a>
 						</div>
 					</div>
 				<cfelse>
-					<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#r( "goback@fb" )#"><img src="#prc.fbModRoot#/includes/images/folder.png" border="0"  alt="Folder"></a>
-					<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#r( "goback@fb" )#">..</a><br>
+					<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#r( "back@fb" )#"><img src="#prc.fbModRoot#/includes/images/folder.png" border="0"  alt="Folder"></a>
+					<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#r( "back@fb" )#">..</a><br>
 				</cfif>
 			</cfif>
 
