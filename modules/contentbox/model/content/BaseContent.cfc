@@ -733,6 +733,19 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	}
 
 	/**
+	* add published timestamp to property
+	* @timeString.hint The joined time string (e.g., 12:00)
+	*/
+	any function addJoinedPublishedTime( required string timeString ){
+		var splitTime = listToArray( arguments.timeString, ":" );
+		if( arrayLen( splitTime ) == 2 ) {
+			return addPublishedTime( splitTime[ 1 ], splitTime[ 2 ] );
+		} else {
+			return this;
+		}
+	}
+
+	/**
 	* add expired timestamp to property
 	*/
 	any function addExpiredTime( required hour, required minute ){
@@ -744,6 +757,19 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
 		setExpireDate( getExpireDate() & " " & time );
 		return this;
+	}
+
+	/**
+	* add expired timestamp to property
+	* @timeString.hint The joined time string (e.g., 12:00)
+	*/
+	any function addJoinedExpiredTime( required string timeString ){
+		var splitTime = listToArray( arguments.timeString, ":" );
+		if( arrayLen( splitTime ) == 2 ) {
+			return addExpiredTime( splitTime[ 1 ], splitTime[ 2 ] );
+		} else {
+			return this;
+		}
 	}
 
 	/**
