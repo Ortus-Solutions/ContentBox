@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <!-- ====================================================================== 
-     ContentBox Modular CMS Build (www.gocontentbox.org)                                                               
+     ContentBox Modular CMS Build
      ====================================================================== -->
  <project name="contentbox-build" default="build.all" basedir="../">
  	<description>
@@ -9,7 +9,7 @@
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
  	<property name="groupID"					value="ortussolutions" />
- 	<property name="contentbox.version"			value="3.0.0-alpha"/>
+ 	<property name="contentbox.version"			value="3.0.0-beta"/>
  	<property name="contentbox.stableversion" 	value="2.1.0" />
  	<property name="contentbox.slug"			value="contentbox"/>
 	
