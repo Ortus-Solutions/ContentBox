@@ -1,12 +1,12 @@
 {
     "name"              : "ContentBox Modular CMS",
-    "version"           : "3.0.0-alpha+@build.number@",
+    "version"           : "3.0.0-beta+@build.number@",
     "author"            : "Ortus Solutions <info@ortussolutions.com>",
     "slug"              : "contentbox",
     "type"              : "cms",
     "keywords"          : "cms,content management,modular cms",
-    "homepage"          : "http://www.gocontentbox.org",
-    "documentation"     : "http://www.gocontentbox.org/docs",
+    "homepage"          : "http://www.ortussolutions.com/products/contentbox",
+    "documentation"     : "http://contentbox.ortusbooks.com",
     "repository"        : { "type" : "git", "url" : "https://github.com/Ortus-Solutions/ContentBox" },
     "bugs"              : "https://ortussolutions.atlassian.net/browse/CONTENTBOX",
     "shortDescription"  : "A Modular Content Management System",
@@ -24,9 +24,9 @@
     ],
     "testbox"           : {
         "runner" : [
-            { "cf10"    : "http://cf10contentbox.jfetmac/tests/runner.cfm" },
-            { "cf11"    : "http://cf11contentbox.jfetmac/tests/runner.cfm" },
-            { "railo"   : "http://railocontentbox.jfetmac/tests/runner.cfm" }
+            { "cf10"    : "http://cf10contentbox.local/tests/runner.cfm" },
+            { "cf11"    : "http://cf11contentbox.local/tests/runner.cfm" },
+            { "lucee"   : "http://luceecontentbox.local/tests/runner.cfm" }
         ]
     }
 }
