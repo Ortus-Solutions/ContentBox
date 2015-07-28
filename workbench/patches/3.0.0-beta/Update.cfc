@@ -97,8 +97,6 @@ component implements="contentbox.model.updates.IUpdate"{
 
 			// Make changes on disk take effect
 			ORMREload();
-
-
 		}
 		catch(Any e){
 			ORMClearSession();
@@ -131,8 +129,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			if( structKeyExists( local, "thisPerm" ) and !oRole.hasPermission( local.thisPerm ) ){
 				oRole.addPermission( local.thisPerm );
 				log.info( "Added #thisPermTitle# permission to admin role" );
-			}
-			else{
+			} else {
 				log.info( "Skipped #thisPermTitle# permission to admin role" );
 			}
 		}
@@ -173,21 +170,9 @@ component implements="contentbox.model.updates.IUpdate"{
 		var perms = {
 		};
 
-		var allperms = [];
-		for(var key in perms){
-			var props = {permission=key, description=perms[ key ]};
-			// only add if not found
-			if( isNull( permissionService.findWhere( {permission=props.permission} ) ) ){
-				permissions[ key ] = permissionService.new(properties=props);
-				arrayAppend(allPerms, permissions[ key ] );
-				log.info( "Added #key# permission" );
-			}
-			else{
-				log.info( "Skipped #key# permission addition as it was already in system" );
-			}
+		for( var key in perms ){
+			addPermission( key, perms[ key ] );
 		}
-		permissionService.saveAll( entities=allPerms, transactional=false );
-
 	}
 
 	private function updateSettings(){
@@ -197,18 +182,29 @@ component implements="contentbox.model.updates.IUpdate"{
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/
 
-	private function addSetting(name, value){
+	private function addPermission( permission, description ){
+		var props = { permission=arguments.permission, description=arguments.description };
+		// only add if not found
+		if( isNull( permissionService.findWhere( { permission=props.permission } ) ) ){
+			permissionService.save( permissionService.new( properties=props ) );
+			log.info( "Added #arguments.permission# permission" );
+		} else {
+			log.info( "Skipped #arguments.permission# permission addition as it was already in system" );
+		}
+	}
+
+	private function addSetting( name, value ){
 		var setting = settingService.findWhere( { name = arguments.name } );
 		if( isNull( setting ) ){
 			setting = settingService.new();
 			setting.setValue( trim( arguments.value ) );
 			setting.setName( arguments.name );
-			settingService.save(entity=setting, transactional=false);
+			settingService.save( entity=setting, transactional=false );
 			log.info( "Added #arguments.name# setting" );
-		}
-		else{
+		} else {
 			log.info( "Skipped #arguments.name# setting, already there" );
 		}
+
 		return this;
 	}
 
