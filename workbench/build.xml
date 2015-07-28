@@ -140,6 +140,7 @@
 		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" basedir="${dir.build}" />
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
 		
 		<!-- Refactor indexes from Source For Express Edition: only use if derby else leave as is
 		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
@@ -158,15 +159,32 @@
  	
  	<!-- Build API Docs -->
  	<target name="build.apidocs" description="Builds the api docs" depends="init">
+ 		<!-- Create API apidocs dir -->
  		<mkdir dir="${dir.api}"/>
- 		<antcall target="update.permissions" />
- 		<!-- Execute DocBox -->
-		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}&amp;path=${dir.api}" verbose="true"/>
-		<delete file="${dir.build}/colddoc.html" />
+ 		<!-- Install dependencies for docs -->
+		<exec executable="box" dir="${dir.apidocs}">
+			<arg line="install" />
+		</exec>
+		<!-- Startup the apidocs server, wait for a few seconds for server to start -->
+		<exec executable="box" dir="${dir.apidocs}">
+			<arg line="server start openbrowser=false --force port=${apidocs.port}" />
+		</exec>
+		<sleep seconds="5"/>
+		<!-- Get the apidocs now -->
+		<get dest="${dir.build}/docbox.html" 
+			 src="${url.apidocs}?version=${contentbox.version}&amp;path=${dir.api}" 
+			 verbose="true"
+			 retries="5"/>
+		<delete file="${dir.build}/docbox.html" />
+ 		<!-- stop server -->
+		<exec executable="box" dir="${dir.apidocs}">
+			<arg line="server stop" />
+		</exec>
 		<!-- Zip API Docs -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" algorithm="SHA-512" fileext=".sha512" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
  	</target>
  	
  	<!-- Build war -->
@@ -203,6 +221,7 @@
  		
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  		<!-- Cleanup INF like a ninja -->
  		<delete dir="${dir.build}/WEB-INF" />
  	</target>
@@ -255,6 +274,7 @@
  		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express"></zip>
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" />
  		<!-- cleanup -->
  		<delete dir="${dir.build}/express" />
  	</target>

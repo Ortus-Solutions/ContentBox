@@ -137,6 +137,11 @@
 				<include name="contentbox-patch-*.zip" />
 			</fileset>
 		</checksum>
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512">
+			<fileset dir="${dir.contentbox.exports}">
+				<include name="contentbox-patch-*.zip" />
+			</fileset>
+		</checksum>
 		
     </target>
 	
