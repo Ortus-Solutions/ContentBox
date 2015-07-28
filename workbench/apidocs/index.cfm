@@ -2,13 +2,13 @@
 <cfparam name="url.path" 	default="#expandPath( "./ContentBox-APIDocs" )#">
 <cfscript>
 	docName = "ContentBox-APIDocs";
-	base = expandPath( "/contentbox" );
+	base 	= expandPath( "/contentbox" );
 
-	colddoc 	= new ColdDoc();
-	strategy 	= new colddoc.strategy.api.HTMLAPIStrategy( url.path, "ContentBox Modular CMS v#url.version#" );
-	colddoc.setStrategy( strategy );
-
-	colddoc.generate( inputSource=base, outputDir=url.path, inputMapping="contentbox" );
+	docbox = new docbox.DocBox( properties = {
+		projectTitle 	= "ContentBox Modular CMS v#url.version#",
+		outputDir 		= url.path
+	} );	
+	docbox.generate( source=base, mapping="contentbox" );
 </cfscript>
 
 <!---
