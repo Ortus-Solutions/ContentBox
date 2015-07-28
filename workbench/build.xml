@@ -268,13 +268,50 @@
  		<copy todir="${dir.build}/express/webapps/ROOT/WEB-INF/lucee" overwrite="true" encoding="UTF-8">
  			<fileset file="${dir.resources}/lucee-web.xml.cfm" />
  		</copy>
+ 		
  		<!-- add execution perms -->
- 		<chmod dir="${dir.build}/express/bin" perm="ugo+rx" includes="*"/>
- 		<!-- Zip server up -->
- 		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express"></zip>
- 		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" />
- 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" />
+ 		<chmod perm="ugo+rx">
+ 			<fileset dir="${dir.build}/express/bin" />
+ 		</chmod>
+ 		
+ 		<!-- NO JRE EXPRESS -->
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express" />
+ 		
+ 		<!-- MAC JRE -->
+ 		<unzip src="${dir.dependencies}/jre-darwin64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
+ 		<chmod perm="ugo+rx">
+ 			<fileset dir="${dir.build}/express/jre/bin" />
+ 		</chmod>
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-darwin64-${contentbox.version}.zip" basedir="${dir.build}/express" />
+ 		<delete dir="${dir.build}/express/jre" />
+
+ 		<!-- LINUX64 JRE -->
+ 		<unzip src="${dir.dependencies}/jre-linux64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
+ 		<chmod perm="ugo+rx">
+ 			<fileset dir="${dir.build}/express/jre/bin" />
+ 		</chmod>
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-linux64-${contentbox.version}.zip" basedir="${dir.build}/express" />
+ 		<delete dir="${dir.build}/express/jre" />
+
+ 		<!-- WINDOWS64 JRE -->
+ 		<unzip src="${dir.dependencies}/jre-win64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
+ 		<chmod perm="ugo+rx">
+ 			<fileset dir="${dir.build}/express/jre/bin" />
+ 		</chmod>
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-win64-${contentbox.version}.zip" basedir="${dir.build}/express" />
+
+ 		<!-- Build Checksums -->
+		<checksum forceoverwrite="true" fileext=".md5">
+			<fileset dir="${dir.contentbox.exports}">
+				<include name="contentbox-express-*.zip" />
+			</fileset>
+		</checksum>
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512">
+			<fileset dir="${dir.contentbox.exports}">
+				<include name="contentbox-express-*.zip" />
+			</fileset>
+		</checksum>
+
  		<!-- cleanup -->
  		<delete dir="${dir.build}/express" />
  	</target>
@@ -352,6 +389,22 @@
  						version="${lucee.patch}"
  						extension="lco"
  						destination="${dir.dependencies}"/>
+ 		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="oracle" 
+ 						artifactID="jre"
+ 						version="${jre.version}"
+ 						destination="${dir.dependencies}"
+ 						classifiers="win64"/>
+ 		<box-dependency groupID="oracle" 
+ 						artifactID="jre"
+ 						version="${jre.version}"
+ 						destination="${dir.dependencies}"
+ 						classifiers="darwin64"/>
+ 		<box-dependency groupID="oracle" 
+ 						artifactID="jre"
+ 						version="${jre.version}"
+ 						destination="${dir.dependencies}"
+ 						classifiers="linux64"/>
 	</target>
 	
 </project>
