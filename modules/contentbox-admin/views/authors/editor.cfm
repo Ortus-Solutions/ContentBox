@@ -1,4 +1,5 @@
 ﻿<cfoutput>
+
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
@@ -7,8 +8,9 @@
         </h1>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-md-8">
+    <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>">
     	#getPlugin("MessageBox").renderIt()#
     	<div class="panel panel-default">
             <div class="panel-heading">
@@ -253,6 +255,8 @@
             </div>
  		</div>
     </div>
+
+    <cfif prc.author.isLoaded()>
     <div class="col-md-4">
     	<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -300,5 +304,6 @@
 		<!--- cbadmin Event --->
 		#announceInterception("cbadmin_onAuthorEditorSidebar")#
     </div>
+	</cfif>
 </div>
 </cfoutput>
