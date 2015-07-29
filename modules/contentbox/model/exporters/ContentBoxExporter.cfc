@@ -136,10 +136,10 @@ component accessors=true {
                 extension="",
                 priority=1
             },
-            "layouts" = {
-                fileName="layouts",
-                displayName="Layouts",
-                directory = contentBoxPath & "/layouts",
+            "themes" = {
+                fileName="themes",
+                displayName="Themes",
+                directory = contentBoxPath & "/themes",
                 type="folder",
                 extension="",
                 priority=1

@@ -150,7 +150,7 @@
         "useSSL": false
     },
     {
-        "securelist": "^contentbox-admin:layouts\\.(remove|upload|rebuildRegistry|activate)",
+        "securelist": "^contentbox-admin:themes\\.(remove|upload|rebuildRegistry|activate)",
         "roles": "",
         "permissions": "THEME_ADMIN",
         "whitelist": "",
