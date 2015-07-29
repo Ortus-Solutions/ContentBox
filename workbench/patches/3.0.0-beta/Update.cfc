@@ -81,6 +81,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			for( var oRule in aRules ){
 				if( findNoCase( "LAYOUT_ADMIN", oRule.getPermissions() ) ){
 					oRule.setPermissions( replaceNoCase( oRule.getPermissions(), "LAYOUT_ADMIN", "THEME_ADMIN", "all" ) );
+					oRule.setSecureList( replaceNoCase( oRule.getSecureList(), "layouts", "themes", "all" ) );
 				}
 				securityRuleService.save( entity=oRule, transactional=false );
 			}
