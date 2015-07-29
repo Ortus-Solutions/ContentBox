@@ -36,7 +36,7 @@ component accessors="true"{
 			var cols = arrayLen( row );
 			var newRow = {};
 			for(var x=1; x LTE cols; x++){
-				newRow[ arguments.columnNames[x] ] = row[x];
+				newRow[ arguments.columnNames[ x ] ] = row[ x ];
 			}
 			arrayAppend( newData, newRow );
 		}

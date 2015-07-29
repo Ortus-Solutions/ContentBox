@@ -29,7 +29,7 @@ component extends="content" singleton{
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
-	property name="layoutService"		inject="id:LayoutService@cb";
+	property name="themeService"		inject="id:themeService@cb";
 	property name="utility"				inject="coldbox:plugin:Utilities";
 	
 	// Pre Handler Exceptions
@@ -72,8 +72,8 @@ component extends="content" singleton{
 				return prc.page.renderContent();
 			}
 			default : {
-				event.setLayout( name="#prc.cbLayout#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox" )
-					.setView( view="#prc.cbLayout#/views/page", module="contentbox" );
+				event.setLayout( name="#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox" )
+					.setView( view="#prc.cbTheme#/views/page", module="contentbox" );
 			}
 		} 
 	}
@@ -143,8 +143,8 @@ component extends="content" singleton{
 				return prc.page.renderContent();
 			} else {
 				// set skin view
-				event.setLayout( name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox" )
-					.setView( view="#prc.cbLayout#/views/page", module="contentbox" );
+				event.setLayout( name="#prc.cbTheme#/layouts/#thisLayout#", module="contentbox" )
+					.setView( view="#prc.cbTheme#/views/page", module="contentbox" );
 			}
 		} else {
 			// missing page
@@ -153,8 +153,8 @@ component extends="content" singleton{
 			// announce event
 			announceInterception( "cbui_onPageNotFound", {page=prc.page, missingPage=prc.missingPage, routedURL=prc.missingRoutedURL} );
 			// set skin not found
-			event.setLayout( name="#prc.cbLayout#/layouts/pages", module="contentbox" )
-				.setView( view="#prc.cbLayout#/views/notfound", module="contentbox" )
+			event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
+				.setView( view="#prc.cbTheme#/views/notfound", module="contentbox" )
 				.setHTTPHeader( "404", "Page not found" );				
 		}
 	}
@@ -189,8 +189,8 @@ component extends="content" singleton{
 		}
 		
 		// set skin search
-		event.setLayout( name="#prc.cbLayout#/layouts/#layoutService.getThemeSearchLayout()#", module="contentbox" )
-			.setView( view="#prc.cbLayout#/views/search", module="contentbox" );
+		event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeSearchLayout()#", module="contentbox" )
+			.setView( view="#prc.cbTheme#/views/search", module="contentbox" );
 			
 		// announce event
 		announceInterception( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
@@ -240,7 +240,7 @@ component extends="content" singleton{
 		// Verify exclusions
 		if( listFindNoCase( excluded, arguments.layout ) ){ return; }
 		// Verify layout
-		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.layout#.cfm" ) ) ){
+		if( !fileExists( expandPath( CBHelper.themeRoot() & "/layouts/#arguments.layout#.cfm" ) ) ){
 			throw( 
 				message	= "The layout of the page: '#arguments.layout#' does not exist in the current theme.",
 			    detail	= "Please verify your page layout settings",

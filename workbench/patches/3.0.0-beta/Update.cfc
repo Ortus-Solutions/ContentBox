@@ -69,6 +69,24 @@ component implements="contentbox.model.updates.IUpdate"{
 
 			// Verify if less than 2.1.0 with message
 			if( !isValidInstall() ){ return; }
+
+			/****************************** RENAME LAYOUTS TO THEMES ******************************/
+			
+			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
+			directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );
+
+			/****************************** UPDATE SECURITY RULES ******************************/
+			
+			var aRules = securityRuleService.getAll();
+			for( var oRule in aRules ){
+				if( findNoCase( "LAYOUT_ADMIN", oRule.getPermissions() ) ){
+					oRule.setPermissions( replaceNoCase( oRule.getPermissions(), "LAYOUT_ADMIN", "THEME_ADMIN", "all" ) );
+				}
+				securityRuleService.save( entity=oRule, transactional=false );
+			}
+
+			/****************************** UPDATE SETTINGS + PERMISSIONS ******************************/
+
 			// Update new settings
 			updateSettings();
 			// Update Permissions
@@ -165,6 +183,13 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 
 	private function updatePermissions(){
+		// Update Old Permissions
+		var perm = permissionService.findWhere( { name="LAYOUT_ADMIN" } );
+		if( !isNull( perm ) ){
+			perm.setName( "THEME_ADMIN" );
+			perm.setDescription( "Ability to manage themes, default is view only" );
+			permissionService.save( entity=perm, transactional=false );
+		}
 
 		// Create new Permissions
 		var perms = {
@@ -176,8 +201,12 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 
 	private function updateSettings(){
-		// Create New settings
-		//addSetting( "cb_content_cachingHeader", "true" );
+		// Update Theme to layout
+		var oldLayoutSetting = settingService.findWhere( { name="cb_site_layout" } );
+		if( !isNull( oldLayoutSetting ) ){
+			oldLayoutSetting.setName( "cb_site_theme" );
+			settingService.save( entity=oldLayoutSetting, transactional=false );
+		}
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/
@@ -186,7 +215,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		var props = { permission=arguments.permission, description=arguments.description };
 		// only add if not found
 		if( isNull( permissionService.findWhere( { permission=props.permission } ) ) ){
-			permissionService.save( permissionService.new( properties=props ) );
+			permissionService.save( entity=permissionService.new( properties=props ), transactional=false );
 			log.info( "Added #arguments.permission# permission" );
 		} else {
 			log.info( "Skipped #arguments.permission# permission addition as it was already in system" );

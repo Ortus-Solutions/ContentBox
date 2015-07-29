@@ -140,7 +140,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		if( arguments.asStruct ){
 			var s = {};
 			for(var x=1; x lte settings.recordcount; x++){
-				s[ settings.name[x] ] = settings.value[x];
+				s[ settings.name[ x ] ] = settings.value[ x ];
 			}
 			return s;
 		}

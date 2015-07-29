@@ -80,7 +80,7 @@
 					for(var i in this.load_syntax[lang]['QUOTEMARKS']){	
 						if(typeof(this.load_syntax[lang]['QUOTEMARKS'][i])=="function") continue;			
 						var x=this.get_escaped_regexp(this.load_syntax[lang]['QUOTEMARKS'][i]);
-						this.syntax[lang]["quotes"][x]=x;
+						this.syntax[lang]["quotes"][ x ]=x;
 						//quote_tab[quote_tab.length]="("+x+"(?:\\\\"+x+"|[^"+x+"])*("+x+"|$))";
 						//previous working : quote_tab[quote_tab.length]="("+x+"(?:[^"+x+"\\\\]*(\\\\\\\\)*(\\\\"+x+"?)?)*("+x+"|$))";
 						quote_tab[quote_tab.length]="("+ x +"(\\\\.|[^"+ x +"])*(?:"+ x +"|$))";
@@ -96,7 +96,7 @@
 						var x=this.get_escaped_regexp(this.load_syntax[lang]['COMMENT_SINGLE'][i]);
 						quote_tab[quote_tab.length]="("+x+"(.|\\r|\\t)*(\\n|$))";
 						syntax_trace.push(x);
-						this.syntax[lang]["comments"][x]="\n";
+						this.syntax[lang]["comments"][ x ]="\n";
 					}			
 				}		
 				// (/\*(.|[\r\n])*?\*/)

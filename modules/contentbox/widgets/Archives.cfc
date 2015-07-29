@@ -51,9 +51,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<select name="archives" id="archives" onchange="window.location=this.value")><option value="##">Select Archive</option>');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.archives ); x++){
-				var thisDate = arguments.archives[x]["year"] & "-" & arguments.archives[x]["month"] & "-1";
-				writeOutput('<option value="#cb.linkArchive(year=arguments.archives[x]['year'],month=arguments.archives[x]['month'])#">#dateformat(thisDate,"mmmm yyyy")#');
-				if( arguments.showPostCount ){ writeOutput(" (#arguments.archives[x]['count']#)"); }
+				var thisDate = arguments.archives[ x ]["year"] & "-" & arguments.archives[ x ]["month"] & "-1";
+				writeOutput('<option value="#cb.linkArchive(year=arguments.archives[ x ]['year'],month=arguments.archives[ x ]['month'])#">#dateformat(thisDate,"mmmm yyyy")#');
+				if( arguments.showPostCount ){ writeOutput(" (#arguments.archives[ x ]['count']#)"); }
 				writeOutput('</option>');
 			}
 			// close ul
@@ -69,9 +69,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<ul id="archives">');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.archives ); x++){
-				var thisDate = arguments.archives[x]["year"] & "-" & arguments.archives[x]["month"] & "-1";
-				writeOutput('<li class="archives"><a href="#cb.linkArchive(year=arguments.archives[x]['year'],month=arguments.archives[x]['month'])#">#dateFormat(thisDate,"mmmm yyyy")#');
-				if( arguments.showPostCount ){ writeOutput(" (#arguments.archives[x]['count']#)"); }
+				var thisDate = arguments.archives[ x ]["year"] & "-" & arguments.archives[ x ]["month"] & "-1";
+				writeOutput('<li class="archives"><a href="#cb.linkArchive(year=arguments.archives[ x ]['year'],month=arguments.archives[ x ]['month'])#">#dateFormat(thisDate,"mmmm yyyy")#');
+				if( arguments.showPostCount ){ writeOutput(" (#arguments.archives[ x ]['count']#)"); }
 				writeOutput('</a></li>');
 			}
 			// close ul

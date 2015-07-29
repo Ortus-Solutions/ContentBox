@@ -21,8 +21,8 @@
 				<div class="controls">
 				<cfloop from="1" to="#arrayLen(prc.qpCategories)#" index="x">
 					<label class="checkbox inline control-label">
-					#html.checkbox(name="category_#x#",value="#prc.qpCategories[x].getCategoryID()#")#
-					#prc.qpCategories[x].getCategory()#
+					#html.checkbox(name="category_#x#",value="#prc.qpCategories[ x ].getCategoryID()#")#
+					#prc.qpCategories[ x ].getCategory()#
 					</label>
 				</cfloop>
 				</div>

@@ -144,10 +144,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 	/************************************** root methods *********************************************/
 
-	// Get the location of your currently defined layout in the application, great for assets, cfincludes, etc
-	function layoutRoot(){
-		var prc = getRequestCollection(private=true);
-		return prc.cbLayoutRoot;
+	// Get the location of your currently defined theme in the application, great for assets, cfincludes, etc
+	function themeRoot(){
+		var prc = getRequestCollection( private=true );
+		return prc.cbthemeRoot;
 	}
 
 	// Get the site root location using your configured module's entry point
@@ -167,10 +167,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		return prc.cbAdminEntryPoint;
 	}
 
-	// Get the name of the current set and active layout
-	function layoutName(){
+	// Get the name of the current set and active theme
+	function themeName(){
 		var prc = getRequestCollection(private=true);
-		return prc.cbLayout;
+		return prc.cbTheme;
 	}
 
 	// Get the location of the widgets in the application, great for assets, cfincludes, etc
@@ -180,13 +180,13 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	}
 	
 	/**
-	* Get a layout setting
-	* @key.hint The name of the layout setting
+	* Get a theme setting
+	* @key.hint The name of the theme setting
 	* @value.hint The default value if the layout setting does not exist
 	*/
-	function layoutSetting(required key, value){
-		arguments.key = "cb_layout_#layoutName()#_#arguments.key#";
-		return setting(argumentCollection=arguments);
+	function themeSetting( required key, value ){
+		arguments.key = "cb_theme_#themeName()#_#arguments.key#";
+		return setting( argumentCollection=arguments );
 	}
 
 	/************************************** site properties *********************************************/
@@ -233,7 +233,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	/************************************** Context Methods *********************************************/
 
 	/**
-	* Prepare a ContentBox UI request. This sets ups settings, layout, etc. This method is usualy called
+	* Prepare a ContentBox UI request. This sets ups settings, theme, etc. This method is usualy called
 	* automatically for you on the UI module. However, you can use it a-la-carte if you are building
 	* ajax or module extensions
 	*/
@@ -251,9 +251,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 		// Place global cb options on scope
 		prc.cbSettings = settingService.getAllSettings( asStruct=true );
 		// Place the default layout on scope
-		prc.cbLayout = prc.cbSettings.cb_site_layout;
+		prc.cbTheme = prc.cbSettings.cb_site_theme;
 		// Place layout root location
-		prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & prc.cbLayout;
+		prc.cbthemeRoot = prc.cbRoot & "/themes/" & prc.cbTheme;
 		// Place widgets root location
 		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
 		// announce event
@@ -890,11 +890,11 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* @name The name of the installed widget to return
 	*/
 	function getWidget(required name){
-		var layoutWidgetPath = layoutRoot() & "/widgets/#arguments.name#.cfc";
+		var layoutWidgetPath = themeRoot() & "/widgets/#arguments.name#.cfc";
 
 		// layout widgets overrides
 		if( fileExists( expandPath( layoutWidgetPath ) ) ){
-			var widgetCreationPath = replace( reReplace(layoutRoot(),"^/","")  ,"/",".","all") & ".widgets.#arguments.name#";
+			var widgetCreationPath = replace( reReplace(themeRoot(),"^/","")  ,"/",".","all") & ".widgets.#arguments.name#";
 			return controller.getPlugin(plugin=widgetCreationPath,customPlugin=true);
 		}
 
@@ -931,7 +931,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 
 		// iterate and create links
 		for(var x=1; x lte arrayLen(cats); x++){
-			var link = '<a href="#linkCategory(cats[x])#" title="Filter entries by ''#cats[x].getCategory()#''">#cats[x].getCategory()#</a>';
+			var link = '<a href="#linkCategory(cats[ x ])#" title="Filter entries by ''#cats[ x ].getCategory()#''">#cats[ x ].getCategory()#</a>';
 			arrayAppend( catList, link );
 		}
 
@@ -958,7 +958,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function quickEntries(template="entry",collectionAs="entry",args=structnew()){
 		var entries = getCurrentEntries();
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
+		return renderView(view="#themeName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
 
 	/**
@@ -969,7 +969,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function quickEntry(template="entry",collectionAs="entry",args=structnew()){
 		var entries = [getCurrentEntry()];
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
+		return renderView(view="#themeName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
 
 	/**
@@ -980,7 +980,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function quickCategories(template="category",collectionAs="category",args=structnew()){
 		var categories = getCurrentCategories();
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=categories,collectionAs=arguments.collectionAs,args=arguments.args);
+		return renderView(view="#themeName()#/templates/#arguments.template#",collection=categories,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
 
 	/**
@@ -991,7 +991,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function quickRelatedContent( template="relatedContent", collectionAs="relatedContent", args=structnew() ){
 		var relatedContent = getCurrentRelatedContent();
-		return renderView( view="#layoutName()#/templates/#arguments.template#", collection=relatedContent,collectionAs=arguments.collectionAs, args=arguments.args );
+		return renderView( view="#themeName()#/templates/#arguments.template#", collection=relatedContent,collectionAs=arguments.collectionAs, args=arguments.args );
 	}
 
 	/**
@@ -1020,7 +1020,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	*/
 	function quickComments(template="comment",collectionAs="comment",args=structNew()){
 		var comments = getCurrentComments();
-		return renderView(view="#layoutName()#/templates/#arguments.template#",collection=comments,collectionAs=arguments.collectionAs,args=arguments.args);
+		return renderView(view="#themeName()#/templates/#arguments.template#",collection=comments,collectionAs=arguments.collectionAs,args=arguments.args);
 	}
 
 	/**
@@ -1043,7 +1043,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* layout theme you are using. All the arguments are the same as renderView()'s methods
 	*/
 	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module="contentbox",args,collection,collectionAs,prepostExempt){
-		arguments.view = "#layoutName()#/views/#arguments.view#";
+		arguments.view = "#themeName()#/views/#arguments.view#";
 		return renderView(argumentCollection=arguments);
 	}
 
@@ -1052,7 +1052,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 	* layout theme you are using. All the arguments are the same as renderLayout()'s methods
 	*/
 	function quickLayout(required layout,view="",module="contentbox",args=structNew(),viewModule="",prePostExempt=false){
-		arguments.layout = "#layoutName()#/layouts/#arguments.layout#";
+		arguments.layout = "#themeName()#/layouts/#arguments.layout#";
 		return renderLayout(argumentCollection=arguments);
 	}
 
@@ -1343,9 +1343,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 			if( isSimpleValue( arguments.elementClass ) ){ arguments.elementClass = listToArray( arguments.elementClass ); }
 			classText = duplicate( arguments.elementClass );
 
-			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[x].getTitle() )){
+			if( !len(arguments.excludes) OR !listFindNoCase(arguments.excludes, pageResults.pages[ x ].getTitle() )){
 				// Do we need to nest?
-				var doNesting = ( arguments.currentLevel lt arguments.levels AND pageResults.pages[x].hasChild() );
+				var doNesting = ( arguments.currentLevel lt arguments.levels AND pageResults.pages[ x ].hasChild() );
 				// Is element active (or one of its decendants)
 				var isElementActive 		= currentPageID eq pageResults.pages[ x ].getContentID();
 				var isElementActiveAncestor = ( listFindNoCase( pageAncestorContentIDs, pageResults.pages[ x ].getContentID() ) );
@@ -1359,10 +1359,10 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 						// Setup Parent class, we are going down the wormhole
 						arrayAppend( classText, arguments.parentClass );
 						// Start Embedded List
-						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
+						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[ x ])#">#pageResults.pages[ x ].getTitle()#</a>');
 						// If type is "li" then guess to do a nested ul list
 						b.append( buildMenu(
-							pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
+							pageRecords=pageService.findPublishedPages(parent=pageResults.pages[ x ].getContentID(), showInMenu=true),
 							excludes=arguments.excludes,
 							type=( arguments.type eq "li" ? "ul" : arguments.type ),
 							typeClass=arguments.typeClass,
@@ -1374,14 +1374,14 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 						) );
 					}
 					// Do we nest active and activeShowChildren flag is activated?
-					else if( activeShowChildren AND ( isElementActive OR isElementActiveAncestor ) AND pageResults.pages[x].hasChild() ){
+					else if( activeShowChildren AND ( isElementActive OR isElementActiveAncestor ) AND pageResults.pages[ x ].hasChild() ){
 						// Setup Parent class, we are going down the wormhole
 						arrayAppend( classText, arguments.parentClass );
 						// Start Embedded List
-						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
+						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[ x ])#">#pageResults.pages[ x ].getTitle()#</a>');
 						// If type is "li" then guess to do a nested ul list
 						b.append( buildMenu(
-							pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
+							pageRecords=pageService.findPublishedPages(parent=pageResults.pages[ x ].getContentID(), showInMenu=true),
 							excludes=arguments.excludes,
 							type=( arguments.type eq "li" ? "ul" : arguments.type ),
 							typeClass=arguments.typeClass,
@@ -1393,19 +1393,19 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 						) );
 					} else {
 						// Start Embedded List
-						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a>');
+						b.append('<li class="#arrayToList( classText, " " )#"><a href="#linkPage(pageResults.pages[ x ])#">#pageResults.pages[ x ].getTitle()#</a>');
 					}
 
 					// Close it
 					b.append('</li>');
 				} else if ( arguments.type eq "data" ){
 					var pageData = {
-						title = pageResults.pages[x].getTitle(),
-						link = linkPage(pageResults.pages[x])
+						title = pageResults.pages[ x ].getTitle(),
+						link = linkPage(pageResults.pages[ x ])
 					};
 					if( doNesting ){
 						pageData.subPageMenu = buildMenu(
-							pageRecords=pageService.findPublishedPages( parent=pageResults.pages[x].getContentID(), showInMenu=true ),
+							pageRecords=pageService.findPublishedPages( parent=pageResults.pages[ x ].getContentID(), showInMenu=true ),
 							excludes=arguments.excludes,
 							type = arguments.type,
 							typeClass=arguments.typeClass,
@@ -1417,9 +1417,9 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 						);
 					}
 					// Do we nest active and activeShowChildren flag is activated?
-					else if( activeShowChildren AND isElementActive AND pageResults.pages[x].hasChild() ){
+					else if( activeShowChildren AND isElementActive AND pageResults.pages[ x ].hasChild() ){
 						pageData.subPageMenu = buildMenu(
-							pageRecords=pageService.findPublishedPages(parent=pageResults.pages[x].getContentID(), showInMenu=true),
+							pageRecords=pageService.findPublishedPages(parent=pageResults.pages[ x ].getContentID(), showInMenu=true),
 							excludes=arguments.excludes,
 							type = arguments.type,
 							typeClass=arguments.typeClass,
@@ -1432,7 +1432,7 @@ component extends="coldbox.system.Plugin" accessors="true" singleton threadSafe{
 					}
 					arrayAppend(dataMenu,pageData);
 				} else {
-					b.append('<a href="#linkPage(pageResults.pages[x])#" class="#arrayToList(classText, " ")#">#pageResults.pages[x].getTitle()#</a>#arguments.separator#');
+					b.append('<a href="#linkPage(pageResults.pages[ x ])#" class="#arrayToList(classText, " ")#">#pageResults.pages[ x ].getTitle()#</a>#arguments.separator#');
 				}
 			}
 		}

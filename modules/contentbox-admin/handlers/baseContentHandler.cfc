@@ -26,7 +26,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="authorService"		inject="id:authorService@cb";
-	property name="layoutService"		inject="id:layoutService@cb";
+	property name="themeService"		inject="id:themeService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="editorService"		inject="id:editorService@cb";

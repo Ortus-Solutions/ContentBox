@@ -257,9 +257,9 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		for(var x=1; x lte arrayLen(inList); x++){
 
 			// Verify each keword via regex
-			if( refindNoCase( inList[x], inComment.getContent() ) OR
-				refindNoCase( inList[x], inComment.getAuthor() ) OR
-				refindNoCase( inList[x], inComment.getAuthorIP() ) ){
+			if( refindNoCase( inList[ x ], inComment.getContent() ) OR
+				refindNoCase( inList[ x ], inComment.getAuthor() ) OR
+				refindNoCase( inList[ x ], inComment.getAuthorIP() ) ){
 				return true;
 			}
 
@@ -397,7 +397,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Get all by id
 		var comments = getAll(id=arguments.commentID);
 		for(var x=1; x lte arrayLen(comments); x++){
-			comments[x].setisApproved( approve );
+			comments[ x ].setisApproved( approve );
 		}
 		// transaction the save of all the comments
 		saveAll( comments );

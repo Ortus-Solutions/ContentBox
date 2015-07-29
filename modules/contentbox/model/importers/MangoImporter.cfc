@@ -63,7 +63,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 			var q = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						      password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#category").execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
-				var props 	= {category=q.title[x], slug=q.name[x]};
+				var props 	= {category=q.title[ x ], slug=q.name[ x ]};
 				var cat 	= categoryService.new(properties=props);
 				var exists 	= categoryService.findAllBySlug( q.name[ x ] );
 				
@@ -74,7 +74,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				}
 				
 				log.info("Imported category: #props.category#");
-				catMap[ q.id[x] ] = cat.getCategoryID();
+				catMap[ q.id[ x ] ] = cat.getCategoryID();
 			}
 			log.info("Categories imported successfully!");
 
@@ -87,8 +87,8 @@ component implements="contentbox.model.importers.ICBImporter"{
 			var q = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#author").execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
-				var props = {email=q.email[x], username=q.username[x], password=hash(defaultPassword, authorService.getHashType() ),isActive=1,
-						     firstName=listFirst(q.name[x]," "), lastName=trim(replacenocase(q.name[x], listFirst(q.name[x]," "), "" ))};
+				var props = {email=q.email[ x ], username=q.username[ x ], password=hash(defaultPassword, authorService.getHashType() ),isActive=1,
+						     firstName=listFirst(q.name[ x ]," "), lastName=trim(replacenocase(q.name[ x ], listFirst(q.name[ x ]," "), "" ))};
 				var author = authorService.new(properties=props);
 				author.setRole( defaultRole );
 				// duplicate usernames
@@ -98,7 +98,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				
 				entitySave( author );
 				log.info("Imported author: #props.firstName# #props.lastName#");
-				authorMap[ q.id[x] ] = author.getAuthorID();
+				authorMap[ q.id[ x ] ] = author.getAuthorID();
 			}
 			log.info("Authors imported successfully!");
 			
@@ -114,9 +114,9 @@ component implements="contentbox.model.importers.ICBImporter"{
 			for(var x=1; x lte qPages.recordcount;x++){
 				// Get properties
 				var published = true;
-				if( qPages.status[x] neq "published" ){ published = false; }
-				var props = {title=qPages.title[x], slug=qPages.name[x], content=qPages.content[x], excerpt=qPages.excerpt[x], publishedDate=qPages.last_modified[x],
-							 createdDate=qPages.last_modified[x], isPublished=published, allowComments=qPages.comments_allowed[x], order=qPages.sort_order[x], layout="pages"};
+				if( qPages.status[ x ] neq "published" ){ published = false; }
+				var props = {title=qPages.title[ x ], slug=qPages.name[ x ], content=qPages.content[ x ], excerpt=qPages.excerpt[ x ], publishedDate=qPages.last_modified[ x ],
+							 createdDate=qPages.last_modified[ x ], isPublished=published, allowComments=qPages.comments_allowed[ x ], order=qPages.sort_order[ x ], layout="pages"};
 				
 				// slug checks
 				if( !len(Trim(props.slug)) ){
@@ -131,12 +131,12 @@ component implements="contentbox.model.importers.ICBImporter"{
 								
 				var page = pageService.new(properties=props);
 				// Add content versionized!
-				page.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[qPages.author_id[x]] ));
-				page.setCreator( authorService.get( authorMap[qPages.author_id[x]] ) );
+				page.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[qPages.author_id[ x ]] ));
+				page.setCreator( authorService.get( authorMap[qPages.author_id[ x ]] ) );
 				// Custom Fields
 				log.info("Starting to import Page Custom Fields....");
 				var qCustomFields = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#entry_custom_field as cf where cf.entry_id = '#qPages.id[x]#'").execute().getResult();
+						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#entry_custom_field as cf where cf.entry_id = '#qPages.id[ x ]#'").execute().getResult();
 				for(var y=1; y lte qCustomFields.recordcount; y++){
 					var props = {
 						key = qCustomFields.name[y], value = qCustomFields.field_value[y]
@@ -147,13 +147,13 @@ component implements="contentbox.model.importers.ICBImporter"{
 				}
 				
 				// Save page and store in reference map
-				pageMap[ qPages.id[x] ] = page;	
+				pageMap[ qPages.id[ x ] ] = page;	
 				entitySave( page );
 				
 				log.info("Starting to import Page Comments....");
 				// Import page comments
 				var qComments = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-							       		  password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#comment as mc where mc.entry_id = '#qPages.id[x]#'").execute().getResult();
+							       		  password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#comment as mc where mc.entry_id = '#qPages.id[ x ]#'").execute().getResult();
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
 						content = qComments.content[y], author = qComments.creator_name[y], authorIP = '127.0.0.1', authorEmail = qComments.creator_email[y], 
@@ -168,9 +168,9 @@ component implements="contentbox.model.importers.ICBImporter"{
 				log.info("Comments imported successfully!");
 				
 				// Hierarchies
-				if( len( qPages.parent_page_id[x] ) ){
+				if( len( qPages.parent_page_id[ x ] ) ){
 					// relate to page
-					page.setParent( pageMap[ qPages.parent_page_id[x] ] );
+					page.setParent( pageMap[ qPages.parent_page_id[ x ] ] );
 				}
 				
 				log.info("Page imported: #props.title#");
@@ -190,9 +190,9 @@ component implements="contentbox.model.importers.ICBImporter"{
 								order by last_modified asc").execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
 				var published = true;
-				if( q.status[x] neq "published" ){ published = false; }
-				var props = {title=q.title[x], slug=q.name[x], content=q.content[x], excerpt=q.excerpt[x], publishedDate=q.last_modified[x],
-							 createdDate=q.last_modified[x], isPublished=published, allowComments=q.comments_allowed[x]};
+				if( q.status[ x ] neq "published" ){ published = false; }
+				var props = {title=q.title[ x ], slug=q.name[ x ], content=q.content[ x ], excerpt=q.excerpt[ x ], publishedDate=q.last_modified[ x ],
+							 createdDate=q.last_modified[ x ], isPublished=published, allowComments=q.comments_allowed[ x ]};
 				
 				// slug checks
 				if( !len(Trim(props.slug)) ){
@@ -207,11 +207,11 @@ component implements="contentbox.model.importers.ICBImporter"{
 				
 				var entry = entryService.new(properties=props);
 				// Add content versionized!
-				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.author_id[x]] ));
-				entry.setCreator( authorService.get( authorMap[q.author_id[x]] ) );
+				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.author_id[ x ]] ));
+				entry.setCreator( authorService.get( authorMap[q.author_id[ x ]] ) );
 				// entry categories
 				var qCategories = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#post_category as mp where mp.post_id = '#q.id[x]#'").execute().getResult();
+						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#post_category as mp where mp.post_id = '#q.id[ x ]#'").execute().getResult();
 				var aCategories = [];
 				for(var y=1; y lte qCategories.recordcount; y++){
 					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.category_id[y]] ) );
@@ -220,7 +220,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				
 				// Custom Fields
 				var qCustomFields = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#entry_custom_field as cf where cf.entry_id = '#q.id[x]#'").execute().getResult();
+						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#entry_custom_field as cf where cf.entry_id = '#q.id[ x ]#'").execute().getResult();
 				for(var y=1; y lte qCustomFields.recordcount; y++){
 					var props = {
 						key = qCustomFields.name[y], value = qCustomFields.field_value[y]
@@ -236,7 +236,7 @@ component implements="contentbox.model.importers.ICBImporter"{
 				log.info("Starting to import Entry Comments....");
 				// Import page comments
 				var qComments = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
-							       		  password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#comment as mc where mc.entry_id = '#q.id[x]#'").execute().getResult();
+							       		  password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#comment as mc where mc.entry_id = '#q.id[ x ]#'").execute().getResult();
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
 						content = qComments.content[y], author = qComments.creator_name[y], authorIP = '127.0.0.1', authorEmail = qComments.creator_email[y], 

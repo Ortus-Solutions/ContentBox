@@ -70,19 +70,19 @@ component accessors="true"{
 			}
 			catch( Any e ){
 				widgetContent = "Error translating widget: #e.message# #e.detail#";
-				log.error("Error translating widget on target: #targets[x]#", e);
+				log.error("Error translating widget on target: #targets[ x ]#", e);
 			}
 			// PROCESS REPLACING
 			
 			// get location of target
-			var rLocation 	= builder.indexOf( targets[x] );
-			var rLen 		= len( targets[x] );
+			var rLocation 	= builder.indexOf( targets[ x ] );
+			var rLen 		= len( targets[ x ] );
 			// Loop findings of same {{{}}} instances to replace
 			while( rLocation gt -1 ){
 				// Replace it
 				builder.replace( javaCast("int", rLocation), JavaCast("int", rLocation+rLen), widgetContent);
 				// look again
-				rLocation = builder.indexOf( targets[x], javaCast("int", rLocation) );
+				rLocation = builder.indexOf( targets[ x ], javaCast("int", rLocation) );
 			}
 		}
 	}
@@ -104,7 +104,7 @@ component accessors="true"{
 		// Loop over found mustaches {{{Widget}}}
 		for(var x=1; x lte targetLen; x++){
 			// convert mustache to tag
-			tagString = replace(targets[x],"{{{","<");
+			tagString = replace(targets[ x ],"{{{","<");
 			tagString = replace(tagString,"}}}","/>");
 			// convert quotes to standards
 			tagString = replace(tagString,"&##34;",'"',"all");
@@ -167,7 +167,7 @@ component accessors="true"{
 			}
 			catch(Any e){
 				widgetContent = "Error translating widget: #e.message# #e.detail#";
-				log.error("Error translating widget on target: #targets[x]#", e);
+				log.error("Error translating widget on target: #targets[ x ]#", e);
 			}
 			// PROCESS REPLACING
 			
@@ -175,14 +175,14 @@ component accessors="true"{
 			if( isNull( widgetContent ) ){ widgetContent = "null!"; }
 			
 			// get location of target
-			var rLocation 	= builder.indexOf( targets[x] );
-			var rLen 		= len( targets[x] );
+			var rLocation 	= builder.indexOf( targets[ x ] );
+			var rLen 		= len( targets[ x ] );
 			// Loop findings of same {{{}}} instances to replace
 			while( rLocation gt -1 ){
 				// Replace it
 				builder.replace( javaCast("int", rLocation), JavaCast("int", rLocation+rLen), widgetContent);
 				// look again
-				rLocation = builder.indexOf( targets[x], javaCast("int", rLocation) );
+				rLocation = builder.indexOf( targets[ x ], javaCast("int", rLocation) );
 			}
 		}
 	}

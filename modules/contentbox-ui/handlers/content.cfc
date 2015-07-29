@@ -32,7 +32,7 @@ component{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="rssService"			inject="id:rssService@cb";
 	property name="validator"			inject="id:Validator@cb";
-	property name="layoutService"		inject="id:layoutService@cb";
+	property name="themeService"		inject="id:themeService@cb";
 	property name="antiSamy"			inject="coldbox:plugin:AntiSamy";
 	property name="messagebox"			inject="coldbox:plugin:MessageBox";
 	
@@ -70,20 +70,20 @@ component{
 		// valid Author?
 		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
 			
-			// Place layout on scope
-			prc.cbLayout = rc.l;
-			// Place layout root location
-			prc.cbLayoutRoot = prc.cbRoot & "/layouts/" & rc.l;
+			// Place theme on scope
+			prc.cbTheme = rc.l;
+			// Place theme root location
+			prc.cbThemeRoot = prc.cbRoot & "/themes/" & rc.l;
 			// Home page determination either blog or a page
 			if( prc.cbSettings.cb_site_homepage NEQ "cbBlog"){
 				// Override event and incoming page.
-				event.overrideEvent("contentbox-ui:page.index");
+				event.overrideEvent( "contentbox-ui:page.index" );
 				prc.pageOverride = prc.cbSettings.cb_site_homepage;
 				// run it
 				var eArgs = {noCache=true};
 				runEvent(event="contentbox-ui:page.index", eventArguments=eArgs);
 				// Override the layout
-				event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox");
+				event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox");
 			}
 			else{
 				// Override layout and event so we can display it
@@ -105,13 +105,13 @@ component{
 	*/
 	function maintenance( event, rc, prc ){
 		// If no maintenance view exists, just output data
-		if( !layoutService.themeMaintenanceViewExists() ){
+		if( !themeService.themeMaintenanceViewExists() ){
 			event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
 		}
 		else{
 			// output maintenance view
-			event.setLayout(name="#prc.cbLayout#/layouts/#layoutService.getThemeMaintenanceLayout()#", module="contentbox")
-				.setView(view="#prc.cbLayout#/views/maintenance", module="contentbox");
+			event.setLayout(name="#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#", module="contentbox")
+				.setView(view="#prc.cbTheme#/views/maintenance", module="contentbox");
 		}
 		
 	}
@@ -131,8 +131,8 @@ component{
 		announceInterception("cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments});
 
 		// Set view to render
-		event.setLayout(name="#prc.cbLayout#/layouts/pages", module="contentbox")
-			.setView(view="#prc.cbLayout#/views/error", module="contentbox");
+		event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox")
+			.setView(view="#prc.cbTheme#/views/error", module="contentbox");
 	}
 
 	/************************************** PRIVATE *********************************************/
@@ -205,7 +205,7 @@ component{
 		// generate content only if content is not set, else means handler generated content.
 		if ( isNull( data.content ) ){
 			data.content = renderLayout( 
-				layout 		= "#prc.cbLayout#/layouts/#layoutService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
+				layout 		= "#prc.cbTheme#/layouts/#themeService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
 				module 		= "contentbox",
 				viewModule 	= "contentbox" 
 			);

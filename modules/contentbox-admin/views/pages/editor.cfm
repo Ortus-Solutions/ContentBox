@@ -492,10 +492,10 @@
                                         <label class="checkbox">
                                         #html.checkbox(
                                             name="category_#x#",
-                                            value="#prc.categories[x].getCategoryID()#",
-                                            checked=prc.page.hasCategories( prc.categories[x] )
+                                            value="#prc.categories[ x ].getCategoryID()#",
+                                            checked=prc.page.hasCategories( prc.categories[ x ] )
                                         )#
-                                        #prc.categories[x].getCategory()#
+                                        #prc.categories[ x ].getCategory()#
                                         </label>
                                     </cfloop>
                                     </div>

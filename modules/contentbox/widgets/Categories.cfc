@@ -52,9 +52,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<select name="categories" id="categories" onchange="window.location=this.value")><option value="##">Select Category</option>');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.categories ); x++){
-				if( arguments.categories[x].getNumberOfEntries() gt 0 ){
-					writeOutput('<option value="#cb.linkCategory(arguments.categories[x])#">#arguments.categories[x].getCategory()#');
-					if( arguments.showPostCount ){ writeOutput(" (#arguments.categories[x].getNumberOfEntries()#)"); }
+				if( arguments.categories[ x ].getNumberOfEntries() gt 0 ){
+					writeOutput('<option value="#cb.linkCategory(arguments.categories[ x ])#">#arguments.categories[ x ].getCategory()#');
+					if( arguments.showPostCount ){ writeOutput(" (#arguments.categories[ x ].getNumberOfEntries()#)"); }
 					writeOutput('</option>');
 				}
 			}
@@ -71,9 +71,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<ul id="categories">');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.categories ); x++){
-				if( arguments.categories[x].getNumberOfEntries() gt 0 ){
-					writeOutput('<li class="categories"><a href="#cb.linkCategory(arguments.categories[x])#">#arguments.categories[x].getCategory()#');
-					if( arguments.showPostCount ){ writeOutput(" (#arguments.categories[x].getNumberOfEntries()#)"); }
+				if( arguments.categories[ x ].getNumberOfEntries() gt 0 ){
+					writeOutput('<li class="categories"><a href="#cb.linkCategory(arguments.categories[ x ])#">#arguments.categories[ x ].getCategory()#');
+					if( arguments.showPostCount ){ writeOutput(" (#arguments.categories[ x ].getNumberOfEntries()#)"); }
 					writeOutput('</a></li>');
 				}
 			}

@@ -342,8 +342,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 		// Get all by id
 		var contentObjects = getAll(id=arguments.contentID);
 		for(var x=1; x lte arrayLen( contentObjects ); x++){
-			contentObjects[x].setpublishedDate( now() );
-			contentObjects[x].setisPublished( publish );
+			contentObjects[ x ].setpublishedDate( now() );
+			contentObjects[ x ].setisPublished( publish );
 		}
 
 		// transaction the save of all the content objects

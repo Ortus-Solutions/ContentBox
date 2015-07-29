@@ -27,7 +27,7 @@ component accessors="true" singleton threadSafe{
 	property name="settingService"		inject="id:settingService@cb";
 	property name="moduleSettings"		inject="coldbox:setting:modules";
 	property name="moduleService"		inject="ModuleService@cb";
-	property name="layoutService"		inject="LayoutService@cb";
+	property name="themeService"		inject="themeService@cb";
 	property name="coldbox"				inject="coldbox";
 	property name="log"					inject="logbox:logger:{this}";
 
@@ -130,7 +130,7 @@ component accessors="true" singleton threadSafe{
 		// get module widgets
 		var moduleWidgets = moduleService.getModuleWidgetCache();
 		// get layout widgets
-		var layoutWidgets = layoutService.getLayoutWidgetCache();
+		var layoutWidgets = themeService.getLayoutWidgetCache();
 
 		// Add custom columns
 		QueryAddColumn( widgets, "filename", [] );
@@ -216,7 +216,7 @@ component accessors="true" singleton threadSafe{
 		var path = "";
 		switch( type ) {
 			case "layout":
-				var path = layoutService.getLayoutWidgetPath( arguments.name );
+				var path = themeService.getThemeWidgetPath( arguments.name );
 				break;
 			case "module":
 				var path = moduleService.getModuleWidgetPath( arguments.name );
@@ -289,7 +289,7 @@ component accessors="true" singleton threadSafe{
 		// switch on widget type (core, layout, module )
 		switch( type ) {
 			case "layout":
-				var layout = LayoutService.getActiveLayout();
+				var layout = themeService.getActiveTheme();
 				widgetPath = "#layout.directory#/#layout.name#/widgets/#replaceNoCase( arguments.name, '~', '', 'one' )#.cfc";
 				break;
 			case "module":

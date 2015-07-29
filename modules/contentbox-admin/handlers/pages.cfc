@@ -173,7 +173,7 @@ component extends="baseContentHandler"{
 		// Get all page names for parent drop downs
 		prc.pages = pageService.getAllFlatPages( sortOrder="slug asc" );
 		// Get active layout record and available page only layouts
-		prc.themeRecord = layoutService.getActiveLayout();
+		prc.themeRecord = themeService.getActiveTheme();
 		prc.availableLayouts = REreplacenocase( prc.themeRecord.layouts,"blog,?","");
 		// Get parent from active page
 		prc.parentcontentID = prc.page.getParentID();

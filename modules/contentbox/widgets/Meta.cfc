@@ -64,7 +64,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<select name="meta" id="meta" onchange="window.location=this.value")><option value="##">ContentBox Links</option>');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.links ); x++){
-				writeOutput('<option value="#links[x].link#">#links[x].title#</option>');
+				writeOutput('<option value="#links[ x ].link#">#links[ x ].title#</option>');
 			}
 			// close ul
 			writeOutput("</select>");
@@ -79,7 +79,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<ul id="meta">');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.links ); x++){
-				writeOutput('<li class="archives"><a href="#links[x].link#">#links[x].title#</a></li>');
+				writeOutput('<li class="archives"><a href="#links[ x ].link#">#links[ x ].title#</a></li>');
 			}
 			// close ul
 			writeOutput("</ul>");

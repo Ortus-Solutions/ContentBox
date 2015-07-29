@@ -58,8 +58,8 @@ component {
 
 		// CB Module Conventions
 		conventions = {
-			layoutsLocation = "layouts",
-			viewsLocation 	= "layouts"
+			layoutsLocation = "themes",
+			viewsLocation 	= "themes"
 		};
 
 		// Parent Affected Settings
@@ -128,7 +128,7 @@ component {
 		// UI
 		binder.map("customFieldService@cb").toDSL("entityService:cbCustomField");
 		binder.map("widgetService@cb").to("contentbox.model.ui.WidgetService");
-		binder.map("layoutService@cb").to("contentbox.model.ui.LayoutService");
+		binder.map("themeService@cb").to("contentbox.model.ui.ThemeService");
 		binder.map("CBHelper@cb").toDSL("coldbox:myplugin:CBHelper@contentbox");
 		binder.map("Widget@cb").to("contentbox.model.ui.Widget");
 		binder.map("AdminMenuService@cb").to("contentbox.model.ui.AdminMenuService");
