@@ -65,15 +65,6 @@
 					<li>All templates have access to all ColdBox scopes and functions.</li>
 				</ul>
 				
-				<div class="actionBar">
-					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehAPIDocs&"/index/apislug/plugins/print/?_cfcviewer_cfc=CBHelper")#')" 
-					   class="btn btn-info" title="Get some quick CBHelper API Goodness!">
-						CBHelper Docs
-					</a>
-					<a href="#event.buildLink(prc.xehApiDocs)#" target="_blank" class="btn btn-info" title="Open the ContentBox API Docs in another window">
-						API Docs
-					</a>
-				</div>
 		    </div>
 		</div>
 	</div>
