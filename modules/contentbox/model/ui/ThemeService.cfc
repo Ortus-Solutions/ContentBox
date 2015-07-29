@@ -192,8 +192,10 @@ component accessors="true" threadSafe singleton{
 	* Save theme settings
 	* @name The theme name
 	* @settings The settings struct
+	* 
+	* @return ThemeService
 	*/
-	public ThemeService function saveThemeSettings( required name, required struct settings ) transactional{
+	public function saveThemeSettings( required name, required struct settings ) transactional{
 		var oTheme = variables.themeCFCRegistry[ arguments.name ];
 		// iterate and save theme settings
 		for( var thisSetting in oTheme.settings ){
@@ -210,8 +212,10 @@ component accessors="true" threadSafe singleton{
 	* Register a theme's settings
 	* @name The theme name
 	* @settings The settings struct
+	* 
+	* @return ThemeService
 	*/
-	private ThemeService function registerThemeSettings( required name, required array settings ) transactional{
+	private any function registerThemeSettings( required name, required array settings ) transactional{
 		// iterate and register theme settings
 		for( var thisSetting in arguments.settings ){
 			// try to retrieve it first
@@ -229,6 +233,8 @@ component accessors="true" threadSafe singleton{
 	/**
 	* Unregister theme settings
 	* @settings The settings to unregister
+	* 
+	* @return ThemeService
 	*/
 	private function unregisterThemeSettings( required array settings ) transactional{
 		// iterate and register theme settings
@@ -240,6 +246,7 @@ component accessors="true" threadSafe singleton{
 				settingService.delete( oSetting );
 			}
 		}
+		return this;
 	}
 
 	/**
