@@ -130,7 +130,7 @@ component accessors="true" singleton threadSafe{
 		// get module widgets
 		var moduleWidgets = moduleService.getModuleWidgetCache();
 		// get layout widgets
-		var layoutWidgets = themeService.getLayoutWidgetCache();
+		var layoutWidgets = themeService.getWidgetCache();
 
 		// Add custom columns
 		QueryAddColumn( widgets, "filename", [] );
