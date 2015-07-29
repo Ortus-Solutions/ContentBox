@@ -333,7 +333,7 @@ component accessors="true" threadSafe singleton{
 		// filter theme folders only
 		var rawThemes 	= new Query( 
 				dbtype 		= "query", 
-				sql 		= "SELECT directory,name from rawThemes WHERE type = 'Dir'", 
+				sql 		= "SELECT directory,name from rawThemes WHERE type = 'Dir'",
 				rawThemes 	= rawThemes
 			).execute().getResult();
 
@@ -359,14 +359,21 @@ component accessors="true" threadSafe singleton{
 			if( left( themeName, 1 ) eq '.' )
 				continue;
 
-			// Check if valid theme
-			if( !fileExists( variables.themesPath & "/#themeName#/#themeName#.cfc") ){
-				log.warn( "The theme: #themeName# is an invalid theme, skipping." );
-				rawThemes.isValid[ x ] = false;
-				continue;
+			// Check for theme descriptor by 'theme.cfc' or '#themeName#.cfc'
+			var descriptorPath 		= variables.themesPath & "/#themeName#/theme.cfc";
+			var descriptorInstance 	= variables.themesInvocationPath & ".#themeName#.Theme";
+			if( !fileExists( descriptorPath ) ){
+				// try by theme name instead
+				descriptorPath 		= variables.themesPath & "/#themeName#/#themeName#.cfc";
+				descriptorInstance	= variables.themesInvocationPath & ".#themeName#.#themeName#";
+				if( !fileExists( descriptorPath ) ){
+					log.warn( "The theme: #themeName# has no theme descriptor, skipping." );
+					rawThemes.isValid[ x ] = false;
+					continue;
+				}
 			}
 			// construct descriptor via WireBox
-			var config = wirebox.getInstance( variables.themesInvocationPath & ".#themeName#.#themeName#" );
+			var config = wirebox.getInstance( descriptorInstance );
 
 			// Add custom descriptions
 			rawThemes.isValid[ x ] 		= true;
