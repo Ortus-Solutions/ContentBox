@@ -364,7 +364,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehCommentsettings	= "#this.ADMIN_ENTRYPOINT#.comments.settings";
 
 		// Look and Feel Tab
-		prc.xehLayouts		= "#this.ADMIN_ENTRYPOINT#.layouts";
+		prc.xehThemes		= "#this.ADMIN_ENTRYPOINT#.themes";
 		prc.xehWidgets		= "#this.ADMIN_ENTRYPOINT#.widgets";
 		prc.xehGlobalHTML	= "#this.ADMIN_ENTRYPOINT#.globalHTML";
 
@@ -415,7 +415,7 @@ component accessors="true" threadSafe singleton{
 
 		// Look and Feel
 		addTopMenu( name=this.LOOK_FEEL, label="<i class='fa fa-tint'></i> Look & Feel" )
-			.addSubMenu( name="Layouts", label="Layouts", href="#event.buildLink(prc.xehLayouts)#", permissions="LAYOUT_ADMIN" )
+			.addSubMenu( name="Themes", label="Themes", href="#event.buildLink(prc.xehThemes)#", permissions="THEME_ADMIN" )
 			.addSubMenu( name="Widgets", label="Widgets", href="#event.buildLink(prc.xehWidgets)#", permissions="WIDGET_ADMIN" )
 			.addSubMenu( name="globalHTML", label="Global HTML", href="#event.buildLink(prc.xehGlobalHTML)#", permissions="GLOBALHTML_ADMIN" );
 

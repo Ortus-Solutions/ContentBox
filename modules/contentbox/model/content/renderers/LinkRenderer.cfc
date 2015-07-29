@@ -32,7 +32,7 @@ component accessors="true"{
 		
 		// Loop over found links
 		for(var x=1; x lte targetLen; x++){
-			tagString = targets[x];
+			tagString = targets[ x ];
 			
 			// convert quotes to standards
 			tagString = replace(tagString,"&##34;",'"',"all");
@@ -47,27 +47,27 @@ component accessors="true"{
 					case "pagessl" 	: { linkContent = cb.linkPage( page=determineSlug( tagString ), ssl=true ); break; }
 					case "entry" 	: { linkContent = cb.linkEntry( entry=determineSlug( tagString ) ); break; }
 					case "entryssl" : { linkContent = cb.linkEntry( entry=determineSlug( tagString ), ssl=true ); break; }
-					case "root"  	: { linkContent = cb.layoutRoot(); break; }
+					case "root"  	: { linkContent = cb.themeRoot(); break; }
 				}
 				
 			}
 			catch(Any e){
 				linkContent = "Error translating link: #e.message# #e.detail#";
-				log.error("Error translating link on target: #targets[x]#", e);
+				log.error("Error translating link on target: #targets[ x ]#", e);
 			}
 			
 			// PROCESS REPLACING 
 			
 			// get location of target
-			var rLocation 	= builder.indexOf( targets[x] );
-			var rLen 		= len( targets[x] );
+			var rLocation 	= builder.indexOf( targets[ x ] );
+			var rLen 		= len( targets[ x ] );
 			
 			// Loop findings of same {{{}}} instances to replace
 			while( rLocation gt -1 ){
 				// Replace it
 				builder.replace( javaCast("int", rLocation), javaCast("int", rLocation+rLen), linkContent);
 				// look again
-				rLocation = builder.indexOf( targets[x], javaCast("int", rLocation) );
+				rLocation = builder.indexOf( targets[ x ], javaCast("int", rLocation) );
 			}
 			
 		}

@@ -766,7 +766,7 @@ EditAreaLoader.prototype ={
 		for( i in editAreas ){			
 			is_child= false;
 			for( x=0;x<formObj.elements.length;x++ ) {
-				if(formObj.elements[x].id == i)
+				if(formObj.elements[ x ].id == i)
 					is_child=true;
 			}
 			
@@ -793,7 +793,7 @@ EditAreaLoader.prototype ={
 		for( i in editAreas){
 			is_child= false;
 			for( x=0;x<formObj.elements.length;x++ ) {
-				if(formObj.elements[x].id == i)
+				if(formObj.elements[ x ].id == i)
 					is_child=true;
 			}
 		

@@ -60,11 +60,11 @@ component implements="contentbox.model.importers.ICBImporter" {
 			                  password=arguments.dsnPassword,
 			                  sql="select categoryid, categoryname, categoryalias, blog FROM tblBlogCategories").execute().getResult();
 			for(var x = 1; x lte qCategories.recordcount; x++) {
-				var props = {category=qCategories.categoryName[x], slug=qCategories.categoryAlias[x]};
+				var props = {category=qCategories.categoryName[ x ], slug=qCategories.categoryAlias[ x ]};
 				var cat = categoryService.new(properties=props);
 				entitySave(cat);
 				log.info("Imported category: #props.category#");
-				catMap[qCategories.categoryId[x]] = cat.getCategoryID();
+				catMap[qCategories.categoryId[ x ]] = cat.getCategoryID();
 			}
 			log.info("Categories imported successfully!");
 
@@ -76,12 +76,12 @@ component implements="contentbox.model.importers.ICBImporter" {
 			var qAuthors = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
 			                  password=arguments.dsnPassword,sql="select username, password, name from tblUsers").execute().getResult();
 			for(var x = 1; x lte qAuthors.recordcount; x++) {
-				var props = {email=qAuthors.username[x], username=qAuthors.username[x],
+				var props = {email=qAuthors.username[ x ], username=qAuthors.username[ x ],
 				                  password=hash(defaultPassword, authorService.getHashType()),isActive=1,
-				                  firstName=listFirst(qAuthors.name[x], " "),
-				                  lastName=trim(replacenocase(qAuthors.name[x], listFirst(qAuthors.name[x], " "), ""))};
+				                  firstName=listFirst(qAuthors.name[ x ], " "),
+				                  lastName=trim(replacenocase(qAuthors.name[ x ], listFirst(qAuthors.name[ x ], " "), ""))};
 
-				var author = authorService.findWhere({username=qAuthors.username[x]});
+				var author = authorService.findWhere({username=qAuthors.username[ x ]});
 				if( isNull(author) ) {
 					author = authorService.new(properties=props);
 				}
@@ -89,7 +89,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 				author.setRole( defaultRole );
 				entitySave(author);
 				log.info("Imported author: #props.firstName# #props.lastName#");
-				authorMap[qAuthors.username[x]] = author.getAuthorID();
+				authorMap[qAuthors.username[ x ]] = author.getAuthorID();
 
 				// Save first author found from blogCFC as the default author.
 				if(x == 1) {
@@ -106,9 +106,9 @@ component implements="contentbox.model.importers.ICBImporter" {
 
 			for(var x = 1; x lte qPages.recordcount; x++) {
 				var props = {
-					title = qPages.title[x],
-					slug = qPages.alias[x],
-					content = qPages.body[x],
+					title = qPages.title[ x ],
+					slug = qPages.alias[ x ],
+					content = qPages.body[ x ],
 					publishedDate = now(),
 					createdDate = now(),
 					isPublished = true,
@@ -137,27 +137,27 @@ component implements="contentbox.model.importers.ICBImporter" {
 			for(var x = 1; x lte q.recordcount; x++) {
 				var published = true;
 				var commentStatus = true;
-				if(!trim(q.released[x])) {
+				if(!trim(q.released[ x ])) {
 					published = false;
 				}
-				if(!q.allowComments[x]) {
+				if(!q.allowComments[ x ]) {
 					commentSatus = false;
 				}
 
-				var importedBody = q.Body[x] & q.moreBody[x];
+				var importedBody = q.Body[ x ] & q.moreBody[ x ];
 				interceptorService.processState("preImportEntry", {post = importedBody});
 				importedBody = findImages(importedBody);
 				importedBody = convertContent(importedBody);
 				interceptorService.processState("postImportEntry", {post = importedBody});
 
-				var props = {title=q.title[x], slug=q.alias[x], content = importedBody,
-				                  excerpt = q.Body[x], publishedDate = q.posted[x], createdDate = q.posted[x],
-				                  isPublished = published, allowComments = commentStatus, hits = q.views[x]
+				var props = {title=q.title[ x ], slug=q.alias[ x ], content = importedBody,
+				                  excerpt = q.Body[ x ], publishedDate = q.posted[ x ], createdDate = q.posted[ x ],
+				                  isPublished = published, allowComments = commentStatus, hits = q.views[ x ]
 							};
 
 				var entry = entryService.new(properties = props);
-				entry.addNewContentVersion(content = props.content, changelog = "Imported content", author = authorService.get( authorMap[q.username[x]] ));
-				entry.setCreator( authorService.get( authorMap[q.username[x]] ) );
+				entry.addNewContentVersion(content = props.content, changelog = "Imported content", author = authorService.get( authorMap[q.username[ x ]] ));
+				entry.setCreator( authorService.get( authorMap[q.username[ x ]] ) );
 				
 				// entry categories
 				var thisSQL = "
@@ -165,7 +165,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 					from		tblBlogEntries
 					inner join	tblBlogEntriesCategories ON tblBlogEntries.id = tblBlogEntriesCategories.entryidfk
 					inner join	tblBlogCategories ON tblBlogEntriesCategories.categoryidfk = tblBlogCategories.categoryid
-					where		tblBlogEntriesCategories.entryidfk = '#q.id[x]#'
+					where		tblBlogEntriesCategories.entryidfk = '#q.id[ x ]#'
 				";
 				var qCategories = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
 				                            password=arguments.dsnPassword,sql=thisSQL).execute().getResult();
@@ -183,7 +183,7 @@ component implements="contentbox.model.importers.ICBImporter" {
 				// Import entry comments
 				var qComments = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
 				                  password=arguments.dsnPassword,
-				                  sql="select * from tblBlogComments where entryidfk = '#q.id[x]#'").execute().getResult();
+				                  sql="select * from tblBlogComments where entryidfk = '#q.id[ x ]#'").execute().getResult();
 
 				for(var y = 1; y lte qComments.recordcount; y++) {
 					var props = { content=qComments.comment[y], author=qComments.name[y], authorEmail=qComments.email[y],

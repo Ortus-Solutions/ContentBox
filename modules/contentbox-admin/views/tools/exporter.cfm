@@ -232,10 +232,10 @@
                             <div class="col-md-9">
                                 <div class="controls checkbox-spacer">
                                     <div class="row">
-                                        <cfloop query="prc.layouts">
+                                        <cfloop query="prc.themes">
                                             <div class="col-md-6">
-                                                <cfset name = prc.layouts.name>
-                                                <label for="export_layouts_#name#" class="checkbox">#html.checkbox(name="export_layouts",id="export_layouts_#name#",value="#prc.layouts.name#",checked=true,data={alacarte=true})# #name#</label>
+                                                <cfset name = prc.themes.name>
+                                                <label for="export_layouts_#name#" class="checkbox">#html.checkbox(name="export_layouts",id="export_layouts_#name#",value="#prc.themes.name#",checked=true,data={alacarte=true})# #name#</label>
                                             </div>
                                             <cfif currentRow MOD 2 eq 0>
                                                 </div>

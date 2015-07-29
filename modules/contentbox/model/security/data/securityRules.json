@@ -152,7 +152,7 @@
     {
         "securelist": "^contentbox-admin:layouts\\.(remove|upload|rebuildRegistry|activate)",
         "roles": "",
-        "permissions": "LAYOUT_ADMIN",
+        "permissions": "THEME_ADMIN",
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "12",

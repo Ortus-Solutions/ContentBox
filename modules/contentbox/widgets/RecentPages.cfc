@@ -72,7 +72,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<ul id="recentPages">');
 			// iterate and create
 			for(var x=1; x lte arguments.max; x++){
-				writeOutput('<li class="recentPages"><a href="#cb.linkPage(pageResults.pages[x])#">#pageResults.pages[x].getTitle()#</a></li>');
+				writeOutput('<li class="recentPages"><a href="#cb.linkPage(pageResults.pages[ x ])#">#pageResults.pages[ x ].getTitle()#</a></li>');
 			}
 			// close ul
 			writeOutput("</ul>");

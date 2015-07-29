@@ -65,11 +65,11 @@ component  implements="ICBImporter" {
 						      password=arguments.dsnPassword,
 						      sql="select * from #arguments.tablePrefix#machblog_category").execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
-				var props 	= {category=q.category_name[x], slug=htmlHelper.slugify(q.category_name[x])};
+				var props 	= {category=q.category_name[ x ], slug=htmlHelper.slugify(q.category_name[ x ])};
 				var cat 	= categoryService.new(properties=props);
 				entitySave( cat );
 				log.info("Imported category: #props.category#");
-				catMap[ q.category_id[x] ] = cat.getCategoryID();
+				catMap[ q.category_id[ x ] ] = cat.getCategoryID();
 			}
 			log.info("Categories imported successfully!");
 			
@@ -84,8 +84,8 @@ component  implements="ICBImporter" {
 						      password=arguments.dsnPassword,
 						      sql="select * from #arguments.tablePrefix#machblog_user").execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
-				var props = {email=q.email[x], username=q.email[x], password=hash(defaultPassword, authorService.getHashType() ),isActive=q.is_active[x],
-						     firstName=q.first_name[x], lastName=q.last_name[x]};
+				var props = {email=q.email[ x ], username=q.email[ x ], password=hash(defaultPassword, authorService.getHashType() ),isActive=q.is_active[ x ],
+						     firstName=q.first_name[ x ], lastName=q.last_name[ x ]};
 				var author = authorService.new(properties=props);
 				author.setRole( defaultRole );
 				// duplicate usernames
@@ -95,7 +95,7 @@ component  implements="ICBImporter" {
 				
 				entitySave( author );
 				log.info("Imported author: #props.firstName# #props.lastName#");
-				authorMap[ q.user_id[x] ] = author.getAuthorID();
+				authorMap[ q.user_id[ x ] ] = author.getAuthorID();
 			 }
 			 log.info("Authors imported successfully!");
 			 
@@ -113,9 +113,9 @@ component  implements="ICBImporter" {
 						      
 			for(var x=1; x lte q.recordcount; x++){
 				var published = true;
-				if( !q.is_active[x] ){ published = false; }
-				var props = {title=q.title[x], slug=htmlHelper.slugify(q.title[x]), content=q.body[x]&q.more_body[x], excerpt=q.body[x], publishedDate=DateAdd("s", q.dt_posted[x]/1000, baseDate),
-							 createdDate=DateAdd("s", q.dt_created[x]/1000, baseDate), isPublished=published, allowComments=q.allow_comments[x]};
+				if( !q.is_active[ x ] ){ published = false; }
+				var props = {title=q.title[ x ], slug=htmlHelper.slugify(q.title[ x ]), content=q.body[ x ]&q.more_body[ x ], excerpt=q.body[ x ], publishedDate=DateAdd("s", q.dt_posted[ x ]/1000, baseDate),
+							 createdDate=DateAdd("s", q.dt_created[ x ]/1000, baseDate), isPublished=published, allowComments=q.allow_comments[ x ]};
 				
 				// slug checks
 				if( !len(Trim(props.slug)) ){
@@ -130,13 +130,13 @@ component  implements="ICBImporter" {
 				
 				var entry = entryService.new(properties=props);
 				// Add content versionized!
-				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.created_by_id[x]] ));
-				entry.setCreator( authorService.get( authorMap[q.created_by_id[x]] ) );
+				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.created_by_id[ x ]] ));
+				entry.setCreator( authorService.get( authorMap[q.created_by_id[ x ]] ) );
 				// entry categories
 				var qCategories = new Query(datasource=arguments.dsn,
 											username=arguments.dsnUsername,
 						     		    	password=arguments.dsnPassword,
-						     		    	sql="select * from #arguments.tablePrefix#machblog_entry_category as category where category.entry_id = '#q.entry_id[x]#'").execute().getResult();
+						     		    	sql="select * from #arguments.tablePrefix#machblog_entry_category as category where category.entry_id = '#q.entry_id[ x ]#'").execute().getResult();
 				var aCategories = [];
 				for(var y=1; y lte qCategories.recordcount; y++){
 					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.category_id[y]] ) );
@@ -154,7 +154,7 @@ component  implements="ICBImporter" {
 				var qComments = new Query(datasource=arguments.dsn,
 										  username=arguments.dsnUsername,
 							       		  password=arguments.dsnPassword,
-							       		  sql="select * from #arguments.tablePrefix#machblog_comment as comment where comment.entry_id = '#q.entry_id[x]#' order by dt_created asc").execute().getResult();
+							       		  sql="select * from #arguments.tablePrefix#machblog_comment as comment where comment.entry_id = '#q.entry_id[ x ]#' order by dt_created asc").execute().getResult();
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
 						content = qComments.comment[y], author = qComments.name[y], authorIP = qComments.ip_created[y], authorEmail = qComments.email[y], 

@@ -52,7 +52,7 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" singleton{
 
 		// iterate and create
 		for(var x=1; x lte arrayLen(arguments.categories); x++){
-			var thisCat 	= trim(arguments.categories[x]);
+			var thisCat 	= trim(arguments.categories[ x ]);
 			var properties 	= {category=thisCat, slug=htmlHelper.slugify( thisCat )};
 			// check that category doesn't exist already
 			var extantCategory = findWhere( criteria = properties );

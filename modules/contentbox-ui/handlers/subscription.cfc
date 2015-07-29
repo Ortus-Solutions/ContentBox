@@ -66,7 +66,7 @@ component singleton{
                 prc.subscriptions = subscriber.getSubscriptionsByContentType();
             }
         }
-        event.setLayout( name="#prc.cbLayout#/layouts/pages", module="contentbox" )
+        event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
              .setView( view="subscription/subscriptions" );
     }
 
@@ -89,7 +89,7 @@ component singleton{
         else {
             getPlugin( "MessageBox" ).warn( message = "Sorry, your request could not be completed." );
         }
-        event.setLayout( name="#prc.cbLayout#/layouts/pages", module="contentbox" )
+        event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
              .setView( view="subscription/unsubscribe" );
     }
 }

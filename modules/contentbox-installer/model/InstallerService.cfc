@@ -120,7 +120,7 @@ component accessors="true"{
 			"PERMISSIONS_ADMIN" = "Ability to manage permissions, default is view only",
 			"AUTHOR_ADMIN" = "Ability to manage authors, default is view only",
 			"WIDGET_ADMIN" = "Ability to manage widgets, default is view only",
-			"LAYOUT_ADMIN" = "Ability to manage layouts, default is view only",
+			"THEME_ADMIN" = "Ability to manage layouts, default is view only",
 			"COMMENTS_ADMIN" = "Ability to manage comments, default is view only",
 			"CONTENTSTORE_ADMIN" = "Ability to manage the content store, default is view only",
 			"PAGES_ADMIN" = "Ability to manage content pages, default is view only",
@@ -179,7 +179,7 @@ component accessors="true"{
 		oRole.addPermission( permissions[ "PAGES_EDITOR"] );
 		oRole.addPermission( permissions[ "CATEGORIES_ADMIN"] );
 		oRole.addPermission( permissions[ "ENTRIES_EDITOR"] );
-		oRole.addPermission( permissions[ "LAYOUT_ADMIN"] );
+		oRole.addPermission( permissions[ "THEME_ADMIN"] );
 		oRole.addPermission( permissions[ "GLOBALHTML_ADMIN"] );
 		oRole.addPermission( permissions[ "MEDIAMANAGER_ADMIN"] );
 		oRole.addPermission( permissions[ "VERSIONS_ROLLBACK"] );
@@ -310,7 +310,7 @@ component accessors="true"{
 			"cb_notify_contentstore" = "true",
 
 			// Site Layout
-			"cb_site_layout" = "default",
+			"cb_site_theme" = "default",
 
 			// RSS Feeds
 			"cb_rss_maxEntries" = "10",

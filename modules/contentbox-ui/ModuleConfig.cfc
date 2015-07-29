@@ -146,8 +146,8 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Startup the ContentBox layout service and activate the current layout
-		controller.getWireBox().getInstance("layoutService@cb").startupActiveLayout();
+		// Startup the ContentBox theme service and activate the current layout
+		controller.getWireBox().getInstance( "themeService@cb" ).startupActiveTheme();
 		// Get ses handle
 		var ses = controller.getInterceptorService().getInterceptor('SES',true);
 		
@@ -163,9 +163,9 @@ component {
 
 			// iterate and only keep module routing
 			for(var x=1; x lte arrayLen(parentRoutes); x++){
-				if( parentRoutes[x].pattern NEQ ":handler/" AND
-				    parentRoutes[x].pattern NEQ ":handler/:action/" ){
-					arrayAppend(newRoutes, parentRoutes[x]);
+				if( parentRoutes[ x ].pattern NEQ ":handler/" AND
+				    parentRoutes[ x ].pattern NEQ ":handler/:action/" ){
+					arrayAppend(newRoutes, parentRoutes[ x ]);
 				}
 			}
 			// override new cleaned routes
@@ -177,7 +177,7 @@ component {
 			// Add routes manually to take over parent routes
 			for(var x=1; x LTE arrayLen( variables.routes ); x++){
 				// append module location to it so the route is now system wide
-				var args = duplicate( variables.routes[x] );
+				var args = duplicate( variables.routes[ x ] );
 				// Check if handler defined
 				if( structKeyExists(args,"handler") ){
 					args.handler = "contentbox-ui:#args.handler#";

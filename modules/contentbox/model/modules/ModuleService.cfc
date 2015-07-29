@@ -253,8 +253,8 @@ component extends="coldbox.system.orm.hibernate.VirtualEntityService" accessors=
 		// Register each module as it is found on disk
 		for(var x=1; x lte qModules.recordCount; x++){
 			// Only look at directories
-			if( qModules.type[x] eq "dir" and left(qModules.name[x],1) neq '.'){
-				var moduleName = qModules.name[x];
+			if( qModules.type[ x ] eq "dir" and left(qModules.name[ x ],1) neq '.'){
+				var moduleName = qModules.name[ x ];
 				var thisModule = findWhere({name=moduleName});
 				// check if module already in database records or new
 				if( isNull(thisModule) ){

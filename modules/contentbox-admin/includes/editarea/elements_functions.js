@@ -52,19 +52,19 @@
 			var result=null;
 			var results= [];
 			for (var x=0;x<children.length;x++) {
-				strTagName = new String(children[x].tagName);
+				strTagName = new String(children[ x ].tagName);
 				children_class="?";
 				if(strTagName!= "undefined"){
-					child_attribute= getAttribute(children[x],elem_attribute);
+					child_attribute= getAttribute(children[ x ],elem_attribute);
 					if((strTagName.toLowerCase()==elem_type.toLowerCase() || elem_type=="") && (elem_attribute=="" || child_attribute==elem_attribute_match)){
 						if(option=="all"){
-							results.push(children[x]);
+							results.push(children[ x ]);
 						}else{
-							return children[x];
+							return children[ x ];
 						}
 					}
 					if(depth!=0){
-						result=getChildren(children[x], elem_type, elem_attribute, elem_attribute_match, option, depth-1);
+						result=getChildren(children[ x ], elem_type, elem_attribute, elem_attribute_match, option, depth-1);
 						if(option=="all"){
 							if(result.length>0){
 								results= results.concat(result);

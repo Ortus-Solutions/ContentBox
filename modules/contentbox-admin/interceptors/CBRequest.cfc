@@ -79,7 +79,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehCommentsettings	= "#prc.cbAdminEntryPoint#.comments.settings";
 
 		// Look and Feel Tab
-		prc.xehLayouts		= "#prc.cbAdminEntryPoint#.layouts";
+		prc.xehThemes		= "#prc.cbAdminEntryPoint#.themes";
 		prc.xehWidgets		= "#prc.cbAdminEntryPoint#.widgets";
 		prc.xehGlobalHTML	= "#prc.cbAdminEntryPoint#.globalHTML";
 

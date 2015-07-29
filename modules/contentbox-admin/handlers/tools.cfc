@@ -6,7 +6,7 @@ component extends="baseHandler"{
 	// DI
 	property name="settingService" 		inject="id:settingService@cb";
 	property name="moduleService"       inject="id:moduleService@cb";
-    property name="layoutService"       inject="id:layoutService@cb";
+    property name="themeService"       inject="id:themeService@cb";
     property name="widgetService"       inject="id:widgetService@cb";
     property name="roleService"         inject="id:roleService@cb";
     property name="templateService"     inject="id:emailtemplateService@cb";
@@ -120,7 +120,7 @@ component extends="baseHandler"{
 		prc.tabTools_export = true;
 		prc.emailTemplates 	= templateService.getTemplates();
 		prc.modules 		= moduleService.findModules().modules;
-		prc.layouts 		= layoutService.getLayouts();
+		prc.themes 		= themeService.getThemes();
 		prc.widgets 		= widgetService.getWidgets();
 		prc.widgetService 	= widgetService;
 		

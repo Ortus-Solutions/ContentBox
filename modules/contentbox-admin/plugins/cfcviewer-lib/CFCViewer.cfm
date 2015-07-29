@@ -163,7 +163,7 @@ Modification History:
 					<td valign="top">
 					<cfloop from="#ArrayLen(md.InheritanceTree)#" to="1" index="x" step="-1">
 						<p style="padding-left: #(ArrayLen(md.InheritanceTree) - x)*30#px;margin:5px">
-							|-----+ #md.InheritanceTree[x].name#
+							|-----+ #md.InheritanceTree[ x ].name#
 						</p>
 					</cfloop>
 					<p style="padding-left: #(ArrayLen(md.InheritanceTree))*32#px;margin:5px">|---+ <strong>#md.name#</strong></p>
@@ -192,7 +192,7 @@ Modification History:
 								<td class="cfc_methodstitle" >Hint</td>
 							</tr>
 							<cfloop from="1" to="#arrayLen(md.properties)#" index="x">
-								<cfset thisProperty = md.Properties[x]>
+								<cfset thisProperty = md.Properties[ x ]>
 								<!--- Verify Methods --->
 								<cfparam name="thisProperty.Name" 		default="">
 								<cfparam name="thisProperty.Type" 		default="">
@@ -300,12 +300,12 @@ Modification History:
 						<cfloop from="1" to="#arrayLen(md.inheritanceTree)#" index="x">
 						<table cellspacing="0" width="100%">
 							<tr valign="top">
-								<td class="cfc_methodstitle">Inherited Methods From: <strong>#md.inheritanceTree[x].name#</strong></td>
+								<td class="cfc_methodstitle">Inherited Methods From: <strong>#md.inheritanceTree[ x ].name#</strong></td>
 							</tr>
 							<tr valign="top" class="cfc_methodrows" >
 								<td class="cfc_methodcells" style="line-height:1.3">
-									<cfloop from="1" to="#arrayLen(md.inheritanceTree[x].functions)#" index="y">
-									#md.inheritanceTree[x].functions[y]#<cfif arrayLen(md.inheritanceTree[x].functions) neq y>, </cfif>
+									<cfloop from="1" to="#arrayLen(md.inheritanceTree[ x ].functions)#" index="y">
+									#md.inheritanceTree[ x ].functions[y]#<cfif arrayLen(md.inheritanceTree[ x ].functions) neq y>, </cfif>
 									</cfloop>											
 								</td>
 							</tr>					

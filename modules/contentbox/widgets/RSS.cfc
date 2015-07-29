@@ -49,9 +49,9 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<ul class="rssItems">');
 			// iterate and create
 			for(var x=1; x lte arguments.entries.recordcount; x++){
-				writeOutput('<li class="rssItem"><a href="#arguments.entries.URL[x]#" target="#arguments.linkTarget#">#arguments.entries.title[x]#');
+				writeOutput('<li class="rssItem"><a href="#arguments.entries.URL[ x ]#" target="#arguments.linkTarget#">#arguments.entries.title[ x ]#');
 				if( arguments.showBody ){
-					writeOutput('<br/>#arguments.entries.body[x]#');
+					writeOutput('<br/>#arguments.entries.body[ x ]#');
 				}
 				writeOutput('</li>');
 			}

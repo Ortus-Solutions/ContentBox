@@ -44,8 +44,8 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<ul id="recentComments">');
 			// iterate and create
 			for(var x=1; x lte arguments.max; x++){
-				writeOutput('<li class="recentComments">#commentResults.comments[x].getAuthor()# said
-				<a href="#cb.linkComment(commentResults.comments[x])#">#left(commentResults.comments[x].getContent(),arguments.maxChars)#</a></li>');
+				writeOutput('<li class="recentComments">#commentResults.comments[ x ].getAuthor()# said
+				<a href="#cb.linkComment(commentResults.comments[ x ])#">#left(commentResults.comments[ x ].getContent(),arguments.maxChars)#</a></li>');
 			}
 			// close ul
 			writeOutput("</ul>");

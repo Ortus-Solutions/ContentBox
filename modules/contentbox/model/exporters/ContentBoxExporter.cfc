@@ -40,7 +40,7 @@ component accessors=true {
     property name="settingService"      inject="id:settingService@cb";
     property name="securityService"     inject="id:securityService@cb";
     property name="moduleService"       inject="id:moduleService@cb";
-    property name="layoutService"       inject="id:layoutService@cb";
+    property name="themeService"        inject="id:themeService@cb";
     property name="widgetService"       inject="id:widgetService@cb";
     property name="templateService"     inject="id:emailtemplateService@cb";
     property name="log"                 inject="logbox:logger:{this}";
