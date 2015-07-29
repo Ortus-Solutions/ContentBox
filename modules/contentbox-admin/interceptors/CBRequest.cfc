@@ -100,7 +100,6 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehSettings			= "#prc.cbAdminEntryPoint#.settings";
 		prc.xehSecurityRules	= "#prc.cbAdminEntryPoint#.securityrules";
 		prc.xehRawSettings		= "#prc.cbAdminEntryPoint#.settings.raw";
-		prc.xehEmailTemplates   = "#prc.cbAdminEntryPoint#.emailtemplates";
 		prc.xehAutoUpdater	    = "#prc.cbAdminEntryPoint#.autoupdates";
 		// Stats
 		prc.xehSubscribers 		= "#prc.cbAdminEntryPoint#.subscribers";

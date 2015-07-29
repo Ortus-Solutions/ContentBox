@@ -51,23 +51,6 @@ component accessors="true" singleton{
 	}
 
 	/**
-	* Get template code
-	*/
-	string function getTemplateCode(required string name){
-		var templatePath = getTemplatesPath() & "/#arguments.name#.cfm";
-		return fileRead( templatePath );
-	}
-	
-	/**
-	* Save template code
-	*/
-	EmailTemplateService function saveTemplateCode(required string name, required string code){
-		var templatePath = getTemplatesPath() & "/#arguments.name#.cfm";
-		fileWrite( templatePath, arguments.code );
-		return this;
-	}
-	
-	/**
 	* Get installed templates
 	*/
 	query function getTemplates(){
