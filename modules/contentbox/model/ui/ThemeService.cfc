@@ -470,14 +470,14 @@ component accessors="true" threadSafe singleton{
 	* @return struct : { error:boolean, messages:string }
 	*/
 	struct function uploadTheme( required fileField ){
-		var destination = variables.themesPath;
+		var tmpPath 	= moduleSettings[ "contentbox" ].path & "/tmp";
 		var results = {
 			error = false, messages = ""
 		};
 
 		// upload file
 		try{
-			var fInfo 		= fileUpload( destination,arguments.fileField, "", "overwrite" );
+			var fInfo 		= fileUpload( tmpPath, arguments.fileField, "", "overwrite" );
 			var fFilePath 	= fInfo.serverDirectory & "/" & fInfo.serverFile;
 		}
 		catch( any e ){
@@ -490,12 +490,40 @@ component accessors="true" threadSafe singleton{
 		try{
 			// check if zip file
 			if( fInfo.serverFileExt eq "zip" ){
-				// Expand it
-				zipUtil.extract( zipFilePath=fFilePath, extractPath=destination, useFolderName=true );
-				// Removal of Mac stuff
-				if( directoryExists( destination & "/__MACOSX" ) ){
-					directoryDelete( destination & "/__MACOSX", true );
+				// Create temp holder
+				if( directoryExists( tmpPath & "/theme" ) ){
+					directoryDelete( tmpPath & "/theme", true );
 				}
+				directoryCreate( tmpPath & "/theme" );
+				// Expand it
+				zipUtil.extract( zipFilePath=fFilePath, extractPath=tmpPath & "/theme" );
+				// Removal of Mac stuff
+				if( directoryExists( tmpPath & "/theme" & "/__MACOSX" ) ){
+					directoryDelete( tmpPath & "/theme" & "/__MACOSX", true );
+				}
+				// Verify the directory contents to move it
+				var qFiles = directoryList( tmpPath & "/theme", false, "query" );
+				// If only 1 entry found, we have a nested package
+				if( qFiles.recordcount == 1 ){
+					for( var thisRow in qFiles ){
+						if( thisRow.type == 'dir' ){
+							// Time to move it with a slugified version of the name
+							var newDestination = variables.themesPath & "/" & replace( thisRow.name, ".", "-", "all" );
+							if( directoryExists( newDestination ) ){
+								directoryDelete( newDestination, true );
+							}
+							directoryRename( thisRow.directory & "/" & thisRow.name, newDestination );
+						}
+					}
+				} else {
+					var themeName = replacenocase( fInfo.serverFile, ".zip", "" );
+					var newDestination = variables.themesPath & "/" & replace( themeName, ".", "-", "all" );
+					if( directoryExists( newDestination ) ){
+						directoryDelete( newDestination, true );
+					}
+					directoryRename( tmpPath & "/theme", newDestination );
+				}
+
 				// rebuild the registry now that it is installed
 				buildThemeRegistry();
 			}
@@ -506,8 +534,12 @@ component accessors="true" threadSafe singleton{
 			results.messages 	= "Error expanding theme package. #e.message# #e.detail#";
 		}
 		finally{
-			// remove zip file
+			// Remove zip file
 			fileDelete( fFilePath );
+			// Remove temp holder
+			if( directoryExists( tmpPath & "/theme" ) ){
+				directoryDelete( tmpPath & "/theme", true );
+			}
 		}
 
 		return results;
