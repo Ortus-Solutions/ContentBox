@@ -380,7 +380,6 @@ component accessors="true" threadSafe singleton{
 		// Tools
 		prc.xehToolsImport	= "#this.ADMIN_ENTRYPOINT#.tools.importer";
 		prc.xehToolsExport	= "#this.ADMIN_ENTRYPOINT#.tools.exporter";
-		prc.xehApiDocs		= "#this.ADMIN_ENTRYPOINT#.apidocs";
 
 		// System
 		prc.xehSettings			= "#this.ADMIN_ENTRYPOINT#.settings";
@@ -432,8 +431,7 @@ component accessors="true" threadSafe singleton{
 		// Tools
 		addTopMenu( name=this.TOOLS, label="<i class='fa fa-wrench'></i> Tools" )
 			.addSubMenu( name="Import", label="Import", href="#event.buildLink(prc.xehToolsImport)#", permissions="TOOLS_IMPORT" )
-			.addSubMenu( name="Export", label="Export", href="#event.buildLink(prc.xehToolsExport)#", permissions="TOOLS_EXPORT" )
-			.addSubMenu( name="APIDocs", label="API Docs", href="#event.buildLink(prc.xehApiDocs)#", permissions="SYSTEM_TAB" );
+			.addSubMenu( name="Export", label="Export", href="#event.buildLink(prc.xehToolsExport)#", permissions="TOOLS_EXPORT" );
 
 		// SYSTEM
 		addTopMenu( name=this.SYSTEM, label="<i class='fa fa-briefcase'></i> System", permissions="SYSTEM_TAB" )
