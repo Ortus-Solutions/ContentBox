@@ -96,47 +96,44 @@
 	<body class="animated fadeIn">
 		<!--- cbadmin Event --->
 		#announceInterception("cbadmin_afterLoginBodyStart")#
-		
-		<div id="wrapper">
-			<!--- NavBar --->
-			<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
-			    <div class="navbar-inner">
-			    	<div class="container">
-			    		<!--- Logo --->
-						<img src="#prc.cbroot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
-						<!--- Brand, future multi-site switcher --->
-						<a class="brand">
-							ContentBox
-						</a>
-						<!--- i18n navbar --->
-						<ul class="nav pull-right">
-							<li class="dropdown">
-								<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
-									<i class="fa fa-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
-									<ul role="menu" class="dropdown-menu">
-										<cfloop array="#prc.langs#" index="thisLang">
-										<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>
-										</cfloop>
-									</ul>
-								</a>
-							</li>
-						</ul>
-					</div> <!---end container --->
-			    </div> <!--- end navbar-inner --->
-		    </div> <!---end navbar --->
-			
-			<!--- Container --->
-			<section id="login-container">
-				<!--- cbadmin event --->
-				#announceInterception("cbadmin_beforeLoginContent")#
-				<!--- Main Content --->
-				#renderView()#
-				<!--- cbadmin event --->
-				#announceInterception("cbadmin_afterLoginContent")#
-			</section>
-		</div>
-		<!--- Footer --->
-		#renderView(view="_tags/footer", module="contentbox-admin")#
+		<section id="container">
+            <header id="header">
+
+            	<!--logo start-->
+                <div class="brand text-center">
+                    <a class="logo">
+                        <img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
+                    </a>
+                </div>
+
+                <div class="user-nav">
+	                <!--- i18n navbar --->
+					<ul class="pull-right">
+						<li class="dropdown settings">
+							<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
+								<i class="fa fa-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
+								<ul role="menu" class="dropdown-menu">
+									<cfloop array="#prc.langs#" index="thisLang">
+									<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>
+									</cfloop>
+								</ul>
+							</a>
+						</li>
+					</ul>
+				</div>
+            </header>
+        </section>
+
+    	<!--- Login Container --->
+		<section id="login-container">
+			<!--- cbadmin event --->
+			#announceInterception("cbadmin_beforeLoginContent")#
+			<!--- Main Content --->
+			#renderView()#
+			<!--- cbadmin event --->
+			#announceInterception("cbadmin_afterLoginContent")#
+		</section>
+
 		<!--- cbadmin Event --->
 		#announceInterception("cbadmin_beforeLoginBodyEnd")#
 	</body>
