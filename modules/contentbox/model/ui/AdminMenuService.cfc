@@ -488,7 +488,7 @@ component accessors="true" threadSafe singleton{
 	* @itemClass.hint A CSS class list to append to the element
 	* @itemId.hint An id to apply to the item element
 	*/
-	AdminMenuService function addTopMenu( required name, required label, title="", href="javascript:void( null )", target="", permissions="", data=structNew(), class="", id="", itemType="a", itemClass="", itemId=""  ){
+	AdminMenuService function addTopMenu( required name, required label, title="", href="##", target="", permissions="", data=structNew(), class="", id="", itemType="a", itemClass="", itemId=""  ){
 		// stash pointer
 		variables.thisTopMenu = arguments.name;
 		// store new top menu in reference map

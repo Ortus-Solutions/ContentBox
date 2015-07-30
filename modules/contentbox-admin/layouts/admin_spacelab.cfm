@@ -38,7 +38,7 @@
         <link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         
         <!--- ********************************************************************* --->
-        <!---                           CSS 	                                    --->
+        <!---                           CSS THEME                                   --->
         <!--- ********************************************************************* --->
 
         <!-- Bootstrap core CSS -->
@@ -47,6 +47,19 @@
         <link href="#prc.cbroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />
         <!-- css animate -->
         <link href="#prc.cbroot#/includes/spacelab/css/animate.css" rel="stylesheet" />
+        <!-- Switchery -->
+    	<link rel="stylesheet" href="#prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.css">
+        <!-- spacelab theme-->
+        <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
+        <!-- datatables -->
+        <link href="#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css" rel="stylesheet" />
+        <!-- toastr -->
+        <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
+
+        <!--- ********************************************************************* --->
+        <!---                          CONTENTBOX                                   --->
+        <!--- ********************************************************************* --->
+
         <!-- file upload -->
         <link href="#prc.cbroot#/includes/css/bootstrap-fileupload.css" rel="stylesheet" />
         <!-- modal -->
@@ -54,13 +67,7 @@
         <link href="#prc.cbroot#/includes/css/bootstrap-modal.css" rel="stylesheet" />
         <!-- datepicker -->
         <link href="#prc.cbroot#/includes/css/bootstrap-datepicker.css" rel="stylesheet" />
-        <!-- datatables -->
-        <link href="#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css" rel="stylesheet" />
-        <!-- toastr -->
-        <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
-        <!-- custom styles for spacelab -->
-        <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
-        <!-- custom admin -->
+        <!-- custom contentbox css -->
         <link href="#prc.cbroot#/includes/css/contentbox.css" rel="stylesheet" />
         
         <!--- ********************************************************************* --->
@@ -73,8 +80,16 @@
         <script src="#prc.cbroot#/includes/spacelab/js/jquery.min.js"></script>
         <!-- bootstrap js -->
         <script src="#prc.cbroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <!-- Navigation -->
+        <script src="#prc.cbroot#/includes/spacelab/plugins/navgoco/jquery.navgoco.min.js"></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.js"></script>
         <!-- spacelab js -->
         <script src="#prc.cbroot#/includes/spacelab/js/application.js"></script>
+
+        <!--- ********************************************************************* --->
+        <!---                          CONTENTBOX JAVASCRIPT                        --->
+        <!--- ********************************************************************* --->
+
         <!-- file upload -->
         <script src="#prc.cbroot#/includes/js/bootstrap-fileupload.js"></script>
        	<!-- modal -->
@@ -142,7 +157,7 @@
         <!--- cbadmin Event --->
         #announceInterception("cbadmin_beforeHeadEnd")#
     </head>
-    <body class="animated">
+    <body class="off-canvas">
         <!--- cbadmin Event --->
         #announceInterception("cbadmin_afterBodyStart")#
         <section id="container">
@@ -221,18 +236,22 @@
 							</ul>
 						</li>
 						</cfif>
+                    	
                     	<!--- Utils --->
                         #prc.adminMenuService.generateUtilsMenu()#
+                       	
                        	<!--- Support Menu --->
                         #prc.adminMenuService.generateSupportMenu()#
+                        
                         <!--- Profile --->
                         <li class="profile-photo">
                             #getMyPlugin( plugin="Avatar",module="contentbox" )
                             	.renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
                         </li>
                         #prc.adminMenuService.generateProfileMenu()#
+                        
                         <!--- Notifications --->
-                        <li class="notifications">
+                        <li class="dropdown messages">
                             <span class="badge badge-danager animated bounceIn" id="new-messages">5</span>
                             <div class="toggle-navigation toggle-right">
                                 <button type="button" class="btn btn-default" id="toggle-right">
@@ -243,14 +262,15 @@
                     </ul>
                 </div>
             </header>
+
             <!--sidebar left start-->
-            <aside class="sidebar">
-                <div id="leftside-navigation" class="nano">
-                    <!--- Main Generated Menu --->
-                    #prc.adminMenuService.generateMenu()#
-                </div>
-            </aside>
+            <nav class="sidebar sidebar-left">
+            	<h5 class="sidebar-header">Navigation</h5>
+                <!--- Main Generated Menu --->
+                #prc.adminMenuService.generateMenu()#
+            </nav>
             <!--sidebar left end-->
+            
             <!--main content start-->
             <section class="main-content-wrapper">
                 <section id="main-content">
@@ -263,12 +283,15 @@
                 </section>
             </section>
             <!--main content end-->
-            <!--- Footer --->
-        #renderView( view="_tags/footer", module="contentbox-admin" )#
-            <!--sidebar right start-->
-            <aside class="sidebarRight">
-                <div id="rightside-navigation ">
-                    <div class="sidebar-heading"><i class="fa fa-bullhorn"></i> Notifications</div>
+
+         	<!--- Footer --->
+        	#renderView( view="_tags/footer", module="contentbox-admin" )#
+        </section>  
+
+        <!--sidebar right start-->
+        <div class="sidebarRight">
+	        <div id="rightside-navigation">
+	            <div class="sidebar-heading"><i class="fa fa-bullhorn"></i> Notifications</div>
                     <div class="sidebar-title">system</div>
                     <div class="list-contacts">
                         <cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.installer>
@@ -319,9 +342,10 @@
                         </cfif>
                     </div>
                 </div>
-            </aside>
-            <!--sidebar right end-->
-        </section>  
+	        </div>
+	    </div>
+        <!--sidebar right end-->
+
         <!--- ConfirmIt modal --->
         <div id="confirmIt" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmItTitle" aria-hidden="true">
             <div class="modal-dialog">

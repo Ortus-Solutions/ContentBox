@@ -1,5 +1,5 @@
 <cfoutput>
-	<ul class="nano-content">
+	<ul class="nav nav-pills nav-stacked">
 		<cfinclude template="nav.cfm">
 	</ul>
 <!---
