@@ -1,23 +1,5 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-desktop icon-large"></i> Admin Options</legend>
-    <!--- Default Themes --->
-    <div class="form-group">
-        <label class="control-label" for="cb_admin_theme">Default Admin Theme:</label>
-        <div class="controls">
-            <small>Choose the theme to use for the ContentBox administrator</small><br/>
-            #html.select(
-                name="cb_admin_theme", 
-                options=prc.adminThemes,
-                column="name",
-                class="form-control input-sm",
-                nameColumn="displayName",
-                selectedValue=prc.cbSettings.cb_admin_theme
-            )#
-        </div>
-    </div>  
-</fieldset>
-<fieldset>
     <legend><i class="fa fa-dashboard icon-large"></i>  Dashboard Options</legend>
     
     <!--- Tag Line --->
