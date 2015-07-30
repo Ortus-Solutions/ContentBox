@@ -55,6 +55,69 @@
 </fieldset>
 
 <fieldset>
+	<legend><i class="fa fa-filter"></i> <strong>Rate Limiter</strong></legend>
+	<!--- Rate Limiter --->
+	<div class="form-group">
+        #html.label( class="control-label", field="cb_security_rate_limiter", content="Enable Rate Limiter:" )#
+        <div class="controls">
+            <small>When enabled, it will keep track of requests and apply rate limiting according to count and duration settings according to client IP Address.</small><br/>
+			#html.radioButton( name="cb_security_rate_limiter", checked=prc.cbSettings.cb_security_rate_limiter, value=true )# Yes
+			#html.radioButton( name="cb_security_rate_limiter", checked=not prc.cbSettings.cb_security_rate_limiter, value=false )# No
+        </div>
+    </div>
+
+    <!--- Bot Limiter --->
+	<div class="form-group">
+        #html.label( class="control-label", field="cb_security_rate_limiter_bots_only", content="Enable For Automated Requets Only:" )#
+        <div class="controls">
+            <small>When enabled, it will apply rate limiting only for cookie-less requests. If disabled, it will limit ALL requests, including "legit" user requests. Usually, automated scripts and DOS attacks have no cookies enabled.</small><br/>
+			#html.radioButton( name="cb_security_rate_limiter_bots_only", checked=prc.cbSettings.cb_security_rate_limiter_bots_only, value=true )# Yes
+			#html.radioButton( name="cb_security_rate_limiter_bots_only", checked=not prc.cbSettings.cb_security_rate_limiter_bots_only, value=false )# No
+        </div>
+    </div>
+
+    <!--- Limiter Count --->
+    <div class="form-group">
+        <label class="control-label" for="cb_security_rate_limiter_count">Limiter Count:</label>
+        <div class="controls">
+            <small>Throttle requests made more than this count in the duration specified.</small><br/>
+			<select name="cb_security_rate_limiter_count" id="cb_security_rate_limiter_count">
+				<cfloop from="1" to="25" step="1" index="i">
+					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_count>selected="selected"</cfif>>#i#</option>
+				</cfloop>
+			</select>
+        </div>
+	</div>
+
+	<!--- Limiter Duration --->
+    <div class="form-group">
+        <label class="control-label" for="cb_security_rate_limiter_duration">Limiter Duration (Seconds):</label>
+        <div class="controls">
+            <small>Throttle requests made more than the count above in the span of this setting in seconds.</small><br/>
+			<select name="cb_security_rate_limiter_duration" id="cb_security_rate_limiter_duration">
+				<cfloop from="1" to="25" step="1" index="i">
+					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_duration>selected="selected"</cfif>>#i#</option>
+				</cfloop>
+			</select>
+        </div>
+	</div>
+
+    <!--- Bot Regex Matching --->
+    <div class="form-group">
+        #html.label( field="cb_security_rate_limiter_message", class="control-label", content="Limiter Message:")#
+        <div class="controls">
+            <small>The message displayed to users when the rate limit has been exceeded. A 503 status header is also sent in the response.The <code>{duration}</code> element will be replaced with the setting at runtime.</small>
+            #html.textarea(
+            	name 	= "cb_security_rate_limiter_message",
+            	class 	= "form-control",
+            	value 	= prc.cbSettings.cb_security_rate_limiter_message,
+            	rows 	= "4"
+            )#     
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
     <legend><i class="fa fa-lock icon-large"></i>  Secure Sockets Layer (SSL) Encryption</legend>
 	<!--- Admin SSL --->
     <div class="form-group">
