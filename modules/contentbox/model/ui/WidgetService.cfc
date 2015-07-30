@@ -69,47 +69,6 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Get widget code
-	* @name {String}
-	* @type {String}
-	* return String
-	*/
-	string function getWidgetCode(required string name, required string type){
-		var widgetPath = getWidgetFilePath( argumentCollection=arguments );
-		return fileRead( widgetPath );
-	}
-
-	/**
-	* Save widget code
-	* @name {String}
-	* @code {String}
-	* @type {String}
-	* return WidgetService
-	*/
-	WidgetService function saveWidgetCode(required string name, required string code, required string type){
-		var widgetPath = getWidgetFilePath( argumentCollection=arguments );
-		fileWrite( widgetPath, arguments.code );
-		return this;
-	}
-
-	/**
-	* Create new core widget
-	*/
-	WidgetService function createNewWidget(required Widget widget){
-		// read in template
-		var templateCode = fileRead( getDirectoryFromPath( getMetadata( this ).path ) & "templates/Widget.txt" );
-		// parsing
-		templateCode = replacenocase(templateCode,"@name@", widget.getName(),"all");
-		templateCode = replacenocase(templateCode,"@description@", widget.getDescription(),"all");
-		templateCode = replacenocase(templateCode,"@version@", widget.getVersion(),"all");
-		templateCode = replacenocase(templateCode,"@author@", widget.getAuthor(),"all");
-		templateCode = replacenocase(templateCode,"@authorURL@", widget.getAuthorURL(),"all");
-		templateCode = replacenocase(templateCode,"@category@", widget.getCategory(),"all");
-		templateCode = replacenocase(templateCode,"@icon@", widget.getIcon(),"all");
-		// write it out
-		return saveWidgetCode( widget.getName(), templateCode, "core" );
-	}
-	/**
 	 * Get unique, sorted widget categories from main widget query
 	 * returns Query
 	 */

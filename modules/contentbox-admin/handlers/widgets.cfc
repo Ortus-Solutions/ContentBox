@@ -22,6 +22,7 @@ component extends="baseHandler"{
 		prc.xehWidgetEditor = "#prc.cbAdminEntryPoint#.widgets.edit";
 		prc.xehWidgetCreate = "#prc.cbAdminEntryPoint#.widgets.create";
 		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
+		prc.xehWidgetTest 	= "#prc.cbAdminEntryPoint#.widgets.viewWidgetInstance";
 		// Get all widgets
 		prc.widgets 		= widgetService.getWidgets();
 		prc.categories 		= widgetService.getWidgetCategories();
@@ -104,16 +105,19 @@ component extends="baseHandler"{
 	}
 
 	function viewWidgetInstance( event, rc, prc ) {
-		event.paramValue( "modal", false );
-		event.paramValue( "Test", false );
+		// param data
+		event.paramValue( "modal", false )
+			.paramValue( "test", false )
+			.paramValue( "widgetudf", "renderIt" );
+
 		// get widget
-		var widget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
-		prc.md = widgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
+		var widget  = widgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
+		prc.md  	= widgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
 		prc.widget = {
 			name = rc.widgetname,
         	widgetType = rc.widgettype,
         	plugin = widget,
-        	udf = structKeyExists( rc, "widgetudf" ) ? rc.widgetudf : "renderIt",
+        	udf = rc.widgetudf,
         	module = find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
         	category = !isNull( widget.getCategory() ) ? 
         					widget.getCategory() : 
@@ -134,77 +138,4 @@ component extends="baseHandler"{
 		}
 	}
 
-	// Create New Widget wizard
-	function create( event, rc, prc ){
-		// exit handler
-		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.doCreate";
-		// widget path
-		prc.widgetsPath = widgetService.getWidgetsPath();
-		// widget icons
-		prc.widgetIcons = widgetService.getWidgetIcons();
-		// widget icon path
-		prc.widgetIconsIncludePath = widgetService.getwidgetsIconsIncludePath();
-		// view
-		event.setView(view="widgets/create",layout="ajax");
-	}
-	// Create the new widget
-	function doCreate( event, rc, prc ){
-		// slugify name
-		rc.name = getPlugin("HTMLHelper").slugify( rc.name );
-		// get and populate widget
-		var oWidget = populateModel("Widget@cb");
-		var errors = oWidget.validate();
-		if( !arrayLen(errors) ){
-			// save the new widget
-			widgetService.createNewWidget( oWidget );
-			getPlugin("MessageBox").info("Widget Created! Now Code It!");
-			setNextEvent(event="#prc.cbAdminEntryPoint#.widgets.edit",queryString="widget=#oWidget.getName()#&type=core");
-		}
-		else{
-			getPlugin("MessageBox").error(messageArray=errors);
-			setNextEvent(prc.xehWidgets);
-		}
-	}
-
-	// Editor
-	function edit( event, rc, prc ){
-		// param values
-		event.paramValue( "type", "core" );
-		// get widget
-		var widget = WidgetService.getWidget( name=rc.widget, type=rc.type );
-		// Exit handlers
-		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.save";
-		prc.xehWidgetTest = "#prc.cbAdminEntryPoint#.widgets.viewWidgetInstance";
-		// set widget details into prc
-		prc.widget = {
-			name = rc.widget,
-        	widgetType = rc.type,
-        	plugin = widget,
-        	udf = structKeyExists( rc, "widgetudf" ) ? rc.widgetudf : "renderIt",
-        	module = find( "@", rc.widget ) ? listGetAt( rc.widget, 2, '@' ) : "",
-        	category = !isNull( widget.getCategory() ) ? 
-        					widget.getCategory() : 
-        					rc.type=="Core" ?
-                            	"Miscellaneous" :
-                                rc.type,
-        	icon = !isNull( widget.getIcon() ) ? widget.getIcon() : "",
-        	widgetCode = widgetService.getWidgetCode( rc.widget, rc.type )
-		};
-		// view
-		event.setView("widgets/edit");
-	}
-
-	// Save Widget Code
-	function save( event, rc, prc ){
-		// Save the widget code
-		widgetService.saveWidgetCode( rc.widget, rc.widgetCode, rc.type );
-		// stay or relocate?
-		if( event.isAjax() ){
-			event.renderData(data=true,type="json");
-		}
-		else{
-			getPlugin("MessageBox").info("Widget Code Saved!");
-			setNextEvent(prc.xehWidgets);
-		}
-	}
 }

@@ -1,22 +1,16 @@
 <cfoutput>
 <div id="widget-container">
+
     <div class="well well-sm">
-        <!--- Create Widget --->
-        <cfif args.mode eq "edit">
-            <div class="btn-group btn-sm pull-right">
-                <button class="btn btn-sm btn-danger" onclick="openRemoteModal('#event.buildLink(prc.xehWidgetCreate)#');return false"
-                        title="Create a spanking new Widget">Create Widget</button>
-            </div>
-        </cfif>
-        <div class="form-group form-inline no-margin">
+        <div class="form-group no-margin">
             #html.textField(
                 name="widgetFilter",
-                size="30",
                 class="form-control",
                 placeholder="Quick Filter"
             )#
         </div>
     </div>
+
     <div class="tab-wrapper tab-left tab-primary">
         <!--- Navigation Bar --->
         <ul class="nav nav-tabs" id="widget-sidebar">
@@ -96,20 +90,21 @@
                                             <div class="col-md-5">
                                                 <cfif args.mode eq "edit">
                                                     <span class="widget-type">
-                                                        <div class="btn-group btn-group-xs pull-right">
+                                                        <div class="btn-group btn-group-sm pull-right">
                                                             <!---read docs--->
-                                                            <a title="Read Widget Documentation" class="btn btn-xs btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
+                                                            <a title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
                                                                 <i class="fa fa-book icon-large"></i> 
                                                             </a>
                                                             <cfif prc.oAuthor.checkPermission("WIDGET_ADMIN")>
-                                                                <!--- Editor --->
-                                                                <a title="Edit Widget" class="btn btn-xs btn-info" href="#event.buildLink(linkTo=prc.xehWidgetEditor,queryString='widget=#widgetName#&type=#prc.widgets.widgettype#')#">
-                                                                    <i class="fa fa-edit icon-large"></i> 
+                                                                <!--- Test --->
+                                                                <a title="Test Widget" class="btn btn-sm btn-info" 
+                                                                    href="javascript:testWidgetCode( '#widgetName#', '#prc.widgets.widgetType#' )">
+                                                                    <i class="fa fa-bolt icon-large"></i> 
                                                                 </a>
                                                                 <!---only allow deletion of core widgets--->
                                                                 <cfif prc.widgets.widgettype eq "core">
                                                                     <!--- Delete Command --->
-                                                                    <a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-xs btn-info" data-title="Delete #widgetName#?">
+                                                                    <a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
                                                                         <i class="fa fa-trash-o icon-large"></i> 
                                                                     </a>
                                                                 </cfif>
