@@ -43,8 +43,6 @@
 
         <!-- Bootstrap core CSS -->
         <link href="#prc.cbroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <!-- custom admintheme files -->
-        <link href="#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() : '' )#" rel="stylesheet" />
         <!-- fonts from font awesome -->
         <link href="#prc.cbroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />
         <!-- css animate -->
@@ -62,7 +60,9 @@
         <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
         <!-- custom styles for spacelab -->
         <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
-
+        <!-- custom admintheme files -->
+        <link href="#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() : '' )#" rel="stylesheet" />
+        
         <!--- ********************************************************************* --->
         <!---                           JAVASCRIPT                                  --->
         <!--- ********************************************************************* --->
@@ -149,9 +149,12 @@
         #announceInterception("cbadmin_afterBodyStart")#
         <section id="container">
             <header id="header">
+
                 <!--logo start-->
-                <div class="brand">
-                    <a data-keybinding="ctrl+shift+d" title="ctrl+shift+D" href="#event.buildLink( prc.xehDashboard )#" class="logo">#prc.cbSettings.cb_site_name#</a>
+                <div class="brand text-center">
+                    <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="right">
+                        <img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
+                    </a>
                 </div>
 
                 <!--logo end-->
