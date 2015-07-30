@@ -121,5 +121,19 @@ function updateWidgetCSS( widget, count ) {
         //widget.removeClass( 'spacer' );
     }
 }
+function getWidgetPreviewURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#'; }
+function getWidgetInstanceURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#'; }
+function testWidgetCode( name, type ){
+    // Test it
+    $widgetEditorForm = $("##widgetEditForm");
+    var attributes = {
+        modal       : true,
+        mode        : 'Test',
+        widgetName  : name,
+        widgetType  : type
+    };
+    openRemoteModal( '#event.buildLink( prc.xehWidgetTest )#', attributes, 1000, 650 );
+    return false;
+}
 </script>
 </cfoutput>

@@ -45,7 +45,6 @@ component accessors="true" threadSafe singleton{
 		
 		// register core editors
 		registerEditor( arguments.wirebox.getInstance( "CKEditor@cb" ) );
-		registerEditor( arguments.wirebox.getInstance( "EditAreaEditor@cb" ) );
 		registerEditor( arguments.wirebox.getInstance( "TextareaEditor@cb" ) );
 		
 		// register default markup
