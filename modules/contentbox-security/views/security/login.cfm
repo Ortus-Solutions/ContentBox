@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-4" id="login-wrapper">
-        <div class="panel panel-primary animated flipInY">
+        <div class="panel panel-primary animated fadeInDown">
             <div class="panel-heading">
                 <h3 class="panel-title">     
                    <i class="fa fa-key"></i> Login
