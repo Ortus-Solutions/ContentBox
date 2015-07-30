@@ -1,3 +1,5 @@
+.brand{ background-color: white!important; margin-top: -5px!important;}
+
 /**============================== ADMIN MAIN ELEMENTS ==============================**/
 ol { list-style:decimal inside; }
 ul { list-style:disc inside; }
