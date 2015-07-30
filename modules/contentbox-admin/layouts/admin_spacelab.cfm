@@ -78,25 +78,25 @@
         <!-- file upload -->
         <script src="#prc.cbroot#/includes/js/bootstrap-fileupload.js"></script>
        	<!-- modal -->
-        <script src="#prc.cbroot#/includes/js/bootstrap-modalmanager.js",></script>
+        <script src="#prc.cbroot#/includes/js/bootstrap-modalmanager.js"></script>
         <script src="#prc.cbroot#/includes/js/bootstrap-modal.js"></script>
         <!-- datepicker -->
-        <script src="#prc.cbroot#/includes/js/bootstrap-datepicker.js",></script>
+        <script src="#prc.cbroot#/includes/js/bootstrap-datepicker.js"></script>
         <!-- cookie helper -->
-        <script src="#prc.cbroot#/includes/js/jquery.cookie.js",></script>
+        <script src="#prc.cbroot#/includes/js/jquery.cookie.js"></script>
         <!-- validation -->
-        <script src="#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js",></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js"></script>
         <!-- jwerty -->
         <script src="#prc.cbroot#/includes/js/jwerty.js"></script>
         <!-- datatables -->
-        <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js",></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js"></script>
         <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js"></script>
         <!-- table filter -->
-        <script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js",></script>
+        <script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
         <!-- drag and drop -->
-        <script src="#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",></script>
+        <script src="#prc.cbroot#/includes/js/jquery.tablednd_0_7.js"></script>
         <!-- toastr -->
-        <script src="#prc.cbroot#/includes/js/toastr.min.js",></script>
+        <script src="#prc.cbroot#/includes/js/toastr.min.js"></script>
         <!-- main ContentBox scripts -->
         <script src="#prc.cbroot#/includes/js/contentbox.js"></script>
 
