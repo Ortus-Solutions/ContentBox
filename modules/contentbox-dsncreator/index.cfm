@@ -35,7 +35,7 @@
 		<!--- StyleSheets --->
 		<!--// Bootstrap core CSS-->
         <link href="#assetroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <!--// custom admintheme files-->
+        <!--// custom admin files-->
         <link href="#assetroot#/includes/css/contentbox.css" rel="stylesheet" />
         <!--// fonts from font awesome-->
         <link href="#assetroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />

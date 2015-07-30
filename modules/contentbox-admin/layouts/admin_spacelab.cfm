@@ -60,8 +60,8 @@
         <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
         <!-- custom styles for spacelab -->
         <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
-        <!-- custom admintheme files -->
-        <link href="#( len( prc.adminThemeService.getCurrentTheme().getCSS() ) ? prc.adminThemeService.getCurrentTheme().getCSS() : '' )#" rel="stylesheet" />
+        <!-- custom admin -->
+        <link href="#prc.cbroot#/includes/css/contentbox.css" rel="stylesheet" />
         
         <!--- ********************************************************************* --->
         <!---                           JAVASCRIPT                                  --->
@@ -97,8 +97,6 @@
         <script src="#prc.cbroot#/includes/js/jquery.tablednd_0_7.js",></script>
         <!-- toastr -->
         <script src="#prc.cbroot#/includes/js/toastr.min.js",></script>
-        <!-- custom admintheme js -->
-        <script src="#( len( prc.adminThemeService.getCurrentTheme().getJS() ) ? prc.adminThemeService.getCurrentTheme().getJS() & ',' : '')#",></script>
         <!-- main ContentBox scripts -->
         <script src="#prc.cbroot#/includes/js/contentbox.js"></script>
 

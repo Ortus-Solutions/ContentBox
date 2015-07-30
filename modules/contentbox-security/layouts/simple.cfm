@@ -43,7 +43,7 @@
 
         <!--// Bootstrap core CSS-->
         <link href="#prc.cbroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <!--// custom admintheme files-->
+        <!--// custom admin files-->
         <link href="#prc.cbroot#/includes/css/contentbox.css" rel="stylesheet" />
         <!--// fonts from font awesome-->
         <link href="#prc.cbroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />
