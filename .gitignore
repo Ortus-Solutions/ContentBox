@@ -22,3 +22,6 @@ workbench/dependencies
 Icon?
 workbench/build.number
 workbench/apidocs/docbox
+coldbox/*
+testbox/*
+modules/*

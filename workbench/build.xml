@@ -318,31 +318,12 @@
  	
 	<!-- Build all releases-->
 	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.patch">
-		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 	 		 
-			  tofile="${be.exports}/contentbox-be.zip" 
-			  overwrite="true" 
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip.md5" 		 
-			  tofile="${be.exports}/contentbox-be.zip.md5" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" 	 	 
-			  tofile="${be.exports}/contentbox-war-be.zip" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip.md5" 	 
-			  tofile="${be.exports}/contentbox-war-be.zip.md5" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" 	 
-			  tofile="${be.exports}/contentbox-express-be.zip" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip.md5" 
-			  tofile="${be.exports}/contentbox-express-be.zip.md5" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		
+		<!-- Copy as BE to root -->
+		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8">
+			<fileset dir="${dir.contentbox.exports}" />
+			<globmapper from="*${contentbox.version}*" to="*be*" />
+		</copy>
+
 		<!-- Create Box Repo From macrodef -->
 		<box-repo location="${be.exports}" 
 				  artifactID="${contentbox.slug}" 
@@ -350,7 +331,7 @@
 				  buildID="${build.number}"
 				  latest="${contentbox.version}"
 				  stableVersion="${contentbox.stableversion}"
-				  classifiers="express,war,apidocs,path,patch-db,patch-nocoldbox"/>
+				  classifiers="express,express-linux64,express-darwin64,express-win64,war,apidocs,patch,patch-db,patch-nocoldbox"/>
 		
 		<!-- Cleanup -->
 		<delete dir="${dir.build}" />
