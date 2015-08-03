@@ -35,5 +35,5 @@
 </table>
 
 <!--- Paging --->
-#prc.pagingPlugin.renderit(foundRows=prc.pagesCount, link=prc.pagingLink, asList=true)#
+#prc.oPaging.renderit(foundRows=prc.pagesCount, link=prc.pagingLink, asList=true)#
 </cfoutput>

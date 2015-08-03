@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-md-12">
         <!-- MessageBox -->
-        #getPlugin( "MessageBox" ).renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
         <!--- Info Bar --->
 		<cfif NOT prc.cbSettings.cb_comments_enabled>
 			<div class="alert alert-info">
@@ -77,7 +77,7 @@
 									<input type="checkbox" name="commentID" id="commentID" value="#comment.getCommentID()#" />
 								</td>
 								<td>
-									#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
+									#getModel( "Avatar@cb" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
 									&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 									<br/>
 									<cfif len(comment.getAuthorURL())>
@@ -132,7 +132,7 @@
 						</tbody>
 					</table>
 					<!--- Paging --->
-					#prc.pagingPlugin.renderit(
+					#prc.oPaging.renderit(
 						foundRows=prc.commentsCount, 
 						link=prc.pagingLink, 
 						asList=true

@@ -6,17 +6,14 @@
 * A convenient way to create a Bootstrap-themed file upload field
 */
 component extends="coldbox.system.Plugin" {
-    property name="html" inject="HTMLHelper@coldbox";
+
+    // DI
+    property name="html"        inject="HTMLHelper@coldbox";
 
     /**
     *  Constructor
     */
-    BootstrapFileUpload function init( required controller ){
-        super.init( controller );
-        
-        setpluginName( "Bootstrap File Upload Field" );
-        setpluginVersion( "1.0" );
-        setpluginDescription( "A convenient way to create a Bootstrap-themed file upload field" );        
+    BootstrapFileUpload function init(){
         //Return instance
         return this;        
     }

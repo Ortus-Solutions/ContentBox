@@ -1,4 +1,8 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage system settings
 */
 component extends="baseHandler"{
@@ -10,6 +14,7 @@ component extends="baseHandler"{
 	property name="editorService"		inject="id:editorService@cb";
 	property name="mediaService"		inject="id:mediaService@cb";
 	property name="LoginTrackerService"	inject="id:LoginTrackerService@cb";
+	property name="mailService"			inject="id:mailservice@cbMailservices";
 	
 	// pre handler
 	function preHandler( event, rc, prc, action, eventArguments ){
@@ -42,7 +47,6 @@ component extends="baseHandler"{
 	
 	// email test
 	function emailTest( event, rc, prc ){
-		var mailService = getPlugin( "MailService" );
 		var mail = mailservice.newMail(to=rc.cb_site_outgoingEmail,
 									   from=rc.cb_site_outgoingEmail,
 									   subject="ContentBox Test",
@@ -56,13 +60,13 @@ component extends="baseHandler"{
 		// send it out
 		var results = mailService.send( mail );
 		
-		event.renderData(data=results, type="json" );		
+		event.renderData( data=results, type="json" );		
 	}
 
 	// save settings
 	function save( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc} );
+		announceInterception( "cbadmin_preSettingsSave",{ oldSettings = prc.cbSettings, newSettings = rc } );
 		// bulk save the options
 		settingsService.bulkSave(rc);
 		// Do blog entry point change
@@ -77,7 +81,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postSettingsSave" );
 		// relocate back to editor
-		getPlugin( "MessageBox" ).info( "All ContentBox settings updated! Yeeehaww!" );
+		getModel( "messagebox@cbMessagebox" ).info( "All ContentBox settings updated! Yeeehaww!" );
 		setNextEvent(prc.xehSettings);
 	}
 
@@ -124,17 +128,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = settingsService.importFromFile( importFile=rc.importFile, override=rc.overrideSettings );
-				getPlugin( "MessageBox" ).info( "Settings imported sucessfully!" );
+				getModel( "messagebox@cbMessagebox" ).info( "Settings imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";
 			log.error( errorMessage, e );
-			getPlugin( "MessageBox" ).error( errorMessage );
+			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehRawSettings );
 	}
@@ -146,9 +150,9 @@ component extends="baseHandler"{
 		event.paramValue( "search", "" );
 		event.paramValue( "viewAll", false );
 		
-		// prepare paging plugin
-		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox" );
-		prc.paging 		= prc.pagingPlugin.getBoundaries();
+		// prepare paging object
+		prc.oPaging = getModel( "Paging@cb" );
+		prc.paging 		= prc.oPaging.getBoundaries();
 		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
 		prc.pagingLink 	= "javascript:settingsPaginate(@page@)";
 		
@@ -184,7 +188,7 @@ component extends="baseHandler"{
 		settingsService.save( setting );
 		settingsService.flushSettingsCache();
 		// messagebox
-		getPlugin( "MessageBox" ).setMessage( "info","Setting saved!" );
+		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Setting saved!" );
 		// relocate
 		setNextEvent(event=prc.xehRawSettings,queryString="page=#rc.page#" );
 	}
@@ -195,14 +199,14 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_preSettingRemove",{settingID=rc.settingID} );
 		// delete by id
 		if( !settingsService.deleteByID( rc.settingID ) ){
-			getPlugin( "MessageBox" ).setMessage( "warning","Invalid Setting detected!" );
+			getModel( "messagebox@cbMessagebox" ).setMessage( "warning","Invalid Setting detected!" );
 		}
 		else{
 			// announce event
 			announceInterception( "cbadmin_postSettingRemove",{settingID=rc.settingID} );
 			// flush cache
 			settingsService.flushSettingsCache();
-			getPlugin( "MessageBox" ).setMessage( "info","Setting Removed!" );
+			getModel( "messagebox@cbMessagebox" ).setMessage( "info","Setting Removed!" );
 		}
 		setNextEvent(prc.xehRawSettings);
 	}
@@ -225,7 +229,7 @@ component extends="baseHandler"{
 	// flush singletons
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
-		getPlugin( "MessageBox" ).setMessage( "info","All singletons flushed and awaiting re-creation." );
+		getModel( "messagebox@cbMessagebox" ).setMessage( "info","All singletons flushed and awaiting re-creation." );
 		setNextEvent(event=prc.xehRawSettings,queryString="##wirebox" );
 	}
 

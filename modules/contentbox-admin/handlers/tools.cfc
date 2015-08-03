@@ -1,4 +1,8 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Tools for ContentBox.
 */
 component extends="baseHandler"{
@@ -6,16 +10,15 @@ component extends="baseHandler"{
 	// DI
 	property name="settingService" 		inject="id:settingService@cb";
 	property name="moduleService"       inject="id:moduleService@cb";
-    property name="themeService"       inject="id:themeService@cb";
+    property name="themeService"       	inject="id:themeService@cb";
     property name="widgetService"       inject="id:widgetService@cb";
     property name="roleService"         inject="id:roleService@cb";
     property name="templateService"     inject="id:emailtemplateService@cb";
-	property name="fileUtils"           inject="coldbox:plugin:FileUtils";
+	property name="fileUtils"           inject="id:FileUtils@cb";
+	property name="HTMLHelper"			inject="coldbox:HTMLHelper";
 
 	// pre handler
-	function preHandler( event, action, eventArguments ){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
 		prc.tabTools = true;
 	}
@@ -145,7 +148,7 @@ component extends="baseHandler"{
 		// export the content
 		var exportFilePath = exportResult.exportfile;
 		// save success message
-		var filename = getPlugin( "HTMLHelper" ).slugify( settingService.getSetting( "cb_site_name" ) );
+		var filename = variables.HTMLHelper.slugify( settingService.getSetting( "cb_site_name" ) );
 		// send it
 		fileUtils.sendFile( file=exportFilePath, name=fileName, abortAtEnd=true );
 	}

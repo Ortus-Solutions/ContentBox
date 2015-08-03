@@ -13,7 +13,7 @@
 			<!--- Comment Details --->
 			<fieldset>
 				<legend><i class="icon-eye-open icon-large"></i> Comment Details</legend>
-					#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=rc.comment.getAuthorEmail())#
+					#getModel( "Avatar@cb" ).renderAvatar(email=rc.comment.getAuthorEmail())#
 					&nbsp;<a href="mailto:#rc.comment.getAUthorEmail()#" title="#rc.comment.getAUthorEmail()#">#rc.comment.getAuthor()#</a>
 					<br/>
 					<cfif len(rc.comment.getAuthorURL())>

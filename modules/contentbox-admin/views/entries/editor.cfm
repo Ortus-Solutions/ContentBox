@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-8">
             <!--- MessageBox --->
-            #getPlugin( "MessageBox" ).renderit()#
+            #getModel( "messagebox@cbMessagebox" ).renderit()#
 
             <!--- id --->
             #html.hiddenField(name="contentID",bind=prc.entry)#

@@ -31,7 +31,7 @@ component cache="false"{
 	function install( event, rc, prc ){
 		// Verify installed?
 		if( settingService.isCBReady() ){
-			getPlugin( "MessageBox" ).warn( cb.r( "validation.alreadyinstalled@installer" ) );
+			getModel( "messagebox@cbMessagebox" ).warn( cb.r( "validation.alreadyinstalled@installer" ) );
 			setNextEvent(  prc.adminEntryPoint );
 		}
 		// start installation

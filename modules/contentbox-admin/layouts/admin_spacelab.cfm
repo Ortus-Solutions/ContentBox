@@ -245,8 +245,7 @@
                         
                         <!--- Profile --->
                         <li class="profile-photo">
-                            #getMyPlugin( plugin="Avatar",module="contentbox" )
-                            	.renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
+                            #getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
                         </li>
                         #prc.adminMenuService.generateProfileMenu()#
                         

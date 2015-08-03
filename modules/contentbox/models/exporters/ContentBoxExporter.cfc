@@ -29,7 +29,6 @@ component accessors=true {
     property name="templateService"     inject="id:emailtemplateService@cb";
     property name="log"                 inject="logbox:logger:{this}";
     property name="zipUtil"             inject="zipUtil@cb";
-    property name="fileUtils"           inject="coldbox:plugin:FileUtils";
     property name="dataExporter"        inject="id:dataExporter@cb";
     property name="fileExporter"        inject="id:fileExporter@cb";
     property name="wirebox"             inject="wirebox";
@@ -232,7 +231,7 @@ component accessors=true {
                 exportLog.append( "Beginning export of #exporter.getDisplayName()#<br />" );
                 var fileName = tmpDirectory & "/" & exporter.getFileName() & "." & exporter.getFormat();
                 exportLog.append( "#arrayLen( exporter.getContent() )# records found<br />" );
-                fileUtils.saveFile( fileToSave=fileName, fileContents=serializeJSON( exporter.getContent() ) );
+                fileWrite( fileName, serializeJSON( exporter.getContent() ) );
                 exportLog.append( "Export of #exporter.getDisplayName()# complete!<br />" );
             }
             if( isInstanceOf( exporter, "contentbox.models.exporters.FileExporter" ) ) {
@@ -269,7 +268,7 @@ component accessors=true {
         }
         exportLog.append( "Creating package descriptor file<br />" );
         // add descriptor file
-        fileUtils.saveFile( fileToSave=tmpDirectory & "/descriptor.json", fileContents=serializeJSON( getDescriptor() ) );
+        fileWrite( tmpDirectory & "/descriptor.json", serializeJSON( getDescriptor() ) );
         exportLog.append( "Package descriptor complete!<br />" );
         
         // done! now we just need to compress the whole thing

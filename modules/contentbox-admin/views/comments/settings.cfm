@@ -6,7 +6,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getPlugin( "MessageBox" ).renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 <div class="row">

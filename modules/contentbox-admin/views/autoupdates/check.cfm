@@ -6,7 +6,7 @@
 </div>
 <div class="modal-body">
     #html.startForm(name="updateForm",action=prc.xehUpdateApply,class="form-vertical" )#
-	#getPlugin( "MessageBox" ).renderit()#
+	#getModel( "messagebox@cbMessagebox" ).renderit()#
 
 	<cfif prc.updateFound>
 	#html.startFieldSet(legend="Version Information" )#

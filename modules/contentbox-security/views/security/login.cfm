@@ -9,7 +9,7 @@
             </div>
             <div class="panel-body">
             	<!--- Render Messagebox. --->
-				#getPlugin( "MessageBox" ).renderit()#
+				#getModel( "messagebox@cbMessagebox" ).renderit()#
 
                 #html.startForm(
                 	action=prc.xehDoLogin, 

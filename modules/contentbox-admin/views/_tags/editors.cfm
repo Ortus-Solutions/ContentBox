@@ -255,7 +255,7 @@ function quickPublish(isDraft){
 	// submit form
 	$targetEditorForm.submit();
 }
-// Widget Plugin Integration
+// Widget Selector Integration
 function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector" )#';}
 // Widget Preview Integration
 function getWidgetPreviewURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#'; }

@@ -6,7 +6,7 @@
 </div>
 <!--- Paging --->
 <cfif prc.commentPager_pagination>
-	#prc.commentPager_pagingPlugin.renderit(prc.commentPager_commentsCount,prc.commentPager_pagingLink)#
+	#prc.commentPager_oPaging.renderit(prc.commentPager_commentsCount,prc.commentPager_pagingLink)#
 </cfif>
 #html.startForm(name="commentPagerForm" )#
 <!--- comments --->
@@ -24,7 +24,7 @@
 		<cfloop array="#prc.commentPager_comments#" index="comment">
 		<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
 			<td>
-				#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
+				#getModel( "Avatar@cb" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
 				&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 				<br/>
 				<cfif len(comment.getAuthorURL())>

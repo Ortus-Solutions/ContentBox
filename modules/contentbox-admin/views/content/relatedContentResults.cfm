@@ -51,5 +51,5 @@
     </div>
 </cfif>
 <!--- Paging --->
-#prc.pagingPlugin.renderit( foundRows=prc.contentCount, link=prc.pagingLink, asList=true )#
+#prc.oPaging.renderit( foundRows=prc.contentCount, link=prc.pagingLink, asList=true )#
 </cfoutput>

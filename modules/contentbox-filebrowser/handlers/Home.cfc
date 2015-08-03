@@ -8,8 +8,8 @@
 component output="false" hint="Main filebrowser module handler"{
 
 	// DI
-	property name="antiSamy"		inject="coldbox:plugin:AntiSamy";
-	property name="fileUtils"		inject="coldbox:plugin:FileUtils";
+	property name="antiSamy"		inject="antisamy@cbantisamy";
+	property name="fileUtils"		inject="FileUtils@cb";
 	property name="cookieStorage"	inject="cookieStorage@cbStorages";
 
 	function preHandler( event, currentAction, rc, prc ){
@@ -95,7 +95,7 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// traversal testing
 		if( NOT isTraversalSecure(prc, prc.fbCurrentRoot) ){
-			getPlugin( "MessageBox" ).warn( r( "messages.traversal@fb" ) );
+			getModel( "messagebox@cbMessagebox" ).warn( r( "messages.traversal@fb" ) );
 			setNextEvent(prc.xehFBBrowser);
 		}
 
@@ -418,10 +418,12 @@ component output="false" hint="Main filebrowser module handler"{
 			};
 			announceInterception( "fb_preFileUpload", iData );
 
-			iData.results = fileUtils.uploadFile( fileField="FILEDATA",
-											      destination=rc.path,
-											      nameConflict="Overwrite",
-											      accept=prc.fbSettings.acceptMimeTypes );
+			iData.results = fileUtils.uploadFile( 
+				fileField		= "FILEDATA",
+				destination		= rc.path,
+				nameConflict	= "Overwrite",
+				accept			= prc.fbSettings.acceptMimeTypes 
+			);
 			// debug log file
 			if( log.canDebug() ){
 				log.debug( "File Uploaded!", iData.results);

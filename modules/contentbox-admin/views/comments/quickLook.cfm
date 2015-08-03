@@ -4,7 +4,7 @@
     <h4><i class="fa fa-comments"></i> Comment Quick Look</h4>
 </div>
 <div class="modal-body">
-	#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=rc.comment.getAuthorEmail(), size="50" )#
+	#getModel( "Avatar@cb" ).renderAvatar(email=rc.comment.getAuthorEmail(), size="50" )#
 	&nbsp;<a href="mailto:#rc.comment.getAUthorEmail()#" title="#rc.comment.getAUthorEmail()#">#rc.comment.getAuthor()#</a>
 	<br/>
 	<cfif len(rc.comment.getAuthorURL())>

@@ -6,7 +6,7 @@
             Security Rule Editor
         </h1>
         <!--- messageBox --->
-        #getPlugin( "MessageBox" ).renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div> 
 <div class="row">

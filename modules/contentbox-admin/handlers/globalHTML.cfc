@@ -31,7 +31,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postGlobalHTMLSave" );
 		// relocate back to editor
-		getPlugin( "MessageBox" ).info( "All Global HTML updated! Yeeehaww!" );
+		getModel( "messagebox@cbMessagebox" ).info( "All Global HTML updated! Yeeehaww!" );
 		// relocate
 		setNextEvent(prc.xehGlobalHTML);
 	}

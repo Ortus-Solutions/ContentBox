@@ -427,10 +427,10 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickSearchPaging(){
 		var prc = getRequestCollection(private=true);
-		if( NOT structKeyExists(prc,"pagingPlugin" ) ){
+		if( NOT structKeyExists(prc,"oPaging" ) ){
 			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext" );
 		}
-		return prc.pagingPlugin.renderit(foundRows=getSearchResults().getTotal(), link=prc.pagingLink, pagingMaxRows=setting( "cb_search_maxResults" ));
+		return prc.oPaging.renderit(foundRows=getSearchResults().getTotal(), link=prc.pagingLink, pagingMaxRows=setting( "cb_search_maxResults" ));
 	}
 
 	// get the curent search results object
@@ -917,10 +917,10 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickPaging(){
 		var prc = getRequestCollection(private=true);
-		if( NOT structKeyExists(prc,"pagingPlugin" ) ){
+		if( NOT structKeyExists(prc,"oPaging" ) ){
 			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the main entries index page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext" );
 		}
-		return prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, pagingMaxRows=setting( "cb_paging_maxentries" ));
+		return prc.oPaging.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, pagingMaxRows=setting( "cb_paging_maxentries" ));
 	}
 
 	/**
