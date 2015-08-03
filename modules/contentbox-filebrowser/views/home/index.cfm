@@ -123,7 +123,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			
 			#announceInterception( "fb_preFileListing" )#
 			<!--- Messagebox --->
-			#getPlugin( "MessageBox" ).renderit()#
+			#getModel( "messagebox@cbMessagebox" ).renderit()#
 
 			<!--- Display back links --->
 			<cfif prc.fbCurrentRoot NEQ prc.fbDirRoot>

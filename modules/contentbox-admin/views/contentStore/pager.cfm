@@ -71,7 +71,7 @@
 
 <!--- Paging --->
 <cfif prc.pager_pagination>
-	#prc.pager_pagingPlugin.renderit(foundRows=prc.pager_contentCount, link=prc.pager_pagingLink, asList=true)#
+	#prc.pager_oPaging.renderit(foundRows=prc.pager_contentCount, link=prc.pager_pagingLink, asList=true)#
 </cfif>
 </div>
 </cfoutput>

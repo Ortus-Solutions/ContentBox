@@ -8,7 +8,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getPlugin( "MessageBox" ).renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
         <!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>

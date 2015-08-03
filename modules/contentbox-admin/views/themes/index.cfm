@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-12">
        	<!--- MessageBox --->
-		#getPlugin( "MessageBox" ).renderit()#
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!--- Logs --->
 		<cfif flash.exists( "forgeboxInstallLog" )>
 			<h3>Installation Log</h3>

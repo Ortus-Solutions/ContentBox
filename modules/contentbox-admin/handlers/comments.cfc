@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage comments
 */
 component extend="baseHandler"{
@@ -25,10 +29,10 @@ component extend="baseHandler"{
 		event.paramValue( "ftype","any" );
 		event.paramValue( "isFiltering",false);
 
-		// prepare paging plugin
-		prc.pagingPlugin = getMyPlugin(plugin="Paging",module="contentbox" );
-		prc.paging 		 = prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 	 = event.buildLink('#prc.xehComments#.page.@page@?');
+		// prepare paging object
+		prc.oPaging 	= getModel( "Paging@cb" );
+		prc.paging 		= prc.oPaging.getBoundaries();
+		prc.pagingLink 	= event.buildLink('#prc.xehComments#.page.@page@?');
 		// Append search to paging link?
 		if( len(rc.searchComments) ){ prc.pagingLink&="&searchComments=#rc.searchComments#"; }
 		// Append filters to paging link?
@@ -235,9 +239,9 @@ component extend="baseHandler"{
 		prc.xehCommentPagerRemove		= "#prc.cbAdminEntryPoint#.comments.remove";
 		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
-		// prepare paging plugin
-		prc.commentPager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox" );
-		prc.commentPager_paging 	  	= prc.commentPager_pagingPlugin.getBoundaries();
+		// prepare paging object
+		prc.commentPager_oPaging 	= getModel( "Paging@cb" );
+		prc.commentPager_paging 	  	= prc.commentPager_oPaging.getBoundaries();
 		prc.commentPager_pagingLink 	= "javascript:commentPagerLink(@page@)";
 		prc.commentPager_pagination		= arguments.pagination;
 		prc.commentPager_max			= arguments.max;

@@ -137,8 +137,5 @@ component {
 	* On Module Load
 	*/
 	function onLoad(){
-		// Clean cached assets
-		controller.getPlugin( plugin="JSMin", customPlugin="true", module="contentbox" )
-			.cleanCache( "/#moduleMapping#/includes/cache" );
 	}
 }

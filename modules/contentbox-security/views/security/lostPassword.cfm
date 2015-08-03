@@ -9,7 +9,7 @@
             </div>
             <div class="panel-body">
             	<!--- Render Messagebox. --->
-				#getPlugin( "MessageBox" ).renderit()#
+				#getModel( "messagebox@cbMessagebox" ).renderit()#
 
 				<p>#cb.r( "lostpassword.instructions@security" )#</p>
 

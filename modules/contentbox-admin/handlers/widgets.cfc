@@ -1,4 +1,8 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage widgets
 */
 component extends="baseHandler"{
@@ -7,7 +11,7 @@ component extends="baseHandler"{
 	property name="widgetService"	inject="id:widgetService@cb";
 
 	// pre handler
-	function preHandler(event,action,eventArguments,rc,prc){
+	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
 		prc.tabLookAndFeel = true;
 		prc.tabLookAndFeel_widgets = true;
@@ -43,7 +47,7 @@ component extends="baseHandler"{
 		prc.widgetName = widgetService.ripExtension( urlDecode( rc.widget ) );
 		prc.widgetType = urlDecode( rc.type );
 		prc.icon = widgetService.getWidgetIcon( rc.widget, rc.type );
-		// get widget plugin
+		// get widget
 		prc.oWidget  = widgetService.getWidget( prc.widgetName, prc.widgetType );
 		// get its metadata
 		prc.metadata = prc.oWidget.getPublicMethods();
@@ -54,27 +58,27 @@ component extends="baseHandler"{
 	//Remove
 	function remove( event, rc, prc ){
 		widgetService.removeWidget( rc.widgetFile );
-		getPlugin( "MessageBox" ).info( "Widget Removed Forever!" );
+		getModel( "messagebox@cbMessagebox" ).info( "Widget Removed Forever!" );
 		setNextEvent(prc.xehWidgets);
 	}
 
 	//upload
 	function upload( event, rc, prc ){
-		var fp = event.getTrimValue( "filePlugin","" );
+		var fp = event.getTrimValue( "fileWidget","" );
 
 		// Verify
 		if( len( fp ) eq 0){
-			getPlugin( "MessageBox" ).setMessage(type="warning", message="Please choose a file to upload" );
+			getModel( "messagebox@cbMessagebox" ).setMessage(type="warning", message="Please choose a file to upload" );
 		}
 		else{
 			// Upload File
 			try{
-				widgetService.uploadWidget( "filePlugin" );
+				widgetService.uploadWidget( "fileWidget" );
 				// Info
-				getPlugin( "MessageBox" ).setMessage(type="info", message="Widget Installed Successfully" );
+				getModel( "messagebox@cbMessagebox" ).setMessage(type="info", message="Widget Installed Successfully" );
 			}
 			catch(Any e){
-				getPlugin( "MessageBox" ).error( "Error uploading file: #e.detail# #e.message#" );
+				getModel( "messagebox@cbMessagebox" ).error( "Error uploading file: #e.detail# #e.message#" );
 			}
 		}
 
@@ -114,17 +118,17 @@ component extends="baseHandler"{
 		var widget  = widgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
 		prc.md  	= widgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
 		prc.widget = {
-			name = rc.widgetname,
-        	widgetType = rc.widgettype,
-        	plugin = widget,
-        	udf = rc.widgetudf,
-        	module = find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
-        	category = !isNull( widget.getCategory() ) ? 
+			name 		= rc.widgetname,
+        	widgetType 	= rc.widgettype,
+        	widget 		= widget,
+        	udf 		= rc.widgetudf,
+        	module 		= find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
+        	category 	= !isNull( widget.getCategory() ) ? 
         					widget.getCategory() : 
         					rc.widgetType=="Core" ?
                             	"Miscellaneous" :
                                 rc.widgetType,
-        	icon = !isNull( widget.getIcon() ) ? widget.getIcon() : ""
+        	icon 		= !isNull( widget.getIcon() ) ? widget.getIcon() : ""
 		};
 		// get its metadata
 		prc.metadata = widget.getPublicMethods();

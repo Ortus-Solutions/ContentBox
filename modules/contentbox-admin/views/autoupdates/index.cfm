@@ -8,7 +8,7 @@
     <div class="col-md-8">
         <div class="panel panel-default">
             <div class="panel-body">
-                #getPlugin( "MessageBox" ).renderit()#
+                #getModel( "messagebox@cbMessagebox" ).renderit()#
                 
                 <p>You can patch ContentBox in order to receive the latest bugfixes and enhancements from here.  We do encourage you
                 to make backups when doing auto-udpates.</p>
@@ -96,10 +96,10 @@
                                     class="form-vertical"
                                 )#
                                     <p>You can also apply an update by uploading the update archive.</p>
-                                    #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
-                                        name="filePatch", 
-                                        label="Upload Patch:",
-                                        required=true
+                                    #getModel( "BootstrapFileUpload@cb" ).renderIt( 
+                                        name    = "filePatch", 
+                                        label   = "Upload Patch:",
+                                        required= true
                                     )#
                                     #html.submitButton(value="Upload & Install Update",class="btn btn-danger" )#
                                 #html.endForm()#    

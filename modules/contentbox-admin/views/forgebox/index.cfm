@@ -5,7 +5,7 @@
 #html.hiddenField(name="downloadURL" )#
 
 <cfif prc.errors>
-#getPlugin( "MessageBox" ).renderit()#
+#getModel( "messagebox@cbMessagebox" ).renderit()#
 <cfelse>
 	<!--- Title --->
 	<h2>
@@ -128,7 +128,7 @@
 		</div>
 		<!--- Info --->
 		<p>
-			#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=prc.entries.username,size="30" )#
+			#getModel( "Avatar@cb" ).renderAvatar(email=prc.entries.username,size="30" )#
 			<label class="inline">By: </label> <a title="Open Profile" href="http://www.coldbox.org/profiles/show/#prc.entries.username#" target="_blank">#prc.entries.username#</a> |
 			<label class="inline">Updated: </label> #dateFormat(prc.entries.updatedate)# |
 			<label class="inline">Downloads: </label> #prc.entries.downloads# |
@@ -137,7 +137,7 @@
 	</div>
 	</cfloop>
 	<cfif NOT prc.entries.recordcount>
-		#getPlugin( "MessageBox" ).renderMessage( "warning","No Entries Found!" )#
+		#getModel( "messagebox@cbMessagebox" ).renderMessage( "warning","No Entries Found!" )#
 	</cfif>
 	#html.endForm()#
 </cfif>

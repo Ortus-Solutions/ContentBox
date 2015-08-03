@@ -46,7 +46,7 @@
 
 <!--- Paging --->
 <cfif !rc.viewAll>
-	#prc.pagingPlugin.renderit(
+	#prc.oPaging.renderit(
 		foundRows=prc.settingsCount, 
 		link=prc.pagingLink, 
 		asList=true

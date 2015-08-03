@@ -13,9 +13,9 @@
                     <div class="modal-body">
                         <p>#args.contentInfo#</p>
                 
-                        #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
-                            name="importFile",
-                            required=true
+                        #getModel( "BootstrapFileUpload@cb" ).renderIt( 
+                            name        = "importFile",
+                            required    = true
                         )#      
                         
                         <label for="overrideContent">Override content?</label>

@@ -62,7 +62,7 @@
     </table>
     <!--- Paging --->
     <cfif !rc.showAll>
-        #prc.pagingPlugin.renderit(foundRows=prc.menuCount, link=prc.pagingLink, asList=true)#
+        #prc.oPaging.renderit(foundRows=prc.menuCount, link=prc.pagingLink, asList=true)#
         <cfelse>
         <span class="label label-info">Total Records: #prc.menuCount#</span>
     </cfif>

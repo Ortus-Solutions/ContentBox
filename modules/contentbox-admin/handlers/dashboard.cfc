@@ -227,7 +227,7 @@ component extends="baseHandler"{
 				event.renderData( type="json", data=data );
 			} else {
 				// MessageBox
-				getPlugin( "MessageBox" ).error( "Error running admin reload module action: #e.message# #e.detail#" );
+				getModel( "messagebox@cbMessagebox" ).error( "Error running admin reload module action: #e.message# #e.detail#" );
 				// relocate back to dashboard
 				setNextEvent( prc.xehDashboard );
 			}

@@ -67,7 +67,7 @@ component extends="baseHandler"{
 		// Check for renderData
 		if( structIsEmpty( event.getRenderData() ) ){
 			// else normal ColdBox Rendering
-			return controller.getPlugin( "Renderer" ).renderLayout();
+			return controller.getRenderer().renderLayout();
 		}
 
 	}

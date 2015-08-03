@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    #getPlugin( "MessageBox" ).renderit()#
+                    #getModel( "messagebox@cbMessagebox" ).renderit()#
 
                      
                     <menu class="well well-small">

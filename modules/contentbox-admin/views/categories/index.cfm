@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<!--- MessageBox --->
-		#getPlugin( "MessageBox" ).renderit()#
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -161,7 +161,7 @@
 	            #html.startForm( name="importForm", action=prc.xehCategoryImport, class="form-vertical", multipart=true, role="form" )#
 	                <div class="modal-body">
 	                    <p>Choose the ContentBox <strong>JSON</strong> categories file to import.</p>
-						#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+						#getModel( "BootstrapFileUpload@cb" ).renderIt( 
 							name="importFile", 
 							required=true
 						)#

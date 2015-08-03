@@ -14,7 +14,7 @@
 				<p class="lead">#prc.cbSettings.cb_dashboard_welcome_body#</p>
 
 				<!--- Messagebox --->
-				#getPlugin( "MessageBox" ).renderit()#
+				#getModel( "messagebox@cbMessagebox" ).renderit()#
 				
 				<!--- Event --->
 				#announceInterception( "cbadmin_preDashboardContent" )#

@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>">
-    	#getPlugin( "MessageBox" ).renderIt()#
+    	#getModel( "messagebox@cbMessagebox" ).renderIt()#
     	<div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">&nbsp;</h3>
@@ -264,7 +264,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="pull-left margin10">
-					#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=prc.author.getEmail(),size="40" )#
+					#getModel( "Avatar@cb" ).renderAvatar( email=prc.author.getEmail(), size="40" )#
 				</div>
 				<div class="margin10">
 					<a title="Email Me!" href="mailto:#prc.author.getEmail()#">#prc.author.getName()#</a>

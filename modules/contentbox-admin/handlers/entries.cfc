@@ -1,31 +1,17 @@
 /**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage blog entries
 */
 component extends="baseContentHandler"{
 
 	// Dependencies
 	property name="entryService"		inject="id:entryService@cb";
+	property name="CKHelper"			inject="CKHelper@contentbox-admin";
+	property name="messagebox"			inject="messagebox@cbMessagebox";
+	property name="HTMLHelper"			inject="coldbox:HTMLHelper";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -41,7 +27,7 @@ component extends="baseContentHandler"{
 
 		// Verify if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
-			getPlugin( "MessageBox" ).warn( "The blog has been currently disabled. You can activate it again in your ContentBox settings panel" );
+			variables.messagebox.warn( "The blog has been currently disabled. You can activate it again in your ContentBox settings panel" );
 			setNextEvent(prc.xehDashboard);
 		}
 	}
@@ -80,9 +66,9 @@ component extends="baseContentHandler"{
 			.paramValue( "isFiltering", false, true )
 			.paramValue( "showAll", false );
 
-		// prepare paging plugin
-		prc.pagingPlugin 	= getMyPlugin( plugin="Paging", module="contentbox" );
-		prc.paging 			= prc.pagingPlugin.getBoundaries();
+		// prepare paging object
+		prc.oPaging 	= getModel( "Paging@cb" );
+		prc.paging 			= prc.oPaging.getBoundaries();
 		prc.pagingLink 		= "javascript:contentPaginate(@page@)";
 
 		// is Filtering?
@@ -135,10 +121,10 @@ component extends="baseContentHandler"{
 			// announce event
 			announceInterception( "cbadmin_onEntryStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
-			getPlugin( "MessageBox" ).info( "#listLen(rc.contentID)# Entries where set to '#rc.contentStatus#'" );
+			variables.messagebox.info( "#listLen(rc.contentID)# Entries where set to '#rc.contentStatus#'" );
 		}
 		else{
-			getPlugin( "MessageBox" ).warn( "No entries selected!" );
+			variables.messagebox.warn( "No entries selected!" );
 		}
 
 		// relocate back
@@ -162,7 +148,7 @@ component extends="baseContentHandler"{
 			prc.versionsViewlet = runEvent(event="contentbox-admin:versions.pager",eventArguments=args);
 		}
 		// CK Editor Helper
-		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin" );
+		prc.ckHelper = variables.CKHelper;
 
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
@@ -203,7 +189,7 @@ component extends="baseContentHandler"{
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
-			getPlugin( "MessageBox" ).warn( "Can't clone the unclonable, meaning no contentID or title passed." );
+			variables.messagebox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
@@ -216,7 +202,7 @@ component extends="baseContentHandler"{
 			rc.title = "Copy of #rc.title#";
 		}
 		// get a clone
-		var clone = entryService.new( { title=rc.title, slug=getPlugin( "HTMLHelper" ).slugify( rc.title ) } );
+		var clone = entryService.new( { title=rc.title, slug=variables.HTMLHelper.slugify( rc.title ) } );
 		clone.setCreator( prc.oAuthor );
 		// prepare for clone
 		clone.prepareForClone(author=prc.oAuthor,
@@ -228,7 +214,7 @@ component extends="baseContentHandler"{
 		// clone this sucker now!
 		entryService.saveEntry( clone );
 		// relocate
-		getPlugin( "MessageBox" ).info( "Entry Cloned, isn't that cool!" );
+		variables.messagebox.info( "Entry Cloned, isn't that cool!" );
 		setNextEvent(event=prc.xehEntries);
 	}
 
@@ -260,7 +246,7 @@ component extends="baseContentHandler"{
 
 		// slugify the incoming title or slug
 		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
-		rc.slug = getPlugin( "HTMLHelper" ).slugify( rc.slug );
+		rc.slug = variables.HTMLHelper.slugify( rc.slug );
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oAuthor.checkPermission( "ENTRIES_ADMIN" ) ){
@@ -281,7 +267,7 @@ component extends="baseContentHandler"{
 			arrayAppend(errors, "Please enter the content to save!" );
 		}
 		if( arrayLen(errors) ){
-			getPlugin( "MessageBox" ).warn(messageArray=errors);
+			variables.messagebox.warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
@@ -334,7 +320,7 @@ component extends="baseContentHandler"{
 		}
 		else{
 			// relocate
-			getPlugin( "MessageBox" ).info( "Entry Saved!" );
+			variables.messagebox.info( "Entry Saved!" );
 			setNextEvent(prc.xehEntries);
 		}
 	}
@@ -346,7 +332,7 @@ component extends="baseContentHandler"{
 
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
-			getPlugin( "MessageBox" ).warn( "No entries sent to delete!" );
+			variables.messagebox.warn( "No entries sent to delete!" );
 			setNextEvent(event=prc.xehEntries);
 		}
 
@@ -374,7 +360,7 @@ component extends="baseContentHandler"{
 			}
 		}
 		// messagebox
-		getPlugin( "MessageBox" ).info(messageArray=messages);
+		variables.messagebox.info(messageArray=messages);
 		// relocate
 		setNextEvent(event=prc.xehEntries);
 	}
@@ -398,9 +384,9 @@ component extends="baseContentHandler"{
 		prc.xehEntryQuickLook= "#prc.cbAdminEntryPoint#.entries.quickLook";
 		prc.xehEntryHistory = "#prc.cbAdminEntryPoint#.versions.index";
 
-		// prepare paging plugin
-		prc.pager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox" );
-		prc.pager_paging 	  	= prc.pager_pagingPlugin.getBoundaries();
+		// prepare paging object
+		prc.pager_oPaging 	= getModel( "Paging@cb" );
+		prc.pager_paging 	  	= prc.pager_oPaging.getBoundaries();
 		prc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pager_pagination	= arguments.pagination;
 
@@ -425,7 +411,7 @@ component extends="baseContentHandler"{
 
 	// slugify remotely
 	function slugify( event, rc, prc ){
-		event.renderData(data=trim( getPlugin( "HTMLHelper" ).slugify( rc.slug ) ),type="plain" );
+		event.renderData(data=trim( variables.HTMLHelper.slugify( rc.slug ) ),type="plain" );
 	}
 
 	// quick post viewlet
@@ -448,9 +434,9 @@ component extends="baseContentHandler"{
 		// exit handlers
 		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.entries.editorSelector";
 
-		// prepare paging plugin
-		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox" );
-		prc.paging 	  		= prc.pagingPlugin.getBoundaries();
+		// prepare paging object
+		prc.oPaging 	= getModel( "Paging@cb" );
+		prc.paging 	  		= prc.oPaging.getBoundaries();
 		prc.pagingLink 		= "javascript:pagerLink(@page@)";
 
 		// search entries with filters and all
@@ -481,7 +467,7 @@ component extends="baseContentHandler"{
 
 		// relocate if not existent
 		if( !prc.entry.isLoaded() ){
-			getPlugin( "MessageBox" ).warn( "ContentID sent is not valid" );
+			variables.messagebox.warn( "ContentID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.entries" );
 		}
 
@@ -524,17 +510,17 @@ component extends="baseContentHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = entryService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin( "MessageBox" ).info( "Entries imported sucessfully!" );
+				variables.messagebox.info( "Entries imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				variables.messagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin( "MessageBox" ).error( errorMessage );
+			variables.messagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehEntries );
 	}

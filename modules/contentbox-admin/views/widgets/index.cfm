@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-12">
        	<!--- MessageBox --->
-		#getPlugin( "MessageBox" ).renderit()#
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		
 		<!--- Logs --->
 		<cfif flash.exists( "forgeboxInstallLog" )>
@@ -77,7 +77,7 @@
 			    	)#
 					
 						#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
-			                name="filePlugin",
+			                name="fileWidget",
 			                label="Upload Widget:",
 			                columnWidth=2,
 			                useRemoveButton=false,

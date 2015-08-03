@@ -21,7 +21,7 @@
 				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
 			</td>
 			<td>
-				#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=author.getEmail(),size="30" )#
+				#getModel( "Avatar@cb" ).renderAvatar( email=author.getEmail(), size="30" )#
 				<!--- Display Link if Admin Or yourself --->
 				<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
 					<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
@@ -82,7 +82,7 @@
 
 <!--- Paging --->
 <cfif !rc.showAll>
-	#prc.pagingPlugin.renderit(foundRows=prc.authorCount, link=prc.pagingLink, asList=true)#
+	#prc.oPaging.renderit(foundRows=prc.authorCount, link=prc.pagingLink, asList=true)#
 <cfelse>
 	<span class="label label-info">Total Records: #prc.authorCount#</span>
 </cfif>

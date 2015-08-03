@@ -1,4 +1,8 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage custom site menus
 */
 component extends="baseHandler" {
@@ -6,8 +10,9 @@ component extends="baseHandler" {
     // Dependencies
     property name="menuService"     inject="id:menuService@cb";
     property name="menuItemService" inject="id:menuItemService@cb";
-    property name="settingService" inject="id:settingService@cb";
-    property name="cb" inject="cbHelper@cb";
+    property name="settingService"  inject="id:settingService@cb";
+    property name="cb"              inject="id:cbHelper@cb";
+    property name="HTMLHelper"      inject="coldbox:HTMLHelper";
     
     // Public properties
     this.preHandler_except = "pager";
@@ -55,7 +60,7 @@ component extends="baseHandler" {
 
     // slugify remotely
     function slugify( required any event, required struct rc, required struct prc ){
-        event.renderData( data=trim( getPlugin( "HTMLHelper" ).slugify( rc.slug ) ),type="plain" );
+        event.renderData( data=trim( variables.HTMLHelper.slugify( rc.slug ) ),type="plain" );
     }
     
     function slugUnique( required any event, required struct rc, required struct prc ){
@@ -127,9 +132,9 @@ component extends="baseHandler" {
         event.paramValue( "isFiltering", false, true);
         event.paramValue( "showAll", false);
 
-        // prepare paging plugin
-        prc.pagingPlugin    = getMyPlugin( plugin="Paging", module="contentbox" );
-        prc.paging          = prc.pagingPlugin.getBoundaries();
+        // prepare paging object
+        prc.oPaging    = getModel( "Paging@cb" );
+        prc.paging          = prc.oPaging.getBoundaries();
         prc.pagingLink      = "javascript:contentPaginate(@page@)";
         
         // is Filtering?
@@ -156,7 +161,7 @@ component extends="baseHandler" {
         event.paramValue( "slug", "" );
         // slugify if not passed, and allow passed slugs to be saved as-is
         if( !len( rc.slug ) ) { 
-            rc.slug = getPlugin( "HTMLHelper" ).slugify( rc.title ); 
+            rc.slug = variables.HTMLHelper.slugify( rc.title ); 
         }
         var Menu = menuService.get( id=rc.menuID );
         var originalSlug = Menu.getSlug();
@@ -181,7 +186,7 @@ component extends="baseHandler" {
             originalSlug=originalSlug 
         } );
         // messagebox
-        getPlugin( "MessageBox" ).setMessage( "info", "Menu saved!" );
+        getModel( "messagebox@cbMessagebox" ).setMessage( "info", "Menu saved!" );
         // relocate
         setNextEvent( prc.xehMenus );
     }
@@ -191,7 +196,7 @@ component extends="baseHandler" {
         event.paramValue( "slug", "" );
         // slugify if not passed, and allow passed slugs to be saved as-is
         if( !len( rc.slug ) ) { 
-            rc.slug = getPlugin( "HTMLHelper" ).slugify( rc.title ); 
+            rc.slug = variables.HTMLHelper.slugify( rc.title ); 
         }
         var Menu = menuService.new();
         var originalSlug = Menu.getSlug();
@@ -210,7 +215,7 @@ component extends="baseHandler" {
         
         // verify if contentID sent
         if( !len( rc.menuID ) ){
-            getPlugin( "MessageBox" ).warn( "No menus sent to delete!" );
+            getModel( "messagebox@cbMessagebox" ).warn( "No menus sent to delete!" );
             setNextEvent( event=prc.xehMenus );
         }
         
@@ -239,7 +244,7 @@ component extends="baseHandler" {
         }
         
         // messagebox
-        getPlugin( "MessageBox" ).info( messageArray=messages );
+        getModel( "messagebox@cbMessagebox" ).info( messageArray=messages );
         setNextEvent( prc.xehMenus );
     }
 
@@ -251,7 +256,7 @@ component extends="baseHandler" {
         
         // relocate if not existent
         if( !prc.menu.isLoaded() ){
-            getPlugin( "MessageBox" ).warn( "MenuID sent is not valid" );
+            getModel( "messagebox@cbMessagebox" ).warn( "MenuID sent is not valid" );
             setNextEvent( "#prc.cbAdminEntryPoint#.menus" );
         }
         
@@ -294,17 +299,17 @@ component extends="baseHandler" {
         try {
             if( len( rc.importFile ) and fileExists( rc.importFile ) ){
                 var importLog = menuService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-                getPlugin( "MessageBox" ).info( "Menus imported sucessfully!" );
+                getModel( "messagebox@cbMessagebox" ).info( "Menus imported sucessfully!" );
                 flash.put( "importLog", importLog );
             }
             else{
-                getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+                getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
             }
         }
         catch( any e ){
             var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
             log.error( errorMessage, e );
-            getPlugin( "MessageBox" ).error( errorMessage );
+            getModel( "messagebox@cbMessagebox" ).error( errorMessage );
         }
         setNextEvent( prc.xehMenus );
     }

@@ -1,10 +1,16 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage categories
 */
 component extends="baseHandler"{
 
 	// Dependencies
 	property name="categoryService"		inject="id:categoryService@cb";
+	property name="HTMLHelper"			inject="coldbox:HTMLHelper";
+
 	
 	// pre handler
 	function preHandler(event,action,eventArguments){
@@ -34,7 +40,7 @@ component extends="baseHandler"{
 	function save(event,rc,prc){
 		// slugify if not passed, and allow passed slugs to be saved as-is
 		if( NOT len(rc.slug) ){ 
-			rc.slug = getPlugin( "HTMLHelper" ).slugify(rc.category); 
+			rc.slug = HTMLHelper.slugify(rc.category); 
 		}
 		// populate and get category
 		var oCategory = populateModel( categoryService.get(id=rc.categoryID) );
@@ -49,11 +55,11 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception( "cbadmin_postCategorySave",{category=oCategory} );
 			// messagebox
-			getPlugin( "MessageBox" ).setMessage( "info","Category saved!" );
+			getModel( "messagebox@cbMessagebox" ).setMessage( "info","Category saved!" );
 		}
 		else {
 			// messagebox
-			getPlugin( "MessageBox" ).setMessage( "warning","Category '#rc.category#' already exists!" );	
+			getModel( "messagebox@cbMessagebox" ).setMessage( "warning","Category '#rc.category#' already exists!" );	
 		}
 		// relocate
 		setNextEvent(prc.xehCategories);
@@ -66,7 +72,7 @@ component extends="baseHandler"{
 		
 		// verify if contentID sent
 		if( !len( rc.categoryID ) ){
-			getPlugin( "MessageBox" ).warn( "No categories sent to delete!" );
+			getModel( "messagebox@cbMessagebox" ).warn( "No categories sent to delete!" );
 			setNextEvent(event=prc.xehCategories);
 		}
 		
@@ -95,7 +101,7 @@ component extends="baseHandler"{
 		}
 		
 		// messagebox
-		getPlugin( "MessageBox" ).info(messageArray=messages);
+		getModel( "messagebox@cbMessagebox" ).info(messageArray=messages);
 		setNextEvent( prc.xehCategories );
 	}
 
@@ -125,17 +131,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = categoryService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin( "MessageBox" ).info( "Categories imported sucessfully!" );
+				getModel( "messagebox@cbMessagebox" ).info( "Categories imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin( "MessageBox" ).error( errorMessage );
+			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehCategories );
 	}
