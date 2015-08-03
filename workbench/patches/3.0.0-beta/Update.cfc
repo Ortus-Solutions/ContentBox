@@ -75,6 +75,11 @@ component implements="contentbox.model.updates.IUpdate"{
 			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
 			directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );
 
+			/****************************** RENAME MODULES ******************************/
+			
+			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
+			directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
+
 			/****************************** UPDATE SECURITY RULES ******************************/
 			
 			var aRules = securityRuleService.getAll();

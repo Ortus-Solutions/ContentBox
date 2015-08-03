@@ -37,10 +37,10 @@ component{
 
 	// LOCATION MAPPINGS
 	this.mappings[ "/cbapp" ] 		= COLDBOX_APP_ROOT_PATH;
-	this.mappings[ "/contentbox" ] 	= COLDBOX_APP_ROOT_PATH & "modules_cb/contentbox";
+	this.mappings[ "/contentbox" ] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	// THE LOCATION OF EMBEDDED COLDBOX & MODULES
 	this.mappings[ "/coldbox" ] 	= COLDBOX_APP_ROOT_PATH & "coldbox";
-	this.mappings[ "/cborm" ] 	 	= COLDBOX_APP_ROOT_PATH & "modules/cborm";
+	this.mappings[ "/cborm" ] 	 	= this.mappings[ "/coldbox" ] & "/system/modules/cborm";
 
 	// THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";
@@ -57,7 +57,7 @@ component{
 		secondarycacheenabled = false,
 		cacheprovider		= "ehCache",
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
-		logSQL 				= true,
+		logSQL 				= false,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK

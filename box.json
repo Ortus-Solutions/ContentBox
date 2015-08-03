@@ -49,17 +49,19 @@
         ]
     },
     "dependencies":{
-        "coldbox":"4.1.0+00002",
         "cborm":"1.0.3",
         "cbmailservices":"1.0.0",
-        "cbsecurity":"1.1.0"
+        "cbsecurity":"1.1.0",
+        "coldbox":"4.1.0+00002",
+        "cbstorages":"1.0.0"
     },
     "installPaths":{
-        "coldbox":"coldbox",
         "testbox":"testbox",
-        "cborm":"modules/cborm",
-        "cbmailservices":"modules/cbmailservices",
-        "cbsecurity":"modules/cbsecurity"
+        "cborm":"coldbox/system/modules/cborm",
+        "cbmailservices":"coldbox/system/modules/cbmailservices",
+        "cbsecurity":"coldbox/system/modules/cbsecurity",
+        "coldbox":"coldbox",
+        "cbstorages":"coldbox/system/modules/cbstorages"
     },
     "devDependencies":{
         "testbox":"2.0.0"

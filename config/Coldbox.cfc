@@ -32,7 +32,7 @@ component{
 			//Extension Points
 			applicationHelper 			= "",
 			viewsHelper					= "",
-			modulesExternalLocation		= [ "/cbapp/modules_cb" ],
+			modulesExternalLocation		= [ "/cbapp/modules" ],
 			viewsExternalLocation		= "",
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
