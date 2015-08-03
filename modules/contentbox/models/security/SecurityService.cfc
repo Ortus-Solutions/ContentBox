@@ -125,7 +125,7 @@ component implements="ISecurityService" singleton{
 	boolean function authenticate(required username, required password){
 		// hash password
 		arguments.password = hash( arguments.password, authorService.getHashType() );
-		var author = authorService.findWhere({username=arguments.username,password=arguments.password,isActive=true});
+		var author = authorService.findWhere( {username=arguments.username,password=arguments.password,isActive=true} );
 		
 		//check if found and return verification
 		if( not isNull(author) ){

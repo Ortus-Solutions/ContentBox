@@ -90,7 +90,7 @@ var hasTouch   = 'ontouchstart' in document.documentElement,
 hasTouch
     && $.each( "touchstart touchmove touchend".split( " " ), function(i, name) {
         $.event.fixHooks[name] = $.event.mouseHooks;
-    });
+    } );
 
 
 $(document).ready(function () {
@@ -105,7 +105,7 @@ $(document).ready(function () {
     $('table').each(function () {
         if ($(this).data('table') == 'dnd') {
 
-            $(this).tableDnD({
+            $(this).tableDnD( {
                 onDragStyle: $(this).data('ondragstyle') && parseStyle($(this).data('ondragstyle')) || null,
                 onDropStyle: $(this).data('ondropstyle') && parseStyle($(this).data('ondropstyle')) || null,
                 onDragClass: $(this).data('ondragclass') == undefined && "tDnD_whileDrag" || $(this).data('ondragclass'),
@@ -121,12 +121,12 @@ $(document).ready(function () {
                 serializeRegexp: $(this).data('serializeregexp') && new RegExp($(this).data('serializeregexp')) || /[^\-]*$/,
                 serializeParamName: $(this).data('serializeparamname') || false,
                 dragHandle: $(this).data('draghandle') || null
-            });
+            } );
         }
 
 
-    });
-});
+    } );
+} );
 
 window.jQuery.tableDnD = {
     /** Keep hold of the current table being dragged */
@@ -145,7 +145,7 @@ window.jQuery.tableDnD = {
 
         this.each(function() {
             // This is bound to each matching table, set up the defaults and override with user options
-            this.tableDnDConfig = $.extend({
+            this.tableDnDConfig = $.extend( {
                 onDragStyle: null,
                 onDropStyle: null,
                 // Add in the default class for whileDragging
@@ -171,14 +171,14 @@ window.jQuery.tableDnD = {
                 serializeParamName: false,
                 /** If you give the name of a class here, then only Cells with this class will be draggable */
                 dragHandle: null
-            }, options || {});
+            }, options || {} );
 
             // Now make the rows draggable
             $.tableDnD.makeDraggable(this);
             // Prepare hierarchy support
             this.tableDnDConfig.hierarchyLevel
                 && $.tableDnD.makeIndented(this);
-        });
+        } );
 
         // Don't break the chain
         return this;
@@ -196,7 +196,7 @@ window.jQuery.tableDnD = {
             return null;
 
         tableStyle = $(table).addClass('indtd').attr('style');
-        $(table).css({whiteSpace: "nowrap"});
+        $(table).css( {whiteSpace: "nowrap"} );
 
         for (var w = 0; w < rows.length; w++) {
             if (cellWidth < $(rows[w]).find('td:first').text().length) {
@@ -204,10 +204,10 @@ window.jQuery.tableDnD = {
                 longestCell = w;
             }
         }
-        $(firstCell).css({width: 'auto'});
+        $(firstCell).css( {width: 'auto'} );
         for (w = 0; w < config.hierarchyLevel; w++)
             $(rows[longestCell]).find('td:first').prepend(config.indentArtifact);
-        firstCell && $(firstCell).css({width: firstCell.offsetWidth});
+        firstCell && $(firstCell).css( {width: firstCell.offsetWidth} );
         tableStyle && $(table).css(tableStyle);
 
         for (w = 0; w < config.hierarchyLevel; w++)
@@ -221,7 +221,7 @@ window.jQuery.tableDnD = {
                     || $(this).data('level', 0);
                 for (var i = 0; i < $(this).data('level'); i++)
                     $(this).find('td:first').prepend(config.indentArtifact);
-            });
+            } );
 
         return this;
     },
@@ -236,8 +236,8 @@ window.jQuery.tableDnD = {
                 $(this).bind(startEvent, function(e) {
                     $.tableDnD.initialiseDrag($(this).parents('tr')[0], table, this, e, config);
                     return false;
-                });
-            })
+                } );
+            } )
             // For backwards compatibility, we add the event to the whole row
             // get all the rows as a wrapped set
             || $(table.rows).each(function() {
@@ -248,15 +248,15 @@ window.jQuery.tableDnD = {
                             $.tableDnD.initialiseDrag(this, table, this, e, config);
                             return false;
                         }
-                    }).css( "cursor", "move" ); // Store the tableDnD object
+                    } ).css( "cursor", "move" ); // Store the tableDnD object
                 }
-            });
+            } );
     },
     currentOrder: function() {
         var rows = this.currentTable.rows;
         return $.map(rows, function (val) {
             return ($(val).data('level') + val.id).replace(/\s/g, '');
-        }).join('');
+        } ).join('');
     },
     initialiseDrag: function(dragObject, table, target, e, config) {
         this.dragObject    = dragObject;
@@ -279,7 +279,7 @@ window.jQuery.tableDnD = {
             // this is now bound to each matching table
             if (this.tableDnDConfig)
                 $.tableDnD.makeDraggable(this);
-        });
+        } );
     },
     /** Get the mouse coordinates from the event (allowing for browser differences) */
     mouseCoords: function(e) {
@@ -513,7 +513,7 @@ window.jQuery.tableDnD = {
                 myLevel
                     && $(this).parents('tr:first').data('level', --myLevel)
                     && $(this).remove();
-            })
+            } )
             && config.hierarchyLevel > 1
             && $(this.currentTable.rows).each(function () {
                 myLevel = $(this).data('level');
@@ -524,7 +524,7 @@ window.jQuery.tableDnD = {
                         $(this).data('level', --myLevel);
                     }
                 }
-            });
+            } );
 
         // If we have a dragObject, then we need to release it,
         // The row will already have been moved to the right place so we just reset stuff
@@ -577,7 +577,7 @@ window.jQuery.tableDnD = {
         var result = [];
         $('table').each(function() {
             this.id && result.push($.param(this.tableData(this)));
-        });
+        } );
         return result.join('&');
     },
     tableData: function (table) {
@@ -612,7 +612,7 @@ window.jQuery.tableDnD = {
         data[currentID] = [];
         !config.autoCleanRelations
             && $(rows[0]).data('level')
-            && rows.unshift({id: 'undefined'});
+            && rows.unshift( {id: 'undefined'} );
 
 
 

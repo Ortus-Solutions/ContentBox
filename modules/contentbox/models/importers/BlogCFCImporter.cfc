@@ -81,7 +81,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 				                  firstName=listFirst(qAuthors.name[ x ], " " ),
 				                  lastName=trim(replacenocase(qAuthors.name[ x ], listFirst(qAuthors.name[ x ], " " ), "" ))};
 
-				var author = authorService.findWhere({username=qAuthors.username[ x ]});
+				var author = authorService.findWhere( {username=qAuthors.username[ x ]} );
 				if( isNull(author) ) {
 					author = authorService.new(properties=props);
 				}
@@ -145,10 +145,10 @@ component implements="contentbox.models.importers.ICBImporter" {
 				}
 
 				var importedBody = q.Body[ x ] & q.moreBody[ x ];
-				interceptorService.processState( "preImportEntry", {post = importedBody});
+				interceptorService.processState( "preImportEntry", {post = importedBody} );
 				importedBody = findImages(importedBody);
 				importedBody = convertContent(importedBody);
-				interceptorService.processState( "postImportEntry", {post = importedBody});
+				interceptorService.processState( "postImportEntry", {post = importedBody} );
 
 				var props = {title=q.title[ x ], slug=q.alias[ x ], content = importedBody,
 				                  excerpt = q.Body[ x ], publishedDate = q.posted[ x ], createdDate = q.posted[ x ],

@@ -7,6 +7,6 @@ $(document).ready(function() {
     $( "##previewFrame" ).attr( "height", height );
 	// load source
 	$( "##previewForm" ).submit();
-});
+} );
 </script>
 </cfoutput>

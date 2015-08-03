@@ -57,9 +57,9 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 				editor.ui.add( 'MyButton', CKEDITOR.UI_BUTTON, {
 					label: 'My Dialog',
 					command: 'myDialogCmd'
-				});
-			});
-		});
+				} );
+			} );
+		} );
 
 		// When opening a dialog, its "definition" is created for it, for
 		// each editor instance. The "dialogDefinition" event is then
@@ -86,7 +86,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 						if ( ( /\d/ ).test( this.getValue() ) )
 							return 'My Custom Field must not contain digits';
 					}
-				});
+				} );
 
 				// Remove the "select1" field from the "tab1" tab.
 				infoTab.remove( 'select1' );
@@ -115,7 +115,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 							label: 'Another Text Field'
 						}
 					]
-				});
+				} );
 
 				// Provide the focus handler to start initial focus in "customField" field.
 				dialogDefinition.onFocus = function() {
@@ -123,7 +123,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 					urlField.select();
 				};
 			}
-		});
+		} );
 
 		var config = {
 			extraPlugins: 'dialog',

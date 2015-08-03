@@ -92,7 +92,7 @@
                                                     <span class="widget-type">
                                                         <div class="btn-group btn-group-sm pull-right">
                                                             <!---read docs--->
-                                                            <a title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'})">
+                                                            <a title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'} )">
                                                                 <i class="fa fa-book icon-large"></i> 
                                                             </a>
                                                             <cfif prc.oAuthor.checkPermission( "WIDGET_ADMIN" )>

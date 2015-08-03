@@ -39,7 +39,7 @@ component extends="baseHandler"{
 		// populate and get category
 		var oCategory = populateModel( categoryService.get(id=rc.categoryID) );
     	// announce event
-		announceInterception( "cbadmin_preCategorySave",{category=oCategory,categoryID=rc.categoryID});
+		announceInterception( "cbadmin_preCategorySave",{category=oCategory,categoryID=rc.categoryID} );
 		// check if category already exists
 		var isSaveableCategory = rc.categoryID!="" || isNull( categoryService.findWhere( criteria={ slug=rc.category } ) ) ? true : false;
 		// if non-existent
@@ -47,7 +47,7 @@ component extends="baseHandler"{
 			// save category
 			categoryService.save( oCategory );
 			// announce event
-			announceInterception( "cbadmin_postCategorySave",{category=oCategory});
+			announceInterception( "cbadmin_postCategorySave",{category=oCategory} );
 			// messagebox
 			getPlugin( "MessageBox" ).setMessage( "info","Category saved!" );
 		}
@@ -90,7 +90,7 @@ component extends="baseHandler"{
 				categoryService.deleteCategory( category ); 
 				arrayAppend( messages, "Category '#title#' removed" );
 				// announce event
-				announceInterception( "cbadmin_postCategoryRemove", { categoryID=categoryID });
+				announceInterception( "cbadmin_postCategoryRemove", { categoryID=categoryID } );
 			}
 		}
 		

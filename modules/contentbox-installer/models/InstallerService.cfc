@@ -447,7 +447,7 @@ component accessors="true"{
 			passwordProtection='',
 			HTMLKeywords = "cool,first entry, contentbox",
 			HTMLDescription = "The most amazing ContentBox blog entry in the world"
-		});
+		} );
 		entry.setCreator( author );
 		// version content
 		entry.addNewContentVersion(content="Hey everybody, this is my first blog entry made from ContentBox.  Isn't this amazing!'",
@@ -462,7 +462,7 @@ component accessors="true"{
 			authorEmail = "awesomejoe@gocontentbox.com",
 			authorURL = "www.gocontentbox.com",
 			isApproved = true
-		});
+		} );
 		comment.setRelatedContent( entry );
 		entry.addComment( comment );
 
@@ -474,7 +474,7 @@ component accessors="true"{
 			authorEmail = "badjoe@gocontentbox.com",
 			authorURL = "www.gocontentbox.com",
 			isApproved = false
-		});
+		} );
 		comment.setRelatedContent( entry );
 		entry.addComment( comment );
 
@@ -492,7 +492,7 @@ component accessors="true"{
 			HTMLKeywords = "about, contentbox,coldfusion,coldbox",
 			HTMLDescription = "The most amazing ContentBox page in the world",
 			layout = "pages"
-		});
+		} );
 		page.setCreator( author );
 		// Add new version
 		page.addNewContentVersion(content="<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{ContentStore slug='contentbox'}}}</p>",
@@ -509,7 +509,7 @@ component accessors="true"{
 			allowComments = false,
 			passwordProtection='',
 			description = "Our contact information"
-		});
+		} );
 		contentStore.setCreator( author );
 		contentStore.addNewContentVersion(content='<p style="text-align: center;">
 	<a href="http://www.ortussolutions.com/products/contentbox"><img alt="" src="__media/ContentBox_125.gif" style="width: 124px; height: 118px;" /></a></p>

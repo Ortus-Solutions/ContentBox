@@ -5,15 +5,15 @@ function data(offset) {
     var ret = [];
     for (var x = 0; x <= 360; x += 10) {
         var v = (offset + x) % 360;
-        ret.push({
+        ret.push( {
             x: x,
             y: Math.sin(Math.PI * v / 180).toFixed(4),
             z: Math.cos(Math.PI * v / 180).toFixed(4)
-        });
+        } );
     }
     return ret;
 }
-var graph = Morris.Line({
+var graph = Morris.Line( {
     element: 'graph',
     data: data(0),
     xkey: 'x',
@@ -25,7 +25,7 @@ var graph = Morris.Line({
      lineColors: ['#1ABC9C'],
      pointFillColors: ['#19a88b'],
     hideHover: true
-});
+} );
 
 // Area as Line
 
@@ -36,7 +36,7 @@ function update() {
 }
 setInterval(update, 100);
 
-Morris.Area({
+Morris.Area( {
     element: 'area-as-line',
     behaveLikeLine: false,
     data: [
@@ -50,10 +50,10 @@ Morris.Area({
     labels: ['Y', 'Z'],
     lineColors:['#1ABC9C','#293949']
 
-});
+} );
 
 //Donut
-Morris.Donut({
+Morris.Donut( {
     element: 'donut',
     data: [
         {value: 70, label: 'foo', formatted: 'at least 70%' },
@@ -67,11 +67,11 @@ Morris.Donut({
         '#1abc9c','#2dcc70','#f1c40f','#e84c3d'
     ],
     formatter: function (x, data) { return data.formatted; }
-});
+} );
 
 
 // Use Morris.Bar
-Morris.Bar({
+Morris.Bar( {
     element: 'bar',
     data: [
         {x: '2014 Q1', y: 3, z: 2, a: 3},
@@ -85,4 +85,4 @@ Morris.Bar({
     barColors:['#1abc9c','#2dcc70','#e84c3d']
 
 
-});
+} );

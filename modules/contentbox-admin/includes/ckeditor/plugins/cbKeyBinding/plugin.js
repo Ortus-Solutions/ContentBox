@@ -8,13 +8,13 @@ CKEDITOR.plugins.add( 'cbKeyBinding', {
 			exec: function( editor ) {
 				quickSave();
 			}
-		});
+		} );
 		// add command for quickPreview
 		editor.addCommand( 'quickPreview', {
 			exec: function( editor ) {
 				previewContent();
 			}
-		});
+		} );
 
 		// bind keystrokes...can be for ad-hoc commands added above, or event named commands in other plugins
 		// add key stroke -- ctrl+p
@@ -30,4 +30,4 @@ CKEDITOR.plugins.add( 'cbKeyBinding', {
 		// add key stroke -- ctrl+shift+w
 		editor.setKeystroke( CKEDITOR.CTRL+CKEDITOR.SHIFT+87, 'cbWidgets' );
 	}	
-});
+} );

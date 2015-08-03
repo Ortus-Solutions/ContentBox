@@ -4,7 +4,7 @@ $(document).ready(function() {
 	// tables references
 	$pages = $( "##pages" );
 	// datatable
-	$pages.dataTable({
+	$pages.dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -15,7 +15,7 @@ $(document).ready(function() {
     		}
   		],
   		"order": []
-	});
+	} );
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
 	// Drag and drop hierarchies
-	$pages.tableDnD({
+	$pages.tableDnD( {
 		dragHandle : ".dragHandle",
 		onDragClass: "selected",
 		onDragStart : function(table,row){
@@ -54,7 +54,7 @@ $(document).ready(function() {
 					$( oID ).html( i + 1 );
 				}
 				$( row ).css( "cursor", "default" );
-			});
+			} );
 			//console.log( $( row ) );
 			$( row ).find( "a.dragHandle" )
 				.css( "cursor", "pointer" )
@@ -62,8 +62,8 @@ $(document).ready(function() {
 				.addClass( "btn-default" );
 			$( row ).removeClass( "dotted" );
 		}
-	});
+	} );
 	</cfif>
-});
+} );
 </script>
 </cfoutput>

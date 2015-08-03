@@ -5,6 +5,6 @@ $(document).ready(function() {
 	$( "##email" ).focus();
 	// form validators
 	$( "##lostPasswordForm" ).validate();
-});
+} );
 </script>
 </cfoutput>

@@ -4,4 +4,4 @@ CKEDITOR.plugins.setLang( 'insertpre', 'en', {
 	edit : 'Edit code',
 	codeclass : 'Pre Class(es)',
 	notEmpty : 'The code field cannot be empty.'
-});
+} );

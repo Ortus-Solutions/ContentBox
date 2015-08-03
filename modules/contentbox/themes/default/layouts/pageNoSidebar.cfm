@@ -24,4 +24,4 @@ limitations under the License.
 */
  --->
 <!--- Nested Layouts --->
-<cfoutput>#cb.quickLayout(layout="pages",args={sidebar=false})#</cfoutput>
+<cfoutput>#cb.quickLayout(layout="pages",args={sidebar=false} )#</cfoutput>

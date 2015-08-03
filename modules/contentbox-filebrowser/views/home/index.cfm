@@ -12,7 +12,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<!--- Roots
 		<div style="float:right;margin-right:3px">
 			<strong>Volumes:</strong>
-			<select name="roots" id="roots" onChange="javascript:doEventNOUI('#rc.xehBrowser#','FileBrowser',{computerRoot:this.value})" style="width:50px">
+			<select name="roots" id="roots" onChange="javascript:doEventNOUI('#rc.xehBrowser#','FileBrowser',{computerRoot:this.value} )" style="width:50px">
 				<cfloop from="1" to="#arrayLen(rc.roots)#" index="i">
 				<option value="#urlEncodedFormat(rc.roots[i].getAbsolutePath())#" <cfif rc.roots[i].getAbsolutePath() eq rc.computerRoot>selected=selected</cfif>>#rc.roots[i].getAbsolutePath()#</option>
 				</cfloop>

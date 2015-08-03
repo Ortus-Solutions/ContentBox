@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$permissionForm = $( "##permissionForm" );
-});
+} );
 function addPermission(){
 	// loader
 	$( "##permissionLoader" ).slideDown();
@@ -11,7 +11,7 @@ function addPermission(){
 	$.post('#event.buildLink(prc.xehPermissionSave)#',{roleID:'#prc.role.getRoleID()#',permissionID:$permissionForm.find( "##permissionID" ).val() },function(){ 
 		$( "##permissionLoader" ).slideUp();
 		reloadPerms(); 
-	});
+	} );
 }
 function removePermission(permissionID){
 	// loader
@@ -20,7 +20,7 @@ function removePermission(permissionID){
 	$.post('#event.buildLink(prc.xehPermissionRemove)#',{roleID:'#prc.role.getRoleID()#',permissionID:permissionID },function(){ 
 		$( "##permissionLoader" ).slideUp();
 		reloadPerms();
-	});
+	} );
 }
 function reloadPerms(){
 	$remoteModal.load('#event.buildLink( prc.xehRolePermissions )#/roleID/#prc.role.getRoleID()#');

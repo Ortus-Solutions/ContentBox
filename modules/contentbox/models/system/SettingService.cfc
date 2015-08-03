@@ -100,7 +100,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* Mark cb as ready to serve
 	*/
 	function activateCB(){
-		var s = new(properties={name="cb_active",value="true"});
+		var s = new(properties={name="cb_active",value="true"} );
 		save( s );
 		return this;
 	}
@@ -167,7 +167,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		for(var key in settings){
 			// save only sent in setting keys
 			if( structKeyExists(memento, key) ){
-				oOption = findWhere({name=key});
+				oOption = findWhere( {name=key} );
 				oOption.setValue( memento[key] );
 				arrayAppend( newOptions, oOption );
 			}

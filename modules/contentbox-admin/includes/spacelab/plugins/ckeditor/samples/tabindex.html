@@ -28,15 +28,15 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 			// Apply focus class name.
 			editor.on( 'focus', function() {
 				editor.container.addClass( 'cke_focused' );
-			});
+			} );
 			editor.on( 'blur', function() {
 				editor.container.removeClass( 'cke_focused' );
-			});
+			} );
 
 			// Put startup focus on the first editor in tab order.
 			if ( editor.tabIndex == 1 )
 				editor.focus();
-		});
+		} );
 
 	</script>
 </head>

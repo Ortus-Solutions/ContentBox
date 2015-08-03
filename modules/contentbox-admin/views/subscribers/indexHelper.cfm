@@ -1,7 +1,7 @@
 <cfoutput>
 <script>
 $(document).ready(function() {
-    Morris.Donut({
+    Morris.Donut( {
         element: 'commentchart',
         data: #serializeJSON( prc.topCommentSubscriptions )#,
         colors: [
@@ -11,7 +11,7 @@ $(document).ready(function() {
             var pluralized = x>1 ? 's' : '';
             return x + " Subscriber" + pluralized;
         }
-    });
-});
+    } );
+} );
 </script>
 </cfoutput>

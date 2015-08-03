@@ -14,11 +14,11 @@ $(document).ready(function() {
 		bulkStatusURL 	: '#event.buildlink(linkTo=prc.xehPageBulkStatus)#',
 		importDialog 	: $( "##importDialog" ),
 		cloneDialog		: $( "##cloneDialog" )
-	});
+	} );
 	
 	// load content on startup, using default parents if passed.
 	contentLoad( { parent: '#rc.parent#' } );
 	
-});
+} );
 </script>
 </cfoutput>

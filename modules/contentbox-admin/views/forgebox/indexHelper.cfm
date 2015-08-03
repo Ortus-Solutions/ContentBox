@@ -7,12 +7,12 @@ $(document).ready(function() {
 	// Div Filter
 	$( "##entryFilter" ).keyup(function(){
 		$.uiDivFilter( $( ".forgeBox-entrybox" ), this.value );
-	})
+	} )
 	// tool tips
 	activateTooltips();
-});
+} );
 function openForgeboxModal(id){
-	$( "##"+id).overlay({
+	$( "##"+id).overlay( {
 		mask: {
 			color: '##fff',
 			loadSpeed: 200,
@@ -20,7 +20,7 @@ function openForgeboxModal(id){
 		closeOnClick : true,
 		closeOnEsc : true,
 		oneInstance: false
-	});
+	} );
 	// open the modal
 	$( "##"+id).data( "overlay" ).load();
 }

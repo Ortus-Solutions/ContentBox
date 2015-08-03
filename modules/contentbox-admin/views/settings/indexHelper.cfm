@@ -3,7 +3,7 @@
 $(document).ready(function() {
 	// form validators
 	$( "##settingsForm" ).validate();
-});
+} );
 function emailTest(){
 	$( "##emailTestDiv" ).html( "" );
 	$( "##iTest" ).addClass( "icon-spin" );
@@ -21,7 +21,7 @@ function emailTest(){
 			if( data.ERROR ){
 				var eMessages = $.map(data.ERRORARRAY, function(val,index) {
 				     return val;
-				}).join( ", " );
+				} ).join( ", " );
 				$( "##emailTestDiv" ).html( "Error sending test email: " + eMessages );
 			}
 			else{

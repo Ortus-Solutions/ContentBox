@@ -188,7 +188,7 @@
                                                 #wirebox.getBinder().getMapping(target).getPath()#
                                             </td>
                                             <td class="text-center">
-                                                <a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'})" title="Dump Mapping Memento"><i class="fa fa-eye icon-large"></i> </a>
+                                                <a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'} )" title="Dump Mapping Memento"><i class="fa fa-eye icon-large"></i> </a>
                                             </td>
                                         </tr>
                                         </cfloop>

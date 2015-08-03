@@ -2,9 +2,7 @@
     <h1>Manage My Subscriptions</h1>
 
     <!--- MessageBox --->
-    <cfif flash.exists( "notice" )>
-        <div class="alert alert-#flash.get( 'notice' ).type#">#flash.get( 'notice' ).message#</div>
-    </cfif>
+    #getModel( "messagebox@cbmessagebox" ).renderit()#
 
     <cfif structCount( prc.subscriptions )>
         <form name="removeSubscriptions" action="#event.buildLink( linkto='__removesubscriptions' )#" method="POST" onsubmit="return onSubmitHandler();">

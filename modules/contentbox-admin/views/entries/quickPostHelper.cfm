@@ -3,16 +3,16 @@
 <script type="text/javascript">
 $(document).ready(function() {
  	
-});
+} );
 function qpSaveDraft(){
 	$quickPostForm.find( "##isPublished" ).val('false');
 }
 function showQuickPost(){
-    $( '##quickPostModal' ).modal({
+    $( '##quickPostModal' ).modal( {
         maxHeight: 800,
         height: '80%',
         width: 1000
-    });
+    } );
     // pointers
     var $quickPost          = $( "##quickPost" );
     var $quickPostForm      = $( "##quickPostForm" );

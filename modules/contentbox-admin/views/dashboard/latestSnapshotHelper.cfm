@@ -1,7 +1,7 @@
 <cfoutput>
 <script>
 $(document).ready(function() {
-    Morris.Donut({
+    Morris.Donut( {
         element: 'top-visited-chart',
         data: #prc.aTopContent#,
         colors: [
@@ -11,9 +11,9 @@ $(document).ready(function() {
             var pluralized = x>1 ? 's' : '';
             return x + " Hit" + pluralized;
         }
-    });
+    } );
 
-    Morris.Donut({
+    Morris.Donut( {
         element: 'top-commented-chart',
         data: #prc.aTopCommented#,
         colors: [
@@ -23,7 +23,7 @@ $(document).ready(function() {
             var pluralized = x>1 ? 's' : '';
             return x + " Hit" + pluralized;
         }
-    });
-});
+    } );
+} );
 </script>
 </cfoutput>

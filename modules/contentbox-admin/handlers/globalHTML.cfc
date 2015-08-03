@@ -23,7 +23,7 @@ component extends="baseHandler"{
 	// save html
 	function save(event,rc,prc){
 		// announce event
-		announceInterception( "cbadmin_preGlobalHTMLSave",{oldSettings=prc.cbSettings,newSettings=rc});
+		announceInterception( "cbadmin_preGlobalHTMLSave",{oldSettings=prc.cbSettings,newSettings=rc} );
 		// bulk save the options
 		settingsService.bulkSave(rc);
 		// clear caches

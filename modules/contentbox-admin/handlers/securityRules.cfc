@@ -95,11 +95,11 @@ component extends="baseHandler"{
 		var errors = oRule.validate();
 		if( !arrayLen(errors) ){
 			// announce event
-			announceInterception( "cbadmin_preSecurityRulesSave",{rule=oRule,ruleID=rc.ruleID});
+			announceInterception( "cbadmin_preSecurityRulesSave",{rule=oRule,ruleID=rc.ruleID} );
 			// save rule
 			ruleService.saveRule( oRule );
 			// announce event
-			announceInterception( "cbadmin_postSecurityRulesSave",{rule=oRule});
+			announceInterception( "cbadmin_postSecurityRulesSave",{rule=oRule} );
 			// Message
 			getPlugin( "MessageBox" ).info( "Security Rule saved! Isn't that awesome!" );
 		}
@@ -117,11 +117,11 @@ component extends="baseHandler"{
 		// check for length
 		if( len(rc.ruleID) ){
 			// announce event
-			announceInterception( "cbadmin_preSecurityRulesRemove",{ruleID=rc.ruleID});
+			announceInterception( "cbadmin_preSecurityRulesRemove",{ruleID=rc.ruleID} );
 			// remove using hibernate bulk
 			ruleService.deleteByID( listToArray(rc.ruleID) );
 			// announce event
-			announceInterception( "cbadmin_postSecurityRulesRemove",{ruleID=rc.ruleID});
+			announceInterception( "cbadmin_postSecurityRulesRemove",{ruleID=rc.ruleID} );
 			// message
 			getPlugin( "MessageBox" ).info( "Security Rule Removed!" );
 		}

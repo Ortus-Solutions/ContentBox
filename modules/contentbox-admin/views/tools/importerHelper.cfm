@@ -24,9 +24,9 @@ $(document).ready(function() {
 				if( !$overrideContent.is(':visible') ) {
 					// if not already prepared, do some iframe tricker to upload the file in the background and process the results
 					$( '##uploadIframe' ).remove();
-					$( '<iframe name="uploadIframe" />' ).appendTo( 'body' ).attr({
+					$( '<iframe name="uploadIframe" />' ).appendTo( 'body' ).attr( {
 						id: 'uploadIframe'
-					});
+					} );
 					// get reference to newly created frame
 					var hiddenUpload = $( '##uploadIframe' );
 					$importForm.attr( 'action', "#event.buildLink( rc.xehCBPreImport )#" );
@@ -36,7 +36,7 @@ $(document).ready(function() {
 						var response = hiddenUpload.contents().find( 'body' ).html();
 						openModal( $importDialog, 900 );
 						$importDialog.find( '##modalContent' ).html( response );
-					});
+					} );
 					if ( $importForm.valid() ) {
 						activateLoaders();
 					}
@@ -62,7 +62,7 @@ $(document).ready(function() {
 			e.preventDefault();
 			removeValidations();
 		}
-	});
+	} );
 	// handle export type selection
     $( 'input[name=importtype]' ).change(function() {
         $( 'input[name=importtype]' ).each(function(){
@@ -75,7 +75,7 @@ $(document).ready(function() {
                 parent.removeClass( 'btn-success' );
                 parent.parent().removeClass( 'alert-success' );
             }
-        });
+        } );
         var cbContent = $( '##contentbox-import' );
         var dbContent = $( '##database-import' );
         if( this.id == 'import-contentbox' ) {
@@ -86,16 +86,16 @@ $(document).ready(function() {
             cbContent.hide( 'fast' );
             dbContent.show( 'fast' );
         }
-    });
+    } );
 	// close button
 	$importDialog.delegate( '##closeButton', 'click', function(e){
 		closeModal( $importDialog ); return false;
-	});
+	} );
 	// clone button
 	$importDialog.delegate( '##importButton', 'click', function(e){
 		$importForm.submit();
-	});
-});
+	} );
+} );
 /**
  * Handy method to remove all validaitons from the form so that we can add them conditionally when switching tabs
  */

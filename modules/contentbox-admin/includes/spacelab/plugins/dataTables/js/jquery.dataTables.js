@@ -5024,7 +5024,7 @@
 		 *      // Filter to rows with 'Webkit' in them, add a background colour and then
 		 *      // remove the filter, thus highlighting the 'Webkit' rows only.
 		 *      oTable.fnFilter('Webkit');
-		 *      oTable.$('tr', {"search": "applied"}).css('backgroundColor', 'blue');
+		 *      oTable.$('tr', {"search": "applied"} ).css('backgroundColor', 'blue');
 		 *      oTable.fnFilter('');
 		 *    } );
 		 */
@@ -5076,7 +5076,7 @@
 		 *
 		 *      // Filter to 'Webkit' and get all data for
 		 *      oTable.fnFilter('Webkit');
-		 *      var data = oTable._('tr', {"search": "applied"});
+		 *      var data = oTable._('tr', {"search": "applied"} );
 		 *
 		 *      // Do something with the data
 		 *      alert( data.length+" rows matched the search" );
@@ -5121,7 +5121,7 @@
 		 *    </ul>
 		 *  @param {bool} [redraw=true] redraw the table or not
 		 *  @returns {array} An array of integers, representing the list of indexes in
-		 *    <i>aoData</i> ({@link DataTable.models.oSettings}) that have been added to
+		 *    <i>aoData</i> ( {@link DataTable.models.oSettings} ) that have been added to
 		 *    the table.
 		 *  @dtopt API
 		 *  @deprecated Since v1.10
@@ -9885,7 +9885,7 @@
 		 *      $('#example').dataTable( {
 		 *        "formatNumber": function ( toFormat ) {
 		 *          return toFormat.toString().replace(
-		 *            /\B(?=(\d{3})+(?!\d))/g, "'"
+		 *            /\B(?=(\d{3} )+(?!\d))/g, "'"
 		 *          );
 		 *        };
 		 *      } );
@@ -9893,7 +9893,7 @@
 		 */
 		"fnFormatNumber": function ( toFormat ) {
 			return toFormat.toString().replace(
-				/\B(?=(\d{3})+(?!\d))/g,
+				/\B(?=(\d{3} )+(?!\d))/g,
 				this.oLanguage.sThousands
 			);
 		},
@@ -11382,7 +11382,7 @@
 		 *            }
 		 *          }
 		 *        } ]
-		 *      });
+		 *      } );
 		 *    } );
 		 */
 		"fnCreatedCell": null,
@@ -12997,7 +12997,7 @@
 		 * 2. `{array|object}` Data for the row to be processed (same as the
 		 *    original format that was passed in as the data source, or an array
 		 *    from a DOM data source
-		 * 3. `{int}` Row index ({@link DataTable.models.oSettings.aoData}), which
+		 * 3. `{int}` Row index ( {@link DataTable.models.oSettings.aoData} ), which
 		 *    can be useful to retrieve the `TR` element if you need DOM interaction.
 		 *
 		 * And the following return is expected:
@@ -14210,6 +14210,6 @@
 	 */
 
 	return $.fn.dataTable;
-}));
+} ));
 
 }(window, document));

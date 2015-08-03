@@ -44,23 +44,13 @@ component singleton{
                     subscriptionService.deleteWhere( subscriptionToken = targets[ i ] );
                 }
                 
-                flash.put( "notice", {
-                    type    = "info",
-                    message = "Your subscriptions were successfully updated!"
-                } );
-
+                messagebox.info( "Your subscriptions were successfully updated!" );
                 setNextEvent( "__subscriptions/#rc.subscriberToken#" );
             } else {
-                flash.put( "notice", {
-                    type    = "error",
-                    message = "Sorry, we couldn't complete your request. Please try again."
-                } );
+                messagebox.error( "Sorry, we couldn't complete your request. Please try again." );
             }
         } else {
-            flash.put( "notice", {
-                type    = "warning",
-                message = "Sorry, we couldn't complete your request. Please try again."
-            } );
+            messagebox.warn( "Sorry, we couldn't complete your request. Please try again." );
         }
         setNextEvent( "/" );
     }
@@ -90,19 +80,12 @@ component singleton{
             var subscriber = subscription.getSubscriber();
             // delete it
             subscriptionService.delete( subscription );
-            flash.put( "notice", {
-                type    = "warn",
-                message = "You have been succssfully unsubscribed!"
-            } );
+            messagebox.warn( "You have been succssfully unsubscribed!" );
             // see if subscriber has others; if so, we can provide a handy link to managing their other subs
             prc.subscriberToken = subscriber.getSubscriberToken();
             prc.subscriptions = subscriber.getSubscriptionsByContentType();
-        }
-        else {
-            flash.put( "notice", {
-                type    = "warn",
-                message = "Sorry, your request could not be completed."
-            } );
+        } else {
+            messagebox.warn( "Sorry, your request could not be completed." );
         }
         event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
              .setView( view="subscription/unsubscribe" );

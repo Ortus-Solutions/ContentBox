@@ -25,7 +25,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @defaultValue.hint The string to show if the page does not exist
 	*/
 	any function renderIt(required string slug, string defaultValue){
-		var entry = entryService.findWhere({slug=arguments.slug});
+		var entry = entryService.findWhere( {slug=arguments.slug} );
 
 		if( !isNull(entry) ){
 			return entry.renderContent();

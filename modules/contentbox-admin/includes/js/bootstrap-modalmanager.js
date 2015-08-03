@@ -33,7 +33,7 @@
 
 		init: function (element, options) {
 			this.$element = $(element);
-			this.options = $.extend({}, $.fn.modalmanager.defaults, this.$element.data(), typeof options == 'object' && options);
+			this.options = $.extend( {}, $.fn.modalmanager.defaults, this.$element.data(), typeof options == 'object' && options);
 			this.stack = [];
 			this.backdropCount = 0;
 
@@ -48,12 +48,12 @@
 							that.stack[i].isShown && that.stack[i].layout();
 						}
 					}, 10);
-				});
+				} );
 			}
 		},
 
 		createModal: function (element, options) {
-			$(element).modal($.extend({ manager: this }, options));
+			$(element).modal($.extend( { manager: this }, options));
 		},
 
 		appendModal: function (modal) {
@@ -84,7 +84,7 @@
 						if (transition) {       
 							//modal.$element[0].style.display = 'run-in';       
 							modal.$element[0].offsetWidth;
-							//modal.$element.one($.support.transition.end, function () { modal.$element[0].style.display = 'block' });  
+							//modal.$element.one($.support.transition.end, function () { modal.$element[0].style.display = 'block' } );  
 						}
 						
 						modal.layout();
@@ -101,13 +101,13 @@
 						transition ?
 							modal.$element.one($.support.transition.end, complete) :
 							complete();
-					});
+					} );
 				};
 
 				modal.options.replace ?
 					that.replace(showModal) :
 					showModal();
-			}));
+			} ));
 
 			modal.$element.on('hidden.modalmanager', targetIsSelf(function (e) {
 				that.backdrop(modal);
@@ -120,17 +120,17 @@
 					// trigger a relayout due to firebox's buggy transition end event 
 					if (transition) { modal.$element[0].offsetWidth; }
 					$.support.transition && modal.$element.hasClass('fade') ?
-						modal.$backdrop.one($.support.transition.end, function () { modal.destroy(); }) :
+						modal.$backdrop.one($.support.transition.end, function () { modal.destroy(); } ) :
 						modal.destroy();
 				} else {
 					modal.destroy();
 				}
 
-			}));
+			} ));
 
 			modal.$element.on('destroyed.modalmanager', targetIsSelf(function (e) {
 				that.destroyModal(modal);
-			}));
+			} ));
 		},
 
 		getOpenModals: function () {
@@ -243,11 +243,11 @@
 			if (modal && modal.options.backdrop != 'static') {
 				$container.on('click.modal', targetIsSelf(function (e) {
 					modal.hide();
-				}));
+				} ));
 			} else if (modal) {
 				$container.on('click.modal', targetIsSelf(function (e) {
 					modal.attention();
-				}));
+				} ));
 			}
 
 			return $container;
@@ -284,7 +284,7 @@
 				var that = this;
 
 				$.support.transition && modal.$element.hasClass('fade')?
-					modal.$backdrop.one($.support.transition.end, function () { that.removeBackdrop(modal) }) :
+					modal.$backdrop.one($.support.transition.end, function () { that.removeBackdrop(modal) } ) :
 					that.removeBackdrop(modal);
 
 			} else if (callback) {
@@ -343,7 +343,7 @@
 
 				var that = this;
 				$.support.transition ?
-					this.$backdropHandle.one($.support.transition.end, function () { that.removeLoading() }) :
+					this.$backdropHandle.one($.support.transition.end, function () { that.removeLoading() } ) :
 					that.removeLoading();
 
 			} else if (callback) {
@@ -402,7 +402,7 @@
 
 			if (!data) $this.data('modalmanager', (data = new ModalManager(this, option)));
 			if (typeof option === 'string') data[option].apply(data, [].concat(args))
-		})
+		} )
 	};
 
 	$.fn.modalmanager.defaults = {
@@ -418,6 +418,6 @@
 	// to remove conflicting bootstrap 3 event handlers
 	$(function () {
 		$(document).off('show.bs.modal').off('hidden.bs.modal');
-	});
+	} );
 
 }(jQuery);

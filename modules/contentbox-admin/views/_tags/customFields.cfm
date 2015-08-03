@@ -80,14 +80,14 @@
 			$( ".dynamicAdd" ).click(function() {
 				addDynamicItem($(this));
 				return false;
-			});
+			} );
 			// Removal Dynamic
 			$( ".dynamicRemove" ).click(function() {
 				$container = $(this).parent().parent();
 				$(this).closest( '.template' ).remove();
 				idCustomFields();
 				return false;
-			});
+			} );
 			$beacon = $( "##beacon" );
 			$removeCustomFieldsButton = $( "##removeCustomFieldsButton" );
 			$customFields = $( "##customFields" );
@@ -95,7 +95,7 @@
 			<cfif arrayLen(args.customFields)>
 			idCustomFields()
 			</cfif>
-		});
+		} );
 		function cleanCustomFields(){
 			$( "##customFields div.template" ).remove();
 			$customFieldsCount.val(0);
@@ -112,7 +112,7 @@
 					$this.val(inData[index]);
 				}
 				$this.tooltip(toolTipSettings);
-			});
+			} );
 			idCustomFields();
 		}
 		function idCustomFields(){
@@ -120,11 +120,11 @@
 			$customFields.find( "input.customFieldKey" ).each(function(index){
 				var $this = $(this);
 				$this.attr( "name","CustomFieldKeys_"+index).attr( "id","CustomFieldKeys_"+index);
-			});
+			} );
 			$customFields.find( "input.customFieldValue" ).each(function(index){
 				var $this = $(this);
 				$this.attr( "name","CustomFieldValues_"+index).attr( "id","CustomFieldValues_"+index);
-			});
+			} );
 		}
 	</script>
 </cfif>

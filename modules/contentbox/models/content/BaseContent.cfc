@@ -126,7 +126,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 			var newVersion = contentVersionService.new(properties={
 				content		= arguments.content,
 				changelog 	= arguments.changelog
-			});
+			} );
 
 			// join them to author and related content
 			newVersion.setAuthor( arguments.author );
@@ -615,7 +615,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// safe clone custom fields
 		var newFields = arguments.original.getCustomFields();
 		for(var thisField in newFields){
-			var newField = customFieldService.new({key=thisField.getKey(),value=thisField.getValue()});
+			var newField = customFieldService.new( {key=thisField.getKey(),value=thisField.getValue()} );
 			newField.setRelatedContent( this );
 			addCustomField( newField );
 		}

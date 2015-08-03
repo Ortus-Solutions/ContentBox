@@ -10,6 +10,6 @@ $(document).ready(function() {
     $( '.clockpicker' ).clockpicker();
 	// setup editors via _tags/editors.cfm by passing the form container
 	setupEditors( $contentForm, false, '#event.buildLink(prc.xehContentSave)#' );
-});
+} );
 </script>
 </cfoutput>

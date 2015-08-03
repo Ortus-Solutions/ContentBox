@@ -35,7 +35,7 @@ jQuery.uiTableFilter = function(jq, phrase, column, ifHidden){
         index = i;
         return false;
       }
-    });
+    } );
     var iselector = "td:eq( " + index + " )";
   
     var search_text = function( ){

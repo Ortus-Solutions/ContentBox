@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-$('#world-map').vectorMap({map: 'world_mill_en',
+$('#world-map').vectorMap( {map: 'world_mill_en',
           backgroundColor: 'transparent',
           regionStyle: {
             initial: {
@@ -19,8 +19,8 @@ $('#world-map').vectorMap({map: 'world_mill_en',
                 stroke: 'rgba(255,255,255,0.8)',
                 "stroke-width": 3
               }
-            }});
-$('#europe-map').vectorMap({map: 'europe_mill_en',
+            }} );
+$('#europe-map').vectorMap( {map: 'europe_mill_en',
           backgroundColor: 'transparent',
           regionStyle: {
             initial: {
@@ -39,8 +39,8 @@ $('#europe-map').vectorMap({map: 'europe_mill_en',
                 stroke: 'rgba(255,255,255,0.8)',
                 "stroke-width": 3
               }
-            }});
-$('#canada-map').vectorMap({map: 'ca_lcc_en',
+            }} );
+$('#canada-map').vectorMap( {map: 'ca_lcc_en',
           backgroundColor: 'transparent',
           regionStyle: {
             initial: {
@@ -59,8 +59,8 @@ $('#canada-map').vectorMap({map: 'ca_lcc_en',
                 stroke: 'rgba(255,255,255,0.8)',
                 "stroke-width": 3
               }
-            }});
-$('#italy-map').vectorMap({map: 'it_mill_en',
+            }} );
+$('#italy-map').vectorMap( {map: 'it_mill_en',
           backgroundColor: 'transparent',
           regionStyle: {
             initial: {
@@ -79,8 +79,8 @@ $('#italy-map').vectorMap({map: 'it_mill_en',
                 stroke: 'rgba(255,255,255,0.8)',
                 "stroke-width": 3
               }
-            }});
-$('#usa-map').vectorMap({map: 'us_aea_en',
+            }} );
+$('#usa-map').vectorMap( {map: 'us_aea_en',
           backgroundColor: 'transparent',
           regionStyle: {
             initial: {
@@ -99,8 +99,8 @@ $('#usa-map').vectorMap({map: 'us_aea_en',
                 stroke: 'rgba(255,255,255,0.8)',
                 "stroke-width": 3
               }
-            }});
-$('#chicago-map').vectorMap({map: 'us-il-chicago_mill_en',
+            }} );
+$('#chicago-map').vectorMap( {map: 'us-il-chicago_mill_en',
           backgroundColor: 'transparent',
           regionStyle: {
             initial: {
@@ -119,8 +119,8 @@ $('#chicago-map').vectorMap({map: 'us-il-chicago_mill_en',
                 stroke: 'rgba(255,255,255,0.8)',
                 "stroke-width": 3
               }
-            }});
-$('#ny-map').vectorMap({map: 'us-ny-newyork_mill_en',
+            }} );
+$('#ny-map').vectorMap( {map: 'us-ny-newyork_mill_en',
           backgroundColor: 'transparent',
           regionStyle: {
             initial: {
@@ -139,8 +139,8 @@ $('#ny-map').vectorMap({map: 'us-ny-newyork_mill_en',
                 stroke: 'rgba(255,255,255,0.8)',
                 "stroke-width": 3
               }
-            }});
-$('#united-kingdom-map').vectorMap({map: 'uk_mill_en',
+            }} );
+$('#united-kingdom-map').vectorMap( {map: 'uk_mill_en',
           backgroundColor: 'transparent',
           regionStyle: {
             initial: {
@@ -159,6 +159,6 @@ $('#united-kingdom-map').vectorMap({map: 'uk_mill_en',
                 stroke: 'rgba(255,255,255,0.8)',
                 "stroke-width": 3
               }
-            }});
+            }} );
 
-  });
+  } );

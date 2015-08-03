@@ -13,8 +13,8 @@ $(document).ready(function() {
 				e.preventDefault();
 			}
 		}
-	});
-});
+	} );
+} );
 function versionsPagerDiff(){
 	var oldVersion 	= $( ".rb_oldversion:checked" ).val();
 	var cVersion 	= $( ".rb_version:checked" ).val();

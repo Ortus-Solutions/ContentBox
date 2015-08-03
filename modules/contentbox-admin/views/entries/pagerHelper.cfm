@@ -12,8 +12,8 @@ $(document).ready(function() {
 				openRemoteModal('#event.buildLink(prc.xehEntryQuickLook)#/contentID/' + $(this).attr('data-contentID'));
 			}
 	    }
-	});
-});
+	} );
+} );
 function pagerLink(page){
 	$( "##entryPagerLoader" ).fadeIn( "fast" );
 	$('##pagerEntries')
@@ -21,7 +21,7 @@ function pagerLink(page){
 			$( "##entryPagerLoader" ).fadeOut();
 			hideAllTooltips();
 			activateTooltips();
-	});
+	} );
 }
 </script>
 </cfoutput>

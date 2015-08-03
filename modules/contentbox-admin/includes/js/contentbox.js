@@ -12,13 +12,13 @@ $(document).ready(function() {
             // load the modal content
             modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
         }        
-    });
+    } );
 
     // reset modal content when hidden
 	$remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
         modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin icon-large icon-4x"></i></div>' );
-    })
+    } )
     
 	// Global Tool Tip Settings
 	toolTipSettings	= {
@@ -36,7 +36,7 @@ $(document).ready(function() {
 	activateTooltips();
 
     // global Validaiton settings
-    $.validator.setDefaults({
+    $.validator.setDefaults( {
         // apparently, the *default* of jQuery validation is to ignore validation of hidden elements (e.g., when using tabs, validation is skipped)
         // seriously???
         // anyway, setting ignore: [] fixes it
@@ -56,16 +56,16 @@ $(document).ready(function() {
         errorPlacement: function(error, element) {
             error.appendTo( element.parent( "div.controls" ) );
         }
-    })	
+    } )	
     $.fn.resetValidations = function() {
         var form = this[ 0 ].currentForm;
         // also remove success and error classes
         $( form ).find( '.form-group' ).each(function() {
             $( this ).removeClass( 'error' ).removeClass( 'success' );
-        });
+        } );
         $( form ).find( ':input' ).each(function() {
             $( this ).removeClass( 'error' ).removeClass( 'valid' );
-        });
+        } );
         return this;
     }
     // simple method to blank out all form fields 
@@ -88,7 +88,7 @@ $(document).ready(function() {
                 case 'radio':
                     this.checked = false;
             }
-        });
+        } );
         $( this.data( 'validator' ) ).resetValidations();
         return this;
     }
@@ -97,7 +97,7 @@ $(document).ready(function() {
         var data = {};
         $.each( serializedArrayData, function( index, obj ) {
             data[ obj.name ] = obj.value;
-        });
+        } );
         return data;
     }
 	// flicker messages
@@ -107,7 +107,7 @@ $(document).ready(function() {
 	$(function () {
 	   var activeTab = $('[href="' + location.hash + '"]');
 	   activeTab && activeTab.tab('show');
-	});
+	} );
 	
 	// Sidebar shortcut keys
 	if( $( "#main-sidebar" ).attr( "id" ) == undefined ){
@@ -138,15 +138,15 @@ $(document).ready(function() {
 				// otherwise, follow link
 				to( boundItem.attr( 'href' ) );
 			} 
-		});
-	});
+		} );
+	} );
 
 	// Hide empty menu's due to permissions.
 	$( "#adminMenuBarContent li.dropdown" ).each(function(){
 		if( !$( this ).find( "ul.dropdown-menu li" ).length ){
 			$( this ).hide();
 		}
-	});
+	} );
     // match stateful accordions
     $( '.accordion[data-stateful]' ).each(function() {
         var accordion = $( this ),
@@ -169,9 +169,9 @@ $(document).ready(function() {
             var active = accordion.find( '.in' ).attr( 'id' );
             // set cookie
             $.cookie( data, active );
-        })            
-    })
-});
+        } )            
+    } )
+} );
 function isSidebarOpen(){
 	var sidebar = $( "#main-sidebar" );
 	return ( sidebar.attr( "id" ) != undefined && sidebar.css( "display" ) == "block"  ? true : false );
@@ -195,11 +195,11 @@ function toggleSidebar(){
 		sidebarState = true;
 	}
 	// Call change user editor preference
-	$.ajax({
+	$.ajax( {
 		url : $( "#sidebar-toggle" ).attr( "data-stateurl" ),
 		data : { sidebarState: sidebarState },
 		async : true
-	});
+	} );
 }
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
@@ -253,16 +253,16 @@ function activateContentSearch(){
 	// focus effects
 	$nav_search.focusin(function() {
 		if( $nav_search.is( ":focus" ) ){ return; }
-    	$(this).animate({
+    	$(this).animate( {
 		    opacity: 1.0,
 		    width: '+=95',
-		  }, 500, function(){});
-    }).blur(function() {
-    	$(this).animate({
+		  }, 500, function(){} );
+    } ).blur(function() {
+    	$(this).animate( {
 		    opacity: 0.50,
 		    width: '-=95',
-		  }, 500, function(){});
-    });
+		  }, 500, function(){} );
+    } );
 	// keyup quick search
 	$nav_search.keyup(function(){
 		var $this = $(this);
@@ -275,7 +275,7 @@ function activateContentSearch(){
 			} );
 		}
 		
-	});
+	} );
 	// add click listener to body to hide quick search panel
     $( 'body' ).click( function( e ){
        var target = $( e.target ),
@@ -285,7 +285,7 @@ function activateContentSearch(){
            //run global hide methods
     	   closeSearchBox();
        }
-    });
+    } );
 }
 function closeSearchBox(){
 	$nav_search_results.slideUp();
@@ -339,10 +339,10 @@ function closeModal(div){
  * @return
  */
 function openModal(div, w, h){
-    div.modal({
+    div.modal( {
         width: w,
         height: h
-    });
+    } );
     // attach a listener to clear form when modal closes
     $( div ).on( 'hidden.bs.modal', function() {
         if( !$( this ).hasClass( 'in' ) ) {
@@ -351,7 +351,7 @@ function openModal(div, w, h){
                 $( frm[0] ).clearForm();        
             }
         }
-    });
+    } );
 }
 /**
  * Open a new remote modal window Ajax style.
@@ -406,7 +406,7 @@ function openRemoteModal(url,params,w,h,delay){
                 args.height = maxHeight;
             }
             modal.modal( args )
-        }) 
+        } ) 
     }
     return;
 }
@@ -426,7 +426,7 @@ function activateConfirmations(){
 			$confirmIt.find( "#confirmItLoader" ).fadeIn();
 			window.location =  $confirmIt.data('confirmSrc');
 		}
-	});
+	} );
 	
 	// Activate dynamic confirmations from <a> of class confirmIt
 	$('a.confirmIt').click(function(e){
@@ -444,7 +444,7 @@ function activateConfirmations(){
 		$confirmIt.modal();
 		// prevent default action
 		e.preventDefault();
-	});
+	} );
 }
 function popup(url,w,h){
 	var winWidth = 1000;
@@ -472,7 +472,7 @@ function to(link){
 function checkAll(checked,id){
 	$( "input[name='"+id+"']" ).each(function(){
 		this.checked = checked;
-	});
+	} );
 }
 /**
  * Check all checkboxes by value
@@ -484,7 +484,7 @@ function checkByValue(id,recordID){
 	$( "input[name='"+id+"']" ).each(function(){
 		if( this.value == recordID ){ this.checked = true; }
 		else{ this.checked = false; }
-	});	
+	} );	
 }
 /**
  * Get today's date in us or rest of the world format

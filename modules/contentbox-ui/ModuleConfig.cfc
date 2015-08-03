@@ -116,7 +116,7 @@ component {
 		interceptorSettings = {
 			// ContentBox UI Custom Events, you can add your own if you like to!
 			customInterceptionPoints = arrayToList([
-				// Layout HTML points: A layout must announce them via cb.event( "cbui_footer",{renderer=this}) make sure you pass in the renderer
+				// Layout HTML points: A layout must announce them via cb.event( "cbui_footer",{renderer=this} ) make sure you pass in the renderer
 				"cbui_beforeHeadEnd","cbui_afterBodyStart","cbui_beforeBodyEnd","cbui_footer","cbui_beforeContent","cbui_afterContent","cbui_beforeSideBar","cbui_afterSideBar",
 				// Code Interception points
 				"cbui_onPageNotFound","cbui_onEntryNotFound","cbui_onError","cbui_preRequest","cbui_postRequest","cbui_onRendererDecoration","cbui_onContentSearch",
@@ -199,7 +199,7 @@ component {
 		// Get setting service
 		var settingService = controller.getWireBox().getInstance( "settingService@cb" );
 		// Get blog entry point from DB
-		var blogEntryPoint = settingService.findWhere({name="cb_site_blog_entrypoint"});
+		var blogEntryPoint = settingService.findWhere( {name="cb_site_blog_entrypoint"} );
 		if( !isNull( blogEntryPoint ) ){
 			ses.addNamespace(pattern="#this.entryPoint#/#blogEntryPoint.getValue()#", namespace="blog", append=false);
 		}

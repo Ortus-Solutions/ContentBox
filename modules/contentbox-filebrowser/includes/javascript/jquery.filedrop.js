@@ -67,7 +67,7 @@
       files;
 
   $.fn.filedrop = function(options) {
-    var opts = $.extend({}, default_opts, options),
+    var opts = $.extend( {}, default_opts, options),
         global_progress = [];
 
     this.on('drop', drop).on('dragstart', opts.dragStart).on('dragenter', dragEnter).on('dragover', dragOver).on('dragleave', dragLeave);
@@ -78,7 +78,7 @@
       files = e.target.files;
       files_count = files.length;
       upload();
-    });
+    } );
 
     function drop(e) {
       if( opts.drop.call(this, e) === false ) return false;
@@ -114,7 +114,7 @@
           builder += crlf;
           builder += val;
           builder += crlf;
-        });
+        } );
       }
 
       builder += dashdash;
@@ -257,7 +257,7 @@
                 if (value === fileIndex) {
                   processingQueue.splice(key, 1);
                 }
-              });
+              } );
               filesRejected++;
               return true;
             }
@@ -280,7 +280,7 @@
             };
 
             reader.onloadend = !opts.beforeSend ? send : function (e) {
-              opts.beforeSend(files[fileIndex], fileIndex, function () { send(e); });
+              opts.beforeSend(files[fileIndex], fileIndex, function () { send(e); } );
             };
             
             reader.readAsBinaryString(files[fileIndex]);
@@ -294,7 +294,7 @@
             if (value === fileIndex) {
               processingQueue.splice(key, 1);
             }
-          });
+          } );
           opts.error(errors[0]);
           return false;
         }
@@ -357,7 +357,7 @@
         // Add headers
         $.each(opts.headers, function(k, v) {
           xhr.setRequestHeader(k, v);
-        });
+        } );
 
         xhr.sendAsBinary(builder);
 
@@ -388,7 +388,7 @@
               if (value === fileIndex) {
                 processingQueue.splice(key, 1);
               }
-            });
+            } );
 
             // Add to donequeue
             doneQueue.push(fileIndex);
@@ -482,7 +482,7 @@
         return function() {
           opts.docLeave.call(_this, e);
         };
-      })(this), 200);
+      } )(this), 200);
     }
 
     return this;
@@ -504,4 +504,4 @@
     };
   } catch (e) {}
 
-})(jQuery);
+} )(jQuery);

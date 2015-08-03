@@ -1,4 +1,4 @@
-$.validator.setDefaults({
+$.validator.setDefaults( {
     highlight: function (element, errorClass, validClass) {
         var $element;
         if (element.type === 'radio') {
@@ -25,7 +25,7 @@ $.validator.setDefaults({
             $element.parents( "div.control-group" ).removeClass( "error" );
         }
     }
-});
+} );
 
 $(function () {
     // make all validation errors use the bootstrap inline help class on page load if none are specified
@@ -40,7 +40,7 @@ $(function () {
                 validationMessage.addClass( "help-block" );
             }
         }
-    });
+    } );
 
     // if the page was rendered with an error, add the error class to the control group
     $('form').each(function () {
@@ -48,6 +48,6 @@ $(function () {
             if ($(this).find('.field-validation-error').length > 0) {
                 $(this).addClass('error');
             }
-        });
-    });
-});
+        } );
+    } );
+} );
