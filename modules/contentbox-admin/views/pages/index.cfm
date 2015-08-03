@@ -21,8 +21,8 @@
 		</cfif>
 		<!--- pageForm --->
 		#html.startForm(name="pageForm",action=prc.xehPageRemove)#
-			#html.hiddenField(name="contentStatus",value="")#
-			#html.hiddenField(name="contentID",value="")#
+			#html.hiddenField(name="contentStatus",value="" )#
+			#html.hiddenField(name="contentID",value="" )#
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
@@ -43,7 +43,7 @@
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+								    		<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
 								    			<li>
 								    				<a href="javascript:bulkRemove()" 
 								    					class="confirmIt"
@@ -68,7 +68,7 @@
 								    				<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a>
 								    			</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_EXPORT")>
+											<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 												<li class="dropdown-submenu">
 													<a href="javascript:null">
 														<i class="fa fa-download icon-large"></i> Export All
@@ -120,7 +120,7 @@
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
-					#html.startForm(name="pageFilterForm", action=prc.xehPageSearch, class="form-vertical",role="form")#
+					#html.startForm(name="pageFilterForm", action=prc.xehPageSearch, class="form-vertical",role="form" )#
 						<!--- Authors --->
 						<div class="form-group">
 					        <label for="fAuthors" class="control-label">Authors:</label>
@@ -191,7 +191,7 @@
 </div>
 
 <!--- Clone Dialog --->
-<cfif prc.oAuthor.checkPermission("PAGES_EDITOR,PAGES_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Page Cloning",
@@ -205,7 +205,7 @@
 	</cfscript>
 	#renderView( view="_tags/dialog/clone", args=dialogArgs )#
 </cfif>
-<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Pages",

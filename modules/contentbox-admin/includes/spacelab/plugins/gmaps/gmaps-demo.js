@@ -65,10 +65,10 @@ $(document).ready(function() {
           alert('Geolocation failed: '+error.message);
         },
         not_supported: function(){
-          alert("Your browser does not support geolocation");
+          alert( "Your browser does not support geolocation" );
         },
         always: function(){
-          //alert("Done!");
+          //alert( "Done!" );
         }
       });
 

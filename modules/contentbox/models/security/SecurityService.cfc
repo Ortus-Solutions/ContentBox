@@ -79,7 +79,7 @@ component implements="ISecurityService" singleton{
 	Author function getAuthorSession(){
 		
 		// Check if valid user id in session
-		var authorID = val( sessionStorage.getVar("loggedInAuthorID", "") );
+		var authorID = val( sessionStorage.getVar( "loggedInAuthorID", "" ) );
 		
 		// If that fails, check for a cookie
 		if( !authorID ) {
@@ -105,7 +105,7 @@ component implements="ISecurityService" singleton{
 	* Set a new author in session
 	*/
 	ISecurityService function setAuthorSession(required Author author){
-		sessionStorage.setVar("loggedInAuthorID", author.getAuthorID() );
+		sessionStorage.setVar( "loggedInAuthorID", author.getAuthorID() );
 		return this;
 	} 
 
@@ -165,7 +165,7 @@ component implements="ISecurityService" singleton{
 									   port=settings.cb_site_mail_smtp,
 									   useTLS=settings.cb_site_mail_tls,
 									   useSSL=settings.cb_site_mail_ssl);
-		//body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification")									   
+		//body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification" )									   
 		mail.setBody( renderer.get().renderLayout( view="/contentbox/email_templates/password_verification", layout="email", module="contentbox-admin" ) );
 		// send it out
 		mailService.send( mail );
@@ -218,7 +218,7 @@ component implements="ISecurityService" singleton{
 									   port=settings.cb_site_mail_smtp,
 									   useTLS=settings.cb_site_mail_tls,
 									   useSSL=settings.cb_site_mail_ssl);
-		//,body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder")
+		//,body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder" )
 		mail.setBody( renderer.get().renderLayout( view="/contentbox/email_templates/password_reminder", layout="email", module="contentbox-admin" ) );
 		// send it out
 		mailService.send( mail );
@@ -233,7 +233,7 @@ component implements="ISecurityService" singleton{
 		// Validate Password
 		if( compare(arguments.content.getPasswordProtection(),arguments.password) eq 0 ){
 			// Set simple validation
-			sessionStorage.setVar("protection-#hash(arguments.content.getSlug())#",  getContentProtectedHash( arguments.content ) );
+			sessionStorage.setVar( "protection-#hash(arguments.content.getSlug())#",  getContentProtectedHash( arguments.content ) );
 			return true;
 		}
 		
@@ -244,7 +244,7 @@ component implements="ISecurityService" singleton{
 	* Checks Whether a content entry or page is protected and user has credentials for it
 	*/
 	boolean function isContentViewable(required content){
-		var protectedHash = sessionStorage.getVar("protection-#hash(arguments.content.getSlug())#","");
+		var protectedHash = sessionStorage.getVar( "protection-#hash(arguments.content.getSlug())#","" );
 		//check hash against validated content
 		if( compare( protectedHash, getContentProtectedHash( arguments.content ) )  EQ 0 ){
 			return true;
@@ -256,7 +256,7 @@ component implements="ISecurityService" singleton{
 	* Get password content protected salt
 	*/
 	private function getContentProtectedHash(content){
-		return hash(arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256");
+		return hash(arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256" );
 	}
 	
 	/**
@@ -264,15 +264,15 @@ component implements="ISecurityService" singleton{
 	*/
 	any function getRememberMe(){
 		var results = "";
-		var cookieValue = cookieStorage.getVar(name="contentbox_remember_me", default="");
+		var cookieValue = cookieStorage.getVar(name="contentbox_remember_me", default="" );
 		
 		try{
 			results = decryptIt(  cookieValue );
 		}
 		catch(Any e){
 			// Errors on decryption
-			log.error("Error decrypting remember me key: #e.message# #e.detail#", cookieValue );
-			cookieStorage.deleteVar(name="contentbox_remember_me");
+			log.error( "Error decrypting remember me key: #e.message# #e.detail#", cookieValue );
+			cookieStorage.deleteVar(name="contentbox_remember_me" );
 			results = "";
 		}
 		
@@ -285,7 +285,7 @@ component implements="ISecurityService" singleton{
 	*/
 	any function getKeepMeLoggedIn(){
 		var results = 0;
-		var cookieValue = cookieStorage.getVar(name="contentbox_keep_logged_in", default="");
+		var cookieValue = cookieStorage.getVar(name="contentbox_keep_logged_in", default="" );
 		
 		try{
 			// Decrypted value should be a number representing the authorID
@@ -293,8 +293,8 @@ component implements="ISecurityService" singleton{
 		}
 		catch(Any e){
 			// Errors on decryption
-			log.error("Error decrypting Keep Me Logged in key: #e.message# #e.detail#", cookieValue );
-			cookieStorage.deleteVar(name="contentbox_keep_logged_in");
+			log.error( "Error decrypting Keep Me Logged in key: #e.message# #e.detail#", cookieValue );
+			cookieStorage.deleteVar(name="contentbox_keep_logged_in" );
 			results = 0;
 		}
 		
@@ -350,7 +350,7 @@ component implements="ISecurityService" singleton{
 			setting.setValue( generateSecretKey( "BLOWFISH" ) );
 			setting.setName( "cb_enc_key" );
 			settingService.save(entity=setting);
-			log.info("Registered new cookie encryption key");
+			log.info( "Registered new cookie encryption key" );
 		}
 		
 		return setting.getValue();

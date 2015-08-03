@@ -25,7 +25,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	ModuleService function init(){
 		// init it
-		super.init(entityName="cbModule");
+		super.init(entityName="cbModule" );
 		modulesPath = "";
 		modulesInvocationPath = "";
 		moduleWidgetCache = {};
@@ -50,7 +50,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		module.setDescription( arguments.config.description );
 		module.setVersion( arguments.config.version );
 		module.setEntryPoint( arguments.config.entryPoint );
-		if( structKeyExists(arguments.config,"forgeboxslug") ){
+		if( structKeyExists(arguments.config,"forgeboxslug" ) ){
 			module.setForgeBoxSlug( arguments.config.forgeboxSlug );
 		}
 		return module;
@@ -68,13 +68,13 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* findModules
 	* @isActive.hint The active criteria, true, false or any for all modules
 	*/
-	struct function findModules(isActive="any"){
+	struct function findModules(isActive="any" ){
 		var results = {};
 		var criteria = newCriteria();
 
 		// isApproved filter
-		if( structKeyExists(arguments,"isActive") AND arguments.isActive NEQ "any"){
-			criteria.eq("isActive", javaCast("boolean",arguments.isActive));
+		if( structKeyExists(arguments,"isActive" ) AND arguments.isActive NEQ "any" ){
+			criteria.eq( "isActive", javaCast( "boolean",arguments.isActive));
 		}
 		// run criteria query and projections count
 		results.count 	 = criteria.count();
@@ -95,7 +95,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			path = moduleWidgetCache[ arguments.widgetName ];
 		}
 		else {
-			log.error("Could not find #arguments.widgetname# widget in the module.");	
+			log.error( "Could not find #arguments.widgetname# widget in the module." );	
 		}
 		return path;
 	}
@@ -104,8 +104,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* Register a new module and return the module representation, this does not activate, just registers
 	*/
 	Module function registerNewModule(required name){
-		if( fileExists( modulesPath & "/#arguments.name#/ModuleConfig.cfc") ){
-			var config = createObject("component", modulesInvocationPath & ".#arguments.name#.ModuleConfig");
+		if( fileExists( modulesPath & "/#arguments.name#/ModuleConfig.cfc" ) ){
+			var config = createObject( "component", modulesInvocationPath & ".#arguments.name#.ModuleConfig" );
 			var module = new();
 			module.setName( arguments.name );
 			populateModule( module, config );
@@ -113,7 +113,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			return module;
 		}
 		else{
-			log.error("Cannot register new module #arguments.name# as it is not a valid ContentBox Module. No ModuleConfig.cfc found.");
+			log.error( "Cannot register new module #arguments.name# as it is not a valid ContentBox Module. No ModuleConfig.cfc found." );
 		}
 		return new();
 	}
@@ -130,7 +130,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		if( structKeyExists(configCache, arguments.name) ){
 			var config = configCache[arguments.name];
 			// Call deactivate if it exists
-			if( structKeyExists(config,"onDeactivate") ){
+			if( structKeyExists(config,"onDeactivate" ) ){
 				config.onDeactivate();
 			}
 			// deactivate from ColdBox
@@ -170,7 +170,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		// Repopulate module, just in case
 		populateModule( module, config );
 		// Call activate now if found
-		if( structKeyExists(config,"onActivate") ){
+		if( structKeyExists(config,"onActivate" ) ){
 			try{
 				config.onActivate();
 			}
@@ -198,7 +198,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		var configPath = modulesInvocationPath & ".#name#.ModuleConfig";
 		
 		// Try to do an onDelete() callback.
-		var config = createObject("component", configPath);
+		var config = createObject( "component", configPath);
 		if( structKeyExists( config, "onDelete" ) ){
 			config.onDelete();
 		}
@@ -261,28 +261,28 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	struct function uploadModule(required fileField){
 		var destination 	= getModulesPath();
-		var installLog 		= createObject("java","java.lang.StringBuilder").init("");
+		var installLog 		= createObject( "java","java.lang.StringBuilder" ).init( "" );
 		var results 		= {error=true, logInfo=""};
 
 		// Upload the module zip
-		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream,application/x-zip-compressed,application/zip", "overwrite");
+		var fileResults = fileUpload(destination, arguments.fileField, "application/octet-stream,application/x-zip-compressed,application/zip", "overwrite" );
 
 		// Unzip File?
-		if ( listLast(fileResults.clientFile, ".") eq "zip" ){
+		if ( listLast(fileResults.clientFile, "." ) eq "zip" ){
 			// test zip has files?
 			try{
 				var listing = zipUtil.list( "#destination#/#fileResults.clientFile#" );
 			}
 			catch(Any e){
 				// bad zip file.
-				installLog.append("Error getting listing of zip archive (#destination#/#fileResults.clientFile#), bad zip, file will be removed.<br />");
+				installLog.append( "Error getting listing of zip archive (#destination#/#fileResults.clientFile#), bad zip, file will be removed.<br />" );
 				fileDelete( destination & "/" & fileResults.clientFile );
 				// flatten messages;
 				results.logInfo = installLog.toString();
 				return results;
 			}
 			// extract it
-			zipUtil.extract(zipFilePath="#destination#/#fileResults.clientFile#", extractPath="#destination#");
+			zipUtil.extract(zipFilePath="#destination#/#fileResults.clientFile#", extractPath="#destination#" );
 			// Removal of Mac stuff
 			if( directoryExists( destination & "/__MACOSX" ) ){
 				directoryDelete( destination & "/__MACOSX", true);
@@ -293,7 +293,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			results.error = false;
 		}
 		else{
-			installLog.append("File #fileResults.clientFile# is not a zip file, so cannot extract it or use it, file will be removed.<br/>");
+			installLog.append( "File #fileResults.clientFile# is not a zip file, so cannot extract it or use it, file will be removed.<br/>" );
 			fileDelete( destination & "/" & fileResults.clientFile );
 		}
 		// flatten messages;
@@ -339,6 +339,6 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	}
 
 	private query function getModulesOnDisk(required path){
-		return directoryList( arguments.path, false, "query", "", "name asc");
+		return directoryList( arguments.path, false, "query", "", "name asc" );
 	}
 }

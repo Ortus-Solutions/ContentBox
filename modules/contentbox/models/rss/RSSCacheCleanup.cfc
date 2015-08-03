@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -26,16 +26,16 @@ component extends="coldbox.system.Interceptor"{
 
 		// Listen when entries are saved
 	function cbadmin_postEntrySave(event,interceptData){
-		getModel("rssService@cb").clearCaches();
+		getModel( "rssService@cb" ).clearCaches();
 	}
 	
 	// Listen when entries are removed
 	function cbadmin_postEntryRemove(event,interceptData){
-		getModel("rssService@cb").clearCaches();
+		getModel( "rssService@cb" ).clearCaches();
 	}
 
 	// Listen when comments are made
 	function cbui_onCommentPost(event,interceptData){
-		getModel("rssService@cb").clearCaches(comments=true,slug=arguments.interceptData.comment.getRelatedContent().getSlug());
+		getModel( "rssService@cb" ).clearCaches(comments=true,slug=arguments.interceptData.comment.getRelatedContent().getSlug());
 	}
 }

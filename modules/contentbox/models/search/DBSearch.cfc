@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -120,7 +120,7 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 
 			};
 
-			writeOutput("</ul></div>");
+			writeOutput( "</ul></div>" );
 		}
 
 		return results;
@@ -130,7 +130,7 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 	* utility to strip HTML
 	*/
 	private function stripHTML(stringTarget){
-		return REReplaceNoCase(arguments.stringTarget,"<[^>]*>","","ALL");
+		return REReplaceNoCase(arguments.stringTarget,"<[^>]*>","","ALL" );
 	}
 
 	/**
@@ -162,14 +162,14 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 		}
 
 		try{
-			excerpt = reReplaceNoCase(excerpt, "(#arguments.term#)", "<span class='highlight'>\1</span>","all");
+			excerpt = reReplaceNoCase(excerpt, "(#arguments.term#)", "<span class='highlight'>\1</span>","all" );
 		}
 		catch(Any e){}
 
 		// remove images
-		//excerpt = reReplaceNoCase(excerpt, '<img\s[^//>].*//?>',"[image]","all");
+		//excerpt = reReplaceNoCase(excerpt, '<img\s[^//>].*//?>',"[image]","all" );
 		// remove links
-		//excerpt = reReplaceNoCase(excerpt, '<a\b[^>]*>(.*?)</a>',"[link]","all");
+		//excerpt = reReplaceNoCase(excerpt, '<a\b[^>]*>(.*?)</a>',"[link]","all" );
 
 		return excerpt;
 	}

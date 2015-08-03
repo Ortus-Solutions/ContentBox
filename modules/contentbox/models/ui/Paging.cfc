@@ -26,14 +26,14 @@ To use. You must use a "page" variable to move from page to page.
 ex: index.cfm?event=users.list&page=2
 
 In your handler you must calculate the boundaries to push into your paging query.
-<cfset rc.boundaries = getInstance("paging").getBoundaries()>
+<cfset rc.boundaries = getInstance( "paging" ).getBoundaries()>
 Gives you a struct:
 [startrow] : the startrow to use
 [maxrow] : the max row in this recordset to use.
 Ex: [startrow=11][maxrow=20] if we are using a PagingMaxRows of 10
 
 To RENDER:
-#getInstance("paging").renderit(FoundRows,link)#
+#getInstance( "paging" ).renderit(FoundRows,link)#
 
 FoundRows = The total rows found in the recordset
 link = The link to use for paging, including a placeholder for the page @page@
@@ -100,13 +100,13 @@ link = The link to use for paging, including a placeholder for the page @page@
 		<cfset var totalPages = 0>
 		<cfset var theLink = arguments.link>
 		<!--- Paging vars --->
-		<cfset var currentPage = event.getValue("page",1)>
+		<cfset var currentPage = event.getValue( "page",1)>
 		<cfset var pageFrom = 0>
 		<cfset var pageTo = 0>
 		<cfset var pageIndex = 0>
 		
 		<!--- Override --->
-		<cfif structKeyExists(arguments, "pagingMaxRows")>
+		<cfif structKeyExists(arguments, "pagingMaxRows" )>
 			<cfset maxRows = arguments.pagingMaxRows>
 		</cfif>
 		

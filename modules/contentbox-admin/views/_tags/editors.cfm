@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- Load Editor Custom Assets --->
-#html.addAsset(prc.cbroot & "/includes/css/date.css")#
+#html.addAsset(prc.cbroot & "/includes/css/date.css" )#
 <!--- Editor Javascript --->
 <script type="text/javascript">
 // Load Custom Editor Assets, Functions, etc.
@@ -28,9 +28,9 @@ function previewContent(){
 // Set the actual publishing date to now
 function publishNow(){
 	var fullDate = new Date();
-	$("##publishedDate").val( getToday() );
-	$("##publishedHour").val( fullDate.getHours() );
-	$("##publishedMinute").val( fullDate.getMinutes() );
+	$( "##publishedDate" ).val( getToday() );
+	$( "##publishedHour" ).val( fullDate.getHours() );
+	$( "##publishedMinute" ).val( fullDate.getMinutes() );
 }
 // quick save for pages
 function quickSave(){
@@ -77,7 +77,7 @@ function quickSave(){
 		}
 		// notify
 		adminNotifier( "info", "Draft Saved!" );
-	},"json");
+	},"json" );
 }
 /**
  * Setup the editors. 
@@ -91,13 +91,13 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	// Setup global editor elements
 	$targetEditorForm   	= $theForm;
 	$targetEditorSaveURL 	= saveURL;
-	$uploaderBarLoader 		= $targetEditorForm.find("##uploadBarLoader");
-	$uploaderBarStatus 		= $targetEditorForm.find("##uploadBarLoaderStatus");
-	$excerpt				= $targetEditorForm.find("##excerpt");
-	$content 				= $targetEditorForm.find("##content");
-	$isPublished 			= $targetEditorForm.find("##isPublished");
-	$contentID				= $targetEditorForm.find("##contentID");
-	$changelog				= $targetEditorForm.find("##changelog");
+	$uploaderBarLoader 		= $targetEditorForm.find( "##uploadBarLoader" );
+	$uploaderBarStatus 		= $targetEditorForm.find( "##uploadBarLoaderStatus" );
+	$excerpt				= $targetEditorForm.find( "##excerpt" );
+	$content 				= $targetEditorForm.find( "##content" );
+	$isPublished 			= $targetEditorForm.find( "##isPublished" );
+	$contentID				= $targetEditorForm.find( "##contentID" );
+	$changelog				= $targetEditorForm.find( "##changelog" );
 	$slug 					= $targetEditorForm.find('##slug');
 	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
@@ -110,8 +110,8 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	#prc.oEditorDriver.startup()#
 
 	// Activate Date fields
-	$("[type=date]").datepicker();
-	$(".datepicker").datepicker();
+	$( "[type=date]" ).datepicker();
+	$( ".datepicker" ).datepicker();
 
 	// Activate Form Validator
 	$targetEditorForm.validate({
@@ -147,7 +147,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	var $title = $targetEditorForm.find( "##title" );
 	// set up live event for title, do nothing if slug is locked..
 	$title.on('blur', function(){
-		if( !$slug.prop("disabled") ){
+		if( !$slug.prop( "disabled" ) ){
 			createPermalink( $title.val() );
 		}
 	});
@@ -162,11 +162,11 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	window.onbeforeunload = askLeaveConfirmation;
 	needConfirmation = true;
 	// counters
-	$("##htmlKeywords").keyup(function(){
-		$("##html_keywords_count").html( $("##htmlKeywords").val().length );
+	$( "##htmlKeywords" ).keyup(function(){
+		$( "##html_keywords_count" ).html( $( "##htmlKeywords" ).val().length );
 	});
-	$("##htmlDescription").keyup(function(){
-		$("##html_description_count").html( $("##htmlDescription").val().length );
+	$( "##htmlDescription" ).keyup(function(){
+		$( "##html_description_count" ).html( $( "##htmlDescription" ).val().length );
 	});
 	
 }
@@ -192,8 +192,8 @@ function switchEditor(editorType){
 }
 
 function switchMarkup(markupType){
-	$("##markup").val( markupType );
-	$("##markupLabel").html( markupType );
+	$( "##markup" ).val( markupType );
+	$( "##markupLabel" ).html( markupType );
 }
 
 // Ask for leave confirmations
@@ -229,12 +229,12 @@ function permalinkUniqueCheck( linkToUse ){
 	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
 	if( !linkToUse.length ){ return; }
 	// Verify unique
-	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, contentID: $("##contentID").val() }, function( data ){
+	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, contentID: $( "##contentID" ).val() }, function( data ){
 		if( !data.UNIQUE ){
-			$("##slugCheckErrors").html("The permalink slug you entered is already in use, please enter another one or modify it.").addClass("alert");
+			$( "##slugCheckErrors" ).html( "The permalink slug you entered is already in use, please enter another one or modify it." ).addClass( "alert" );
 		}
 		else{
-			$("##slugCheckErrors").html("").removeClass("alert");
+			$( "##slugCheckErrors" ).html( "" ).removeClass( "alert" );
 		}
 	} );
 }
@@ -256,7 +256,7 @@ function quickPublish(isDraft){
 	$targetEditorForm.submit();
 }
 // Widget Plugin Integration
-function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector")#';}
+function getWidgetSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".widgets.editorselector" )#';}
 // Widget Preview Integration
 function getWidgetPreviewURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#'; }
 // Widget Editor Integration
@@ -264,18 +264,18 @@ function getWidgetEditorURL(){ return '#event.buildLink( prc.cbAdminEntryPoint &
 // Widget Instance Integration
 function getWidgetInstanceURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#'; }
 // Page Selection Integration
-function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector")#';}
+function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector" )#';}
 // Entry Selection Integration
-function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector")#';}
+function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector" )#';}
 // ContentStore Selection Integration
-function getContentStoreSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".contentStore.editorselector")#';}
+function getContentStoreSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".contentStore.editorselector" )#';}
 // Preview Integration
-function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".content.preview")#';}
+function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".content.preview" )#';}
 // Module Link Building
 function getModuleURL(module, event, queryString){
 	var returnURL = "";
 	$.ajax({
-		url : '#event.buildLink(prc.cbAdminEntryPoint & ".modules.buildModuleLink")#',
+		url : '#event.buildLink(prc.cbAdminEntryPoint & ".modules.buildModuleLink" )#',
 		data : {module: module, moduleEvent: event, moduleQS: queryString},
 		async : false,
 		success : function(data){
@@ -287,7 +287,7 @@ function getModuleURL(module, event, queryString){
 // Toggle upload/saving bar
 function toggleLoaderBar(){
 	// Activate Loader
-	$uploaderBarStatus.html("Saving...");
+	$uploaderBarStatus.html( "Saving..." );
 	$uploaderBarLoader.slideToggle();
 }
 </script>

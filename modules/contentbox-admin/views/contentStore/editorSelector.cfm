@@ -4,7 +4,7 @@
 	<h3><i class="fa fa-hdd-o"></i> Insert From ContentStore</h3>
 </div>
 <div class="modal-body">
-	#html.startForm(name="contentStoreEditorSelectorForm")#
+	#html.startForm(name="contentStoreEditorSelectorForm" )#
 		<!--- Loader --->
 		<div class="loaders floatRight" id="contentStoreLoader">
 			<i class="fa fa-spinner fa-spin icon-large"></i>
@@ -12,13 +12,13 @@
 
 		<!--- Content Bar --->
 	    <div class="form-group well">
-	        #html.label(field="contentSearch",content="Quick Search:",class="control-label")#
+	        #html.label(field="contentSearch",content="Quick Search:",class="control-label" )#
 	        #html.textField(name="contentSearch",size="30",class="form-control",value=rc.search)#
 	    </div>
 
 		<!--- Render tables out --->
 		<div id="contentContainer">
-		#renderView(view="contentStore/editorSelectorEntries", module="contentbox-admin")#
+		#renderView(view="contentStore/editorSelectorEntries", module="contentbox-admin" )#
 		</div>
 	#html.endForm()#
 </div>

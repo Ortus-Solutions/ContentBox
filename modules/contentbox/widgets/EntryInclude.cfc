@@ -8,11 +8,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("EntryInclude");
-		setPluginVersion("1.0");
-		setPluginDescription("A widget that can render out ContentBox blog entries inline");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setPluginName( "EntryInclude" );
+		setPluginVersion( "1.0" );
+		setPluginDescription( "A widget that can render out ContentBox blog entries inline" );
+		setPluginAuthor( "Ortus Solutions" );
+		setPluginAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "notebook.png" );
 		setCategory( "Blog" );
 		return this;
@@ -32,11 +32,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		}
 
 		// default value
-		if( structKeyExists(arguments, "defaultValue") ){
+		if( structKeyExists(arguments, "defaultValue" ) ){
 			return arguments.defaultValue;
 		}
 
-		throw(message="The content slug '#arguments.slug#' does not exist",type="EntryIncludeWidget.InvalidEntrySlug");
+		throw(message="The content slug '#arguments.slug#' does not exist",type="EntryIncludeWidget.InvalidEntrySlug" );
 	}
 
 	/**

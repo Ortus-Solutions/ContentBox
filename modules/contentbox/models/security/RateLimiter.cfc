@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -81,7 +81,7 @@ component extends="coldbox.system.Interceptor"{
 					.setHTTPHeader( name="Retry-After", value=arguments.duration );
 
 				// Log it to app logs
-				log.info( "'limiter invoked for:','#realIP#',#targetData.attempts#,#cgi.request_method#,'#cgi.SCRIPT_NAME#', '#cgi.QUERY_STRING#','#cgi.http_user_agent#','#targetData.lastAttempt#',#listlen(cgi.http_cookie,";")#" );
+				log.info( "'limiter invoked for:','#realIP#',#targetData.attempts#,#cgi.request_method#,'#cgi.SCRIPT_NAME#', '#cgi.QUERY_STRING#','#cgi.http_user_agent#','#targetData.lastAttempt#',#listlen(cgi.http_cookie,";" )#" );
 
 				// Setup counter
 				targetData.attempts++;

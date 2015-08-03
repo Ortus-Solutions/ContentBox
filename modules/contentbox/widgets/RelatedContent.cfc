@@ -74,7 +74,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
                 }
             }
             // close ul
-            writeOutput("</select>");
+            writeOutput( "</select>" );
         }
         return content;
     }
@@ -95,7 +95,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
                 }
             }
             // close ul
-            writeoutput("</ul>");
+            writeoutput( "</ul>" );
         }
         return content;
     }

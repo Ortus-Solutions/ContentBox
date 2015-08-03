@@ -8,7 +8,7 @@
     </cfif>
         <div id="widget-preview-wrapper">
             <div class="widget-arguments" id="widget-arguments">
-                #html.startForm(name="widgetArgsForm_#prc.widget.name#", class="form-vertical")#
+                #html.startForm(name="widgetArgsForm_#prc.widget.name#", class="form-vertical" )#
                     <fieldset <cfif arrayLen( prc.metadata ) eq 1>style="display:none;"</cfif>>
                         <legend>Public Methods</legend>
                         <label for="renderMethodSelect"><strong>Select a Method:</strong></label>
@@ -18,7 +18,7 @@
                             </cfloop> 
                         </select>
                     </fieldset>
-                    #html.startFieldSet(legend="Widget Arguments")#
+                    #html.startFieldSet(legend="Widget Arguments" )#
                     <!--- instructions --->
                     <cfif arrayLen( prc.md.parameters )> 
                         <p>Please fill out the arguments for this widget:</p>

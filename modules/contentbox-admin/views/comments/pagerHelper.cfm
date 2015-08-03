@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// quick look
-	$("##comments_pager").find("tr").bind("contextmenu",function(e) {
+	$( "##comments_pager" ).find( "tr" ).bind( "contextmenu",function(e) {
 	    if (e.which === 3) {
 			if( $(this).attr('data-commentID') != null ){
 	    		openRemoteModal('#event.buildLink(prc.xehCommentPagerQuickLook)#', {commentID: $(this).attr('data-commentID')});
@@ -12,12 +12,12 @@ $(document).ready(function() {
 	    }
 	});
 });
-<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 function commentPagerChangeStatus(status,recordID){
 	// update icon
-	$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+	$( "##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 	// ajax status change
-	$.post("#event.buildlink(linkTo=prc.xehCommentPagerStatus)#",{commentStatus:status, commentID:recordID},function(data){
+	$.post( "#event.buildlink(linkTo=prc.xehCommentPagerStatus)#",{commentStatus:status, commentID:recordID},function(data){
 		if( data.ERROR ){
 			adminNotifier( "error", data.MESSAGES, 3000 );	
 		}
@@ -29,17 +29,17 @@ function commentPagerChangeStatus(status,recordID){
 	});
 }
 function commentPagerRemove(recordID){
-	if( !confirm("Really permanently delete comment?") ){ return; }
-	$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+	if( !confirm( "Really permanently delete comment?" ) ){ return; }
+	$( "##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 	// ajax remove change
-	$.post("#event.buildlink(linkTo=prc.xehCommentPagerRemove)#",{commentID:recordID},function(data){
+	$.post( "#event.buildlink(linkTo=prc.xehCommentPagerRemove)#",{commentID:recordID},function(data){
 		hideAllTooltips();
 		commentPagerLink(#rc.page#);
 	});
 }
 </cfif>
 function commentPagerLink(page){
-	$("##commentsPagerLoader").fadeIn("fast");
+	$( "##commentsPagerLoader" ).fadeIn( "fast" );
 	$('##pagerComments')
 		.load('#event.buildLink(prc.xehCommentPager)#',
 			{commentPager_contentID:'#prc.commentPager_contentID#',
@@ -47,7 +47,7 @@ function commentPagerLink(page){
 			 page:page,
 			 commentPager_pagination: '#prc.commentPager_pagination#'},function() {
 			hideAllTooltips();
-			$("##commentsPagerLoader").fadeOut();
+			$( "##commentsPagerLoader" ).fadeOut();
 			activateTooltips();
 	});
 }

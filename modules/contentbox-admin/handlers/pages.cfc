@@ -1,4 +1,4 @@
-﻿/**
+/**
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -43,12 +43,12 @@ component extends="baseContentHandler"{
 	// index
 	function index( event, rc, prc ){
 		// params
-		event.paramValue("parent","");
+		event.paramValue( "parent","" );
 
 		// get all authors
-		prc.authors    = authorService.getAll(sortOrder="lastName");
+		prc.authors    = authorService.getAll(sortOrder="lastName" );
 		// get all categories
-		prc.categories = categoryService.getAll(sortOrder="category");
+		prc.categories = categoryService.getAll(sortOrder="category" );
 
 		// exit handlers
 		prc.xehPageSearch 		= "#prc.cbAdminEntryPoint#.pages";
@@ -64,7 +64,7 @@ component extends="baseContentHandler"{
 		prc.cssAppendList = "../spacelab/plugins/dataTables/css/dataTables";
         prc.jsAppendList  = "../spacelab/plugins/dataTables/js/jquery.dataTables,../spacelab/plugins/dataTables/js/dataTables.bootstrap";
 		// view
-		event.setView("pages/index");
+		event.setView( "pages/index" );
 	}
 
 	// page tables
@@ -100,7 +100,7 @@ component extends="baseContentHandler"{
 		// Doing a page search or filtering?
 		if( len( rc.searchPages ) OR prc.isFiltering ){
 			// remove parent for searches, we go site wide
-			structDelete(rc, "parent");
+			structDelete(rc, "parent" );
 		}
 
 		// search entries with filters and all
@@ -136,8 +136,8 @@ component extends="baseContentHandler"{
 	// Quick Look
 	function quickLook( event, rc, prc ){
 		// get entry
-		prc.page  = pageService.get( event.getValue("contentID",0) );
-		event.setView(view="pages/quickLook",layout="ajax");
+		prc.page  = pageService.get( event.getValue( "contentID",0) );
+		event.setView(view="pages/quickLook",layout="ajax" );
 	}
 
 	// editor
@@ -145,7 +145,7 @@ component extends="baseContentHandler"{
 		// cb helper reference
 		prc.cbHelper = CBHelper;
 		// CK Editor Helper
-		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin");
+		prc.ckHelper = getMyPlugin(plugin="CKHelper",module="contentbox-admin" );
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
 		// Get User's default editor
@@ -157,9 +157,9 @@ component extends="baseContentHandler"{
 		// Get User's default markup
 		prc.defaultMarkup = prc.oAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
 		// get all categories for display purposes
-		prc.categories = categoryService.getAll(sortOrder="category");
+		prc.categories = categoryService.getAll(sortOrder="category" );
 		// get new page or persisted
-		prc.page  = pageService.get( event.getValue("contentID",0) );
+		prc.page  = pageService.get( event.getValue( "contentID",0) );
 		// load comments,versions and child pages viewlets if persisted
 		if( prc.page.isLoaded() ){
 			var args = {contentID=rc.contentID};
@@ -174,15 +174,15 @@ component extends="baseContentHandler"{
 		prc.pages = pageService.getAllFlatPages( sortOrder="slug asc" );
 		// Get active layout record and available page only layouts
 		prc.themeRecord = themeService.getActiveTheme();
-		prc.availableLayouts = REreplacenocase( prc.themeRecord.layouts,"blog,?","");
+		prc.availableLayouts = REreplacenocase( prc.themeRecord.layouts,"blog,?","" );
 		// Get parent from active page
 		prc.parentcontentID = prc.page.getParentID();
 		// Override the parent page if incoming via URL
-		if( structKeyExistS(rc,"parentID") ){
+		if( structKeyExistS(rc,"parentID" ) ){
 			prc.parentcontentID = rc.parentID;
 		}
 		// get all authors
-		prc.authors = authorService.getAll(sortOrder="lastName");
+		prc.authors = authorService.getAll(sortOrder="lastName" );
 		// get related content
 		prc.relatedContent = prc.page.hasRelatedContent() ? prc.page.getRelatedContent() : [];
 		prc.linkedContent = prc.page.hasLinkedContent() ? prc.page.getLinkedContent() : [];
@@ -202,7 +202,7 @@ component extends="baseContentHandler"{
         prc.jsAppendList  = "../spacelab/plugins/clockpicker/clockpicker";
 
 		// view
-		event.setView("pages/editor");
+		event.setView( "pages/editor" );
 	}
 
 	// save
@@ -215,9 +215,9 @@ component extends="baseContentHandler"{
 		event.paramValue( "creatorID", "" );
 		event.paramValue( "changelog", "" );
 		event.paramValue( "publishedDate", now() );
-		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH") );
-		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm") );
-		event.paramValue( "publishedTime", event.getValue( "publishedHour") & ":" & event.getValue( "publishedMinute" ) );
+		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH" ) );
+		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm" ) );
+		event.paramValue( "publishedTime", event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" ) );
 		event.paramValue( "expireHour", "" );
 		event.paramValue( "expireMinute", "" );
 		event.paramValue( "expireTime", "" );
@@ -225,10 +225,10 @@ component extends="baseContentHandler"{
 		event.paramValue( "relatedContentIDs", [] );
 
 		// slugify the incoming title or slug
-		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin("HTMLHelper").slugify( rc.slug ) );
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : getPlugin( "HTMLHelper" ).slugify( rc.slug ) );
 
 		// Verify permission for publishing, else save as draft
-		if( !prc.oAuthor.checkPermission("PAGES_ADMIN") ){
+		if( !prc.oAuthor.checkPermission( "PAGES_ADMIN" ) ){
 			rc.isPublished 	= "false";
 		}
 
@@ -243,7 +243,7 @@ component extends="baseContentHandler"{
 		// Validate Page And Incoming Data
 		var errors = page.validate();
 		if( !len( trim( rc.content ) ) ){
-			arrayAppend(errors, "Please enter the content to save!");
+			arrayAppend(errors, "Please enter the content to save!" );
 		}
 		if( arrayLen( errors ) ){
 			getPlugin( "MessageBox" ).warn(messageArray=errors);
@@ -254,7 +254,7 @@ component extends="baseContentHandler"{
 		// Attach creator if new page
 		if( isNew ){ page.setCreator( prc.oAuthor ); }
 		// Override creator?
-		else if( !isNew and prc.oAuthor.checkPermission("PAGES_ADMIN") and len( rc.creatorID ) and page.getCreator().getAuthorID() NEQ rc.creatorID ){
+		else if( !isNew and prc.oAuthor.checkPermission( "PAGES_ADMIN" ) and len( rc.creatorID ) and page.getCreator().getAuthorID() NEQ rc.creatorID ){
 			page.setCreator( authorService.get( rc.creatorID ) );
 		}
 		// Register a new content in the page, versionized!
@@ -268,7 +268,7 @@ component extends="baseContentHandler"{
 		}
 		// Remove parent
 		else if( rc.parentPage EQ "null" ){
-			page.setParent( javaCast("null", "") );
+			page.setParent( javaCast( "null", "" ) );
 		}
 
 		// Create new categories?
@@ -310,7 +310,7 @@ component extends="baseContentHandler"{
 		}
 		else{
 			// relocate
-			getPlugin( "MessageBox" ).info("Page Saved!");
+			getPlugin( "MessageBox" ).info( "Page Saved!" );
 			if( page.hasParent() ){
 				setNextEvent( event=prc.xehPages, querystring="parent=#page.getParent().getContentID()#" );
 			} else {
@@ -321,8 +321,8 @@ component extends="baseContentHandler"{
 
 	function clone( event, rc, prc ){
 		// validation
-		if( !event.valueExists("title") OR !event.valueExists("contentID") ){
-			getPlugin( "MessageBox" ).warn("Can't clone the unclonable, meaning no contentID or title passed.");
+		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
+			getPlugin( "MessageBox" ).warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
@@ -335,7 +335,7 @@ component extends="baseContentHandler"{
 			rc.title = "Copy of #rc.title#";
 		}
 		// get a clone
-		var clone = pageService.new({title=rc.title,slug=getPlugin("HTMLHelper").slugify( rc.title )});
+		var clone = pageService.new({title=rc.title,slug=getPlugin( "HTMLHelper" ).slugify( rc.title )});
 		clone.setCreator( prc.oAuthor );
 		// attach to the original's parent.
 		if( original.hasParent() ){
@@ -352,7 +352,7 @@ component extends="baseContentHandler"{
 		// clone this sucker now!
 		pageService.savePage( clone );
 		// relocate
-		getPlugin( "MessageBox" ).info("Page Cloned, isn't that cool!");
+		getPlugin( "MessageBox" ).info( "Page Cloned, isn't that cool!" );
 		if( clone.hasParent() ){
 			setNextEvent( event=prc.xehPages, querystring="parent=#clone.getParent().getContentID()#" );
 		} else {
@@ -362,9 +362,9 @@ component extends="baseContentHandler"{
 
 	// Bulk Status Change
 	function bulkStatus( event, rc, prc ){
-		event.paramValue("parent","")
-			.paramValue("contentID","")
-			.paramValue("contentStatus","draft");
+		event.paramValue( "parent","" )
+			.paramValue( "contentID","" )
+			.paramValue( "contentStatus","draft" );
 
 		// check if id list has length
 		if( len( rc.contentID ) ){
@@ -372,10 +372,10 @@ component extends="baseContentHandler"{
 			// announce event
 			announceInterception( "cbadmin_onPageStatusUpdate", {contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
-			getPlugin( "MessageBox" ).info("#listLen(rc.contentID)# Pages(s) where set to '#rc.contentStatus#'");
+			getPlugin( "MessageBox" ).info( "#listLen(rc.contentID)# Pages(s) where set to '#rc.contentStatus#'" );
 		}
 		else{
-			getPlugin( "MessageBox" ).warn("No pages selected!");
+			getPlugin( "MessageBox" ).warn( "No pages selected!" );
 		}
 		// relocate back
 		if( len( rc.parent ) ){
@@ -394,7 +394,7 @@ component extends="baseContentHandler"{
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
 			getPlugin( "MessageBox" ).warn( "No pages sent to delete!" );
-			setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#");
+			setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#" );
 		}
 
 		// Inflate to array
@@ -470,19 +470,19 @@ component extends="baseContentHandler"{
 	function pager( event, rc, prc ,authorID="all",parent,max=0,pagination=true,latest=false,sorting=true){
 
 		// check if authorID exists in rc to do an override, maybe it's the paging call
-		if( event.valueExists("pager_authorID") ){
+		if( event.valueExists( "pager_authorID" ) ){
 			arguments.authorID = rc.pager_authorID;
 		}
 		// check if parent exists in rc to do an override, maybe it's the paging call
-		if( event.valueExists("pager_parentID") ){
+		if( event.valueExists( "pager_parentID" ) ){
 			arguments.parent = rc.pager_parentID;
 		}
 		// check if pagination exists in rc to do an override, maybe it's the paging call
-		if( event.valueExists("pagePager_pagination") ){
+		if( event.valueExists( "pagePager_pagination" ) ){
 			arguments.pagination = rc.pagePager_pagination;
 		}
 		// Check for sorting
-		if( event.valueExists("pagePager_sorting") ){
+		if( event.valueExists( "pagePager_sorting" ) ){
 			arguments.sorting = rc.pagePager_sorting;
 		}
 
@@ -490,7 +490,7 @@ component extends="baseContentHandler"{
 		if( arguments.max eq 0 ){ arguments.max = prc.cbSettings.cb_paging_maxrows; }
 
 		// paging default
-		event.paramValue("page",1);
+		event.paramValue( "page",1);
 
 		// exit handlers
 		prc.xehPagePager 		= "#prc.cbAdminEntryPoint#.pages.pager";
@@ -500,7 +500,7 @@ component extends="baseContentHandler"{
 		prc.xehPageHistory		= "#prc.cbAdminEntryPoint#.versions.index";
 
 		// prepare paging plugin
-		prc.pagePager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pagePager_pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox" );
 		prc.pagePager_paging 	  	= prc.pagePager_pagingPlugin.getBoundaries();
 		prc.pagePager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pagePager_pagination	= arguments.pagination;
@@ -540,15 +540,15 @@ component extends="baseContentHandler"{
 	// editor selector
 	function editorSelector( event, rc, prc ){
 		// paging default
-		event.paramValue("page",1);
-		event.paramValue("search", "");
-		event.paramValue("clear", false);
+		event.paramValue( "page",1);
+		event.paramValue( "search", "" );
+		event.paramValue( "clear", false);
 
 		// exit handlers
 		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.pages.editorSelector";
 
 		// prepare paging plugin
-		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox");
+		prc.pagingPlugin 	= getMyPlugin(plugin="Paging",module="contentbox" );
 		prc.paging 	  		= prc.pagingPlugin.getBoundaries();
 		prc.pagingLink 		= "javascript:pagerLink(@page@)";
 
@@ -565,52 +565,52 @@ component extends="baseContentHandler"{
 
 		// if ajax and searching, just return tables
 		if( event.isAjax() and len( rc.search ) OR rc.clear ){
-			return renderView(view="pages/editorSelectorPages", module="contentbox-admin");
+			return renderView(view="pages/editorSelectorPages", module="contentbox-admin" );
 		}
 		else{
-			event.setView(view="pages/editorSelector",layout="ajax");
+			event.setView(view="pages/editorSelector",layout="ajax" );
 		}
 	}
 
 	// Export Entry
 	function export( event, rc, prc ){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get page
-		prc.page  = pageService.get( event.getValue("contentID",0) );
+		prc.page  = pageService.get( event.getValue( "contentID",0) );
 
 		// relocate if not existent
 		if( !prc.page.isLoaded() ){
-			getPlugin( "MessageBox" ).warn("ContentID sent is not valid");
+			getPlugin( "MessageBox" ).warn( "ContentID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.pages" );
 		}
 
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.page.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=prc.page.getMemento(), type=rc.format, xmlRootName="page")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#");
+				event.renderData(data=prc.page.getMemento(), type=rc.format, xmlRootName="page" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
 
 	// Export All Pages
 	function exportAll( event, rc, prc ){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = pageService.getAllForExport();
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Pages." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="pages")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#");
+				event.renderData(data=data, type=rc.format, xmlRootName="pages" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}

@@ -12,7 +12,7 @@ function activateTooltips(){
 		 offset:[5, 0]
 	};
 	//Tooltip 
-	$("[title]").tooltip(toolTipSettings)
+	$( "[title]" ).tooltip(toolTipSettings)
 		 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isn't space on the top
 	});
 }

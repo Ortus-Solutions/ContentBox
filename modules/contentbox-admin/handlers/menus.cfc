@@ -71,7 +71,7 @@ component extends="baseHandler" {
             data[ "UNIQUE" ] = menuService.isSlugUnique( trim( rc.slug ), trim( rc.menuID ) );
         }
         // render result
-        event.renderData(data=data, type="json");
+        event.renderData(data=data, type="json" );
     }
 
     // editor
@@ -122,10 +122,10 @@ component extends="baseHandler" {
     // menuTable
     function menuTable( event, rc, prc ){
         // params
-        event.paramValue("page",1);
-        event.paramValue("searchMenu","");
-        event.paramValue("isFiltering", false, true);
-        event.paramValue("showAll", false);
+        event.paramValue( "page",1);
+        event.paramValue( "searchMenu","" );
+        event.paramValue( "isFiltering", false, true);
+        event.paramValue( "showAll", false);
 
         // prepare paging plugin
         prc.pagingPlugin    = getMyPlugin( plugin="Paging", module="contentbox" );
@@ -140,7 +140,7 @@ component extends="baseHandler" {
         var results = menuService.search(searchTerm=rc.searchMenu,
                                          offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
                                          max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-                                         sortOrder="createdDate desc");
+                                         sortOrder="createdDate desc" );
         prc.menus = results.menus;
         prc.menuCount = results.count;
 
@@ -148,7 +148,7 @@ component extends="baseHandler" {
         prc.xehMenuSearch        = "#prc.cbAdminEntryPoint#.menus";
         prc.xehMenuExport        = "#prc.cbAdminEntryPoint#.menus.export";        
         // view
-        event.setView(view="menus/indexTable", layout="ajax");
+        event.setView(view="menus/indexTable", layout="ajax" );
     }
 
     // save
@@ -229,7 +229,7 @@ component extends="baseHandler" {
                 var menuID  = Menu.getMenuID();
                 var title   = Menu.getSlug();
                 // announce event
-                announceInterception("cbadmin_preMenuRemove", { menu=Menu, menuID=menuID } );
+                announceInterception( "cbadmin_preMenuRemove", { menu=Menu, menuID=menuID } );
                 // Delete it
                 menuService.delete( Menu ); 
                 arrayAppend( messages, "Menu '#title#' removed" );
@@ -245,7 +245,7 @@ component extends="baseHandler" {
 
     // Export menu
     function export( required any event, required struct rc, required struct prc ){
-        event.paramValue("format", "json");
+        event.paramValue( "format", "json" );
         // get page
         prc.menu  = menuService.get( event.getValue( "menuID", 0 ) );
         
@@ -298,7 +298,7 @@ component extends="baseHandler" {
                 flash.put( "importLog", importLog );
             }
             else{
-                getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+                getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
             }
         }
         catch( any e ){

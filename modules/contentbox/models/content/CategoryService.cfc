@@ -119,9 +119,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="categoryID,category,slug")
+		return c.withProjections(property="categoryID,category,slug" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="category");
+			.list(sortOrder="category" );
 			 
 	}
 
@@ -141,10 +141,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }

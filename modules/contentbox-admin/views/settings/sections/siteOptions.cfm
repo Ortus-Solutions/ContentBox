@@ -113,7 +113,7 @@
         </div>  
         <!--- Entry Point --->
         <div class="form-group">
-            #html.label(class="control-label",field="cb_site_blog_entrypoint",content="Blog Entry Point:")#
+            #html.label(class="control-label",field="cb_site_blog_entrypoint",content="Blog Entry Point:" )#
             <div class="controls">
                 <small>Choose the entry point in the URL to trigger the blog engine. The usual defaul entry point pattern is 
                 <strong>blog</strong>. Do not use symbols or slashes (/ \)<br/></small>
@@ -151,7 +151,7 @@
         </div>
         <!--- Maintenance Message --->
         <div class="form-group">
-            #html.label(class="control-label",field="cb_site_maintenance_message",content="Offline Message: ")#
+            #html.label(class="control-label",field="cb_site_maintenance_message",content="Offline Message: " )#
             <div class="controls">
                 <small>The message to show users once the site is in maintenance mode, HTML is ok.</small><br/>
                 #html.textarea(

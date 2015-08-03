@@ -54,7 +54,8 @@
         "cbsecurity":"1.1.0",
         "coldbox":"4.1.0+00002",
         "cbstorages":"1.0.0",
-        "cbfeeds":"1.0.1"
+        "cbfeeds":"1.0.1",
+        "cbmessagebox":"1.0.0"
     },
     "installPaths":{
         "testbox":"testbox",
@@ -63,7 +64,8 @@
         "cbsecurity":"coldbox/system/modules/cbsecurity",
         "coldbox":"coldbox",
         "cbstorages":"coldbox/system/modules/cbstorages",
-        "cbfeeds":"coldbox/system/modules/cbfeeds"
+        "cbfeeds":"coldbox/system/modules/cbfeeds",
+        "cbmessagebox":"coldbox/system/modules/cbmessagebox"
     },
     "devDependencies":{
         "testbox":"2.0.0"

@@ -8,11 +8,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("Viewlet");
-		setPluginVersion("1.0");
-		setPluginDescription("A widget that executes any internal ColdBox event and return its results");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setPluginName( "Viewlet" );
+		setPluginVersion( "1.0" );
+		setPluginDescription( "A widget that executes any internal ColdBox event and return its results" );
+		setPluginAuthor( "Ortus Solutions" );
+		setPluginAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
 		setIcon( 'wired.png' );
 		
@@ -27,7 +27,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @title.hint The title to show before the dropdown or list, defaults to H2
 	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(required string event,boolean private=false,string args="",string title="",string titleLevel="2"){
+	any function renderIt(required string event,boolean private=false,string args="",string title="",string titleLevel="2" ){
 		var rString			= "";
 		var eventArguments 	= {};
 		
@@ -42,14 +42,14 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
 			// execute it
 			try{
 				writeOutput( runEvent(event=arguments.event, eventArguments=eventArguments, private=arguments.private) );
 			}
 			catch(Any e){
-				writeOutput("Error executing viewlet: #arguments.event#(#arguments.args.toString()#). #e.message#");
-				log.error("Error executing viewlet: #arguments.event#(#arguments.args.toString()#)",e);
+				writeOutput( "Error executing viewlet: #arguments.event#(#arguments.args.toString()#). #e.message#" );
+				log.error( "Error executing viewlet: #arguments.event#(#arguments.args.toString()#)",e);
 			}
 		}
 

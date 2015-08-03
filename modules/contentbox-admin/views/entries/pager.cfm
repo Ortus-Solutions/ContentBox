@@ -57,7 +57,7 @@
 						<i class="fa fa-cogs icon-large"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR") OR prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+			    		<cfif prc.oAuthor.checkPermission( "ENTRIES_EDITOR" ) OR prc.oAuthor.checkPermission( "ENTRIES_ADMIN" )>
 						<!--- Edit Command --->
 						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 						</cfif>

@@ -15,7 +15,7 @@
     <div class="row">
         <div class="col-md-8">
             <!--- MessageBox --->
-            #getPlugin("MessageBox").renderit()#
+            #getPlugin( "MessageBox" ).renderit()#
             <!--- form --->
             #html.hiddenField(name="contentID",bind=prc.content)#
             #html.hiddenField(name="contentType",bind=prc.content)#
@@ -139,7 +139,7 @@
                     </div>
                 </div>
                 <!--- Event --->
-                #announceInterception("cbadmin_contentStoreEditorInBody")#
+                #announceInterception( "cbadmin_contentStoreEditorInBody" )#
             </div>
             <!--- Custom Fields --->
             <!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
@@ -158,7 +158,7 @@
             </cfif>
         
             <!--- Event --->
-            #announceInterception("cbadmin_contentStoreEditorFooter")#
+            #announceInterception( "cbadmin_contentStoreEditorFooter" )#
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
@@ -231,7 +231,7 @@
                         <!---End content Info--->
                         
                         <!---Begin Related Content--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -252,7 +252,7 @@
                         </cfif>
 
                         <!---Begin Linked Content--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_LINKED_CONTENT")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -272,7 +272,7 @@
                         <!---End Linked Content--->
 
                         <!---Begin Modifiers--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS") AND prc.content.isLoaded()>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_MODIFIERS" ) AND prc.content.isLoaded()>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -306,10 +306,10 @@
 	         						</div>
 
                                     <!--- Creator --->
-                                    <cfif prc.content.isLoaded() and prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
+                                    <cfif prc.content.isLoaded() and prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
                                         <div class="form-group">
                                             <i class="fa fa-user icon-large"></i>
-                                            #html.label(field="creatorID",content="Creator:",class="inline")#
+                                            #html.label(field="creatorID",content="Creator:",class="inline" )#
                                             <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                 <cfloop array="#prc.authors#" index="author">
                                                 <option value="#author.getAuthorID()#" <cfif prc.content.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
@@ -324,7 +324,7 @@
                         <!---End Modfiers--->
                             
                         <!---Begin Cache Settings--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -380,7 +380,7 @@
                         <!---End Cache Settings--->
                             
                         <!---Begin Categories--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -420,16 +420,16 @@
                         <!---End Categories--->
                             
                         <!--- Event --->
-                        #announceInterception("cbadmin_contentStoreEditorSidebarAccordion")#     
+                        #announceInterception( "cbadmin_contentStoreEditorSidebarAccordion" )#     
                     </div>  
                     <!--- End Accordion --->
         
                     <!--- Event --->
-                    #announceInterception("cbadmin_contentStoreEditorSidebar")#
+                    #announceInterception( "cbadmin_contentStoreEditorSidebar" )#
                 </div>
             </div>
             <!--- Event --->
-            #announceInterception("cbadmin_contentStoreEditorSidebarFooter")#
+            #announceInterception( "cbadmin_contentStoreEditorSidebarFooter" )#
         </div>
     </div>
 #html.endForm()#

@@ -37,13 +37,15 @@ component extend="baseHandler"{
 		if( rc.fStatus neq "any" ){ rc.isFiltering = true; }
 
 		// search comments with filters and all
-		var commentResults = commentService.search(search=rc.searchComments,
-											       offset=prc.paging.startRow-1,
-											       max=prc.cbSettings.cb_paging_maxrows,
-											       isApproved=rc.fStatus);
-		prc.comments 	 	= commentResults.comments;
-		prc.commentsCount 	= commentResults.count;
-		prc.countApproved 	= commentService.getApprovedCommentCount();
+		var commentResults = commentService.search(
+			search		= rc.searchComments,
+			offset		= prc.paging.startRow-1,
+			max			= prc.cbSettings.cb_paging_maxrows,
+			isApproved	= rc.fStatus
+		);
+		prc.comments 	 		= commentResults.comments;
+		prc.commentsCount 		= commentResults.count;
+		prc.countApproved 		= commentService.getApprovedCommentCount();
 		prc.countUnApproved 	= commentService.getUnApprovedCommentCount();
 
 		// exit Handlers
@@ -73,11 +75,11 @@ component extend="baseHandler"{
 			announceInterception( "cbadmin_onCommentStatusUpdate", {commentID=rc.commentID,status=rc.commentStatus} );
 			// Message
 			data.messages = "#listLen( rc.commentID )# Comment(s) #rc.commentStatus#d";
-			flash.put( "notice", { type="info", message = data.messages } );
+			messagebox.info( data.messages );
 		} else {
 			data.messages = "No comments selected!";
 			data.error = true;
-			flash.put( "notice", { type="warn", message = data.messages } );
+			messagebox.warn( data.messages );
 		}
 		
 		// If ajax call, return as ajax
@@ -105,7 +107,7 @@ component extend="baseHandler"{
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue( "commentID",0) );
 		if( isNull(rc.Comment) ){
-			flash.put( "notice", { type="error", message = "The commentID #rc.commentID# is invalid." } );
+			messagebox.error( "The commentID #rc.commentID# is invalid." );
 			setNextEvent(prc.xehComments);
 			return;
 		}
@@ -135,7 +137,7 @@ component extend="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postCommentSave",{comment=oComment});
 		// notice
-		flash.put( "notice", { type="info", message = "Comment Saved!" } );
+		messagebox.info( "Comment Saved!" );
 		// relocate
 		setNextEvent(prc.xehComments);
 	}
@@ -150,7 +152,7 @@ component extend="baseHandler"{
 		announceInterception( "cbadmin_postCommentRemoveAllModerated" );
 		// message
 		data.messages = "Moderated Comment(s) Removed!";
-		flash.put( "notice", { type="info", message = data.messages } );
+		messagebox.info( data.messages );
 		// If ajax call, return as ajax
 		if( event.isAjax() ){
 			event.renderData( data=data, type="json" );
@@ -192,7 +194,7 @@ component extend="baseHandler"{
 		if( arrayLen( rc.commentID ) eq 0 ){
 			arrayAppend( data.message, "No comments selected!" );
 			data.error = true;
-			flash.put( "notice", { type="warn", message = data.messages } );
+			messagebox.warn( data.messages );
 		}
 
 		// If ajax call, return as ajax
@@ -270,7 +272,7 @@ component extend="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postCommentSettingsSave" );
 		// relocate back to editor
-		flash.put( "notice", { type="info", message = "All comment settings updated!" } );
+		messagebox.info( "All comment settings updated!" );
 		setNextEvent(prc.xehCommentsettings);
 	}
 }

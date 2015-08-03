@@ -8,7 +8,7 @@
     <div class="col-md-8">
         <div class="panel panel-default">
             <div class="panel-body">
-                #getPlugin("MessageBox").renderit()#
+                #getPlugin( "MessageBox" ).renderit()#
                 
                 <p>You can patch ContentBox in order to receive the latest bugfixes and enhancements from here.  We do encourage you
                 to make backups when doing auto-udpates.</p>
@@ -24,18 +24,18 @@
                         <div id="check" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <!--- Update Form --->
-                                #html.startForm(name="updateCheckForm",novalidate="novalidate")#
+                                #html.startForm(name="updateCheckForm",novalidate="novalidate" )#
                                     <p>Select your update channel so we can check if there are any new releases available for you.</p>
                                     
                                     #html.radioButton(name="channel",id="stable",value=prc.updateSlugStable,checked="false",checked=true)#
                                     <label for="stable" class="inline">Stable Release</label> : Official ContentBox releases.
                                     <br/>
                                     
-                                    #html.radioButton(name="channel",id="beta",value=prc.updateSlugBeta,checked="false")#
+                                    #html.radioButton(name="channel",id="beta",value=prc.updateSlugBeta,checked="false" )#
                                     <label for="beta" class="inline">Bleeding Edge Release</label> : Beta releases can be done at your own risk as it is still in development.
                                     
                                     <br/><br/>
-                                    #html.button(value="Check For Updates",class="btn btn-danger",onclick="return checkForUpdates()")#
+                                    #html.button(value="Check For Updates",class="btn btn-danger",onclick="return checkForUpdates()" )#
                                 #html.endForm()#    
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
                                     )#
-                                    #html.submitButton(value="Install Update", class="btn btn-danger")#   
+                                    #html.submitButton(value="Install Update", class="btn btn-danger" )#   
                                 #html.endForm()#    
                             </div>
                         </div>
@@ -101,7 +101,7 @@
                                         label="Upload Patch:",
                                         required=true
                                     )#
-                                    #html.submitButton(value="Upload & Install Update",class="btn btn-danger")#
+                                    #html.submitButton(value="Upload & Install Update",class="btn btn-danger" )#
                                 #html.endForm()#    
                             </div>
                         </div>
@@ -115,7 +115,7 @@
                     <hr/>
                     <h3>Installation Log</h3>
                     <div class="consoleLog">#prc.installLog#</div>
-                    #html.button(value="Clear Log",class="btn btn-primary",onclick="to ('#event.buildLink(prc.xehAutoUpdater)#/index/clearlogs/true')")#
+                    #html.button(value="Clear Log",class="btn btn-primary",onclick="to ('#event.buildLink(prc.xehAutoUpdater)#/index/clearlogs/true')" )#
                 </cfif>
             </div>
         </div>
@@ -138,7 +138,7 @@
                         <tr>
                             <th>
                                 ContentBox Core <br/>
-                                (Codename: <a href="#getModuleSettings("contentbox").settings.codenameLink#" target="_blank">#getModuleSettings("contentbox").settings.codename#</a>)
+                                (Codename: <a href="#getModuleSettings( "contentbox" ).settings.codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).settings.codename#</a>)
                             </th>
                             <th class="text-center">v.#getModuleSettings('contentbox').version#</th>
                         </tr>
@@ -152,7 +152,7 @@
                         </tr>
                         <tr>
                             <th>ColdBox Platform</th>
-                            <th class="text-center">v.#getSetting("Version",1)#</th>
+                            <th class="text-center">v.#getSetting( "Version",1)#</th>
                         </tr>
                     </tbody>
                 </table>
@@ -164,7 +164,7 @@
             </div>
             <div class="panel-body">
                 <!--- need help --->
-                #renderView(view="_tags/needhelp", module="contentbox-admin")#
+                #renderView(view="_tags/needhelp", module="contentbox-admin" )#
             </div>
         </div>
     </div>

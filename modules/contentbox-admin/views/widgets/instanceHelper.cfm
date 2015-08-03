@@ -166,7 +166,7 @@ function insertCBWidget(){
  * return void
  */
 function updateCBWidget() {
-    var editor = $("###rc.editorName#").ckeditorGet(),
+    var editor = $( "###rc.editorName#" ).ckeditorGet(),
         element = editor.widgetSelection,
         textel = element.getChild( 0 ).getChild( 1 ),
         form = $( '##widget-arguments' ).find( 'form' ),

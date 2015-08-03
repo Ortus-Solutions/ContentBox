@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-8">
         <!--- MessageBox --->
-		#getPlugin("MessageBox").renderit()#
+		#getPlugin( "MessageBox" ).renderit()#
 		<!--- Version History Panel --->
 		#prc.versionsPager#
     </div>

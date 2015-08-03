@@ -219,7 +219,7 @@ component accessors=true {
      * Processes export!
      */
     public struct function export() {
-        var exportLog = createObject("java", "java.lang.StringBuilder").init("Starting ContentBox package export...<br>");
+        var exportLog = createObject( "java", "java.lang.StringBuilder" ).init( "Starting ContentBox package export...<br>" );
         // do some directory checking/creating
         var tmpDirectory = getTempDirectory() & "cbexport";
         if( directoryExists( tmpDirectory ) ) {

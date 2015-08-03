@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -34,7 +34,7 @@ component extends="content" singleton{
 	function preHandler( event, rc, prc ,action,eventArguments){
 		// Check if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
-			event.overrideEvent("contentbox-ui:blog.disabled");
+			event.overrideEvent( "contentbox-ui:blog.disabled" );
 		}
 		// super call
 		super.preHandler(argumentCollection=arguments);
@@ -46,11 +46,11 @@ component extends="content" singleton{
 		prc.missingRoutedURL = event.getCurrentRoutedURL();
 
 		// set 404 headers
-		event.setHTTPHeader("404","Page not found");
+		event.setHTTPHeader( "404","Page not found" );
 
 		// set skin not found
-		event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox")
-			.setView(view="#prc.cbTheme#/views/notfound",module="contentbox");
+		event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox" )
+			.setView(view="#prc.cbTheme#/views/notfound",module="contentbox" );
 	}
 	
 	/**
@@ -75,8 +75,8 @@ component extends="content" singleton{
 		prc.entry.addNewContentVersion(content=URLDecode( rc.content ), author=prc.author)
 			.setActiveContent( prc.entry.getContentVersions() );
 		// set skin view
-		event.setLayout(name="#prc.cbTheme#/layouts/#rc.layout#", module="contentbox")
-			.setView(view="#prc.cbTheme#/views/entry", module="contentbox");
+		event.setLayout(name="#prc.cbTheme#/layouts/#rc.layout#", module="contentbox" )
+			.setView(view="#prc.cbTheme#/views/entry", module="contentbox" );
 	}
 
 	/**
@@ -84,9 +84,9 @@ component extends="content" singleton{
 	*/
 	function index( event, rc, prc ){
 		// incoming params
-		event.paramValue("page",1);
-		event.paramValue("category","");
-		event.paramValue("q","");
+		event.paramValue( "page",1);
+		event.paramValue( "category","" );
+		event.paramValue( "q","" );
 		
 		// Page numeric check
 		if( !isNumeric( rc.page ) ){ rc.page = 1; }
@@ -114,11 +114,11 @@ component extends="content" singleton{
 		prc.entriesCount  	= entryResults.count;
 
 		// announce event
-		announceInterception("cbui_onIndex",{entries=prc.entries,entriesCount=prc.entriesCount});
+		announceInterception( "cbui_onIndex",{entries=prc.entries,entriesCount=prc.entriesCount});
 
 		// set skin view
-		event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox")
-			.setView(view="#prc.cbTheme#/views/index",module="contentbox");
+		event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox" )
+			.setView(view="#prc.cbTheme#/views/index",module="contentbox" );
 		
 	}
 
@@ -127,11 +127,11 @@ component extends="content" singleton{
 	*/
 	function archives( event, rc, prc ){
 		// incoming params
-		event.paramValue("page",1);
+		event.paramValue( "page",1);
 		// archived params
-		event.paramValue("year","0");
-		event.paramValue("month","0");
-		event.paramValue("day","0");
+		event.paramValue( "year","0" );
+		event.paramValue( "month","0" );
+		event.paramValue( "day","0" );
 		
 		// Page numeric check
 		if( !isNumeric( rc.page ) ){ rc.page = 1; }
@@ -151,11 +151,11 @@ component extends="content" singleton{
 		prc.entriesCount  	= entryResults.count;
 
 		// announce event
-		announceInterception("cbui_onArchives",{entries=prc.entries,entriesCount=prc.entriesCount});
+		announceInterception( "cbui_onArchives",{entries=prc.entries,entriesCount=prc.entriesCount});
 
 		// set skin view
-		event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox")
-			.setView(view="#prc.cbTheme#/views/archives",module="contentbox");
+		event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox" )
+			.setView(view="#prc.cbTheme#/views/archives",module="contentbox" );
 	}
 
 	/**
@@ -175,10 +175,10 @@ component extends="content" singleton{
 	*/
 	function entry( event, rc, prc ){
 		// incoming params
-		event.paramValue("entrySlug","");
+		event.paramValue( "entrySlug","" );
 
 		// get the author
-		var author = getModel("securityService@cb").getAuthorSession();
+		var author = getModel( "securityService@cb" ).getAuthorSession();
 		var showUnpublished = false;
 		if( author.isLoaded() AND author.isLoggedIn() ){
 			var showUnpublished = true;
@@ -191,25 +191,25 @@ component extends="content" singleton{
 			entryService.updateHits( prc.entry.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
-			var commentResults 	= commentService.findApprovedComments(contentID=prc.entry.getContentID(),sortOrder="asc");
+			var commentResults 	= commentService.findApprovedComments(contentID=prc.entry.getContentID(),sortOrder="asc" );
 			prc.comments 		= commentResults.comments;
 			prc.commentsCount 	= commentResults.count;
 			// announce event
-			announceInterception("cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug});
+			announceInterception( "cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug});
 			// set skin view
-			event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox")
-				.setView(view="#prc.cbTheme#/views/entry",module="contentbox");
+			event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox" )
+				.setView(view="#prc.cbTheme#/views/entry",module="contentbox" );
 		}
 		else{
 			// announce event
-			announceInterception("cbui_onEntryNotFound",{entry=prc.entry,entrySlug=rc.entrySlug});
+			announceInterception( "cbui_onEntryNotFound",{entry=prc.entry,entrySlug=rc.entrySlug});
 			// missing page
 			prc.missingPage = rc.entrySlug;
 			// set 404 headers
-			event.setHTTPHeader("404","Entry not found");
+			event.setHTTPHeader( "404","Entry not found" );
 			// set skin not found
-			event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox")
-				.setView(view="#prc.cbTheme#/views/notfound",module="contentbox");
+			event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox" )
+				.setView(view="#prc.cbTheme#/views/notfound",module="contentbox" );
 		}
 	}
 
@@ -218,15 +218,15 @@ component extends="content" singleton{
 	*/
 	function rss( event, rc, prc ){
 		// params
-		event.paramValue("category","");
-		event.paramValue("entrySlug","");
-		event.paramValue("commentRSS",false);
+		event.paramValue( "category","" );
+		event.paramValue( "entrySlug","" );
+		event.paramValue( "commentRSS",false);
 
 		// Build out the blog RSS feeds
-		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,slug=rc.entrySlug,contentType="Entry");
+		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,slug=rc.entrySlug,contentType="Entry" );
 
 		// Render out the feed xml
-		event.renderData(type="plain",data=feed,contentType="text/xml");
+		event.renderData(type="plain",data=feed,contentType="text/xml" );
 	}
 
 	/**

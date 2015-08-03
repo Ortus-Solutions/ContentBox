@@ -31,9 +31,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
     // table sorting + filtering
-    //$("##widgets").tablesorter();
-    $("##widgetFilter").keyup(function(){
-        $.uiTableFilter( $("##widgets"), this.value );
+    //$( "##widgets" ).tablesorter();
+    $( "##widgetFilter" ).keyup(function(){
+        $.uiTableFilter( $( "##widgets" ), this.value );
     });
     // Widget Filter by text input
     $( '##widgetFilter' ).keyup(function(){
@@ -125,7 +125,7 @@ function getWidgetPreviewURL(){ return '#event.buildLink( prc.cbAdminEntryPoint 
 function getWidgetInstanceURL(){ return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#'; }
 function testWidgetCode( name, type ){
     // Test it
-    $widgetEditorForm = $("##widgetEditForm");
+    $widgetEditorForm = $( "##widgetEditForm" );
     var attributes = {
         modal       : true,
         mode        : 'Test',

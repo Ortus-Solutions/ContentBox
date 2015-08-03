@@ -2,9 +2,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	//Get Focus
-	$("##email").focus();
+	$( "##email" ).focus();
 	// form validators
-	$("##lostPasswordForm").validate();
+	$( "##lostPasswordForm" ).validate();
 });
 </script>
 </cfoutput>

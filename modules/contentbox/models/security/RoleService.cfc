@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -33,7 +33,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	RoleService function init(){
 		// init it
-		super.init(entityName="cbRole");
+		super.init(entityName="cbRole" );
 		
 		return this;
 	}
@@ -57,10 +57,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }

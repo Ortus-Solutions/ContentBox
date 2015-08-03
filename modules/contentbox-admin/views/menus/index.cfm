@@ -46,10 +46,10 @@
                                                     <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a>
                                                 </li>
                                             </cfif>
-                                            <cfif prc.oAuthor.checkPermission("MENUS_ADMIN,TOOLS_IMPORT")>
+                                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
                                                 <li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
                                             </cfif>
-                                            <cfif prc.oAuthor.checkPermission("MENUS_ADMIN,TOOLS_EXPORT")>
+                                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                                 <li class="dropdown-submenu">
                                                     <a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
                                                     <ul class="dropdown-menu text-left">
@@ -77,7 +77,7 @@
         #html.endForm()#
     </div>
 </div>
-<cfif prc.oAuthor.checkPermission("MENUS_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
     <cfscript>
         dialogArgs = {
             title = "Import Menus",

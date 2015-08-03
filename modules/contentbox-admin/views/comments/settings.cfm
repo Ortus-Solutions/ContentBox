@@ -16,7 +16,7 @@
             action=rc.xehSaveSettings, 
             class="form-vertical"
         )#		
-            #html.anchor(name="top")#
+            #html.anchor(name="top" )#
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">&nbsp;</h3>
@@ -39,7 +39,7 @@
                             <li><a href="##moderation" data-toggle="tab"><i class="fa fa-unlock icon-large"></i> Moderation</a></li>
                             <li><a href="##notifications" data-toggle="tab"><i class="fa fa-envelope icon-large"></i> Notifications</a></li>
                             <!--- cbadmin Event --->
-                            #announceInterception("cbadmin_onCommentSettingsNav")#
+                            #announceInterception( "cbadmin_onCommentSettingsNav" )#
                         </ul>       
                         
                         <!--- Tab Content --->
@@ -249,7 +249,7 @@
                                     
                                     <!--- Notification on Comment --->
                                     <div class="form-group">
-                                        #html.label(field="cb_comments_notify",content="Send a notification that a comment has been made:")#
+                                        #html.label(field="cb_comments_notify",content="Send a notification that a comment has been made:" )#
                                         <div class="controls">
                                             #html.radioButton(
                                                 name="cb_comments_notify",
@@ -284,10 +284,10 @@
                                 </fieldset>                     
                             </div>
                             <!--- cbadmin Event --->
-                            #announceInterception("cbadmin_onCommentSettingsContent")#
+                            #announceInterception( "cbadmin_onCommentSettingsContent" )#
                             <!--- End Tab Content --->
                             <div class="form-actions">
-                                #html.button(type="submit", value="Save Settings", class="btn btn-danger")#
+                                #html.button(type="submit", value="Save Settings", class="btn btn-danger" )#
                             </div>
                             
                         </div>

@@ -155,11 +155,11 @@
         <script src="#prc.cbroot#/includes/spacelab/js/respond.min.js"></script>
         <![endif]-->
         <!--- cbadmin Event --->
-        #announceInterception("cbadmin_beforeHeadEnd")#
+        #announceInterception( "cbadmin_beforeHeadEnd" )#
     </head>
     <body class="off-canvas">
         <!--- cbadmin Event --->
-        #announceInterception("cbadmin_afterBodyStart")#
+        #announceInterception( "cbadmin_afterBodyStart" )#
         <section id="container">
             <header id="header">
 
@@ -275,11 +275,11 @@
             <section class="main-content-wrapper">
                 <section id="main-content">
                     <!--- cbadmin event --->
-                    #announceInterception("cbadmin_beforeContent")#
+                    #announceInterception( "cbadmin_beforeContent" )#
                     <!--- Main Content --->
                     #renderView()#
                     <!--- cbadmin event --->
-                    #announceInterception("cbadmin_afterContent")#
+                    #announceInterception( "cbadmin_afterContent" )#
                 </section>
             </section>
             <!--main content end-->

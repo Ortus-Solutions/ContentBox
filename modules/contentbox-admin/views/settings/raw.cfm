@@ -7,7 +7,7 @@
         </h1>
         <span class="label label-warning">Environment: #getSetting('Environment')#</span>
         <!--- messageBox --->
-        #getPlugin("MessageBox").renderit()#
+        #getPlugin( "MessageBox" ).renderit()#
         <!---Import Log --->
         <cfif flash.exists( "importLog" )>
             <div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -65,10 +65,10 @@
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="fa fa-hdd-o"></i> View Cached Settings</a></li>
                                                     <li><a href="javascript:flushSettingsCache()"><i class="fa fa-refresh"></i> Flush Settings Cache</a></li>
-                                                    <cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS,TOOLS_IMPORT")>
+                                                    <cfif prc.oAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
                                                     <li><a href="javascript:importSettings()"><i class="fa fa-upload"></i> Import Settings</a></li>
                                                     </cfif>
-                                                    <cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS,TOOLS_EXPORT")>
+                                                    <cfif prc.oAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
                                                     <li class="dropdown-submenu">
                                                         <a href="javascript:null"><i class="fa fa-download"></i> Export All</a>
                                                         <ul class="dropdown-menu text-left">
@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                             </div>
-                            #html.startForm(name="singletonForm")#
+                            #html.startForm(name="singletonForm" )#
                                 <!--- settings --->
                                 <table name="singletons" id="singletons" class="table-bordered table table-hover table-striped table-condensed" width="98%">
                                     <thead>
@@ -224,7 +224,7 @@
                                 <div class="col-md-6"></div>
                             </div>
                             <!---Event Forms --->
-                            #html.startForm(name="eventsForm")#
+                            #html.startForm(name="eventsForm" )#
                                 <!--- events --->
                                 <table name="eventsList" id="eventsList" class="table-bordered table table-striped table-hover table-condensed" width="100%">
                                     <thead>

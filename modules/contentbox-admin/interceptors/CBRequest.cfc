@@ -28,13 +28,13 @@ component extends="coldbox.system.Interceptor"{
 		// store module root
 		prc.cbRoot = getContextRoot() & event.getModuleRoot('contentbox-admin');
 		// cb helper
-		prc.CBHelper = getMyPlugin(plugin="CBHelper",module="contentbox");
+		prc.CBHelper = getMyPlugin(plugin="CBHelper",module="contentbox" );
 		// store admin module entry point
-		prc.cbAdminEntryPoint = getModuleSettings("contentbox-admin").entryPoint;
+		prc.cbAdminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
 		// store site entry point
-		prc.cbEntryPoint = getModuleSettings("contentbox-ui").entryPoint;
+		prc.cbEntryPoint = getModuleSettings( "contentbox-ui" ).entryPoint;
 		// store filebrowser entry point
-		prc.cbFileBrowserEntryPoint = getModuleSettings("contentbox-filebrowser").entryPoint;
+		prc.cbFileBrowserEntryPoint = getModuleSettings( "contentbox-filebrowser" ).entryPoint;
 		// Place user in prc
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global cb options on scope

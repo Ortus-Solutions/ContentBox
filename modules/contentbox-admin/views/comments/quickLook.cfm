@@ -4,12 +4,12 @@
     <h4><i class="fa fa-comments"></i> Comment Quick Look</h4>
 </div>
 <div class="modal-body">
-	#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=rc.comment.getAuthorEmail(), size="50")#
+	#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=rc.comment.getAuthorEmail(), size="50" )#
 	&nbsp;<a href="mailto:#rc.comment.getAUthorEmail()#" title="#rc.comment.getAUthorEmail()#">#rc.comment.getAuthor()#</a>
 	<br/>
 	<cfif len(rc.comment.getAuthorURL())>
 		<i class="fa fa-cloud"></i>
-		<a href="<cfif NOT findnocase("http",rc.comment.getAuthorURL())>http://</cfif>#rc.comment.getAuthorURL()#" title="Open URL" target="_blank">
+		<a href="<cfif NOT findnocase( "http",rc.comment.getAuthorURL())>http://</cfif>#rc.comment.getAuthorURL()#" title="Open URL" target="_blank">
 			#rc.comment.getAuthorURL()#
 		</a>
 		<br />

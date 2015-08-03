@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -57,7 +57,7 @@ component singleton{
 	* @comments.hint Clear comment caches or not, defaults to false
 	* @slug.hint The content slug to clear on
 	*/
-	RSSService function clearCaches(boolean comments=false, string slug=""){
+	RSSService function clearCaches(boolean comments=false, string slug="" ){
 		var cacheKey = "";
 
 		// compose cache key
@@ -70,7 +70,7 @@ component singleton{
 		cache.clearByKeySnippet(keySnippet=cacheKey,async=false);
 		// log
 		if( log.canInfo() ){
-			log.info("Sent clear command using the following content key: #cacheKey# from provider: #cache.getName()#");
+			log.info( "Sent clear command using the following content key: #cacheKey# from provider: #cache.getName()#" );
 		}
 		return this;
 	}
@@ -90,7 +90,7 @@ component singleton{
 	* @category.hint Filter the content feed with categories
 	* @contentType.hint The contentType to build an RSS feed on. Empty is for the site. Available content types are [page,entry]
 	*/
-	function getRSS(string slug="", boolean comments=false, category="", contentType=""){
+	function getRSS(string slug="", boolean comments=false, category="", contentType="" ){
 		var settings	= settingService.getAllSettings(asStruct=true);
 		var rssFeed  	= "";
 		var cacheKey  	= "";
@@ -164,7 +164,7 @@ component singleton{
 	* Build entries feeds
 	* @category The category to filter on if needed
 	*/
-	private function buildEntryFeed(category=""){
+	private function buildEntryFeed(category="" ){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var entryResults 	= entryService.findPublishedEntries(category=arguments.category,max=settings.cb_rss_maxEntries);
 		var myArray 		= [];
@@ -231,7 +231,7 @@ component singleton{
 	* Build pages feeds
 	* @category The category to filter on if needed
 	*/
-	private function buildPageFeed(category=""){
+	private function buildPageFeed(category="" ){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var pageResults 	= pageService.findPublishedPages(category=arguments.category,max=settings.cb_rss_maxEntries);
 		var myArray 		= [];
@@ -297,7 +297,7 @@ component singleton{
 	* Build content feeds
 	* @category The category to filter on if needed
 	*/
-	private function buildContentFeed(category=""){
+	private function buildContentFeed(category="" ){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var contentResults 	= contentService.findPublishedContent(category=arguments.category,max=settings.cb_rss_maxEntries);
 		var myArray 		= [];
@@ -360,7 +360,7 @@ component singleton{
 	* @slug.hint The content slug to filter on
 	* @contentType.hint The content type discriminator to filter on
 	*/
-	private function buildCommentFeed(string slug="", string contentType=""){
+	private function buildCommentFeed(string slug="", string contentType="" ){
 		var settings		= settingService.getAllSettings(asStruct=true);
 		var commentResults 	= commentService.findApprovedComments(contentID=contentService.getIDBySlug(arguments.slug),contentType=arguments.contentType,max=settings.cb_rss_maxComments);
 		var myArray 		= [];

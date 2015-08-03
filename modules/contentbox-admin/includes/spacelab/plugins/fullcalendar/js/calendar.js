@@ -65,19 +65,19 @@
         -----------------------------------------------------------------*/
         $('.fc-header').hide();
         var currDate = $('#calendar').fullCalendar('getDate');
-        $('#calender-current-day').html($.fullCalendar.formatDate(currDate, "dddd"));
-        $('#calender-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy"));
+        $('#calender-current-day').html($.fullCalendar.formatDate(currDate, "dddd" ));
+        $('#calender-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy" ));
         $('#cal-prev').click(function(){
             currDate = $('#calendar').fullCalendar('getDate');
             $('#calendar').fullCalendar( 'prev' );
-            $('#cal-current-day').html($.fullCalendar.formatDate(currDate, "dddd"));
-            $('#cal-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy"));
+            $('#cal-current-day').html($.fullCalendar.formatDate(currDate, "dddd" ));
+            $('#cal-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy" ));
         });
         $('#cal-next').click(function(){
             $('#calendar').fullCalendar( 'next' );
             currDate = $('#calendar').fullCalendar('getDate');       
-            $('#calender-current-day').html($.fullCalendar.formatDate(currDate, "dddd"));
-            $('#calender-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy"));
+            $('#calender-current-day').html($.fullCalendar.formatDate(currDate, "dddd" ));
+            $('#calender-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy" ));
         });
         $('#change-view-month').click(function(){
             $('#calendar').fullCalendar('changeView', 'month');

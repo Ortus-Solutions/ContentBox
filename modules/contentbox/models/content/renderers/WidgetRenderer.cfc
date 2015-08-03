@@ -48,8 +48,8 @@ component accessors="true"{
 				isModuleWidget = widgetType=="Module";
 				isLayoutWidget = widgetType=="Layout";
 				// Detect direct method call
-				if( find(".", widgetName) ){
-					widgetContent = evaluate("widgetService.getWidget( '#getToken(widgetName,1,".")#' ).#getToken(widgetName,2,".")#(argumentCollection=attributes)");
+				if( find( ".", widgetName) ){
+					widgetContent = evaluate( "widgetService.getWidget( '#getToken(widgetName,1,"." )#' ).#getToken(widgetName,2,"." )#(argumentCollection=attributes)" );
 				}
 				else{
 					if( isModuleWidget ) {
@@ -70,7 +70,7 @@ component accessors="true"{
 			}
 			catch( Any e ){
 				widgetContent = "Error translating widget: #e.message# #e.detail#";
-				log.error("Error translating widget on target: #targets[ x ]#", e);
+				log.error( "Error translating widget on target: #targets[ x ]#", e);
 			}
 			// PROCESS REPLACING
 			
@@ -80,9 +80,9 @@ component accessors="true"{
 			// Loop findings of same {{{}}} instances to replace
 			while( rLocation gt -1 ){
 				// Replace it
-				builder.replace( javaCast("int", rLocation), JavaCast("int", rLocation+rLen), widgetContent);
+				builder.replace( javaCast( "int", rLocation), JavaCast( "int", rLocation+rLen), widgetContent);
 				// look again
-				rLocation = builder.indexOf( targets[ x ], javaCast("int", rLocation) );
+				rLocation = builder.indexOf( targets[ x ], javaCast( "int", rLocation) );
 			}
 		}
 	}
@@ -104,21 +104,21 @@ component accessors="true"{
 		// Loop over found mustaches {{{Widget}}}
 		for(var x=1; x lte targetLen; x++){
 			// convert mustache to tag
-			tagString = replace(targets[ x ],"{{{","<");
-			tagString = replace(tagString,"}}}","/>");
+			tagString = replace(targets[ x ],"{{{","<" );
+			tagString = replace(tagString,"}}}","/>" );
 			// convert quotes to standards
-			tagString = replace(tagString,"&##34;",'"',"all");
-			tagString = replace(tagString,"&##39;","'","all");
-			tagString = replace(tagString,"&quot;","'","all");
+			tagString = replace(tagString,"&##34;",'"',"all" );
+			tagString = replace(tagString,"&##39;","'","all" );
+			tagString = replace(tagString,"&quot;","'","all" );
 
 			try{
 				// Parse : separator from method to first argument
-				if( reFindNoCase("\<[^\>\=\:\s]+\:",tagString) ){
-					tagString = replace(tagString,":"," ");
+				if( reFindNoCase( "\<[^\>\=\:\s]+\:",tagString) ){
+					tagString = replace(tagString,":"," " );
 				}
 				// Parse arguments separated by commas
-				tagString = replace(tagString,"',","' ","all");
-				tagString = replace(tagString,'",', '" ',"all");
+				tagString = replace(tagString,"',","' ","all" );
+				tagString = replace(tagString,'",', '" ',"all" );
 				isModuleWidget = findNoCase( "@", tagString ) ? true : false;
 				isLayoutWidget = findNoCase( "~", tagString ) ? true : false;
 				if( isModuleWidget ) {
@@ -135,7 +135,7 @@ component accessors="true"{
 				var widgetName 	= tagXML.XMLRoot.XMLName;
 				var widgetArgs  = {};
 				// Create Arg Collection From Attributes, if any
-				if( structKeyExists( tagXML[ widgetName ], "XMLAttributes") ){
+				if( structKeyExists( tagXML[ widgetName ], "XMLAttributes" ) ){
 					for(key in tagXML[ widgetName ].XMLAttributes){
 						widgetArgs[key] = trim( tagXML[ widgetName ].XMLAttributes[ key ] );
 					}
@@ -145,8 +145,8 @@ component accessors="true"{
 					widgetArgs[ "widgetUDF" ] = "renderIt";
 				}
 				// Detect direct method call
-				if( find(".", widgetName) ){
-					widgetContent = evaluate("widgetService.getWidget( '#getToken(widgetName,1,".")#' ).#getToken(widgetName,2,".")#(argumentCollection=widgetArgs)");
+				if( find( ".", widgetName) ){
+					widgetContent = evaluate( "widgetService.getWidget( '#getToken(widgetName,1,"." )#' ).#getToken(widgetName,2,"." )#(argumentCollection=widgetArgs)" );
 				}
 				else{
 					if( isModuleWidget ) {
@@ -167,7 +167,7 @@ component accessors="true"{
 			}
 			catch(Any e){
 				widgetContent = "Error translating widget: #e.message# #e.detail#";
-				log.error("Error translating widget on target: #targets[ x ]#", e);
+				log.error( "Error translating widget on target: #targets[ x ]#", e);
 			}
 			// PROCESS REPLACING
 			
@@ -180,9 +180,9 @@ component accessors="true"{
 			// Loop findings of same {{{}}} instances to replace
 			while( rLocation gt -1 ){
 				// Replace it
-				builder.replace( javaCast("int", rLocation), JavaCast("int", rLocation+rLen), widgetContent);
+				builder.replace( javaCast( "int", rLocation), JavaCast( "int", rLocation+rLen), widgetContent);
 				// look again
-				rLocation = builder.indexOf( targets[ x ], javaCast("int", rLocation) );
+				rLocation = builder.indexOf( targets[ x ], javaCast( "int", rLocation) );
 			}
 		}
 	}

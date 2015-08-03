@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -80,7 +80,7 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	*/
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt" );
 	}
 
 	/**

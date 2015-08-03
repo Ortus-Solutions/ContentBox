@@ -58,28 +58,28 @@ component accessors="true" singleton threadSafe{
 			return prc.cbSettings[ key ];
 		}
 		// default value
-		if( structKeyExists(arguments,"value") ){
+		if( structKeyExists(arguments,"value" ) ){
 			return arguments.value;
 		}
 		// else throw exception
-		throw(message="Setting requested: #arguments.key# not found",detail="Settings keys are #structKeyList(prc.cbSettings)#",type="ContentBox.CBHelper.InvalidSetting");
+		throw(message="Setting requested: #arguments.key# not found",detail="Settings keys are #structKeyList(prc.cbSettings)#",type="ContentBox.CBHelper.InvalidSetting" );
 	}
 
 	// get contentbox version
 	function getContentBoxVersion(){
-		return getModuleSettings("contentbox").version;
+		return getModuleSettings( "contentbox" ).version;
 	}
 	// get contentbox codename
 	function getContentBoxCodeName(){
-		return getModuleSettings("contentbox").settings.codename;
+		return getModuleSettings( "contentbox" ).settings.codename;
 	}
 	// get contentbox codename URL
 	function getContentBoxCodeNameURL(){
-		return getModuleSettings("contentbox").settings.codenameLink;
+		return getModuleSettings( "contentbox" ).settings.codenameLink;
 	}
 	// get blog entry point
 	function getBlogEntryPoint(){
-		return setting("cb_site_blog_entrypoint", "blog");
+		return setting( "cb_site_blog_entrypoint", "blog" );
 	}
 	
 	function getMaintenanceMessage(){
@@ -93,7 +93,7 @@ component accessors="true" singleton threadSafe{
 	* @slug.hint The content slug to retrieve
 	* @defaultValue.hint The default value to use if custom html element not found.
 	*/
-	function customHTML(required slug, defaultValue=""){
+	function customHTML(required slug, defaultValue="" ){
 		return contentStore( argumentCollection=arguments );
 	}
 
@@ -102,7 +102,7 @@ component accessors="true" singleton threadSafe{
 	* @slug.hint The content slug to retrieve
 	* @defaultValue.hint The default value to use if the content element not found.
 	*/
-	function contentStore(required slug, defaultValue=""){
+	function contentStore(required slug, defaultValue="" ){
 		var content = contentStoreService.findBySlug( arguments.slug );
 		return ( !content.isLoaded() ? arguments.defaultValue : content.renderContent() );
 	}
@@ -165,27 +165,27 @@ component accessors="true" singleton threadSafe{
 	/************************************** site properties *********************************************/
 
 	// Retrieve the site name
-	function siteName(){ return setting("cb_site_name"); }
+	function siteName(){ return setting( "cb_site_name" ); }
 	// Retrieve the site tagline
-	function siteTagLine(){ return setting("cb_site_tagline"); }
+	function siteTagLine(){ return setting( "cb_site_tagline" ); }
 	// Retrieve the site description
-	function siteDescription(){ return setting("cb_site_description"); }
+	function siteDescription(){ return setting( "cb_site_description" ); }
 	// Retrieve the site keywords
-	function siteKeywords(){ return setting("cb_site_keywords"); }
+	function siteKeywords(){ return setting( "cb_site_keywords" ); }
 	// Retrieve the site administrator email
-	function siteEmail(){ return setting("cb_site_email"); }
+	function siteEmail(){ return setting( "cb_site_email" ); }
 	// Retrieve the site outgoing email
-	function siteOutgoingEmail(){ return setting("cb_site_outgoingEmail"); }
+	function siteOutgoingEmail(){ return setting( "cb_site_outgoingEmail" ); }
 
 	/**
 	* Determines if site comments are enabled and if the entry accepts comments
 	* @content The entry or page content to validate comments also with
 	*/
 	function isCommentsEnabled(content){
-		if( structKeyExists(arguments,"content") ){
-			return ( arguments.content.getAllowComments() AND setting("cb_comments_enabled") );
+		if( structKeyExists(arguments,"content" ) ){
+			return ( arguments.content.getAllowComments() AND setting( "cb_comments_enabled" ) );
 		}
-		return ( setting("cb_comments_enabled") );
+		return ( setting( "cb_comments_enabled" ) );
 	}
 
 	// determines if a comment form error has ocurred
@@ -195,7 +195,7 @@ component accessors="true" singleton threadSafe{
 
 	// Determine if you are in printing or exporting format
 	boolean function isPrintFormat(){
-		return ( getRequestContext().getValue("format","contentbox") eq "contentbox" ? false : true );
+		return ( getRequestContext().getValue( "format","contentbox" ) eq "contentbox" ? false : true );
 	}
 
 	// get comment errors array, usually when the form elements did not validate
@@ -250,24 +250,24 @@ component accessors="true" singleton threadSafe{
 	// Determine if you have a category filter
 	boolean function categoryFilterExists(){
 		var rc = getRequestCollection();
-		return (structKeyExists(rc,"category") AND len(rc.category));
+		return (structKeyExists(rc,"category" ) AND len(rc.category));
 	}
 	// Get Category Filter
 	function getCategoryFilter(){
-		return getRequestContext().getValue("category","");
+		return getRequestContext().getValue( "category","" );
 	}
 
 	// Get Year Filter
 	function getYearFilter(){
-		return getRequestContext().getValue("year","0");
+		return getRequestContext().getValue( "year","0" );
 	}
 	// Get Month Filter
 	function getMonthFilter(){
-		return getRequestContext().getValue("month","0");
+		return getRequestContext().getValue( "month","0" );
 	}
 	// Get Day Filter
 	function getDayFilter(){
-		return getRequestContext().getValue("day","0");
+		return getRequestContext().getValue( "day","0" );
 	}
 
 	// Determine if you are in the blog
@@ -296,7 +296,7 @@ component accessors="true" singleton threadSafe{
 	* Determine if you are in the page view
 	* @page.hint Optional page slug to determine if you are in that page or not.
 	*/
-	boolean function isPageView(page=""){
+	boolean function isPageView(page="" ){
 		var event = getRequestContext();
 		if( findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND event.valueExists( "page", true ) ){
 			// slug check
@@ -321,53 +321,53 @@ component accessors="true" singleton threadSafe{
 	// Get the index page entries, else throws exception
 	any function getCurrentEntries(){
 		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"entries") ){ return prc.entries; }
-		throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries in an non-index page",type="ContentBox.CBHelper.InvalidEntriesContext");
+		if( structKeyExists(prc,"entries" ) ){ return prc.entries; }
+		throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries in an non-index page",type="ContentBox.CBHelper.InvalidEntriesContext" );
 	}
 	// Get the index page entries count, else throws exception
 	any function getCurrentEntriesCount(){
 		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"entriesCount") ){ return prc.entriesCount; }
-		throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries in an non-index page",type="ContentBox.CBHelper.InvalidEntriesContext");
+		if( structKeyExists(prc,"entriesCount" ) ){ return prc.entriesCount; }
+		throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries in an non-index page",type="ContentBox.CBHelper.InvalidEntriesContext" );
 	}
 	// Get the the blog categories, else throws exception
 	any function getCurrentCategories(){
 		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"categories") ){ return prc.categories; }
-		throw(message="Categories not found in collection",detail="Hmm, weird as categories should be available to all blog events",type="ContentBox.CBHelper.InvalidBlogContext");
+		if( structKeyExists(prc,"categories" ) ){ return prc.categories; }
+		throw(message="Categories not found in collection",detail="Hmm, weird as categories should be available to all blog events",type="ContentBox.CBHelper.InvalidBlogContext" );
 	}
 	// Get the viewed entry if in entry view, else throws exception
 	any function getCurrentEntry(){
 		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"entry") ){ return prc.entry; }
-		throw(message="Entry not found in collection",detail="This probably means you are trying to use the entry in an non-entry page",type="ContentBox.CBHelper.InvalidEntryContext");
+		if( structKeyExists(prc,"entry" ) ){ return prc.entry; }
+		throw(message="Entry not found in collection",detail="This probably means you are trying to use the entry in an non-entry page",type="ContentBox.CBHelper.InvalidEntryContext" );
 	}
 	// Get the viewed page if in page view, else throws exception
 	any function getCurrentPage(){
 		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"page") ){ return prc.page; }
-		throw(message="Page not found in collection",detail="This probably means you are trying to use the page in an non-page page! Redundant huh?",type="ContentBox.CBHelper.InvalidPageContext");
+		if( structKeyExists(prc,"page" ) ){ return prc.page; }
+		throw(message="Page not found in collection",detail="This probably means you are trying to use the page in an non-page page! Redundant huh?",type="ContentBox.CBHelper.InvalidPageContext" );
 	}
 	// Get the viewed page's or entry's comments, else throw exception
 	any function getCurrentComments(){
 		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"comments") ){ return prc.comments; }
-		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext");
+		if( structKeyExists(prc,"comments" ) ){ return prc.comments; }
+		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext" );
 	}
 	// Get the viewed entry's comments count, else throw exception
 	any function getCurrentCommentsCount(){
 		var prc = getRequestCollection(private=true);
-		if( structKeyExists(prc,"commentsCount") ){ return prc.commentsCount; }
-		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext");
+		if( structKeyExists(prc,"commentsCount" ) ){ return prc.commentsCount; }
+		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext" );
 	}
 	// Get the missing page, if any
 	any function getMissingPage(){
 		var event = getRequestContext();
-		return event.getValue(name="missingPage",private="true",defaultValue="");
+		return event.getValue(name="missingPage",private="true",defaultValue="" );
 	}
 	// Get Home Page slug set up by the administrator.
 	any function getHomePage(){
-		return setting("cb_site_homepage");
+		return setting( "cb_site_homepage" );
 	}
 	// Get the the blog categories, else throws exception
 	any function getCurrentRelatedContent(){
@@ -401,10 +401,10 @@ component accessors="true" singleton threadSafe{
 		if( structKeyExists( fields, arguments.key ) ){
 			return fields[arguments.key];
 		}
-		if( structKeyExists(arguments,"defaultValue") ){
+		if( structKeyExists(arguments,"defaultValue" ) ){
 			return arguments.defaultValue;
 		}
-		throw(message="No custom field with key: #arguments.key# found",detail="The keys are #structKeyList(fields)#",type="CBHelper.InvalidCustomField");
+		throw(message="No custom field with key: #arguments.key# found",detail="The keys are #structKeyList(fields)#",type="CBHelper.InvalidCustomField" );
 	}
 
 	/************************************** search *********************************************/
@@ -412,14 +412,14 @@ component accessors="true" singleton threadSafe{
 	// Determine if you are in the search view
 	boolean function isSearchView(){
 		var event = getRequestContext();
-		return (event.getCurrentEvent() eq "contentbox-ui:page.search");
+		return (event.getCurrentEvent() eq "contentbox-ui:page.search" );
 	}
 
 	/**
 	* quickSearchForm will build a standard ContentBox Content Search Form according to the SearchForm widget
 	*/
 	function quickSearchForm(){
-		return widget("SearchForm",{type="content"});
+		return widget( "SearchForm",{type="content"});
 	}
 
 	/**
@@ -427,33 +427,33 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickSearchPaging(){
 		var prc = getRequestCollection(private=true);
-		if( NOT structKeyExists(prc,"pagingPlugin") ){
-			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext");
+		if( NOT structKeyExists(prc,"pagingPlugin" ) ){
+			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext" );
 		}
-		return prc.pagingPlugin.renderit(foundRows=getSearchResults().getTotal(), link=prc.pagingLink, pagingMaxRows=setting("cb_search_maxResults"));
+		return prc.pagingPlugin.renderit(foundRows=getSearchResults().getTotal(), link=prc.pagingLink, pagingMaxRows=setting( "cb_search_maxResults" ));
 	}
 
 	// get the curent search results object
 	contentbox.models.search.SearchResults function getSearchResults(){
 		var event = getRequestContext();
-		return event.getValue(name="searchResults",private="true",default="");
+		return event.getValue(name="searchResults",private="true",default="" );
 	}
 
 	// get the curent search results HTML content
 	any function getSearchResultsContent(){
 		var event = getRequestContext();
-		return event.getValue(name="searchResultsContent",private="true",default="");
+		return event.getValue(name="searchResultsContent",private="true",default="" );
 	}
 
 	// Determine if you have a search term
 	boolean function searchTermExists(){
 		var rc = getRequestCollection();
-		return (structKeyExists(rc,"q") AND len(rc.q));
+		return (structKeyExists(rc,"q" ) AND len(rc.q));
 	}
 
 	// Get Search Term
 	function getSearchTerm(){
-		return getRequestContext().getValue("q","");
+		return getRequestContext().getValue( "q","" );
 	}
 
 	/************************************** events *********************************************/
@@ -556,7 +556,7 @@ component accessors="true" singleton threadSafe{
 		var xehRSS = siteRoot() & sep() & "#getBlogEntryPoint()#.rss";
 
 		// do we have a category?
-		if( structKeyExists(arguments,"category") ){
+		if( structKeyExists(arguments,"category" ) ){
 			xehRSS &= ".category.#arguments.category.getSlug()#";
 			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
 		}
@@ -565,7 +565,7 @@ component accessors="true" singleton threadSafe{
 		if( arguments.comments ){
 			xehRSS &= ".comments";
 			// do we have entry filter
-			if( structKeyExists(arguments,"entry") ){
+			if( structKeyExists(arguments,"entry" ) ){
 				xehRSS &= ".#arguments.entry.getSlug()#";
 			}
 			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
@@ -586,7 +586,7 @@ component accessors="true" singleton threadSafe{
 		var xehRSS = siteRoot() & sep() & "__rss";
 
 		// do we have a category?
-		if( structKeyExists(arguments,"category") ){
+		if( structKeyExists(arguments,"category" ) ){
 
 			if( isSimpleValue(arguments.category) ){
 				xehRSS &= "/category/#arguments.category#";
@@ -602,7 +602,7 @@ component accessors="true" singleton threadSafe{
 		if( arguments.comments ){
 			xehRSS &= "/comments";
 			// do we have content filter
-			if( structKeyExists(arguments,"slug") ){
+			if( structKeyExists(arguments,"slug" ) ){
 				xehRSS &= "/#arguments.slug#";
 			}
 			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
@@ -623,7 +623,7 @@ component accessors="true" singleton threadSafe{
 		var xehRSS = siteRoot() & sep() & "__rss/pages";
 
 		// do we have a category?
-		if( structKeyExists(arguments,"category") ){
+		if( structKeyExists(arguments,"category" ) ){
 
 			if( isSimpleValue(arguments.category) ){
 				xehRSS &= "/category/#arguments.category#";
@@ -639,7 +639,7 @@ component accessors="true" singleton threadSafe{
 		if( arguments.comments ){
 			xehRSS &= "/comments";
 			// do we have content filter
-			if( structKeyExists(arguments,"page") ){
+			if( structKeyExists(arguments,"page" ) ){
 				xehRSS &= "/#arguments.page.getSlug()#";
 			}
 			return getRequestContext().buildLink(linkto=xehRSS, ssl=arguments.ssl);
@@ -684,9 +684,9 @@ component accessors="true" singleton threadSafe{
 	*/
 	function linkArchive(year, month, day, boolean ssl=false){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.archives";
-		if( structKeyExists(arguments,"year") ){ xeh &= "/#arguments.year#"; }
-		if( structKeyExists(arguments,"month") ){ xeh &= "/#arguments.month#"; }
-		if( structKeyExists(arguments,"day") ){ xeh &= "/#arguments.day#"; }
+		if( structKeyExists(arguments,"year" ) ){ xeh &= "/#arguments.year#"; }
+		if( structKeyExists(arguments,"month" ) ){ xeh &= "/#arguments.month#"; }
+		if( structKeyExists(arguments,"day" ) ){ xeh &= "/#arguments.day#"; }
 		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
 
@@ -732,7 +732,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl.hint	Use SSL or not, defaults to false.
 	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkEntry(required entry, boolean ssl=false, format="html"){
+	function linkEntry(required entry, boolean ssl=false, format="html" ){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		if( isSimpleValue(arguments.entry) ){
@@ -748,7 +748,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl.hint	Use SSL or not, defaults to false.
 	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkEntryWithSlug(required slug, boolean ssl=false, format="html"){
+	function linkEntryWithSlug(required slug, boolean ssl=false, format="html" ){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
@@ -762,7 +762,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl.hint	Use SSL or not, defaults to false.
 	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkContent(required content, boolean ssl=false, format="html"){
+	function linkContent(required content, boolean ssl=false, format="html" ){
 		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl, arguments.format ); }
 		if( arguments.content.getContentType() eq "page" ){ return linkPage( arguments.content, arguments.ssl, arguments.format ); }
 	}
@@ -773,7 +773,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl.hint	Use SSL or not, defaults to false.
 	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkPage(required page, boolean ssl=false, format="html"){
+	function linkPage(required page, boolean ssl=false, format="html" ){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		// link directly or with slug
@@ -790,7 +790,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl.hint	Use SSL or not, defaults to false.
 	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkPageWithSlug(required slug, boolean ssl=false, format="html"){
+	function linkPageWithSlug(required slug, boolean ssl=false, format="html" ){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
@@ -867,7 +867,7 @@ component accessors="true" singleton threadSafe{
 
 		// layout widgets overrides
 		if( fileExists( expandPath( layoutWidgetPath ) ) ){
-			var widgetCreationPath = replace( reReplace(themeRoot(),"^/","")  ,"/",".","all") & ".widgets.#arguments.name#";
+			var widgetCreationPath = replace( reReplace(themeRoot(),"^/","" )  ,"/",".","all" ) & ".widgets.#arguments.name#";
 			return wirebox.getInstance( widgetCreationPath );
 		}
 
@@ -909,7 +909,7 @@ component accessors="true" singleton threadSafe{
 		}
 
 		// return list of links
-		return replace(arrayToList( catList ), ",",", ","all");
+		return replace(arrayToList( catList ), ",",", ","all" );
 	}
 
 	/**
@@ -917,10 +917,10 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickPaging(){
 		var prc = getRequestCollection(private=true);
-		if( NOT structKeyExists(prc,"pagingPlugin") ){
-			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the main entries index page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext");
+		if( NOT structKeyExists(prc,"pagingPlugin" ) ){
+			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the main entries index page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext" );
 		}
-		return prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, pagingMaxRows=setting("cb_paging_maxentries"));
+		return prc.pagingPlugin.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, pagingMaxRows=setting( "cb_paging_maxentries" ));
 	}
 
 	/**
@@ -975,11 +975,11 @@ component accessors="true" singleton threadSafe{
 		var content = "";
 
 		savecontent variable="content"{
-			writeOutput("<ul class='customFields'>");
+			writeOutput( "<ul class='customFields'>" );
 			for(var thisField in customFields){
-				writeOutput("<li><span class='customField-key'>#thisField#:</span> #customFields[thisField]#</li>");
+				writeOutput( "<li><span class='customField-key'>#thisField#:</span> #customFields[thisField]#</li>" );
 			}
-			writeOutput("</ul>");
+			writeOutput( "</ul>" );
 		}
 
 		return content;
@@ -1039,14 +1039,14 @@ component accessors="true" singleton threadSafe{
 	* @content.hint The content this comment form will be linked to, page or entry
 	*/
 	function quickCommentForm(required content){
-		return widget("CommentForm",{content=arguments.content});
+		return widget( "CommentForm",{content=arguments.content});
 	}
 
 	/**
 	* Render the incoming event's main view, basically a proxy to ColdBox's renderView().
 	*/
 	function mainView(){
-		return renderView(view="");
+		return renderView(view="" );
 	}
 
 	/************************************** MENUS *********************************************/
@@ -1172,7 +1172,7 @@ component accessors="true" singleton threadSafe{
 		activeShowChildren=false
 	){
 		// If page not passed,then use current
-		if( !structKeyExists(arguments,"page") ){
+		if( !structKeyExists(arguments,"page" ) ){
 			arguments.page = getCurrentPage();
 		}
 
@@ -1193,9 +1193,9 @@ component accessors="true" singleton threadSafe{
 	* @page Optional page to create link for, else look for current page
 	* @text The optional text to use for the link, else it uses the page's title
 	*/
-	function linkToParentPage(page,text=""){
+	function linkToParentPage(page,text="" ){
 		// verify incoming page
-		if( !structKeyExists(arguments,"page") ){
+		if( !structKeyExists(arguments,"page" ) ){
 			arguments.page = getCurrentPage();
 		}
 		// link if parent found.
@@ -1283,10 +1283,10 @@ component accessors="true" singleton threadSafe{
 		// Levels = *, then create big enough integer
 		if( arguments.levels eq "*" ){ arguments.levels = "999999"; }
 		// check type?
-		if( !reFindNoCase("^(ul|ol|li|data|none)$", arguments.type) ){ arguments.type="ul"; }
+		if( !reFindNoCase( "^(ul|ol|li|data|none)$", arguments.type) ){ arguments.type="ul"; }
 		var pageResults = arguments.pageRecords;
 		// buffer
-		var b = createObject( "java", "java.lang.StringBuilder").init( '' );
+		var b = createObject( "java", "java.lang.StringBuilder" ).init( '' );
 		// current page?
 		var prc = getRequestCollection( private=true );
 		var pageAncestorContentIDs = "";
@@ -1308,7 +1308,7 @@ component accessors="true" singleton threadSafe{
 		}
 
 		// list start
-		if( !listFindNoCase("li,none,data", arguments.type) ){
+		if( !listFindNoCase( "li,none,data", arguments.type) ){
 			b.append( '<#arguments.type# class="#arguments.typeClass#">' );
 		}
 		// data setup
@@ -1411,7 +1411,7 @@ component accessors="true" singleton threadSafe{
 					}
 					arrayAppend(dataMenu,pageData);
 				} else {
-					b.append('<a href="#linkPage(pageResults.pages[ x ])#" class="#arrayToList(classText, " ")#">#pageResults.pages[ x ].getTitle()#</a>#arguments.separator#');
+					b.append('<a href="#linkPage(pageResults.pages[ x ])#" class="#arrayToList(classText, " " )#">#pageResults.pages[ x ].getTitle()#</a>#arguments.separator#');
 				}
 			}
 		}
@@ -1421,10 +1421,10 @@ component accessors="true" singleton threadSafe{
 		}
 
 		// None?
-		if( pageResults.count eq 0 and arguments.showNone ){ b.append("<li>No Sub Pages</li>"); }
+		if( pageResults.count eq 0 and arguments.showNone ){ b.append( "<li>No Sub Pages</li>" ); }
 
 		// list end
-		if( !listFindNoCase("li,none", arguments.type) ){	b.append('</#arguments.type#>'); }
+		if( !listFindNoCase( "li,none", arguments.type) ){	b.append('</#arguments.type#>'); }
 
 		// return
 		return b.toString();

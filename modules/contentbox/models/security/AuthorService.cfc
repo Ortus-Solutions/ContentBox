@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -37,7 +37,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	AuthorService function init(){
 		// init it
-		super.init(entityName="cbAuthor");
+		super.init(entityName="cbAuthor" );
 	    setHashType( "SHA-256" );
 	    
 		return this;
@@ -79,18 +79,18 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		
 		// Search
 		if( len( arguments.searchTerm ) ){
-			c.$or( c.restrictions.like("firstName","%#arguments.searchTerm#%"),
-				   c.restrictions.like("lastName", "%#arguments.searchTerm#%"),
-				   c.restrictions.like("email", "%#arguments.searchTerm#%") );
+			c.$or( c.restrictions.like( "firstName","%#arguments.searchTerm#%" ),
+				   c.restrictions.like( "lastName", "%#arguments.searchTerm#%" ),
+				   c.restrictions.like( "email", "%#arguments.searchTerm#%" ) );
 		}
 
 		// isActive filter
-		if( structKeyExists( arguments, "isActive" ) AND arguments.isActive NEQ "any"){
+		if( structKeyExists( arguments, "isActive" ) AND arguments.isActive NEQ "any" ){
 			c.eq( "isActive", javaCast( "boolean", arguments.isActive ) );
 		}
 
 		// role filter
-		if( structKeyExists( arguments, "role" ) AND arguments.role NEQ "any"){
+		if( structKeyExists( arguments, "role" ) AND arguments.role NEQ "any" ){
 			c.createAlias( "role", "role" )
 				.isEq( "role.roleID", javaCast( "int", arguments.role ) );
 		}
@@ -132,10 +132,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }

@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-#html.addAsset("#prc.cbRoot#/includes/css/diff.css")#
+#html.addAsset( "#prc.cbRoot#/includes/css/diff.css" )#
 <div id="diff">
             <!--header-->
             <div class="modal-header">
@@ -70,7 +70,7 @@
 								<td width="50%" class="code#codeCSS#">
 									<div class="diffContent">
 										<cfif arrayIsDefined( prc.leftA, x )>
-										#Replace(HTMLEditFormat( prc.leftA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
+										#Replace(HTMLEditFormat( prc.leftA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL" )#
 										</cfif>
 									</div>
 								</td>
@@ -80,7 +80,7 @@
 								<td width="50%" class="code#codeCSS#">
 									<div class="diffContent">
 										<cfif arrayIsDefined( prc.rightA, x )>
-										#Replace(HTMLEditFormat( prc.rightA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
+										#Replace(HTMLEditFormat( prc.rightA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL" )#
 										</cfif>
 									</div>
 								</td>

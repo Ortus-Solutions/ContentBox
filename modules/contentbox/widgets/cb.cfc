@@ -8,11 +8,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("CBHelper");
-		setPluginVersion("1.0");
-		setPluginDescription("A proxy to our CBHelper object");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setPluginName( "CBHelper" );
+		setPluginVersion( "1.0" );
+		setPluginDescription( "A proxy to our CBHelper object" );
+		setPluginAuthor( "Ortus Solutions" );
+		setPluginAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "wrench-add.png" );
 		setCategory( "Utilities" );
 		return this;
@@ -29,7 +29,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* Proxy into the CB Helper
 	*/
 	any function onMissingMethod(missingMethodName,missingMethodArguments){
-		return evaluate("variables.cb.#missingMethodName#(argumentCollection=arguments.missingMethodArguments)");
+		return evaluate( "variables.cb.#missingMethodName#(argumentCollection=arguments.missingMethodArguments)" );
 	}
 
 

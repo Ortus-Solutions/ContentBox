@@ -8,11 +8,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("Archives");
-		setPluginVersion("1.0");
-		setPluginDescription("A cool widget that renders your blog archives summary information.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setPluginName( "Archives" );
+		setPluginVersion( "1.0" );
+		setPluginDescription( "A cool widget that renders your blog archives summary information." );
+		setPluginAuthor( "Ortus Solutions" );
+		setPluginAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "calendar.png" );
 		setCategory( "Blog" );
 		return this;
@@ -25,13 +25,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @title.hint The title to show before the dropdown or list, defaults to H2
 	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(boolean dropdown=false,boolean showPostCount=true,string title="",string titleLevel="2"){
+	any function renderIt(boolean dropdown=false,boolean showPostCount=true,string title="",string titleLevel="2" ){
 		var archives 		= entryService.getArchiveReport();
 		var rString			= "";
 
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
 			// Build Type
 			if( arguments.dropdown ){
 				writeoutput(buildDropDown(archives,arguments.showPostCount));
@@ -48,16 +48,16 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		var rString = "";
 
 		saveContent variable="rString"{
-			writeOutput('<select name="archives" id="archives" onchange="window.location=this.value")><option value="##">Select Archive</option>');
+			writeOutput('<select name="archives" id="archives" onchange="window.location=this.value" )><option value="##">Select Archive</option>');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.archives ); x++){
 				var thisDate = arguments.archives[ x ]["year"] & "-" & arguments.archives[ x ]["month"] & "-1";
-				writeOutput('<option value="#cb.linkArchive(year=arguments.archives[ x ]['year'],month=arguments.archives[ x ]['month'])#">#dateformat(thisDate,"mmmm yyyy")#');
-				if( arguments.showPostCount ){ writeOutput(" (#arguments.archives[ x ]['count']#)"); }
+				writeOutput('<option value="#cb.linkArchive(year=arguments.archives[ x ]['year'],month=arguments.archives[ x ]['month'])#">#dateformat(thisDate,"mmmm yyyy" )#');
+				if( arguments.showPostCount ){ writeOutput( " (#arguments.archives[ x ]['count']#)" ); }
 				writeOutput('</option>');
 			}
 			// close ul
-			writeOutput("</select>");
+			writeOutput( "</select>" );
 		}
 		return rString;
 	}
@@ -70,12 +70,12 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.archives ); x++){
 				var thisDate = arguments.archives[ x ]["year"] & "-" & arguments.archives[ x ]["month"] & "-1";
-				writeOutput('<li class="archives"><a href="#cb.linkArchive(year=arguments.archives[ x ]['year'],month=arguments.archives[ x ]['month'])#">#dateFormat(thisDate,"mmmm yyyy")#');
-				if( arguments.showPostCount ){ writeOutput(" (#arguments.archives[ x ]['count']#)"); }
+				writeOutput('<li class="archives"><a href="#cb.linkArchive(year=arguments.archives[ x ]['year'],month=arguments.archives[ x ]['month'])#">#dateFormat(thisDate,"mmmm yyyy" )#');
+				if( arguments.showPostCount ){ writeOutput( " (#arguments.archives[ x ]['count']#)" ); }
 				writeOutput('</a></li>');
 			}
 			// close ul
-			writeOutput("</ul>");
+			writeOutput( "</ul>" );
 		}
 		return rString;
 	}

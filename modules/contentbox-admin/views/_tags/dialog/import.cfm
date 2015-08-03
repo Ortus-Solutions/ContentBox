@@ -9,7 +9,7 @@
                     <h4 class="modal-title" id="importTitle"><i class="fa fa-copy"></i> #args.title#</h4>
                 </div>
                 <!--body-->
-                #html.startForm(name="importForm", action="#args.action#", class="form-vertical", multipart=true, role="form")#
+                #html.startForm(name="importForm", action="#args.action#", class="form-vertical", multipart=true, role="form" )#
                     <div class="modal-body">
                         <p>#args.contentInfo#</p>
                 

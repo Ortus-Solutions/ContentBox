@@ -1,5 +1,5 @@
 <cfoutput>
-#html.anchor(name="recentComments")#
+#html.anchor(name="recentComments" )#
 <div class="buttonBar"></div>				
 <div class="filterBar">
 	<h3><i class="icon-comments"></i> Recent Comments</h3>

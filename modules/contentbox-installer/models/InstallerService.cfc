@@ -73,18 +73,18 @@ component accessors="true"{
 	function processColdBoxPasswords(required setup){
 		var configPath = appPath & "config/Coldbox.cfc";
 		var c = fileRead(configPath);
-		var newPass = hash( now() & setup.getUserData().toString() ,"MD5");
-		c = replacenocase(c, "@fwPassword@", newPass,"all");
+		var newPass = hash( now() & setup.getUserData().toString() ,"MD5" );
+		c = replacenocase(c, "@fwPassword@", newPass,"all" );
 		fileWrite(configPath, c);
-		coldbox.setSetting("debugPassword", newpass);
-		coldbox.setSetting("reinitPassword", newpass);
+		coldbox.setSetting( "debugPassword", newpass);
+		coldbox.setSetting( "reinitPassword", newpass);
 	}
 
 	function processRewrite(required setup){
 		// rewrite on routes.cfm
 		var routesPath = appPath & "config/Routes.cfm";
 		var c = fileRead(routesPath);
-		c = replacenocase(c, "index.cfm","","all");
+		c = replacenocase(c, "index.cfm","","all" );
 		fileWrite(routesPath, c);
 
 		// determine engine and setup the appropriate file for the rewrite engine
@@ -435,7 +435,7 @@ component accessors="true"{
 	function createSampleData(required setup, required author){
 
 		// create a few categories
-		categoryService.createCategories("News, ColdFusion, ColdBox, ContentBox");
+		categoryService.createCategories( "News, ColdFusion, ColdBox, ContentBox" );
 
 		// create some blog entries
 		var entry = entryService.new(properties={

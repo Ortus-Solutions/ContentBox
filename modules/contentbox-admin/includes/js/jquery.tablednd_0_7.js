@@ -52,12 +52,12 @@
  *
  * Other methods:
  *
- * $("...").tableDnDUpdate()
+ * $( "..." ).tableDnDUpdate()
  * Will update all the matching tables, that is it will reapply the mousedown method to the rows (or handle cells).
  * This is useful if you have updated the table rows using Ajax and you want to make the table draggable again.
  * The table maintains the original configuration (so you don't have to specify it again).
  *
- * $("...").tableDnDSerialize()
+ * $( "..." ).tableDnDSerialize()
  * Will serialize and return the serialized string as above, but for each of the matching tables--so it can be
  * called from anywhere and isn't dependent on the currentTable being set up correctly before calling
  *
@@ -88,7 +88,7 @@ var hasTouch   = 'ontouchstart' in document.documentElement,
 // If we're on a touch device, then wire up the events
 // see http://stackoverflow.com/a/8456194/1316086
 hasTouch
-    && $.each("touchstart touchmove touchend".split(" "), function(i, name) {
+    && $.each( "touchstart touchmove touchend".split( " " ), function(i, name) {
         $.event.fixHooks[name] = $.event.mouseHooks;
     });
 
@@ -109,8 +109,8 @@ $(document).ready(function () {
                 onDragStyle: $(this).data('ondragstyle') && parseStyle($(this).data('ondragstyle')) || null,
                 onDropStyle: $(this).data('ondropstyle') && parseStyle($(this).data('ondropstyle')) || null,
                 onDragClass: $(this).data('ondragclass') == undefined && "tDnD_whileDrag" || $(this).data('ondragclass'),
-                onDrop: $(this).data('ondrop') && new Function('table', 'row', $(this).data('ondrop')), // 'return eval("'+$(this).data('ondrop')+'");') || null,
-                onDragStart: $(this).data('ondragstart') && new Function('table', 'row' ,$(this).data('ondragstart')), // 'return eval("'+$(this).data('ondragstart')+'");') || null,
+                onDrop: $(this).data('ondrop') && new Function('table', 'row', $(this).data('ondrop')), // 'return eval( "'+$(this).data('ondrop')+'" );') || null,
+                onDragStart: $(this).data('ondragstart') && new Function('table', 'row' ,$(this).data('ondragstart')), // 'return eval( "'+$(this).data('ondragstart')+'" );') || null,
                 scrollAmount: $(this).data('scrollamount') || 5,
                 sensitivity: $(this).data('sensitivity') || 10,
                 hierarchyLevel: $(this).data('hierarchylevel') || 0,
@@ -242,13 +242,13 @@ window.jQuery.tableDnD = {
             // get all the rows as a wrapped set
             || $(table.rows).each(function() {
                 // Iterate through each row, the row is bound to "this"
-                if (! $(this).hasClass("nodrag")) {
+                if (! $(this).hasClass( "nodrag" )) {
                     $(this).bind(startEvent, function(e) {
-                        if (e.target.tagName == "TD") {
+                        if (e.target.tagName == "TD" ) {
                             $.tableDnD.initialiseDrag(this, table, this, e, config);
                             return false;
                         }
-                    }).css("cursor", "move"); // Store the tableDnD object
+                    }).css( "cursor", "move" ); // Store the tableDnD object
                 }
             });
     },
@@ -485,7 +485,7 @@ window.jQuery.tableDnD = {
                     || (config.onAllowDrop
                     && !config.onAllowDrop(draggedRow, row))
                     // If a row has nodrop class, then don't allow dropping (inspired by John Tarr and Famic)
-                    || $(row).hasClass("nodrop"))
+                    || $(row).hasClass( "nodrop" ))
                         return null;
                 else
                     return row;

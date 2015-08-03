@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// form validators
-	$("##commentSettingsForm").validate({
+	$( "##commentSettingsForm" ).validate({
         rules: {
             cb_comments_moderation_expiration: {
                 digits: true,

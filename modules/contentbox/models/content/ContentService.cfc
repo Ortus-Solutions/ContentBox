@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -44,7 +44,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Constructor
 	* @entityName.hint The content entity name to bind this service to.
 	*/
-	ContentService function init(entityName="cbContent"){
+	ContentService function init(entityName="cbContent" ){
 		// init it
 		super.init(entityName=arguments.entityName, useQueryCaching=true);
 
@@ -97,7 +97,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var settings = settingService.getAllSettings(asStruct=true);
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clear("cb-content-wrapper-#cgi.http_host#-#arguments.slug#/");
+		cache.clear( "cb-content-wrapper-#cgi.http_host#-#arguments.slug#/" );
 		return this;
 	}
 
@@ -136,9 +136,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			c.isEq( "isPublished", javaCast( "Boolean", arguments.isPublished ) );
 			// Published eq true evaluate other params
 			if( arguments.isPublished ){
-				c.isLt("publishedDate", now() )
-				.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
-				.isEq("passwordProtection","");
+				c.isLt( "publishedDate", now() )
+				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
+				.isEq( "passwordProtection","" );
 			}
 		}
 
@@ -150,11 +150,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		// Search Criteria
 		if( len( arguments.searchTerm ) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac");
+			c.createAlias( "activeContent","ac" );
 			// Do we search title and active content or just title?
 			if( arguments.searchActiveContent ){
-				c.$or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  	  c.restrictions.like("ac.content", "%#arguments.searchTerm#%") );
+				c.$or( c.restrictions.like( "title","%#arguments.searchTerm#%" ),
+				  	  c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" ) );
 			}
 			else{
 				c.like( "title", "%#arguments.searchTerm#%" );
@@ -187,8 +187,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	function getIDBySlug(required any slug){
 		var results = newCriteria()
-			.isEq("slug", arguments.slug)
-			.withProjections(property="contentID")
+			.isEq( "slug", arguments.slug)
+			.withProjections(property="contentID" )
 			.get();
 		// verify results
 		if( isNull( results ) ){ return "";}
@@ -205,12 +205,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var c = newCriteria();
 		// Override usually for admins
 		if( !showUnpublished ){
-			c.isTrue("isPublished")
-				.isLT("publishedDate", now())
-				.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) );
+			c.isTrue( "isPublished" )
+				.isLT( "publishedDate", now())
+				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) );
 		}
 		// By criteria now
-		var content = c.isEq("slug",arguments.slug).get();
+		var content = c.isEq( "slug",arguments.slug).get();
 		// return accordingly
 		return ( isNull( content ) ? new() : content );
 	}
@@ -220,7 +220,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @slug.hint The slug to search for uniqueness
 	* @contentID.hint Limit the search to the passed contentID usually for updates
 	*/
-	function isSlugUnique(required any slug, any contentID=""){
+	function isSlugUnique(required any slug, any contentID="" ){
 		var c = newCriteria()
 			.isEq( "slug", arguments.slug );
 
@@ -284,33 +284,33 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var sortOrder = "publishedDate DESC";
 
 		// only published pages
-		c.isTrue("isPublished")
-			.isLT("publishedDate", Now())
-			.$or( c.restrictions.isNull("expireDate"), c.restrictions.isGT("expireDate", now() ) )
+		c.isTrue( "isPublished" )
+			.isLT( "publishedDate", Now())
+			.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
 			// only non-password pages
-			.isEq("passwordProtection","");
+			.isEq( "passwordProtection","" );
 
 		// Show only pages with showInMenu criteria?
-		if( structKeyExists(arguments,"showInMenu") ){
+		if( structKeyExists(arguments,"showInMenu" ) ){
 			c.isEq( "showInMenu", javaCast( "boolean", arguments.showInMenu ) );
 		}
 
 		// Category Filter
 		if( len(arguments.category) ){
 			// create association with categories by slug.
-			c.createAlias("categories","cats").isIn( "cats.slug", listToArray( arguments.category ) );
+			c.createAlias( "categories","cats" ).isIn( "cats.slug", listToArray( arguments.category ) );
 		}
 
 		// Search Criteria
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
-			c.createAlias("activeContent","ac");
-			c.or( c.restrictions.like("title","%#arguments.searchTerm#%"),
-				  c.restrictions.isEq("ac.content", "%#arguments.searchTerm#%") );
+			c.createAlias( "activeContent","ac" );
+			c.or( c.restrictions.like( "title","%#arguments.searchTerm#%" ),
+				  c.restrictions.isEq( "ac.content", "%#arguments.searchTerm#%" ) );
 		}
 
 		// parent filter
-		if( structKeyExists(arguments,"parent") ){
+		if( structKeyExists(arguments,"parent" ) ){
 			if( len( trim( arguments.parent ) ) ){
 				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
 			} else {
@@ -379,7 +379,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function getAllForExport(any inData){
 		var result = [];
 
-		if( !structKeyExists( arguments, "inData") ){
+		if( !structKeyExists( arguments, "inData" ) ){
 			// export from the root node, instead of everything.
 			var data = newCriteria().isNull( "parent" ).list();
 		}
@@ -401,10 +401,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -508,7 +508,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
 
 			// PARENT
-			if( structKeyExists( arguments, "parent") and isObject( arguments.parent ) ){
+			if( structKeyExists( arguments, "parent" ) and isObject( arguments.parent ) ){
 				oContent.setParent( arguments.parent );
 				arguments.importLog.append( "Content parent passed and linked: #arguments.parent.getSlug()#<br>" );
 			}

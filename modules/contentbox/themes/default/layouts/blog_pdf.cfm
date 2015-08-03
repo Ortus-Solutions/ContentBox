@@ -1,1 +1,1 @@
-﻿<cfoutput>#cb.quickLayout("blog_print")#</cfoutput>
+﻿<cfoutput>#cb.quickLayout( "blog_print" )#</cfoutput>

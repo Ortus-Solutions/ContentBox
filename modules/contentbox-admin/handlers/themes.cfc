@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Manage Themes
 */
 component extends="baseHandler"{
@@ -57,14 +57,14 @@ component extends="baseHandler"{
 		var vResults = validateModel( target=rc, constraints=themeService.getSettingsConstraints( rc.themeName ) );
 		// Validate results
 		if( vResults.hasErrors() ){
-			getPlugin("MessageBox").error(messageArray=vResults.getAllErrors());
+			getPlugin( "MessageBox" ).error(messageArray=vResults.getAllErrors());
 			return index( argumentCollection=arguments );
 		}
 		
 		// Results validated, save settings
 		themeService.saveThemeSettings( name=rc.themeName, settings=rc );
 		settingservice.flushSettingsCache();
-		getPlugin("MessageBox").info(message="Theme settings saved!");
+		getPlugin( "MessageBox" ).info(message="Theme settings saved!" );
 		// Relocate
 		setNextEvent(event=prc.xehThemes);
 	}
@@ -76,7 +76,7 @@ component extends="baseHandler"{
 		// clear caches
 		contentService.clearAllCaches();
 		// messages
-		getPlugin("MessageBox").info("#rc.themeName# Activated!");
+		getPlugin( "MessageBox" ).info( "#rc.themeName# Activated!" );
 		// Relocate
 		setNextEvent(prc.xehThemes);
 	}
@@ -84,48 +84,48 @@ component extends="baseHandler"{
 	// rebuild registry
 	function rebuildRegistry(event,rc,prc){
 		themeService.buildThemeRegistry();
-		getPlugin("MessageBox").info( "Themes re-scanned and registered!");
-		setNextEvent(event=prc.xehThemes, queryString="##themesPane");
+		getPlugin( "MessageBox" ).info( "Themes re-scanned and registered!" );
+		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
 	}
 
 	//Remove
 	function remove(event,rc,prc){
 		if( themeService.removeTheme( rc.themeName ) ){
-			getPlugin("MessageBox").info("Theme Removed Forever!");
+			getPlugin( "MessageBox" ).info( "Theme Removed Forever!" );
 		}
 		else{
-			getPlugin("MessageBox").error("Error removing theme, please check your logs for more information!");
+			getPlugin( "MessageBox" ).error( "Error removing theme, please check your logs for more information!" );
 		}
-		setNextEvent(event=prc.xehThemes, queryString="##themesPane");
+		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
 	}
 
 	//upload
 	function upload(event,rc,prc){
-		var fp = event.getTrimValue("fileTheme","");
+		var fp = event.getTrimValue( "fileTheme","" );
 
 		// Verify
 		if( len( fp ) eq 0){
-			getPlugin("MessageBox").setMessage(type="warning", message="Please choose a file to upload");
+			getPlugin( "MessageBox" ).setMessage(type="warning", message="Please choose a file to upload" );
 		}
 		else{
 			// Upload File
 			try{
-				var results = themeService.uploadTheme("fileTheme");
+				var results = themeService.uploadTheme( "fileTheme" );
 
 				if( !results.error ){
 					// Good
-					getPlugin("MessageBox").setMessage(type="info", message="Theme Installed Successfully");
+					getPlugin( "MessageBox" ).setMessage(type="info", message="Theme Installed Successfully" );
 				}
 				else{
 					// Bad
-					getPlugin("MessageBox").error(results.messages);
+					getPlugin( "MessageBox" ).error(results.messages);
 				}
 			}
 			catch(Any e){
-				getPlugin("MessageBox").error("Error uploading file: #e.detail# #e.message#");
+				getPlugin( "MessageBox" ).error( "Error uploading file: #e.detail# #e.message#" );
 			}
 		}
 
-		setNextEvent(event=prc.xehThemes, queryString="##themesPane");
+		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
 	}
 }

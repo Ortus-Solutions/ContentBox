@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -50,8 +50,8 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" 
 	* Overriden setter
 	*/
 	SecurityRule function setMatch(required match){
-		if( not reFindnocase("^(event|url)$", arguments.match) ){
-			throw(message="Invalid match type sent: #arguments.match#",detail="Valid match types are 'event,url'",type="InvalidMatchType");
+		if( not reFindnocase( "^(event|url)$", arguments.match) ){
+			throw(message="Invalid match type sent: #arguments.match#",detail="Valid match types are 'event,url'",type="InvalidMatchType" );
 		}
 		variables.match = arguments.match;
 		return this;
@@ -71,8 +71,8 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" 
 		redirect		= left(redirect,255);
 		
 		// Required
-		if( !len(securelist) ){ arrayAppend(errors, "Securelist is required"); }
-		if( !len(redirect) ){ arrayAppend(errors, "Redirect is required"); }
+		if( !len(securelist) ){ arrayAppend(errors, "Securelist is required" ); }
+		if( !len(redirect) ){ arrayAppend(errors, "Redirect is required" ); }
 		
 		return errors;
 	}

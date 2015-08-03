@@ -2,12 +2,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// form validators
-	$("##loginForm").validate();
+	$( "##loginForm" ).validate();
 	<cfif len(prc.rememberMe)>
 		//Get Focus
-		$("##password").focus();
+		$( "##password" ).focus();
 	<cfelse>
-		$("##username").focus();
+		$( "##username" ).focus();
 	</cfif>
 });
 </script>

@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-12">
         <!--- MessageBox --->
-        #getPlugin("MessageBox").renderit()#
+        #getPlugin( "MessageBox" ).renderit()#
     </div>
 </div>
 <div class="row">

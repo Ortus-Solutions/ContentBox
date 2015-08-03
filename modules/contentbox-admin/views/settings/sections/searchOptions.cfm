@@ -16,7 +16,7 @@
     </div>
     <!--- Search Adapter --->
     <div class="form-group">
-        #html.label(class="control-label",field="cb_search_adapter",content="Search Adapter: ")#
+        #html.label(class="control-label",field="cb_search_adapter",content="Search Adapter: " )#
         <div class="controls">
             <small>The ContentBox search engine adapter class (instantiation path) to use. You can create your own search engine adapters as
             long as they implement <em>contentbox.models.search.ISearchAdapter</em>. You can choose from our core adapters or

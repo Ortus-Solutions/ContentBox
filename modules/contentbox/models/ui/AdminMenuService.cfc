@@ -529,9 +529,9 @@ component accessors="true" threadSafe singleton{
 	*/
 	AdminMenuService function addSubMenu(topMenu, required name, required label, title="", href="##", target="", permissions="", data=structNew(), class="", id="", itemType="a", itemClass="", itemId="" ){
 		// Check if thisTopMenu set?
-		if( !len(thisTopMenu) AND !structKeyExists(arguments,"topMenu") ){ throw("No top menu passed or concatenated with"); }
+		if( !len(thisTopMenu) AND !structKeyExists(arguments,"topMenu" ) ){ throw( "No top menu passed or concatenated with" ); }
 		// check this pointer
-		if( len(thisTopMenu) AND !structKeyExists(arguments,"topMenu")){ arguments.topmenu = thisTopMenu; }
+		if( len(thisTopMenu) AND !structKeyExists(arguments,"topMenu" )){ arguments.topmenu = thisTopMenu; }
 		// store in top menu
 		arrayAppend( topMenuMap[ arguments.topMenu ].submenu, arguments );
 		// return

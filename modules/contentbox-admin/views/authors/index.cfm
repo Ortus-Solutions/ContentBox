@@ -28,16 +28,16 @@
 						</div>
 						<div class="col-md-6">
 							<div class="pull-right">
-								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group btn-group-sm">
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT")>
+								    		<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 								    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_EXPORT")>
+											<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 								    		<li class="dropdown-submenu">
 												<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
 												<ul class="dropdown-menu text-left">
@@ -50,7 +50,7 @@
 								    	</ul>
 								    </div>
 								</cfif>
-								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
 									<button class="btn btn-sm btn-danger" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')">Create User</button>
 								</cfif>
 							</div>
@@ -74,7 +74,7 @@
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
-					#html.startForm(name="filterForm", action=prc.xehAuthorSearch, class="form-vertical",role="form")#
+					#html.startForm(name="filterForm", action=prc.xehAuthorSearch, class="form-vertical",role="form" )#
 						<!---Status--->
 						<div class="form-group">
 							<label for="fStatus" class="control-label">Status: </label>
@@ -103,7 +103,7 @@
 	</div>
 </div>
 
-<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Users",

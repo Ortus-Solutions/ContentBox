@@ -2,10 +2,10 @@
     <cfset ETH = getModel( "EmailTemplateHelper@cb" )>
     #ETH.author( email=args.gravatarEmail, content="
         <strong>@currentAuthor@</strong> removed an author from your system
-    ")#
+    " )#
     #ETH.divider()#
     #ETH.heading( content="Author Details" )#
-    #ETH.text("
+    #ETH.text( "
         <table cellpadding='3' cellspacing='3'>
             <tbody>
                 <tr>
@@ -22,5 +22,5 @@
                 </tr>
             </tbody>
         </table>
-    ")#
+    " )#
 </cfoutput>

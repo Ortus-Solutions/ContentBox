@@ -37,19 +37,19 @@ component extends="baseHandler"{
 		// get module by moduleEntryPoint
 		var module = moduleService.findWhere( {entryPoint = rc.moduleEntryPoint} );
 		if( isNull( module ) ){
-			flash.put( "notice", { type="warn", message = "No modules where found with the following entryPoint: #rc.moduleEntryPoint#. Please make sure your module has an entry point." } );
+			messagebox.warn( "No modules where found with the following entryPoint: #rc.moduleEntryPoint#. Please make sure your module has an entry point." );
 			return setNextEvent( prc.xehModules );
 		}
 		if( !module.isLoaded() ){
-			flash.put( "notice", { type="warn", message = "The requested module: #rc.moduleEntryPoint# is not valid!" } );
+			messagebox.warn( "The requested module: #rc.moduleEntryPoint# is not valid!" );
 			return setNextEvent( prc.xehModules );
 		}
 		if( !module.getIsActive() ){
-			flash.put( "notice", { type="warn", message = "The requested module: #rc.moduleEntryPoint# is not active!" } );
+			messagebox.warn( "The requested module: #rc.moduleEntryPoint# is not active!" );
 			return setNextEvent( prc.xehModules );
 		}
 		if( !len(rc.moduleHandler) ){
-			flash.put( "notice", { type="warn", message = "The requested module: #rc.moduleEntryPoint# is valid but the incoming module handler is empty!" } );
+			messagebox.warn( "The requested module: #rc.moduleEntryPoint# is valid but the incoming module handler is empty!" );
 			return setNextEvent( prc.xehModules );
 		}
 
@@ -61,7 +61,7 @@ component extends="baseHandler"{
 		if( !isNull( results ) ){ return results; }
 
 		// stash the module view, so it renders in the admin layout if not set already
-		if( !structKeyExists( prc, "viewModule") or !len( prc.viewModule )) {
+		if( !structKeyExists( prc, "viewModule" ) or !len( prc.viewModule )) {
 			prc.viewModule = module.getName();
 		}
 		// Check for renderData
@@ -108,35 +108,35 @@ component extends="baseHandler"{
 	//activate
 	function activate( event, rc, prc ){
 		moduleService.activateModule( rc.moduleName );
-		flash.put( "notice", { type="info", message = "Modules Activated, woohoo!" } );
+		messagebox.info( "Modules Activated, woohoo!" );
 		setNextEvent(prc.xehModules);
 	}
 
 	//deactivate
 	function deactivate( event, rc, prc ){
 		moduleService.deactivateModule( rc.moduleName );
-		flash.put( "notice", { type="info", message = "Modules Deactivated!" } );
+		messagebox.info( "Modules Deactivated!" );
 		setNextEvent(prc.xehModules);
 	}
 
 	//reset
 	function reset( event, rc, prc ){
 		moduleService.resetModules();
-		flash.put( "notice", { type="info", message = "Modules Reset!" } );
+		messagebox.info( "Modules Reset!" );
 		setNextEvent(prc.xehModules);
 	}
 
 	//rescan
 	function rescan( event, rc, prc ){
 		moduleService.startup();
-		flash.put( "notice", { type="info", message = "Modules Rescaned and Revamped!" } );
+		messagebox.info( "Modules Rescaned and Revamped!" );
 		setNextEvent(prc.xehModules);
 	}
 
 	//Remove
 	function remove( event, rc, prc ){
 		moduleService.deleteModule( rc.moduleName );
-		flash.put( "notice", { type="info", message = "Module Removed Forever!" } );
+		messagebox.info( "Module Removed Forever!" );
 		setNextEvent(prc.xehModules);
 	}
 
@@ -146,7 +146,7 @@ component extends="baseHandler"{
 
 		// Verify
 		if( len( fp ) eq 0){
-			flash.put( "notice", { type="warn", message = "Please choose a file to upload" } );
+			messagebox.warn( "Please choose a file to upload" );
 		}
 		else{
 			// Upload File
@@ -154,11 +154,11 @@ component extends="baseHandler"{
 				var results = moduleService.uploadModule( "fileModule" );
 				if( results.error ){
 					flash.put( "forgeboxInstallLog", results.logInfo );
-					flash.put( "notice", { type="error", message = "Error installing module, please check out the log information." } );
+					messagebox.error( "Error installing module, please check out the log information." );
 				}
 				else{
 					// Messagebox
-					flash.put( "notice", { type="info", message = "Module Installed Successfully in your 'modules' folder." } );
+					messagebox.info( "Module Installed Successfully in your 'modules' folder." );
 					flash.put( "forgeboxInstallLog", "Please verify if the module was
 					registered successfully by looking below in your modules listing.  Some modules need some manual installations so please verify the file structure in your
 					media manager modules library.  If the module does not appear below, then it was not a valid module installation and some manual work is needed." );

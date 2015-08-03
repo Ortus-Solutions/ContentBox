@@ -6,14 +6,14 @@
 $(document).ready(function() {
 	// Setup content view
 	setupContentView( { 
-		tableContainer	: $("##entriesTableContainer"), 
+		tableContainer	: $( "##entriesTableContainer" ), 
 		tableURL		: '#event.buildLink( prc.xehEntryTable )#',
-		searchField 	: $("##entrySearch"),
+		searchField 	: $( "##entrySearch" ),
 		searchName		: 'searchEntries',
-		contentForm 	: $("##entryForm"),
+		contentForm 	: $( "##entryForm" ),
 		bulkStatusURL 	: '#event.buildlink(linkTo=prc.xehEntryBulkStatus)#',
-		importDialog 	: $("##importDialog"),
-		cloneDialog		: $("##cloneDialog")
+		importDialog 	: $( "##importDialog" ),
+		cloneDialog		: $( "##cloneDialog" )
 	});
 	
 	// load content on startup, using default parents if passed.

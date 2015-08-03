@@ -6,7 +6,7 @@
 			Security Rules
         </h1>
         <!--- messageBox --->
-		#getPlugin("MessageBox").renderit()#
+		#getPlugin( "MessageBox" ).renderit()#
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -52,7 +52,7 @@
 					</div>
 					<div class="col-md-5">
 						<div class="pull-right">
-							<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT")>
+							<cfif prc.oAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT" )>
 								<div class="buttonBar">
 									<!---Global --->
 									<div class="btn-group btn-group-sm">
@@ -60,7 +60,7 @@
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
+								    		<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 											<li><a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt"
 												data-title="Really Apply Rules?"
 												data-message="Please be aware that you could be locked out of application if your rules are not correct.">
@@ -68,10 +68,10 @@
 												</a>
 											</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
+											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 											<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
+											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 								    		<li class="dropdown-submenu">
 												<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
 												<ul class="dropdown-menu text-left">
@@ -80,7 +80,7 @@
 												</ul>
 											</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
+											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 											<li><a href="#event.buildLink(prc.xehResetRules)#" 
 												data-title="<i class='fa fa-refresh'></i> Really Reset All Rules?" class="confirmIt"
 												data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
@@ -101,14 +101,14 @@
 			</div>
 		    <div class="panel-body">
 		    	#html.startForm(name="ruleForm",action=prc.xehRemoveRule)#
-					#html.hiddenField(name="ruleID")#
-					<div id="rulesTable">#renderView("securityRules/rulesTable")#</div>
+					#html.hiddenField(name="ruleID" )#
+					<div id="rulesTable">#renderView( "securityRules/rulesTable" )#</div>
 				#html.endForm()#
 		    </div>
 		</div>
 	</div>
 </div>
-<cfif prc.oAuthor.checkPermission("SECURITYRULES_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Security Rules",

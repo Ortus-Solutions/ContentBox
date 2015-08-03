@@ -35,11 +35,11 @@ component cache="false"{
 			setNextEvent(  prc.adminEntryPoint );
 		}
 		// start installation
-		installerService.execute( populateModel("SetupBean@cbi") );
+		installerService.execute( populateModel( "SetupBean@cbi" ) );
 		// start up fresh in next request
 		applicationStop();
 		// Take them to the finalized screen
-		setNextEvent("cbinstaller/finished");
+		setNextEvent( "cbinstaller/finished" );
 	}
 	
 	function finished( event, rc, prc ){

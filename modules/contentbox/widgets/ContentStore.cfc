@@ -40,7 +40,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		}
 
 		// else throw
-		throw(message="The content slug '#arguments.slug#' does not exist", type="InvalidContentStoreException");
+		throw(message="The content slug '#arguments.slug#' does not exist", type="InvalidContentStoreException" );
 	}
 
 	/**

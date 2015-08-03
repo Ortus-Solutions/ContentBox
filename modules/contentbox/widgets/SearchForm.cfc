@@ -8,7 +8,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init( controller );
 
 		// Widget Properties
-		setPluginName("SearchForm" );
+		setPluginName( "SearchForm" );
 		setPluginVersion( "2.0" );
 		setPluginDescription( "This widget creates a simple ContentBox search form." );
 		setPluginAuthor( "Ortus Solutions" );
@@ -29,13 +29,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @buttoncss.hint The search button css classes
 	* @formcss.hint The form css classes
 	*/
-	any function renderIt(string type="content", string label="Search for", string title="", string titleLevel="2", string placeholder="", string querycss="", string buttoncss="", string formcss=""){
+	any function renderIt(string type="content", string label="Search for", string title="", string titleLevel="2", string placeholder="", string querycss="", string buttoncss="", string formcss="" ){
 		var rString	= "";
 		var event = getRequestContext();
 
 		// Check type
-		if( !reFindNoCase("^(content|blog)$",arguments.type) ){
-			throw(message="Invalid type for search form", detail="Valid types are: content or blog", type="InvalidSearchType");
+		if( !reFindNoCase( "^(content|blog)$",arguments.type) ){
+			throw(message="Invalid type for search form", detail="Valid types are: content or blog", type="InvalidSearchType" );
 		}
 		// Action
 		var action = cb.linkContentSearch();

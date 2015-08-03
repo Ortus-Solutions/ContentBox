@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -29,15 +29,15 @@ component extends="content" singleton{
 	*/
 	function index(event,rc,prc){
 		// params
-		event.paramValue("category","");
-		event.paramValue("contentSlug","");
-		event.paramValue("commentRSS",false);
+		event.paramValue( "category","" );
+		event.paramValue( "contentSlug","" );
+		event.paramValue( "commentRSS",false);
 
 		// Build out the site RSS feeds
 		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,slug=rc.contentSlug);
 
 		// Render out the feed xml
-		event.renderData(type="plain",data=feed,contentType="text/xml");
+		event.renderData(type="plain",data=feed,contentType="text/xml" );
 	}
 
 	/**
@@ -45,15 +45,15 @@ component extends="content" singleton{
 	*/
 	function pages(event,rc,prc){
 		// params
-		event.paramValue("category","");
-		event.paramValue("commentRSS",false);
-		event.paramValue("slug","");
+		event.paramValue( "category","" );
+		event.paramValue( "commentRSS",false);
+		event.paramValue( "slug","" );
 
 		// Build out the site RSS feeds
-		var feed = RSSService.getRSS(category=rc.category,slug=rc.slug,comments=rc.commentRSS,contentType="Page");
+		var feed = RSSService.getRSS(category=rc.category,slug=rc.slug,comments=rc.commentRSS,contentType="Page" );
 
 		// Render out the feed xml
-		event.renderData(type="plain",data=feed,contentType="text/xml");
+		event.renderData(type="plain",data=feed,contentType="text/xml" );
 	}
 
 }

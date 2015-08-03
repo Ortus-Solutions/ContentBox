@@ -101,7 +101,7 @@ component accessors="true" singleton threadSafe{
 				widgets.icon[ x ] = getWidgetIcon( widgets.name[ x ], widgets.widgettype[ x ] );
 			}
 			catch(any e){
-				log.error("Error creating widget plugin: #widgets.name[ x ]#",e);
+				log.error( "Error creating widget plugin: #widgets.name[ x ]#",e);
 			}
 		}
 		// add module widgets
@@ -123,7 +123,7 @@ component accessors="true" singleton threadSafe{
 				querySetCell( widgets, "icon", icon );
 			}
 			catch(any e){
-				log.error("Error creating module widget plugin: #widgetName#",e);
+				log.error( "Error creating module widget plugin: #widgetName#",e);
 				querySetCell( widgets, "debug", "Error creating module widget plugin #e.message# #e.detail#. Logged error and stacktrace too." );
 			}
 		}
@@ -144,7 +144,7 @@ component accessors="true" singleton threadSafe{
 				querySetCell( widgets, "icon", icon );
 			}
 			catch(any e){
-				log.error("Error creating layout widget plugin: #widget#",e);
+				log.error( "Error creating layout widget plugin: #widget#",e);
 			}
 		}
 		return widgets;
@@ -261,17 +261,17 @@ component accessors="true" singleton threadSafe{
 	*/
 	struct function uploadWidget(required fileField){
 		var destination = getWidgetsPath();
-		var results = fileUpload(destination, arguments.fileField, "", "overwrite");
+		var results = fileUpload(destination, arguments.fileField, "", "overwrite" );
 		if( results.clientfileext neq "cfc" ){
 			fileDelete( results.serverDirectory & "/" & results.serverfile );
-			throw(message="Invalid widget type detected: #results.clientfileext#", type="InvalidWidgetType");
+			throw(message="Invalid widget type detected: #results.clientfileext#", type="InvalidWidgetType" );
 		}
 		return results;
 	}
 
 	// rip extensions
 	string function ripExtension(required filename){
-		return reReplace(arguments.filename,"\.[^.]*$","");
+		return reReplace(arguments.filename,"\.[^.]*$","" );
 	}
 
 	any function getWidgetRenderArgs( udf, widget, type ){

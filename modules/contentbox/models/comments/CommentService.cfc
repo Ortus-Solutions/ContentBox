@@ -19,7 +19,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Constructor
 	*/
 	public CommentService function init(){
-		super.init(entityName="cbComment",useQueryCaching="true");
+		super.init(entityName="cbComment",useQueryCaching="true" );
 		return this;
 	}
 
@@ -47,21 +47,21 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @offset.hint The offset in the paging, 0 means 0
 	* @sortOrder.hint Sort the comments asc or desc, by default it is desc
 	*/
-	function findApprovedComments(contentID,contentType,max=0,offset=0,sortOrder="desc"){
+	function findApprovedComments(contentID,contentType,max=0,offset=0,sortOrder="desc" ){
 		var results = {};
 		var c = newCriteria();
 
 		// only approved comments
-		c.isTrue("isApproved");
+		c.isTrue( "isApproved" );
 
 		// By Content?
-		if( structKeyExists(arguments,"contentID") AND len(arguments.contentID) ){
-			c.eq("relatedContent.contentID",javaCast("int", arguments.contentID));
+		if( structKeyExists(arguments,"contentID" ) AND len(arguments.contentID) ){
+			c.eq( "relatedContent.contentID",javaCast( "int", arguments.contentID));
 		}
 		// By Content Type Discriminator: class is a special hibernate deal
-		if( structKeyExists(arguments,"contentType") AND len(arguments.contentType) ){
-			c.createCriteria("relatedContent")
-				.isEq("class", arguments.contentType);
+		if( structKeyExists(arguments,"contentType" ) AND len(arguments.contentType) ){
+			c.createCriteria( "relatedContent" )
+				.isEq( "class", arguments.contentType);
 		}
 
 		// run criteria query and projections count
@@ -331,7 +331,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Activate URL's from text
 	*/
 	private function activateURLs(required text){
-		return REReplaceNoCase(arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href=""\1\3"">\1\3</a> ", "ALL");
+		return REReplaceNoCase(arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href=""\1\3"">\1\3</a> ", "ALL" );
 	}
 
 	/**
@@ -342,19 +342,19 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var criteria = newCriteria(); 
 
 		// isApproved filter
-		if( structKeyExists(arguments,"isApproved") AND arguments.isApproved NEQ "any"){
-			criteria.eq("isApproved", javaCast("boolean",arguments.isApproved));
+		if( structKeyExists(arguments,"isApproved" ) AND arguments.isApproved NEQ "any" ){
+			criteria.eq( "isApproved", javaCast( "boolean",arguments.isApproved));
 		}
 		// Content Filter
-		if( structKeyExists(arguments,"contentID") AND arguments.contentID NEQ "all"){
-			criteria.eq("relatedContent.contentID", javaCast("int",arguments.contentID));
+		if( structKeyExists(arguments,"contentID" ) AND arguments.contentID NEQ "all" ){
+			criteria.eq( "relatedContent.contentID", javaCast( "int",arguments.contentID));
 		}
 		// Search Criteria
 		if( len(arguments.search) ){
 			// OR disjunction on author, authorEmail and content.
-			criteria.or( criteria.restrictions.like("author","%#arguments.search#%"),
-					     criteria.restrictions.like("authorEmail","%#arguments.search#%"),
-					     criteria.restrictions.like("content","%#arguments.search#%") );
+			criteria.or( criteria.restrictions.like( "author","%#arguments.search#%" ),
+					     criteria.restrictions.like( "authorEmail","%#arguments.search#%" ),
+					     criteria.restrictions.like( "content","%#arguments.search#%" ) );
 		}
 
 		// run criteria query and projections count

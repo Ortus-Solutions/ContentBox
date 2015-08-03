@@ -7,12 +7,12 @@
 <div class="row">
     <div class="col-md-12">
        	<!--- MessageBox --->
-		#getPlugin("MessageBox").renderit()#
+		#getPlugin( "MessageBox" ).renderit()#
 
 		<!--- Logs --->
-		<cfif flash.exists("forgeboxInstallLog")>
+		<cfif flash.exists( "forgeboxInstallLog" )>
 			<h3>Installation Log</h3>
-			<div class="consoleLog">#flash.get("forgeboxInstallLog")#</div>
+			<div class="consoleLog">#flash.get( "forgeboxInstallLog" )#</div>
 		</cfif>
     </div>
 </div>
@@ -28,7 +28,7 @@
 						<li class="active" title="Manage Modules">
 							<a href="##managePane" data-toggle="tab"><i class="fa fa-cog icon-large"></i> Manage</a>
 						</li>
-						<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
+						<cfif prc.oAuthor.checkPermission( "FORGEBOX_ADMIN" )>
 						<!--- Install --->
 							<li title="Install New Modules">
 								<a href="##forgeboxPane" data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download icon-large"></i> ForgeBox</a>
@@ -41,8 +41,8 @@
 		                <!-- Tab ` -->
 		                <div id="managePane" class="tab-pane active">
 							<!--- CategoryForm --->
-							#html.startForm(name="moduleForm")#
-								#html.hiddenField(name="moduleName")#
+							#html.startForm(name="moduleForm" )#
+								#html.hiddenField(name="moduleName" )#
 								<!--- Content Bar --->
 								<div class="well well-sm">
 									<div class="form-group form-inline no-margin">
@@ -89,7 +89,7 @@
 												</cfif>
 											</td>
 											<td class="text-center">
-											<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
+											<cfif prc.oAuthor.checkPermission( "MODULES_ADMIN" )>
 												<div class="btn-group btn-group-sm">
 												<!--- Check if active --->
 												<cfif module.getIsActive()>
@@ -113,7 +113,7 @@
 							#html.endForm()#
 						</div>
 						<!--- end manage pane --->
-						<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
+						<cfif prc.oAuthor.checkPermission( "MODULES_ADMIN" )>
 							<!--- ForgeBox --->
 							<div id="forgeboxPane" class="tab-pane">
 								<div class="text-center">
@@ -130,7 +130,7 @@
 		</div>
 	</div>
 	<div class="col-md-4">
-		<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
+		<cfif prc.oAuthor.checkPermission( "MODULES_ADMIN" )>
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
 			        <h3 class="panel-title"><i class="fa fa-cogs"></i> Module Admin Actions</h3>

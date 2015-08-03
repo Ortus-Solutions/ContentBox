@@ -9,7 +9,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -28,14 +28,14 @@ limitations under the License.
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<!--- Page Includes --->
-	#cb.quickView("_pageIncludes")#
+	#cb.quickView( "_pageIncludes" )#
 	
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_beforeHeadEnd")#
+	#cb.event( "cbui_beforeHeadEnd" )#
 </head>
 <body>
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_afterBodyStart")#
+	#cb.event( "cbui_afterBodyStart" )#
 	
 	<!--- Main Content --->
 	<div class="main">
@@ -45,7 +45,7 @@ limitations under the License.
 			<div class="body">
 				<div class="body_bg">
 					<!--- ContentBoxEvent --->
-					#cb.event("cbui_beforeContent")#
+					#cb.event( "cbui_beforeContent" )#
 					
 					<!--- Content --->
 					<div class="fullWidth">#renderView()#</div>
@@ -54,7 +54,7 @@ limitations under the License.
 					<div class="clr"></div>
 
 					<!--- ContentBoxEvent --->
-					#cb.event("cbui_afterContent")#
+					#cb.event( "cbui_afterContent" )#
 				</div>
 			</div>
 			<!--- Separator --->
@@ -65,7 +65,7 @@ limitations under the License.
 	<!--- end main --->
 		
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_beforeBodyEnd")#	
+	#cb.event( "cbui_beforeBodyEnd" )#	
 </body>
 </html>
 </cfoutput>

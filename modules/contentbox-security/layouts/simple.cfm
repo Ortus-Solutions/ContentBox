@@ -91,11 +91,11 @@
 	    <![endif]-->
 
 		<!--- cbadmin Event --->
-		#announceInterception("cbadmin_beforeLoginHeadEnd")#
+		#announceInterception( "cbadmin_beforeLoginHeadEnd" )#
 	</head>
 	<body class="animated fadeIn">
 		<!--- cbadmin Event --->
-		#announceInterception("cbadmin_afterLoginBodyStart")#
+		#announceInterception( "cbadmin_afterLoginBodyStart" )#
 		<section id="container">
             <header id="header">
 
@@ -127,15 +127,15 @@
     	<!--- Login Container --->
 		<section id="login-container">
 			<!--- cbadmin event --->
-			#announceInterception("cbadmin_beforeLoginContent")#
+			#announceInterception( "cbadmin_beforeLoginContent" )#
 			<!--- Main Content --->
 			#renderView()#
 			<!--- cbadmin event --->
-			#announceInterception("cbadmin_afterLoginContent")#
+			#announceInterception( "cbadmin_afterLoginContent" )#
 		</section>
 
 		<!--- cbadmin Event --->
-		#announceInterception("cbadmin_beforeLoginBodyEnd")#
+		#announceInterception( "cbadmin_beforeLoginBodyEnd" )#
 	</body>
 </html>
 </cfoutput>

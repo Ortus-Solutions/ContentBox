@@ -111,7 +111,7 @@
 
         $btnOk.addClass(this.getBtnOkClass())
             .html(this.getBtnOkLabel())
-            .prepend($('<i></i>').addClass(this.getBtnOkIcon()), " ")
+            .prepend($('<i></i>').addClass(this.getBtnOkIcon()), " " )
             .attr('href', this.getHref())
             .attr('target', this.getTarget())
             .off('click').on('click', function(event) {
@@ -122,7 +122,7 @@
 
         $btnCancel.addClass(this.getBtnCancelClass())
             .html(this.getBtnCancelLabel())
-            .prepend($('<i></i>').addClass(this.getBtnCancelIcon()), " ")
+            .prepend($('<i></i>').addClass(this.getBtnCancelIcon()), " " )
             .off('click').on('click', function(event){
                 options.onCancel(event, that.$element);
 

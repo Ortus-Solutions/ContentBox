@@ -21,9 +21,9 @@
 				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
 			</td>
 			<td>
-				#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=author.getEmail(),size="30")#
+				#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=author.getEmail(),size="30" )#
 				<!--- Display Link if Admin Or yourself --->
-				<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
+				<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
 					<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
 				<cfelse>
 					#author.getName()#
@@ -49,7 +49,7 @@
 						<i class="fa fa-cogs icon-large"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-						<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
+						<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
 							<!--- Delete Command --->
 							<cfif prc.oAuthor.getAuthorID() neq author.getAuthorID()>
 								<li><a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Author?"><i id="delete_#author.getAuthorID()#" class="fa fa-trash-o icon-large"></i> Delete</a></li>
@@ -60,7 +60,7 @@
 							<li><a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 					
 							<!--- Export --->
-							<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_EXPORT")>
+							<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li class="dropdown-submenu pull-left">
 								<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>
 								<ul class="dropdown-menu text-left">

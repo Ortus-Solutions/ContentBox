@@ -15,7 +15,7 @@
 				<div class="center">
 					<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo"/><br/>
 					v.#getModuleSettings('contentbox').version# <br/>
-					(Codename: <a href="#getModuleSettings("contentbox").settings.codenameLink#" target="_blank">#getModuleSettings("contentbox").settings.codename#</a>)
+					(Codename: <a href="#getModuleSettings( "contentbox" ).settings.codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).settings.codename#</a>)
 					<br/><br/>
 				</div>
 
@@ -35,7 +35,7 @@
 				<i class="icon-medkit"></i> Need Help?
 			</div>
 			<div class="body">
-				#renderView(view="_tags/needhelp", module="contentbox-admin")#
+				#renderView(view="_tags/needhelp", module="contentbox-admin" )#
 			</div>
 		</div>	
 	</div>

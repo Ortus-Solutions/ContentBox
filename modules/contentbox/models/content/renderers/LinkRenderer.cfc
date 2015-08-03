@@ -17,8 +17,8 @@ component accessors="true"{
 	}
 
 	private function determineSlug(required tagString){
-		var slug = reReplaceNoCase(arguments.tagString,"(page|entry|pagessl|entryssl)\:\[","");
-		return reReplaceNoCase(slug,"\]$","");
+		var slug = reReplaceNoCase(arguments.tagString,"(page|entry|pagessl|entryssl)\:\[","" );
+		return reReplaceNoCase(slug,"\]$","" );
 	}
 
 	private function translateContent(required builder, content){
@@ -35,9 +35,9 @@ component accessors="true"{
 			tagString = targets[ x ];
 			
 			// convert quotes to standards
-			tagString = replace(tagString,"&##34;",'"',"all");
-			tagString = replace(tagString,"&##39;","'","all");
-			tagString = replace(tagString,"&quot;","'","all");
+			tagString = replace(tagString,"&##34;",'"',"all" );
+			tagString = replace(tagString,"&##39;","'","all" );
+			tagString = replace(tagString,"&quot;","'","all" );
 			
 			try{
 				
@@ -53,7 +53,7 @@ component accessors="true"{
 			}
 			catch(Any e){
 				linkContent = "Error translating link: #e.message# #e.detail#";
-				log.error("Error translating link on target: #targets[ x ]#", e);
+				log.error( "Error translating link on target: #targets[ x ]#", e);
 			}
 			
 			// PROCESS REPLACING 
@@ -65,9 +65,9 @@ component accessors="true"{
 			// Loop findings of same {{{}}} instances to replace
 			while( rLocation gt -1 ){
 				// Replace it
-				builder.replace( javaCast("int", rLocation), javaCast("int", rLocation+rLen), linkContent);
+				builder.replace( javaCast( "int", rLocation), javaCast( "int", rLocation+rLen), linkContent);
 				// look again
-				rLocation = builder.indexOf( targets[ x ], javaCast("int", rLocation) );
+				rLocation = builder.indexOf( targets[ x ], javaCast( "int", rLocation) );
 			}
 			
 		}

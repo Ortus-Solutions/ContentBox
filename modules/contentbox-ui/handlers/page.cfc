@@ -184,15 +184,15 @@ component extends="content" singleton{
 	*/
 	function rss( event, rc, prc ){
 		// params
-		event.paramValue("category","");
-		event.paramValue("entrySlug","");
-		event.paramValue("commentRSS",false);
+		event.paramValue( "category","" );
+		event.paramValue( "entrySlug","" );
+		event.paramValue( "commentRSS",false);
 
 		// Build out the RSS feeds
 		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,entrySlug=rc.entrySlug);
 
 		// Render out the feed xml
-		event.renderData(type="plain",data=feed,contentType="text/xml");
+		event.renderData(type="plain",data=feed,contentType="text/xml" );
 	}
 
 	/**

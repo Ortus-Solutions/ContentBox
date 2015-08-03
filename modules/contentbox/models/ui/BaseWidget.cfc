@@ -30,7 +30,7 @@ component extends="coldbox.system.Plugin" accessors="true"{
 	* This is the main renderit method you will need to implement in concrete widgets
 	*/
 	any function renderIt(){
-		throw(message="This is a base method that you must implement",type="ContentBox.BaseWidget.BaseClassException");
+		throw(message="This is a base method that you must implement",type="ContentBox.BaseWidget.BaseClassException" );
 	}
 	
 	/*

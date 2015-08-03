@@ -8,11 +8,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("RecentEntries");
-		setPluginVersion("1.0");
-		setPluginDescription("A cool basic widget that shows N recent blog entries.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setPluginName( "RecentEntries" );
+		setPluginVersion( "1.0" );
+		setPluginDescription( "A cool basic widget that shows N recent blog entries." );
+		setPluginAuthor( "Ortus Solutions" );
+		setPluginAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "list.png" );
 		setCategory( "Blog" );
 		return this;
@@ -63,7 +63,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
 			// UL start
 			writeOutput('<ul id="recentEntries">');
 			// iterate and create
@@ -71,7 +71,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 				writeOutput('<li class="recentEntries"><a href="#cb.linkEntry(entryResults.entries[ x ])#">#entryResults.entries[ x ].getTitle()#</a></li>');
 			}
 			// close ul
-			writeOutput("</ul>");
+			writeOutput( "</ul>" );
 		}
 
 		return rString;

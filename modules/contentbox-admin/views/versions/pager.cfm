@@ -20,7 +20,7 @@
 		</cfif>
 	</div>
 	
-	#html.startForm(name="versionsPagerForm")#
+	#html.startForm(name="versionsPagerForm" )#
 
 	<table id="versionsHistoryTable" width="100%" class="tablesorter table table-hover table-condensed table-striped table-bordered" border="0">
 		<thead>
@@ -62,14 +62,14 @@
 					</cfif>
 
 					<cfif not thisVersion.getIsActive()>
-						<cfif prc.oAuthor.checkPermission("VERSIONS_ROLLBACK")>
+						<cfif prc.oAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
 						<!--- ROLLBACK BUTTON --->
 						<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
 						   class="confirmIt"
 						   data-message="Do you really want to rollback to this version?"><i class="fa fa-refresh icon-large" id="version_rollback_#thisVersion.getContentVersionID()#"></i></a>
 						</cfif>
 
-						<cfif prc.oAuthor.checkPermission("VERSIONS_DELETE")>
+						<cfif prc.oAuthor.checkPermission( "VERSIONS_DELETE" )>
 						<!--- DELETE VERSION --->
 						<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
 						   data-title="<i class='fa fa-trash-o'></i> Remove Content Version"

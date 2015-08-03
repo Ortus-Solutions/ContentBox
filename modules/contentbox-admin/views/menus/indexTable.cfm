@@ -19,7 +19,7 @@
                     <input type="checkbox" name="menuID" id="menuID" value="#menu.getMenuID()#" />
                 </td>
                 <td>
-                    <cfif prc.oAuthor.checkPermission("MENUS_ADMIN")>
+                    <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
                         <a href="#event.buildLink(prc.xehMenuEditor)#/menuID/#menu.getMenuID()#" title="Edit menu">#menu.getTitle()#</a>
                     <cfelse>
                         #menu.getTitle()#
@@ -33,7 +33,7 @@
                             <i class="fa fa-cogs icon-large"></i>
                         </a>
                         <ul class="dropdown-menu text-left pull-right">
-                            <cfif prc.oAuthor.checkPermission("MENUS_ADMIN")>
+                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
                                 <!--- Delete Command --->
                                 <li>
                                     <a title="Delete Menu" href="javascript:remove('#menu.getmenuID()#', 'menuID')" class="confirmIt" data-title="Delete Menu?"><i class="fa fa-trash-o icon-large" id="delete_#menu.getMenuID()#"></i> Delete</a>
@@ -42,7 +42,7 @@
                                 <li>
                                     <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fa fa-edit icon-large"></i> Edit</a>
                                 </li>
-                                <cfif prc.oAuthor.checkPermission("TOOLS_EXPORT")>
+                                <cfif prc.oAuthor.checkPermission( "TOOLS_EXPORT" )>
                                     <!--- Export --->
                                     <li class="dropdown-submenu pull-left">
                                         <a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>

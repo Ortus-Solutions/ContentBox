@@ -22,7 +22,7 @@
             action=prc.xehRoleRemove, 
             class="form-vertical"
         )#
-        	#html.hiddenField(name="roleID",value="")#
+        	#html.hiddenField(name="roleID",value="" )#
         	<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
@@ -37,7 +37,7 @@
 						</div>
 						<div class="col-md-6">
 							<div class="pull-right">
-								<cfif prc.oAuthor.checkPermission("ROLES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+								<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 								<div class="pull-right">
 									<!---Global --->
 									<div class="btn-group btn-group-sm">
@@ -45,10 +45,10 @@
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
+								    		<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 								    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
+											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 								    		<li class="dropdown-submenu">
 												<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
 												<ul class="dropdown-menu text-left">
@@ -87,7 +87,7 @@
 							<cfloop array="#prc.roles#" index="role">
 							<tr>
 								<td>
-									<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
+									<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN" )>
 									<a href="javascript:edit('#role.getRoleID()#',
 									   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
 									   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')" 
@@ -110,7 +110,7 @@
 											<i class="fa fa-cogs icon-large"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
-											<cfif prc.oAuthor.checkPermission("ROLES_ADMIN,TOOLS_EXPORT")>
+											<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 												<!--- Delete Command --->
 												<cfif role.getNumberOfAuthors() eq 0>
 												<li><a href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Role?"><i class="fa fa-trash-o icon-large" id="delete_#role.getRoleID()#"></i> Delete</a></li>
@@ -121,7 +121,7 @@
 											   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 											
 												<!--- Export --->
-												<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
+												<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li class="dropdown-submenu pull-left">
 													<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>
 													<ul class="dropdown-menu text-left">
@@ -143,7 +143,7 @@
         #html.endForm()#
     </div>
 </div>
-<cfif prc.oAuthor.checkPermission("ROLES_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN" )>
 	<!--- Role Editor --->
 	<div id="roleEditorContainer" class="modal fade">
 		<div class="modal-header">
@@ -158,7 +158,7 @@
 			class="form-vertical"
 		)#
 		<div class="modal-body">
-			#html.hiddenField(name="roleID",value="")#
+			#html.hiddenField(name="roleID",value="" )#
 			#html.textField(
 				name="role",
 				label="Role:",
@@ -201,7 +201,7 @@
 		</div>
 	</div>
 </cfif>
-<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Roles",

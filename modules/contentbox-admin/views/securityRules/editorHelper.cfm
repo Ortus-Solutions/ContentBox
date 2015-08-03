@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <script type="text/javascript">
 $(document).ready(function() {
-	$ruleEditForm = $("##ruleEditForm");
+	$ruleEditForm = $( "##ruleEditForm" );
 	// form validators
 	$ruleEditForm.validate();
 });

@@ -9,7 +9,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -53,11 +53,11 @@ limitations under the License.
 		var results = "";
 		
 		// Invoke call
-		results = makeRequest(resource="types");
+		results = makeRequest(resource="types" );
 		
 		// error 
 		if( results.error ){
-			$throw("Error making ForgeBox REST Call",results.message);
+			$throw( "Error making ForgeBox REST Call",results.message);
 		}
 		
 		return results.response.data;				
@@ -84,7 +84,7 @@ limitations under the License.
 			
 			// error 
 			if( results.error ){
-				$throw("Error making ForgeBox REST Call",results.message);
+				$throw( "Error making ForgeBox REST Call",results.message);
 			}
 			
 			return results.response.data;				
@@ -98,11 +98,11 @@ limitations under the License.
 			var results = "";
 			
 			// Invoke call
-			results = makeRequest(resource="entry/#arguments.slug#");
+			results = makeRequest(resource="entry/#arguments.slug#" );
 			
 			// error 
 			if( results.error ){
-				$throw("Error making ForgeBox REST Call",results.message);
+				$throw( "Error making ForgeBox REST Call",results.message);
 			}
 			
 			return results.response.data;				
@@ -115,13 +115,13 @@ limitations under the License.
 		<cfargument name="destinationDir" type="string" required="true" />
 		
 		<!--- Start Log --->
-		<cfset var log 			= createObject("java","java.lang.StringBuffer").init("Starting Download...<br />")>
+		<cfset var log 			= createObject( "java","java.lang.StringBuffer" ).init( "Starting Download...<br />" )>
 		<cfset var destination  = arguments.destinationDir>
 		<cfset var fileName		= getFileFromPath(arguments.downloadURL)>
 		<cfset var results 		= {error=true,logInfo=""}>
 		
 		<!--- Append zip, if not found --->
-		<cfif listLast(filename,".") neq "zip">
+		<cfif listLast(filename,"." ) neq "zip">
 			<cfset filename &=".zip">
 		</cfif>
 		
@@ -135,7 +135,7 @@ limitations under the License.
 					throwOnError="true">
 		
 			<cfcatch type="any">
-				<cfset log.append("<strong>Error downloading file: #cfcatch.message# #cfcatch.detail#</strong><br />")>
+				<cfset log.append( "<strong>Error downloading file: #cfcatch.message# #cfcatch.detail#</strong><br />" )>
 				<cfset results.logInfo = log.toString()>
 				<cfreturn results>
 			</cfcatch>
@@ -143,26 +143,26 @@ limitations under the License.
 		
 		<!--- has file size? --->
 		<cfif getFileInfo(destination & "/" & fileName).size LTE 0>	
-			<cfset log.append("<strong>Cannot install file as it has a file size of 0.</strong>")>
+			<cfset log.append( "<strong>Cannot install file as it has a file size of 0.</strong>" )>
 			<cfset results.logInfo = log.toString()>
 			<cfset fileDelete( destination & "/" & fileName )>
 			<cfreturn results>
 		</cfif>
 		
-		<cfset log.append("File #fileName# downloaded successfully at #destination#, checking type for extraction.<br />")>
+		<cfset log.append( "File #fileName# downloaded successfully at #destination#, checking type for extraction.<br />" )>
 		
 		<!--- Unzip File? --->
-		<cfif listLast(filename,".") eq "zip">
-			<cfset log.append("Zip archive detected, beginning to uncompress.<br />")>
+		<cfif listLast(filename,"." ) eq "zip">
+			<cfset log.append( "Zip archive detected, beginning to uncompress.<br />" )>
 			<cfzip action="unzip" file="#destination#/#filename#" destination="#destination#" overwrite="true">
-			<cfset log.append("Archive uncompressed and installed at #destination#. Performing cleanup.<br />")>
+			<cfset log.append( "Archive uncompressed and installed at #destination#. Performing cleanup.<br />" )>
 			<cfset fileDelete(destination & "/" & filename)>
 		<cfelse>
-			<cfset log.append("File is not a zip, skipping and removing<br/>")>
+			<cfset log.append( "File is not a zip, skipping and removing<br/>" )>
 			<cfset fileDelete( destination & "/" & fileName )>
 		</cfif>
 		
-		<cfset log.append("Entry: #filename# successfully installed at #destination#.<br />")>
+		<cfset log.append( "Entry: #filename# successfully installed at #destination#.<br />" )>
 		<cfset results = {error=false,logInfo=log.toString()}>
 		
 		<cfreturn results>		
@@ -185,7 +185,7 @@ limitations under the License.
 			var jsonRegex = "^(\{|\[)(.)*(\}|\])$";
 			
 			// Default Content Type
-			if( NOT structKeyExists(arguments.headers,"content-type") ){
+			if( NOT structKeyExists(arguments.headers,"content-type" ) ){
 				arguments.headers["content-type"] = "";
 			}
 		</cfscript>
@@ -217,7 +217,7 @@ limitations under the License.
 		<cfscript>
 			// Log
 			if( logger.canDebug() ){
-				logger.debug("ForgeBox Rest Call ->Arguments: #arguments.toString()#",HTTPResults);
+				logger.debug( "ForgeBox Rest Call ->Arguments: #arguments.toString()#",HTTPResults);
 			}
 			
 			// Set Results

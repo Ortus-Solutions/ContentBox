@@ -5,10 +5,10 @@
 </style>	
 <script type="text/javascript">
 $(document).ready(function() {
-	$importForm = $("##importerForm");
+	$importForm = $( "##importerForm" );
 	var $importDialog = $( "##importDialog" );
-	$tabs = $("##import_tabs");
-	$button = $("##import_button");
+	$tabs = $( "##import_tabs" );
+	$button = $( "##import_button" );
 	$validator = $importForm.validate();
 	// form validation handler
 	$importForm.submit(function( e ){
@@ -45,8 +45,8 @@ $(document).ready(function() {
 					$( '##overwrite' ).val( $overrideContent.val() );
 					$importForm.attr( 'action', '#event.buildLink( rc.xehCBImport )#' );
 					$importForm.attr( 'target', '' );
-					$importDialog.find("##importButtonBar").slideUp();
-					$importDialog.find("##importBarLoader").slideDown();
+					$importDialog.find( "##importButtonBar" ).slideUp();
+					$importDialog.find( "##importBarLoader" ).slideDown();
 				}
 				break;
 			case 'database':
@@ -121,8 +121,8 @@ function addDatabaseValidations() {
  * Little utility for showing progress bars
  */
 function activateLoaders(){
-	$("##uploadBar").slideToggle();
-	$("##uploadBarLoader").slideToggle();
+	$( "##uploadBar" ).slideToggle();
+	$( "##uploadBarLoader" ).slideToggle();
 }
 </script>
 </cfoutput>
