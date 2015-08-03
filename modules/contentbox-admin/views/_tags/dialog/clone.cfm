@@ -12,7 +12,7 @@
                 #html.startForm( name="cloneForm", action="#args.action#", class="form-vertical", role="form" )#
                     <div class="modal-body">
                         <p>#args.infoMsg#</p>
-                        #html.hiddenField(name="contentID")#
+                        #html.hiddenField(name="contentID" )#
                         #html.textfield(
                             name="title", 
                             label="#args.titleLabel#", 

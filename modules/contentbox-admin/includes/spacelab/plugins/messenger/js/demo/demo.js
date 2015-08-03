@@ -1,5 +1,5 @@
 $(function(){
-  Messenger().post("Thanks for checking out SpaceLab!");
+  Messenger().post( "Thanks for checking out SpaceLab!" );
 
   var loc = ['bottom', 'right'];
   var style = 'flat';
@@ -17,7 +17,7 @@ $(function(){
     $.globalMessenger({ extraClasses: classes, theme: style });
     Messenger.options = { extraClasses: classes, theme: style };
 
-    $output.text("Messenger.options = {\n    extraClasses: '" + classes + "',\n    theme: '" + style + "'\n}");
+    $output.text( "Messenger.options = {\n    extraClasses: '" + classes + "',\n    theme: '" + style + "'\n}" );
   };
 
   update();

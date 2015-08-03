@@ -261,10 +261,10 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( structKeyExists( fields, arguments.key ) ){
 			return fields[ arguments.key ];
 		}
-		if( structKeyExists(arguments,"defaultValue") ){
+		if( structKeyExists(arguments,"defaultValue" ) ){
 			return arguments.defaultValue;
 		}
-		throw(message="No custom field with key: #arguments.key# found", detail="The keys are #structKeyList( fields )#", type="InvalidCustomField");
+		throw(message="No custom field with key: #arguments.key# found", detail="The keys are #structKeyList( fields )#", type="InvalidCustomField" );
 	}
 
 	/**
@@ -445,12 +445,12 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( !len( settingService.getSetting( "cb_versions_max_history" ) )  ){ return; }
 
 		// How many versions do we have?
-		var versionCounts = contentVersionService.newCriteria().isEq("relatedContent.contentID", getContentID() ).count();
+		var versionCounts = contentVersionService.newCriteria().isEq( "relatedContent.contentID", getContentID() ).count();
 		// Have we passed the limit?
 		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
 			var oldestVersion = contentVersionService.newCriteria()
 				.isEq( "relatedContent.contentID", getContentID() )
-				.isEq( "isActive", javaCast("boolean", false) )
+				.isEq( "isActive", javaCast( "boolean", false) )
 				.withProjections( id="true" )
 				.list( sortOrder="createdDate DESC", offset=settingService.getSetting( "cb_versions_max_history" ) - 2 );
 			// delete by primary key IDs found
@@ -462,7 +462,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Get recursive slug paths to get ancestry, DEPRECATED.
 	* @deprecated
 	*/
-	function getRecursiveSlug(separator="/"){
+	function getRecursiveSlug(separator="/" ){
 		var pPath = "";
 		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
 		return pPath & arguments.separator & getSlug();
@@ -608,7 +608,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// get latest content versioning
 		var latestContent = arguments.original.getActiveContent().getContent();
 		// Original slug updates on all content
-		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all");
+		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all" );
 		// reset versioning, and start with one
 		addNewContentVersion(content=latestContent, changelog="Content Cloned!", author=arguments.author);
 
@@ -672,7 +672,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// get formatted date
 		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
 		if( arguments.showTime ){
-			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt");
+			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt" );
 		}
 		return fDate;
 	}
@@ -686,7 +686,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// get formatted date
 		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
 		if( arguments.showTime ){
-			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt");
+			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt" );
 		}
 		return fDate;
 	}
@@ -696,7 +696,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayPublishedDate(){
 		var publishedDate = getPublishedDate();
-		return dateFormat( publishedDate, "mm/dd/yyyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt");
+		return dateFormat( publishedDate, "mm/dd/yyyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt" );
 	}
 
 	/**
@@ -704,7 +704,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt" );
 	}
 
 	/**
@@ -712,7 +712,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayExpireDate(){
 		if( isNull(expireDate) ){ return "N/A"; }
-		return dateFormat( expireDate, "mm/dd/yyyy" ) & " " & timeFormat(expireDate, "hh:mm:ss tt");
+		return dateFormat( expireDate, "mm/dd/yyyy" ) & " " & timeFormat(expireDate, "hh:mm:ss tt" );
 	}
 
 	/**
@@ -840,14 +840,14 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	any function renderContentSilent(any content=getContent()) profile{
 		// render content out, prepare builder
-		var b = createObject("java","java.lang.StringBuilder").init( arguments.content );
+		var b = createObject( "java","java.lang.StringBuilder" ).init( arguments.content );
 
 		// announce renderings with data, so content renderers can process them
 		var iData = {
 			builder = b,
 			content	= this
 		};
-		interceptorService.processState("cb_onContentRendering", iData);
+		interceptorService.processState( "cb_onContentRendering", iData);
 
 		// return processed content
 		return b.toString();

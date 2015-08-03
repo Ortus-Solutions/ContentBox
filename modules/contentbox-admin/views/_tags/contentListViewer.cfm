@@ -23,20 +23,20 @@ function setupContentView( settings ){
 }
 // Content filters
 function contentFilter(){
-	if ( $("##fAuthors").val() != "all" ||
-		 $("##fCreators").val() != "all" ||
-		 $("##fCategories").val() != "all" ||
-		 $("##fStatus").val() != "any") {
-		 $("##filterBox").addClass("selected");
+	if ( $( "##fAuthors" ).val() != "all" ||
+		 $( "##fCreators" ).val() != "all" ||
+		 $( "##fCategories" ).val() != "all" ||
+		 $( "##fStatus" ).val() != "any" ) {
+		 $( "##filterBox" ).addClass( "selected" );
 	}
 	else{
-		$("##filterBox").removeClass("selected");
+		$( "##filterBox" ).removeClass( "selected" );
 	}
 	contentLoad( {
-		fAuthors : $("##fAuthors").val(),
-		fCategories : $("##fCategories").val(),
-		fStatus : $("##fStatus").val(),
-		fCreators : $("##fCreators").val()
+		fAuthors : $( "##fAuthors" ).val(),
+		fCategories : $( "##fCategories" ).val(),
+		fStatus : $( "##fStatus" ).val(),
+		fCreators : $( "##fCreators" ).val()
 	} );
 }
 // reset filters
@@ -46,11 +46,11 @@ function resetFilter( reload ){
 		contentLoad();
 	}
 	// reload filters
-	$("##filterBox").removeClass("selected");
-	$("##fAuthors").val( 'all' );
-	$("##fCategories").val( 'all' );
-	$("##fStatus").val( 'any' );
-	$("##fCreators").val( 'all' );
+	$( "##filterBox" ).removeClass( "selected" );
+	$( "##fAuthors" ).val( 'all' );
+	$( "##fCategories" ).val( 'all' );
+	$( "##fStatus" ).val( 'any' );
+	$( "##fCreators" ).val( 'all' );
 }
 // Content drill down
 function contentDrilldown(parent){
@@ -66,7 +66,7 @@ function contentShowAll(){
 }
 // Get parent content ID value
 function getParentContentID(){
-	return $("##parent").val();
+	return $( "##parent" ).val();
 }
 // content paginate
 function contentPaginate(page){
@@ -75,10 +75,10 @@ function contentPaginate(page){
 		search: $searchField.val(),
 		page: page,
 		parent: getParentContentID(),
-		fAuthors : $("##fAuthors").val(),
-		fCategories : $("##fCategories").val(),
-		fStatus : $("##fStatus").val(),
-		fCreators : $("##fCreators").val()
+		fAuthors : $( "##fAuthors" ).val(),
+		fCategories : $( "##fCategories" ).val(),
+		fStatus : $( "##fStatus" ).val(),
+		fCreators : $( "##fCreators" ).val()
 	} );
 }
 // Content load
@@ -86,14 +86,14 @@ function contentLoad(criteria){
 	// default checks
 	if( criteria == undefined ){ criteria = {}; }
 	// default criteria matches
-	if( !("search" in criteria) ){ criteria.search = ""; }
-	if( !("page" in criteria) ){ criteria.page = 1; }
-	if( !("parent" in criteria) ){ criteria.parent = ""; }
-	if( !("fAuthors" in criteria) ){ criteria.fAuthors = "all"; }
-	if( !("fCreators" in criteria) ){ criteria.fCreators = "all"; }
-	if( !("fCategories" in criteria) ){ criteria.fCategories = "all"; }
-	if( !("fStatus" in criteria) ){ criteria.fStatus = "any"; }
-	if( !("showAll" in criteria) ){ criteria.showAll = false; }
+	if( !( "search" in criteria) ){ criteria.search = ""; }
+	if( !( "page" in criteria) ){ criteria.page = 1; }
+	if( !( "parent" in criteria) ){ criteria.parent = ""; }
+	if( !( "fAuthors" in criteria) ){ criteria.fAuthors = "all"; }
+	if( !( "fCreators" in criteria) ){ criteria.fCreators = "all"; }
+	if( !( "fCategories" in criteria) ){ criteria.fCategories = "all"; }
+	if( !( "fStatus" in criteria) ){ criteria.fStatus = "any"; }
+	if( !( "showAll" in criteria) ){ criteria.showAll = false; }
 	// loading effect
 	$tableContainer.css( 'opacity', .60 );
 	var args = {  
@@ -115,11 +115,11 @@ function contentLoad(criteria){
 }
 // Get info panel contents
 function getInfoPanelContent(contentID){
-	return $("##infoPanel_" + contentID).html();
+	return $( "##infoPanel_" + contentID).html();
 }
 // Activate info panels
 function activateInfoPanels(){
-	$(".popovers").popover({
+	$( ".popovers" ).popover({
 		html : true,
 		content : function(){
 			return getInfoPanelContent( $(this).attr( "data-contentID" ) );
@@ -132,7 +132,7 @@ function activateInfoPanels(){
 }
 // Activate quick looks 
 function activateQuickLook( $table, quickLookURL ){
-	$table.find("tr").bind("contextmenu",function(e) {
+	$table.find( "tr" ).bind( "contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if($(this).attr('data-contentID') != null) {
 				openRemoteModal( quickLookURL + $(this).attr('data-contentID'));
@@ -145,7 +145,7 @@ function activateQuickLook( $table, quickLookURL ){
 function remove( contentID, id ){
 	id = typeof id !== 'undefined' ? id : 'contentID';
 	if( contentID != null ){
-		$("##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+		$( "##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue( id, contentID );		
 	}
 	$contentForm.submit();
@@ -158,58 +158,58 @@ function bulkRemove(){
 function bulkChangeStatus(status, contentID){
 	// Setup the right form actions and status
 	$contentForm.attr( "action", $bulkStatusURL );
-	$contentForm.find("##contentStatus").val( status );
+	$contentForm.find( "##contentStatus" ).val( status );
 	// only submit if something selected
 	if( contentID != null ){
-		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+		$( "##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('contentID',contentID);	
 	}
 	$contentForm.submit();
 }
 // Import content dialogs
 function importContent(){
-	var $importForm = $importDialog.find("##importForm");
+	var $importForm = $importDialog.find( "##importForm" );
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
 	// form validator and data
 	$importForm.validate({ 
 		submitHandler: function(form){
-           	$importForm.find("##importButtonBar").slideUp();
-			$importForm.find("##importBarLoader").slideDown();
+           	$importForm.find( "##importButtonBar" ).slideUp();
+			$importForm.find( "##importBarLoader" ).slideDown();
 			form.submit();
         }
 	});
 	// close button
-	$importForm.find("##closeButton").click(function(e){
+	$importForm.find( "##closeButton" ).click(function(e){
 		closeModal( $importDialog ); return false;
 	});
 	// clone button
-	$importForm.find("##importButton").click(function(e){
+	$importForm.find( "##importButton" ).click(function(e){
 		$importForm.submit();
 	});
 }
 // Clone Dialog
 function openCloneDialog(contentID, title){
 	// local id's
-	var $cloneForm = $cloneDialog.find("##cloneForm");
+	var $cloneForm = $cloneDialog.find( "##cloneForm" );
 	// open modal for cloning options
 	openModal( $cloneDialog, 500, 300 );
 	// form validator and data
 	$cloneForm.validate({ 
 		submitHandler: function(form){
-           	$cloneForm.find("##cloneButtonBar").slideUp();
-			$cloneForm.find("##clonerBarLoader").slideDown();
+           	$cloneForm.find( "##cloneButtonBar" ).slideUp();
+			$cloneForm.find( "##clonerBarLoader" ).slideDown();
 			form.submit();
         }
 	});
-	$cloneForm.find("##contentID").val( contentID );
-	$cloneForm.find("##title").val( title ).focus();
+	$cloneForm.find( "##contentID" ).val( contentID );
+	$cloneForm.find( "##title" ).val( title ).focus();
 	// close button
-	$cloneForm.find("##closeButton").click(function(e){
+	$cloneForm.find( "##closeButton" ).click(function(e){
 		closeModal( $cloneDialog ); return false;
 	});
 	// clone button
-	$cloneForm.find("##cloneButton").click(function(e){
+	$cloneForm.find( "##cloneButton" ).click(function(e){
 		$cloneForm.submit();
 	});
 }

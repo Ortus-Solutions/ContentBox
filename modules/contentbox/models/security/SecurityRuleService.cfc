@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -32,7 +32,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	SecurityRuleService function init(){
 		// init it
-		super.init(entityName="cbSecurityRule");
+		super.init(entityName="cbSecurityRule" );
 
 		return this;
 	}
@@ -73,7 +73,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Get all rules in firing order
 	*/
 	query function getSecurityRules(){
-		return list(sortOrder="order asc");
+		return list(sortOrder="order asc" );
 	}
 
 	/**
@@ -83,14 +83,14 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		// Get rules path
 		var rulesPath = getDirectoryFromPath( getMetadata(this).path ) & "data/securityRules.json";
 		// remove all rules first
-		//var q = new query(sql="delete from cb_securityRule").execute();
+		//var q = new query(sql="delete from cb_securityRule" ).execute();
 		deleteAll(transactional=false);
 		// now re-create them
 		var securityRules = deserializeJSON(  fileRead( rulesPath ) );
 		// iterate over array
 		for(var thisRule in securityRules){
-			if( structKeyExists(thisRule,"ruleID") ){
-				structDelete(thisRule,"ruleID");
+			if( structKeyExists(thisRule,"ruleID" ) ){
+				structDelete(thisRule,"ruleID" );
 			}
 			var oRule = new(properties=thisRule);
 			save(entity=oRule, transactional=false);
@@ -104,9 +104,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="ruleID,whitelist,securelist,roles,permissions,redirect,useSSL,order,match")
+		return c.withProjections(property="ruleID,whitelist,securelist,roles,permissions,redirect,useSSL,order,match" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="order");
+			.list(sortOrder="order" );
 	}
 	
 	/**
@@ -114,10 +114,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }

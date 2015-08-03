@@ -75,11 +75,11 @@ Updates
 	<cffunction name="getCaptchaStorage" access="private" returntype="any" output="false">
 		<cfset var captcha = {captchaCode = "", validated = true}>
 		
-		<cfif not variables.sessionStorage.exists("cb_captcha")>
-			<cfset variables.sessionStorage.setVar("cb_captcha",captcha)>
+		<cfif not variables.sessionStorage.exists( "cb_captcha" )>
+			<cfset variables.sessionStorage.setVar( "cb_captcha",captcha)>
 		</cfif>
 		
-		<cfreturn variables.sessionStorage.getVar("cb_captcha")>
+		<cfreturn variables.sessionStorage.getVar( "cb_captcha" )>
 	</cffunction>
 	
 	<cffunction name="setCaptchaCode" access="public" returntype="void" output="false">
@@ -101,7 +101,7 @@ Updates
 	</cffunction>
 	
 	<cffunction name="clearCaptcha" access="private" returntype="void" output="false">
-		<cfset variables.sessionStorage.deleteVar("cb_captcha")>
+		<cfset variables.sessionStorage.deleteVar( "cb_captcha" )>
 	</cffunction>
 
 	<cffunction name="makeRandomString" access="private" returnType="string" output="false">

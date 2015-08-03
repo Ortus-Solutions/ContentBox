@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -29,7 +29,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	ContentVersionService function init(){
 		// init it
-		super.init(entityName="cbContentVersion");
+		super.init(entityName="cbContentVersion" );
 
 		return this;
 	}
@@ -39,7 +39,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// Find it
 		var c = newCriteria()
-			.isEq("relatedContent.contentID", javaCast("int",arguments.contentID));
+			.isEq( "relatedContent.contentID", javaCast( "int",arguments.contentID));
 
 		// run criteria query and projections count
 		results.count 		= c.count();

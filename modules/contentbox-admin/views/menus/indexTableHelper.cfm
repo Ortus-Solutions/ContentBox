@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     // tables references
-    $menu = $("##menu");
+    $menu = $( "##menu" );
     // sorting
     $menu.dataTable({
         "paging": false,

@@ -230,7 +230,7 @@ function fbNewFolder(){
 <cfif prc.fbSettings.deleteStuff>
 function fbDelete(){
 	var sPath = $selectedItem.val();
-	if( !sPath.length ){ alert( '#r( "jsmessages.select@fb")#' ); return; }
+	if( !sPath.length ){ alert( '#r( "jsmessages.select@fb" )#' ); return; }
 	if( confirm( '#r( "jsmessages.delete_confirm@fb" )#' ) ){
 		$fileLoaderBar.slideDown();
 		$.post( '#event.buildLink( prc.xehFBRemove )#',

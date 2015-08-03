@@ -16,7 +16,7 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
-		#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical")#
+		#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical" )#
 		<input type="hidden" name="categoryID" id="categoryID" value="" />
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -80,7 +80,7 @@
 							<td class="text-center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
 							<td class="text-center">
 								<div class="btn-group">
-									<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+									<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 									<!--- Edit Command --->
 									<button type="button" class="btn btn-primary btn-sm" onclick="javascript:edit('#category.getCategoryID()#','#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
 									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="fa fa-edit"></i></button>
@@ -110,9 +110,9 @@
 	                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-tag"></i> Category Editor</h4>
 			    </div>
 				<!--- Create/Edit form --->
-				#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate",class="form-vertical",role="form")#
+				#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate",class="form-vertical",role="form" )#
 				<div class="modal-body">
-					#html.hiddenField(name="categoryID",value="")#
+					#html.hiddenField(name="categoryID",value="" )#
 					#html.textField(
 						name="category",
 						label="Category:",
@@ -138,8 +138,8 @@
 				</div>
 				<!--- Footer --->
 				<div class="modal-footer">
-					#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##categoryEditorContainer') )")#
-					#html.submitButton(name="btnSave",value="Save Category",class="btn btn-danger")#
+					#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##categoryEditorContainer') )" )#
+					#html.submitButton(name="btnSave",value="Save Category",class="btn btn-danger" )#
 				</div>
 				#html.endForm()#
 			</div>

@@ -5,7 +5,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
  	// Editor Pointers
-	$contentForm 		= $("##contentForm");
+	$contentForm 		= $( "##contentForm" );
     // setup clockpicker
     $( '.clockpicker' ).clockpicker();
 	// setup editors via _tags/editors.cfm by passing the form container

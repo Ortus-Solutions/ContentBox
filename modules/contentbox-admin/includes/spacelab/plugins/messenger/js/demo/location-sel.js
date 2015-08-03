@@ -34,7 +34,7 @@
     LocationSelector.prototype._addBit = function(classes) {
       var bit;
       bit = $('<div>');
-      bit.addClass("bit " + classes);
+      bit.addClass( "bit " + classes);
       bit.attr('data-position', classes);
       this.$el.append(bit);
       return bit;

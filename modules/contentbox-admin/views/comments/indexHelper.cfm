@@ -2,13 +2,13 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$commentForm = $("##commentForm");
-	//$commentForm.find("##comments").tablesorter();
-	$commentForm.find("##commentFilter").keyup(function(){
-		$.uiTableFilter( $("##comments"), this.value );
+	$commentForm = $( "##commentForm" );
+	//$commentForm.find( "##comments" ).tablesorter();
+	$commentForm.find( "##commentFilter" ).keyup(function(){
+		$.uiTableFilter( $( "##comments" ), this.value );
 	});
 	// comment quick look
-	$commentForm.find("##comments").find("tr").bind("contextmenu",function(e) {
+	$commentForm.find( "##comments" ).find( "tr" ).bind( "contextmenu",function(e) {
 	    if (e.which === 3) {
 	    	if ($(this).attr('data-commentID') != null) {
 				openRemoteModal('#event.buildLink(prc.xehCommentQuickLook)#', {
@@ -18,7 +18,7 @@ $(document).ready(function() {
 			}
 	    }
 	});
-	$commentForm.find("##comments").dataTable({
+	$commentForm.find( "##comments" ).dataTable({
 	    "paging": false,
 	    "info": false,
 	    "searching": false,
@@ -31,26 +31,26 @@ $(document).ready(function() {
 	    "order": []
 	});
 });
-<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 function changeStatus(status,recordID){
-	$commentForm.attr("action","#event.buildlink(linkTo=prc.xehCommentstatus)#");
-	$commentForm.find("##commentStatus").val(status);
+	$commentForm.attr( "action","#event.buildlink(linkTo=prc.xehCommentstatus)#" );
+	$commentForm.find( "##commentStatus" ).val(status);
 	if( recordID != null ){
-		$("##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+		$( "##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('commentID',recordID);	
 	}
 	$commentForm.submit();
 }
 function remove(recordID){
 	if( recordID != null ){
-		$("##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+		$( "##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('commentID',recordID);		
 	}
 	//Submit Form
 	$commentForm.submit();
 }
 function removeAllModerated(){
-	$commentForm.attr("action","#event.buildlink(linkTo=prc.xehCommentRemoveAllModerated)#");
+	$commentForm.attr( "action","#event.buildlink(linkTo=prc.xehCommentRemoveAllModerated)#" );
 	$commentForm.submit();
 }
 </cfif>

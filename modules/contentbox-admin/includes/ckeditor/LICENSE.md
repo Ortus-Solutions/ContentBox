@@ -7,15 +7,15 @@ Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
 Licensed under the terms of any of the following licenses at your
 choice:
 
- - GNU General Public License Version 2 or later (the "GPL")
+ - GNU General Public License Version 2 or later (the "GPL" )
    http://www.gnu.org/licenses/gpl.html
    (See Appendix A)
 
- - GNU Lesser General Public License Version 2.1 or later (the "LGPL")
+ - GNU Lesser General Public License Version 2.1 or later (the "LGPL" )
    http://www.gnu.org/licenses/lgpl.html
    (See Appendix B)
 
- - Mozilla Public License Version 1.1 or later (the "MPL")
+ - Mozilla Public License Version 1.1 or later (the "MPL" )
    http://www.mozilla.org/MPL/MPL-1.1.html
    (See Appendix C)
 
@@ -452,7 +452,7 @@ TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
   0. This License Agreement applies to any software library or other
 program which contains a notice placed by the copyright holder or
 other authorized party saying it may be distributed under the terms of
-this Lesser General Public License (also called "this License").
+this Lesser General Public License (also called "this License" ).
 Each licensee is addressed as "you".
 
   A "library" means a collection of software functions and/or data
@@ -863,7 +863,7 @@ Version 1.1
      appropriate decompression or de-archiving software is widely available
      for no charge.
 
-     1.12. "You" (or "Your")  means an individual or a legal entity
+     1.12. "You" (or "Your" )  means an individual or a legal entity
      exercising rights under, and complying with all of the terms of, this
      License or a future version of this License issued under Section 6.1.
      For legal entities, "You" includes any entity which controls, is
@@ -1072,7 +1072,7 @@ Version 1.1
 6. Versions of the License.
 
      6.1. New Versions.
-     Netscape Communications Corporation ("Netscape") may publish revised
+     Netscape Communications Corporation ( "Netscape" ) may publish revised
      and/or new versions of the License from time to time. Each version
      will be given a distinguishing version number.
 
@@ -1124,7 +1124,7 @@ Version 1.1
      8.2.  If You initiate litigation by asserting a patent infringement
      claim (excluding declatory judgment actions) against Initial Developer
      or a Contributor (the Initial Developer or Contributor against whom
-     You file such action is referred to as "Participant")  alleging that:
+     You file such action is referred to as "Participant" )  alleging that:
 
      (a)  such Participant's Contributor Version directly or indirectly
      infringes any patent, then any and all rights granted by such
@@ -1230,7 +1230,7 @@ Version 1.1
 EXHIBIT A -Mozilla Public License.
 
      ``The contents of this file are subject to the Mozilla Public License
-     Version 1.1 (the "License"); you may not use this file except in
+     Version 1.1 (the "License" ); you may not use this file except in
      compliance with the License. You may obtain a copy of the License at
      http://www.mozilla.org/MPL/
 
@@ -1248,7 +1248,7 @@ EXHIBIT A -Mozilla Public License.
      Contributor(s): ______________________________________.
 
      Alternatively, the contents of this file may be used under the terms
-     of the _____ license (the  "[___] License"), in which case the
+     of the _____ license (the  "[___] License" ), in which case the
      provisions of [______] License are applicable instead of those
      above.  If you wish to allow use of your version of this file only
      under the terms of the [____] License and not to allow others to use

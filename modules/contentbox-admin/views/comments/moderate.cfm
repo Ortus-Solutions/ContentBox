@@ -13,12 +13,12 @@
 			<!--- Comment Details --->
 			<fieldset>
 				<legend><i class="icon-eye-open icon-large"></i> Comment Details</legend>
-					#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=rc.comment.getAuthorEmail())#
+					#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=rc.comment.getAuthorEmail())#
 					&nbsp;<a href="mailto:#rc.comment.getAUthorEmail()#" title="#rc.comment.getAUthorEmail()#">#rc.comment.getAuthor()#</a>
 					<br/>
 					<cfif len(rc.comment.getAuthorURL())>
 						<i class="icon-cloud"></i> 
-						<a href="<cfif NOT findnocase("http",rc.comment.getAuthorURL())>http://</cfif>#rc.comment.getAuthorURL()#" target="_blank">
+						<a href="<cfif NOT findnocase( "http",rc.comment.getAuthorURL())>http://</cfif>#rc.comment.getAuthorURL()#" target="_blank">
 							#rc.comment.getAuthorURL()#
 						</a>
 						<br />
@@ -42,7 +42,7 @@
 			<!--- Search Form --->
 			#html.startForm(name="commentForm",action=prc.xehCommentstatus)#
 				#html.hiddenField(name="commentID",bind=rc.comment)#
-				#html.hiddenField(name="commentStatus",value="approve")#
+				#html.hiddenField(name="commentStatus",value="approve" )#
 				<div class="form-actions">
 				<!--- Buttons --->
 				<button type="submit" class="btn btn-primary" onclick="removeComment()"><i class="icon-trash"></i> Delete</button>

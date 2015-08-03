@@ -86,10 +86,10 @@
 						<i class="fa fa-cogs icon-large"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oAuthor.checkPermission("ENTRIES_EDITOR,ENTRIES_ADMIN")>
+			    		<cfif prc.oAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
 						<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="fa fa-copy icon-large"></i> Clone</a></li>
-						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
 							<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Entry?"><i id="delete_#entry.getContentID()#" class="fa fa-trash-o icon-large" ></i> Delete</a>
@@ -98,7 +98,7 @@
 						<!--- Edit Command --->
 						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 						</cfif>
-						<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN,TOOLS_EXPORT")>
+						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
 						<li class="dropdown-submenu pull-left">
 							<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>

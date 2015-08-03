@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -51,7 +51,7 @@ component accessors=true {
     */
     ContentBoxImporter function init(){
         setFileNames( [] );
-        setContentBoxPackagePath("");
+        setContentBoxPackagePath( "" );
         dataServiceMappings = {};
         fileServiceMappings = {};
         return this;
@@ -141,7 +141,7 @@ component accessors=true {
      * @overrideContent.hint Whether or not to override existing content with uploaded data (default=false)
      */
     public string function execute( required boolean overrideContent=false ) {
-        var importLog = createObject("java", "java.lang.StringBuilder").init("Starting ContentBox package import with override = #arguments.overrideContent#...<br>");
+        var importLog = createObject( "java", "java.lang.StringBuilder" ).init( "Starting ContentBox package import with override = #arguments.overrideContent#...<br>" );
         // first, unzip entire package
         zipUtil.extract( 
             zipFilePath=getContentBoxPackagePath(), 

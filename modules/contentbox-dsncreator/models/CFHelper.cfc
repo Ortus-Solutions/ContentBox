@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -72,10 +72,10 @@ limitations under the License.
 				// Login First
 				loginCFML( arguments.cfmlPassword );	    
 				// Create CF DSN Manager
-				var oDSNManager = createObject("component","cfide.adminapi.datasource");
+				var oDSNManager = createObject( "component","cfide.adminapi.datasource" );
 				// Verify DSN Does not Exist yet
 				if( structKeyExists( oDSNManager.getDatasources(), arguments.dsnName ) ){
-					throw(message="Datsource #arguments.dsnName# already exists!", type="DuplicateDSNException");
+					throw(message="Datsource #arguments.dsnName# already exists!", type="DuplicateDSNException" );
 				}
 				// Create DSN data struct
 				var data = {
@@ -138,7 +138,7 @@ limitations under the License.
     <cffunction name="loginCFML" output="false" access="private" returntype="any" hint="Login to CFML admin">    
     	<cfargument name="cfmlPassword" required=true>
     	<cfscript>	
-			return createObject("component","cfide.adminapi.administrator").login( arguments.cfmlPassword );    
+			return createObject( "component","cfide.adminapi.administrator" ).login( arguments.cfmlPassword );    
     	</cfscript>    
     </cffunction>
 			

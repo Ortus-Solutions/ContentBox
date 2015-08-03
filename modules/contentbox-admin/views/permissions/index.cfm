@@ -23,7 +23,7 @@
             action=prc.xehPermissionRemove, 
             class="form-vertical"
         )#
-        	#html.hiddenField(name="permissionID",value="")#
+        	#html.hiddenField(name="permissionID",value="" )#
         	<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
@@ -38,16 +38,16 @@
 						</div>
 						<div class="col-md-6">
 							<div class="pull-right">
-								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+								<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group btn-group-sm">
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
+								    		<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 								    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
+											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 								    		<li class="dropdown-submenu">
 												<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
 												<ul class="dropdown-menu text-left">
@@ -79,7 +79,7 @@
 							<cfloop array="#prc.permissions#" index="permission">
 							<tr>
 								<td>
-									<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+									<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<a href="javascript:edit('#permission.getPermissionID()#',
 									   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
 									   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
@@ -93,7 +93,7 @@
 									<span class="badge badge-info">#permission.getNumberOfRoles()#</span>
 								</td>
 								<td class="text-center">
-									<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
+									<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 										<!--- Edit Command --->
 										<a class="btn btn-sm btn-primary" href="javascript:edit('#permission.getPermissionID()#',
 										   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
@@ -116,7 +116,7 @@
 		#html.endForm()#	
     </div>
 </div>
-<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 	<!--- Permissions Editor --->
 	<div id="permissionEditorContainer" class="modal fade">
 		<div class="modal-dialog">
@@ -133,7 +133,7 @@
 					class="form-vertical"
 				)#
 				<div class="modal-body">
-					#html.hiddenField(name="permissionID",value="")#
+					#html.hiddenField(name="permissionID",value="" )#
 					#html.textField(
 						name="permission",
 						label="Permission:",
@@ -174,7 +174,7 @@
 		</div>
 	</div>
 </cfif>
-<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Permissions",

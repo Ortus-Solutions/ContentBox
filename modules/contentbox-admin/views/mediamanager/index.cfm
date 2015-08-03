@@ -28,7 +28,7 @@
 	<div class="col-md-12">
 		    
     	<!--- messageBox --->
-		#getPlugin("MessageBox").renderit()#
+		#getPlugin( "MessageBox" ).renderit()#
 
 		<!--- FileBrowser Viewlet --->
 		#runEvent(event=prc.xehFileBrowser,eventArguments=prc.fbArgs)#

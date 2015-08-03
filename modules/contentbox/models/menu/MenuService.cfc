@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -231,7 +231,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     * @slug.hint The slug to search for uniqueness
     * @menuID.hint Limit the search to the passed menuID usually for updates
     */
-    function isSlugUnique(required any slug, any menuID=""){
+    function isSlugUnique(required any slug, any menuID="" ){
         var c = newCriteria()
             .isEq( "slug", arguments.slug );
         

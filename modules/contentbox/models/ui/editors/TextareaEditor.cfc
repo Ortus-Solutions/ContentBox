@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -52,7 +52,7 @@ component implements="contentbox.models.ui.editors.IEditor" singleton{
 		var js = "";
 		
 		savecontent variable="js"{
-			writeOutput("
+			writeOutput( "
 			function checkIsDirty(){
 				return false;
 			}
@@ -71,7 +71,7 @@ component implements="contentbox.models.ui.editors.IEditor" singleton{
 			function insertEditorContent( editorName, content ){
 				// not used yet
 			}
-			");
+			" );
 		}
 		
 		return js;
@@ -81,14 +81,14 @@ component implements="contentbox.models.ui.editors.IEditor" singleton{
 	* Startup the editor(s) on a page
 	*/
 	function startup(){
-		log.info( getName() & " editor started up.");
+		log.info( getName() & " editor started up." );
 	}
 	
 	/**
 	* Shutdown the editor(s) on a page
 	*/
 	function shutdown(){
-		log.info( getName() & " editor shutdown.");
+		log.info( getName() & " editor shutdown." );
 	}
 
 

@@ -8,7 +8,7 @@
 </cfif>
 
 <!--- Hidden Elements --->
-#html.hiddenField( name="parent", value=event.getValue( "parent", "") )#
+#html.hiddenField( name="parent", value=event.getValue( "parent", "" ) )#
 
 <!--- content --->
 <table name="content" id="content" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -98,12 +98,12 @@
 						<i class="fa fa-cogs icon-large"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oAuthor.checkPermission("CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN")>
+			    		<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 						<!--- Clone Command --->
 						<li><a href="javascript:openCloneDialog('#content.getContentID()#','#URLEncodedFormat(content.getTitle())#')"><i class="fa fa-copy icon-large"></i> Clone</a></li>
 						<!--- Create Child --->
 						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fa fa-sitemap icon-large"></i> Create Child</a></li>
-						<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
+						<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
 							<a href="javascript:remove('#content.getContentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Content?"><i id="delete_#content.getContentID()#" class="fa fa-trash-o icon-large" ></i> Delete</a>
@@ -112,7 +112,7 @@
 						<!--- Edit Command --->
 						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 						</cfif>
-						<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_EXPORT")>
+						<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
 						<li class="dropdown-submenu pull-left">
 							<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>

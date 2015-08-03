@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -108,7 +108,7 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 	*/
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt");
+		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt" );
 	}
 
 	/**
@@ -144,14 +144,14 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 			lock name="contentbox.versionrendering.#getContentVersionID()#" type="exclusive" throwontimeout="true" timeout="10"{
 				if( NOT len(renderedContent) ){
 					// else render content out, prepare builder
-					var b = createObject("java","java.lang.StringBuilder").init( content );
+					var b = createObject( "java","java.lang.StringBuilder" ).init( content );
 
 					// announce renderings with data, so content renderers can process them
 					var iData = {
 						builder = b,
 						content	= this
 					};
-					interceptorService.processState("cb_onContentRendering", iData);
+					interceptorService.processState( "cb_onContentRendering", iData);
 
 					// save content
 					renderedContent = b.toString();

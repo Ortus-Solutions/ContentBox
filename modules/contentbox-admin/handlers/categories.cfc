@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Manage categories
 */
 component extends="baseHandler"{
@@ -27,19 +27,19 @@ component extends="baseHandler"{
 		// Tab
 		prc.tabContent_categories = true;
 		// view
-		event.setView("categories/index");
+		event.setView( "categories/index" );
 	}
 
 	// save
 	function save(event,rc,prc){
 		// slugify if not passed, and allow passed slugs to be saved as-is
 		if( NOT len(rc.slug) ){ 
-			rc.slug = getPlugin("HTMLHelper").slugify(rc.category); 
+			rc.slug = getPlugin( "HTMLHelper" ).slugify(rc.category); 
 		}
 		// populate and get category
 		var oCategory = populateModel( categoryService.get(id=rc.categoryID) );
     	// announce event
-		announceInterception("cbadmin_preCategorySave",{category=oCategory,categoryID=rc.categoryID});
+		announceInterception( "cbadmin_preCategorySave",{category=oCategory,categoryID=rc.categoryID});
 		// check if category already exists
 		var isSaveableCategory = rc.categoryID!="" || isNull( categoryService.findWhere( criteria={ slug=rc.category } ) ) ? true : false;
 		// if non-existent
@@ -47,13 +47,13 @@ component extends="baseHandler"{
 			// save category
 			categoryService.save( oCategory );
 			// announce event
-			announceInterception("cbadmin_postCategorySave",{category=oCategory});
+			announceInterception( "cbadmin_postCategorySave",{category=oCategory});
 			// messagebox
-			getPlugin("MessageBox").setMessage("info","Category saved!");
+			getPlugin( "MessageBox" ).setMessage( "info","Category saved!" );
 		}
 		else {
 			// messagebox
-			getPlugin("MessageBox").setMessage("warning","Category '#rc.category#' already exists!");	
+			getPlugin( "MessageBox" ).setMessage( "warning","Category '#rc.category#' already exists!" );	
 		}
 		// relocate
 		setNextEvent(prc.xehCategories);
@@ -66,7 +66,7 @@ component extends="baseHandler"{
 		
 		// verify if contentID sent
 		if( !len( rc.categoryID ) ){
-			getPlugin("MessageBox").warn( "No categories sent to delete!" );
+			getPlugin( "MessageBox" ).warn( "No categories sent to delete!" );
 			setNextEvent(event=prc.xehCategories);
 		}
 		
@@ -85,35 +85,35 @@ component extends="baseHandler"{
 				var categoryID 	= category.getCategoryID();
 				var title		= category.getSlug();
 				// announce event
-				announceInterception("cbadmin_preCategoryRemove", { category=category, categoryID=categoryID } );
+				announceInterception( "cbadmin_preCategoryRemove", { category=category, categoryID=categoryID } );
 				// Delete category via service
 				categoryService.deleteCategory( category ); 
 				arrayAppend( messages, "Category '#title#' removed" );
 				// announce event
-				announceInterception("cbadmin_postCategoryRemove", { categoryID=categoryID });
+				announceInterception( "cbadmin_postCategoryRemove", { categoryID=categoryID });
 			}
 		}
 		
 		// messagebox
-		getPlugin("MessageBox").info(messageArray=messages);
+		getPlugin( "MessageBox" ).info(messageArray=messages);
 		setNextEvent( prc.xehCategories );
 	}
 
 	// Export All categories
 	function exportAll(event,rc,prc){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = categoryService.getAllForExport();
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Categories." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="categories")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); ; 
+				event.renderData(data=data, type=rc.format, xmlRootName="categories" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); ; 
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
@@ -125,17 +125,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = categoryService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin("MessageBox").info( "Categories imported sucessfully!" );
+				getPlugin( "MessageBox" ).info( "Categories imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin("MessageBox").error( errorMessage );
+			getPlugin( "MessageBox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehCategories );
 	}

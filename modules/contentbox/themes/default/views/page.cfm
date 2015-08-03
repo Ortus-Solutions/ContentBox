@@ -1,10 +1,10 @@
 ﻿<cfoutput>
 
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_prePageDisplay")#
+	#cb.event( "cbui_prePageDisplay" )#
 	
 	<!--- breadcrumbs only if not home page. --->
-	<cfif cb.getCurrentPage().getSlug() NEQ cb.getHomePage() AND cb.getCustomField("breadcrumb",true) AND !cb.isPrintFormat()>
+	<cfif cb.getCurrentPage().getSlug() NEQ cb.getHomePage() AND cb.getCustomField( "breadcrumb",true) AND !cb.isPrintFormat()>
 	<div class="infoBar">> <a href="#cb.linkHome()#">Home</a> #cb.breadCrumbs()#</div>
 	</cfif>
 	
@@ -27,7 +27,7 @@
 		<!--- Comments Bar --->
 		<cfif cb.isCommentsEnabled(cb.getCurrentPage()) and !cb.isPrintFormat()>
 					
-			#html.anchor(name="comments")#
+			#html.anchor(name="comments" )#
 			<div class="post-comments">
 				<div class="infoBar">
 					<button class="button2" onclick="toggleCommentForm()"> Add Comment </button>
@@ -57,20 +57,20 @@
 	</div>
 		
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_postPageDisplay")#
+	#cb.event( "cbui_postPageDisplay" )#
 	
 <!--- Custom JS For Comments--->
 <cfif cb.isCommentsEnabled() and !cb.isPrintFormat()>
 <script type="text/javascript">
 $(document).ready(function() {
  	// form validator
-	$("##commentForm").validator({position:'top left'});
+	$( "##commentForm" ).validator({position:'top left'});
 	<cfif cb.isCommentFormError()>
 	toggleCommentForm();
 	</cfif>
 });
 function toggleCommentForm(){
-	$("##commentForm").slideToggle();
+	$( "##commentForm" ).slideToggle();
 }
 </script>
 </cfif>

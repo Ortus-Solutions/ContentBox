@@ -37,7 +37,7 @@ component accessors="true" threadSafe{
 
 	// Apply updates from a download URL, return results struct: [error,logInfo]
 	struct function applyUpdateFromURL(required string downloadURL){
-		var log 			= createObject("java","java.lang.StringBuilder").init("");
+		var log 			= createObject( "java","java.lang.StringBuilder" ).init( "" );
 		var results 		= {error=true, logInfo=""};
 		var fileName 		= getFileFromPath( arguments.downloadURL );
 
@@ -56,14 +56,14 @@ component accessors="true" threadSafe{
 
 	// Apply updates from an upload, return results struct: [error,logInfo]
 	struct function applyUpdateFromUpload(required fileField){
-		var log 			= createObject("java","java.lang.StringBuilder").init("");
+		var log 			= createObject( "java","java.lang.StringBuilder" ).init( "" );
 		var results 		= {error=true,logInfo=""};
 
 		try{
 			// upload patch
-			log.append("Starting upload of patch.<br/>");
+			log.append( "Starting upload of patch.<br/>" );
 			var uploadResults = uploadUpdate( arguments.fileField );
-			log.append("Upload of patch completed, starting to uncompress it.<br/>");
+			log.append( "Upload of patch completed, starting to uncompress it.<br/>" );
 
 			// extract patch
 			extractPatch( uploadResults.clientfile, log);
@@ -74,7 +74,7 @@ component accessors="true" threadSafe{
 			}
 		}
 		catch(any e){
-			log.append("Exception uploading patch: #e.message# #e.detail#<br/>");
+			log.append( "Exception uploading patch: #e.message# #e.detail#<br/>" );
 		}
 
 		// finalize the results
@@ -88,28 +88,28 @@ component accessors="true" threadSafe{
 	function processRemovals(required path, required log){
 		// verify the path exists on the incoming path
 		if( !fileExists( arguments.path ) ){
-			arguments.log.append("Skipping file removals as file does not exist: #arguments.path#<br/>");
+			arguments.log.append( "Skipping file removals as file does not exist: #arguments.path#<br/>" );
 			return;
 		}
 		// read the files to remove
 		var removalText = fileRead( arguments.path );
-		arguments.log.append("Starting to process removals from: #arguments.path#<br/>");
+		arguments.log.append( "Starting to process removals from: #arguments.path#<br/>" );
 
 		// if there are files, then remove, else continue
 		if( len( removalText ) ){
 			var files = listToArray( removalText, chr(10) );
 			for(var thisFile in files){
-				if( fileExists( expandPath("/#thisFile#" ) ) ){
-					fileDelete( expandPath("/#thisFile#" ) );
-					arguments.log.append("Removed: #thisFile#<br/>");
+				if( fileExists( expandPath( "/#thisFile#" ) ) ){
+					fileDelete( expandPath( "/#thisFile#" ) );
+					arguments.log.append( "Removed: #thisFile#<br/>" );
 				}
 				else{
-					arguments.log.append("File Not Found, so not removed: #thisFile#<br/>");
+					arguments.log.append( "File Not Found, so not removed: #thisFile#<br/>" );
 				}
 			}
 		}
 		else{
-			arguments.log.append("No updated files to remove. <br/>");
+			arguments.log.append( "No updated files to remove. <br/>" );
 		}
 
 		// remove deletes.txt file
@@ -123,7 +123,7 @@ component accessors="true" threadSafe{
 
 		// Verify patch exists
 		if( !fileExists( arguments.path ) ){
-			arguments.log.append("Skipping patch extraction as no patch.zip found in update patch.<br/>");
+			arguments.log.append( "Skipping patch extraction as no patch.zip found in update patch.<br/>" );
 			return;
 		}
 
@@ -133,16 +133,16 @@ component accessors="true" threadSafe{
 		}
 		catch(Any e){
 			// bad zip file.
-			arguments.log.append("Error getting listing of zip archive, bad zip.<br />");
+			arguments.log.append( "Error getting listing of zip archive, bad zip.<br />" );
 			rethrow;
 		}
 
 		// good zip file
-		arguments.log.append("Patch Zip archive detected, beginning to expand update: #arguments.path#<br />");
+		arguments.log.append( "Patch Zip archive detected, beginning to expand update: #arguments.path#<br />" );
 		// extract it
-		zipUtil.extract(zipFilePath=arguments.path, extractPath=appPath, overwriteFiles="true");
+		zipUtil.extract(zipFilePath=arguments.path, extractPath=appPath, overwriteFiles="true" );
 		// more logging
-		arguments.log.append("Patch Updates uncompressed.<br />");
+		arguments.log.append( "Patch Updates uncompressed.<br />" );
 
 		// remove patch
 		fileDelete( arguments.path );
@@ -150,7 +150,7 @@ component accessors="true" threadSafe{
 
 	// Build an updater CFC from our patch locations
 	contentbox.models.updates.IUpdate function buildUpdater(){
-		return wirebox.getInstance("contentbox.updates.Update");
+		return wirebox.getInstance( "contentbox.updates.Update" );
 	}
 
 	// Download the patch from URL and mark it as ok or not
@@ -158,7 +158,7 @@ component accessors="true" threadSafe{
 		var fileName = getFileFromPath( arguments.downloadURL );
 
 		try{
-			arguments.log.append("Starting Download...<br />");
+			arguments.log.append( "Starting Download...<br />" );
 			//Download File
 			var httpService = new http(url="#arguments.downloadURL#",
 									   method="GET",
@@ -168,12 +168,12 @@ component accessors="true" threadSafe{
 			httpService.send();
 		}
 		catch(Any e){
-			arguments.log.append("<strong>Error downloading file: #e.message# #e.detail#</strong><br />");
+			arguments.log.append( "<strong>Error downloading file: #e.message# #e.detail#</strong><br />" );
 			return false;
 		}
 
 		// log it
-		arguments.log.append("File #fileName# downloaded successfully at #getPatchesLocation()#, checking type for extraction.<br />");
+		arguments.log.append( "File #fileName# downloaded successfully at #getPatchesLocation()#, checking type for extraction.<br />" );
 
 		// Uncompress Patch?
 		return extractPatch(filename,log);
@@ -182,7 +182,7 @@ component accessors="true" threadSafe{
 	// extract a patch in the updates location
 	boolean function extractPatch(required string filename, required log){
 		// Unzip File?
-		if ( listLast(arguments.filename,".") eq "zip" ){
+		if ( listLast(arguments.filename,"." ) eq "zip" ){
 
 			// test zip has files?
 			try{
@@ -190,22 +190,22 @@ component accessors="true" threadSafe{
 			}
 			catch(Any e){
 				// bad zip file.
-				arguments.log.append("Error getting listing of zip archive (#getPatchesLocation()#/#arguments.filename#), bad zip, file will be removed.<br />");
+				arguments.log.append( "Error getting listing of zip archive (#getPatchesLocation()#/#arguments.filename#), bad zip, file will be removed.<br />" );
 				fileDelete( getPatchesLocation() & "/" & arguments.filename );
 				return false;
 			}
 
 			// good zip file
-			arguments.log.append("Zip archive detected, beginning to uncompress.<br />");
+			arguments.log.append( "Zip archive detected, beginning to uncompress.<br />" );
 			// extract it
-			zipUtil.extract(zipFilePath="#getPatchesLocation()#/#arguments.filename#", extractPath="#getPatchesLocation()#", overwriteFiles="true");
+			zipUtil.extract(zipFilePath="#getPatchesLocation()#/#arguments.filename#", extractPath="#getPatchesLocation()#", overwriteFiles="true" );
 			// more logging
-			arguments.log.append("Patch Update uncompressed at #getPatchesLocation()#.<br />");
+			arguments.log.append( "Patch Update uncompressed at #getPatchesLocation()#.<br />" );
 			// return good and extracted
 			return true;
 		}
 		else{
-			arguments.log.append("File #arguments.fileName# is not a zip file, so cannot extract it or use it, file will be removed.<br/>");
+			arguments.log.append( "File #arguments.fileName# is not a zip file, so cannot extract it or use it, file will be removed.<br/>" );
 			fileDelete( getPatchesLocation() & "/" & arguments.filename );
 			return false;
 		}
@@ -305,7 +305,7 @@ component accessors="true" threadSafe{
 	* Upload an update file to disk
 	*/
 	struct function uploadUpdate(required fileField){
-		return fileUpload( getPatchesLocation(), arguments.fileField, "application/zip,application/x-zip-compressed,application/octet-stream", "overwrite");
+		return fileUpload( getPatchesLocation(), arguments.fileField, "application/zip,application/x-zip-compressed,application/octet-stream", "overwrite" );
 	}
 
 	/************************************** PRIVATE *********************************************/
@@ -316,7 +316,7 @@ component accessors="true" threadSafe{
 
 		// Verify Patch integrity
 		if( !fileExists( getPatchesLocation() & "/Update.cfc" ) ){
-			arguments.log.append("Update.cfc not found in downloaded package, skipping patch update.<br/>");
+			arguments.log.append( "Update.cfc not found in downloaded package, skipping patch update.<br/>" );
 		}
 		else{
 			try{
@@ -324,7 +324,7 @@ component accessors="true" threadSafe{
 
 				// do preInstallation
 				updater.preInstallation( arguments.log );
-				arguments.log.append("Update.cfc - called preInstallation() method.<br/>");
+				arguments.log.append( "Update.cfc - called preInstallation() method.<br/>" );
 
 				// Do deletes first
 				processRemovals( getPatchesLocation() & "/deletes.txt", log );
@@ -334,12 +334,12 @@ component accessors="true" threadSafe{
 
 				// Post Install
 				updater.postInstallation( arguments.log );
-				arguments.log.append("Update.cfc - called postInstallation() method.<br/>");
+				arguments.log.append( "Update.cfc - called postInstallation() method.<br/>" );
 
 				results = true;
 			}
 			catch(any e){
-				arguments.log.append("Error applying update: #e.message# #e.detail#<br/>#e.stacktrace#");
+				arguments.log.append( "Error applying update: #e.message# #e.detail#<br/>#e.stacktrace#" );
 			}
 			finally{
 				// Finally Remove Updater

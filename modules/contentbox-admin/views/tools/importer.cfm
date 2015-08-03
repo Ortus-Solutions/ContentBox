@@ -6,7 +6,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getPlugin("MessageBox").renderit()#
+        #getPlugin( "MessageBox" ).renderit()#
     </div>
 </div>
 <div class="row">
@@ -19,7 +19,7 @@
                             <h2>ContentBox Package (.cbox)</h2>
                             <small>If you're importing content from another ContentBox site, this option is for you.</small><br /><br />
                             <label class="btn btn-success btn-toggle radio" for="import-contentbox">
-                                #html.radioButton(name="importtype",id="import-contentbox",checked=true,value="contentbox")# Import ContentBox Package
+                                #html.radioButton(name="importtype",id="import-contentbox",checked=true,value="contentbox" )# Import ContentBox Package
                             </label>
                         </div>
                         <div class="col-md-1">&nbsp;</div>
@@ -27,7 +27,7 @@
                             <h2>Database Import</h2>
                             <small>ContentBox also supports imports from Mango, WordPress, BlogCFC, and MachBlog databases via Datasource connections!</small><br />
                             <label class="btn btn-toggle radio clearfix" for="import-database">
-                                #html.radioButton(name="importtype",id="import-database",value="database")# 
+                                #html.radioButton(name="importtype",id="import-database",value="database" )# 
                                 Import from Database
                             </label>
                         </div>
@@ -43,7 +43,7 @@
                             <div class="row-fluid">
                                 <div class="form-group">
                                     <div class="controls">
-                                        #html.label(field="CBUpload",content="Select ContentBox Package",class="control-label")#
+                                        #html.label(field="CBUpload",content="Select ContentBox Package",class="control-label" )#
                                         #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
                                             name="CBUpload",
                                             required=true
@@ -57,8 +57,8 @@
                                                     <span class="fileupload-new">Select file</span>
                                                     <span class="fileupload-exists">Change</span>
                                                     <input type="file" name="CBUpload" />
-                                                    #html.hiddenField(name="validated",value="false")#
-                                                    #html.hiddenField(name="overwrite",id="overwrite",value="false")#
+                                                    #html.hiddenField(name="validated",value="false" )#
+                                                    #html.hiddenField(name="overwrite",id="overwrite",value="false" )#
                                                 </span>
                                                 <a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                                             </div>
@@ -123,19 +123,19 @@
                             
                             <!--- Default Password --->
                             <div class="form-group">
-                                #html.label(field="tableprefix",content="Table Prefix:",class="control-label")#
+                                #html.label(field="tableprefix",content="Table Prefix:",class="control-label" )#
                                 <div class="controls">
                                     <small>The table prefix used by the source software.</small><br/>
-                                    #html.textField(name="tableprefix", class="form-control")#
+                                    #html.textField(name="tableprefix", class="form-control" )#
                                 </div>
                             </div>
                             <!--- Default Password --->
                             <div class="form-group">
-                                #html.label(field="defaultPassword",content="Default Author Password:",class="control-label")#
+                                #html.label(field="defaultPassword",content="Default Author Password:",class="control-label" )#
                                 <div class="controls">
                                     <small>Since ContentBox uses its own encryption algorithm, you cannot port passwords. Use the following
                                     default password for all authors and then do password change requests.</small><br/>
-                                    #html.textField(name="defaultPassword",class="form-control")#   
+                                    #html.textField(name="defaultPassword",class="form-control" )#   
                                 </div>
                             </div>
                             <!--- Roles --->

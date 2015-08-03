@@ -5,11 +5,11 @@
 	<h3><i class="icon-bolt icon-large"></i> Update Check: <span class="label label-inverse">#rc.channel#</span></h3>
 </div>
 <div class="modal-body">
-    #html.startForm(name="updateForm",action=prc.xehUpdateApply,class="form-vertical")#
-	#getPlugin("MessageBox").renderit()#
+    #html.startForm(name="updateForm",action=prc.xehUpdateApply,class="form-vertical" )#
+	#getPlugin( "MessageBox" ).renderit()#
 
 	<cfif prc.updateFound>
-	#html.startFieldSet(legend="Version Information")#
+	#html.startFieldSet(legend="Version Information" )#
 	<table name="settings" id="settings" class="table table-striped table-hover table-condensed table-bordered" width="98%">
 		<thead>
 			<tr class="">
@@ -32,7 +32,7 @@
 	#html.hiddenField(name="downloadURL",value=prc.updateEntry.downloadURL)#
 	#html.hiddenField(name="version",value=prc.updateEntry.version)#
 	
-	#html.startFieldSet(legend="Description")#
+	#html.startFieldSet(legend="Description" )#
 	<p>#prc.updateEntry.description#</p>
 	
 	<cfif len(prc.updateEntry.installInstructions)>
@@ -43,7 +43,7 @@
 	</cfif>
 	#html.endFieldSet()#
 	
-	#html.startFieldSet(legend="Changelog")#	
+	#html.startFieldSet(legend="Changelog" )#	
 	<p>#prc.updateEntry.changelog#</p>
 	#html.endFieldSet()#
 	
@@ -52,7 +52,7 @@
 			<i class="icon-warning-sign icon-large"></i>
 			Please make sure you do any backups before applying this update.
 		</div>
-		#html.button(type="submit", name="submitUpdate", class="btn btn-danger btn-large", value="<i class='icon-ok'></i> Apply Update", onclick="return confirm('Are you positive?')")#
+		#html.button(type="submit", name="submitUpdate", class="btn btn-danger btn-large", value="<i class='icon-ok'></i> Apply Update", onclick="return confirm('Are you positive?')" )#
 	</div>
 	</cfif>
 	#html.endForm()#

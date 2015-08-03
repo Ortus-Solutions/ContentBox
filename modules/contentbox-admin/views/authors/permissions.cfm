@@ -3,8 +3,8 @@
 <div>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="permissionRolesForm",class="form-vertical")#
-	#html.startFieldset(legend="Active User Role Permissions")#
+	#html.startForm(name="permissionRolesForm",class="form-vertical" )#
+	#html.startFieldset(legend="Active User Role Permissions" )#
 		<cfif !prc.author.getRole().hasPermission()>
 			<small>No permissions assigned!</small>
 		<cfelse>
@@ -25,9 +25,9 @@
 	#html.endForm()#
 	
 	<!--- Add Permission Form--->
-	<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
-	#html.startForm(name="permissionForm",class="form-vertical")#
-		#html.startFieldset(legend="Assign A-la-Carte Permissions")#
+	<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+	#html.startForm(name="permissionForm",class="form-vertical" )#
+		#html.startFieldset(legend="Assign A-la-Carte Permissions" )#
 			#html.hiddenField(name="authorID",bind=prc.author)#
 			
 			<!--- Loader --->
@@ -69,8 +69,8 @@
 	</cfif>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="alacartePermissions",class="form-vertical")#
-	#html.startFieldset(legend="Active A-la-carte Permissions")#
+	#html.startForm(name="alacartePermissions",class="form-vertical" )#
+	#html.startFieldset(legend="Active A-la-carte Permissions" )#
 		<cfif !prc.author.hasPermission()>
 			<small>No permissions assigned!</small>
 		<cfelse>
@@ -81,7 +81,7 @@
 		<div>
 			<!--- Assigned --->
 			<i class="fa fa-check icon-large textGreen"></i>
-			<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+			<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
 				<!--- Remove --->
 				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-times icon-large textRed"></i></a>
 			</cfif>

@@ -6,12 +6,12 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getPlugin("MessageBox").renderit()#
+        #getPlugin( "MessageBox" ).renderit()#
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        #html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate")#  
+        #html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate" )#  
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3>What, you thought exporting content would be hard? Sorry to disappoint! ;)</h3>

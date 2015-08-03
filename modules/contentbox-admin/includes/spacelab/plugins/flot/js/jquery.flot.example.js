@@ -96,19 +96,19 @@ sales_chart =
       top: y + 5,
       left: x + 5,
       opacity: 0.80
-    }).appendTo("body").fadeIn(200);
+    }).appendTo( "body" ).fadeIn(200);
   }
 
 
-  $('#sales-chart').bind("plothover", function (event, pos, item) {
-    $("#x").text(pos.x.toFixed(2));
-    $("#y").text(pos.y.toFixed(2));
+  $('#sales-chart').bind( "plothover", function (event, pos, item) {
+    $( "#x" ).text(pos.x.toFixed(2));
+    $( "#y" ).text(pos.y.toFixed(2));
 
     if (item) {
       if (previousPoint != item.dataIndex) {
         previousPoint = item.dataIndex;
 
-        $(".chart-tooltip").remove();
+        $( ".chart-tooltip" ).remove();
         var x = item.datapoint[0].toFixed(2),
           y = item.datapoint[1].toFixed(2);
 
@@ -116,7 +116,7 @@ sales_chart =
       }
     }
     else {
-      $(".chart-tooltip").remove();
+      $( ".chart-tooltip" ).remove();
       previousPoint = null;
     }
   });

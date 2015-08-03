@@ -5,12 +5,12 @@
 $(document).ready(function() {
     // Setup content view
     setupView({ 
-        tableContainer  : $("##menuTableContainer"), 
+        tableContainer  : $( "##menuTableContainer" ), 
         tableURL        : '#event.buildLink( prc.xehMenuTable )#',
-        searchField     : $("##menuSearch"),
+        searchField     : $( "##menuSearch" ),
         searchName      : 'searchMenu',
-        contentForm     : $("##menuForm"),
-        importDialog    : $("##importDialog")
+        contentForm     : $( "##menuForm" ),
+        importDialog    : $( "##importDialog" )
     });
     
     // load content on startup, using default parents if passed.
@@ -125,7 +125,7 @@ function bulkRemove(){
 }
 // Import content dialogs
 function importContent(){
-    var $importForm = $importDialog.find("##importForm");
+    var $importForm = $importDialog.find( "##importForm" );
     // open modal for cloning options
     openModal( $importDialog, 500, 350 );
     // form validator and data

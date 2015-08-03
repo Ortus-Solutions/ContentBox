@@ -9,7 +9,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -26,7 +26,7 @@ limitations under the License.
 <cfoutput>
 
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_preEntryDisplay")#
+	#cb.event( "cbui_preEntryDisplay" )#
 	
 	<!--- top gap --->
 	<div class="post-top-gap"></div>
@@ -48,7 +48,7 @@ limitations under the License.
 	</div>
 	</cfif>	
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_postEntryDisplay")#
+	#cb.event( "cbui_postEntryDisplay" )#
 	
 
 <!--- Custom JS For Comments--->
@@ -56,13 +56,13 @@ limitations under the License.
 <script type="text/javascript">
 $(document).ready(function() {
  	// form validator
-	$("##commentForm").validator({position:'top left'});
+	$( "##commentForm" ).validator({position:'top left'});
 	<cfif cb.isCommentFormError()>
 	toggleCommentForm();
 	</cfif>
 });
 function toggleCommentForm(){
-	$("##commentForm").slideToggle();
+	$( "##commentForm" ).slideToggle();
 }
 </script>
 </cfif>

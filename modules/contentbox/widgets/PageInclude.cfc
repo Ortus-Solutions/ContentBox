@@ -8,11 +8,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("PageInclude");
-		setPluginVersion("1.0");
-		setPluginDescription("A widget that can render out a ContentBox page anywhere you like.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setPluginName( "PageInclude" );
+		setPluginVersion( "1.0" );
+		setPluginDescription( "A widget that can render out a ContentBox page anywhere you like." );
+		setPluginAuthor( "Ortus Solutions" );
+		setPluginAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "page-add.png" );
 		setCategory( "Content" );
 		return this;
@@ -32,11 +32,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		}
 
 		// default value
-		if( structKeyExists(arguments, "defaultValue") ){
+		if( structKeyExists(arguments, "defaultValue" ) ){
 			return arguments.defaultValue;
 		}
 
-		throw(message="The content slug '#arguments.slug#' does not exist",type="PageIncludeWidget.InvalidPageSlug");
+		throw(message="The content slug '#arguments.slug#' does not exist",type="PageIncludeWidget.InvalidPageSlug" );
 	}
 
 	/**

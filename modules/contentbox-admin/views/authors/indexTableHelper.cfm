@@ -2,7 +2,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// tables references
-	$authors = $("##authors");
+	$authors = $( "##authors" );
 	// datatable
     $authors.dataTable({
         "paging": false,

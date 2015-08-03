@@ -174,7 +174,7 @@
 
         createToolbar: function(el, options) {
             var self = this;
-            var toolbar = $("<ul/>", {
+            var toolbar = $( "<ul/>", {
                 'class' : "wysihtml5-toolbar",
                 'style': "display:none"
             });
@@ -193,15 +193,15 @@
                 if(value === true) {
                     toolbar.append(templates(key, locale[culture], options));
 
-                    if(key === "html") {
+                    if(key === "html" ) {
                         this.initHtml(toolbar);
                     }
 
-                    if(key === "link") {
+                    if(key === "link" ) {
                         this.initInsertLink(toolbar);
                     }
 
-                    if(key === "image") {
+                    if(key === "image" ) {
                         this.initInsertImage(toolbar);
                     }
                 }
@@ -213,13 +213,13 @@
                 }
             }
 
-            toolbar.find("a[data-wysihtml5-command='formatBlock']").click(function(e) {
+            toolbar.find( "a[data-wysihtml5-command='formatBlock']" ).click(function(e) {
                 var target = e.target || e.srcElement;
                 var el = $(target);
                 self.toolbar.find('.current-font').text(el.html());
             });
 
-            toolbar.find("a[data-wysihtml5-command='foreColor']").click(function(e) {
+            toolbar.find( "a[data-wysihtml5-command='foreColor']" ).click(function(e) {
                 var target = e.target || e.srcElement;
                 var el = $(target);
                 self.toolbar.find('.current-color').text(el.html());
@@ -253,7 +253,7 @@
                     self.editor.composer.selection.setBookmark(caretBookmark);
                     caretBookmark = null;
                 }
-                self.editor.composer.commands.exec("insertImage", url);
+                self.editor.composer.commands.exec( "insertImage", url);
             };
 
             urlInput.keypress(function(e) {
@@ -274,7 +274,7 @@
             });
 
             toolbar.find('a[data-wysihtml5-command=insertImage]').click(function() {
-                var activeButton = $(this).hasClass("wysihtml5-command-active");
+                var activeButton = $(this).hasClass( "wysihtml5-command-active" );
 
                 if (!activeButton) {
                     self.editor.currentView.element.focus(false);
@@ -309,8 +309,8 @@
                     caretBookmark = null;
                 }
 
-                var newWindow = targetInput.prop("checked");
-                self.editor.composer.commands.exec("createLink", {
+                var newWindow = targetInput.prop( "checked" );
+                self.editor.composer.commands.exec( "createLink", {
                     'href' : url,
                     'target' : (newWindow ? '_blank' : '_self'),
                     'rel' : (newWindow ? 'nofollow' : '')
@@ -336,7 +336,7 @@
             });
 
             toolbar.find('a[data-wysihtml5-command=createLink]').click(function() {
-                var activeButton = $(this).hasClass("wysihtml5-command-active");
+                var activeButton = $(this).hasClass( "wysihtml5-command-active" );
 
                 if (!activeButton) {
                     self.editor.currentView.element.focus(false);

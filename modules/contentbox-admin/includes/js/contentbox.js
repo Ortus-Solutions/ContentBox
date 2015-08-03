@@ -2,7 +2,7 @@ $(document).ready(function() {
 	
 	// setup global variables
 	$confirmIt 			= $('#confirmIt');
-	$remoteModal 		= $("#modal");
+	$remoteModal 		= $( "#modal" );
     
     // handler for "shown" event in modals
 	$remoteModal.on( 'shown', function() {
@@ -27,7 +27,7 @@ $(document).ready(function() {
 	};
 	
 	// toggle flicker messages
-	$(".flickerMessages").slideDown();
+	$( ".flickerMessages" ).slideDown();
 	// Search Capabilities
 	activateContentSearch();
 	// activate confirmations
@@ -54,7 +54,7 @@ $(document).ready(function() {
             element.remove();
         },
         errorPlacement: function(error, element) {
-            error.appendTo( element.parent("div.controls") );
+            error.appendTo( element.parent( "div.controls" ) );
         }
     })	
     $.fn.resetValidations = function() {
@@ -101,7 +101,7 @@ $(document).ready(function() {
         return data;
     }
 	// flicker messages
-	var t=setTimeout("toggleFlickers()",5000);
+	var t=setTimeout( "toggleFlickers()",5000);
 
 	// Tab link detector
 	$(function () {
@@ -110,20 +110,20 @@ $(document).ready(function() {
 	});
 	
 	// Sidebar shortcut keys
-	if( $("#main-sidebar").attr( "id" ) == undefined ){
-		$("#sidebar-toggle").hide();
+	if( $( "#main-sidebar" ).attr( "id" ) == undefined ){
+		$( "#sidebar-toggle" ).hide();
 	}
 	else{
 		jwerty.key( "ctrl+shift+e" , toggleSidebar );
 	}
 
 	// If the sidebar preference is off, toggle it
-	if( $("body").attr( "data-showsidebar" ) == "no" ){
+	if( $( "body" ).attr( "data-showsidebar" ) == "no" ){
 		toggleSidebar();
 	}
 
 	// Nav Search Shortcut
-	jwerty.key( "ctrl+shift+s" , function(){ $("#nav-search").focus(); return false;} );
+	jwerty.key( "ctrl+shift+s" , function(){ $( "#nav-search" ).focus(); return false;} );
 	
 	// find all links with the key-binding data attribute
 	$( '[data-keybinding]' ).each(function(){
@@ -142,7 +142,7 @@ $(document).ready(function() {
 	});
 
 	// Hide empty menu's due to permissions.
-	$("#adminMenuBarContent li.dropdown").each(function(){
+	$( "#adminMenuBarContent li.dropdown" ).each(function(){
 		if( !$( this ).find( "ul.dropdown-menu li" ).length ){
 			$( this ).hide();
 		}
@@ -173,11 +173,11 @@ $(document).ready(function() {
     })
 });
 function isSidebarOpen(){
-	var sidebar = $("#main-sidebar");
+	var sidebar = $( "#main-sidebar" );
 	return ( sidebar.attr( "id" ) != undefined && sidebar.css( "display" ) == "block"  ? true : false );
 }
 function toggleSidebar(){
-	var sidebar = $("#main-sidebar");
+	var sidebar = $( "#main-sidebar" );
 	var type 	= sidebar.css( "display" );
 	var sidebarState = false;
 	// nosidebar exit
@@ -185,25 +185,25 @@ function toggleSidebar(){
 	// toggles
 	if( type == "block" ){
 		sidebar.fadeOut();
-		$("#sidebar_trigger").removeClass("icon-collapse-alt").addClass("icon-expand-alt");
-		$("#main-content").removeClass("span9").addClass("span12");
+		$( "#sidebar_trigger" ).removeClass( "icon-collapse-alt" ).addClass( "icon-expand-alt" );
+		$( "#main-content" ).removeClass( "span9" ).addClass( "span12" );
 	}
 	else{
-		$("#sidebar_trigger").removeClass("icon-expand-alt").addClass("icon-collapse-alt");
+		$( "#sidebar_trigger" ).removeClass( "icon-expand-alt" ).addClass( "icon-collapse-alt" );
 		sidebar.fadeIn();
-		$("#main-content").removeClass("span12").addClass("span9");
+		$( "#main-content" ).removeClass( "span12" ).addClass( "span9" );
 		sidebarState = true;
 	}
 	// Call change user editor preference
 	$.ajax({
-		url : $("#sidebar-toggle").attr( "data-stateurl" ),
+		url : $( "#sidebar-toggle" ).attr( "data-stateurl" ),
 		data : { sidebarState: sidebarState },
 		async : true
 	});
 }
 function adminAction( action, actionURL ){
 	if( action != 'null' ){
-		$("#adminActionsIcon").addClass( "icon-spin textOrange" );
+		$( "#adminActionsIcon" ).addClass( "icon-spin textOrange" );
 		// Run Action Dispatch
 		$.post( actionURL , {targetModule: action}, function(data){
 			if( data.ERROR ){
@@ -212,7 +212,7 @@ function adminAction( action, actionURL ){
 			else{
 				adminNotifier( "info", "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>" );
 			}
-			$("#adminActionsIcon").removeClass( "icon-spin textOrange" );
+			$( "#adminActionsIcon" ).removeClass( "icon-spin textOrange" );
 			
 		} );
 	}
@@ -225,7 +225,7 @@ function adminAction( action, actionURL ){
  */
 function adminNotifier(type, message, delay){
 	/*
-    var $notifier = $("#adminActionNotifier").attr( "class", "alert hide" );
+    var $notifier = $( "#adminActionNotifier" ).attr( "class", "alert hide" );
 	if( type == null ){ type = "warn";  }
 	if( delay == null ){ delay = 1500;  }
 	// add type css
@@ -246,13 +246,13 @@ function adminNotifier(type, message, delay){
 }
 function activateContentSearch(){
 	// local refs
-	$nav_search = $("#nav-search");
-	$nav_search_results = $("#div-search-results");
+	$nav_search = $( "#nav-search" );
+	$nav_search_results = $( "#div-search-results" );
 	// opacity
-	$nav_search.css("opacity","0.8");
+	$nav_search.css( "opacity","0.8" );
 	// focus effects
 	$nav_search.focusin(function() {
-		if( $nav_search.is(":focus") ){ return; }
+		if( $nav_search.is( ":focus" ) ){ return; }
     	$(this).animate({
 		    opacity: 1.0,
 		    width: '+=95',
@@ -268,8 +268,8 @@ function activateContentSearch(){
 		var $this = $(this);
 		// Only send requests if more than 2 characters
 		if( $this.val().length > 1 ){
-			$nav_search_results.load( $("#nav-search-url").val(), { search: $this.val() }, function(data){
-				if( $nav_search_results.css("display") == "none" ){
+			$nav_search_results.load( $( "#nav-search-url" ).val(), { search: $this.val() }, function(data){
+				if( $nav_search_results.css( "display" ) == "none" ){
 					$nav_search_results.fadeIn().slideDown();
 				}
 			} );
@@ -300,13 +300,13 @@ function activateTooltips(){
     $( '[title]' ).tooltip( toolTipSettings )
 }
 function hideAllTooltips(){
-	$(".tooltip").hide();
+	$( ".tooltip" ).hide();
 }
 function toggleFlickers(){
-	$(".flickerMessages").slideToggle();
-	$(".cbox_messagebox_info").slideToggle();
-	$(".cbox_messagebox_warn").slideToggle();
-	$(".cbox_messagebox_error").slideToggle();
+	$( ".flickerMessages" ).slideToggle();
+	$( ".cbox_messagebox_info" ).slideToggle();
+	$( ".cbox_messagebox_warn" ).slideToggle();
+	$( ".cbox_messagebox_error" ).slideToggle();
 }
 
 /**
@@ -420,10 +420,10 @@ function closeConfirmations(){
  */
 function activateConfirmations(){
 	// close button triggers for confirmation dialog
-	$confirmIt.find("button").click(function(e){
-		if( $(this).attr("data-action") == "confirm" ){
-			$confirmIt.find("#confirmItButtons").hide();
-			$confirmIt.find("#confirmItLoader").fadeIn();
+	$confirmIt.find( "button" ).click(function(e){
+		if( $(this).attr( "data-action" ) == "confirm" ){
+			$confirmIt.find( "#confirmItButtons" ).hide();
+			$confirmIt.find( "#confirmItLoader" ).fadeIn();
 			window.location =  $confirmIt.data('confirmSrc');
 		}
 	});
@@ -431,16 +431,16 @@ function activateConfirmations(){
 	// Activate dynamic confirmations from <a> of class confirmIt
 	$('a.confirmIt').click(function(e){
 		// setup the href
-		$confirmIt.data("confirmSrc", $(this).attr('href'));
+		$confirmIt.data( "confirmSrc", $(this).attr('href'));
         // defaults
         var dataMessage = $(this).attr('data-message') ? $(this).attr('data-message') : 'Are you sure you want to perform this action?';
         var dataTitle = $(this).attr('data-title') ? $(this).attr('data-title') : 'Are you sure?';
         // set message
-        $confirmIt.find("#confirmItMessage").html( dataMessage );
+        $confirmIt.find( "#confirmItMessage" ).html( dataMessage );
         // set title
-        $confirmIt.find("#confirmItTitle").html( dataTitle );
+        $confirmIt.find( "#confirmItTitle" ).html( dataTitle );
 		// show the confirmation when clicked
-		//$confirmIt.data("overlay").load();
+		//$confirmIt.data( "overlay" ).load();
 		$confirmIt.modal();
 		// prevent default action
 		e.preventDefault();
@@ -470,7 +470,7 @@ function to(link){
  * @param id
  */
 function checkAll(checked,id){
-	$("input[name='"+id+"']").each(function(){
+	$( "input[name='"+id+"']" ).each(function(){
 		this.checked = checked;
 	});
 }
@@ -481,7 +481,7 @@ function checkAll(checked,id){
  * @returns
  */
 function checkByValue(id,recordID){
-	$("input[name='"+id+"']").each(function(){
+	$( "input[name='"+id+"']" ).each(function(){
 		if( this.value == recordID ){ this.checked = true; }
 		else{ this.checked = false; }
 	});	

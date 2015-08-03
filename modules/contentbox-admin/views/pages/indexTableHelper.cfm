@@ -56,7 +56,7 @@ $(document).ready(function() {
 				$( row ).css( "cursor", "default" );
 			});
 			//console.log( $( row ) );
-			$( row ).find( "a.dragHandle")
+			$( row ).find( "a.dragHandle" )
 				.css( "cursor", "pointer" )
 				.removeClass( "btn-primary" )
 				.addClass( "btn-default" );

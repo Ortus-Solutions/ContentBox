@@ -6,7 +6,7 @@
             Security Rule Editor
         </h1>
         <!--- messageBox --->
-        #getPlugin("MessageBox").renderit()#
+        #getPlugin( "MessageBox" ).renderit()#
     </div>
 </div> 
 <div class="row">

@@ -79,7 +79,7 @@ component extends="baseHandler"{
 			data[ "UNIQUE" ] = contentService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
 		}
 		
-		event.renderData(data=data, type="json");
+		event.renderData(data=data, type="json" );
 	}
 
 	// related content selector
@@ -124,7 +124,7 @@ component extends="baseHandler"{
 		// exit handlers
 		prc.xehRelatedContentSelector	= "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 		prc.CBHelper = CBHelper;
-		event.setView(view="content/relatedContentSelector",layout="ajax");
+		event.setView(view="content/relatedContentSelector",layout="ajax" );
 	}
 
 	function breakContentLink( event, rc, prc ) {

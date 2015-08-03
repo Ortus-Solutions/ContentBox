@@ -3,7 +3,7 @@
     <div class="col-md-12">
         <h1 class="h1">
         	<i class="fa fa-comments"></i> Comments (#prc.commentsCount#)
-			<cfif len(rc.searchComments)> > Search: #event.getValue("searchComments")#</cfif>
+			<cfif len(rc.searchComments)> > Search: #event.getValue( "searchComments" )#</cfif>
 		</h1>
     </div>
 </div>
@@ -22,8 +22,8 @@
 </div>
 <div class="row">
     <div class="col-md-8">
-        #html.startForm(name="commentForm", action=prc.xehCommentRemove, class="form-vertical")#
-        	#html.hiddenField(name="commentStatus",value="")#
+        #html.startForm(name="commentForm", action=prc.xehCommentRemove, class="form-vertical" )#
+        	#html.hiddenField(name="commentStatus",value="" )#
 			#html.hiddenField(name="page",value=rc.page)#
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -38,7 +38,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+							<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 								<div class="pull-right">
 									<div class="btn-group btn-sm">
 								    	<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
@@ -77,12 +77,12 @@
 									<input type="checkbox" name="commentID" id="commentID" value="#comment.getCommentID()#" />
 								</td>
 								<td>
-									#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=comment.getAuthorEmail(),size="30")#
+									#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
 									&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 									<br/>
 									<cfif len(comment.getAuthorURL())>
 										<i class="fa fa-cloud"></i>
-										<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
+										<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
 											#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 										</a>
 										<br />
@@ -101,7 +101,7 @@
 									#comment.getDisplayCreatedDate()#
 								</td>
 								<td class="text-center">
-									<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+									<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>
 											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up icon-large"></i></a>
@@ -156,7 +156,7 @@
 							class="form-control",
 							size="16",
 							title="Search all authors, author emails and content",
-							value=event.getValue("searchComments","")
+							value=event.getValue( "searchComments","" )
 						)#
 					</div>
 					<button type="submit" class="btn btn-danger">Search</button>

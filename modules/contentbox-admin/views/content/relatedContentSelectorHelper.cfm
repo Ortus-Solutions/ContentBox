@@ -74,7 +74,7 @@
      * @param {String} contentType The contentType to restrict results to
      */
     function pagerLink( page, contentType ){
-        $relatedContentSelectorLoader.fadeIn("fast");
+        $relatedContentSelectorLoader.fadeIn( "fast" );
         var url = '#event.buildLink(prc.xehRelatedContentSelector )#?excludeIDs=#rc.excludeIDs#&contentType=' + contentType + '&page=' + page;
         $( '##' + contentType ).load( url, function( data ) {
             $relatedContentSelectorLoader.fadeOut();

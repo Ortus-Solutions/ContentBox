@@ -128,7 +128,7 @@
 
         // arc
         var __arc_label_fomat = getConfig(['arc', 'label', 'format'], function (d, ratio) { return (100 * ratio).toFixed(1) + "%"; }),
-            __arc_title = getConfig(['arc', 'title'], "");
+            __arc_title = getConfig(['arc', 'title'], "" );
 
         // region - region to change style
         var __regions = getConfig(['regions'], []);
@@ -161,7 +161,7 @@
         /*-- Set Variables --*/
 
         var clipId = __bindto.replace('#', '') + '-clip',
-            clipPath = "url(" + document.URL + "#" + clipId + ")";
+            clipPath = "url( " + document.URL + "#" + clipId + " )";
 
         var isTimeSeries = (__axis_x_type === 'timeseries'),
             isCategorized = (__axis_x_type === 'categorized'),
@@ -175,14 +175,14 @@
 
         var defaultTimeFormat = (function () {
             var formats = [
-                [d3.time.format("%Y/%-m/%-d"), function () { return true; }],
-                [d3.time.format("%-m/%-d"), function (d) { return d.getMonth(); }],
-                [d3.time.format("%-m/%-d"), function (d) { return d.getDate() !== 1; }],
-                [d3.time.format("%-m/%-d"), function (d) { return d.getDay() && d.getDate() !== 1; }],
-                [d3.time.format("%I %p"), function (d) { return d.getHours(); }],
-                [d3.time.format("%I:%M"), function (d) { return d.getMinutes(); }],
-                [d3.time.format(":%S"), function (d) { return d.getSeconds(); }],
-                [d3.time.format(".%L"), function (d) { return d.getMilliseconds(); }]
+                [d3.time.format( "%Y/%-m/%-d" ), function () { return true; }],
+                [d3.time.format( "%-m/%-d" ), function (d) { return d.getMonth(); }],
+                [d3.time.format( "%-m/%-d" ), function (d) { return d.getDate() !== 1; }],
+                [d3.time.format( "%-m/%-d" ), function (d) { return d.getDay() && d.getDate() !== 1; }],
+                [d3.time.format( "%I %p" ), function (d) { return d.getHours(); }],
+                [d3.time.format( "%I:%M" ), function (d) { return d.getMinutes(); }],
+                [d3.time.format( ":%S" ), function (d) { return d.getSeconds(); }],
+                [d3.time.format( ".%L" ), function (d) { return d.getMilliseconds(); }]
             ];
             return function (date) {
                 var i = formats.length - 1, f = formats[i];
@@ -199,18 +199,18 @@
         var x, y, y2, subX, subY, subY2, xAxis, yAxis, yAxis2, subXAxis;
 
         var xOrient = __axis_rotated ? "left" : "bottom",
-            yOrient = __axis_rotated ? (__axis_y_inner ? "top" : "bottom") : (__axis_y_inner ? "right" : "left"),
-            y2Orient = __axis_rotated ? (__axis_y2_inner ? "bottom" : "top") : (__axis_y2_inner ? "left" : "right"),
+            yOrient = __axis_rotated ? (__axis_y_inner ? "top" : "bottom" ) : (__axis_y_inner ? "right" : "left" ),
+            y2Orient = __axis_rotated ? (__axis_y2_inner ? "bottom" : "top" ) : (__axis_y2_inner ? "left" : "right" ),
             subXOrient = __axis_rotated ? "left" : "bottom";
 
         var translate = {
-            main : function () { return "translate(" + margin.left + "," + margin.top + ")"; },
-            context : function () { return "translate(" + margin2.left + "," + margin2.top + ")"; },
-            legend : function () { return "translate(" + margin3.left + "," + margin3.top + ")"; },
-            y2 : function () { return "translate(" + (__axis_rotated ? 0 : width) + "," + (__axis_rotated ? 10 : 0) + ")"; },
-            x : function () { return "translate(0," + height + ")"; },
-            subx : function () { return "translate(0," + (__axis_rotated ? 0 : height2) + ")"; },
-            arc: function () { return "translate(" + width / 2 + "," + height / 2 + ")"; }
+            main : function () { return "translate( " + margin.left + "," + margin.top + " )"; },
+            context : function () { return "translate( " + margin2.left + "," + margin2.top + " )"; },
+            legend : function () { return "translate( " + margin3.left + "," + margin3.top + " )"; },
+            y2 : function () { return "translate( " + (__axis_rotated ? 0 : width) + "," + (__axis_rotated ? 10 : 0) + " )"; },
+            x : function () { return "translate(0," + height + " )"; },
+            subx : function () { return "translate(0," + (__axis_rotated ? 0 : height2) + " )"; },
+            arc: function () { return "translate( " + width / 2 + "," + height / 2 + " )"; }
         };
 
         /*-- Define Functions --*/
@@ -292,7 +292,7 @@
             return 40; // TODO: calc automatically
         }
         function getParentWidth() {
-            return +d3.select(__bindto).style("width").replace('px', ''); // TODO: if rotated, use height
+            return +d3.select(__bindto).style( "width" ).replace('px', ''); // TODO: if rotated, use height
         }
         function getParentHeight() {
             return +d3.select(__bindto).style('height').replace('px', ''); // TODO: if rotated, use width
@@ -473,7 +473,7 @@
             if (updated) {
                 c = svgArc.centroid(updated);
                 x = c[0], y = c[1], h = Math.sqrt(x * x + y * y);
-                translate = "translate(" + ((x / h) * radius * 0.8) +  ',' + ((y / h) * radius * 0.8) +  ")";
+                translate = "translate( " + ((x / h) * radius * 0.8) +  ',' + ((y / h) * radius * 0.8) +  " )";
             }
             return translate;
         }
@@ -488,25 +488,25 @@
                 noneTargets = svg.selectAll('.-arc').filter(function (data) { return data.data.id !== id; });
             target.selectAll('path')
               .transition().duration(50)
-                .attr("d", svgArcExpanded)
+                .attr( "d", svgArcExpanded)
               .transition().duration(100)
-                .attr("d", svgArcExpandedSub)
+                .attr( "d", svgArcExpandedSub)
                 .each(function (d) {
                     if (isDonutType(d.data)) {
                         // callback here
                     }
                 });
             if (!withoutFadeOut) {
-                noneTargets.style("opacity", 0.3);
+                noneTargets.style( "opacity", 0.3);
             }
         }
         function unexpandArc(id) {
             var target = svg.selectAll('.chart-arc' + getTargetSelector(id));
             target.selectAll('path')
               .transition().duration(50)
-                .attr("d", svgArc);
+                .attr( "d", svgArc);
             svg.selectAll('.-arc')
-                .style("opacity", 1);
+                .style( "opacity", 1);
         }
 
         //-- Domain --//
@@ -952,8 +952,8 @@
             if (dataToShow.length === 0) { return; }
             // Construct tooltip
             tooltip.html(__tooltip_contents(selectedData))
-                .style("visibility", "hidden")
-                .style("display", "block");
+                .style( "visibility", "hidden" )
+                .style( "display", "block" );
             // Get tooltip dimensions
             tWidth = tooltip.property('offsetWidth');
             tHeight = tooltip.property('offsetHeight');
@@ -973,12 +973,12 @@
             // Set tooltip
             // todo get rid of magic numbers
             tooltip
-                .style("top", tooltipTop + "px")
-                .style("left", tooltipLeft + 'px')
-                .style("visibility", "visible");
+                .style( "top", tooltipTop + "px" )
+                .style( "left", tooltipLeft + 'px')
+                .style( "visibility", "visible" );
         }
         function hideTooltip() {
-            tooltip.style("display", "none");
+            tooltip.style( "display", "none" );
         }
 
         function showXGridFocus(selectedData) {
@@ -987,13 +987,13 @@
             // Hide when scatter plot exists
             if (hasScatterType(c3.data.targets) || hasArcType(c3.data.targets)) { return; }
             main.selectAll('line.xgrid-focus')
-                .style("visibility", "visible")
+                .style( "visibility", "visible" )
                 .data([dataToShow[0]])
                 .attr(__axis_rotated ? 'y1' : 'x1', xx)
                 .attr(__axis_rotated ? 'y2' : 'x2', xx);
         }
         function hideXGridFocus() {
-            main.select('line.xgrid-focus').style("visibility", "hidden");
+            main.select('line.xgrid-focus').style( "visibility", "hidden" );
         }
 
         //-- Circle --//
@@ -1169,9 +1169,9 @@
 
         function parseDate(date) {
             var parsedDate;
-            if (!date) { throw Error(date + " can not be parsed as d3.time with format " + __data_x_format + ". Maybe 'x' of this data is not defined. See data.x or data.xs option."); }
+            if (!date) { throw Error(date + " can not be parsed as d3.time with format " + __data_x_format + ". Maybe 'x' of this data is not defined. See data.x or data.xs option." ); }
             parsedDate = d3.time.format(__data_x_format).parse(date);
-            if (!parsedDate) { throw Error("Failed to parse '" + date + "' with format " + __data_x_format); }
+            if (!parsedDate) { throw Error( "Failed to parse '" + date + "' with format " + __data_x_format); }
             return parsedDate;
         }
 
@@ -1179,12 +1179,12 @@
 
         function isWithinCircle(_this, _r) {
             var mouse = d3.mouse(_this), d3_this = d3.select(_this);
-            var cx = d3_this.attr("cx") * 1, cy = d3_this.attr("cy") * 1;
+            var cx = d3_this.attr( "cx" ) * 1, cy = d3_this.attr( "cy" ) * 1;
             return Math.sqrt(Math.pow(cx - mouse[0], 2) + Math.pow(cy - mouse[1], 2)) < _r;
         }
         function isWithinBar(_this) {
             var mouse = d3.mouse(_this), d3_this = d3.select(_this);
-            var x = d3_this.attr("x") * 1, y = d3_this.attr("y") * 1, w = d3_this.attr("width") * 1;
+            var x = d3_this.attr( "x" ) * 1, y = d3_this.attr( "y" ) * 1, w = d3_this.attr( "width" ) * 1;
             var sx = x - 10, ex = x + w + 10, ey = y - 10;
             return sx < mouse[0] && mouse[0] < ex && ey < mouse[1];
         }
@@ -1213,21 +1213,21 @@
         function selectPoint(target, d, i) {
             __point_onselected(target, d);
             // add selected-circle on low layer g
-            main.select(".selected-circles-" + d.id).selectAll('.selected-circle-' + i)
+            main.select( ".selected-circles-" + d.id).selectAll('.selected-circle-' + i)
                 .data([d])
               .enter().append('circle')
-                .attr("class", function () { return "selected-circle selected-circle-" + i; })
-                .attr("cx", __axis_rotated ? circleY : circleX)
-                .attr("cy", __axis_rotated ? circleX : circleY)
-                .attr("stroke", function () { return color(d.id); })
-                .attr("r", __point_select_r * 1.4)
+                .attr( "class", function () { return "selected-circle selected-circle-" + i; })
+                .attr( "cx", __axis_rotated ? circleY : circleX)
+                .attr( "cy", __axis_rotated ? circleX : circleY)
+                .attr( "stroke", function () { return color(d.id); })
+                .attr( "r", __point_select_r * 1.4)
               .transition().duration(100)
-                .attr("r", __point_select_r);
+                .attr( "r", __point_select_r);
         }
         function unselectPoint(target, d, i) {
             __point_onunselected(target, d);
             // remove selected-circle from low layer g
-            main.select(".selected-circles-" + d.id).selectAll(".selected-circle-" + i)
+            main.select( ".selected-circles-" + d.id).selectAll( ".selected-circle-" + i)
               .transition().duration(100).attr('r', 0)
                 .remove();
         }
@@ -1264,7 +1264,7 @@
                 .attr('r', __point_r);
         }
         function getBars(i) {
-            return main.selectAll(".-bar" + (isValue(i) ? '-' + i : ''));
+            return main.selectAll( ".-bar" + (isValue(i) ? '-' + i : ''));
         }
         function expandBars(i) {
             getBars(i).classed(EXPANDED, false);
@@ -1281,7 +1281,7 @@
             return function (d) {
                 var data = filterRemoveNull(d.values), x0, y0;
                 if (isLineType(d)) {
-                    isSplineType(d) ? line.interpolate("cardinal") : line.interpolate("linear");
+                    isSplineType(d) ? line.interpolate( "cardinal" ) : line.interpolate( "linear" );
                     return __data_regions[d.id] ? lineWithRegions(data, x, getYScale(d.id), __data_regions[d.id]) : line(data);
                 } else {
                     x0 = x(data[0].x);
@@ -1310,7 +1310,7 @@
                 var data = filterRemoveNull(d.values), x0, y0;
 
                 if (hasType([d], 'area') || hasType([d], 'area-spline')) {
-                    isSplineType(d) ? area.interpolate("cardinal") : area.interpolate("linear");
+                    isSplineType(d) ? area.interpolate( "cardinal" ) : area.interpolate( "linear" );
                     return area(data);
                 } else {
                     x0 = x(data[0].x);
@@ -1437,8 +1437,8 @@
 
         //-- Define brush/zoom -//
 
-        var brush = d3.svg.brush().on("brush", redrawForBrush);
-        var zoom = d3.behavior.zoom().on("zoomstart", function () { zoom.altDomain = d3.event.sourceEvent.altKey ? x.orgDomain() : null; }).on("zoom", __zoom_enabled || __scroll_enabled ? redrawForZoom : null);
+        var brush = d3.svg.brush().on( "brush", redrawForBrush);
+        var zoom = d3.behavior.zoom().on( "zoomstart", function () { zoom.altDomain = d3.event.sourceEvent.altKey ? x.orgDomain() : null; }).on( "zoom", __zoom_enabled || __scroll_enabled ? redrawForZoom : null);
 
         // define functions for c3
         brush.update = function () {
@@ -1487,7 +1487,7 @@
                 window.alert('No bind element found. Check the selector specified by "bindto" and existance of that element. Default "bindto" is "#chart".');
                 return;
             } else {
-                selectChart.html("");
+                selectChart.html( "" );
             }
 
             // Init data as targets
@@ -1518,115 +1518,115 @@
             /*-- Basic Elements --*/
 
             // Define svgs
-            svg = d3.select(__bindto).append("svg")
-                .attr("width", width + margin.left + margin.right)
-                .attr("height", height + margin.top + margin.bottom)
+            svg = d3.select(__bindto).append( "svg" )
+                .attr( "width", width + margin.left + margin.right)
+                .attr( "height", height + margin.top + margin.bottom)
                 .on('mouseenter', __onenter)
                 .on('mouseleave', __onleave);
 
             // Define defs
-            defs = svg.append("defs");
-            defs.append("clipPath")
-                .attr("id", clipId)
-              .append("rect")
-                .attr("y", margin.top)
-                .attr("width", width)
-                .attr("height", height - margin.top);
-            defs.append("clipPath")
-                .attr("id", "xaxis-clip")
-              .append("rect")
-                .attr("x", -1 - margin.left)
-                .attr("y", -20)
-                .attr("width", getXAxisClipWidth)
-                .attr("height", getXAxisClipHeight);
-            defs.append("clipPath")
-                .attr("id", "yaxis-clip")
-              .append("rect")
-                .attr("x", -margin.left + 1)
-                .attr("y", margin.top - 1)
-                .attr("width", getYAxisClipWidth)
-                .attr("height", getYAxisClipHeight);
+            defs = svg.append( "defs" );
+            defs.append( "clipPath" )
+                .attr( "id", clipId)
+              .append( "rect" )
+                .attr( "y", margin.top)
+                .attr( "width", width)
+                .attr( "height", height - margin.top);
+            defs.append( "clipPath" )
+                .attr( "id", "xaxis-clip" )
+              .append( "rect" )
+                .attr( "x", -1 - margin.left)
+                .attr( "y", -20)
+                .attr( "width", getXAxisClipWidth)
+                .attr( "height", getXAxisClipHeight);
+            defs.append( "clipPath" )
+                .attr( "id", "yaxis-clip" )
+              .append( "rect" )
+                .attr( "x", -margin.left + 1)
+                .attr( "y", margin.top - 1)
+                .attr( "width", getYAxisClipWidth)
+                .attr( "height", getYAxisClipHeight);
 
             // Define regions
-            main = svg.append("g").attr("transform", translate.main);
-            context = __subchart_show ? svg.append("g").attr("transform", translate.context) : null;
-            legend = __legend_show ? svg.append("g").attr("transform", translate.legend) : null;
+            main = svg.append( "g" ).attr( "transform", translate.main);
+            context = __subchart_show ? svg.append( "g" ).attr( "transform", translate.context) : null;
+            legend = __legend_show ? svg.append( "g" ).attr( "transform", translate.legend) : null;
 
             // Define tooltip
             tooltip = d3.select(__bindto)
-                .style("position", "relative")
-              .append("div")
-                .style("position", "absolute")
-                .style("z-index", "10")
-                .style("display", "none");
+                .style( "position", "relative" )
+              .append( "div" )
+                .style( "position", "absolute" )
+                .style( "z-index", "10" )
+                .style( "display", "none" );
 
             /*-- Main Region --*/
 
             // Add Axis
-            main.append("g")
-                .attr("class", "x axis")
-                .attr("clip-path", __axis_rotated ? "" : "url(" + document.URL + "#xaxis-clip)")
-                .attr("transform", translate.x)
+            main.append( "g" )
+                .attr( "class", "x axis" )
+                .attr( "clip-path", __axis_rotated ? "" : "url( " + document.URL + "#xaxis-clip)" )
+                .attr( "transform", translate.x)
                 .call(__axis_rotated ? yAxis : xAxis)
-              .append("text")
-                .attr("class", "-axis-x-label")
-                .attr("x", width)
-                .attr("dy", "-.5em")
-                .style("text-anchor", "end")
+              .append( "text" )
+                .attr( "class", "-axis-x-label" )
+                .attr( "x", width)
+                .attr( "dy", "-.5em" )
+                .style( "text-anchor", "end" )
                 .text(__axis_x_label);
-            main.append("g")
-                .attr("class", "y axis")
-                .attr("clip-path", __axis_rotated ? "url(" + document.URL + "#yaxis-clip)" : "")
+            main.append( "g" )
+                .attr( "class", "y axis" )
+                .attr( "clip-path", __axis_rotated ? "url( " + document.URL + "#yaxis-clip)" : "" )
                 .call(__axis_rotated ? xAxis : yAxis)
-              .append("text")
-                .attr("transform", "rotate(-90)")
-                .attr("dy", "1.2em")
-                .attr("dx", "-.5em")
-                .style("text-anchor", "end")
+              .append( "text" )
+                .attr( "transform", "rotate(-90)" )
+                .attr( "dy", "1.2em" )
+                .attr( "dx", "-.5em" )
+                .style( "text-anchor", "end" )
                 .text(__axis_y_label);
 
             if (__axis_y2_show) {
-                main.append("g")
-                    .attr("class", "y2 axis")
-                    .attr("transform", translate.y2)
+                main.append( "g" )
+                    .attr( "class", "y2 axis" )
+                    .attr( "transform", translate.y2)
                     .call(yAxis2);
             }
 
             // Grids
             grid = main.append('g')
-                .attr("clip-path", clipPath)
+                .attr( "clip-path", clipPath)
                 .attr('class', 'grid');
 
             // X-Grid
             if (__grid_x_show) {
-                grid.append("g").attr("class", "xgrids");
+                grid.append( "g" ).attr( "class", "xgrids" );
             }
             if (__grid_x_lines) {
                 xgridLines = grid.append('g')
-                    .attr("class", "xgrid-lines")
+                    .attr( "class", "xgrid-lines" )
                   .selectAll('.xgrid-line')
                     .data(__grid_x_lines)
                   .enter().append('g')
-                    .attr("class", "xgrid-line");
+                    .attr( "class", "xgrid-line" );
                 xgridLines.append('line')
-                    .attr("class", function (d) { return "" + d['class']; });
+                    .attr( "class", function (d) { return "" + d['class']; });
                 xgridLines.append('text')
-                    .attr("class", function (d) { return "" + d['class']; })
-                    .attr("text-anchor", "end")
-                    .attr("transform", __axis_rotated ? "" : "rotate(-90)")
+                    .attr( "class", function (d) { return "" + d['class']; })
+                    .attr( "text-anchor", "end" )
+                    .attr( "transform", __axis_rotated ? "" : "rotate(-90)" )
                     .attr('dx', __axis_rotated ? 0 : -margin.top)
                     .attr('dy', -5)
                     .text(function (d) { return d.text; });
             }
             if (__point_focus_line_enabled) {
                 grid.append('g')
-                    .attr("class", "xgrid-focus")
+                    .attr( "class", "xgrid-focus" )
                   .append('line')
                     .attr('class', 'xgrid-focus')
-                    .attr("x1", __axis_rotated ? 0 : -10)
-                    .attr("x2", __axis_rotated ? width : -10)
-                    .attr("y1", __axis_rotated ? -10 : margin.top)
-                    .attr("y2", __axis_rotated ? -10 : height);
+                    .attr( "x1", __axis_rotated ? 0 : -10)
+                    .attr( "x2", __axis_rotated ? width : -10)
+                    .attr( "y1", __axis_rotated ? -10 : margin.top)
+                    .attr( "y2", __axis_rotated ? -10 : height);
             }
 
             // Y-Grid
@@ -1639,13 +1639,13 @@
                   .selectAll('ygrid-line')
                     .data(__grid_y_lines)
                   .enter().append('g')
-                    .attr("class", "ygrid-line");
+                    .attr( "class", "ygrid-line" );
                 ygridLines.append('line')
-                    .attr("class", function (d) { return "" + d['class']; });
+                    .attr( "class", function (d) { return "" + d['class']; });
                 ygridLines.append('text')
-                    .attr("class", function (d) { return "" + d['class']; })
-                    .attr("text-anchor", "end")
-                    .attr("transform", __axis_rotated ? "rotate(-90)" : "")
+                    .attr( "class", function (d) { return "" + d['class']; })
+                    .attr( "text-anchor", "end" )
+                    .attr( "transform", __axis_rotated ? "rotate(-90)" : "" )
                     .attr('dx', __axis_rotated ? 0 : -margin.top)
                     .attr('dy', -5)
                     .text(function (d) { return d.text; });
@@ -1653,35 +1653,35 @@
 
             // Area
             main.append('g')
-                .attr("clip-path", clipPath)
-                .attr("class", "regions");
+                .attr( "clip-path", clipPath)
+                .attr( "class", "regions" );
 
             // Define g for chart area
             main.append('g')
-                .attr("clip-path", clipPath)
+                .attr( "clip-path", clipPath)
                 .attr('class', 'chart');
 
             // Cover whole with rects for events
-            eventRect = main.select('.chart').append("g")
-                .attr("class", "event-rects")
+            eventRect = main.select('.chart').append( "g" )
+                .attr( "class", "event-rects" )
                 .style('fill-opacity', 0)
                 .style('cursor', __zoom_enabled || __scroll_enabled ? __axis_rotated ? 'ns-resize' : 'ew-resize' : null);
 
             // Define g for bar chart area
-            main.select(".chart").append("g")
-                .attr("class", "chart-bars");
+            main.select( ".chart" ).append( "g" )
+                .attr( "class", "chart-bars" );
 
             // Define g for line chart area
-            main.select(".chart").append("g")
-                .attr("class", "chart-lines");
+            main.select( ".chart" ).append( "g" )
+                .attr( "class", "chart-lines" );
 
             // Define g for arc chart area
-            main.select(".chart").append("g")
-                .attr("class", "chart-arcs")
-                .attr("transform", translate.arc)
+            main.select( ".chart" ).append( "g" )
+                .attr( "class", "chart-arcs" )
+                .attr( "transform", translate.arc)
               .append('text')
                 .attr('class', 'chart-arcs-title')
-                .style("text-anchor", "middle")
+                .style( "text-anchor", "middle" )
                 .text(__arc_title);
 
             if (__zoom_enabled || __scroll_enabled) { // TODO: __zoom_privileged here?
@@ -1692,7 +1692,7 @@
                     .attr('height', height)
                     .style('opacity', 0)
                     .style('cursor', __axis_rotated ? 'ns-resize' : 'ew-resize')
-                    .call(zoom).on("dblclick.zoom", null);
+                    .call(zoom).on( "dblclick.zoom", null);
             }
 
             // Set default extent if defined
@@ -1705,31 +1705,31 @@
             if (__subchart_show) {
                 // Define g for chart area
                 context.append('g')
-                    .attr("clip-path", clipPath)
+                    .attr( "clip-path", clipPath)
                     .attr('class', 'chart');
 
                 // Define g for bar chart area
-                context.select(".chart").append("g")
-                    .attr("class", "chart-bars");
+                context.select( ".chart" ).append( "g" )
+                    .attr( "class", "chart-bars" );
 
                 // Define g for line chart area
-                context.select(".chart").append("g")
-                    .attr("class", "chart-lines");
+                context.select( ".chart" ).append( "g" )
+                    .attr( "class", "chart-lines" );
 
                 // Add extent rect for Brush
-                context.append("g")
-                    .attr("clip-path", clipPath)
-                    .attr("class", "x brush")
+                context.append( "g" )
+                    .attr( "clip-path", clipPath)
+                    .attr( "class", "x brush" )
                     .call(brush)
-                  .selectAll("rect")
+                  .selectAll( "rect" )
                     .attr(__axis_rotated ? "width" : "height", __axis_rotated ? width2 : height2);
 
                 // ATTENTION: This must be called AFTER chart added
                 // Add Axis
-                context.append("g")
-                    .attr("class", "x axis")
-                    .attr("transform", translate.subx)
-                    .attr("clip-path", __axis_rotated ? "url(" + document.URL + "#yaxis-clip)" : "")
+                context.append( "g" )
+                    .attr( "class", "x axis" )
+                    .attr( "transform", translate.subx)
+                    .attr( "clip-path", __axis_rotated ? "url( " + document.URL + "#yaxis-clip)" : "" )
                     .call(subXAxis);
             }
 
@@ -1755,9 +1755,9 @@
                 tooltip.html(__tooltip_contents(c3.data.targets.map(function (d) {
                     return addName(d.values[__tooltip_init_x]);
                 })));
-                tooltip.style("top", __tooltip_init_position.top)
-                       .style("left", __tooltip_init_position.left)
-                       .style("display", "block");
+                tooltip.style( "top", __tooltip_init_position.top)
+                       .style( "left", __tooltip_init_position.left)
+                       .style( "display", "block" );
             }
 
             // Bind resize event
@@ -1770,9 +1770,9 @@
         }
 
         function generateEventRectsForSingleX(eventRectEnter) {
-            eventRectEnter.append("rect")
-                .attr("class", classEvent)
-                .style("cursor", __data_selection_enabled && __data_selection_grouped ? "pointer" : null)
+            eventRectEnter.append( "rect" )
+                .attr( "class", classEvent)
+                .style( "cursor", __data_selection_enabled && __data_selection_grouped ? "pointer" : null)
                 .on('mouseover', function (_, i) {
                     if (dragging) { return; } // do nothing if dragging
                     if (hasArcType(c3.data.targets)) { return; }
@@ -1864,7 +1864,7 @@
                         .on('dragstart', function () { dragstart(d3.mouse(this)); })
                         .on('dragend', function () { dragend(); })
                 )
-                .call(zoom).on("dblclick.zoom", null);
+                .call(zoom).on( "dblclick.zoom", null);
         }
 
         function generateEventRectsForMultipleXs(eventRectEnter) {
@@ -1873,7 +1873,7 @@
                 .attr('y', 0)
                 .attr('width', width)
                 .attr('height', height)
-                .attr('class', "event-rect")
+                .attr('class', "event-rect" )
                 .on('mouseout', function () {
                     if (hasArcType(c3.data.targets)) { return; }
                     hideXGridFocus();
@@ -1930,7 +1930,7 @@
                         .on('dragstart', function () { dragstart(d3.mouse(this)); })
                         .on('dragend', function () { dragend(); })
                 )
-                .call(zoom).on("dblclick.zoom", null);
+                .call(zoom).on( "dblclick.zoom", null);
         }
 
         function selectShape(target, d, i) {
@@ -1984,14 +1984,14 @@
                         isIncluded = _this.classed(INCLUDED),
                         _x, _y, _w, toggle, isWithin = false;
                     if (this.nodeName === 'circle') {
-                        _x = _this.attr("cx") * 1;
-                        _y = _this.attr("cy") * 1;
+                        _x = _this.attr( "cx" ) * 1;
+                        _y = _this.attr( "cy" ) * 1;
                         toggle = togglePoint;
                         isWithin = minX < _x && _x < maxX && minY < _y && _y < maxY;
                     }
                     else if (this.nodeName === 'rect') {
-                        _x = _this.attr("x") * 1;
-                        _y = _this.attr("y") * 1;
+                        _x = _this.attr( "x" ) * 1;
+                        _y = _this.attr( "y" ) * 1;
                         _w = _this.attr('width') * 1;
                         toggle = toggleBar;
                         isWithin = minX < _x + _w && _x < maxX && _y < maxY;
@@ -2066,23 +2066,23 @@
             y2.domain(getYDomain('y2'));
 
             // axis
-            main.select(".x.axis").style("opacity", hideAxis ? 0 : 1).transition().duration(__axis_rotated ? duration : 0).call(__axis_rotated ? yAxis : xAxis);
-            main.select(".y.axis").style("opacity", hideAxis ? 0 : 1).transition().duration(__axis_rotated ? 0 : duration).call(__axis_rotated ? xAxis : yAxis);
-            main.select(".y2.axis").style("opacity", hideAxis ? 0 : 1).transition().call(yAxis2);
+            main.select( ".x.axis" ).style( "opacity", hideAxis ? 0 : 1).transition().duration(__axis_rotated ? duration : 0).call(__axis_rotated ? yAxis : xAxis);
+            main.select( ".y.axis" ).style( "opacity", hideAxis ? 0 : 1).transition().duration(__axis_rotated ? 0 : duration).call(__axis_rotated ? xAxis : yAxis);
+            main.select( ".y2.axis" ).style( "opacity", hideAxis ? 0 : 1).transition().call(yAxis2);
 
             // Update label position
-            main.select(".x.axis .-axis-x-label").attr("x", width);
+            main.select( ".x.axis .-axis-x-label" ).attr( "x", width);
 
             // Update sub domain
             subY.domain(y.domain());
             subY2.domain(y2.domain());
 
             // tooltip
-            tooltip.style("display", "none");
+            tooltip.style( "display", "none" );
 
             // grid
             main.select('line.xgrid-focus')
-                .style("visibility", "hidden")
+                .style( "visibility", "hidden" )
                 .attr('y2', height);
             if (__grid_x_show) {
                 if (__grid_x_type === 'year') {
@@ -2097,51 +2097,51 @@
                     xgridData = x.ticks(10);
                 }
 
-                xgrid = main.select('.xgrids').selectAll(".xgrid")
+                xgrid = main.select('.xgrids').selectAll( ".xgrid" )
                     .data(xgridData);
-                xgrid.enter().append('line').attr("class", "xgrid");
-                xgrid.attr("x1", __axis_rotated ? 0 : function (d) { return x(d) - xAxis.tickOffset(); })
-                    .attr("x2", __axis_rotated ? width : function (d) { return x(d) - xAxis.tickOffset(); })
-                    .attr("y1", __axis_rotated ? function (d) { return x(d) - xAxis.tickOffset(); } : margin.top)
-                    .attr("y2", __axis_rotated ? function (d) { return x(d) - xAxis.tickOffset(); } : height)
-                    .style("opacity", function () { return +d3.select(this).attr(__axis_rotated ? 'y1' : 'x1') === (__axis_rotated ? height : 0) ? 0 : 1; });
+                xgrid.enter().append('line').attr( "class", "xgrid" );
+                xgrid.attr( "x1", __axis_rotated ? 0 : function (d) { return x(d) - xAxis.tickOffset(); })
+                    .attr( "x2", __axis_rotated ? width : function (d) { return x(d) - xAxis.tickOffset(); })
+                    .attr( "y1", __axis_rotated ? function (d) { return x(d) - xAxis.tickOffset(); } : margin.top)
+                    .attr( "y2", __axis_rotated ? function (d) { return x(d) - xAxis.tickOffset(); } : height)
+                    .style( "opacity", function () { return +d3.select(this).attr(__axis_rotated ? 'y1' : 'x1') === (__axis_rotated ? height : 0) ? 0 : 1; });
                 xgrid.exit().remove();
             }
             if (__grid_x_lines) {
-                xgridLines = main.selectAll(".xgrid-lines");
+                xgridLines = main.selectAll( ".xgrid-lines" );
                 xgridLines.selectAll('line')
                   .transition().duration(duration)
-                    .attr("x1", __axis_rotated ? 0 : xv)
-                    .attr("x2", __axis_rotated ? width : xv)
-                    .attr("y1", __axis_rotated ? xv : margin.top)
-                    .attr("y2", __axis_rotated ? xv : height);
+                    .attr( "x1", __axis_rotated ? 0 : xv)
+                    .attr( "x2", __axis_rotated ? width : xv)
+                    .attr( "y1", __axis_rotated ? xv : margin.top)
+                    .attr( "y2", __axis_rotated ? xv : height);
                 xgridLines.selectAll('text')
-                    .attr("x", __axis_rotated ? width : 0)
-                    .attr("y", xv);
+                    .attr( "x", __axis_rotated ? width : 0)
+                    .attr( "y", xv);
             }
             // Y-Grid
             if (withY && __grid_y_show) {
-                ygrid = main.select('.ygrids').selectAll(".ygrid")
+                ygrid = main.select('.ygrids').selectAll( ".ygrid" )
                     .data(y.ticks(10));
                 ygrid.enter().append('line')
                     .attr('class', 'ygrid');
-                ygrid.attr("x1", __axis_rotated ? y : 0)
-                     .attr("x2", __axis_rotated ? y : width)
-                     .attr("y1", __axis_rotated ? 0 : y)
-                     .attr("y2", __axis_rotated ? height : y);
+                ygrid.attr( "x1", __axis_rotated ? y : 0)
+                     .attr( "x2", __axis_rotated ? y : width)
+                     .attr( "y1", __axis_rotated ? 0 : y)
+                     .attr( "y2", __axis_rotated ? height : y);
                 ygrid.exit().remove();
             }
             if (withY && __grid_y_lines) {
                 ygridLines = main.select('.ygrid-lines');
                 ygridLines.selectAll('line')
                   .transition().duration(duration)
-                    .attr("x1", __axis_rotated ? yv : 0)
-                    .attr("x2", __axis_rotated ? yv : width)
-                    .attr("y1", __axis_rotated ? 0 : yv)
-                    .attr("y2", __axis_rotated ? height : yv);
+                    .attr( "x1", __axis_rotated ? yv : 0)
+                    .attr( "x2", __axis_rotated ? yv : width)
+                    .attr( "y1", __axis_rotated ? 0 : yv)
+                    .attr( "y2", __axis_rotated ? height : yv);
                 ygridLines.selectAll('text')
-                    .attr("x", __axis_rotated ? 0 : width)
-                    .attr("y", yv);
+                    .attr( "x", __axis_rotated ? 0 : width)
+                    .attr( "y", yv);
             }
 
             // bars
@@ -2149,50 +2149,50 @@
                 .data(barData);
             mainBar.enter().append('path')
                 .attr('d', drawBar(barIndices, false))
-                .style("stroke", 'none')
-                .style("opacity", 0)
-                .style("fill", function (d) { return color(d.id); })
-                .attr("class", classBar);
+                .style( "stroke", 'none')
+                .style( "opacity", 0)
+                .style( "fill", function (d) { return color(d.id); })
+                .attr( "class", classBar);
             mainBar
-                .style("opacity", initialOpacity)
+                .style( "opacity", initialOpacity)
               .transition().duration(duration)
                 .attr('d', drawBar(barIndices, false))
-                .style("opacity", 1);
+                .style( "opacity", 1);
             mainBar.exit().transition().duration(duration)
                 .style('opacity', 0)
                 .remove();
 
             // lines and cricles
             main.selectAll('.-line')
-                .style("opacity", initialOpacity)
+                .style( "opacity", initialOpacity)
               .transition().duration(duration)
-                .attr("d", lineOnMain)
-                .style("opacity", 1);
+                .attr( "d", lineOnMain)
+                .style( "opacity", 1);
             main.selectAll('.-area')
-                .style("opacity", 0)
+                .style( "opacity", 0)
               .transition().duration(duration)
-                .attr("d", areaOnMain)
-                .style("opacity", orgAreaOpacity);
+                .attr( "d", areaOnMain)
+                .style( "opacity", orgAreaOpacity);
             mainCircle = main.selectAll('.-circles').selectAll('.-circle')
                 .data(lineOrScatterData);
-            mainCircle.enter().append("circle")
-                .attr("class", classCircle)
+            mainCircle.enter().append( "circle" )
+                .attr( "class", classCircle)
                 .style('opacity', 0)
-                .attr("r", __point_r);
+                .attr( "r", __point_r);
             mainCircle
-                .style("opacity", initialOpacity)
+                .style( "opacity", initialOpacity)
               .transition().duration(duration)
                 .style('opacity', opacityCircle)
-                .attr("cx", __axis_rotated ? circleY : circleX)
-                .attr("cy", __axis_rotated ? circleX : circleY);
+                .attr( "cx", __axis_rotated ? circleY : circleX)
+                .attr( "cy", __axis_rotated ? circleX : circleY);
             mainCircle.exit().remove();
 
             // arc
             main.selectAll('.chart-arc').select('.-arc')
-                .attr("transform", withTransform ? "scale(0)" : "")
-                .style("opacity", function (d) { return d === this._current ? 0 : 1; })
+                .attr( "transform", withTransform ? "scale(0)" : "" )
+                .style( "opacity", function (d) { return d === this._current ? 0 : 1; })
               .transition().duration(duration)
-                .attrTween("d", function (d) {
+                .attrTween( "d", function (d) {
                     var updated = updateAngle(d);
                     if (! updated) {
                         return function () { return "M 0 0"; };
@@ -2209,16 +2209,16 @@
                     this._current = i(0);
                     return function (t) { return getArc(i(t), true); };
                 })
-                .attr("transform", withTransform ? "scale(1)" : "")
-                .style("opacity", 1);
+                .attr( "transform", withTransform ? "scale(1)" : "" )
+                .style( "opacity", 1);
             main.selectAll('.chart-arc').select('text')
-                .attr("transform", transformForArcLable)
-                .style("opacity", 0)
+                .attr( "transform", transformForArcLable)
+                .style( "opacity", 0)
               .transition().duration(duration)
                 .text(textForArcLable)
-                .style("opacity", function (d) { return isArcType(d.data) ? 1 : 0; });
+                .style( "opacity", function (d) { return isArcType(d.data) ? 1 : 0; });
             main.select('.chart-arcs-title')
-                .style("opacity", hasDonutType(c3.data.targets) ? 1 : 0);
+                .style( "opacity", hasDonutType(c3.data.targets) ? 1 : 0);
 
             // subchart
             if (__subchart_show) {
@@ -2229,7 +2229,7 @@
                 // update subchart elements if needed
                 if (withSubchart) {
                     // axes
-                    context.select('.x.axis').style("opacity", hideAxis ? 0 : 1).transition().duration(__axis_rotated ? duration : 0).call(subXAxis);
+                    context.select('.x.axis').style( "opacity", hideAxis ? 0 : 1).transition().duration(__axis_rotated ? duration : 0).call(subXAxis);
                     // extent rect
                     if (!brush.empty()) {
                         brush.extent(x.orgDomain()).update();
@@ -2239,11 +2239,11 @@
                         .data(barData);
                     contextBar.enter().append('path')
                         .attr('d', drawBar(barIndices))
-                        .style("stroke", 'none')
-                        .style("fill", function (d) { return color(d.id); })
-                        .attr("class", classBar);
+                        .style( "stroke", 'none')
+                        .style( "fill", function (d) { return color(d.id); })
+                        .attr( "class", classBar);
                     contextBar
-                        .style("opacity", initialOpacity)
+                        .style( "opacity", initialOpacity)
                       .transition().duration(duration)
                         .attr('d', drawBar(barIndices))
                         .style('opacity', 1);
@@ -2252,9 +2252,9 @@
                         .remove();
                     // lines
                     context.selectAll('.-line')
-                        .style("opacity", initialOpacity)
+                        .style( "opacity", initialOpacity)
                       .transition().duration(duration)
-                        .attr("d", lineOnSub)
+                        .attr( "d", lineOnSub)
                         .style('opacity', 1);
                 }
             }
@@ -2266,8 +2266,8 @@
                 .remove();
             main.selectAll('.selected-circle')
               .transition().duration(duration)
-                .attr("cx", __axis_rotated ? circleY : circleX)
-                .attr("cy", __axis_rotated ? circleX : circleY);
+                .attr( "cx", __axis_rotated ? circleY : circleX)
+                .attr( "cy", __axis_rotated ? circleX : circleY);
 
             // rect for mouseover
             if (__data_xs) {
@@ -2298,7 +2298,7 @@
                 }
                 // Set data
                 maxDataCountTarget = getMaxDataCountTarget();
-                main.select(".event-rects")
+                main.select( ".event-rects" )
                     .datum(maxDataCountTarget ? maxDataCountTarget.values : []);
                 // Update rects
                 eventRectUpdate = main.select('.event-rects').selectAll('.event-rect')
@@ -2308,10 +2308,10 @@
                 // update
                 eventRectUpdate
                     .attr('class', classEvent)
-                    .attr("x", __axis_rotated ? 0 : rectX)
-                    .attr("y", __axis_rotated ? rectX : 0)
-                    .attr("width", __axis_rotated ? width : rectW)
-                    .attr("height", __axis_rotated ? rectW : height);
+                    .attr( "x", __axis_rotated ? 0 : rectX)
+                    .attr( "y", __axis_rotated ? rectX : 0)
+                    .attr( "width", __axis_rotated ? width : rectW)
+                    .attr( "height", __axis_rotated ? rectW : height);
                 // exit
                 eventRectUpdate.exit().remove();
             }
@@ -2320,17 +2320,17 @@
             mainRegion = main.select('.regions').selectAll('rect.region')
                 .data(__regions);
             mainRegion.enter().append('rect')
-                .style("fill-opacity", 0);
+                .style( "fill-opacity", 0);
             mainRegion
                 .attr('class', classRegion)
-                .attr("x", __axis_rotated ? 0 : regionStart)
-                .attr("y", __axis_rotated ? regionStart : margin.top)
-                .attr("width", __axis_rotated ? width : regionWidth)
-                .attr("height", __axis_rotated ? regionWidth : height)
+                .attr( "x", __axis_rotated ? 0 : regionStart)
+                .attr( "y", __axis_rotated ? regionStart : margin.top)
+                .attr( "width", __axis_rotated ? width : regionWidth)
+                .attr( "height", __axis_rotated ? regionWidth : height)
               .transition().duration(duration)
-                .style("fill-opacity", function (d) { return isValue(d.opacity) ? d.opacity : 0.1; });
+                .style( "fill-opacity", function (d) { return isValue(d.opacity) ? d.opacity : 0.1; });
             mainRegion.exit().transition().duration(duration)
-                .style("fill-opacity", 0)
+                .style( "fill-opacity", 0)
                 .remove();
 
             // update fadein condition
@@ -2391,17 +2391,17 @@
             svg.select('#xaxis-clip').select('rect').attr('width', getXAxisClipWidth);
             svg.select('.zoom-rect').attr('width', width).attr('height', height);
             // Update main positions
-            main.select('.x.axis').attr("transform", translate.x);
-            main.select('.y2.axis').attr("transform", translate.y2);
-            main.select('.chart-arcs').attr("transform", translate.arc);
+            main.select('.x.axis').attr( "transform", translate.x);
+            main.select('.y2.axis').attr( "transform", translate.y2);
+            main.select('.chart-arcs').attr( "transform", translate.arc);
             // Update context sizes and positions
             if (__subchart_show) {
-                context.attr("transform", translate.context);
-                context.select('.x.axis').attr("transform", translate.subx);
+                context.attr( "transform", translate.context);
+                context.select('.x.axis').attr( "transform", translate.subx);
             }
             // Update legend positions
             if (__legend_show) {
-                legend.attr("transform", translate.legend);
+                legend.attr( "transform", translate.legend);
                 updateLegend(c3.data.targets, {withTransition: false});
             }
             // Draw with new sizes & scales
@@ -2420,13 +2420,13 @@
                 .data(targets);
             mainBarEnter = mainBarUpdate.enter().append('g')
                 .attr('class', function (d) { return 'chart-bar target target-' + d.id; })
-                .style("pointer-events", "none");
+                .style( "pointer-events", "none" );
             // Bars for each data
             mainBarEnter.append('g')
-                .attr("class", classBars)
-                .style("fill", function (d) { return color(d.id); })
-                .style("stroke", "none")
-                .style("cursor", function (d) { return __data_selection_isselectable(d) ? "pointer" : null; });
+                .attr( "class", classBars)
+                .style( "fill", function (d) { return color(d.id); })
+                .style( "stroke", "none" )
+                .style( "cursor", function (d) { return __data_selection_isselectable(d) ? "pointer" : null; });
 
             //-- Line --//
             mainLineUpdate = main.select('.chart-lines')
@@ -2434,24 +2434,24 @@
                 .data(targets);
             mainLineEnter = mainLineUpdate.enter().append('g')
                 .attr('class', function (d) { return 'chart-line target target-' + d.id; })
-                .style("pointer-events", "none");
+                .style( "pointer-events", "none" );
             // Lines for each data
-            mainLineEnter.append("path")
-                .attr("class", classLine)
-                .style("opacity", 0)
-                .style("stroke", function (d) { return color(d.id); });
+            mainLineEnter.append( "path" )
+                .attr( "class", classLine)
+                .style( "opacity", 0)
+                .style( "stroke", function (d) { return color(d.id); });
             // Areas
-            mainLineEnter.append("path")
-                .attr("class", classArea)
-                .style("opacity", function () { orgAreaOpacity = +d3.select(this).style('opacity'); return 0; })
-                .style("fill", function (d) { return color(d.id); });
+            mainLineEnter.append( "path" )
+                .attr( "class", classArea)
+                .style( "opacity", function () { orgAreaOpacity = +d3.select(this).style('opacity'); return 0; })
+                .style( "fill", function (d) { return color(d.id); });
             // Circles for each data point on lines
             mainLineEnter.append('g')
-                .attr("class", function (d) { return "selected-circles selected-circles-" + d.id; });
+                .attr( "class", function (d) { return "selected-circles selected-circles-" + d.id; });
             mainLineEnter.append('g')
-                .attr("class", classCircles)
-                .style("fill", function (d) { return color(d.id); })
-                .style("cursor", function (d) { return __data_selection_isselectable(d) ? "pointer" : null; });
+                .attr( "class", classCircles)
+                .style( "fill", function (d) { return color(d.id); })
+                .style( "cursor", function (d) { return __data_selection_isselectable(d) ? "pointer" : null; });
             // Update date for selected circles
             targets.forEach(function (t) {
                 var suffix = getTargetSelectorSuffix(t.id);
@@ -2464,15 +2464,15 @@
 
             //-- Pie --//
             mainPieUpdate = main.select('.chart-arcs')
-              .selectAll(".chart-arc")
+              .selectAll( ".chart-arc" )
                 .data(pie(targets));
-            mainPieEnter = mainPieUpdate.enter().append("g")
-                .attr("class", function (d) { return 'chart-arc target target-' + d.data.id; });
-            mainPieEnter.append("path")
-                .attr("class", classArc)
-                .style("opacity", 0)
-                .style("fill", function (d) { return color(d.data.id); })
-                .style("cursor", function (d) { return __data_selection_isselectable(d) ? "pointer" : null; })
+            mainPieEnter = mainPieUpdate.enter().append( "g" )
+                .attr( "class", function (d) { return 'chart-arc target target-' + d.data.id; });
+            mainPieEnter.append( "path" )
+                .attr( "class", classArc)
+                .style( "opacity", 0)
+                .style( "fill", function (d) { return color(d.data.id); })
+                .style( "cursor", function (d) { return __data_selection_isselectable(d) ? "pointer" : null; })
                 .each(function (d) { this._current = d; })
                 .on('mouseover', function (d) {
                     expandArc(d.data.id);
@@ -2482,11 +2482,11 @@
                     unexpandArc(d.data.id);
                     revertLegend();
                 });
-            mainPieEnter.append("text")
-                .attr("dy", ".35em")
-                .style("opacity", 0)
-                .style("text-anchor", "middle")
-                .style("pointer-events", "none");
+            mainPieEnter.append( "text" )
+                .attr( "dy", ".35em" )
+                .style( "opacity", 0)
+                .style( "text-anchor", "middle" )
+                .style( "pointer-events", "none" );
             // MEMO: can not keep same color..., but not bad to update color in redraw
             //mainPieUpdate.exit().remove();
 
@@ -2501,8 +2501,8 @@
                     .attr('class', function (d) { return 'chart-bar target target-' + d.id; });
                 // Bars for each data
                 contextBarEnter.append('g')
-                    .attr("class", classBars)
-                    .style("fill", function (d) { return color(d.id); });
+                    .attr( "class", classBars)
+                    .style( "fill", function (d) { return color(d.id); });
 
                 //-- Line --//
                 contextLineUpdate = context.select('.chart-lines')
@@ -2511,10 +2511,10 @@
                 contextLineEnter = contextLineUpdate.enter().append('g')
                     .attr('class', function (d) { return 'chart-line target target-' + d.id; });
                 // Lines for each data
-                contextLineEnter.append("path")
-                    .attr("class", classLine)
-                    .style("opacity", 0)
-                    .style("stroke", function (d) { return color(d.id); });
+                contextLineEnter.append( "path" )
+                    .attr( "class", classLine)
+                    .style( "opacity", 0)
+                    .style( "stroke", function (d) { return color(d.id); });
             }
 
             /*-- Legend --*/
@@ -2528,7 +2528,7 @@
             // Fade-in each chart
             svg.selectAll('.target')
                 .transition()
-                .style("opacity", 1);
+                .style( "opacity", 1);
         }
 
         function load(targets, done) {
@@ -2602,15 +2602,15 @@
                     c3.revert();
                 });
             l.append('rect')
-                .attr("class", "legend-item-event")
+                .attr( "class", "legend-item-event" )
                 .style('fill-opacity', 0)
                 .attr('x', -200)
                 .attr('y', function () { return legendHeight / 2 - 16; })
                 .attr('width', __legend_item_width)
                 .attr('height', 24);
             l.append('rect')
-                .attr("class", "legend-item-tile")
-                .style("pointer-events", "none")
+                .attr( "class", "legend-item-tile" )
+                .style( "pointer-events", "none" )
                 .style('fill', function (d) { return color(d); })
                 .attr('x', -200)
                 .attr('y', function () { return legendHeight / 2 - 9; })
@@ -2618,7 +2618,7 @@
                 .attr('height', 10);
             l.append('text')
                 .text(function (d) { return isDefined(__data_names[d]) ? __data_names[d] : d; })
-                .style("pointer-events", "none")
+                .style( "pointer-events", "none" )
                 .attr('x', -200)
                 .attr('y', function () { return legendHeight / 2; });
 
@@ -2909,7 +2909,7 @@
         c3.destroy = function () {
             c3.data.targets = undefined;
             c3.data.x = {};
-            selectChart.html("");
+            selectChart.html( "" );
             window.onresize = null;
         };
 
@@ -2936,13 +2936,13 @@
         var tickMajorSize = 6, /*tickMinorSize = 6,*/ tickEndSize = 6, tickPadding = 3, tickCentered = false, tickTextNum = 10, tickOffset = 0, tickFormat = null;
         var categories = [];
         function axisX(selection, x) {
-            selection.attr("transform", function (d) {
-                return "translate(" + (x(d) + tickOffset) + ", 0)";
+            selection.attr( "transform", function (d) {
+                return "translate( " + (x(d) + tickOffset) + ", 0)";
             });
         }
         function axisY(selection, y) {
-            selection.attr("transform", function (d) {
-                return "translate(0," + y(d) + ")";
+            selection.attr( "transform", function (d) {
+                return "translate(0," + y(d) + " )";
             });
         }
         function scaleExtent(domain) {
@@ -2973,24 +2973,24 @@
             g.each(function () {
                 var g = d3.select(this);
                 var ticks = generateTicks(scale.domain());
-                var tick = g.selectAll(".tick.major").data(ticks, String),
-                    tickEnter = tick.enter().insert("g", "path").attr("class", "tick major").style("opacity", 1e-6),
-                    tickExit = d3.transition(tick.exit()).style("opacity", 1e-6).remove(),
-                    tickUpdate = d3.transition(tick).style("opacity", 1),
+                var tick = g.selectAll( ".tick.major" ).data(ticks, String),
+                    tickEnter = tick.enter().insert( "g", "path" ).attr( "class", "tick major" ).style( "opacity", 1e-6),
+                    tickExit = d3.transition(tick.exit()).style( "opacity", 1e-6).remove(),
+                    tickUpdate = d3.transition(tick).style( "opacity", 1),
                     tickTransform,
                     tickX;
                 var range = scale.rangeExtent ? scale.rangeExtent() : scaleExtent(scale.range()),
-                    path = g.selectAll(".domain").data([ 0 ]);
+                    path = g.selectAll( ".domain" ).data([ 0 ]);
 
-                path.enter().append("path").attr("class", "domain");
+                path.enter().append( "path" ).attr( "class", "domain" );
 
                 var pathUpdate = d3.transition(path);
 
                 var scale1 = scale.copy(), scale0 = this.__chart__ || scale1;
                 this.__chart__ = scale1;
-                tickEnter.append("line");
-                tickEnter.append("text");
-                var lineEnter = tickEnter.select("line"), lineUpdate = tickUpdate.select("line"), text = tick.select("text"), textEnter = tickEnter.select("text"), textUpdate = tickUpdate.select("text");
+                tickEnter.append( "line" );
+                tickEnter.append( "text" );
+                var lineEnter = tickEnter.select( "line" ), lineUpdate = tickUpdate.select( "line" ), text = tick.select( "text" ), textEnter = tickEnter.select( "text" ), textUpdate = tickUpdate.select( "text" );
 
                 tickOffset = (scale1(1) - scale1(0)) / 2;
                 tickX = tickCentered ? 0 : tickOffset;
@@ -2999,13 +2999,13 @@
                 case "bottom":
                     {
                         tickTransform = axisX;
-                        lineEnter.attr("y2", tickMajorSize);
-                        textEnter.attr("y", Math.max(tickMajorSize, 0) + tickPadding);
-                        lineUpdate.attr("x1", tickX).attr("x2", tickX).attr("y2", tickMajorSize);
-                        textUpdate.attr("x", 0).attr("y", Math.max(tickMajorSize, 0) + tickPadding);
-                        text.attr("dy", ".71em").style("text-anchor", "middle");
+                        lineEnter.attr( "y2", tickMajorSize);
+                        textEnter.attr( "y", Math.max(tickMajorSize, 0) + tickPadding);
+                        lineUpdate.attr( "x1", tickX).attr( "x2", tickX).attr( "y2", tickMajorSize);
+                        textUpdate.attr( "x", 0).attr( "y", Math.max(tickMajorSize, 0) + tickPadding);
+                        text.attr( "dy", ".71em" ).style( "text-anchor", "middle" );
                         text.text(function (i) { return shouldShowTickText(ticks, i) ? formattedCategory(i) : ""; });
-                        pathUpdate.attr("d", "M" + range[0] + "," + tickEndSize + "V0H" + range[1] + "V" + tickEndSize);
+                        pathUpdate.attr( "d", "M" + range[0] + "," + tickEndSize + "V0H" + range[1] + "V" + tickEndSize);
                     }
 
                     break;
@@ -3013,37 +3013,37 @@
                 case "top":
                     {
                         tickTransform = axisX
-                        lineEnter.attr("y2", -tickMajorSize)
-                        textEnter.attr("y", -(Math.max(tickMajorSize, 0) + tickPadding))
-                        lineUpdate.attr("x2", 0).attr("y2", -tickMajorSize)
-                        textUpdate.attr("x", 0).attr("y", -(Math.max(tickMajorSize, 0) + tickPadding))
-                        text.attr("dy", "0em").style("text-anchor", "middle")
-                        pathUpdate.attr("d", "M" + range[0] + "," + -tickEndSize + "V0H" + range[1] + "V" + -tickEndSize)
+                        lineEnter.attr( "y2", -tickMajorSize)
+                        textEnter.attr( "y", -(Math.max(tickMajorSize, 0) + tickPadding))
+                        lineUpdate.attr( "x2", 0).attr( "y2", -tickMajorSize)
+                        textUpdate.attr( "x", 0).attr( "y", -(Math.max(tickMajorSize, 0) + tickPadding))
+                        text.attr( "dy", "0em" ).style( "text-anchor", "middle" )
+                        pathUpdate.attr( "d", "M" + range[0] + "," + -tickEndSize + "V0H" + range[1] + "V" + -tickEndSize)
                         break
                     }
 */
                 case "left":
                     {
                         tickTransform = axisY;
-                        lineEnter.attr("x2", -tickMajorSize);
-                        textEnter.attr("x", -(Math.max(tickMajorSize, 0) + tickPadding));
-                        lineUpdate.attr("x2", -tickMajorSize).attr("y2", 0);
-                        textUpdate.attr("x", -(Math.max(tickMajorSize, 0) + tickPadding)).attr("y", tickOffset);
-                        text.attr("dy", ".32em").style("text-anchor", "end");
+                        lineEnter.attr( "x2", -tickMajorSize);
+                        textEnter.attr( "x", -(Math.max(tickMajorSize, 0) + tickPadding));
+                        lineUpdate.attr( "x2", -tickMajorSize).attr( "y2", 0);
+                        textUpdate.attr( "x", -(Math.max(tickMajorSize, 0) + tickPadding)).attr( "y", tickOffset);
+                        text.attr( "dy", ".32em" ).style( "text-anchor", "end" );
                         text.text(function (i) { return shouldShowTickText(ticks, i) ? formattedCategory(i) : ""; });
-                        pathUpdate.attr("d", "M" + -tickEndSize + "," + range[0] + "H0V" + range[1] + "H" + -tickEndSize);
+                        pathUpdate.attr( "d", "M" + -tickEndSize + "," + range[0] + "H0V" + range[1] + "H" + -tickEndSize);
                         break;
                     }
 /*
                 case "right":
                     {
                         tickTransform = axisY
-                        lineEnter.attr("x2", tickMajorSize)
-                        textEnter.attr("x", Math.max(tickMajorSize, 0) + tickPadding)
-                        lineUpdate.attr("x2", tickMajorSize).attr("y2", 0)
-                        textUpdate.attr("x", Math.max(tickMajorSize, 0) + tickPadding).attr("y", 0)
-                        text.attr("dy", ".32em").style("text-anchor", "start")
-                        pathUpdate.attr("d", "M" + tickEndSize + "," + range[0] + "H0V" + range[1] + "H" + tickEndSize)
+                        lineEnter.attr( "x2", tickMajorSize)
+                        textEnter.attr( "x", Math.max(tickMajorSize, 0) + tickPadding)
+                        lineUpdate.attr( "x2", tickMajorSize).attr( "y2", 0)
+                        textUpdate.attr( "x", Math.max(tickMajorSize, 0) + tickPadding).attr( "y", 0)
+                        text.attr( "dy", ".32em" ).style( "text-anchor", "start" )
+                        pathUpdate.attr( "d", "M" + tickEndSize + "," + range[0] + "H0V" + range[1] + "H" + tickEndSize)
                         break
                     }
 */

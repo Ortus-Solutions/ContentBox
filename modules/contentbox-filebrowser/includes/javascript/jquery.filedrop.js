@@ -27,7 +27,7 @@
  */
 ;(function($) {
 
-  jQuery.event.props.push("dataTransfer");
+  jQuery.event.props.push( "dataTransfer" );
 
   var default_opts = {
       fallback_id: '',
@@ -102,7 +102,7 @@
         var params = $.param(opts.data).replace(/\+/g, '%20').split(/&/);
 
         $.each(params, function() {
-          var pair = this.split("=", 2),
+          var pair = this.split( "=", 2),
               name = decodeURIComponent(pair[0]),
               val  = decodeURIComponent(pair[1]);
 
@@ -307,7 +307,7 @@
 
       var send = function(e) {
 
-        var fileIndex = ((typeof(e.srcElement) === "undefined") ? e.target : e.srcElement).index;
+        var fileIndex = ((typeof(e.srcElement) === "undefined" ) ? e.target : e.srcElement).index;
 
         // Sometimes the index is not attached to the
         // event object. Find it by size. Hack for sure.
@@ -330,7 +330,7 @@
           xhr.withCredentials = opts.withCredentials;
         }
 
-        if (typeof newName === "string") {
+        if (typeof newName === "string" ) {
           builder = getBuilder(newName, e.target.result, mime, boundary);
         } else {
           builder = getBuilder(file.name, e.target.result, mime, boundary);
@@ -343,13 +343,13 @@
         upload.currentProgress = 0;
         upload.global_progress_index = global_progress_index;
         upload.startData = 0;
-        upload.addEventListener("progress", progress, false);
+        upload.addEventListener( "progress", progress, false);
 
 		// Allow url to be a method
 		if (jQuery.isFunction(opts.url)) {
-	        xhr.open("POST", opts.url(), true);
+	        xhr.open( "POST", opts.url(), true);
 	    } else {
-	    	xhr.open("POST", opts.url, true);
+	    	xhr.open( "POST", opts.url, true);
 	    }
 	    
         xhr.setRequestHeader('content-type', 'multipart/form-data; boundary=' + boundary);

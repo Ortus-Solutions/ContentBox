@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -50,7 +50,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		HTML_BASE_URL	 = arguments.coldbox.getSetting( "htmlBaseURL" );
 		
 		// Register our CKEditor events
-		interceptorService.appendInterceptionPoints("cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig");
+		interceptorService.appendInterceptionPoints( "cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig" );
 		
 		return this;
 	}
@@ -77,15 +77,15 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var iData = { toolbar = deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_toolbar" ) ), 
 					  excerptToolbar = deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" ) ) };
 		// Announce the editor toolbar is about to be processed
-		interceptorService.processState("cbadmin_ckeditorToolbar", iData);
+		interceptorService.processState( "cbadmin_ckeditorToolbar", iData);
 		// Load extra plugins according to our version
 		var iData2 = { extraPlugins = listToArray( settingService.getSetting( "cb_editors_ckeditor_extraplugins" ) ) };
 		// Announce extra plugins to see if user implements more.
-		interceptorService.processState("cbadmin_ckeditorExtraPlugins", iData2);
+		interceptorService.processState( "cbadmin_ckeditorExtraPlugins", iData2);
 		// Load extra configuration
 		var iData3 = { extraConfig = "" };
 		// Announce extra configuration
-		interceptorService.processState("cbadmin_ckeditorExtraConfig", iData3);
+		interceptorService.processState( "cbadmin_ckeditorExtraConfig", iData3);
 		// Now prepare our JavaScript and load it. No need to send assets to the head as CKEditor comes pre-bundled
 		return compileJS(iData, iData2, iData3);
 	}
@@ -98,7 +98,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var js = "";
 		
 		savecontent variable="js"{
-			writeOutput("
+			writeOutput( "
 			function checkIsDirty(){
 				return $content.ckeditorGet().checkDirty();
 			}
@@ -122,7 +122,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 				else
 					$( '##' + editorName ).ckeditorGet().insertElement( content );
 			}
-			");
+			" );
 		}
 		
 		return js;
@@ -158,7 +158,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		*/
 		
 		savecontent variable="js"{
-			writeOutput("
+			writeOutput( "
 			// toolbar Configuration
 			var ckToolbar = $.parseJSON( '#serializeJSON( arguments.iData.toolbar )#' );
 			var ckExcerptToolbar = $.parseJSON( '#serializeJSON( arguments.iData.excerptToolbar )#' );
@@ -187,7 +187,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 					baseHref: '#HTML_BASE_URL#/'
 				});
 			}
-			");
+			" );
 		}
 		
 		return js;

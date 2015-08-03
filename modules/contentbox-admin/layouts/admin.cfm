@@ -28,14 +28,14 @@
 			    #prc.cbroot#/includes/css/bootstrap-datepicker.css,
           #prc.cbroot#/includes/css/bootstrap-fileupload.css,
 			    #prc.cbroot#/includes/css/font-awesome.min.css",
-			   location="#prc.cbroot#/includes/cache")#
+			   location="#prc.cbroot#/includes/cache" )#
 
 	<!--- loop around the cssAppendList, to add page specific css --->
 	<cfloop list="#event.getValue( "cssAppendList", "", true )#" index="css">
-		<cfset addAsset("#prc.cbroot#/includes/css/#css#.css")>
+		<cfset addAsset( "#prc.cbroot#/includes/css/#css#.css" )>
 	</cfloop>
 	<cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
-		<cfset addAsset("#css#.css")>
+		<cfset addAsset( "#css#.css" )>
 	</cfloop>
 	<!--- JS --->
 	#cb.minify(assets="#prc.cbroot#/includes/js/jquery.min.js,
@@ -53,24 +53,24 @@
 			    #prc.cbroot#/includes/js/jquery.validate.bootstrap.js,
 			    #prc.cbroot#/includes/js/jquery.cookie.js,
 			    #prc.cbroot#/includes/js/contentbox.js",
-			   location="#prc.cbroot#/includes/cache")#
+			   location="#prc.cbroot#/includes/cache" )#
 	<!--- CKEditor Separate --->
 	<script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
 	<script src="#prc.cbroot#/includes/ckeditor/adapters/jquery.js"></script>
 	<!--- loop around the jsAppendList, to add page specific js --->
 	<cfloop list="#event.getValue( "jsAppendList", "", true )#" index="js">
-		<cfset addAsset("#prc.cbroot#/includes/js/#js#.js")>
+		<cfset addAsset( "#prc.cbroot#/includes/js/#js#.js" )>
 	</cfloop>
 	<cfloop list="#event.getValue( "jsFullAppendList", "", true )#" index="js">
-		<cfset addAsset("#js#.js")>
+		<cfset addAsset( "#js#.js" )>
 	</cfloop>
 	<!--- cbadmin Event --->
-	#announceInterception("cbadmin_beforeHeadEnd")#
+	#announceInterception( "cbadmin_beforeHeadEnd" )#
 </head>
 <!--============================Body============================-->
 <body data-showsidebar="#lcase( yesNoFormat( prc.oAuthor.getPreference( "sidebarState", true ) ) )#">
 	<!--- cbadmin Event --->
-	#announceInterception("cbadmin_afterBodyStart")#
+	#announceInterception( "cbadmin_afterBodyStart" )#
 	<div id="wrapper">
 		<!--- NavBar --->
 		<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
@@ -92,7 +92,7 @@
 					</a>
 
 					<!--- cbadmin event --->
-					#announceInterception("cbadmin_onTagline")#
+					#announceInterception( "cbadmin_onTagline" )#
 
 					<!--- Main Menu bar --->
 					<div class="nav-collapse collapse">
@@ -176,7 +176,7 @@
 							<li class="divider-vertical"></li>
 
 							<!---Search --->
-							<cfif prc.oAuthor.checkPermission("GLOBAL_SEARCH")>
+							<cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
 							<span class="navbar-search pull-left" id="div-search" title="ctrl+shift+s" data-placement="right"/>
 								<!---Search Results --->
 								<span id="div-search-results"></span>
@@ -187,7 +187,7 @@
 							</cfif>
 
 							<!--- cbadmin event --->
-							#announceInterception("cbadmin_onTopBar")#
+							#announceInterception( "cbadmin_onTopBar" )#
 				    	</ul>
 
 						<!--- Right NavBar --->
@@ -209,11 +209,11 @@
 		<!---Container --->
 		<div id="main-container" class="container-fluid clearfix">
 			<!--- cbadmin event --->
-			#announceInterception("cbadmin_beforeContent")#
+			#announceInterception( "cbadmin_beforeContent" )#
 			<!--- Main Content --->
 			#renderView()#
 			<!--- cbadmin event --->
-			#announceInterception("cbadmin_afterContent")#
+			#announceInterception( "cbadmin_afterContent" )#
 		</div>
 
 		<div class="push"></div>
@@ -221,7 +221,7 @@
 	</div>
 
 	<!--- Footer --->
-	#renderView(view="_tags/footer", module="contentbox-admin")#
+	#renderView(view="_tags/footer", module="contentbox-admin" )#
 
 	<!--- ============================ confirm it modal dialog ============================ --->
 	<div id="confirmIt" class="modal hide fade">
@@ -259,7 +259,7 @@
 	#runEvent(event="contentbox-admin:entries.quickPost",prePostExempt=true)#
 
 	<!--- cbadmin Event --->
-	#announceInterception("cbadmin_beforeBodyEnd")#
+	#announceInterception( "cbadmin_beforeBodyEnd" )#
 </body>
 </html>
 </cfoutput>

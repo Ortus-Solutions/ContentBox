@@ -9,8 +9,8 @@ component extends="ContentStore" singleton{
 		super.init( arguments.controller );
 
 		// Widget Properties
-		setPluginName("CustomHTML");
-		setPluginDescription("A widget that renders Custom HTML content anywhere you like. Deprecated, use the ContentStore widget instead");
+		setPluginName( "CustomHTML" );
+		setPluginDescription( "A widget that renders Custom HTML content anywhere you like. Deprecated, use the ContentStore widget instead" );
 
 		return this;
 	}

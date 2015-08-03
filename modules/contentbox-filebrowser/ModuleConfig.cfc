@@ -83,8 +83,8 @@ The arguments you can use are:
 		};
 
 		// clean directory root
-		settings.directoryRoot = REReplace(settings.directoryRoot,"\\","/","all");
-		if (right(settings.directoryRoot,1) EQ "/") {
+		settings.directoryRoot = REReplace(settings.directoryRoot,"\\","/","all" );
+		if (right(settings.directoryRoot,1) EQ "/" ) {
 			settings.directoryRoot = left(settings.directoryRoot,len(settings.directoryRoot)-1);
 		}
 

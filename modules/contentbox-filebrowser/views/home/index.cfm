@@ -22,7 +22,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<!--- Your Current Location --->
 		<div id="titleBar">
-			#announceInterception("fb_preTitleBar")#
+			#announceInterception( "fb_preTitleBar" )#
 			<div id="title">#prc.fbSettings.title#</div>
 
 			<!--- Refresh --->
@@ -63,7 +63,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 			<!--- Quick Filter --->
 			#html.label( field="fbQuickFilter", content=r( "quickfilter@fb" ) )#
-			#html.textField( name="fbQuickFilter", size="20")#
+			#html.textField( name="fbQuickFilter", size="20" )#
 
 			<!---Grid or listing --->
 			&nbsp;
@@ -88,8 +88,8 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							<span class="fileupload-new">Select file</span>
 							<span class="fileupload-exists">Change</span>
 							<input type="file" name="FILEDATA" id="file_uploader" />
-							#html.hiddenField(name="validated",value="false")#
-							#html.hiddenField(name="overwrite",id="overwrite",value="false")#
+							#html.hiddenField(name="validated",value="false" )#
+							#html.hiddenField(name="overwrite",id="overwrite",value="false" )#
 						</span>
 						<a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
 						<span id="file_uploader_button" class="btn btn-primary">Upload</span>
@@ -264,7 +264,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<!--- Location Bar --->
 		<div id="locationBar">
 			#announceInterception( "fb_preLocationBar" )#
-			#replace( prc.fbCurrentRoot, "/", '&nbsp;<img class="divider" src="#prc.fbModRoot#/includes/images/bullet_go.png" alt="arrow" />&nbsp;', "all")#
+			#replace( prc.fbCurrentRoot, "/", '&nbsp;<img class="divider" src="#prc.fbModRoot#/includes/images/bullet_go.png" alt="arrow" />&nbsp;', "all" )#
 			(#prc.fbqListing.recordCount# #r( "items@fb" )#)
 			#announceInterception( "fb_postLocationBar" )#
 		</div>

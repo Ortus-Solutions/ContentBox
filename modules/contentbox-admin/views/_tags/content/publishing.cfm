@@ -76,7 +76,7 @@
         </div>
         <!--- expire date --->
         <div class="form-group">
-            #html.label(class="control-label",field="expireDate",content="Expiration Date")#
+            #html.label(class="control-label",field="expireDate",content="Expiration Date" )#
             <div class="controls row">
                 <div class="col-md-6">
                     <div class="input-group">

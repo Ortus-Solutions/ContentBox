@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -38,7 +38,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	SettingService function init(){
 		// init it
-		super.init(entityName="cbSetting");
+		super.init(entityName="cbSetting" );
 		// settings cache key
 		setSettingsCacheKey( "cb-settings-#cgi.http_host#" );
 		return this;
@@ -50,12 +50,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	struct function isInstallationPresent(){
 		var results = { installer = false, dsncreator = false };
 		
-		if( structKeyExists( moduleSettings, "contentbox-installer") AND
+		if( structKeyExists( moduleSettings, "contentbox-installer" ) AND
 		    directoryExists( moduleSettings[ "contentbox-installer" ].path ) ){
 			results.installer = true;
 		}
 		
-		if( structKeyExists( moduleSettings, "contentbox-dsncreator") AND
+		if( structKeyExists( moduleSettings, "contentbox-dsncreator" ) AND
 		    directoryExists( moduleSettings[ "contentbox-dsncreator" ].path ) ){
 			results.dsncreator = true;
 		}
@@ -67,7 +67,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* Delete the installer module
 	*/
 	boolean function deleteInstaller(){
-		if( structKeyExists( moduleSettings, "contentbox-installer") AND
+		if( structKeyExists( moduleSettings, "contentbox-installer" ) AND
 		    directoryExists( moduleSettings[ "contentbox-installer" ].path ) ){
 			directoryDelete( moduleSettings[ "contentbox-installer" ].path, true );
 			return true;
@@ -79,7 +79,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* Delete the dsn creator module
 	*/
 	boolean function deleteDSNCreator(){
-		if( structKeyExists( moduleSettings, "contentbox-dsncreator") AND
+		if( structKeyExists( moduleSettings, "contentbox-dsncreator" ) AND
 		    directoryExists( moduleSettings[ "contentbox-dsncreator" ].path ) ){
 			directoryDelete( moduleSettings[ "contentbox-dsncreator" ].path, true );
 			return true;
@@ -113,12 +113,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		if( structKeyExists(s,arguments.name) ){
 			return s[arguments.name];
 		}
-		if( structKeyExists(arguments,"defaultValue") ){
+		if( structKeyExists(arguments,"defaultValue" ) ){
 			return arguments.defaultValue;
 		}
 		throw(message="Setting #arguments.name# not found in settings collection",
 			  detail="Registered settings are: #structKeyList(s)#",
-			  type="contentbox.SettingService.SettingNotFound");
+			  type="contentbox.SettingService.SettingNotFound" );
 	}
 
 	/**
@@ -131,7 +131,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		// found in cache?
 		if( isNull(settings) ){
 			// not found, so query db
-			var settings = list(sortOrder="name");
+			var settings = list(sortOrder="name" );
 			// cache them for an hour
 			cache.set(settingsCacheKey,settings,60);
 		}
@@ -220,13 +220,13 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	/**
 	* setting search returns struct with keys [settings,count]
 	*/
-	struct function search(search="", max=0, offset=0, sortOrder="name asc"){
+	struct function search(search="", max=0, offset=0, sortOrder="name asc" ){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
 		// Search Criteria	
 		if( len(arguments.search) ){
-			c.like("name","%#arguments.search#%");
+			c.like( "name","%#arguments.search#%" );
 		}
 		// run criteria query and projections count
 		results.count 		= c.count( "settingID" );
@@ -241,9 +241,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="settingID,name,value")
+		return c.withProjections(property="settingID,name,value" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="name");
+			.list(sortOrder="name" );
 			 
 	}
 	
@@ -252,10 +252,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }

@@ -4,7 +4,7 @@
 	<h3><i class="fa fa-quote-left"></i> Link To A ContentBox Entry</h3>
 </div>
 <div class="modal-body">
-	#html.startForm(name="entryEditorSelectorForm")#
+	#html.startForm(name="entryEditorSelectorForm" )#
 
 		<!--- Loader --->
 		<div class="loaders floatRight" id="entryLoader">
@@ -13,13 +13,13 @@
 
 		<!--- Content Bar --->
 	    <div class="form-group well">
-	        #html.label(field="entrySearch",content="Quick Search:",class="control-label")#
+	        #html.label(field="entrySearch",content="Quick Search:",class="control-label" )#
 	        #html.textField(name="entrySearch",size="30",class="form-control",value=rc.search)#
 	    </div>
 
 		<!--- Render tables out --->
 		<div id="entriesContainer">
-		#renderView(view="entries/editorSelectorEntries", module="contentbox-admin")#
+		#renderView(view="entries/editorSelectorEntries", module="contentbox-admin" )#
 		</div>
 
 

@@ -367,7 +367,7 @@ component accessors="true" threadSafe singleton{
 			rawThemes.author[ x ] 		= config.author;
 			rawThemes.authorURL[ x ] 	= config.authorURL;
 			// Screenshot
-			if( structKeyExists( config, "screenShotURL") ){
+			if( structKeyExists( config, "screenShotURL" ) ){
 				rawThemes.screenShotURL[ x ] = variables.themesIncludePath & "/#themeName#/" & config.screenShotURL;
 			} else {
 				rawThemes.screenShotURL[ x ] = "";
@@ -425,7 +425,7 @@ component accessors="true" threadSafe singleton{
 		// verify name
 		if( !len( arguments.themeName ) ){ return false; }
 		// Call onDelete on theme
-		if( structKeyExists( variables.themeCFCRegistry[ arguments.themeName ], "onDelete") ){
+		if( structKeyExists( variables.themeCFCRegistry[ arguments.themeName ], "onDelete" ) ){
 			variables.themeCFCRegistry[ arguments.themeName ].onDelete();
 		}
 		// Remove settings
@@ -465,7 +465,7 @@ component accessors="true" threadSafe singleton{
 			var fFilePath 	= fInfo.serverDirectory & "/" & fInfo.serverFile;
 		}
 		catch( any e ){
-			log.error("Error uploading theme package",e);
+			log.error( "Error uploading theme package",e);
 			results.error 		= true;
 			results.messages 	= "Error uploading theme package. #e.message# #e.detail#";
 			return results;

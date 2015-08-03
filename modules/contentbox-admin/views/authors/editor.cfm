@@ -11,13 +11,13 @@
 
 <div class="row">
     <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>">
-    	#getPlugin("MessageBox").renderIt()#
+    	#getPlugin( "MessageBox" ).renderIt()#
     	<div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">&nbsp;</h3>
                 <div class="actions pull-right">
                     <!--- Back To Inbox --->
-                    #announceInterception("cbadmin_onAuthorEditorActions")#
+                    #announceInterception( "cbadmin_onAuthorEditorActions" )#
 					<!--- Back button --->
 					<p class="text-center">
 						<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
@@ -62,7 +62,7 @@
 							</cfif>
 						</cfif>
 						<!--- cbadmin Event --->
-    					#announceInterception("cbadmin_onAuthorEditorNav")#
+    					#announceInterception( "cbadmin_onAuthorEditorNav" )#
                     </ul>
                     <!--- Tab Content --->
                     <div class="tab-content">
@@ -137,7 +137,7 @@
 								</cfif>
 
 								<!--- Active --->
-								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN")>
+								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
 									#html.select(
 										label="Active User:",
 										name="isActive",
@@ -182,7 +182,7 @@
 								#html.endFieldSet()#
 								
 								<!--- Action Bar --->
-								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
+								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 								<div class="form-actions">
 									<input type="submit" value="Save Details" class="btn btn-danger">
 								</div>
@@ -194,16 +194,16 @@
 						<cfif prc.author.isLoaded()>
 							<!--- Change Password --->
 							<div class="tab-pane" id="password">
-							#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate",class="form-vertical")#
-								#html.startFieldset(legend="Change Password")#
+							#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate",class="form-vertical" )#
+								#html.startFieldset(legend="Change Password" )#
 								#html.hiddenField(name="authorID",bind=prc.author)#
 								<!--- Fields --->
-								#html.passwordField(name="password",label="Password:",required="required",size="50",class="form-control",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group")#
-								#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="form-control",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group")#
+								#html.passwordField(name="password",label="Password:",required="required",size="50",class="form-control",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
+								#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="form-control",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
 								#html.endFieldSet()#
 								
 								<!--- Action Bar --->
-								<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
+								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 								<div class="form-actions">
 									<input type="submit" value="Change Password" class="btn btn-danger">
 								</div>
@@ -220,7 +220,7 @@
 							<!--- My Entries --->
 							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 								<div class="tab-pane" id="entries">
-									#html.startFieldset(legend="User Entries")#
+									#html.startFieldset(legend="User Entries" )#
 										#prc.entryViewlet#
 									#html.endFieldSet()#
 									<a href="#event.buildLink( prc.xehEntriesManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
@@ -230,7 +230,7 @@
 							<!--- My Pages --->
 							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 								<div class="tab-pane" id="pages">
-									#html.startFieldset(legend="User Pages")#
+									#html.startFieldset(legend="User Pages" )#
 										#prc.pageViewlet#
 									#html.endFieldSet()#
 									<a href="#event.buildLink( prc.xehPagesManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
@@ -240,7 +240,7 @@
 							<!--- My ContentStore --->
 							<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 								<div class="tab-pane" id="contentstore">
-									#html.startFieldset(legend="User Content Store")#
+									#html.startFieldset(legend="User Content Store" )#
 										#prc.contentStoreViewlet#
 									#html.endFieldSet()#
 									<a href="#event.buildLink( prc.xehContentStoreManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
@@ -248,7 +248,7 @@
 							</cfif>
 						</cfif>
 						<!--- cbadmin Event --->
-						#announceInterception("cbadmin_onAuthorEditorContent")#
+						#announceInterception( "cbadmin_onAuthorEditorContent" )#
                    	</div>
                    	<!--- End Tab Content--->
                 </div>
@@ -264,7 +264,7 @@
 			</div>
 			<div class="panel-body">
 				<div class="pull-left margin10">
-					#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=prc.author.getEmail(),size="40")#
+					#getMyPlugin(plugin="Avatar",module="contentbox" ).renderAvatar(email=prc.author.getEmail(),size="40" )#
 				</div>
 				<div class="margin10">
 					<a title="Email Me!" href="mailto:#prc.author.getEmail()#">#prc.author.getName()#</a>
@@ -305,7 +305,7 @@
 			</div>
 		</div>
 		<!--- cbadmin Event --->
-		#announceInterception("cbadmin_onAuthorEditorSidebar")#
+		#announceInterception( "cbadmin_onAuthorEditorSidebar" )#
     </div>
 	</cfif>
 </div>

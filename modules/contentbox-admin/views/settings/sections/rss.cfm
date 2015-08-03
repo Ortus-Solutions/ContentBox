@@ -4,43 +4,43 @@
 
     <!--- RSS title --->
     <div class="form-group">
-        #html.label(class="control-label",field="",content="Feed Title: ")#
+        #html.label(class="control-label",field="",content="Feed Title: " )#
         <div class="controls">
             <small>The title of the rss feeds</small></br>
-            #html.textField(name="cb_rss_title", required="required", value=prc.cbSettings.cb_rss_title, class="form-control input-sm width98",title="The title of the rss feed.")#
+            #html.textField(name="cb_rss_title", required="required", value=prc.cbSettings.cb_rss_title, class="form-control input-sm width98",title="The title of the rss feed." )#
         </div>
     </div>
      
     <!--- RSS feed generator --->
     <div class="form-group">
-    	#html.label(class="control-label",field="",content="Feed Generator: ")#
+    	#html.label(class="control-label",field="",content="Feed Generator: " )#
         <div class="controls">
             <small>RSS feed generator</small></br>
-             #html.textField(name="cb_rss_generator",required="required",value=prc.cbSettings.cb_rss_generator,class="form-control input-sm width98",title="The generator of the rss feed.")#
+             #html.textField(name="cb_rss_generator",required="required",value=prc.cbSettings.cb_rss_generator,class="form-control input-sm width98",title="The generator of the rss feed." )#
         </div>
     </div>
      
     <!--- RSS feed copyright --->
     <div class="form-group">
-        #html.label(class="control-label",field="",content="Feed Copyright: ")#
+        #html.label(class="control-label",field="",content="Feed Copyright: " )#
         <div class="controls">
             <small>RSS feed copyright</small></br>
-             #html.textField(name="cb_rss_copyright",required="required",value=prc.cbSettings.cb_rss_copyright,class="form-control input-sm width98",title="Copyright.")#
+             #html.textField(name="cb_rss_copyright",required="required",value=prc.cbSettings.cb_rss_copyright,class="form-control input-sm width98",title="Copyright." )#
         </div>
     </div>
      
     <!--- RSS feed description --->
     <div class="form-group">
-        #html.label(class="control-label",field="",content="Feed Description: ")#
+        #html.label(class="control-label",field="",content="Feed Description: " )#
         <div class="controls">
             <small>RSS feed description</small></br>
-             #html.textField(name="cb_rss_description",required="required",value=prc.cbSettings.cb_rss_description,class="form-control input-sm width98",title="RSS feed description.")#
+             #html.textField(name="cb_rss_description",required="required",value=prc.cbSettings.cb_rss_description,class="form-control input-sm width98",title="RSS feed description." )#
         </div>
     </div>
      
 	<!--- RSS feed webmaster --->
 	<div class="form-group">
-	    #html.label(class="control-label",field="",content="Feed Webmaster: ")#
+	    #html.label(class="control-label",field="",content="Feed Webmaster: " )#
 	    <div class="controls">
 	        <small>RSS feed webmaster. Ex: myemail@mysite.com (Site Administrator)</small></br>
 	        #html.textField(

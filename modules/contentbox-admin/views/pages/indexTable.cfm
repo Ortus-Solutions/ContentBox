@@ -1,14 +1,14 @@
 <cfoutput>
 <!--- Location Bar --->
-<cfif structKeyExists(rc, "parent") AND len( rc.parent )>
+<cfif structKeyExists(rc, "parent" ) AND len( rc.parent )>
 	<div class="breadcrumb">
 	  	<a href="javascript:contentDrilldown()"><i class="fa fa-home"></i></a> 
-	  	#getMyPlugin(plugin="PageBreadcrumbVisitor", module="contentbox-admin").visit( prc.page )#
+	  	#getMyPlugin(plugin="PageBreadcrumbVisitor", module="contentbox-admin" ).visit( prc.page )#
 	</div>
 </cfif>
 
 <!--- Hidden Elements --->
-#html.hiddenField(name="parent", value=event.getValue("parent",""))#
+#html.hiddenField(name="parent", value=event.getValue( "parent","" ))#
 
 <!--- pages --->
 <table id="pages" name="pages" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -48,7 +48,7 @@
 						<i class="fa fa-circle-blank icon-large"></i>
 					</cfif>
 					<!--- Title --->
-					<cfif prc.oAuthor.checkPermission("PAGES_EDITOR,PAGES_ADMIN")>
+					<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 						<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a>
 					<cfelse>
 						#page.getTitle()#
@@ -129,12 +129,12 @@
 							<i class="fa fa-cogs fa fa-large"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">
-				    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR,PAGES_ADMIN")>
+				    		<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 							<!--- Clone Command --->
 							<li><a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><i class="fa fa-copy fa fa-large"></i> Clone</a></li>
 							<!--- Create Child --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="fa fa-sitemap fa fa-large"></i> Create Child</a></li>
-							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Delete Command --->
 							<li><a href="javascript:remove('#page.getContentID()#')" class="confirmIt"
 							  data-title="<i class='fa fa-trash-o'></i> Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="fa fa-trash-o icon-large"></i> Delete</a></li>
@@ -142,7 +142,7 @@
 							<!--- Edit Command --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 							</cfif>
-							<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_EXPORT")>
+							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 							<!--- Export --->
 							<li class="dropdown-submenu pull-left">
 								<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>

@@ -155,7 +155,7 @@ component extends="baseHandler"{
 			results[ "MESSAGE" ] = "Error removing installer: #e.message#";
 		}
 		
-		event.renderData(data=results, type="json");
+		event.renderData(data=results, type="json" );
 	}
 	
 	// Delete INstaller

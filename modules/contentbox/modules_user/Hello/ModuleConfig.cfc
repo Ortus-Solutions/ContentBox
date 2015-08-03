@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -123,7 +123,7 @@ Optional Methods
 		];
 
 		// Binder Mappings
-		// binder.map("Alias").to("#moduleMapping#.model.MyService");
+		// binder.map( "Alias" ).to( "#moduleMapping#.model.MyService" );
 
 	}
 
@@ -132,9 +132,9 @@ Optional Methods
 	*/
 	function onLoad(){
 		// Let's add ourselves to the main menu in the Modules section
-		var menuService = controller.getWireBox().getInstance("AdminMenuService@cb");
+		var menuService = controller.getWireBox().getInstance( "AdminMenuService@cb" );
 		// Add Menu Contribution
-		menuService.addSubMenu(topMenu=menuService.MODULES,name="HelloContentBox",label="Hello ContentBox",href="#menuService.buildModuleLink('HelloContentBox','home')#");
+		menuService.addSubMenu(topMenu=menuService.MODULES,name="HelloContentBox",label="Hello ContentBox",href="#menuService.buildModuleLink('HelloContentBox','home')#" );
 	}
 
 	/**
@@ -149,9 +149,9 @@ Optional Methods
 	*/
 	function onUnload(){
 		// Let's remove ourselves to the main menu in the Modules section
-		var menuService = controller.getWireBox().getInstance("AdminMenuService@cb");
+		var menuService = controller.getWireBox().getInstance( "AdminMenuService@cb" );
 		// Remove Menu Contribution
-		menuService.removeSubMenu(topMenu=menuService.MODULES,name="HelloContentBox");
+		menuService.removeSubMenu(topMenu=menuService.MODULES,name="HelloContentBox" );
 	}
 
 	/**

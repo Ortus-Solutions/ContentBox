@@ -14,8 +14,8 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        #html.startForm(name="settingsForm", action=prc.xehSaveSettings, novalidate="novalidate")#
-            #html.anchor(name="top")#
+        #html.startForm(name="settingsForm", action=prc.xehSaveSettings, novalidate="novalidate" )#
+            #html.anchor(name="top" )#
             <div class="panel panel-default">
                 <div class="panel-body">
                     <!--- Vertical Nav --->
@@ -56,7 +56,7 @@
                                 <a href="##rss_options" data-toggle="tab"><i class="fa fa-rss icon-large"></i> RSS</a>
                             </li>
                             <!--- cbadmin Event --->
-                            #announceInterception("cbadmin_onSettingsNav")#
+                            #announceInterception( "cbadmin_onSettingsNav" )#
                         </ul>
                         <!--- End Tabs --->
                         <!--- Tab Content --->
@@ -150,11 +150,11 @@
                             </div>
 
                             <!--- cbadmin Event --->
-                            #announceInterception("cbadmin_onSettingsContent")#
+                            #announceInterception( "cbadmin_onSettingsContent" )#
 
                             <!--- Button Bar --->
                             <div class="form-actions">
-                                #html.submitButton(value="Save Settings", class="btn btn-danger")#
+                                #html.submitButton(value="Save Settings", class="btn btn-danger" )#
                             </div>
                         </div>
                         <!--- End Tab Content --->

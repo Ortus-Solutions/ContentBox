@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Manage widgets
 */
 component extends="baseHandler"{
@@ -48,33 +48,33 @@ component extends="baseHandler"{
 		// get its metadata
 		prc.metadata = prc.oWidget.getPublicMethods();
 		// presetn view
-		event.setView(view="widgets/docs",layout="ajax");
+		event.setView(view="widgets/docs",layout="ajax" );
 	}
 
 	//Remove
 	function remove( event, rc, prc ){
 		widgetService.removeWidget( rc.widgetFile );
-		getPlugin("MessageBox").info("Widget Removed Forever!");
+		getPlugin( "MessageBox" ).info( "Widget Removed Forever!" );
 		setNextEvent(prc.xehWidgets);
 	}
 
 	//upload
 	function upload( event, rc, prc ){
-		var fp = event.getTrimValue("filePlugin","");
+		var fp = event.getTrimValue( "filePlugin","" );
 
 		// Verify
 		if( len( fp ) eq 0){
-			getPlugin("MessageBox").setMessage(type="warning", message="Please choose a file to upload");
+			getPlugin( "MessageBox" ).setMessage(type="warning", message="Please choose a file to upload" );
 		}
 		else{
 			// Upload File
 			try{
 				widgetService.uploadWidget( "filePlugin" );
 				// Info
-				getPlugin("MessageBox").setMessage(type="info", message="Widget Installed Successfully");
+				getPlugin( "MessageBox" ).setMessage(type="info", message="Widget Installed Successfully" );
 			}
 			catch(Any e){
-				getPlugin("MessageBox").error("Error uploading file: #e.detail# #e.message#");
+				getPlugin( "MessageBox" ).error( "Error uploading file: #e.detail# #e.message#" );
 			}
 		}
 
@@ -99,7 +99,7 @@ component extends="baseHandler"{
 			event.renderData( data=evaluate( "widget.#rc.widgetudf#( argumentCollection=rc )" ), type="html" );
 		}
 		catch ( any e ) {
-			log.error("Error rendering widget: #e.message# #e.detail#", e);
+			log.error( "Error rendering widget: #e.message# #e.detail#", e);
 			event.renderData( data="Error rendering widget: #e.message# #e.detail# #e.stacktrace#", type="html" );
 		}
 	}

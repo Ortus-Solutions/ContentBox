@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- ContentBoxEvent --->
-#cb.event("cbui_BeforeSideBar")#
+#cb.event( "cbui_BeforeSideBar" )#
 
 <!--- Categories --->
 <h4>Categories</h4>
@@ -19,7 +19,7 @@
 <div class="bg"></div>
 <p>#cb.siteDescription()#</p>
 
-#cb.widget("Meta",{titleLevel="4"})#
+#cb.widget( "Meta",{titleLevel="4"})#
 
 <h4>Recent Entries</h4>
 <div class="bg"></div>
@@ -32,7 +32,7 @@
 
 <h4>Archives</h4>
 <div class="bg"></div>
-#cb.widget("Archives")#
+#cb.widget( "Archives" )#
 <br/>
 
 <!--- RSS Buttons --->
@@ -43,5 +43,5 @@
 </cfif>
 
 <!--- ContentBoxEvent --->
-#cb.event("cbui_afterSideBar")#
+#cb.event( "cbui_afterSideBar" )#
 </cfoutput>

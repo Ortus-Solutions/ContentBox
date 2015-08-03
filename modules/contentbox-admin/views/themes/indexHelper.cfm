@@ -2,11 +2,11 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$uploadForm = $("##themeUploadForm");
-	$themeForm = $("##themeForm");
-	$forgebox   = $("##forgeboxPane");
+	$uploadForm = $( "##themeUploadForm" );
+	$themeForm = $( "##themeForm" );
+	$forgebox   = $( "##forgeboxPane" );
 	// table sorting + filtering
-	$("##themes").dataTable({
+	$( "##themes" ).dataTable({
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -18,8 +18,8 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	});
-	$("##themeFilter").keyup(function(){
-		$.uiTableFilter( $("##themes"), this.value );
+	$( "##themeFilter" ).keyup(function(){
+		$.uiTableFilter( $( "##themes" ), this.value );
 	});
 	// form validator
 	$uploadForm.validate({
@@ -27,11 +27,11 @@ $(document).ready(function() {
     });	
 });
 function activateLoaders(){
-	$("##uploadBar").slideToggle();
-	$("##uploadBarLoader").slideToggle();
+	$( "##uploadBar" ).slideToggle();
+	$( "##uploadBarLoader" ).slideToggle();
 }
 function remove(themeName){
-	$themeForm.find("##themeName").val( themeName );
+	$themeForm.find( "##themeName" ).val( themeName );
 	$themeForm.submit();
 }
 function loadForgeBox(orderBY){
@@ -40,7 +40,7 @@ function loadForgeBox(orderBY){
 		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#', orderBY:orderBY});
 }
 function toggleUploader(){
-	$("##uploaderBar").slideToggle();
+	$( "##uploaderBar" ).slideToggle();
 	return false;
 }
 </script>

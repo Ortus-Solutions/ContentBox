@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -80,13 +80,13 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
 				if( NOT len( renderedExcerpt ) ){
 					// render excerpt out, prepare builder
-					var b = createObject("java","java.lang.StringBuilder").init( getExcerpt() );
+					var b = createObject( "java","java.lang.StringBuilder" ).init( getExcerpt() );
 					// announce renderings with data, so content renderers can process them
 					var iData = {
 						builder = b,
 						content	= this
 					};
-					interceptorService.processState("cb_onContentRendering", iData);
+					interceptorService.processState( "cb_onContentRendering", iData);
 					// store processed content
 					renderedExcerpt = b.toString();
 				}
@@ -110,8 +110,8 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		slug				= left(slug,200);
 
 		// Required
-		if( !len(title) ){ arrayAppend(errors, "Title is required"); }
-		if( !len(slug) ){ arrayAppend(errors, "Slug is required"); }
+		if( !len(title) ){ arrayAppend(errors, "Title is required" ); }
+		if( !len(slug) ){ arrayAppend(errors, "Slug is required" ); }
 
 		return errors;
 	}

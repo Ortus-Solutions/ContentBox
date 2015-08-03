@@ -8,11 +8,11 @@ component extends="contentbox.models.ui.BaseWidget"{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("Relocate");
-		setPluginVersion("1.0");
-		setPluginDescription("Issues 302 relocations once it is executed on any content page.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setPluginName( "Relocate" );
+		setPluginVersion( "1.0" );
+		setPluginDescription( "Issues 302 relocations once it is executed on any content page." );
+		setPluginAuthor( "Ortus Solutions" );
+		setPluginAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "Utilities" );
 		setIcon( "replay.png" );
 		return this;

@@ -11,11 +11,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName("RecentPages");
-		setPluginVersion("1.0");
-		setPluginDescription("A cool basic widget that shows N recent pages.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setPluginName( "RecentPages" );
+		setPluginVersion( "1.0" );
+		setPluginDescription( "A cool basic widget that shows N recent pages." );
+		setPluginAuthor( "Ortus Solutions" );
+		setPluginAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "list.png" );
 		setCategory( "Content" );
 		
@@ -67,7 +67,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		// generate recent pages
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
 			// UL start
 			writeOutput('<ul id="recentPages">');
 			// iterate and create
@@ -75,7 +75,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 				writeOutput('<li class="recentPages"><a href="#cb.linkPage(pageResults.pages[ x ])#">#pageResults.pages[ x ].getTitle()#</a></li>');
 			}
 			// close ul
-			writeOutput("</ul>");
+			writeOutput( "</ul>" );
 		}
 
 		return rString;

@@ -24,14 +24,14 @@ component singleton{
     ) {
         var gravatar = variables.avatar.renderAvatar( email=arguments.email, size=40 );
         savecontent variable="authorContent" {
-            writeoutput(text("
+            writeoutput(text( "
                 <table cellpadding=3 cellspacing=3>
                     <tr>
                         <td width=30>#gravatar#</td>
                         <td>#arguments.content#</td>
                     </tr>
                 </table> 
-            "));
+            " ));
         }
         return authorContent;
     }

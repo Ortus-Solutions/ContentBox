@@ -56,7 +56,7 @@
 							<i class="fa fa-cogs icon-large"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">
-				    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+				    		<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR" ) OR prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Edit Command --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
 							<!--- Create Child --->

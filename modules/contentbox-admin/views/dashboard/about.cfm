@@ -30,7 +30,7 @@
 						<tr>
 							<th>
 								ContentBox Core <br/>
-								(Codename: <a href="#getModuleSettings("contentbox").settings.codenameLink#" target="_blank">#getModuleSettings("contentbox").settings.codename#</a>)
+								(Codename: <a href="#getModuleSettings( "contentbox" ).settings.codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).settings.codename#</a>)
 							</th>
 							<th class="text-center">v.#getModuleSettings('contentbox').version#</th>
 						</tr>
@@ -44,7 +44,7 @@
 						</tr>
 						<tr>
 							<th>ColdBox Platform</th>
-							<th class="text-center">v.#getSetting("Version",1)#</th>
+							<th class="text-center">v.#getSetting( "Version",1)#</th>
 						</tr>
 					</tbody>
 				</table>
@@ -183,7 +183,7 @@
 		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Need Help?</h3>
 		    </div>
 		    <div class="panel-body">
-		    	#renderView(view="_tags/needhelp", module="contentbox-admin")#
+		    	#renderView(view="_tags/needhelp", module="contentbox-admin" )#
 				
 				<h2>Links</h2>
 				<ul>

@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-8">
             <!--- MessageBox --->
-            #getPlugin("MessageBox").renderit()#
+            #getPlugin( "MessageBox" ).renderit()#
 
             <!--- id --->
             #html.hiddenField(name="contentID",bind=prc.entry)#
@@ -102,7 +102,7 @@
                     )#
                 </div>
                 <!--- Event --->
-                #announceInterception("cbadmin_entryEditorInBody")#
+                #announceInterception( "cbadmin_entryEditorInBody" )#
             </div>
             <!--- Custom Fields --->
             <!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
@@ -128,7 +128,7 @@
                 </div>
             </cfif>
             <!--- Event --->
-            #announceInterception("cbadmin_entryEditorFooter")#
+            #announceInterception( "cbadmin_entryEditorFooter" )#
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
@@ -212,7 +212,7 @@
                         <!---End Page Info--->
 
                         <!---Begin Related Content--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -235,7 +235,7 @@
                         <!---End Related Content--->
 
                         <!---Begin Linked Content--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_LINKED_CONTENT")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -256,7 +256,7 @@
                         <!---End Linked Content--->
 
                         <!---Begin Modifiers--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_MODIFIERS" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -268,7 +268,7 @@
                             <div id="modifiers" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <!--- Creator --->
-                                    <cfif prc.entry.isLoaded() and prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+                                    <cfif prc.entry.isLoaded() and prc.oAuthor.checkPermission( "ENTRIES_ADMIN" )>
                                         <div class="form-group">
                                             <i class="fa fa-user icon-large"></i>
                                             #html.label(
@@ -320,7 +320,7 @@
                         <!---End Modfiers--->
                             
                         <!---Begin Cache Settings--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -376,7 +376,7 @@
                         <!---End Cache Settings--->
                             
                         <!---Begin Categories--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -416,7 +416,7 @@
                         <!---End Categories--->
                             
                         <!---Begin HTML Attributes--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>   
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>   
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -452,16 +452,16 @@
                         <!---End HTML Attributes--->    
                         
                         <!--- Event --->
-                        #announceInterception("cbadmin_entryEditorSidebarAccordion")#           
+                        #announceInterception( "cbadmin_entryEditorSidebarAccordion" )#           
                     </div>  
                     <!--- End Accordion --->
         
                     <!--- Event --->
-                    #announceInterception("cbadmin_entryEditorSidebar")#
+                    #announceInterception( "cbadmin_entryEditorSidebar" )#
                 </div>
             </div>
             <!--- Event --->
-            #announceInterception("cbadmin_entryEditorSidebarFooter")#   
+            #announceInterception( "cbadmin_entryEditorSidebarFooter" )#   
         </div>
     </div>
 #html.endForm()#

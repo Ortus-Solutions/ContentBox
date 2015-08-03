@@ -2,9 +2,9 @@
     <cfset ETH = getModel( "EmailTemplateHelper@cb" )>
     #ETH.author( email=args.gravatarEmail, content="
         <strong>@pageAuthor@</strong> removed a page from your system
-    ")#
+    " )#
     #ETH.divider()#
-    #ETH.text("
+    #ETH.text( "
         <table cellpadding='3' cellspacing='3'>
             <tbody>
                 <tr>
@@ -13,7 +13,7 @@
                 </tr>
             </tbody>
         </table>
-    ")#
+    " )#
     #ETH.divider()#
     #ETH.heading( content="Excerpt" )#
     #ETH.text( content="@pageExcerpt@", callout="true" )#

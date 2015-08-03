@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Tools for ContentBox.
 */
 component extends="baseHandler"{
@@ -48,11 +48,11 @@ component extends="baseHandler"{
 				prc.contents.exportDate = reReplace( prc.contents.exportDate, badDateRegex, "" );
 			}
 			else {
-				flash.put( "notice", { type="warn", message = "Sorry, the imported ContentBox package was not valid. Please verify you have the right file and try again." } );
+				messagebox.warn( "Sorry, the imported ContentBox package was not valid. Please verify you have the right file and try again." );
 			}
 		}
 		else {
-			flash.put( "notice", { type="error", message = "Sorry, there was a problem verifying your ContentBox import package. Please try again." } );
+			messagebox.error( "Sorry, there was a problem verifying your ContentBox import package. Please try again." );
 		}
 		event.setView( view="tools/importerPreview", layout="ajax" );
 	}
@@ -67,43 +67,42 @@ component extends="baseHandler"{
 				ContentBoxImporter.setup( importFile=rc.CBUpload );
 				// already validated, so just process the import
 				var importLog = ContentBoxImporter.execute( overrideContent=rc.overwrite );
-				flash.put( "notice", { type="info", message = "ContentBox package imported sucessfully! Please check out your ContentBox now!" } );
+				messagebox.info( "ContentBox package imported sucessfully! Please check out your ContentBox now!" );
 				flash.put( "importLog", importLog );
 			} else {
-				flash.put( "notice", { type="error", message = "The ContentBox package is invalid. Please try again." } );
+				messagebox.error( "The ContentBox package is invalid. Please try again." );
 			}
 		}
 		catch( any e ){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			flash.put( "notice", { type="error", message = errorMessage } );
+			messagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehToolsImport );
 	}
 
 	// do database import
 	function doDataImport( event, rc, prc ){
-		event.paramValue("dsn","");
-		event.paramValue("dsnUsername","");
-		event.paramValue("dsnPassword","");
-		event.paramValue("defaultPassword","");
-		event.paramValue("tableprefix","");
-		event.paramValue("roleID","");
+		event.paramValue( "dsn","" );
+		event.paramValue( "dsnUsername","" );
+		event.paramValue( "dsnPassword","" );
+		event.paramValue( "defaultPassword","" );
+		event.paramValue( "tableprefix","" );
+		event.paramValue( "roleID","" );
 		
 		// validate
-		if( !len(rc.dsn) or !len(rc.defaultPassword) ){
-			flash.put( "notice", { type="warn", message = "Please fill out all required fields." } );
-			setNextEvent(prc.xehToolsImport);
+		if( !len( rc.dsn ) or !len( rc.defaultPassword ) ){
+			messagebox.warn( "Please fill out all required fields." );
+			setNextEvent( prc.xehToolsImport );
 		}
 		
 		try{
 			// get importer
-			var importer = getModel("#rc.importer#Importer@cb");
+			var importer = getModel( "#rc.importer#Importer@cb" );
 			importer.execute( argumentCollection=rc );
-			flash.put( "notice", { type="info", message = "Content imported successfully! Please check out your ContentBox now!" } );
-		}
-		catch(any e){
-			flash.put( "notice", { type="error", message = "Error importing from datasource: #e.message# #e.detail#" } );
+			messagebox.info( "Content imported successfully! Please check out your ContentBox now!" );
+		} catch( any e ){
+			messagebox.error( "Error importing from datasource: #e.message# #e.detail#" );
 		}
 		
 		setNextEvent(prc.xehToolsImport);
@@ -124,7 +123,7 @@ component extends="baseHandler"{
 		prc.widgetService 	= widgetService;
 		
 		// view
-		event.setView("tools/exporter");
+		event.setView( "tools/exporter" );
 	}
 	
 	function previewExport( event, rc, prc ) {

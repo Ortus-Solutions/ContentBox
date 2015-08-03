@@ -42,7 +42,7 @@ function fbGenericClose(){
  * @param type
  */
 function fbTestChoose(path, rPath, type){
-	alert("Path: " + path + '\n URL: ' + rPath + '\n Type: ' + type);
+	alert( "Path: " + path + '\n URL: ' + rPath + '\n Type: ' + type);
 }
 function fbTestCancel(){
 	alert('Cancel Called');

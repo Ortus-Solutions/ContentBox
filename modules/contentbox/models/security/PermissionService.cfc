@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -32,7 +32,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	PermissionService function init(){
 		// init it
-		super.init(entityName="cbPermission");
+		super.init(entityName="cbPermission" );
 		
 		return this;
 	}
@@ -43,16 +43,16 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	boolean function deletePermission(required permissionID) transactional{
 		// We do SQL deletions as those relationships are not bi-directional
 		// delete role relationships
-		var q = new Query(sql="delete from cb_rolePermissions where FK_permissionID = :permissionID");
-		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric");
+		var q = new Query(sql="delete from cb_rolePermissions where FK_permissionID = :permissionID" );
+		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric" );
 		q.execute();
 		// delete user relationships
-		var q = new Query(sql="delete from cb_authorPermissions where FK_permissionID = :permissionID");
-		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric");
+		var q = new Query(sql="delete from cb_authorPermissions where FK_permissionID = :permissionID" );
+		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric" );
 		q.execute();
 		// delete permission now
-		var q = new Query(sql="delete from cb_permission where permissionID = :permissionID");
-		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric");
+		var q = new Query(sql="delete from cb_permission where permissionID = :permissionID" );
+		q.addParam(name="permissionID", value=arguments.permissionID, cfsqltype="numeric" );
 		q.execute();
 		
 		return true;
@@ -64,9 +64,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="permissionID,permission,description")
+		return c.withProjections(property="permissionID,permission,description" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="permission");
+			.list(sortOrder="permission" );
 			 
 	}
 	
@@ -75,10 +75,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject("java", "java.lang.StringBuilder").init("Starting import with override = #arguments.override#...<br>");
+		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat");
+			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }

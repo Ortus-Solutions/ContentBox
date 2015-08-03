@@ -1,4 +1,4 @@
-﻿/**
+/**
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -39,12 +39,12 @@ component extends="baseHandler"{
 		// Specific admin validation actions
 		if( listFindNoCase( "save,editor,savePreferences,passwordChange,saveRawPreferences", arguments.action ) ){
 			// Get incoming author to verify credentials
-			arguments.event.paramValue("authorID", 0);
+			arguments.event.paramValue( "authorID", 0);
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
-			if(  !prc.oAuthor.checkPermission("AUTHOR_ADMIN") AND oAuthor.getAuthorID() NEQ prc.oAuthor.getAuthorID() ){
+			if(  !prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) AND oAuthor.getAuthorID() NEQ prc.oAuthor.getAuthorID() ){
 				// relocate
-				getPlugin("MessageBox").error("You do not have permissions to do this!");
+				getPlugin( "MessageBox" ).error( "You do not have permissions to do this!" );
 				setNextEvent(event=prc.xehAuthors);
 				return;
 			}
@@ -67,7 +67,7 @@ component extends="baseHandler"{
 		prc.roles = roleService.getAll( sortOrder="role" );
 		
 		// View
-		event.setView("authors/index");
+		event.setView( "authors/index" );
 	}
 
 	// build out user table
@@ -113,7 +113,7 @@ component extends="baseHandler"{
 	function usernameCheck( event, rc, prc ){
 		var found = true;
 
-		event.paramValue("username","");
+		event.paramValue( "username","" );
 
 		// only check if we have a username
 		if( len(username) ){
@@ -155,7 +155,7 @@ component extends="baseHandler"{
 		prc.tabUsers_manage = true;
 
 		// view
-		event.setView("authors/editor");
+		event.setView( "authors/editor" );
 	}
 
 	// shortcut to your profile
@@ -171,7 +171,7 @@ component extends="baseHandler"{
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// render out view
-		return renderView(view="authors/listPreferences", module="contentbox-admin");
+		return renderView(view="authors/listPreferences", module="contentbox-admin" );
 	}
 	
 	// change user editor preferences
@@ -185,7 +185,7 @@ component extends="baseHandler"{
 			results[ "MESSAGES" ] = "Editor changed to #rc.editor#";
 		}
 		catch(Any e){
-			log.error("Error saving preferences.", e);
+			log.error( "Error saving preferences.", e);
 			results[ "ERROR" ] = true;
 			results[ "MESSAGES" ] = e.detail & e.message;
 		}
@@ -205,7 +205,7 @@ component extends="baseHandler"{
 			results[ "MESSAGES" ] = "Sidebar state saved";
 		}
 		catch(Any e){
-			log.error("Error saving preferences.", e);
+			log.error( "Error saving preferences.", e);
 			results[ "ERROR" ] = true;
 			results[ "MESSAGES" ] = e.detail & e.message;
 		}
@@ -228,15 +228,15 @@ component extends="baseHandler"{
 		// Store Preferences
 		oAuthor.setPreferences( allPreferences );
 		// announce event
-		announceInterception("cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences});
+		announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences});
 		// save Author
 		authorService.saveAuthor( oAuthor );
 		// announce event
-		announceInterception("cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences});
+		announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences});
 		// message
-		getPlugin("MessageBox").setMessage("info","Author Preferences Saved!");
+		getPlugin( "MessageBox" ).setMessage( "info","Author Preferences Saved!" );
 		// relocate
-		setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences");
+		setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 	}
 	
 	// save raw preferences
@@ -248,21 +248,21 @@ component extends="baseHandler"{
 			// store preferences
 			oAuthor.setPreferences( rc.preferences );
 			// announce event
-			announceInterception("cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences});
+			announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences});
 			// save Author
 			authorService.saveAuthor( oAuthor );
 			// announce event
-			announceInterception("cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences});
+			announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences});
 			// message
-			getPlugin("MessageBox").setMessage("info","Author Preferences Saved!");
+			getPlugin( "MessageBox" ).setMessage( "info","Author Preferences Saved!" );
 			// relocate
-			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences");	
+			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );	
 		}
 		else{
 			// message
-			getPlugin("MessageBox").error(messageArray=vResult.getAllErrors());
+			getPlugin( "MessageBox" ).error(messageArray=vResult.getAllErrors());
 			// relocate
-			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences");
+			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 		}	
 	}
 	
@@ -276,27 +276,27 @@ component extends="baseHandler"{
 		var newAuthor = (NOT oAuthor.isLoaded());
 
     	// role assignment if permission allows it
-    	if( prc.oAuthor.checkPermission("AUTHOR_ADMIN") ){
+    	if( prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) ){
     		oAuthor.setRole( roleService.get( rc.roleID ) );
     	}
 
     	// validate it
-    	var vResults = validateModel(target=oAuthor, excludes=( structKeyExists(rc, "password") ? "" : "password" ));
+    	var vResults = validateModel(target=oAuthor, excludes=( structKeyExists(rc, "password" ) ? "" : "password" ));
 		if( !vResults.hasErrors() ){
 			// announce event
-			announceInterception("cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID,isNew=newAuthor});
+			announceInterception( "cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID,isNew=newAuthor});
 			// save Author
 			authorService.saveAuthor( oAuthor );
 			// announce event
-			announceInterception("cbadmin_postAuthorSave",{author=oAuthor,isNew=newAuthor});
+			announceInterception( "cbadmin_postAuthorSave",{author=oAuthor,isNew=newAuthor});
 			// message
-			getPlugin("MessageBox").setMessage("info","Author saved!");
+			getPlugin( "MessageBox" ).setMessage( "info","Author saved!" );
 			// relocate
 			setNextEvent(prc.xehAuthors);
 		}
 		else{
-			getPlugin("MessageBox").warn(messageArray=vResults.getAllErrors());
-			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()#");
+			getPlugin( "MessageBox" ).warn(messageArray=vResults.getAllErrors());
+			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()#" );
 		}
 
 	}
@@ -311,17 +311,17 @@ component extends="baseHandler"{
 			oAuthor.setPassword( rc.password );
 			authorService.saveAuthor(author=oAuthor, passwordChange=true);
 			// announce event
-			announceInterception("cbadmin_onAuthorPasswordChange",{author=oAuthor,password=rc.password});
+			announceInterception( "cbadmin_onAuthorPasswordChange",{author=oAuthor,password=rc.password});
 			// message
-			getPlugin("MessageBox").info("Password Updated!");
+			getPlugin( "MessageBox" ).info( "Password Updated!" );
 		}
 		else{
 			// message
-			getPlugin("MessageBox").error("Passwords do not match, please try again!");
+			getPlugin( "MessageBox" ).error( "Passwords do not match, please try again!" );
 		}
 
 		// relocate
-		setNextEvent(event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#");
+		setNextEvent(event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
 	}
 
 	// remove user
@@ -329,18 +329,18 @@ component extends="baseHandler"{
 		var oAuthor	= authorService.get( rc.authorID );
 
 		if( isNull(oAuthor) ){
-			getPlugin("MessageBox").setMessage("warning","Invalid Author detected!");
+			getPlugin( "MessageBox" ).setMessage( "warning","Invalid Author detected!" );
 			setNextEvent( prc.xehAuthors );
 		}
 		// announce event
-		announceInterception("cbadmin_preAuthorRemove",{author=oAuthor,authorID=rc.authorID});
+		announceInterception( "cbadmin_preAuthorRemove",{author=oAuthor,authorID=rc.authorID});
 		// remove
 		oAuthor.clearPermissions();
 		authorService.delete( oAuthor );
 		// announce event
-		announceInterception("cbadmin_postAuthorRemove",{authorID=rc.authorID});
+		announceInterception( "cbadmin_postAuthorRemove",{authorID=rc.authorID});
 		// message
-		getPlugin("MessageBox").setMessage("info","Author Removed!");
+		getPlugin( "MessageBox" ).setMessage( "info","Author Removed!" );
 		// redirect
 		setNextEvent(prc.xehAuthors);
 	}
@@ -356,7 +356,7 @@ component extends="baseHandler"{
 		// Get author
 		prc.author = authorService.get( rc.authorID );
 		// view
-		event.setView(view="authors/permissions",layout="ajax");
+		event.setView(view="authors/permissions",layout="ajax" );
 	}
 
 	// Save permission to the author and gracefully end.
@@ -371,7 +371,7 @@ component extends="baseHandler"{
 			authorService.saveAuthor( oAuthor );
 		}
 		// Saved
-		event.renderData(data="true",type="json");
+		event.renderData(data="true",type="json" );
 	}
 
 	// remove permission to a author and gracefully end.
@@ -384,49 +384,49 @@ component extends="baseHandler"{
 		// Save it
 		authorService.saveAuthor( oAuthor );
 		// Saved
-		event.renderData(data="true",type="json");
+		event.renderData(data="true",type="json" );
 	}
 	
 	// Export Entry
 	function export( event, rc, prc ){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get user
-		prc.user  = authorService.get( event.getValue("authorID",0) );
+		prc.user  = authorService.get( event.getValue( "authorID",0) );
 		
 		// relocate if not existent
 		if( !prc.user.isLoaded() ){
-			getPlugin("MessageBox").warn("authorID sent is not valid");
+			getPlugin( "MessageBox" ).warn( "authorID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.authors" );
 		}
 		//writeDump( prc.role.getMemento() );abort;
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.user.getUsername()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=prc.user.getMemento(), type=rc.format, xmlRootName="user")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				event.renderData(data=prc.user.getMemento(), type=rc.format, xmlRootName="user" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
 	
 	// Export All Entries
 	function exportAll( event, rc, prc ){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = authorService.getAllForExport();
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Users." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="users")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				event.renderData(data=data, type=rc.format, xmlRootName="users" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
@@ -438,17 +438,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = authorService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin("MessageBox").info( "Users imported sucessfully!" );
+				getPlugin( "MessageBox" ).info( "Users imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getPlugin( "MessageBox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin("MessageBox").error( errorMessage );
+			getPlugin( "MessageBox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehAuthors );
 	}

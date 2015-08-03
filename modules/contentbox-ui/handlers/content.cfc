@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -43,7 +43,7 @@ component{
 	function preHandler( event, rc, prc ,action,eventArguments){
 		// Maintenance Mode?
 		if( prc.cbSettings.cb_site_maintenance ){
-			event.overrideEvent("contentbox-ui:page.maintenance");
+			event.overrideEvent( "contentbox-ui:page.maintenance" );
 			return;
 		}
 
@@ -52,8 +52,8 @@ component{
 
 		// Home page determination either blog or a page
 		// Blog routes are in the blog namespace
-		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog" AND event.getCurrentRoutedNamespace() neq "blog"){
-			event.overrideEvent("contentbox-ui:page.index");
+		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog" AND event.getCurrentRoutedNamespace() neq "blog" ){
+			event.overrideEvent( "contentbox-ui:page.index" );
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
 		}
 	}
@@ -63,10 +63,10 @@ component{
 	*/
 	function previewSite( event, rc, prc ){
 		// Param incoming data
-		event.paramValue("l", "");
-		event.paramValue("h", "");
+		event.paramValue( "l", "" );
+		event.paramValue( "h", "" );
 		
-		var author = getModel("securityService@cb").getAuthorSession();
+		var author = getModel( "securityService@cb" ).getAuthorSession();
 		// valid Author?
 		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
 			
@@ -75,7 +75,7 @@ component{
 			// Place theme root location
 			prc.cbThemeRoot = prc.cbRoot & "/themes/" & rc.l;
 			// Home page determination either blog or a page
-			if( prc.cbSettings.cb_site_homepage NEQ "cbBlog"){
+			if( prc.cbSettings.cb_site_homepage NEQ "cbBlog" ){
 				// Override event and incoming page.
 				event.overrideEvent( "contentbox-ui:page.index" );
 				prc.pageOverride = prc.cbSettings.cb_site_homepage;
@@ -83,14 +83,14 @@ component{
 				var eArgs = {noCache=true};
 				runEvent(event="contentbox-ui:page.index", eventArguments=eArgs);
 				// Override the layout
-				event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox");
+				event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox" );
 			}
 			else{
 				// Override layout and event so we can display it
-				event.setLayout("#rc.l#/layouts/blog")
-					.overrideEvent("contentbox-ui:blog.index");
+				event.setLayout( "#rc.l#/layouts/blog" )
+					.overrideEvent( "contentbox-ui:blog.index" );
 				// run it
-				runEvent("contentbox-ui:blog.index");
+				runEvent( "contentbox-ui:blog.index" );
 			}
 			
 		}
@@ -110,8 +110,8 @@ component{
 		}
 		else{
 			// output maintenance view
-			event.setLayout(name="#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#", module="contentbox")
-				.setView(view="#prc.cbTheme#/views/maintenance", module="contentbox");
+			event.setLayout(name="#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#", module="contentbox" )
+				.setView(view="#prc.cbTheme#/views/maintenance", module="contentbox" );
 		}
 		
 	}
@@ -128,11 +128,11 @@ component{
 		prc.exception   = arguments.exception;
 
 		// announce event
-		announceInterception("cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments});
+		announceInterception( "cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments});
 
 		// Set view to render
-		event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox")
-			.setView(view="#prc.cbTheme#/views/error", module="contentbox");
+		event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox" )
+			.setView(view="#prc.cbTheme#/views/error", module="contentbox" );
 	}
 
 	/************************************** PRIVATE *********************************************/
@@ -152,7 +152,7 @@ component{
 	){
 	
 		// param incoming multi UI formats
-		event.paramValue("format", "contentbox");
+		event.paramValue( "format", "contentbox" );
 		// If UI export is disabled, default to contentbox
 		if( !prc.cbSettings.cb_content_uiexport ){
 			rc.format = "contentbox";
@@ -248,16 +248,16 @@ component{
 	*/
 	private function preview( event, rc, prc ){
 		// Param incoming data
-		event.paramValue("content", "");
-		event.paramValue("contentType", "");
-		event.paramValue("layout", "");
-		event.paramValue("title", "");
-		event.paramValue("slug", "");
-		event.paramValue("h", "");
+		event.paramValue( "content", "" );
+		event.paramValue( "contentType", "" );
+		event.paramValue( "layout", "" );
+		event.paramValue( "title", "" );
+		event.paramValue( "slug", "" );
+		event.paramValue( "h", "" );
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
 		// get current author, only authors can preview
-		prc.author = getModel("securityService@cb").getAuthorSession();
+		prc.author = getModel( "securityService@cb" ).getAuthorSession();
 		// valid Author?
 		if( !prc.author.isLoaded() OR !prc.author.isLoggedIn() OR compareNoCase( hash( prc.author.getAuthorID() ), rc.h) NEQ 0){
 			// Not an author, kick them out.

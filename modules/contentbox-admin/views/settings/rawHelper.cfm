@@ -2,10 +2,10 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$settingEditor = $("##settingEditor");
-	$importDialog = $("##importDialog");
+	$settingEditor = $( "##settingEditor" );
+	$importDialog = $( "##importDialog" );
 	// settings sorting
-	$("##settings").dataTable({
+	$( "##settings" ).dataTable({
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -17,11 +17,11 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	});
-	$("##eventFilter").keyup(function(){
-		$.uiTableFilter( $("##eventsList"), this.value );
+	$( "##eventFilter" ).keyup(function(){
+		$.uiTableFilter( $( "##eventsList" ), this.value );
 	});
 	// singletons sorting + filter
-	$("##singletons").dataTable({
+	$( "##singletons" ).dataTable({
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -33,19 +33,19 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	});
-	$("##singletonsFilter").keyup(function(){
-		$.uiTableFilter( $("##singletons"), this.value );
+	$( "##singletonsFilter" ).keyup(function(){
+		$.uiTableFilter( $( "##singletons" ), this.value );
 	});
 	// form validator
 	$settingEditor.validate();
 	// reset
 	$('##btnReset').click(function() {
-		$settingEditor.find("##settingID").val( '' );
-		$settingEditor.find("##btnSave").val( "Save" );
-		$settingEditor.find("##btnReset").val( "Reset" );
+		$settingEditor.find( "##settingID" ).val( '' );
+		$settingEditor.find( "##btnSave" ).val( "Save" );
+		$settingEditor.find( "##btnReset" ).val( "Reset" );
 	});
 	// keyup quick search
-	$("##settingSearch").keyup(function(){
+	$( "##settingSearch" ).keyup(function(){
 		var $this = $(this);
 		var clearIt = ( $this.val().length > 0 ? false : true );
 		// ajax search
@@ -56,28 +56,28 @@ $(document).ready(function() {
 });
 function importSettings(){
 	// local id's
-	var $importForm = $("##importForm");
+	var $importForm = $( "##importForm" );
 	// open modal for cloning options
 	openModal( $importDialog, 500, 300 );
 	// form validator and data
 	$importForm.validate({ 
 		submitHandler: function(form){
-           	$importForm.find("##importButtonBar").slideUp();
-			$importForm.find("##importBarLoader").slideDown();
+           	$importForm.find( "##importButtonBar" ).slideUp();
+			$importForm.find( "##importBarLoader" ).slideDown();
 			form.submit();
         }
 	});
 	// close button
-	$importForm.find("##closeButton").click(function(e){
+	$importForm.find( "##closeButton" ).click(function(e){
 		closeModal( $importDialog ); return false;
 	});
 	// clone button
-	$importForm.find("##importButton").click(function(e){
+	$importForm.find( "##importButton" ).click(function(e){
 		$importForm.submit();
 	});
 }
 function flushSettingsCache(){
-	$("##specialActionsLoader").removeClass("hidden");
+	$( "##specialActionsLoader" ).removeClass( "hidden" );
 	$.ajax({
 		url : '#event.buildLink(prc.xehFlushCache)#',
 		success : function(data){
@@ -87,7 +87,7 @@ function flushSettingsCache(){
 			else{
 				adminNotifier( "info", data.MESSAGES );
 			}
-			$("##specialActionsLoader").addClass("hidden");
+			$( "##specialActionsLoader" ).addClass( "hidden" );
 		}
 	});
 	
@@ -105,32 +105,32 @@ function settingsLoad(search, viewAll, page){
 }
 function settingsPaginate(page){
 	$('##settingsTableContainer').fadeOut();
-	settingsLoad( $("##settingSearch").val() , false, page );
+	settingsLoad( $( "##settingSearch" ).val() , false, page );
 }
 function viewAllSettings(){
 	$('##settingsTableContainer').fadeOut();
 	settingsLoad( "", true );
 }
 function edit(settingID,name,value){
-	openModal( $("##settingEditorContainer"), 500, 300 );
-	$settingEditor.find("##settingID").val( settingID );
-	$settingEditor.find("##name").val( name );
-	$settingEditor.find("##value").val( value );
-	$settingEditor.find("##btnSave").val( "Update" );
-	$settingEditor.find("##btnReset").val( "Cancel" );
+	openModal( $( "##settingEditorContainer" ), 500, 300 );
+	$settingEditor.find( "##settingID" ).val( settingID );
+	$settingEditor.find( "##name" ).val( name );
+	$settingEditor.find( "##value" ).val( value );
+	$settingEditor.find( "##btnSave" ).val( "Update" );
+	$settingEditor.find( "##btnReset" ).val( "Cancel" );
 }
 function remove(settingID){
-	var $settingForm = $("##settingForm");
-	$("##delete_"+ settingID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
-	$settingForm.find("##settingID").val( settingID );
+	var $settingForm = $( "##settingForm" );
+	$( "##delete_"+ settingID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+	$settingForm.find( "##settingID" ).val( settingID );
 	$settingForm.submit();
 }
 function createSetting(){
-	$settingEditor.find("##settingID").val( '' );
-	$settingEditor.find("##name").val( '' );
-	$settingEditor.find("##value").val( '' );
-	$settingEditor.find("##btnSave").val( "Save" );
-	openModal( $("##settingEditorContainer"), 500, 300 );
+	$settingEditor.find( "##settingID" ).val( '' );
+	$settingEditor.find( "##name" ).val( '' );
+	$settingEditor.find( "##value" ).val( '' );
+	$settingEditor.find( "##btnSave" ).val( "Save" );
+	openModal( $( "##settingEditorContainer" ), 500, 300 );
 	return false;
 }
 </script>

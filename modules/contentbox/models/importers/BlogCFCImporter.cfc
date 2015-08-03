@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -45,41 +45,41 @@ component implements="contentbox.models.importers.ICBImporter" {
 	//------------------------------------------------------------------------------------------------
 	// Import from blogcfc blog, returns the string console.
 	//------------------------------------------------------------------------------------------------
-	function execute(required dsn, dsnUsername = "", dsnPassword = "", defaultPassword = "", required roleID, tableprefix = "") {
+	function execute(required dsn, dsnUsername = "", dsnPassword = "", defaultPassword = "", required roleID, tableprefix = "" ) {
 		var authorMap = {};
 		var catMap = {};
 		var entryMap = {};
 		var slugMap = {};
 		var defaultAuthor = {};
 
-		log.info("Starting import process: #arguments.toString()#");
+		log.info( "Starting import process: #arguments.toString()#" );
 
 		try {
 			// Import categories
 			var qCategories = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
 			                  password=arguments.dsnPassword,
-			                  sql="select categoryid, categoryname, categoryalias, blog FROM tblBlogCategories").execute().getResult();
+			                  sql="select categoryid, categoryname, categoryalias, blog FROM tblBlogCategories" ).execute().getResult();
 			for(var x = 1; x lte qCategories.recordcount; x++) {
 				var props = {category=qCategories.categoryName[ x ], slug=qCategories.categoryAlias[ x ]};
 				var cat = categoryService.new(properties=props);
 				entitySave(cat);
-				log.info("Imported category: #props.category#");
+				log.info( "Imported category: #props.category#" );
 				catMap[qCategories.categoryId[ x ]] = cat.getCategoryID();
 			}
-			log.info("Categories imported successfully!");
+			log.info( "Categories imported successfully!" );
 
-			log.info("Starting to import Authors....");
+			log.info( "Starting to import Authors...." );
 			// Get the default role
 			var defaultRole = roleService.get( arguments.roleID );
 
 			// Import Authors
 			var qAuthors = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
-			                  password=arguments.dsnPassword,sql="select username, password, name from tblUsers").execute().getResult();
+			                  password=arguments.dsnPassword,sql="select username, password, name from tblUsers" ).execute().getResult();
 			for(var x = 1; x lte qAuthors.recordcount; x++) {
 				var props = {email=qAuthors.username[ x ], username=qAuthors.username[ x ],
 				                  password=hash(defaultPassword, authorService.getHashType()),isActive=1,
-				                  firstName=listFirst(qAuthors.name[ x ], " "),
-				                  lastName=trim(replacenocase(qAuthors.name[ x ], listFirst(qAuthors.name[ x ], " "), ""))};
+				                  firstName=listFirst(qAuthors.name[ x ], " " ),
+				                  lastName=trim(replacenocase(qAuthors.name[ x ], listFirst(qAuthors.name[ x ], " " ), "" ))};
 
 				var author = authorService.findWhere({username=qAuthors.username[ x ]});
 				if( isNull(author) ) {
@@ -88,7 +88,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 
 				author.setRole( defaultRole );
 				entitySave(author);
-				log.info("Imported author: #props.firstName# #props.lastName#");
+				log.info( "Imported author: #props.firstName# #props.lastName#" );
 				authorMap[qAuthors.username[ x ]] = author.getAuthorID();
 
 				// Save first author found from blogCFC as the default author.
@@ -96,13 +96,13 @@ component implements="contentbox.models.importers.ICBImporter" {
 					defaultAuthor = author;
 				}
 			}
-			log.info("Authors imported successfully!");
+			log.info( "Authors imported successfully!" );
 
-			log.info("Starting to import Pages....");
+			log.info( "Starting to import Pages...." );
 
 			var qPages = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     password=arguments.dsnPassword,
-						     sql="select id, blog, title, alias, body from tblblogpages").execute().getResult();
+						     sql="select id, blog, title, alias, body from tblblogpages" ).execute().getResult();
 
 			for(var x = 1; x lte qPages.recordcount; x++) {
 				var props = {
@@ -123,9 +123,9 @@ component implements="contentbox.models.importers.ICBImporter" {
 				page.setCreator( defaultAuthor );
 				entitySave( page );
 			}
-			log.info("Pages imported");
+			log.info( "Pages imported" );
 
-			log.info("Starting to import Entries....");
+			log.info( "Starting to import Entries...." );
 			// Import Entries
 			var q = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
 			                  password=arguments.dsnPassword,
@@ -133,7 +133,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 				                  select id, title, body, posted, morebody, alias, username, blog, allowcomments, enclosure,
 				                  		filesize, mimetype, views, released, mailed, summary, subtitle, keywords, duration
 									from tblBlogEntries
-									").execute().getResult();
+									" ).execute().getResult();
 			for(var x = 1; x lte q.recordcount; x++) {
 				var published = true;
 				var commentStatus = true;
@@ -145,10 +145,10 @@ component implements="contentbox.models.importers.ICBImporter" {
 				}
 
 				var importedBody = q.Body[ x ] & q.moreBody[ x ];
-				interceptorService.processState("preImportEntry", {post = importedBody});
+				interceptorService.processState( "preImportEntry", {post = importedBody});
 				importedBody = findImages(importedBody);
 				importedBody = convertContent(importedBody);
-				interceptorService.processState("postImportEntry", {post = importedBody});
+				interceptorService.processState( "postImportEntry", {post = importedBody});
 
 				var props = {title=q.title[ x ], slug=q.alias[ x ], content = importedBody,
 				                  excerpt = q.Body[ x ], publishedDate = q.posted[ x ], createdDate = q.posted[ x ],
@@ -179,11 +179,11 @@ component implements="contentbox.models.importers.ICBImporter" {
 				// Categories won't save in ContentBox Express without this flush :/
 				ORMFlush();
 
-				log.info("Starting to import Entry Comments....");
+				log.info( "Starting to import Entry Comments...." );
 				// Import entry comments
 				var qComments = new Query(datasource=arguments.dsn, username=arguments.dsnUsername,
 				                  password=arguments.dsnPassword,
-				                  sql="select * from tblBlogComments where entryidfk = '#q.id[ x ]#'").execute().getResult();
+				                  sql="select * from tblBlogComments where entryidfk = '#q.id[ x ]#'" ).execute().getResult();
 
 				for(var y = 1; y lte qComments.recordcount; y++) {
 					var props = { content=qComments.comment[y], author=qComments.name[y], authorEmail=qComments.email[y],
@@ -194,16 +194,16 @@ component implements="contentbox.models.importers.ICBImporter" {
 					var comment = commentService.new(properties=props);
 					comment.setRelatedContent( entry );
 					entitySave( comment );
-					log.info("Entry Comment imported: #props.authorEmail#");
+					log.info( "Entry Comment imported: #props.authorEmail#" );
 				}
-				log.info("Comments imported successfully!");
-				log.info("Entry imported: #entry.getTitle()#");
+				log.info( "Comments imported successfully!" );
+				log.info( "Entry imported: #entry.getTitle()#" );
 			}
-			log.info("Entries imported successfully!");
+			log.info( "Entries imported successfully!" );
 
 		} catch(any e) {
 			transaction action="rollback" {}
-			log.error("Error importing blog: #e.message# #e.detail#", e);
+			log.error( "Error importing blog: #e.message# #e.detail#", e);
 			rethrow;
 		}
 		transaction action="commit" {}
@@ -213,10 +213,10 @@ component implements="contentbox.models.importers.ICBImporter" {
 	// Convert blogCFC code blocks to a more uniform approach
 	//------------------------------------------------------------------------------------------------
 	private string function convertContent(required string content) {
-		if(findNoCase("<code>", arguments.content) and findNoCase("</code>", arguments.content)) {
-			var counter = findNoCase("<code>", arguments.content);
+		if(findNoCase( "<code>", arguments.content) and findNoCase( "</code>", arguments.content)) {
+			var counter = findNoCase( "<code>", arguments.content);
 			while(counter gte 1) {
-				var codeblock = reFindNoCase("(?s)(.*)(<code>)(.*)(</code>)(.*)", arguments.content, 1, 1);
+				var codeblock = reFindNoCase( "(?s)(.*)(<code>)(.*)(</code>)(.*)", arguments.content, 1, 1);
 				if(arrayLen(codeblock.len) gte 6) {
 					var codeportion = mid(arguments.content, codeblock.pos[4], codeblock.len[4]);
 					if (len(trim(codeportion))) {
@@ -225,7 +225,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 					}
 					var newbody = mid(arguments.content, 1, codeblock.len[2]) & result & mid(arguments.content, codeblock.pos[6], codeblock.len[6]);
 					arguments.content = newBody;
-					counter = findNoCase("<code>", arguments.content, counter);
+					counter = findNoCase( "<code>", arguments.content, counter);
 				} else {
 					counter = 0;
 				}
@@ -238,16 +238,16 @@ component implements="contentbox.models.importers.ICBImporter" {
 	// find all images in a given entry and save them to the media manager
 	//------------------------------------------------------------------------------------------------
 	private string function findImages(required string content) {
-		var images = reMatchNoCase("(?i)src=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content);
-		var images1 = reMatchNoCase("(?i)href=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content);
-		var pattern = createObject("java", "java.util.regex.Pattern");
-		var exp = '(?<=\=\")([^"])+(?=\")';
+		var images = reMatchNoCase( "(?i)src=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content);
+		var images1 = reMatchNoCase( "(?i)href=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content);
+		var pattern = createObject( "java", "java.util.regex.Pattern" );
+		var exp = '(?<=\=\" )([^"])+(?=\" )';
 		var mediaPath = expandPath( settingService.getSetting('cb_media_directoryRoot') );
 		var newUrl = '/modules/contentbox/content/blogImages/';
 
 		// Create a directory in the Media Manager for all the blog entry images
 		if(!directoryExists(mediaPath & '\blogImages')) {
-			log.info("Creating BlogImages folder for Media Manager....");
+			log.info( "Creating BlogImages folder for Media Manager...." );
 			directoryCreate(mediaPath & '\blogImages');
 		}
 
@@ -260,10 +260,10 @@ component implements="contentbox.models.importers.ICBImporter" {
 					var fileName = listLast(matcher.group(),'/');
 
 					var httpService = new http();
-					httpService.setMethod("get");
+					httpService.setMethod( "get" );
 					httpService.setUrl(urlObj);
 					httpService.setTimeOut(45);
-					httpService.setGetAsBinary("yes");
+					httpService.setGetAsBinary( "yes" );
 					var result = httpService.send().getPrefix();
 					fileWrite(mediaPath & '\blogImages\' & fileName, result.fileContent );
 					arguments.content = ReplaceNoCase(arguments.content, urlObj, newUrl & fileName);
@@ -281,10 +281,10 @@ component implements="contentbox.models.importers.ICBImporter" {
 					var fileName = listLast(matcher.group(),'/');
 
 					var httpService = new http();
-					httpService.setMethod("get");
+					httpService.setMethod( "get" );
 					httpService.setUrl(urlObj);
 					httpService.setTimeOut(45);
-					httpService.setGetAsBinary("yes");
+					httpService.setGetAsBinary( "yes" );
 					var result = httpService.send().getPrefix();
 					fileWrite(mediaPath & '\blogImages\' & fileName, result.fileContent );
 					arguments.content = ReplaceNoCase(arguments.content, urlObj, newUrl & fileName);

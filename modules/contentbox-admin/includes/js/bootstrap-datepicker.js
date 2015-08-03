@@ -4,7 +4,7 @@
  * =========================================================
  * Copyright 2012 Stefan Petre
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License" );
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -385,7 +385,7 @@
 			var separator = format.match(/[.\/\-\s].*?/),
 				parts = format.split(/\W+/);
 			if (!separator || !parts || parts.length === 0){
-				throw new Error("Invalid date format.");
+				throw new Error( "Invalid date format." );
 			}
 			return {separator: separator, parts: parts};
 		},
