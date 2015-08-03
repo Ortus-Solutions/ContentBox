@@ -1,0 +1,242 @@
+[
+    {
+        "securelist": "^contentbox-admin:modules\\..*",
+        "roles": "",
+        "permissions": "MODULES_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:mediamanager\\..*",
+        "roles": "",
+        "permissions": "MEDIAMANAGER_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:versions\\.(remove)",
+        "roles": "",
+        "permissions": "VERSIONS_DELETE",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:versions\\.(rollback)",
+        "roles": "",
+        "permissions": "VERSIONS_ROLLBACK",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "1",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)$",
+        "roles": "",
+        "permissions": "WIDGET_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "2",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:tools\\.(importer|doImport)",
+        "roles": "",
+        "permissions": "TOOLS_IMPORT",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "3",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:(settings|permissions|roles|securityRules)\\..*",
+        "roles": "",
+        "permissions": "SYSTEM_TAB",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "4",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:settings\\.save",
+        "roles": "",
+        "permissions": "SYSTEM_SAVE_CONFIGURATION",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "5",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)",
+        "roles": "",
+        "permissions": "SYSTEM_RAW_SETTINGS",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "6",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)",
+        "roles": "",
+        "permissions": "SECURITYRULES_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "7",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)",
+        "roles": "",
+        "permissions": "ROLES_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "8",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:permissions\\.(remove|save)",
+        "roles": "",
+        "permissions": "PERMISSIONS_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "9",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:dashboard\\.reload",
+        "roles": "",
+        "permissions": "RELOAD_MODULES",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "10",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:pages\\.(changeOrder|remove)",
+        "roles": "",
+        "permissions": "PAGES_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "11",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:themes\\.(remove|upload|rebuildRegistry|activate)",
+        "roles": "",
+        "permissions": "THEME_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "12",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:entries\\.(quickPost|remove)",
+        "roles": "",
+        "permissions": "ENTRIES_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "13",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:contentStore\\.(editor|remove|save)",
+        "roles": "",
+        "permissions": "CONTENTSTORE_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "14",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)",
+        "roles": "",
+        "permissions": "COMMENTS_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "15",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:categories\\.(remove|save)",
+        "roles": "",
+        "permissions": "CATEGORIES_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "16",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:authors\\.(remove|removePermission|savePermission)",
+        "roles": "",
+        "permissions": "AUTHOR_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "17",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:.*",
+        "roles": "",
+        "permissions": "CONTENTBOX_ADMIN",
+        "whitelist": "^contentbox-admin:security\\.",
+        "redirect": "cbadmin/security/login",
+        "order": "18",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-filebrowser:.*",
+        "roles": "",
+        "permissions": "MEDIAMANAGER_ADMIN",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "19",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.importAll$",
+        "roles": "",
+        "permissions": "TOOLS_IMPORT",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "20",
+        "match": "event",
+        "useSSL": false
+    },
+    {
+        "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.(export|exportAll)$",
+        "roles": "",
+        "permissions": "TOOLS_EXPORT",
+        "whitelist": "",
+        "redirect": "cbadmin/security/login",
+        "order": "20",
+        "match": "event",
+        "useSSL": false
+    }
+]
