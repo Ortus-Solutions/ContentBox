@@ -133,7 +133,7 @@ component extends="baseContentHandler"{
 		if( len( rc.contentID ) ){
 			entryService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
 			// announce event
-			announceInterception( "cbadmin_onEntryStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus});
+			announceInterception( "cbadmin_onEntryStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
 			getPlugin( "MessageBox" ).info( "#listLen(rc.contentID)# Entries where set to '#rc.contentStatus#'" );
 		}
@@ -315,7 +315,7 @@ component extends="baseContentHandler"{
 			entry=entry,
 			isNew=isNew,
 			originalSlug=originalSlug
-		});
+		} );
 		// save entry
 		entryService.saveEntry( entry );
 		// announce event
@@ -323,7 +323,7 @@ component extends="baseContentHandler"{
 			entry=entry,
 			isNew=isNew,
 			originalSlug=originalSlug
-		});
+		} );
 
 		// Ajax?
 		if( event.isAjax() ){
@@ -370,7 +370,7 @@ component extends="baseContentHandler"{
 				entryService.deleteContent( entry );
 				arrayAppend( messages, "Entry '#title#' removed" );
 				// announce event
-				announceInterception( "cbadmin_postEntryRemove", { contentID=contentID });
+				announceInterception( "cbadmin_postEntryRemove", { contentID=contentID } );
 			}
 		}
 		// messagebox

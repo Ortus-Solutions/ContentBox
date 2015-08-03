@@ -1,7 +1,7 @@
 <cfoutput>
 <script language="javascript">
 $(document).ready(function() {
-});
+} );
 function showDSNPanel(created){
 	if( created ){
 		$( "##dsnPanelCreate" ).hide();
@@ -13,7 +13,7 @@ function showDSNPanel(created){
 	}
 }
 function verifyDSN(){
-	$.ajax({
+	$.ajax( {
 		url:'handlers/verifyDSN.cfm',
 		data: { dsnName : $( "##dsnName" ).val() },
 		async:false,
@@ -27,7 +27,7 @@ function verifyDSN(){
 			}
 		},
 		dataType:"json"
-	});
+	} );
 }
 function verifyData(){
 	
@@ -38,7 +38,7 @@ function verifyData(){
 	
 	var cfVerified = false;
 	// Verify CFML Password First
-	$.ajax({
+	$.ajax( {
 		url:'handlers/verifyCFML.cfm',
 		data: { cfmlPassword : $( "##cfpassword" ).val() },
 		async:false,
@@ -52,11 +52,11 @@ function verifyData(){
 			}
 		},
 		dataType:"json"
-	});
+	} );
 	
 	if( cfVerified ){
 		// Verify DSN Does NOT exists
-		$.ajax({
+		$.ajax( {
 			url:'handlers/verifyDSN.cfm',
 			data: { dsnName : $( "##dsnCreateName" ).val() },
 			async:false,
@@ -74,7 +74,7 @@ function verifyData(){
 				}
 			},
 			dataType:"json"
-		});
+		} );
 	}
 }
 </script>

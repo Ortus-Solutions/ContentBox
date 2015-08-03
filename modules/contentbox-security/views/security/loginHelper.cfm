@@ -9,6 +9,6 @@ $(document).ready(function() {
 	<cfelse>
 		$( "##username" ).focus();
 	</cfif>
-});
+} );
 </script>
 </cfoutput>

@@ -37,11 +37,11 @@ component extends="baseHandler"{
 		// populate and get
 		var oPermission = populateModel( permissionService.get(id=rc.permissionID) );
     	// announce event
-		announceInterception( "cbadmin_prePermissionSave",{permission=oPermission,permissionID=rc.permissionID});
+		announceInterception( "cbadmin_prePermissionSave",{permission=oPermission,permissionID=rc.permissionID} );
 		// save permission
 		permissionService.save( oPermission );
 		// announce event
-		announceInterception( "cbadmin_postPermissionSave",{permission=oPermission});
+		announceInterception( "cbadmin_postPermissionSave",{permission=oPermission} );
 		// messagebox
 		getPlugin( "MessageBox" ).setMessage( "info","Permission saved!" );
 		// relocate
@@ -51,14 +51,14 @@ component extends="baseHandler"{
 	// remove
 	function remove(event,rc,prc){
 		// announce event
-		announceInterception( "cbadmin_prePermissionRemove",{permissionID=rc.permissionID});
+		announceInterception( "cbadmin_prePermissionRemove",{permissionID=rc.permissionID} );
 		// delete by id
 		if( !permissionService.deletePermission( rc.permissionID ) ){
 			getPlugin( "MessageBox" ).setMessage( "warning","Invalid Permission detected!" );
 		}
 		else{
 			// announce event
-			announceInterception( "cbadmin_postPermissionRemove",{permissionID=rc.permissionID});
+			announceInterception( "cbadmin_postPermissionRemove",{permissionID=rc.permissionID} );
 			// Message
 			getPlugin( "MessageBox" ).setMessage( "info","Permission and all relationships Removed!" );
 		}

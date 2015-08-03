@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$permissionForm = $( "##permissionForm" );
-});
+} );
 <cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
 function addPermission(){
 	// loader
@@ -13,7 +13,7 @@ function addPermission(){
 		$( "##permissionLoader" ).slideUp();
 		// load permissions via container
 		loadPermissions(); 
-	});
+	} );
 }
 function removePermission(permissionID){
 	// loader
@@ -23,7 +23,7 @@ function removePermission(permissionID){
 		$( "##permissionLoader" ).slideUp();
 		// load permissions via container
 		loadPermissions();
-	});
+	} );
 }
 </cfif>
 </script>

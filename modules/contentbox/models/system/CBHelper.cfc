@@ -419,7 +419,7 @@ component accessors="true" singleton threadSafe{
 	* quickSearchForm will build a standard ContentBox Content Search Form according to the SearchForm widget
 	*/
 	function quickSearchForm(){
-		return widget( "SearchForm",{type="content"});
+		return widget( "SearchForm",{type="content"} );
 	}
 
 	/**
@@ -1039,7 +1039,7 @@ component accessors="true" singleton threadSafe{
 	* @content.hint The content this comment form will be linked to, page or entry
 	*/
 	function quickCommentForm(required content){
-		return widget( "CommentForm",{content=arguments.content});
+		return widget( "CommentForm",{content=arguments.content} );
 	}
 
 	/**

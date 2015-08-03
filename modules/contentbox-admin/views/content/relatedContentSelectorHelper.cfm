@@ -38,19 +38,19 @@
             loadContentTypeTab( 'Page', params );
             loadContentTypeTab( 'Entry', params );
             loadContentTypeTab( 'ContentStore', params );
-        });
+        } );
         // prevent enter submisson
         $( "##contentSearch" ).keydown(function( e ){
             if( e.keyCode == 13 ) {
               e.preventDefault();
               return false;
             }
-        });
+        } );
         // handler for tabbed content
         $( '##contentTypes a' ).click(function( e ) {
             e.preventDefault();
             $( this ).tab( 'show' );
-        })
+        } )
         <cfif len( rc.search )>
         $( "##contentSearch" ).focus();
         </cfif>
@@ -58,7 +58,7 @@
         loadContentTypeTab( 'Page', {} );
         loadContentTypeTab( 'Entry', {} );
         loadContentTypeTab( 'ContentStore', {} );
-    });
+    } );
     /**
      * Generic method for making an AJAX request for tabbed related content
      * @param {String} contentType The content type to restrict the results to
@@ -66,7 +66,7 @@
      */
     function loadContentTypeTab( contentType, params ) {
         var url = '#event.buildLink( prc.xehRelatedContentSelector )#?excludeIDs=#rc.excludeIDs#&contentType=' + contentType;
-        $( '##' + contentType ).load( url, params, function( data ) {});
+        $( '##' + contentType ).load( url, params, function( data ) {} );
     }
     /**
      * Handler for pager links; has additional contentType argument to determine which pager/tab combo is currently active
@@ -78,7 +78,7 @@
         var url = '#event.buildLink(prc.xehRelatedContentSelector )#?excludeIDs=#rc.excludeIDs#&contentType=' + contentType + '&page=' + page;
         $( '##' + contentType ).load( url, function( data ) {
             $relatedContentSelectorLoader.fadeOut();
-        });
+        } );
     }
     </script>
 </cfoutput>

@@ -171,7 +171,7 @@
                             <div class="col-md-3">
                                 <h4><i class="fa fa-envelope icon-large"></i> Email Templates</h4>
                                 <label class="checkbox" for="toggle_emailtemplates">
-                                    #html.checkbox(name="toggle_emailtemplates",checked=true,data={togglegroup="export_emailtemplates"})# Toggle All
+                                    #html.checkbox(name="toggle_emailtemplates",checked=true,data={togglegroup="export_emailtemplates"} )# Toggle All
                                 </label>
                                 <small class="muted clearfix">Export email templates, all or a-la-carte</small>
                             </div>
@@ -181,7 +181,7 @@
                                         <cfloop query="prc.emailTemplates">
                                             <div class="col-md-6">
                                                 <cfset name = prc.emailTemplates.name>
-                                                <label for="export_emailtemplates_#name#" class="checkbox">#html.checkbox(name="export_emailtemplates",id="export_emailtemplates_#name#",value="#name#",checked=true,data={alacarte=true})# #name#</label>
+                                                <label for="export_emailtemplates_#name#" class="checkbox">#html.checkbox(name="export_emailtemplates",id="export_emailtemplates_#name#",value="#name#",checked=true,data={alacarte=true} )# #name#</label>
                                             </div>
                                             <cfif currentRow MOD 2 eq 0>
                                                 </div>
@@ -197,7 +197,7 @@
                             <div class="col-md-3">
                                 <h4><i class="fa fa-bolt icon-large"></i> Modules</h4>
                                 <label class="checkbox" for="toggle_modules">
-                                    #html.checkbox(name="toggle_modules",checked=true,data={togglegroup="export_modules"})# Toggle All
+                                    #html.checkbox(name="toggle_modules",checked=true,data={togglegroup="export_modules"} )# Toggle All
                                 </label>
                                 <small class="muted clearfix">Export modules, all or a-la-carte</small>
                             </div>
@@ -208,7 +208,7 @@
                                         <cfloop array="#prc.modules#" index="module">
                                             <div class="col-md-6">
                                                 <cfset name = module.getName()>
-                                                <label for="export_modules_#name#" class="checkbox">#html.checkbox(name="export_modules",id="export_modules_#name#",value="#name#",checked=true,data={alacarte=true})# #module.getTitle()#</label>
+                                                <label for="export_modules_#name#" class="checkbox">#html.checkbox(name="export_modules",id="export_modules_#name#",value="#name#",checked=true,data={alacarte=true} )# #module.getTitle()#</label>
                                             </div>
                                             <cfif mcounter MOD 2 eq 0>
                                                 </div>
@@ -225,7 +225,7 @@
                             <div class="col-md-3">
                                 <h4><i class="fa fa-photo icon-large"></i> Layouts</h4>
                                 <label class="checkbox" for="toggle_layouts">
-                                    #html.checkbox(name="toggle_layouts",checked=true,data={togglegroup="export_layouts"})# Toggle All
+                                    #html.checkbox(name="toggle_layouts",checked=true,data={togglegroup="export_layouts"} )# Toggle All
                                 </label>
                                 <small class="muted clearfix">Export layouts, all or a-la-carte</small>
                             </div>
@@ -235,7 +235,7 @@
                                         <cfloop query="prc.themes">
                                             <div class="col-md-6">
                                                 <cfset name = prc.themes.name>
-                                                <label for="export_layouts_#name#" class="checkbox">#html.checkbox(name="export_layouts",id="export_layouts_#name#",value="#prc.themes.name#",checked=true,data={alacarte=true})# #name#</label>
+                                                <label for="export_layouts_#name#" class="checkbox">#html.checkbox(name="export_layouts",id="export_layouts_#name#",value="#prc.themes.name#",checked=true,data={alacarte=true} )# #name#</label>
                                             </div>
                                             <cfif currentRow MOD 2 eq 0>
                                                 </div>
@@ -251,7 +251,7 @@
                             <div class="col-md-3">
                                 <h4><i class="fa fa-magic icon-large"></i> Widgets</h4>
                                 <label class="checkbox" for="toggle_widgets">
-                                    #html.checkbox(name="toggle_widgets",checked=true,data={togglegroup="export_widgets"})# Toggle All
+                                    #html.checkbox(name="toggle_widgets",checked=true,data={togglegroup="export_widgets"} )# Toggle All
                                 </label>
                                 <small class="muted clearfix">Export core widgets, all or a-la-carte. For layout or module widgets, please export the necessary layout and/or modules.</small>
                             </div>

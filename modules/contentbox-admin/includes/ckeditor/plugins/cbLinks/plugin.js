@@ -19,7 +19,7 @@ openRemoteModal() is part of contentbox js
 				label:'Link to a ContentBox Page',
 				icon: this.path + 'page.png',
 				command:b
-			});
+			} );
 			// context menu
 			if (editor.addMenuItem) {
 				// A group menu is required
@@ -31,13 +31,13 @@ openRemoteModal() is part of contentbox js
 					icon: this.path + 'page.png',
 					group: 'contentbox',
 					order:5
-				});
+				} );
 			}
 			if (editor.contextMenu) {
 				editor.contextMenu.addListener(function(element, selection) {
 					return { cbLinks: CKEDITOR.TRISTATE_ON };
-				});
+				} );
 			}
 		}
-	});
-})();
+	} );
+} )();

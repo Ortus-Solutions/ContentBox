@@ -18,7 +18,7 @@ $(document).ready(function() {
 		$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );		
 	</cfif>
 	$( "##dashboardTabs a:first" ).tab( 'show' )
-});
+} );
 <cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
 function deleteInstaller(){
 	deleteModule( '#event.buildLink(prc.xehDeleteInstaller)#', "installerCheck" );

@@ -17,7 +17,7 @@
                 // build up list of excluded IDs
                 var excludeIDs = $( 'input[name=relatedContentIDs]' ).map( function(){
                     return $( this ).val();
-                }).get();
+                } ).get();
                 if( typeof currentContentID !== 'undefined' ) {
                     excludeIDs.push( currentContentID );
                 }
@@ -25,16 +25,16 @@
                     baseURL += '?excludeIDs=' + excludeIDs.join( ',' );
                 }
                 openRemoteModal( baseURL, {}, 900, 600 );
-            });
+            } );
             // remove relatedContent listener
             $( '##relatedContent-items' ).on( 'click', '.btn', function(){
                 // remove row
                 $( this ).closest( 'tr' ).remove();
                 // evaluate if we need to modify the view of the row
                 toggleWarningMessage();
-            });
+            } );
             toggleWarningMessage();
-        });
+        } );
         /**
          * Looks at table content to see if we need to hide the table and display a "no content" message or not
          */

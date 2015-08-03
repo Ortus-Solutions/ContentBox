@@ -136,7 +136,7 @@ component extends="baseContentHandler"{
 		if( len( rc.contentID ) ){
 			contentStoreService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
 			// announce event
-			announceInterception( "cbadmin_onContentStoreStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus});
+			announceInterception( "cbadmin_onContentStoreStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
 			getPlugin( "MessageBox" ).info( "#listLen(rc.contentID)# content where set to '#rc.contentStatus#'" );
 		}
@@ -341,11 +341,11 @@ component extends="baseContentHandler"{
 		// Inflate Related Content into the content
 		content.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
-		announceInterception( "cbadmin_preContentStoreSave", {content=content, isNew=isNew});
+		announceInterception( "cbadmin_preContentStoreSave", {content=content, isNew=isNew} );
 		// save content
 		contentStoreService.saveContent( content );
 		// announce event
-		announceInterception( "cbadmin_postContentStoreSave", {content=content, isNew=isNew});
+		announceInterception( "cbadmin_postContentStoreSave", {content=content, isNew=isNew} );
 
 		// Ajax?
 		if( event.isAjax() ){

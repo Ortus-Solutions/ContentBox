@@ -21,7 +21,7 @@ openRemoteModal() is part of contentbox js
 				label:'Insert Ipsum Lorem',
 				icon: this.path + 'text.png',
 				command:b
-			});
+			} );
 			// context menu
 			if (editor.addMenuItem) {
 				// A group menu is required
@@ -33,13 +33,13 @@ openRemoteModal() is part of contentbox js
 					icon: this.path + 'text.png',
 					group: 'contentbox',
 					order : 1
-				});
+				} );
 			}
 			if (editor.contextMenu) {
 				editor.contextMenu.addListener(function(element, selection) {
 					return { cbIpsumLorem: CKEDITOR.TRISTATE_ON };
-				});
+				} );
 			}
 		}
-	});
-})();
+	} );
+} )();

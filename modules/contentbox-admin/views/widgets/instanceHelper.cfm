@@ -21,9 +21,9 @@ $( document ).ready( function() {
         else {
             updateArgs( $( this ) );
         }
-    });
+    } );
     updatePreview();
-});
+} );
 
 /*
  * Gets form values from arguments form
@@ -35,7 +35,7 @@ function getFormValues() {
     // loop over form fields, and add form field values to struct
     $.each( form, function(){
         vals[ this.name ] = this.value;
-    });
+    } );
     return vals;
 }
 
@@ -46,7 +46,7 @@ function getFormValues() {
  */
 function updateArgs( select ) {
     var vals = getFormValues();
-    $.ajax({
+    $.ajax( {
         type: 'GET',
         url: getWidgetInstanceURL(),
         data: {
@@ -61,7 +61,7 @@ function updateArgs( select ) {
             // update content
             $( '##widget-preview-wrapper' ).parent().html( data );
         }
-    });
+    } );
 }
 
 /*
@@ -72,7 +72,7 @@ function updatePreview() {
     var vals = getFormValues(),
         me = this;
         // make ajax request for preview content
-        $.ajax({
+        $.ajax( {
             type: 'GET',
             url: getWidgetPreviewURL(),
             data: vals,
@@ -89,7 +89,7 @@ function updatePreview() {
             error: function( e ) {
                 $( '##widget-preview-content' ).html( '<div class="widget-no-preview">No preview available!</div>' );
             }
-        });
+        } );
 }
 
 function buildInfobarText( vals, count ) {
@@ -142,19 +142,19 @@ function insertCBWidget(){
     widgetContent.setAttributes( vals );
     // create new widgetinfobar element
     widgetInfobar = new CKEDITOR.dom.element( 'widgetinfobar' );
-    widgetInfobar.setAttributes({
+    widgetInfobar.setAttributes( {
         contenteditable: false    
-    });
+    } );
     // create new img element
     widgetInfobarImage = new CKEDITOR.dom.element( 'img' );
-    widgetInfobarImage.setAttributes({
+    widgetInfobarImage.setAttributes( {
         src: '#prc.cbroot#/includes/images/widgets/#prc.widget.icon#',
         width: 20,
         height:20,
         align:'left',
         style: 'margin-right:5px;',
         contenteditable: false
-    })
+    } )
     widgetInfobar.setText( infobarText );
     widgetInfobar.append( widgetInfobarImage, true );
     widgetContent.append( widgetInfobar );

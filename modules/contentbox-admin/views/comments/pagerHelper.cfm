@@ -6,12 +6,12 @@ $(document).ready(function() {
 	$( "##comments_pager" ).find( "tr" ).bind( "contextmenu",function(e) {
 	    if (e.which === 3) {
 			if( $(this).attr('data-commentID') != null ){
-	    		openRemoteModal('#event.buildLink(prc.xehCommentPagerQuickLook)#', {commentID: $(this).attr('data-commentID')});
+	    		openRemoteModal('#event.buildLink(prc.xehCommentPagerQuickLook)#', {commentID: $(this).attr('data-commentID')} );
 				e.preventDefault();
 			}
 	    }
-	});
-});
+	} );
+} );
 <cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 function commentPagerChangeStatus(status,recordID){
 	// update icon
@@ -26,7 +26,7 @@ function commentPagerChangeStatus(status,recordID){
 		}
 		hideAllTooltips();
 		commentPagerLink(#rc.page#);
-	});
+	} );
 }
 function commentPagerRemove(recordID){
 	if( !confirm( "Really permanently delete comment?" ) ){ return; }
@@ -35,7 +35,7 @@ function commentPagerRemove(recordID){
 	$.post( "#event.buildlink(linkTo=prc.xehCommentPagerRemove)#",{commentID:recordID},function(data){
 		hideAllTooltips();
 		commentPagerLink(#rc.page#);
-	});
+	} );
 }
 </cfif>
 function commentPagerLink(page){
@@ -49,7 +49,7 @@ function commentPagerLink(page){
 			hideAllTooltips();
 			$( "##commentsPagerLoader" ).fadeOut();
 			activateTooltips();
-	});
+	} );
 }
 </script>
 </cfoutput>

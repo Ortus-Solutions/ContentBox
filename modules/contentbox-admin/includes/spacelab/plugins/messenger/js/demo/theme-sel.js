@@ -42,16 +42,16 @@
 
     return ThemeSelector;
 
-  })(Backbone.View);
+  } )(Backbone.View);
 
   $.fn.themeSelector = function(opts) {
     var sel;
-    sel = new ThemeSelector($.extend({}, opts, {
+    sel = new ThemeSelector($.extend( {}, opts, {
       el: this
-    }));
+    } ));
     $(this).addClass(sel.className);
     sel.render();
     return sel;
   };
 
-}).call(this);
+} ).call(this);

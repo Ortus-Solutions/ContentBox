@@ -6,8 +6,8 @@
    $(document).ready(function() {
    		$( "##productFilter" ).keyup(function(){
 			$.uiDivFilter( $( ".ProductCollectionTab" ), this.value, divIsHidden )
-		})
-	})
+		} )
+	} )
 	
 	//Callback when items are hidden
    function divIsHidden(elem){

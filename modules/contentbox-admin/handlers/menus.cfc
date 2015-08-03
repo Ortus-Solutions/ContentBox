@@ -172,14 +172,14 @@ component extends="baseHandler" {
         announceInterception( "cbadmin_preMenuSave", { 
             menu=Menu, 
             menuID=rc.menuID 
-        });
+        } );
         // save menu
         menuService.saveMenu( menu=Menu, originalSlug=originalSlug );
         // announce event
         announceInterception( "cbadmin_postMenuSave", { 
             menu=Menu, 
             originalSlug=originalSlug 
-        });
+        } );
         // messagebox
         getPlugin( "MessageBox" ).setMessage( "info", "Menu saved!" );
         // relocate

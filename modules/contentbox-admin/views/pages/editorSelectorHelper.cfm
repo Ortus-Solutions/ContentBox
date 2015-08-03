@@ -17,19 +17,19 @@ $(document).ready(function() {
 			{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
 			function(){
 				$pageEditorSelectorLoader.fadeOut();
-		});
+		} );
 		
-	});
+	} );
 	<cfif len( rc.search )>
 	$( "##pageSearch" ).focus();
 	</cfif>
-});
+} );
 function pagerLink(page){
 	$pageEditorSelectorLoader.fadeIn( "fast" );
 	$('##modal')
 		.load('#event.buildLink(prc.xehEditorSelector)#?search=#rc.search#&editorName=#rc.editorName#&page=' + page, function() {
 			$pageEditorSelectorLoader.fadeOut();
-	});
+	} );
 }
 </script>
 </cfoutput>

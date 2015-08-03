@@ -19,7 +19,7 @@ var app = function() {
         $('.actions > .fa-chevron-down').click(function() {
             $(this).parent().parent().next().slideToggle('fast');
             $(this).toggleClass('fa-chevron-down fa-chevron-up');
-        });
+        } );
 
     };
 
@@ -28,39 +28,39 @@ var app = function() {
            $('body').removeClass('off-canvas-open')    
             var bodyEl = $('#container');
             ($(window).width() > 768) ? $(bodyEl).toggleClass('sidebar-mini'): $(bodyEl).toggleClass('sidebar-opened');
-        });
+        } );
     };
 
     var toggleMenuRight = function() {
          $('#toggle-right').click(function(){
              $('.off-canvas').toggleClass('off-canvas-open');
-         });
+         } );
     };
 
     var switcheryToggle = function() {
         var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
         elems.forEach(function(html) {
-            var switchery = new Switchery(html, { size: 'small' });
-        });
+            var switchery = new Switchery(html, { size: 'small' } );
+        } );
     };
 
     var closePanel = function() {
         $('.actions > .fa-times').click(function() {
             $(this).parent().parent().parent().fadeOut();
-        });
+        } );
 
     }
 
     var menu = function() {
         var subMenu = $('.sidebar .nav');
-        $(subMenu).navgoco({
+        $(subMenu).navgoco( {
             caretHtml: false,
             accordion: true,
             slide: {
                   duration: 400,
                   easing: 'swing'
               }
-          });
+          } );
 
     };
     //End functions
@@ -73,7 +73,7 @@ var app = function() {
 
     //Vector Maps 
     var map = function() {
-        $('#map').vectorMap({
+        $('#map').vectorMap( {
             map: 'world_mill_en',
             backgroundColor: 'transparent',
             regionStyle: {
@@ -127,14 +127,14 @@ var app = function() {
                     "stroke-width": 3
                 }
             }]
-        });
+        } );
 
     };
 
     var weather = function() {
-        var icons = new Skycons({
+        var icons = new Skycons( {
             "color": "white"
-        });
+        } );
 
         icons.set( "clear-day", Skycons.CLEAR_DAY);
         icons.set( "clear-night", Skycons.CLEAR_NIGHT);
@@ -153,7 +153,7 @@ var app = function() {
     //morris pie chart
     var morrisPie = function() {
 
-        Morris.Donut({
+        Morris.Donut( {
             element: 'donut-example',
             data: [{
                     label: "Chrome",
@@ -184,7 +184,7 @@ var app = function() {
                 '#2dcc70',
                 '#f1c40f'
             ]
-        });
+        } );
     }
 
     //Sliders
@@ -209,4 +209,4 @@ var app = function() {
 $(document).ready(function() {
     app.init();
 
-});
+} );

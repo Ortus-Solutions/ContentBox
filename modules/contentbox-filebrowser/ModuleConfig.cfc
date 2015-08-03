@@ -7,7 +7,7 @@ Author      :	Luis Majano
 Description :
 File Browser can be used by either navigating to it or rendering it out as a widget:
 
-#runEvent(event="filebrowser:home",eventArguments={widget=true})#
+#runEvent(event="filebrowser:home",eventArguments={widget=true} )#
 
 By default this module loads jquery, if you don't want to, update the setting
 

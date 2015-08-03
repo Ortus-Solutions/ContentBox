@@ -3,7 +3,7 @@
 $(document).ready(function() {
     var $installerForm = $( "##installerForm" )
 	// form validators
-	$installerForm.validate({
+	$installerForm.validate( {
         showErrors: function( errorMap, errorList ) {
             var errors = this.numberOfInvalids();
             if ( errors ) {
@@ -16,13 +16,13 @@ $(document).ready(function() {
                 var wall = $( "##errorBar" ).addClass( "alert alert-danger" ).fadeIn().html( msg );
             }
         }
-    });
+    } );
 	
 	// password validator
 	$.validator.addMethod( 'passwordmatch', function( value, element ) {
         return (value==$( "[name=password]" ).val()) ? true : false;
     }, '#cb.r( "validation.passwordmatch@installer" )#' );
-});
+} );
 
 function nextStep(){
     var $tabs = $('.tab-wrapper li');

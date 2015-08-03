@@ -476,7 +476,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		required any contentData,
 		required any importLog,
 		any parent,
-		struct newContent={}){
+		struct newContent={} ){
 
 		// setup
 		var thisContent 	= arguments.contentData;

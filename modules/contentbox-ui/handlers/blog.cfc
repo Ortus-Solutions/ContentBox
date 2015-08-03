@@ -114,7 +114,7 @@ component extends="content" singleton{
 		prc.entriesCount  	= entryResults.count;
 
 		// announce event
-		announceInterception( "cbui_onIndex",{entries=prc.entries,entriesCount=prc.entriesCount});
+		announceInterception( "cbui_onIndex",{entries=prc.entries,entriesCount=prc.entriesCount} );
 
 		// set skin view
 		event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox" )
@@ -151,7 +151,7 @@ component extends="content" singleton{
 		prc.entriesCount  	= entryResults.count;
 
 		// announce event
-		announceInterception( "cbui_onArchives",{entries=prc.entries,entriesCount=prc.entriesCount});
+		announceInterception( "cbui_onArchives",{entries=prc.entries,entriesCount=prc.entriesCount} );
 
 		// set skin view
 		event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox" )
@@ -195,14 +195,14 @@ component extends="content" singleton{
 			prc.comments 		= commentResults.comments;
 			prc.commentsCount 	= commentResults.count;
 			// announce event
-			announceInterception( "cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug});
+			announceInterception( "cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug} );
 			// set skin view
 			event.setLayout(name="#prc.cbTheme#/layouts/blog", module="contentbox" )
 				.setView(view="#prc.cbTheme#/views/entry",module="contentbox" );
 		}
 		else{
 			// announce event
-			announceInterception( "cbui_onEntryNotFound",{entry=prc.entry,entrySlug=rc.entrySlug});
+			announceInterception( "cbui_onEntryNotFound",{entry=prc.entry,entrySlug=rc.entrySlug} );
 			// missing page
 			prc.missingPage = rc.entrySlug;
 			// set 404 headers

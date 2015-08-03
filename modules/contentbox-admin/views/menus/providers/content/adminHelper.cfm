@@ -12,8 +12,8 @@
                 typeIcon = $( this ).closest( '.dd3-item' ).find( '.dd3-type' );
                 var baseURL = '#event.buildLink( args.xehContentSelector )#';
                 openRemoteModal( baseURL, {contentType:'Page,Entry'}, 900, 600 );
-            });
-        });
+            } );
+        } );
         function chooseRelatedContent( id, title, type, slug ) {
             closeRemoteModal();
             input.val( title );

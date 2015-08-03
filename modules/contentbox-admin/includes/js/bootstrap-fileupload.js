@@ -165,7 +165,7 @@
           data = $this.data('bs.fileinput')
       if (!data) $this.data('bs.fileinput', (data = new Fileinput(this, options)))
       if (typeof options == 'string') data[options]()
-    })
+    } )
   }
 
   $.fn.fileinput.Constructor = Fileinput
@@ -193,6 +193,6 @@
       e.preventDefault()
       $target.trigger('click.bs.fileinput')
     }
-  })
+  } )
 
 }(window.jQuery);

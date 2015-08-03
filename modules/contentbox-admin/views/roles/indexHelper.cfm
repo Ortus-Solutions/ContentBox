@@ -2,7 +2,7 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 $(document).ready(function() {
-	$( "##roles" ).dataTable({
+	$( "##roles" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -13,7 +13,7 @@ $(document).ready(function() {
 	        }
 	    ],
 	    "order": []
-	});
+	} );
 	<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN" )>
 	$importDialog = $( "##importDialog" );
 	$roleEditor = $( "##roleEditor" );
@@ -22,14 +22,14 @@ $(document).ready(function() {
 	// reset
 	$('##btnReset').click(function() {
 		$roleEditor.find( "##roleID" ).val( '' );
-	});
+	} );
 	</cfif>
 	// table sorting + filtering
 	//$( "##roles" ).tablesorter();
 	$( "##roleFilter" ).keyup(function(){
 		$.uiTableFilter( $( "##roles" ), this.value );
-	});
-});
+	} );
+} );
 <cfif prc.oAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
 function importContent(){
 	// local id's
@@ -37,21 +37,21 @@ function importContent(){
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
 	// form validator and data
-	$importForm.validate({ 
+	$importForm.validate( { 
 		submitHandler: function(form){
            	$importForm.find( "##importButtonBar" ).slideUp();
 			$importForm.find( "##importBarLoader" ).slideDown();
 			form.submit();
         }
-	});
+	} );
 	// close button
 	$importForm.find( "##closeButton" ).click(function(e){
 		closeModal( $importDialog ); return false;
-	});
+	} );
 	// clone button
 	$importForm.find( "##importButton" ).click(function(e){
 		$importForm.submit();
-	});
+	} );
 }
 function edit(roleID,role,description){
 	openModal( $( "##roleEditorContainer" ), 500, 200 );

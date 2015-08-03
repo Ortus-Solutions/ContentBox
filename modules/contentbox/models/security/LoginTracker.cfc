@@ -81,15 +81,9 @@ component extends="coldbox.system.Interceptor"{
 		// If blocked, relocate
 		if( isblocked ){
 			if( byIP ){
-				flash.put( "notice", {
-					type 	= "warn",
-					message = cb.r( "messages.ip_blocked@security" )
-				} );
+				messagebox.warn( cb.r( "messages.ip_blocked@security" ) );
 			} else {
-				flash.put( "notice", {
-					type 	= "warn",
-					message = cb.r( "messages.user_blocked@security" )
-				} );
+				messagebox.warn( cb.r( "messages.user_blocked@security" ) );
 			}
 			// Log it
 			log.warn( "Request blocked (#realIP#;#realUsername#) via login tracker" );
@@ -147,10 +141,10 @@ component extends="coldbox.system.Interceptor"{
 		if( !isNull( prc.oBlockByIP ) ){
 			prc.oBlockByIP.setAttempts( prc.oBlockByIP.getAttempts() + 1 );
 		} else {
-			prc.oBlockByIP = loginTrackerService.new({
+			prc.oBlockByIP = loginTrackerService.new( {
 				value 		= realIP,
 				attempts 	= 1
-			});
+			} );
 		}
 		// Update date + Log it by ip
 		prc.oBlockByIP.setCreatedDate( now() );
@@ -160,10 +154,10 @@ component extends="coldbox.system.Interceptor"{
 		if( !isNull( prc.oBlockByUsername ) ){
 			prc.oBlockByUsername.setAttempts( prc.oBlockByUsername.getAttempts() + 1 );
 		}else{
-			prc.oBlockByUsername = loginTrackerService.new({
+			prc.oBlockByUsername = loginTrackerService.new( {
 				value 		= realUsername,
 				attempts 	= 1
-			});
+			} );
 		}
 		// Update date + Log it by ip
 		prc.oBlockByUsername.setCreatedDate( now() );

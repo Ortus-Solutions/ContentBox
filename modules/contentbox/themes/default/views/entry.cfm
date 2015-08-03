@@ -32,7 +32,7 @@ limitations under the License.
 	<div class="post-top-gap"></div>
 	
 	<!--- Quickly reuse our entry template to build this one with some extra pizzaz --->
-	#cb.quickEntry(args={addComments=true})#
+	#cb.quickEntry(args={addComments=true} )#
 	
 	<!--- Comment Form: I can build it or I can quick it? --->
 	<div id="commentFormShell">
@@ -56,11 +56,11 @@ limitations under the License.
 <script type="text/javascript">
 $(document).ready(function() {
  	// form validator
-	$( "##commentForm" ).validator({position:'top left'});
+	$( "##commentForm" ).validator( {position:'top left'} );
 	<cfif cb.isCommentFormError()>
 	toggleCommentForm();
 	</cfif>
-});
+} );
 function toggleCommentForm(){
 	$( "##commentForm" ).slideToggle();
 }

@@ -30,10 +30,10 @@ $(document).ready(function() {
 	$permissionsTab = $( "##permissionsTab" );
 	</cfif>
 	
-});
+} );
 function isUsernameFound(username){
 	var usernameFound = false;
-	$.ajax({
+	$.ajax( {
 		url:'#event.buildLink(prc.xehUsernameCheck)#',
 		data: {username: username},
 		async:false,
@@ -41,7 +41,7 @@ function isUsernameFound(username){
 			usernameFound = data;
 		},
 		dataType:"json"
-	});
+	} );
 	return usernameFound;
 }
 <cfif prc.author.isLoaded()>

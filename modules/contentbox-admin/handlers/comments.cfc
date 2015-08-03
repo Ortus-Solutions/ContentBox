@@ -131,11 +131,11 @@ component extend="baseHandler"{
 		// populate and get comment
 		var oComment = populateModel( commentService.get(id=rc.commentID) );
 		// announce event
-		announceInterception( "cbadmin_preCommentSave",{comment=oComment,commentID=rc.commentID});
+		announceInterception( "cbadmin_preCommentSave",{comment=oComment,commentID=rc.commentID} );
 		// save comment
 		commentService.save( oComment );
 		// announce event
-		announceInterception( "cbadmin_postCommentSave",{comment=oComment});
+		announceInterception( "cbadmin_postCommentSave",{comment=oComment} );
 		// notice
 		messagebox.info( "Comment Saved!" );
 		// relocate
@@ -186,7 +186,7 @@ component extend="baseHandler"{
 				commentService.delete( oComment ); 
 				arrayAppend( data.messages, "Comment #thisCommentID# removed" );
 				// announce event
-				announceInterception( "cbadmin_postCommentRemove", { commentID=thisCommentID });
+				announceInterception( "cbadmin_postCommentRemove", { commentID=thisCommentID } );
 			}
 		}
 
@@ -266,7 +266,7 @@ component extend="baseHandler"{
 	// save settings
 	function saveSettings( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preCommentSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc});
+		announceInterception( "cbadmin_preCommentSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc} );
 		// bulk save the options
 		settingsService.bulkSave(rc);
 		// announce event

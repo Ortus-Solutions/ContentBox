@@ -228,11 +228,11 @@ component extends="baseHandler"{
 		// Store Preferences
 		oAuthor.setPreferences( allPreferences );
 		// announce event
-		announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences});
+		announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences} );
 		// save Author
 		authorService.saveAuthor( oAuthor );
 		// announce event
-		announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences});
+		announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences} );
 		// message
 		getPlugin( "MessageBox" ).setMessage( "info","Author Preferences Saved!" );
 		// relocate
@@ -243,16 +243,16 @@ component extends="baseHandler"{
 	function saveRawPreferences( event, rc, prc ){
 		var oAuthor = authorService.get(id=rc.authorID);
 		// Validate raw preferences
-		var vResult = validateModel(target=rc, constraints={ preferences = {required=true, type="json" } });
+		var vResult = validateModel(target=rc, constraints={ preferences = {required=true, type="json" } } );
 		if( !vResult.hasErrors() ){
 			// store preferences
 			oAuthor.setPreferences( rc.preferences );
 			// announce event
-			announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences});
+			announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences} );
 			// save Author
 			authorService.saveAuthor( oAuthor );
 			// announce event
-			announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences});
+			announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences} );
 			// message
 			getPlugin( "MessageBox" ).setMessage( "info","Author Preferences Saved!" );
 			// relocate
@@ -284,11 +284,11 @@ component extends="baseHandler"{
     	var vResults = validateModel(target=oAuthor, excludes=( structKeyExists(rc, "password" ) ? "" : "password" ));
 		if( !vResults.hasErrors() ){
 			// announce event
-			announceInterception( "cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID,isNew=newAuthor});
+			announceInterception( "cbadmin_preAuthorSave",{author=oAuthor,authorID=rc.authorID,isNew=newAuthor} );
 			// save Author
 			authorService.saveAuthor( oAuthor );
 			// announce event
-			announceInterception( "cbadmin_postAuthorSave",{author=oAuthor,isNew=newAuthor});
+			announceInterception( "cbadmin_postAuthorSave",{author=oAuthor,isNew=newAuthor} );
 			// message
 			getPlugin( "MessageBox" ).setMessage( "info","Author saved!" );
 			// relocate
@@ -311,7 +311,7 @@ component extends="baseHandler"{
 			oAuthor.setPassword( rc.password );
 			authorService.saveAuthor(author=oAuthor, passwordChange=true);
 			// announce event
-			announceInterception( "cbadmin_onAuthorPasswordChange",{author=oAuthor,password=rc.password});
+			announceInterception( "cbadmin_onAuthorPasswordChange",{author=oAuthor,password=rc.password} );
 			// message
 			getPlugin( "MessageBox" ).info( "Password Updated!" );
 		}
@@ -333,12 +333,12 @@ component extends="baseHandler"{
 			setNextEvent( prc.xehAuthors );
 		}
 		// announce event
-		announceInterception( "cbadmin_preAuthorRemove",{author=oAuthor,authorID=rc.authorID});
+		announceInterception( "cbadmin_preAuthorRemove",{author=oAuthor,authorID=rc.authorID} );
 		// remove
 		oAuthor.clearPermissions();
 		authorService.delete( oAuthor );
 		// announce event
-		announceInterception( "cbadmin_postAuthorRemove",{authorID=rc.authorID});
+		announceInterception( "cbadmin_postAuthorRemove",{authorID=rc.authorID} );
 		// message
 		getPlugin( "MessageBox" ).setMessage( "info","Author Removed!" );
 		// redirect

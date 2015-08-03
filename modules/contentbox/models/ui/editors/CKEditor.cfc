@@ -185,7 +185,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 					height: 200,
 					filebrowserBrowseUrl: '#event.buildLink( xehCKFileBrowserURL )#',
 					baseHref: '#HTML_BASE_URL#/'
-				});
+				} );
 			}
 			" );
 		}

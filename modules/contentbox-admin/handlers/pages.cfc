@@ -289,7 +289,7 @@ component extends="baseContentHandler"{
 			page=page,
 			isNew=isNew,
 			originalSlug=originalSlug
-		});
+		} );
 
 		// save entry
 		pageService.savePage( page, originalSlug );
@@ -299,7 +299,7 @@ component extends="baseContentHandler"{
 			page=page,
 			isNew=isNew,
 			originalSlug=originalSlug
-		});
+		} );
 
 		// Ajax?
 		if( event.isAjax() ){
@@ -335,7 +335,7 @@ component extends="baseContentHandler"{
 			rc.title = "Copy of #rc.title#";
 		}
 		// get a clone
-		var clone = pageService.new({title=rc.title,slug=getPlugin( "HTMLHelper" ).slugify( rc.title )});
+		var clone = pageService.new( {title=rc.title,slug=getPlugin( "HTMLHelper" ).slugify( rc.title )} );
 		clone.setCreator( prc.oAuthor );
 		// attach to the original's parent.
 		if( original.hasParent() ){

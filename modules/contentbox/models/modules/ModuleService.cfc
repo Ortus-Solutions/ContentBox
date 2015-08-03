@@ -60,7 +60,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* findModuleByEntryPoint
 	*/
 	Module function findModuleByEntryPoint(required entryPoint){
-		var module = findWhere({entryPoint=arguments.entryPoint});
+		var module = findWhere( {entryPoint=arguments.entryPoint} );
 		return ( isNull(module) ? new() : module );
 	}
 
@@ -122,7 +122,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* Deactivate a module from ContentBox
 	*/
 	ModuleService function deactivateModule(required name){
-		var module = findWhere({name=arguments.name});
+		var module = findWhere( {name=arguments.name} );
 		// deactivate record
 		module.setIsActive( false );
 		// Call deactivate on module if it exists
@@ -158,7 +158,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* Activate a module from ContentBox
 	*/
 	ModuleService function activateModule(required name){
-		var module = findWhere({name=arguments.name});
+		var module = findWhere( {name=arguments.name} );
 		// Set module as active
 		module.setIsActive( true );
 		// detach from coldbox just in case
@@ -238,7 +238,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			// Only look at directories
 			if( qModules.type[ x ] eq "dir" and left(qModules.name[ x ],1) neq '.'){
 				var moduleName = qModules.name[ x ];
-				var thisModule = findWhere({name=moduleName});
+				var thisModule = findWhere( {name=moduleName} );
 				// check if module already in database records or new
 				if( isNull(thisModule) ){
 					// new record, so register it

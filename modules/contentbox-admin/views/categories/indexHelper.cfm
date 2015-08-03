@@ -9,14 +9,14 @@ $(document).ready(function() {
 	/*$( "##categories" ).tablesorter();
 	$( "##categoryFilter" ).keyup(function(){
 		$.uiTableFilter( $( "##categories" ), this.value );
-	});*/
+	} );*/
 	// form validator
 	$categoryEditor.validate();
 	// reset
 	$('##btnReset').click(function() {
 		$categoryEditor.find( "##categoryID" ).val( '' );
-	});
-	$('##categories').dataTable({
+	} );
+	$('##categories').dataTable( {
 		"columnDefs": [
     		{ 
     			"orderable": false, 
@@ -24,8 +24,8 @@ $(document).ready(function() {
     		}
   		],
   		"order": []
-	});
-});
+	} );
+} );
 <cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 function bulkRemove(){
 	$categoryForm.submit();
@@ -36,21 +36,21 @@ function importContent(){
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
 	// form validator and data
-	$importForm.validate({ 
+	$importForm.validate( { 
 		submitHandler: function(form){
            	$importForm.find( "##importButtonBar" ).slideUp();
 			$importForm.find( "##importBarLoader" ).slideDown();
 			form.submit();
         }
-	});
+	} );
 	// close button
 	$importForm.find( "##closeButton" ).click(function(e){
 		closeModal( $importDialog ); return false;
-	});
+	} );
 	// clone button
 	$importForm.find( "##importButton" ).click(function(e){
 		$importForm.submit();
-	});
+	} );
 }
 function edit(categoryID,category,slug){
 	openModal( $( "##categoryEditorContainer" ) );

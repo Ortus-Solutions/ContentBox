@@ -50,7 +50,7 @@ $.extend($.fn, {
 				if ( $(event.target).attr( "formnovalidate" ) !== undefined ) {
 					validator.cancelSubmit = true;
 				}
-			});
+			} );
 
 			// validate the form on submit
 			this.submit( function( event ) {
@@ -90,7 +90,7 @@ $.extend($.fn, {
 					validator.focusInvalid();
 					return false;
 				}
-			});
+			} );
 		}
 
 		return validator;
@@ -104,7 +104,7 @@ $.extend($.fn, {
 			var validator = $(this[0].form).validate();
 			this.each(function() {
 				valid = valid && validator.element(this);
-			});
+			} );
 			return valid;
 		}
 	},
@@ -115,7 +115,7 @@ $.extend($.fn, {
 		$.each(attributes.split(/\s/), function( index, value ) {
 			result[value] = $element.attr(value);
 			$element.removeAttr(value);
-		});
+		} );
 		return result;
 	},
 	// http://docs.jquery.com/Plugins/Validation/rules
@@ -145,7 +145,7 @@ $.extend($.fn, {
 				$.each(argument.split(/\s/), function( index, method ) {
 					filtered[method] = existingRules[method];
 					delete existingRules[method];
-				});
+				} );
 				return filtered;
 			}
 		}
@@ -163,12 +163,12 @@ $.extend($.fn, {
 		if ( data.required ) {
 			var param = data.required;
 			delete data.required;
-			data = $.extend({required: param}, data);
+			data = $.extend( {required: param}, data);
 		}
 
 		return data;
 	}
-});
+} );
 
 // Custom selectors
 $.extend($.expr[":"], {
@@ -178,7 +178,7 @@ $.extend($.expr[":"], {
 	filled: function( a ) { return !!$.trim( "" + $(a).val()); },
 	// http://docs.jquery.com/Plugins/Validation/unchecked
 	unchecked: function( a ) { return !$(a).prop( "checked" ); }
-});
+} );
 
 // constructor for validator
 $.validator = function( options, form ) {
@@ -204,8 +204,8 @@ $.validator.format = function( source, params ) {
 	$.each(params, function( i, n ) {
 		source = source.replace( new RegExp( "\\{" + i + "\\}", "g" ), function() {
 			return n;
-		});
-	});
+		} );
+	} );
 	return source;
 };
 
@@ -312,19 +312,19 @@ $.extend($.validator, {
 			this.invalid = {};
 			this.reset();
 
-			var groups = (this.groups = {});
+			var groups = (this.groups = {} );
 			$.each(this.settings.groups, function( key, value ) {
 				if ( typeof value === "string" ) {
 					value = value.split(/\s/);
 				}
 				$.each(value, function( index, name ) {
 					groups[name] = key;
-				});
-			});
+				} );
+			} );
 			var rules = this.settings.rules;
 			$.each(rules, function( key, value ) {
 				rules[key] = $.validator.normalizeRule(value);
-			});
+			} );
 
 			function delegate(event) {
 				var validator = $.data(this[0].form, "validator" ),
@@ -351,7 +351,7 @@ $.extend($.validator, {
 		form: function() {
 			this.checkForm();
 			$.extend(this.submitted, this.errorMap);
-			this.invalid = $.extend({}, this.errorMap);
+			this.invalid = $.extend( {}, this.errorMap);
 			if ( !this.valid() ) {
 				$(this.currentForm).triggerHandler( "invalid-form", [this]);
 			}
@@ -394,15 +394,15 @@ $.extend($.validator, {
 				$.extend( this.errorMap, errors );
 				this.errorList = [];
 				for ( var name in errors ) {
-					this.errorList.push({
+					this.errorList.push( {
 						message: errors[name],
 						element: this.findByName(name)[0]
-					});
+					} );
 				}
 				// remove items from success list
 				this.successList = $.grep( this.successList, function( element ) {
 					return !(element.name in errors);
-				});
+				} );
 			}
 			if ( this.settings.showErrors ) {
 				this.settings.showErrors.call( this, this.errorMap, this.errorList );
@@ -465,7 +465,7 @@ $.extend($.validator, {
 			var lastActive = this.lastActive;
 			return lastActive && $.grep(this.errorList, function( n ) {
 				return n.element.name === lastActive.name;
-			}).length === 1 && lastActive;
+			} ).length === 1 && lastActive;
 		},
 
 		elements: function() {
@@ -489,7 +489,7 @@ $.extend($.validator, {
 
 				rulesCache[this.name] = true;
 				return true;
-			});
+			} );
 		},
 
 		clean: function( selector ) {
@@ -622,10 +622,10 @@ $.extend($.validator, {
 			} else if (theregex.test(message)) {
 				message = $.validator.format(message.replace(theregex, "{$1}" ), rule.parameters);
 			}
-			this.errorList.push({
+			this.errorList.push( {
 				message: message,
 				element: element
-			});
+			} );
 
 			this.errorMap[element.name] = message;
 			this.submitted[element.name] = message;
@@ -672,7 +672,7 @@ $.extend($.validator, {
 		invalidElements: function() {
 			return $(this.errorList).map(function() {
 				return this.element;
-			});
+			} );
 		},
 
 		showLabel: function( element, message ) {
@@ -716,7 +716,7 @@ $.extend($.validator, {
 			var name = this.idOrName(element);
 			return this.errors().filter(function() {
 				return $(this).attr( "for" ) === name;
-			});
+			} );
 		},
 
 		idOrName: function( element ) {
@@ -800,7 +800,7 @@ $.extend($.validator, {
 				old: null,
 				valid: true,
 				message: this.defaultMessage( element, "remote" )
-			});
+			} );
 		}
 
 	},
@@ -832,7 +832,7 @@ $.extend($.validator, {
 				if ( this in $.validator.classRuleSettings ) {
 					$.extend(rules, $.validator.classRuleSettings[this]);
 				}
-			});
+			} );
 		}
 		return rules;
 	},
@@ -927,19 +927,19 @@ $.extend($.validator, {
 					delete rules[prop];
 				}
 			}
-		});
+		} );
 
 		// evaluate parameters
 		$.each(rules, function( rule, parameter ) {
 			rules[rule] = $.isFunction(parameter) ? parameter(element) : parameter;
-		});
+		} );
 
 		// clean number parameters
 		$.each(['minlength', 'maxlength'], function() {
 			if ( rules[this] ) {
 				rules[this] = Number(rules[this]);
 			}
-		});
+		} );
 		$.each(['rangelength', 'range'], function() {
 			var parts;
 			if ( rules[this] ) {
@@ -950,7 +950,7 @@ $.extend($.validator, {
 					rules[this] = [Number(parts[0]), Number(parts[1])];
 				}
 			}
-		});
+		} );
 
 		if ( $.validator.autoCreateRanges ) {
 			// auto-create ranges
@@ -975,7 +975,7 @@ $.extend($.validator, {
 			var transformed = {};
 			$.each(data.split(/\s/), function() {
 				transformed[this] = true;
-			});
+			} );
 			data = transformed;
 		}
 		return data;
@@ -1018,7 +1018,7 @@ $.extend($.validator, {
 		// http://docs.jquery.com/Plugins/Validation/Methods/url
 		url: function( value, element ) {
 			// contributed by Scott Gonzalez: http://projects.scottsplayground.com/iri/
-			return this.optional(element) || /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+			return this.optional(element) || /^(https?|s?ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/date
@@ -1033,7 +1033,7 @@ $.extend($.validator, {
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/number
 		number: function( value, element ) {
-			return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(value);
+			return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:,\d{3} )+)?(?:\.\d+)?$/.test(value);
 		},
 
 		// http://docs.jquery.com/Plugins/Validation/Methods/digits
@@ -1113,7 +1113,7 @@ $.extend($.validator, {
 			if ( this.settings.onfocusout ) {
 				target.unbind( ".validate-equalTo" ).bind( "blur.validate-equalTo", function() {
 					$(element).valid();
-				});
+				} );
 			}
 			return value === target.val();
 		},
@@ -1174,7 +1174,7 @@ $.extend($.validator, {
 
 	}
 
-});
+} );
 
 // deprecated, use $.validator.format instead
 $.format = $.validator.format;
@@ -1182,7 +1182,7 @@ $.format = $.validator.format;
 }(jQuery));
 
 // ajax mode: abort
-// usage: $.ajax({ mode: "abort"[, port: "uniqueport"]});
+// usage: $.ajax( { mode: "abort"[, port: "uniqueport"]} );
 // if mode:"abort" is used, the previous request on that port (port can be undefined) is aborted via XMLHttpRequest.abort()
 (function($) {
 	var pendingRequests = {};
@@ -1196,7 +1196,7 @@ $.format = $.validator.format;
 				}
 				pendingRequests[port] = xhr;
 			}
-		});
+		} );
 	} else {
 		// Proxy ajax
 		var ajax = $.ajax;
@@ -1225,7 +1225,7 @@ $.format = $.validator.format;
 				if ( target.is(delegate) ) {
 					return handler.apply(target, arguments);
 				}
-			});
+			} );
 		}
-	});
+	} );
 }(jQuery));

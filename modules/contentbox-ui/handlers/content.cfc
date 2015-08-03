@@ -128,7 +128,7 @@ component{
 		prc.exception   = arguments.exception;
 
 		// announce event
-		announceInterception( "cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments});
+		announceInterception( "cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments} );
 
 		// Set view to render
 		event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox" )
@@ -322,7 +322,7 @@ component{
 			commentErrors	= commentErrors,
 			content			= arguments.thisContent,
 			contentType		= arguments.thisContent.getContentType()
-		});
+		} );
 
 		// Store errors if found
 		if( arrayLen( commentErrors ) ){
@@ -358,7 +358,7 @@ component{
 			moderationResults=results,
 			contentType=arguments.thisContent.getContentType(),
 			subscribe = arguments.subscribe
-		});
+		} );
 
 		// Check if all good
 		if( results.moderated ){

@@ -62,7 +62,7 @@ component extends="baseHandler"{
 	// save settings
 	function save( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc});
+		announceInterception( "cbadmin_preSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc} );
 		// bulk save the options
 		settingsService.bulkSave(rc);
 		// Do blog entry point change
@@ -192,14 +192,14 @@ component extends="baseHandler"{
 	// remove
 	function remove( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preSettingRemove",{settingID=rc.settingID});
+		announceInterception( "cbadmin_preSettingRemove",{settingID=rc.settingID} );
 		// delete by id
 		if( !settingsService.deleteByID( rc.settingID ) ){
 			getPlugin( "MessageBox" ).setMessage( "warning","Invalid Setting detected!" );
 		}
 		else{
 			// announce event
-			announceInterception( "cbadmin_postSettingRemove",{settingID=rc.settingID});
+			announceInterception( "cbadmin_postSettingRemove",{settingID=rc.settingID} );
 			// flush cache
 			settingsService.flushSettingsCache();
 			getPlugin( "MessageBox" ).setMessage( "info","Setting Removed!" );

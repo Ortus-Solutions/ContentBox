@@ -127,20 +127,20 @@
 
 		if (this.touchCapable) {
 			// Touch: Bind touch events:
-			this.picker.on({
+			this.picker.on( {
 				touchstart: $.proxy(this.mousedown, this)
-			});
+			} );
 		} else {
-			this.picker.on({
+			this.picker.on( {
 				mousedown: $.proxy(this.mousedown, this)
-			});
+			} );
 		}
 
 		if (tooltip === 'show') {
-			this.picker.on({
+			this.picker.on( {
 				mouseenter: $.proxy(this.showTooltip, this),
 				mouseleave: $.proxy(this.hideTooltip, this)
-			});
+			} );
 		} else {
 			this.tooltip.addClass('hide');
 		}
@@ -216,26 +216,26 @@
 
 			if (this.touchCapable) {
 				// Touch: Bind touch events:
-				$(document).on({
+				$(document).on( {
 					touchmove: $.proxy(this.mousemove, this),
 					touchend: $.proxy(this.mouseup, this)
-				});
+				} );
 			} else {
-				$(document).on({
+				$(document).on( {
 					mousemove: $.proxy(this.mousemove, this),
 					mouseup: $.proxy(this.mouseup, this)
-				});
+				} );
 			}
 
 			this.inDrag = true;
 			var val = this.calculateValue();
-			this.element.trigger({
+			this.element.trigger( {
 					type: 'slideStart',
 					value: val
-				}).trigger({
+				} ).trigger( {
 					type: 'slide',
 					value: val
-				});
+				} );
 			return false;
 		},
 
@@ -260,10 +260,10 @@
 			this.layout();
 			var val = this.calculateValue();
 			this.element
-				.trigger({
+				.trigger( {
 					type: 'slide',
 					value: val
-				})
+				} )
 				.data('value', val)
 				.prop('value', val);
 			return false;
@@ -272,15 +272,15 @@
 		mouseup: function(ev) {
 			if (this.touchCapable) {
 				// Touch: Bind touch events:
-				$(document).off({
+				$(document).off( {
 					touchmove: this.mousemove,
 					touchend: this.mouseup
-				});
+				} );
 			} else {
-				$(document).off({
+				$(document).off( {
 					mousemove: this.mousemove,
 					mouseup: this.mouseup
-				});
+				} );
 			}
 
 			this.inDrag = false;
@@ -290,10 +290,10 @@
 			this.element;
 			var val = this.calculateValue();
 			this.element
-				.trigger({
+				.trigger( {
 					type: 'slideStop',
 					value: val
-				})
+				} )
 				.data('value', val)
 				.prop('value', val);
 			return false;
@@ -361,12 +361,12 @@
 				data = $this.data('slider'),
 				options = typeof option === 'object' && option;
 			if (!data)  {
-				$this.data('slider', (data = new Slider(this, $.extend({}, $.fn.slider.defaults,options))));
+				$this.data('slider', (data = new Slider(this, $.extend( {}, $.fn.slider.defaults,options))));
 			}
 			if (typeof option == 'string') {
 				data[option](val);
 			}
-		})
+		} )
 	};
 
 	$.fn.slider.defaults = {

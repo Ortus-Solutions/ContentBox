@@ -13,7 +13,7 @@
 <div class="bg"></div>
 <p>#cb.siteDescription()#</p>
 
-#cb.widget( "Meta",{titleLevel="4"})#
+#cb.widget( "Meta",{titleLevel="4"} )#
 
 <h4>Recent Pages</h4>
 <div class="bg"></div>
@@ -21,7 +21,7 @@
 
 <h4>Content Search</h4>
 <div class="bg"></div>
-#cb.widget(name="SearchForm", args={placeholder="Search..."})#
+#cb.widget(name="SearchForm", args={placeholder="Search..."} )#
 <br/>
 
 <!--- ContentBoxEvent --->

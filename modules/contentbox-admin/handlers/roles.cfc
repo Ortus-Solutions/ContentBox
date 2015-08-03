@@ -38,11 +38,11 @@ component extends="baseHandler"{
 		// populate and get
 		var orole = populateModel( roleService.get(id=rc.roleID) );
     	// announce event
-		announceInterception( "cbadmin_preRoleSave",{role=orole,roleID=rc.roleID});
+		announceInterception( "cbadmin_preRoleSave",{role=orole,roleID=rc.roleID} );
 		// save role
 		roleService.save( orole );
 		// announce event
-		announceInterception( "cbadmin_postRoleSave",{role=orole});
+		announceInterception( "cbadmin_postRoleSave",{role=orole} );
 		// messagebox
 		getPlugin( "MessageBox" ).setMessage( "info","Role saved!" );
 		// relocate
@@ -52,13 +52,13 @@ component extends="baseHandler"{
 	// remove
 	function remove(event,rc,prc){
 		// announce event
-		announceInterception( "cbadmin_preRoleRemove",{roleID=rc.roleID});
+		announceInterception( "cbadmin_preRoleRemove",{roleID=rc.roleID} );
 		// Get requested role and remove permissions
 		var oRole = roleService.get( id=rc.roleID ).clearPermissions();
 		// finally delete
 		roleService.delete( oRole );
 		// announce event
-		announceInterception( "cbadmin_postRoleRemove",{roleID=rc.roleID});
+		announceInterception( "cbadmin_postRoleRemove",{roleID=rc.roleID} );
 		// Message
 		getPlugin( "MessageBox" ).setMessage( "info","Role Removed!" );
 		// relocate

@@ -12,10 +12,10 @@ $(document).ready(function() {
 				e.preventDefault();
 			}
 		}
-	});
+	} );
 	<!---If admin and also if sorting is enabled --->
 	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" ) AND prc.pagePager_sorting>
-	$( "##pages_pager" ).tableDnD({
+	$( "##pages_pager" ).tableDnD( {
 		onDragClass: "selected",
 		onDragStart : function(table,row){
 			$(row).css( "cursor","grab" );
@@ -32,11 +32,11 @@ $(document).ready(function() {
 					$(oID).html(i+1);
 				}
 				$(row).css( "cursor","move" );
-			});
+			} );
 		}
-	});
+	} );
 	</cfif>
-});
+} );
 function pagerLink(page){
 	$( "##pagePagerLoader" ).fadeIn( "fast" );
 	$('##pagerPages')
@@ -45,7 +45,7 @@ function pagerLink(page){
 			$( "##pagePagerLoader" ).fadeOut();
 			hideAllTooltips();
 			activateTooltips();
-	});
+	} );
 }
 <cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
 function changeOrder(contentID,order,direction){
@@ -55,7 +55,7 @@ function changeOrder(contentID,order,direction){
 	$.post('#event.buildLink(prc.xehPageOrder)#',{contentID:contentID,order:order},function(){
 		hideAllTooltips();
 		pagerLink(#rc.page#);
-	});
+	} );
 }
 </cfif>
 </script>

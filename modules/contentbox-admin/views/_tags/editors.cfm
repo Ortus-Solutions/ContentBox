@@ -114,7 +114,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$( ".datepicker" ).datepicker();
 
 	// Activate Form Validator
-	$targetEditorForm.validate({
+	$targetEditorForm.validate( {
     	ignore: 'content',
     	success:function(e,els){ 
     		needConfirmation=false; 
@@ -136,7 +136,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
             	alert( 'Please enter some content!' );
            	}
         }
-    });
+    } );
 
 	// Changelog mandatory?
 	if( withChangelogs ){
@@ -150,13 +150,13 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 		if( !$slug.prop( "disabled" ) ){
 			createPermalink( $title.val() );
 		}
-	});
+	} );
 	// Activate permalink blur
 	$slug.on('blur',function(){
 		if( !$( this ).prop( "disabled" ) ){
 			permalinkUniqueCheck();
 		}
-	});
+	} );
 
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
@@ -164,10 +164,10 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	// counters
 	$( "##htmlKeywords" ).keyup(function(){
 		$( "##html_keywords_count" ).html( $( "##htmlKeywords" ).val().length );
-	});
+	} );
 	$( "##htmlDescription" ).keyup(function(){
 		$( "##html_description_count" ).html( $( "##htmlDescription" ).val().length );
-	});
+	} );
 	
 }
 
@@ -181,14 +181,14 @@ function switchEditor(editorType){
 		quickSave();
 	}
 	// Call change user editor preference
-	$.ajax({
+	$.ajax( {
 		url : '#event.buildLink(prc.xehAuthorEditorSave)#',
 		data : {editor: editorType},
 		async : false,
 		success : function(data){
 			location.reload();
 		}
-	});
+	} );
 }
 
 function switchMarkup(markupType){
@@ -274,14 +274,14 @@ function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint
 // Module Link Building
 function getModuleURL(module, event, queryString){
 	var returnURL = "";
-	$.ajax({
+	$.ajax( {
 		url : '#event.buildLink(prc.cbAdminEntryPoint & ".modules.buildModuleLink" )#',
 		data : {module: module, moduleEvent: event, moduleQS: queryString},
 		async : false,
 		success : function(data){
 			returnURL = data;
 		}
-	});
+	} );
 	return $.trim( returnURL );
 }
 // Toggle upload/saving bar

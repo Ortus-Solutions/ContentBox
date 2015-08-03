@@ -34,7 +34,7 @@ $(document).ready(function() {
     //$( "##widgets" ).tablesorter();
     $( "##widgetFilter" ).keyup(function(){
         $.uiTableFilter( $( "##widgets" ), this.value );
-    });
+    } );
     // Widget Filter by text input
     $( '##widgetFilter' ).keyup(function(){
         var value = this.value,
@@ -56,7 +56,7 @@ $(document).ready(function() {
             else {
                 wrapper.hide();
             }
-        });
+        } );
         if( !widgetCount ) {
             $( '.widget-no-preview' ).show();
         }
@@ -69,7 +69,7 @@ $(document).ready(function() {
         else {
             $( '##widget-total-bar' ).html( 'Category: <strong>All</strong> (' + widgetCount + ( widgetCount==1 ? ' Widget)' : ' Widgets)' ) )   
         }
-    });
+    } );
     // Handle menu click
     $( '##widget-sidebar li' ).click( function(){
         var me = $( this ),
@@ -103,7 +103,7 @@ $(document).ready(function() {
                     wrapper.hide();
                 }    
             }
-        });
+        } );
         if( !widgetCount ) {
             $( '.widget-no-preview' ).show();
         }
@@ -111,8 +111,8 @@ $(document).ready(function() {
             $( '.widget-no-preview' ).hide();
         }
         $( '##widget-total-bar' ).html( 'Category: <strong>' + originalValue + '</strong> (' + widgetCount + ( widgetCount==1 ? ' Widget)' : ' Widgets)' ) ) 
-    }); 
-});
+    } ); 
+} );
 function updateWidgetCSS( widget, count ) {
     if( count % 3 != 1 ) {
         //widget.addClass( 'spacer' );

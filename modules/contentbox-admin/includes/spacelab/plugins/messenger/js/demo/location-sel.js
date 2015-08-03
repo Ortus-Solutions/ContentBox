@@ -48,16 +48,16 @@
 
     return LocationSelector;
 
-  })(Backbone.View);
+  } )(Backbone.View);
 
   $.fn.locationSelector = function(opts) {
     var loc;
-    loc = new LocationSelector($.extend({}, opts, {
+    loc = new LocationSelector($.extend( {}, opts, {
       el: this
-    }));
+    } ));
     $(this).addClass(loc.className);
     loc.render();
     return loc;
   };
 
-}).call(this);
+} ).call(this);

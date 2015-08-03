@@ -4,7 +4,7 @@
 $(document).ready(function() {
 	$contentPager = $( "##content_pager" );
 	$contentPagerLoader = $( "##contentPagerLoader" );
-});
+} );
 function pagerLink(page){
 	$( "##contentPagerLoader" ).fadeIn( "fast" );
 	$('##pagerContent')
@@ -12,7 +12,7 @@ function pagerLink(page){
 			$( "##contentPagerLoader" ).fadeOut();
 			hideAllTooltips();
 			activateTooltips();
-	});
+	} );
 }
 </script>
 </cfoutput>

@@ -19,7 +19,7 @@ function setupContentView( settings ){
 		var clearIt = ( $this.val().length > 0 ? false : true );
 		// ajax search
 		contentLoad( { search: $this.val() } );
-	});
+	} );
 }
 // Content filters
 function contentFilter(){
@@ -62,7 +62,7 @@ function contentDrilldown(parent){
 // show all content
 function contentShowAll(){
 	resetFilter();
-	contentLoad ({ showAll: true } );
+	contentLoad ( { showAll: true } );
 }
 // Get parent content ID value
 function getParentContentID(){
@@ -111,7 +111,7 @@ function contentLoad(criteria){
 	$tableContainer.load( $tableURL, args, function(){
 			$tableContainer.css( 'opacity', 1 );
 			$(this).fadeIn( 'fast' );
-	});
+	} );
 }
 // Get info panel contents
 function getInfoPanelContent(contentID){
@@ -119,7 +119,7 @@ function getInfoPanelContent(contentID){
 }
 // Activate info panels
 function activateInfoPanels(){
-	$( ".popovers" ).popover({
+	$( ".popovers" ).popover( {
 		html : true,
 		content : function(){
 			return getInfoPanelContent( $(this).attr( "data-contentID" ) );
@@ -128,7 +128,7 @@ function activateInfoPanels(){
 		placement : 'left',
 		title : '<i class="icon-info-sign"></i> Quick Info',
 		delay : { show: 200, hide: 500 }
-	});
+	} );
 }
 // Activate quick looks 
 function activateQuickLook( $table, quickLookURL ){
@@ -139,7 +139,7 @@ function activateQuickLook( $table, quickLookURL ){
 				e.preventDefault();
 			}
 	    }
-	});
+	} );
 }
 // Remove content
 function remove( contentID, id ){
@@ -172,21 +172,21 @@ function importContent(){
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
 	// form validator and data
-	$importForm.validate({ 
+	$importForm.validate( { 
 		submitHandler: function(form){
            	$importForm.find( "##importButtonBar" ).slideUp();
 			$importForm.find( "##importBarLoader" ).slideDown();
 			form.submit();
         }
-	});
+	} );
 	// close button
 	$importForm.find( "##closeButton" ).click(function(e){
 		closeModal( $importDialog ); return false;
-	});
+	} );
 	// clone button
 	$importForm.find( "##importButton" ).click(function(e){
 		$importForm.submit();
-	});
+	} );
 }
 // Clone Dialog
 function openCloneDialog(contentID, title){
@@ -195,23 +195,23 @@ function openCloneDialog(contentID, title){
 	// open modal for cloning options
 	openModal( $cloneDialog, 500, 300 );
 	// form validator and data
-	$cloneForm.validate({ 
+	$cloneForm.validate( { 
 		submitHandler: function(form){
            	$cloneForm.find( "##cloneButtonBar" ).slideUp();
 			$cloneForm.find( "##clonerBarLoader" ).slideDown();
 			form.submit();
         }
-	});
+	} );
 	$cloneForm.find( "##contentID" ).val( contentID );
 	$cloneForm.find( "##title" ).val( title ).focus();
 	// close button
 	$cloneForm.find( "##closeButton" ).click(function(e){
 		closeModal( $cloneDialog ); return false;
-	});
+	} );
 	// clone button
 	$cloneForm.find( "##cloneButton" ).click(function(e){
 		$cloneForm.submit();
-	});
+	} );
 }
 // Reset Hits
 function resetHits( contentID ){

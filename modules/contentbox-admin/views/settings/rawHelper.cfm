@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$settingEditor = $( "##settingEditor" );
 	$importDialog = $( "##importDialog" );
 	// settings sorting
-	$( "##settings" ).dataTable({
+	$( "##settings" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -16,12 +16,12 @@ $(document).ready(function() {
 	        }
 	    ],
 	    "order": []
-	});
+	} );
 	$( "##eventFilter" ).keyup(function(){
 		$.uiTableFilter( $( "##eventsList" ), this.value );
-	});
+	} );
 	// singletons sorting + filter
-	$( "##singletons" ).dataTable({
+	$( "##singletons" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -32,10 +32,10 @@ $(document).ready(function() {
 	        }
 	    ],
 	    "order": []
-	});
+	} );
 	$( "##singletonsFilter" ).keyup(function(){
 		$.uiTableFilter( $( "##singletons" ), this.value );
-	});
+	} );
 	// form validator
 	$settingEditor.validate();
 	// reset
@@ -43,42 +43,42 @@ $(document).ready(function() {
 		$settingEditor.find( "##settingID" ).val( '' );
 		$settingEditor.find( "##btnSave" ).val( "Save" );
 		$settingEditor.find( "##btnReset" ).val( "Reset" );
-	});
+	} );
 	// keyup quick search
 	$( "##settingSearch" ).keyup(function(){
 		var $this = $(this);
 		var clearIt = ( $this.val().length > 0 ? false : true );
 		// ajax search
 		settingsLoad( $this.val() );
-	});
+	} );
 	// Load settings
 	settingsLoad( $( "##settingSearch" ).val() );
-});
+} );
 function importSettings(){
 	// local id's
 	var $importForm = $( "##importForm" );
 	// open modal for cloning options
 	openModal( $importDialog, 500, 300 );
 	// form validator and data
-	$importForm.validate({ 
+	$importForm.validate( { 
 		submitHandler: function(form){
            	$importForm.find( "##importButtonBar" ).slideUp();
 			$importForm.find( "##importBarLoader" ).slideDown();
 			form.submit();
         }
-	});
+	} );
 	// close button
 	$importForm.find( "##closeButton" ).click(function(e){
 		closeModal( $importDialog ); return false;
-	});
+	} );
 	// clone button
 	$importForm.find( "##importButton" ).click(function(e){
 		$importForm.submit();
-	});
+	} );
 }
 function flushSettingsCache(){
 	$( "##specialActionsLoader" ).removeClass( "hidden" );
-	$.ajax({
+	$.ajax( {
 		url : '#event.buildLink(prc.xehFlushCache)#',
 		success : function(data){
 			if (data.ERROR) {
@@ -89,7 +89,7 @@ function flushSettingsCache(){
 			}
 			$( "##specialActionsLoader" ).addClass( "hidden" );
 		}
-	});
+	} );
 	
 }
 function settingsLoad(search, viewAll, page){
@@ -101,7 +101,7 @@ function settingsLoad(search, viewAll, page){
 		{ search: search, viewAll: viewAll, page: page }, 
 		function(){
 			$(this).fadeIn();
-	});
+	} );
 }
 function settingsPaginate(page){
 	$('##settingsTableContainer').fadeOut();

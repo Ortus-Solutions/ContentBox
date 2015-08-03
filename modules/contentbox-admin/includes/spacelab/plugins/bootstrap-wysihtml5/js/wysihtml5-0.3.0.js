@@ -141,7 +141,7 @@ window['rangy'] = (function() {
 
     api.warn = warn;
 
-    if ({}.hasOwnProperty) {
+    if ( {}.hasOwnProperty) {
         api.util.extend = function(o, props) {
             for (var i in props) {
                 if (props.hasOwnProperty(i)) {
@@ -269,7 +269,7 @@ window['rangy'] = (function() {
             initFunc(api, module);
             module.initialized = true;
             module.supported = true;
-        });
+        } );
     };
 
     api.requireModules = function(modules) {
@@ -325,7 +325,7 @@ window['rangy'] = (function() {
     }
 
     return api;
-})();
+} )();
 rangy.createModule( "DomUtil", function(api, module) {
 
     var UNDEF = "undefined";
@@ -694,7 +694,7 @@ rangy.createModule( "DomUtil", function(api, module) {
     };
 
     api.DOMException = DOMException;
-});rangy.createModule( "DomRange", function(api, module) {
+} );rangy.createModule( "DomRange", function(api, module) {
     api.requireModules( ["DomUtil"] );
 
 
@@ -719,7 +719,7 @@ rangy.createModule( "DomUtil", function(api, module) {
         var listeners = range._listeners[type];
         if (listeners) {
             for (var i = 0, len = listeners.length; i < len; ++i) {
-                listeners[i].call(range, {target: range, args: args});
+                listeners[i].call(range, {target: range, args: args} );
             }
         }
     }
@@ -848,7 +848,7 @@ rangy.createModule( "DomUtil", function(api, module) {
             if ((!filterNodeTypes || regex.test(node.nodeType)) && (!filterExists || filter(node))) {
                 nodes.push(node);
             }
-        });
+        } );
         return nodes;
     }
 
@@ -1339,7 +1339,7 @@ rangy.createModule( "DomUtil", function(api, module) {
                     if (node.nodeType == 3 || node.nodeType == 4) {
                         textBits.push(node.data);
                     }
-                });
+                } );
                 iterator.detach();
                 return textBits.join( "" );
             }
@@ -1818,7 +1818,7 @@ rangy.createModule( "DomUtil", function(api, module) {
 
                 setRangeStartAndEnd(this, node, offset);
             }
-        });
+        } );
 
         copyComparisonConstants(constructor);
     }
@@ -1842,7 +1842,7 @@ rangy.createModule( "DomUtil", function(api, module) {
         range.endOffset = endOffset;
 
         updateCollapsedAndCommonAncestor(range);
-        dispatchEvent(range, "boundarychange", {startMoved: startMoved, endMoved: endMoved});
+        dispatchEvent(range, "boundarychange", {startMoved: startMoved, endMoved: endMoved} );
     }
 
     function detach(range) {
@@ -1887,7 +1887,7 @@ rangy.createModule( "DomUtil", function(api, module) {
 
     api.DomRange = Range;
     api.RangeException = RangeException;
-});rangy.createModule( "WrappedRange", function(api, module) {
+} );rangy.createModule( "WrappedRange", function(api, module) {
     api.requireModules( ["DomUtil", "DomRange"] );
 
     /**
@@ -2351,7 +2351,7 @@ rangy.createModule( "DomUtil", function(api, module) {
             dom.getBody(document).removeChild(testTextNode);
             range.detach();
             range2.detach();
-        })();
+        } )();
 
         api.createNativeRange = function(doc) {
             doc = doc || document;
@@ -2389,7 +2389,7 @@ rangy.createModule( "DomUtil", function(api, module) {
         DomRange.copyComparisonConstants(WrappedRange);
 
         // Add WrappedRange as the Range property of the global object to allow expression like Range.END_TO_END to work
-        var globalObj = (function() { return this; })();
+        var globalObj = (function() { return this; } )();
         if (typeof globalObj.Range == "undefined" ) {
             globalObj.Range = WrappedRange;
         }
@@ -2453,8 +2453,8 @@ rangy.createModule( "DomUtil", function(api, module) {
             };
         }
         doc = win = null;
-    });
-});rangy.createModule( "WrappedSelection", function(api, module) {
+    } );
+} );rangy.createModule( "WrappedSelection", function(api, module) {
     // This will create a selection object wrapper that follows the Selection object found in the WHATWG draft DOM Range
     // spec (http://html5.org/specs/dom-range.html)
 
@@ -2568,7 +2568,7 @@ rangy.createModule( "DomUtil", function(api, module) {
             r2.detach();
 
             body.removeChild(iframe);
-        })();
+        } )();
     }
 
     api.features.selectionSupportsMultipleRanges = selectionSupportsMultipleRanges;
@@ -2632,7 +2632,7 @@ rangy.createModule( "DomUtil", function(api, module) {
                 range.attachListener( "detach", function() {
 
                     this._selectionNativeRange = null;
-                });
+                } );
             }
         } else if (range instanceof WrappedRange) {
             nativeRange = range.nativeRange;
@@ -3241,8 +3241,8 @@ rangy.createModule( "DomUtil", function(api, module) {
             };
         }
         win = null;
-    });
-});
+    } );
+} );
 /*
 	Base.js, version 1.1a
 	Copyright 2006-2010, Dean Edwards
@@ -3349,7 +3349,7 @@ Base.prototype = {
 };
 
 // initialise
-Base = Base.extend({
+Base = Base.extend( {
 	constructor: function() {
 		this.extend(arguments[0]);
 	}
@@ -3381,7 +3381,7 @@ Base = Base.extend({
 	toString: function() {
 		return String(this.valueOf());
 	}
-});/**
+} );/**
  * Detect browser support for specific features
  */
 wysihtml5.browser = (function() {
@@ -3490,7 +3490,7 @@ wysihtml5.browser = (function() {
       return "on" + eventName in testElement || (function() {
         testElement.setAttribute( "on" + eventName, "return;" );
         return typeof(testElement["on" + eventName]) === "function";
-      })();
+      } )();
     },
 
     /**
@@ -3582,7 +3582,7 @@ wysihtml5.browser = (function() {
         }
         return false;
       };
-    })(),
+    } )(),
 
     /**
      * IE: URLs starting with:
@@ -3735,7 +3735,7 @@ wysihtml5.browser = (function() {
       return isGecko || isChrome || isOpera;
     }
   };
-})();wysihtml5.lang.array = function(arr) {
+} )();wysihtml5.lang.array = function(arr) {
   return {
     /**
      * Check whether a given object exists in an array
@@ -3835,11 +3835,11 @@ wysihtml5.browser = (function() {
     }
     return this;
   }
-});wysihtml5.lang.object = function(obj) {
+} );wysihtml5.lang.object = function(obj) {
   return {
     /**
      * @example
-     *    wysihtml5.lang.object({ foo: 1, bar: 1 }).merge({ bar: 2, baz: 3 }).get();
+     *    wysihtml5.lang.object( { foo: 1, bar: 1 } ).merge( { bar: 2, baz: 3 } ).get();
      *    // => { foo: 1, bar: 2, baz: 3 }
      */
     merge: function(otherObj) {
@@ -3855,7 +3855,7 @@ wysihtml5.browser = (function() {
     
     /**
      * @example
-     *    wysihtml5.lang.object({ foo: 1 }).clone();
+     *    wysihtml5.lang.object( { foo: 1 } ).clone();
      *    // => { foo: 1 }
      */
     clone: function() {
@@ -3893,7 +3893,7 @@ wysihtml5.browser = (function() {
       
       /**
        * @example
-       *    wysihtml5.lang.string( "Hello #{name}" ).interpolate({ name: "Christopher" });
+       *    wysihtml5.lang.string( "Hello #{name}" ).interpolate( { name: "Christopher" } );
        *    // => "Hello Christopher"
        */
       interpolate: function(vars) {
@@ -3917,7 +3917,7 @@ wysihtml5.browser = (function() {
       }
     };
   };
-})();/**
+} )();/**
  * Find urls in descendant text nodes of an element and auto-links them
  * Inspired by http://james.padolsey.com/javascript/find-and-replace-text-with-javascript/
  *
@@ -3942,7 +3942,7 @@ wysihtml5.browser = (function() {
        * put this in the beginning if you don't wan't to match within a word
        *    (^|[\>\(\{\[\s\>])
        */
-      URL_REG_EXP           = /((https?:\/\/|www\.)[^\s<]{3,})/gi,
+      URL_REG_EXP           = /((https?:\/\/|www\.)[^\s<]{3,} )/gi,
       TRAILING_CHAR_REG_EXP = /([^\w\/\-](,?))$/i,
       MAX_DISPLAY_LENGTH    = 100,
       BRACKETS              = { " )": "( ", "]": "[", "}": "{" };
@@ -3984,7 +3984,7 @@ wysihtml5.browser = (function() {
       }
       
       return '<a href="' + realUrl + '">' + displayUrl + '</a>' + punctuation;
-    });
+    } );
   }
   
   /**
@@ -4057,7 +4057,7 @@ wysihtml5.browser = (function() {
   
   // Reveal url reg exp to the outside
   wysihtml5.dom.autoLink.URL_REG_EXP = URL_REG_EXP;
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var supportsClassList = wysihtml5.browser.supportsClassList(),
       api               = wysihtml5.dom;
   
@@ -4087,7 +4087,7 @@ wysihtml5.browser = (function() {
     var elementClassName = element.className;
     return (elementClassName.length > 0 && (elementClassName == className || new RegExp( "(^|\\s)" + className + "(\\s|$)" ).test(elementClassName)));
   };
-})(wysihtml5);
+} )(wysihtml5);
 wysihtml5.dom.contains = (function() {
   var documentElement = document.documentElement;
   if (documentElement.contains) {
@@ -4103,7 +4103,7 @@ wysihtml5.dom.contains = (function() {
       return !!(container.compareDocumentPosition(element) & 16);
     };
   }
-})();/**
+} )();/**
  * Converts an HTML fragment/element into a unordered/ordered list
  *
  * @param {Element} element The element which should be turned into a list
@@ -4203,7 +4203,7 @@ wysihtml5.dom.convertToList = (function() {
   }
   
   return convertToList;
-})();/**
+} )();/**
  * Copy a set of attributes from one element to another
  *
  * @param {Array} attributesToCopy List of attributes which should be copied
@@ -4307,13 +4307,13 @@ wysihtml5.dom.copyAttributes = function(attributesToCopy) {
       }
     };
   };
-})(wysihtml5.dom);/**
+} )(wysihtml5.dom);/**
  * Event Delegation
  *
  * @example
  *    wysihtml5.dom.delegate(document.body, "a", "click", function() {
  *      // foo
- *    });
+ *    } );
  */
 (function(wysihtml5) {
   
@@ -4329,10 +4329,10 @@ wysihtml5.dom.copyAttributes = function(attributesToCopy) {
         }
         target = target.parentNode;
       }
-    });
+    } );
   };
   
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * Returns the given html wrapped in a div element
  *
  * Fixing IE's inability to treat unknown elements (HTML5 section, article, ...) correctly
@@ -4395,7 +4395,7 @@ wysihtml5.dom.getAsDom = (function() {
     }
     return tempElement;
   };
-})();/**
+} )();/**
  * Walks the dom tree from the given node up until it finds a match
  * Designed for optimal performance.
  *
@@ -4404,11 +4404,11 @@ wysihtml5.dom.getAsDom = (function() {
  * @param {Number} [levels] How many parents should the function check up from the current node (defaults to 50)
  * @return {null|Element} Returns the first element that matched the desiredNodeName(s)
  * @example
- *    var listElement = wysihtml5.dom.getParentElement(document.querySelector( "li" ), { nodeName: ["MENU", "UL", "OL"] });
+ *    var listElement = wysihtml5.dom.getParentElement(document.querySelector( "li" ), { nodeName: ["MENU", "UL", "OL"] } );
  *    // ... or ...
- *    var unorderedListElement = wysihtml5.dom.getParentElement(document.querySelector( "li" ), { nodeName: "UL" });
+ *    var unorderedListElement = wysihtml5.dom.getParentElement(document.querySelector( "li" ), { nodeName: "UL" } );
  *    // ... or ...
- *    var coloredElement = wysihtml5.dom.getParentElement(myTextNode, { nodeName: "SPAN", className: "wysiwyg-color-red", classRegExp: /wysiwyg-color-[a-z]/g });
+ *    var coloredElement = wysihtml5.dom.getParentElement(myTextNode, { nodeName: "SPAN", className: "wysiwyg-color-red", classRegExp: /wysiwyg-color-[a-z]/g } );
  */
 wysihtml5.dom.getParentElement = (function() {
   
@@ -4470,7 +4470,7 @@ wysihtml5.dom.getParentElement = (function() {
       );
     }
   };
-})();
+} )();
 /**
  * Get element's style for a specific css property
  *
@@ -4490,7 +4490,7 @@ wysihtml5.dom.getStyle = (function() {
   function camelize(str) {
     return str.replace(REG_EXP_CAMELIZE, function(match) {
       return match.charAt(1).toUpperCase();
-    });
+    } );
   }
   
   return function(property) {
@@ -4543,7 +4543,7 @@ wysihtml5.dom.getStyle = (function() {
       }
     };
   };
-})();/**
+} )();/**
  * High performant way to check whether an element with a specific tag name is in the given document
  * Optimized for being heavily executed
  * Unleashes the power of live node lists
@@ -4570,7 +4570,7 @@ wysihtml5.dom.hasElementWithTagName = (function() {
     
     return cacheEntry.length > 0;
   };
-})();/**
+} )();/**
  * High performant way to check whether an element with a specific class name is in the given document
  * Optimized for being heavily executed
  * Unleashes the power of live node lists
@@ -4603,7 +4603,7 @@ wysihtml5.dom.hasElementWithTagName = (function() {
 
     return cacheEntry.length > 0;
   };
-})(wysihtml5);
+} )(wysihtml5);
 wysihtml5.dom.insert = function(elementToInsert) {
   return {
     after: function(element) {
@@ -4643,7 +4643,7 @@ wysihtml5.dom.insert = function(elementToInsert) {
  * Method to set dom events
  *
  * @example
- *    wysihtml5.dom.observe(iframe.contentWindow.document.body, ["focus", "blur"], function() { ... });
+ *    wysihtml5.dom.observe(iframe.contentWindow.document.body, ["focus", "blur"], function() { ... } );
  */
 wysihtml5.dom.observe = function(element, eventNames, handler) {
   eventNames = typeof(eventNames) === "string" ? [eventNames] : eventNames;
@@ -4711,7 +4711,7 @@ wysihtml5.dom.observe = function(element, eventNames, handler) {
  *        div:    true,       // Keep them, also possible (same result when passing: "div" or true)
  *        script: undefined   // Remove script elements
  *      }
- *    });
+ *    } );
  *    // => <div><div><span>foo bar</span></div></div>
  *
  *    var userHTML = '<table><tbody><tr><td>I'm a table!</td></tr></tbody></table>';
@@ -4724,7 +4724,7 @@ wysihtml5.dom.observe = function(element, eventNames, handler) {
  *        div: undefined,
  *        br:  true
  *      }
- *    });
+ *    } );
  *    // => ''
  *
  *    var userHTML = '<div class="red">foo</div><div class="pink">bar</div>';
@@ -4738,7 +4738,7 @@ wysihtml5.dom.observe = function(element, eventNames, handler) {
  *          rename_tag:     "p"
  *        }
  *      }
- *    });
+ *    } );
  *    // => '<p class="red">foo</p><p>bar</p>'
  */
 wysihtml5.dom.parse = (function() {
@@ -5058,9 +5058,9 @@ wysihtml5.dom.parse = (function() {
         }
         return attributeValue.replace(REG_EXP, function(match) {
           return match.toLowerCase();
-        });
+        } );
       };
-    })(),
+    } )(),
     
     alt: (function() {
       var REG_EXP = /[^ a-z0-9_\-]/gi;
@@ -5070,7 +5070,7 @@ wysihtml5.dom.parse = (function() {
         }
         return attributeValue.replace(REG_EXP, "" );
       };
-    })(),
+    } )(),
     
     numbers: (function() {
       var REG_EXP = /\D/g;
@@ -5078,7 +5078,7 @@ wysihtml5.dom.parse = (function() {
         attributeValue = (attributeValue || "" ).replace(REG_EXP, "" );
         return attributeValue || null;
       };
-    })()
+    } )()
   };
   
   // ------------ class converter (converts an html attribute to a class name) ------------ \\
@@ -5091,7 +5091,7 @@ wysihtml5.dom.parse = (function() {
       return function(attributeValue) {
         return mapping[String(attributeValue).toLowerCase()];
       };
-    })(),
+    } )(),
     
     align_text: (function() {
       var mapping = {
@@ -5103,7 +5103,7 @@ wysihtml5.dom.parse = (function() {
       return function(attributeValue) {
         return mapping[String(attributeValue).toLowerCase()];
       };
-    })(),
+    } )(),
     
     clear_br: (function() {
       var mapping = {
@@ -5115,7 +5115,7 @@ wysihtml5.dom.parse = (function() {
       return function(attributeValue) {
         return mapping[String(attributeValue).toLowerCase()];
       };
-    })(),
+    } )(),
     
     size_font: (function() {
       var mapping = {
@@ -5132,11 +5132,11 @@ wysihtml5.dom.parse = (function() {
       return function(attributeValue) {
         return mapping[String(attributeValue).charAt(0)];
       };
-    })()
+    } )()
   };
   
   return parse;
-})();/**
+} )();/**
  * Checks for empty text node childs and removes them
  *
  * @param {Element} node The element in which to cleanup
@@ -5291,7 +5291,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
   }
   
   dom.resolveList = resolveList;
-})(wysihtml5.dom);/**
+} )(wysihtml5.dom);/**
  * Sandbox for executing javascript, parsing css styles and doing dom operations in a secure way
  *
  * Browser Compatibility:
@@ -5311,7 +5311,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
  * @example
  *    new wysihtml5.dom.Sandbox(function(sandbox) {
  *      sandbox.getWindow().document.body.innerHTML = '<img src=foo.gif onerror="alert(document.cookie)">';
- *    });
+ *    } );
  */
 (function(wysihtml5) {
   var /**
@@ -5347,7 +5347,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
 
     constructor: function(readyCallback, config) {
       this.callback = readyCallback || wysihtml5.EMPTY_FUNCTION;
-      this.config   = wysihtml5.lang.object({}).merge(config).get();
+      this.config   = wysihtml5.lang.object( {} ).merge(config).get();
       this.iframe   = this._createIframe();
     },
     
@@ -5403,7 +5403,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
       var that   = this,
           iframe = doc.createElement( "iframe" );
       iframe.className = "wysihtml5-sandbox";
-      wysihtml5.dom.setAttributes({
+      wysihtml5.dom.setAttributes( {
         "security":           "restricted",
         "allowtransparency":  "true",
         "frameborder":        0,
@@ -5411,7 +5411,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
         "height":             0,
         "marginwidth":        0,
         "marginheight":       0
-      }).on(iframe);
+      } ).on(iframe);
 
       // Setting the src like this prevents ssl warnings in IE6
       if (wysihtml5.browser.throwsMixedContentWarningWhenIframeSrcIsEmpty()) {
@@ -5446,10 +5446,10 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
           iframeWindow   = iframe.contentWindow,
           iframeDocument = iframe.contentWindow.document,
           charset        = doc.characterSet || doc.charset || "utf-8",
-          sandboxHtml    = this._getHtml({
+          sandboxHtml    = this._getHtml( {
             charset:      charset,
             stylesheets:  this.config.stylesheets
-          });
+          } );
 
       // Create the basic dom tree including proper DOCTYPE and charset
       iframeDocument.open( "text/html", "replace" );
@@ -5524,9 +5524,9 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
     _unset: function(object, property, value, setter) {
       try { object[property] = value; } catch(e) {}
 
-      try { object.__defineGetter__(property, function() { return value; }); } catch(e) {}
+      try { object.__defineGetter__(property, function() { return value; } ); } catch(e) {}
       if (setter) {
-        try { object.__defineSetter__(property, function() {}); } catch(e) {}
+        try { object.__defineSetter__(property, function() {} ); } catch(e) {}
       }
 
       if (!wysihtml5.browser.crashesWhenDefineProperty(property)) {
@@ -5541,8 +5541,8 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
         } catch(e) {}
       }
     }
-  });
-})(wysihtml5);
+  } );
+} )(wysihtml5);
 (function() {
   var mapping = {
     "className": "class"
@@ -5556,7 +5556,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
       }
     }
   };
-})();wysihtml5.dom.setStyles = function(styles) {
+} )();wysihtml5.dom.setStyles = function(styles) {
   return {
     on: function(element) {
       var style = element.style;
@@ -5613,7 +5613,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
 
     set();
   };
-})(wysihtml5.dom);
+} )(wysihtml5.dom);
 (function(dom) {
   var documentElement = document.documentElement;
   if ( "textContent" in documentElement) {
@@ -5641,7 +5641,7 @@ wysihtml5.dom.replaceWithChildNodes = function(node) {
       return element.nodeValue;
     };
   }
-})(wysihtml5.dom);
+} )(wysihtml5.dom);
 
 /**
  * Fix most common html formatting misbehaviors of browsers implementation when inserting
@@ -5688,7 +5688,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
   }
   
   return cleanPastedHTML;
-})();/**
+} )();/**
  * IE and Opera leave an empty paragraph in the contentEditable element after clearing it
  *
  * @param {Object} contentEditableElement The contentEditable element to observe for clearing events
@@ -5713,7 +5713,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
     return function(composer) {
       dom.observe(composer.element, ["cut", "keydown"], clearIfNecessary);
     };
-  })();
+  } )();
 
 
 
@@ -5732,7 +5732,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
         return;
       }
 
-      var list = dom.getParentElement(element, { nodeName: ELEMENTS_THAT_CONTAIN_LI });
+      var list = dom.getParentElement(element, { nodeName: ELEMENTS_THAT_CONTAIN_LI } );
       if (!list) {
         return;
       }
@@ -5763,11 +5763,11 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
 
         var element = composer.selection.getSelectedNode();
         clearIfNecessary(element, composer.element);
-      });
+      } );
     };
-  })();
+  } )();
 
-})(wysihtml5);
+} )(wysihtml5);
 // See https://bugzilla.mozilla.org/show_bug.cgi?id=664398
 //
 // In Firefox this:
@@ -5797,7 +5797,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
     }
     return innerHTML;
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * Some browsers don't insert line breaks when hitting return in a contentEditable element
  *    - Opera & IE insert new <p> on return
  *    - Chrome & Safari insert new <div> on return
@@ -5874,7 +5874,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
     // keypress doesn't fire when you hit backspace
     dom.observe(composer.element.ownerDocument, "keydown", keyDown);
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * Force rerendering of a given element
  * Needed to fix display misbehaviors of IE
  *
@@ -5896,7 +5896,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
       doc.execCommand( "italic", false, null);
     } catch(e) {}
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * Selection API
  *
  * @example
@@ -6201,7 +6201,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
             // The element needs content in order to be able to calculate it's position properly
             element.innerHTML = wysihtml5.INVISIBLE_SPACE;
             return element;
-          })(),
+          } )(),
           offsetTop;
 
       if (hasScrollBars) {
@@ -6311,9 +6311,9 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
           selection = rangy.getSelection(win);
       return selection.setSingleRange(range);
     }
-  });
+  } );
   
-})(wysihtml5);
+} )(wysihtml5);
 /**
  * Inspired by the rangy CSS Applier module written by Tim Down and licensed under the MIT license.
  * http://code.google.com/p/rangy/
@@ -6746,7 +6746,7 @@ wysihtml5.quirks.cleanPastedHTML = (function() {
 
   wysihtml5.selection.HTMLApplier = HTMLApplier;
   
-})(wysihtml5, rangy);/**
+} )(wysihtml5, rangy);/**
  * Rich Text Query/Formatting Commands
  * 
  * @example
@@ -6850,7 +6850,7 @@ wysihtml5.Commands = Base.extend(
       }
     }
   }
-});
+} );
 (function(wysihtml5) {
   var undef;
   
@@ -6872,7 +6872,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);
+} )(wysihtml5);
 
 (function(wysihtml5) {
   var undef,
@@ -6887,7 +6887,7 @@ wysihtml5.Commands = Base.extend(
         textContent;
     for (; i<length; i++) {
       anchor      = anchors[i];
-      codeElement = dom.getParentElement(anchor, { nodeName: "code" });
+      codeElement = dom.getParentElement(anchor, { nodeName: "code" } );
       textContent = dom.getTextContent(anchor);
 
       // if <a> contains url-like text content, rename it to <code> to prevent re-autolinking
@@ -6954,7 +6954,7 @@ wysihtml5.Commands = Base.extend(
      *    // either ...
      *    wysihtml5.commands.createLink.exec(composer, "createLink", "http://www.google.de" );
      *    // ... or ...
-     *    wysihtml5.commands.createLink.exec(composer, "createLink", { href: "http://www.google.de", target: "_blank" });
+     *    wysihtml5.commands.createLink.exec(composer, "createLink", { href: "http://www.google.de", target: "_blank" } );
      */
     exec: function(composer, command, value) {
       var anchors = this.state(composer, command);
@@ -6962,7 +6962,7 @@ wysihtml5.Commands = Base.extend(
         // Selection contains links
         composer.selection.executeAndRestore(function() {
           _removeFormat(composer, anchors);
-        });
+        } );
       } else {
         // Create links
         value = typeof(value) === "object" ? value : { href: value };
@@ -6978,7 +6978,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * document.execCommand( "fontSize" ) will create either inline styles (firefox, chrome) or use font tags
  * which we don't want
  * Instead we set a css class
@@ -7000,7 +7000,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);
+} )(wysihtml5);
 /**
  * document.execCommand( "foreColor" ) will create either inline styles (firefox, chrome) or use font tags
  * which we don't want
@@ -7023,7 +7023,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef,
       dom                     = wysihtml5.dom,
       DEFAULT_NODE_NAME       = "DIV",
@@ -7154,7 +7154,7 @@ wysihtml5.Commands = Base.extend(
           // Make sure that only block elements receive the given class
           target.className += " " + className;
         }
-      });
+      } );
     }
     doc.execCommand(command, false, nodeName);
     if (eventListener) {
@@ -7197,7 +7197,7 @@ wysihtml5.Commands = Base.extend(
             // Make sure that styling is kept by renaming the element to <div> and copying over the class name
             dom.renameElement(blockElement, DEFAULT_NODE_NAME);
           }
-        });
+        } );
         return;
       }
 
@@ -7206,7 +7206,7 @@ wysihtml5.Commands = Base.extend(
         selectedNode = composer.selection.getSelectedNode();
         blockElement = dom.getParentElement(selectedNode, {
           nodeName: BLOCK_ELEMENTS_GROUP
-        });
+        } );
 
         if (blockElement) {
           composer.selection.executeAndRestoreSimple(function() {
@@ -7217,7 +7217,7 @@ wysihtml5.Commands = Base.extend(
             if (className) {
               _addClass(blockElement, className, classRegExp);
             }
-          });
+          } );
           return;
         }
       }
@@ -7241,14 +7241,14 @@ wysihtml5.Commands = Base.extend(
         nodeName:     nodeName,
         className:    className,
         classRegExp:  classRegExp
-      });
+      } );
     },
 
     value: function() {
       return undef;
     }
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * formatInline scenarios for tag "B" (| = caret, |foo| = selected text)
  *
  *   #1 caret in unformatted text:
@@ -7343,7 +7343,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef;
   
   wysihtml5.commands.insertHTML = {
@@ -7363,7 +7363,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var NODE_NAME = "IMG";
   
   wysihtml5.commands.insertImage = {
@@ -7375,7 +7375,7 @@ wysihtml5.Commands = Base.extend(
      *    // either ...
      *    wysihtml5.commands.insertImage.exec(composer, "insertImage", "http://www.google.de/logo.jpg" );
      *    // ... or ...
-     *    wysihtml5.commands.insertImage.exec(composer, "insertImage", { src: "http://www.google.de/logo.jpg", title: "foo" });
+     *    wysihtml5.commands.insertImage.exec(composer, "insertImage", { src: "http://www.google.de/logo.jpg", title: "foo" } );
      */
     exec: function(composer, command, value) {
       value = typeof(value) === "object" ? value : { src: value };
@@ -7452,7 +7452,7 @@ wysihtml5.Commands = Base.extend(
 
       imagesInSelection = composer.selection.getNodes(wysihtml5.ELEMENT_NODE, function(node) {
         return node.nodeName === "IMG";
-      });
+      } );
 
       if (imagesInSelection.length !== 1) {
         return false;
@@ -7466,7 +7466,7 @@ wysihtml5.Commands = Base.extend(
       return image && image.src;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef,
       LINE_BREAK = "<br>" + (wysihtml5.browser.needsSpaceAfterLineBreak() ? " " : "" );
   
@@ -7490,15 +7490,15 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef;
   
   wysihtml5.commands.insertOrderedList = {
     exec: function(composer, command) {
       var doc           = composer.doc,
           selectedNode  = composer.selection.getSelectedNode(),
-          list          = wysihtml5.dom.getParentElement(selectedNode, { nodeName: "OL" }),
-          otherList     = wysihtml5.dom.getParentElement(selectedNode, { nodeName: "UL" }),
+          list          = wysihtml5.dom.getParentElement(selectedNode, { nodeName: "OL" } ),
+          otherList     = wysihtml5.dom.getParentElement(selectedNode, { nodeName: "UL" } ),
           tempClassName =  "_wysihtml5-temp-" + new Date().getTime(),
           isEmpty,
           tempElement;
@@ -7515,7 +7515,7 @@ wysihtml5.Commands = Base.extend(
         // foo<br>bar<br>
         composer.selection.executeAndRestoreSimple(function() {
           wysihtml5.dom.resolveList(list);
-        });
+        } );
       } else if (otherList) {
         // Turn an unordered list into an ordered list
         // <ul><li>foo</li><li>bar</li></ul>
@@ -7523,7 +7523,7 @@ wysihtml5.Commands = Base.extend(
         // <ol><li>foo</li><li>bar</li></ol>
         composer.selection.executeAndRestoreSimple(function() {
           wysihtml5.dom.renameElement(otherList, "ol" );
-        });
+        } );
       } else {
         // Create list
         composer.commands.exec( "formatBlock", "div", tempClassName);
@@ -7531,7 +7531,7 @@ wysihtml5.Commands = Base.extend(
         isEmpty = tempElement.innerHTML === "" || tempElement.innerHTML === wysihtml5.INVISIBLE_SPACE;
         composer.selection.executeAndRestoreSimple(function() {
           list = wysihtml5.dom.convertToList(tempElement, "ol" );
-        });
+        } );
         if (isEmpty) {
           composer.selection.selectNode(list.querySelector( "li" ));
         }
@@ -7540,22 +7540,22 @@ wysihtml5.Commands = Base.extend(
     
     state: function(composer) {
       var selectedNode = composer.selection.getSelectedNode();
-      return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "OL" });
+      return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "OL" } );
     },
 
     value: function() {
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef;
   
   wysihtml5.commands.insertUnorderedList = {
     exec: function(composer, command) {
       var doc           = composer.doc,
           selectedNode  = composer.selection.getSelectedNode(),
-          list          = wysihtml5.dom.getParentElement(selectedNode, { nodeName: "UL" }),
-          otherList     = wysihtml5.dom.getParentElement(selectedNode, { nodeName: "OL" }),
+          list          = wysihtml5.dom.getParentElement(selectedNode, { nodeName: "UL" } ),
+          otherList     = wysihtml5.dom.getParentElement(selectedNode, { nodeName: "OL" } ),
           tempClassName =  "_wysihtml5-temp-" + new Date().getTime(),
           isEmpty,
           tempElement;
@@ -7572,7 +7572,7 @@ wysihtml5.Commands = Base.extend(
         // foo<br>bar<br>
         composer.selection.executeAndRestoreSimple(function() {
           wysihtml5.dom.resolveList(list);
-        });
+        } );
       } else if (otherList) {
         // Turn an ordered list into an unordered list
         // <ol><li>foo</li><li>bar</li></ol>
@@ -7580,7 +7580,7 @@ wysihtml5.Commands = Base.extend(
         // <ul><li>foo</li><li>bar</li></ul>
         composer.selection.executeAndRestoreSimple(function() {
           wysihtml5.dom.renameElement(otherList, "ul" );
-        });
+        } );
       } else {
         // Create list
         composer.commands.exec( "formatBlock", "div", tempClassName);
@@ -7588,7 +7588,7 @@ wysihtml5.Commands = Base.extend(
         isEmpty = tempElement.innerHTML === "" || tempElement.innerHTML === wysihtml5.INVISIBLE_SPACE;
         composer.selection.executeAndRestoreSimple(function() {
           list = wysihtml5.dom.convertToList(tempElement, "ul" );
-        });
+        } );
         if (isEmpty) {
           composer.selection.selectNode(list.querySelector( "li" ));
         }
@@ -7597,14 +7597,14 @@ wysihtml5.Commands = Base.extend(
     
     state: function(composer) {
       var selectedNode = composer.selection.getSelectedNode();
-      return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "UL" });
+      return wysihtml5.dom.getParentElement(selectedNode, { nodeName: "UL" } );
     },
 
     value: function() {
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef;
   
   wysihtml5.commands.italic = {
@@ -7625,7 +7625,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef,
       CLASS_NAME  = "wysiwyg-text-align-center",
       REG_EXP     = /wysiwyg-text-align-[a-z]+/g;
@@ -7643,7 +7643,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef,
       CLASS_NAME  = "wysiwyg-text-align-left",
       REG_EXP     = /wysiwyg-text-align-[a-z]+/g;
@@ -7661,7 +7661,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef,
       CLASS_NAME  = "wysiwyg-text-align-right",
       REG_EXP     = /wysiwyg-text-align-[a-z]+/g;
@@ -7679,7 +7679,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);(function(wysihtml5) {
+} )(wysihtml5);(function(wysihtml5) {
   var undef;
   wysihtml5.commands.underline = {
     exec: function(composer, command) {
@@ -7694,7 +7694,7 @@ wysihtml5.Commands = Base.extend(
       return undef;
     }
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * Undo Manager for wysihtml5
  * slightly inspired by http://rniwa.com/editing/undomanager.html#the-undomanager-interface
  */
@@ -7752,7 +7752,7 @@ wysihtml5.Commands = Base.extend(
           that.redo();
           event.preventDefault();
         }
-      });
+      } );
       
       // Catch delete and backspace
       dom.observe(this.element, "keydown", function(event) {
@@ -7766,7 +7766,7 @@ wysihtml5.Commands = Base.extend(
         if (keyCode === BACKSPACE_KEY || keyCode === DELETE_KEY) {
           that.transact();
         }
-      });
+      } );
       
       // Now this is very hacky:
       // These days browsers don't offer a undo/redo event which we could hook into
@@ -7793,7 +7793,7 @@ wysihtml5.Commands = Base.extend(
             // enable redo button in context menu
             doc.execCommand( "insertHTML", false, REDO_HTML);
             doc.execCommand( "undo", false, null);
-          });
+          } );
 
           interval = setInterval(function() {
             if (doc.getElementById( "_wysihtml5-redo" )) {
@@ -7810,17 +7810,17 @@ wysihtml5.Commands = Base.extend(
             dom.observe(document, "mousedown", cleanUp);
             dom.observe(doc, ["mousedown", "paste", "cut", "copy"], cleanUp);
           }
-        });
+        } );
       }
       
       this.editor
         .observe( "newword:composer", function() {
           that.transact();
-        })
+        } )
         
         .observe( "beforecommand:composer", function() {
           that.transact();
-        });
+        } );
     },
     
     transact: function() {
@@ -7865,8 +7865,8 @@ wysihtml5.Commands = Base.extend(
       this.composer.setValue(html);
       this.editor.focus(true);
     }
-  });
-})(wysihtml5);
+  } );
+} )(wysihtml5);
 /**
  * TODO: the following methods still need unit test coverage
  */
@@ -7892,8 +7892,8 @@ wysihtml5.views.View = Base.extend(
         } else {
           that.hide();
         }
-      });
-    });
+      } );
+    } );
   },
   
   focus: function() {
@@ -7919,7 +7919,7 @@ wysihtml5.views.View = Base.extend(
   enable: function() {
     this.element.removeAttribute( "disabled" );
   }
-});(function(wysihtml5) {
+} );(function(wysihtml5) {
   var dom       = wysihtml5.dom,
       browser   = wysihtml5.browser;
   
@@ -8032,7 +8032,7 @@ wysihtml5.views.View = Base.extend(
         that._create();
       }, {
         stylesheets:  this.config.stylesheets
-      });
+      } );
       this.iframe  = this.sandbox.getIframe();
 
       // Create hidden field which tells the server after submit, that the user used an wysiwyg editor
@@ -8142,8 +8142,8 @@ wysihtml5.views.View = Base.extend(
         this.parent.observe( "newword:composer", function() {
           that.selection.executeAndRestore(function(startContainer, endContainer) {
             dom.autoLink(endContainer.parentNode);
-          });
-        });
+          } );
+        } );
       }
 
       // Assuming we have the following:
@@ -8189,7 +8189,7 @@ wysihtml5.views.View = Base.extend(
             link.setAttribute( "href", newTextContent);
           }
         }, 0);
-      });
+      } );
     },
 
     _initObjectResizing: function() {
@@ -8218,11 +8218,11 @@ wysihtml5.views.View = Base.extend(
             }
             // After resizing IE sometimes forgets to remove the old resize handles
             wysihtml5.quirks.redraw(element);
-          });
+          } );
         }
       } else {
         if (browser.supportsEvent( "resizestart" )) {
-          dom.observe(element, "resizestart", function(event) { event.preventDefault(); });
+          dom.observe(element, "resizestart", function(event) { event.preventDefault(); } );
         }
       }
     },
@@ -8230,8 +8230,8 @@ wysihtml5.views.View = Base.extend(
     _initUndoManager: function() {
       new wysihtml5.UndoManager(this.parent);
     }
-  });
-})(wysihtml5);(function(wysihtml5) {
+  } );
+} )(wysihtml5);(function(wysihtml5) {
   var dom             = wysihtml5.dom,
       doc             = document,
       win             = window,
@@ -8314,13 +8314,13 @@ wysihtml5.views.View = Base.extend(
             WebkitUserSelect: elementStyle.WebkitUserSelect
           };
       
-      dom.setStyles({
+      dom.setStyles( {
         position:         "absolute",
         top:              "-99999px",
         left:             "-99999px",
         // Don't ask why but temporarily setting -webkit-user-select to none makes the whole thing performing smoother
         WebkitUserSelect: "none"
-      }).on(element);
+      } ).on(element);
       
       element.focus();
       
@@ -8405,23 +8405,23 @@ wysihtml5.views.View = Base.extend(
           .andTo(that.blurStylesHost);
         that.iframe.style.display = originalComposerDisplayStyle;
         textareaElement.style.display = originalTextareaDisplayStyle;
-      });
+      } );
     }
   
     // --------- Sync focus/blur styles ---------
     this.parent.observe( "focus:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.focusStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.focusStylesHost).to(that.element);
-    });
+    } );
 
     this.parent.observe( "blur:composer", function() {
       dom.copyStyles(boxFormattingStyles) .from(that.blurStylesHost).to(that.iframe);
       dom.copyStyles(TEXT_FORMATTING)     .from(that.blurStylesHost).to(that.element);
-    });
+    } );
   
     return this;
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * Taking care of events
  *  - Simulating 'change' event on contentEditable element
  *  - Handling drag & drop logic
@@ -8454,7 +8454,7 @@ wysihtml5.views.View = Base.extend(
     dom.observe(iframe, "DOMNodeRemoved", function() {
       clearInterval(domNodeRemovedInterval);
       that.parent.fire( "destroy:composer" );
-    });
+    } );
 
     // DOMNodeRemoved event is not supported in IE 8
     var domNodeRemovedInterval = setInterval(function() {
@@ -8472,14 +8472,14 @@ wysihtml5.views.View = Base.extend(
       // Delay storing of state until all focus handler are fired
       // especially the one which resets the placeholder
       setTimeout(function() { state = that.getValue(); }, 0);
-    });
+    } );
 
     dom.observe(focusBlurElement, "blur", function() {
       if (state !== that.getValue()) {
         that.parent.fire( "change" ).fire( "change:composer" );
       }
       that.parent.fire( "blur" ).fire( "blur:composer" );
-    });
+    } );
     
     if (wysihtml5.browser.isIos()) {
       // When on iPad/iPhone/IPod after clicking outside of editor, the editor loses focus
@@ -8498,18 +8498,18 @@ wysihtml5.views.View = Base.extend(
         input.parentNode.removeChild(input);
         
         window.scrollTo(originalScrollLeft, originalScrollTop);
-      });
+      } );
     }
 
     // --------- Drag & Drop logic ---------
     dom.observe(element, "dragenter", function() {
       that.parent.fire( "unset_placeholder" );
-    });
+    } );
 
     if (browser.firesOnDropOnlyWhenOnDragOverIsCancelled()) {
       dom.observe(element, ["dragover", "dragenter"], function(event) {
         event.preventDefault();
-      });
+      } );
     }
 
     dom.observe(element, pasteEvents, function(event) {
@@ -8532,7 +8532,7 @@ wysihtml5.views.View = Base.extend(
           that.parent.fire( "paste" ).fire( "paste:composer" );
         }, 0);
       }
-    });
+    } );
 
     // --------- neword event ---------
     dom.observe(element, "keyup", function(event) {
@@ -8540,11 +8540,11 @@ wysihtml5.views.View = Base.extend(
       if (keyCode === wysihtml5.SPACE_KEY || keyCode === wysihtml5.ENTER_KEY) {
         that.parent.fire( "newword:composer" );
       }
-    });
+    } );
 
     this.parent.observe( "paste:composer", function() {
       setTimeout(function() { that.parent.fire( "newword:composer" ); }, 0);
-    });
+    } );
 
     // --------- Make sure that images are selected when clicking on them ---------
     if (!browser.canSelectImagesInContentEditable()) {
@@ -8554,7 +8554,7 @@ wysihtml5.views.View = Base.extend(
           that.selection.selectNode(target);
           event.preventDefault();
         }
-      });
+      } );
     }
     
     // --------- Shortcut logic ---------
@@ -8565,7 +8565,7 @@ wysihtml5.views.View = Base.extend(
         that.commands.exec(command);
         event.preventDefault();
       }
-    });
+    } );
 
     // --------- Make sure that when pressing backspace/delete on selected images deletes the image and it's anchor ---------
     dom.observe(element, "keydown", function(event) {
@@ -8584,7 +8584,7 @@ wysihtml5.views.View = Base.extend(
         setTimeout(function() { wysihtml5.quirks.redraw(element); }, 0);
         event.preventDefault();
       }
-    });
+    } );
 
     // --------- Show url in tooltip when hovering links or images ---------
     var titlePrefixes = {
@@ -8604,9 +8604,9 @@ wysihtml5.views.View = Base.extend(
         title = titlePrefixes[nodeName] + (target.getAttribute( "href" ) || target.getAttribute( "src" ));
         target.setAttribute( "title", title);
       }
-    });
+    } );
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * Class that takes care that the value of the composer and the textarea is always in sync
  */
 (function(wysihtml5) {
@@ -8683,10 +8683,10 @@ wysihtml5.views.View = Base.extend(
         // has the correct state
         wysihtml5.dom.observe(form, "submit", function() {
           that.sync(true);
-        });
+        } );
         wysihtml5.dom.observe(form, "reset", function() {
           setTimeout(function() { that.fromTextareaToComposer(); }, 0);
-        });
+        } );
       }
 
       this.editor.observe( "change_view", function(view) {
@@ -8697,12 +8697,12 @@ wysihtml5.views.View = Base.extend(
           that.fromComposerToTextarea(true);
           stopInterval();
         }
-      });
+      } );
 
       this.editor.observe( "destroy:composer", stopInterval);
     }
-  });
-})(wysihtml5);
+  } );
+} )(wysihtml5);
 wysihtml5.views.Textarea = wysihtml5.views.View.extend(
   /** @scope wysihtml5.views.Textarea.prototype */ {
   name: "textarea",
@@ -8761,14 +8761,14 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
       wysihtml5.dom.observe(element, events, function(event) {
         var eventName = eventMapping[event.type] || event.type;
         parent.fire(eventName).fire(eventName + ":textarea" );
-      });
+      } );
       
       wysihtml5.dom.observe(element, ["paste", "drop"], function() {
         setTimeout(function() { parent.fire( "paste" ).fire( "paste:textarea" ); }, 0);
-      });
-    });
+      } );
+    } );
   }
-});/**
+} );/**
  * Toolbar Dialog
  *
  * @param {Element} link The toolbar link which causes the dialog to show up
@@ -8795,7 +8795,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
  *      );
  *      dialog.observe( "save", function(attributes) {
  *        // do something
- *      });
+ *      } );
  *    </script>
  */
 (function(wysihtml5) {
@@ -8835,7 +8835,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
         if (dom.hasClass(that.link, CLASS_NAME_OPENED)) {
           setTimeout(function() { that.hide(); }, 0);
         }
-      });
+      } );
 
       dom.observe(this.container, "keydown", function(event) {
         var keyCode = event.keyCode;
@@ -8845,7 +8845,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
         if (keyCode === wysihtml5.ESCAPE_KEY) {
           that.hide();
         }
-      });
+      } );
 
       dom.delegate(this.container, "[data-wysihtml5-dialog-action=save]", "click", callbackWrapper);
 
@@ -8854,7 +8854,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
         that.hide();
         event.preventDefault();
         event.stopPropagation();
-      });
+      } );
 
       var formElements  = this.container.querySelectorAll(SELECTOR_FORM_ELEMENTS),
           i             = 0,
@@ -8960,8 +8960,8 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
       this.container.style.display = "none";
       this.fire( "hide" );
     }
-  });
-})(wysihtml5);
+  } );
+} )(wysihtml5);
 /**
  * Converts speech-to-text and inserts this into the editor
  * As of now (2011/03/25) this only is supported in Chrome >= 11
@@ -9019,10 +9019,10 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
     
     var wrapper = document.createElement( "div" );
     
-    wysihtml5.lang.object(wrapperStyles).merge({
+    wysihtml5.lang.object(wrapperStyles).merge( {
       width:  link.offsetWidth  + "px",
       height: link.offsetHeight + "px"
-    });
+    } );
     
     dom.insert(input).into(wrapper);
     dom.insert(wrapper).into(link);
@@ -9037,7 +9037,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
     dom.observe(input, eventName, function() {
       parent.execCommand( "insertText", input.value);
       input.value = "";
-    });
+    } );
     
     dom.observe(input, "click", function(event) {
       if (dom.hasClass(link, "wysihtml5-command-disabled" )) {
@@ -9045,9 +9045,9 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
       }
       
       event.stopPropagation();
-    });
+    } );
   };
-})(wysihtml5);/**
+} )(wysihtml5);/**
  * Toolbar
  *
  * @param {Object} parent Reference to instance of Editor instance
@@ -9131,8 +9131,8 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
         dialog.observe( "show", function() {
           caretBookmark = that.composer.selection.getBookmark();
 
-          that.editor.fire( "show:dialog", { command: command, dialogContainer: dialogElement, commandLink: link });
-        });
+          that.editor.fire( "show:dialog", { command: command, dialogContainer: dialogElement, commandLink: link } );
+        } );
 
         dialog.observe( "save", function(attributes) {
           if (caretBookmark) {
@@ -9140,13 +9140,13 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
           }
           that._execCommand(command, attributes);
           
-          that.editor.fire( "save:dialog", { command: command, dialogContainer: dialogElement, commandLink: link });
-        });
+          that.editor.fire( "save:dialog", { command: command, dialogContainer: dialogElement, commandLink: link } );
+        } );
 
         dialog.observe( "cancel", function() {
           that.editor.focus(false);
-          that.editor.fire( "cancel:dialog", { command: command, dialogContainer: dialogElement, commandLink: link });
-        });
+          that.editor.fire( "cancel:dialog", { command: command, dialogContainer: dialogElement, commandLink: link } );
+        } );
       }
       return dialog;
     },
@@ -9204,14 +9204,14 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
       for (; i<length; i++) {
         // 'javascript:;' and unselectable=on Needed for IE, but done in all browsers to make sure that all get the same css applied
         // (you know, a:link { ... } doesn't match anchors with missing href attribute)
-        dom.setAttributes({
+        dom.setAttributes( {
           href:         "javascript:;",
           unselectable: "on"
-        }).on(links[i]);
+        } ).on(links[i]);
       }
 
       // Needed for opera
-      dom.delegate(container, "[data-wysihtml5-command]", "mousedown", function(event) { event.preventDefault(); });
+      dom.delegate(container, "[data-wysihtml5-command]", "mousedown", function(event) { event.preventDefault(); } );
       
       dom.delegate(container, "[data-wysihtml5-command]", "click", function(event) {
         var link          = this,
@@ -9219,27 +9219,27 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
             commandValue  = link.getAttribute( "data-wysihtml5-command-value" );
         that.execCommand(command, commandValue);
         event.preventDefault();
-      });
+      } );
 
       dom.delegate(container, "[data-wysihtml5-action]", "click", function(event) {
         var action = this.getAttribute( "data-wysihtml5-action" );
         that.execAction(action);
         event.preventDefault();
-      });
+      } );
 
       editor.observe( "focus:composer", function() {
         that.bookmark = null;
         clearInterval(that.interval);
         that.interval = setInterval(function() { that._updateLinkStates(); }, 500);
-      });
+      } );
 
       editor.observe( "blur:composer", function() {
         clearInterval(that.interval);
-      });
+      } );
 
       editor.observe( "destroy:composer", function() {
         clearInterval(that.interval);
-      });
+      } );
 
       editor.observe( "change_view", function(currentView) {
         // Set timeout needed in order to let the blur event fire first
@@ -9252,7 +9252,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
             dom.removeClass(container, CLASS_NAME_COMMANDS_DISABLED);
           }
         }, 0);
-      });
+      } );
     },
 
     _updateLinkStates: function() {
@@ -9339,9 +9339,9 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
     hide: function() {
       this.container.style.display = "none";
     }
-  });
+  } );
   
-})(wysihtml5);
+} )(wysihtml5);
 /**
  * WYSIHTML5 Editor
  *
@@ -9406,7 +9406,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
     /** @scope wysihtml5.Editor.prototype */ {
     constructor: function(textareaElement, config) {
       this.textareaElement  = typeof(textareaElement) === "string" ? document.getElementById(textareaElement) : textareaElement;
-      this.config           = wysihtml5.lang.object({}).merge(defaultConfig).merge(config).get();
+      this.config           = wysihtml5.lang.object( {} ).merge(defaultConfig).merge(config).get();
       this.textarea         = new wysihtml5.views.Textarea(this, this.textareaElement, this.config);
       this.currentView      = this.textarea;
       this._isCompatible    = wysihtml5.browser.supported();
@@ -9433,7 +9433,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
         if (this.config.toolbar) {
           this.toolbar = new wysihtml5.toolbar.Toolbar(this, this.config.toolbar);
         }
-      });
+      } );
       
       try {
         //console.log( "Heya! This page is using wysihtml5 for rich text editing. Check out https://github.com/xing/wysihtml5" );
@@ -9510,14 +9510,14 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
           wysihtml5.quirks.cleanPastedHTML(that.composer.element);
           that.parse(that.composer.element);
         }, keepScrollPosition);
-      });
+      } );
       
       this.observe( "paste:textarea", function() {
         var value   = this.textarea.getValue(),
             newValue;
         newValue = this.parse(value);
         this.textarea.setValue(newValue);
-      });
+      } );
     }
-  });
-})(wysihtml5);
+  } );
+} )(wysihtml5);

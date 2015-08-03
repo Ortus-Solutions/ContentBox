@@ -16,19 +16,19 @@ $(document).ready(function() {
 			{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
 			function(){
 				$editorSelectorLoader.fadeOut();
-		});
+		} );
 		
-	});
+	} );
 	<cfif len( rc.search )>
 	$( "##contentSearch" ).focus();
 	</cfif>
-});
+} );
 function pagerLink(page){
 	$editorSelectorLoader.fadeIn( "fast" );
 	$('##modal')
 		.load('#event.buildLink(prc.xehEditorSelector)#?editorName=#rc.editorName#&page=' + page, function() {
 			$editorSelectorLoader.fadeOut();
-	});
+	} );
 }
 function insertContentStore(slug){
 	var customContent = "{{{ContentStore slug='"+slug+"'}}}";

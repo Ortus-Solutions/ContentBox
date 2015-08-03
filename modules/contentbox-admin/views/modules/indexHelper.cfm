@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$uploadForm = $( "##moduleUploadForm" );
 	$moduleForm = $( "##moduleForm" );
 	$forgebox   = $( "##forgeboxPane" );
-	$( "##modules" ).dataTable({
+	$( "##modules" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -16,13 +16,13 @@ $(document).ready(function() {
 	        }
 	    ],
 	    "order": []
-	});
+	} );
 	$( "##moduleFilter" ).keyup(function(){
 		$.uiTableFilter( $( "##modules" ), this.value );
-	});
+	} );
 	// form validator
-	$uploadForm.validate({success:function(e,els){ activateLoaders(); }});
-});
+	$uploadForm.validate( {success:function(e,els){ activateLoaders(); }} );
+} );
 function activateLoaders(){
 	$( "##uploadBar" ).slideToggle();
 	$( "##uploadBarLoader" ).slideToggle();
@@ -45,7 +45,7 @@ function deactivate(moduleName){
 function loadForgeBox(orderBY){
 	if( orderBY == null ){ orderBY = "popular"; }
 	$forgebox.load('#event.buildLink(prc.xehForgeBox)#',
-		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#', orderBY:orderBY});
+		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#', orderBY:orderBY} );
 }
 </script>
 </cfoutput>

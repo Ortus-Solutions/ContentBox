@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	// activate tooltips
 	activateTooltips();
-});
+} );
 function activateTooltips(){
 	// Tooltip settings
 	var toolTipSettings	= {	//will make a tooltip of all elements having a title property
@@ -13,8 +13,8 @@ function activateTooltips(){
 	};
 	//Tooltip 
 	$( "[title]" ).tooltip(toolTipSettings)
-		 .dynamic({bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isn't space on the top
-	});
+		 .dynamic( {bottom: { direction: 'down', bounce: true}   //made it dynamic so it will show on bottom if there isn't space on the top
+	} );
 }
 /**
  * Relocation shorcuts

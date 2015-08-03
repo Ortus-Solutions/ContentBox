@@ -96,7 +96,7 @@ sales_chart =
       top: y + 5,
       left: x + 5,
       opacity: 0.80
-    }).appendTo( "body" ).fadeIn(200);
+    } ).appendTo( "body" ).fadeIn(200);
   }
 
 
@@ -119,10 +119,10 @@ sales_chart =
       $( ".chart-tooltip" ).remove();
       previousPoint = null;
     }
-  });
+  } );
 
 
    sales_chart.init();
 
 
-})(jQuery);
+} )(jQuery);
