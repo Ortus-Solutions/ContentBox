@@ -42,7 +42,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 
 				#cb.event( "cbui_preCommentForm" )#
 
-				#TODO: MEssagebox#
+				#getModel( 'messagebox@cbMessagebox' ).renderIt()#
 
 				#html.hiddenField(name="contentID",value=arguments.content.getContentID())#
 				#html.hiddenField(name="contentType",value=arguments.content.getContentType())#
