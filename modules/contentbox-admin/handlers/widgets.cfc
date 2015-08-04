@@ -32,7 +32,7 @@ component extends="baseHandler"{
 		prc.categories 		= widgetService.getWidgetCategories();
 		prc.widgetService 	= widgetService;
 		// ForgeBox Entry URL
-		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).settings.forgeBoxEntryURL;
+		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
 		// ForgeBox Stuff
 		prc.forgeBoxSlug 		= "contentbox-widgets";
 		prc.forgeBoxInstallDir 	= URLEncodedFormat( widgetService.getWidgetsPath() );

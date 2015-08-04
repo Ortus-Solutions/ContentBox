@@ -138,17 +138,17 @@
                         <tr>
                             <th>
                                 ContentBox Core <br/>
-                                (Codename: <a href="#getModuleSettings( "contentbox" ).settings.codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).settings.codename#</a>)
+                                (Codename: <a href="#getModuleSettings( "contentbox" ).codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).codename#</a>)
                             </th>
-                            <th class="text-center">v.#getModuleSettings('contentbox').version#</th>
+                            <th class="text-center">v.#getModuleConfig('contentbox').version#</th>
                         </tr>
                         <tr>
                             <th>ContentBox Admin</th>
-                            <th class="text-center">v.#getModuleSettings('contentbox-admin').version#</th>
+                            <th class="text-center">v.#getModuleConfig('contentbox-admin').version#</th>
                         </tr>
                         <tr>
                             <th>ContentBox UI</th>
-                            <th class="text-center">v.#getModuleSettings('contentbox-ui').version#</th>
+                            <th class="text-center">v.#getModuleConfig('contentbox-ui').version#</th>
                         </tr>
                         <tr>
                             <th>ColdBox Platform</th>

@@ -53,6 +53,13 @@ component accessors="true"{
 	any function renderIt(){
 		throw( message="This is a base method that you must implement", type="BaseClassException" );
 	}
+
+	/**
+	* Get the current request context
+	*/
+	function getRequestContext(){
+		return controller.getRequestService().getContext();
+	}
 	
 	/*
      * Get this widget's public methods'

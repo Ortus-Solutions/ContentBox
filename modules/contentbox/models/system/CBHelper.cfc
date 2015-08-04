@@ -22,6 +22,7 @@ component accessors="true" singleton threadSafe{
 	property name="menuItemService"		inject="id:menuItemService@cb";
 	property name="requestService"		inject="coldbox:requestService";
 	property name="wirebox"				inject="wirebox";
+	property name="controller"			inject="coldbox";
 	
 	/**
 	* Constructor 
@@ -47,6 +48,30 @@ component accessors="true" singleton threadSafe{
 		return getRequestContext().getCollection( private=arguments.private );
 	}
 
+	/**
+	* Get a module's settings structure
+	* @module.hint The module to retrieve the configuration settings from
+	*/
+	struct function getModuleSettings( required module ){
+		return getModuleConfig( arguments.module ).settings;
+	}
+
+	/**
+	* Get a module's configuration structure
+	* @module.hint The module to retrieve the configuration structure from
+	*/
+	struct function getModuleConfig( required module ){
+		var mConfig = controller.getSetting( "modules" );
+		if( structKeyExists( mConfig, arguments.module ) ){
+			return mConfig[ arguments.module ];
+		}
+		throw( 
+			message = "The module you passed #arguments.module# is invalid.",
+			detail	= "The loaded modules are #structKeyList( mConfig )#",
+			type 	= "FrameworkSuperType.InvalidModuleException"
+		);
+	}
+
 	/************************************** settings *********************************************/
 
 	// get contentbox setting value by key or by default value
@@ -67,15 +92,15 @@ component accessors="true" singleton threadSafe{
 
 	// get contentbox version
 	function getContentBoxVersion(){
-		return getModuleSettings( "contentbox" ).version;
+		return controller.getModuleConfig( "contentbox" ).version;
 	}
 	// get contentbox codename
 	function getContentBoxCodeName(){
-		return getModuleSettings( "contentbox" ).settings.codename;
+		return getModuleSettings( "contentbox" ).codename;
 	}
 	// get contentbox codename URL
 	function getContentBoxCodeNameURL(){
-		return getModuleSettings( "contentbox" ).settings.codenameLink;
+		return getModuleSettings( "contentbox" ).codenameLink;
 	}
 	// get blog entry point
 	function getBlogEntryPoint(){
@@ -218,9 +243,9 @@ component accessors="true" singleton threadSafe{
 		// store UI module root
 		prc.cbRoot = getContextRoot() & event.getModuleRoot( 'contentbox' );
 		// store module entry point
-		prc.cbEntryPoint = getModuleSettings( "contentbox-ui" ).entryPoint;
+		prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
 		// store site entry point
-		prc.cbAdminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
+		prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 		// Place global cb options on scope
 		prc.cbSettings = settingService.getAllSettings( asStruct=true );
 		// Place the default layout on scope
@@ -230,7 +255,7 @@ component accessors="true" singleton threadSafe{
 		// Place widgets root location
 		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
 		// announce event
-		announceInterception( "cbui_preRequest" );
+		this.event( "cbui_preRequest" );
 		
 		/************************************** FORCE SITE WIDE SSL *********************************************/
 		
@@ -443,8 +468,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Get the curent search results object
+	* @return contentbox.models.search.SearchResults
 	*/
-	contentbox.models.search.SearchResults function getSearchResults(){
+	function getSearchResults(){
 		var event = getRequestContext();
 		return event.getValue( name="searchResults", private="true", default="" );
 	}
@@ -475,7 +501,7 @@ component accessors="true" singleton threadSafe{
 	/************************************** events *********************************************/
 
 	// event announcements, funky for whitespace reasons
-	function event( required state, struct data=structNew() ) output="true"{ announceInterception( arguments.state,arguments.data ); }
+	function event( required state, struct data=structNew() ) output="true"{ controller.getInterceptorService().processState( arguments.state, arguments.data ); }
 
 	/************************************** link methods *********************************************/
 
@@ -981,7 +1007,7 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickEntries( string template="entry", string collectionAs="entry", struct args=structnew() ){
 		var entries = getCurrentEntries();
-		return renderView(
+		return controller.getRenderer().renderView(
 			view			= "#themeName()#/templates/#arguments.template#",
 			collection		= entries,
 			collectionAs	= arguments.collectionAs,
@@ -997,7 +1023,7 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickEntry( string template="entry", string collectionAs="entry", struct args=structnew() ){
 		var entries = [ getCurrentEntry() ];
-		return renderView(
+		return controller.getRenderer().renderView(
 			view			= "#themeName()#/templates/#arguments.template#",
 			collection		= entries,
 			collectionAs	= arguments.collectionAs,
@@ -1013,7 +1039,7 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickCategories( string template="category", string collectionAs="category", struct args=structnew() ){
 		var categories = getCurrentCategories();
-		return renderView(
+		return controller.getRenderer().renderView(
 			view			= "#themeName()#/templates/#arguments.template#",
 			collection		= categories,
 			collectionAs	= arguments.collectionAs,
@@ -1029,7 +1055,7 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickRelatedContent( string template="relatedContent", string collectionAs="relatedContent", struct args=structnew() ){
 		var relatedContent = getCurrentRelatedContent();
-		return renderView( 
+		return controller.getRenderer().renderView( 
 			view			= "#themeName()#/templates/#arguments.template#", 
 			collection		= relatedContent,
 			collectionAs	= arguments.collectionAs, 
@@ -1063,7 +1089,7 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickComments( string template="comment", string collectionAs="comment", struct args=structNew() ){
 		var comments = getCurrentComments();
-		return renderView(
+		return controller.getRenderer().renderView(
 			view			= "#themeName()#/templates/#arguments.template#",
 			collection		= comments,
 			collectionAs	= arguments.collectionAs,
@@ -1092,7 +1118,7 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module="contentbox",args,collection,collectionAs,prepostExempt){
 		arguments.view = "#themeName()#/views/#arguments.view#";
-		return renderView( argumentCollection=arguments );
+		return controller.getRenderer().renderView( argumentCollection=arguments );
 	}
 
 	/**
@@ -1101,7 +1127,7 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickLayout(required layout,view="",module="contentbox",args=structNew(),viewModule="",prePostExempt=false){
 		arguments.layout = "#themeName()#/layouts/#arguments.layout#";
-		return renderLayout( argumentCollection=arguments );
+		return controller.getRenderer().renderLayout( argumentCollection=arguments );
 	}
 
 	/**
@@ -1113,10 +1139,10 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Render the incoming event's main view, basically a proxy to ColdBox's renderView().
+	* Render the incoming event's main view, basically a proxy to ColdBox's controller.getRenderer().renderView().
 	*/
 	function mainView(){
-		return renderView(view="" );
+		return controller.getRenderer().renderView( view="" );
 	}
 
 	/************************************** MENUS *********************************************/

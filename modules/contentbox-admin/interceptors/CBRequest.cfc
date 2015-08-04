@@ -34,11 +34,11 @@ component extends="coldbox.system.Interceptor"{
 		// cb helper
 		prc.CBHelper = getModel( "CBHelper@cb" );
 		// store admin module entry point
-		prc.cbAdminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
+		prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 		// store site entry point
-		prc.cbEntryPoint = getModuleSettings( "contentbox-ui" ).entryPoint;
+		prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
 		// store filebrowser entry point
-		prc.cbFileBrowserEntryPoint = getModuleSettings( "contentbox-filebrowser" ).entryPoint;
+		prc.cbFileBrowserEntryPoint = getModuleConfig( "contentbox-filebrowser" ).entryPoint;
 		// Place user in prc
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global cb options on scope

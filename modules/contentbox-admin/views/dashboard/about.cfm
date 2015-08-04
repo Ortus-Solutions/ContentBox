@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-8">
     	<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="pull-left" style="margin-right: 20px;" />
-	    <h2>ContentBox Modular CMS <span class="label label-warning">#getModuleSettings('contentbox').version#</span></h2>
+	    <h2>ContentBox Modular CMS <span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
         <blockquote class="clearfix">
 			<strong>ContentBox</strong> is a modular content platform developed by <a href="http://www.ortussolutions.com">Ortus Solutions</a> and 
 			based on the popular <a href="http://www.coldbox.org">ColdBox Platform</a> development framework.
@@ -30,17 +30,17 @@
 						<tr>
 							<th>
 								ContentBox Core <br/>
-								(Codename: <a href="#getModuleSettings( "contentbox" ).settings.codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).settings.codename#</a>)
+								(Codename: <a href="#getModuleSettings( "contentbox" ).codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).codename#</a>)
 							</th>
-							<th class="text-center">v.#getModuleSettings('contentbox').version#</th>
+							<th class="text-center">v.#getModuleConfig('contentbox').version#</th>
 						</tr>
 						<tr>
 							<th>ContentBox Admin</th>
-							<th class="text-center">v.#getModuleSettings('contentbox-admin').version#</th>
+							<th class="text-center">v.#getModuleConfig('contentbox-admin').version#</th>
 						</tr>
 						<tr>
 							<th>ContentBox UI</th>
-							<th class="text-center">v.#getModuleSettings('contentbox-ui').version#</th>
+							<th class="text-center">v.#getModuleConfig('contentbox-ui').version#</th>
 						</tr>
 						<tr>
 							<th>ColdBox Platform</th>

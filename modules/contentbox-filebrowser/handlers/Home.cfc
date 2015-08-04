@@ -21,10 +21,10 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 
 		// Setup the Module Root And Entry Point
-		prc.fbModRoot 		= getModuleSettings( prc.fbModuleName ).mapping;
-		prc.fbModEntryPoint = getModuleSettings( prc.fbModuleName ).entrypoint;
+		prc.fbModRoot 		= getModuleConfig( prc.fbModuleName ).mapping;
+		prc.fbModEntryPoint = getModuleConfig( prc.fbModuleName ).entrypoint;
 		// Duplicate the settings so we can do overrides a-la-carte
-		prc.fbSettings = duplicate( getModuleSettings( prc.fbModuleName ).settings );
+		prc.fbSettings = duplicate( getModuleSettings( prc.fbModuleName ) );
 		// Merge Flash Settings if they exist
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "settings" ) ){
 			mergeSettings(prc.fbSettings, flash.get( "fileBrowser" ).settings);

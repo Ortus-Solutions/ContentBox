@@ -60,7 +60,7 @@ component extends="baseHandler"{
 		prc.xehUpdateApply = "#prc.cbAdminEntryPoint#.autoupdates.apply";
 
 		// Get Extension Version
-		prc.contentboxVersion = getModuleSettings( 'contentbox' ).version;
+		prc.contentboxVersion = getModuleConfig( 'contentbox' ).version;
 		prc.updateFound = false;
 
 		// Check for forgebox item
