@@ -3,9 +3,9 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* This is the base class for contentbox widgets
+* This is the base class for contentbox widgets which gives them access to ContentBox and ColdBox.
 */
-component accessors="true"{
+component accessors="true" extends="coldbox.system.FrameworkSupertype"{
 	
 	// Shared DI all widgets receive
 	property name="categoryService"			inject="id:categoryService@cb";
@@ -54,13 +54,6 @@ component accessors="true"{
 		throw( message="This is a base method that you must implement", type="BaseClassException" );
 	}
 
-	/**
-	* Get the current request context
-	*/
-	function getRequestContext(){
-		return controller.getRequestService().getContext();
-	}
-	
 	/*
      * Get this widget's public methods'
      * @return array

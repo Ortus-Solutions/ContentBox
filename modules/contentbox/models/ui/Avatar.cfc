@@ -22,7 +22,7 @@ component singleton{
 	function renderAvatar( required email, numeric size=80, string class="gravatar" ){
 		var avatar 		= "";
 		var emailTarget = arguments.email;
-		var prc 		= requestService.getContext().getRequestCollection( private=true );
+		var prc 		= requestService.getContext().getCollection( private=true );
 
 		// check settings
 		if( NOT prc.cbSettings.cb_gravatar_display ){ return ""; }
