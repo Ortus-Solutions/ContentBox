@@ -161,7 +161,7 @@
 	            #html.startForm( name="importForm", action=prc.xehCategoryImport, class="form-vertical", multipart=true, role="form" )#
 	                <div class="modal-body">
 	                    <p>Choose the ContentBox <strong>JSON</strong> categories file to import.</p>
-						#getModel( "BootstrapFileUpload@cb" ).renderIt( 
+						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
 							name="importFile", 
 							required=true
 						)#

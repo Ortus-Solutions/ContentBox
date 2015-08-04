@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-    Menu function init( controller ){
-        // super init
-        super.init( controller );
-
+    Menu function init(){
         // Widget Properties
-        setPluginName( "Menu" );
-        setPluginVersion( "1.0" );
-        setPluginDescription( "A widget that can render out a ContentBox menu anywhere you like." );
-        setPluginAuthor( "Ortus Solutions" );
-        setPluginAuthorURL( "http://www.ortussolutions.com" );
+        setName( "Menu" );
+        setVersion( "1.0" );
+        setDescription( "A widget that can render out a ContentBox menu anywhere you like." );
+        setAuthor( "Ortus Solutions" );
+        setAuthorURL( "http://www.ortussolutions.com" );
         setIcon( "list.png" );
         setCategory( "Content" );
         return this;

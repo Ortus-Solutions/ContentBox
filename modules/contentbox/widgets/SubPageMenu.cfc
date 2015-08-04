@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
-    function init( controller ){
-        // super init
-        super.init( controller );
-
+    function init(){
         // Widget Properties
-        setPluginName( "SubPageMenu" );
-        setPluginVersion( "1.0" );
-        setPluginDescription( "A widget that renders sub pages according to where it is rendered." );
-        setPluginAuthor( "Ortus Solutions" );
-        setPluginAuthorURL( "http://www.ortussolutions.com" );
+        setName( "SubPageMenu" );
+        setVersion( "1.0" );
+        setDescription( "A widget that renders sub pages according to where it is rendered." );
+        setAuthor( "Ortus Solutions" );
+        setAuthorURL( "http://www.ortussolutions.com" );
         setIcon( "list.png" );
         setCategory( "Content" );
         return this;

@@ -65,10 +65,10 @@
                                 extraClasses &= currentRow mod 3!=1 ? "spacer" : "";
                             }
                         </cfscript>
-                        <cfset hasProtocol = reFindNoCase( "\b(?:https?):?", p.getPluginAuthorURL() )>
-                        <cfset pluginURL = hasProtocol ? p.getPluginAuthorURL() : "http://" & p.getPluginAuthorURL()>
+                        <cfset hasProtocol = reFindNoCase( "\b(?:https?):?", p.getAuthorURL() )>
+                        <cfset widgetURL = hasProtocol ? p.getAuthorURL() : "http://" & p.getAuthorURL()>
                         <div class="widget-wrapper col-md-6">
-                            <div class="widget-content" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getPluginName()#">
+                            <div class="widget-content" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getName()#">
                                 <cfif isSimpleValue( p )>
                                     <div class="alert alert-danger">Error loading widget: #widgetName#<br>
                                         <p>Debugging:</p>
@@ -76,16 +76,16 @@
                                     </div>
                                 <cfelse>
                                     <div class="widget-title">
-                                        #p.getPluginName()#
+                                        #p.getName()#
                                         <span class="widget-type">#prc.widgets.widgettype#</span>
                                     </div>
                                     <img class="widget-icon" src="#prc.cbroot#/includes/images/widgets/#iconName#" width="80" />
-                                    <div class="widget-teaser">#p.getPluginDescription()#</div>
+                                    <div class="widget-teaser">#p.getDescription()#</div>
                                     <div class="widget-actions">
                                         <div class="row">
                                             <div class="col-md-7">
-                                                v#p.getPluginVersion()#
-                                                By <a href="#pluginURL#" target="_blank">#p.getPluginAuthor()#</a>
+                                                v#p.getVersion()#
+                                                By <a href="#widgetURL#" target="_blank">#p.getAuthor()#</a>
                                             </div>
                                             <div class="col-md-5">
                                                 <cfif args.mode eq "edit">

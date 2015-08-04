@@ -76,7 +76,7 @@
 			    		novalidate="novalidate"
 			    	)#
 					
-						#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
 			                name="fileWidget",
 			                label="Upload Widget:",
 			                columnWidth=2,

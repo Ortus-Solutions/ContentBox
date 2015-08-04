@@ -426,40 +426,56 @@ component accessors="true" singleton threadSafe{
 	* Render out paging for search content
 	*/
 	function quickSearchPaging(){
-		var prc = getRequestCollection(private=true);
-		if( NOT structKeyExists(prc,"oPaging" ) ){
-			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the search results page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext" );
+		var prc = getRequestCollection( private=true );
+		if( NOT structKeyExists( prc, "oPaging" ) ){
+			throw( 
+				message = "Paging object is not in the collection",
+				detail  = "This probably means you are trying to use the paging outside of the search results page and that is a No No",
+				type 	= "ContentBox.CBHelper.InvalidPagingContext"
+			);
 		}
-		return prc.oPaging.renderit(foundRows=getSearchResults().getTotal(), link=prc.pagingLink, pagingMaxRows=setting( "cb_search_maxResults" ));
+		return prc.oPaging.renderit(
+			foundRows		= getSearchResults().getTotal(), 
+			link			= prc.pagingLink, 
+			pagingMaxRows	= setting( "cb_search_maxResults" )
+		);
 	}
 
-	// get the curent search results object
+	/**
+	* Get the curent search results object
+	*/
 	contentbox.models.search.SearchResults function getSearchResults(){
 		var event = getRequestContext();
-		return event.getValue(name="searchResults",private="true",default="" );
+		return event.getValue( name="searchResults", private="true", default="" );
 	}
 
-	// get the curent search results HTML content
+	/**
+	* get the curent search results HTML content
+	*/
 	any function getSearchResultsContent(){
 		var event = getRequestContext();
-		return event.getValue(name="searchResultsContent",private="true",default="" );
+		return event.getValue( name="searchResultsContent", private="true", default="" );
 	}
 
-	// Determine if you have a search term
+	/**
+	* Determine if you have a search term
+	*/
 	boolean function searchTermExists(){
 		var rc = getRequestCollection();
-		return (structKeyExists(rc,"q" ) AND len(rc.q));
+		return ( structKeyExists( rc, "q" ) AND len( rc.q ) );
 	}
 
-	// Get Search Term
+	/** 
+	* Get Search Term used
+	*/
 	function getSearchTerm(){
-		return getRequestContext().getValue( "q","" );
+		return getRequestContext().getValue( "q", "" );
 	}
 
 	/************************************** events *********************************************/
 
 	// event announcements, funky for whitespace reasons
-	function event(required state,struct data=structNew()) output="true"{announceInterception(arguments.state,arguments.data);}
+	function event( required state, struct data=structNew() ) output="true"{ announceInterception( arguments.state,arguments.data ); }
 
 	/************************************** link methods *********************************************/
 
@@ -470,21 +486,47 @@ component accessors="true" singleton threadSafe{
 	* @queryString.hint The query string to append in SES format
 	* @ssl.hint Create the link in SSL or not
 	*/
-	function buildModuleLink(required string module, required string linkTo, queryString="", boolean ssl=false){
-		return getRequestContext().buildLink(linkto=adminRoot() & ".module.#arguments.module#.#arguments.linkTo#",queryString=arguments.queryString,ssl=arguments.ssl);
+	function buildModuleLink(
+		required string module, 
+		required string linkTo, 
+		queryString="", 
+		boolean ssl=false
+	){
+		return getRequestContext().buildLink(
+			linkto 		= adminRoot() & ".module.#arguments.module#.#arguments.linkTo#",
+			queryString	= arguments.queryString,ssl=arguments.ssl
+		);
 	}
 
 	/**
 	* SetNextEvent For ContentBox Modules
 	* @module.hint The module to link this URL to
-	* @event.hint The handler action combination to link to
-	* @queryString.hint The query string to append in SES format
-	* @ssl.hint Create the link in SSL or not
+	* @event.hint The name of the event to run, if not passed, then it will use the default event found in your configuration file
+	* @URL.hint The full URL you would like to relocate to instead of an event: ex: URL='http://www.google.com'
+	* @URI.hint The relative URI you would like to relocate to instead of an event: ex: URI='/mypath/awesome/here'
+	* @queryString.hint The query string to append, if needed. If in SES mode it will be translated to convention name value pairs
+	* @persist.hint What request collection keys to persist in flash ram
+	* @persistStruct.hint A structure key-value pairs to persist in flash ram
+	* @addToken.hint Wether to add the tokens or not. Default is false
+	* @ssl.hint Whether to relocate in SSL or not
+	* @baseURL.hint Use this baseURL instead of the index.cfm that is used by default. You can use this for ssl or any full base url you would like to use. Ex: https://mysite.com/index.cfm
+	* @postProcessExempt.hint Do not fire the postProcess interceptors
+	* @statusCode.hint The status code to use in the relocation
 	*/
-	function setNextModuleEvent(required string module, string event,
-							   queryString="", boolean addToken = false,
-							   persist, struct persistStruct, boolean ssl=false,
-							   boolean postProcessExempt=false, numeric statusCode){
+	function setNextModuleEvent(
+		required string module, 
+		string URL,
+		string URI,
+		string queryString = "",
+		persist,
+		struct persistStruct
+		boolean addToken,
+		boolean ssl,
+		baseURL,
+		boolean postProcessExempt,
+		numeric statusCode
+
+	){
 		arguments.event = adminRoot() & ".module.#arguments.module#.#arguments.event#";
 		return super.setNextEvent( argumentCollection=arguments );
 	}
@@ -878,7 +920,7 @@ component accessors="true" singleton threadSafe{
 			var cache = moduleService.getModuleWidgetCache();
 			// check if requested widget exists in widget cache
 			if( structKeyExists( cache, arguments.name ) && len( cache[ arguments.name ] ) ) {
-				// if exists, use it as the requested plugin
+				// if exists, use it as the requested widget
 				return wirebox.getInstance( cache[ arguments.name ] );
 			}
 		}
@@ -916,11 +958,19 @@ component accessors="true" singleton threadSafe{
 	* Render out paging for blog entries only
 	*/
 	function quickPaging(){
-		var prc = getRequestCollection(private=true);
-		if( NOT structKeyExists(prc,"oPaging" ) ){
-			throw(message="Paging plugin is not in the collection",detail="This probably means you are trying to use the paging outside of the main entries index page and that is a No No",type="ContentBox.CBHelper.InvalidPagingContext" );
+		var prc = getRequestCollection( private=true );
+		if( NOT structKeyExists( prc,"oPaging" ) ){
+			throw(
+				message = "Paging object is not in the collection",
+				detail	= "This probably means you are trying to use the paging outside of the main entries index page and that is a No No",
+				type 	= "ContentBox.CBHelper.InvalidPagingContext" 
+			);
 		}
-		return prc.oPaging.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, pagingMaxRows=setting( "cb_paging_maxentries" ));
+		return prc.oPaging.renderit(
+			foundRows		= prc.entriesCount, 
+			link			= prc.pagingLink, 
+			pagingMaxRows	= setting( "cb_paging_maxentries" )
+		);
 	}
 
 	/**
@@ -929,9 +979,14 @@ component accessors="true" singleton threadSafe{
 	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'entry'
 	* @args.hint A structure of name-value pairs to pass to the template
 	*/
-	function quickEntries(template="entry",collectionAs="entry",args=structnew()){
+	function quickEntries( string template="entry", string collectionAs="entry", struct args=structnew() ){
 		var entries = getCurrentEntries();
-		return renderView(view="#themeName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
+		return renderView(
+			view			= "#themeName()#/templates/#arguments.template#",
+			collection		= entries,
+			collectionAs	= arguments.collectionAs,
+			args			= arguments.args
+		);
 	}
 
 	/**
@@ -940,9 +995,14 @@ component accessors="true" singleton threadSafe{
 	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'entry'
 	* @args.hint A structure of name-value pairs to pass to the template
 	*/
-	function quickEntry(template="entry",collectionAs="entry",args=structnew()){
-		var entries = [getCurrentEntry()];
-		return renderView(view="#themeName()#/templates/#arguments.template#",collection=entries,collectionAs=arguments.collectionAs,args=arguments.args);
+	function quickEntry( string template="entry", string collectionAs="entry", struct args=structnew() ){
+		var entries = [ getCurrentEntry() ];
+		return renderView(
+			view			= "#themeName()#/templates/#arguments.template#",
+			collection		= entries,
+			collectionAs	= arguments.collectionAs,
+			args			= arguments.args
+		);
 	}
 
 	/**
@@ -951,9 +1011,14 @@ component accessors="true" singleton threadSafe{
 	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'category'
 	* @args.hint A structure of name-value pairs to pass to the template
 	*/
-	function quickCategories(template="category",collectionAs="category",args=structnew()){
+	function quickCategories( string template="category", string collectionAs="category", struct args=structnew() ){
 		var categories = getCurrentCategories();
-		return renderView(view="#themeName()#/templates/#arguments.template#",collection=categories,collectionAs=arguments.collectionAs,args=arguments.args);
+		return renderView(
+			view			= "#themeName()#/templates/#arguments.template#",
+			collection		= categories,
+			collectionAs	= arguments.collectionAs,
+			args			= arguments.args
+		);
 	}
 
 	/**
@@ -962,9 +1027,14 @@ component accessors="true" singleton threadSafe{
 	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'relatedContent'
 	* @args.hint A structure of name-value pairs to pass to the template
 	*/
-	function quickRelatedContent( template="relatedContent", collectionAs="relatedContent", args=structnew() ){
+	function quickRelatedContent( string template="relatedContent", string collectionAs="relatedContent", struct args=structnew() ){
 		var relatedContent = getCurrentRelatedContent();
-		return renderView( view="#themeName()#/templates/#arguments.template#", collection=relatedContent,collectionAs=arguments.collectionAs, args=arguments.args );
+		return renderView( 
+			view			= "#themeName()#/templates/#arguments.template#", 
+			collection		= relatedContent,
+			collectionAs	= arguments.collectionAs, 
+			args			= arguments.args 
+		);
 	}
 
 	/**

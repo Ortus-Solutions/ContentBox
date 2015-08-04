@@ -8,11 +8,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		super.init(controller);
 
 		// Widget Properties
-		setPluginName( "CBHelper" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A proxy to our CBHelper object" );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "CBHelper" );
+		setVersion( "1.0" );
+		setDescription( "A proxy to our CBHelper object" );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "wrench-add.png" );
 		setCategory( "Utilities" );
 		return this;

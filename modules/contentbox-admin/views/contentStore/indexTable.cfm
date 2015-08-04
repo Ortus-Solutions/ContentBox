@@ -3,7 +3,7 @@
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 <div class="breadcrumb">
   <a href="javascript:contentDrilldown()"><i class="fa fa-home icon-large"></i></a>
-  #getMyPlugin( plugin="PageBreadcrumbVisitor", module="contentbox-admin" ).visit( prc.oParent )#
+  #getModel( "PageBreadcrumbVisitor@contentbox-admin" ).visit( prc.oParent )#
 </div>
 </cfif>
 

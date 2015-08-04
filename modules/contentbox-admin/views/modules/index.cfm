@@ -153,7 +153,7 @@
 			    		multipart=true,
 			    		novalidate="novalidate"
 			    	)#
-						#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
 							name="fileModule",
 							label="Upload Module:",
 							columnWidth=2,

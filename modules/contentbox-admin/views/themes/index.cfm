@@ -160,7 +160,7 @@
 											)#
 												<fieldset>
 													<legend>Theme Uploader</legend>
-													#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+													#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
 														name="fileTheme",
 														label="Upload Theme (.zip):",
 														required=true

@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	Archives function init(controller){
-		// super init
-		super.init(controller);
-
+	Archives function init(){
 		// Widget Properties
-		setPluginName( "Archives" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A cool widget that renders your blog archives summary information." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "Archives" );
+		setVersion( "1.0" );
+		setDescription( "A cool widget that renders your blog archives summary information." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "calendar.png" );
 		setCategory( "Blog" );
 		return this;

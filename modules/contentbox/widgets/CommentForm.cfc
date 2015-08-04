@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	CommentForm function init(controller){
-		// super init
-		super.init(controller);
-
+	CommentForm function init(){
 		// Widget Properties
-		setPluginName( "CommentForm" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A cool basic commenting form for ContentBox content objects." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "CommentForm" );
+		setVersion( "1.0" );
+		setDescription( "A cool basic commenting form for ContentBox content objects." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "comment-add.png" );
 		setCategory( "Miscellaneous" );
 		return this;

@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	ContentStore function init(required any controller){
-		// super init
-		super.init( arguments.controller );
-
+	ContentStore function init(){
 		// Widget Properties
-		setPluginName( "ContentStore" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A widget that renders ContentStore content anywhere you like." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "ContentStore" );
+		setVersion( "1.0" );
+		setDescription( "A widget that renders ContentStore content anywhere you like." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "window-text.png" );
 		setCategory( "Content" );
 
