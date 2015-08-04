@@ -38,27 +38,27 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		// generate comment form
 		saveContent variable="commentForm"{
 			writeOutput('
-			#html.startForm(name="commentForm",action=cb.linkCommentPost(arguments.content),novalidate="novalidate" )#
+			#html.startForm( name="commentForm", action=cb.linkCommentPost( arguments.content ), novalidate="novalidate" )#
 
 				#cb.event( "cbui_preCommentForm" )#
 
-				#getModel( 'messagebox@cbMessagebox' ).renderIt()#
+				#getModel( "messagebox@cbMessagebox" ).renderIt()#
 
-				#html.hiddenField(name="contentID",value=arguments.content.getContentID())#
-				#html.hiddenField(name="contentType",value=arguments.content.getContentType())#
+				#html.hiddenField( name="contentID", value=arguments.content.getContentID() )#
+				#html.hiddenField( name="contentType",value=arguments.content.getContentType() )#
 
-				#html.textField(name="author",label="Name: (required)",size="50",required="required",value=event.getValue( "author","" ))#
-				#html.inputField(name="authorEmail",type="email",label="Email: (required)",size="50",required="required",value=event.getValue( "authorEmail","" ))#
-				#html.inputField(name="authorURL",type="url",label="Website:",size="50",value=event.getValue( "authorURL","" ))#
+				#html.textField( name="author", label="Name: (required)",size="50", required="required", value=event.getValue( "author","" ) )#
+				#html.inputField( name="authorEmail", type="email", label="Email: (required)", size="50", required="required", value=event.getValue( "authorEmail","" ) )#
+				#html.inputField( name="authorURL", type="url", label="Website:", size="50", value=event.getValue( "authorURL","" ) )#
 
-				#html.textArea(name="content",label="Comment:",required="required",value=event.getValue( "content","" ))#
+				#html.textArea( name="content", label="Comment:", required="required", value=event.getValue( "content","" ) )#
 				#html.checkBox( name="subscribe", label="Notify me of follow-up comments by email." )#
 				#captcha#
 
 				#cb.event( "cbui_postCommentForm" )#
 
 				<div class="buttons">
-					#html.submitButton(name="commentSubmitButton",value="Submit" )#
+					#html.submitButton( name="commentSubmitButton", value="Submit" )#
 				</div>
 			#html.endForm()#
 			');

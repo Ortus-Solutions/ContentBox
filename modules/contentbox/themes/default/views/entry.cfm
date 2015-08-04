@@ -55,8 +55,6 @@ limitations under the License.
 <cfif cb.isCommentsEnabled() and !cb.isPrintFormat()>
 <script type="text/javascript">
 $(document).ready(function() {
- 	// form validator
-	$( "##commentForm" ).validator( {position:'top left'} );
 	<cfif cb.isCommentFormError()>
 	toggleCommentForm();
 	</cfif>
