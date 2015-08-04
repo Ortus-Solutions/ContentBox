@@ -14,8 +14,8 @@
 				<!--- Logo --->
 				<div class="center">
 					<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo"/><br/>
-					v.#getModuleSettings('contentbox').version# <br/>
-					(Codename: <a href="#getModuleSettings( "contentbox" ).settings.codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).settings.codename#</a>)
+					v.#getModuleConfig('contentbox').version# <br/>
+					(Codename: <a href="#getModuleSettings( "contentbox" ).codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).codename#</a>)
 					<br/><br/>
 				</div>
 

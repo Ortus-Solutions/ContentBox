@@ -14,10 +14,10 @@ component{
 	property name="commentService"		inject="id:commentService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="rssService"			inject="id:rssService@cb";
-	property name="validator"			inject="id:Validator@cb";
 	property name="themeService"		inject="id:themeService@cb";
 	property name="antiSamy"			inject="antisamy@cbantisamy";
 	property name="captchaService"		inject="id:captcha@cb";
+	property name="messagebox"			inject="id:messagebox@cbMessageBox";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -272,10 +272,7 @@ component{
 		
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
-			flash.put( {
-				type 	= "warn",
-				message = "Comments are disabled! So you can't post any!"
-			} );
+			messagebox.warn( "Comments are disabled! So you can't post any!" );
 			setNextEvent( URL=CBHelper.linkContent( arguments.thisContent ) );
 		}
 
@@ -289,8 +286,8 @@ component{
 		// Validate incoming data
 		commentErrors = [];
 		if( !len( rc.author ) ){ arrayAppend( commentErrors, "Your name is missing!" ); }
-		if( !len( rc.authorEmail ) OR NOT validator.checkEmail( rc.authorEmail ) ){ arrayAppend( commentErrors, "Your email is missing or is invalid!" ); }
-		if( len( rc.authorURL ) AND NOT validator.checkURL( rc.authorURL ) ){ arrayAppend( commentErrors, "Your website URL is invalid!" ); }
+		if( !len( rc.authorEmail ) OR NOT isValid( "email", rc.authorEmail ) ){ arrayAppend( commentErrors, "Your email is missing or is invalid!" ); }
+		if( len( rc.authorURL ) AND NOT isValid( "URL", rc.authorURL ) ){ arrayAppend( commentErrors, "Your website URL is invalid!" ); }
 		if( !len( rc.content ) ){ arrayAppend( commentErrors, "Please provide a comment!" ); }
 
 		// Captcha Validation
@@ -312,10 +309,7 @@ component{
 			// Flash errors
 			flash.put( name="commentErrors", value=commentErrors, inflateTOPRC=true );
 			// Message
-			flash.put( {
-				type 	= "warn",
-				message = arrayToList( commentErrors, "<br>" )
-			} );
+			messagebox.warn( arrayToList( commentErrors, "<br>" ) );
 			// Redirect
 			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ), persist="author,authorEmail,authorURL,content" );
 			return;
