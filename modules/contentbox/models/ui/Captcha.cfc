@@ -17,17 +17,17 @@ Updates
 <cfcomponent name="Captcha" 
 			 hint="Create captchas" 
 			 output="false"
+			 accessors="true"
 			 singleton>
 
-	<!--- DI --->
-	<property name="sessionStorage" inject="sessionStorage@cbStorages">
-  
 <!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
    
     <cffunction name="init" access="public" returntype="any" output="false">
+    	<cfargument name="sessionStorage" inject="sessionStorage@cbStorages">
 		<cfscript>
-  		//Return instance
-  		return this;
+			variables.sessionStorage = arguments.sessionStorage;
+  			// return instance
+  			return this;
 		</cfscript>
 	</cffunction>
 
@@ -73,8 +73,7 @@ Updates
 <!------------------------------------------- PRIVATE ------------------------------------------->
 
 	<cffunction name="getCaptchaStorage" access="private" returntype="any" output="false">
-		<cfset var captcha = {captchaCode = "", validated = true}>
-		
+		<cfset var captcha = { captchaCode = "", validated = true }>
 		<cfif not variables.sessionStorage.exists( "cb_captcha" )>
 			<cfset variables.sessionStorage.setVar( "cb_captcha",captcha)>
 		</cfif>
@@ -84,7 +83,7 @@ Updates
 	
 	<cffunction name="setCaptchaCode" access="public" returntype="void" output="false">
     	<cfargument name="captchastring" type="string" required="true" />
-		<cfset getCaptchaStorage().captchaCode = hash(lcase(arguments.captchastring),'SHA') />
+		<cfset getCaptchaStorage().captchaCode = hash( lcase( arguments.captchastring ), 'SHA') />
 	</cffunction>
 	
 	<cffunction name="getCaptchaCode" access="public" returntype="string" output="false">
