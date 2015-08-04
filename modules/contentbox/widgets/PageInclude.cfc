@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	PageInclude function init(controller){
-		// super init
-		super.init(controller);
-
+	PageInclude function init(){
 		// Widget Properties
-		setPluginName( "PageInclude" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A widget that can render out a ContentBox page anywhere you like." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "PageInclude" );
+		setVersion( "1.0" );
+		setDescription( "A widget that can render out a ContentBox page anywhere you like." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "page-add.png" );
 		setCategory( "Content" );
 		return this;

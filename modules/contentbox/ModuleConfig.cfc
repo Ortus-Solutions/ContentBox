@@ -123,7 +123,6 @@ component {
 			controller.setSetting( 'LocaleStorage', 'cookie' );
 			// Add Back when Ready -> controller.setSetting( 'defaultResourceBundle', moduleMapping & '/includes/i18n/main' );
 			controller.setSetting( 'defaultLocale', "en_US" );
-			// initialize i18n plugin
 		}
 	}
 

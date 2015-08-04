@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	RecentComments function init(controller){
-		// super init
-		super.init(controller);
-
+	RecentComments function init(){
 		// Widget Properties
-		setPluginName( "RecentComments" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A cool basic widget that shows N recent comments from any content object" );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "RecentComments" );
+		setVersion( "1.0" );
+		setDescription( "A cool basic widget that shows N recent comments from any content object" );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "comment-add.png" );
 		setCategory( "Content" );
 		return this;

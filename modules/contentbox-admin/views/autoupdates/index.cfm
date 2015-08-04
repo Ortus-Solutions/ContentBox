@@ -96,7 +96,7 @@
                                     class="form-vertical"
                                 )#
                                     <p>You can also apply an update by uploading the update archive.</p>
-                                    #getModel( "BootstrapFileUpload@cb" ).renderIt( 
+                                    #getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
                                         name    = "filePatch", 
                                         label   = "Upload Patch:",
                                         required= true

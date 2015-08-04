@@ -5,10 +5,10 @@
 * ---
 * A convenient way to create a Bootstrap-themed file upload field
 */
-component extends="coldbox.system.Plugin" {
+component {
 
     // DI
-    property name="html"        inject="HTMLHelper@coldbox";
+    property name="html"		inject="HTMLHelper@coldbox";
 
     /**
     *  Constructor

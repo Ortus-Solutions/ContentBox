@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	Categories function init(controller){
-		// super init
-		super.init(controller);
-
+	Categories function init(){
 		// Widget Properties
-		setPluginName( "Categories" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A cool widget that renders your blog categories summary." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "Categories" );
+		setVersion( "1.0" );
+		setDescription( "A cool widget that renders your blog categories summary." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "tag.png" );
 		setCategory( "Blog" );
 		return this;

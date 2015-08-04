@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	RSS function init(controller){
-		// super init
-		super.init(controller);
-
+	RSS function init(){
 		// Widget Properties
-		setPluginName( "RSS" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A widget that reads an RSS feed and displays the items as you see fit." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "RSS" );
+		setVersion( "1.0" );
+		setDescription( "A widget that reads an RSS feed and displays the items as you see fit." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "Content" );
 		setIcon( "cloud.png" );
 		return this;
@@ -29,7 +26,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	*/
 	any function renderIt(required feedURL,numeric maxItems=5,boolean showBody=true,string linkTarget="_blank",string title="",string titleLevel="2" ){
 		var rString		= "";
-		var feed 		= getPlugin('FeedReader').readFeed(feedURL=arguments.feedURL,maxItems=arguments.maxItems,itemsType="query" );
+		var feed 		= get('FeedReader').readFeed(feedURL=arguments.feedURL,maxItems=arguments.maxItems,itemsType="query" );
 
 		// generate recent comments
 		saveContent variable="rString"{

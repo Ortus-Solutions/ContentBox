@@ -6,16 +6,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	/**
 	* Constructor
 	*/
-	RecentPages function init( required controller ){
-		// super init
-		super.init(controller);
-
+	RecentPages function init(){
 		// Widget Properties
-		setPluginName( "RecentPages" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A cool basic widget that shows N recent pages." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "RecentPages" );
+		setVersion( "1.0" );
+		setDescription( "A cool basic widget that shows N recent pages." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "list.png" );
 		setCategory( "Content" );
 		

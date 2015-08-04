@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	SearchForm function init(controller){
-		// super init
-		super.init( controller );
-
+	SearchForm function init(){
 		// Widget Properties
-		setPluginName( "SearchForm" );
-		setPluginVersion( "2.0" );
-		setPluginDescription( "This widget creates a simple ContentBox search form." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "SearchForm" );
+		setVersion( "2.0" );
+		setDescription( "This widget creates a simple ContentBox search form." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "Miscellaneous" );
 		setIcon( "search.png" );
 		return this;

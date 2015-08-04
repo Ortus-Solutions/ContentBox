@@ -5,7 +5,7 @@
 * ---
 * This is the base class for contentbox widgets
 */
-component extends="coldbox.system.Plugin" accessors="true"{
+component accessors="true"{
 	
 	// Shared DI all widgets receive
 	property name="categoryService"			inject="id:categoryService@cb";
@@ -20,27 +20,49 @@ component extends="coldbox.system.Plugin" accessors="true"{
 	property name="cb"						inject="id:CBHelper@cb";
 	property name="securityService" 		inject="id:securityService@cb";
 	property name="html"					inject="HTMLHelper@coldbox";
+	property name="controller"				inject="coldbox";
 	
 	// Local Properties
-	property name="forgeBoxSlug" type="string" default="";
-	property name="category" type="string" default="";
-	property name="icon" type="string" default="";
+	property name="name"					type="string" default="";
+	property name="version"					type="string" default="";
+	property name="description"				type="string" default="";
+	property name="author"					type="string" default="";
+	property name="authorURL"				type="string" default="";
+	property name="forgeBoxSlug" 			type="string" default="";
+	property name="category" 				type="string" default="";
+	property name="icon" 					type="string" default="";
+
+	/**
+	* Base Constructor
+	*/
+	function init(){
+		variables.name 			= '';
+		variables.version 		= '';
+		variables.description 	= '';
+		variables.author 		= '';
+		variables.authorURL 	= '';
+		variables.category 		= "";
+		variables.icon 			= "";
+
+		return this;
+	}
 
 	/**
 	* This is the main renderit method you will need to implement in concrete widgets
 	*/
 	any function renderIt(){
-		throw(message="This is a base method that you must implement",type="ContentBox.BaseWidget.BaseClassException" );
+		throw( message="This is a base method that you must implement", type="BaseClassException" );
 	}
 	
 	/*
      * Get this widget's public methods'
-     * return array
+     * @return array
      */
 	array function getPublicMethods() {
-		var publicMethods = [];
-		var meta = getMetadata( this );
-		var method = "";
+		var publicMethods 	= [];
+		var meta 			= getMetadata( this );
+		var method 			= "";
+		
 		for( var i=1; i <= arrayLen( meta.functions ); i++ ){
 			method = meta.functions[ i ];
 			// ignores?

@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	EntryInclude function init(controller){
-		// super init
-		super.init(controller);
-
+	EntryInclude function init(){
 		// Widget Properties
-		setPluginName( "EntryInclude" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A widget that can render out ContentBox blog entries inline" );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "EntryInclude" );
+		setVersion( "1.0" );
+		setDescription( "A widget that can render out ContentBox blog entries inline" );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "notebook.png" );
 		setCategory( "Blog" );
 		return this;

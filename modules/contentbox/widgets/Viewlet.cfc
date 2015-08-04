@@ -3,16 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	Viewlet function init(controller){
-		// super init
-		super.init(controller);
-
+	Viewlet function init(){
 		// Widget Properties
-		setPluginName( "Viewlet" );
-		setPluginVersion( "1.0" );
-		setPluginDescription( "A widget that executes any internal ColdBox event and return its results" );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "Viewlet" );
+		setVersion( "1.0" );
+		setDescription( "A widget that executes any internal ColdBox event and return its results" );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
 		setIcon( 'wired.png' );
 		

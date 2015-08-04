@@ -7,9 +7,9 @@ Description :
 validate method), an error message also appears under the image, which can be customized by the 'message' argument.
  The validate() method is used in the event that handles the form and takes as an argument the form field value from the 
  request collection in which the user entered the CAPTCHA code. It returns true if there is a match and false if not (and also
- sets a flag in the session scope to tell the plugin to display the error message if the user is redirected back to the form.)
+ sets a flag in the session scope to tell the object to display the error message if the user is redirected back to the form.)
 
-This plugin is free to use and modify and is provided with NO WARRANTY of merchantability or fitness for a particular purpose. 
+This object is free to use and modify and is provided with NO WARRANTY of merchantability or fitness for a particular purpose. 
 
 Updates
 11/16/2008 - Luis Majano - Cleanup

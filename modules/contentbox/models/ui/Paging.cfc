@@ -86,7 +86,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 	</cffunction>
 	
 	<!--- render paging --->
-	<cffunction name="renderit" access="public" returntype="any" hint="render plugin tabs" output="false" >
+	<cffunction name="renderit" access="public" returntype="any" hint="render tabs" output="false" >
 		<!--- ***************************************************************** --->
 		<cfargument name="foundRows"    	required="true"  type="numeric" hint="The found rows to page">
 		<cfargument name="link"   			required="true"  type="string"  hint="The link to use, you must place the @page@ place holder so the link ca be created correctly">

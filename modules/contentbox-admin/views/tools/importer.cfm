@@ -44,7 +44,7 @@
                                 <div class="form-group">
                                     <div class="controls">
                                         #html.label(field="CBUpload",content="Select ContentBox Package",class="control-label" )#
-                                        #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+                                        #getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
                                             name="CBUpload",
                                             required=true
                                         )# 

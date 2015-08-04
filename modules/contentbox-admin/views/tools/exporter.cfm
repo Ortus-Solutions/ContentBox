@@ -277,7 +277,7 @@
                                                     		id="export_widgets_#prc.widgets.name#",
                                                     		value="#prc.widgets.name#",
                                                     		checked=true,data={alacarte=true}
-                                                    	)# #p.getPluginName()#
+                                                    	)# #prc.widgets.name#
                                                    	</label>
                                                 </div>
                                                 <cfif counter MOD 2 eq 0>

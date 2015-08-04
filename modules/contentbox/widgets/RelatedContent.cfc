@@ -3,15 +3,13 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-    RelatedContent function init( controller ){
-        // super init
-        super.init( controller );
+    RelatedContent function init(){
         // Widget Properties
-        setPluginName( "Related Content" );
-        setPluginVersion( "1.0" );
-        setPluginDescription( "A nice widget to display your content's related content." );
-        setPluginAuthor( "Ortus Solutions" );
-        setPluginAuthorURL( "http://www.ortussolutions.com" );
+        setName( "Related Content" );
+        setVersion( "1.0" );
+        setDescription( "A nice widget to display your content's related content." );
+        setAuthor( "Ortus Solutions" );
+        setAuthorURL( "http://www.ortussolutions.com" );
         setIcon( "tag.png" );
         setCategory( "Content" );
         return this;
