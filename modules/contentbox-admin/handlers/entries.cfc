@@ -11,7 +11,7 @@ component extends="baseContentHandler"{
 	property name="entryService"		inject="id:entryService@cb";
 	property name="CKHelper"			inject="CKHelper@contentbox-admin";
 	property name="messagebox"			inject="messagebox@cbMessagebox";
-	property name="HTMLHelper"			inject="coldbox:HTMLHelper";
+	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	// Public properties
 	this.preHandler_except = "pager";

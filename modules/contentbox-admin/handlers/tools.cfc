@@ -15,7 +15,7 @@ component extends="baseHandler"{
     property name="roleService"         inject="id:roleService@cb";
     property name="templateService"     inject="id:emailtemplateService@cb";
 	property name="fileUtils"           inject="id:FileUtils@cb";
-	property name="HTMLHelper"			inject="coldbox:HTMLHelper";
+	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){

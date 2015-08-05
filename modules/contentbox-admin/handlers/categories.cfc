@@ -9,7 +9,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="categoryService"		inject="id:categoryService@cb";
-	property name="HTMLHelper"			inject="coldbox:HTMLHelper";
+	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	
 	// pre handler

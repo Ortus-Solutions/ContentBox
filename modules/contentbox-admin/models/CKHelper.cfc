@@ -16,7 +16,7 @@ component singleton{
 	}
 	
 	string function ckHour( required inDate ){
-		if( isNull( required inDate) ){ inDate = now(); }
+		if( isNull( inDate ) ){ inDate = now(); }
 		return timeFormat( arguments.inDate, "HH" );
 	}
 	
