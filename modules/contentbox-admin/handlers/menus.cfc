@@ -12,7 +12,7 @@ component extends="baseHandler" {
     property name="menuItemService" inject="id:menuItemService@cb";
     property name="settingService"  inject="id:settingService@cb";
     property name="cb"              inject="id:cbHelper@cb";
-    property name="HTMLHelper"      inject="coldbox:HTMLHelper";
+    property name="HTMLHelper"      inject="HTMLHelper@coldbox";
     
     // Public properties
     this.preHandler_except = "pager";

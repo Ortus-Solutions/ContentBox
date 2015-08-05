@@ -11,7 +11,7 @@ component extends="baseContentHandler"{
 	property name="pageService"			inject="id:pageService@cb";
 	property name="CKHelper"			inject="id:CKHelper@contentbox-admin";
 	property name="messagebox"			inject="id:messagebox@cbMessagebox";
-	property name="HTMLHelper"			inject="coldbox:HTMLHelper";
+	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -23,7 +23,6 @@ component extends="baseContentHandler"{
 		prc.xehPages 		= "#prc.cbAdminEntryPoint#.pages";
 		prc.xehPageEditor 	= "#prc.cbAdminEntryPoint#.pages.editor";
 		prc.xehPageRemove 	= "#prc.cbAdminEntryPoint#.pages.remove";
-
 	}
 
 	// index
