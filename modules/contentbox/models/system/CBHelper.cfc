@@ -23,6 +23,7 @@ component accessors="true" singleton threadSafe{
 	property name="requestService"		inject="coldbox:requestService";
 	property name="wirebox"				inject="wirebox";
 	property name="controller"			inject="coldbox";
+	property name="resourceService"		inject="resourceService@cbi18n";
 	
 	/**
 	* Constructor 
@@ -1356,7 +1357,14 @@ component accessors="true" singleton threadSafe{
 		}
 		// Stupid CF9 Hack.
 		if( structKeyExists( arguments, "defaultValue" ) ){ arguments.default = arguments.defaultValue; }
-		return getResource( argumentCollection=arguments );
+		return resourceService.getResource( argumentCollection=arguments );
+	}
+
+	/**
+	* utility to strip HTML
+	*/
+	function stripHTML( required stringTarget ){
+		return HTMLEditFormat( REReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" ) );
 	}
 
 	/************************************** PRIVATE *********************************************/
@@ -1526,11 +1534,4 @@ component accessors="true" singleton threadSafe{
 		return b.toString();
 	}
 	
-	/**
-	* utility to strip HTML
-	*/
-	function stripHTML(required stringTarget){
-		return HTMLEditFormat( REReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" ) );
-	}
-
 }
