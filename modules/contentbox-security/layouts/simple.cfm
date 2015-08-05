@@ -38,43 +38,81 @@
         <link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         
         <!--- ********************************************************************* --->
-        <!---                           CSS 	                                    --->
+        <!---                           CSS THEME                                   --->
         <!--- ********************************************************************* --->
 
-        <!--// Bootstrap core CSS-->
+        <!-- Bootstrap core CSS -->
         <link href="#prc.cbroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <!--// custom admin files-->
-        <link href="#prc.cbroot#/includes/css/contentbox.css" rel="stylesheet" />
-        <!--// fonts from font awesome-->
+        <!-- fonts from font awesome -->
         <link href="#prc.cbroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />
-        <!--// css animate-->
+        <!-- css animate -->
         <link href="#prc.cbroot#/includes/spacelab/css/animate.css" rel="stylesheet" />
-        <!--// toastr-->
-        <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
-        <!--// custom styles for spacelab-->
+        <!-- Switchery -->
+        <link rel="stylesheet" href="#prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.css">
+        <!-- spacelab theme-->
         <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
+        <!-- datatables -->
+        <link href="#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css" rel="stylesheet" />
+        <!-- toastr -->
+        <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
+
+        <!--- ********************************************************************* --->
+        <!---                          CONTENTBOX                                   --->
+        <!--- ********************************************************************* --->
+
+        <!-- file upload -->
+        <link href="#prc.cbroot#/includes/css/bootstrap-fileupload.css" rel="stylesheet" />
+        <!-- modal -->
+        <link href="#prc.cbroot#/includes/css/bootstrap-modal-bs3patch.css" rel="stylesheet" />
+        <link href="#prc.cbroot#/includes/css/bootstrap-modal.css" rel="stylesheet" />
+        <!-- datepicker -->
+        <link href="#prc.cbroot#/includes/css/bootstrap-datepicker.css" rel="stylesheet" />
+        <!-- custom contentbox css -->
+        <link href="#prc.cbroot#/includes/css/contentbox.css" rel="stylesheet" />
         
        	<!--- ********************************************************************* --->
         <!---                           JAVASCRIPT                                  --->
         <!--- ********************************************************************* --->
 
-        <!--// modernizr for feature detection-->
+        <!-- modernizr for feature detection -->
         <script src="#prc.cbroot#/includes/spacelab/js/modernizr.min.js"></script>
-        <!--// jquery main-->
+        <!-- jquery main -->
         <script src="#prc.cbroot#/includes/spacelab/js/jquery.min.js"></script>
-        <!--// bootstrap js-->
+        <!-- bootstrap js -->
         <script src="#prc.cbroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <!--// spacelab js-->
+        <!-- Navigation -->
+        <script src="#prc.cbroot#/includes/spacelab/plugins/navgoco/jquery.navgoco.min.js"></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.js"></script>
+        <!-- spacelab js -->
         <script src="#prc.cbroot#/includes/spacelab/js/application.js"></script>
-        <!--// cookie helper-->
+
+        <!--- ********************************************************************* --->
+        <!---                          CONTENTBOX JAVASCRIPT                        --->
+        <!--- ********************************************************************* --->
+
+        <!-- file upload -->
+        <script src="#prc.cbroot#/includes/js/bootstrap-fileupload.js"></script>
+        <!-- modal -->
+        <script src="#prc.cbroot#/includes/js/bootstrap-modalmanager.js"></script>
+        <script src="#prc.cbroot#/includes/js/bootstrap-modal.js"></script>
+        <!-- datepicker -->
+        <script src="#prc.cbroot#/includes/js/bootstrap-datepicker.js"></script>
+        <!-- cookie helper -->
         <script src="#prc.cbroot#/includes/js/jquery.cookie.js"></script>
-        <!--// validation-->
+        <!-- validation -->
         <script src="#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js"></script>
-        <!--// jwerty-->
+        <!-- jwerty -->
         <script src="#prc.cbroot#/includes/js/jwerty.js"></script>
-        <!--// toastr-->
+        <!-- datatables -->
+        <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/jquery.dataTables.js"></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js"></script>
+        <!-- table filter -->
+        <script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
+        <!-- drag and drop -->
+        <script src="#prc.cbroot#/includes/js/jquery.tablednd_0_7.js"></script>
+        <!-- toastr -->
         <script src="#prc.cbroot#/includes/js/toastr.min.js"></script>
-        <!--// main ContentBox scripts-->
+        <!-- main ContentBox scripts -->
         <script src="#prc.cbroot#/includes/js/contentbox.js"></script>
 	    
 	    <!--- ********************************************************************* --->
