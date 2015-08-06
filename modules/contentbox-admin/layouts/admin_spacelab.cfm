@@ -55,6 +55,8 @@
         <link href="#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css" rel="stylesheet" />
         <!-- toastr -->
         <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
+        <!-- morris -->
+        <link href="#prc.cbroot#/includes/spacelab/plugins/morris/css/morris.css" rel="stylesheet" />
 
         <!--- ********************************************************************* --->
         <!---                          CONTENTBOX                                   --->
@@ -83,6 +85,9 @@
         <!-- Navigation -->
         <script src="#prc.cbroot#/includes/spacelab/plugins/navgoco/jquery.navgoco.min.js"></script>
         <script src="#prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.js"></script>
+        <!-- morris graphs -->
+        <script src="#prc.cbroot#/includes/spacelab/plugins/morris/js/raphael-min.js"></script>
+        <script src="#prc.cbroot#/includes/spacelab/plugins/morris/js/morris.min.js"></script>
         <!-- spacelab js -->
         <script src="#prc.cbroot#/includes/spacelab/js/application.js"></script>
 
@@ -179,14 +184,14 @@
                 <div class="user-nav">
                     <ul>
                     	<!--- View Site --->
-                    	<li class="messages" data-placement="right" title="Visit Site">
+                    	<li class="" data-placement="right" title="Visit Site">
                     		<a class="btn btn-default options toggle" href="#event.buildLink( prc.cbEntryPoint )#" target="_blank">
                     			<i class="fa fa-home"></i>
                     		</a>
                     	</li>
                     	<!--- New Quick Links --->
 				    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
-				    	<li class="dropdown messages" title="Create New..." data-name="create-new" data-placement="right">
+				    	<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right">
 				    		<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
 				    			<i class="fa fa-plus"></i>
 				    		</button>

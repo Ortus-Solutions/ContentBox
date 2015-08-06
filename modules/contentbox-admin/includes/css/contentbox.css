@@ -1,16 +1,4 @@
-#header .brand{ 
-	background-color: white!important; 
-}
-#header .logo{
-	padding: 15px 0 0 0px !important;
-	background: none !important;
-}
-#header .messages{
-	margin: 0 5px;
-}
-#header a.btn-default{
-	padding-top: 6px;
-}
+/** Theme Overrides */
 .loaders {
   margin: 10px;
   display: none;
@@ -28,6 +16,41 @@ a.btn.btn-danger:visited {
 }
 .nav > li >a:hover{
 	background-color: #eaeaea;
+}
+/** Header */
+#header .brand{ 
+	background-color: white!important; 
+}
+#header .logo{
+	padding: 15px 0 0 0px !important;
+	background: none !important;
+}
+#header .user-nav {
+    padding-right: 60px;
+}
+/* vertical align */
+#header a.btn-default{
+	padding-top: 6px;
+	vertical-align: middle;
+}
+/* close gap between li's */
+#header .user-nav ul li{
+    margin: 0px 5px;
+}
+#header .user-nav ul li.dropdown.settings .dropdown-menu {
+	width: 230px;
+	left: -80px;
+}
+#header .user-nav ul li.dropdown.settings {
+  line-height: 39px;
+  margin: 0px 5px;
+  padding: 0px;
+}
+#header .user-nav ul li.dropdown.settings .dropdown-menu:after {
+  left: 43%;
+}
+#header .user-nav ul li.dropdown.settings .dropdown-menu:before {
+  left: 43%;
 }
 /**============================== ADMIN MAIN ELEMENTS ==============================**/
 
