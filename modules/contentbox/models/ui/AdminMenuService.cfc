@@ -167,7 +167,7 @@ component accessors="true" threadSafe singleton{
 			name="about", 
 			label='<i class="fa fa-info"></i>', 
 			permissions="SYSTEM_TAB", 
-			class="dropdown messages", 
+			class="dropdown settings", 
 			itemType="button", 
 			itemClass="btn btn-default options toggle", 
 			href="javascript:void(0)",
@@ -193,10 +193,6 @@ component accessors="true" threadSafe singleton{
 			target="_blank" 
 		)
 		.addHeaderSubMenu( 
-			name="divider", 
-			class="divider", 
-			label="" )
-		.addHeaderSubMenu( 
 			name="twitter", 
 			label='<i class="fa fa-twitter"></i> Twitter', 
 			href="https://www.twitter.com/gocontentbox", 
@@ -213,11 +209,6 @@ component accessors="true" threadSafe singleton{
 			label='<i class="fa fa-google-plus"></i> Google+', 
 			href="https://plus.google.com/u/0/111231811346031749369", 
 			target="_blank" 
-		)
-		.addHeaderSubMenu( 
-			name="divider", 
-			class="divider", 
-			label="" 
 		)
 		.addHeaderSubMenu( 
 			name="updates", 
@@ -255,7 +246,7 @@ component accessors="true" threadSafe singleton{
 		addHeaderMenu( 
 			name="utils", 
 			label='<i class="fa fa-cog"></i>', 
-			class="dropdown messages", 
+			class="dropdown settings", 
 			itemType="button", 
 			itemClass="btn btn-default options toggle", 
 			permissions="RELOAD_MODULES",

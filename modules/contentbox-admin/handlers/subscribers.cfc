@@ -1,5 +1,9 @@
 /**
-* Manage subscriptions
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* Manage Comment subscriptions
 */
 component extends="baseHandler"{
 
@@ -14,15 +18,14 @@ component extends="baseHandler"{
     }
 
     // index
-    function index( required any event, required struct rc, required struct prc ){
+    function index( event, rc, prc ){
         prc.maxCommentSubscriptions = 4;
         // queries for view
-        prc.topCommentSubscriptions = commentSubscriptionService.getGroupedSubscriptions( max=prc.maxCommentSubscriptions );
-        prc.commentSubscriptions = commentSubscriptionService.getGroupedSubscriptions();
-        prc.commentSubscriptionCount = commentSubscriptionService.getGroupedSubscriptionCount();
-        prc.uniqueSubscriberCount = subscriberService.getUniqueSubscriberCount();
-        prc.cssAppendList = "../js/morris.js/morris";
-        prc.jsAppendList  = "morris.js/raphael-min,morris.js/morris.min";
+        prc.topCommentSubscriptions     = commentSubscriptionService.getGroupedSubscriptions( max=prc.maxCommentSubscriptions );
+        prc.commentSubscriptions        = commentSubscriptionService.getGroupedSubscriptions();
+        prc.commentSubscriptionCount    = commentSubscriptionService.getGroupedSubscriptionCount();
+        prc.uniqueSubscriberCount       = subscriberService.getUniqueSubscriberCount();
+
         // view
         event.setView( "subscribers/index" );
     }

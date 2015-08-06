@@ -36,10 +36,6 @@ component extends="baseHandler"{
 		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
 		prc.xehLatestLogins			= "#prc.cbAdminEntryPoint#.dashboard.latestLogins";
 		
-		// Extra JS/CSS
-		prc.cssAppendList = "../js/morris.js/morris";
-        prc.jsAppendList  = "morris.js/raphael-min,morris.js/morris.min";
-        
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
 		// Installer Check
