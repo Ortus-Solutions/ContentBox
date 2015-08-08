@@ -3,7 +3,7 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* ContentBox main module configuration
+* ContentBox Core module configuration
 */
 component {
 
@@ -11,7 +11,7 @@ component {
 	this.title 				= "ContentBox Core";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
-	this.description 		= "An enterprise modular content platform";
+	this.description 		= "This is the core module used to power the admin, RESTful and UI modules";
 	this.version			= "3.0.0-beta+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
@@ -22,8 +22,8 @@ component {
 	function configure(){
 		// contentbox settings
 		settings = {
-			codename = "Psalm 144:1",
-			codenameLink = "https://www.bible.com/bible/114/psa.144.1.nkjv",
+			codename 			= "Psalm 144:1",
+			codenameLink 		= "https://www.bible.com/bible/114/psa.144.1.nkjv",
 			// Auto Updates
 			updateSlug_stable 	= "contentbox-stable-updates",
 			updateSlug_beta 	= "contentbox-beta-updates",
@@ -49,12 +49,12 @@ component {
 
 		// Parent Affected Settings
 		parentSettings = {
-			// override messagebox styles
-			messagebox_style_override	= true,
 			// File Browser module name override
 			filebrowser_module_name		= "contentbox-filebrowser",
-			// JSMin settings
-			jsmin_enable = true
+			// The default HTMl template for emitting the messages
+			messagebox = {
+				template = "#moduleMapping#/models/ui/templates/messagebox.cfm"
+			}
 		};
 
 		// interceptor settings
@@ -62,7 +62,7 @@ component {
 			// ContentBox Custom Events
 			customInterceptionPoints = arrayToList([
 				// Code Rendering
-				"cb_onContentRendering","cb_onContentStoreRendering"
+				"cb_onContentRendering", "cb_onContentStoreRendering"
 			])
 		};
 
@@ -79,8 +79,7 @@ component {
 			// Content Renderers, remember order is important.
 			{ class="contentbox.models.content.renderers.LinkRenderer", name="LinkRenderer@cb" },
 			{ class="contentbox.models.content.renderers.WidgetRenderer", name="WidgetRenderer@cb" },
-			{ class="contentbox.models.content.renderers.SettingRenderer", name="SettingRenderer@cb" },
-			{ class="contentbox.models.security.LoginTracker", name="LoginTracker@cb" }
+			{ class="contentbox.models.content.renderers.SettingRenderer", name="SettingRenderer@cb" }
 		];
 
 		// Manual Mappings
