@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-	<legend><i class="fa fa-paw icon-large"></i> Login Tracker</legend>
+	<legend><i class="fa fa-paw fa-lg"></i> Login Tracker</legend>
 	
 	<!--- Login Blocker --->
 	<div class="form-group">
@@ -118,7 +118,7 @@
 </fieldset>
 
 <fieldset>
-    <legend><i class="fa fa-lock icon-large"></i>  Secure Sockets Layer (SSL) Encryption</legend>
+    <legend><i class="fa fa-lock fa-lg"></i>  Secure Sockets Layer (SSL) Encryption</legend>
 	<!--- Admin SSL --->
     <div class="form-group">
         #html.label(

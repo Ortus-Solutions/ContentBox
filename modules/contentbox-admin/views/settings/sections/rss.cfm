@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-rss icon-large"></i>  RSS Options</legend>
+    <legend><i class="fa fa-rss fa-lg"></i>  RSS Options</legend>
 
     <!--- RSS title --->
     <div class="form-group">
@@ -78,7 +78,7 @@
     </div>
 </fieldset>
 <fieldset>
-    <legend><i class="fa fa-hdd-o icon-large"></i>  RSS Caching</legend>
+    <legend><i class="fa fa-hdd-o fa-lg"></i>  RSS Caching</legend>
 
     <!--- RSS Caching --->
     <div class="form-group">

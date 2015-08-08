@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-user icon-large"></i>
+        	<i class="fa fa-user fa-lg"></i>
 			<cfif prc.author.isLoaded()>Editing #prc.author.getName()#<cfelse>Create Author</cfif>
         </h1>
     </div>
@@ -297,7 +297,7 @@
 				<!---Gravatar info --->
 				<cfif prc.cbSettings.cb_gravatar_display>
 				<div class="alert alert-info clearfix">
-					<i class="fa fa-info-circle icon-large"></i>
+					<i class="fa fa-info-circle fa-lg"></i>
 					To change your avatar <a href="http://www.gravatar.com/site/signup/#URLEncodedFormat( prc.author.getEmail() )#" target="_blank">sign up to Gravatar.com</a>
 					and follow the on-screen instructions to add a Gravatar for #prc.author.getEmail()#
 				</div>

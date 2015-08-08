@@ -2,7 +2,7 @@
 <div id="pagerComments">
 <!--- Loader --->
 <div class="loaders floatRight" id="commentsPagerLoader">
-	<i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+	<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
 </div>
 <!--- Paging --->
 <cfif prc.commentPager_pagination>
@@ -51,15 +51,15 @@
 					<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 						<!--- Approve/Unapprove --->
 						<cfif !comment.getIsApproved()>
-							<a class="btn btn-xs btn-primary" href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up icon-large" ></i></a>
+							<a class="btn btn-xs btn-primary" href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg" ></i></a>
 						<cfelse>
-							<a class="btn btn-xs btn-primary" href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down icon-large"></i></a>
+							<a class="btn btn-xs btn-primary" href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 						</cfif>
 						<!--- Delete Command --->
-						<a class="btn btn-xs btn-danger" title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o icon-large" ></i></a>
+						<a class="btn btn-xs btn-danger" title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o fa-lg" ></i></a>
 					</cfif>
 					<!--- View in Site --->
-					<a class="btn btn-xs btn-primary" href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye icon-large"></i></a>
+					<a class="btn btn-xs btn-primary" href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye fa-lg"></i></a>
 				</div>
 			</td>
 		</tr>

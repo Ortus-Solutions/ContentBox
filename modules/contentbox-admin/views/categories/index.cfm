@@ -37,7 +37,7 @@
 								</cfif>
 								<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 					    		<li class="dropdown-submenu">
-									<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
+									<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
 										<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
 										<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
@@ -178,7 +178,7 @@
 						)#
 						<!---Notice --->
 						<div class="alert alert-info">
-							<i class="icon-info-sign icon-large"></i> Please note that import is an expensive process, so please be patient when importing.
+							<i class="icon-info-sign fa-lg"></i> Please note that import is an expensive process, so please be patient when importing.
 						</div>
 	                </div>
 	                <!-- footer -->
@@ -190,7 +190,7 @@
 			            </div>
 						<!--- Loader --->
 						<div class="center loaders" id="importBarLoader">
-							<i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+							<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
 							<br>Please wait, doing some hardcore importing action...
 						</div>
 	                </div>

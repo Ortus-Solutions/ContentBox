@@ -8,7 +8,7 @@
 
 		<!--- Loader --->
 		<div class="loaders floatRight" id="entryLoader">
-			<i class="fa fa-spinner fa-spin icon-large"></i>
+			<i class="fa fa-spinner fa-spin fa-lg"></i>
 		</div>
 
 		<!--- Content Bar --->

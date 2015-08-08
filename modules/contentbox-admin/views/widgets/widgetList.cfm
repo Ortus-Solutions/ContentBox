@@ -93,19 +93,19 @@
                                                         <div class="btn-group btn-group-sm pull-right">
                                                             <!---read docs--->
                                                             <a title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'} )">
-                                                                <i class="fa fa-book icon-large"></i> 
+                                                                <i class="fa fa-book fa-lg"></i> 
                                                             </a>
                                                             <cfif prc.oAuthor.checkPermission( "WIDGET_ADMIN" )>
                                                                 <!--- Test --->
                                                                 <a title="Test Widget" class="btn btn-sm btn-info" 
                                                                     href="javascript:testWidgetCode( '#widgetName#', '#prc.widgets.widgetType#' )">
-                                                                    <i class="fa fa-bolt icon-large"></i> 
+                                                                    <i class="fa fa-bolt fa-lg"></i> 
                                                                 </a>
                                                                 <!---only allow deletion of core widgets--->
                                                                 <cfif prc.widgets.widgettype eq "core">
                                                                     <!--- Delete Command --->
                                                                     <a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
-                                                                        <i class="fa fa-trash-o icon-large"></i> 
+                                                                        <i class="fa fa-trash-o fa-lg"></i> 
                                                                     </a>
                                                                 </cfif>
                                                             </cfif>

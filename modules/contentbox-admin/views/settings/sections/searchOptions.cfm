@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-search icon-large"></i>  Search Options</legend>
+    <legend><i class="fa fa-search fa-lg"></i>  Search Options</legend>
 
     <!--- Max Search Results --->
     <div class="form-group">

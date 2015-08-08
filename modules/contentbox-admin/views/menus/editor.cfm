@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="icon-sort-by-attributes-alt icon-large"></i> Menu Designer
+            <i class="icon-sort-by-attributes-alt fa-lg"></i> Menu Designer
         </h1>
     </div>
 </div>

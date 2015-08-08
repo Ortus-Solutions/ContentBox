@@ -116,7 +116,7 @@
             <cfif prc.page.isLoaded()>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-clock-o icon-large"></i> Versions</h3>
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-lg"></i> Versions</h3>
                     </div>
                     <div class="panel-body">
                         #prc.versionsViewlet#
@@ -124,7 +124,7 @@
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-comment icon-large"></i> Comments</h3>
+                        <h3 class="panel-title"><i class="fa fa-comment fa-lg"></i> Comments</h3>
                     </div>
                     <div class="panel-body">
                         #prc.commentsViewlet#
@@ -151,7 +151,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
-                                        <i class="fa fa-info-circle icon-large"></i> Page Info
+                                        <i class="fa fa-info-circle fa-lg"></i> Page Info
                                     </a>
                                 </h4>
                             </div>
@@ -226,7 +226,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##displayoptions">
-                                    <i class="fa fa-picture-o icon-large"></i> Display Options
+                                    <i class="fa fa-picture-o fa-lg"></i> Display Options
                                     </a>
                                 </h4>
                             </div>
@@ -316,7 +316,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap icon-large"></i> Related Content                                
+                                        <i class="fa fa-sitemap fa-lg"></i> Related Content                                
                                     </a>
 
                                 </h4>
@@ -339,7 +339,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link icon-large"></i> Linked Content                                
+                                        <i class="fa fa-link fa-lg"></i> Linked Content                                
                                     </a>
 
                                 </h4>
@@ -360,7 +360,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fa fa-cogs icon-large"></i> Modifiers
+                                        <i class="fa fa-cogs fa-lg"></i> Modifiers
                                     </a>
                                 </h4>
                             </div>
@@ -369,7 +369,7 @@
                                     <!--- Creator --->
                                     <cfif prc.page.isLoaded() and prc.oAuthor.checkPermission( "ENTRIES_ADMIN" )>
                                         <div class="form-group">
-                                            <i class="fa fa-user icon-large"></i>
+                                            <i class="fa fa-user fa-lg"></i>
                                             #html.label(
                                                 field="creatorID",
                                                 content="Creator:",
@@ -386,7 +386,7 @@
                                     <!--- Allow Comments --->
                                     <cfif prc.cbSettings.cb_comments_enabled>
                                         <div class="form-group">
-                                            <i class="fa fa-comments icon-large"></i> 
+                                            <i class="fa fa-comments fa-lg"></i> 
                                             #html.label(
                                                 field="allowComments",
                                                 content="Allow Comments:",
@@ -403,7 +403,7 @@
                                     
                                     <!--- Password Protection --->
                                     <div class="form-group">
-                                        <label for="passwordProtection"><i class="fa fa-lock icon-large"></i> Password Protection:</label>
+                                        <label for="passwordProtection"><i class="fa fa-lock fa-lg"></i> Password Protection:</label>
                                         #html.textfield(
                                             name="passwordProtection",
                                             bind=prc.page,
@@ -424,7 +424,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fa-hdd-o icon-large"></i> Cache Settings
+                                        <i class="fa-hdd-o fa-lg"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
@@ -480,7 +480,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                        <i class="fa fa-tags icon-large"></i> Categories
+                                        <i class="fa fa-tags fa-lg"></i> Categories
                                     </a>
                                 </h4>
                             </div>
@@ -520,7 +520,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##htmlattributes">
-                                        <i class="fa fa-cloud icon-large"></i> HTML Attributes
+                                        <i class="fa fa-cloud fa-lg"></i> HTML Attributes
                                     </a>
                                 </h4>
                             </div>

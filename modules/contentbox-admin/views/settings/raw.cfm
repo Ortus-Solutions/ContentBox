@@ -21,16 +21,16 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="##raw" data-toggle="tab"><i class="fa fa-cog icon-large"></i> Raw Settings</a>
+                            <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> Raw Settings</a>
                         </li>
                         <li>
-                            <a href="##wirebox" data-toggle="tab"><i class="fa fa-th icon-large"></i> WireBox</a>
+                            <a href="##wirebox" data-toggle="tab"><i class="fa fa-th fa-lg"></i> WireBox</a>
                         </li>
                         <li>
-                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o icon-large"></i>  CacheBox</a>
+                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o fa-lg"></i>  CacheBox</a>
                         </li>
                         <li>
-                            <a href="##_events" data-toggle="tab"><i class="fa fa-bullhorn icon-large"></i> Events</a>
+                            <a href="##_events" data-toggle="tab"><i class="fa fa-bullhorn fa-lg"></i> Events</a>
                         </li>
                     </ul>
                     <!-- End Tabs -->
@@ -58,7 +58,7 @@
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
                                                 <a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
-                                                    <i class="fa fa-spinner fa-spin icon-large hidden" id="specialActionsLoader"></i>
+                                                    <i class="fa fa-spinner fa-spin fa-lg hidden" id="specialActionsLoader"></i>
                                                     Special Actions
                                                     <span class="caret"></span>
                                                 </a>
@@ -94,7 +94,7 @@
                                 </div>
                                 <!---settings load --->
                                 <div id="settingsTableContainer">
-                                    <i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+                                    <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
                                 </div>
                             #html.endForm()#
 
@@ -188,7 +188,7 @@
                                                 #wirebox.getBinder().getMapping(target).getPath()#
                                             </td>
                                             <td class="text-center">
-                                                <a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'} )" title="Dump Mapping Memento"><i class="fa fa-eye icon-large"></i> </a>
+                                                <a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'} )" title="Dump Mapping Memento"><i class="fa fa-eye fa-lg"></i> </a>
                                             </td>
                                         </tr>
                                         </cfloop>

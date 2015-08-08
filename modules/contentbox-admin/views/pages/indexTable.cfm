@@ -18,9 +18,9 @@
             	<input type="checkbox" onClick="checkAll(this.checked,'contentID')"/>
             </th>
 			<th>Name</th>
-			<th width="40" class="text-center"><i class="fa fa-th-list icon-large" title="Show in Menu"></i></th>
-			<th width="40" class="text-center"><i class="fa fa-globe icon-large" title="Published"></i></th>
-			<th width="40" class="text-center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-th-list fa-lg" title="Show in Menu"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>
 			<th width="100" class="text-center {sorter:false}">Actions</th>
         </tr>
     </thead>
@@ -43,9 +43,9 @@
 				<td>
 					<!--- Children Dig Deeper --->
 					<cfif page.getNumberOfChildren()>
-						<a href="javascript:contentDrilldown( '#page.getContentID()#' )" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="fa fa-plus-sign icon-large text"></i></a>
+						<a href="javascript:contentDrilldown( '#page.getContentID()#' )" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="fa fa-plus-sign fa-lg text"></i></a>
 					<cfelse>
-						<i class="fa fa-circle-blank icon-large"></i>
+						<i class="fa fa-circle-blank fa-lg"></i>
 					</cfif>
 					<!--- Title --->
 					<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
@@ -68,23 +68,23 @@
 				</td>
 				<td class="text-center">
 					<cfif page.getShowInMenu()>
-						<i class="fa fa-check icon-large textGreen"></i>
+						<i class="fa fa-check fa-lg textGreen"></i>
 					<cfelse>
-						<i class="fa fa-times icon-large textRed"></i>
+						<i class="fa fa-times fa-lg textRed"></i>
 					</cfif>
 				</td>
 				<td class="text-center">
 					<cfif page.isExpired()>
-						<i class="fa fa-time icon-large textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
+						<i class="fa fa-time fa-lg textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
 					<cfelseif page.isPublishedInFuture()>
-						<i class="fa fa-fighter-jet icon-large textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
+						<i class="fa fa-fighter-jet fa-lg textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
 						<span class="hidden">published in future</span>
 					<cfelseif page.isContentPublished()>
-						<i class="fa fa-check icon-large textGreen" title="Page Published"></i>
+						<i class="fa fa-check fa-lg textGreen" title="Page Published"></i>
 						<span class="hidden">published in future</span>
 					<cfelse>
-						<i class="fa fa-times icon-large textRed" title="Page Draft"></i>
+						<i class="fa fa-times fa-lg textRed" title="Page Draft"></i>
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
@@ -93,7 +93,7 @@
 					<!---Info Panel --->
 					<a 	class="btn btn-info btn-sm popovers" 
 						data-contentID="#page.getContentID()#"
-						data-toggle="popover"><i class="fa fa-info-circle icon-large"></i></a>
+						data-toggle="popover"><i class="fa fa-info-circle fa-lg"></i></a>
 					<!---Info Panel --->
 					<div id="infoPanel_#page.getContentID()#" class="hide">
 						<!--- creator --->
@@ -137,15 +137,15 @@
 							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Delete Command --->
 							<li><a href="javascript:remove('#page.getContentID()#')" class="confirmIt"
-							  data-title="<i class='fa fa-trash-o'></i> Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="fa fa-trash-o icon-large"></i> Delete</a></li>
+							  data-title="<i class='fa fa-trash-o'></i> Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="fa fa-trash-o fa-lg"></i> Delete</a></li>
 							</cfif>
 							<!--- Edit Command --->
-							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 							</cfif>
 							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 							<!--- Export --->
 							<li class="dropdown-submenu pull-left">
-								<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>
+								<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export</a>
 								<ul class="dropdown-menu text-left">
 									<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
 									<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
@@ -153,11 +153,11 @@
 							</li>
 							</cfif>
 							<!--- History Command --->
-							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fa fa-clock-o icon-large"></i> History</a></li>
+							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
 							<!-- Reset hits --->
-							<li><a href="javascript:resetHits( '#page.getContentID()#' )"><i class="fa fa-refresh icon-large"></i> Reset Hits</a></li>
+							<li><a href="javascript:resetHits( '#page.getContentID()#' )"><i class="fa fa-refresh fa-lg"></i> Reset Hits</a></li>
 							<!--- View in Site --->
-							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye icon-large"></i> Open In Site</a></li>
+							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye fa-lg"></i> Open In Site</a></li>
 				    	</ul>
 				    </div>	
 				    

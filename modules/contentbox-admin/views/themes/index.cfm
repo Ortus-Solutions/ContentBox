@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-picture-o icon-large"></i> Themes</h1>
+        <h1 class="h1"><i class="fa fa-picture-o fa-lg"></i> Themes</h1>
     </div>
 </div>
 <div class="row">
@@ -26,12 +26,12 @@
 						<!--- Install Themes --->
 						<cfif prc.oAuthor.checkPermission( "FORGEBOX_ADMIN" )>
 							<li title="Install New Themes" class="navbar-right">
-								<a href="##forgeboxPane"  data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download icon-large"></i> ForgeBox</a>
+								<a href="##forgeboxPane"  data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download fa-lg"></i> ForgeBox</a>
 							</li>
 						</cfif>
 						<!--- Manage Themes --->
 						<li class="active navbar-right" title="Manage Themes">
-							<a href="##managePane" data-toggle="tab"><i class="fa fa-cog icon-large"></i> Manage</a>
+							<a href="##managePane" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> Manage</a>
 						</li>
 		            </ul>
 		            <!-- End Tabs -->
@@ -45,10 +45,10 @@
 								<!--- Themes Navigation Bar --->
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<a href="##active" data-toggle="tab"><i class="fa fa-star icon-large"></i> Active Theme</a>
+										<a href="##active" data-toggle="tab"><i class="fa fa-star fa-lg"></i> Active Theme</a>
 									</li>
 									<li>
-										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns icon-large"></i> Manage Themes</a>
+										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns fa-lg"></i> Manage Themes</a>
 									</li>
 								</ul>
 								<!--- Tab Content --->
@@ -172,7 +172,7 @@
 			    										)#
 			    									</div>
 			    									<div class="loaders" id="uploadBarLoader">
-			    										<i class="fa fa-spinner fa-spin icon-large"></i>
+			    										<i class="fa fa-spinner fa-spin fa-lg"></i>
 			    									</div>
 			                                	</fieldset>
 											#html.endForm()#
@@ -200,7 +200,7 @@
 													<tr>
 														<td>
 															<cfif prc.cbSettings.cb_site_theme eq prc.themes.name>
-																<i class="fa fa-asterisk icon-large textOrance"></i>
+																<i class="fa fa-asterisk fa-lg textOrance"></i>
 															</cfif>
 															<strong>#prc.themes.themeName#</strong>
 															<br/>	
@@ -240,7 +240,7 @@
 															<cfif prc.oAuthor.checkPermission( "THEME_ADMIN" )>
 															<!--- Delete Command --->
 															<a href="javascript:remove('#JSStringFormat(prc.themes.name)#')" 
-															   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!"><i class="fa fa-trash-o icon-large"></i></a>
+															   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!"><i class="fa fa-trash-o fa-lg"></i></a>
 															</cfif>
 														</td>
 													</tr>
@@ -259,7 +259,7 @@
 		                <!--- ForgeBox Pane --->
 						<div id="forgeboxPane" class="tab-pane">
 							<div class="text-center">
-								<i class="fa fa-spinner fa-spin icon-large icon-4x"></i><br/>
+								<i class="fa fa-spinner fa-spin fa-lg icon-4x"></i><br/>
 								Please wait, connecting to ForgeBox...
 							</div>
 						</div>

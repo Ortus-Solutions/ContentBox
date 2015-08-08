@@ -25,7 +25,7 @@ function openForgeboxModal(id){
 	$( "##"+id).data( "overlay" ).load();
 }
 function installEntry(id, downloadURL){
-	$( "##"+id).html('<div class="text-center"><i class="fa fa-spinner fa-spin icon-large"></i><br/>Please wait, installing from ForgeBox...</div>');
+	$( "##"+id).html('<div class="text-center"><i class="fa fa-spinner fa-spin fa-lg"></i><br/>Please wait, installing from ForgeBox...</div>');
 	$downloadURL.val( downloadURL );
 	$forgeBoxInstall.submit();
 	return true;

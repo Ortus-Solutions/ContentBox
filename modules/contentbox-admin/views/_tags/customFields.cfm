@@ -43,7 +43,7 @@
 								value=cField.getValue()
 							)#
 							
-							<button class="btn btn-danger dynamicRemove" onclick="return false;"><i class="fa fa-trash-o icon-large"></i></button>
+							<button class="btn btn-danger dynamicRemove" onclick="return false;"><i class="fa fa-trash-o fa-lg"></i></button>
 						
 						</div>
 					</div>

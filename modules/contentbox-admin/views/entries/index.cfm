@@ -15,7 +15,7 @@
 		<!--- Info Bar --->
 		<cfif NOT prc.cbSettings.cb_comments_enabled>
 			<div class="alert alert-info">
-				<i class="fa fa-exclamation icon-large"></i>
+				<i class="fa fa-exclamation fa-lg"></i>
 				Comments are currently disabled site-wide!
 			</div>
 		</cfif>
@@ -66,7 +66,7 @@
 												</cfif>
 												<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 													<li class="dropdown-submenu">
-														<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
+														<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export All</a>
 														<ul class="dropdown-menu text-left">
 															<li>
 																<a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON
@@ -95,7 +95,7 @@
 				<div class="panel-body">
 					<!--- entries container --->
     				<div id="entriesTableContainer">
-    					<p class="text-center"><i id="entryLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i></p>
+    					<p class="text-center"><i id="entryLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i></p>
     				</div>
 				</div>
 			</div>

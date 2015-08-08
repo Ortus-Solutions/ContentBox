@@ -10,7 +10,7 @@
 		#html.startFieldset( legend="Available Permissions" )#
 			<!--- Loader --->
 			<div class="loaders floatRight" id="permissionLoader">
-				<i class="fa fa-spinner fa-spin icon-large icon-2x"></i><br/>
+				<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i><br/>
 				<div class="text-center"><small>Please Wait...</small></div>
 			</div>
 			
@@ -48,14 +48,14 @@
 			<cfif !prc.role.hasPermission()>
 				<small>No permissions assigned!</small>
 			<cfelse>
-				<p>Below are the currently assigned permissions. You can optionally remove permissions by clicking on the remove button (<i class="icon-remove icon-large textRed"></i>).</p>
+				<p>Below are the currently assigned permissions. You can optionally remove permissions by clicking on the remove button (<i class="icon-remove fa-lg textRed"></i>).</p>
 			</cfif>			
 		
 			
 			<cfloop array="#prc.role.getPermissions()#" index="perm">
 			<div>
 				<!--- Remove --->
-				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-times icon-large textRed"></i></a>
+				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-times fa-lg textRed"></i></a>
 				<!--- Name --->
 				&nbsp; 
 				<strong>#perm.getPermission()#</strong>

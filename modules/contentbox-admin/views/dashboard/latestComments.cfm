@@ -7,7 +7,7 @@
 <!--- Info Bar --->
 <cfif NOT prc.cbSettings.cb_comments_enabled>
 	<div class="alert alert-info">
-		<i class="icon-exclamation-sign icon-2x pull-left"></i>
+		<i class="icon-exclamation-sign fa-2x pull-left"></i>
 		Comments are currently disabled site-wide!
 	</div>
 </cfif>			

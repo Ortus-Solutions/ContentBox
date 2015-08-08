@@ -154,7 +154,7 @@
         </div>
          <!--- Loader --->
         <div class="loaders" id="uploadBarLoader">
-            <i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+            <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
             <div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
         </div>
     </div>

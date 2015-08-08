@@ -19,6 +19,6 @@
 <cfoutput>
 <div class="alert#local.cssType#" style="min-height: 38px">
 	<button type="button" class="close" data-dismiss="alert">&times;</button>
-	<i class="#local.iconType# icon-large icon-2x pull-left"></i> #msgStruct.message#
+	<i class="#local.iconType# fa-lg fa-2x pull-left"></i> #msgStruct.message#
 </div>
 </cfoutput>

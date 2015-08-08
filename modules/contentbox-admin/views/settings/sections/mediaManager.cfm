@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-th icon-large"></i> Media Manager</legend>
+    <legend><i class="fa fa-th fa-lg"></i> Media Manager</legend>
         <p>From here you can control the media manager settings.</p>
 
         <!--- Location --->
@@ -70,7 +70,7 @@
         </div>
     </fieldset>
     <fieldset>
-    <legend><i class="fa fa-cog icon-large"></i> FileBrowser Options</legend>
+    <legend><i class="fa fa-cog fa-lg"></i> FileBrowser Options</legend>
         
         <!--- Create Folders --->
         <div class="form-group">

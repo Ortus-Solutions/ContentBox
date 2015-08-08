@@ -18,7 +18,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##check">
-                                <i class="fa fa-globe icon-large"></i> Check For Updates
+                                <i class="fa fa-globe fa-lg"></i> Check For Updates
                             </a>
                         </div>
                         <div id="check" class="panel-collapse collapse in">
@@ -46,7 +46,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##download">
-                                <i class="fa fa-download icon-large"></i> Download Update
+                                <i class="fa fa-download fa-lg"></i> Download Update
                             </a>
                         </div>
                         <div id="download" class="panel-collapse collapse">
@@ -82,7 +82,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##upload">
-                                <i class="fa fa-upload icon-large"></i> Upload Update
+                                <i class="fa fa-upload fa-lg"></i> Upload Update
                             </a>
                         </div>
                         <div id="upload" class="panel-collapse collapse">

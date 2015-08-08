@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-dashboard icon-larger"></i> #prc.cbSettings.cb_dashboard_welcome_title#
+        	<i class="fa fa-dashboard fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
         </h1>
     </div>
 </div>
@@ -129,9 +129,9 @@
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="list-unstyled tipList">
-					<li><i class="fa fa-lightbulb-o icon-large"></i> Right click on a row to activate quick look!</li>
-					<li><i class="fa fa-lightbulb-o icon-large"></i> 'Quick Post' is a minimalistic editing machine</li>
-					<li><i class="fa fa-lightbulb-o icon-large"></i> 'Create Entry' is a full blown editing machine</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> Right click on a row to activate quick look!</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> 'Quick Post' is a minimalistic editing machine</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> 'Create Entry' is a full blown editing machine</li>
 				</ul>
 		    </div>
 		</div>

@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-globe icon-large"></i> Global HTML</h1>
+        <h1 class="h1"><i class="fa fa-globe fa-lg"></i> Global HTML</h1>
     </div>
 </div>
 <div class="row">
@@ -24,16 +24,16 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="##global" data-toggle="tab"><i class="fa fa-globe icon-large"></i> Global Layout</a>
+                            <a href="##global" data-toggle="tab"><i class="fa fa-globe fa-lg"></i> Global Layout</a>
                         </li>
                         <li>
-                            <a href="##entry" data-toggle="tab"><i class="fa fa-quote-left icon-large"></i> Blog Entries</a>
+                            <a href="##entry" data-toggle="tab"><i class="fa fa-quote-left fa-lg"></i> Blog Entries</a>
                         </li>
                         <li>
-                            <a href="##comments" data-toggle="tab"><i class="fa fa-comments icon-large"></i> Comments</a>
+                            <a href="##comments" data-toggle="tab"><i class="fa fa-comments fa-lg"></i> Comments</a>
                         </li>
                         <li>
-                            <a href="##pages" data-toggle="tab"><i class="fa fa-pencil icon-large"></i> Pages</a>
+                            <a href="##pages" data-toggle="tab"><i class="fa fa-pencil fa-lg"></i> Pages</a>
                         </li>
                     </ul>
                     #html.startForm(
@@ -47,7 +47,7 @@
                             <!--- Global HTML Page --->
                             <div class="tab-pane active" id="global">
                                 <fieldset>
-                                    <legend><i class="fa fa-globe icon-large"></i> Global Layout</legend>
+                                    <legend><i class="fa fa-globe fa-lg"></i> Global Layout</legend>
                                     #html.textarea(
                                         name="cb_html_beforeHeadEnd",
                                         label="Before Head End: ",
@@ -133,7 +133,7 @@
                             <!--- Entry --->
                             <div class="tab-pane" id="entry">
                                 <fieldset>
-                                    <legend><i class="fa fa-quote-left icon-large"></i> Blog Entries</legend>
+                                    <legend><i class="fa fa-quote-left fa-lg"></i> Blog Entries</legend>
                                     #html.textarea(
                                         name="cb_html_preEntryDisplay",
                                         label="Before A Blog Entry: ",
@@ -199,7 +199,7 @@
                             <!--- Comments --->
                             <div class="tab-pane" id="comments">
                                 <fieldset>
-                                    <legend><i class="fa fa-comments icon-large"></i> Comments</legend>
+                                    <legend><i class="fa fa-comments fa-lg"></i> Comments</legend>
                                     #html.textarea(
                                         name="cb_html_preCommentForm",
                                         label="Before The Comment Form: ",
@@ -225,7 +225,7 @@
                             <!--- Pages --->
                             <div class="tab-pane" id="pages">
                                 <fieldset>
-                                    <legend><i class="fa fa-pencil icon-large"></i> Pages</legend>
+                                    <legend><i class="fa fa-pencil fa-lg"></i> Pages</legend>
                                     #html.textarea(
                                         name="cb_html_prePageDisplay",
                                         label="Before Any Page: ",

@@ -101,12 +101,12 @@
 							<li class="divider-vertical"></li>
 
 							<!--- View Site --->
-							<li title="Open Site" data-placement="left"><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home icon-large"></i></a></li>
+							<li title="Open Site" data-placement="left"><a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><i class="icon-home fa-lg"></i></a></li>
 
 							<!--- New Quick Links --->
 					    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
 					    	<li class="dropdown" title="Create New..." data-placement="left">
-					    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus icon-large"></i></a>
+					    		<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i class="icon-plus fa-lg"></i></a>
 								<ul class="dropdown-menu">
 									<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 										<li>
@@ -156,14 +156,14 @@
 
 							<!---Quick Post --->
 							<cfif prc.oAuthor.checkPermission( "ENTRIES_EDITOR" ) AND !prc.cbSettings.cb_site_disable_blog>
-								<li title="Quick Post (ctrl+shift+Q)" data-placement="left"><a href="javascript:showQuickPost()" data-keybinding="ctrl+shift+Q"><i class="icon-edit icon-large"></i></a></li>
+								<li title="Quick Post (ctrl+shift+Q)" data-placement="left"><a href="javascript:showQuickPost()" data-keybinding="ctrl+shift+Q"><i class="icon-edit fa-lg"></i></a></li>
 							</cfif>
 
 							<!---Admin Actions --->
 							<cfif prc.oAuthor.checkPermission( "RELOAD_MODULES" )>
 							<li class="dropdown" title="Admin Actions" data-placement="left">
 								<!---Loader Status --->
-								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cogs icon-large"></i></a>
+								<a data-toggle="dropdown" class="dropdown-toggle" href="##"><i id="adminActionsIcon" class="icon-cogs fa-lg"></i></a>
 								<ul class="dropdown-menu">
 									<cfloop array="#prc.xehAdminActionData#" index="thisAction">
 									<li><a href="javascript:adminAction( '#thisAction.value#', '#event.buildLink(prc.xehAdminAction)#')"><i class="icon-caret-right"></i>  #thisAction.name#</a></li>
@@ -236,7 +236,7 @@
 
 		<div class="modal-footer">
 			<p class="text-center">
-				<span id="confirmItLoader" class="hide"><i class="icon-spinner icon-spin icon-large icon-2x"></i></span>
+				<span id="confirmItLoader" class="hide"><i class="icon-spinner icon-spin fa-lg fa-2x"></i></span>
 				<span id="confirmItButtons">
 					<button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Cancel</button>
 					<button class="btn btn-danger" data-action="confirm"><i class="icon-check"></i>  Confirm </button>
@@ -251,7 +251,7 @@
 	        <h3>Loading...</h3>
 	    </div>
 		<div id="remoteModelContent" class="modal-body">
-			<i class="icon-spinner icon-spin icon-large icon-4x"></i>
+			<i class="icon-spinner icon-spin fa-lg icon-4x"></i>
 		</div>
 	</div>
 

@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-exchange icon-large"></i> Import Tools</h1>
+        <h1 class="h1"><i class="fa fa-exchange fa-lg"></i> Import Tools</h1>
     </div>
 </div>
 <div class="row">
@@ -39,7 +39,7 @@
                             <br /><br />Easy, right? Well, what are you waiting for?
                         </p>
                         <fieldset>
-                            <legend><i class="fa fa-upload icon-large"></i> Import ContentBox Package</legend>
+                            <legend><i class="fa fa-upload fa-lg"></i> Import ContentBox Package</legend>
                             <div class="row-fluid">
                                 <div class="form-group">
                                     <div class="controls">
@@ -77,7 +77,7 @@
                         
                         <!--- dsn Info --->
                         <fieldset>
-                        <legend><i class="icon-bolt icon-large"></i> <strong>Datasource Options</strong></legend>
+                        <legend><i class="icon-bolt fa-lg"></i> <strong>Datasource Options</strong></legend>
                             <p>
                                 This server must have a defined datasource to the source blog database in order to import it. Please
                                 make sure this datasource exists in the ColdFusion administrator.
@@ -110,7 +110,7 @@
                         
                         <!--- importer --->
                         <fieldset>
-                        <legend><i class="icon-cog icon-large"></i> <strong>Source Content</strong></legend>
+                        <legend><i class="icon-cog fa-lg"></i> <strong>Source Content</strong></legend>
                             #html.select(
                                 name="importer",
                                 options="Select Source,Mango,WordPress,BlogCFC,MachBlog",
@@ -166,7 +166,7 @@
                     
                     <!--- Loader --->
                     <div class="loaders" id="uploadBarLoader">
-                        <i class="fa fa-spinner fa-spin icon-large icon-2x"></i><br/>
+                        <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i><br/>
                         Importing Action
                     </div>
                 </div>
