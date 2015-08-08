@@ -512,7 +512,7 @@ component accessors="true"{
 		} );
 		contentStore.setCreator( author );
 		contentStore.addNewContentVersion(content='<p style="text-align: center;">
-	<a href="http://www.ortussolutions.com/products/contentbox"><img alt="" src="__media/ContentBox_125.gif" style="width: 124px; height: 118px;" /></a></p>
+	<a href="http://www.ortussolutions.com/products/contentbox"><img alt="" src="__media/ContentBox_300.png" /></a></p>
 <p style="text-align: center;">
 	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>',
 								  changelog="First creation",
