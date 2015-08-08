@@ -1,44 +1,30 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-* ContentBox Admin module configuration
-* Icon Themes: woothemesiconset, duesseldorf
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* ContentBox Admin Module
 */
 component {
 
 	// Module Properties
-	this.title 				= "ContentBox-Admin";
+	this.title 				= "ContentBox Admin";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
-	this.description 		= "ContentBox Admin";
+	this.description 		= "ContentBox Administration Module";
 	this.version			= "3.0.0-beta+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
+	this.dependencies 		= [ "contentbox" ];
 
+	/**
+	* Configure Module
+	*/
 	function configure(){
 
 		// Layout Settings
-		layoutSettings = { defaultLayout = "admin_spacelab.cfm" };
+		layoutSettings = { defaultLayout = "admin.cfm" };
 
 		// Module Settings
 		settings = {
@@ -49,24 +35,23 @@ component {
 
 		// Parent Settings
 		parentSettings = {
-			messagebox_template = "#moduleMapping#/views/_tags/messagebox.cfm"
 		};
 
 		// SES Routes
 		routes = [
-			{pattern="/", handler="dashboard", action="index" },
-			{pattern="/dashboard/reload/:targetModule", handler="dashboard", action="reload" },
-			{pattern="/authors/page/:page",handler="authors"},
-			{pattern="/entries/page/:page",handler="entries"},
-			{pattern="/pages/parent/:parent?",handler="pages"},
-			{pattern="/entries/pager/page/:page",handler="entries",action="pager"},
-			{pattern="/comments/page/:page",handler="comments"},
-			{pattern="/contentStore/parent/:parent?",handler="contentStore"},
-			{pattern="/contentStore/page/:page",handler="contentStore"},
-			{pattern="/menus/page/:page",handler="menus"},
-			{pattern="/mediamanager/library/:library", handler="mediamanager", action="index"},
-			{pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
-			{pattern="/:handler/:action?"}
+			{ pattern="/", handler="dashboard", action="index" },
+			{ pattern="/dashboard/reload/:targetModule", handler="dashboard", action="reload" },
+			{ pattern="/authors/page/:page", handler="authors" },
+			{ pattern="/entries/page/:page", handler="entries" },
+			{ pattern="/pages/parent/:parent?", handler="pages" },
+			{ pattern="/entries/pager/page/:page", handler="entries",action="pager" },
+			{ pattern="/comments/page/:page", handler="comments" },
+			{ pattern="/contentStore/parent/:parent?", handler="contentStore" },
+			{ pattern="/contentStore/page/:page", handler="contentStore" },
+			{ pattern="/menus/page/:page", handler="menus" },
+			{ pattern="/mediamanager/library/:library", handler="mediamanager", action="index" },
+			{ pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
+			{ pattern="/:handler/:action?" }
 		];
 
 		// Custom Declared Points
@@ -126,6 +111,7 @@ component {
 		interceptors = [
 			// CB Admin Request Interceptor
 			{ class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
+			{ class="contentbox.models.security.LoginTracker", name="LoginTracker@cb" },
 			{ class="#moduleMapping#.interceptors.CommentCleanup" },
 			{ class="#moduleMapping#.interceptors.Subscription" },
 			{ class="#moduleMapping#.interceptors.MenuCleanup" }
