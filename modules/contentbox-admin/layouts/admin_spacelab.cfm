@@ -370,7 +370,7 @@
                     </div>
                     <!-- footer -->
                     <div class="modal-footer">
-                        <span id="confirmItLoader" class="hide"><i class="fa fa-spinner fa-spin icon-large icon-2x"></i></span>
+                        <span id="confirmItLoader" class="hide"><i class="fa fa-spinner fa-spin fa-lg fa-2x"></i></span>
                         <span id="confirmItButtons">
                             <button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Cancel</button>
                             <button class="btn btn-danger" data-action="confirm"><i class="icon-check"></i>  Confirm </button>
@@ -384,7 +384,7 @@
                 <h3>Loading...</h3>
             </div>
             <div class="modal-body" id="remoteModelContent">
-                <i class="fa fa-spinner fa fa-spin icon-large icon-4x"></i>
+                <i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i>
             </div>
         </div>
     </body>

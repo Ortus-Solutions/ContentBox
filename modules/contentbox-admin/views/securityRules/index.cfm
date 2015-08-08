@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-road icon-large"></i>
+        	<i class="fa fa-road fa-lg"></i>
 			Security Rules
         </h1>
         <!--- messageBox --->
@@ -22,7 +22,7 @@
 		    <div class="panel-body">
 		    	<!--- Usage --->
 				<div class="alert alert-danger">
-					<i class="icon-warning-sign icon-large"></i>
+					<i class="icon-warning-sign fa-lg"></i>
 					Please remember that the security rules are fired in the order shown. You can drag and drop
 					the rows to the desired order of firing. Be careful with security rules as with much power comes great responsibility!
 				</div>
@@ -64,7 +64,7 @@
 											<li><a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt"
 												data-title="Really Apply Rules?"
 												data-message="Please be aware that you could be locked out of application if your rules are not correct.">
-												<i class="fa fa-bolt icon-large"></i> Apply Rules
+												<i class="fa fa-bolt fa-lg"></i> Apply Rules
 												</a>
 											</li>
 											</cfif>
@@ -73,7 +73,7 @@
 											</cfif>
 											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 								    		<li class="dropdown-submenu">
-												<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
+												<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export All</a>
 												<ul class="dropdown-menu text-left">
 													<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
 													<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>

@@ -64,7 +64,7 @@
 		</div>
 		<!--- Info --->
 		<h3>#prc.entries.title# v#prc.entries.version#</h3>
-		<a href="#prc.entries.downloadURL#" title="Download URL" target="_blank"><i class="fa fa-download icon-large"></i> #prc.entries.downloadURL#</a>
+		<a href="#prc.entries.downloadURL#" title="Download URL" target="_blank"><i class="fa fa-download fa-lg"></i> #prc.entries.downloadURL#</a>
 		<p>#prc.entries.summary#</p>
 		
 		<!--- Description --->
@@ -123,7 +123,7 @@
 			   	<span>Download & Install</span>
 			</a>
 			<cfelse>
-			<div class="alert alert-warning"><i class="fa fa-exclamation icon-large"></i> No zip detected, manual install only!</div>
+			<div class="alert alert-warning"><i class="fa fa-exclamation fa-lg"></i> No zip detected, manual install only!</div>
 			</cfif>	
 		</div>
 		<!--- Info --->

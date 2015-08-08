@@ -4,7 +4,7 @@
 	<thead>
 		<tr class="info">
 			<th>Page Name</th>
-			<th width="40" class="text-center"><i class="icon-globe icon-large"></i></th>
+			<th width="40" class="text-center"><i class="icon-globe fa-lg"></i></th>
 			<th width="120" class="text-center">Select</th>
 		</tr>
 	</thead>
@@ -18,10 +18,10 @@
 			</td>
 			<td class="text-center">
 				<cfif page.getIsPublished()>
-					<i class="fa fa-check icon-large textGreen"></i>
+					<i class="fa fa-check fa-lg textGreen"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="fa fa-times icon-large textRed"></i>
+					<i class="fa fa-times fa-lg textRed"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>

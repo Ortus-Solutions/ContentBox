@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-cog icon-large"></i> Site Options</legend>
+    <legend><i class="fa fa-cog fa-lg"></i> Site Options</legend>
         <!--- Site Name  --->
         #html.textField(
             name="cb_site_name",
@@ -88,7 +88,7 @@
     </fieldset>
     <!---Blog Entries --->
     <fieldset>
-    <legend><i class="fa fa-quote-left icon-large"></i> <strong>Blog Options</strong></legend>
+    <legend><i class="fa fa-quote-left fa-lg"></i> <strong>Blog Options</strong></legend>
         <!--- Disable Blog --->
         <div class="form-group">
             #html.label(
@@ -128,7 +128,7 @@
     </fieldset>
     <!--- Site Maintenance --->
     <fieldset>
-    <legend><i class="fa fa-ambulance icon-large"></i> <strong>Site Maintenance</strong></legend>
+    <legend><i class="fa fa-ambulance fa-lg"></i> <strong>Site Maintenance</strong></legend>
         <p>You can put your entire site in maintenance mode if you are doing upgrades or anything funky!</p>
         <!--- Site maintenance --->
         <div class="form-group">

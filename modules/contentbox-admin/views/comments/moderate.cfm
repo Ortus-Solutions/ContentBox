@@ -4,7 +4,7 @@
 	<div class="box">
 		<!--- Body Header --->
 		<div class="header">
-			<i class="icon-comments icon-large"></i>
+			<i class="icon-comments fa-lg"></i>
 			Comment Moderator
 		</div>
 		<!--- Body --->
@@ -12,7 +12,7 @@
 
 			<!--- Comment Details --->
 			<fieldset>
-				<legend><i class="icon-eye-open icon-large"></i> Comment Details</legend>
+				<legend><i class="icon-eye-open fa-lg"></i> Comment Details</legend>
 					#getModel( "Avatar@cb" ).renderAvatar(email=rc.comment.getAuthorEmail())#
 					&nbsp;<a href="mailto:#rc.comment.getAUthorEmail()#" title="#rc.comment.getAUthorEmail()#">#rc.comment.getAuthor()#</a>
 					<br/>

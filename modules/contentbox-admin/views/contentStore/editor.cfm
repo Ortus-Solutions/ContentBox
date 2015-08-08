@@ -125,7 +125,7 @@
                         <!---Right References Panel --->
                         <div class="pull-right">
                             <a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
-                                <i class="fa fa-eye icon-large"></i>
+                                <i class="fa fa-eye fa-lg"></i>
                             </a>
                         </div>
                         
@@ -149,7 +149,7 @@
             <cfif prc.content.isLoaded()>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-clock-o icon-large"></i> Versions</h3>
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-lg"></i> Versions</h3>
                     </div>
                     <div class="panel-body">
                         #prc.versionsViewlet#
@@ -179,7 +179,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
-                                        <i class="fa fa-info-circle icon-large"></i> Content Info
+                                        <i class="fa fa-info-circle fa-lg"></i> Content Info
                                     </a>
                                 </h4>
                             </div>
@@ -236,7 +236,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap icon-large"></i> Related Content                                
+                                        <i class="fa fa-sitemap fa-lg"></i> Related Content                                
                                     </a>
                                 </h4>
                             </div>
@@ -257,7 +257,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link icon-large"></i> Linked Content                                
+                                        <i class="fa fa-link fa-lg"></i> Linked Content                                
                                     </a>
                                 </h4>
                             </div>
@@ -277,7 +277,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fa fa-cogs icon-large"></i> Modifiers
+                                        <i class="fa fa-cogs fa-lg"></i> Modifiers
                                     </a>
                                 </h4>
                             </div>
@@ -286,7 +286,7 @@
 
 									<!--- Parent Content --->
 									<div class="form-group">
-										<i class="fa fa-sitemap icon-large"></i>
+										<i class="fa fa-sitemap fa-lg"></i>
 		         						#html.label( field="parentContent",content='Parent:' )#
 		         						<select name="parentContent" id="parentContent" class="form-control input-sm">
 		         							<option value="null">No Parent</option>
@@ -308,7 +308,7 @@
                                     <!--- Creator --->
                                     <cfif prc.content.isLoaded() and prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
                                         <div class="form-group">
-                                            <i class="fa fa-user icon-large"></i>
+                                            <i class="fa fa-user fa-lg"></i>
                                             #html.label(field="creatorID",content="Creator:",class="inline" )#
                                             <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                 <cfloop array="#prc.authors#" index="author">
@@ -329,7 +329,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fa fa-hdd-o icon-large"></i> Cache Settings
+                                        <i class="fa fa-hdd-o fa-lg"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
@@ -385,7 +385,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                        <i class="fa fa-tags icon-large"></i> Categories
+                                        <i class="fa fa-tags fa-lg"></i> Categories
                                     </a>
                                 </h4>
                             </div>

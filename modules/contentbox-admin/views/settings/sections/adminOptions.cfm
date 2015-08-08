@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-dashboard icon-large"></i>  Dashboard Options</legend>
+    <legend><i class="fa fa-dashboard fa-lg"></i>  Dashboard Options</legend>
     
     <!--- Tag Line --->
     #html.textField( 
@@ -105,7 +105,7 @@
     </div>
 </fieldset>
 <fieldset>
-    <legend><i class="fa fa-copy icon-large"></i>  Paging Options</legend>
+    <legend><i class="fa fa-copy fa-lg"></i>  Paging Options</legend>
 
     <!--- Quick Search --->
     <div class="form-group">

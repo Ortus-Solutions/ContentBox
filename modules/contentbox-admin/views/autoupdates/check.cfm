@@ -2,7 +2,7 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	<h3><i class="icon-bolt icon-large"></i> Update Check: <span class="label label-inverse">#rc.channel#</span></h3>
+	<h3><i class="icon-bolt fa-lg"></i> Update Check: <span class="label label-inverse">#rc.channel#</span></h3>
 </div>
 <div class="modal-body">
     #html.startForm(name="updateForm",action=prc.xehUpdateApply,class="form-vertical" )#
@@ -49,7 +49,7 @@
 	
 	<div class="form-actions text-center">
 		<div class="alert alert-error">
-			<i class="icon-warning-sign icon-large"></i>
+			<i class="icon-warning-sign fa-lg"></i>
 			Please make sure you do any backups before applying this update.
 		</div>
 		#html.button(type="submit", name="submitUpdate", class="btn btn-danger btn-large", value="<i class='icon-ok'></i> Apply Update", onclick="return confirm('Are you positive?')" )#

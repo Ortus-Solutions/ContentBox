@@ -20,8 +20,8 @@ function previewContent(){
 			markup 		: $( "##markup" ).val(),
 			parentPage	: $( "##parentPage" ).val() || ''
 		},
-		"95%",
-		"85%",
+		$( window ).width() - 50,
+		$( window ).height() - 200,
         true
 	);
 }

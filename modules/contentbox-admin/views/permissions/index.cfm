@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-lock icon-large"></i>
+        	<i class="fa fa-lock fa-lg"></i>
 			Permissions
         </h1>
     </div>
@@ -49,7 +49,7 @@
 											</cfif>
 											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 								    		<li class="dropdown-submenu">
-												<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
+												<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export All</a>
 												<ul class="dropdown-menu text-left">
 													<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
 													<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
@@ -99,11 +99,11 @@
 										   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
 										   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#');" 
 										   title="Edit #permission.getPermission()#">
-										   	<i class="fa fa-edit icon-large"></i>
+										   	<i class="fa fa-edit fa-lg"></i>
 										</a>
 										<!--- Delete Command --->
 										<a class="btn btn-sm btn-danger confirmIt" title="<i class='fa fa-trash-o'></i> Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
-											<i id="delete_#permission.getPermissionID()#" class="fa fa-trash-o icon-large"></i>
+											<i id="delete_#permission.getPermissionID()#" class="fa fa-trash-o fa-lg"></i>
 										</a>
 									</cfif>
 								</td>

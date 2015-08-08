@@ -3,7 +3,7 @@
 
 	<!--- Loader --->
 	<div class="loaders floatRight" id="versionsPagerLoader">
-		<i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+		<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
 	</div>
 
 	<p>Here are the past versions of your content. You can compare previous versions and even right click on the rows to get a quick peek at the versioned
@@ -66,14 +66,14 @@
 						<!--- ROLLBACK BUTTON --->
 						<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
 						   class="confirmIt"
-						   data-message="Do you really want to rollback to this version?"><i class="fa fa-refresh icon-large" id="version_rollback_#thisVersion.getContentVersionID()#"></i></a>
+						   data-message="Do you really want to rollback to this version?"><i class="fa fa-refresh fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i></a>
 						</cfif>
 
 						<cfif prc.oAuthor.checkPermission( "VERSIONS_DELETE" )>
 						<!--- DELETE VERSION --->
 						<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
 						   data-title="<i class='fa fa-trash-o'></i> Remove Content Version"
-						   data-message="Do you really want to remove this content version?"><i class="fa fa-trash-o icon-large" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
+						   data-message="Do you really want to remove this content version?"><i class="fa fa-trash-o fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
 						</cfif>
 					</cfif>
 				</td>

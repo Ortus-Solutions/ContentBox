@@ -17,7 +17,7 @@ $(document).ready(function() {
     // reset modal content when hidden
 	$remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
-        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin icon-large icon-4x"></i></div>' );
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i></div>' );
     } )
     
 	// Global Tool Tip Settings

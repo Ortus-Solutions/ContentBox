@@ -14,7 +14,7 @@
 		<cfloop array="#prc.author.getRole().getPermissions()#" index="perm">
 		<div>
 			<!--- Assigned --->
-			<i class="fa fa-check icon-large textGreen"></i>
+			<i class="fa fa-check fa-lg textGreen"></i>
 			<!--- Name --->
 			&nbsp; 
 			<strong>#perm.getPermission()#</strong>
@@ -32,7 +32,7 @@
 			
 			<!--- Loader --->
 			<div class="loaders floatRight" id="permissionLoader">
-				<i class="fa fa-spinner fa-spin icon-large icon-2x"></i><br/>
+				<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i><br/>
 				<div class="text-center"><small>Please Wait...</small></div>
 			</div>
 			
@@ -74,16 +74,16 @@
 		<cfif !prc.author.hasPermission()>
 			<small>No permissions assigned!</small>
 		<cfelse>
-			<p>Below are the currently assigned a-la-carte permissions. You can optionally remove permissions by clicking on the remove button (<i class="fa fa-times icon-large textRed"></i>).</p>
+			<p>Below are the currently assigned a-la-carte permissions. You can optionally remove permissions by clicking on the remove button (<i class="fa fa-times fa-lg textRed"></i>).</p>
 		</cfif>			
 		
 		<cfloop array="#prc.author.getPermissions()#" index="perm">
 		<div>
 			<!--- Assigned --->
-			<i class="fa fa-check icon-large textGreen"></i>
+			<i class="fa fa-check fa-lg textGreen"></i>
 			<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
 				<!--- Remove --->
-				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-times icon-large textRed"></i></a>
+				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-times fa-lg textRed"></i></a>
 			</cfif>
 			<!--- Name --->
 			&nbsp; 
