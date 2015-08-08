@@ -179,8 +179,6 @@ component extends="baseContentHandler"{
 
 		// Tab
 		prc.tabContent_blog = true;
-		prc.cssAppendList = "../spacelab/plugins/clockpicker/clockpicker";
-        prc.jsAppendList  = "../spacelab/plugins/clockpicker/clockpicker";
 		// view
 		event.setView( "entries/editor" );
 	}

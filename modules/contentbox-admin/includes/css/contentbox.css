@@ -14,7 +14,7 @@ a.btn.btn-danger:link,
 a.btn.btn-danger:visited {
   color: white !important;
 }
-.nav > li >a:hover{
+.nav-tabs > li >a:hover{
 	background-color: #eaeaea;
 }
 /** Header */
@@ -42,15 +42,18 @@ a.btn.btn-danger:visited {
 	left: -80px;
 }
 #header .user-nav ul li.dropdown.settings {
-  line-height: 39px;
-  margin: 0px 5px;
-  padding: 0px;
+  	line-height: 39px;
+  	margin: 0px 5px;
+  	padding: 0px;
 }
 #header .user-nav ul li.dropdown.settings .dropdown-menu:after {
-  left: 43%;
+	left: 43%;
 }
 #header .user-nav ul li.dropdown.settings .dropdown-menu:before {
-  left: 43%;
+	left: 43%;
+}
+#login-wrapper #username{
+    padding-left: 32px;
 }
 /**============================== ADMIN MAIN ELEMENTS ==============================**/
 

@@ -192,8 +192,6 @@ component extends="baseContentHandler"{
 
 		// Tab
 		prc.tabContent_contentStore = true;
-		prc.cssAppendList = "../spacelab/plugins/clockpicker/clockpicker";
-        prc.jsAppendList  = "../spacelab/plugins/clockpicker/clockpicker";
 		// view
 		event.setView( "contentStore/editor" );
 	}

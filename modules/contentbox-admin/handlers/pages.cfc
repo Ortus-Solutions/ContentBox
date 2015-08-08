@@ -183,8 +183,6 @@ component extends="baseContentHandler"{
 
 		// Turn Tab On
 		prc.tabContent_pages = true;
-		prc.cssAppendList = "../spacelab/plugins/clockpicker/clockpicker";
-        prc.jsAppendList  = "../spacelab/plugins/clockpicker/clockpicker";
 
 		// view
 		event.setView( "pages/editor" );
