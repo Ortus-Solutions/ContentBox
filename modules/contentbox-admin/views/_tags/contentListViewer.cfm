@@ -170,7 +170,7 @@ function bulkChangeStatus(status, contentID){
 function importContent(){
 	var $importForm = $importDialog.find( "##importForm" );
 	// open modal for cloning options
-	openModal( $importDialog, 500, 350 );
+	openModal( $importDialog, 500 );
 	// form validator and data
 	$importForm.validate( { 
 		submitHandler: function(form){
@@ -193,7 +193,7 @@ function openCloneDialog(contentID, title){
 	// local id's
 	var $cloneForm = $cloneDialog.find( "##cloneForm" );
 	// open modal for cloning options
-	openModal( $cloneDialog, 500, 300 );
+	openModal( $cloneDialog, 500 );
 	// form validator and data
 	$cloneForm.validate( { 
 		submitHandler: function(form){
