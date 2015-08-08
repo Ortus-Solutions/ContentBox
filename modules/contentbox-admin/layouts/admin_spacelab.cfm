@@ -51,17 +51,17 @@
     	<link rel="stylesheet" href="#prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.css">
         <!-- spacelab theme-->
         <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
-        <!-- datatables -->
-        <link href="#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css" rel="stylesheet" />
-        <!-- toastr -->
-        <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
-        <!-- morris -->
-        <link href="#prc.cbroot#/includes/spacelab/plugins/morris/css/morris.css" rel="stylesheet" />
-
+        
         <!--- ********************************************************************* --->
         <!---                          CONTENTBOX                                   --->
         <!--- ********************************************************************* --->
 
+        <!-- datatables -->
+        <link href="#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css" rel="stylesheet" />
+        <!-- morris -->
+        <link href="#prc.cbroot#/includes/spacelab/plugins/morris/css/morris.css" rel="stylesheet" />
+        <!-- toastr -->
+        <link href="#prc.cbroot#/includes/css/toastr.min.css" rel="stylesheet" />
         <!-- file upload -->
         <link href="#prc.cbroot#/includes/css/bootstrap-fileupload.css" rel="stylesheet" />
         <!-- modal -->
@@ -69,6 +69,8 @@
         <link href="#prc.cbroot#/includes/css/bootstrap-modal.css" rel="stylesheet" />
         <!-- datepicker -->
         <link href="#prc.cbroot#/includes/css/bootstrap-datepicker.css" rel="stylesheet" />
+        <!-- clockpicker -->
+        <link href="#prc.cbroot#/includes/spacelab/plugins/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
         <!-- custom contentbox css -->
         <link href="#prc.cbroot#/includes/css/contentbox.css" rel="stylesheet" />
         
@@ -95,6 +97,8 @@
         <!---                          CONTENTBOX JAVASCRIPT                        --->
         <!--- ********************************************************************* --->
 
+        <!-- clock picker -->
+        <script src="#prc.cbroot#/includes/spacelab/plugins/clockpicker/bootstrap-clockpicker.min.js"></script>
         <!-- file upload -->
         <script src="#prc.cbroot#/includes/js/bootstrap-fileupload.js"></script>
        	<!-- modal -->
