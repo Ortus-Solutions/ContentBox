@@ -55,6 +55,9 @@ a.btn.btn-danger:visited {
 #login-wrapper #username{
     padding-left: 32px;
 }
+.main-content-wrapper .dropdown-menu > li > a:hover, .main-content-wrapper .dropdown-menu > li > a:active {
+    background-color: #16a086;
+}
 /**============================== ADMIN MAIN ELEMENTS ==============================**/
 
 /**
