@@ -5,7 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="ruleService"				inject="id:securityRuleService@cb";
-	property name="securityInterceptor"		inject="id:securityInterceptor@cb";
+	property name="securityInterceptor"		inject="coldbox:interceptor:security@cb";
 
 	// index
 	function index(event,rc,prc){
