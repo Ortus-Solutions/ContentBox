@@ -40,6 +40,9 @@ component {
 		// SES Routes
 		routes = [
 			{ pattern="/", handler="dashboard", action="index" },
+			// Security Module Routing
+			{ pattern="/security", moduleRouting="contentbox-security" },
+			// Dashboard Reloads
 			{ pattern="/dashboard/reload/:targetModule", handler="dashboard", action="reload" },
 			{ pattern="/authors/page/:page", handler="authors" },
 			{ pattern="/entries/page/:page", handler="entries" },
