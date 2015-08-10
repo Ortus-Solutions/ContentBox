@@ -17,7 +17,7 @@ component {
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
 	this.modelNamespace 	= "cb";
-	this.dependencies 		= [];
+	this.dependencies 		= [ "cborm", "cbmailservices", "cbstorages", "cbantisamy", "cbfeeds", "cbmessagebox", "cbsecurity" ];
 
 	function configure(){
 		// contentbox settings
