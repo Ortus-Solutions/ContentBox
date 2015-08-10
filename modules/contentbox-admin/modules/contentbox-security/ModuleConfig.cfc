@@ -16,7 +16,7 @@ component {
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "/cbadmin/security";
-	this.dependencies 		= [ "cbsecurity" ];
+	this.dependencies 		= [];
 
 	function configure(){
 
