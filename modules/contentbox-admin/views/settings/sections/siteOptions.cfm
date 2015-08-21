@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-cog icon-large"></i> Site Options</legend>
+    <legend><i class="fa fa-cog fa-lg"></i> Site Options</legend>
         <!--- Site Name  --->
         #html.textField(
             name="cb_site_name",
@@ -88,7 +88,7 @@
     </fieldset>
     <!---Blog Entries --->
     <fieldset>
-    <legend><i class="fa fa-quote-left icon-large"></i> <strong>Blog Options</strong></legend>
+    <legend><i class="fa fa-quote-left fa-lg"></i> <strong>Blog Options</strong></legend>
         <!--- Disable Blog --->
         <div class="form-group">
             #html.label(
@@ -113,7 +113,7 @@
         </div>  
         <!--- Entry Point --->
         <div class="form-group">
-            #html.label(class="control-label",field="cb_site_blog_entrypoint",content="Blog Entry Point:")#
+            #html.label(class="control-label",field="cb_site_blog_entrypoint",content="Blog Entry Point:" )#
             <div class="controls">
                 <small>Choose the entry point in the URL to trigger the blog engine. The usual defaul entry point pattern is 
                 <strong>blog</strong>. Do not use symbols or slashes (/ \)<br/></small>
@@ -128,7 +128,7 @@
     </fieldset>
     <!--- Site Maintenance --->
     <fieldset>
-    <legend><i class="fa fa-ambulance icon-large"></i> <strong>Site Maintenance</strong></legend>
+    <legend><i class="fa fa-ambulance fa-lg"></i> <strong>Site Maintenance</strong></legend>
         <p>You can put your entire site in maintenance mode if you are doing upgrades or anything funky!</p>
         <!--- Site maintenance --->
         <div class="form-group">
@@ -151,7 +151,7 @@
         </div>
         <!--- Maintenance Message --->
         <div class="form-group">
-            #html.label(class="control-label",field="cb_site_maintenance_message",content="Offline Message: ")#
+            #html.label(class="control-label",field="cb_site_maintenance_message",content="Offline Message: " )#
             <div class="controls">
                 <small>The message to show users once the site is in maintenance mode, HTML is ok.</small><br/>
                 #html.textarea(

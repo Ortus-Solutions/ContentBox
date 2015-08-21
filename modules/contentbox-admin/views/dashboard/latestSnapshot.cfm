@@ -9,7 +9,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##topvisited">
-                    <i class="fa fa-bar-chart-o icon-large"></i> Top Visited Content
+                    <i class="fa fa-bar-chart-o fa-lg"></i> Top Visited Content
                 </a>
             </div>
             <div id="topvisited" class="panel-collapse collapse active in">
@@ -44,7 +44,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##topcommented">
-                    <i class="fa fa-bar-chart-o icon-large"></i> Top Commented Content
+                    <i class="fa fa-bar-chart-o fa-lg"></i> Top Commented Content
                 </a>
             </div>
             <div id="topcommented" class="panel-collapse collapse">
@@ -79,7 +79,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##discussion">
-                    <i class="fa fa-comments icon-large"></i> Discussions
+                    <i class="fa fa-comments fa-lg"></i> Discussions
                 </a>
             </div>
             <div id="discussion" class="panel-collapse collapse">
@@ -98,7 +98,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##content">
-                    <i class="fa fa-pencil icon-large"></i> Content
+                    <i class="fa fa-pencil fa-lg"></i> Content
                 </a>
             </div>
             <div id="content" class="panel-collapse collapse">

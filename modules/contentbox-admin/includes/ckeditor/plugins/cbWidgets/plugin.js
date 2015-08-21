@@ -45,7 +45,7 @@ openRemoteModal() is part of contentbox js
 				label:'Insert a ContentBox Widget',
 				icon: this.path + 'ContentBox-Circle_16.png',
 				command: pluginName
-			});
+			} );
 			// context menu
 			if (editor.addMenuItem) {
 				// A group menu is required
@@ -57,7 +57,7 @@ openRemoteModal() is part of contentbox js
 					icon: this.path + 'ContentBox-Circle_16.png',
 					group: 'contentbox',
 					order:3
-				});
+				} );
                 // Register a new context menu item for editing existing widget.
     			editor.addMenuItem( 'widgetEdit', {
     				// Item label.
@@ -68,7 +68,7 @@ openRemoteModal() is part of contentbox js
     				command : 'widgetModal',
     				// Context menu group that this entry belongs to.
     				group : 'clipboard'
-    			});
+    			} );
                 // Register a new context menu item for removing widget.
     			editor.addMenuItem( 'widgetRemove', {
     				// Item label.
@@ -79,12 +79,12 @@ openRemoteModal() is part of contentbox js
     				command : 'widgetRemove',
     				// Context menu group that this entry belongs to.
     				group : 'clipboard'
-    			});
+    			} );
 			}
 			if (editor.contextMenu) {
 				editor.contextMenu.addListener(function(element, selection) {
 					return { cbWidget: CKEDITOR.TRISTATE_ON };
-				});
+				} );
 				// listener for right-click on <widget> element (and only <widget> element)
     			editor.contextMenu.addListener( function( element ) {
     				// Get to the closest <widget> element that contains the selection.
@@ -96,7 +96,7 @@ openRemoteModal() is part of contentbox js
                            widgetRemove: CKEDITOR.TRISTATE_OFF
                        };
                    }
-    			});
+    			} );
 			}
             // add double-click handler
             editor.on( 'doubleclick', function( evt ) {
@@ -110,7 +110,7 @@ openRemoteModal() is part of contentbox js
                     // stop event so it doesn't keep bubbling
                     evt.cancel();
                 }
-            });
+            } );
 		}
-	});
-})();
+	} );
+} )();

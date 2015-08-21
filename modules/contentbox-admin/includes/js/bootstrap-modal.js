@@ -3,7 +3,7 @@
  * ===========================================================
  * Copyright 2012 Jordan Schroter
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License" );
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -43,7 +43,7 @@
 			this.options.remote && this.$element.find('.modal-body').load(this.options.remote, function () {
 				var e = $.Event('loaded');
 				that.$element.trigger(e);
-			});
+			} );
 
 			var manager = typeof this.options.manager === 'function' ?
 				this.options.manager.call(this) : this.options.manager;
@@ -119,7 +119,7 @@
 					} else {
 						return -($(this).width() / 2) + 'px';
 					}
-				});
+				} );
 			} else {
 				this.$element.css('width', '');
 				this.$element.css('margin-left', '');
@@ -159,8 +159,8 @@
 
 						that.$element.find('[data-tabindex]:enabled:visible:not([readonly])').each(function (ev) {
 							elements.push(Number($(this).data('tabindex')));
-						});
-						elements.sort(function(a,b){return a-b});
+						} );
+						elements.sort(function(a,b){return a-b} );
 						
 						var arrayPos = $.inArray(tabindex, elements);
 						if (!e.shiftKey){
@@ -175,7 +175,7 @@
 						
 						e.preventDefault();
 					}
-				});
+				} );
 			} else if (!this.isShown) {
 				this.$element.off('keydown.tabindex.modal');
 			}
@@ -188,7 +188,7 @@
 
 				this.$element.on('keyup.dismiss.modal', function (e) {
 					e.which == 27 && that.hide();
-				});
+				} );
 			} else if (!this.isShown) {
 				this.$element.off('keyup.dismiss.modal')
 			}
@@ -204,7 +204,7 @@
 			this.$element.one($.support.transition.end, function () {
 				clearTimeout(timeout);
 				that.hideModal();
-			});
+			} );
 		},
 
 		hideModal: function () {
@@ -255,7 +255,7 @@
 
 				var that = this;
 				$.support.transition && this.$element.hasClass('fade')?
-					this.$loading.one($.support.transition.end, function () { that.removeLoading() }) :
+					this.$loading.one($.support.transition.end, function () { that.removeLoading() } ) :
 					that.removeLoading();
 
 			} else if (callback) {
@@ -326,12 +326,12 @@
 		return this.each(function () {
 			var $this = $(this),
 				data = $this.data('modal'),
-				options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option);
+				options = $.extend( {}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option);
 
 			if (!data) $this.data('modal', (data = new Modal(this, options)));
 			if (typeof option == 'string') data[option].apply(data, [].concat(args));
 			else if (options.show) data.show()
-		})
+		} )
 	};
 
 	$.fn.modal.defaults = {
@@ -364,15 +364,15 @@
 			var $this = $(this),
 				href = $this.attr('href'),
 				$target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))), //strip for ie7
-				option = $target.data('modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data());
+				option = $target.data('modal') ? 'toggle' : $.extend( { remote: !/#/.test(href) && href }, $target.data(), $this.data());
 
 			e.preventDefault();
 			$target
 				.modal(option)
 				.one('hide', function () {
 					$this.focus();
-				})
-		});
-	});
+				} )
+		} );
+	} );
 
 }(window.jQuery);

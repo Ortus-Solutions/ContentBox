@@ -4,10 +4,10 @@
 	<div class="FBG_resize">
 		<div class="left">
 		  <h2>Categories</h2>
-		  #cb.widget(name="Categories")#
+		  #cb.widget(name="Categories" )#
 		</div>
 		<div class="left">
-		  #cb.widget("Meta")#
+		  #cb.widget( "Meta" )#
 		</div>
 		<div class="left">
 		  <h2>RSS Feeds</h2>
@@ -26,8 +26,8 @@
 </div>
 <div class="footer">
 	<!--- contentboxEvent --->
-	#cb.event("cbui_footer")#
+	#cb.event( "cbui_footer" )#
 	<div class="clr"></div>
 </div> 
-#cb.themeSetting("googleAnalyticsAPI","")#
+#cb.themeSetting( "googleAnalyticsAPI","" )#
 </cfoutput>

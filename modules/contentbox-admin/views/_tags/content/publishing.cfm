@@ -76,7 +76,7 @@
         </div>
         <!--- expire date --->
         <div class="form-group">
-            #html.label(class="control-label",field="expireDate",content="Expiration Date")#
+            #html.label(class="control-label",field="expireDate",content="Expiration Date" )#
             <div class="controls row">
                 <div class="col-md-6">
                     <div class="input-group">
@@ -154,7 +154,7 @@
         </div>
          <!--- Loader --->
         <div class="loaders" id="uploadBarLoader">
-            <i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+            <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
             <div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
         </div>
     </div>

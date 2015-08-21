@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-md-8">
 		<!--- MessageBox --->
-		#getPlugin( "MessageBox" ).renderit()#
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -15,14 +15,14 @@
 		<!--- Info Bar --->
 		<cfif NOT prc.cbSettings.cb_comments_enabled>
 			<div class="alert alert-info">
-				<i class="fa fa-exclamation icon-large"></i>
+				<i class="fa fa-exclamation fa-lg"></i>
 				Comments are currently disabled site-wide!
 			</div>
 		</cfif>
 		<!--- pageForm --->
 		#html.startForm(name="pageForm",action=prc.xehPageRemove)#
-			#html.hiddenField(name="contentStatus",value="")#
-			#html.hiddenField(name="contentID",value="")#
+			#html.hiddenField(name="contentStatus",value="" )#
+			#html.hiddenField(name="contentID",value="" )#
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
@@ -43,7 +43,7 @@
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission("PAGES_ADMIN")>
+								    		<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
 								    			<li>
 								    				<a href="javascript:bulkRemove()" 
 								    					class="confirmIt"
@@ -68,10 +68,10 @@
 								    				<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a>
 								    			</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_EXPORT")>
+											<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 												<li class="dropdown-submenu">
 													<a href="javascript:null">
-														<i class="fa fa-download icon-large"></i> Export All
+														<i class="fa fa-download fa-lg"></i> Export All
 													</a>
 													<ul class="dropdown-menu text-left">
 														<li>
@@ -107,7 +107,7 @@
 				<div class="panel-body">
 					<!--- pages container --->
     				<div id="pagesTableContainer">
-    					<p class="text-center"><i id="pageLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i></p>
+    					<p class="text-center"><i id="pageLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i></p>
     				</div>
 				</div>
 			</div>
@@ -120,7 +120,7 @@
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
-					#html.startForm(name="pageFilterForm", action=prc.xehPageSearch, class="form-vertical",role="form")#
+					#html.startForm(name="pageFilterForm", action=prc.xehPageSearch, class="form-vertical",role="form" )#
 						<!--- Authors --->
 						<div class="form-group">
 					        <label for="fAuthors" class="control-label">Authors:</label>
@@ -179,11 +179,11 @@
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
-					<li><i class="fa fa-lightbulb-o icon-large"></i> Right click on a row to activate quick look!</li>
-					<li><i class="fa fa-lightbulb-o icon-large"></i> Sorting is only done within your paging window</li>
-					<li><i class="fa fa-lightbulb-o icon-large"></i> Quick Filtering is only for viewed results</li>
-					<li><i class="fa fa-lightbulb-o icon-large"></i> Cloning does not copy comments or version history</li>
-					<li><i class="fa fa-lightbulb-o icon-large"></i> You can quickly order the pages by dragging the rows</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> Right click on a row to activate quick look!</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> Sorting is only done within your paging window</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> Quick Filtering is only for viewed results</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> Cloning does not copy comments or version history</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> You can quickly order the pages by dragging the rows</li>
 				</ul>
 		    </div>
 		</div>
@@ -191,7 +191,7 @@
 </div>
 
 <!--- Clone Dialog --->
-<cfif prc.oAuthor.checkPermission("PAGES_EDITOR,PAGES_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Page Cloning",
@@ -205,7 +205,7 @@
 	</cfscript>
 	#renderView( view="_tags/dialog/clone", args=dialogArgs )#
 </cfif>
-<cfif prc.oAuthor.checkPermission("PAGES_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Pages",

@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * This simulates the onRequest start for the admin interface
 */
 component extends="coldbox.system.Interceptor"{
@@ -16,7 +20,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess(event, interceptData) eventPattern="^(contentbox-admin|contentbox-security)"{
+	function preProcess( event, interceptData ) eventPattern="^(contentbox-admin|contentbox-security)"{
 		var prc = event.getCollection(private=true);
 		var rc	= event.getCollection();
 
@@ -28,13 +32,13 @@ component extends="coldbox.system.Interceptor"{
 		// store module root
 		prc.cbRoot = getContextRoot() & event.getModuleRoot('contentbox-admin');
 		// cb helper
-		prc.CBHelper = getMyPlugin(plugin="CBHelper",module="contentbox");
+		prc.CBHelper = getModel( "CBHelper@cb" );
 		// store admin module entry point
-		prc.cbAdminEntryPoint = getModuleSettings("contentbox-admin").entryPoint;
+		prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 		// store site entry point
-		prc.cbEntryPoint = getModuleSettings("contentbox-ui").entryPoint;
+		prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
 		// store filebrowser entry point
-		prc.cbFileBrowserEntryPoint = getModuleSettings("contentbox-filebrowser").entryPoint;
+		prc.cbFileBrowserEntryPoint = getModuleConfig( "contentbox-filebrowser" ).entryPoint;
 		// Place user in prc
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global cb options on scope

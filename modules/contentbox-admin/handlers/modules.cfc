@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage modules
 */
 component extends="baseHandler"{
@@ -6,21 +10,22 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="moduleService"	inject="id:moduleService@cb";
 	property name="cb" 				inject="cbHelper@cb";
-	property name="messagebox"		inject="coldbox:plugin:MessageBox";
 
+	// PrePost Actions
 	this.prehandler_except = "execute";
 
 	// pre handler
-	function preHandler(event,action,eventArguments,rc,prc){
+	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
 		prc.tabModules = true;
 	}
 
 	// Build Module Links
 	function buildModuleLink( event, rc, prc ){
-		return cb.buildModuleLink(module=event.getValue( "module","" ),
-								  linkTo=event.getValue( "moduleEvent","" ),
-								  queryString=event.getValue( "moduleQS","" ));
+		return cb.buildModuleLink(
+			module		= event.getValue( "module","" ),
+			linkTo		= event.getValue( "moduleEvent","" ),
+			queryString	= event.getValue( "moduleQS","" ));
 	}
 
 	// proxy a call to a module, all module calls are supposed to return content
@@ -56,13 +61,13 @@ component extends="baseHandler"{
 		if( !isNull( results ) ){ return results; }
 
 		// stash the module view, so it renders in the admin layout if not set already
-		if( !structKeyExists( prc, "viewModule") or !len( prc.viewModule )) {
+		if( !structKeyExists( prc, "viewModule" ) or !len( prc.viewModule )) {
 			prc.viewModule = module.getName();
 		}
 		// Check for renderData
 		if( structIsEmpty( event.getRenderData() ) ){
 			// else normal ColdBox Rendering
-			return controller.getPlugin( "Renderer" ).renderLayout();
+			return controller.getRenderer().renderLayout();
 		}
 
 	}
@@ -90,7 +95,7 @@ component extends="baseHandler"{
 		prc.modulesCount = modules.count;
 
 		// ForgeBox Entry URL
-		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).settings.forgeBoxEntryURL;
+		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
 		// ForgeBox Stuff
 		prc.forgeBoxSlug = "contentbox-modules";
 		prc.forgeBoxInstallDir = URLEncodedFormat( moduleService.getModulesPath() );
@@ -141,7 +146,7 @@ component extends="baseHandler"{
 
 		// Verify
 		if( len( fp ) eq 0){
-			messagebox.setMessage(type="warning", message="Please choose a file to upload" );
+			messagebox.warn( "Please choose a file to upload" );
 		}
 		else{
 			// Upload File
@@ -158,12 +163,11 @@ component extends="baseHandler"{
 					registered successfully by looking below in your modules listing.  Some modules need some manual installations so please verify the file structure in your
 					media manager modules library.  If the module does not appear below, then it was not a valid module installation and some manual work is needed." );
 				}
-			}
-			catch(Any e){
+			} catch( Any e ){
 				messagebox.error( "Error Installing Module: #e.detail# #e.message#" );
 			}
 		}
 
-		setNextEvent(prc.xehModules);
+		setNextEvent( prc.xehModules );
 	}
 }

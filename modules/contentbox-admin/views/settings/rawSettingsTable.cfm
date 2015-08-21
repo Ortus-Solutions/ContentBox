@@ -34,9 +34,9 @@
 					<!--- Edit Command --->
 					<a class="btn btn-sm btn-primary" href="javascript:edit('#setting.getSettingId()#',
 											 '#HTMLEditFormat( setting.getName() )#',
-											 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting"><i class="fa fa-edit icon-large"></i></a>
+											 '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#')" title="Edit Setting"><i class="fa fa-edit fa-lg"></i></a>
 					<!--- Delete Command --->
-					<a class="btn btn-sm btn-danger" title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Setting?"><i class="fa fa-trash-o icon-large" id="delete_#setting.getsettingID()#"></i></a>
+					<a class="btn btn-sm btn-danger" title="Delete Setting" href="javascript:remove('#setting.getsettingID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Setting?"><i class="fa fa-trash-o fa-lg" id="delete_#setting.getsettingID()#"></i></a>
 				</div>
 			</td>
 		</tr>
@@ -46,7 +46,7 @@
 
 <!--- Paging --->
 <cfif !rc.viewAll>
-	#prc.pagingPlugin.renderit(
+	#prc.oPaging.renderit(
 		foundRows=prc.settingsCount, 
 		link=prc.pagingLink, 
 		asList=true

@@ -9,7 +9,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -29,7 +29,7 @@ limitations under the License.
 	<div class="post-top-gap"></div>
 
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_preIndexDisplay")#
+	#cb.event( "cbui_preIndexDisplay" )#
 
 	<!--- Are we filtering by category? --->
 	<cfif cb.categoryFilterExists()>
@@ -64,6 +64,6 @@ limitations under the License.
 	<div class="contentBar">#cb.quickPaging()#</div>
 
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_postIndexDisplay")#
+	#cb.event( "cbui_postIndexDisplay" )#
 
 </cfoutput>

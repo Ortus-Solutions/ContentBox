@@ -3,7 +3,7 @@
 <div class="post-top-gap"></div>
 
 <!--- ContentBoxEvent --->
-#cb.event("cbui_preArchivesDisplay")#
+#cb.event( "cbui_preArchivesDisplay" )#
 
 <!--- Title --->
 <h1>Blog Archives - #cb.getCurrentEntriesCount()# Record(s)</h1>
@@ -32,5 +32,5 @@
 <div class="contentBar">#cb.quickPaging()#</div>
 
 <!--- ContentBoxEvent --->
-#cb.event("cbui_postArchivesDisplay")#
+#cb.event( "cbui_postArchivesDisplay" )#
 </cfoutput>

@@ -1,7 +1,7 @@
 <cfoutput>
 <!--- Mail Server Settings --->
 <fieldset>
-    <legend><i class="fa fa-laptop icon-large"></i> <strong>Mail Server</strong></legend>
+    <legend><i class="fa fa-laptop fa-lg"></i> <strong>Mail Server</strong></legend>
     <p>By default ContentBox will use the mail settings in your application server.  You can override those settings by completing
        the settings below</p>
     <!--- Mail Server --->
@@ -121,7 +121,7 @@
     <hr/>
     <div id="emailTestDiv"></div>
     <button id="emailTestButton" class="btn btn-primary" title="Send a test email with these settings" onclick="return emailTest()">
-        <i class="fa fa-spinner icon-large" id="iTest"></i> Test Connection
+        <i class="fa fa-spinner fa-lg" id="iTest"></i> Test Connection
     </button>
 </fieldset>
 </cfoutput>

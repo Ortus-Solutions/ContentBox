@@ -4,18 +4,18 @@
  * 
    JS on Load:
    $(document).ready(function() {
-   		$("##productFilter").keyup(function(){
-			$.uiDivFilter( $(".ProductCollectionTab"), this.value, divIsHidden )
-		})
-	})
+   		$( "##productFilter" ).keyup(function(){
+			$.uiDivFilter( $( ".ProductCollectionTab" ), this.value, divIsHidden )
+		} )
+	} )
 	
 	//Callback when items are hidden
    function divIsHidden(elem){
-		var words = elem.attr("id").split("_");
+		var words = elem.attr( "id" ).split( "_" );
 		var id = words[1];
 		
 		if( id ){
-			var pvtab = $("##pvtab_"+id);
+			var pvtab = $( "##pvtab_"+id);
 			pvtab.hide();
 		}
 	}
@@ -54,7 +54,7 @@ jQuery.uiDivFilter = function(jq, phrase, ifHidden, ifShown){
 		return false
 	};
 	var phrase_length = phrase.length;
-	var words = phrase.toLowerCase().split(" ");
+	var words = phrase.toLowerCase().split( " " );
 	var test = "";
 	
 	// Search Method
@@ -76,7 +76,7 @@ jQuery.uiDivFilter = function(jq, phrase, ifHidden, ifShown){
 	if( (words.length > 1) && (phrase.substr(0, phrase_length - 1) === this.last_phrase) ) {
 		var words = words[words.length-1];
 		this.last_phrase = phrase;
-		jq.filter(":visible").each( search_text );
+		jq.filter( ":visible" ).each( search_text );
 	}
 	else {
 		this.last_phrase = phrase;

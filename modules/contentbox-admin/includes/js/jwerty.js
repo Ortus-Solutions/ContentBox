@@ -298,14 +298,14 @@
 
                         // Go from match 1 and capture all key-comobs up to match 2
                         for (rangeI = rangeMatches[1]; rangeI < rangeMatches[2]; ++rangeI) {
-                            optionals.push({
+                            optionals.push( {
                                 altKey: keyCombo.altKey,
                                 shiftKey: keyCombo.shiftKey,
                                 metaKey: keyCombo.metaKey,
                                 ctrlKey: keyCombo.ctrlKey,
                                 keyCode: rangeI,
                                 jwertyCombo: String(jwertyCodeFragment)
-                            });
+                            } );
 
                         }
                         keyCombo.keyCode = rangeI;

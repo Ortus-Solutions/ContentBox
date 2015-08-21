@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-edit icon-large"></i> Editor Options</legend>
+    <legend><i class="fa fa-edit fa-lg"></i> Editor Options</legend>
         <!--- Default Editor --->
         <div class="form-group">
             <label class="control-label" for="cb_editors_default">Default Editor:</label>

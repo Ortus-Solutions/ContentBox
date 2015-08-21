@@ -105,16 +105,6 @@
 				#renderView()#
 			</section>
 		</div>
-		<!---
-		<footer id="footer" class="clearfix">
-			<div class="pull-right" id="footerLogo">
-				<a href="http://www.gocontentbox.org" target="_blank"><img src="#prc.assetRoot#/includes/images/ContentBox_90.png" alt="Logo" /></a>
-			</div>
-			Copyright (C) #dateformat(now(),"yyyy")# 
-			<a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>.<br/>
-			<a href="http://www.ortussolutions.com">#cb.r( "layout.ortus_poss@installer" )#</a>
-		</footer>
-		--->
 	</body>
 	<!--End Body-->
 </html>

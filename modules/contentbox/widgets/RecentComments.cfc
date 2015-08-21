@@ -1,18 +1,15 @@
 ﻿/**
 * A cool basic widget that shows N recent comments
 */
-component extends="contentbox.model.ui.BaseWidget" singleton{
+component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	RecentComments function init(controller){
-		// super init
-		super.init(controller);
-
+	RecentComments function init(){
 		// Widget Properties
-		setPluginName("RecentComments");
-		setPluginVersion("1.0");
-		setPluginDescription("A cool basic widget that shows N recent comments from any content object");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setName( "RecentComments" );
+		setVersion( "1.0" );
+		setDescription( "A cool basic widget that shows N recent comments from any content object" );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "comment-add.png" );
 		setCategory( "Content" );
 		return this;
@@ -25,7 +22,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	* @title.hint An optional title to display using an H2 tag.
 	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(numeric max=5,numeric maxChars=80,string title="",string titleLevel="2"){
+	any function renderIt(numeric max=5,numeric maxChars=80,string title="",string titleLevel="2" ){
 		var event 			= getRequestContext();
 		var cbSettings 		= event.getValue(name="cbSettings",private=true);
 		var commentResults 	= commentService.findApprovedComments(max=arguments.max);
@@ -39,7 +36,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
 			// UL start
 			writeOutput('<ul id="recentComments">');
 			// iterate and create
@@ -48,7 +45,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 				<a href="#cb.linkComment(commentResults.comments[ x ])#">#left(commentResults.comments[ x ].getContent(),arguments.maxChars)#</a></li>');
 			}
 			// close ul
-			writeOutput("</ul>");
+			writeOutput( "</ul>" );
 		}
 
 		return rString;

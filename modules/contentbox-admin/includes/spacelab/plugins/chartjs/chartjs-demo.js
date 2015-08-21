@@ -22,7 +22,7 @@
 			
 			];
 
-	var myDoughnut = new Chart(document.getElementById("doughnut").getContext("2d")).Doughnut(doughnutData);
+	var myDoughnut = new Chart(document.getElementById( "doughnut" ).getContext( "2d" )).Doughnut(doughnutData);
 
 
 			var lineChartData = {
@@ -46,7 +46,7 @@
 			
 		}
 
-	var myLine = new Chart(document.getElementById("line").getContext("2d")).Line(lineChartData);
+	var myLine = new Chart(document.getElementById( "line" ).getContext( "2d" )).Line(lineChartData);
 
 
 	var barChartData = {
@@ -66,7 +66,7 @@
 			
 		}
 
-	var myLine = new Chart(document.getElementById("bar").getContext("2d")).Bar(barChartData);
+	var myLine = new Chart(document.getElementById( "bar" ).getContext( "2d" )).Bar(barChartData);
 
 	var chartData = [
 			{
@@ -94,7 +94,7 @@
 				color: "#584A5E"
 			}
 		];
-	var myPolarArea = new Chart(document.getElementById("polarArea").getContext("2d")).PolarArea(chartData);
+	var myPolarArea = new Chart(document.getElementById( "polarArea" ).getContext( "2d" )).PolarArea(chartData);
 
 
 

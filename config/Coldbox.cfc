@@ -1,70 +1,52 @@
-<!---
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
+/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* ColdBox Configuration
+*/
+component{
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
- --->
-<cfcomponent output="false" hint="My App Configuration">
-<cfscript>
 	// Configure ColdBox Application
 	function configure(){
 
 		// coldbox directives
 		coldbox = {
 			//Application Setup
-			appName 				= "ContentBox Modular CMS",
+			appName 					= "ContentBox Modular CMS",
 
 			//Development Settings
-			debugMode				= false,
-			debugPassword			= "@fwPassword@",
-			reinitPassword			= "@fwPassword@",
-			handlersIndexAutoReload = false,
+			reinitPassword				= "@fwPassword@",
+			handlersIndexAutoReload 	= false,
 
 			//Implicit Events
-			defaultEvent						= "Main.index",
+			defaultEvent				= "Main.index",
 			requestStartHandler			= "",
 			requestEndHandler			= "",
-			applicationStartHandler 		= "",
+			applicationStartHandler 	= "",
 			applicationEndHandler		= "",
-			sessionStartHandler 			= "",
+			sessionStartHandler 		= "",
 			sessionEndHandler			= "",
-			missingTemplateHandler	= "",
+			missingTemplateHandler		= "",
 
 			//Extension Points
-			UDFLibraryFile 				= "",
-			coldboxExtensionsLocation 	= "",
-			modulesExternalLocation		= [],
-			pluginsExternalLocation 	= "",
+			applicationHelper 			= "",
+			viewsHelper					= "",
+			modulesExternalLocation		= [ "/cbapp/modules" ],
 			viewsExternalLocation		= "",
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
 			requestContextDecorator 	= "",
+			controllerDecorator			= "",
 
 			//Error/Exception Handling
 			exceptionHandler			= "",
 			onInvalidEvent				= "",
-			customErrorTemplate	= "",
+			customErrorTemplate			= "",
 
 			//Application Aspects
-			handlerCaching 	= true,
-			eventCaching			= true
+			handlerCaching 				= true,
+			eventCaching				= true
 		};
 
 		// custom settings
@@ -76,7 +58,7 @@ limitations under the License.
 		// create a function with the name of the environment so it can be executed if that environment is detected
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
-			development = "local,jfetmac"
+			development = "local,127\.0\.0\.1"
 		};
 
 		// Module Directives
@@ -93,7 +75,7 @@ limitations under the License.
 		logBox = {
 			// Define Appenders
 			appenders = {
-				coldboxTracer = { class="coldbox.system.logging.appenders.ColdboxTracerAppender" }
+				console = { class="coldbox.system.logging.appenders.ConsoleAppender" }
 			},
 			// Root Logger
 			root = { levelmax="INFO", appenders="*" }
@@ -101,10 +83,17 @@ limitations under the License.
 
 		//Layout Settings
 		layoutSettings = {
-			defaultLayout = "Main.cfm"
+			defaultLayout = "",
+			defaultView   = ""
 		};
 
-		// ORM
+		//Interceptor Settings
+		interceptorSettings = {
+			throwOnInvalidStates = false,
+			customInterceptionPoints = ""
+		};
+
+		// ORM Module Configuration
 		orm = {
 			// Enable Injection
 			injection = {
@@ -115,7 +104,7 @@ limitations under the License.
 		//Register interceptors as an array, we need order
 		interceptors = [
 			//SES
-			{class="coldbox.system.interceptors.SES"}
+			{ class="coldbox.system.interceptors.SES" }
 		];
 
 	}
@@ -125,27 +114,21 @@ limitations under the License.
 
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
-		coldbox.handlerCaching = false;
-		coldbox.reinitpassword = "";
-		coldbox.debugpassword = "";
-		//wirebox.singletonreload = true;
-
-		//Debugger Settings
-		debugger.showRCPanel = false;
+		coldbox.handlerCaching 			= false;
+		coldbox.reinitpassword			= "";
+		coldbox.customErrorTemplate 	= "/coldbox/system/includes/BugReport.cfm";
 
 		// debugging file
-		/**
-		logbox.appenders.files={class="coldbox.system.logging.appenders.AsyncRollingFileAppender",
+		logbox.appenders.files = { 
+			class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {
-				filename = "ContentBox", filePath="../logs"
+				filename = "ContentBox", filePath="/cbapp/logs", async=true
 			}
 		};
-		***/
-		//logbox.debug = ["coldbox.system.interceptors.Security"];
-		//logbox.debug = [ "coldbox.system.aop" ];
-		logbox.debug = ["root"];
+		//logbox.debug 	= ["coldbox.system.interceptors.Security"];
+		//logbox.debug 	= [ "coldbox.system.aop" ];
+		//logbox.debug 	= [ "root" ];
 
 	}
 
-</cfscript>
-</cfcomponent>
+}

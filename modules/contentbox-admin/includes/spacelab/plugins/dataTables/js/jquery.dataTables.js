@@ -1031,7 +1031,7 @@
 			if ( oSettings.iDrawError != oSettings.iDraw && oCol.sDefaultContent === null )
 			{
 				_fnLog( oSettings, 0, "Requested unknown parameter "+
-					(typeof oCol.mData=='function' ? '{function}' : "'"+oCol.mData+"'")+
+					(typeof oCol.mData=='function' ? '{function}' : "'"+oCol.mData+"'" )+
 					" for row "+iRow, 4 );
 				oSettings.iDrawError = oSettings.iDraw;
 			}
@@ -1172,7 +1172,7 @@
 							// If a string is given in between the array notation indicators, that
 							// is used to join the strings together, otherwise an array is returned
 							var join = arrayNotation[0].substring(1, arrayNotation[0].length-1);
-							data = (join==="") ? out : out.join(join);
+							data = (join==="" ) ? out : out.join(join);
 	
 							// The inner call to fetchData has already traversed through the remainder
 							// of the source requested, so we exit from the loop
@@ -3603,7 +3603,7 @@
 			// - which is shouldn't. When there is a scrollbar we need to take this
 			// into account.
 			if ( ie67 && (table.find('tbody').height() > divBodyEl.offsetHeight ||
-				divBody.css('overflow-y') == "scroll")
+				divBody.css('overflow-y') == "scroll" )
 			) {
 				tableStyle.width = _fnStringToCss( table.outerWidth() - barWidth);
 			}
@@ -3697,13 +3697,13 @@
 		{
 			// The min width depends upon if we have a vertical scrollbar visible or not */
 			correction = ((divBodyEl.scrollHeight > divBodyEl.offsetHeight ||
-				divBody.css('overflow-y') == "scroll")) ?
+				divBody.css('overflow-y') == "scroll" )) ?
 					sanityWidth+barWidth :
 					sanityWidth;
 	
 			// IE6/7 are a law unto themselves...
 			if ( ie67 && (divBodyEl.scrollHeight >
-				divBodyEl.offsetHeight || divBody.css('overflow-y') == "scroll")
+				divBodyEl.offsetHeight || divBody.css('overflow-y') == "scroll" )
 			) {
 				tableStyle.width = _fnStringToCss( correction-barWidth );
 			}
@@ -4998,12 +4998,12 @@
 		 *  @param {string|node|jQuery} sSelector jQuery selector or node collection to act on
 		 *  @param {object} [oOpts] Optional parameters for modifying the rows to be included
 		 *  @param {string} [oOpts.filter=none] Select TR elements that meet the current filter
-		 *    criterion ("applied") or all TR elements (i.e. no filter).
+		 *    criterion ( "applied" ) or all TR elements (i.e. no filter).
 		 *  @param {string} [oOpts.order=current] Order of the TR elements in the processed array.
 		 *    Can be either 'current', whereby the current sorting of the table is used, or
 		 *    'original' whereby the original order the data was read into the table is used.
 		 *  @param {string} [oOpts.page=all] Limit the selection to the currently displayed page
-		 *    ("current") or not ("all"). If 'current' is given, then order is assumed to be
+		 *    ( "current" ) or not ( "all" ). If 'current' is given, then order is assumed to be
 		 *    'current' and filter is 'applied', regardless of what they might be given as.
 		 *  @returns {object} jQuery object, filtered by the given selector.
 		 *  @dtopt API
@@ -5024,7 +5024,7 @@
 		 *      // Filter to rows with 'Webkit' in them, add a background colour and then
 		 *      // remove the filter, thus highlighting the 'Webkit' rows only.
 		 *      oTable.fnFilter('Webkit');
-		 *      oTable.$('tr', {"search": "applied"}).css('backgroundColor', 'blue');
+		 *      oTable.$('tr', {"search": "applied"} ).css('backgroundColor', 'blue');
 		 *      oTable.fnFilter('');
 		 *    } );
 		 */
@@ -5046,12 +5046,12 @@
 		 *  @param {string|node|jQuery} sSelector jQuery selector or node collection to act on
 		 *  @param {object} [oOpts] Optional parameters for modifying the rows to be included
 		 *  @param {string} [oOpts.filter=none] Select elements that meet the current filter
-		 *    criterion ("applied") or all elements (i.e. no filter).
+		 *    criterion ( "applied" ) or all elements (i.e. no filter).
 		 *  @param {string} [oOpts.order=current] Order of the data in the processed array.
 		 *    Can be either 'current', whereby the current sorting of the table is used, or
 		 *    'original' whereby the original order the data was read into the table is used.
 		 *  @param {string} [oOpts.page=all] Limit the selection to the currently displayed page
-		 *    ("current") or not ("all"). If 'current' is given, then order is assumed to be
+		 *    ( "current" ) or not ( "all" ). If 'current' is given, then order is assumed to be
 		 *    'current' and filter is 'applied', regardless of what they might be given as.
 		 *  @returns {array} Data for the matched elements. If any elements, as a result of the
 		 *    selector, were not TR, TD or TH elements in the DataTable, they will have a null
@@ -5076,7 +5076,7 @@
 		 *
 		 *      // Filter to 'Webkit' and get all data for
 		 *      oTable.fnFilter('Webkit');
-		 *      var data = oTable._('tr', {"search": "applied"});
+		 *      var data = oTable._('tr', {"search": "applied"} );
 		 *
 		 *      // Do something with the data
 		 *      alert( data.length+" rows matched the search" );
@@ -5121,7 +5121,7 @@
 		 *    </ul>
 		 *  @param {bool} [redraw=true] redraw the table or not
 		 *  @returns {array} An array of integers, representing the list of indexes in
-		 *    <i>aoData</i> ({@link DataTable.models.oSettings}) that have been added to
+		 *    <i>aoData</i> ( {@link DataTable.models.oSettings} ) that have been added to
 		 *    the table.
 		 *  @dtopt API
 		 *  @deprecated Since v1.10
@@ -6173,7 +6173,7 @@
 			oSettings.nTBody = tbody[0];
 			
 			var tfoot = $(this).children('tfoot');
-			if ( tfoot.length === 0 && captions.length > 0 && (oSettings.oScroll.sX !== "" || oSettings.oScroll.sY !== "") )
+			if ( tfoot.length === 0 && captions.length > 0 && (oSettings.oScroll.sX !== "" || oSettings.oScroll.sY !== "" ) )
 			{
 				// If we are a scrolling table, and no footer has been given, then we need to create
 				// a tfoot element for the caption element to be appended to
@@ -9866,9 +9866,9 @@
 	
 		/**
 		 * When rendering large numbers in the information element for the table
-		 * (i.e. "Showing 1 to 10 of 57 entries") DataTables will render large numbers
+		 * (i.e. "Showing 1 to 10 of 57 entries" ) DataTables will render large numbers
 		 * to have a comma separator for the 'thousands' units (e.g. 1 million is
-		 * rendered as "1,000,000") to help readability for the end user. This
+		 * rendered as "1,000,000" ) to help readability for the end user. This
 		 * function will override the default method DataTables uses.
 		 *  @type function
 		 *  @member
@@ -9885,7 +9885,7 @@
 		 *      $('#example').dataTable( {
 		 *        "formatNumber": function ( toFormat ) {
 		 *          return toFormat.toString().replace(
-		 *            /\B(?=(\d{3})+(?!\d))/g, "'"
+		 *            /\B(?=(\d{3} )+(?!\d))/g, "'"
 		 *          );
 		 *        };
 		 *      } );
@@ -9893,7 +9893,7 @@
 		 */
 		"fnFormatNumber": function ( toFormat ) {
 			return toFormat.toString().replace(
-				/\B(?=(\d{3})+(?!\d))/g,
+				/\B(?=(\d{3} )+(?!\d))/g,
 				this.oLanguage.sThousands
 			);
 		},
@@ -11382,7 +11382,7 @@
 		 *            }
 		 *          }
 		 *        } ]
-		 *      });
+		 *      } );
 		 *    } );
 		 */
 		"fnCreatedCell": null,
@@ -12997,7 +12997,7 @@
 		 * 2. `{array|object}` Data for the row to be processed (same as the
 		 *    original format that was passed in as the data source, or an array
 		 *    from a DOM data source
-		 * 3. `{int}` Row index ({@link DataTable.models.oSettings.aoData}), which
+		 * 3. `{int}` Row index ( {@link DataTable.models.oSettings.aoData} ), which
 		 *    can be useful to retrieve the `TR` element if you need DOM interaction.
 		 *
 		 * And the following return is expected:
@@ -13256,7 +13256,7 @@
 			 *
 			 *  @example
 			 *    $.fn.dataTable.ext.type.search['title-numeric'] = function ( d ) {
-			 *      return d.replace(/\n/g," ").replace( /<.*?>/g, "" );
+			 *      return d.replace(/\n/g," " ).replace( /<.*?>/g, "" );
 			 *    }
 			 */
 			search: {},
@@ -13310,7 +13310,7 @@
 			 *    // Numeric ordering of formatted numbers with a pre-formatter
 			 *    $.extend( $.fn.dataTable.ext.type.order, {
 			 *      "string-pre": function(x) {
-			 *        a = (a === "-" || a === "") ? 0 : a.replace( /[^\d\-\.]/g, "" );
+			 *        a = (a === "-" || a === "" ) ? 0 : a.replace( /[^\d\-\.]/g, "" );
 			 *        return parseFloat( a );
 			 *      }
 			 *    } );
@@ -14210,6 +14210,6 @@
 	 */
 
 	return $.fn.dataTable;
-}));
+} ));
 
 }(window, document));

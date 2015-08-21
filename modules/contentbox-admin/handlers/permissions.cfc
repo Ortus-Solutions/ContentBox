@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Manage permissions
 */
 component extends="baseHandler"{
@@ -27,7 +27,7 @@ component extends="baseHandler"{
 		// Tab
 		prc.tabUsers_Permissions = true;
 		// view
-		event.setView("permissions/index");
+		event.setView( "permissions/index" );
 	}
 
 	// save
@@ -37,13 +37,13 @@ component extends="baseHandler"{
 		// populate and get
 		var oPermission = populateModel( permissionService.get(id=rc.permissionID) );
     	// announce event
-		announceInterception("cbadmin_prePermissionSave",{permission=oPermission,permissionID=rc.permissionID});
+		announceInterception( "cbadmin_prePermissionSave",{permission=oPermission,permissionID=rc.permissionID} );
 		// save permission
 		permissionService.save( oPermission );
 		// announce event
-		announceInterception("cbadmin_postPermissionSave",{permission=oPermission});
+		announceInterception( "cbadmin_postPermissionSave",{permission=oPermission} );
 		// messagebox
-		getPlugin("MessageBox").setMessage("info","Permission saved!");
+		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Permission saved!" );
 		// relocate
 		setNextEvent( prc.xehPermissions );
 	}
@@ -51,35 +51,35 @@ component extends="baseHandler"{
 	// remove
 	function remove(event,rc,prc){
 		// announce event
-		announceInterception("cbadmin_prePermissionRemove",{permissionID=rc.permissionID});
+		announceInterception( "cbadmin_prePermissionRemove",{permissionID=rc.permissionID} );
 		// delete by id
 		if( !permissionService.deletePermission( rc.permissionID ) ){
-			getPlugin("MessageBox").setMessage("warning","Invalid Permission detected!");
+			getModel( "messagebox@cbMessagebox" ).setMessage( "warning","Invalid Permission detected!" );
 		}
 		else{
 			// announce event
-			announceInterception("cbadmin_postPermissionRemove",{permissionID=rc.permissionID});
+			announceInterception( "cbadmin_postPermissionRemove",{permissionID=rc.permissionID} );
 			// Message
-			getPlugin("MessageBox").setMessage("info","Permission and all relationships Removed!");
+			getModel( "messagebox@cbMessagebox" ).setMessage( "info","Permission and all relationships Removed!" );
 		}
 		setNextEvent( prc.xehPermissions );
 	}
 	
 	// Export All Permissions
 	function exportAll(event,rc,prc){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = permissionService.getAllForExport();
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Permissions." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="permissions")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); ; 
+				event.renderData(data=data, type=rc.format, xmlRootName="permissions" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); ; 
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
@@ -91,17 +91,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = permissionService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin("MessageBox").info( "Permissions imported sucessfully!" );
+				getModel( "messagebox@cbMessagebox" ).info( "Permissions imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin("MessageBox").error( errorMessage );
+			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehPermissions );
 	}

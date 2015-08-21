@@ -24,10 +24,10 @@
 
     return FutureMessage;
 
-  })(window.Messenger.Message);
+  } )(window.Messenger.Message);
 
   window.Messenger.themes.future = {
     Message: FutureMessage
   };
 
-}).call(this);
+} ).call(this);

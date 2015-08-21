@@ -92,17 +92,6 @@
 		<div class="container-fluid" style="padding-top:100px;">
 			<cfinclude template="views/index.cfm">
 		</div>
-		<!---
-		<footer id="footer" class="clearfix">
-			<div class="pull-right" id="footerLogo">
-				<a href="http://www.gocontentbox.org" target="_blank"><img src="#assetRoot#/includes/images/ContentBox_90.png" alt="Logo" /></a>
-			</div>
-			
-			Copyright (C) #dateformat(now(),"yyyy")# 
-			<a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a>.<br/>
-			<a href="http://www.ortussolutions.com">Need Professional Support, Architecture, Design, or Development?</a>
-		</footer>
-		--->
 	</body>
 </html>
 </cfoutput>

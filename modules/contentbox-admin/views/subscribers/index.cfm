@@ -1,13 +1,13 @@
 <cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-star icon-large"></i> Subscribers</h1>
+        <h1 class="h1"><i class="fa fa-star fa-lg"></i> Subscribers</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         <!--- MessageBox --->
-        #getPlugin("MessageBox").renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 <div class="row">

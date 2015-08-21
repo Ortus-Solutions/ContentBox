@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-12">
         <!--- MessageBox --->
-        #getPlugin( "MessageBox" ).renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
         
         <!---Import Log --->
         <cfif flash.exists( "importLog" )>
@@ -46,12 +46,12 @@
                                                     <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a>
                                                 </li>
                                             </cfif>
-                                            <cfif prc.oAuthor.checkPermission("MENUS_ADMIN,TOOLS_IMPORT")>
+                                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
                                                 <li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
                                             </cfif>
-                                            <cfif prc.oAuthor.checkPermission("MENUS_ADMIN,TOOLS_EXPORT")>
+                                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                                 <li class="dropdown-submenu">
-                                                    <a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
+                                                    <a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export All</a>
                                                     <ul class="dropdown-menu text-left">
                                                         <li><a href="#event.buildLink( linkto=prc.xehMenuExportAll )#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
                                                         <li><a href="#event.buildLink( linkto=prc.xehMenuExportAll )#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
@@ -70,14 +70,14 @@
                 <div class="panel-body">
                     <!--- entries container --->
                     <div id="menuTableContainer">
-                        <p class="text-center"><i id="contentLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i></p>
+                        <p class="text-center"><i id="contentLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i></p>
                     </div>
                 </div>
             </div>
         #html.endForm()#
     </div>
 </div>
-<cfif prc.oAuthor.checkPermission("MENUS_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
     <cfscript>
         dialogArgs = {
             title = "Import Menus",

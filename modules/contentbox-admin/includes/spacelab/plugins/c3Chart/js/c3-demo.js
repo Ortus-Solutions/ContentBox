@@ -1,5 +1,5 @@
 $(function () {
-var chart = c3.generate({
+var chart = c3.generate( {
     bindto: '#area-chart',
     data: {
         columns: [
@@ -11,12 +11,12 @@ var chart = c3.generate({
             data2: 'area-spline'
         }
     }
-});
+} );
 
-});
+} );
 
 $(function () {
-var chart = c3.generate({
+var chart = c3.generate( {
      bindto: '#combination-chart',
     data: {
         columns: [
@@ -42,11 +42,11 @@ var chart = c3.generate({
             type: 'categorized'
         }
     }
-});
-});
+} );
+} );
 
 $(function () {
-      var chart = c3.generate({
+      var chart = c3.generate( {
          bindto: '#zoom',
         data: {
           columns: [
@@ -56,5 +56,5 @@ $(function () {
         zoom: {
           enabled: true
         }
-      });
-});
+      } );
+} );

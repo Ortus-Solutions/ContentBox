@@ -2,7 +2,7 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4>
-        <img width="25" src="#prc.cbroot#/includes/images/widgets/#prc.icon#" /> #prc.oWidget.getPluginName()# Widget (#prc.widgetType#)
+        <img width="25" src="#prc.cbroot#/includes/images/widgets/#prc.icon#" /> #prc.oWidget.getName()# Widget (#prc.widgetType#)
     </h4>
 </div>
 <div class="modal-body">
@@ -10,9 +10,9 @@
 		<div class="row">
 			<div class="col-md-9">
 				<ul>
-            		<li><strong>Version:</strong> #prc.oWidget.getpluginVersion()# </li>
+            		<li><strong>Version:</strong> #prc.oWidget.getVersion()# </li>
             		<li><strong>ForgeBox Slug:</strong> #prc.oWidget.getForgeBoxSlug()# </li>
-            		<li><strong>Description:</strong> #prc.oWidget.getPluginDescription()#</li>
+            		<li><strong>Description:</strong> #prc.oWidget.getDescription()#</li>
             	</ul>
                 <cfloop array="#prc.metadata#" index="method">
             		<div class="rendermethod" id="#method.name#" <cfif method.name neq "renderIt">style="display:none;"</cfif>>

@@ -9,7 +9,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -26,13 +26,13 @@ limitations under the License.
 <cfoutput>
 
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_preEntryDisplay")#
+	#cb.event( "cbui_preEntryDisplay" )#
 	
 	<!--- top gap --->
 	<div class="post-top-gap"></div>
 	
 	<!--- Quickly reuse our entry template to build this one with some extra pizzaz --->
-	#cb.quickEntry(args={addComments=true})#
+	#cb.quickEntry(args={addComments=true} )#
 	
 	<!--- Comment Form: I can build it or I can quick it? --->
 	<div id="commentFormShell">
@@ -48,21 +48,19 @@ limitations under the License.
 	</div>
 	</cfif>	
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_postEntryDisplay")#
+	#cb.event( "cbui_postEntryDisplay" )#
 	
 
 <!--- Custom JS For Comments--->
 <cfif cb.isCommentsEnabled() and !cb.isPrintFormat()>
 <script type="text/javascript">
 $(document).ready(function() {
- 	// form validator
-	$("##commentForm").validator({position:'top left'});
 	<cfif cb.isCommentFormError()>
 	toggleCommentForm();
 	</cfif>
-});
+} );
 function toggleCommentForm(){
-	$("##commentForm").slideToggle();
+	$( "##commentForm" ).slideToggle();
 }
 </script>
 </cfif>

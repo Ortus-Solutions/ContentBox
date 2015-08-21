@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_prePageDisplay")#
+	#cb.event( "cbui_prePageDisplay" )#
 	
 	<!--- top gap --->
 	<div class="post-top-gap"></div>
@@ -13,7 +13,7 @@
 		<!--- Search Form --->
 		#html.startForm(name="searchForm",action=cb.linkContentSearch())#
 			#html.textField(name="q",size="55",value=htmlEditFormat( cb.getSearchTerm() ))#
-			#html.submitButton(name="searchSubmitButton",value="Search")#
+			#html.submitButton(name="searchSubmitButton",value="Search" )#
 		#html.endForm()#
 		
 		<br/>
@@ -26,6 +26,6 @@
 	</div>
 		
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_postPageDisplay")#
+	#cb.event( "cbui_postPageDisplay" )#
 	
 </cfoutput>

@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage content
 */
 component extends="baseHandler"{
@@ -79,7 +83,7 @@ component extends="baseHandler"{
 			data[ "UNIQUE" ] = contentService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
 		}
 		
-		event.renderData(data=data, type="json");
+		event.renderData(data=data, type="json" );
 	}
 
 	// related content selector
@@ -94,10 +98,10 @@ component extends="baseHandler"{
 		// exit handlers
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 
-		// prepare paging plugin
-		prc.pagingPlugin 	= getMyPlugin( plugin="Paging", module="contentbox" );
-		prc.paging 	  		= prc.pagingPlugin.getBoundaries();
-		prc.pagingLink 		= "javascript:pagerLink( @page@, '#rc.contentType#' )";
+		// prepare paging object
+		prc.oPaging 	= getModel( "Paging@cb" );
+		prc.paging 	  	= prc.oPaging.getBoundaries();
+		prc.pagingLink 	= "javascript:pagerLink( @page@, '#rc.contentType#' )";
 
 		// search entries with filters and all
 		var contentResults = contentService.searchContent( searchTerm=rc.search,
@@ -124,7 +128,7 @@ component extends="baseHandler"{
 		// exit handlers
 		prc.xehRelatedContentSelector	= "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 		prc.CBHelper = CBHelper;
-		event.setView(view="content/relatedContentSelector",layout="ajax");
+		event.setView(view="content/relatedContentSelector",layout="ajax" );
 	}
 
 	function breakContentLink( event, rc, prc ) {

@@ -1,12 +1,12 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-exchange icon-large"></i> Import Tools</h1>
+        <h1 class="h1"><i class="fa fa-exchange fa-lg"></i> Import Tools</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getPlugin("MessageBox").renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 <div class="row">
@@ -19,7 +19,7 @@
                             <h2>ContentBox Package (.cbox)</h2>
                             <small>If you're importing content from another ContentBox site, this option is for you.</small><br /><br />
                             <label class="btn btn-success btn-toggle radio" for="import-contentbox">
-                                #html.radioButton(name="importtype",id="import-contentbox",checked=true,value="contentbox")# Import ContentBox Package
+                                #html.radioButton(name="importtype",id="import-contentbox",checked=true,value="contentbox" )# Import ContentBox Package
                             </label>
                         </div>
                         <div class="col-md-1">&nbsp;</div>
@@ -27,7 +27,7 @@
                             <h2>Database Import</h2>
                             <small>ContentBox also supports imports from Mango, WordPress, BlogCFC, and MachBlog databases via Datasource connections!</small><br />
                             <label class="btn btn-toggle radio clearfix" for="import-database">
-                                #html.radioButton(name="importtype",id="import-database",value="database")# 
+                                #html.radioButton(name="importtype",id="import-database",value="database" )# 
                                 Import from Database
                             </label>
                         </div>
@@ -39,12 +39,12 @@
                             <br /><br />Easy, right? Well, what are you waiting for?
                         </p>
                         <fieldset>
-                            <legend><i class="fa fa-upload icon-large"></i> Import ContentBox Package</legend>
+                            <legend><i class="fa fa-upload fa-lg"></i> Import ContentBox Package</legend>
                             <div class="row-fluid">
                                 <div class="form-group">
                                     <div class="controls">
-                                        #html.label(field="CBUpload",content="Select ContentBox Package",class="control-label")#
-                                        #getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+                                        #html.label(field="CBUpload",content="Select ContentBox Package",class="control-label" )#
+                                        #getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
                                             name="CBUpload",
                                             required=true
                                         )# 
@@ -57,8 +57,8 @@
                                                     <span class="fileupload-new">Select file</span>
                                                     <span class="fileupload-exists">Change</span>
                                                     <input type="file" name="CBUpload" />
-                                                    #html.hiddenField(name="validated",value="false")#
-                                                    #html.hiddenField(name="overwrite",id="overwrite",value="false")#
+                                                    #html.hiddenField(name="validated",value="false" )#
+                                                    #html.hiddenField(name="overwrite",id="overwrite",value="false" )#
                                                 </span>
                                                 <a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                                             </div>
@@ -77,7 +77,7 @@
                         
                         <!--- dsn Info --->
                         <fieldset>
-                        <legend><i class="icon-bolt icon-large"></i> <strong>Datasource Options</strong></legend>
+                        <legend><i class="icon-bolt fa-lg"></i> <strong>Datasource Options</strong></legend>
                             <p>
                                 This server must have a defined datasource to the source blog database in order to import it. Please
                                 make sure this datasource exists in the ColdFusion administrator.
@@ -110,7 +110,7 @@
                         
                         <!--- importer --->
                         <fieldset>
-                        <legend><i class="icon-cog icon-large"></i> <strong>Source Content</strong></legend>
+                        <legend><i class="icon-cog fa-lg"></i> <strong>Source Content</strong></legend>
                             #html.select(
                                 name="importer",
                                 options="Select Source,Mango,WordPress,BlogCFC,MachBlog",
@@ -123,19 +123,19 @@
                             
                             <!--- Default Password --->
                             <div class="form-group">
-                                #html.label(field="tableprefix",content="Table Prefix:",class="control-label")#
+                                #html.label(field="tableprefix",content="Table Prefix:",class="control-label" )#
                                 <div class="controls">
                                     <small>The table prefix used by the source software.</small><br/>
-                                    #html.textField(name="tableprefix", class="form-control")#
+                                    #html.textField(name="tableprefix", class="form-control" )#
                                 </div>
                             </div>
                             <!--- Default Password --->
                             <div class="form-group">
-                                #html.label(field="defaultPassword",content="Default Author Password:",class="control-label")#
+                                #html.label(field="defaultPassword",content="Default Author Password:",class="control-label" )#
                                 <div class="controls">
                                     <small>Since ContentBox uses its own encryption algorithm, you cannot port passwords. Use the following
                                     default password for all authors and then do password change requests.</small><br/>
-                                    #html.textField(name="defaultPassword",class="form-control")#   
+                                    #html.textField(name="defaultPassword",class="form-control" )#   
                                 </div>
                             </div>
                             <!--- Roles --->
@@ -166,7 +166,7 @@
                     
                     <!--- Loader --->
                     <div class="loaders" id="uploadBarLoader">
-                        <i class="fa fa-spinner fa-spin icon-large icon-2x"></i><br/>
+                        <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i><br/>
                         Importing Action
                     </div>
                 </div>

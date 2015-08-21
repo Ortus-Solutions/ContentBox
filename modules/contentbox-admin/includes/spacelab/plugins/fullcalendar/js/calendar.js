@@ -16,19 +16,19 @@
             $(this).data('eventObject', eventObject);
             
             // make the event draggable using jQuery UI
-            $(this).draggable({
+            $(this).draggable( {
                 zIndex: 999,
                 revert: true,      // will cause the event to go back to its
                 revertDuration: 0  //  original position after the drag
-            });
+            } );
             
-        });
+        } );
     
     
         /* initialize the calendar
         -----------------------------------------------------------------*/
         
-        $('#calendar').fullCalendar({
+        $('#calendar').fullCalendar( {
             header: {
                 left: 'prev,next today',
                 center: 'title',
@@ -42,7 +42,7 @@
                 var originalEventObject = $(this).data('eventObject');
                 
                 // we need to copy it, so that multiple events don't have a reference to the same object
-                var copiedEventObject = $.extend({}, originalEventObject);
+                var copiedEventObject = $.extend( {}, originalEventObject);
                 
                 // assign it the date that was reported
                 copiedEventObject.start = date;
@@ -59,33 +59,33 @@
                 }
                 
             }
-        });
+        } );
 
       /* Bootstrap styles
         -----------------------------------------------------------------*/
         $('.fc-header').hide();
         var currDate = $('#calendar').fullCalendar('getDate');
-        $('#calender-current-day').html($.fullCalendar.formatDate(currDate, "dddd"));
-        $('#calender-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy"));
+        $('#calender-current-day').html($.fullCalendar.formatDate(currDate, "dddd" ));
+        $('#calender-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy" ));
         $('#cal-prev').click(function(){
             currDate = $('#calendar').fullCalendar('getDate');
             $('#calendar').fullCalendar( 'prev' );
-            $('#cal-current-day').html($.fullCalendar.formatDate(currDate, "dddd"));
-            $('#cal-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy"));
-        });
+            $('#cal-current-day').html($.fullCalendar.formatDate(currDate, "dddd" ));
+            $('#cal-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy" ));
+        } );
         $('#cal-next').click(function(){
             $('#calendar').fullCalendar( 'next' );
             currDate = $('#calendar').fullCalendar('getDate');       
-            $('#calender-current-day').html($.fullCalendar.formatDate(currDate, "dddd"));
-            $('#calender-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy"));
-        });
+            $('#calender-current-day').html($.fullCalendar.formatDate(currDate, "dddd" ));
+            $('#calender-current-date').html($.fullCalendar.formatDate(currDate, "MMM yyyy" ));
+        } );
         $('#change-view-month').click(function(){
             $('#calendar').fullCalendar('changeView', 'month');
-        });
+        } );
         $('#change-view-week').click(function(){
              $('#calendar').fullCalendar( 'changeView', 'agendaWeek');
-        });
+        } );
         $('#change-view-day').click(function(){
             $('#calendar').fullCalendar( 'changeView','agendaDay');
-        });
-    });
+        } );
+    } );

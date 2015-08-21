@@ -2,9 +2,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// tables references
-	$entries = $("##entries");
+	$entries = $( "##entries" );
 	// sorting
-	$entries.dataTable({
+	$entries.dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -15,7 +15,7 @@ $(document).ready(function() {
     		}
   		],
   		"order": []
-	});
+	} );
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
@@ -24,6 +24,6 @@ $(document).ready(function() {
 	activateQuickLook( $entries, '#event.buildLink(prc.xehEntryQuickLook)#/contentID/' );
 	// Popovers
 	activateInfoPanels();
-});
+} );
 </script>
 </cfoutput>

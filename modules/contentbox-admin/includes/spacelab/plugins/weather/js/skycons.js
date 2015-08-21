@@ -638,25 +638,25 @@
     add: function(el, draw) {
       var obj;
 
-      if(typeof el === "string")
+      if(typeof el === "string" )
         el = document.getElementById(el);
 
       // Does nothing if canvas name doesn't exists
       if(el === null)
         return;
 
-      if(typeof draw === "string") {
-        draw = draw.toUpperCase().replace(/-/g, "_");
+      if(typeof draw === "string" ) {
+        draw = draw.toUpperCase().replace(/-/g, "_" );
         draw = Skycons.hasOwnProperty(draw) ? Skycons[draw] : null;
       }
 
       // Does nothing if the draw function isn't actually a function
-      if(typeof draw !== "function")
+      if(typeof draw !== "function" )
         return;
 
       obj = {
         element: el,
-        context: el.getContext("2d"),
+        context: el.getContext( "2d" ),
         drawing: draw
       };
 
@@ -666,7 +666,7 @@
     set: function(el, draw) {
       var i;
 
-      if(typeof el === "string")
+      if(typeof el === "string" )
         el = document.getElementById(el);
 
       for(i = this.list.length; i--; )
@@ -681,7 +681,7 @@
     remove: function(el) {
       var i;
 
-      if(typeof el === "string")
+      if(typeof el === "string" )
         el = document.getElementById(el);
 
       for(i = this.list.length; i--; )

@@ -1,17 +1,17 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-picture-o icon-large"></i> Themes</h1>
+        <h1 class="h1"><i class="fa fa-picture-o fa-lg"></i> Themes</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
        	<!--- MessageBox --->
-		#getPlugin("MessageBox").renderit()#
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!--- Logs --->
-		<cfif flash.exists("forgeboxInstallLog")>
+		<cfif flash.exists( "forgeboxInstallLog" )>
 			<h3>Installation Log</h3>
-			<div class="consoleLog">#flash.get("forgeboxInstallLog")#</div>
+			<div class="consoleLog">#flash.get( "forgeboxInstallLog" )#</div>
 		</cfif>
     </div>
 </div>
@@ -24,14 +24,14 @@
 		            <!-- Tabs -->
 		            <ul class="nav nav-tabs">
 						<!--- Install Themes --->
-						<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
+						<cfif prc.oAuthor.checkPermission( "FORGEBOX_ADMIN" )>
 							<li title="Install New Themes" class="navbar-right">
-								<a href="##forgeboxPane"  data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download icon-large"></i> ForgeBox</a>
+								<a href="##forgeboxPane"  data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download fa-lg"></i> ForgeBox</a>
 							</li>
 						</cfif>
 						<!--- Manage Themes --->
 						<li class="active navbar-right" title="Manage Themes">
-							<a href="##managePane" data-toggle="tab"><i class="fa fa-cog icon-large"></i> Manage</a>
+							<a href="##managePane" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> Manage</a>
 						</li>
 		            </ul>
 		            <!-- End Tabs -->
@@ -45,10 +45,10 @@
 								<!--- Themes Navigation Bar --->
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<a href="##active" data-toggle="tab"><i class="fa fa-star icon-large"></i> Active Theme</a>
+										<a href="##active" data-toggle="tab"><i class="fa fa-star fa-lg"></i> Active Theme</a>
 									</li>
 									<li>
-										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns icon-large"></i> Manage Themes</a>
+										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns fa-lg"></i> Manage Themes</a>
 									</li>
 								</ul>
 								<!--- Tab Content --->
@@ -113,7 +113,7 @@
 										</div>
 		                                <!---Theme Settings --->
 										<cfif len( prc.activeTheme.settings )>
-											#html.startForm(action=prc.xehSaveSettings, class="form-vertical")#	
+											#html.startForm(action=prc.xehSaveSettings, class="form-vertical" )#	
 											<br />
 											<fieldset>
 												<legend> Theme Settings: </legend>
@@ -122,7 +122,7 @@
 											</fieldset>
 											<br />
 											<div class="form-actions">
-												#html.submitButton(value="Save Settings", class="btn btn-danger")#
+												#html.submitButton(value="Save Settings", class="btn btn-danger" )#
 											</div>
 			                                #html.endForm()#
 										</cfif>
@@ -132,7 +132,7 @@
 										<!--- Content Bar --->
 										<div class="well well-sm">
 											<!--- Rebuild Registry Button --->
-											<cfif prc.oAuthor.checkPermission("THEME_ADMIN")>
+											<cfif prc.oAuthor.checkPermission( "THEME_ADMIN" )>
 												<div class="btn-group btn-sm pull-right">
 													<button class="btn btn-sm btn-primary" onclick="return toggleUploader()" ><i class="fa fa-upload-alt"></i> Upload Theme</button>
 													<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan Themes directory and rebuild registry"><i class="fa fa-refresh"></i> Rebuild Registry</button>
@@ -160,7 +160,7 @@
 											)#
 												<fieldset>
 													<legend>Theme Uploader</legend>
-													#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+													#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
 														name="fileTheme",
 														label="Upload Theme (.zip):",
 														required=true
@@ -172,7 +172,7 @@
 			    										)#
 			    									</div>
 			    									<div class="loaders" id="uploadBarLoader">
-			    										<i class="fa fa-spinner fa-spin icon-large"></i>
+			    										<i class="fa fa-spinner fa-spin fa-lg"></i>
 			    									</div>
 			                                	</fieldset>
 											#html.endForm()#
@@ -180,7 +180,7 @@
 
 										<!--- Theme Form --->
 										#html.startForm(name="themeForm",action=prc.xehThemeRemove)#
-											#html.hiddenField(name="themeName")#
+											#html.hiddenField(name="themeName" )#
 											<!--- themes --->
 											<table name="themes" id="themes" class="table table-striped table-hover" width="100%">
 												<thead>
@@ -200,7 +200,7 @@
 													<tr>
 														<td>
 															<cfif prc.cbSettings.cb_site_theme eq prc.themes.name>
-																<i class="fa fa-asterisk icon-large textOrance"></i>
+																<i class="fa fa-asterisk fa-lg textOrance"></i>
 															</cfif>
 															<strong>#prc.themes.themeName#</strong>
 															<br/>	
@@ -208,7 +208,7 @@
 															<a href="#prc.themes.authorURL#" title="#prc.themes.AuthorURL#" target="_blank">#prc.themes.Author#</a>
 															<br/>
 															<!--- Button Bar --->
-															<cfif prc.oAuthor.checkPermission("THEME_ADMIN") AND prc.cbSettings.cb_site_theme NEQ prc.themes.name>
+															<cfif prc.oAuthor.checkPermission( "THEME_ADMIN" ) AND prc.cbSettings.cb_site_theme NEQ prc.themes.name>
 																<div class="btn-group">
 																<button class="btn btn-primary" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.themes.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;">Preview</button>
 																<button class="btn btn-danger" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#prc.themes.name#')">Activate</button>
@@ -237,10 +237,10 @@
 															</ul>
 														</td>
 														<td class="text-center">
-															<cfif prc.oAuthor.checkPermission("THEME_ADMIN")>
+															<cfif prc.oAuthor.checkPermission( "THEME_ADMIN" )>
 															<!--- Delete Command --->
 															<a href="javascript:remove('#JSStringFormat(prc.themes.name)#')" 
-															   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!"><i class="fa fa-trash-o icon-large"></i></a>
+															   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!"><i class="fa fa-trash-o fa-lg"></i></a>
 															</cfif>
 														</td>
 													</tr>
@@ -259,7 +259,7 @@
 		                <!--- ForgeBox Pane --->
 						<div id="forgeboxPane" class="tab-pane">
 							<div class="text-center">
-								<i class="fa fa-spinner fa-spin icon-large icon-4x"></i><br/>
+								<i class="fa fa-spinner fa-spin fa-lg icon-4x"></i><br/>
 								Please wait, connecting to ForgeBox...
 							</div>
 						</div>

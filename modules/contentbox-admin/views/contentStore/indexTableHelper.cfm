@@ -2,9 +2,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// tables references
-	$content = $("##content");
+	$content = $( "##content" );
 	// sorting
-	$content.dataTable({
+	$content.dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
@@ -15,13 +15,13 @@ $(document).ready(function() {
     		}
   		],
   		"order": []
-	});
+	} );
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
 	activateTooltips();
 	// Popovers
 	activateInfoPanels();
-});
+} );
 </script>
 </cfoutput>

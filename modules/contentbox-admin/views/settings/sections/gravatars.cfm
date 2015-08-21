@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-user icon-large"></i> Gravatars</legend>
+    <legend><i class="fa fa-user fa-lg"></i> Gravatars</legend>
     <p>An avatar is an image that follows you from site to site appearing beside your name when you comment on avatar enabled sites.(<a href="http://www.gravatar.com/" target="_blank">http://www.gravatar.com/</a>)</p>
 
     <!--- Gravatars  --->
@@ -38,7 +38,7 @@
     
     <!---Gravatar info --->
     <div class="alert alert-info clearfix">
-        <i class="fa fa-info-circle icon-large"></i>
+        <i class="fa fa-info-circle fa-lg"></i>
         To change or create avatars <a href="http://www.gravatar.com/site/signup" target="_blank">sign up to Gravatar.com</a>
         and follow the on-screen instructions.
     </div>

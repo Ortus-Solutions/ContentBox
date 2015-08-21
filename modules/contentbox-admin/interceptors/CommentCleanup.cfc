@@ -28,7 +28,7 @@ component extends="coldbox.system.Interceptor"{
                 commentService.deleteUnApprovedComments( expirationDays=commentExpiration );
                 // done!
                 if( log.canInfo() )
-                    log.info( "Comment moderation executed for the last (#commentExpiration#) days!");
+                    log.info( "Comment moderation executed for the last (#commentExpiration#) days!" );
             }
         }
     }

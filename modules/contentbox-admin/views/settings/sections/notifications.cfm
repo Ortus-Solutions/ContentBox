@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-envelope icon-large"></i> Notifications</legend>
+    <legend><i class="fa fa-envelope fa-lg"></i> Notifications</legend>
     <!--- Site Email --->
     <div class="form-group">
         #html.label(

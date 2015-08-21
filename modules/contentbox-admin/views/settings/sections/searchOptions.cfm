@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-search icon-large"></i>  Search Options</legend>
+    <legend><i class="fa fa-search fa-lg"></i>  Search Options</legend>
 
     <!--- Max Search Results --->
     <div class="form-group">
@@ -16,14 +16,14 @@
     </div>
     <!--- Search Adapter --->
     <div class="form-group">
-        #html.label(class="control-label",field="cb_search_adapter",content="Search Adapter: ")#
+        #html.label(class="control-label",field="cb_search_adapter",content="Search Adapter: " )#
         <div class="controls">
             <small>The ContentBox search engine adapter class (instantiation path) to use. You can create your own search engine adapters as
-            long as they implement <em>contentbox.model.search.ISearchAdapter</em>. You can choose from our core adapters or
+            long as they implement <em>contentbox.models.search.ISearchAdapter</em>. You can choose from our core adapters or
             enter your own CFC instantiation path below.</small><br/>
 
             <ul>
-                <li><a href="javascript:chooseAdapter('contentbox.model.search.DBSearch')">ORM Database Search (contentbox.model.search.DBSearch)</a></li>
+                <li><a href="javascript:chooseAdapter('contentbox.models.search.DBSearch')">ORM Database Search (contentbox.models.search.DBSearch)</a></li>
             </ul>
 
             #html.textField(

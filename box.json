@@ -1,32 +1,75 @@
 {
-    "name"              : "ContentBox Modular CMS",
-    "version"           : "3.0.0-beta+@build.number@",
-    "author"            : "Ortus Solutions <info@ortussolutions.com>",
-    "slug"              : "contentbox",
-    "type"              : "cms",
-    "keywords"          : "cms,content management,modular cms",
-    "homepage"          : "http://www.ortussolutions.com/products/contentbox",
-    "documentation"     : "http://contentbox.ortusbooks.com",
-    "repository"        : { "type" : "git", "url" : "https://github.com/Ortus-Solutions/ContentBox" },
-    "bugs"              : "https://ortussolutions.atlassian.net/browse/CONTENTBOX",
-    "shortDescription"  : "A Modular Content Management System",
-    "createPackageDirectory" : false,
-    "engines"           : [
-        { "type" : "railo", "version" : ">4.1" },
-        { "type" : "lucee", "version" : ">4.5" },
-        { "type" : "adobe", "version" : ">9.0.2" }
+    "name":"ContentBox Modular CMS",
+    "version":"3.0.0-beta+@build.number@",
+    "author":"Ortus Solutions <info@ortussolutions.com>",
+    "slug":"contentbox",
+    "type":"cms",
+    "keywords":"cms,content management,modular cms",
+    "homepage":"http://www.ortussolutions.com/products/contentbox",
+    "documentation":"http://contentbox.ortusbooks.com",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/Ortus-Solutions/ContentBox"
+    },
+    "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
+    "shortDescription":"A Modular Content Management System",
+    "createPackageDirectory":false,
+    "engines":[
+        {
+            "type":"lucee",
+            "version":">4.5"
+        },
+        {
+            "type":"adobe",
+            "version":">10"
+        }
     ],
-    "license"           : [ 
-        { "type" : "Apache2", "url" : "http://www.apache.org/licenses/LICENSE-2.0.html" } 
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
     ],
-    "contributors"      : [
-        "Joel Watson <existdissolve@gmail.com>", "Brad Wood <bdw429s@gmail.com>", "Curt Gratz <gratz@computerknowhow.com>"
+    "contributors":[
+        "Joel Watson <existdissolve@gmail.com>",
+        "Brad Wood <bdw429s@gmail.com>",
+        "Curt Gratz <gratz@computerknowhow.com>"
     ],
-    "testbox"           : {
-        "runner" : [
-            { "cf10"    : "http://cf10contentbox.local/tests/runner.cfm" },
-            { "cf11"    : "http://cf11contentbox.local/tests/runner.cfm" },
-            { "lucee"   : "http://luceecontentbox.local/tests/runner.cfm" }
+    "testbox":{
+        "runner":[
+            {
+                "cf10":"http://cf10contentbox.local/tests/runner.cfm"
+            },
+            {
+                "cf11":"http://cf11contentbox.local/tests/runner.cfm"
+            },
+            {
+                "lucee":"http://luceecontentbox.local/tests/runner.cfm"
+            }
         ]
+    },
+    "dependencies":{
+        "coldbox":"4.1.0+00002",
+        "cborm":"1.0.3",
+        "cbmailservices":"1.0.0",
+        "cbsecurity":"1.1.0",
+        "cbstorages":"1.0.0",
+        "cbfeeds":"1.0.1",
+        "cbmessagebox":"1.0.0",
+        "cbantisamy":"1.1.0"
+    },
+    "installPaths":{
+        "coldbox":"coldbox",
+        "testbox":"testbox",
+        "cborm":"coldbox/system/modules/cborm",
+        "cbmailservices":"coldbox/system/modules/cbmailservices",
+        "cbsecurity":"coldbox/system/modules/cbsecurity",
+        "cbstorages":"coldbox/system/modules/cbstorages",
+        "cbfeeds":"coldbox/system/modules/cbfeeds",
+        "cbmessagebox":"coldbox/system/modules/cbmessagebox",
+        "cbantisamy":"coldbox/system/modules/cbantisamy"
+    },
+    "devDependencies":{
+        "testbox":"2.0.0"
     }
 }

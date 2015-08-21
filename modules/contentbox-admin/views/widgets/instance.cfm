@@ -2,13 +2,13 @@
     <cfif rc.modal>
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4><span id="widget-title-bar"><img width="25" src="#prc.cbroot#/includes/images/widgets/#prc.widget.icon#" /> #rc.mode# '#prc.widget.plugin.getPluginName()#' Widget</span></h4>
+            <h4><span id="widget-title-bar"><img width="25" src="#prc.cbroot#/includes/images/widgets/#prc.widget.icon#" /> #rc.mode# '#prc.widget.widget.getName()#' Widget</span></h4>
         </div>
         <div class="modal-body">
     </cfif>
         <div id="widget-preview-wrapper">
             <div class="widget-arguments" id="widget-arguments">
-                #html.startForm(name="widgetArgsForm_#prc.widget.name#", class="form-vertical")#
+                #html.startForm(name="widgetArgsForm_#prc.widget.name#", class="form-vertical" )#
                     <fieldset <cfif arrayLen( prc.metadata ) eq 1>style="display:none;"</cfif>>
                         <legend>Public Methods</legend>
                         <label for="renderMethodSelect"><strong>Select a Method:</strong></label>
@@ -18,7 +18,7 @@
                             </cfloop> 
                         </select>
                     </fieldset>
-                    #html.startFieldSet(legend="Widget Arguments")#
+                    #html.startFieldSet(legend="Widget Arguments" )#
                     <!--- instructions --->
                     <cfif arrayLen( prc.md.parameters )> 
                         <p>Please fill out the arguments for this widget:</p>
@@ -82,7 +82,7 @@
                                     )#
                                 <!--- OptionsUDF --->
                                 <cfelseif listLen( thisArg.optionsUDF )>
-                                    <cfset options = evaluate( "prc.widget.plugin.#thisArg.optionsUDF#()" )>
+                                    <cfset options = evaluate( "prc.widget.widget.#thisArg.optionsUDF#()" )>
                                     #html.select( 
                                         name=thisArg.name, 
                                         options=options, 
@@ -101,7 +101,7 @@
                                     )#
                                 <!--- MultiOptionsUDF --->
                                 <cfelseif listLen( thisArg.multiOptionsUDF )>
-                                    <cfset options = evaluate( "prc.widget.plugin.#thisArg.multiOptionsUDF#()" )>
+                                    <cfset options = evaluate( "prc.widget.widget.#thisArg.multiOptionsUDF#()" )>
                                     #html.select( 
                                         name=thisArg.name, 
                                         options=options, 
@@ -132,7 +132,7 @@
                     #html.hiddenfield( 
                         name="widgetDisplayName", 
                         id="widgetDisplayName", 
-                        value=prc.widget.plugin.getPluginName() 
+                        value=prc.widget.widget.getName() 
                     )#
                     #html.hiddenfield( 
                         name="widgetType", 

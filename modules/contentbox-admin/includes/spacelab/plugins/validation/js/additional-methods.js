@@ -17,49 +17,49 @@
 		// remove punctuation
 		.replace(/[.(),;:!?%#$'"_+=\/\-]*/g,'');
 	}
-	jQuery.validator.addMethod("maxWords", function(value, element, params) {
+	jQuery.validator.addMethod( "maxWords", function(value, element, params) {
 		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length <= params;
-	}, jQuery.validator.format("Please enter {0} words or less."));
+	}, jQuery.validator.format( "Please enter {0} words or less." ));
 
-	jQuery.validator.addMethod("minWords", function(value, element, params) {
+	jQuery.validator.addMethod( "minWords", function(value, element, params) {
 		return this.optional(element) || stripHtml(value).match(/\b\w+\b/g).length >= params;
-	}, jQuery.validator.format("Please enter at least {0} words."));
+	}, jQuery.validator.format( "Please enter at least {0} words." ));
 
-	jQuery.validator.addMethod("rangeWords", function(value, element, params) {
+	jQuery.validator.addMethod( "rangeWords", function(value, element, params) {
 		var valueStripped = stripHtml(value);
 		var regex = /\b\w+\b/g;
 		return this.optional(element) || valueStripped.match(regex).length >= params[0] && valueStripped.match(regex).length <= params[1];
-	}, jQuery.validator.format("Please enter between {0} and {1} words."));
+	}, jQuery.validator.format( "Please enter between {0} and {1} words." ));
 
 }());
 
-jQuery.validator.addMethod("letterswithbasicpunc", function(value, element) {
+jQuery.validator.addMethod( "letterswithbasicpunc", function(value, element) {
 	return this.optional(element) || /^[a-z\-.,()'"\s]+$/i.test(value);
-}, "Letters or punctuation only please");
+}, "Letters or punctuation only please" );
 
-jQuery.validator.addMethod("alphanumeric", function(value, element) {
+jQuery.validator.addMethod( "alphanumeric", function(value, element) {
 	return this.optional(element) || /^\w+$/i.test(value);
-}, "Letters, numbers, and underscores only please");
+}, "Letters, numbers, and underscores only please" );
 
-jQuery.validator.addMethod("lettersonly", function(value, element) {
+jQuery.validator.addMethod( "lettersonly", function(value, element) {
 	return this.optional(element) || /^[a-z]+$/i.test(value);
-}, "Letters only please");
+}, "Letters only please" );
 
-jQuery.validator.addMethod("nowhitespace", function(value, element) {
+jQuery.validator.addMethod( "nowhitespace", function(value, element) {
 	return this.optional(element) || /^\S+$/i.test(value);
-}, "No white space please");
+}, "No white space please" );
 
-jQuery.validator.addMethod("ziprange", function(value, element) {
+jQuery.validator.addMethod( "ziprange", function(value, element) {
 	return this.optional(element) || /^90[2-5]\d\{2\}-\d{4}$/.test(value);
-}, "Your ZIP-code must be in the range 902xx-xxxx to 905-xx-xxxx");
+}, "Your ZIP-code must be in the range 902xx-xxxx to 905-xx-xxxx" );
 
-jQuery.validator.addMethod("zipcodeUS", function(value, element) {
+jQuery.validator.addMethod( "zipcodeUS", function(value, element) {
 	return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value);
-}, "The specified US ZIP Code is invalid");
+}, "The specified US ZIP Code is invalid" );
 
-jQuery.validator.addMethod("integer", function(value, element) {
+jQuery.validator.addMethod( "integer", function(value, element) {
 	return this.optional(element) || /^-?\d+$/.test(value);
-}, "A positive or negative non-decimal number please");
+}, "A positive or negative non-decimal number please" );
 
 /**
  * Return true, if the value is a valid vehicle identification number (VIN).
@@ -73,7 +73,7 @@ jQuery.validator.addMethod("integer", function(value, element) {
  * @type Boolean
  * @cat Plugins/Validate/Methods
  */
-jQuery.validator.addMethod("vinUS", function(v) {
+jQuery.validator.addMethod( "vinUS", function(v) {
 	if (v.length !== 17) {
 		return false;
 	}
@@ -112,18 +112,18 @@ jQuery.validator.addMethod("vinUS", function(v) {
 		return true;
 	}
 	return false;
-}, "The specified vehicle identification number (VIN) is invalid.");
+}, "The specified vehicle identification number (VIN) is invalid." );
 
 /**
  * Return true, if the value is a valid date, also making this formal check dd/mm/yyyy.
  *
- * @example jQuery.validator.methods.date("01/01/1900")
+ * @example jQuery.validator.methods.date( "01/01/1900" )
  * @result true
  *
- * @example jQuery.validator.methods.date("01/13/1990")
+ * @example jQuery.validator.methods.date( "01/13/1990" )
  * @result false
  *
- * @example jQuery.validator.methods.date("01.01.1900")
+ * @example jQuery.validator.methods.date( "01.01.1900" )
  * @result false
  *
  * @example <input name="pippo" class="{dateITA:true}" />
@@ -133,7 +133,7 @@ jQuery.validator.addMethod("vinUS", function(v) {
  * @type Boolean
  * @cat Plugins/Validate/Methods
  */
-jQuery.validator.addMethod("dateITA", function(value, element) {
+jQuery.validator.addMethod( "dateITA", function(value, element) {
 	var check = false;
 	var re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
 	if( re.test(value)) {
@@ -151,13 +151,13 @@ jQuery.validator.addMethod("dateITA", function(value, element) {
 		check = false;
 	}
 	return this.optional(element) || check;
-}, "Please enter a correct date");
+}, "Please enter a correct date" );
 
 /**
  * IBAN is the international bank account number.
  * It has a country - specific format, that is checked here too
  */
-jQuery.validator.addMethod("iban", function(value, element) {
+jQuery.validator.addMethod( "iban", function(value, element) {
 	// some quick simple tests to prevent needless work
 	if (this.optional(element)) {
 		return true;
@@ -244,7 +244,7 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	// Strict checking should return FALSE for unknown
 	// countries.
 	if (typeof bbanpattern !== 'undefined') {
-		var ibanregexp = new RegExp("^[A-Z]{2}\\d{2}" + bbanpattern + "$", "");
+		var ibanregexp = new RegExp( "^[A-Z]{2}\\d{2}" + bbanpattern + "$", "" );
 		if (!(ibanregexp.test(iban))) {
 			return false; // invalid country specific format
 		}
@@ -257,7 +257,7 @@ jQuery.validator.addMethod("iban", function(value, element) {
 	var charAt;
 	for (var i =0; i<ibancheck.length; i++) {
 		charAt = ibancheck.charAt(i);
-		if (charAt !== "0") {
+		if (charAt !== "0" ) {
 			leadingZeroes = false;
 		}
 		if (!leadingZeroes) {
@@ -274,26 +274,26 @@ jQuery.validator.addMethod("iban", function(value, element) {
 		cRest = cOperator % 97;
     }
 	return cRest === 1;
-}, "Please specify a valid IBAN");
+}, "Please specify a valid IBAN" );
 
-jQuery.validator.addMethod("dateNL", function(value, element) {
+jQuery.validator.addMethod( "dateNL", function(value, element) {
 	return this.optional(element) || /^(0?[1-9]|[12]\d|3[01])[\.\/\-](0?[1-9]|1[012])[\.\/\-]([12]\d)?(\d\d)$/.test(value);
-}, "Please enter a correct date");
+}, "Please enter a correct date" );
 
 /**
  * Dutch phone numbers have 10 digits (or 11 and start with +31).
  */
-jQuery.validator.addMethod("phoneNL", function(value, element) {
+jQuery.validator.addMethod( "phoneNL", function(value, element) {
 	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)[1-9]((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
-}, "Please specify a valid phone number.");
+}, "Please specify a valid phone number." );
 
-jQuery.validator.addMethod("mobileNL", function(value, element) {
+jQuery.validator.addMethod( "mobileNL", function(value, element) {
 	return this.optional(element) || /^((\+|00(\s|\s?\-\s?)?)31(\s|\s?\-\s?)?(\(0\)[\-\s]?)?|0)6((\s|\s?\-\s?)?[0-9]){8}$/.test(value);
-}, "Please specify a valid mobile number");
+}, "Please specify a valid mobile number" );
 
-jQuery.validator.addMethod("postalcodeNL", function(value, element) {
+jQuery.validator.addMethod( "postalcodeNL", function(value, element) {
 	return this.optional(element) || /^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/.test(value);
-}, "Please specify a valid postal code");
+}, "Please specify a valid postal code" );
 
 /*
  * Dutch bank account numbers (not 'giro' numbers) have 9 digits
@@ -301,7 +301,7 @@ jQuery.validator.addMethod("postalcodeNL", function(value, element) {
  * We accept the notation with spaces, as that is common.
  * acceptable: 123456789 or 12 34 56 789
  */
-jQuery.validator.addMethod("bankaccountNL", function(value, element) {
+jQuery.validator.addMethod( "bankaccountNL", function(value, element) {
 	if (this.optional(element)) {
 		return true;
 	}
@@ -318,28 +318,28 @@ jQuery.validator.addMethod("bankaccountNL", function(value, element) {
 		sum = sum + factor * digit;
 	}
 	return sum % 11 === 0;
-}, "Please specify a valid bank account number");
+}, "Please specify a valid bank account number" );
 
 /**
  * Dutch giro account numbers (not bank numbers) have max 7 digits
  */
-jQuery.validator.addMethod("giroaccountNL", function(value, element) {
+jQuery.validator.addMethod( "giroaccountNL", function(value, element) {
 	return this.optional(element) || /^[0-9]{1,7}$/.test(value);
-}, "Please specify a valid giro account number");
+}, "Please specify a valid giro account number" );
 
-jQuery.validator.addMethod("bankorgiroaccountNL", function(value, element) {
+jQuery.validator.addMethod( "bankorgiroaccountNL", function(value, element) {
 	return this.optional(element) ||
 			($.validator.methods["bankaccountNL"].call(this, value, element)) ||
 			($.validator.methods["giroaccountNL"].call(this, value, element));
-}, "Please specify a valid bank or giro account number");
+}, "Please specify a valid bank or giro account number" );
 
 
-jQuery.validator.addMethod("time", function(value, element) {
+jQuery.validator.addMethod( "time", function(value, element) {
 	return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){1,2}$/.test(value);
-}, "Please enter a valid time, between 00:00 and 23:59");
-jQuery.validator.addMethod("time12h", function(value, element) {
+}, "Please enter a valid time, between 00:00 and 23:59" );
+jQuery.validator.addMethod( "time12h", function(value, element) {
 	return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){1,2}(\ ?[AP]M))$/i.test(value);
-}, "Please enter a valid time in 12-hour am/pm format");
+}, "Please enter a valid time in 12-hour am/pm format" );
 
 /**
  * matches US phone number format
@@ -357,29 +357,29 @@ jQuery.validator.addMethod("time12h", function(value, element) {
  * and not
  * 212 123 4567
  */
-jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
-	phone_number = phone_number.replace(/\s+/g, "");
+jQuery.validator.addMethod( "phoneUS", function(phone_number, element) {
+	phone_number = phone_number.replace(/\s+/g, "" );
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
-}, "Please specify a valid phone number");
+		phone_number.match(/^(\+?1-?)?(\([2-9]\d{2}\)|[2-9]\d{2} )-?[2-9]\d{2}-?\d{4}$/);
+}, "Please specify a valid phone number" );
 
 jQuery.validator.addMethod('phoneUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:\d{2}\)?\s?\d{4}\s?\d{4}|\d{3}\)?\s?\d{3}\s?\d{3,4}|\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3})|\d{5}\)?\s?\d{4,5})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?)|(?:\(?0))(?:\d{2}\)?\s?\d{4}\s?\d{4}|\d{3}\)?\s?\d{3}\s?\d{3,4}|\d{4}\)?\s?(?:\d{5}|\d{3}\s?\d{3} )|\d{5}\)?\s?\d{4,5} )$/);
 }, 'Please specify a valid phone number');
 
 jQuery.validator.addMethod('mobileUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\s?\d{3}\s?\d{3})$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)7(?:[45789]\d{2}|624)\s?\d{3}\s?\d{3} )$/);
 }, 'Please specify a valid mobile number');
 
 //Matches UK landline + mobile, accepting only 01-3 for landline or 07 for mobile to exclude many premium numbers
 jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 	phone_number = phone_number.replace(/\(|\)|\s+|-/g,'');
 	return this.optional(element) || phone_number.length > 9 &&
-		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[45789]\d{8}|624\d{6})))$/);
+		phone_number.match(/^(?:(?:(?:00\s?|\+)44\s?|0)(?:1\d{8,9}|[23]\d{9}|7(?:[45789]\d{8}|624\d{6} )))$/);
 }, 'Please specify a valid uk phone number');
 // On the above three UK functions, do the following server side processing:
 //  Compare original input with this RegEx pattern:
@@ -391,33 +391,33 @@ jQuery.validator.addMethod('phonesUK', function(phone_number, element) {
 
 // Matches UK postcode. Does not match to UK Channel Islands that have their own postcodes (non standard UK)
 jQuery.validator.addMethod('postcodeUK', function(value, element) {
-	return this.optional(element) || /^((([A-PR-UWYZ][0-9])|([A-PR-UWYZ][0-9][0-9])|([A-PR-UWYZ][A-HK-Y][0-9])|([A-PR-UWYZ][A-HK-Y][0-9][0-9])|([A-PR-UWYZ][0-9][A-HJKSTUW])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY]))\s?([0-9][ABD-HJLNP-UW-Z]{2})|(GIR)\s?(0AA))$/i.test(value);
+	return this.optional(element) || /^((([A-PR-UWYZ][0-9])|([A-PR-UWYZ][0-9][0-9])|([A-PR-UWYZ][A-HK-Y][0-9])|([A-PR-UWYZ][A-HK-Y][0-9][0-9])|([A-PR-UWYZ][0-9][A-HJKSTUW])|([A-PR-UWYZ][A-HK-Y][0-9][ABEHMNPRVWXY]))\s?([0-9][ABD-HJLNP-UW-Z]{2} )|(GIR)\s?(0AA))$/i.test(value);
 }, 'Please specify a valid UK postcode');
 
 // TODO check if value starts with <, otherwise don't try stripping anything
-jQuery.validator.addMethod("strippedminlength", function(value, element, param) {
+jQuery.validator.addMethod( "strippedminlength", function(value, element, param) {
 	return jQuery(value).text().length >= param;
-}, jQuery.validator.format("Please enter at least {0} characters"));
+}, jQuery.validator.format( "Please enter at least {0} characters" ));
 
 // same as email, but TLD is optional
-jQuery.validator.addMethod("email2", function(value, element, param) {
+jQuery.validator.addMethod( "email2", function(value, element, param) {
 	return this.optional(element) || /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i.test(value);
 }, jQuery.validator.messages.email);
 
 // same as url, but TLD is optional
-jQuery.validator.addMethod("url2", function(value, element, param) {
-	return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+jQuery.validator.addMethod( "url2", function(value, element, param) {
+	return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2} )|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
 }, jQuery.validator.messages.url);
 
 // NOTICE: Modified version of Castle.Components.Validator.CreditCardValidator
 // Redistributed under the the Apache License 2.0 at http://www.apache.org/licenses/LICENSE-2.0
 // Valid Types: mastercard, visa, amex, dinersclub, enroute, discover, jcb, unknown, all (overrides all other settings)
-jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
+jQuery.validator.addMethod( "creditcardtypes", function(value, element, param) {
 	if (/[^0-9\-]+/.test(value)) {
 		return false;
 	}
 
-	value = value.replace(/\D/g, "");
+	value = value.replace(/\D/g, "" );
 
 	var validTypes = 0x0000;
 
@@ -476,30 +476,30 @@ jQuery.validator.addMethod("creditcardtypes", function(value, element, param) {
 		return true;
 	}
 	return false;
-}, "Please enter a valid credit card number.");
+}, "Please enter a valid credit card number." );
 
-jQuery.validator.addMethod("ipv4", function(value, element, param) {
+jQuery.validator.addMethod( "ipv4", function(value, element, param) {
 	return this.optional(element) || /^(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)\.(25[0-5]|2[0-4]\d|[01]?\d\d?)$/i.test(value);
-}, "Please enter a valid IP v4 address.");
+}, "Please enter a valid IP v4 address." );
 
-jQuery.validator.addMethod("ipv6", function(value, element, param) {
-	return this.optional(element) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test(value);
-}, "Please enter a valid IP v6 address.");
+jQuery.validator.addMethod( "ipv6", function(value, element, param) {
+	return this.optional(element) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4} )|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4} )|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4} )|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4} )|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4} )|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4} )|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2} )|(2[0-4]\d)|(\d{1,2} ))\b)\.){3}(\b((25[0-5])|(1\d{2} )|(2[0-4]\d)|(\d{1,2} ))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2} )|(2[0-4]\d)|(\d{1,2} ))\b)\.){3}(\b((25[0-5])|(1\d{2} )|(2[0-4]\d)|(\d{1,2} ))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2} )|(2[0-4]\d)|(\d{1,2} ))\b)\.){3}(\b((25[0-5])|(1\d{2} )|(2[0-4]\d)|(\d{1,2} ))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4} )|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4} )|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test(value);
+}, "Please enter a valid IP v6 address." );
 
 /**
 * Return true if the field value matches the given format RegExp
 *
-* @example jQuery.validator.methods.pattern("AR1004",element,/^AR\d{4}$/)
+* @example jQuery.validator.methods.pattern( "AR1004",element,/^AR\d{4}$/)
 * @result true
 *
-* @example jQuery.validator.methods.pattern("BR1004",element,/^AR\d{4}$/)
+* @example jQuery.validator.methods.pattern( "BR1004",element,/^AR\d{4}$/)
 * @result false
 *
 * @name jQuery.validator.methods.pattern
 * @type Boolean
 * @cat Plugins/Validate/Methods
 */
-jQuery.validator.addMethod("pattern", function(value, element, param) {
+jQuery.validator.addMethod( "pattern", function(value, element, param) {
 	if (this.optional(element)) {
 		return true;
 	}
@@ -507,7 +507,7 @@ jQuery.validator.addMethod("pattern", function(value, element, param) {
 		param = new RegExp('^(?:' + param + ')$');
 	}
 	return param.test(value);
-}, "Invalid format.");
+}, "Invalid format." );
 
 
 /*
@@ -524,12 +524,12 @@ jQuery.validator.addMethod("pattern", function(value, element, param) {
  * description: {require_from_group: [1,".productinfo"]}
  *
  */
-jQuery.validator.addMethod("require_from_group", function(value, element, options) {
+jQuery.validator.addMethod( "require_from_group", function(value, element, options) {
 	var validator = this;
 	var selector = options[1];
 	var validOrNot = $(selector, element.form).filter(function() {
 		return validator.elementValue(this);
-	}).length >= options[0];
+	} ).length >= options[0];
 
 	if(!$(element).data('being_validated')) {
 		var fields = $(selector, element.form);
@@ -538,7 +538,7 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
 		fields.data('being_validated', false);
 	}
 	return validOrNot;
-}, jQuery.format("Please fill at least {0} of these fields."));
+}, jQuery.format( "Please fill at least {0} of these fields." ));
 
 /*
  * Lets you say "either at least X inputs that match selector Y must be filled,
@@ -558,13 +558,13 @@ jQuery.validator.addMethod("require_from_group", function(value, element, option
  * color:       {skip_or_fill_minimum: [2,".productinfo"]}
  *
  */
-jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, options) {
+jQuery.validator.addMethod( "skip_or_fill_minimum", function(value, element, options) {
 	var validator = this,
 		numberRequired = options[0],
 		selector = options[1];
 	var numberFilled = $(selector, element.form).filter(function() {
 		return validator.elementValue(this);
-	}).length;
+	} ).length;
 	var valid = numberFilled >= numberRequired || numberFilled === 0;
 
 	if(!$(element).data('being_validated')) {
@@ -574,10 +574,10 @@ jQuery.validator.addMethod("skip_or_fill_minimum", function(value, element, opti
 		fields.data('being_validated', false);
 	}
 	return valid;
-}, jQuery.format("Please either skip these fields or fill at least {0} of them."));
+}, jQuery.format( "Please either skip these fields or fill at least {0} of them." ));
 
 // Accept a value from a file input based on a required mimetype
-jQuery.validator.addMethod("accept", function(value, element, param) {
+jQuery.validator.addMethod( "accept", function(value, element, param) {
 	// Split mime on commas in case we have multiple types we can accept
 	var typeParam = typeof param === "string" ? param.replace(/\s/g, '').replace(/,/g, '|') : "image/*",
 	optionalValue = this.optional(element),
@@ -588,9 +588,9 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 		return optionalValue;
 	}
 
-	if ($(element).attr("type") === "file") {
+	if ($(element).attr( "type" ) === "file" ) {
 		// If we are using a wildcard, make it regex friendly
-		typeParam = typeParam.replace(/\*/g, ".*");
+		typeParam = typeParam.replace(/\*/g, ".*" );
 
 		// Check if the element has a FileList before checking each file
 		if (element.files && element.files.length) {
@@ -598,7 +598,7 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 				file = element.files[i];
 
 				// Grab the mimetype from the loaded file, verify it matches
-				if (!file.type.match(new RegExp( ".?(" + typeParam + ")$", "i"))) {
+				if (!file.type.match(new RegExp( ".?( " + typeParam + " )$", "i" ))) {
 					return false;
 				}
 			}
@@ -608,10 +608,10 @@ jQuery.validator.addMethod("accept", function(value, element, param) {
 	// Either return true because we've validated each file, or because the
 	// browser does not support element.files and the FileList feature
 	return true;
-}, jQuery.format("Please enter a value with a valid mimetype."));
+}, jQuery.format( "Please enter a value with a valid mimetype." ));
 
 // Older "accept" file extension method. Old docs: http://docs.jquery.com/Plugins/Validation/Methods/accept
-jQuery.validator.addMethod("extension", function(value, element, param) {
+jQuery.validator.addMethod( "extension", function(value, element, param) {
 	param = typeof param === "string" ? param.replace(/,/g, '|') : "png|jpe?g|gif";
-	return this.optional(element) || value.match(new RegExp(".(" + param + ")$", "i"));
-}, jQuery.format("Please enter a value with a valid extension."));
+	return this.optional(element) || value.match(new RegExp( ".( " + param + " )$", "i" ));
+}, jQuery.format( "Please enter a value with a valid extension." ));

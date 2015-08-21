@@ -4,7 +4,7 @@
  * =========================================================
  * Copyright 2012 Stefan Petre
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License" );
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -26,19 +26,19 @@
 		this.format = DPGlobal.parseFormat(options.format||this.element.data('date-format')||'mm/dd/yyyy');
 		this.picker = $(DPGlobal.template)
 							.appendTo('body')
-							.on({
+							.on( {
 								click: $.proxy(this.click, this)//,
 								//mousedown: $.proxy(this.mousedown, this)
-							});
+							} );
 		this.isInput = this.element.is('input');
 		this.component = this.element.is('.date') ? this.element.find('.add-on') : false;
 		
 		if (this.isInput) {
-			this.element.on({
+			this.element.on( {
 				focus: $.proxy(this.show, this),
 				//blur: $.proxy(this.hide, this),
 				keyup: $.proxy(this.update, this)
-			});
+			} );
 		} else {
 			if (this.component){
 				this.component.on('click', $.proxy(this.show, this));
@@ -104,11 +104,11 @@
 				if ($(ev.target).closest('.datepicker').length == 0) {
 					that.hide();
 				}
-			});
-			this.element.trigger({
+			} );
+			this.element.trigger( {
 				type: 'show',
 				date: this.date
-			});
+			} );
 		},
 		
 		hide: function(){
@@ -120,10 +120,10 @@
 				$(document).off('mousedown', this.hide);
 			}
 			//this.set();
-			this.element.trigger({
+			this.element.trigger( {
 				type: 'hide',
 				date: this.date
-			});
+			} );
 		},
 		
 		set: function() {
@@ -151,10 +151,10 @@
 		
 		place: function(){
 			var offset = this.component ? this.component.offset() : this.element.offset();
-			this.picker.css({
+			this.picker.css( {
 				top: offset.top + this.height,
 				left: offset.left
-			});
+			} );
 		},
 		
 		update: function(newDate){
@@ -284,11 +284,11 @@
 						}
 						if (this.viewMode !== 0) {
 							this.date = new Date(this.viewDate);
-							this.element.trigger({
+							this.element.trigger( {
 								type: 'changeDate',
 								date: this.date,
 								viewMode: DPGlobal.modes[this.viewMode].clsName
-							});
+							} );
 						}
 						this.showMode(-1);
 						this.fill();
@@ -308,11 +308,11 @@
 							this.viewDate = new Date(year, month, Math.min(28, day),0,0,0,0);
 							this.fill();
 							this.set();
-							this.element.trigger({
+							this.element.trigger( {
 								type: 'changeDate',
 								date: this.date,
 								viewMode: DPGlobal.modes[this.viewMode].clsName
-							});
+							} );
 						}
 						break;
 				}
@@ -338,10 +338,10 @@
 				data = $this.data('datepicker'),
 				options = typeof option === 'object' && option;
 			if (!data) {
-				$this.data('datepicker', (data = new Datepicker(this, $.extend({}, $.fn.datepicker.defaults,options))));
+				$this.data('datepicker', (data = new Datepicker(this, $.extend( {}, $.fn.datepicker.defaults,options))));
 			}
 			if (typeof option === 'string') data[option](val);
-		});
+		} );
 	};
 
 	$.fn.datepicker.defaults = {
@@ -385,7 +385,7 @@
 			var separator = format.match(/[.\/\-\s].*?/),
 				parts = format.split(/\W+/);
 			if (!separator || !parts || parts.length === 0){
-				throw new Error("Invalid date format.");
+				throw new Error( "Invalid date format." );
 			}
 			return {separator: separator, parts: parts};
 		},

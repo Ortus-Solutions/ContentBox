@@ -3,18 +3,18 @@
     <div class="col-md-12">
         <h1 class="h1">
         	<i class="fa fa-comments"></i> Comments (#prc.commentsCount#)
-			<cfif len(rc.searchComments)> > Search: #event.getValue("searchComments")#</cfif>
+			<cfif len(rc.searchComments)> > Search: #event.getValue( "searchComments" )#</cfif>
 		</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         <!-- MessageBox -->
-        #getPlugin( "MessageBox" ).renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
         <!--- Info Bar --->
 		<cfif NOT prc.cbSettings.cb_comments_enabled>
 			<div class="alert alert-info">
-				<i class="icon-exclamation-sign icon-large"></i>
+				<i class="icon-exclamation-sign fa-lg"></i>
 				Comments are currently disabled site-wide!
 			</div>
 		</cfif>
@@ -22,8 +22,8 @@
 </div>
 <div class="row">
     <div class="col-md-8">
-        #html.startForm(name="commentForm", action=prc.xehCommentRemove, class="form-vertical")#
-        	#html.hiddenField(name="commentStatus",value="")#
+        #html.startForm(name="commentForm", action=prc.xehCommentRemove, class="form-vertical" )#
+        	#html.hiddenField(name="commentStatus",value="" )#
 			#html.hiddenField(name="page",value=rc.page)#
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -38,7 +38,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+							<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 								<div class="pull-right">
 									<div class="btn-group btn-sm">
 								    	<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
@@ -77,12 +77,12 @@
 									<input type="checkbox" name="commentID" id="commentID" value="#comment.getCommentID()#" />
 								</td>
 								<td>
-									#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=comment.getAuthorEmail(),size="30")#
+									#getModel( "Avatar@cb" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
 									&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 									<br/>
 									<cfif len(comment.getAuthorURL())>
 										<i class="fa fa-cloud"></i>
-										<a href="<cfif NOT findnocase("http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
+										<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
 											#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 										</a>
 										<br />
@@ -101,38 +101,38 @@
 									#comment.getDisplayCreatedDate()#
 								</td>
 								<td class="text-center">
-									<cfif prc.oAuthor.checkPermission("COMMENTS_ADMIN")>
+									<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>
-											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up icon-large"></i></a>
+											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
 										<cfelse>
-											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down icon-large"></i></a>
+											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 										</cfif>
 										<div class="btn-group">
 											<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
-												<i class="fa fa-cogs icon-large"></i>
+												<i class="fa fa-cogs fa-lg"></i>
 											</a>
 									    	<ul class="dropdown-menu text-left pull-right">
 									    		<!--- Edit Command --->
-												<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'});" title="Edit Comment"><i class="fa fa-edit icon-large"></i> Edit</a></li>
+												<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'} );" title="Edit Comment"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 												<li><!--- Delete Command --->
-													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Comment?"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o icon-large"></i> Delete</a>
+													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Comment?"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o fa-lg"></i> Delete</a>
 												</li>
 												<li>
-													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye icon-large"></i> View In Site</a>
+													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye fa-lg"></i> View In Site</a>
 												</li>
 									    	</ul>
 									    </div>
 									</cfif>
 									<!--- View in Site --->
-									<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open icon-large"></i></a>
+									<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open fa-lg"></i></a>
 								</td>
 							</tr>
 							</cfloop>
 						</tbody>
 					</table>
 					<!--- Paging --->
-					#prc.pagingPlugin.renderit(
+					#prc.oPaging.renderit(
 						foundRows=prc.commentsCount, 
 						link=prc.pagingLink, 
 						asList=true
@@ -156,7 +156,7 @@
 							class="form-control",
 							size="16",
 							title="Search all authors, author emails and content",
-							value=event.getValue("searchComments","")
+							value=event.getValue( "searchComments","" )
 						)#
 					</div>
 					<button type="submit" class="btn btn-danger">Search</button>

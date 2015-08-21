@@ -11,10 +11,10 @@ component cache="false"{
 	function preHandler( event, currentAction, rc, prc ){
 		// setup asset root from administrator as that is the holder of 
 		// all things assets :)
-		prc.assetRoot 		= getContextRoot() & getModuleSettings( "contentbox-admin" ).mapping;
-		prc.adminEntryPoint = getModuleSettings( "contentbox-admin" ).entryPoint;
-		prc.uiEntryPoint 	= getModuleSettings( "contentbox-ui" ).entryPoint;
-		prc.langs 			= getModuleSettings( "contentbox" ).settings.languages;
+		prc.assetRoot 		= getContextRoot() & getModuleConfig( "contentbox-admin" ).mapping;
+		prc.adminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
+		prc.uiEntryPoint 	= getModuleConfig( "contentbox-ui" ).entryPoint;
+		prc.langs 			= getModuleSettings( "contentbox" ).languages;
 	}
 
 	function index( event, rc, prc ){
@@ -31,15 +31,15 @@ component cache="false"{
 	function install( event, rc, prc ){
 		// Verify installed?
 		if( settingService.isCBReady() ){
-			getPlugin( "MessageBox" ).warn( cb.r( "validation.alreadyinstalled@installer" ) );
+			getModel( "messagebox@cbMessagebox" ).warn( cb.r( "validation.alreadyinstalled@installer" ) );
 			setNextEvent(  prc.adminEntryPoint );
 		}
 		// start installation
-		installerService.execute( populateModel("SetupBean@cbi") );
+		installerService.execute( populateModel( "SetupBean@cbi" ) );
 		// start up fresh in next request
 		applicationStop();
 		// Take them to the finalized screen
-		setNextEvent("cbinstaller/finished");
+		setNextEvent( "cbinstaller/finished" );
 	}
 	
 	function finished( event, rc, prc ){

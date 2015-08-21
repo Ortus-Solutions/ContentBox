@@ -4,7 +4,7 @@
  * ===========================================================
  * Copyright 2012-2014 Arnold Daniels
  *
- * Licensed under the Apache License, Version 2.0 (the "License")
+ * Licensed under the Apache License, Version 2.0 (the "License" )
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -76,7 +76,7 @@
 
     var file = files[0]
 
-    if (this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match(/^image\/(gif|png|jpeg)$/) : file.name.match(/\.(gif|png|jpe?g)$/i)) && typeof FileReader !== "undefined") {
+    if (this.$preview.length > 0 && (typeof file.type !== "undefined" ? file.type.match(/^image\/(gif|png|jpeg)$/) : file.name.match(/\.(gif|png|jpe?g)$/i)) && typeof FileReader !== "undefined" ) {
       var reader = new FileReader()
       var preview = this.$preview
       var element = this.$element
@@ -165,7 +165,7 @@
           data = $this.data('bs.fileinput')
       if (!data) $this.data('bs.fileinput', (data = new Fileinput(this, options)))
       if (typeof options == 'string') data[options]()
-    })
+    } )
   }
 
   $.fn.fileinput.Constructor = Fileinput
@@ -193,6 +193,6 @@
       e.preventDefault()
       $target.trigger('click.bs.fileinput')
     }
-  })
+  } )
 
 }(window.jQuery);

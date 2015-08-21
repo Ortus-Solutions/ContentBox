@@ -123,7 +123,7 @@
 					<div class="actionBar">	
 						<input name="verifyDataButton" id="verifyDataButton" type="button" class="btn btn-primary" value="Verify Data" onclick="verifyData()" />
 						<input name="createDSNButton" id="createDSNButton" type="submit" class="btn btn-danger" value="Create Datasource" style="display: none" />
-						<div id="actionBarLoader" style="display:none"><i class="icon-spinner icon-spin icon-large icon-2x"></i> Creating, Please Wait...</div>
+						<div id="actionBarLoader" style="display:none"><i class="icon-spinner icon-spin fa-lg fa-2x"></i> Creating, Please Wait...</div>
 					</div>
 				</form>
 			</fieldset>

@@ -2,7 +2,7 @@
 <div id="pagerPages">
 	<!--- Loader --->
 	<div class="loaders floatRight" id="pagePagerLoader">
-		<i class="fa fa-spinner fa-spin icon-large"></i>
+		<i class="fa fa-spinner fa-spin fa-lg"></i>
 	</div>
 
 	<!--- entries --->
@@ -10,8 +10,8 @@
 		<thead>
 			<tr class="info">
 				<th>Page</th>
-				<th width="40" class="text-center"><i class="fa fa-globe icon-large" title="Published"></i></th>
-				<th width="40" class="text-center"><i class="fa fa-signal icon-large" title="Hits"></i></th>
+				<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published"></i></th>
+				<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>
 				<th width="50" class="text-center">Actions</th>
 			</tr>
 		</thead>
@@ -35,16 +35,16 @@
 				</td>
 				<td class="text-center">
 					<cfif page.isExpired()>
-						<i class="fa fa-clock-o icon-large textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
+						<i class="fa fa-clock-o fa-lg textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
 					<cfelseif page.isPublishedInFuture()>
-						<i class="fa fa-fighter-jet icon-large textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
+						<i class="fa fa-fighter-jet fa-lg textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
 						<span class="hidden">published in future</span>
 					<cfelseif page.isContentPublished()>
-						<i class="fa fa-check icon-large textGreen" title="Page Published"></i>
+						<i class="fa fa-check fa-lg textGreen" title="Page Published"></i>
 						<span class="hidden">published in future</span>
 					<cfelse>
-						<i class="fa fa-times icon-large textRed" title="Page Draft"></i>
+						<i class="fa fa-times fa-lg textRed" title="Page Draft"></i>
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
@@ -53,19 +53,19 @@
 					<!--- Page Actions --->
 					<div class="btn-group btn-xs">
 				    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
-							<i class="fa fa-cogs icon-large"></i>
+							<i class="fa fa-cogs fa-lg"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">
-				    		<cfif prc.oAuthor.checkPermission("PAGES_EDITOR") OR prc.oAuthor.checkPermission("PAGES_ADMIN")>
+				    		<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR" ) OR prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Edit Command --->
-							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit icon-large"></i> Edit</a></li>
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 							<!--- Create Child --->
-							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="fa fa-sitemap icon-large"></i> Create Child</a></li>
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="fa fa-sitemap fa-lg"></i> Create Child</a></li>
 							</cfif>
 							<!--- History Command --->
-							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fa fa-clock-o icon-large"></i> History</a></li>
+							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
 							<!--- View in Site --->
-							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye icon-large"></i> View Page</a></li>
+							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye fa-lg"></i> View Page</a></li>
 				    	</ul>
 				    </div>
 				</td>
@@ -76,7 +76,7 @@
 	
 	<!--- Paging --->
 	<cfif prc.pagePager_pagination>
-		#prc.pagepager_pagingPlugin.renderit(foundRows=prc.pager_pagesCount, link=prc.pagePager_pagingLink, asList=true)#
+		#prc.pagepager_oPaging.renderit(foundRows=prc.pager_pagesCount, link=prc.pagePager_pagingLink, asList=true)#
 	</cfif>
 
 </div>

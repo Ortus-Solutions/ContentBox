@@ -11,7 +11,7 @@
 	<!--- Title --->
     <title>#prc.fbSettings.title#</title> 
 	<!--- JQuery --->
-	<cfset addAsset("#prc.fbModRoot#/includes/javascript/jquery.min.js")>
+	<cfset addAsset( "#prc.fbModRoot#/includes/javascript/jquery.min.js" )>
 </head>
 <body>#renderView()#</body>
 </html>

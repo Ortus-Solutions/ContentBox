@@ -2,10 +2,10 @@
 #html.startForm(name="forgeBoxInstall",action=prc.xehForgeBoxInstall)#
 #html.hiddenField(name="installDir",value=rc.installDir)#
 #html.hiddenField(name="returnURL",value=rc.returnURL)#
-#html.hiddenField(name="downloadURL")#
+#html.hiddenField(name="downloadURL" )#
 
 <cfif prc.errors>
-#getPlugin("MessageBox").renderit()#
+#getModel( "messagebox@cbMessagebox" ).renderit()#
 <cfelse>
 	<!--- Title --->
 	<h2>
@@ -64,7 +64,7 @@
 		</div>
 		<!--- Info --->
 		<h3>#prc.entries.title# v#prc.entries.version#</h3>
-		<a href="#prc.entries.downloadURL#" title="Download URL" target="_blank"><i class="fa fa-download icon-large"></i> #prc.entries.downloadURL#</a>
+		<a href="#prc.entries.downloadURL#" title="Download URL" target="_blank"><i class="fa fa-download fa-lg"></i> #prc.entries.downloadURL#</a>
 		<p>#prc.entries.summary#</p>
 		
 		<!--- Description --->
@@ -118,17 +118,17 @@
 		<br/>
 		<!--- Download & Install --->
 		<div class="forgebox-download">
-			<cfif findnocase(".zip", prc.entries.downloadURL)>
+			<cfif findnocase( ".zip", prc.entries.downloadURL)>
 			<a href="javascript:installEntry('entry_#prc.entries.entryID#','#prc.entries.downloadURL#')" class="btn btn-sm btn-primary">
 			   	<span>Download & Install</span>
 			</a>
 			<cfelse>
-			<div class="alert alert-warning"><i class="fa fa-exclamation icon-large"></i> No zip detected, manual install only!</div>
+			<div class="alert alert-warning"><i class="fa fa-exclamation fa-lg"></i> No zip detected, manual install only!</div>
 			</cfif>	
 		</div>
 		<!--- Info --->
 		<p>
-			#getMyPlugin(plugin="Avatar",module="contentbox").renderAvatar(email=prc.entries.username,size="30")#
+			#getModel( "Avatar@cb" ).renderAvatar(email=prc.entries.username,size="30" )#
 			<label class="inline">By: </label> <a title="Open Profile" href="http://www.coldbox.org/profiles/show/#prc.entries.username#" target="_blank">#prc.entries.username#</a> |
 			<label class="inline">Updated: </label> #dateFormat(prc.entries.updatedate)# |
 			<label class="inline">Downloads: </label> #prc.entries.downloads# |
@@ -137,7 +137,7 @@
 	</div>
 	</cfloop>
 	<cfif NOT prc.entries.recordcount>
-		#getPlugin("MessageBox").renderMessage("warning","No Entries Found!")#
+		#getModel( "messagebox@cbMessagebox" ).renderMessage( "warning","No Entries Found!" )#
 	</cfif>
 	#html.endForm()#
 </cfif>

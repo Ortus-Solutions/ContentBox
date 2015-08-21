@@ -24,13 +24,13 @@
             if(options.singleton) {
                 $(all+'.in').not(that.$element).confirmation('hide');
             }
-        });
+        } );
 
         $(element).on('hide.bs.confirmation', function(e) {
             that.options.onHide(e, this);
 
             $(this).removeClass('open');
-        });
+        } );
 
         $(element).on('shown.bs.confirmation', function(e) {
             var options = that.options;
@@ -52,19 +52,19 @@
                         event_body = false;
 
                         return;
-                    });
+                    } );
                 }
             }
-        });
+        } );
 
         $(element).on('click', function(e) {
             e.preventDefault();
-        });
+        } );
     }
 
     if (!$.fn.popover || !$.fn.tooltip) throw new Error('Confirmation requires popover.js and tooltip.js');
 
-    Confirmation.DEFAULTS = $.extend({}, $.fn.popover.Constructor.DEFAULTS, {
+    Confirmation.DEFAULTS = $.extend( {}, $.fn.popover.Constructor.DEFAULTS, {
         placement       : 'right',
         title           : 'Are you sure?',
         btnOkClass      : 'btn btn-sm btn-danger',
@@ -88,12 +88,12 @@
                             + ' <a data-dismiss="confirmation">No</a>'
                             + '</div>'
                             + '</div>'
-    });
+    } );
 
 
     // NOTE: CONFIRMATION EXTENDS popover.js
     // ================================
-    Confirmation.prototype = $.extend({}, $.fn.popover.Constructor.prototype);
+    Confirmation.prototype = $.extend( {}, $.fn.popover.Constructor.prototype);
 
     Confirmation.prototype.constructor = Confirmation;
 
@@ -111,23 +111,23 @@
 
         $btnOk.addClass(this.getBtnOkClass())
             .html(this.getBtnOkLabel())
-            .prepend($('<i></i>').addClass(this.getBtnOkIcon()), " ")
+            .prepend($('<i></i>').addClass(this.getBtnOkIcon()), " " )
             .attr('href', this.getHref())
             .attr('target', this.getTarget())
             .off('click').on('click', function(event) {
                 options.onConfirm(event, that.$element);
 
                 that.$element.confirmation('hide');
-            });
+            } );
 
         $btnCancel.addClass(this.getBtnCancelClass())
             .html(this.getBtnCancelLabel())
-            .prepend($('<i></i>').addClass(this.getBtnCancelIcon()), " ")
+            .prepend($('<i></i>').addClass(this.getBtnCancelIcon()), " " )
             .off('click').on('click', function(event){
                 options.onCancel(event, that.$element);
 
                 that.$element.confirmation('hide');
-            });
+            } );
 
         $tip.find('.popover-title')[this.options.html ? 'html' : 'text'](title);
 
@@ -225,7 +225,7 @@
             if (!data && option == 'destroy') return;
             if (!data) $this.data('bs.confirmation', (data = new Confirmation(this, options)));
             if (typeof option == 'string') data[option]();
-        });
+        } );
     }
 
     $.fn.confirmation.Constructor = Confirmation
