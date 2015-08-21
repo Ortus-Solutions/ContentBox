@@ -1,5 +1,5 @@
 <cfoutput>
-    <a class="dd-handle dd3-handle btn" title="Drag to reorder"><i class="fa fa-crosshairs icon-large"></i></a>
+    <a class="dd-handle dd3-handle btn" title="Drag to reorder"><i class="fa fa-crosshairs fa-lg"></i></a>
     <cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-primary">
     <a class="dd3-type btn #btnCls#" title="#args.provider.getDescription()#"><i class="#args.provider.getIconClass()#"></i></a>
     <div class="dd3-content double" data-toggle="context" data-target="##context-menu">#args.menuItem.getLabel()#</div>
@@ -86,6 +86,6 @@
         </cfif>
         <!---end provider thing--->
     </div>
-    <a class="dd3-expand btn" title="Edit Details"><i class="fa fa-edit icon-large"></i></a>
-    <a class="dd3-delete btn btn-danger" data-toggle="confirmation" data-title="Are you sure you want to remove this menu item and all its descendants?"><i class="fa fa-trash-o icon-large"></i></a>
+    <a class="dd3-expand btn" title="Edit Details"><i class="fa fa-edit fa-lg"></i></a>
+    <a class="dd3-delete btn btn-danger" data-toggle="confirmation" data-title="Are you sure you want to remove this menu item and all its descendants?"><i class="fa fa-trash-o fa-lg"></i></a>
 </cfoutput>

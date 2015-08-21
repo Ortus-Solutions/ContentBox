@@ -3,8 +3,8 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// pointers
-	$authorForm 	= $("##authorForm");
-	$authorUsername = $authorForm.find("##username");
+	$authorForm 	= $( "##authorForm" );
+	$authorUsername = $authorForm.find( "##username" );
 	
 	// initialize validator and add a custom form submission logic
 	$authorForm.validate();
@@ -22,18 +22,18 @@ $(document).ready(function() {
     }, "The username you entered already exists, try a new one!" );
 	
 	<cfif prc.author.isLoaded()>
-    $("##authorPasswordForm").validate();
+    $( "##authorPasswordForm" ).validate();
     $.validator.addMethod( 'password', function( value, element ) {
-        return (value==$("[name=password]").val()) ? true : false;
+        return (value==$( "[name=password]" ).val()) ? true : false;
     }, 'Passwords need to match' );
 	// Setup Permissions
-	$permissionsTab = $("##permissionsTab");
+	$permissionsTab = $( "##permissionsTab" );
 	</cfif>
 	
-});
+} );
 function isUsernameFound(username){
 	var usernameFound = false;
-	$.ajax({
+	$.ajax( {
 		url:'#event.buildLink(prc.xehUsernameCheck)#',
 		data: {username: username},
 		async:false,
@@ -41,7 +41,7 @@ function isUsernameFound(username){
 			usernameFound = data;
 		},
 		dataType:"json"
-	});
+	} );
 	return usernameFound;
 }
 <cfif prc.author.isLoaded()>

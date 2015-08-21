@@ -894,8 +894,6 @@ label.valid {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  left: -20px;
-  top: 48px;
   background-color: #F6F6F6;
   border-color: #e7e8ec;
   -webkit-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
@@ -905,7 +903,7 @@ label.valid {
 }
 #header .user-nav ul li.dropdown.settings .dropdown-menu:after {
   bottom: 100%;
-  left: 78%;
+  left: 18%;
   border: solid transparent;
   content: " ";
   height: 0;
@@ -919,7 +917,7 @@ label.valid {
 }
 #header .user-nav ul li.dropdown.settings .dropdown-menu:before {
   bottom: 100%;
-  left: 78%;
+  left: 18%;
   border: solid transparent;
   content: " ";
   height: 0;

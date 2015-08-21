@@ -14,7 +14,7 @@
     <div class="row">
         <div class="col-md-8">
             <!--- MessageBox --->
-            #getPlugin("MessageBox").renderit()#
+            #getModel( "messagebox@cbMessagebox" ).renderit()#
 
             <!--- id --->
             #html.hiddenField(name="contentID",bind=prc.entry)#
@@ -102,7 +102,7 @@
                     )#
                 </div>
                 <!--- Event --->
-                #announceInterception("cbadmin_entryEditorInBody")#
+                #announceInterception( "cbadmin_entryEditorInBody" )#
             </div>
             <!--- Custom Fields --->
             <!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
@@ -112,7 +112,7 @@
             <cfif prc.entry.isLoaded()>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-clock-o icon-large"></i> Versions</h3>
+                        <h3 class="panel-title"><i class="fa fa-clock-o fa-lg"></i> Versions</h3>
                     </div>
                     <div class="panel-body">
                         #prc.versionsViewlet#
@@ -120,7 +120,7 @@
                 </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-comment icon-large"></i> Comments</h3>
+                        <h3 class="panel-title"><i class="fa fa-comment fa-lg"></i> Comments</h3>
                     </div>
                     <div class="panel-body">
                         #prc.commentsViewlet#
@@ -128,7 +128,7 @@
                 </div>
             </cfif>
             <!--- Event --->
-            #announceInterception("cbadmin_entryEditorFooter")#
+            #announceInterception( "cbadmin_entryEditorFooter" )#
         </div>
         <div class="col-md-4">
             <div class="panel panel-primary">
@@ -148,7 +148,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
-                                        <i class="fa fa-info-circle icon-large"></i> Entry Info
+                                        <i class="fa fa-info-circle fa-lg"></i> Entry Info
                                     </a>
                                 </h4>
                             </div>
@@ -212,12 +212,12 @@
                         <!---End Page Info--->
 
                         <!---Begin Related Content--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_RELATED_CONTENT")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap icon-large"></i> Related Content                                
+                                        <i class="fa fa-sitemap fa-lg"></i> Related Content                                
                                     </a>
 
                                 </h4>
@@ -235,12 +235,12 @@
                         <!---End Related Content--->
 
                         <!---Begin Linked Content--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_LINKED_CONTENT")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link icon-large"></i> Linked Content                                
+                                        <i class="fa fa-link fa-lg"></i> Linked Content                                
                                     </a>
 
                                 </h4>
@@ -256,21 +256,21 @@
                         <!---End Linked Content--->
 
                         <!---Begin Modifiers--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_MODIFIERS")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_MODIFIERS" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fa fa-cogs icon-large"></i> Modifiers
+                                        <i class="fa fa-cogs fa-lg"></i> Modifiers
                                     </a>
                                 </h4>
                             </div>
                             <div id="modifiers" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <!--- Creator --->
-                                    <cfif prc.entry.isLoaded() and prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+                                    <cfif prc.entry.isLoaded() and prc.oAuthor.checkPermission( "ENTRIES_ADMIN" )>
                                         <div class="form-group">
-                                            <i class="fa fa-user icon-large"></i>
+                                            <i class="fa fa-user fa-lg"></i>
                                             #html.label(
                                                 field="creatorID",
                                                 content="Creator:",
@@ -287,7 +287,7 @@
                                     <!--- Allow Comments --->
                                     <cfif prc.cbSettings.cb_comments_enabled>
                                         <div class="form-group">
-                                            <i class="fa fa-comments icon-large"></i> 
+                                            <i class="fa fa-comments fa-lg"></i> 
                                             #html.label(
                                                 field="allowComments",
                                                 content="Allow Comments:",
@@ -304,7 +304,7 @@
                 
                                     <!--- Password Protection --->
                                     <div class="form-group">
-                                        <label for="passwordProtection"><i class="fa fa-lock icon-large"></i> Password Protection:</label>
+                                        <label for="passwordProtection"><i class="fa fa-lock fa-lg"></i> Password Protection:</label>
                                         #html.textfield(
                                             name="passwordProtection",
                                             bind=prc.entry,
@@ -320,12 +320,12 @@
                         <!---End Modfiers--->
                             
                         <!---Begin Cache Settings--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_CACHING")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fa-hdd-o icon-large"></i> Cache Settings
+                                        <i class="fa-hdd-o fa-lg"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
@@ -376,12 +376,12 @@
                         <!---End Cache Settings--->
                             
                         <!---Begin Categories--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_CATEGORIES")>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                        <i class="fa fa-tags icon-large"></i> Categories
+                                        <i class="fa fa-tags fa-lg"></i> Categories
                                     </a>
                                 </h4>
                             </div>
@@ -416,12 +416,12 @@
                         <!---End Categories--->
                             
                         <!---Begin HTML Attributes--->
-                        <cfif prc.oAuthor.checkPermission("EDITORS_HTML_ATTRIBUTES")>   
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>   
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##htmlattributes">
-                                        <i class="fa fa-cloud icon-large"></i> HTML Attributes
+                                        <i class="fa fa-cloud fa-lg"></i> HTML Attributes
                                     </a>
                                 </h4>
                             </div>
@@ -452,16 +452,16 @@
                         <!---End HTML Attributes--->    
                         
                         <!--- Event --->
-                        #announceInterception("cbadmin_entryEditorSidebarAccordion")#           
+                        #announceInterception( "cbadmin_entryEditorSidebarAccordion" )#           
                     </div>  
                     <!--- End Accordion --->
         
                     <!--- Event --->
-                    #announceInterception("cbadmin_entryEditorSidebar")#
+                    #announceInterception( "cbadmin_entryEditorSidebar" )#
                 </div>
             </div>
             <!--- Event --->
-            #announceInterception("cbadmin_entryEditorSidebarFooter")#   
+            #announceInterception( "cbadmin_entryEditorSidebarFooter" )#   
         </div>
     </div>
 #html.endForm()#

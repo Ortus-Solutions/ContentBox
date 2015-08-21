@@ -19,7 +19,7 @@
                     <input type="checkbox" name="menuID" id="menuID" value="#menu.getMenuID()#" />
                 </td>
                 <td>
-                    <cfif prc.oAuthor.checkPermission("MENUS_ADMIN")>
+                    <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
                         <a href="#event.buildLink(prc.xehMenuEditor)#/menuID/#menu.getMenuID()#" title="Edit menu">#menu.getTitle()#</a>
                     <cfelse>
                         #menu.getTitle()#
@@ -30,22 +30,22 @@
                 <td class="text-center">
                     <div class="btn-group btn-group-sm">
                         <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Menu Actions">
-                            <i class="fa fa-cogs icon-large"></i>
+                            <i class="fa fa-cogs fa-lg"></i>
                         </a>
                         <ul class="dropdown-menu text-left pull-right">
-                            <cfif prc.oAuthor.checkPermission("MENUS_ADMIN")>
+                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
                                 <!--- Delete Command --->
                                 <li>
-                                    <a title="Delete Menu" href="javascript:remove('#menu.getmenuID()#', 'menuID')" class="confirmIt" data-title="Delete Menu?"><i class="fa fa-trash-o icon-large" id="delete_#menu.getMenuID()#"></i> Delete</a>
+                                    <a title="Delete Menu" href="javascript:remove('#menu.getmenuID()#', 'menuID')" class="confirmIt" data-title="Delete Menu?"><i class="fa fa-trash-o fa-lg" id="delete_#menu.getMenuID()#"></i> Delete</a>
                                 </li>
                                 <!--- Edit Command --->
                                 <li>
-                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fa fa-edit icon-large"></i> Edit</a>
+                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fa fa-edit fa-lg"></i> Edit</a>
                                 </li>
-                                <cfif prc.oAuthor.checkPermission("TOOLS_EXPORT")>
+                                <cfif prc.oAuthor.checkPermission( "TOOLS_EXPORT" )>
                                     <!--- Export --->
                                     <li class="dropdown-submenu pull-left">
-                                        <a href="javascript:null"><i class="fa fa-download icon-large"></i> Export</a>
+                                        <a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export</a>
                                         <ul class="dropdown-menu text-left">
                                             <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
                                             <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
@@ -62,7 +62,7 @@
     </table>
     <!--- Paging --->
     <cfif !rc.showAll>
-        #prc.pagingPlugin.renderit(foundRows=prc.menuCount, link=prc.pagingLink, asList=true)#
+        #prc.oPaging.renderit(foundRows=prc.menuCount, link=prc.pagingLink, asList=true)#
         <cfelse>
         <span class="label label-info">Total Records: #prc.menuCount#</span>
     </cfif>

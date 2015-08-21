@@ -1,7 +1,7 @@
 <cfoutput>
 <!--- authorPreferencesForm --->
-#html.startForm( name="authorPreferencesForm", action=prc.xehAuthorPreferences, novalidate="novalidate", class="form-vertical")#
-	#html.startFieldset(legend="User Preferences")#
+#html.startForm( name="authorPreferencesForm", action=prc.xehAuthorPreferences, novalidate="novalidate", class="form-vertical" )#
+	#html.startFieldset(legend="User Preferences" )#
 		#html.hiddenField( name="authorID", bind=prc.author )#
 		
 		<!---Editor of Choice --->
@@ -10,7 +10,7 @@
 			label="Favorite Editor", 
 			options=prc.editors, 
 			class="form-control input-sm", 
-			selectedValue=prc.author.getPreference("editor", ""),
+			selectedValue=prc.author.getPreference( "editor", "" ),
 			wrapper="div class=controls",
 			labelClass="control-label",
 			groupWrapper="div class=form-group" 
@@ -22,7 +22,7 @@
 			label="Favorite Markup", 
 			options=prc.markups, 
 			class="form-control input-sm", 
-			selectedValue=prc.author.getPreference("markup", ""),
+			selectedValue=prc.author.getPreference( "markup", "" ),
 			wrapper="div class=controls",
 			labelClass="control-label",
 			groupWrapper="div class=form-group" 
@@ -72,10 +72,10 @@
 		)#
 		
 		<!--- Admin Event --->
-		#announceInterception("cbadmin_UserPreferencePanel")#
+		#announceInterception( "cbadmin_UserPreferencePanel" )#
 		
 		<!--- Action Bar --->
-		<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
+		<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 			<div>
 				<input type="submit" value="Save Preferences" class="btn btn-danger">
 			</div>
@@ -84,7 +84,7 @@
 #html.endForm()#
 
 <!--- authorRawPreferencesForm --->
-#html.startForm( name="authorRawPreferencesForm", action=prc.xehAuthorRawPreferences, novalidate="novalidate", class="form-vertical")#
+#html.startForm( name="authorRawPreferencesForm", action=prc.xehAuthorRawPreferences, novalidate="novalidate", class="form-vertical" )#
 	#html.startFieldset( legend="Raw Preferences (<a href='javascript:toggleRawPreferences()'>Show/Hide</a>)" )#
 	#html.hiddenField( name="authorID", bind=prc.author )#
 	
@@ -103,7 +103,7 @@
 		)#
 
 		<!--- Action Bar --->
-		<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN") OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
+		<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
 			<div>
 				<input type="submit" value="Save" class="btn btn-danger">
 			</div>

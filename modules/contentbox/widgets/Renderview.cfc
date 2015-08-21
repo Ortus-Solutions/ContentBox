@@ -1,18 +1,15 @@
 /**
 * Renders any view in your ColdBox application
 */
-component extends="contentbox.model.ui.BaseWidget"{
+component extends="contentbox.models.ui.BaseWidget"{
 
-	function init(controller){
-		// super init
-		super.init(controller);
-
+	function init(){
 		// Widget Properties
-		setPluginName("Renderview");
-		setPluginVersion("1.0");
-		setPluginDescription("Renders any view within the deployed ColdBox application.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setName( "Renderview" );
+		setVersion( "1.0" );
+		setDescription( "Renders any view within the deployed ColdBox application." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
 		setIcon( "book.png" );
 		return this;
@@ -28,7 +25,7 @@ component extends="contentbox.model.ui.BaseWidget"{
 	* @module.hint The name of the module to render the view from
 	* @args.hint The arguments to pass to the view, this should be a comma delimitted list of name value pairs. Ex: widget=true,name=Test
 	*/
-	any function renderIt(required string view,boolean cache=false, cacheTimeout, cacheLastAccessTimeout, cacheSuffix, module, string args=""){
+	any function renderIt(required string view,boolean cache=false, cacheTimeout, cacheLastAccessTimeout, cacheSuffix, module, string args="" ){
 		var viewArgs = {};
 		
 		// Inflate args

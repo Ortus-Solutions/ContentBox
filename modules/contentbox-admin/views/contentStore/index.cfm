@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-md-8">
 		<!--- MessageBox --->
-		#getPlugin( "MessageBox" ).renderit()#
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -15,13 +15,13 @@
 		<!--- Info Bar --->
 		<cfif NOT prc.cbSettings.cb_comments_enabled>
 			<div class="alert alert-info">
-				<i class="fa fa-exclamation icon-large"></i>
+				<i class="fa fa-exclamation fa-lg"></i>
 				Comments are currently disabled site-wide!
 			</div>
 		</cfif>
 		#html.startForm(name="contentForm",action=prc.xehContentRemove)#
-			#html.hiddenField(name="contentStatus",value="")#
-			#html.hiddenField(name="contentID",value="")#
+			#html.hiddenField(name="contentStatus",value="" )#
+			#html.hiddenField(name="contentID",value="" )#
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
@@ -36,13 +36,13 @@
 						</div>
 						<div class="col-md-6">
 							<div class="pull-right">
-								<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
+								<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group btn-group-sm">
 								    	<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
+								    		<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
 													<a href="javascript:bulkRemove()" class="confirmIt"
 													data-title="<i class='fa fa-trash-o'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
@@ -60,17 +60,17 @@
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_IMPORT")>
+											<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
 														<i class="fa fa-upload"></i> Import
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_EXPORT")>
+											<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 												<li class="dropdown-submenu">
 													<a href="javascript:null">
-														<i class="fa fa-download icon-large"></i> Export All
+														<i class="fa fa-download fa-lg"></i> Export All
 													</a>
 													<ul class="dropdown-menu text-left">
 														<li>
@@ -101,7 +101,7 @@
 				<div class="panel-body">
 					<!--- entries container --->
     				<div id="contentTableContainer">
-    					<p class="text-center"><i id="entryLoader" class="fa fa-spinner fa-spin icon-large icon-4x"></i></p>
+    					<p class="text-center"><i id="entryLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i></p>
     				</div>
 				</div>
 			</div>
@@ -114,7 +114,7 @@
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
-					#html.startForm(name="contentFilterForm", action=prc.xehContentSearch, class="form-vertical",role="form")#
+					#html.startForm(name="contentFilterForm", action=prc.xehContentSearch, class="form-vertical",role="form" )#
 						<!--- Authors --->
 						<div class="form-group">
 					        <label for="fAuthors" class="control-label">Authors:</label>
@@ -170,7 +170,7 @@
 	</div>
 </div>
 <!--- Clone Dialog --->
-<cfif prc.oAuthor.checkPermission("CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN")>
+<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Content Cloning",
@@ -184,7 +184,7 @@
 	</cfscript>
 	#renderView( view="_tags/dialog/clone", args=dialogArgs )#
 </cfif>
-<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Content",

@@ -24,7 +24,7 @@
         var supports = window.getComputedStyle && window.getComputedStyle(el, '').pointerEvents === 'auto';
         docEl.removeChild(el);
         return !!supports;
-    })();
+    } )();
 
     var eStart  = hasTouch ? 'touchstart'  : 'mousedown',
         eMove   = hasTouch ? 'touchmove'   : 'mousemove',
@@ -54,7 +54,7 @@
     {
         this.w  = $(window);
         this.el = $(element);
-        this.options = $.extend({}, defaults, options);
+        this.options = $.extend( {}, defaults, options);
         this.init();
     }
 
@@ -72,7 +72,7 @@
 
             $.each(this.el.find(list.options.itemNodeName), function(k, el) {
                 list.setParent($(el));
-            });
+            } );
 
             list.el.on('click', 'button', function(e) {
                 if (list.dragEl || (!hasTouch && e.button !== 0)) {
@@ -87,7 +87,7 @@
                 if (action === 'expand') {
                     list.expandItem(item);
                 }
-            });
+            } );
 
             var onStartEvent = function(e)
             {
@@ -146,13 +146,13 @@
                     items.each(function()
                     {
                         var li   = $(this),
-                            item = $.extend({}, li.data()),
+                            item = $.extend( {}, li.data()),
                             sub  = li.children(list.options.listNodeName);
                         if (sub.length) {
                             item.children = step(sub, depth + 1);
                         }
                         array.push(item);
-                    });
+                    } );
                     return array;
                 };
             data = step(list.el.find(list.options.listNodeName).first(), depth);
@@ -217,7 +217,7 @@
             var list = this;
             list.el.find(list.options.itemNodeName).each(function() {
                 list.expandItem($(this));
-            });
+            } );
         },
 
         collapseAll: function()
@@ -225,7 +225,7 @@
             var list = this;
             list.el.find(list.options.itemNodeName).each(function() {
                 list.collapseItem($(this));
-            });
+            } );
         },
 
         setParent: function(li)
@@ -269,10 +269,10 @@
             dragItem.appendTo(this.dragEl);
 
             $(document.body).append(this.dragEl);
-            this.dragEl.css({
+            this.dragEl.css( {
                 'left' : e.pageX - mouse.offsetX,
                 'top'  : e.pageY - mouse.offsetY
-            });
+            } );
             // total depth of dragging item
             var i, depth,
                 items = this.dragEl.find(this.options.itemNodeName);
@@ -306,10 +306,10 @@
                 opt   = this.options,
                 mouse = this.mouse;
 
-            this.dragEl.css({
+            this.dragEl.css( {
                 'left' : e.pageX - mouse.offsetX,
                 'top'  : e.pageY - mouse.offsetY
-            });
+            } );
 
             // mouse position last events
             mouse.lastX = mouse.nowX;
@@ -467,11 +467,11 @@
 
         lists.each(function()
         {
-            var plugin = $(this).data("nestable");
+            var plugin = $(this).data( "nestable" );
 
             if (!plugin) {
-                $(this).data("nestable", new Plugin(this, params));
-                $(this).data("nestable-id", new Date().getTime());
+                $(this).data( "nestable", new Plugin(this, params));
+                $(this).data( "nestable-id", new Date().getTime());
             } else {
                 if (typeof params === 'string' && typeof plugin[params] === 'function') {
                     retval = plugin[params]();
@@ -480,9 +480,9 @@
                     retval = plugin[ params.fn ].apply( plugin, params.args );
                 }
             }
-        });
+        } );
 
         return retval || lists;
     };
 
-})(window.jQuery || window.Zepto, window, document);
+} )(window.jQuery || window.Zepto, window, document);

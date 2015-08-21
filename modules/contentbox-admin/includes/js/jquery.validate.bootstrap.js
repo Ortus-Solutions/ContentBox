@@ -1,4 +1,4 @@
-$.validator.setDefaults({
+$.validator.setDefaults( {
     highlight: function (element, errorClass, validClass) {
         var $element;
         if (element.type === 'radio') {
@@ -8,7 +8,7 @@ $.validator.setDefaults({
         }
         $element.addClass(errorClass).removeClass(validClass);
         // add the bootstrap error class
-        $element.parents("div.control-group").addClass("error");
+        $element.parents( "div.control-group" ).addClass( "error" );
     },
     unhighlight: function (element, errorClass, validClass) {
         var $element;
@@ -19,28 +19,28 @@ $.validator.setDefaults({
         }
         $element.removeClass(errorClass).addClass(validClass);
         // remove the bootstrap error class
-        if ($element.parents("div.control-group").find("." + errorClass).length == 0)
+        if ($element.parents( "div.control-group" ).find( "." + errorClass).length == 0)
         {  
             // Only remove the class if there are no other errors
-            $element.parents("div.control-group").removeClass("error");
+            $element.parents( "div.control-group" ).removeClass( "error" );
         }
     }
-});
+} );
 
 $(function () {
     // make all validation errors use the bootstrap inline help class on page load if none are specified
     $('.field-validation-valid, .field-validation-error').each(function () {
         var validationMessage = $(this);
-        if (!validationMessage.hasClass("help-inline") || !validationMessage.hasClass("help-block")) {
-            if (validationMessage.is("p")) {                // add block to p tags
-                validationMessage.addClass("help-block");
-            } else if (validationMessage.is("span")) {      // add inline to span tags
-                validationMessage.addClass("help-inline");
+        if (!validationMessage.hasClass( "help-inline" ) || !validationMessage.hasClass( "help-block" )) {
+            if (validationMessage.is( "p" )) {                // add block to p tags
+                validationMessage.addClass( "help-block" );
+            } else if (validationMessage.is( "span" )) {      // add inline to span tags
+                validationMessage.addClass( "help-inline" );
             } else {                                        // add block to another other tag
-                validationMessage.addClass("help-block");
+                validationMessage.addClass( "help-block" );
             }
         }
-    });
+    } );
 
     // if the page was rendered with an error, add the error class to the control group
     $('form').each(function () {
@@ -48,6 +48,6 @@ $(function () {
             if ($(this).find('.field-validation-error').length > 0) {
                 $(this).addClass('error');
             }
-        });
-    });
-});
+        } );
+    } );
+} );

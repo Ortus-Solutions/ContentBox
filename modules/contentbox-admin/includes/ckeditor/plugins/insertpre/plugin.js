@@ -6,10 +6,10 @@
 if (typeof(CKEDITOR.config.insertpre_style) == 'undefined')
 	CKEDITOR.config.insertpre_style = 'background-color:#C6E1FF;border:1px solid #DDD;padding:10px;';
 var format=function( code ) {
-	code=code.replace(/<br>/g,"\n");
-	code=code.replace(/&amp;/g,"&");
-	code=code.replace(/&lt;/g,"<");
-	code=code.replace(/&gt;/g,">");
+	code=code.replace(/<br>/g,"\n" );
+	code=code.replace(/&amp;/g,"&" );
+	code=code.replace(/&lt;/g,"<" );
+	code=code.replace(/&gt;/g,">" );
 	code=code.replace(/&quot;/g,'"');
     code=code.replace(/&nbsp;/g,' ');
 	return code;
@@ -42,7 +42,7 @@ CKEDITOR.plugins.add( 'insertpre',
 					evt.data.dialog = 'insertpre';
 			        editor.getSelection().selectElement( element );
 				}
-			});
+			} );
 			
 			// Register insertpre dialog command
 			editor.addCommand( 'insertpre', new CKEDITOR.dialogCommand( 'insertpre' ) );
@@ -64,7 +64,7 @@ CKEDITOR.plugins.add( 'insertpre',
 						icon : this.path + 'icons/insertpre-color.png',
 						command : 'insertpre',
 						group : 'code'
-					});
+					} );
 				editor.contextMenu.addListener( function( element )
 				{
 					if ( element )
@@ -72,7 +72,7 @@ CKEDITOR.plugins.add( 'insertpre',
 					if ( element && !element.isReadOnly() )
 						return { insertpre : CKEDITOR.TRISTATE_OFF };
 					return null;
-				});
+				} );
 			}
 			
 			// Dialog window

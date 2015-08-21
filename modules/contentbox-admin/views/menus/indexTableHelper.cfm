@@ -2,9 +2,9 @@
 <script type="text/javascript">
 $(document).ready(function() {
     // tables references
-    $menu = $("##menu");
+    $menu = $( "##menu" );
     // sorting
-    $menu.dataTable({
+    $menu.dataTable( {
         "paging": false,
         "info": false,
         "searching": false,
@@ -15,11 +15,11 @@ $(document).ready(function() {
             }
         ],
         "order": []
-    });
+    } );
     // activate confirmations
     activateConfirmations();
     // activate tooltips
     activateTooltips();
-});
+} );
 </script>
 </cfoutput>

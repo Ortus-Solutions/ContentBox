@@ -1,12 +1,12 @@
 ﻿<cfoutput>
-#html.addAsset("#prc.cbRoot#/includes/css/diff.css")#
+#html.addAsset( "#prc.cbRoot#/includes/css/diff.css" )#
 <div id="diff">
             <!--header-->
             <div class="modal-header">
                 <!--if dismissable-->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="diffTitle">
-                	<i class="icon-time icon-large"></i>
+                	<i class="icon-time fa-lg"></i>
 					Comparing Version <strong>#prc.currentVersion#</strong> and <strong>#prc.oldVersion#</strong>
 				</h4>
             </div>
@@ -70,7 +70,7 @@
 								<td width="50%" class="code#codeCSS#">
 									<div class="diffContent">
 										<cfif arrayIsDefined( prc.leftA, x )>
-										#Replace(HTMLEditFormat( prc.leftA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
+										#Replace(HTMLEditFormat( prc.leftA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL" )#
 										</cfif>
 									</div>
 								</td>
@@ -80,7 +80,7 @@
 								<td width="50%" class="code#codeCSS#">
 									<div class="diffContent">
 										<cfif arrayIsDefined( prc.rightA, x )>
-										#Replace(HTMLEditFormat( prc.rightA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL")#
+										#Replace(HTMLEditFormat( prc.rightA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL" )#
 										</cfif>
 									</div>
 								</td>

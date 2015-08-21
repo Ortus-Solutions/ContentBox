@@ -7,7 +7,7 @@
         </h1>
         <span class="label label-warning">Environment: #getSetting('Environment')#</span>
         <!--- messageBox --->
-        #getPlugin("MessageBox").renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
         <!---Import Log --->
         <cfif flash.exists( "importLog" )>
             <div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -21,16 +21,16 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="##raw" data-toggle="tab"><i class="fa fa-cog icon-large"></i> Raw Settings</a>
+                            <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> Raw Settings</a>
                         </li>
                         <li>
-                            <a href="##wirebox" data-toggle="tab"><i class="fa fa-th icon-large"></i> WireBox</a>
+                            <a href="##wirebox" data-toggle="tab"><i class="fa fa-th fa-lg"></i> WireBox</a>
                         </li>
                         <li>
-                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o icon-large"></i>  CacheBox</a>
+                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o fa-lg"></i>  CacheBox</a>
                         </li>
                         <li>
-                            <a href="##_events" data-toggle="tab"><i class="fa fa-bullhorn icon-large"></i> Events</a>
+                            <a href="##_events" data-toggle="tab"><i class="fa fa-bullhorn fa-lg"></i> Events</a>
                         </li>
                     </ul>
                     <!-- End Tabs -->
@@ -58,17 +58,17 @@
                                         <div class="pull-right">
                                             <div class="btn-group btn-group-sm">
                                                 <a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
-                                                    <i class="fa fa-spinner fa-spin icon-large hidden" id="specialActionsLoader"></i>
+                                                    <i class="fa fa-spinner fa-spin fa-lg hidden" id="specialActionsLoader"></i>
                                                     Special Actions
                                                     <span class="caret"></span>
                                                 </a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="fa fa-hdd-o"></i> View Cached Settings</a></li>
                                                     <li><a href="javascript:flushSettingsCache()"><i class="fa fa-refresh"></i> Flush Settings Cache</a></li>
-                                                    <cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS,TOOLS_IMPORT")>
+                                                    <cfif prc.oAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
                                                     <li><a href="javascript:importSettings()"><i class="fa fa-upload"></i> Import Settings</a></li>
                                                     </cfif>
-                                                    <cfif prc.oAuthor.checkPermission("SYSTEM_RAW_SETTINGS,TOOLS_EXPORT")>
+                                                    <cfif prc.oAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
                                                     <li class="dropdown-submenu">
                                                         <a href="javascript:null"><i class="fa fa-download"></i> Export All</a>
                                                         <ul class="dropdown-menu text-left">
@@ -94,7 +94,7 @@
                                 </div>
                                 <!---settings load --->
                                 <div id="settingsTableContainer">
-                                    <i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+                                    <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
                                 </div>
                             #html.endForm()#
 
@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                             </div>
-                            #html.startForm(name="singletonForm")#
+                            #html.startForm(name="singletonForm" )#
                                 <!--- settings --->
                                 <table name="singletons" id="singletons" class="table-bordered table table-hover table-striped table-condensed" width="98%">
                                     <thead>
@@ -188,7 +188,7 @@
                                                 #wirebox.getBinder().getMapping(target).getPath()#
                                             </td>
                                             <td class="text-center">
-                                                <a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'})" title="Dump Mapping Memento"><i class="fa fa-eye icon-large"></i> </a>
+                                                <a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'} )" title="Dump Mapping Memento"><i class="fa fa-eye fa-lg"></i> </a>
                                             </td>
                                         </tr>
                                         </cfloop>
@@ -224,7 +224,7 @@
                                 <div class="col-md-6"></div>
                             </div>
                             <!---Event Forms --->
-                            #html.startForm(name="eventsForm")#
+                            #html.startForm(name="eventsForm" )#
                                 <!--- events --->
                                 <table name="eventsList" id="eventsList" class="table-bordered table table-striped table-hover table-condensed" width="100%">
                                     <thead>

@@ -1,17 +1,17 @@
 <cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-exchange icon-large"></i> Export Tools</h1>
+        <h1 class="h1"><i class="fa fa-exchange fa-lg"></i> Export Tools</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getPlugin("MessageBox").renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        #html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate")#  
+        #html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate" )#  
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3>What, you thought exporting content would be hard? Sorry to disappoint! ;)</h3>
@@ -37,7 +37,7 @@
                     <fieldset style="display:none;" id="selective_controls" class="well">
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-file icon-large"></i> Pages</h4>
+                                <h4><i class="fa fa-file fa-lg"></i> Pages</h4>
                                 <small class="muted">Export site pages with comments</small>
                             </div>
                             <div class="col-md-9">
@@ -49,7 +49,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-quote-left icon-large"></i> Entries</h4>
+                                <h4><i class="fa fa-quote-left fa-lg"></i> Entries</h4>
                                 <small class="muted">Export blog entries with comments</small>
                             </div>
                             <div class="col-md-9">
@@ -61,7 +61,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-tags icon-large"></i> Categories</h4>
+                                <h4><i class="fa fa-tags fa-lg"></i> Categories</h4>
                                 <small class="muted">Export categories</small>
                             </div>
                             <div class="col-md-9">
@@ -73,7 +73,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-hdd-o icon-large"></i> Content Store</h4>
+                                <h4><i class="fa fa-hdd-o fa-lg"></i> Content Store</h4>
                                 <small class="muted">Export the Content Store</small>
                             </div>
                             <div class="col-md-9">
@@ -85,7 +85,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-sort-amount-desc icon-large"></i> Menus</h4>
+                                <h4><i class="fa fa-sort-amount-desc fa-lg"></i> Menus</h4>
                                 <small class="muted">Export menus</small>
                             </div>
                             <div class="col-md-9">
@@ -97,7 +97,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-user icon-large"></i> Authors</h4>
+                                <h4><i class="fa fa-user fa-lg"></i> Authors</h4>
                                 <small class="muted">Export all site authors</small>
                             </div>
                             <div class="col-md-9">
@@ -109,7 +109,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-lock icon-large"></i> Permission</h4>
+                                <h4><i class="fa fa-lock fa-lg"></i> Permission</h4>
                                 <small class="muted">Export all author permissions</small>
                             </div>
                             <div class="col-md-9">
@@ -121,7 +121,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-group icon-large"></i> Roles</h4>
+                                <h4><i class="fa fa-group fa-lg"></i> Roles</h4>
                                 <small class="muted">Export all author roles</small>
                             </div>
                             <div class="col-md-9">
@@ -133,7 +133,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-road icon-large"></i> Security Rules</h4>
+                                <h4><i class="fa fa-road fa-lg"></i> Security Rules</h4>
                                 <small class="muted">Export configured site security rules</small>
                             </div>
                             <div class="col-md-9">
@@ -145,7 +145,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-wrench icon-large"></i> Settings</h4>
+                                <h4><i class="fa fa-wrench fa-lg"></i> Settings</h4>
                                 <small class="muted">Export all site settings</small>
                             </div>
                             <div class="col-md-9">
@@ -157,7 +157,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-th icon-large"></i> Media Library</h4>
+                                <h4><i class="fa fa-th fa-lg"></i> Media Library</h4>
                                 <small class="muted">Export all Media Library content</small>
                             </div>
                             <div class="col-md-9">
@@ -169,9 +169,9 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-envelope icon-large"></i> Email Templates</h4>
+                                <h4><i class="fa fa-envelope fa-lg"></i> Email Templates</h4>
                                 <label class="checkbox" for="toggle_emailtemplates">
-                                    #html.checkbox(name="toggle_emailtemplates",checked=true,data={togglegroup="export_emailtemplates"})# Toggle All
+                                    #html.checkbox(name="toggle_emailtemplates",checked=true,data={togglegroup="export_emailtemplates"} )# Toggle All
                                 </label>
                                 <small class="muted clearfix">Export email templates, all or a-la-carte</small>
                             </div>
@@ -181,7 +181,7 @@
                                         <cfloop query="prc.emailTemplates">
                                             <div class="col-md-6">
                                                 <cfset name = prc.emailTemplates.name>
-                                                <label for="export_emailtemplates_#name#" class="checkbox">#html.checkbox(name="export_emailtemplates",id="export_emailtemplates_#name#",value="#name#",checked=true,data={alacarte=true})# #name#</label>
+                                                <label for="export_emailtemplates_#name#" class="checkbox">#html.checkbox(name="export_emailtemplates",id="export_emailtemplates_#name#",value="#name#",checked=true,data={alacarte=true} )# #name#</label>
                                             </div>
                                             <cfif currentRow MOD 2 eq 0>
                                                 </div>
@@ -195,9 +195,9 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-bolt icon-large"></i> Modules</h4>
+                                <h4><i class="fa fa-bolt fa-lg"></i> Modules</h4>
                                 <label class="checkbox" for="toggle_modules">
-                                    #html.checkbox(name="toggle_modules",checked=true,data={togglegroup="export_modules"})# Toggle All
+                                    #html.checkbox(name="toggle_modules",checked=true,data={togglegroup="export_modules"} )# Toggle All
                                 </label>
                                 <small class="muted clearfix">Export modules, all or a-la-carte</small>
                             </div>
@@ -208,7 +208,7 @@
                                         <cfloop array="#prc.modules#" index="module">
                                             <div class="col-md-6">
                                                 <cfset name = module.getName()>
-                                                <label for="export_modules_#name#" class="checkbox">#html.checkbox(name="export_modules",id="export_modules_#name#",value="#name#",checked=true,data={alacarte=true})# #module.getTitle()#</label>
+                                                <label for="export_modules_#name#" class="checkbox">#html.checkbox(name="export_modules",id="export_modules_#name#",value="#name#",checked=true,data={alacarte=true} )# #module.getTitle()#</label>
                                             </div>
                                             <cfif mcounter MOD 2 eq 0>
                                                 </div>
@@ -223,9 +223,9 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-photo icon-large"></i> Layouts</h4>
+                                <h4><i class="fa fa-photo fa-lg"></i> Layouts</h4>
                                 <label class="checkbox" for="toggle_layouts">
-                                    #html.checkbox(name="toggle_layouts",checked=true,data={togglegroup="export_layouts"})# Toggle All
+                                    #html.checkbox(name="toggle_layouts",checked=true,data={togglegroup="export_layouts"} )# Toggle All
                                 </label>
                                 <small class="muted clearfix">Export layouts, all or a-la-carte</small>
                             </div>
@@ -235,7 +235,7 @@
                                         <cfloop query="prc.themes">
                                             <div class="col-md-6">
                                                 <cfset name = prc.themes.name>
-                                                <label for="export_layouts_#name#" class="checkbox">#html.checkbox(name="export_layouts",id="export_layouts_#name#",value="#prc.themes.name#",checked=true,data={alacarte=true})# #name#</label>
+                                                <label for="export_layouts_#name#" class="checkbox">#html.checkbox(name="export_layouts",id="export_layouts_#name#",value="#prc.themes.name#",checked=true,data={alacarte=true} )# #name#</label>
                                             </div>
                                             <cfif currentRow MOD 2 eq 0>
                                                 </div>
@@ -249,9 +249,9 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-3">
-                                <h4><i class="fa fa-magic icon-large"></i> Widgets</h4>
+                                <h4><i class="fa fa-magic fa-lg"></i> Widgets</h4>
                                 <label class="checkbox" for="toggle_widgets">
-                                    #html.checkbox(name="toggle_widgets",checked=true,data={togglegroup="export_widgets"})# Toggle All
+                                    #html.checkbox(name="toggle_widgets",checked=true,data={togglegroup="export_widgets"} )# Toggle All
                                 </label>
                                 <small class="muted clearfix">Export core widgets, all or a-la-carte. For layout or module widgets, please export the necessary layout and/or modules.</small>
                             </div>
@@ -277,7 +277,7 @@
                                                     		id="export_widgets_#prc.widgets.name#",
                                                     		value="#prc.widgets.name#",
                                                     		checked=true,data={alacarte=true}
-                                                    	)# #p.getPluginName()#
+                                                    	)# #prc.widgets.name#
                                                    	</label>
                                                 </div>
                                                 <cfif counter MOD 2 eq 0>
@@ -313,7 +313,7 @@
                     
                     <!--- Loader --->
                     <div class="loaders" id="uploadBarLoader">
-                        <i class="fa fa-spinner fa-spin icon-large icon-4x"></i><br/>
+                        <i class="fa fa-spinner fa-spin fa-lg icon-4x"></i><br/>
                        <h2> Doing some awesome exporting action, please wait...</h2><br>
                     </div>
                 </div>

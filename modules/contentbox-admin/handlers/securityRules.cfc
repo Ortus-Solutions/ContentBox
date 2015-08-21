@@ -1,11 +1,11 @@
-﻿/**
+/**
 * Manage Security Rules
 */
 component extends="baseHandler"{
 
 	// Dependencies
 	property name="ruleService"				inject="id:securityRuleService@cb";
-	property name="securityInterceptor"		inject="id:securityInterceptor@cb";
+	property name="securityInterceptor"		inject="coldbox:interceptor:security@cb";
 
 	// index
 	function index(event,rc,prc){
@@ -21,18 +21,18 @@ component extends="baseHandler"{
 		prc.xehImportAll	= "#prc.cbAdminEntryPoint#.securityRules.importAll";
 		
 		// get content pieces
-		prc.rules = ruleService.getAll(sortOrder="order asc");
+		prc.rules = ruleService.getAll(sortOrder="order asc" );
 
 		// tab
 		prc.tabSystem				= true;
 		prc.tabSystem_securityRules	= true;
 
 		// view
-		if( event.valueExists("ajax") ){
+		if( event.valueExists( "ajax" ) ){
 			event.setView(view="securityRules/rulesTable",noLayout=true);
 		}
 		else{
-			event.setView("securityRules/index");
+			event.setView( "securityRules/index" );
 		}
 	}
 
@@ -41,23 +41,23 @@ component extends="baseHandler"{
 		ruleService.resetRules();
 		securityInterceptor.loadRules();
 		// announce event
-		announceInterception("cbadmin_onResetSecurityRules");
-		getPlugin("MessageBox").info("Security Rules Re-created and Re-applied!");
+		announceInterception( "cbadmin_onResetSecurityRules" );
+		getModel( "messagebox@cbMessagebox" ).info( "Security Rules Re-created and Re-applied!" );
 		setNextEvent(prc.xehsecurityRules);
 	}
 
 	// Apply the security rules
 	function apply(event,rc,prc){
 		securityInterceptor.loadRules();
-		getPlugin("MessageBox").info("Security Rules Applied!");
+		getModel( "messagebox@cbMessagebox" ).info( "Security Rules Applied!" );
 		setNextEvent(prc.xehsecurityRules);
 	}
 
 	// change order for all rules
 	function changeOrder(event,rc,prc){
-		event.paramValue("newRulesOrder","");
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&rules[]=", ",", "all");
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "rules[]=,", "", "all");
+		event.paramValue( "newRulesOrder","" );
+		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&rules[]=", ",", "all" );
+		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "rules[]=,", "", "all" );
 		for(var i=1;i lte listLen(rc.newRulesOrder);i++) {
 			ruleID = listGetAt(rc.newRulesOrder,i);
 			var rule = ruleService.get(ruleID);
@@ -77,13 +77,13 @@ component extends="baseHandler"{
 		prc.tabSystem_securityRules	= true;
 
 		// get new or persisted
-		prc.rule  = ruleService.get( event.getValue("ruleID",0) );
+		prc.rule  = ruleService.get( event.getValue( "ruleID",0) );
 
 		// exit handlers
 		prc.xehRuleSave = "#prc.cbAdminEntryPoint#.securityRules.save";
 
 		// view
-		event.setView(view="securityRules/editor");
+		event.setView(view="securityRules/editor" );
 	}
 
 	// save rule
@@ -95,16 +95,16 @@ component extends="baseHandler"{
 		var errors = oRule.validate();
 		if( !arrayLen(errors) ){
 			// announce event
-			announceInterception("cbadmin_preSecurityRulesSave",{rule=oRule,ruleID=rc.ruleID});
+			announceInterception( "cbadmin_preSecurityRulesSave",{rule=oRule,ruleID=rc.ruleID} );
 			// save rule
 			ruleService.saveRule( oRule );
 			// announce event
-			announceInterception("cbadmin_postSecurityRulesSave",{rule=oRule});
+			announceInterception( "cbadmin_postSecurityRulesSave",{rule=oRule} );
 			// Message
-			getPlugin("MessageBox").info("Security Rule saved! Isn't that awesome!");
+			getModel( "messagebox@cbMessagebox" ).info( "Security Rule saved! Isn't that awesome!" );
 		}
 		else{
-			getPlugin("MessageBox").warn(errorMessages=errors);
+			getModel( "messagebox@cbMessagebox" ).warn(errorMessages=errors);
 		}
 
 		// relocate back to editor
@@ -113,63 +113,63 @@ component extends="baseHandler"{
 
 	// remove
 	function remove(event,rc,prc){
-		event.paramValue("ruleID","");
+		event.paramValue( "ruleID","" );
 		// check for length
 		if( len(rc.ruleID) ){
 			// announce event
-			announceInterception("cbadmin_preSecurityRulesRemove",{ruleID=rc.ruleID});
+			announceInterception( "cbadmin_preSecurityRulesRemove",{ruleID=rc.ruleID} );
 			// remove using hibernate bulk
 			ruleService.deleteByID( listToArray(rc.ruleID) );
 			// announce event
-			announceInterception("cbadmin_postSecurityRulesRemove",{ruleID=rc.ruleID});
+			announceInterception( "cbadmin_postSecurityRulesRemove",{ruleID=rc.ruleID} );
 			// message
-			getPlugin("MessageBox").info("Security Rule Removed!");
+			getModel( "messagebox@cbMessagebox" ).info( "Security Rule Removed!" );
 		}
 		else{
-			getPlugin("MessageBox").warn("No ID selected!");
+			getModel( "messagebox@cbMessagebox" ).warn( "No ID selected!" );
 		}
 		setNextEvent(event=prc.xehsecurityRules);
 	}
 	
 	// Export Entry
 	function export(event,rc,prc){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get role
-		prc.rule  = ruleService.get( event.getValue("ruleID",0) );
+		prc.rule  = ruleService.get( event.getValue( "ruleID",0) );
 		
 		// relocate if not existent
 		if( !prc.rule.isLoaded() ){
-			getPlugin("MessageBox").warn("ruleID sent is not valid");
+			getModel( "messagebox@cbMessagebox" ).warn( "ruleID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.securityrules" );
 		}
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "SecurityRule-#prc.rule.getRuleID()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=prc.rule.getMemento(), type=rc.format, xmlRootName="securityrule")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				event.renderData(data=prc.rule.getMemento(), type=rc.format, xmlRootName="securityrule" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
 	
 	// Export All Entries
 	function exportAll(event,rc,prc){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = ruleService.getAllForExport();
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "SecurityRules." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="securityrules")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				event.renderData(data=data, type=rc.format, xmlRootName="securityrules" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
@@ -181,17 +181,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = ruleService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin("MessageBox").info( "Rules imported sucessfully!" );
+				getModel( "messagebox@cbMessagebox" ).info( "Rules imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin("MessageBox").error( errorMessage );
+			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehSecurityRules );
 	}

@@ -7,7 +7,7 @@ Author      :	Luis Majano
 Description :
 File Browser can be used by either navigating to it or rendering it out as a widget:
 
-#runEvent(event="filebrowser:home",eventArguments={widget=true})#
+#runEvent(event="filebrowser:home",eventArguments={widget=true} )#
 
 By default this module loads jquery, if you don't want to, update the setting
 
@@ -83,8 +83,8 @@ The arguments you can use are:
 		};
 
 		// clean directory root
-		settings.directoryRoot = REReplace(settings.directoryRoot,"\\","/","all");
-		if (right(settings.directoryRoot,1) EQ "/") {
+		settings.directoryRoot = REReplace(settings.directoryRoot,"\\","/","all" );
+		if (right(settings.directoryRoot,1) EQ "/" ) {
 			settings.directoryRoot = left(settings.directoryRoot,len(settings.directoryRoot)-1);
 		}
 

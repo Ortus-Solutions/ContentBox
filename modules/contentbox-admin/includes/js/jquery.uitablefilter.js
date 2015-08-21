@@ -23,20 +23,20 @@ jQuery.uiTableFilter = function(jq, phrase, column, ifHidden){
   if( this.last_phrase === phrase ) return false;
 
   var phrase_length = phrase.length;
-  var words = phrase.toLowerCase().split(" ");
+  var words = phrase.toLowerCase().split( " " );
 
   var success = function(elem) { elem.show() }
   var failure = function(elem) { elem.hide() }
 
   if( column ) {
     var index = null;
-    jq.find("thead > tr:last > th").each( function(i){
+    jq.find( "thead > tr:last > th" ).each( function(i){
       if( $(this).text() == column ){
         index = i;
         return false;
       }
-    });
-    var iselector = "td:eq(" + index + ")";
+    } );
+    var iselector = "td:eq( " + index + " )";
   
     var search_text = function( ){
       var elem = jQuery(this);
@@ -62,11 +62,11 @@ jQuery.uiTableFilter = function(jq, phrase, column, ifHidden){
     success = function(elem) { elem.hide(); new_hidden = true; }
     failure = function(elem) {;}
     var words = words[-1];
-    jq.find("tbody tr:visible").each( search_text )
+    jq.find( "tbody tr:visible" ).each( search_text )
   }
   else {
     new_hidden = true;
-    jq.find("tbody > tr").each( search_text );
+    jq.find( "tbody > tr" ).each( search_text );
   }
 
   last_phrase = phrase;

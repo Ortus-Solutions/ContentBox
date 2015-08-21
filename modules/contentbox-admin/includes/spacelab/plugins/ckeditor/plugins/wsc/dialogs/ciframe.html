@@ -46,10 +46,10 @@ function OnMessage (event) {
 
 function listenPostMessage() {
     if (window.addEventListener) { // all browsers except IE before version 9
-            window.addEventListener ("message", OnMessage, false);
+            window.addEventListener ( "message", OnMessage, false);
     }else {
             if (window.attachEvent) { // IE before version 9
-                        window.attachEvent("onmessage", OnMessage);
+                        window.attachEvent( "onmessage", OnMessage);
                 }
         }
 }

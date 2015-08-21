@@ -6,7 +6,7 @@
     <cfif not structKeyExists( prc, "contents" )>
         <div class="modal-body" id="modal-body">
             <!--- messageBox --->
-            #getPlugin("MessageBox").renderit()#
+            #getModel( "messagebox@cbMessagebox" ).renderit()#
         </div>
     <cfelse>
         <div class="modal-body" id="modal-body">
@@ -14,13 +14,13 @@
                 <div class="col-md-5">
                     <h4>Override Existing Content?</h4>
                     <small>By default all content that exists is not overwritten.</small><br>
-                    #html.select(options="true,false", name="overrideContent", selectedValue="false", class="form-control input-sm",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group")#
+                    #html.select(options="true,false", name="overrideContent", selectedValue="false", class="form-control input-sm",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
                     <div class="alert">
-                        <i class="fa fa-warning icon-large"></i> <strong>Non-content</strong> imports (layouts, widgets, modules, etc.) will automatically overwrite any existing assets regardless of the choice above.</strong>
+                        <i class="fa fa-warning fa-lg"></i> <strong>Non-content</strong> imports (layouts, widgets, modules, etc.) will automatically overwrite any existing assets regardless of the choice above.</strong>
                     </div>
                     <!---Notice --->
                     <div class="alert alert-info">
-                        <i class="fa fa-info-circle icon-large"></i> Please note that import is an expensive process, so please be patient when importing.
+                        <i class="fa fa-info-circle fa-lg"></i> Please note that import is an expensive process, so please be patient when importing.
                     </div>
                 </div>
                 <div class="col-md-7">
@@ -60,7 +60,7 @@
             </div>
             <!--- Loader --->
             <div class="center loaders" id="importBarLoader">
-                <i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+                <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
                 <br>Please wait, doing some hardcore importing action...
             </div>
         </div>

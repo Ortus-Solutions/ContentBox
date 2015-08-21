@@ -1,7 +1,7 @@
 <cfoutput>
 <script type="text/javascript">
 function selectCBContent(slug,title,type){
-	var editor = $("###rc.editorName#").ckeditorGet();
+	var editor = $( "###rc.editorName#" ).ckeditorGet();
 	var link = editor.document.createElement( 'a' );
 	link.setAttribute( 'href', type+':['+slug+']');
 	link.setAttribute( 'title', title );

@@ -7,6 +7,6 @@
             var badge = '<span class="label label-default">#prc.contentCount#</span>';
             // set new content
             tab.html(  baseHTML + '  ' + badge );
-        });
+        } );
     </script>
 </cfoutput>

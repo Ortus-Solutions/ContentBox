@@ -1,26 +1,9 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-* The main ContentBox engine handler
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* Manages page displays
 */
 component extends="content" singleton{
 
@@ -30,13 +13,12 @@ component extends="content" singleton{
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	property name="themeService"		inject="id:themeService@cb";
-	property name="utility"				inject="coldbox:plugin:Utilities";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
 	
 	// pre Handler
-	function preHandler(event, action, eventArguments, rc, prc ){
+	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 	}
 
@@ -170,9 +152,9 @@ component extends="content" singleton{
 		// cleanup
 		rc.q = HTMLEditFormat( trim( rc.q ) );
 
-		// prepare paging plugin
-		prc.pagingPlugin 		= getMyPlugin( plugin="Paging", module="contentbox" );
-		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
+		// prepare paging object
+		prc.oPaging 			= getModel( "paging@cb" );
+		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
 		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
 		
 		// get search results
@@ -202,15 +184,15 @@ component extends="content" singleton{
 	*/
 	function rss( event, rc, prc ){
 		// params
-		event.paramValue("category","");
-		event.paramValue("entrySlug","");
-		event.paramValue("commentRSS",false);
+		event.paramValue( "category","" );
+		event.paramValue( "entrySlug","" );
+		event.paramValue( "commentRSS",false);
 
 		// Build out the RSS feeds
 		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,entrySlug=rc.entrySlug);
 
 		// Render out the feed xml
-		event.renderData(type="plain",data=feed,contentType="text/xml");
+		event.renderData(type="plain",data=feed,contentType="text/xml" );
 	}
 
 	/**

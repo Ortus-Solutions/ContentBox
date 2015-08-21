@@ -1,4 +1,4 @@
-﻿/**
+/**
 * ContentBox Media Manager
 */
 component extends="baseHandler"{
@@ -20,7 +20,7 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// library type
-		event.paramValue("library","content");
+		event.paramValue( "library","content" );
 		// get settings according to contentbox
 		prc.cbFileBrowserSettings = settingService.buildFileBrowserSettings();
 		// set root according to library root
@@ -32,15 +32,15 @@ component extends="baseHandler"{
 			}
 			case "modules" : {
 				prc.cbFileBrowserSettings.title = "Modules Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel("ModuleService@cb").getModulesPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "ModuleService@cb" ).getModulesPath(); break;
 			}
 			case "updates" : {
 				prc.cbFileBrowserSettings.title = "Updates Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel("UpdateService@cb").getPatchesLocation(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "UpdateService@cb" ).getPatchesLocation(); break;
 			}
 			case "widgets" : {
 				prc.cbFileBrowserSettings.title = "Widgets Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel("WidgetService@cb").getWidgetsPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getWidgetsPath(); break;
 			}
 		}
 		// options
@@ -55,7 +55,7 @@ component extends="baseHandler"{
 		prc.fbArgs = {widget=true, settings=prc.cbFileBrowserSettings};
 
 		// view
-		event.setView("mediamanager/index");
+		event.setView( "mediamanager/index" );
 	}
 
 }

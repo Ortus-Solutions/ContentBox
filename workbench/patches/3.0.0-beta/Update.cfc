@@ -75,6 +75,14 @@ component implements="contentbox.model.updates.IUpdate"{
 			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
 			directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );
 
+			/****************************** UPDATE SEARCH PATHS ******************************/
+
+
+			/****************************** RENAME MODULES ******************************/
+			
+			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
+			directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
+
 			/****************************** UPDATE SECURITY RULES ******************************/
 			
 			var aRules = securityRuleService.getAll();
@@ -208,6 +216,10 @@ component implements="contentbox.model.updates.IUpdate"{
 			oldLayoutSetting.setName( "cb_site_theme" );
 			settingService.save( entity=oldLayoutSetting, transactional=false );
 		}
+		// Update Search setting
+		var oSearchSetting = settingService.findWhere( { name="cb_search_adapter" } );
+		oSearchSetting.setValue( "contentbox.models.search.DBSearch" );
+		settingService.save( entity=oSearchSetting, transactional=false );
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/

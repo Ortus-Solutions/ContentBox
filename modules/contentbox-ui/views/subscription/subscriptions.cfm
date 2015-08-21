@@ -1,7 +1,9 @@
 <cfoutput>
     <h1>Manage My Subscriptions</h1>
+
     <!--- MessageBox --->
-    #getPlugin("MessageBox").renderit()#
+    #getModel( "messagebox@cbmessagebox" ).renderit()#
+
     <cfif structCount( prc.subscriptions )>
         <form name="removeSubscriptions" action="#event.buildLink( linkto='__removesubscriptions' )#" method="POST" onsubmit="return onSubmitHandler();">
             <cfloop collection="#prc.subscriptions#" item="type">
@@ -21,6 +23,6 @@
         </form>
     <cfelse>
         <!--- MessageBox --->
-        #getPlugin("MessageBox").info( "You don't currently have any active subscriptions." )#
+        <div class="alert alert-info">You don't currently have any active subscriptions</div>
     </cfif>
 </cfoutput>

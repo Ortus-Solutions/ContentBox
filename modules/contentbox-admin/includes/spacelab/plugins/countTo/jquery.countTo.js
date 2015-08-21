@@ -4,7 +4,7 @@
 
 		return $(this).each(function () {
 			// set options for current element
-			var settings = $.extend({}, $.fn.countTo.defaults, {
+			var settings = $.extend( {}, $.fn.countTo.defaults, {
 				from:            $(this).data('from'),
 				to:              $(this).data('to'),
 				speed:           $(this).data('speed'),
@@ -60,7 +60,7 @@
 				var formattedValue = settings.formatter.call(self, value, settings);
 				$self.text(formattedValue);
 			}
-		});
+		} );
 	};
 
 	$.fn.countTo.defaults = {

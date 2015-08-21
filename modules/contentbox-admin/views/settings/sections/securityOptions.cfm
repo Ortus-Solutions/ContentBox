@@ -1,10 +1,10 @@
 <cfoutput>
 <fieldset>
-	<legend><i class="fa fa-paw icon-large"></i> Login Tracker</legend>
+	<legend><i class="fa fa-paw fa-lg"></i> Login Tracker</legend>
 	
 	<!--- Login Blocker --->
 	<div class="form-group">
-        #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:")#
+        #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:" )#
         <div class="controls">
             <small>When enabled, all logins attempts will by tracked and blocking is enabled if too many attempts occur.</small><br/>
 			#html.radioButton(name="cb_security_login_blocker",checked=prc.cbSettings.cb_security_login_blocker,value=true)# Yes
@@ -104,7 +104,7 @@
 
     <!--- Bot Regex Matching --->
     <div class="form-group">
-        #html.label( field="cb_security_rate_limiter_message", class="control-label", content="Limiter Message:")#
+        #html.label( field="cb_security_rate_limiter_message", class="control-label", content="Limiter Message:" )#
         <div class="controls">
             <small>The message displayed to users when the rate limit has been exceeded. A 503 status header is also sent in the response.The <code>{duration}</code> element will be replaced with the setting at runtime.</small>
             #html.textarea(
@@ -118,7 +118,7 @@
 </fieldset>
 
 <fieldset>
-    <legend><i class="fa fa-lock icon-large"></i>  Secure Sockets Layer (SSL) Encryption</legend>
+    <legend><i class="fa fa-lock fa-lg"></i>  Secure Sockets Layer (SSL) Encryption</legend>
 	<!--- Admin SSL --->
     <div class="form-group">
         #html.label(

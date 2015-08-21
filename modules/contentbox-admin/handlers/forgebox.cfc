@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Manage ForgeBox
 */
 component extends="baseHandler"{
@@ -9,7 +9,7 @@ component extends="baseHandler"{
 	// index
 	function index(event,rc,prc){
 		// order by
-		event.paramValue("orderBy","POPULAR");
+		event.paramValue( "orderBy","POPULAR" );
 
 		// exit Handlers
 		prc.xeh 	= "#prc.cbAdminEntryPoint#.layouts.remove";
@@ -22,13 +22,13 @@ component extends="baseHandler"{
 		}
 		catch(Any e){
 			prc.errors = true;
-			log.error("Error installing from ForgeBox: #e.message# #e.detail#",e);
-			getPlugin("MessageBox").error("Error connecting to ForgeBox: #e.message# #e.detail#");
+			log.error( "Error installing from ForgeBox: #e.message# #e.detail#",e);
+			getModel( "messagebox@cbMessagebox" ).error( "Error connecting to ForgeBox: #e.message# #e.detail#" );
 		}
 
 		// Add Assets
-		addAsset("#prc.cbroot#/includes/js/ratings/jquery.ratings.pack.js");
-		addAsset("#prc.cbroot#/includes/js/ratings/jquery.ratings.css");
+		addAsset( "#prc.cbroot#/includes/js/ratings/jquery.ratings.pack.js" );
+		addAsset( "#prc.cbroot#/includes/js/ratings/jquery.ratings.css" );
 
 		// Entries title
 		switch(rc.orderBy){
@@ -37,7 +37,7 @@ component extends="baseHandler"{
 			default: { prc.entriesTitle = "Most Popular!"; }
 		}
 		// view
-		event.setView(view="forgebox/index",layout="ajax");
+		event.setView(view="forgebox/index",layout="ajax" );
 	}
 
 	function install(event,rc,prc){
@@ -48,14 +48,14 @@ component extends="baseHandler"{
 		// get entries
 		var results = forgebox.install(rc.downloadURL,rc.installDir);
 		if( results.error ){
-			log.error("Error installing from ForgeBox: #results.logInfo#",results.logInfo);
-			getPlugin("MessageBox").error("Error installing from ForgeBox: #results.logInfo#");
+			log.error( "Error installing from ForgeBox: #results.logInfo#",results.logInfo);
+			getModel( "messagebox@cbMessagebox" ).error( "Error installing from ForgeBox: #results.logInfo#" );
 		}
 		else{
-			getPlugin("MessageBox").info("Entry installed from ForgeBox!");
+			getModel( "messagebox@cbMessagebox" ).info( "Entry installed from ForgeBox!" );
 		}
 		// flash results
-		flash.put("forgeboxInstallLog", results.logInfo);
+		flash.put( "forgeboxInstallLog", results.logInfo);
 		// return to caller
 		setNextEvent(URL=rc.returnURL);
 	}

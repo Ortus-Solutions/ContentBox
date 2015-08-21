@@ -1,6 +1,6 @@
 <cfoutput>
     <fieldset>
-        <legend><i class="fa fa-file icon-large"></i>  Content Options</legend>
+        <legend><i class="fa fa-file fa-lg"></i>  Content Options</legend>
 
         <!--- Content Max Versions --->
         <div class="form-group">
@@ -81,7 +81,7 @@
     </fieldset>
 
 	<fieldset>
-    	<legend><i class="fa fa-bar-chart-o icon-large"></i> Content Stats Tracking</legend>
+    	<legend><i class="fa fa-bar-chart-o fa-lg"></i> Content Stats Tracking</legend>
         
         <!--- Hit Count --->
         <div class="form-group">
@@ -144,7 +144,7 @@
     </fieldset>
 
     <fieldset>
-        <legend><i class="fa fa-hdd-o icon-large"></i>  Content Caching</legend>
+        <legend><i class="fa fa-hdd-o fa-lg"></i>  Content Caching</legend>
 
         <!--- Content Caching --->
         <div class="form-group">

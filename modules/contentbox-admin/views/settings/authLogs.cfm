@@ -2,14 +2,14 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fa fa-bar-chart-o icon-large"></i>
+            <i class="fa fa-bar-chart-o fa-lg"></i>
             Authentication Logs
         </h1>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getPlugin( "MessageBox" ).renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 <div class="row">
@@ -63,9 +63,9 @@
 								</td>
 								<td class="text-center">
 									<cfif thisLog.getIsBlocked()>
-										<i class="fa fa-times icon-large textRed" data-original-title="Blocked"></i>
+										<i class="fa fa-times fa-lg textRed" data-original-title="Blocked"></i>
 									<cfelse>
-										<i class="fa fa-check icon-large textGreen" data-original-title="All Ok"></i>
+										<i class="fa fa-check fa-lg textGreen" data-original-title="All Ok"></i>
 									</cfif>
 								</td>
 							</tr>

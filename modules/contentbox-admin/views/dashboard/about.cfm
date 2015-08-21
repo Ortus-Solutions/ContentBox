@@ -7,12 +7,12 @@
 <div class="row">
     <div class="col-md-8">
     	<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="pull-left" style="margin-right: 20px;" />
-	    <h2>ContentBox Modular CMS <span class="label label-warning">#getModuleSettings('contentbox').version#</span></h2>
+	    <h2>ContentBox Modular CMS <span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
         <blockquote class="clearfix">
 			<strong>ContentBox</strong> is a modular content platform developed by <a href="http://www.ortussolutions.com">Ortus Solutions</a> and 
 			based on the popular <a href="http://www.coldbox.org">ColdBox Platform</a> development framework.
 			ContentBox is a professional open source project with tons of services, training, customizations and more.
-			<small><a href="http://www.gocontentbox.org">www.gocontentbox.org</a></small>
+			<small><a href="http://www.ortussolutions.com/products/contentbox">www.ortussolutions.com/products/contentbox</a></small>
 		</blockquote>
 		<div class="panel panel-default">
 		    <div class="panel-heading">
@@ -30,21 +30,21 @@
 						<tr>
 							<th>
 								ContentBox Core <br/>
-								(Codename: <a href="#getModuleSettings("contentbox").settings.codenameLink#" target="_blank">#getModuleSettings("contentbox").settings.codename#</a>)
+								(Codename: <a href="#getModuleSettings( "contentbox" ).codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).codename#</a>)
 							</th>
-							<th class="text-center">v.#getModuleSettings('contentbox').version#</th>
+							<th class="text-center">v.#getModuleConfig('contentbox').version#</th>
 						</tr>
 						<tr>
 							<th>ContentBox Admin</th>
-							<th class="text-center">v.#getModuleSettings('contentbox-admin').version#</th>
+							<th class="text-center">v.#getModuleConfig('contentbox-admin').version#</th>
 						</tr>
 						<tr>
 							<th>ContentBox UI</th>
-							<th class="text-center">v.#getModuleSettings('contentbox-ui').version#</th>
+							<th class="text-center">v.#getModuleConfig('contentbox-ui').version#</th>
 						</tr>
 						<tr>
 							<th>ColdBox Platform</th>
-							<th class="text-center">v.#getSetting("Version",1)#</th>
+							<th class="text-center">v.#getSetting( "Version",1)#</th>
 						</tr>
 					</tbody>
 				</table>
@@ -183,7 +183,7 @@
 		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Need Help?</h3>
 		    </div>
 		    <div class="panel-body">
-		    	#renderView(view="_tags/needhelp", module="contentbox-admin")#
+		    	#renderView(view="_tags/needhelp", module="contentbox-admin" )#
 				
 				<h2>Links</h2>
 				<ul>

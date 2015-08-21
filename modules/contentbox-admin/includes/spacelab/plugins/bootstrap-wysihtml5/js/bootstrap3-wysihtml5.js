@@ -142,12 +142,12 @@
         window.editor = this.editor;
 
         $('iframe.wysihtml5-sandbox').each(function(i, el){
-            $(el.contentWindow).off('focus.wysihtml5').on({
+            $(el.contentWindow).off('focus.wysihtml5').on( {
                 'focus.wysihtml5' : function(){
                     $('li.dropdown').removeClass('open');
                 }
-            });
-        });
+            } );
+        } );
     };
 
     Wysihtml5.prototype = {
@@ -174,10 +174,10 @@
 
         createToolbar: function(el, options) {
             var self = this;
-            var toolbar = $("<ul/>", {
+            var toolbar = $( "<ul/>", {
                 'class' : "wysihtml5-toolbar",
                 'style': "display:none"
-            });
+            } );
             var culture = options.locale || defaultOptions.locale || "en";
             for(var key in defaultOptions) {
                 var value = false;
@@ -193,15 +193,15 @@
                 if(value === true) {
                     toolbar.append(templates(key, locale[culture], options));
 
-                    if(key === "html") {
+                    if(key === "html" ) {
                         this.initHtml(toolbar);
                     }
 
-                    if(key === "link") {
+                    if(key === "link" ) {
                         this.initInsertLink(toolbar);
                     }
 
-                    if(key === "image") {
+                    if(key === "image" ) {
                         this.initInsertImage(toolbar);
                     }
                 }
@@ -213,17 +213,17 @@
                 }
             }
 
-            toolbar.find("a[data-wysihtml5-command='formatBlock']").click(function(e) {
+            toolbar.find( "a[data-wysihtml5-command='formatBlock']" ).click(function(e) {
                 var target = e.target || e.srcElement;
                 var el = $(target);
                 self.toolbar.find('.current-font').text(el.html());
-            });
+            } );
 
-            toolbar.find("a[data-wysihtml5-command='foreColor']").click(function(e) {
+            toolbar.find( "a[data-wysihtml5-command='foreColor']" ).click(function(e) {
                 var target = e.target || e.srcElement;
                 var el = $(target);
                 self.toolbar.find('.current-color').text(el.html());
-            });
+            } );
 
             this.el.before(toolbar);
 
@@ -234,7 +234,7 @@
             var changeViewSelector = "a[data-wysihtml5-action='change_view']";
             toolbar.find(changeViewSelector).click(function(e) {
                 toolbar.find('a.btn').not(changeViewSelector).toggleClass('disabled');
-            });
+            } );
         },
 
         initInsertImage: function(toolbar) {
@@ -253,7 +253,7 @@
                     self.editor.composer.selection.setBookmark(caretBookmark);
                     caretBookmark = null;
                 }
-                self.editor.composer.commands.exec("insertImage", url);
+                self.editor.composer.commands.exec( "insertImage", url);
             };
 
             urlInput.keypress(function(e) {
@@ -261,20 +261,20 @@
                     insertImage();
                     insertImageModal.modal('hide');
                 }
-            });
+            } );
 
             insertButton.click(insertImage);
 
             insertImageModal.on('shown', function() {
                 urlInput.focus();
-            });
+            } );
 
             insertImageModal.on('hide', function() {
                 self.editor.currentView.element.focus();
-            });
+            } );
 
             toolbar.find('a[data-wysihtml5-command=insertImage]').click(function() {
-                var activeButton = $(this).hasClass("wysihtml5-command-active");
+                var activeButton = $(this).hasClass( "wysihtml5-command-active" );
 
                 if (!activeButton) {
                     self.editor.currentView.element.focus(false);
@@ -282,13 +282,13 @@
                     insertImageModal.appendTo('body').modal('show');
                     insertImageModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
                         e.stopPropagation();
-                    });
+                    } );
                     return false;
                 }
                 else {
                     return true;
                 }
-            });
+            } );
         },
 
         initInsertLink: function(toolbar) {
@@ -309,12 +309,12 @@
                     caretBookmark = null;
                 }
 
-                var newWindow = targetInput.prop("checked");
-                self.editor.composer.commands.exec("createLink", {
+                var newWindow = targetInput.prop( "checked" );
+                self.editor.composer.commands.exec( "createLink", {
                     'href' : url,
                     'target' : (newWindow ? '_blank' : '_self'),
                     'rel' : (newWindow ? 'nofollow' : '')
-                });
+                } );
             };
             var pressedEnter = false;
 
@@ -323,20 +323,20 @@
                     insertLink();
                     insertLinkModal.modal('hide');
                 }
-            });
+            } );
 
             insertButton.click(insertLink);
 
             insertLinkModal.on('shown', function() {
                 urlInput.focus();
-            });
+            } );
 
             insertLinkModal.on('hide', function() {
                 self.editor.currentView.element.focus();
-            });
+            } );
 
             toolbar.find('a[data-wysihtml5-command=createLink]').click(function() {
-                var activeButton = $(this).hasClass("wysihtml5-command-active");
+                var activeButton = $(this).hasClass( "wysihtml5-command-active" );
 
                 if (!activeButton) {
                     self.editor.currentView.element.focus(false);
@@ -344,13 +344,13 @@
                     insertLinkModal.appendTo('body').modal('show');
                     insertLinkModal.on('click.dismiss.modal', '[data-dismiss="modal"]', function(e) {
                         e.stopPropagation();
-                    });
+                    } );
                     return false;
                 }
                 else {
                     return true;
                 }
-            });
+            } );
         }
     };
 
@@ -363,15 +363,15 @@
             return this.each(function () {
                 var $this = $(this);
                 $this.data('wysihtml5', new Wysihtml5($this, options));
-            });
+            } );
         },
         shallowExtend: function (options) {
-            var settings = $.extend({}, $.fn.wysihtml5.defaultOptions, options || {}, $(this).data());
+            var settings = $.extend( {}, $.fn.wysihtml5.defaultOptions, options || {}, $(this).data());
             var that = this;
             return methods.bypassDefaults.apply(that, [settings]);
         },
         deepExtend: function(options) {
-            var settings = $.extend(true, {}, $.fn.wysihtml5.defaultOptions, options || {});
+            var settings = $.extend(true, {}, $.fn.wysihtml5.defaultOptions, options || {} );
             var that = this;
             return methods.bypassDefaults.apply(that, [settings]);
         },

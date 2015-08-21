@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<!--- MessageBox --->
-		#getPlugin( "MessageBox" ).renderit()#
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -16,7 +16,7 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
-		#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical")#
+		#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical" )#
 		<input type="hidden" name="categoryID" id="categoryID" value="" />
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -37,7 +37,7 @@
 								</cfif>
 								<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 					    		<li class="dropdown-submenu">
-									<a href="javascript:null"><i class="fa fa-download icon-large"></i> Export All</a>
+									<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export All</a>
 									<ul class="dropdown-menu text-left">
 										<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
 										<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
@@ -80,7 +80,7 @@
 							<td class="text-center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
 							<td class="text-center">
 								<div class="btn-group">
-									<cfif prc.oAuthor.checkPermission("CATEGORIES_ADMIN")>
+									<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 									<!--- Edit Command --->
 									<button type="button" class="btn btn-primary btn-sm" onclick="javascript:edit('#category.getCategoryID()#','#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
 									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="fa fa-edit"></i></button>
@@ -110,9 +110,9 @@
 	                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-tag"></i> Category Editor</h4>
 			    </div>
 				<!--- Create/Edit form --->
-				#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate",class="form-vertical",role="form")#
+				#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate",class="form-vertical",role="form" )#
 				<div class="modal-body">
-					#html.hiddenField(name="categoryID",value="")#
+					#html.hiddenField(name="categoryID",value="" )#
 					#html.textField(
 						name="category",
 						label="Category:",
@@ -138,8 +138,8 @@
 				</div>
 				<!--- Footer --->
 				<div class="modal-footer">
-					#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##categoryEditorContainer') )")#
-					#html.submitButton(name="btnSave",value="Save Category",class="btn btn-danger")#
+					#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##categoryEditorContainer') )" )#
+					#html.submitButton(name="btnSave",value="Save Category",class="btn btn-danger" )#
 				</div>
 				#html.endForm()#
 			</div>
@@ -161,7 +161,7 @@
 	            #html.startForm( name="importForm", action=prc.xehCategoryImport, class="form-vertical", multipart=true, role="form" )#
 	                <div class="modal-body">
 	                    <p>Choose the ContentBox <strong>JSON</strong> categories file to import.</p>
-						#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
+						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
 							name="importFile", 
 							required=true
 						)#
@@ -178,7 +178,7 @@
 						)#
 						<!---Notice --->
 						<div class="alert alert-info">
-							<i class="icon-info-sign icon-large"></i> Please note that import is an expensive process, so please be patient when importing.
+							<i class="icon-info-sign fa-lg"></i> Please note that import is an expensive process, so please be patient when importing.
 						</div>
 	                </div>
 	                <!-- footer -->
@@ -190,7 +190,7 @@
 			            </div>
 						<!--- Loader --->
 						<div class="center loaders" id="importBarLoader">
-							<i class="fa fa-spinner fa-spin icon-large icon-2x"></i>
+							<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
 							<br>Please wait, doing some hardcore importing action...
 						</div>
 	                </div>

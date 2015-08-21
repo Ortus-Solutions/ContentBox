@@ -138,7 +138,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 						},
 
 						on: { 'instanceReady': configureFlashOutput }
-					});
+					} );
 
 					/*
 					 * Adjust the behavior of the dataProcessor to match the
@@ -161,7 +161,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 								breakAfterOpen: false,
 								breakBeforeClose: false,
 								breakAfterClose: false
-							});
+							} );
 						}
 						dataProcessor.writer.setRules( 'br', {
 							indent: false,
@@ -169,7 +169,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 							breakAfterOpen: false,
 							breakBeforeClose: false,
 							breakAfterClose: false
-						});
+						} );
 
 						// Output properties as attributes, not styles.
 						htmlFilter.addRules( {
@@ -224,7 +224,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 									return element;
 								}
 							}
-						});
+						} );
 					}
 
 					function sendToFlash() {
@@ -254,7 +254,7 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 							'8',
 							{ wmode: 'transparent' }
 						);
-					});
+					} );
 
 				</script>
 				<p>

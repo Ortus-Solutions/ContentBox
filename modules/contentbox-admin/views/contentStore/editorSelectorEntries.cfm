@@ -4,7 +4,7 @@
 	<thead>
 		<tr class="info">
 			<th>Title</th>
-			<th width="40" class="text-center"><i class="fa fa-globe icon-large"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-globe fa-lg"></i></th>
 			<th width="120" class="text-center">Insert</th>
 		</tr>
 	</thead>
@@ -19,10 +19,10 @@
 			</td>
 			<td class="text-center">
 				<cfif entry.getIsPublished()>
-					<i class="fa fa-check icon-large textGreen"></i>
+					<i class="fa fa-check fa-lg textGreen"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="fa fa-times icon-large textRed"></i>
+					<i class="fa fa-times fa-lg textRed"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
@@ -35,5 +35,5 @@
 </table>
 
 <!--- Paging --->
-#prc.pagingPlugin.renderit(foundRows=prc.contentCount, link=prc.pagingLink, asList=true)#
+#prc.oPaging.renderit(foundRows=prc.contentCount, link=prc.pagingLink, asList=true)#
 </cfoutput>

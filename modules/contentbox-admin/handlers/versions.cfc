@@ -91,11 +91,11 @@ component extends="baseHandler"{
 		// check for length
 		if( len( rc.versionID ) ){
 			// announce event
-			announceInterception( "cbadmin_preContentVersionRemove",{contentVersionID=rc.versionID});
+			announceInterception( "cbadmin_preContentVersionRemove",{contentVersionID=rc.versionID} );
 			// remove using hibernate bulk
 			contentVersionService.deleteByID( rc.versionID );
 			// announce event
-			announceInterception( "cbadmin_postContentVersionRemove",{contentVersionID=rc.versionID});
+			announceInterception( "cbadmin_postContentVersionRemove",{contentVersionID=rc.versionID} );
 			// results
 			results.messages = "Version removed!";
 		} else {
@@ -122,7 +122,7 @@ component extends="baseHandler"{
 			// save
 			contentVersionService.save( oVersion );
 			// announce event
-			announceInterception( "cbadmin_postContentVersionRollback",{contentVersion=oVersion});
+			announceInterception( "cbadmin_postContentVersionRollback",{contentVersion=oVersion} );
 			// results
 			results.messages = "Version #oVersion.getVersion()# rollback was successfull!";
 		} else {

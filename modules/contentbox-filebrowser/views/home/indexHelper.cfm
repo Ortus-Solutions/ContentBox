@@ -95,17 +95,17 @@ $( document ).ready( function() {
 	// history
 	fbSelectHistory = "";
 	// file context menus
-	$fileBrowser.find( ".files" ).contextMenu({menu: 'fbContextMenu'}, fbContextActions);
-	$fileBrowser.find( ".folders" ).contextMenu({menu: 'fbContextMenuDirectories'}, fbContextActions);
+	$fileBrowser.find( ".files" ).contextMenu( {menu: 'fbContextMenu'}, fbContextActions);
+	$fileBrowser.find( ".folders" ).contextMenu( {menu: 'fbContextMenuDirectories'}, fbContextActions);
 	// Sorting
-	$sorting.change(function(){ fbRefresh(); });
-	$quickViewCloseBtn.click(function(){ fbCloseQuickView(); });
+	$sorting.change(function(){ fbRefresh(); } );
+	$quickViewCloseBtn.click(function(){ fbCloseQuickView(); } );
 	// Quick div filter
 	$fileBrowser.find( "##fbQuickFilter" ).keyup(function(){
 		$.uiDivFilter( $( ".filterDiv" ), this.value);
-	})
+	} )
 
-});
+} );
 function fbCloseQuickView(){
 	$quickView.slideUp();
 	$quickViewContents.html( '' );
@@ -138,14 +138,14 @@ function fbRefresh(){
 		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val() },
 		function(){
 			$fileLoaderBar.slideUp();
-		});
+		} );
 }
 function fbDrilldown( inPath ){
 	if( inPath == null ){ inPath = ""; }
 	$fileLoaderBar.slideDown();
 	$fileBrowser.parent().load( '#event.buildLink( prc.xehFBBrowser )#', { path : inPath },function(){
 		$fileLoaderBar.slideUp();
-	});
+	} );
 }
 function fbSelect( sID, sPath ){
 	// history cleanup
@@ -230,7 +230,7 @@ function fbNewFolder(){
 <cfif prc.fbSettings.deleteStuff>
 function fbDelete(){
 	var sPath = $selectedItem.val();
-	if( !sPath.length ){ alert( '#r( "jsmessages.select@fb")#' ); return; }
+	if( !sPath.length ){ alert( '#r( "jsmessages.select@fb" )#' ); return; }
 	if( confirm( '#r( "jsmessages.delete_confirm@fb" )#' ) ){
 		$fileLoaderBar.slideDown();
 		$.post( '#event.buildLink( prc.xehFBRemove )#',
@@ -293,12 +293,12 @@ $(document).ready(function() {
 				field.prependTo( wrapper );
 				field.show();
 			}
-		});
-	});
+		} );
+	} );
 	
 	// File drag and drop	
 	var dropbox = $fileBrowser;
-	dropbox.filedrop({
+	dropbox.filedrop( {
 		// The name of the $_FILES entry:
 		paramname : 'FILEDATA',
 		<cfif isNumeric( prc.fbSettings.html5uploads.maxfiles )>
@@ -360,7 +360,7 @@ $(document).ready(function() {
 			$.data( file ).find( '.progress' ).width( progress );
 			//console.log( "uploading progress" + progress );
 		}
-	});
+	} );
 	// Progress template
 	var template = '<div class="preview">'+
 						'<span class="fileHolder"></span>'+
@@ -378,7 +378,7 @@ $(document).ready(function() {
 		$.data( file, preview );
 	}
 	
-});
+} );
 function fbUpload(){
 	$( "##uploadBar" ).slideToggle();
 }

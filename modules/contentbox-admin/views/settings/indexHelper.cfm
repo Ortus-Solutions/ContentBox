@@ -2,39 +2,39 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	// form validators
-	$("##settingsForm").validate();
-});
+	$( "##settingsForm" ).validate();
+} );
 function emailTest(){
-	$("##emailTestDiv").html("");
-	$("##iTest").addClass( "icon-spin" );
+	$( "##emailTestDiv" ).html( "" );
+	$( "##iTest" ).addClass( "icon-spin" );
 	$.post('#event.buildLink( prc.xehEmailTest )#',
 		{
-		  cb_site_mail_server : $("##cb_site_mail_server").val(),
-		  cb_site_mail_username : $("##cb_site_mail_username").val(),
-		  cb_site_mail_password : $("##cb_site_mail_password").val(),
-		  cb_site_mail_smtp : $("##cb_site_mail_smtp").val(),
-		  cb_site_mail_tls : $("##cb_site_mail_tls").val(),
-		  cb_site_mail_ssl : $("##cb_site_mail_ssl").val(),
-		  cb_site_outgoingEmail : $("##cb_site_outgoingEmail").val()		
+		  cb_site_mail_server : $( "##cb_site_mail_server" ).val(),
+		  cb_site_mail_username : $( "##cb_site_mail_username" ).val(),
+		  cb_site_mail_password : $( "##cb_site_mail_password" ).val(),
+		  cb_site_mail_smtp : $( "##cb_site_mail_smtp" ).val(),
+		  cb_site_mail_tls : $( "##cb_site_mail_tls" ).val(),
+		  cb_site_mail_ssl : $( "##cb_site_mail_ssl" ).val(),
+		  cb_site_outgoingEmail : $( "##cb_site_outgoingEmail" ).val()		
 		}, 
 		function(data){ 
 			if( data.ERROR ){
 				var eMessages = $.map(data.ERRORARRAY, function(val,index) {
 				     return val;
-				}).join(", ");
-				$("##emailTestDiv").html("Error sending test email: " + eMessages );
+				} ).join( ", " );
+				$( "##emailTestDiv" ).html( "Error sending test email: " + eMessages );
 			}
 			else{
-				$("##emailTestDiv").html('<div class="alert alert-success">Test email sent to ' + $("##cb_site_outgoingEmail").val() + ', please verify you received it.</div>');
+				$( "##emailTestDiv" ).html('<div class="alert alert-success">Test email sent to ' + $( "##cb_site_outgoingEmail" ).val() + ', please verify you received it.</div>');
 			}
-			$("##iTest").removeClass( "icon-spin" );
+			$( "##iTest" ).removeClass( "icon-spin" );
 		},
 		"JSON"
 	);
 	return false;
 }
 function chooseAdapter(adapter){
-	$("##settingsForm").find("##cb_search_adapter").val( adapter );
+	$( "##settingsForm" ).find( "##cb_search_adapter" ).val( adapter );
 }
 </script>
 </cfoutput>

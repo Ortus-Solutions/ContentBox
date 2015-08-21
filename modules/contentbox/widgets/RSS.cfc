@@ -1,18 +1,15 @@
 ﻿/**
 * A widget that reads an RSS feed and displays the items
 */
-component extends="contentbox.model.ui.BaseWidget" singleton{
+component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	RSS function init(controller){
-		// super init
-		super.init(controller);
-
+	RSS function init(){
 		// Widget Properties
-		setPluginName("RSS");
-		setPluginVersion("1.0");
-		setPluginDescription("A widget that reads an RSS feed and displays the items as you see fit.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setName( "RSS" );
+		setVersion( "1.0" );
+		setDescription( "A widget that reads an RSS feed and displays the items as you see fit." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "Content" );
 		setIcon( "cloud.png" );
 		return this;
@@ -27,14 +24,14 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
  	* @title.hint The title to show before the dropdown or list, defaults to H2
 	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(required feedURL,numeric maxItems=5,boolean showBody=true,string linkTarget="_blank",string title="",string titleLevel="2"){
+	any function renderIt(required feedURL,numeric maxItems=5,boolean showBody=true,string linkTarget="_blank",string title="",string titleLevel="2" ){
 		var rString		= "";
-		var feed 		= getPlugin('FeedReader').readFeed(feedURL=arguments.feedURL,maxItems=arguments.maxItems,itemsType="query");
+		var feed 		= get('FeedReader').readFeed(feedURL=arguments.feedURL,maxItems=arguments.maxItems,itemsType="query" );
 
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
 			// build RSS feed
 			writeOutput( buildList(feed.items,arguments.showBody,arguments.linkTarget) );
 		}
@@ -56,7 +53,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 				writeOutput('</li>');
 			}
 			// close ul
-			writeOutput("</ul>");
+			writeOutput( "</ul>" );
 		}
 		return rString;
 	}

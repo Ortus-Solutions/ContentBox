@@ -6,7 +6,7 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getPlugin( "MessageBox" ).renderit()#
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 <div class="row">
@@ -16,7 +16,7 @@
             action=rc.xehSaveSettings, 
             class="form-vertical"
         )#		
-            #html.anchor(name="top")#
+            #html.anchor(name="top" )#
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">&nbsp;</h3>
@@ -35,11 +35,11 @@
                     <div class="tab-wrapper tab-left tab-primary">
                         <!--- Documentation Navigation Bar --->
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="##general_options" data-toggle="tab"><i class="fa fa-cog icon-large"></i> General Options</a></li>
-                            <li><a href="##moderation" data-toggle="tab"><i class="fa fa-unlock icon-large"></i> Moderation</a></li>
-                            <li><a href="##notifications" data-toggle="tab"><i class="fa fa-envelope icon-large"></i> Notifications</a></li>
+                            <li class="active"><a href="##general_options" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> General Options</a></li>
+                            <li><a href="##moderation" data-toggle="tab"><i class="fa fa-unlock fa-lg"></i> Moderation</a></li>
+                            <li><a href="##notifications" data-toggle="tab"><i class="fa fa-envelope fa-lg"></i> Notifications</a></li>
                             <!--- cbadmin Event --->
-                            #announceInterception("cbadmin_onCommentSettingsNav")#
+                            #announceInterception( "cbadmin_onCommentSettingsNav" )#
                         </ul>       
                         
                         <!--- Tab Content --->
@@ -48,7 +48,7 @@
                             <!--- comment options --->
                             <div class="tab-pane active" id="general_options">
                                 <fieldset>
-                                    <legend><i class="fa fa-cog icon-large"></i> Comment Options</legend>
+                                    <legend><i class="fa fa-cog fa-lg"></i> Comment Options</legend>
                                         <!--- Activate Comments  --->
                                         <div class="form-group">
                                             #html.label(
@@ -128,7 +128,7 @@
                             <!--- Comment Moderation --->
                             <div class="tab-pane" id="moderation">
                                 <fieldset>
-                                    <legend><i class="fa fa-unlock icon-large"></i> Before A Comment Appears</legend>
+                                    <legend><i class="fa fa-unlock fa-lg"></i> Before A Comment Appears</legend>
                                     <!--- Enable Moderation --->
                                     <div class="form-group">
                                         #html.label(
@@ -229,7 +229,7 @@
                             <!--- Notifications --->
                             <div class="tab-pane" id="notifications">
                                 <fieldset>
-                                    <legend><i class="fa fa-envelope icon-large"></i> Notifications</legend>
+                                    <legend><i class="fa fa-envelope fa-lg"></i> Notifications</legend>
                                     <p>
                                         By default all comment notifications are sent to the system email: <a href="mailto:#prc.cbSettings.cb_site_email#">#prc.cbSettings.cb_site_email#</a>, 
                                     but you can add more emails separated by commas, ohh goody!
@@ -249,7 +249,7 @@
                                     
                                     <!--- Notification on Comment --->
                                     <div class="form-group">
-                                        #html.label(field="cb_comments_notify",content="Send a notification that a comment has been made:")#
+                                        #html.label(field="cb_comments_notify",content="Send a notification that a comment has been made:" )#
                                         <div class="controls">
                                             #html.radioButton(
                                                 name="cb_comments_notify",
@@ -284,10 +284,10 @@
                                 </fieldset>                     
                             </div>
                             <!--- cbadmin Event --->
-                            #announceInterception("cbadmin_onCommentSettingsContent")#
+                            #announceInterception( "cbadmin_onCommentSettingsContent" )#
                             <!--- End Tab Content --->
                             <div class="form-actions">
-                                #html.button(type="submit", value="Save Settings", class="btn btn-danger")#
+                                #html.button(type="submit", value="Save Settings", class="btn btn-danger" )#
                             </div>
                             
                         </div>

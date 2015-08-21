@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -29,7 +29,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox UI Module";
-	this.version			= "3.0.0-alpha+@build.number@";
+	this.version			= "3.0.0-beta+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 
@@ -116,7 +116,7 @@ component {
 		interceptorSettings = {
 			// ContentBox UI Custom Events, you can add your own if you like to!
 			customInterceptionPoints = arrayToList([
-				// Layout HTML points: A layout must announce them via cb.event("cbui_footer",{renderer=this}) make sure you pass in the renderer
+				// Layout HTML points: A layout must announce them via cb.event( "cbui_footer",{renderer=this} ) make sure you pass in the renderer
 				"cbui_beforeHeadEnd","cbui_afterBodyStart","cbui_beforeBodyEnd","cbui_footer","cbui_beforeContent","cbui_afterContent","cbui_beforeSideBar","cbui_afterSideBar",
 				// Code Interception points
 				"cbui_onPageNotFound","cbui_onEntryNotFound","cbui_onError","cbui_preRequest","cbui_postRequest","cbui_onRendererDecoration","cbui_onContentSearch",
@@ -172,21 +172,21 @@ component {
 			ses.setRoutes( newRoutes );
 
 			// Add parent routing
-			ses.addRoute(pattern="#variables.parentSESPrefix#/:handler/:action?");
+			ses.addRoute(pattern="#variables.parentSESPrefix#/:handler/:action?" );
 			
 			// Add routes manually to take over parent routes
 			for(var x=1; x LTE arrayLen( variables.routes ); x++){
 				// append module location to it so the route is now system wide
 				var args = duplicate( variables.routes[ x ] );
 				// Check if handler defined
-				if( structKeyExists(args,"handler") ){
+				if( structKeyExists(args,"handler" ) ){
 					args.handler = "contentbox-ui:#args.handler#";
 				}
 				// add it as main application route.
 				ses.addRoute(argumentCollection=args);
 			}
 			// change the default event of the entire app
-			controller.setSetting("DefaultEvent","contentbox-ui:blog");
+			controller.setSetting( "DefaultEvent","contentbox-ui:blog" );
 		}		
 	}
 	
@@ -197,9 +197,9 @@ component {
 		// Get ses handle
 		var ses = controller.getInterceptorService().getInterceptor('SES',true);
 		// Get setting service
-		var settingService = controller.getWireBox().getInstance("settingService@cb");
+		var settingService = controller.getWireBox().getInstance( "settingService@cb" );
 		// Get blog entry point from DB
-		var blogEntryPoint = settingService.findWhere({name="cb_site_blog_entrypoint"});
+		var blogEntryPoint = settingService.findWhere( {name="cb_site_blog_entrypoint"} );
 		if( !isNull( blogEntryPoint ) ){
 			ses.addNamespace(pattern="#this.entryPoint#/#blogEntryPoint.getValue()#", namespace="blog", append=false);
 		}
@@ -211,7 +211,7 @@ component {
 		for(var x=1; x LTE arrayLen( variables.blogRoutes ); x++){
 			var args = duplicate( variables.blogRoutes[ x ] );
 			// Check if handler defined
-			if( structKeyExists(args,"handler") ){
+			if( structKeyExists(args,"handler" ) ){
 				args.handler = "contentbox-ui:#args.handler#";
 			}
 			// Add the namespace routes

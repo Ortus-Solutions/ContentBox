@@ -10,7 +10,7 @@ $(document).ready(function() {
         var checked = this.checked;
         var selector = 'input[name=' + $( this ).data( 'togglegroup' ) + ']';
         $( selector ).prop( 'checked', checked );
-    });
+    } );
     // check if parent needs to be toggled based on full selection/deselection of children
     $( 'input[data-alacarte' ).change(function() {
         var me = $( this );
@@ -26,12 +26,12 @@ $(document).ready(function() {
             if( this.checked==checked ) {
                 checkedCount++
             }
-        });
+        } );
         // if sibling match count equals total number of togglegroup items, change parent to reflect state
         if( checkedCount==total ) {
             $( parentSelector ).prop( 'checked', checked );
         }
-    });
+    } );
     // handle export type selection
     $( 'input[name=export_type]' ).change(function() {
         $( 'input[name=export_type]' ).each(function(){
@@ -44,7 +44,7 @@ $(document).ready(function() {
                 parent.removeClass( 'btn-success' );
                 parent.parent().removeClass( 'alert-success' );
             }
-        });
+        } );
         var fieldset = $( '##selective_controls' );
         if( this.id == 'export_selective' ) {
             fieldset.show( 'fast' );
@@ -53,10 +53,10 @@ $(document).ready(function() {
             fieldset.hide( 'fast' );
             fieldset.find( 'input[type=checkbox]' ).each(function(){
                 $( this ).prop( 'checked', true );
-            })
+            } )
         }
-    });
-});
+    } );
+} );
 function doExport(){
     if( confirm( 'Are you sure you want to begin the export?' ) ){
         activateLoaders();
@@ -68,7 +68,7 @@ function previewExport() {
         var target = $( '##exportPreviewDialog' );
         $( '##previewBody' ).html( data );
         openModal( target );
-    });
+    } );
 }
 function activateLoaders(){
     $( "##uploadBar" ).slideToggle();

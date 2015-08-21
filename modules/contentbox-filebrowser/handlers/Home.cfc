@@ -1,20 +1,16 @@
 /**
-********************************************************************************
-Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
-********************************************************************************
-Author      :	Luis Majano
-Description :
-
-This is the main controller of events for the filebrowser
------------------------------------------------------------------------>
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* This is the main controller of events for the filebrowser
 */
 component output="false" hint="Main filebrowser module handler"{
 
 	// DI
-	property name="antiSamy"		inject="coldbox:plugin:AntiSamy";
-	property name="fileUtils"		inject="coldbox:plugin:FileUtils";
-	property name="cookieStorage"	inject="coldbox:plugin:CookieStorage";
+	property name="antiSamy"		inject="antisamy@cbantisamy";
+	property name="fileUtils"		inject="FileUtils@cb";
+	property name="cookieStorage"	inject="cookieStorage@cbStorages";
 
 	function preHandler( event, currentAction, rc, prc ){
 		// Detect Module Name Override or default it
@@ -25,10 +21,10 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 
 		// Setup the Module Root And Entry Point
-		prc.fbModRoot 		= getModuleSettings( prc.fbModuleName ).mapping;
-		prc.fbModEntryPoint = getModuleSettings( prc.fbModuleName ).entrypoint;
+		prc.fbModRoot 		= getModuleConfig( prc.fbModuleName ).mapping;
+		prc.fbModEntryPoint = getModuleConfig( prc.fbModuleName ).entrypoint;
 		// Duplicate the settings so we can do overrides a-la-carte
-		prc.fbSettings = duplicate( getModuleSettings( prc.fbModuleName ).settings );
+		prc.fbSettings = duplicate( getModuleSettings( prc.fbModuleName ) );
 		// Merge Flash Settings if they exist
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "settings" ) ){
 			mergeSettings(prc.fbSettings, flash.get( "fileBrowser" ).settings);
@@ -99,7 +95,7 @@ component output="false" hint="Main filebrowser module handler"{
 
 		// traversal testing
 		if( NOT isTraversalSecure(prc, prc.fbCurrentRoot) ){
-			getPlugin( "MessageBox" ).warn( r( "messages.traversal@fb" ) );
+			getModel( "messagebox@cbMessagebox" ).warn( r( "messages.traversal@fb" ) );
 			setNextEvent(prc.xehFBBrowser);
 		}
 
@@ -422,10 +418,12 @@ component output="false" hint="Main filebrowser module handler"{
 			};
 			announceInterception( "fb_preFileUpload", iData );
 
-			iData.results = fileUtils.uploadFile( fileField="FILEDATA",
-											      destination=rc.path,
-											      nameConflict="Overwrite",
-											      accept=prc.fbSettings.acceptMimeTypes );
+			iData.results = fileUtils.uploadFile( 
+				fileField		= "FILEDATA",
+				destination		= rc.path,
+				nameConflict	= "Overwrite",
+				accept			= prc.fbSettings.acceptMimeTypes 
+			);
 			// debug log file
 			if( log.canDebug() ){
 				log.debug( "File Uploaded!", iData.results);

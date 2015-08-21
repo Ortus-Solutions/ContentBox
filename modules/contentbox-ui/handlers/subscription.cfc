@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -43,15 +43,14 @@ component singleton{
                     var deleteCriteria = { "subscriptionToken"=targets[ i ] };
                     subscriptionService.deleteWhere( subscriptionToken = targets[ i ] );
                 }
-                getPlugin( "MessageBox" ).setMessage( "info", "Your subscriptions were successfully updated!" );
+                
+                messagebox.info( "Your subscriptions were successfully updated!" );
                 setNextEvent( "__subscriptions/#rc.subscriberToken#" );
+            } else {
+                messagebox.error( "Sorry, we couldn't complete your request. Please try again." );
             }
-            else {
-                getPlugin( "MessageBox" ).setMessage( "error", "Sorry, we couldn't complete your request. Please try again." );
-            }
-        }
-        else {
-            getPlugin( "MessageBox" ).setMessage( "warning", "Sorry, we couldn't complete your request. Please try again." );
+        } else {
+            messagebox.warn( "Sorry, we couldn't complete your request. Please try again." );
         }
         setNextEvent( "/" );
     }
@@ -81,13 +80,12 @@ component singleton{
             var subscriber = subscription.getSubscriber();
             // delete it
             subscriptionService.delete( subscription );
-            getPlugin( "MessageBox" ).info( message = "You have been succssfully unsubscribed!" );
+            messagebox.warn( "You have been succssfully unsubscribed!" );
             // see if subscriber has others; if so, we can provide a handy link to managing their other subs
             prc.subscriberToken = subscriber.getSubscriberToken();
             prc.subscriptions = subscriber.getSubscriptionsByContentType();
-        }
-        else {
-            getPlugin( "MessageBox" ).warn( message = "Sorry, your request could not be completed." );
+        } else {
+            messagebox.warn( "Sorry, your request could not be completed." );
         }
         event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
              .setView( view="subscription/unsubscribe" );

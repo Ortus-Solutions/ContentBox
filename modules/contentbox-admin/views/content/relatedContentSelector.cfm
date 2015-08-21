@@ -4,16 +4,16 @@
     <h3><i class="fa fa-sitemap"></i> Select Related Content</h3>
 </div>
 <div class="modal-body">
-#html.startForm(name="relatedContentSelectorForm")#
+#html.startForm(name="relatedContentSelectorForm" )#
 
     <!--- Loader --->
     <div class="loaders floatRight" id="relatedContentSelectorLoader">
-        <i class="fa fa-spinner fa-spin icon-large"></i>
+        <i class="fa fa-spinner fa-spin fa-lg"></i>
     </div>
 
     <!--- Content Bar --->
     <div class="form-group">
-        #html.label(field="contentSearch",content="Quick Search:",class="inline")#
+        #html.label(field="contentSearch",content="Quick Search:",class="inline" )#
         #html.textField(name="contentSearch",size="30",class="form-control",value=rc.search)#
     </div>
 

@@ -1,18 +1,15 @@
 ﻿/**
 * A cool basic commenting form for ContentBox
 */
-component extends="contentbox.model.ui.BaseWidget" singleton{
+component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	CommentForm function init(controller){
-		// super init
-		super.init(controller);
-
+	CommentForm function init(){
 		// Widget Properties
-		setPluginName("CommentForm");
-		setPluginVersion("1.0");
-		setPluginDescription("A cool basic commenting form for ContentBox content objects.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setName( "CommentForm" );
+		setVersion( "1.0" );
+		setDescription( "A cool basic commenting form for ContentBox content objects." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "comment-add.png" );
 		setCategory( "Miscellaneous" );
 		return this;
@@ -31,37 +28,37 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		// captcha?
 		if( cbSettings.cb_comments_captcha ){
 			saveContent variable="captcha"{
-				writeOutput("
+				writeOutput( "
 					<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
-					#html.textField(name="captchacode",label="Enter the security code shown above:",required="required",size="50")#
-				");
+					#html.textField(name="captchacode",label="Enter the security code shown above:",required="required",size="50" )#
+				" );
 			}
 		}
 
 		// generate comment form
 		saveContent variable="commentForm"{
 			writeOutput('
-			#html.startForm(name="commentForm",action=cb.linkCommentPost(arguments.content),novalidate="novalidate")#
+			#html.startForm( name="commentForm", action=cb.linkCommentPost( arguments.content ), novalidate="novalidate" )#
 
-				#cb.event("cbui_preCommentForm")#
+				#cb.event( "cbui_preCommentForm" )#
 
-				#getPlugin("MessageBox").renderit()#
+				#getModel( "messagebox@cbMessagebox" ).renderIt()#
 
-				#html.hiddenField(name="contentID",value=arguments.content.getContentID())#
-				#html.hiddenField(name="contentType",value=arguments.content.getContentType())#
+				#html.hiddenField( name="contentID", value=arguments.content.getContentID() )#
+				#html.hiddenField( name="contentType",value=arguments.content.getContentType() )#
 
-				#html.textField(name="author",label="Name: (required)",size="50",required="required",value=event.getValue("author",""))#
-				#html.inputField(name="authorEmail",type="email",label="Email: (required)",size="50",required="required",value=event.getValue("authorEmail",""))#
-				#html.inputField(name="authorURL",type="url",label="Website:",size="50",value=event.getValue("authorURL",""))#
+				#html.textField( name="author", label="Name: (required)",size="50", required="required", value=event.getValue( "author","" ) )#
+				#html.inputField( name="authorEmail", type="email", label="Email: (required)", size="50", required="required", value=event.getValue( "authorEmail","" ) )#
+				#html.inputField( name="authorURL", type="url", label="Website:", size="50", value=event.getValue( "authorURL","" ) )#
 
-				#html.textArea(name="content",label="Comment:",required="required",value=event.getValue("content",""))#
+				#html.textArea( name="content", label="Comment:", required="required", value=event.getValue( "content","" ) )#
 				#html.checkBox( name="subscribe", label="Notify me of follow-up comments by email." )#
 				#captcha#
 
-				#cb.event("cbui_postCommentForm")#
+				#cb.event( "cbui_postCommentForm" )#
 
 				<div class="buttons">
-					#html.submitButton(name="commentSubmitButton",value="Submit")#
+					#html.submitButton( name="commentSubmitButton", value="Submit" )#
 				</div>
 			#html.endForm()#
 			');

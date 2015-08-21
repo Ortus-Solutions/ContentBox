@@ -27,7 +27,7 @@
  */
 ;(function($) {
 
-  jQuery.event.props.push("dataTransfer");
+  jQuery.event.props.push( "dataTransfer" );
 
   var default_opts = {
       fallback_id: '',
@@ -67,7 +67,7 @@
       files;
 
   $.fn.filedrop = function(options) {
-    var opts = $.extend({}, default_opts, options),
+    var opts = $.extend( {}, default_opts, options),
         global_progress = [];
 
     this.on('drop', drop).on('dragstart', opts.dragStart).on('dragenter', dragEnter).on('dragover', dragOver).on('dragleave', dragLeave);
@@ -78,7 +78,7 @@
       files = e.target.files;
       files_count = files.length;
       upload();
-    });
+    } );
 
     function drop(e) {
       if( opts.drop.call(this, e) === false ) return false;
@@ -102,7 +102,7 @@
         var params = $.param(opts.data).replace(/\+/g, '%20').split(/&/);
 
         $.each(params, function() {
-          var pair = this.split("=", 2),
+          var pair = this.split( "=", 2),
               name = decodeURIComponent(pair[0]),
               val  = decodeURIComponent(pair[1]);
 
@@ -114,7 +114,7 @@
           builder += crlf;
           builder += val;
           builder += crlf;
-        });
+        } );
       }
 
       builder += dashdash;
@@ -257,7 +257,7 @@
                 if (value === fileIndex) {
                   processingQueue.splice(key, 1);
                 }
-              });
+              } );
               filesRejected++;
               return true;
             }
@@ -280,7 +280,7 @@
             };
 
             reader.onloadend = !opts.beforeSend ? send : function (e) {
-              opts.beforeSend(files[fileIndex], fileIndex, function () { send(e); });
+              opts.beforeSend(files[fileIndex], fileIndex, function () { send(e); } );
             };
             
             reader.readAsBinaryString(files[fileIndex]);
@@ -294,7 +294,7 @@
             if (value === fileIndex) {
               processingQueue.splice(key, 1);
             }
-          });
+          } );
           opts.error(errors[0]);
           return false;
         }
@@ -307,7 +307,7 @@
 
       var send = function(e) {
 
-        var fileIndex = ((typeof(e.srcElement) === "undefined") ? e.target : e.srcElement).index;
+        var fileIndex = ((typeof(e.srcElement) === "undefined" ) ? e.target : e.srcElement).index;
 
         // Sometimes the index is not attached to the
         // event object. Find it by size. Hack for sure.
@@ -330,7 +330,7 @@
           xhr.withCredentials = opts.withCredentials;
         }
 
-        if (typeof newName === "string") {
+        if (typeof newName === "string" ) {
           builder = getBuilder(newName, e.target.result, mime, boundary);
         } else {
           builder = getBuilder(file.name, e.target.result, mime, boundary);
@@ -343,13 +343,13 @@
         upload.currentProgress = 0;
         upload.global_progress_index = global_progress_index;
         upload.startData = 0;
-        upload.addEventListener("progress", progress, false);
+        upload.addEventListener( "progress", progress, false);
 
 		// Allow url to be a method
 		if (jQuery.isFunction(opts.url)) {
-	        xhr.open("POST", opts.url(), true);
+	        xhr.open( "POST", opts.url(), true);
 	    } else {
-	    	xhr.open("POST", opts.url, true);
+	    	xhr.open( "POST", opts.url, true);
 	    }
 	    
         xhr.setRequestHeader('content-type', 'multipart/form-data; boundary=' + boundary);
@@ -357,7 +357,7 @@
         // Add headers
         $.each(opts.headers, function(k, v) {
           xhr.setRequestHeader(k, v);
-        });
+        } );
 
         xhr.sendAsBinary(builder);
 
@@ -388,7 +388,7 @@
               if (value === fileIndex) {
                 processingQueue.splice(key, 1);
               }
-            });
+            } );
 
             // Add to donequeue
             doneQueue.push(fileIndex);
@@ -482,7 +482,7 @@
         return function() {
           opts.docLeave.call(_this, e);
         };
-      })(this), 200);
+      } )(this), 200);
     }
 
     return this;
@@ -504,4 +504,4 @@
     };
   } catch (e) {}
 
-})(jQuery);
+} )(jQuery);

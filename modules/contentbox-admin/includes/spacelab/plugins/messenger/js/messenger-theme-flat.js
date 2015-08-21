@@ -24,10 +24,10 @@
 
     return FlatMessage;
 
-  })(window.Messenger.Message);
+  } )(window.Messenger.Message);
 
   window.Messenger.themes.flat = {
     Message: FlatMessage
   };
 
-}).call(this);
+} ).call(this);

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-dashboard icon-larger"></i> #prc.cbSettings.cb_dashboard_welcome_title#
+        	<i class="fa fa-dashboard fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
         </h1>
     </div>
 </div>
@@ -14,10 +14,10 @@
 				<p class="lead">#prc.cbSettings.cb_dashboard_welcome_body#</p>
 
 				<!--- Messagebox --->
-				#getPlugin("MessageBox").renderit()#
+				#getModel( "messagebox@cbMessagebox" ).renderit()#
 				
 				<!--- Event --->
-				#announceInterception("cbadmin_preDashboardContent")#
+				#announceInterception( "cbadmin_preDashboardContent" )#
 				
 				<!--- Installer Checks --->
 				<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
@@ -55,11 +55,11 @@
 							<a href="##latestNews" data-toggle="tab"><i class="fa fa-rss"></i> Recent News</a>
 						</li>
 						<!--- cbadmin Event --->
-						#announceInterception("cbadmin_onDashboardTabNav")#
+						#announceInterception( "cbadmin_onDashboardTabNav" )#
 					</ul>
 					<div class="tab-content">
 						<!--- cbadmin Event --->
-						#announceInterception("cbadmin_preDashboardTabContent")#
+						#announceInterception( "cbadmin_preDashboardTabContent" )#
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<div class="tab-pane" id="recentContentTab">
 								<div class="" id="latestPages">
@@ -82,18 +82,18 @@
 							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 						</div>
 						<!--- cbadmin Event --->
-						#announceInterception("cbadmin_postDashboardTabContent")#
+						#announceInterception( "cbadmin_postDashboardTabContent" )#
 					</div>
 				</div>
 				
 				<!--- Event --->
-				#announceInterception("cbadmin_postDashboardContent")#
+				#announceInterception( "cbadmin_postDashboardContent" )#
 		    </div>
 		</div>
     </div>
     <div class="col-md-4">
         <!--- Event --->
-		#announceInterception("cbadmin_preDashboardSideBar")#
+		#announceInterception( "cbadmin_preDashboardSideBar" )#
 		
 		<!---Latest Snapshot --->
 		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
@@ -120,7 +120,7 @@
 		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Need Help?</h3>
 		    </div>
 		    <div class="panel-body">
-		    	#renderview(view="_tags/needhelp", module="contentbox-admin")#
+		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#
 		    </div>
 		</div>
 		<div class="panel panel-primary">
@@ -129,14 +129,14 @@
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="list-unstyled tipList">
-					<li><i class="fa fa-lightbulb-o icon-large"></i> Right click on a row to activate quick look!</li>
-					<li><i class="fa fa-lightbulb-o icon-large"></i> 'Quick Post' is a minimalistic editing machine</li>
-					<li><i class="fa fa-lightbulb-o icon-large"></i> 'Create Entry' is a full blown editing machine</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> Right click on a row to activate quick look!</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> 'Quick Post' is a minimalistic editing machine</li>
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> 'Create Entry' is a full blown editing machine</li>
 				</ul>
 		    </div>
 		</div>
 		<!--- Event --->
-		#announceInterception("cbadmin_postDashboardSideBar")#
+		#announceInterception( "cbadmin_postDashboardSideBar" )#
     </div>
 </div>
 </cfoutput>

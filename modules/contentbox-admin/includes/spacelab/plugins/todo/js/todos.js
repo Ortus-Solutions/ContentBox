@@ -16,7 +16,7 @@ $(document).ready(function() {
           $currentListItem = $(this).closest('li');
 
           $currentListItem.remove();
-        });
+        } );
 
         $('.toggle').on('click', function(e) {
           var $currentListItemLabel = $(this).closest('li').find('label');
@@ -31,7 +31,7 @@ $(document).ready(function() {
 			  $currentListItemLabel.attr('data', 'done');
         $currentListItemLabel.css('text-decoration', 'line-through');
 		  }
-			});
+			} );
 		}
 
 	
@@ -55,7 +55,7 @@ $(document).ready(function() {
 		runBind();
 		$('#main').show();
     
-  }}); // end if
+  }} ); // end if
 
 	$('#todo-enter').click(function(e) {
 			$('.destroy').off('click');
@@ -75,7 +75,7 @@ $(document).ready(function() {
 		runBind();
 		$('#main').show();
     
-  });
+  } );
 
-});
+} );
 
