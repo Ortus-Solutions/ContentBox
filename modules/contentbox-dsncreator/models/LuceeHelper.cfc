@@ -24,7 +24,7 @@ limitations under the License.
 <cfcomponent output="false" hint="ContentBox DSN creator helper" extends="BaseHelper">
 
 	<!--- Constructor --->
-	<cffunction name="init" output="false" returntype="RailoHelper" hint="constructor" access="public">
+	<cffunction name="init" output="false" returntype="LuceeHelper" hint="constructor" access="public">
 		<cfscript>
 			super.init();
 			return this;
