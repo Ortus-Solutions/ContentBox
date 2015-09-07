@@ -15,7 +15,7 @@ component accessors="true"{
 	property name="permissionService" 	inject="permissionService@cb";
 	property name="securityRuleService" inject="securityRuleService@cb";
 	property name="appPath" 			inject="coldbox:setting:applicationPath";
-	property name="securityInterceptor" inject="securityInterceptor@cb";
+	property name="securityInterceptor" inject="coldbox:interceptor:security@cb";
 	property name="coldbox"				inject="coldbox";
 
 	/**
