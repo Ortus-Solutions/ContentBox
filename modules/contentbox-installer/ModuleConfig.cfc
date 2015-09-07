@@ -42,8 +42,8 @@ component {
 		];
 		
 		// Binder
-		binder.map( "InstallerService@cbi" ).to( "#moduleMapping#.model.InstallerService" );
-		binder.map( "SetupBean@cbi" ).to( "#moduleMapping#.model.Setup" );
+		binder.map( "InstallerService@cbi" ).to( "#moduleMapping#.models.InstallerService" );
+		binder.map( "SetupBean@cbi" ).to( "#moduleMapping#.models.Setup" );
 	}
 	
 	/**
