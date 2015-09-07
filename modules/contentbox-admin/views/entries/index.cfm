@@ -123,7 +123,7 @@
 					    </div>
 					    <!--- Creators --->
 					    <div class="form-group">
-							<label for="fCreators" class="form-control">Creators: </label>
+							<label for="fCreators" class="control-label">Creators: </label>
 							<select name="fCreators" id="fCreators" class="form-control input-sm" title="Filter on who created content">
 								<option value="all" selected="selected">All Creators</option>
 								<cfloop array="#prc.authors#" index="author">
