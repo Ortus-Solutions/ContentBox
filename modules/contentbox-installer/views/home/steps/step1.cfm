@@ -7,7 +7,7 @@
 <!--- Fields --->
 #html.textField(
     name="firstName",
-    label=cb.r( "tab.admin.lname@installer" ),
+    label=cb.r( "tab.admin.fname@installer" ),
     required="required",
     size="100",
     class="form-control",
@@ -17,7 +17,7 @@
 )#
 #html.textField(
     name="lastName",
-    label=cb.r( "tab.admin.fname@installer" ),
+    label=cb.r( "tab.admin.lname@installer" ),
     required="required",
     size="100",
     class="form-control",
