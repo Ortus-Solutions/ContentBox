@@ -13,6 +13,7 @@ component accessors="true" singleton threadSafe{
 	property name="moduleService"		inject="ModuleService@cb";
 	property name="themeService"		inject="themeService@cb";
 	property name="wirebox"				inject="wirebox";
+	property name="coldbox"				inject="coldbox";
 	property name="log"					inject="logbox:logger:{this}";
 
 	// Local properties
@@ -169,7 +170,11 @@ component accessors="true" singleton threadSafe{
 				break;
 		}
 		if( len( path ) ) {
-			return wirebox.getInstance( path );
+			// Init Arguments added for backwards compat
+			return wirebox.getInstance( 
+				name=path, 
+				initArguments={ "controller" = variables.coldbox } 
+			);
 		}
 	}
 
