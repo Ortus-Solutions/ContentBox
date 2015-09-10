@@ -3,10 +3,10 @@
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	cb function init(controller){
-		// super init
-		super.init(controller);
-
+	/**
+	* Constructor
+	*/
+	cb function init(){
 		// Widget Properties
 		setName( "CBHelper" );
 		setVersion( "1.0" );
@@ -28,7 +28,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	/**
 	* Proxy into the CB Helper
 	*/
-	any function onMissingMethod(missingMethodName,missingMethodArguments){
+	any function onMissingMethod( missingMethodName, missingMethodArguments ){
 		return evaluate( "variables.cb.#missingMethodName#(argumentCollection=arguments.missingMethodArguments)" );
 	}
 
