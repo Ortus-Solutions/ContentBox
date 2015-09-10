@@ -56,7 +56,7 @@
         "cbstorages":"1.0.0",
         "cbfeeds":"1.0.1",
         "cbmessagebox":"1.0.0",
-        "cbantisamy":"1.1.0"
+        "cbantisamy":"1.2.0"
     },
     "installPaths":{
         "coldbox":"coldbox",
