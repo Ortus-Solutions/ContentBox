@@ -181,7 +181,7 @@
 
                 <!--logo end-->
                 <div class="toggle-navigation toggle-left">
-                    <a onclick="app.toggleMenuLeft()" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+                    <a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
                     	<i class="fa fa-bars"></i>
                     </a>
                 </div>
