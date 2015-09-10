@@ -8,11 +8,11 @@
         <!---Begin Top Visited--->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##topvisited">
-                    <i class="fa fa-bar-chart-o fa-lg"></i> Top Visited Content
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##topcontent">
+                    <i class="fa fa-bar-chart-o fa-lg"></i> Top Hits & Comments
                 </a>
             </div>
-            <div id="topvisited" class="panel-collapse collapse active in">
+            <div id="topcontent" class="panel-collapse collapse active in">
                 <div class="panel-body">
                     <!--- Top Visited Content Chart --->
                     <div id="top-visited-chart"></div>
@@ -35,20 +35,6 @@
                             </cfloop>
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-        <!---End Top Visited--->
-
-        <!---Begin Top Commented--->
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##topcommented">
-                    <i class="fa fa-bar-chart-o fa-lg"></i> Top Commented Content
-                </a>
-            </div>
-            <div id="topcommented" class="panel-collapse collapse">
-                <div class="panel-body">
                     <!--- Top Visited Content Chart --->
                     <div id="top-commented-chart"></div>
                     <!--- Table Report --->
@@ -73,13 +59,13 @@
                 </div>
             </div>
         </div>
-        <!---End Top Commented--->
+        <!---End Top Visited--->
 
         <!---Begin Discussions--->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##discussion">
-                    <i class="fa fa-comments fa-lg"></i> Discussions
+                    <i class="fa fa-comments fa-lg"></i> Discussion Counts
                 </a>
             </div>
             <div id="discussion" class="panel-collapse collapse">
@@ -98,7 +84,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##content">
-                    <i class="fa fa-pencil fa-lg"></i> Content
+                    <i class="fa fa-pencil fa-lg"></i> Content Counts
                 </a>
             </div>
             <div id="content" class="panel-collapse collapse">
