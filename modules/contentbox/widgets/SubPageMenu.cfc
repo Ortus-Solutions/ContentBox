@@ -1,4 +1,8 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A widget that renders sub pages according to where it is rendered.
 */
 component extends="contentbox.models.ui.BaseWidget" singleton {
