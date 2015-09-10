@@ -1,5 +1,9 @@
 /**
-* ContentBox main module configuration
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* ContentBox installer module
 */
 component {
 	
@@ -12,6 +16,7 @@ component {
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbinstaller";
+	this.modelNamespace 	= "cbi";
 	
 	function configure(){
 		
@@ -27,23 +32,15 @@ component {
 		  	}
 		};
 		
-		// Settings
-		settings = {
-			languages = [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
-		};
-		
 		// SES Routes
 		routes = [
-			{ pattern="/", handler="home", action="index" },
-			{ pattern="/language/:lang", handler="home", action="changelang" },
-			{ pattern="/install", handler="home", action="install" },
-			{ pattern="/finished", handler="home", action="finished" },
+			{ pattern="/", 					handler="home", action="index" },
+			{ pattern="/language/:lang", 	handler="home", action="changelang" },
+			{ pattern="/install", 			handler="home", action="install" },
+			{ pattern="/finished", 			handler="home", action="finished" },
 			{ pattern="/:handler/:action?" }	
 		];
 		
-		// Binder
-		binder.map( "InstallerService@cbi" ).to( "#moduleMapping#.models.InstallerService" );
-		binder.map( "SetupBean@cbi" ).to( "#moduleMapping#.models.Setup" );
 	}
 	
 	/**

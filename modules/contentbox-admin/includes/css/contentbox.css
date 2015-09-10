@@ -58,6 +58,10 @@ a.btn.btn-danger:visited {
 .main-content-wrapper .dropdown-menu > li > a:hover, .main-content-wrapper .dropdown-menu > li > a:active {
     background-color: #16a086;
 }
+/** Section Overrides */
+#simple-container{
+	padding-top:10px;
+}
 /**============================== ADMIN MAIN ELEMENTS ==============================**/
 
 /**

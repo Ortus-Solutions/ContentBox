@@ -14,13 +14,18 @@
         <!--- Robots --->
         <meta name="robots" content="noindex,nofollow" />
         <!--- SES --->
-        <base href="#getSetting('htmlBaseURL')#" />
+        <base href="#cb.siteBaseURL()#" />
         <!--- Title --->
         <title>#cb.r( "layout.installer@installer" )#</title>
         <!--- Description --->
-        <meta name="description" content="">
+        <meta name="description" content="ContentBox Admin Installer">
         <!--- Viewport for scaling --->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+        <!--- ********************************************************************* --->
+        <!---                           FAVICONS                                    --->
+        <!--- ********************************************************************* --->
+
         <!--- Favicon --->
         <link href="#prc.assetroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->
@@ -31,80 +36,104 @@
         <link href="#prc.assetroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
         <!-- Favicon -->
         <link href="#prc.assetroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <!--// Bootstrap core CSS-->
+        
+        <!--- ********************************************************************* --->
+        <!---                           CSS THEME                                   --->
+        <!--- ********************************************************************* --->
+
+        <!-- Bootstrap core CSS -->
         <link href="#prc.assetroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <!--// custom admin files-->
-        <link href="#prc.assetroot#/includes/css/contentbox.css" rel="stylesheet" />
-        <!--// fonts from font awesome-->
+        <!-- fonts from font awesome -->
         <link href="#prc.assetroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />
-        <!--// css animate-->
+        <!-- css animate -->
         <link href="#prc.assetroot#/includes/spacelab/css/animate.css" rel="stylesheet" />
-        <!--// toastr-->
-        <link href="#prc.assetroot#/includes/css/toastr.min.css" rel="stylesheet" />
-        <!--// custom styles for spacelab-->
+        <!-- Switchery -->
+        <link rel="stylesheet" href="#prc.assetroot#/includes/spacelab/plugins/switchery/switchery.min.css">
+        <!-- spacelab theme-->
         <link href="#prc.assetroot#/includes/spacelab/css/main.css" rel="stylesheet" />
-        <!--- JS --->
-        <!--// modernizr for feature detection-->
+
+        <!--- ********************************************************************* --->
+        <!---                          CONTENTBOX CSS                               --->
+        <!--- ********************************************************************* --->
+
+        <!-- custom contentbox css -->
+        <link href="#prc.assetroot#/includes/css/contentbox.css" rel="stylesheet" />
+        
+       	<!--- ********************************************************************* --->
+        <!---                           JAVASCRIPT                                  --->
+        <!--- ********************************************************************* --->
+
+        <!-- modernizr for feature detection -->
         <script src="#prc.assetroot#/includes/spacelab/js/modernizr.min.js"></script>
-        <!--// jquery main-->
+        <!-- jquery main -->
         <script src="#prc.assetroot#/includes/spacelab/js/jquery.min.js"></script>
-        <!--// bootstrap js-->
+        <!-- bootstrap js -->
         <script src="#prc.assetroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <!--// spacelab js-->
+        <!-- Navigation -->
+        <script src="#prc.assetroot#/includes/spacelab/plugins/navgoco/jquery.navgoco.min.js"></script>
+        <!-- spacelab js -->
         <script src="#prc.assetroot#/includes/spacelab/js/application.js"></script>
-        <!--// cookie helper-->
-        <script src="#prc.assetroot#/includes/js/jquery.cookie.js"></script>
-        <!--// validation-->
+
+        <!--- ********************************************************************* --->
+        <!---                          CONTENTBOX JAVASCRIPT                        --->
+        <!--- ********************************************************************* --->
+
+        <!-- validation -->
         <script src="#prc.assetroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js"></script>
-        <!--// jwerty-->
+        <script src="#prc.assetroot#/includes/spacelab/plugins/validation/js/jquery.validate.bootstrap.js"></script>
+        <!-- jwerty -->
         <script src="#prc.assetroot#/includes/js/jwerty.js"></script>
-        <!--// toastr-->
-        <script src="#prc.assetroot#/includes/js/toastr.min.js"></script>
-        <!--// main ContentBox scripts-->
+        <!-- main ContentBox scripts -->
         <script src="#prc.assetroot#/includes/js/contentbox.js"></script>
-	    <!-- Fonts -->
+	    
+	    <!--- ********************************************************************* --->
+        <!---                           FONTS 	                                    --->
+        <!--- ********************************************************************* --->
+
 	    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
 	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	   
 	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!--[if lt IE 9]>
 	    <script src="assets/js/html5shiv.js"></script>
 	    <script src="assets/js/respond.min.js"></script>
 	    <![endif]-->
 	</head>
-	<body>
-		<div id="wrapper">
-			<!--- NavBar --->
-			<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
-			    <div class="navbar-inner">
-			    	<div class="container">
-			    		<!--- Logo --->
-						<img src="#prc.assetRoot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
-						<!--- Brand, future multi-site switcher --->
-						<a class="brand">
-							#cb.r( "layout.installer@installer" )#
-						</a>
-						
-						<ul class="nav pull-right">
-							<li class="dropdown">
-								<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
-									<i class="fa fa-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
-									<ul role="menu" class="dropdown-menu">
-										<cfloop array="#prc.langs#" index="thisLang">
-										<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>
-										</cfloop>
-									</ul>
-								</a>
-							</li>
-						</ul>
-					</div> <!---end container --->
-			    </div> <!--- end navbar-inner --->
-		    </div> <!---end navbar --->
+	<body class="animated fadeIn">
 
-			<!--- Container --->
-			<section id="simple-container" class="container-fluid" style="padding-top:100px;">
-				#renderView()#
-			</section>
-		</div>
+		<!--- Header Container --->
+		<section id="container">
+            <header id="header">
+
+            	<!--logo start-->
+                <div class="brand text-center">
+                    <a class="logo">@
+                        <img src="#prc.assetroot#/includes/images/ContentBox_90.png"/>
+                    </a>
+                </div>
+
+                <div class="user-nav">
+	                <!--- i18n navbar --->
+					<ul class="pull-right">
+						<li class="dropdown settings">
+							<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button">
+								<i class="fa fa-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
+								<ul role="menu" class="dropdown-menu">
+									<cfloop array="#prc.langs#" index="thisLang">
+									<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>
+									</cfloop>
+								</ul>
+							</a>
+						</li>
+					</ul>
+				</div>
+            </header>
+        </section>
+
+		<!--- Simple Container --->
+		<section id="simple-container" class="container-fluid">
+			#renderView()#
+		</section>
 	</body>
 	<!--End Body-->
 </html>
