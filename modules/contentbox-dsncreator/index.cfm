@@ -17,9 +17,16 @@
         <!--- Robots --->
         <meta name="robots" content="noindex,nofollow" />
         <!--- Description --->
-        <meta name="description" content="">
+        <meta name="description" content="ContentBox Admin DSN Creator">
         <!--- Viewport for scaling --->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <!--- Title --->
+	    <title>ContentBox Datasource Wizard</title>
+        
+        <!--- ********************************************************************* --->
+        <!---                           FAVICONS                                    --->
+        <!--- ********************************************************************* --->
+
         <!--- Favicon --->
         <link href="#assetroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <!--- For non-Retina iPhone, iPod Touch, and Android 2.2+ devices: --->
@@ -30,68 +37,88 @@
         <link href="#assetroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
         <!-- Favicon -->
         <link href="#assetroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-		<!--- Title --->
-	    <title>ContentBox Datasource Wizard</title>
-		<!--- StyleSheets --->
-		<!--// Bootstrap core CSS-->
+
+		<!--- ********************************************************************* --->
+        <!---                           CSS THEME                                   --->
+        <!--- ********************************************************************* --->
+
+        <!-- Bootstrap core CSS -->
         <link href="#assetroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <!--// custom admin files-->
-        <link href="#assetroot#/includes/css/contentbox.css" rel="stylesheet" />
-        <!--// fonts from font awesome-->
+        <!-- fonts from font awesome -->
         <link href="#assetroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />
-        <!--// css animate-->
+        <!-- css animate -->
         <link href="#assetroot#/includes/spacelab/css/animate.css" rel="stylesheet" />
-        <!--// toastr-->
-        <link href="#assetroot#/includes/css/toastr.min.css" rel="stylesheet" />
-        <!--// custom styles for spacelab-->
+        <!-- Switchery -->
+        <link rel="stylesheet" href="#assetroot#/includes/spacelab/plugins/switchery/switchery.min.css">
+        <!-- spacelab theme-->
         <link href="#assetroot#/includes/spacelab/css/main.css" rel="stylesheet" />
-		<!--- JS --->
-		<!--// modernizr for feature detection-->
+
+        <!--- ********************************************************************* --->
+        <!---                          CONTENTBOX CSS                               --->
+        <!--- ********************************************************************* --->
+
+        <!-- custom contentbox css -->
+        <link href="#assetroot#/includes/css/contentbox.css" rel="stylesheet" />
+        
+       	<!--- ********************************************************************* --->
+        <!---                           JAVASCRIPT                                  --->
+        <!--- ********************************************************************* --->
+
+        <!-- modernizr for feature detection -->
         <script src="#assetroot#/includes/spacelab/js/modernizr.min.js"></script>
-        <!--// jquery main-->
+        <!-- jquery main -->
         <script src="#assetroot#/includes/spacelab/js/jquery.min.js"></script>
-        <!--// bootstrap js-->
+        <!-- bootstrap js -->
         <script src="#assetroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <!--// spacelab js-->
+        <!-- Navigation -->
+        <script src="#assetroot#/includes/spacelab/plugins/navgoco/jquery.navgoco.min.js"></script>
+        <!-- spacelab js -->
         <script src="#assetroot#/includes/spacelab/js/application.js"></script>
-        <!--// cookie helper-->
-        <script src="#assetroot#/includes/js/jquery.cookie.js"></script>
-        <!--// validation-->
+
+        <!--- ********************************************************************* --->
+        <!---                          CONTENTBOX JAVASCRIPT                        --->
+        <!--- ********************************************************************* --->
+
+        <!-- validation -->
         <script src="#assetroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js"></script>
-        <!--// jwerty-->
+        <script src="#assetroot#/includes/spacelab/plugins/validation/js/jquery.validate.bootstrap.js"></script>
+        <!-- jwerty -->
         <script src="#assetroot#/includes/js/jwerty.js"></script>
-        <!--// toastr-->
-        <script src="#assetroot#/includes/js/toastr.min.js"></script>
-        <!--// main ContentBox scripts-->
+        <!-- main ContentBox scripts -->
         <script src="#assetroot#/includes/js/contentbox.js"></script>
-	    <!-- Fonts -->
+	    
+	    <!--- ********************************************************************* --->
+        <!---                           FONTS 	                                    --->
+        <!--- ********************************************************************* --->
+
 	    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
 	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+	   
 	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!--[if lt IE 9]>
 	    <script src="assets/js/html5shiv.js"></script>
 	    <script src="assets/js/respond.min.js"></script>
 	    <![endif]-->
 	</head>
-	<body>
-		<!--- NavBar --->
-		<div class="navbar navbar-fixed-top navbar-inverse" id="adminMenuTopNav">
-		    <div class="navbar-inner">
-		    	<div class="container">
-		    		<!--- Logo --->
-					<img src="#assetRoot#/includes/images/ContentBox_30.png" id="logo" title="ContentBox Modular CMS"/>
-					<!--- Brand, future multi-site switcher --->
-					<a class="brand">
-						ContentBox Datasource Wizard
-					</a>
-				</div> <!---end container --->
-		    </div> <!--- end navbar-inner --->
-	    </div> <!---end navbar --->
+	<body class="animated fadeIn">
+		<!--- Header Container --->
+		<section id="container">
+            <header id="header">
 
-		<!--- Container --->
-		<div class="container-fluid" style="padding-top:100px;">
+            	<!--logo start-->
+                <div class="brand text-center">
+                    <a class="logo">@
+                        <img src="#assetroot#/includes/images/ContentBox_90.png"/>
+                    </a>
+                </div>
+
+            </header>
+        </section>
+
+		<!--- Simple Container --->
+		<section id="simple-container" class="container-fluid">
 			<cfinclude template="views/index.cfm">
-		</div>
+		</section>
 	</body>
 </html>
 </cfoutput>

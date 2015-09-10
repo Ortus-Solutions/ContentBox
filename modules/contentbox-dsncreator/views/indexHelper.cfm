@@ -1,8 +1,8 @@
 <cfoutput>
 <script language="javascript">
-$(document).ready(function() {
+$( document ).ready(function() {
 } );
-function showDSNPanel(created){
+function showDSNPanel( created ){
 	if( created ){
 		$( "##dsnPanelCreate" ).hide();
 		$( "##dsnPanelExists" ).fadeIn();
@@ -16,8 +16,7 @@ function verifyDSN(){
 	$.ajax( {
 		url:'handlers/verifyDSN.cfm',
 		data: { dsnName : $( "##dsnName" ).val() },
-		async:false,
-		success: function(data){
+		success: function( data ){
 			if( data.ERROR || !data.EXISTS ){
 				$( "##createButton" ).fadeOut();
 				alert( "Error verifying datasource: " + data.MESSAGES );
@@ -30,7 +29,6 @@ function verifyDSN(){
 	} );
 }
 function verifyData(){
-	
 	if( !$( "##dsnCreateName" ).val().length ){
 		alert( "Please enter a datsource name" );
 		return;
@@ -41,7 +39,6 @@ function verifyData(){
 	$.ajax( {
 		url:'handlers/verifyCFML.cfm',
 		data: { cfmlPassword : $( "##cfpassword" ).val() },
-		async:false,
 		success: function(data){
 			if( data.ERROR ){
 				alert( "Error verifying CFML Administrator password: " + data.MESSAGES );
@@ -59,7 +56,6 @@ function verifyData(){
 		$.ajax( {
 			url:'handlers/verifyDSN.cfm',
 			data: { dsnName : $( "##dsnCreateName" ).val() },
-			async:false,
 			success: function(data){
 				if( data.EXISTS ){
 					alert( "Datasource " + $( "##dsnCreateName" ).val() + " already exists. Please try another name." );
