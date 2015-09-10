@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A widget that can render out ContentBox blog entries inline
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{

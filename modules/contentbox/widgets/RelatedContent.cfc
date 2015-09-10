@@ -1,4 +1,8 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A nice widget that shows related content for the content
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
