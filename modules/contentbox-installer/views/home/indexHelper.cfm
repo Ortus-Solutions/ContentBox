@@ -1,6 +1,6 @@
 <cfoutput>
 <script language="javascript">
-$(document).ready(function() {
+$( document ).ready(function() {
     var $installerForm = $( "##installerForm" )
 	// form validators
 	$installerForm.validate( {
@@ -20,17 +20,18 @@ $(document).ready(function() {
 	
 	// password validator
 	$.validator.addMethod( 'passwordmatch', function( value, element ) {
-        return (value==$( "[name=password]" ).val()) ? true : false;
+        return ( value==$( "[name=password]" ).val() ) ? true : false;
     }, '#cb.r( "validation.passwordmatch@installer" )#' );
 } );
 
 function nextStep(){
-    var $tabs = $('.tab-wrapper li');
-	$tabs.filter('.active').next('li').find('a[data-toggle="tab"]').tab('show');
+    var $tabs = $( '.tab-wrapper li' );
+	$tabs.filter( '.active' ).next( 'li' ).find( 'a[data-toggle="tab"]' ).tab( 'show' );
 }
+
 function prevStep(){
     var $tabs = $('.tab-wrapper li');
-	$tabs.filter('.active').prev('li').find('a[data-toggle="tab"]').tab('show');
+	$tabs.filter( '.active' ).prev( 'li' ).find( 'a[data-toggle="tab"]' ).tab( 'show' );
 }
 </script>
 </cfoutput>

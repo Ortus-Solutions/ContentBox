@@ -5,10 +5,10 @@
     </div>
     <div class="panel-body">
         #html.startForm( 
-            action="cbinstaller/install", 
-            name="installerForm", 
-            novalidate="novalidate", 
-            class="form-vertical" 
+            action 		= "cbinstaller/install", 
+            name 		= "installerForm", 
+            novalidate 	= "novalidate", 
+            class 		= "form-vertical" 
         )#
             <div class="tab-wrapper tab-left tab-primary">
                 <!--- Tabs --->
@@ -29,7 +29,6 @@
                     		<img src="#prc.assetRoot#/includes/images/ContentBox_300.png" />
                     	</div>
                         <p>#cb.r( "tab.intro.message@installer" )#</p>
-                        
                         <div class="text-center">
 	                        <a href="javascript:nextStep()" class="btn btn-primary btn-lg">
 	                            <i class="fa fa-check"></i> #cb.r( "tab.intro.start@installer" )#
@@ -64,7 +63,8 @@
                     <!--- ****************************************************************************** --->
                     <div class="tab-pane" id="step4">  
                         #renderView( view="home/steps/step4", module="contentbox-installer" )#
-                    </div>                      
+                    </div> 
+                                         
                     <!---Error Bar --->
                     <div id="errorBar"></div>
                 </div>
