@@ -258,7 +258,8 @@
                         </li>
                         #prc.adminMenuService.generateProfileMenu()#
                         
-                        <!--- Notifications --->
+                        <!--- Notifications :
+                        TODO: Enable once done
                         <li class="dropdown messages">
                             <span class="badge badge-danager animated bounceIn" id="new-messages">5</span>
                             <div class="toggle-navigation toggle-right">
@@ -267,6 +268,7 @@
                                 </button>                        
                             </div>
                         </li>
+                        --->
                     </ul>
                 </div>
             </header>
