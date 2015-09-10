@@ -115,8 +115,14 @@
       			<exclude name=".DS_Store" />
       			<exclude name="settings.xml" />
       			<exclude name=".project" />
+      			<exclude name="logs" />
       		</fileset>
         </copy>
+
+        <!-- Install Dependencies -->
+		<exec executable="box" dir="${dir.build}">
+			<arg line="install production=true" />
+		</exec>
         
 		<!-- Replace Build Numbers -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
@@ -126,9 +132,6 @@
 		  <fileset file="${dir.build}/box.json" />
 		</replaceregexp>
 		
-		<!-- API Docs -->
-		<antcall target="build.apidocs" />
-				
 		<!-- Activate DSN Creator link -->
 		<replace file="${dir.build}/Application.cfc" 
 				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
@@ -317,7 +320,7 @@
  	</target>
  	
 	<!-- Build all releases-->
-	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.patch">
+	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.apidocs,build.patch">
 		<!-- Copy as BE to root -->
 		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8">
 			<fileset dir="${dir.contentbox.exports}" />
