@@ -8,7 +8,6 @@
 component extends="baseHandler"{
 	
 	// DI
-	property name="settingService" 		inject="id:settingService@cb";
 	property name="moduleService"       inject="id:moduleService@cb";
     property name="themeService"       	inject="id:themeService@cb";
     property name="widgetService"       inject="id:widgetService@cb";

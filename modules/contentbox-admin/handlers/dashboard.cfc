@@ -13,7 +13,6 @@ component extends="baseHandler"{
 	property name="contentService" 		inject="id:contentService@cb";
 	property name="commentService" 		inject="id:commentService@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
-	property name="settingService"		inject="id:settingService@cb";
 	property name="feedReader"			inject="FeedReader@cbfeeds";
 	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
 

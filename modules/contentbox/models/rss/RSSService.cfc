@@ -190,7 +190,7 @@ component singleton{
 				qEntries.content[i]	= entryResults.entries[i].renderExcerpt();
 			}
 			else{
-				qEntries.content[i]	= entryResults.entries[i].getActiveContent().renderContent();
+				qEntries.content[i]	= entryResults.entries[i].renderContent();
 			}
 			qEntries.content[ i ] = cleanupContent( qEntries.content[ i ] );
 		}
@@ -256,7 +256,7 @@ component singleton{
 			if( pageResults.pages[i].hasExcerpt() ){
 				qPages.content[i]	= pageResults.pages[i].renderExcerpt();
 			} else {
-				qPages.content[i]	= pageResults.pages[i].getActiveContent().renderContent();
+				qPages.content[i]	= pageResults.pages[i].renderContent();
 			}
 			qPages.content[ i ] = cleanupContent( qPages.content[ i ] );
 		}
@@ -317,7 +317,7 @@ component singleton{
 			qContent.author[i]			= "#contentResults.content[i].getAuthorEmail()# (#contentResults.content[i].getAuthorName()#)";
 			qContent.linkComments[i]	= CBHelper.linkComments( contentResults.content[i] );
 			qContent.categories[i]		= contentResults.content[i].getCategoriesList();
-			qContent.content[i]			= cleanupContent( contentResults.content[i].getActiveContent().renderContent() );
+			qContent.content[i]			= cleanupContent( contentResults.content[i].renderContent() );
 			qContent.guid_permalink[i] 	= false;
 			qContent.guid_string[i] 	= CBHelper.linkContent( contentResults.content[i] );
 
