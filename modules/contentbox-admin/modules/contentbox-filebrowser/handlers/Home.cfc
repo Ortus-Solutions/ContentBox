@@ -5,10 +5,9 @@
 * ---
 * This is the main controller of events for the filebrowser
 */
-component output="false" hint="Main filebrowser module handler"{
+component hint="Main filebrowser module handler"{
 
 	// DI
-	property name="antiSamy"		inject="antisamy@cbantisamy";
 	property name="fileUtils"		inject="FileUtils@cb";
 	property name="cookieStorage"	inject="cookieStorage@cbStorages";
 
@@ -80,7 +79,7 @@ component output="false" hint="Main filebrowser module handler"{
 		prc.fbWebRootPath 	= expandPath( "./" );
 
 		// clean incoming path and decode it.
-		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
+		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
 		// Check if the incoming path does not exist so we default to the configuration directory root.
 		if( !len(rc.path) ){
 			prc.fbCurrentRoot = cleanIncomingPath( prc.fbSettings.directoryRoot );
@@ -156,8 +155,8 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 
 		// clean incoming path and names
-		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
-		rc.dName = URLDecode( trim( antiSamy.clean( rc.dName ) ) );
+		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
+		rc.dName = URLDecode( trim( rc.dName ) );
 		if( !len( rc.path ) OR !len( rc.dName ) ){
 			data.errors = true;
 			data.messages = r( "messages.invalid_path_name@fb" );
@@ -217,7 +216,7 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 
 		// clean incoming path and names
-		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
+		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
 		if( !len( rc.path ) ){
 			data.errors = true;
 			data.messages = r( "messages.invalid_path@fb" );
@@ -281,7 +280,7 @@ component output="false" hint="Main filebrowser module handler"{
 		}
 
 		// clean incoming path and names
-		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
+		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
 		if( !len( rc.path ) ){
 			data.errors = true;
 			data.messages = r( "messages.invalid_path@fb" );
@@ -334,8 +333,8 @@ component output="false" hint="Main filebrowser module handler"{
 		event.paramValue( "name", "" );
 
 		// clean incoming path and names
-		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
-		rc.name = URLDecode( trim( antiSamy.clean( rc.name ) ) );
+		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
+		rc.name = URLDecode( trim( rc.name ) );
 		if( !len( rc.path ) OR !len( rc.name ) ){
 			data.errors = true;
 			data.messages = r( "messages.invalid_path_name@fb" );
@@ -391,7 +390,7 @@ component output="false" hint="Main filebrowser module handler"{
 			.paramValue( "manual", false );
 
 		// clean incoming path for destination directory
-		rc.path = cleanIncomingPath( URLDecode( trim( antiSamy.clean( rc.path ) ) ) );
+		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
 		// traversal test
 		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
@@ -572,27 +571,26 @@ component output="false" hint="Main filebrowser module handler"{
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "callback" ) and len( flash.get( "fileBrowser" ).callback ) ){
 			rc.callback = flash.get( "fileBrowser" ).callback;
 		}
-		// clean callback
-		rc.callBack = antiSamy.clean( rc.callback );
 		// cancel callback
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "cancelCallback" ) and len( flash.get( "fileBrowser" ).cancelCallback ) ){
 			rc.cancelCallback = flash.get( "fileBrowser" ).cancelCallback;
 		}
-		// clean callback
-		rc.cancelCallback = antiSamy.clean( rc.cancelCallback );
 		// filterType
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "filterType" ) and len( flash.get( "fileBrowser" ).filterType ) ){
 			rc.filterType = flash.get( "fileBrowser" ).filterType;
 		}
-		// clean filterType
-		rc.filterType = antiSamy.clean( rc.filterType );
 		// settings
 		if( structKeyExists( flash.get( "fileBrowser", {} ), "settings" ) ){
 			prc.fbsettings = flash.get( "fileBrowser" ).settings;
 		}
 
-		if(!flash.exists( "filebrowser" )){
-			var filebrowser = { callback=rc.callback, cancelCallback=rc.cancelCallback, filterType=rc.filterType, settings=prc.fbsettings };
+		if( !flash.exists( "filebrowser" ) ){
+			var filebrowser = { 
+				callback		= rc.callback, 
+				cancelCallback	= rc.cancelCallback, 
+				filterType		= rc.filterType, 
+				settings		= prc.fbsettings 
+			};
 			flash.put( name="filebrowser", value=filebrowser, autoPurge=false );
 		}
 	}

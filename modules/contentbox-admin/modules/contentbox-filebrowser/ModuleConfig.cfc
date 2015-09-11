@@ -1,29 +1,18 @@
-<!---
-********************************************************************************
-Copyright Since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldbox.org | www.luismajano.com | www.ortussolutions.com
-********************************************************************************
-Author      :	Luis Majano
-Description :
-File Browser can be used by either navigating to it or rendering it out as a widget:
+/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* ContentBox Security module configuration
+*/
+component{
 
-#runEvent(event="filebrowser:home",eventArguments={widget=true} )#
-
-By default this module loads jquery, if you don't want to, update the setting
-
-The arguments you can use are:
-
-- widget:boolean[false] Displays as a self-contained widget
-
- --->
-<cfcomponent output="false" hint="My Module Configuration">
-<cfscript>
 	// Module Properties
 	this.title 				= "File Browser";
 	this.author 			= "Ortus Solutions";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "A file-directory browser and selector";
-	this.version			= "1.9.0";
+	this.version			= "2.0.0";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -66,7 +55,7 @@ The arguments you can use are:
 			// Volume Chooser, display the volume navigator
 			volumeChooser = false,
 			// Load jQuery
-			loadJQuery = true,
+			loadJQuery = false,
 			// Load Select Callback hooks
 			loadSelectCallbacks = true,
 			// Quick View image width in pixels
@@ -83,9 +72,9 @@ The arguments you can use are:
 		};
 
 		// clean directory root
-		settings.directoryRoot = REReplace(settings.directoryRoot,"\\","/","all" );
-		if (right(settings.directoryRoot,1) EQ "/" ) {
-			settings.directoryRoot = left(settings.directoryRoot,len(settings.directoryRoot)-1);
+		settings.directoryRoot = REReplace( settings.directoryRoot, "\\", "/", "all" );
+		if( right( settings.directoryRoot, 1 ) EQ "/" ){
+			settings.directoryRoot = left( settings.directoryRoot, len( settings.directoryRoot ) -1 );
 		}
 
 		// i18n
@@ -103,21 +92,21 @@ The arguments you can use are:
 		// SES Routes
 		routes = [
 			// create folder
-			{pattern="/createFolder", handler="home",action="createfolder"},
+			{ pattern="/createFolder", handler="home",action="createfolder" },
 			// remove stuff
-			{pattern="/remove", handler="home",action="remove"},
+			{ pattern="/remove", handler="home",action="remove" },
 			// download
-			{pattern="/download", handler="home",action="download"},
+			{ pattern="/download", handler="home",action="download" },
 			// rename
-			{pattern="/rename", handler="home",action="rename"},
+			{ pattern="/rename", handler="home",action="rename" },
 			// upload
-			{pattern="/upload", handler="home",action="upload"},
+			{ pattern="/upload", handler="home",action="upload" },
 			// traversal paths
-			{pattern="/d/:path", handler="home",action="index"},
+			{ pattern="/d/:path", handler="home",action="index" },
 			// Module Entry Point
-			{pattern="/", handler="home",action="index"},
+			{ pattern="/", handler="home",action="index" },
 			// Convention Route
-			{pattern="/:handler/:action?"}
+			{ pattern="/:handler/:action?" }
 		];
 
 		// Custom Declared Points
@@ -159,6 +148,4 @@ The arguments you can use are:
 	function onUnload(){
 
 	}
-
-</cfscript>
-</cfcomponent>
+}

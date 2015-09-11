@@ -10,7 +10,6 @@ component extends="baseHandler" {
     // Dependencies
     property name="menuService"     inject="id:menuService@cb";
     property name="menuItemService" inject="id:menuItemService@cb";
-    property name="settingService"  inject="id:settingService@cb";
     property name="cb"              inject="id:cbHelper@cb";
     property name="HTMLHelper"      inject="HTMLHelper@coldbox";
     

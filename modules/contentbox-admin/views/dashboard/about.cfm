@@ -1,19 +1,18 @@
 ﻿<cfoutput>
 <div class="row">
-	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-info-circle"></i> About ContentBox</h1>
-	</div>
-</div>	
-<div class="row">
-    <div class="col-md-8">
-    	<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="pull-left" style="margin-right: 20px;" />
-	    <h2>ContentBox Modular CMS <span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
-        <blockquote class="clearfix">
-			<strong>ContentBox</strong> is a modular content platform developed by <a href="http://www.ortussolutions.com">Ortus Solutions</a> and 
-			based on the popular <a href="http://www.coldbox.org">ColdBox Platform</a> development framework.
-			ContentBox is a professional open source project with tons of services, training, customizations and more.
-			<small><a href="http://www.ortussolutions.com/products/contentbox">www.ortussolutions.com/products/contentbox</a></small>
-		</blockquote>
+    <div class="col-md-12">
+    	
+    	<div class="text-center">
+    		<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="margin10" title="Modular CMS"/>
+		    <h2><span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
+	        <blockquote class="clearfix">
+				<strong>ContentBox</strong> is a modular content platform developed by <a href="http://www.ortussolutions.com">Ortus Solutions</a> and 
+				based on the popular <a href="http://www.coldbox.org">ColdBox Platform</a> development framework.
+				ContentBox is a professional open source project with tons of services, training, customizations and more.
+				<small><a href="http://www.ortussolutions.com/products/contentbox">www.ortussolutions.com/products/contentbox</a></small>
+			</blockquote>
+		</div>
+
 		<div class="panel panel-default">
 		    <div class="panel-heading">
 		        <h3 class="panel-title">Components</h3>
@@ -50,6 +49,7 @@
 				</table>
 		    </div>
 		</div>
+
 		<div class="panel panel-default">
 		    <div class="panel-heading">
 		        <h3 class="panel-title">Keyboard Shortcuts</h3>
@@ -176,9 +176,8 @@
 				</table>
 		    </div>
 		</div>
-    </div>
-    <div class="col-md-4">
-    	<div class="panel panel-primary">
+
+		<div class="panel panel-primary">
 		    <div class="panel-heading">
 		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Need Help?</h3>
 		    </div>
@@ -188,13 +187,12 @@
 				<h2>Links</h2>
 				<ul>
 					<li><a href="https://github.com/Ortus-Solutions/ContentBox" target="_blank">Source Code</a></li>
-					<li><a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">Code Tracker</a></li>
 					<li><a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">Submit Bugs/Enhancements</a></li>
-					<li><a href="http://www.ortussolutions.com" target="_blank">Professional Services</a></li>
-					<li><a href="http://www.coldbox.org" target="_blank">ColdBox Platform</a></li>
+					<li><a href="http://www.ortussolutions.com/services" target="_blank">Professional Services</a></li>
 				</ul>
 		    </div>
 		</div>
+		
     </div>
 </div>
 </cfoutput>

@@ -5,7 +5,6 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="themeService"	inject="id:themeService@cb";
-	property name="settingService"	inject="id:settingService@cb";
 	property name="contentService"	inject="id:contentService@cb";
 
 	// pre handler
