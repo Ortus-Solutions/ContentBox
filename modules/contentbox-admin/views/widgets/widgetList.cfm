@@ -4,9 +4,9 @@
     <div class="well well-sm">
         <div class="form-group no-margin">
             #html.textField(
-                name="widgetFilter",
-                class="form-control",
-                placeholder="Quick Filter"
+                name 		= "widgetFilter",
+                class 		= "form-control",
+                placeholder	= "Quick Filter"
             )#
         </div>
     </div>
