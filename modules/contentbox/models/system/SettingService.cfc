@@ -1,28 +1,11 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Setting Service for contentbox
 */
-component extends="cborm.models.VirtualEntityService" accessors="true" singleton{
+component extends="cborm.models.VirtualEntityService" accessors="true" threadsafe singleton{
 
 	// DI properties
 	property name="cache" 			inject="cachebox:default";
@@ -38,7 +21,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	SettingService function init(){
 		// init it
-		super.init(entityName="cbSetting" );
+		super.init( entityName="cbSetting" );
 		// settings cache key
 		setSettingsCacheKey( "cb-settings-#cgi.http_host#" );
 		return this;
@@ -91,34 +74,39 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* Check if contentbox has been installed by checking if there are no settings and no cb_active ONLY
 	*/
 	boolean function isCBReady(){
-		var args = { "name" = "cb_active" };
-		if( countWhere(argumentCollection=args) ){ return true; }
-		return false;
+		var thisCount = newCriteria()
+			.isEq( "name", "cb_active" )
+			.count();
+		return( thisCount > 0 ? true : false );
 	}
 
 	/**
 	* Mark cb as ready to serve
 	*/
 	function activateCB(){
-		var s = new(properties={name="cb_active",value="true"} );
+		var s = new( properties={ name="cb_active", value="true" } );
 		save( s );
 		return this;
 	}
 
 	/**
 	* Get a setting
+	* @name The name of the seting
+	* @defaultValue The default value if setting not found.
 	*/
-	function getSetting(required name, defaultValue){
-		var s = getAllSettings(asStruct=true);
-		if( structKeyExists(s,arguments.name) ){
-			return s[arguments.name];
+	function getSetting( required name, defaultValue ){
+		var s = getAllSettings( asStruct=true );
+		if( structKeyExists( s, arguments.name ) ){
+			return s[ arguments.name ];
 		}
-		if( structKeyExists(arguments,"defaultValue" ) ){
+		if( structKeyExists( arguments, "defaultValue" ) ){
 			return arguments.defaultValue;
 		}
-		throw(message="Setting #arguments.name# not found in settings collection",
-			  detail="Registered settings are: #structKeyList(s)#",
-			  type="contentbox.SettingService.SettingNotFound" );
+		throw(
+			message = "Setting #arguments.name# not found in settings collection",
+			detail 	= "Registered settings are: #structKeyList(s)#",
+			type 	= "contentbox.SettingService.SettingNotFound" 
+		);
 	}
 
 	/**
@@ -129,17 +117,17 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		var settings = cache.get( settingsCacheKey );
 
 		// found in cache?
-		if( isNull(settings) ){
+		if( isNull( settings ) ){
 			// not found, so query db
-			var settings = list(sortOrder="name" );
+			var settings = list( sortOrder="name" );
 			// cache them for an hour
-			cache.set(settingsCacheKey,settings,60);
+			cache.set( settingsCacheKey, settings, 60 );
 		}
 
 		// convert to struct
 		if( arguments.asStruct ){
 			var s = {};
-			for(var x=1; x lte settings.recordcount; x++){
+			for( var x=1; x lte settings.recordcount; x++ ){
 				s[ settings.name[ x ] ] = settings.value[ x ];
 			}
 			return s;
