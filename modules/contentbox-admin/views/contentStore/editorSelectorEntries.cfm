@@ -27,7 +27,7 @@
 				</cfif>
 			</td>
 			<td class="text-center">
-				<button class="btn btn-sm" onclick="return insertContentStore('#entry.getSlug()#')">Insert</button>
+				<button class="btn btn-sm btn-default" onclick="return insertContentStore('#entry.getSlug()#')">Insert</button>
 			</td>
 		</tr>
 		</cfloop>

@@ -95,7 +95,7 @@
 							</select>
 						</div>
 						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply Filters</a>
-						<a class="btn btn-sm" href="javascript:resetFilter( true )">Reset</a>
+						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
 					#html.endForm()#
 				</div>
 			</div>
