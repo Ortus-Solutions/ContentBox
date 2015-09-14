@@ -72,8 +72,6 @@
         <script src="#assetroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"></script>
         <!-- Navigation -->
         <script src="#assetroot#/includes/spacelab/plugins/navgoco/jquery.navgoco.min.js"></script>
-        <!-- spacelab js -->
-        <script src="#assetroot#/includes/spacelab/js/application.js"></script>
 
         <!--- ********************************************************************* --->
         <!---                          CONTENTBOX JAVASCRIPT                        --->
