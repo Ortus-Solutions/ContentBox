@@ -84,7 +84,9 @@
 				<exclude name="config/"/>
 				<exclude name="Application.cfc"/>
 				<exclude name="readme.txt"/>
+				<exclude name="readme.md"/>
 				<exclude name="favicon.ico"/>
+				<exclude name="license.txt"/>
 				<exclude name=".htaccess"/>
 				<exclude name="build.number"/>
 				<exclude name="modules/contentbox-dsncreator/**"/>
@@ -93,7 +95,6 @@
 				<exclude name="views/**"/>
 				<exclude name="includes/**"/>
 				<exclude name="handlers/**"/>
-				<exclude name="box.json"/>
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>

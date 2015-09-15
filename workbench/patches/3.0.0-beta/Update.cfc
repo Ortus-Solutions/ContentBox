@@ -25,7 +25,7 @@ Update for 3.0.0
 DB Structure Changes Comment Below
 
 
-Start Commit Hash: bbee7a892871478a20c9c15e73053b1f86c85859
+Start Commit Hash: 762aede3a97eb00519e7f171ac4c3c6d6924daca
 End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
 
 */
