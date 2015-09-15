@@ -87,7 +87,7 @@
 								<cfif listFindNoCase( "railo,lucee", server.coldfusion.productname )>
 								<option value="HSQLDB">HSQLDB (Hypersonic Embedded SQL DB)</option>
 								</cfif>
-								<!---<option value="oracle">Oracle</option>--->
+								<option value="oracle">Oracle</option>
 								<option value="postgresql">PostgreSQL</option>
 							</select>
 						</div>
