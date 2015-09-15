@@ -1,37 +1,20 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * I am a Comment Entity
 */
 component persistent="true" entityname="cbComment" table="cb_comment" batchsize="25" cachename="cbComment" cacheuse="read-write" {
 
 	// PROPERTIES
-	property name="commentID" fieldtype="id" generator="native" setter="false";
+	property name="commentID" fieldtype="id" generator="native" setter="false" params="{ allocationSize = 1, sequence = 'commentID_seq' }";
 	property name="content" 		ormtype="text" 	notnull="true";
 	property name="author"			length="100" 	notnull="true";
 	property name="authorIP"		length="100" 	notnull="true";
 	property name="authorEmail"		length="255" 	notnull="true";
 	property name="authorURL"		length="255" 	notnull="false";
-	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_createdDate";
+	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_commentCreatedDate";
 	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" index="idx_contentComment,idx_approved";
 
 	// M20 -> Content loaded as a proxy
@@ -45,6 +28,8 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	function init(){
 		variables.isApproved 	= false;
 		variables.createdDate	= now();
+
+		return this;
 	}
 
 	/************************************** PUBLIC *********************************************/

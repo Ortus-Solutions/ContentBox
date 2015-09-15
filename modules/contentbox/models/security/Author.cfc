@@ -1,5 +1,9 @@
 ﻿/**
-* I am a author entity
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* I am a ContentBox User/Author entity
 */
 component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="25" cachename="cbAuthor" cacheuse="read-write" {
 
@@ -7,13 +11,13 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	property name="authorService"		inject="authorService@cb" persistent="false";
 
 	// Properties
-	property name="authorID" 	fieldtype="id" generator="native" setter="false";
+	property name="authorID" 	fieldtype="id" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'authorID_seq' }";
 	property name="firstName"	length="100" notnull="true";
 	property name="lastName"	length="100" notnull="true";
 	property name="email"		length="255" notnull="true" index="idx_email";
 	property name="username"	length="100" notnull="true" index="idx_login" unique="true";
 	property name="password"	length="100" notnull="true" index="idx_login";
-	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" index="idx_login,idx_active";
+	property name="isActive" 	ormtype="boolean"   notnull="true" default="false" index="idx_login,idx_activeAuthor";
 	property name="lastLogin" 	ormtype="timestamp" notnull="false";
 	property name="createdDate" ormtype="timestamp" notnull="true" update="false";
 	property name="biography"   ormtype="text" 		notnull="false" length="8000" default="";
@@ -68,10 +72,10 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	* Constructor
 	*/
 	function init(){
-		setPermissionList( '' );
-		setLoggedIn( false );
-		setPreferences( {} );
-		variables.isActive = true;
+		variables.permissionList 	= "";
+		variables.loggedIn 			= false;
+		variables.preferences 		= {};
+		variables.isActive 			= true;
 		
 		return this;
 	}
