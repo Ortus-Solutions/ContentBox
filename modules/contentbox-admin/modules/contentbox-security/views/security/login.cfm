@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-<div class="row">
+<div class="container-fluid">
     <div class="col-md-4" id="login-wrapper">
         <div class="panel panel-primary animated fadeInDown">
             <div class="panel-heading">
