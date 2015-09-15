@@ -126,5 +126,7 @@ component {
 	* On Module Load
 	*/
 	function onLoad(){
+		// Startup the Editor Service, needed for markup translations support
+		wirebox.getInstance( "EditorService@cb" );
 	}
 }

@@ -110,8 +110,6 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Startup the Editor Service, needed for markup translations support
-		wirebox.getInstance( "EditorService@cb" );
 		// Startup the ContentBox modules, if any
 		wirebox.getInstance( "moduleService@cb" ).startup();
 		// Startup localization settings
