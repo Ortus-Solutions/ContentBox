@@ -74,7 +74,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 		// isApproved filter
 		if( structKeyExists(arguments,"isActive" ) AND arguments.isActive NEQ "any" ){
-			criteria.eq( "isActive", javaCast( "boolean",arguments.isActive));
+			criteria.eq( "isActive", javaCast( "Boolean", arguments.isActive ) );
 		}
 		// run criteria query and projections count
 		results.count 	 = criteria.count();
