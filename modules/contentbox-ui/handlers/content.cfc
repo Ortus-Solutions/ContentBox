@@ -342,10 +342,7 @@ component{
 			// Message that comment was moderated
 			flash.put( name="commentErrors", value=results.messages, inflateTOPRC=true );
 			// Message
-			flash.put( {
-				type 	= "warn",
-				message = arrayToList( results.messages, "<br>" )
-			} );
+			messagebox.warn( arrayToList( results.messages, "<br>" ) );
 			// relocate back to comments
 			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ) );
 		} else {

@@ -143,36 +143,55 @@ component accessors="true" singleton threadSafe{
 	
 	/************************************** root methods *********************************************/
 
-	// Get the location of your currently defined theme in the application, great for assets, cfincludes, etc
+	/**
+	* Get the location of your currently defined theme in the application, great for assets, cfincludes, etc
+	*/
 	function themeRoot(){
 		var prc = getRequestCollection( private=true );
 		return prc.cbthemeRoot;
 	}
 
-	// Get the site root location using your configured module's entry point
+	/**
+	* Get the site root location using your configured module's entry point
+	*/
 	function siteRoot(){
 		var prc = getRequestCollection(private=true);
 		return prc.cbEntryPoint;
 	}
 
-	// Get the site base SES URL
+	/**
+	* Get the site base SES URL
+	*/
 	function siteBaseURL(){
 		return replacenocase( getRequestContext().buildLink(''), "index.cfm", "" );
 	}
 
-	// Get the admin site root location using the configured module's entry point
+	/**
+	* Verifies if the admin module is loaded
+	*/
+	function isAdminLoaded(){
+		return structKeyExists( controller.getSetting( "modules" ), "contentbox-admin" );
+	}
+
+	/**
+	* Get the admin site root location using the configured module's entry point
+	*/
 	function adminRoot(){
 		var prc = getRequestCollection(private=true);
 		return prc.cbAdminEntryPoint;
 	}
 
-	// Get the name of the current set and active theme
+	/**
+	* Get the name of the current set and active theme
+	*/
 	function themeName(){
 		var prc = getRequestCollection(private=true);
 		return prc.cbTheme;
 	}
 
-	// Get the location of the widgets in the application, great for assets, cfincludes, etc
+	/**
+	* Get the location of the widgets in the application, great for assets, cfincludes, etc
+	*/
 	function widgetRoot(){
 		var prc = getRequestCollection(private=true);
 		return prc.cbWidgetRoot;
@@ -246,7 +265,11 @@ component accessors="true" singleton threadSafe{
 		// store module entry point
 		prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
 		// store site entry point
-		prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
+		if( isAdminLoaded() ){
+			prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
+		} else {
+			prc.cbAdminEntryPoint = "";
+		}
 		// Place global cb options on scope
 		prc.cbSettings = settingService.getAllSettings( asStruct=true );
 		// Place the default layout on scope
