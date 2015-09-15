@@ -74,8 +74,8 @@ component {
 			{ class="contentbox.models.rss.RSSCacheCleanup", name="RSSCacheCleanup@cb" },
 			// CB Content Cache Cleanup Ghost
 			{ class="contentbox.models.content.util.ContentCacheCleanup", name="ContentCacheCleanup@cb" },
-			// Notification service interceptor
-			{ class="contentbox.models.system.NotificationService", name="NotificationService@cb" },
+			// Content Subscriptions
+			{ class="contentbox.models.subscriptions.SubscriptionListener", name="SubscriptionListener@cb" },
 			// Content Renderers, remember order is important.
 			{ class="contentbox.models.content.renderers.LinkRenderer", name="LinkRenderer@cb" },
 			{ class="contentbox.models.content.renderers.WidgetRenderer", name="WidgetRenderer@cb" },

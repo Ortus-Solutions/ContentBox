@@ -114,10 +114,14 @@ component {
 		interceptors = [
 			// CB Admin Request Interceptor
 			{ class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbAdmin" },
-			{ class="contentbox.models.security.LoginTracker", name="LoginTracker@cb" },
-			{ class="#moduleMapping#.interceptors.CommentCleanup" },
-			{ class="#moduleMapping#.interceptors.Subscription" },
-			{ class="#moduleMapping#.interceptors.MenuCleanup" }
+			// Login Tracker and Preventer
+			{ class="contentbox.models.security.LoginTracker", name="LoginTracker@cbAdmin" },
+			// Admin Notification services
+			{ class="contentbox.models.system.NotificationService", name="NotificationService@cbAdmin" },
+			// Admin Comment Cleanup/Moderation listener
+			{ class="#moduleMapping#.interceptors.CommentCleanup" name="CommentCleanup@cbAdmin" },
+			// Admin MenuBuilder Cleanups
+			{ class="#moduleMapping#.interceptors.MenuCleanup", name="MenuCleanup@cbAdmin" }
 		];
 
 	}
