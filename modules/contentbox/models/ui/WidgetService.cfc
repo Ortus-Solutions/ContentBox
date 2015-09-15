@@ -32,10 +32,16 @@ component accessors="true" singleton threadSafe{
 	* onDIComplete
 	*/
 	function onDIComplete(){
-		widgetsPath 			= moduleSettings[ "contentbox" ].path & "/widgets";
-		widgetsIconsPath 		= moduleSettings[ "contentbox-admin" ].path & "/includes/images/widgets";
-		widgetsIconsPath 		= moduleSettings[ "contentbox-admin" ].path & "/includes/images/widgets";
-		widgetsIconsIncludePath = moduleSettings[ "contentbox-admin" ].mapping & "/includes/images/widgets";
+		// Verify widgets path location
+		widgetsPath = moduleSettings[ "contentbox" ].path & "/widgets";
+		// Verify admin is loaded
+		if( structKeyExists( moduleSettings, "contentbox-admin" ) ){
+			widgetsIconsPath 		= moduleSettings[ "contentbox-admin" ].path & "/includes/images/widgets";
+			widgetsIconsIncludePath = moduleSettings[ "contentbox-admin" ].mapping & "/includes/images/widgets";
+		} else {
+			widgetsIconsPath 		= "";
+			widgetsIconsIncludePath = "";
+		}
 	}
 
 	/**
