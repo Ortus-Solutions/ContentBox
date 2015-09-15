@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A mapped super class used for contentbox content: entries and pages
 */
 component persistent="true" entityname="cbContent" table="cb_content" cachename="cbContent" cacheuse="read-write" discriminatorColumn="contentType"{
@@ -16,7 +20,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="renderedContent" persistent="false";
 
 	// Properties
-	property name="contentID" 				notnull="true"	fieldtype="id" generator="native" setter="false";
+	property name="contentID" 				notnull="true"	fieldtype="id" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'contentID_seq' }";
 	property name="contentType" 			setter="false" update="false" insert="false" index="idx_discriminator,idx_published" default="";
 	property name="title"					notnull="true"  length="200" default="" index="idx_search";
 	property name="slug"					notnull="true"  length="200" default="" unique="true" index="idx_slug,idx_publishedSlug";
@@ -33,7 +37,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="cacheTimeout"			notnull="false" ormtype="integer" default="0" index="idx_cachetimeout";
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="HTML";
-	property name="showInSearch"	 		notnull="true"  ormtype="boolean" default="true" index="idx_showInSearch" dbdefault="1";
+	property name="showInSearch"	 		notnull="true"  ormtype="boolean" default="true" index="idx_showInSearch";
 
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property name="creator" notnull="true" cfc="contentbox.models.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
@@ -52,7 +56,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	// Active Content Pseudo-Collection
 	property name="activeContent" fieldtype="one-to-many" type="array" lazy="extra" cascade="save-update" inverse="true"
-			  cfc="contentbox.models.content.ContentVersion" fkcolumn="FK_contentID" where="isActive=1" ;
+			  cfc="contentbox.models.content.ContentVersion" fkcolumn="FK_contentID" where="isActive = 1" ;
 
 	// M20 -> Parent Page loaded as a proxy
 	property name="parent" cfc="contentbox.models.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_parentID" lazy="true";
@@ -96,15 +100,15 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Base constructor
 	*/
 	function init(){
-		variables.isPublished 		= true;
-		variables.allowComments 	= true;
-		variables.cache 			= true;
-		variables.cacheLayout 		= true;
-		variables.cacheTimeout 		= 0;
-		variables.cacheLastAccessTimeout = 0;
-		variables.markup 			= "HTML";
-		variables.contentType 		= "";
-		variables.showInSearch		= true;
+		variables.isPublished 				= true;
+		variables.allowComments 			= true;
+		variables.cache 					= true;
+		variables.cacheLayout 				= true;
+		variables.cacheTimeout 				= 0;
+		variables.cacheLastAccessTimeout 	= 0;
+		variables.markup 					= "HTML";
+		variables.contentType 				= "";
+		variables.showInSearch				= true;
 
 		return this;
 	}
@@ -450,7 +454,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
 			var oldestVersion = contentVersionService.newCriteria()
 				.isEq( "relatedContent.contentID", getContentID() )
-				.isEq( "isActive", javaCast( "boolean", false) )
+				.isEq( "isActive", javaCast( "boolean", false ) )
 				.withProjections( id="true" )
 				.list( sortOrder="createdDate DESC", offset=settingService.getSetting( "cb_versions_max_history" ) - 2 );
 			// delete by primary key IDs found

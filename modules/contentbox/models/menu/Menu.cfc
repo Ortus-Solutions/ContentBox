@@ -16,7 +16,9 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
     property name="menuID"
              fieldtype="id"
              generator="native"
-             setter="false";
+             setter="false"
+              
+             params="{ allocationSize = 1, sequence = 'menuID_seq' }";
 
     property name="title"
              notnull="true"
