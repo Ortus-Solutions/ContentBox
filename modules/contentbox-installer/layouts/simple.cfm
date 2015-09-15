@@ -80,7 +80,7 @@
 
         <!-- validation -->
         <script src="#prc.assetroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js"></script>
-        <script src="#prc.assetroot#/includes/spacelab/plugins/validation/js/jquery.validate.bootstrap.js"></script>
+        <script src="#prc.assetroot#/includes/js/jquery.validate.bootstrap.js"></script>
         <!-- jwerty -->
         <script src="#prc.assetroot#/includes/js/jwerty.js"></script>
         <!-- main ContentBox scripts -->

@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A class to track stats for content
 */
 component persistent="true" entityname="cbStats" table="cb_stats" batchsize="25" cachename="cbStats" cacheuse="read-write" {
@@ -7,7 +11,8 @@ component persistent="true" entityname="cbStats" table="cb_stats" batchsize="25"
 	property 	name="statsID" 
 				fieldtype="id" 
 				generator="native" 
-				setter="false";
+				setter="false"
+				params="{ allocationSize = 1, sequence = 'statsID_seq' }";
 	
 	property 	name="hits" 
 				notnull="false" 
