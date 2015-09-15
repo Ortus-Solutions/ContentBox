@@ -119,7 +119,7 @@ component {
 			// Admin Notification services
 			{ class="contentbox.models.system.NotificationService", name="NotificationService@cbAdmin" },
 			// Admin Comment Cleanup/Moderation listener
-			{ class="#moduleMapping#.interceptors.CommentCleanup" name="CommentCleanup@cbAdmin" },
+			{ class="#moduleMapping#.interceptors.CommentCleanup", name="CommentCleanup@cbAdmin" },
 			// Admin MenuBuilder Cleanups
 			{ class="#moduleMapping#.interceptors.MenuCleanup", name="MenuCleanup@cbAdmin" }
 		];
