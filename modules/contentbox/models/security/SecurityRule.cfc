@@ -1,47 +1,30 @@
 /**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-
-http://www.apache.org/licenses/LICENSE-2.0 
-
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A cool SecurityRule entity
 */
 component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" cachename="cbSecurityRule" cacheuse="read-write"{
 
 	// Primary Key
-	property name="ruleID" fieldtype="id" column="ruleID" generator="native" setter="false";
+	property name="ruleID" fieldtype="id" column="ruleID" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'ruleID_seq' }";
 	
 	// Properties
-	property name="whitelist" 	ormtype="string"  notnull="false" 	default="" length="255";
-	property name="securelist" 	ormtype="string"  notnull="true" 	default="" length="255";
-	property name="roles" 		ormtype="string"  notnull="false"  	default="" length="255";
-	property name="permissions" ormtype="string"  notnull="false"  	default="" length="500";
-	property name="redirect"	ormtype="string"  notnull="true"  	default="" length="500";
-	property name="useSSL"		ormtype="boolean" notnull="false" 	default="false";
-	property name="order"		ormtype="integer" notnull="true" 	default="0";
-	property name="match"		ormtype="string"  notnull="false" 	default="" length="50";
+	property name="whitelist" 	ormtype="string"  	notnull="false" 	default="" length="255";
+	property name="securelist" 	ormtype="string"  	notnull="true" 		default="" length="255";
+	property name="roles" 		ormtype="string"  	notnull="false"  	default="" length="255";
+	property name="permissions" ormtype="string"  	notnull="false"  	default="" length="500";
+	property name="redirect"	ormtype="string"  	notnull="true"  	default="" length="500";
+	property name="useSSL"		ormtype="boolean" 	notnull="false" 	default="false";
+	property name="order"		ormtype="integer" 	notnull="true" 		default="0";
+	property name="match"		ormtype="string"  	notnull="false" 	default="" length="50";
 		
 	// Constructor
 	function init(){
-		setMatch('event');
-		variables.useSSL = false;
-		variables.order  = 0;
+		variables.match 	= 'event';
+		variables.useSSL 	= false;
+		variables.order  	= 0;
 
 		return this;
 	}

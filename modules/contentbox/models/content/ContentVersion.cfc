@@ -1,25 +1,8 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * I am a versioned piece of content
 */
 component persistent="true" entityname="cbContentVersion" table="cb_contentVersion" batchsize="25" cachename="cbContentVersion" cacheuse="read-write"{
@@ -28,12 +11,12 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 	property name="interceptorService"		inject="coldbox:interceptorService" persistent="false";
 
 	// PROPERTIES
-	property name="contentVersionID" fieldtype="id" generator="native" setter="false";
+	property name="contentVersionID" fieldtype="id" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'contentVersionID_seq' }";
 	property name="content"    		notnull="true"  ormtype="text" length="8000" default="";
 	property name="changelog"  		notnull="false" ormtype="text" length="8000" default="";
 	property name="version"			notnull="true"  ormtype="integer"	default="1" index="idx_version";
-	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_createdDate";
-	property name="isActive" 		notnull="true"  ormtype="boolean"   	default="false" index="idx_active,idx_contentVersions";
+	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_versionCreatedDate";
+	property name="isActive" 		notnull="true"  ormtype="boolean"   	default="false" index="idx_activeContentVersion,idx_contentVersions";
 
 	// M20 -> Author loaded as a proxy and fetched immediately
 	property name="author" notnull="true" cfc="contentbox.models.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
@@ -50,12 +33,12 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 	* constructor
 	*/
 	function init(){
-		setCreatedDate( now() );
-		setIsActive( false );
-		setVersion( 1 );
-		setContent( '' );
-		setChangelog( '' );
-		setRenderedContent( '' );
+		variables.createdDate 		= now();
+		variables.isActive 			= false;
+		variables.version 			= 1;
+		variables.content 			= "";
+		variables.changelog 		= "";
+		variables.renderedContent 	= "";
 		
 		return this;
 	}
