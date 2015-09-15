@@ -3,7 +3,7 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* Notification services event listener for ContentBox
+* Notification services for the ContentBox Administrator
 */
 component extends="coldbox.system.Interceptor" accessors="true"{
 	
