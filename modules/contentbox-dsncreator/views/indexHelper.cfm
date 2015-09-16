@@ -47,31 +47,33 @@ function verifyData(){
 			else{
 				cfVerified = true;
 			}
+			
+			if( cfVerified ){
+				// Verify DSN Does NOT exists
+				$.ajax( {
+					url:'handlers/verifyDSN.cfm',
+					data: { dsnName : $( "##dsnCreateName" ).val() },
+					success: function(data){
+						if( data.EXISTS ){
+							alert( "Datasource " + $( "##dsnCreateName" ).val() + " already exists. Please try another name." );
+						}
+						else{
+							// Lock password and dsn name
+							$( "##cfpassword" ).attr( "readonly",true);
+							$( "##dsnCreateName" ).attr( "readonly",true);
+							// Show creation dialog
+							$( "##verifyDataButton" ).fadeOut();
+							$( "##createDSNButton" ).fadeIn();
+						}
+					},
+					dataType:"json"
+				} );
+			}
 		},
 		dataType:"json"
 	} );
 	
-	if( cfVerified ){
-		// Verify DSN Does NOT exists
-		$.ajax( {
-			url:'handlers/verifyDSN.cfm',
-			data: { dsnName : $( "##dsnCreateName" ).val() },
-			success: function(data){
-				if( data.EXISTS ){
-					alert( "Datasource " + $( "##dsnCreateName" ).val() + " already exists. Please try another name." );
-				}
-				else{
-					// Lock password and dsn name
-					$( "##cfpassword" ).attr( "readonly",true);
-					$( "##dsnCreateName" ).attr( "readonly",true);
-					// Show creation dialog
-					$( "##verifyDataButton" ).fadeOut();
-					$( "##createDSNButton" ).fadeIn();
-				}
-			},
-			dataType:"json"
-		} );
-	}
+	
 }
 </script>
 </cfoutput>
