@@ -150,6 +150,13 @@ component accessors="true" singleton threadSafe{
 		var prc = getRequestCollection( private=true );
 		return prc.cbthemeRoot;
 	}
+	/**
+	* Layout Location. DO NOT USE, DEPRECATED. Use themeRoot instead.
+	* @deprecated
+	*/
+	function layoutRoot(){
+		return themeRoot();
+	}
 
 	/**
 	* Get the site root location using your configured module's entry point
@@ -190,6 +197,14 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
+	* Get the layout name. DO NOT USE, DEPRECATED. Use themeName() instead.
+	* @deprecated
+	*/
+	function layoutName(){
+		return themeName();
+	}
+
+	/**
 	* Get the location of the widgets in the application, great for assets, cfincludes, etc
 	*/
 	function widgetRoot(){
@@ -205,6 +220,14 @@ component accessors="true" singleton threadSafe{
 	function themeSetting( required key, value ){
 		arguments.key = "cb_theme_#themeName()#_#arguments.key#";
 		return setting( argumentCollection=arguments );
+	}
+
+	/**
+	* Get a theme setting. PLEASE DO NOT USE ANYMORE, USE themeSetting()
+	* @deprecated
+	*/
+	function layoutSetting(){
+		return themeSetting( argumentCollection=arguments );
 	}
 
 	/************************************** site properties *********************************************/
