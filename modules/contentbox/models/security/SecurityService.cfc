@@ -27,8 +27,9 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* Update an author's last login timestamp
+	* @author The author object
 	*/
-	ISecurityService function updateAuthorLoginTimestamp(author){
+	ISecurityService function updateAuthorLoginTimestamp( required author ){
 		arguments.author.setLastLogin( now() );
 		authorService.save( arguments.author );
 		return this;
@@ -36,8 +37,10 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* User validator via security interceptor
+	* @rule The security rule
+	* @controller The ColdBox controller calling the validation
 	*/
-	boolean function userValidator(required struct rule,any messagebox,any controller){
+	boolean function userValidator( required struct rule, any controller ){
 		var isAllowed 	= false;
 		var author 		= getAuthorSession();
 		
@@ -45,9 +48,9 @@ component implements="ISecurityService" singleton{
 		if( author.isLoaded() AND author.isLoggedIn() ){
 			
 			// Check if the rule requires roles
-			if( len(rule.roles) ){
-				for(var x=1; x lte listLen(rule.roles); x++){
-					if( listGetAt(rule.roles,x) eq author.getRole().getRole() ){
+			if( len( rule.roles ) ){
+				for(var x=1; x lte listLen( rule.roles ); x++){
+					if( listGetAt( rule.roles, x ) eq author.getRole().getRole() ){
 						isAllowed = true;
 						break;
 					}
@@ -55,9 +58,9 @@ component implements="ISecurityService" singleton{
 			}
 			
 			// Check if the rule requires permissions
-			if( len(rule.permissions) ){
-				for(var y=1; y lte listLen(rule.permissions); y++){
-					if( author.checkPermission( listGetAt(rule.permissions,y) ) ){
+			if( len( rule.permissions ) ){
+				for(var y=1; y lte listLen( rule.permissions ); y++){
+					if( author.checkPermission( listGetAt( rule.permissions, y ) ) ){
 						isAllowed = true;
 						break;
 					}
@@ -65,7 +68,7 @@ component implements="ISecurityService" singleton{
 			}
 			
 			// Check for empty rules and perms
-			if( !len(rule.roles) AND !len(rule.permissions) ){
+			if( !len( rule.roles ) AND !len( rule.permissions ) ){
 				isAllowed = true;
 			}
 		}
@@ -91,7 +94,7 @@ component implements="ISecurityService" singleton{
 			// try to get it with that ID
 			var author = authorService.findWhere( { authorID=authorID, isActive=true } );
 			// If user found?
-			if( NOT isNull(author) ){
+			if( NOT isNull( author ) ){
 				author.setLoggedIn( true );
 				return author;
 			}
@@ -103,14 +106,19 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* Set a new author in session
+	* @author The author to store
+	* 
+	* @return SecurityService
 	*/
-	ISecurityService function setAuthorSession(required Author author){
+	ISecurityService function setAuthorSession( required Author author ){
 		sessionStorage.setVar( "loggedInAuthorID", author.getAuthorID() );
 		return this;
 	} 
 
 	/**
 	* Delete author session
+	* 
+	* @return SecurityService
 	*/
 	ISecurityService function logout(){
 		sessionStorage.clearAll();
@@ -121,14 +129,20 @@ component implements="ISecurityService" singleton{
 
 	/**
 	* Verify if an author is valid
+	* @username The username to validate
+	* @password The password to validate
 	*/
 	boolean function authenticate(required username, required password){
 		// hash password
 		arguments.password = hash( arguments.password, authorService.getHashType() );
-		var author = authorService.findWhere( {username=arguments.username,password=arguments.password,isActive=true} );
+		var author = authorService.findWhere( {
+			username = arguments.username,
+			password = arguments.password,
+			isActive = true
+		} );
 		
 		//check if found and return verification
-		if( not isNull(author) ){
+		if( not isNull( author ) ){
 			// Set last login date
 			updateAuthorLoginTimestamp( author );
 			// set them in session
@@ -140,33 +154,42 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* Send password reminder email
+	* @author The author to send the reminder to
 	*/
 	ISecurityService function sendPasswordReminder(required Author author){
-		// Store Security Token For 15 minutes
+		// Store Security Token For 30 minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
-		cache.set( "reset-token-#cgi.http_host#-#token#", arguments.author.getAuthorID(), 15, 15 );
+		cache.set( "reset-token-#cgi.http_host#-#token#", arguments.author.getAuthorID(), 30, 30 );
 		
 		// get settings
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		
 		// get mail payload
 		var bodyTokens = {
-			name=arguments.author.getName(),
-			linkToken = CBHelper.linkAdmin( event="security.verifyReset", ssl=settings.cb_admin_ssl ) & "?token=#token#"
+			name 		= arguments.author.getName(),
+			linkToken 	= CBHelper.linkAdmin( event="security.verifyReset", ssl=settings.cb_admin_ssl ) & "?token=#token#"
 		};
-		var mail = mailservice.newMail(to=arguments.author.getEmail(),
-									   from=settings.cb_site_outgoingEmail,
-									   subject="#settings.cb_site_name# Password Reset Verification",
-									   bodyTokens=bodyTokens,
-									   type="html",
-									   server=settings.cb_site_mail_server,
-									   username=settings.cb_site_mail_username,
-									   password=settings.cb_site_mail_password,
-									   port=settings.cb_site_mail_smtp,
-									   useTLS=settings.cb_site_mail_tls,
-									   useSSL=settings.cb_site_mail_ssl);
+		var mail = mailservice.newMail(
+			to			= arguments.author.getEmail(),
+			from		= settings.cb_site_outgoingEmail,
+			subject		= "#settings.cb_site_name# Password Reset Verification",
+			bodyTokens	= bodyTokens,
+			type		= "html",
+			server		= settings.cb_site_mail_server,
+			username	= settings.cb_site_mail_username,
+			password	= settings.cb_site_mail_password,
+			port		= settings.cb_site_mail_smtp,
+			useTLS		= settings.cb_site_mail_tls,
+			useSSL		= settings.cb_site_mail_ssl
+		);
 		//body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification" )									   
-		mail.setBody( renderer.get().renderLayout( view="/contentbox/email_templates/password_verification", layout="email", module="contentbox-admin" ) );
+		mail.setBody( 
+			renderer.get()
+				.renderLayout( 
+					view 	= "/contentbox/email_templates/password_verification", 
+					layout 	= "/contentbox/email_templates/layouts/email"
+				)
+		);
 		// send it out
 		mailService.send( mail );
 		
@@ -175,9 +198,11 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* Resets a user's password if the passed in token is valid
-	* Returns [error, author]
+	* @token Security token
+	* 
+	* @Returns {error, author}
 	*/
-	struct function resetUserPassword(required token){
+	struct function resetUserPassword( required token ){
 		var results = { error = false, author = "" };
 		var cacheKey = "reset-token-#cgi.http_host#-#arguments.token#";
 		var authorID = cache.get( cacheKey );
@@ -203,23 +228,31 @@ component implements="ISecurityService" singleton{
 		
 		// get mail payload
 		var bodyTokens = {
-			genPassword=genPassword,
-			name=results.author.getName(),
-			linkLogin = CBHelper.linkAdminLogin( ssl=settings.cb_admin_ssl )
+			genPassword	= genPassword,
+			name		= results.author.getName(),
+			linkLogin 	= CBHelper.linkAdminLogin( ssl=settings.cb_admin_ssl )
 		};
-		var mail = mailservice.newMail(to=results.author.getEmail(),
-									   from=settings.cb_site_outgoingEmail,
-									   subject="#settings.cb_site_name# Password Reset Issued",
-									   bodyTokens=bodyTokens,
-									   type="html",
-									   server=settings.cb_site_mail_server,
-									   username=settings.cb_site_mail_username,
-									   password=settings.cb_site_mail_password,
-									   port=settings.cb_site_mail_smtp,
-									   useTLS=settings.cb_site_mail_tls,
-									   useSSL=settings.cb_site_mail_ssl);
+		var mail = mailservice.newMail(
+			to			= results.author.getEmail(),
+			from		= settings.cb_site_outgoingEmail,
+			subject		= "#settings.cb_site_name# Password Reset Issued",
+			bodyTokens	= bodyTokens,
+			type		= "html",
+			server		= settings.cb_site_mail_server,
+			username	= settings.cb_site_mail_username,
+			password	= settings.cb_site_mail_password,
+			port		= settings.cb_site_mail_smtp,
+			useTLS		= settings.cb_site_mail_tls,
+			useSSL		= settings.cb_site_mail_ssl
+		);
 		//,body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder" )
-		mail.setBody( renderer.get().renderLayout( view="/contentbox/email_templates/password_reminder", layout="email", module="contentbox-admin" ) );
+		mail.setBody( 
+			renderer.get()
+				.renderLayout( 
+					view 	= "/contentbox/email_templates/password_reminder", 
+					layout 	= "/contentbox/email_templates/layouts/email" 
+				) 
+		);
 		// send it out
 		mailService.send( mail );
 		
@@ -228,10 +261,12 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* Check to authorize a user to view a content entry or page
+	* @content The content object
+	* @password The password to check
 	*/
-	boolean function authorizeContent(required content, required password){
+	boolean function authorizeContent( required content, required password ){
 		// Validate Password
-		if( compare(arguments.content.getPasswordProtection(),arguments.password) eq 0 ){
+		if( compare( arguments.content.getPasswordProtection(), arguments.password ) eq 0 ){
 			// Set simple validation
 			sessionStorage.setVar( "protection-#hash(arguments.content.getSlug())#",  getContentProtectedHash( arguments.content ) );
 			return true;
@@ -242,8 +277,9 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* Checks Whether a content entry or page is protected and user has credentials for it
+	* @content The content object to check
 	*/
-	boolean function isContentViewable(required content){
+	boolean function isContentViewable( required content ){
 		var protectedHash = sessionStorage.getVar( "protection-#hash(arguments.content.getSlug())#","" );
 		//check hash against validated content
 		if( compare( protectedHash, getContentProtectedHash( arguments.content ) )  EQ 0 ){
@@ -254,58 +290,53 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* Get password content protected salt
+	* @content The content object
 	*/
-	private function getContentProtectedHash(content){
-		return hash(arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256" );
+	private string function getContentProtectedHash( required content ){
+		return hash( arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256" );
 	}
 	
 	/**
 	* Get remember me cookie
 	*/
 	any function getRememberMe(){
-		var results = "";
-		var cookieValue = cookieStorage.getVar(name="contentbox_remember_me", default="" );
+		var cookieValue = cookieStorage.getVar( name="contentbox_remember_me", default="" );
 		
 		try{
-			results = decryptIt(  cookieValue );
-		}
-		catch(Any e){
+			return decryptIt(  cookieValue );
+		} catch( Any e ){
 			// Errors on decryption
 			log.error( "Error decrypting remember me key: #e.message# #e.detail#", cookieValue );
-			cookieStorage.deleteVar(name="contentbox_remember_me" );
-			results = "";
+			cookieStorage.deleteVar( name="contentbox_remember_me" );
+			return "";
 		}
-		
-		return results;
 	}
 	
 	
 	/**
-	* Get remember me cookie
+	* Get keep me logged in cookie
 	*/
 	any function getKeepMeLoggedIn(){
-		var results = 0;
-		var cookieValue = cookieStorage.getVar(name="contentbox_keep_logged_in", default="" );
+		var cookieValue = cookieStorage.getVar( name="contentbox_keep_logged_in", default="" );
 		
 		try{
 			// Decrypted value should be a number representing the authorID
-			results = val( decryptIt(  cookieValue ) );
-		}
-		catch(Any e){
+			return val( decryptIt(  cookieValue ) );
+		} catch( Any e ){
 			// Errors on decryption
 			log.error( "Error decrypting Keep Me Logged in key: #e.message# #e.detail#", cookieValue );
-			cookieStorage.deleteVar(name="contentbox_keep_logged_in" );
-			results = 0;
+			cookieStorage.deleteVar( name="contentbox_keep_logged_in" );
+			return 0;
 		}
-		
-		return results;
 	}
 	
 	
 	/**
 	* Set remember me cookie
+	* @username The username to store
+	* @days The days to store
 	*/
-	ISecurityService function setRememberMe(required username, required numeric days=0 ){
+	ISecurityService function setRememberMe( required username, required numeric days=0 ){
 				
 		// If the user now only wants to be remembered for this session, remove any existing cookies.
 		if( !arguments.days ) {
@@ -315,32 +346,38 @@ component implements="ISecurityService" singleton{
 		}
 		
 		// Save the username to pre-populate the login field after their login expires for up to a year.
-		cookieStorage.setVar(name="contentbox_remember_me", value=encryptIt( arguments.username ), expires=365 );
+		cookieStorage.setVar( name="contentbox_remember_me", value=encryptIt( arguments.username ), expires=365 );
 		
 		// Look up the user ID and store for the duration specified
 		var author = authorService.findWhere( { username=arguments.username, isActive=true } );
 		if( !isNull( author ) ) {
 			// The user will be auto-logged in as long as this cookie exists
-			cookieStorage.setVar(name="contentbox_keep_logged_in", value=encryptIt( author.getAuthorID() ), expires=arguments.days );			
+			cookieStorage.setVar( name="contentbox_keep_logged_in", value=encryptIt( author.getAuthorID() ), expires=arguments.days );			
 		}
 		
 		return this;
 	}
 	
-	// Cookie encryption
-	private function encryptIt(required encValue){
+	/**
+	* ContentBox encryption
+	*/
+	private function encryptIt( required encValue ){
 		// if empty just return it
 		if( !len( arguments.encValue ) ){ return arguments.encValue; }
 		return encrypt( arguments.encValue, getEncryptionKey() , "BLOWFISH", "HEX" );
 	}
 	
-	// Cookie decryption
+	/**
+	* ContentBox Decryption
+	*/
 	private function decryptIt(required decValue){
 		if( !len( arguments.decValue) ){ return arguments.decValue; }
 		return decrypt( arguments.decValue, getEncryptionKey(), "BLOWFISH", "HEX" );
 	}
 	
-	// Get encryption key according to cookie algorithm
+	/**
+	* Get encryption key according to cookie algorithm
+	*/
 	private function getEncryptionKey(){
 		var setting = settingService.findWhere( { name = "cb_enc_key" } );
 		
