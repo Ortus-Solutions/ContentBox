@@ -1161,9 +1161,20 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
-	* layout theme you are using. All the arguments are the same as renderView()'s methods
+	* theme you are using. All the arguments are the same as `renderView()'s` methods
 	*/
-	function quickView(required view,cache=false,cacheTimeout,cacheLastAccessTimeout,cacheSuffix,module="contentbox",args,collection,collectionAs,prepostExempt){
+	function quickView(
+		required view,
+		cache=false,
+		cacheTimeout,
+		cacheLastAccessTimeout,
+		cacheSuffix,
+		module="contentbox",
+		args,
+		collection,
+		collectionAs,
+		prepostExempt
+	){
 		arguments.view = "#themeName()#/views/#arguments.view#";
 		return controller.getRenderer().renderView( argumentCollection=arguments );
 	}
@@ -1172,7 +1183,14 @@ component accessors="true" singleton threadSafe{
 	* QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
 	* layout theme you are using. All the arguments are the same as renderLayout()'s methods
 	*/
-	function quickLayout(required layout,view="",module="contentbox",args=structNew(),viewModule="",prePostExempt=false){
+	function quickLayout(
+		required layout,
+		view="",
+		module="contentbox",
+		args=structNew(),
+		viewModule="",
+		prePostExempt=false
+	){
 		arguments.layout = "#themeName()#/layouts/#arguments.layout#";
 		return controller.getRenderer().renderLayout( argumentCollection=arguments );
 	}
@@ -1181,8 +1199,8 @@ component accessors="true" singleton threadSafe{
 	* quickCommentForm will build a standard ContentBox Comment Form according to the CommentForm widget
 	* @content.hint The content this comment form will be linked to, page or entry
 	*/
-	function quickCommentForm(required content){
-		return widget( "CommentForm",{content=arguments.content} );
+	function quickCommentForm( required content ){
+		return widget( "CommentForm", { content = arguments.content } );
 	}
 
 	/**
@@ -1193,14 +1211,22 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/************************************** MENUS *********************************************/
+
+	/**
+	* Build out a menu
+	* @slug The menu slug to build
+	* @type The type either 'html' or 'data'
+	* @slugCache.hint The cache of menu slugs already used in this request
+	* 
+	* @return HTML of the menu or a struct representing the menu
+	*/
 	public any function menu( required string slug, required type="html", required array slugCache=[] ) {
 		var result = "";
 		var menu = menuService.findBySlug( arguments.slug );
 		if( !isNull( menu ) ) {
 			if( arguments.type == "data" ) {
 				return menu.getMemento();
-			}
-			else {
+			} else {
 				return buildProviderMenu( menu=menu, slugCache=arguments.slugCache );
 			}
 		}
@@ -1208,7 +1234,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Builds out a custom menu
-	 * @menu.hint The root menu that should be rendered
+	 * @menu.hint The root menu object that should be rendered
 	 * @slugCache.hint The cache of menu slugs already used in this request
 	 */
 	public string function buildProviderMenu( required contentbox.models.menu.Menu menu, required array slugCache=[] ) {
