@@ -322,9 +322,9 @@
 	<!-- Build all releases-->
 	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.apidocs,build.patch">
 		<!-- Copy as BE to root -->
-		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8">
+		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8" verbose="true">
 			<fileset dir="${dir.contentbox.exports}" />
-			<globmapper from="*${contentbox.version}*" to="*be*" />
+			<mapper type="regexp" from="^(.*)(${contentbox.version})(.*)$" to="\1be\3" />
 		</copy>
 
 		<!-- Create Box Repo From macrodef -->
