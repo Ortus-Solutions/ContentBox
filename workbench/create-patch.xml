@@ -58,6 +58,11 @@
 			<arg value="1" />
 			<arg value='--pretty=format:%H' />
 		</exec>
+
+		<!-- Install Dependencies -->
+		<exec executable="box" dir="${basedir}">
+			<arg line="install production=true" />
+		</exec>
 	</target>
 	
 	<!--Build-->
