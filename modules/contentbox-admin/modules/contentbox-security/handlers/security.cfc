@@ -16,22 +16,31 @@ component{
 
 	// Method Security
 	this.allowedMethods = {
-		doLogin = "POST",
-		doLostPassword = "POST"
+		doLogin 		= "POST",
+		doLostPassword 	= "POST"
 	};
 
+	/**
+	* Pre handler
+	*/
 	function preHandler( event, currentAction, rc, prc ){
 		prc.langs 		= getModuleSettings( "contentbox" ).languages;
 		prc.entryPoint 	= getModuleConfig( "contentbox-security" ).entryPoint;
 		prc.xehLang 	= event.buildLink( "#prc.entryPoint#/language" );
 	}
 
+	/**
+	* Change language
+	*/
 	function changeLang( event, rc, prc ){
 		event.paramValue( "lang", "en_US" );
 		setFWLocale( rc.lang );
 		setNextEvent( prc.entryPoint );
 	}
 
+	/**
+	* Login screen
+	*/
 	function login( event, rc, prc ){
 		// exit handlers
 		prc.xehDoLogin 			= "#prc.cbAdminEntryPoint#.security.doLogin";
@@ -45,6 +54,9 @@ component{
 		event.setView( view="security/login" );
 	}
 
+	/**
+	* Do a login
+	*/
 	function doLogin( event, rc, prc ){
 		// params
 		event.paramValue( "rememberMe", 0 )
@@ -81,6 +93,9 @@ component{
 		}
 	}
 
+	/**
+	* Logout a user
+	*/
 	function doLogout( event, rc, prc ){
 		// logout
 		securityService.logout();
@@ -92,6 +107,9 @@ component{
 		setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 	}
 
+	/**
+	* Present lost password screen
+	*/
 	function lostPassword( event, rc, prc ){
 		prc.xehLogin 			= "#prc.cbAdminEntryPoint#.security.login";
 		prc.xehDoLostPassword 	= "#prc.cbAdminEntryPoint#.security.doLostPassword";
@@ -99,6 +117,9 @@ component{
 		event.setView( view="security/lostPassword" );
 	}
 
+	/**
+	* Do lost password reset
+	*/
 	function doLostPassword( event, rc, prc ){
 		var errors 	= [];
 		var oAuthor = "";
@@ -111,8 +132,7 @@ component{
 		// Validate email
 		if( NOT trim( rc.email ).length() ){
 			arrayAppend( errors, "#cb.r( 'validation.need_email@security' )#<br />" );
-		}
-		else{
+		} else {
 			// Try To get the Author
 			oAuthor = authorService.findWhere( { email = rc.email } );
 			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
@@ -130,8 +150,7 @@ component{
 			announceInterception( "cbadmin_onPasswordReminder", { author = oAuthor } );
 			// messagebox
 			messagebox.info( cb.r( resource='messages.reminder_sent@security', values="15" ) );
-		}
-		else{
+		} else {
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReminder", { errors = errors, email = rc.email } );
 			// messagebox
@@ -141,6 +160,9 @@ component{
 		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
 
+	/**
+	* Verify the reset
+	*/
 	function verifyReset( event, rc, prc ){
 		arguments.event.paramValue( "token", "" );
 
@@ -151,8 +173,7 @@ component{
 			announceInterception( "cbadmin_onPasswordReset", { author = results.author } );
 			// Messagebox
 			messagebox.info( cb.r( "messages.password_reset@security" ) );
-		}
-		else{
+		} else {
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
 			// messagebox

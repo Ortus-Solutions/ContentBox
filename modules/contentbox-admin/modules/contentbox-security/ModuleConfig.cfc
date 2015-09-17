@@ -15,7 +15,7 @@ component {
 	this.version			= "3.0.0-beta+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
-	this.entryPoint			= "/cbadmin/security";
+	this.entryPoint			= "cbadmin/security";
 	this.dependencies 		= [];
 
 	function configure(){
