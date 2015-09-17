@@ -360,8 +360,9 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* ContentBox encryption
+	* @encValue value to encrypt
 	*/
-	private function encryptIt( required encValue ){
+	string function encryptIt( required encValue ){
 		// if empty just return it
 		if( !len( arguments.encValue ) ){ return arguments.encValue; }
 		return encrypt( arguments.encValue, getEncryptionKey() , "BLOWFISH", "HEX" );
@@ -369,16 +370,18 @@ component implements="ISecurityService" singleton{
 	
 	/**
 	* ContentBox Decryption
+	* @decValue value to decrypt
 	*/
-	private function decryptIt(required decValue){
+	string function decryptIt( required decValue ){
 		if( !len( arguments.decValue) ){ return arguments.decValue; }
 		return decrypt( arguments.decValue, getEncryptionKey(), "BLOWFISH", "HEX" );
 	}
 	
 	/**
-	* Get encryption key according to cookie algorithm
+	* Verifies we have a salt in our installation
+	* if not, it will generate a new cb_enc_key
 	*/
-	private function getEncryptionKey(){
+	string function getEncryptionKey(){
 		var setting = settingService.findWhere( { name = "cb_enc_key" } );
 		
 		// if no key, then create it for this ContentBox installation
