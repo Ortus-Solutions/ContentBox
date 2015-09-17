@@ -62,8 +62,10 @@
 	
 	<!--Build-->
 	<target name="build" description="Build a new ContentBox patch release" depends="init">
-      	<!-- Create patch folder according to version -->
+      	<!-- Create patch structure according to version -->
 		<mkdir dir="${dir.patches}/${contentbox.version}/patch"/>
+		<delete file="${dir.patches}/${contentbox.version}/patch.zip"/>
+		<delete file="${dir.patches}/${contentbox.version}/deletes.txt"/>
 		
 		<!-- Copy Update Template, just in case -->
 		<copy file="${dir.resources}/Update.cfc" tofile="${dir.patches}/${contentbox.version}/Update.cfc" overwrite="false" encoding="UTF-8"/>
@@ -89,6 +91,7 @@
 				<exclude name="license.txt"/>
 				<exclude name=".htaccess"/>
 				<exclude name="build.number"/>
+				<exclude name="models" />
 				<exclude name="modules/contentbox-dsncreator/**"/>
 				<exclude name="modules/contentbox-installer/**"/>
 				<exclude name="layouts/**"/>
@@ -108,6 +111,11 @@
 		
 		<!-- Delete original patch for cleanup -->
 		<delete file="${dir.patches}/${contentbox.version}/patch.zip" />
+		
+		<!-- Incorporate Dependencies -->
+		<copy todir="${dir.patches}/${contentbox.version}/patch/coldbox" encoding="UTF-8" overwrite="true">
+			<fileset dir="coldbox" />
+		</copy>
 		
 		<!-- Zip now as excludes removed. -->
 		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
