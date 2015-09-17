@@ -181,9 +181,9 @@
 
                 <!--logo end-->
                 <div class="toggle-navigation toggle-left">
-                    <a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+                    <button onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
                     	<i class="fa fa-bars"></i>
-                    </a>
+                    </button>
                 </div>
                 <div class="user-nav">
                     <ul>
