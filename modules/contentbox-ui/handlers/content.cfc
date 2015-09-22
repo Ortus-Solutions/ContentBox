@@ -18,6 +18,7 @@ component{
 	property name="antiSamy"			inject="antisamy@cbantisamy";
 	property name="captchaService"		inject="id:captcha@cb";
 	property name="messagebox"			inject="id:messagebox@cbMessageBox";
+	property name="dataMarshaller"		inject="DataMarshaller@coldbox";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -197,7 +198,7 @@ component{
 		// Multi format generation
 		switch( rc.format ){
 			case "pdf" : {
-				data.content 		= utility.marshallData( data=data.content, type="pdf" );
+				data.content 		= dataMarshaller.marshallData( data=data.content, type="pdf" );
 				data.contentType 	= "application/pdf";
 				data.isBinary 		= true;
 				break;
