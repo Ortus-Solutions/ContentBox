@@ -132,7 +132,7 @@
 											<!--- Rebuild Registry Button --->
 											<cfif prc.oAuthor.checkPermission( "THEME_ADMIN" )>
 												<div class="btn-group btn-sm pull-right">
-													<button class="btn btn-sm btn-primary" onclick="return toggleUploader()" ><i class="fa fa-upload-alt"></i> Upload Theme</button>
+													<button class="btn btn-sm btn-primary" onclick="return toggleUploader()" ><i class="fa fa-upload"></i> Upload Theme</button>
 													<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan Themes directory and rebuild registry"><i class="fa fa-refresh"></i> Rebuild Registry</button>
 												</div>
 											</cfif>
