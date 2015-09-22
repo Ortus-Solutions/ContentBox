@@ -8,7 +8,7 @@
             </#local.topMenu.itemType#>
             <!--- Do we have submenus --->
             <cfif arrayLen( local.topMenu.subMenu )>
-                <ul class="dropdown-menu animated fadeInDown">
+                <ul class="dropdown-menu">
                     <cfloop array="#local.topMenu.submenu#" index="local.thisSubMenu">
                         <!--- Security --->
                         <cfif !len(local.thisSubMenu.permissions) OR prc.oAuthor.checkPermission( local.thisSubMenu.permissions )>
