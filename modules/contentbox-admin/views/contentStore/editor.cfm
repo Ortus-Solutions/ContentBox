@@ -320,6 +320,8 @@
                                 </div>
                             </div>
                         </div>
+                        <cfelse>
+                            #html.hiddenField( name="parentContent", value=prc.parentcontentID )#
                         </cfif>
                         <!---End Modfiers--->
                             
