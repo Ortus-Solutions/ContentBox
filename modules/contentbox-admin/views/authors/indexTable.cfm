@@ -61,13 +61,8 @@
 					
 							<!--- Export --->
 							<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
-							<li class="dropdown-submenu pull-left">
-								<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export</a>
-								<ul class="dropdown-menu text-left">
-									<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
-									<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
-								</ul>
-							</li>
+							<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
+							<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
 							</cfif>
 						<cfelse>
 							<li><a href="javascript:null()"><em>No available actions</em></a></li>
