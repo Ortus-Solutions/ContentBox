@@ -44,8 +44,8 @@
     <div class="modal-footer">
         <!--- Button Bar --->
         <div id="cloneButtonBar">
-            <button class="btn btn-default" id="closeButton" data-dismiss="modal"> Cancel </button>
-            <button class="btn btn-danger" id="cloneButton"> Clone </button>
+            <button class="btn btn-default" id="closeButton" data-dismiss="modal" type="button"> Cancel </button>
+            <button class="btn btn-danger" id="cloneButton" type="button"> Clone </button>
         </div>
         <!--- Loader --->
         <div class="center loaders" id="clonerBarLoader">

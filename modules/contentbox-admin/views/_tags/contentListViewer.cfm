@@ -174,17 +174,13 @@ function importContent(){
 	// form validator and data
 	$importForm.validate( { 
 		submitHandler: function(form){
-           	$importForm.find( "##importButtonBar" ).slideUp();
-			$importForm.find( "##importBarLoader" ).slideDown();
+           	$importDialog.find( "##importButtonBar" ).slideUp();
+			$importDialog.find( "##importBarLoader" ).slideDown();
 			form.submit();
         }
 	} );
-	// close button
-	$importForm.find( "##closeButton" ).click(function(e){
-		closeModal( $importDialog ); return false;
-	} );
 	// clone button
-	$importForm.find( "##importButton" ).click(function(e){
+	$importDialog.find( "##importButton" ).click(function(e){
 		$importForm.submit();
 	} );
 }
@@ -197,21 +193,19 @@ function openCloneDialog(contentID, title){
 	// form validator and data
 	$cloneForm.validate( { 
 		submitHandler: function(form){
-           	$cloneForm.find( "##cloneButtonBar" ).slideUp();
-			$cloneForm.find( "##clonerBarLoader" ).slideDown();
+           	$cloneDialog.find( "##cloneButtonBar" ).slideUp();
+			$cloneDialog.find( "##clonerBarLoader" ).slideDown();
 			form.submit();
         }
 	} );
+	// Setup title and content id.
 	$cloneForm.find( "##contentID" ).val( contentID );
 	$cloneForm.find( "##title" ).val( title ).focus();
-	// close button
-	$cloneForm.find( "##closeButton" ).click(function(e){
-		closeModal( $cloneDialog ); return false;
-	} );
-	// clone button
-	$cloneForm.find( "##cloneButton" ).click(function(e){
+	// clone button actions
+	$cloneDialog.find( "##cloneButton" ).click(function(e){
 		$cloneForm.submit();
 	} );
+	
 }
 // Reset Hits
 function resetHits( contentID ){
