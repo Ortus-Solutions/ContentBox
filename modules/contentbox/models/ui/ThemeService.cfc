@@ -571,6 +571,7 @@ component accessors="true" threadSafe singleton{
 				var thisSetting 		= oTheme.settings[ x ];
 				var requiredText 		= "";
 				var requiredValidator 	= "";
+				
 				// get actual setting value which should be guaranteed to exist
 				var oSetting = settingService.findWhere( { name="cb_theme_#arguments.activeTheme.name#_#thisSetting.name#" } );
 				thisSetting.defaultValue = oSetting.getValue();
@@ -583,33 +584,65 @@ component accessors="true" threadSafe singleton{
 
 				// required stuff
 				if( thisSetting.required ){
-					requiredText 		= "<span class='textRed'>*Required</span>";
+					requiredText 		= "<span class='text-danger'>*Required</span>";
 					requiredValidator 	= "required";
 				}
 				// writeout control wrapper
-				writeOutput( '<div class="control-group">' );
+				writeOutput( '<div class="form-group">' );
 					// write out label
 					writeOutput( html.label( field=thisSetting.name, content="#thisSetting.label# #requiredText#" ) );
-					writeOutput( '<div class="controls">' );
     				// write out control
     				switch( thisSetting.type ){
     					case "boolean" : {
-    						writeOutput( html.select( name=thisSetting.name, options="true,false", selectedValue=thisSetting.defaultValue, title=thisSetting.title ) );
+    						writeOutput( 
+    							html.select( 
+	    							name			= thisSetting.name,
+	    							options			= "true,false",
+	    							selectedValue	= thisSetting.defaultValue,
+	    							title			= thisSetting.title,
+	    							class 			= "form-control"
+	    						) 
+    						);
     						break;
     					}
     					case "select" : {
-    						writeOutput( html.select( name=thisSetting.name, options=thisSetting.options, selectedValue=thisSetting.defaultValue, title=thisSetting.title ) );
+    						writeOutput( 
+    							html.select( 
+    								name 			= thisSetting.name,
+    								options			= thisSetting.options,
+    								selectedValue	= thisSetting.defaultValue,
+    								title			= thisSetting.title,
+    								class 			= "form-control"
+    							) 
+    						);
     						break;
     					}
     					case "textarea" : {
-    						writeOutput( html.textarea( name=thisSetting.name, required=requiredValidator, title=thisSetting.title, value=thisSetting.defaultValue ) );
+    						writeOutput( 
+    							html.textarea( 
+    								name		= thisSetting.name,
+    								required	= requiredValidator,
+    								title		= thisSetting.title,
+    								value		= thisSetting.defaultValue,
+    								class 		= "form-control",
+    								rows		= 5
+    							) 
+    						);
     						break;
     					}
     					default:{
-    						writeOutput( html.textfield( name=thisSetting.name, size="55", class="textfield", required=requiredValidator, title=thisSetting.title, value=thisSetting.defaultValue ) );
+    						writeOutput( 
+    							html.textfield( 
+    								name		= thisSetting.name,
+    								class		= "textfield",
+    								required	= requiredValidator,
+    								title		= thisSetting.title,
+    								value		= thisSetting.defaultValue,
+    								class 		= "form-control"
+    							) 
+    						);
     					}
     				}
-    				writeOutput( '</div>' );
 				writeOutput( '</div>' );
 			}
 		}

@@ -48,7 +48,7 @@
 										<a href="##active" data-toggle="tab"><i class="fa fa-star fa-lg"></i> Active Theme</a>
 									</li>
 									<li>
-										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns fa-lg"></i> Manage Themes</a>
+										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns fa-lg"></i> Installed Themes</a>
 									</li>
 								</ul>
 								<!--- Tab Content --->
@@ -60,7 +60,7 @@
 										<div id="theme-screenshot" class="pull-right">
 											<cfif len( prc.activeTheme.screenShotURL )>
 												<a href="#prc.activeTheme.screenShotURL#" target="_blank">
-													<img src="#prc.activeTheme.screenShotURL#" alt="screenshot" height="200" border="0" class="img-polaroid img-screenshot"/>
+													<img src="#prc.activeTheme.screenShotURL#" alt="screenshot" height="200" border="0" class="img-screenshot img-thumbnail"/>
 												</a>
 												<br/>
 											</cfif>
@@ -69,7 +69,7 @@
 										<!--- Title --->
 										<div id="theme-title"><h2>#prc.activeTheme.themeName#</h2></div>
 										<!---Description --->
-										<p id="theme-description" class="lead">#prc.activeTheme.description#</p>
+										<blockquote id="theme-description">#prc.activeTheme.description#</blockquote>
 										<!---Author --->
 										<div id="theme-author">
 											<i class="fa fa-user"></i>
@@ -113,17 +113,15 @@
 										</div>
 		                                <!---Theme Settings --->
 										<cfif len( prc.activeTheme.settings )>
-											#html.startForm(action=prc.xehSaveSettings, class="form-vertical" )#	
-											<br />
-											<fieldset>
-												<legend> Theme Settings: </legend>
-												#html.hiddenField(name="themeName", value=prc.activeTheme.name)#
+											<h1>Theme Settings:</h1>
+											#html.startForm( action=prc.xehSaveSettings, name="layoutSettingsForm" )#	
+												#html.hiddenField( name="themeName", value=prc.activeTheme.name )#
 												#prc.themeService.buildSettingsForm( prc.activeTheme )#
-											</fieldset>
-											<br />
-											<div class="form-actions">
-												#html.submitButton(value="Save Settings", class="btn btn-danger" )#
-											</div>
+												
+												<div class="form-group">
+													#html.submitButton(value="Save Settings", class="btn btn-danger" )#
+												</div>
+
 			                                #html.endForm()#
 										</cfif>
 									</div>								
