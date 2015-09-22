@@ -24,3 +24,5 @@ workbench/build.number
 workbench/apidocs/docbox
 coldbox/*
 testbox/*
+modules/contentbox/themes/default/bower_components
+modules/contentbox/themes/default/node_modules
