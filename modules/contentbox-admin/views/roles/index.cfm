@@ -45,17 +45,12 @@
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+								    		<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
 								    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
-								    		<li class="dropdown-submenu">
-												<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export All</a>
-												<ul class="dropdown-menu text-left">
-													<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
-													<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
-												</ul>
-											</li>
+											<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
+												<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 											</cfif>
 								    	</ul>
 								    </div>

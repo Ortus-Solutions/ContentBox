@@ -69,23 +69,8 @@
 								    			</li>
 											</cfif>
 											<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
-												<li class="dropdown-submenu">
-													<a href="javascript:null">
-														<i class="fa fa-download fa-lg"></i> Export All
-													</a>
-													<ul class="dropdown-menu text-left">
-														<li>
-															<a href="#event.buildLink(linkto=prc.xehPageExportAll)#.json" target="_blank">
-																<i class="fa fa-code"></i> as JSON
-															</a>
-														</li>
-														<li>
-															<a href="#event.buildLink(linkto=prc.xehPageExportAll)#.xml" target="_blank">
-																<i class="fa fa-sitemap"></i> as XML
-															</a>
-														</li>
-													</ul>
-												</li>
+												<li><a href="#event.buildLink (linkto=prc.xehPageExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( linkto=prc.xehPageExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 											</cfif>
 											<li>
 												<a href="javascript:resetBulkHits()"><i class="fa fa-refresh"></i> Reset Hits Selected</a>
