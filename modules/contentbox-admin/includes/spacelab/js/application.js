@@ -12,7 +12,7 @@ var app = function() {
     };
 
     var tooltips = function() {
-        $('#toggle-left').tooltip();
+        $('#toggle-left').tooltip( { delay : 100 } );
     };
 
     var togglePanel = function() {

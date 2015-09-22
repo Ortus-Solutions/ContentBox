@@ -23,7 +23,7 @@ $(document).ready(function() {
 	// Global Tool Tip Settings
 	toolTipSettings	= {
 		 animation: 'slide',
-		 delay: { show: 250, hide: 250 }
+		 delay: { show: 100, hide: 100 }
 	};
 	
 	// toggle flicker messages
