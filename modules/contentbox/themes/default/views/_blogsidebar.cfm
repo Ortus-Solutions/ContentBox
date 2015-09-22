@@ -1,0 +1,66 @@
+﻿<cfoutput>
+<!--- ContentBoxEvent --->
+#cb.event("cbui_BeforeSideBar")#
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>Categories</h4>
+	</div>
+	<!---
+	Display Categories using ContentBox collection template rendering
+	the default convention for the template is "category.cfm" you can change it via the quickCategories() 'template' argument.
+	--->
+	<ul>
+		#cb.quickCategories()#		
+	</ul>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>Recent Entries</h4>
+	</div>
+	#cb.widget('RecentEntries')#
+</div>
+
+	<!--- RSS Buttons --->
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>Site Updates</h4>
+	</div>
+	<ul>
+		<li><a href='#cb.linkRSS()#' title="Subscribe to our RSS Feed!"><i class="fa fa-rss"></i></a> <a href='#cb.linkRSS()#' title="Subscribe to our RSS Feed!">RSS Feed</a></li>
+	</ul>
+</div>
+
+	<cfif cb.isEntryView()>
+		<!--- RSS Entry Comments --->
+		<div class="panel panel-primary">
+			<div class="panel-heading">
+				<h4>Entry Comments</h4>
+			</div>
+			<ul>
+				<li><a href="#cb.linkRSS(comments=true,entry=prc.entry)#" title="Subscribe to our Entry's Comment(s) RSS Feed!"><i class="fa fa-rss"></i></a> <a href="#cb.linkRSS(comments=true,entry=prc.entry)#" title="Subscribe to our Entry's Comment(s) RSS Feed!">RSS Feed</a></li>
+			</ul>
+		</div>
+	</cfif>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>Archives</h4>
+	</div>
+	#cb.widget("Archives")#
+</div>
+
+<div class="panel panel-default">	
+	<div class="panel-heading">
+		<h4>Entries Search</h4>
+	</div>
+	#cb.widget("SearchForm")#
+</div>
+	
+	<!---#cb.widget("Meta",{titleLevel="4"})#--->
+
+
+<!--- ContentBoxEvent --->
+#cb.event("cbui_afterSideBar")#
+</cfoutput>
