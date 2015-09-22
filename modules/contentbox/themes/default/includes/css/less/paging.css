@@ -1,0 +1,29 @@
+.pagingTabs {
+  /* font-size: 11px; */
+  margin: 10px 0 20px 0;
+  border-top: 1px solid #E3E3E3;
+  padding-top: 5px;
+}
+.pagingTabs a {
+  color: #000;
+  padding: 2px 4px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-left: 2px;
+}
+.pagingTabs a:hover {
+  color: #000;
+  background-color: #FCF9C3;
+  border: 1px solid black;
+}
+.pagingTabs a.selected {
+  color: #000;
+  background-color: #F5F5F5;
+  border: 1px solid #E3E3E3;
+}
+.pagingTabs .label-info {
+  background-color: #004f83;
+}
+.pagingTabsCarrousel {
+  margin-top: 10px;
+}
