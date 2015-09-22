@@ -174,28 +174,28 @@
 
                 <!--logo start-->
                 <div class="brand text-center">
-                    <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="right">
+                    <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="right auto">
                         <img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
                     </a>
                 </div>
 
                 <!--logo end-->
                 <div class="toggle-navigation toggle-left">
-                    <a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+                    <a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right auto" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
                     	<i class="fa fa-bars"></i>
                     </a>
                 </div>
                 <div class="user-nav">
                     <ul>
                     	<!--- View Site --->
-                    	<li class="" data-placement="right" title="Visit Site">
+                    	<li class="" data-placement="right auto" title="Visit Site">
                     		<a class="btn btn-default options toggle" href="#event.buildLink( prc.cbEntryPoint )#" target="_blank">
                     			<i class="fa fa-home"></i>
                     		</a>
                     	</li>
                     	<!--- New Quick Links --->
 				    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
-				    	<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right">
+				    	<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
 				    		<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
 				    			<i class="fa fa-plus"></i>
 				    		</button>
