@@ -42,15 +42,10 @@
                                 <li>
                                     <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fa fa-edit fa-lg"></i> Edit</a>
                                 </li>
-                                <cfif prc.oAuthor.checkPermission( "TOOLS_EXPORT" )>
+                                <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                     <!--- Export --->
-                                    <li class="dropdown-submenu pull-left">
-                                        <a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export</a>
-                                        <ul class="dropdown-menu text-left">
-                                            <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
-                                            <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
-                                        </ul>
-                                    </li>
+                                    <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
+                                    <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
                                 </cfif>
                             </cfif>
                         </ul>

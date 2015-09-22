@@ -116,14 +116,9 @@
 											   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 											
 												<!--- Export --->
-												<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
-												<li class="dropdown-submenu pull-left">
-													<a href="javascript:null"><i class="fa fa-download fa-lg"></i> Export</a>
-													<ul class="dropdown-menu text-left">
-														<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.json" target="_blank"><i class="fa fa-code"></i> as JSON</a></li>
-														<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.xml" target="_blank"><i class="fa fa-sitemap"></i> as XML</a></li>
-													</ul>
-												</li>
+												<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
+													<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
+													<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
 												</cfif>
 											</cfif>
 								    	</ul>
