@@ -88,11 +88,11 @@ a.btn.btn-danger:visited {
 }
 
 /**============================== ADMIN MAIN ELEMENTS ==============================**/
-
-/**
-ul { list-style:disc inside; }
 img{ height: inherit; }
 img.img-screenshot{ height: 200px; }
+.gravatar{ height: auto; }
+/**
+ul { list-style:disc inside; }
 input, textarea, .uneditable-input { width: inherit; }
 #wrapper {
 	min-height: 100%;
@@ -106,7 +106,6 @@ input, textarea, .uneditable-input { width: inherit; }
 .container-fluid{ padding-bottom: 30px }
 .hero-unit{padding:50px; margin-top:20px; margin-bottom: 20px}
 .well{ margin-bottom: 10px; margin-top: 10px;}
-.gravatar{ height: auto; }
 **/
 /** Widgets **/
 widget {
