@@ -199,7 +199,7 @@
 				    		<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
 				    			<i class="fa fa-plus"></i>
 				    		</button>
-							<ul class="dropdown-menu animated fadeInDown">
+							<ul class="dropdown-menu">
 								<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 									<li>
 										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
