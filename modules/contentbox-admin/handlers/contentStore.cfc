@@ -244,8 +244,8 @@ component extends="baseContentHandler"{
 		event.paramValue( "newCategories", "" );
 		event.paramValue( "isPublished", true );
 		event.paramValue( "slug", "" );
+		event.paramValue( "creatorID", "" );
 		event.paramValue( "changelog", "" );
-		event.paramValue( "customFieldsCount", 0 );
 		event.paramValue( "publishedDate", now() );
 		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH" ) );
 		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm" ) );
@@ -254,7 +254,6 @@ component extends="baseContentHandler"{
 		event.paramValue( "expireMinute", "" );
 		event.paramValue( "expireTime", "" );
 		event.paramValue( "content", "" );
-		event.paramValue( "creatorID","" );
 		event.paramValue( "customFieldsCount", 0 );
 		event.paramValue( "relatedContentIDs", [] );
 
