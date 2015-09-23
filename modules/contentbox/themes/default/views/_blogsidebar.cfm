@@ -34,7 +34,7 @@
 
 	<cfif cb.isEntryView()>
 		<!--- RSS Entry Comments --->
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h4>Entry Comments</h4>
 			</div>

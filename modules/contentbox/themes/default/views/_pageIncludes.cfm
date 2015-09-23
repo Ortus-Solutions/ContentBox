@@ -55,16 +55,18 @@
 <link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/bootstrap.min.css?v=1" />
 <link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/skin.css?v=1" />
 
-<!--- Font Awesome --->
-<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/font-awesome/font-awesome.min.css?v=1" />
-<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/font-awesome/font-awesome-ie7.min.css?v=1" />
-
-<!-- Global Theme CSS --->
-<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/main.css?v=1" />
+<!-- injector:css -->
+<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/218c7e65.theme.min.css">
+<!-- endinjector -->
 
 <!--- ********************************************************************************* --->
 <!--- 					JAVASCRIPT														--->
 <!--- ********************************************************************************* --->
+<!-- injector:js -->
+<script src="#cb.themeRoot()#/includes/js/11af6283.theme.min.js"></script>
+<!-- endinjector -->
+<!--- 
 <script type="text/javascript" src="#cb.themeRoot()#/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript" src="#cb.themeRoot()#/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+--->
 </cfoutput>

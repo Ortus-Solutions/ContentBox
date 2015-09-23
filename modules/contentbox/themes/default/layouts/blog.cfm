@@ -1,4 +1,4 @@
-﻿<cfoutput>
+<cfoutput>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,18 +57,16 @@
 	<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/bootstrap.min.css?v=1" />
 	<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/skin.css?v=1" />
 
-	<!--- Font Awesome --->
-	<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/font-awesome/font-awesome.min.css?v=1" />
-	<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/font-awesome/font-awesome-ie7.min.css?v=1" />
-
-	<!-- Global Theme CSS --->
-	<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/main.css?v=1" />
+	<!-- injector:css -->
+	<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/218c7e65.theme.min.css">
+	<!-- endinjector -->
 
 	<!--- ********************************************************************************* --->
 	<!--- 					JAVASCRIPT														--->
 	<!--- ********************************************************************************* --->
-	<script type="text/javascript" src="#cb.themeRoot()#/bower_components/jquery/dist/jquery.min.js"></script>
-	<script type="text/javascript" src="#cb.themeRoot()#/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- injector:js -->
+	<script src="#cb.themeRoot()#/includes/js/11af6283.theme.min.js"></script>
+	<!-- endinjector -->
 
 	<!--- ContentBoxEvent --->
 	#cb.event("cbui_beforeHeadEnd")#
@@ -77,7 +75,10 @@
 	<!--- ContentBoxEvent --->
 	#cb.event("cbui_afterBodyStart")#
 	
+	<!--- Header --->
 	#cb.quickView(view='_header')#
+
+	<!--- Main Body --->
 	<section id="body-main">
 		<div class="container">
 			<div class="row">
@@ -98,9 +99,5 @@
 	</section>
 	#cb.quickView(view='_footer')#
 </body>
-
-<!-- Placed at the end of the document so the pages load faster -->
-<script type="text/javascript" src="#cb.themeRoot()#/bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="#cb.themeRoot()#/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </html>
 </cfoutput>
