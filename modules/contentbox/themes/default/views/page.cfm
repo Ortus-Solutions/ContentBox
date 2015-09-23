@@ -9,7 +9,7 @@
 		</div>
 	</div>
 <cfelse>
-	<div id="body-header" class="shortcodes">
+	<div id="body-header">
 		<div class="container">
 			<!--- Title --->
 			<div class="underlined-title">
@@ -24,7 +24,15 @@
 
 <section id="body-main">
 	<div class="container">
-		<cfif isdefined("prc.page") and prc.page.getNumberOfChildren()>
+
+		<!--- BreadCrumbs --->
+		<cfif !isNull( "prc.page" ) and prc.page.getNumberOfChildren()>
+			<div id="body-breadcrumbs" class="col-sm-12">
+				<i class="fa fa-home"></i> #cb.breadCrumbs( separator="<i class='fa fa-angle-right'></i> " )#
+			</div>
+		</cfif>
+
+		<cfif !isNull( "prc.page" ) and prc.page.getNumberOfChildren()>
 			<cfset variables.span = 9>
 		<cfelse>
 			<cfset variables.span = 12>

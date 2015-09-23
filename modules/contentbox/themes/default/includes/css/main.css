@@ -4,6 +4,7 @@
 footer{ padding:20px 0; }
 #body-main{ padding: 30px 0; }
 #searchForm{ margin: 10px; }
+#body-breadcrumbs{ margin-bottom: 20px }
 
 /* Blog */
 .post-content {
