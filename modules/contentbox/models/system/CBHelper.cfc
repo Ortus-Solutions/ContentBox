@@ -43,7 +43,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Get the RC or PRC collection reference
-	* @private.hint The boolean bit that says give me the RC by default or true for the private collection (PRC)
+	* @private The boolean bit that says give me the RC by default or true for the private collection (PRC)
 	*/
 	struct function getRequestCollection( boolean private=false ){
 		return getRequestContext().getCollection( private=arguments.private );
@@ -51,7 +51,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Get a module's settings structure
-	* @module.hint The module to retrieve the configuration settings from
+	* @module The module to retrieve the configuration settings from
 	*/
 	struct function getModuleSettings( required module ){
 		return getModuleConfig( arguments.module ).settings;
@@ -59,7 +59,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Get a module's configuration structure
-	* @module.hint The module to retrieve the configuration structure from
+	* @module The module to retrieve the configuration structure from
 	*/
 	struct function getModuleConfig( required module ){
 		var mConfig = controller.getSetting( "modules" );
@@ -116,8 +116,8 @@ component accessors="true" singleton threadSafe{
 	* Get a published custom HTML content pieces by slug: DEPRECATED, use contentStore() instead
 	* @see contentStore
 	* @deprecated
-	* @slug.hint The content slug to retrieve
-	* @defaultValue.hint The default value to use if custom html element not found.
+	* @slug The content slug to retrieve
+	* @defaultValue The default value to use if custom html element not found.
 	*/
 	function customHTML(required slug, defaultValue="" ){
 		return contentStore( argumentCollection=arguments );
@@ -125,8 +125,8 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Get a published content store and return its latest active content
-	* @slug.hint The content slug to retrieve
-	* @defaultValue.hint The default value to use if the content element not found.
+	* @slug The content slug to retrieve
+	* @defaultValue The default value to use if the content element not found.
 	*/
 	function contentStore(required slug, defaultValue="" ){
 		var content = contentStoreService.findBySlug( arguments.slug );
@@ -135,7 +135,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Get a content store object by slug, if not found it returns null.
-	* @slug.hint The content slug to retrieve
+	* @slug The content slug to retrieve
 	*/
 	function contentStoreObject(required slug){
 		return contentStoreService.findBySlug( slug=arguments.slug, showUnpublished=true );
@@ -214,8 +214,8 @@ component accessors="true" singleton threadSafe{
 	
 	/**
 	* Get a theme setting
-	* @key.hint The name of the theme setting
-	* @value.hint The default value if the layout setting does not exist
+	* @key The name of the theme setting
+	* @value The default value if the layout setting does not exist
 	*/
 	function themeSetting( required key, value ){
 		arguments.key = "cb_theme_#themeName()#_#arguments.key#";
@@ -366,7 +366,7 @@ component accessors="true" singleton threadSafe{
 	}
 	/**
 	* Determine if you are in the page view
-	* @page.hint Optional page slug to determine if you are in that page or not.
+	* @page Optional page slug to determine if you are in that page or not.
 	*/
 	boolean function isPageView(page="" ){
 		var event = getRequestContext();
@@ -554,10 +554,10 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Build out ContentBox module links
-	* @module.hint The module to link this URL to
-	* @linkTo.hint The handler action combination to link to
-	* @queryString.hint The query string to append in SES format
-	* @ssl.hint Create the link in SSL or not
+	* @module The module to link this URL to
+	* @linkTo The handler action combination to link to
+	* @queryString The query string to append in SES format
+	* @ssl Create the link in SSL or not
 	*/
 	function buildModuleLink(
 		required string module, 
@@ -573,18 +573,18 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* SetNextEvent For ContentBox Modules
-	* @module.hint The module to link this URL to
-	* @event.hint The name of the event to run, if not passed, then it will use the default event found in your configuration file
-	* @URL.hint The full URL you would like to relocate to instead of an event: ex: URL='http://www.google.com'
-	* @URI.hint The relative URI you would like to relocate to instead of an event: ex: URI='/mypath/awesome/here'
-	* @queryString.hint The query string to append, if needed. If in SES mode it will be translated to convention name value pairs
-	* @persist.hint What request collection keys to persist in flash ram
-	* @persistStruct.hint A structure key-value pairs to persist in flash ram
-	* @addToken.hint Wether to add the tokens or not. Default is false
-	* @ssl.hint Whether to relocate in SSL or not
-	* @baseURL.hint Use this baseURL instead of the index.cfm that is used by default. You can use this for ssl or any full base url you would like to use. Ex: https://mysite.com/index.cfm
-	* @postProcessExempt.hint Do not fire the postProcess interceptors
-	* @statusCode.hint The status code to use in the relocation
+	* @module The module to link this URL to
+	* @event The name of the event to run, if not passed, then it will use the default event found in your configuration file
+	* @URL The full URL you would like to relocate to instead of an event: ex: URL='http://www.google.com'
+	* @URI The relative URI you would like to relocate to instead of an event: ex: URI='/mypath/awesome/here'
+	* @queryString The query string to append, if needed. If in SES mode it will be translated to convention name value pairs
+	* @persist What request collection keys to persist in flash ram
+	* @persistStruct A structure key-value pairs to persist in flash ram
+	* @addToken Wether to add the tokens or not. Default is false
+	* @ssl Whether to relocate in SSL or not
+	* @baseURL Use this baseURL instead of the index.cfm that is used by default. You can use this for ssl or any full base url you would like to use. Ex: https://mysite.com/index.cfm
+	* @postProcessExempt Do not fire the postProcess interceptors
+	* @statusCode The status code to use in the relocation
 	*/
 	function setNextModuleEvent(
 		required string module, 
@@ -606,8 +606,8 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the admin
-	* @event.hint An optional event to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @event An optional event to link to
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkAdmin( event="", boolean ssl=false ){
 		return getRequestContext().buildLink( linkto=adminRoot() & ".#arguments.event#", ssl=arguments.ssl );
@@ -615,7 +615,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the admin logout
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkAdminLogout( boolean ssl=false ){
 		return getRequestContext().buildLink( linkto=adminRoot() & "/security/doLogout", ssl=arguments.ssl );
@@ -623,7 +623,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the admin login
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkAdminLogin( boolean ssl=false ){
 		return getRequestContext().buildLink( linkto=adminRoot() & "/security/login", ssl=arguments.ssl );
@@ -631,7 +631,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Create a link to your site root or home page entry point for your blog.
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkHome( boolean ssl=false ){
 		return getRequestContext().buildLink( linkto=siteRoot(), ssl=arguments.ssl );
@@ -639,7 +639,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Create a link to your site blog
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkBlog( boolean ssl=false ){
 		return getRequestContext().buildLink( linkto="#siteRoot()##sep()##getBlogEntryPoint()#", ssl=arguments.ssl );
@@ -665,7 +665,7 @@ component accessors="true" singleton threadSafe{
 	* @category You can optionally pass the category to filter on
 	* @comments A boolean flag that determines if you want the comments RSS feed
 	* @entry You can optionally pass the entry to filter the comment's RSS feed
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkRSS(category,comments=false,entry, boolean ssl=false){
 		var xehRSS = siteRoot() & sep() & "#getBlogEntryPoint()#.rss";
@@ -692,10 +692,10 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the ContentBox Site RSS Feeds
-	* @category.hint The category to filter on
-	* @comments.hint Do comments RSS feeds
-	* @slug.hint The content slug to filter on when using comments
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @category The category to filter on
+	* @comments Do comments RSS feeds
+	* @slug The content slug to filter on when using comments
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkSiteRSS(any category, boolean comments=false, string slug, boolean ssl=false){
 		var xehRSS = siteRoot() & sep() & "__rss";
@@ -729,10 +729,10 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the ContentBox Page RSS Feeds
-	* @category.hint The category to filter on
-	* @comments.hint Page comments or not, defaults to false
-	* @page.hint The page you want to filter on
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @category The category to filter on
+	* @comments Page comments or not, defaults to false
+	* @page The page you want to filter on
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkPageRSS(any category, boolean comments=false, page, boolean ssl=false){
 		var xehRSS = siteRoot() & sep() & "__rss/pages";
@@ -767,7 +767,7 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Link to a specific filtered category view of blog entries
 	* @category The category object or slug to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkCategory( required any category, boolean ssl=false ){
 		var categorySlug = '';
@@ -783,7 +783,7 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Link to a specific filtered category view of blog entries
 	* @categorySlug The category slug as a string to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkCategoryWithSlug( required string categorySlug, boolean ssl=false ){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.categorySlug#";
@@ -795,7 +795,7 @@ component accessors="true" singleton threadSafe{
 	* @year The year of the archive
 	* @month The month of the archive
 	* @day The day of the archive
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkArchive(year, month, day, boolean ssl=false){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.archives";
@@ -807,7 +807,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the search route for this blog
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkSearch(boolean ssl=false){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.search";
@@ -816,7 +816,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the content search route
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkContentSearch(boolean ssl=false){
 		var xeh = siteRoot() & sep() & "__search";
@@ -825,7 +825,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the content subscription route
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkContentSubscription( boolean ssl=false ){
 		var xeh = siteRoot() & sep() & "__subscribe";
@@ -834,7 +834,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the ContentBox Content Subscription unsubscribe URL
-	* @token.hint The token to use for unsubscribing
+	* @token The token to use for unsubscribing
 	*/
 	function linkContentUnsubscribe( required string token, boolean ssl=false ){
 		var xehUnsubscribe = siteRoot() & sep() & "__unsubscribe/#arguments.token#";
@@ -844,8 +844,8 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Link to a specific blog entry's page
 	* @entry The entry to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
-	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
+	* @ssl	Use SSL or not, defaults to false.
+	* @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
 	function linkEntry(required entry, boolean ssl=false, format="html" ){
 		// format?
@@ -860,8 +860,8 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Link to a specific entry's page using a slug only
 	* @slug The entry slug to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
-	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
+	* @ssl	Use SSL or not, defaults to false.
+	* @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
 	function linkEntryWithSlug(required slug, boolean ssl=false, format="html" ){
 		// format?
@@ -873,9 +873,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to a specific content object
-	* @content.hint The content object to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
-	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
+	* @content The content object to link to
+	* @ssl	Use SSL or not, defaults to false.
+	* @format The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
 	function linkContent(required content, boolean ssl=false, format="html" ){
 		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl, arguments.format ); }
@@ -884,9 +884,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to a specific page
-	* @page.hint The page to link to. This can be a simple value or a page object
-	* @ssl.hint	Use SSL or not, defaults to false.
-	* @format.hint The format output of the content default is HTML but you can pass pdf,print or doc.
+	* @page The page to link to. This can be a simple value or a page object
+	* @ssl	Use SSL or not, defaults to false.
+	* @format The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
 	function linkPage(required page, boolean ssl=false, format="html" ){
 		// format?
@@ -901,9 +901,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to a specific page using a slug only
-	* @slug.hint The page slug to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
-	* @format.hint The format output of the content default is HTML bu you can pass pdf,print or doc.
+	* @slug The page slug to link to
+	* @ssl	Use SSL or not, defaults to false.
+	* @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
 	function linkPageWithSlug(required slug, boolean ssl=false, format="html" ){
 		// format?
@@ -916,7 +916,7 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Create a link to a specific comment in a page or in an entry
 	* @comment The comment to link to
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkComment(required comment, boolean ssl=false){
 		var xeh = "";
@@ -932,8 +932,8 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Create a link to an entry's or page's comments section
-	* @content.hint The entry or page to link to its comments
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @content The entry or page to link to its comments
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkComments(required content, boolean ssl=false){
 		var xeh = "";
@@ -949,8 +949,8 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Link to the commenting post action, this is where comments are submitted to
-	* @content.hint The entry or page to link to its comments
-	* @ssl.hint	Use SSL or not, defaults to false.
+	* @content The entry or page to link to its comments
+	* @ssl	Use SSL or not, defaults to false.
 	*/
 	function linkCommentPost(required content, boolean ssl=false){
 
@@ -1006,7 +1006,7 @@ component accessors="true" singleton threadSafe{
 
 	/*
 	* Create entry category links to be display usually on an entry or entry list.
-	* @entry.hint The entry to use to build its category links list.
+	* @entry The entry to use to build its category links list.
 	*/
 	function quickCategoryLinks(required entry){
 		var e = arguments.entry;
@@ -1048,9 +1048,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Render out entries in the home page by using our ColdBox collection rendering
-	* @template.hint The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
-	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'entry'
-	* @args.hint A structure of name-value pairs to pass to the template
+	* @template The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
+	* @collectionAs The name of the iterating object in the template, by default it is called 'entry'
+	* @args A structure of name-value pairs to pass to the template
 	*/
 	function quickEntries( string template="entry", string collectionAs="entry", struct args=structnew() ){
 		var entries = getCurrentEntries();
@@ -1064,9 +1064,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Render out an entry using your pre-defined 'entry' template
-	* @template.hint The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
-	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'entry'
-	* @args.hint A structure of name-value pairs to pass to the template
+	* @template The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
+	* @collectionAs The name of the iterating object in the template, by default it is called 'entry'
+	* @args A structure of name-value pairs to pass to the template
 	*/
 	function quickEntry( string template="entry", string collectionAs="entry", struct args=structnew() ){
 		var entries = [ getCurrentEntry() ];
@@ -1080,9 +1080,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Render out categories anywhere using ColdBox collection rendering
-	* @template.hint The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
-	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'category'
-	* @args.hint A structure of name-value pairs to pass to the template
+	* @template The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
+	* @collectionAs The name of the iterating object in the template, by default it is called 'category'
+	* @args A structure of name-value pairs to pass to the template
 	*/
 	function quickCategories( string template="category", string collectionAs="category", struct args=structnew() ){
 		var categories = getCurrentCategories();
@@ -1096,9 +1096,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Render out related content anywhere using ColdBox collection rendering
-	* @template.hint The name of the template to use, by default it looks in the 'templates/relatedContent.cfm' convention, no '.cfm' please
-	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'relatedContent'
-	* @args.hint A structure of name-value pairs to pass to the template
+	* @template The name of the template to use, by default it looks in the 'templates/relatedContent.cfm' convention, no '.cfm' please
+	* @collectionAs The name of the iterating object in the template, by default it is called 'relatedContent'
+	* @args A structure of name-value pairs to pass to the template
 	*/
 	function quickRelatedContent( string template="relatedContent", string collectionAs="relatedContent", struct args=structnew() ){
 		var relatedContent = getCurrentRelatedContent();
@@ -1130,9 +1130,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Render out comments anywhere using ColdBox collection rendering
-	* @template.hint The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
-	* @collectionAs.hint The name of the iterating object in the template, by default it is called 'comment'
-	* @args.hint A structure of name-value pairs to pass to the template
+	* @template The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
+	* @collectionAs The name of the iterating object in the template, by default it is called 'comment'
+	* @args A structure of name-value pairs to pass to the template
 	*/
 	function quickComments( string template="comment", string collectionAs="comment", struct args=structNew() ){
 		var comments = getCurrentComments();
@@ -1146,8 +1146,8 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Renders out an author's avatar
-	* @author.hint The author object to render an avatar from
-	* @size.hint The size of the gravatar, by default we use 25 pixels
+	* @author The author object to render an avatar from
+	* @size The size of the gravatar, by default we use 25 pixels
 	*/
 	string function quickAvatar( required author, numeric size=25 ){
 		var targetEmail = arguments.author;
@@ -1162,6 +1162,20 @@ component accessors="true" singleton threadSafe{
 	/**
 	* QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
 	* theme you are using. All the arguments are the same as `renderView()'s` methods
+	* @view The view in the theme to render
+	* @cache Cache the output or not
+	* @cacheTimeout The time in minutes to cache the view
+	* @cacheLastAccessTimeout The time in minutes the view will be removed from cache if idle or requested
+	* @cacheSuffix The suffix to add into the cache entry for this view rendering
+	* @cacheProvider The provider to cache this view in, defaults to 'template'
+	* @module The module to render the view from explicitly
+	* @args A struct of arguments to pass into the view for rendering, will be available as 'args' in the view.
+	* @collection A collection to use by this Renderer to render the view as many times as the items in the collection (Array or Query)
+	* @collectionAs The name of the collection variable in the partial rendering.  If not passed, we will use the name of the view by convention
+	* @collectionStartRow The start row to limit the collection rendering with
+	* @collectionMaxRows The max rows to iterate over the collection rendering with
+	* @collectionDelim  A string to delimit the collection renderings by
+	* @prePostExempt If true, pre/post view interceptors will not be fired. By default they do fire
 	*/
 	function quickView(
 		required view,
@@ -1169,11 +1183,15 @@ component accessors="true" singleton threadSafe{
 		cacheTimeout,
 		cacheLastAccessTimeout,
 		cacheSuffix,
+		cacheProvider="template",
 		module="contentbox",
-		args,
+		struct args,
 		collection,
-		collectionAs,
-		prepostExempt
+		collectionAs="",
+		numeric collectionStartRow="1",
+		numeric collectionMaxRows=0,
+		collectionDelim="",
+		boolean prepostExempt=false
 	){
 		arguments.view = "#themeName()#/views/#arguments.view#";
 		return controller.getRenderer().renderView( argumentCollection=arguments );
@@ -1182,6 +1200,12 @@ component accessors="true" singleton threadSafe{
 	/**
 	* QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
 	* layout theme you are using. All the arguments are the same as renderLayout()'s methods
+	* @layout The layout to render out
+	* @view The view to render within this layout
+	* @module The module to explicitly render this layout from
+	* @args An optional set of arguments that will be available to this layouts/view rendering ONLY
+	* @viewModule The module to explicitly render the view from
+	* @prePostExempt If true, pre/post layout interceptors will not be fired. By default they do fire
 	*/
 	function quickLayout(
 		required layout,
@@ -1189,7 +1213,7 @@ component accessors="true" singleton threadSafe{
 		module="contentbox",
 		args=structNew(),
 		viewModule="",
-		prePostExempt=false
+		boolean prePostExempt=false
 	){
 		arguments.layout = "#themeName()#/layouts/#arguments.layout#";
 		return controller.getRenderer().renderLayout( argumentCollection=arguments );
@@ -1197,7 +1221,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* quickCommentForm will build a standard ContentBox Comment Form according to the CommentForm widget
-	* @content.hint The content this comment form will be linked to, page or entry
+	* @content The content this comment form will be linked to, page or entry
 	*/
 	function quickCommentForm( required content ){
 		return widget( "CommentForm", { content = arguments.content } );
@@ -1205,9 +1229,10 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Render the incoming event's main view, basically a proxy to ColdBox's controller.getRenderer().renderView().
+	* @args
 	*/
-	function mainView(){
-		return controller.getRenderer().renderView( view="" );
+	function mainView( struct args=structNew() ){
+		return controller.getRenderer().renderView( view="", args=arguments.args );
 	}
 
 	/************************************** MENUS *********************************************/
@@ -1216,7 +1241,7 @@ component accessors="true" singleton threadSafe{
 	* Build out a menu
 	* @slug The menu slug to build
 	* @type The type either 'html' or 'data'
-	* @slugCache.hint The cache of menu slugs already used in this request
+	* @slugCache The cache of menu slugs already used in this request
 	* 
 	* @return HTML of the menu or a struct representing the menu
 	*/
@@ -1234,8 +1259,8 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Builds out a custom menu
-	 * @menu.hint The root menu object that should be rendered
-	 * @slugCache.hint The cache of menu slugs already used in this request
+	 * @menu The root menu object that should be rendered
+	 * @slugCache The cache of menu slugs already used in this request
 	 */
 	public string function buildProviderMenu( required contentbox.models.menu.Menu menu, required array slugCache=[] ) {
 		var listType = arguments.menu.getListType();
@@ -1255,9 +1280,9 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Builds out a level of a custom menu
-	 * @items.hint An array of menu items for this level
-	 * @listType.hint The type of list to create (derived from owning menu)
-	 * @slugCache.hint The cache of menu slugs already used in this request
+	 * @items An array of menu items for this level
+	 * @listType The type of list to create (derived from owning menu)
+	 * @slugCache The cache of menu slugs already used in this request
 	 */
 	private string function buildProviderMenuLevel( 
 		required array items, 
@@ -1288,14 +1313,14 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Render out a quick menu for root level pages
-	* @excludes.hint The list of pages to exclude from the menu
-	* @type.hint The type of menu, valid choices are: ul,ol,li,data,none
+	* @excludes The list of pages to exclude from the menu
+	* @type The type of menu, valid choices are: ul,ol,li,data,none
 	* @typeClass The CSS class(es) to add to the type tag, defaults to 'submenu'
-	* @separator.hint Used if type eq none, to separate the list of href's
-	* @levels.hint The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
-	* @elementClass.hint The name of the CSS class to attach to the menu <li> element
-	* @parentClass.hint The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
-	* @activeClass.hint The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
+	* @separator Used if type eq none, to separate the list of href's
+	* @levels The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
+	* @elementClass The name of the CSS class to attach to the menu <li> element
+	* @parentClass The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
+	* @activeClass The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
 	*/
 	function rootMenu(
 		excludes="",
@@ -1322,11 +1347,11 @@ component accessors="true" singleton threadSafe{
 	* @typeClass The CSS class(es) to add to the type tag, defaults to 'submenu'
 	* @separator Used if type eq none, to separate the list of href's
 	* @showNone Shows a 'No Sub Pages' message or not
-	* @levels.hint The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
-	* @elementClass.hint The name of the CSS class to attach to the menu <li> element
-	* @parentClass.hint The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
-	* @activeClass.hint The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
-	* @activeShowChildren.hint If true, then we will show the children of the active menu element, else we just show the active element
+	* @levels The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
+	* @elementClass The name of the CSS class to attach to the menu <li> element
+	* @parentClass The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
+	* @activeClass The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
+	* @activeShowChildren If true, then we will show the children of the active menu element, else we just show the active element
 	*/
 	function subPageMenu(any page,
 		excludes="",
@@ -1409,11 +1434,11 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Retrieve i18n resources
-	* @resource.hint The resource (key) to retrieve from a loaded bundle or pass a @bundle
-	* @defaultValue.hint A default value to send back if the resource (key) not found
-	* @locale.hint Pass in which locale to take the resource from. By default it uses the user's current set locale
-	* @values.hint An array, struct or simple string of value replacements to use on the resource string
-	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
+	* @resource The resource (key) to retrieve from a loaded bundle or pass a @bundle
+	* @defaultValue A default value to send back if the resource (key) not found
+	* @locale Pass in which locale to take the resource from. By default it uses the user's current set locale
+	* @values An array, struct or simple string of value replacements to use on the resource string
+	* @bundle The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
 	*/
 	any function r( 
 		required string resource,
