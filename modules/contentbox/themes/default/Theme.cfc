@@ -70,12 +70,12 @@ component{
 	this.screenShotURL	= "screenshot.png";
 	// Layout Settings
 	this.settings = [
-		{ name="cbBootswatchTheme", defaultValue="default", required="false", type="select", label="ContentBox Bootswatch Theme:", options="Default,Green" },
-		{ name="footerBox", defaultValue="", type="textarea", label="Footer Text:" },
-		{ name="hpHeaderTitle", defaultValue="", type="text", label="Homepage Header Title:" },
-		{ name="hpHeaderText", defaultValue="", type="text", label="Homepage Header Text:" },
-		{ name="hpHeaderLink", defaultValue="", type="text", label="Homepage Header Button Link:" },
-		{ name="hpHeaderBg", defaultValue="green", required="false", type="select", label="Homepage Header Background:", options="Green,World" }
+		{ name="cbBootswatchTheme", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", required="false", options="Default,Green" },
+		{ name="footerBox", 		defaultValue="", 		type="textarea", 	label="Footer Text:" },
+		{ name="hpHeaderTitle", 	defaultValue="", 		type="text", 		label="Homepage Header Title:" },
+		{ name="hpHeaderText", 		defaultValue="", 		type="text", 		label="Homepage Header Text:" },
+		{ name="hpHeaderLink", 		defaultValue="", 		type="text", 		label="Homepage Header Button Link:" },
+		{ name="hpHeaderBg", 		defaultValue="green", 	type="select", 		label="Homepage Header Background:", required="false", options="Green,World" }
 		
 	];
 
