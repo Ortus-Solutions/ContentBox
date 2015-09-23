@@ -1,5 +1,8 @@
 /* This file is only utilized if minification/caching is turned off in the layout settings */
 
+/* Global */
+footer{ margin: 20px; }
+
 /* Blog */
 .post-content {
 	margin: 20px 0;
@@ -9,7 +12,7 @@
 	font-size: 1.2em;
 }
 
-/* Blog */
+/* MessageBox */
 .cbox_messagebox_info,
 .cbox_messagebox_warning,
 .cbox_messagebox_error {
