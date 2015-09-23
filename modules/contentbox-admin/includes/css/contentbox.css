@@ -181,12 +181,38 @@ widgetinfobar::-moz-selection {
 #widget-title-bar img {margin-top:-5px;}
 .widget-total-bar {margin-bottom: 10px;font-size: 8pt;}
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
-#nav-search { padding: 6px 14px 2px 14px; }
+#div-search { padding: 6px 14px 2px 14px; }
+#div-search input{ 
+	background-color: #fafafa;
+    border-radius: 3px;
+    box-shadow: none !important;
+    color: #717171;
+    font-size: 13px;
+    height: 18px;
+    line-height: 18px;
+    min-height: 36px;
+    outline: 0 none;
+    padding: 6px 11px;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    width: 175px;
+}
 #div-search-results{
 	display: none;
-	top: 35px;background-color: black; padding: 5px 10px; width: 400px; position: absolute; min-height: 100px; z-index: 9999;
-	box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; 
-	border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;
+	top: 60px;
+	left: 312px;
+	background-color: #293949; 
+	padding: 5px 10px; 
+	width: 425px;
+	position: absolute;
+	min-height: 100px;
+	z-index: 9999;
+	box-shadow:0 0 6px #ccc;
+	border-radius:6px;
+	-moz-box-shadow:0 0 6px #ccc;
+	-webkit-box-shadow:0 0 6px #ccc;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
 }
 #div-search-results h2{ color: #31ADE8; font-size: 16px; font-weight: normal;}
 #div-search-results ul{ font-size: 12px}
