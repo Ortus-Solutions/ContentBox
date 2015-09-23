@@ -1,7 +1,7 @@
 /* This file is only utilized if minification/caching is turned off in the layout settings */
 
 /* Global */
-footer{ margin: 20px; }
+footer{ padding:20px 0; }
 
 /* Blog */
 .post-content {
