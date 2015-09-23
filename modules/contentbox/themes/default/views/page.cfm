@@ -26,14 +26,26 @@
 <section id="body-main">
 	<div class="container">
 
-		<!--- Exports --->
-
-		<!--- BreadCrumbs --->
+		<!--- Export and Breadcrumbs --->
 		<cfif !args.print AND !isNull( "prc.page" ) AND prc.page.getSlug() neq cb.getHomePage()>
+			<!--- Exports --->
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Export Page...">
+					<i class="fa fa-print"></i> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#cb.linkPage( cb.getCurrentPage() )#.print" target="_blank">Print Format</a></li>
+					<li><a href="#cb.linkPage( cb.getCurrentPage() )#.pdf" target="_blank">PDF</a></li>
+					<li><a href="#cb.linkPage( cb.getCurrentPage() )#.doc" target="_blank">Word</a></li>
+				</ul>
+			</div>
+
+			<!--- BreadCrumbs --->
 			<div id="body-breadcrumbs" class="col-sm-12">
 				<i class="fa fa-home"></i> #cb.breadCrumbs( separator="<i class='fa fa-angle-right'></i> " )#
 			</div>
 		</cfif>
+
 
 		<cfif !isNull( "prc.page" ) and prc.page.getNumberOfChildren()>
 			<cfset variables.span = 9>
