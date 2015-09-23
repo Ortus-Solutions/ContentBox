@@ -83,51 +83,71 @@ component accessors="true" singleton threadSafe{
 
 	/************************************** settings *********************************************/
 
-	// get contentbox setting value by key or by default value
-	function setting(required key,value){
-		var prc = getRequestCollection( private=true );
+	/**
+	 * get contentbox setting value by key or by default value
+	 * @key The setting key to get
+	 * @value The default value to return if not found
+	 */
+	any function setting( required key, value ){
+		var prc = getPrivateRequestCollection();
 
 		// return setting if it exists
-		if( structKeyExists(prc.cbSettings, arguments.key) ){
+		if( structKeyExists( prc.cbSettings, arguments.key ) ){
 			return prc.cbSettings[ key ];
 		}
 		// default value
-		if( structKeyExists(arguments,"value" ) ){
+		if( structKeyExists( arguments, "value" ) ){
 			return arguments.value;
 		}
 		// else throw exception
-		throw(message="Setting requested: #arguments.key# not found",detail="Settings keys are #structKeyList(prc.cbSettings)#",type="ContentBox.CBHelper.InvalidSetting" );
+		throw(
+			message = "Setting requested: #arguments.key# not found",
+			detail	= "Settings keys are #structKeyList(prc.cbSettings)#",
+			type 	= "ContentBox.CBHelper.InvalidSetting" 
+		);
 	}
 
-	// get contentbox version
+	/**
+	 * get contentbox version
+	 */
 	function getContentBoxVersion(){
-		return controller.getModuleConfig( "contentbox" ).version;
+		return getModuleConfig( "contentbox" ).version;
 	}
-	// get contentbox codename
+
+	/**
+	 * get contentbox codename
+	 */
 	function getContentBoxCodeName(){
 		return getModuleSettings( "contentbox" ).codename;
 	}
-	// get contentbox codename URL
+
+	/**
+	 * get contentbox codename URL
+	 */
 	function getContentBoxCodeNameURL(){
 		return getModuleSettings( "contentbox" ).codenameLink;
 	}
-	// get blog entry point
+
+	/**
+	 * Get the blog entry point as specified in the settings
+	 */
 	function getBlogEntryPoint(){
 		return setting( "cb_site_blog_entrypoint", "blog" );
 	}
 	
+	/**
+	* Get the maintenance message from the ContentBox settings
+	*/
 	function getMaintenanceMessage(){
 		return setting( "cb_site_maintenance_message" );
 	}
 
 	/**
 	* Get a published custom HTML content pieces by slug: DEPRECATED, use contentStore() instead
-	* @see contentStore
+	* @see contentStore()
 	* @deprecated
-	* @slug The content slug to retrieve
-	* @defaultValue The default value to use if custom html element not found.
 	*/
-	function customHTML(required slug, defaultValue="" ){
+	function customHTML( required slug, defaultValue="" ){
 		return contentStore( argumentCollection=arguments );
 	}
 
@@ -136,7 +156,7 @@ component accessors="true" singleton threadSafe{
 	* @slug The content slug to retrieve
 	* @defaultValue The default value to use if the content element not found.
 	*/
-	function contentStore(required slug, defaultValue="" ){
+	function contentStore( required slug, defaultValue="" ){
 		var content = contentStoreService.findBySlug( arguments.slug );
 		return ( !content.isLoaded() ? arguments.defaultValue : content.renderContent() );
 	}
@@ -440,51 +460,81 @@ component accessors="true" singleton threadSafe{
 		if( structKeyExists(prc,"commentsCount" ) ){ return prc.commentsCount; }
 		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext" );
 	}
-	// Get the missing page, if any
+	
+	/**
+	 * Get the missing page, if any, usually used in a page not found context
+	 */
 	any function getMissingPage(){
 		var event = getRequestContext();
-		return event.getValue(name="missingPage",private="true",defaultValue="" );
+		return event.getValue( name="missingPage", private="true", defaultValue="" );
 	}
-	// Get Home Page slug set up by the administrator.
+	
+	/**
+	 * Get Home Page slug set up by the administrator settings
+	 */
 	any function getHomePage(){
 		return setting( "cb_site_homepage" );
 	}
-	// Get the the blog categories, else throws exception
+
+	/**
+	* Checks if the currently viewed page is the homepage.
+	*/
+	boolean function isHomePage(){
+		var prc = getPrivateRequestCollection();
+		// Check if page exists
+		if( !structKeyExists( prc, "page" ) ){ return false; }
+		return ( prc.page.getSlug() == getHomePage() ? true : false );
+	}
+
+	/**
+	 * Get the current page or entries related content array
+	 * @return array
+	 */
 	any function getCurrentRelatedContent(){
 		var relatedContent = [];
 		if( isPageView() && getCurrentPage().hasRelatedContent() ) {
 			relatedContent = getCurrentPage().getRelatedContent();
-		}
-		else if( isEntryView() && getCurrentEntry().hasRelatedContent() ) {
+		} else if( isEntryView() && getCurrentEntry().hasRelatedContent() ) {
 			relatedContent = getCurrentEntry().getRelatedContent();
 		}
 		return relatedContent;
 	}
-	// Get the current page's or blog entrie's custom fields as a struct
+	
+	/**
+	 * Get the current page's or blog entries custom fields as a struct
+	 */
 	struct function getCurrentCustomFields(){
 		var fields = "";
 		if( isPageView() ){
 			fields = getCurrentPage().getCustomFields();
-		}
-		else{
+		} else {
 			fields = getCurrentEntry().getCustomFields();
 		}
 		var results = {};
-		for(var thisField in fields){
+		for( var thisField in fields ){
 			results[ thisField.getKey() ] = thisField.getValue();
 		}
 		return results;
 	}
-	// Get a current page's or blog entrie's custom field by key, you can pass a default value if not found
-	any function getCustomField(required key, defaultValue){
+
+	/**
+	 * Get a current page's or blog entrie's custom field by key, you can pass a default value if not found
+	 * @key The custom field key
+	 * @defaultValue The default value to return if not found
+	 */
+	any function getCustomField( required key, defaultValue ){
 		var fields = getCurrentCustomFields();
 		if( structKeyExists( fields, arguments.key ) ){
-			return fields[arguments.key];
+			return fields[ arguments.key ];
 		}
-		if( structKeyExists(arguments,"defaultValue" ) ){
+		if( structKeyExists( arguments, "defaultValue" ) ){
 			return arguments.defaultValue;
 		}
-		throw(message="No custom field with key: #arguments.key# found",detail="The keys are #structKeyList(fields)#",type="CBHelper.InvalidCustomField" );
+		throw(
+			message = "No custom field with key: #arguments.key# found",
+			detail 	= "The keys are #structKeyList(fields)#",
+			type 	= "CBHelper.InvalidCustomField" 
+		);
 	}
 
 	/************************************** search *********************************************/
