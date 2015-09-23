@@ -38,7 +38,7 @@
 				<!--- Blog Link, verify active --->
 				<cfif ( !prc.cbSettings.cb_site_disable_blog )>
 					<cfif cb.isBlogView()><li class="active"><cfelse><li></cfif>
-						<a href="#event.buildLink( 'blog' )#">Blog</a>
+						<a href="#cb.linkBlog()#">Blog</a>
 					</li>
 				</cfif>
 			</ul>

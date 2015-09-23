@@ -7,7 +7,10 @@
 		#cb.siteName()# - #cb.siteTagLine()#
 	</cfif>
 </title>
-<!--- Meta Tags --->
+
+<!--- ********************************************************************************* --->
+<!--- 					META TAGS														--->
+<!--- ********************************************************************************* --->
 <meta name="generator" 	 	content="ContentBox powered by ColdBox" />
 <meta name="robots" 	 	content="index,follow" />
 <meta name="viewport" 		content="width=device-width, initial-scale=1">
@@ -30,19 +33,33 @@
 <!--- Base HREF for SES enabled URLs --->
 <base href="#cb.siteBaseURL()#" />
 
+<!--- ********************************************************************************* --->
+<!--- 					RSS DISCOVERY													--->
+<!--- ********************************************************************************* --->
+
 <!--- RSS Discovery If In View Mode --->
 <cfif cb.isPageView() and cb.getCurrentPage().getAllowComments()>
 	<link rel="alternate" type="application/rss+xml" title="Pages's Recent Comments" href="#cb.linkPageRSS( comments=true, page=cb.getCurrentPage() )#" />
 </cfif>
 
-<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase(cb.themeSetting('cbBootswatchTheme','default'))#/skin.css?v=1" />
-<!--- Bootstrap --->
-<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase(cb.themeSetting('cbBootswatchTheme','default'))#/bootstrap.min.css?v=1" />
+<!--- ********************************************************************************* --->
+<!--- 					CSS 															--->
+<!--- ********************************************************************************* --->
+
+<!--- Swatch and Skin --->
+<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/bootstrap.min.css?v=1" />
+<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/skin.css?v=1" />
 
 <!--- Font Awesome --->
 <link rel="stylesheet" href="#cb.themeRoot()#/includes/css/font-awesome/font-awesome.min.css?v=1" />
 <link rel="stylesheet" href="#cb.themeRoot()#/includes/css/font-awesome/font-awesome-ie7.min.css?v=1" />
 
-<!--- Include our unminified, unLESSified, non cached version of the stylesheet --->
+<!-- Global Theme CSS --->
 <link rel="stylesheet" href="#cb.themeRoot()#/includes/css/main.css?v=1" />
+
+<!--- ********************************************************************************* --->
+<!--- 					JAVASCRIPT														--->
+<!--- ********************************************************************************* --->
+<script type="text/javascript" src="#cb.themeRoot()#/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="#cb.themeRoot()#/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 </cfoutput>

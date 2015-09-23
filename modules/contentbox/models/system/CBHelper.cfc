@@ -277,8 +277,8 @@ component accessors="true" singleton threadSafe{
 	* Determines if site comments are enabled and if the entry accepts comments
 	* @content The entry or page content to validate comments also with
 	*/
-	function isCommentsEnabled(content){
-		if( structKeyExists(arguments,"content" ) ){
+	boolean function isCommentsEnabled( content ){
+		if( structKeyExists( arguments, "content" ) ){
 			return ( arguments.content.getAllowComments() AND setting( "cb_comments_enabled" ) );
 		}
 		return ( setting( "cb_comments_enabled" ) );
