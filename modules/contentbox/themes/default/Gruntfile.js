@@ -4,7 +4,7 @@ module.exports = function( grunt ){
 	grunt.registerTask( "default", [ "watch" ] );
 
 	// Build All
-	grunt.registerTask( "all", [ "css", "js", "jslib", "copy" ] );
+	grunt.registerTask( "all", [ "css", "js", "copy" ] );
 
 	// CSS Task
 	grunt.registerTask( "css", [
@@ -21,6 +21,7 @@ module.exports = function( grunt ){
 	// custom js task
 	grunt.registerTask( "js", [
 		"clean:revjs",			//clean old rev js
+		"bower_concat:js",		//bower concat
 		"jshint", 				//js lint
 		"concat:js", 			//concat js 
 		"uglify:js",			//min js
@@ -29,18 +30,6 @@ module.exports = function( grunt ){
 		"clean:minjs",			//clean min js
 		"injector:js"			//inject js
 	] );
-
-	// js library task
-	grunt.registerTask( "jslib", [
-		"clean:revjslib",
-		"bower_concat:js",
-		"concat:jslib",
-		"uglify:jslib",
-		"clean:combinedjslib",
-		"rev:jslib",
-		"clean:minjslib",
-		"injector:jslib"
-	]);
 
 	// Config
 	grunt.initConfig( {
@@ -51,17 +40,10 @@ module.exports = function( grunt ){
 		bower_concat : {
 			css : { 
 				cssDest : 'includes/css/bower.css',
-				mainFiles : {
-					'bootstrap' : 'dist/css/bootstrap.css',
-					'navgoco' : 'src/jquery.navgoco.css'
-				}
+				exclude : [ "bootstrap" ]
 			},
 		  	js 	: { 
-		  		dest  	: 'includes/jslib/bower.js', 
-		  		exclude : [ "jquery" ],
-		  		mainFiles :{
-		  			'navgoco' : 'src/jquery.navgoco.js'
-		  		}
+		  		dest  	: 'includes/js/bower.js'
 		  	}
 		},
 
@@ -91,29 +73,18 @@ module.exports = function( grunt ){
 		concat : {
 			css : {
 	        	files : {
-	            	"includes/css/ba.css" : [
+	            	"includes/css/theme.css" : [
 	            		"includes/css/bower.css",
-	            		"includes/css/src/animate.css",
-	            		"includes/css/src/main.css",
-	            		"includes/css/src/overrides.css"
+	            		"includes/css/src/theme-global.css"
 	            	]
 				} 
 			},
 			js : {
 	        	files : {
-	            	"includes/js/ba.js" : [
-	            		"includes/js/**/*.js"
+	            	"includes/js/theme.js" : [
+	            		"includes/js/bower.js",
+	            		"includes/js/src/**.js",
 	            	]
-				}
-			},
-			jslib : {
-				files : {
-					"includes/jslib/ba.js" : [
-						"bower_components/jquery/dist/jquery.js",
-	            		"includes/jslib/bower.js",
-	            		"includes/jslib/wizard/loader.min.js",
-	            		"includes/jslib/theme.js"
-					]
 				}
 			}
 		}, // end concat
@@ -121,7 +92,7 @@ module.exports = function( grunt ){
 		// CSS Min
 		cssmin : {
 			css : {
-				files : { "includes/css/ba.min.css" : [ "includes/css/ba.css" ] }
+				files : { "includes/css/theme.min.css" : [ "includes/css/theme.css" ] }
 			}
 		}, // end css min
 
@@ -132,39 +103,30 @@ module.exports = function( grunt ){
     			mangle : false
     		},
 			js : {
-				files : { "includes/js/ba.min.js" : [ "includes/js/ba.js"	] }
-			},
-			jslib : {
-				files : { "includes/jslib/ba.min.js" : [ "includes/jslib/ba.js"	] }
+				files : { "includes/js/theme.min.js" : [ "includes/js/theme.js"	] }
 			}
 		},
 
 		// Cache Busting
 		rev : {
 			css : {
-				files : { src : [ "includes/css/ba.min.css" ] }
+				files : { src : [ "includes/css/theme.min.css" ] }
 			},
 			js 	: {
-				files : { src : [ "includes/js/ba.min.js" ] }
-			},
-			jslib 	: {
-				files : { src : [ "includes/jslib/ba.min.js" ] }
+				files : { src : [ "includes/js/theme.min.js" ] }
 			}
 		}, // end cache busting
 
 		// Cleanup
 		clean : {
 			// css
-			combinedcss : { src : [ "includes/css/ba.css", "includes/css/bower.css" ] },
-			mincss 		: { src : [ "includes/css/ba.min.css" ] },
-			revcss 		: { src : [ "includes/css/*ba.min.css" ] },
+			combinedcss : { src : [ "includes/css/theme.css", "includes/css/bower.css" ] },
+			mincss 		: { src : [ "includes/css/theme.min.css" ] },
+			revcss 		: { src : [ "includes/css/*theme.min.css" ] },
 			// js
-			combinedjs  	: { src : [ "includes/js/ba.js" ] },
-			combinedjslib  	: { src : [ "includes/jslib/ba.js", "includes/jslib/bower.js" ] },
-			minjs 			: { src : [ "includes/js/ba.min.js" ] },
-			minjslib		: { src : [ "includes/jslib/ba.min.js" ] },
-			revjs 			: { src : [ "includes/js/*ba.min.js" ] },
-			revjslib		: { src : [ "includes/jslib/*ba.min.js" ] }
+			combinedjs  	: { src : [ "includes/js/theme.js", "includes/js/bower.js" ] },
+			minjs 			: { src : [ "includes/js/theme.min.js" ] },
+			revjs 			: { src : [ "includes/js/*theme.min.js" ] }
 		},
 
 		// Watch
@@ -175,38 +137,37 @@ module.exports = function( grunt ){
 			},
 			js : {
 				files : [ 
-					"includes/js/services/*.js", 
-					"includes/js/controllers/*.js", 
-					"includes/js/app.js",
-					"includes/js/routing.js",
-					"includes/js/directives.js",
-					"includes/js/bootstrap.js"
+					"includes/js/src/*.js"
 				],
 				tasks : [ "js" ]
 			},
 			bower : {
 				files : [ "bower.json" ],
 				tasks : [ "main" ]
-			},
-			tests : {
-				files : [ 'tests/specs/**/*.cfc', 'models/**/*.cfc' ],
-				options : {
-					livereload : true
-				}
 			}
 		},
 
 		// Injector
 		injector : {
-			css : {
-				files : { "views/includes.cfm" : [ "includes/css/*ba.min.css" ]	}
+			options : {
+				transform : function( filepath, index, length ){
+					if( filepath.indexOf( ".js" ) !== -1 ){
+						return '<script src="#cb.themeRoot()#' + filepath + '"></script>';
+					}
+					return '<link rel="stylesheet" href="#cb.themeRoot()#' + filepath + '">';					
+				}
 			},
-			jslib : {
-				options : { starttag : "<!-- injector:jslib -->" },
-				files : { "views/includes.cfm" : [ "includes/jslib/*ba.min.js" ] }
+			css : {
+				files : { 
+					"views/_pageIncludes.cfm" 	: [ "includes/css/*theme.min.css" ],
+					"layouts/blog.cfm" 			: [ "includes/css/*theme.min.css" ]
+				}
 			},
 			js : {
-				files : { "views/includes.cfm" : [ "includes/js/*ba.min.js" ] }
+				files : { 
+					"views/_pageIncludes.cfm" 	: [ "includes/js/*theme.min.js" ],
+					"layouts/blog.cfm" 			: [ "includes/js/*theme.min.js" ]
+				}
 			}
 		},
 
@@ -227,7 +188,7 @@ module.exports = function( grunt ){
 				},
 				ignores : [ "*.ba.min.js" ]
 			},
-			all : [ "Gruntfile.js", 'includes/js/**/*.js' ]			
+			all : [ "Gruntfile.js", 'includes/js/src/**/*.js' ]			
 		},
 
 	} );

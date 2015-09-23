@@ -86,9 +86,7 @@
 	</div>
 
 	<div class="col-sm-3">
-		<div class="well">
-			#cb.quickView(view='_blogsidebar')#
-		</div>
+		#cb.quickView(view='_blogsidebar')#
 	</div>
 </div>
 
