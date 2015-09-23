@@ -36,10 +36,15 @@
 <!--- ********************************************************************************* --->
 <!--- 					RSS DISCOVERY													--->
 <!--- ********************************************************************************* --->
-
-<!--- RSS Discovery If In View Mode --->
-<cfif cb.isPageView() and cb.getCurrentPage().getAllowComments()>
-	<link rel="alternate" type="application/rss+xml" title="Pages's Recent Comments" href="#cb.linkPageRSS( comments=true, page=cb.getCurrentPage() )#" />
+<cfif cb.themeSetting( "rssDiscovery", true )>
+	<link rel="alternate" type="application/rss+xml" title="Recent Page Updates" href="#cb.linkPageRSS()#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="#cb.linkPageRSS(comments=true)#" />	
+	<link rel="alternate" type="application/rss+xml" title="Recent Content Updates" href="#cb.linkSiteRSS()#" />
+	<link rel="alternate" type="application/rss+xml" title="Recent Content Comment Updates" href="#cb.linkSiteRSS(comments=true)#" />
+	<!--- RSS Discovery If In View Mode --->
+	<cfif cb.isPageView() and cb.getCurrentPage().getAllowComments()>
+		<link rel="alternate" type="application/rss+xml" title="Pages's Recent Comments" href="#cb.linkPageRSS( comments=true, page=cb.getCurrentPage() )#" />
+	</cfif>
 </cfif>
 
 <!--- ********************************************************************************* --->
