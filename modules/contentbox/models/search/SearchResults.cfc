@@ -3,7 +3,7 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-The official ContentBox Search Results Object
+* The official ContentBox Search Results Object
 */
 component accessors="true"{
 
@@ -34,7 +34,7 @@ component accessors="true"{
 	* Populate a memento
 	* @return SearchResults
 	*/
-	function populate(required struct memento){
+	any function populate( required struct memento ){
 		for(var key in memento){
 			if( structKeyExists( variables,key ) ){
 				variables[ key ] = memento[ key ];

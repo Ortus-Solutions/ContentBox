@@ -18,6 +18,7 @@ component {
 	this.entryPoint			= "cbcore";
 	this.modelNamespace 	= "cb";
 	this.dependencies 		= [ "cborm", "cbmailservices", "cbstorages", "cbantisamy", "cbfeeds", "cbmessagebox", "cbsecurity" ];
+	this.cfmapping 			= "contentbox";
 
 	function configure(){
 		// contentbox settings
