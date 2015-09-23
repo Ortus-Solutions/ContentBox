@@ -26,7 +26,7 @@ component singleton{
 		}
 		
 		if( len( arguments.page.getTitle() ) ){
-			bc &= '<span class="icon-caret-right"> </span> <a href="javascript:contentDrilldown( ''#arguments.page.getContentID()#'' )">#arguments.page.getTitle()#</a> ';
+			bc &= '<span class="fa fa-caret-right"> </span> <a href="javascript:contentDrilldown( ''#arguments.page.getContentID()#'' )">#arguments.page.getTitle()#</a> ';
 		}
 		
 		return bc;
