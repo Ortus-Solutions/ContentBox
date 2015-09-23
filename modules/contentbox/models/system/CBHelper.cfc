@@ -32,10 +32,11 @@ component accessors="true" singleton threadSafe{
 		return this;
 	}
 
-	/************************************** core *********************************************/
+	/************************************** coldbox bridge *********************************************/
 
 	/**
 	* Get the current request context
+	* @return coldbox.system.web.context.RequestContext
 	*/
 	function getRequestContext(){
 		return variables.requestService.getContext();
@@ -47,6 +48,13 @@ component accessors="true" singleton threadSafe{
 	*/
 	struct function getRequestCollection( boolean private=false ){
 		return getRequestContext().getCollection( private=arguments.private );
+	}
+
+	/**
+	* Get the private request collection
+	*/
+	struct function getPrivateRequestCollection(){
+		return getRequestContext().getCollection( private=true );
 	}
 
 	/**
