@@ -1,0 +1,1 @@
+<cfoutput>#cb.quickLayout( "pages_print" )#</cfoutput>
