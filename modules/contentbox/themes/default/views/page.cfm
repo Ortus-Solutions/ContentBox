@@ -1,4 +1,5 @@
 ﻿<cfoutput>
+<cfparam name="args.print" default="false">
 <!--- Page Jumbotrons --->
 <cfif cb.getCurrentPage().getSlug() EQ cb.getHomePage()>
 	<div class="body-header-jumbotron jumbotron #cb.themeSetting('hpHeaderBg')#-bg">
@@ -25,8 +26,10 @@
 <section id="body-main">
 	<div class="container">
 
+		<!--- Exports --->
+
 		<!--- BreadCrumbs --->
-		<cfif !isNull( "prc.page" ) and prc.page.getNumberOfChildren()>
+		<cfif !args.print AND !isNull( "prc.page" ) AND prc.page.getSlug() neq cb.getHomePage()>
 			<div id="body-breadcrumbs" class="col-sm-12">
 				<i class="fa fa-home"></i> #cb.breadCrumbs( separator="<i class='fa fa-angle-right'></i> " )#
 			</div>

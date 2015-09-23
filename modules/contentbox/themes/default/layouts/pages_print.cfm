@@ -1,4 +1,3 @@
-<cfparam name="args.sidebar" default="true">
 <cfoutput>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +33,7 @@
 	#cb.event( "cbui_beforeContent" )#
 
 	<!--- Main View --->
-	#cb.mainView( args=args )#
+	#cb.mainView( args={ sidebar=true, print=true } )#
 
 	<!--- ContentBoxEvent --->
 	#cb.event( "cbui_afterContent" )#
