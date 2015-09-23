@@ -43,9 +43,9 @@
 			<td>
 				<!--- Children Dig Deeper --->
 				<cfif content.getNumberOfChildren()>
-					<a href="javascript:contentDrilldown( '#content.getContentID()#' )" class="hand-cursor" title="View Children (#content.getNumberOfChildren()#)"><i class="icon-plus-sign fa-lg text"></i></a>
+					<a href="javascript:contentDrilldown( '#content.getContentID()#' )" class="hand-cursor" title="View Children (#content.getNumberOfChildren()#)"><i class="fa fa-plus-square text"></i></a>
 				<cfelse>
-					<i class="fa fa-circle-blank fa-lg"></i>
+					<i class="fa fa-circle-thin"></i>
 				</cfif>
 				<!--- Title --->
 				<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>

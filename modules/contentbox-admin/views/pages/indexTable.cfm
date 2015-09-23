@@ -43,9 +43,9 @@
 				<td>
 					<!--- Children Dig Deeper --->
 					<cfif page.getNumberOfChildren()>
-						<a href="javascript:contentDrilldown( '#page.getContentID()#' )" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="fa fa-plus-sign fa-lg text"></i></a>
+						<a href="javascript:contentDrilldown( '#page.getContentID()#' )" class="hand-cursor" title="View Child Pages (#page.getNumberOfChildren()#)"><i class="fa fa-plus-square text"></i></a>
 					<cfelse>
-						<i class="fa fa-circle-blank fa-lg"></i>
+						<i class="fa fa-circle-thin"></i>
 					</cfif>
 					<!--- Title --->
 					<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
@@ -64,6 +64,10 @@
 					<!--- ssl protected --->
 					<cfif page.getSSLOnly()>
 						<i class="fa fa-shield" title="SSL Enabled"></i>
+					</cfif>
+					<!--- Home page?--->
+					<cfif page.getSlug() eq prc.cbSettings.cb_site_homepage>
+						<i class="fa fa-home text-danger" title="Current Homepage"></i>
 					</cfif>
 				</td>
 				<td class="text-center">
@@ -157,8 +161,7 @@
 				    </div>	
 				    
 				    <!--- Drag Handle --->
-				    &nbsp;
-					<a href="##" onclick="return false;" class="dragHandle btn btn-default btn-sm" title="Click and drag to change menu order"><i class="fa fa-arrows-v"></i></a>
+					<a href="##" onclick="return false;" class="dragHandle btn btn-default btn-sm" title="Click and drag to change menu order" style="padding:5px 15px"><i class="fa fa-arrows-v"></i> </a>
 				</td>
 			</tr>
 		</cfloop>
