@@ -172,19 +172,32 @@
         <section id="container">
             <header id="header">
 
-                <!--logo start-->
+                <!--Branding-->
                 <div class="brand text-center">
                     <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="right auto">
                         <img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
                     </a>
                 </div>
 
-                <!--logo end-->
+                <!-- Toggle Navigation Button -->
                 <div class="toggle-navigation toggle-left">
-                    <a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right auto" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+                    <a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
                     	<i class="fa fa-bars"></i>
                     </a>
                 </div>
+
+                <!---Search --->
+				<cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
+				<span class="navbar-search" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
+					<!---Search Results --->
+					<span id="div-search-results"></span>
+					<!---Search Inputs --->
+					<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
+					<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
+				</span>
+				</cfif>
+
+                <!-- User Nav -->
                 <div class="user-nav">
                     <ul>
                     	<!--- View Site --->

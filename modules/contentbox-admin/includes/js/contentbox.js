@@ -18,7 +18,7 @@ $(document).ready(function() {
 	$remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
         modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i></div>' );
-    } )
+    } );
     
 	// Global Tool Tip Settings
 	toolTipSettings	= {
@@ -56,7 +56,7 @@ $(document).ready(function() {
         errorPlacement: function(error, element) {
             error.appendTo( element.parent( "div.controls" ) );
         }
-    } )	
+    } );
     $.fn.resetValidations = function() {
         var form = this[ 0 ].currentForm;
         // also remove success and error classes
@@ -67,7 +67,7 @@ $(document).ready(function() {
             $( this ).removeClass( 'error' ).removeClass( 'valid' );
         } );
         return this;
-    }
+    };
     // simple method to blank out all form fields 
     $.fn.clearForm = function() {
     	if( this.data( 'validator') == undefined ){ return; }
@@ -91,7 +91,7 @@ $(document).ready(function() {
         } );
         $( this.data( 'validator' ) ).resetValidations();
         return this;
-    }
+    };
     $.fn.collect = function() {
         var serializedArrayData = this.serializeArray();
         var data = {};
@@ -99,9 +99,9 @@ $(document).ready(function() {
             data[ obj.name ] = obj.value;
         } );
         return data;
-    }
+    };
 	// flicker messages
-	var t=setTimeout( "toggleFlickers()",5000);
+	var t = setTimeout( toggleFlickers(), 5000 );
 
 	// Tab link detector
 	$(function () {
@@ -110,7 +110,7 @@ $(document).ready(function() {
 	} );
 	
 	// Sidebar shortcut keys
-	if( $( "#main-sidebar" ).attr( "id" ) == undefined ){
+	if( $( "#main-sidebar" ).attr( "id" ) === undefined ){
 		$( "#sidebar-toggle" ).hide();
 	}
 	else{
@@ -156,7 +156,7 @@ $(document).ready(function() {
             // try to retrieve cookie that matches accordion panel id
             match = $.cookie( data );
             // if a match was found...
-            if ( match != null ) {
+            if ( match !== null ) {
                 // wax defaults that are hardcoded on the template
                 accordion.find( '.collapse' ).removeClass( 'in' );
                 //show the matched group
@@ -169,19 +169,19 @@ $(document).ready(function() {
             var active = accordion.find( '.in' ).attr( 'id' );
             // set cookie
             $.cookie( data, active );
-        } )            
-    } )
+        } );           
+    } );
 } );
 function isSidebarOpen(){
 	var sidebar = $( "#main-sidebar" );
-	return ( sidebar.attr( "id" ) != undefined && sidebar.css( "display" ) == "block"  ? true : false );
+	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) == "block"  ? true : false );
 }
 function toggleSidebar(){
 	var sidebar = $( "#main-sidebar" );
 	var type 	= sidebar.css( "display" );
 	var sidebarState = false;
 	// nosidebar exit
-	if( type == undefined ){ return; }
+	if( type === undefined ){ return; }
 	// toggles
 	if( type == "block" ){
 		sidebar.fadeOut();
@@ -246,22 +246,28 @@ function adminNotifier(type, message, delay){
 }
 function activateContentSearch(){
 	// local refs
-	$nav_search = $( "#nav-search" );
+	$nav_search 		= $( "#nav-search" );
 	$nav_search_results = $( "#div-search-results" );
 	// opacity
 	$nav_search.css( "opacity","0.8" );
 	// focus effects
-	$nav_search.focusin(function() {
-		if( $nav_search.is( ":focus" ) ){ return; }
-    	$(this).animate( {
-		    opacity: 1.0,
-		    width: '+=95',
-		  }, 500, function(){} );
-    } ).blur(function() {
-    	$(this).animate( {
-		    opacity: 0.50,
-		    width: '-=95',
-		  }, 500, function(){} );
+	$nav_search.focusin( function(){
+		//if( $nav_search.is( ":focus" ) ){ return; }
+    	$( this ).animate( {
+		    	opacity: 1.0,
+		    	width  : '+=250',
+		  	}, 
+		  	500, 
+		  	function(){} 
+		);
+    } ).blur( function(){
+    	$( this ).animate( {
+				opacity: 0.50,
+		    	width  : '-=250',
+			}, 
+			500, 
+			function(){}
+		);
     } );
 	// keyup quick search
 	$nav_search.keyup(function(){
@@ -279,7 +285,7 @@ function activateContentSearch(){
 	// add click listener to body to hide quick search panel
     $( 'body' ).click( function( e ){
        var target = $( e.target ),
-           ipTarget = target.closest( '#div-search' )
+           ipTarget = target.closest( '#div-search' );
        // if click occurs within visible element, add to ignore list
        if( !ipTarget.length ){
            //run global hide methods
@@ -288,8 +294,8 @@ function activateContentSearch(){
     } );
 }
 function closeSearchBox(){
-	$nav_search_results.slideUp();
-	$nav_search.val('');
+	$( "#div-search-results" ).slideUp();
+	$( "#nav-search" ).val( '' );
 }
 function quickLinks( inURL ){
 	if( inURL != 'null' )
@@ -297,7 +303,7 @@ function quickLinks( inURL ){
 }
 function activateTooltips(){
 	//Tooltip 
-    $( '[title]' ).tooltip( toolTipSettings )
+    $( '[title]' ).tooltip( toolTipSettings );
 }
 function hideAllTooltips(){
 	$( ".tooltip" ).hide();
