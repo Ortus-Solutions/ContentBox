@@ -76,11 +76,11 @@
 				</cfif>
 			</div>
     	</div>
-    	<cfif isdefined("prc.page") and prc.page.getNumberOfChildren()>
-			<div class="col-sm-3 sidenav">
-				#cb.quickView(view='_pagesidebar')#
-			</div>
-		</cfif>
+
+    	<!--- Sidebar --->
+		<div class="col-sm-3 sidenav">
+			#cb.quickView(view='_pagesidebar')#
+		</div>
 	</div>
 </section>
 <!--- ContentBoxEvent --->

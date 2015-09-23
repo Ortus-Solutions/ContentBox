@@ -1,29 +1,36 @@
 ﻿<cfoutput>
-<div class="fullWidth">
+<div class="body-header-jumbotron jumbotron">
+	<div class="container text-center">
+		<h1>
+			<i class="fa fa-exclamation-triangle"></i> 
+			Houston we have a problem!
+		</h1>
 
-	<!--- This page is rendered whenever an error ocurrs in your blog --->
-	<div class="infoBar">
-	Oh man! Something really went wrong with your request.  The administrator has been advised, so do not worry!
-	Please try your request again!
-	</div>
+		<div class="form-group">
+			<strong>Fault Action:</strong> <code>#prc.faultAction#</code>
+		</div>
 
-	<div class="contentBar">
-		<strong>Fault Action:</strong> #prc.faultAction#
-	</div>
+		<!--- Dev Debugging --->
+		<cfif getSetting( "environment" ) eq "development">
+			
+			<div class="form-group">
+				<pre>
+				#prc.exception.message# #prc.exception.detail#
+				</pre>
+			</div>
 
-	<div class="contentBar">
-		<strong>Error Information:</strong> <br/>
-		#prc.exception.message# #prc.exception.detail#
-	</div>
+			<div class="form-group">
+				<strong>More Information:</strong> <br/>
+				<pre>
+					#prc.exception.stackTrace#
+				</pre>
+			</div>
 
-	<!---
-	--->
-	<div class="contentBar">
-		<strong>More Information:</strong> <br/>
-		#prc.exception.stackTrace#
+		</cfif>
+		
+		<p>
+			<a class="btn btn-primary btn-lg" href="#cb.linkHome()#" role="button">Go Home</a>
+		</p>
 	</div>
 </div>
-
-<!--- Separator --->
-<div class="clr"></div>
 </cfoutput>
