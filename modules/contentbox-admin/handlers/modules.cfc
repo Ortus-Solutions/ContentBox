@@ -10,6 +10,7 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="moduleService"	inject="id:moduleService@cb";
 	property name="cb" 				inject="cbHelper@cb";
+	property name="messagebox" 		inject="messagebox@cbmessagebox";
 
 	// PrePost Actions
 	this.prehandler_except = "execute";

@@ -5,7 +5,7 @@
 * ---
 * Manage ContentBox Modules
 */
-component extends="cborm.models.VirtualEntityService" accessors="true" singleton{
+component extends="cborm.models.VirtualEntityService" accessors="true" singleton threadsafe{
 
 	// Dependecnies
 	property name="settingService"			inject="id:settingService@cb";
@@ -25,10 +25,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	ModuleService function init(){
 		// init it
-		super.init(entityName="cbModule" );
-		modulesPath = "";
-		modulesInvocationPath = "";
-		moduleWidgetCache = {};
+		super.init( entityName="cbModule" );
+		modulesPath 			= "";
+		modulesInvocationPath 	= "";
+		moduleWidgetCache 		= {};
 		return this;
 	}
 
@@ -36,8 +36,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* onDIComplete
 	*/
 	function onDIComplete(){
-		modulesPath = contentBoxSettings.path & "/modules";
-		modulesInvocationPath = contentBoxSettings.invocationPath & ".modules";
+		modulesPath 			= contentBoxSettings.path & "/modules_user";
+		modulesInvocationPath 	= contentBoxSettings.invocationPath & ".modules_user";
 	}
 
 	/**

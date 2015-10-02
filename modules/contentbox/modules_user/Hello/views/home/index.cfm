@@ -1,44 +1,42 @@
 <cfoutput>
-<div class="row-fluid">
-	<!--- main content --->
-	<div class="span9" id="main-content">
-		<div class="box">
-			<!--- Body Header --->
-			<div class="header">
-				<i class="icon-beaker"></i>
-				Hello Module
-			</div>
-			<!--- Body --->
-			<div class="body" id="mainBody">
+	<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1"><i class="fa fa-flask fa-lg"></i> Hello Module</h1>
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-9">
+
+		<div class="panel panel-default">
+		    <div class="panel-body">
 
 				<!--- Logo --->
-				<div class="center">
+				<div class="text-center">
 					<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo"/><br/>
 					v.#getModuleConfig('contentbox').version# <br/>
 					(Codename: <a href="#getModuleSettings( "contentbox" ).codenameLink#" target="_blank">#getModuleSettings( "contentbox" ).codename#</a>)
 					<br/><br/>
+
+					<p>
+						Hi and welcome to the Hello module, ContentBox says <strong>Hello Buddy!</strong>, what you expected more?
+					</p>
+
 				</div>
-
-				<p>
-					Hi and welcome to the Hello module, ContentBox says <strong>Hello Buddy!</strong>, what you expected more?
-				</p>
-
-
 			</div>
 		</div>
-	</div>
 
-	<div class="span3" id="main-sidebar">
+	</div>
+	<div class="col-md-3">
 		<!--- Info Box --->
-		<div class="small_box">
-			<div class="header">
-				<i class="icon-medkit"></i> Need Help?
-			</div>
-			<div class="body">
-				#renderView(view="_tags/needhelp", module="contentbox-admin" )#
-			</div>
-		</div>	
+		<div class="panel panel-primary">
+		    <div class="panel-heading">
+		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Need Help?</h3>
+		    </div>
+		    <div class="panel-body">
+		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#
+		    </div>
+		</div>
 	</div>
-
 </div>
 </cfoutput>
