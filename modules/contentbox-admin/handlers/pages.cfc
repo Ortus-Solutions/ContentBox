@@ -44,8 +44,6 @@ component extends="baseContentHandler"{
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
 		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
 
-		// Tab
-		prc.tabContent_pages = true;
 		prc.cssAppendList = "../spacelab/plugins/dataTables/css/dataTables";
         prc.jsAppendList  = "../spacelab/plugins/dataTables/js/jquery.dataTables,../spacelab/plugins/dataTables/js/dataTables.bootstrap";
 		// view
@@ -180,9 +178,6 @@ component extends="baseContentHandler"{
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 		prc.xehShowRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector";
 		prc.xehBreakContentLink = "#prc.cbAdminEntryPoint#.content.breakContentLink";
-
-		// Turn Tab On
-		prc.tabContent_pages = true;
 
 		// view
 		event.setView( "pages/editor" );
