@@ -16,7 +16,9 @@ component extends="baseContentHandler"{
 	// Public properties
 	this.preHandler_except = "pager";
 
-	// pre handler
+	/**
+	 * pre handler
+	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
 		// exit Handlers
@@ -24,7 +26,9 @@ component extends="baseContentHandler"{
 		prc.xehContentRemove 	= "#prc.cbAdminEntryPoint#.contentStore.remove";
 	}
 
-	// index
+	/**
+	 * index
+	 */
 	function index( event, rc, prc ){
 		// params
 		event.paramValue( "parent","" );
@@ -47,7 +51,9 @@ component extends="baseContentHandler"{
 		event.setView( "contentStore/index" );
 	}
 
-	// contentTable
+	/**
+	 * index contentTable
+	 */
 	function contentTable( event, rc, prc ){
 		// params
 		event.paramValue( "page", 1 )
@@ -61,11 +67,6 @@ component extends="baseContentHandler"{
 
 		// JS null checks
 		if( rc.parent eq "undefined" ){ rc.parent = ""; }
-
-		// prepare paging object
-		prc.oPaging 	= getModel( "Paging@cb" );
-		prc.paging 		= prc.oPaging.getBoundaries();
-		prc.pagingLink 	= "javascript:contentPaginate(@page@)";
 
 		// is Filtering?
 		if( rc.fAuthors neq "all" OR
@@ -83,15 +84,15 @@ component extends="baseContentHandler"{
 		}
 
 		// search content with filters and all
-		var contentResults = contentStoreService.search( search=rc.searchContent,
-													   	 isPublished=rc.fStatus,
-													   	 category=rc.fCategories,
-													   	 author=rc.fAuthors,
-													   	 creator=rc.fCreators,
-													   	 parent=( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
-													   	 max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-													   	 offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
-													   	 sortOrder="createdDate desc" );
+		var contentResults = contentStoreService.search( 
+			search		= rc.searchContent,
+			isPublished	= rc.fStatus,
+			category	= rc.fCategories,
+			author		= rc.fAuthors,
+			creator		= rc.fCreators,
+			parent		= ( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
+			sortOrder	= "createdDate desc" 
+		);
 		prc.content 	 = contentResults.content;
 		prc.contentCount = contentResults.count;
 

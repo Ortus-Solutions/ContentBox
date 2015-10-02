@@ -5,7 +5,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-9">
 		<!--- MessageBox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!---Import Log --->
@@ -93,7 +93,7 @@
 			</div>
 		#html.endForm()#
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
