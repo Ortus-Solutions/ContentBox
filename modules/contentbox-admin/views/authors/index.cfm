@@ -5,7 +5,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-9">
 		<!--- MessageBox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!---Import Log --->
@@ -46,7 +46,7 @@
 								    </div>
 								</cfif>
 								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									<button class="btn btn-sm btn-danger" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')">Create User</button>
+									<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')">Create User</button>
 								</cfif>
 							</div>
 						</div>
@@ -62,7 +62,7 @@
 			</div>
 		#html.endForm()#
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>

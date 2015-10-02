@@ -53,7 +53,7 @@
 											</cfif>
 								    	</ul>
 								    </div>
-									<button onclick="return createPermission();" class="btn btn-sm btn-danger">Create Permission</button>
+									<button onclick="return createPermission();" class="btn btn-sm btn-primary">Create Permission</button>
 								</cfif>
 							</div>
 						</div>
@@ -67,7 +67,7 @@
 								<th>Permission</th>
 								<th>Description</th>
 								<th class="text-center">Roles Assigned</th>		
-								<th width="150" class="text-center {sorter:false}">Actions</th>
+								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>				
 						<tbody>

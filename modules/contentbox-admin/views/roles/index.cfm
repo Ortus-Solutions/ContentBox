@@ -54,7 +54,7 @@
 											</cfif>
 								    	</ul>
 								    </div>
-									<button onclick="return createRole();" class="btn btn-sm btn-danger">Create Role</button>
+									<button onclick="return createRole();" class="btn btn-sm btn-primary">Create Role</button>
 								</div>
 								</cfif>
 							</div>
@@ -64,7 +64,7 @@
 				<div class="panel-body">
 					<!--- Info Bar --->
 					<div class="alert alert-warning">
-						<i class="icon-warning-sign fa-lg"></i>
+						<i class="fa fa-warning fa-lg"></i>
 						You cannot delete roles that have authors attached to them.  You will need to un-attach those authors from the role first.
 					</div>
 					<!--- roles --->
@@ -75,7 +75,7 @@
 								<th>Description</th>		
 								<th width="95" class="text-center">Permissions</th>
 								<th width="95" class="text-center">Authors</th>
-								<th width="150" class="text-center {sorter:false}">Actions</th>
+								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>				
 						<tbody>
