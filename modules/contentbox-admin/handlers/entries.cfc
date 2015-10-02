@@ -48,8 +48,6 @@ component extends="baseContentHandler"{
 		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
 
-		// Tab
-		prc.tabContent_blog = true;
 		// view
 		event.setView( "entries/index" );
 	}
@@ -177,8 +175,6 @@ component extends="baseContentHandler"{
 		prc.xehShowRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector";
 		prc.xehBreakContentLink = "#prc.cbAdminEntryPoint#.content.breakContentLink";
 
-		// Tab
-		prc.tabContent_blog = true;
 		// view
 		event.setView( "entries/editor" );
 	}

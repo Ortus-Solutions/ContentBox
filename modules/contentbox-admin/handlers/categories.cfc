@@ -13,11 +13,7 @@ component extends="baseHandler"{
 
 	
 	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
-		// Tab control
-		prc.tabContent = true;
+	function preHandler( event, action, eventArguments, rc, prc ){
 	}
 	
 	// index
@@ -30,8 +26,6 @@ component extends="baseHandler"{
 		
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
-		// Tab
-		prc.tabContent_categories = true;
 		// view
 		event.setView( "categories/index" );
 	}

@@ -16,8 +16,6 @@ component extends="baseHandler"{
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){
-		// Tab control
-		prc.tabContent = true;
 	}
 
 	/**

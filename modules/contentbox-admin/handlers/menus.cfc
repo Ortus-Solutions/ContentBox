@@ -17,15 +17,11 @@ component extends="baseHandler" {
     this.preHandler_except = "pager";
 
     // pre handler
-    function preHandler(event,action,eventArguments){
-        var rc  = event.getCollection();
-        var prc = event.getCollection(private=true);
+    function preHandler( event, action, eventArguments, rc, prc ){
         // exit Handlers
         prc.xehMenus      = "#prc.cbAdminEntryPoint#.menus";
         prc.xehMenuEditor = "#prc.cbAdminEntryPoint#.menus.editor";
         prc.xehMenuRemove = "#prc.cbAdminEntryPoint#.menus.remove";
-        // Tab control
-        prc.tabContent = true;
     }
     
     // index
@@ -39,8 +35,6 @@ component extends="baseHandler" {
         prc.xehMenuTable= "#prc.cbAdminEntryPoint#.menus.menuTable";
         // Get all menus
         prc.menus = menuService.list( sortOrder="title", asQuery=false );
-        // Tab
-        prc.tabContent_menus = true;
         // view
         event.setView( "menus/index" );
     }
