@@ -61,7 +61,6 @@
 										<tr class="info">
 											<th>Module</th>
 											<th>Description</th>
-											<th class="text-center">Activated</th>
 											<th width="100" class="text-center {sorter:false}">Actions</th>
 										</tr>
 									</thead>
@@ -77,15 +76,6 @@
 												#module.getDescription()#<br/>
 												<cfif len( module.getForgeBoxSlug() )>
 												ForgeBox URL: <a href="#prc.forgeBoxEntryURL & "/" & module.getForgeBoxSlug()#" target="_blank">#module.getForgeBoxSlug()#</a>
-												</cfif>
-											</td>
-											<td class="text-center">
-												<cfif module.getIsActive()>
-													<i class="fa fa-check fa-lg textGreen"></i>
-													<span class="hidden">active</span>
-												<cfelse>
-													<i class="fa fa-times fa-lg textRed"></i>
-													<span class="hidden">deactivated</span>
 												</cfif>
 											</td>
 											<td class="text-center">
