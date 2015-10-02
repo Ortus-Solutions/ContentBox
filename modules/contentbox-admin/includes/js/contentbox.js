@@ -1,17 +1,17 @@
 $(document).ready(function() {
-	
+
 	// setup global variables
 	$confirmIt 			= $('#confirmIt');
 	$remoteModal 		= $( "#modal" );
-    
+
     // handler for "shown" event in modals
 	$remoteModal.on( 'shown', function() {
-        var modal = $remoteModal; 
+        var modal = $remoteModal;
         // only run if modal is in delayed mode
         if( modal.data( 'delay' ) ) {
             // load the modal content
-            modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
-        }        
+            modal.load( modal.data( 'url' ), modal.data( 'params' ) );
+        }
     } );
 
     // reset modal content when hidden
@@ -19,13 +19,13 @@ $(document).ready(function() {
         var modal = $remoteModal;
         modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i></div>' );
     } );
-    
+
 	// Global Tool Tip Settings
 	toolTipSettings	= {
 		 animation: 'slide',
 		 delay: { show: 100, hide: 100 }
 	};
-	
+
 	// toggle flicker messages
 	$( ".flickerMessages" ).slideDown();
 	// Search Capabilities
@@ -68,7 +68,7 @@ $(document).ready(function() {
         } );
         return this;
     };
-    // simple method to blank out all form fields 
+    // simple method to blank out all form fields
     $.fn.clearForm = function() {
     	if( this.data( 'validator') == undefined ){ return; }
         // reset classes and what not
@@ -108,7 +108,7 @@ $(document).ready(function() {
 	   var activeTab = $('[href="' + location.hash + '"]');
 	   activeTab && activeTab.tab('show');
 	} );
-	
+
 	// Sidebar shortcut keys
 	if( $( "#main-sidebar" ).attr( "id" ) === undefined ){
 		$( "#sidebar-toggle" ).hide();
@@ -124,11 +124,11 @@ $(document).ready(function() {
 
 	// Nav Search Shortcut
 	jwerty.key( "ctrl+shift+s" , function(){ $( "#nav-search" ).focus(); return false;} );
-	
+
 	// find all links with the key-binding data attribute
 	$( '[data-keybinding]' ).each(function(){
 		var boundItem = $( this );
-		jwerty.key( boundItem.data( 'keybinding' ), function(){ 
+		jwerty.key( boundItem.data( 'keybinding' ), function(){
 			// give precedence to onclick
 			if( boundItem.attr( 'onclick' ) ) {
 				// if onclick, call event
@@ -137,7 +137,7 @@ $(document).ready(function() {
 			else {
 				// otherwise, follow link
 				to( boundItem.attr( 'href' ) );
-			} 
+			}
 		} );
 	} );
 
@@ -169,7 +169,7 @@ $(document).ready(function() {
             var active = accordion.find( '.in' ).attr( 'id' );
             // set cookie
             $.cookie( data, active );
-        } );           
+        } );
     } );
 } );
 function isSidebarOpen(){
@@ -213,7 +213,7 @@ function adminAction( action, actionURL ){
 				adminNotifier( "info", "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>" );
 			}
 			$( "#adminActionsIcon" ).removeClass( "icon-spin textOrange" );
-			
+
 		} );
 	}
 }
@@ -242,7 +242,7 @@ function adminNotifier(type, message, delay){
         case "error" : { toastr.error( message ); break; }
         case "success" : { toastr.success( message ); break; }
     }
-    
+
 }
 function activateContentSearch(){
 	// local refs
@@ -256,16 +256,16 @@ function activateContentSearch(){
     	$( this ).animate( {
 		    	opacity: 1.0,
 		    	width  : '+=250',
-		  	}, 
-		  	500, 
-		  	function(){} 
+		  	},
+		  	500,
+		  	function(){}
 		);
     } ).blur( function(){
     	$( this ).animate( {
 				opacity: 0.50,
 		    	width  : '-=250',
-			}, 
-			500, 
+			},
+			500,
 			function(){}
 		);
     } );
@@ -280,7 +280,7 @@ function activateContentSearch(){
 				}
 			} );
 		}
-		
+
 	} );
 	// add click listener to body to hide quick search panel
     $( 'body' ).click( function( e ){
@@ -302,7 +302,7 @@ function quickLinks( inURL ){
 		window.location = inURL;
 }
 function activateTooltips(){
-	//Tooltip 
+	//Tooltip
     $( '[title]' ).tooltip( toolTipSettings );
 }
 function hideAllTooltips(){
@@ -322,7 +322,7 @@ function toggleFlickers(){
 function closeRemoteModal(){
     var frm = $remoteModal.find( 'form' );
     if( frm.length ) {
-        $( frm[0] ).clearForm();        
+        $( frm[0] ).clearForm();
     }
     $remoteModal.modal( 'hide' );
 }
@@ -333,7 +333,7 @@ function closeRemoteModal(){
 function closeModal(div){
     var frm = div.find( 'form' );
     if( frm.length ) {
-        $( frm[0] ).clearForm();        
+        $( frm[0] ).clearForm();
     }
 	div.modal( 'hide' );
 }
@@ -354,7 +354,7 @@ function openModal(div, w, h){
         if( !$( this ).hasClass( 'in' ) ) {
             var frm = $( this ).find( 'form' );
             if( frm.length ) {
-                $( frm[0] ).clearForm();        
+                $( frm[0] ).clearForm();
             }
         }
     } );
@@ -374,10 +374,10 @@ function openRemoteModal(url,params,w,h,delay){
     var maxHeight = ($( window ).height() -360);
     // set data values
     modal.data( 'url', url )
-	modal.data( 'params', params );
+		modal.data( 'params', params );
     modal.data( 'width', w != undefined ? w : $( window ).width() * .85 );
     modal.data( 'height', h != undefined ? h : ($( window ).height() -360) );
-    
+
     // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes)
     if( delay ) {
         var height = modal.data( 'height' );
@@ -412,7 +412,7 @@ function openRemoteModal(url,params,w,h,delay){
                 args.height = maxHeight;
             }
             modal.modal( args )
-        } ) 
+        } )
     }
     return;
 }
@@ -433,7 +433,7 @@ function activateConfirmations(){
 			window.location =  $confirmIt.data('confirmSrc');
 		}
 	} );
-	
+
 	// Activate dynamic confirmations from <a> of class confirmIt
 	$('a.confirmIt').click(function(e){
 		// setup the href
@@ -490,7 +490,7 @@ function checkByValue(id,recordID){
 	$( "input[name='"+id+"']" ).each(function(){
 		if( this.value == recordID ){ this.checked = true; }
 		else{ this.checked = false; }
-	} );	
+	} );
 }
 /**
  * Get today's date in us or rest of the world format
@@ -508,6 +508,6 @@ function getToday(us){
 		return twoDigitMonth + "/" + fullDate.getDate() + "/" + theYear;
 	}
 	else{
-		return fullDate.getDate() + "/" + twoDigitMonth + "/" + theYear;	
+		return fullDate.getDate() + "/" + twoDigitMonth + "/" + theYear;
 	}
 }
