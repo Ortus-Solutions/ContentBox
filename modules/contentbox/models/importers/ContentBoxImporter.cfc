@@ -3,11 +3,27 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* Import a .cbox package into contentbox
+* Import a .cbox package into ContentBOx
 */
 component accessors=true {
-    property name="fileNames" type="array";
-    property name="ContentBoxPackagePath" type="any";
+
+	/**
+	* The import file names found
+	*/
+    property name="fileNames" 				type="array";
+    /**
+    * The location of the import file (zip|box)
+    */
+    property name="ContentBoxPackagePath" 	type="any";
+    /**
+    * The location of the data services used for exporting
+    */
+    property name="dataServiceMappings" 	type="struct";
+    /**
+    * The location of the file mappings used for exporting
+    */
+    property name="filePathMappings"		type="struct";
+
     // DI
     property name="moduleSettings"      inject="coldbox:setting:modules";
     property name="entryService"        inject="id:entryService@cb";
@@ -32,10 +48,10 @@ component accessors=true {
     * Constructor
     */
     ContentBoxImporter function init(){
-        setFileNames( [] );
-        setContentBoxPackagePath( "" );
-        dataServiceMappings = {};
-        fileServiceMappings = {};
+    	fileNames 				= [];
+    	contentBoxPackagePath 	= "";
+        dataServiceMappings 	= {};
+        fileServiceMappings 	= {};
         return this;
     }
 
@@ -47,33 +63,32 @@ component accessors=true {
         try {
             var files = zipUtil.list( zipFilePath=arguments.importFile );
             // convert files query to array
-            var fileList = listToArray( valueList( files.entry ) );
-            var contentBoxPath = moduleSettings["contentbox"].path;
+            var fileList 		= listToArray( valueList( files.entry ) );
+            var contentBoxPath 	= moduleSettings[ "contentbox" ].path;
             // now set values
             setFileNames( fileList );
             setContentBoxPackagePath( arguments.importFile );
             // set some cheat mappings
             dataServiceMappings = {
-                "Authors" = "authorService",
-                "Categories" = "categoryService",
-                "Content Store" = "contentStoreService",
-                "Menus" = "menuService",
-                "Permissions" = "permissionService",
-                "Roles" = "roleService",
-                "Security Rules" = "securityRuleService",
-                "Settings" = "settingService",
-                "Entries" = "entryService",
-                "Pages" = "pageService"
+                "Authors" 			= "authorService",
+                "Categories" 		= "categoryService",
+                "Content Store" 	= "contentStoreService",
+                "Menus" 			= "menuService",
+                "Permissions" 		= "permissionService",
+                "Roles" 			= "roleService",
+                "Security Rules" 	= "securityRuleService",
+                "Settings" 			= "settingService",
+                "Entries" 			= "entryService",
+                "Pages" 			= "pageService"
             };
             filePathMappings = {
-                "Email Templates" = contentBoxPath & "/email_templates",
-                "Themes" = contentBoxPath & "/themes",
-                "Media Library" = expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
-                "Modules" = contentBoxPath & "/modules",
-                "Widgets" = contentBoxPath & "/widgets"
+                "Email Templates" 	= contentBoxPath & "/email_templates",
+                "Themes" 			= contentBoxPath & "/themes",
+                "Media Library" 	= expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
+                "Modules" 			= contentBoxPath & "/modules_user",
+                "Widgets" 			= contentBoxPath & "/widgets"
             };
-        }
-        catch( any e ) {
+        } catch( any e ) {
             log.error( "Error processing ContentBox import package: #e.message# #e.detail#", e );
         }
     }
