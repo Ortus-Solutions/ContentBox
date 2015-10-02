@@ -17,8 +17,8 @@
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 			<th>Name</th>
 			<th>Slug/Categories</th>
-			<th width="40" class="text-center"><i class="icon-globe fa-lg" title="Published Status"></i></th>
-			<th width="100" class="text-center {sorter:false}">Actions</th>
+			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
+			<th width="75" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
 
@@ -127,12 +127,4 @@
 		</cfloop>
 	</tbody>
 </table>
-
-<!--- Paging --->
-<cfif !rc.showAll>
-#prc.oPaging.renderit(foundRows=prc.contentCount, link=prc.pagingLink, asList=true)#
-<cfelse>
-<span class="label label-info">Total Records: #prc.contentCount#</span>
-</cfif>
-
 </cfoutput>
