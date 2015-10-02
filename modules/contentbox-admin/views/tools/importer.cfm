@@ -26,7 +26,7 @@
                         <div class="col-md-5 well well-small text-center">
                             <h2>Database Import</h2>
                             <small>ContentBox also supports imports from Mango, WordPress, BlogCFC, and MachBlog databases via Datasource connections!</small><br />
-                            <label class="btn btn-toggle radio clearfix" for="import-database">
+                            <label class="btn btn-toggle radio" for="import-database">
                                 #html.radioButton(name="importtype",id="import-database",value="database" )# 
                                 Import from Database
                             </label>
