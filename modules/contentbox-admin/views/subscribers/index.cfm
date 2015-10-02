@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
@@ -66,7 +66,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Quick Stats</h3>
