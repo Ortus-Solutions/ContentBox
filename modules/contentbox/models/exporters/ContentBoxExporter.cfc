@@ -3,12 +3,26 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* Export ContentBox data
+* Export ContentBox data based on user selection. This is a transient object
 */
 component accessors=true {
     
-    property name="exporters" type="array";
-    property name="descriptor" type="struct";
+    /**
+    * The exporters to use
+    */
+    property name="exporters" 				type="array";
+    /**
+    * Describes what will be exported
+    */
+    property name="descriptor" 				type="struct";
+    /**
+    * The location of the data services used for exporting
+    */
+    property name="dataServiceMappings" 	type="struct";
+    /**
+    * The location of the file mappings used for exporting
+    */
+    property name="filePathMappings"		type="struct";
 
     // DI
     property name="moduleSettings"      inject="coldbox:setting:modules";
@@ -38,16 +52,19 @@ component accessors=true {
     * Constructor
     */
     public ContentBoxExporter function init() {
-        setExporters( [] );
-        setDescriptor( {} );
+        exporters 			= [];
+        descriptor 			= {};
         dataServiceMappings = {};
-        filePathMappings = {};
+        filePathMappings 	= {};
         
         return this;
     }
 
+    /**
+    * On DI Complete
+    */
     function onDIComplete(){
-        var contentBoxPath = moduleSettings["contentbox"].path;
+        var contentBoxPath = moduleSettings[ "contentbox" ].path;
         dataServiceMappings = {
             "authors" = { 
                 fileName="authors",
@@ -139,7 +156,7 @@ component accessors=true {
             "modules" = {
                 fileName="modules",
                 displayName="Modules",
-                directory = contentBoxPath & "/modules",
+                directory = contentBoxPath & "/modules_user",
                 type="folder",
                 extension="",
                 priority=1
@@ -157,7 +174,7 @@ component accessors=true {
 
     /**
      * Setup method to configure service
-     * @targets.hint Targets for the upload
+     * @targets Targets for the upload
      */
     public ContentBoxExporter function setup( required struct targets ) {
         // loop over targets and build up exporters
