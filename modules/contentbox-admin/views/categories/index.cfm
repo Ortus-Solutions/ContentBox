@@ -52,7 +52,7 @@
 				<table id="categories" class="table table-striped table-bordered" cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
+							<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
 							<th>Category Name</th>
 							<th>Slug</th>		
 							<th width="75" class="text-center">Pages</th>

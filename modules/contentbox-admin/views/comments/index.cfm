@@ -21,7 +21,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-9">
         #html.startForm(name="commentForm", action=prc.xehCommentRemove, class="form-vertical" )#
         	#html.hiddenField(name="commentStatus",value="" )#
 			#html.hiddenField(name="page",value=rc.page)#
@@ -61,11 +61,11 @@
 					<table name="comments" id="comments" class="table table-bordered table-striped table-hover tablesorter table-condensed" width="98%">
 						<thead>
 							<tr class="info">
-								<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
+								<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 								<th width="200">Author</th>
 								<th>Comment</th>
 								<th width="150" class="text-center">Date</th>			
-								<th width="100" class="text-center {sorter:false}">Actions</th>
+								<th width="75" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
 						
@@ -141,7 +141,7 @@
 			</div>
 		#html.endForm()#
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
 		        <h3 class="panel-title"><i class="fa fa-search"></i> Search</h3>

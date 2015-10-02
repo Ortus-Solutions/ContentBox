@@ -18,17 +18,6 @@
         )#		
             #html.anchor(name="top" )#
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">&nbsp;</h3>
-                    <div class="actions pull-right">
-                        <!--- Back To Inbox --->
-                        #html.href(
-                            text="<i class='fa fa-reply'></i> Back To Inbox", 
-                            class="btn btn-sm btn-info pull-right", 
-                            href=event.buildlink(prc.xehComments)
-                        )# 
-                    </div>
-                </div>
                 <div class="panel-body">
                     <p>From here you can control how the ContentBox commenting system operates.</p>
                     <!--- Vertical Nav --->

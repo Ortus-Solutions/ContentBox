@@ -1,26 +1,32 @@
 <cfoutput>
 <!--- authors --->
-<table name="authors" id="authors" class="table table-striped table-hover table-bordered" width="100%">
+<table name="authors" id="authors" class="table table-striped table-hover" width="100%">
 	<thead>
-		<tr>
-			<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'authorID')"/></th>
+		<tr class="info">
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'authorID')"/></th>
 			<th>Name</th>
 			<th>Email</th>
 			<th>Role</th>
 			<th>Last Login</th>
-			<th width="40" class="text-center"><i class="icon-thumbs-up fa-lg" title="Active User?"></i></th>
 			<th width="65" class="text-center {sorter: false}">Actions</th>
 		</tr>
 	</thead>
 
 	<tbody>
 		<cfloop array="#prc.authors#" index="author">
-		<tr<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()> class="success"</cfif> data-authorID="#author.getAuthorID()#" >
+		<tr
+			<cfif !author.getIsActive()>
+				class="danger"
+			</cfif>
+			data-authorID="#author.getAuthorID()#" >
 			<!--- check box --->
 			<td class="text-center">
 				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
 			</td>
 			<td>
+				<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()>
+					<i class="fa fa-star fa-lg textOrange" title="That's you!"></i>
+				</cfif>
 				#getModel( "Avatar@cb" ).renderAvatar( email=author.getEmail(), size="30" )#
 				<!--- Display Link if Admin Or yourself --->
 				<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
@@ -28,20 +34,10 @@
 				<cfelse>
 					#author.getName()#
 				</cfif>
-				<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()>
-					<i class="fa fa-star fa-lg textOrange" title="That's you!"></i>
-				</cfif>
 			</td>
 			<td>#author.getEmail()#</td>
 			<td>#author.getRole().getRole()#</td>
 			<td>#author.getDisplayLastLogin()#</td>
-			<td class="text-center">
-				<cfif author.getIsActive()>
-					<i class="fa fa-check fa-lg textGreen" title="User Active"></i>
-				<cfelse>
-					<i class="fa fa-times fa-lg textRed" title="User Deactivated"></i>
-				</cfif>
-			</td>
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">

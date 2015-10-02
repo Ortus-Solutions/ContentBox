@@ -151,11 +151,11 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	string function getDisplayLastLogin(){
 		var lastLogin = getLastLogin();
 
-		if(  NOT isNull(lastLogin) ){
-			return dateFormat( lastLogin, "mm/dd/yyyy" ) & " " & timeFormat(lastLogin, "hh:mm:ss tt" );
+		if(  NOT isNull( lastLogin ) ){
+			return dateFormat( lastLogin, "dd mmm yyyy" ) & " " & timeFormat(lastLogin, "hh:mm tt" );
 		}
 
-		return "Never";
+		return "Never Logged In";
 	}
 
 	/**
@@ -164,7 +164,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		if( isNull( createdDate ) ){ return ""; }
-		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt" );
+		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt" );
 	}
 
 	/**

@@ -14,7 +14,7 @@
 <table name="content" id="content" class="table table-striped table-bordered" cellspacing="0" width="100%">
 	<thead>
 		<tr class="info">
-			<th id="checkboxHolder" class="{sorter:false} text-center" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 			<th>Name</th>
 			<th>Slug/Categories</th>
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
