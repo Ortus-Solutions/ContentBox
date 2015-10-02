@@ -5,7 +5,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-8">
+	<div class="col-md-9">
 		<!--- MessageBox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
 		<!---Import Log --->
@@ -98,7 +98,7 @@
 			</div>
 		#html.endForm()#
 	</div>
-	<div class="col-md-4">
+	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
@@ -165,10 +165,7 @@
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
 					<li><i class="fa fa-lightbulb-o fa-lg"></i> Right click on a row to activate quick look!</li>
-					<li><i class="fa fa-lightbulb-o fa-lg"></i> Sorting is only done within your paging window</li>
-					<li><i class="fa fa-lightbulb-o fa-lg"></i> Quick Filtering is only for viewed results</li>
 					<li><i class="fa fa-lightbulb-o fa-lg"></i> Cloning does not copy comments or version history</li>
-					<li><i class="fa fa-lightbulb-o fa-lg"></i> You can quickly order the pages by dragging the rows</li>
 				</ul>
 		    </div>
 		</div>

@@ -58,6 +58,9 @@ a.btn.btn-danger:visited {
 .main-content-wrapper .dropdown-menu > li > a:hover, .main-content-wrapper .dropdown-menu > li > a:active {
     background-color: #16a086;
 }
+.main-content-wrapper #main-content .h1 {
+    padding: 0px 10px 20px 10px;
+}
 /** Section Overrides */
 #simple-container{
 	padding-top:10px;

@@ -16,7 +16,9 @@ component extends="baseContentHandler"{
 	// Public properties
 	this.preHandler_except = "pager";
 
-	// pre handler
+	/**
+	 * pre handler
+	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
 		// exit Handlers
@@ -25,7 +27,9 @@ component extends="baseContentHandler"{
 		prc.xehPageRemove 	= "#prc.cbAdminEntryPoint#.pages.remove";
 	}
 
-	// index
+	/**
+	* Index
+	*/
 	function index( event, rc, prc ){
 		// params
 		event.paramValue( "parent","" );
@@ -44,13 +48,13 @@ component extends="baseContentHandler"{
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
 		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
 
-		prc.cssAppendList = "../spacelab/plugins/dataTables/css/dataTables";
-        prc.jsAppendList  = "../spacelab/plugins/dataTables/js/jquery.dataTables,../spacelab/plugins/dataTables/js/dataTables.bootstrap";
 		// view
 		event.setView( "pages/index" );
 	}
 
-	// page tables
+	/**
+	 * Index page tables
+	 */
 	function pageTable( event, rc, prc ){
 		// params
 		event.paramValue( "page", 1 )
@@ -65,11 +69,6 @@ component extends="baseContentHandler"{
 
 		// JS null checks
 		if( rc.parent eq "undefined" ){ rc.parent = ""; }
-
-		// prepare paging object
-		prc.oPaging = getModel( "Paging@cb" );
-		prc.paging 		 = prc.oPaging.getBoundaries();
-		prc.pagingLink 	 = "javascript:contentPaginate(@page@)";
 
 		// is Filtering?
 		if( rc.fAuthors neq "all" OR
@@ -87,15 +86,15 @@ component extends="baseContentHandler"{
 		}
 
 		// search entries with filters and all
-		var pageResults = pageService.search( search=rc.searchPages,
-											  isPublished=rc.fStatus,
-											  category=rc.fCategories,
-											  author=rc.fAuthors,
-											  creator=rc.fCreators,
-											  parent=( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
-											  max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-											  offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
-											  sortOrder="order asc" );
+		var pageResults = pageService.search( 
+			search		= rc.searchPages,
+			isPublished	= rc.fStatus,
+			category	= rc.fCategories,
+			author		= rc.fAuthors,
+			creator		= rc.fCreators,
+			parent		= ( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
+			sortOrder	= "order asc" 
+		);
 		prc.pages 		= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
 

@@ -14,7 +14,7 @@
 <table id="pages" name="pages" class="table table-striped table-bordered" cellspacing="0" width="100%">
     <thead>
         <tr class="info">
-            <th id="checkboxHolder" class="{sorter:false} text-center" width="20">
+            <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
             	<input type="checkbox" onClick="checkAll(this.checked,'contentID')"/>
             </th>
 			<th>Name</th>
@@ -167,11 +167,4 @@
 		</cfloop>
     </tbody>
 </table>
-<!--- Paging --->
-<cfif !rc.showAll>
-#prc.oPaging.renderit(foundRows=prc.pagesCount, link=prc.pagingLink, asList=true)#
-<cfelse>
-<span class="label label-info">Total Records: #prc.pagesCount#</span>
-</cfif>
-
 </cfoutput>
