@@ -65,8 +65,4 @@
 <!-- injector:js -->
 <script src="#cb.themeRoot()#/includes/js/11af6283.theme.min.js"></script>
 <!-- endinjector -->
-<!--- 
-<script type="text/javascript" src="#cb.themeRoot()#/bower_components/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="#cb.themeRoot()#/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
---->
 </cfoutput>
