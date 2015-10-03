@@ -1,8 +1,8 @@
 <cfoutput>
 <!--- content --->
-<table name="content" id="content" class="table table-bordered table-condensed table-striped table-hover" width="100%">
+<table name="content" id="content" class="table table-condensed table-striped table-hover" width="100%">
 	<thead>
-		<tr class="info">
+		<tr>
 			<th>Title</th>
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg"></i></th>
 			<th width="120" class="text-center">Insert</th>

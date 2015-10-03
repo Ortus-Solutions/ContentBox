@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" height="30" style="height: 30px;" />
+            <img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" height="30"/>
             Geek Panel
         </h1>
         <span class="label label-warning">Environment: #getSetting('Environment')#</span>
@@ -76,8 +76,8 @@
                                             </div>
                                             
                                             <div class="btn-group btn-group-sm">
-                                                <a href="##" onclick="return createSetting();" class="btn btn-danger btn-sm">Create Setting</a>
-                                                <button class="btn btn-sm btn-danger dropdown-toggle" data-toggle="dropdown">
+                                                <a href="##" onclick="return createSetting();" class="btn btn-primary btn-sm">Create Setting</a>
+                                                <button class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu">
@@ -166,9 +166,9 @@
                             </div>
                             #html.startForm(name="singletonForm" )#
                                 <!--- settings --->
-                                <table name="singletons" id="singletons" class="table-bordered table table-hover table-striped table-condensed" width="98%">
+                                <table name="singletons" id="singletons" class="table table-hover table-striped table-condensed" width="98%">
                                     <thead>
-                                        <tr class="info">
+                                        <tr>
                                             <th>ID</th>
                                             <th>Path</th>
                                             <th class="text-center {sorter:false}">Actions</th>
@@ -221,9 +221,9 @@
                             <!---Event Forms --->
                             #html.startForm(name="eventsForm" )#
                                 <!--- events --->
-                                <table name="eventsList" id="eventsList" class="table-bordered table table-striped table-hover table-condensed" width="100%">
+                                <table name="eventsList" id="eventsList" class="table table-striped table-hover table-condensed" width="100%">
                                     <thead>
-                                        <tr class="info">
+                                        <tr>
                                             <th width="30" class="{sorter:none}">No.</th>
                                             <th>Event</th>
                                             <th width="200">Module</th>

@@ -676,7 +676,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// get formatted date
 		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
 		if( arguments.showTime ){
-			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt" );
+			fDate &=" " & timeFormat(pDate, "hh:mm tt" );
 		}
 		return fDate;
 	}
@@ -690,7 +690,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		// get formatted date
 		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
 		if( arguments.showTime ){
-			fDate &=" " & timeFormat(pDate, "hh:mm:ss tt" );
+			fDate &=" " & timeFormat(pDate, "hh:mm tt" );
 		}
 		return fDate;
 	}
@@ -700,7 +700,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayPublishedDate(){
 		var publishedDate = getPublishedDate();
-		return dateFormat( publishedDate, "mm/dd/yyyy" ) & " " & timeFormat(publishedDate, "hh:mm:ss tt" );
+		return dateFormat( publishedDate, "dd mmm yyyy" ) & " " & timeFormat(publishedDate, "hh:mm tt" );
 	}
 
 	/**
@@ -708,7 +708,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "mm/dd/yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt" );
+		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm tt" );
 	}
 
 	/**
@@ -716,7 +716,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	string function getDisplayExpireDate(){
 		if( isNull(expireDate) ){ return "N/A"; }
-		return dateFormat( expireDate, "mm/dd/yyyy" ) & " " & timeFormat(expireDate, "hh:mm:ss tt" );
+		return dateFormat( expireDate, "dd mmm yyyy" ) & " " & timeFormat(expireDate, "hh:mm tt" );
 	}
 
 	/**
@@ -731,7 +731,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	*/
 	any function addPublishedTime( required hour, required minute ){
 		if( !isDate( getPublishedDate() ) ){ return this; }
-		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
+		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:mm tt" );
 		setPublishedDate( getPublishedDate() & " " & time );
 		return this;
 	}
@@ -758,7 +758,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		if( !len( arguments.hour ) ){ arguments.hour = "0"; }
 		if( !len( arguments.minute ) ){ arguments.minute = "00"; }
 		// setup the right time now.
-		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:MM:SS tt" );
+		var time = timeformat( "#arguments.hour#:#arguments.minute#", "hh:mm tt" );
 		setExpireDate( getExpireDate() & " " & time );
 		return this;
 	}

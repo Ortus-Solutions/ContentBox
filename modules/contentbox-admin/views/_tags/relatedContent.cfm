@@ -102,7 +102,7 @@
         <i class="fa fa-plus"></i>  Add related content
     </button>
     <br /><br />
-    <table class="table table-hover table-bordered table-striped" id="relatedContent-items">
+    <table class="table table-hover table-striped" id="relatedContent-items">
         <tbody>
             <cfloop array="#args.relatedContent#" index="content">
                 <cfset publishedClass = content.isContentPublished() ? "published" : "selected">

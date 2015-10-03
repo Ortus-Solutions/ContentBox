@@ -41,7 +41,7 @@
         }
     </script>
     <p>The items below have linked to this #args.contentType# as related content.</p>
-    <table class="table table-hover table-bordered table-striped" id="linkedContent-items">
+    <table class="table table-hover table-striped" id="linkedContent-items">
         <tbody>
             <cfloop array="#args.linkedContent#" index="content">
                 <cfset publishedClass = content.isContentPublished() ? "published" : "selected">

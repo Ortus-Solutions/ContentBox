@@ -17,7 +17,7 @@
 				<table class="table table-hover table-condensed table-bordered">
 					<tbody>
 					<tr class="info">
-						<th class="text-center" width="100">Info</th>
+						<th class="text-center" width="150">Info</th>
 						<th class="text-center">Version #prc.oldVersion#</th>
 						<th class="text-center">Version #prc.currentVersion#</th>
 					</tr>

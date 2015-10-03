@@ -27,9 +27,9 @@
 				<cfif prc.featureEnabled>
 
 					<!--- templates --->
-					<table name="templates" id="templates" class="table table-bordered table-hover table-striped">
+					<table name="templates" id="templates" class="table table-hover table-striped">
 						<thead>
-							<tr class="info">
+							<tr>
 								<th>Username / IP</th>
 								<th width="75">Attempts</th>
 								<th width="200">Date</th>
@@ -50,7 +50,7 @@
 										</cfif>
 									</strong>
 								</td>
-								<td>
+								<td class="text-center">
 									#thisLog.getAttempts()#
 								</td>
 								<td>#thisLog.getDisplayCreatedDate()#</td>

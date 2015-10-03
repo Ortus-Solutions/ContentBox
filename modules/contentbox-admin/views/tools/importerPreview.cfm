@@ -33,7 +33,7 @@
                             </tr>
                             <tr>
                                 <td>Exported Date:</td>
-                                <td>#dateFormat( prc.contents.exportDate, "yyyy-mm-dd" )# #timeFormat( prc.contents.exportDate, "hh:mm:ss TT" )#</td>
+                                <td>#dateFormat( prc.contents.exportDate, "yyyy-mm-dd" )# #timeFormat( prc.contents.exportDate, "hh:mm TT" )#</td>
                             </tr>
                             <tr>
                                 <th>Content Area</th>

@@ -126,9 +126,9 @@
                 <h3 class="panel-title"><i class="fa fa-info-circle"></i> Components Installed</h3>
             </div>
             <div class="panel-body">
-                <table name="settings" id="settings" class="table table-striped table-hover" width="98%">
+                <table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="98%">
                     <thead>
-                        <tr class="info">
+                        <tr>
                             <th>Module</th> 
                             <th width="100" class="text-center">Version</th>
                         </tr>

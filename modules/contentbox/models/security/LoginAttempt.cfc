@@ -67,6 +67,6 @@ component persistent="true" table="cb_loginAttempts" entityName="cbLoginAttempt"
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		if( isNull( createdDate ) ){ return ""; }
-		return LSDateFormat( createdDate, "mm/dd/yyyy" ) & " " & LSTimeFormat( createdDate, "hh:mm:ss tt" );
+		return LSDateFormat( createdDate, "dd mmm yyyy" ) & " " & LSTimeFormat( createdDate, "hh:mm tt" );
 	}
 }

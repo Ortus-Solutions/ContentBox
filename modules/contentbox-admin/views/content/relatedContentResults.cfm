@@ -3,7 +3,7 @@
     <!--- matches --->
     <table name="content" id="#rc.contentType#" class="tablesorter table table-hover table-striped table-condensed" width="98%">
         <thead>
-            <tr class="info">
+            <tr>
                 <th>Content Title</th>
                 <th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published?"></i></th>
                 <th width="120" class="text-center">Select</th>

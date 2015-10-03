@@ -20,7 +20,7 @@
 		    <div class="panel-body">
 		    	<table name="settings" id="settings" class="table table-hover table-striped">
 					<thead>
-						<tr class="info">
+						<tr>
 							<th>Module</th>	
 							<th width="100" class="text-center">Version</th>
 						</tr>
@@ -63,7 +63,7 @@
 				
 				<table name="settings" id="settings" class="table table-hover table-striped">
 					<thead>
-						<tr class="info">
+						<tr>
 							<th>Action</th>	
 							<th width="100" class="text-center">Shortcut</th>
 						</tr>

@@ -1,8 +1,8 @@
 <cfoutput>
 <!--- settings --->
-<table name="settings" id="settings" class="table-bordered table table-striped table-hover table-condensed" width="100%">
+<table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="100%">
 	<thead>
-		<tr class="info">
+		<tr>
 			<th width="280">Name</th>
 			<th>Value</th>
 			<th width="80" class="text-center {sorter:false}">Actions</th>

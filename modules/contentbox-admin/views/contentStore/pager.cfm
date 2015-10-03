@@ -6,9 +6,9 @@
 </div>
 
 <!--- content --->
-<table name="content_pager" id="content_pager" class="table-bordered table table-hover table-condensed table-striped" width="100%">
+<table name="content_pager" id="content_pager" class="table table-hover table-condensed table-striped" width="100%">
 	<thead>
-		<tr class="info">
+		<tr>
 			<th>Title</th>
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
 			<th width="50" class="text-center">Actions</th>

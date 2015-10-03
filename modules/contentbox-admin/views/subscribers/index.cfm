@@ -72,7 +72,7 @@
                 <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Quick Stats</h3>
             </div>
             <div class="panel-body">
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped">
                     <tr>
                         <td><strong>Comment Subscriptions:</strong></td>
                         <td><span class="label label-info">#prc.commentSubscriptionCount#</span></td>
