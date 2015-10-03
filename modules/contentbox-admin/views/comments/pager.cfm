@@ -10,13 +10,13 @@
 </cfif>
 #html.startForm(name="commentPagerForm" )#
 <!--- comments --->
-<table name="comments_pager" id="comments_pager" class="tablesorter table table-hover table-condensed table-striped table-bordered" width="100%">
+<table name="comments_pager" id="comments_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
 	<thead>
-		<tr class="info">
+		<tr>
 			<th width="200">Author</th>
 			<th>Comment</th>
-			<th width="135" class="text-center">Date</th>			
-			<th width="90" class="text-center">Actions</th>
+			<th width="150" class="text-center">Date</th>			
+			<th width="100" class="text-center">Actions</th>
 		</tr>
 	</thead>
 	
@@ -51,9 +51,9 @@
 					<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 						<!--- Approve/Unapprove --->
 						<cfif !comment.getIsApproved()>
-							<a class="btn btn-xs btn-primary" href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg" ></i></a>
+							<a class="btn btn-xs btn-info" href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg" ></i></a>
 						<cfelse>
-							<a class="btn btn-xs btn-primary" href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
+							<a class="btn btn-xs btn-info" href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 						</cfif>
 						<!--- Delete Command --->
 						<a class="btn btn-xs btn-danger" title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o fa-lg" ></i></a>

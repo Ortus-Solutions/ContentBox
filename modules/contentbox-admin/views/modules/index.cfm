@@ -56,9 +56,9 @@
 								</div>
 				
 								<!--- modules --->
-								<table name="modules" id="modules" class="table-bordered table table-hover table-striped" width="100%">
+								<table name="modules" id="modules" class="table table-hover table-striped" width="100%">
 									<thead>
-										<tr class="info">
+										<tr>
 											<th>Module</th>
 											<th>Description</th>
 											<th width="100" class="text-center {sorter:false}">Actions</th>

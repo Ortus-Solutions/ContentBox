@@ -61,9 +61,9 @@
 				</div>
 				<div class="panel-body">
 					<!--- permissions --->
-					<table name="permissions" id="permissions" class="tablesorter table-bordered table table-hover table-striped" width="100%">
+					<table name="permissions" id="permissions" class="tablesorter table table-hover table-striped" width="100%">
 						<thead>
-							<tr class="info">
+							<tr>
 								<th>Permission</th>
 								<th>Description</th>
 								<th class="text-center">Roles Assigned</th>		

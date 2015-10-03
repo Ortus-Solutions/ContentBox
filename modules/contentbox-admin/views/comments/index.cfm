@@ -58,9 +58,9 @@
 				</div>
 				<div class="panel-body">
 					<!--- comments --->
-					<table name="comments" id="comments" class="table table-bordered table-striped table-hover tablesorter table-condensed" width="98%">
+					<table name="comments" id="comments" class="table table-striped table-hover tablesorter" width="98%">
 						<thead>
-							<tr class="info">
+							<tr>
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 								<th width="200">Author</th>
 								<th>Comment</th>
@@ -104,9 +104,9 @@
 									<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>
-											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
+											<a class="btn btn-sm btn-info" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
 										<cfelse>
-											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
+											<a class="btn btn-sm btn-info" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 										</cfif>
 										<div class="btn-group">
 											<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">

@@ -182,7 +182,7 @@
 											<!--- themes --->
 											<table name="themes" id="themes" class="table table-striped table-hover" width="100%">
 												<thead>
-													<tr class="info">
+													<tr>
 														<th width="200">Theme Info</th>
 														<th width="300">Description</th>
 														<th>Included Themes</th>

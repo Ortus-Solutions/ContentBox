@@ -68,9 +68,9 @@
 						You cannot delete roles that have authors attached to them.  You will need to un-attach those authors from the role first.
 					</div>
 					<!--- roles --->
-					<table name="roles" id="roles" class="tablesorter table-bordered table table-hover table-striped" width="98%">
+					<table name="roles" id="roles" class="tablesorter table table-hover table-striped" width="98%">
 						<thead>
-							<tr class="info">
+							<tr>
 								<th>Role</th>
 								<th>Description</th>		
 								<th width="95" class="text-center">Permissions</th>

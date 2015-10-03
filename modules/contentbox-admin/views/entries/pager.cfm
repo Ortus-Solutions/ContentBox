@@ -6,9 +6,9 @@
 </div>
 
 <!--- entries --->
-<table name="entries_pager" id="entries_pager" class="table table-hover table-condensed table-striped table-bordered" width="100%">
+<table name="entries_pager" id="entries_pager" class="table table-hover table-condensed table-striped" width="100%">
 	<thead>
-		<tr class="info">
+		<tr>
 			<th>Title</th>
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
 			<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>

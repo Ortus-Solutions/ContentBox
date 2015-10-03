@@ -1,8 +1,8 @@
 <cfoutput>
 <!--- rules --->
-<table name="rules" id="rules" class="table table-hover table-striped table-condensed table-bordered" width="100%">
+<table name="rules" id="rules" class="table table-hover table-striped table-condensed" width="100%">
 	<thead>
-		<tr class="info">
+		<tr>
 			<th>Secured</th>
 			<th>Credentials</th>
 			<th class="text-center"><i class="icon-reorder fa-lg"></i></th>

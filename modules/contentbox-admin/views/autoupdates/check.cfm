@@ -10,7 +10,7 @@
 
 	<cfif prc.updateFound>
 	#html.startFieldSet(legend="Version Information" )#
-	<table name="settings" id="settings" class="table table-striped table-hover table-condensed table-bordered" width="98%">
+	<table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="98%">
 		<thead>
 			<tr class="">
 				<th width="100">Your Version</th>

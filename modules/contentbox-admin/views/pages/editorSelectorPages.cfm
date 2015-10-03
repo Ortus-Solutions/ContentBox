@@ -1,10 +1,10 @@
 <cfoutput>
 <!--- pages --->
-<table name="pages" id="pages" class="table table-bordered table-condensed table-striped table-hover" width="100%">
+<table name="pages" id="pages" class="table table-condensed table-striped table-hover" width="100%">
 	<thead>
-		<tr class="info">
+		<tr>
 			<th>Page Name</th>
-			<th width="40" class="text-center"><i class="icon-globe fa-lg"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-globe fa-lg"></i></th>
 			<th width="120" class="text-center">Select</th>
 		</tr>
 	</thead>

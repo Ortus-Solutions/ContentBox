@@ -164,7 +164,7 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	string function getDisplayCreatedDate(){
 		var createdDate = getCreatedDate();
 		if( isNull( createdDate ) ){ return ""; }
-		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm:ss tt" );
+		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm tt" );
 	}
 
 	/**

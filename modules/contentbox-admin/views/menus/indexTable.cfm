@@ -1,9 +1,9 @@
 <cfoutput>
     <!--- menus --->
-    <table name="menu" id="menu" class="tablesorter table table-hover table-bordered" width="100%">
+    <table name="menu" id="menu" class="tablesorter table table-hover" width="100%">
         <thead>
-            <tr class="info">
-                <th id="checkboxHolder" class="{sorter:false} table-bordered" width="20"><input type="checkbox" onClick="checkAll(this.checked,'menuID')"/></th>
+            <tr>
+                <th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'menuID')"/></th>
                 <th>Name</th>
                 <th>Slug</th>
                 <th width="100" class="text-center">No. Children</th>
