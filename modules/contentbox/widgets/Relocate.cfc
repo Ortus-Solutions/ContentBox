@@ -1,18 +1,19 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Issues a relocation on a page with a 302 header
 */
-component extends="contentbox.model.ui.BaseWidget"{
+component extends="contentbox.models.ui.BaseWidget"{
 
-	function init(controller){
-		// super init
-		super.init(controller);
-
+	function init(){
 		// Widget Properties
-		setPluginName("Relocate");
-		setPluginVersion("1.0");
-		setPluginDescription("Issues 302 relocations once it is executed on any content page.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setName( "Relocate" );
+		setVersion( "1.0" );
+		setDescription( "Issues 302 relocations once it is executed on any content page." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "Utilities" );
 		setIcon( "replay.png" );
 		return this;

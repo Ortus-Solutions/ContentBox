@@ -1,0 +1,187 @@
+<!--Modal Window-->
+<div id="{idOfModal}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{idOfModalTitle}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--header-->
+            <div class="modal-header">
+                <!--if dismissable-->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="{modalTitleID}"><i class="fa fa-{FontAwesomeIcon}"></i> {title}</h4>
+            </div>
+            <!--body-->
+            <div class="modal-body">
+                {content}
+            </div>
+            <!-- footer -->
+            <div class="modal-footer">
+                {content}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Window With Form-->
+<div id="{idOfModal}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{idOfModalTitle}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--header-->
+            <div class="modal-header">
+                <!--if dismissable-->
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="{modalTitleID}"><i class="fa fa-{FontAwesomeIcon}"></i> {title}</h4>
+            </div>
+            <!--body-->
+            <form name="{name}" action="{action}" class="form-vertical" role="form">
+                <div class="modal-body">
+                    {content}
+                </div>
+                <!-- footer -->
+                <div class="modal-footer">
+                    {content}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--Form-->
+<form name="{name}" action="{action}" class="form-vertical" role="form">
+    <!--group for each control-->
+    <div class="form-group">
+        <label for="{idOfField}" class="control-label">{label}:</label>
+        <div class="controls">
+            <input class="form-control" name="{name}" id="{name}" placeholder="{placeholder}" {validations} type="{type}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="controls">
+            <button type="submit" name="{name}" class="btn btn-danger">{text}</button>
+        </div>
+    </div>
+</form>
+
+<!--Panel-->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{title}</h3>
+        <div class="actions pull-right">
+            <i class="fa fa-chevron-down"></i>
+            <i class="fa fa-times"></i>
+        </div>
+    </div>
+    <div class="panel-body">
+
+    </div>
+</div>
+
+<!--Table Page-->
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1"><i class="fa fa-{icon}"></i> {title}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!-- MessageBox -->
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        <!--Import Log -->
+        <cfif flash.exists( "importLog" )>
+            <div class="consoleLog">#flash.get( "importLog" )#</div>
+        </cfif>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        #html.startForm(name="{name}", action={action}, class="form-vertical" )#
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">&nbsp;</h3>
+                <div class="actions pull-right">
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+                            {title} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-submenu">
+                                <a href="##"><i class="fa fa-{icon} fa-lg"></i> {title}</a>
+                                <ul class="dropdown-menu text-left">
+                                    <li><a href="{path}" target="_blank"><i class="fa fa-{icon}"></i> {title}</a></li>
+                                    <li><a href="{path}" target="_blank"><i class="fa fa-{icon}"></i> {title}</a></li>
+                                    <li><a href="{path}" target="_blank"><i class="fa fa-{icon}"></i> {title}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <button onclick="{action}" class="btn btn-primary btn-sm">{title}</button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table id="{tableid}" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>{header}</th>
+                            <th>{header}</th>
+                            <th>{header}</th>       
+                            <th>{header}</th>
+                            <th>{header}</th>
+                            <th>{header}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <cfloop array="{something}" index="{something}">
+                            <tr>
+                                <!-- check box -->
+                                <td>{content}</td>
+                                <td>{content}</td>
+                                <td>{content}</td>
+                                <td>{content}</td>
+                                <td>{content}</td>
+                                <td>{content}</td>
+                            </tr>
+                        </cfloop>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        #html.endForm()#
+    </div>
+</div>
+
+<!-- TABS -->
+<div class="panel panel-default">
+    <div class="panel-body">
+        <!-- Vertical Nav -->
+        <div class="tab-wrapper tab-left tab-primary">
+            <!-- Tabs -->
+            <ul class="nav nav-tabs">
+
+            </ul>
+            <!-- End Tabs -->
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Tab ` -->
+                <div class="tab-pane active" id="{tabID}">
+
+                </div>
+            </div>
+            <!-- End Tab Content -->
+        </div>
+        <!-- End Vertical Nav -->
+    </div>
+</div>
+
+<!-- ACCORDION -->
+<div id="accordion" class="panel-group accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##check">
+                {title}
+            </a>
+        </div>
+        <div id="check" class="panel-collapse collapse in">
+            <div class="panel-body">
+                {content}
+            </div>
+        </div>
+    </div>
+</div>

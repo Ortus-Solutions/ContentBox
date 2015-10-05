@@ -3,23 +3,23 @@
 $(document).ready(function() {
 	// Setup view
 	setupView( { 
-		tableContainer	: $("##authorTableContainer"), 
+		tableContainer	: $( "##authorTableContainer" ), 
 		tableURL		: '#event.buildLink( prc.xehAuthorTable )#',
-		searchField 	: $("##userSearch"),
+		searchField 	: $( "##userSearch" ),
 		searchName		: 'searchAuthors',
-		contentForm 	: $("##authorForm"),
-		importDialog 	: $("##importDialog"),
-		cloneDialog		: $("##cloneDialog"),
-		filterBox		: $("##filterBox"),
+		contentForm 	: $( "##authorForm" ),
+		importDialog 	: $( "##importDialog" ),
+		cloneDialog		: $( "##cloneDialog" ),
+		filterBox		: $( "##filterBox" ),
 		filters 		: [
 			{ name : "fStatus", defaultValue : "any" },
 			{ name : "fRole", defaultValue : "any" }
 		]
-	});
+	} );
 
 	// load content on startup
 	contentLoad( {} );
-});
+} );
 // Setup the view with the settings object
 function setupView( settings ){
 	// setup model properties
@@ -41,12 +41,12 @@ function setupView( settings ){
 		var clearIt = ( $this.val().length > 0 ? false : true );
 		// ajax search
 		contentLoad( { search: $this.val() } );
-	});
+	} );
 }
 // show all content
 function contentShowAll(){
 	resetFilter();
-	contentLoad ({ showAll: true } );
+	contentLoad ( { showAll: true } );
 }
 // Content filters
 function contentFilter(){
@@ -112,35 +112,35 @@ function contentLoad( criteria ){
 	$tableContainer.load( $tableURL, args, function(){
 		$tableContainer.css( 'opacity', 1 );
 		$( this ).fadeIn( 'fast' );
-	});
+	} );
 }
-<cfif prc.oAuthor.checkPermission("AUTHOR_ADMIN,TOOLS_IMPORT")>
+<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 function importContent(){
 	// local id's
-	var $importForm = $("##importForm");
+	var $importForm = $( "##importForm" );
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
 	// form validator and data
-	$importForm.validate({ 
+	$importForm.validate( { 
 		submitHandler: function(form){
-           	$importForm.find("##importButtonBar").slideUp();
-			$importForm.find("##importBarLoader").slideDown();
+           	$importForm.find( "##importButtonBar" ).slideUp();
+			$importForm.find( "##importBarLoader" ).slideDown();
 			form.submit();
         }
-	});
+	} );
 	// close button
-	$importForm.find("##closeButton").click(function(e){
+	$importForm.find( "##closeButton" ).click(function(e){
 		closeModal( $importDialog ); return false;
-	});
+	} );
 	// clone button
-	$importForm.find("##importButton").click(function(e){
+	$importForm.find( "##importButton" ).click(function(e){
 		$importForm.submit();
-	});
+	} );
 }
 function removeAuthor(authorID){
-	$("##delete_"+ authorID).removeClass( "icon-remove-sign" ).addClass( "icon-spinner icon-spin" );
-	$("##authorID").val( authorID );
-	$("##authorForm").submit();
+	$( "##delete_"+ authorID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+	$( "##authorID" ).val( authorID );
+	$( "##authorForm" ).submit();
 }
 </cfif>
 </script>

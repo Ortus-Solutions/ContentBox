@@ -8,7 +8,7 @@
 </div>
 <!--- Button Bar --->
 <div class="modal-footer">
-	<cfif prc.oAuthor.checkPermission("ENTRIES_ADMIN")>
+	<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN" )>
 		<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehEntryEditor)#/contentID/#prc.entry.getContentID()#')"> Edit </button>
 	</cfif>
 	<button class="btn" onclick="closeRemoteModal()"> Close </button>

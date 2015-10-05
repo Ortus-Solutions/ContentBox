@@ -1,4 +1,8 @@
-﻿/**
+/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage widgets
 */
 component extends="baseHandler"{
@@ -7,7 +11,7 @@ component extends="baseHandler"{
 	property name="widgetService"	inject="id:widgetService@cb";
 
 	// pre handler
-	function preHandler(event,action,eventArguments,rc,prc){
+	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
 		prc.tabLookAndFeel = true;
 		prc.tabLookAndFeel_widgets = true;
@@ -22,12 +26,13 @@ component extends="baseHandler"{
 		prc.xehWidgetEditor = "#prc.cbAdminEntryPoint#.widgets.edit";
 		prc.xehWidgetCreate = "#prc.cbAdminEntryPoint#.widgets.create";
 		prc.xehForgeBox		= "#prc.cbAdminEntryPoint#.forgebox.index";
+		prc.xehWidgetTest 	= "#prc.cbAdminEntryPoint#.widgets.viewWidgetInstance";
 		// Get all widgets
 		prc.widgets 		= widgetService.getWidgets();
 		prc.categories 		= widgetService.getWidgetCategories();
 		prc.widgetService 	= widgetService;
 		// ForgeBox Entry URL
-		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).settings.forgeBoxEntryURL;
+		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
 		// ForgeBox Stuff
 		prc.forgeBoxSlug 		= "contentbox-widgets";
 		prc.forgeBoxInstallDir 	= URLEncodedFormat( widgetService.getWidgetsPath() );
@@ -42,38 +47,38 @@ component extends="baseHandler"{
 		prc.widgetName = widgetService.ripExtension( urlDecode( rc.widget ) );
 		prc.widgetType = urlDecode( rc.type );
 		prc.icon = widgetService.getWidgetIcon( rc.widget, rc.type );
-		// get widget plugin
+		// get widget
 		prc.oWidget  = widgetService.getWidget( prc.widgetName, prc.widgetType );
 		// get its metadata
 		prc.metadata = prc.oWidget.getPublicMethods();
 		// presetn view
-		event.setView(view="widgets/docs",layout="ajax");
+		event.setView(view="widgets/docs",layout="ajax" );
 	}
 
 	//Remove
 	function remove( event, rc, prc ){
 		widgetService.removeWidget( rc.widgetFile );
-		getPlugin("MessageBox").info("Widget Removed Forever!");
+		getModel( "messagebox@cbMessagebox" ).info( "Widget Removed Forever!" );
 		setNextEvent(prc.xehWidgets);
 	}
 
 	//upload
 	function upload( event, rc, prc ){
-		var fp = event.getTrimValue("filePlugin","");
+		var fp = event.getTrimValue( "fileWidget","" );
 
 		// Verify
 		if( len( fp ) eq 0){
-			getPlugin("MessageBox").setMessage(type="warning", message="Please choose a file to upload");
+			getModel( "messagebox@cbMessagebox" ).setMessage(type="warning", message="Please choose a file to upload" );
 		}
 		else{
 			// Upload File
 			try{
-				widgetService.uploadWidget( "filePlugin" );
+				widgetService.uploadWidget( "fileWidget" );
 				// Info
-				getPlugin("MessageBox").setMessage(type="info", message="Widget Installed Successfully");
+				getModel( "messagebox@cbMessagebox" ).setMessage(type="info", message="Widget Installed Successfully" );
 			}
 			catch(Any e){
-				getPlugin("MessageBox").error("Error uploading file: #e.detail# #e.message#");
+				getModel( "messagebox@cbMessagebox" ).error( "Error uploading file: #e.detail# #e.message#" );
 			}
 		}
 
@@ -98,29 +103,32 @@ component extends="baseHandler"{
 			event.renderData( data=evaluate( "widget.#rc.widgetudf#( argumentCollection=rc )" ), type="html" );
 		}
 		catch ( any e ) {
-			log.error("Error rendering widget: #e.message# #e.detail#", e);
+			log.error( "Error rendering widget: #e.message# #e.detail#", e);
 			event.renderData( data="Error rendering widget: #e.message# #e.detail# #e.stacktrace#", type="html" );
 		}
 	}
 
 	function viewWidgetInstance( event, rc, prc ) {
-		event.paramValue( "modal", false );
-		event.paramValue( "Test", false );
+		// param data
+		event.paramValue( "modal", false )
+			.paramValue( "test", false )
+			.paramValue( "widgetudf", "renderIt" );
+
 		// get widget
-		var widget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
-		prc.md = widgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
+		var widget  = widgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
+		prc.md  	= widgetService.getWidgetRenderArgs( udf=rc.widgetudf, widget=rc.widgetname, type=rc.widgettype );
 		prc.widget = {
-			name = rc.widgetname,
-        	widgetType = rc.widgettype,
-        	plugin = widget,
-        	udf = structKeyExists( rc, "widgetudf" ) ? rc.widgetudf : "renderIt",
-        	module = find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
-        	category = !isNull( widget.getCategory() ) ? 
+			name 		= rc.widgetname,
+        	widgetType 	= rc.widgettype,
+        	widget 		= widget,
+        	udf 		= rc.widgetudf,
+        	module 		= find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
+        	category 	= !isNull( widget.getCategory() ) ? 
         					widget.getCategory() : 
         					rc.widgetType=="Core" ?
                             	"Miscellaneous" :
                                 rc.widgetType,
-        	icon = !isNull( widget.getIcon() ) ? widget.getIcon() : ""
+        	icon 		= !isNull( widget.getIcon() ) ? widget.getIcon() : ""
 		};
 		// get its metadata
 		prc.metadata = widget.getPublicMethods();
@@ -134,77 +142,4 @@ component extends="baseHandler"{
 		}
 	}
 
-	// Create New Widget wizard
-	function create( event, rc, prc ){
-		// exit handler
-		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.doCreate";
-		// widget path
-		prc.widgetsPath = widgetService.getWidgetsPath();
-		// widget icons
-		prc.widgetIcons = widgetService.getWidgetIcons();
-		// widget icon path
-		prc.widgetIconsIncludePath = widgetService.getwidgetsIconsIncludePath();
-		// view
-		event.setView(view="widgets/create",layout="ajax");
-	}
-	// Create the new widget
-	function doCreate( event, rc, prc ){
-		// slugify name
-		rc.name = getPlugin("HTMLHelper").slugify( rc.name );
-		// get and populate widget
-		var oWidget = populateModel("Widget@cb");
-		var errors = oWidget.validate();
-		if( !arrayLen(errors) ){
-			// save the new widget
-			widgetService.createNewWidget( oWidget );
-			getPlugin("MessageBox").info("Widget Created! Now Code It!");
-			setNextEvent(event="#prc.cbAdminEntryPoint#.widgets.edit",queryString="widget=#oWidget.getName()#&type=core");
-		}
-		else{
-			getPlugin("MessageBox").error(messageArray=errors);
-			setNextEvent(prc.xehWidgets);
-		}
-	}
-
-	// Editor
-	function edit( event, rc, prc ){
-		// param values
-		event.paramValue( "type", "core" );
-		// get widget
-		var widget = WidgetService.getWidget( name=rc.widget, type=rc.type );
-		// Exit handlers
-		prc.xehWidgetSave = "#prc.cbAdminEntryPoint#.widgets.save";
-		prc.xehWidgetTest = "#prc.cbAdminEntryPoint#.widgets.viewWidgetInstance";
-		// set widget details into prc
-		prc.widget = {
-			name = rc.widget,
-        	widgetType = rc.type,
-        	plugin = widget,
-        	udf = structKeyExists( rc, "widgetudf" ) ? rc.widgetudf : "renderIt",
-        	module = find( "@", rc.widget ) ? listGetAt( rc.widget, 2, '@' ) : "",
-        	category = !isNull( widget.getCategory() ) ? 
-        					widget.getCategory() : 
-        					rc.type=="Core" ?
-                            	"Miscellaneous" :
-                                rc.type,
-        	icon = !isNull( widget.getIcon() ) ? widget.getIcon() : "",
-        	widgetCode = widgetService.getWidgetCode( rc.widget, rc.type )
-		};
-		// view
-		event.setView("widgets/edit");
-	}
-
-	// Save Widget Code
-	function save( event, rc, prc ){
-		// Save the widget code
-		widgetService.saveWidgetCode( rc.widget, rc.widgetCode, rc.type );
-		// stay or relocate?
-		if( event.isAjax() ){
-			event.renderData(data=true,type="json");
-		}
-		else{
-			getPlugin("MessageBox").info("Widget Code Saved!");
-			setNextEvent(prc.xehWidgets);
-		}
-	}
 }

@@ -5,10 +5,10 @@
 </style>	
 <script type="text/javascript">
 $(document).ready(function() {
-	$importForm = $("##importerForm");
+	$importForm = $( "##importerForm" );
 	var $importDialog = $( "##importDialog" );
-	$tabs = $("##import_tabs");
-	$button = $("##import_button");
+	$tabs = $( "##import_tabs" );
+	$button = $( "##import_button" );
 	$validator = $importForm.validate();
 	// form validation handler
 	$importForm.submit(function( e ){
@@ -24,9 +24,9 @@ $(document).ready(function() {
 				if( !$overrideContent.is(':visible') ) {
 					// if not already prepared, do some iframe tricker to upload the file in the background and process the results
 					$( '##uploadIframe' ).remove();
-					$( '<iframe name="uploadIframe" />' ).appendTo( 'body' ).attr({
+					$( '<iframe name="uploadIframe" />' ).appendTo( 'body' ).attr( {
 						id: 'uploadIframe'
-					});
+					} );
 					// get reference to newly created frame
 					var hiddenUpload = $( '##uploadIframe' );
 					$importForm.attr( 'action', "#event.buildLink( rc.xehCBPreImport )#" );
@@ -36,7 +36,7 @@ $(document).ready(function() {
 						var response = hiddenUpload.contents().find( 'body' ).html();
 						openModal( $importDialog, 900 );
 						$importDialog.find( '##modalContent' ).html( response );
-					});
+					} );
 					if ( $importForm.valid() ) {
 						activateLoaders();
 					}
@@ -45,8 +45,8 @@ $(document).ready(function() {
 					$( '##overwrite' ).val( $overrideContent.val() );
 					$importForm.attr( 'action', '#event.buildLink( rc.xehCBImport )#' );
 					$importForm.attr( 'target', '' );
-					$importDialog.find("##importButtonBar").slideUp();
-					$importDialog.find("##importBarLoader").slideDown();
+					$importDialog.find( "##importButtonBar" ).slideUp();
+					$importDialog.find( "##importBarLoader" ).slideDown();
 				}
 				break;
 			case 'database':
@@ -62,7 +62,7 @@ $(document).ready(function() {
 			e.preventDefault();
 			removeValidations();
 		}
-	});
+	} );
 	// handle export type selection
     $( 'input[name=importtype]' ).change(function() {
         $( 'input[name=importtype]' ).each(function(){
@@ -75,7 +75,7 @@ $(document).ready(function() {
                 parent.removeClass( 'btn-success' );
                 parent.parent().removeClass( 'alert-success' );
             }
-        });
+        } );
         var cbContent = $( '##contentbox-import' );
         var dbContent = $( '##database-import' );
         if( this.id == 'import-contentbox' ) {
@@ -86,16 +86,16 @@ $(document).ready(function() {
             cbContent.hide( 'fast' );
             dbContent.show( 'fast' );
         }
-    });
+    } );
 	// close button
 	$importDialog.delegate( '##closeButton', 'click', function(e){
 		closeModal( $importDialog ); return false;
-	});
+	} );
 	// clone button
 	$importDialog.delegate( '##importButton', 'click', function(e){
 		$importForm.submit();
-	});
-});
+	} );
+} );
 /**
  * Handy method to remove all validaitons from the form so that we can add them conditionally when switching tabs
  */
@@ -121,8 +121,8 @@ function addDatabaseValidations() {
  * Little utility for showing progress bars
  */
 function activateLoaders(){
-	$("##uploadBar").slideToggle();
-	$("##uploadBarLoader").slideToggle();
+	$( "##uploadBar" ).slideToggle();
+	$( "##uploadBarLoader" ).slideToggle();
 }
 </script>
 </cfoutput>

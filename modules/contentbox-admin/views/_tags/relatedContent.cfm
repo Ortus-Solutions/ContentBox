@@ -17,7 +17,7 @@
                 // build up list of excluded IDs
                 var excludeIDs = $( 'input[name=relatedContentIDs]' ).map( function(){
                     return $( this ).val();
-                }).get();
+                } ).get();
                 if( typeof currentContentID !== 'undefined' ) {
                     excludeIDs.push( currentContentID );
                 }
@@ -25,16 +25,16 @@
                     baseURL += '?excludeIDs=' + excludeIDs.join( ',' );
                 }
                 openRemoteModal( baseURL, {}, 900, 600 );
-            });
+            } );
             // remove relatedContent listener
             $( '##relatedContent-items' ).on( 'click', '.btn', function(){
                 // remove row
                 $( this ).closest( 'tr' ).remove();
                 // evaluate if we need to modify the view of the row
                 toggleWarningMessage();
-            });
+            } );
             toggleWarningMessage();
-        });
+        } );
         /**
          * Looks at table content to see if we need to hide the table and display a "no content" message or not
          */
@@ -63,10 +63,10 @@
                 warning = $( '##related-content-empty' ),
                 template = [
                     '<tr id="content_{0}" class="related-content">',
-                        '<td width="14" class="center">{1}</td>',
+                        '<td width="14" class="text-center">{1}</td>',
                         '<td>{2}</td>',
-                        '<td width="14" class="center">',
-                            '<button class="btn btn-tiny btn-danger" type="button"><i class="icon-minus" title="Remove Related Content"></i></button>',
+                        '<td width="14" class="text-center">',
+                            '<button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>',
                             '<input type="hidden" name="relatedContentIDs" value="{0}" />',
                         '</td>',
                     '</tr>'
@@ -86,20 +86,20 @@
             var icon = '';
             switch( type ) {
                 case 'Page':
-                    icon = '<i class="icon-file-alt icon-small" title="Page"></i>';
+                    icon = '<i class="fa fa-file icon-small" title="Page"></i>';
                     break;
                 case 'Entry':
-                    icon = '<i class="icon-quote-left icon-small" title="Entry"></i>';
+                    icon = '<i class="fa fa-quote-left icon-small" title="Entry"></i>';
                     break;
                 case 'ContentStore':
-                    icon = '<i class="icon-hdd icon-small" title="ContentStore"></i>';
+                    icon = '<i class="fa fa-hdd-o icon-small" title="ContentStore"></i>';
                     break;
             }
             return icon;
         }
     </script>
-    <button class="btn btn-small btn-success" type="button" id="add-related-content">
-        <i class="icon-plus"></i>  Add related content
+    <button class="btn btn-sm btn-success" type="button" id="add-related-content">
+        <i class="fa fa-plus"></i>  Add related content
     </button>
     <br /><br />
     <table class="table table-hover table-bordered table-striped" id="relatedContent-items">
@@ -110,16 +110,16 @@
                 <tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
                     <td width="14" class="center #publishedClass#">
                         <cfif content.getContentType() eq "Page">
-                            <i class="icon-file-alt icon-small" title="Page"></i>
+                            <i class="fa fa-file icon-small" title="Page"></i>
                         <cfelseif content.getContentType() eq "Entry">
-                            <i class="icon-quote-left icon-small" title="Entry"></i>
+                            <i class="fa fa-quote-left icon-small" title="Entry"></i>
                         <cfelseif content.getContentType() eq "ContentStore">
-                            <i class="icon-hdd icon-small" title="ContentStore"></i>
+                            <i class="fa fa-hdd-o icon-small" title="ContentStore"></i>
                         </cfif>
                     </td>
                     <td class="#publishedClass#">#content.getTitle()#</td>
                     <td width="14" class="center #publishedClass#">
-                        <button class="btn btn-tiny btn-danger" type="button"><i class="icon-minus" title="Remove Related Content"></i></button>
+                        <button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>
                         <input type="hidden" name="relatedContentIDs" value="#content.getContentID()#" />
                     </td>
                 </tr>

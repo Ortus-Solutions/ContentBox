@@ -1,4 +1,4 @@
-﻿/**
+/**
 * Manage roles
 */
 component extends="baseHandler"{
@@ -30,7 +30,7 @@ component extends="baseHandler"{
 		// Tab
 		prc.tabUsers_roles = true;
 		// view
-		event.setView("roles/index");
+		event.setView( "roles/index" );
 	}
 	
 	// save
@@ -38,13 +38,13 @@ component extends="baseHandler"{
 		// populate and get
 		var orole = populateModel( roleService.get(id=rc.roleID) );
     	// announce event
-		announceInterception("cbadmin_preRoleSave",{role=orole,roleID=rc.roleID});
+		announceInterception( "cbadmin_preRoleSave",{role=orole,roleID=rc.roleID} );
 		// save role
 		roleService.save( orole );
 		// announce event
-		announceInterception("cbadmin_postRoleSave",{role=orole});
+		announceInterception( "cbadmin_postRoleSave",{role=orole} );
 		// messagebox
-		getPlugin("MessageBox").setMessage("info","Role saved!");
+		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Role saved!" );
 		// relocate
 		setNextEvent( prc.xehroles );
 	}
@@ -52,15 +52,15 @@ component extends="baseHandler"{
 	// remove
 	function remove(event,rc,prc){
 		// announce event
-		announceInterception("cbadmin_preRoleRemove",{roleID=rc.roleID});
+		announceInterception( "cbadmin_preRoleRemove",{roleID=rc.roleID} );
 		// Get requested role and remove permissions
 		var oRole = roleService.get( id=rc.roleID ).clearPermissions();
 		// finally delete
 		roleService.delete( oRole );
 		// announce event
-		announceInterception("cbadmin_postRoleRemove",{roleID=rc.roleID});
+		announceInterception( "cbadmin_postRoleRemove",{roleID=rc.roleID} );
 		// Message
-		getPlugin("MessageBox").setMessage("info","Role Removed!");
+		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Role Removed!" );
 		// relocate
 		setNextEvent( prc.xehroles );
 	}
@@ -76,7 +76,7 @@ component extends="baseHandler"{
 		// Get role
 		prc.role = roleService.get( rc.roleID );
 		// view
-		event.setView(view="roles/permissions",layout="ajax");
+		event.setView(view="roles/permissions",layout="ajax" );
 	}
 	
 	// Save permission to a role and gracefully end.
@@ -92,7 +92,7 @@ component extends="baseHandler"{
 		}
 		
 		// Saved
-		event.renderData(data="true",type="json");
+		event.renderData(data="true",type="json" );
 	}
 	
 	// remove permission to a role and gracefully end.
@@ -106,49 +106,49 @@ component extends="baseHandler"{
 		roleService.save( oRole );
 		
 		// Saved
-		event.renderData(data="true",type="json");
+		event.renderData(data="true",type="json" );
 	}
 	
 	// Export Entry
 	function export(event,rc,prc){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get role
-		prc.role  = roleService.get( event.getValue("roleID",0) );
+		prc.role  = roleService.get( event.getValue( "roleID",0) );
 		
 		// relocate if not existent
 		if( !prc.role.isLoaded() ){
-			getPlugin("MessageBox").warn("roleID sent is not valid");
+			getModel( "messagebox@cbMessagebox" ).warn( "roleID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.roles" );
 		}
 		//writeDump( prc.role.getMemento() );abort;
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.role.getRole()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=prc.role.getMemento(), type=rc.format, xmlRootName="role")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				event.renderData(data=prc.role.getMemento(), type=rc.format, xmlRootName="role" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
 	
 	// Export All Entries
 	function exportAll(event,rc,prc){
-		event.paramValue("format", "json");
+		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = roleService.getAllForExport();
 		
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Roles." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="roles")
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#"); 
+				event.renderData(data=data, type=rc.format, xmlRootName="roles" )
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#");
+				event.renderData(data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
@@ -160,17 +160,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = roleService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getPlugin("MessageBox").info( "Roles imported sucessfully!" );
+				getModel( "messagebox@cbMessagebox" ).info( "Roles imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getPlugin("MessageBox").error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin("MessageBox").error( errorMessage );
+			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
 		}
 		setNextEvent( prc.xehRoles );
 	}

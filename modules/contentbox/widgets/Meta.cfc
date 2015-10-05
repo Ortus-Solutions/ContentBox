@@ -1,18 +1,15 @@
 ﻿/**
 * A cool basic widget that shows some ContentBox meta links
 */
-component extends="contentbox.model.ui.BaseWidget" singleton{
+component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	Meta function init(controller){
-		// super init
-		super.init(controller);
-
+	Meta function init(){
 		// Widget Properties
-		setPluginName("Meta");
-		setPluginVersion("1.0");
-		setPluginDescription("A cool basic widget that shows some ContentBox meta links anywhere you like.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
+		setName( "Meta" );
+		setVersion( "1.0" );
+		setDescription( "A cool basic widget that shows some ContentBox meta links anywhere you like." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setIcon( "setting.png" );
 		return this;
 	}
@@ -23,7 +20,7 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	* @title.hint The title to show before the dropdown or list, defaults to H2
 	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
-	any function renderIt(boolean dropdown=false, string title="ContentBox",string titleLevel="2"){
+	any function renderIt(boolean dropdown=false, string title="ContentBox",string titleLevel="2" ){
 		var rString	= "";
 
 		// build links accordingly to authentication
@@ -40,11 +37,11 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		}
 		arrayAppend(links, {link=cb.linkRSS(), title="Entries RSS"} );
 		arrayAppend(links, {link=cb.linkRSS(comments=true), title="Comments RSS"} );
-		arrayAppend(links, {link="http://www.gocontentbox.org", title="ContentBox"} );
+		arrayAppend(links, {link="http://www.ortussolutions.com/products/contentbox", title="ContentBox"} );
 
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput("<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
 			// Build Type
 			if( arguments.dropdown ){
 				writeoutput( buildDropDown( links ) );
@@ -61,13 +58,13 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 		var rString = "";
 
 		saveContent variable="rString"{
-			writeOutput('<select name="meta" id="meta" onchange="window.location=this.value")><option value="##">ContentBox Links</option>');
+			writeOutput('<select name="meta" id="meta" onchange="window.location=this.value" )><option value="##">ContentBox Links</option>');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.links ); x++){
-				writeOutput('<option value="#links[x].link#">#links[x].title#</option>');
+				writeOutput('<option value="#links[ x ].link#">#links[ x ].title#</option>');
 			}
 			// close ul
-			writeOutput("</select>");
+			writeOutput( "</select>" );
 		}
 		return rString;
 	}
@@ -79,10 +76,10 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			writeOutput('<ul id="meta">');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.links ); x++){
-				writeOutput('<li class="archives"><a href="#links[x].link#">#links[x].title#</a></li>');
+				writeOutput('<li class="archives"><a href="#links[ x ].link#">#links[ x ].title#</a></li>');
 			}
 			// close ul
-			writeOutput("</ul>");
+			writeOutput( "</ul>" );
 		}
 		return rString;
 	}

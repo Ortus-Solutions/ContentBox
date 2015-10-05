@@ -1,21 +1,23 @@
-﻿/**
+/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Tools for ContentBox.
 */
 component extends="baseHandler"{
 	
 	// DI
-	property name="settingService" 		inject="id:settingService@cb";
 	property name="moduleService"       inject="id:moduleService@cb";
-    property name="layoutService"       inject="id:layoutService@cb";
+    property name="themeService"       	inject="id:themeService@cb";
     property name="widgetService"       inject="id:widgetService@cb";
     property name="roleService"         inject="id:roleService@cb";
     property name="templateService"     inject="id:emailtemplateService@cb";
-	property name="fileUtils"           inject="coldbox:plugin:FileUtils";
+	property name="fileUtils"           inject="id:FileUtils@cb";
+	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	// pre handler
-	function preHandler( event, action, eventArguments ){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
 		prc.tabTools = true;
 	}
@@ -48,11 +50,11 @@ component extends="baseHandler"{
 				prc.contents.exportDate = reReplace( prc.contents.exportDate, badDateRegex, "" );
 			}
 			else {
-				getPlugin( "MessageBox" ).error( "Sorry, the imported ContentBox package was not valid. Please verify you have the right file and try again." );
+				messagebox.warn( "Sorry, the imported ContentBox package was not valid. Please verify you have the right file and try again." );
 			}
 		}
 		else {
-			getPlugin( "MessageBox" ).error( "Sorry, there was a problem verifying your ContentBox import package. Please try again." );
+			messagebox.error( "Sorry, there was a problem verifying your ContentBox import package. Please try again." );
 		}
 		event.setView( view="tools/importerPreview", layout="ajax" );
 	}
@@ -67,44 +69,42 @@ component extends="baseHandler"{
 				ContentBoxImporter.setup( importFile=rc.CBUpload );
 				// already validated, so just process the import
 				var importLog = ContentBoxImporter.execute( overrideContent=rc.overwrite );
-				getPlugin( "MessageBox" ).info( "ContentBox package imported sucessfully! Please check out your ContentBox now!" );
+				messagebox.info( "ContentBox package imported sucessfully! Please check out your ContentBox now!" );
 				flash.put( "importLog", importLog );
-			}
-			else{
-				getPlugin( "MessageBox" ).error( "The ContentBox package is invalid. Please try again." );
+			} else {
+				messagebox.error( "The ContentBox package is invalid. Please try again." );
 			}
 		}
 		catch( any e ){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getPlugin( "MessageBox" ).error( errorMessage );
+			messagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehToolsImport );
 	}
 
 	// do database import
 	function doDataImport( event, rc, prc ){
-		event.paramValue("dsn","");
-		event.paramValue("dsnUsername","");
-		event.paramValue("dsnPassword","");
-		event.paramValue("defaultPassword","");
-		event.paramValue("tableprefix","");
-		event.paramValue("roleID","");
+		event.paramValue( "dsn","" );
+		event.paramValue( "dsnUsername","" );
+		event.paramValue( "dsnPassword","" );
+		event.paramValue( "defaultPassword","" );
+		event.paramValue( "tableprefix","" );
+		event.paramValue( "roleID","" );
 		
 		// validate
-		if( !len(rc.dsn) or !len(rc.defaultPassword) ){
-			getPlugin("MessageBox").warn("Please fill out all required fields.");
-			setNextEvent(prc.xehToolsImport);
+		if( !len( rc.dsn ) or !len( rc.defaultPassword ) ){
+			messagebox.warn( "Please fill out all required fields." );
+			setNextEvent( prc.xehToolsImport );
 		}
 		
 		try{
 			// get importer
-			var importer = getModel("#rc.importer#Importer@cb");
-			importer.execute(argumentCollection=rc);
-			getPlugin("MessageBox").info("Content imported successfully! Please check out your ContentBox now!");
-		}
-		catch(any e){
-			getPlugin("MessageBox").error("Error importing from datasource: #e.message# #e.detail#");
+			var importer = getModel( "#rc.importer#Importer@cb" );
+			importer.execute( argumentCollection=rc );
+			messagebox.info( "Content imported successfully! Please check out your ContentBox now!" );
+		} catch( any e ){
+			messagebox.error( "Error importing from datasource: #e.message# #e.detail#" );
 		}
 		
 		setNextEvent(prc.xehToolsImport);
@@ -120,11 +120,12 @@ component extends="baseHandler"{
 		prc.tabTools_export = true;
 		prc.emailTemplates 	= templateService.getTemplates();
 		prc.modules 		= moduleService.findModules().modules;
-		prc.layouts 		= layoutService.getLayouts();
+		prc.themes 		= themeService.getThemes();
 		prc.widgets 		= widgetService.getWidgets();
+		prc.widgetService 	= widgetService;
 		
 		// view
-		event.setView("tools/exporter");
+		event.setView( "tools/exporter" );
 	}
 	
 	function previewExport( event, rc, prc ) {
@@ -146,7 +147,7 @@ component extends="baseHandler"{
 		// export the content
 		var exportFilePath = exportResult.exportfile;
 		// save success message
-		var filename = getPlugin( "HTMLHelper" ).slugify( settingService.getSetting( "cb_site_name" ) );
+		var filename = variables.HTMLHelper.slugify( settingService.getSetting( "cb_site_name" ) );
 		// send it
 		fileUtils.sendFile( file=exportFilePath, name=fileName, abortAtEnd=true );
 	}

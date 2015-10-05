@@ -1,173 +1,176 @@
 ﻿<cfoutput>
-<div class="row-fluid">
-	<!--- main content --->
-	<div class="span9" id="main-content">
-		<div class="box">
-			
-			<!--- Body Header --->
-			<div class="header">
-				<ul class="sub_nav nav nav-tabs">
-					<!--- Manage --->
-					<li class="active" title="Manage Modules"><a href="##managePane" data-toggle="tab"><i class="icon-cog icon-large"></i> Manage</a></li>
-					<cfif prc.oAuthor.checkPermission("FORGEBOX_ADMIN")>
-					<!--- Install --->
-					<li title="Install New Modules"><a href="##forgeboxPane" data-toggle="tab" onclick="loadForgeBox()"><i class="icon-cloud-download icon-large"></i> ForgeBox</a></li>
-					</cfif>
-				</ul>
-				
-				<!--- Title --->
-				<i class="icon-bolt icon-large"></i>
-				Modules
-			</div>
-			
-			<!--- Body --->
-			<div class="body">
-	
-				<!--- MessageBox --->
-				#getPlugin("MessageBox").renderit()#
-	
-				<!--- Logs --->
-				<cfif flash.exists("forgeboxInstallLog")>
-					<h3>Installation Log</h3>
-					<div class="consoleLog">#flash.get("forgeboxInstallLog")#</div>
-				</cfif>
-	
-				<div class="panes tab-content">
-					
-					<div id="managePane" class="tab-pane active">
-					<!--- CategoryForm --->
-					#html.startForm(name="moduleForm")#
-					#html.hiddenField(name="moduleName")#
-	
-					<!--- Content Bar --->
-					<div class="well well-small">
-						<!--- Filter Bar --->
-						<div class="filterBar">
-							<div>
-								#html.label(field="moduleFilter",content="Quick Filter:",class="inline")#
-								#html.textField(name="moduleFilter",size="30",class="textfield")#
-							</div>
-						</div>
-					</div>
-	
-					<!--- modules --->
-					<table name="modules" id="modules" class="tablesorter table table-hover table-striped" width="98%">
-						<thead>
-							<tr>
-								<th>Module</th>
-								<th>Description</th>
-								<th class="center">Activated</th>
-								<th width="100" class="center {sorter:false}">Actions</th>
-							</tr>
-						</thead>
-						<tbody>
-							<cfloop array="#prc.modules#" index="module">
-							<tr <cfif !module.getIsActive()>class="warning"</cfif>>
-								<td>
-									<strong>#module.getTitle()#</strong><br/>
-									Version #module.getVersion()#
-									By <a href="#module.getWebURL()#" target="_blank" title="#module.getWebURL()#">#module.getAuthor()#</a>
-								</td>
-								<td>
-									#module.getDescription()#<br/>
-									<cfif len( module.getForgeBoxSlug() )>
-									ForgeBox URL: <a href="#prc.forgeBoxEntryURL & "/" & module.getForgeBoxSlug()#" target="_blank">#module.getForgeBoxSlug()#</a>
-									</cfif>
-								</td>
-								<td class="center">
-									<cfif module.getIsActive()>
-										<i class="icon-ok icon-large textGreen"></i>
-										<span class="hidden">active</span>
-									<cfelse>
-										<i class="icon-remove icon-large textRed"></i>
-										<span class="hidden">deactivated</span>
-									</cfif>
-								</td>
-								<td class="center">
-								<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
-									<div class="btn-group">
-									<!--- Check if active --->
-									<cfif module.getIsActive()>
-										<!--- Update Check --->
-										<a class="btn btn-default" title="Deactivate Module" href="javascript:deactivate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-down icon-large"></i></a>
-										&nbsp;
-									<cfelse>
-										<a class="btn btn-default" title="Activate Module" href="javascript:activate('#JSStringFormat(module.getName())#')"><i class="icon-thumbs-up icon-large"></i></a>
-										&nbsp;
-										<!--- Delete Module --->
-										<a class="btn btn-default confirmIt" title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')"
-											data-title="Delete #module.getName()#?"><i class="icon-trash icon-large"></i></a>
-									</cfif>
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1"><i class="fa fa-bolt fa-lg"></i> Modules</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+       	<!--- MessageBox --->
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
+
+		<!--- Logs --->
+		<cfif flash.exists( "forgeboxInstallLog" )>
+			<h3>Installation Log</h3>
+			<div class="consoleLog">#flash.get( "forgeboxInstallLog" )#</div>
+		</cfif>
+    </div>
+</div>
+<div class="row">
+	<div class="col-md-8">
+		<div class="panel panel-default">
+		    <div class="panel-body">
+		        <!-- Vertical Nav -->
+		        <div class="tab-wrapper tab-primary">
+		            <!-- Tabs -->
+		            <ul class="nav nav-tabs">
+		            	<!--- Manage --->
+						<li class="active" title="Manage Modules">
+							<a href="##managePane" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> Manage</a>
+						</li>
+						<cfif prc.oAuthor.checkPermission( "FORGEBOX_ADMIN" )>
+						<!--- Install --->
+							<li title="Install New Modules">
+								<a href="##forgeboxPane" data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download fa-lg"></i> ForgeBox</a>
+							</li>
+						</cfif>
+		            </ul>
+		            <!-- End Tabs -->
+		            <!-- Tab Content -->
+		            <div class="tab-content">
+		                <!-- Tab ` -->
+		                <div id="managePane" class="tab-pane active">
+							<!--- CategoryForm --->
+							#html.startForm(name="moduleForm" )#
+								#html.hiddenField(name="moduleName" )#
+								<!--- Content Bar --->
+								<div class="well well-sm">
+									<div class="form-group form-inline no-margin">
+										#html.textField(
+											name="moduleFilter",
+											size="30",
+											class="form-control",
+											placeholder="Quick Search"
+										)#
 									</div>
-								</cfif>
-								</td>
-							</tr>
-							</cfloop>
-						</tbody>
-					</table>
-	
-					#html.endForm()#
-					</div>
-					<!--- end manage pane --->
-	
-					<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
-					<!--- ForgeBox --->
-					<div id="forgeboxPane" class="tab-pane">
-						<div class="center">
-							<i class="icon-spinner icon-spin icon-large icon-4x"></i><br/>
-							Please wait, connecting to ForgeBox...
+								</div>
+				
+								<!--- modules --->
+								<table name="modules" id="modules" class="table-bordered table table-hover table-striped" width="100%">
+									<thead>
+										<tr class="info">
+											<th>Module</th>
+											<th>Description</th>
+											<th class="text-center">Activated</th>
+											<th width="100" class="text-center {sorter:false}">Actions</th>
+										</tr>
+									</thead>
+									<tbody>
+										<cfloop array="#prc.modules#" index="module">
+										<tr <cfif !module.getIsActive()>class="warning"</cfif>>
+											<td>
+												<strong>#module.getTitle()#</strong><br/>
+												Version #module.getVersion()#
+												By <a href="#module.getWebURL()#" target="_blank" title="#module.getWebURL()#">#module.getAuthor()#</a>
+											</td>
+											<td>
+												#module.getDescription()#<br/>
+												<cfif len( module.getForgeBoxSlug() )>
+												ForgeBox URL: <a href="#prc.forgeBoxEntryURL & "/" & module.getForgeBoxSlug()#" target="_blank">#module.getForgeBoxSlug()#</a>
+												</cfif>
+											</td>
+											<td class="text-center">
+												<cfif module.getIsActive()>
+													<i class="fa fa-check fa-lg textGreen"></i>
+													<span class="hidden">active</span>
+												<cfelse>
+													<i class="fa fa-times fa-lg textRed"></i>
+													<span class="hidden">deactivated</span>
+												</cfif>
+											</td>
+											<td class="text-center">
+											<cfif prc.oAuthor.checkPermission( "MODULES_ADMIN" )>
+												<div class="btn-group btn-group-sm">
+												<!--- Check if active --->
+												<cfif module.getIsActive()>
+													<!--- Update Check --->
+													<a class="btn btn-sm btn-primary" title="Deactivate Module" href="javascript:deactivate('#JSStringFormat(module.getName())#')"><i class="fa fa-thumbs-down fa-lg"></i></a>
+													&nbsp;
+												<cfelse>
+													<a class="btn btn-sm btn-primary" title="Activate Module" href="javascript:activate('#JSStringFormat(module.getName())#')"><i class="fa fa-thumbs-up fa-lg"></i></a>
+													&nbsp;
+													<!--- Delete Module --->
+													<a class="btn btn-sm btn-danger" title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
+														data-title="<i class='fa fa-trash-o'></i> Delete #module.getName()#?"><i class="fa fa-trash-o fa-lg"></i></a>
+												</cfif>
+												</div>
+											</cfif>
+											</td>
+										</tr>
+										</cfloop>
+									</tbody>
+								</table>
+							#html.endForm()#
 						</div>
-					</div>
-					</cfif>
-	
-				<!--- end panes --->
-			</div>
-			<!--- end body --->
-		</div>
+						<!--- end manage pane --->
+						<cfif prc.oAuthor.checkPermission( "MODULES_ADMIN" )>
+							<!--- ForgeBox --->
+							<div id="forgeboxPane" class="tab-pane">
+								<div class="text-center">
+									<i class="fa fa-spinner fa-spin fa-lg icon-4x"></i><br/>
+									Please wait, connecting to ForgeBox...
+								</div>
+							</div>
+						</cfif>
+		            </div>
+		            <!-- End Tab Content -->
+		        </div>
+		        <!-- End Vertical Nav -->
+		    </div>
 		</div>
 	</div>
-
-	<!--- main sidebar --->
-	<div class="span3" id="main-sidebar">
-		<cfif prc.oAuthor.checkPermission("MODULES_ADMIN")>
-		<!--- Actions Box --->
-		<div class="small_box">
-			<div class="header">
-				<i class="icon-cogs"></i> Module Admin Actions
-			</div>
-			<div class="body text-center">
-				<div class="btn-group">
-				<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivate + Rescan" class="btn"><i class="icon-hdd"></i> Reset</a>
-				<a href="#event.buildLink(prc.xehModuleRescan)#" title="Scans For New Modules" class="btn"><i class="icon-refresh"></i> Rescan</a>
-				</div>
-			</div>
-		</div>
-		<!--- Upload Box --->
-		<div class="small_box">
-			<div class="header">
-				<i class="icon-upload-alt"></i> Module Uploader
-			</div>
-			<div class="body">
-				#html.startForm(name="moduleUploadForm",action=prc.xehModuleUpload,multipart=true,novalidate="novalidate")#
-					#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
-						name="fileModule",
-						label="Upload Module:",
-						columnWidth=2,
-						useRemoveButton=false,
-						required=true
-					)#
-	
-					<div class="actionBar" id="uploadBar">
-						#html.submitButton(value="Upload & Install",class="btn btn-danger")#
+	<div class="col-md-4">
+		<cfif prc.oAuthor.checkPermission( "MODULES_ADMIN" )>
+			<div class="panel panel-primary">
+			    <div class="panel-heading">
+			        <h3 class="panel-title"><i class="fa fa-cogs"></i> Module Admin Actions</h3>
+			    </div>
+			    <div class="panel-body">
+			    	<div class="btn-group text-center">
+						<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivate + Rescan" class="btn btn-info"><i class="fa fa-hdd-o"></i> Reset</a>
+						<a href="#event.buildLink(prc.xehModuleRescan)#" title="Scans For New Modules" class="btn btn-info"><i class="fa fa-refresh"></i> Rescan</a>
 					</div>
-	
-					<!--- Loader --->
-					<div class="loaders" id="uploadBarLoader">
-						<i class="icon-spinner icon-spin icon-large icon-2x"></i> Uploading...
-					</div>
-				#html.endForm()#
+			    </div>
 			</div>
-		</div>
+			<div class="panel panel-primary">
+			    <div class="panel-heading">
+			        <h3 class="panel-title"><i class="fa fa-upload"></i> Module Uploader</h3>
+			    </div>
+			    <div class="panel-body">
+			    	#html.startForm(
+			    		name="moduleUploadForm",
+			    		action=prc.xehModuleUpload,
+			    		multipart=true,
+			    		novalidate="novalidate"
+			    	)#
+						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
+							name="fileModule",
+							label="Upload Module:",
+							columnWidth=2,
+							useRemoveButton=false,
+							required=true
+						)#
+		
+						<div class="actionBar" id="uploadBar">
+							#html.submitButton( value="Upload & Install",class="btn btn-danger" )#
+						</div>
+						<!--- Loader --->
+						<div class="loaders" id="uploadBarLoader">
+							<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i> Uploading...
+						</div>
+					#html.endForm()#
+			    </div>
+			</div>
 		</cfif>
 	</div>
 </div>

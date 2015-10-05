@@ -1,64 +1,77 @@
 <cfoutput>
-<div class="row-fluid">
-    <div class="span9" id="main-content">
-        <div class="box">
-            <!--- Body Header --->
-            <div class="header">
-                <i class="icon-star icon-large"></i> Subscribers
-            </div>
-            <!--- Body --->
-            <div class="body">
-                <!--- MessageBox --->
-                #getPlugin("MessageBox").renderit()#
-                <ul class="nav nav-tabs" id="contentTypes">
-                    <li class="active">
-                        <a href="##CommentSubscriptions" data-toggle="tab"><i class="icon-quote-left icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane fade active in" id="CommentSubscriptions">
-                        <cfif arrayLen( prc.commentSubscriptions )>
-                            <div class="span6">
-                                <h3>All Subscriptions</h3>
-                                    <!--- comment subscriptions --->
-                                    <table name="commentSubscriptions" id="commentSubscriptions" class="tablesorter table table-striped table-hover" width="98%">
-                                        <thead>
-                                            <tr>
-                                                <th>Content</th>     
-                                                <th width="75" class="center">Followers</th>
-                                            </tr>
-                                        </thead>                
-                                        <tbody>
-                                            <cfloop array="#prc.commentSubscriptions#" index="subscription">
-                                            <tr>
-                                                <td><a href="#cb.linkContent( subscription[ 'relatedContent' ] )#" target="_blank">#subscription[ "title" ]#</a></td>
-                                                <td class="center">#subscription[ "subscriberCount" ]#</td>
-                                            </tr>
-                                            </cfloop>
-                                        </tbody>
-                                    </table>
-                                
-                            </div>
-                            <div class="span6">
-                                <h3>Top #prc.maxCommentSubscriptions# Comment Subscriptions</h3>
-                                <div id="commentchart"></div>
-                            </div>
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1"><i class="fa fa-star fa-lg"></i> Subscribers</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <!--- MessageBox --->
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <!-- Vertical Nav -->
+                <div class="tab-wrapper tab-primary">
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs" id="contentTypes">
+                        <li class="active">
+                            <a href="##CommentSubscriptions" data-toggle="tab"><i class="fa fa-quote-left icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
+                        </li>
+                    </ul>
+                    <!-- End Tabs -->
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <!-- Tab ` -->
+                        <div class="tab-pane active" id="CommentSubscriptions">
+                            <cfif arrayLen( prc.commentSubscriptions )>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h3>All Subscriptions</h3>
+                                            <!--- comment subscriptions --->
+                                            <table name="commentSubscriptions" id="commentSubscriptions" class="tablesorter table table-striped table-hover" width="98%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Content</th>     
+                                                        <th width="75" class="text-center">Followers</th>
+                                                    </tr>
+                                                </thead>                
+                                                <tbody>
+                                                    <cfloop array="#prc.commentSubscriptions#" index="subscription">
+                                                    <tr>
+                                                        <td><a href="#cb.linkContent( subscription[ 'relatedContent' ] )#" target="_blank">#subscription[ "title" ]#</a></td>
+                                                        <td class="text-center">#subscription[ "subscriberCount" ]#</td>
+                                                    </tr>
+                                                    </cfloop>
+                                                </tbody>
+                                            </table>
+                                        
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h3>Top #prc.maxCommentSubscriptions# Comment Subscriptions</h3>
+                                        <div id="commentchart"></div>
+                                    </div>
+                                </div>
                             <cfelse>
                                 <p class="label label-info">No subscriptions yet!</p>
                             </cfif>
+                        </div>
                     </div>
-                </div>            
-            </div>  
+                    <!-- End Tab Content -->
+                </div>
+                <!-- End Vertical Nav -->
+            </div>
         </div>
     </div>
-    <!--- main sidebar --->    
-    <div class="span3" id="main-sidebar">    
-        <!--- Filter Box --->
-        <div class="small_box">
-            <div class="header">
-                <i class="icon-bar-chart"></i> Quick Stats
+    <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Quick Stats</h3>
             </div>
-            <div class="body">
+            <div class="panel-body">
                 <table class="table table-striped table-bordered">
                     <tr>
                         <td><strong>Comment Subscriptions:</strong></td>
@@ -71,6 +84,6 @@
                 </table>
             </div>
         </div>
-    </div>   
-</div> 
+    </div>
+</div>
 </cfoutput>

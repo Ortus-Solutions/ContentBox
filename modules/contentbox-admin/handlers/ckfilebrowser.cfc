@@ -3,9 +3,6 @@
 */
 component extends="baseHandler"{
 
-	//DI
-	property name="settingService"			inject="id:settingService@cb";
-
 	// pre handler
 	function preHandler(event,action,eventArguments){
 		var rc 	= event.getCollection();

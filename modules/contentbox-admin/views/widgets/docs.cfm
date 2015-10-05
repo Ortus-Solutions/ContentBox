@@ -1,18 +1,18 @@
 ﻿<cfoutput>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>
-        <img width="25" src="#prc.cbroot#/includes/images/widgets/#prc.icon#" /> #prc.oWidget.getPluginName()# Widget (#prc.widgetType#)
-    </h3>
+    <h4>
+        <img width="25" src="#prc.cbroot#/includes/images/widgets/#prc.icon#" /> #prc.oWidget.getName()# Widget (#prc.widgetType#)
+    </h4>
 </div>
 <div class="modal-body">
 	<div id="widget-detail">
-		<div class="row-fluid">
-			<div class="span9">
+		<div class="row">
+			<div class="col-md-9">
 				<ul>
-            		<li><strong>Version:</strong> #prc.oWidget.getpluginVersion()# </li>
+            		<li><strong>Version:</strong> #prc.oWidget.getVersion()# </li>
             		<li><strong>ForgeBox Slug:</strong> #prc.oWidget.getForgeBoxSlug()# </li>
-            		<li><strong>Description:</strong> #prc.oWidget.getPluginDescription()#</li>
+            		<li><strong>Description:</strong> #prc.oWidget.getDescription()#</li>
             	</ul>
                 <cfloop array="#prc.metadata#" index="method">
             		<div class="rendermethod" id="#method.name#" <cfif method.name neq "renderIt">style="display:none;"</cfif>>
@@ -21,9 +21,10 @@
                     		<li><strong>Hint: </strong> <cfif structKeyExists( method, "hint" )>#method.hint#<cfelse>N/A</cfif></li>
                     		<li><strong>Arguments: </strong>
                     			<cfif ArrayLen( method.parameters )>
-                    				<table class="tablesorter table table-hover table-condensed table-striped" width="100%">
+                                    <br /><br />
+                    				<table class="table-bordered table table-hover table-condensed table-striped" width="100%">
                     					<thead>
-                    						<tr>
+                    						<tr class="info">
         	            						<th>Argument</th>
         	            						<th>Type</th>
         	            						<th>Required</th>
@@ -51,16 +52,20 @@
                 	</div>
             	</cfloop>
         	</div>
-			<div class="span3" id="widget-arguments">
+			<div class="col-md-3" id="widget-arguments">
         	    <fieldset>
         	        <legend>Public Methods</legend>
                     <p>Select from the public methods in this widget to see method hints and arguments.</p>
-        	    	<label for="renderMethodSelect"><strong>Select a Method:</strong></label>
-            		<select name="renderMethodSelect" id="renderMethodSelect">
-            		    <cfloop array="#prc.metadata#" index="method">
-        					<option value="#method.name#" <cfif method.name eq "renderIt">selected=true</cfif>>#method.name#()</option>
-        				</cfloop>
-            		</select>
+                    <div class="form-group">
+                        <div class="controls">
+                	    	<label for="renderMethodSelect" class="control-label"><strong>Select a Method:</strong></label>
+                    		<select name="renderMethodSelect" id="renderMethodSelect" class="form-control input-sm">
+                    		    <cfloop array="#prc.metadata#" index="method">
+                					<option value="#method.name#" <cfif method.name eq "renderIt">selected=true</cfif>>#method.name#()</option>
+                				</cfloop>
+                    		</select>
+                        </div>
+                    </div>
                 </fieldset>
             </div>
         </div>

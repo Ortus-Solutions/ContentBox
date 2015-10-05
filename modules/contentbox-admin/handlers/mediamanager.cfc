@@ -1,26 +1,26 @@
-﻿/**
-* ContentBox Media Manager
+/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* ContentBox Media Manager handler
 */
 component extends="baseHandler"{
 
-	//DI
-	property name="settingService"			inject="id:settingService@cb";
-
-	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+	/**
+	* Pre handler
+	*/
+	function preHandler( event, action, eventArguments, rc, prc ){
 		// widget runnable event
 		prc.xehFileBrowser = "contentbox-filebrowser:home.index";
-		// tabs
-		prc.tabContent = true;
-		prc.tabContent_mediaManager = true;
 	}
 
-	// index
+	/**
+	* Display media manager
+	*/
 	function index(event,rc,prc){
 		// library type
-		event.paramValue("library","content");
+		event.paramValue( "library", "content" );
 		// get settings according to contentbox
 		prc.cbFileBrowserSettings = settingService.buildFileBrowserSettings();
 		// set root according to library root
@@ -32,30 +32,30 @@ component extends="baseHandler"{
 			}
 			case "modules" : {
 				prc.cbFileBrowserSettings.title = "Modules Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel("ModuleService@cb").getModulesPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "ModuleService@cb" ).getModulesPath(); break;
 			}
 			case "updates" : {
 				prc.cbFileBrowserSettings.title = "Updates Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel("UpdateService@cb").getPatchesLocation(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "UpdateService@cb" ).getPatchesLocation(); break;
 			}
 			case "widgets" : {
 				prc.cbFileBrowserSettings.title = "Widgets Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel("WidgetService@cb").getWidgetsPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getWidgetsPath(); break;
 			}
 		}
 		// options
 		prc.libraryOptions = [
-			{name="<i class='icon-pencil'></i> Content", value="Content"},
-			{name="<i class='icon-bolt'></i> Modules", value="Modules"},
-			{name="<i class='icon-download-alt'></i> Updates", value="Updates"},
-			{name="<i class='icon-magic'></i> Widgets", value="Widgets"}
+			{ name="<i class='fa fa-pencil'></i> Content", 		value="Content"	},
+			{ name="<i class='fa fa-bolt'></i> Modules", 		value="Modules"	},
+			{ name="<i class='fa fa-download'></i> Updates", value="Updates"	},
+			{ name="<i class='fa fa-magic'></i> Widgets", 		value="Widgets	"}
 		];
 
 		// build argument list for widget
-		prc.fbArgs = {widget=true, settings=prc.cbFileBrowserSettings};
+		prc.fbArgs = { widget=true, settings=prc.cbFileBrowserSettings };
 
 		// view
-		event.setView("mediamanager/index");
+		event.setView( "mediamanager/index" );
 	}
 
 }

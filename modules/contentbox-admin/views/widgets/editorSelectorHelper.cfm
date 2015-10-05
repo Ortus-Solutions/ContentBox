@@ -8,7 +8,7 @@ $(document).ready(function() {
         // mark selected
         $( this ).addClass( 'selected' );
         // make ajax request for arguments form
-        $.ajax({
+        $.ajax( {
             type: 'GET',
             url: getWidgetInstanceURL(),
             data: {
@@ -24,15 +24,15 @@ $(document).ready(function() {
                 // fire switch method
                 switchWidgetFormMode( 'detail' );
             }
-        });
-    });
+        } );
+    } );
     // Handle mode switch back to list
     $( '##widget-button-back' ).click( function(){
         $( '##widget-arguments' ).html( '' );
         $( '##widget-preview-content' ).html( '' );
         switchWidgetFormMode( 'list' );
-    });
-});
+    } );
+} );
 /*
  * Get selected widget from collection
  */
@@ -61,7 +61,7 @@ function switchWidgetFormMode( mode ) {
                 backBtn.hide();
                 insertBtn.hide();
                 titleBar.html( 'Select a Widget' );
-            });
+            } );
             break;
         // detail mode
         case 'detail':
@@ -76,7 +76,7 @@ function switchWidgetFormMode( mode ) {
                 src = findSelectedWidget().find( 'img' ).attr( 'src' );
                 titleBar.html( '<img width="25" src="' + src + '" /> Insert \'' +widgetDisplayName+ '\' Widget' );
                 //updatePreview();
-            })
+            } )
             break;
     }
 }

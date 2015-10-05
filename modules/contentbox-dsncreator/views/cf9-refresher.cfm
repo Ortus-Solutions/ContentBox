@@ -9,7 +9,7 @@
     <title>ContentBox Datasource Wizard</title>
 	<script>
 		function refreshit(){
-			var t=setTimeout("reloadit()",8000);
+			var t=setTimeout( "reloadit()",8000);
 		}
 		function reloadit(){
 			window.location.reload();

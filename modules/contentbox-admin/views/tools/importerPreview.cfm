@@ -1,29 +1,29 @@
 <cfoutput>
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3><i class="icon-copy"></i> Import Preview</h3>
+        <h3><i class="fa fa-copy"></i> Import Preview</h3>
     </div>
     <cfif not structKeyExists( prc, "contents" )>
         <div class="modal-body" id="modal-body">
             <!--- messageBox --->
-            #getPlugin("MessageBox").renderit()#
+            #getModel( "messagebox@cbMessagebox" ).renderit()#
         </div>
     <cfelse>
         <div class="modal-body" id="modal-body">
-            <div class="row-fluid">
-                <div class="span5">
+            <div class="row">
+                <div class="col-md-5">
                     <h4>Override Existing Content?</h4>
                     <small>By default all content that exists is not overwritten.</small><br>
-                    #html.select(options="true,false", name="overrideContent", selectedValue="false", class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
+                    #html.select(options="true,false", name="overrideContent", selectedValue="false", class="form-control input-sm",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
                     <div class="alert">
-                        <i class="icon-warning-sign icon-large"></i> <strong>Non-content</strong> imports (layouts, widgets, modules, etc.) will automatically overwrite any existing assets regardless of the choice above.</strong>
+                        <i class="fa fa-warning fa-lg"></i> <strong>Non-content</strong> imports (layouts, widgets, modules, etc.) will automatically overwrite any existing assets regardless of the choice above.</strong>
                     </div>
                     <!---Notice --->
                     <div class="alert alert-info">
-                        <i class="icon-info-sign icon-large"></i> Please note that import is an expensive process, so please be patient when importing.
+                        <i class="fa fa-info-circle fa-lg"></i> Please note that import is an expensive process, so please be patient when importing.
                     </div>
                 </div>
-                <div class="span7">
+                <div class="col-md-7">
                     <h4>Import Summary</h4>
                     <div id="import-preview">
                         <table class="table table-bordered">
@@ -60,7 +60,7 @@
             </div>
             <!--- Loader --->
             <div class="center loaders" id="importBarLoader">
-                <i class="icon-spinner icon-spin icon-large icon-2x"></i>
+                <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
                 <br>Please wait, doing some hardcore importing action...
             </div>
         </div>

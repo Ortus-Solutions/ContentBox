@@ -1,15 +1,16 @@
 ﻿<cfoutput>
-<div class="row-fluid">
-	<div class="box clear">
-		<!--- Body Header --->
-		<div class="header">
-			<i class="icon-th icon-large"></i>
-			Media Manager <span class="label">#rc.library#</span>
-			
-			<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
-				<div class="btn-group pull-right">
-				    <a class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" href="##">
-				    	<i class="icon-exchange"></i> Switch Library
+<div class="row">
+	<div class="col-md-12">
+		<h1 class="h1">
+			<i class="fa fa-picture-o"></i> Media Manager 
+		</h1>
+		<span class="label label-warning">#rc.library#</span>
+
+		<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
+			<div class="pull-right">
+				<div class="btn-group btn-group-sm">
+				    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+				    	<i class="fa fa-exchange"></i> Switch Library
 				    	<span class="caret"></span>
 				    </a>
 					<ul class="dropdown-menu">
@@ -18,19 +19,19 @@
 						</cfloop>
 					</ul>
 			    </div>
-		    </cfif>
-		</div>
-		
-		<!--- Body --->
-		<div class="body">
-			
-			<!--- messageBox --->
-			#getPlugin("MessageBox").renderit()#
-	
-			<!--- FileBrowser Viewlet --->
-			#runEvent(event=prc.xehFileBrowser,eventArguments=prc.fbArgs)#
-	
-		</div>
+			</div>
+	    </cfif>
+	    
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		    
+    	<!--- messageBox --->
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
+
+		<!--- FileBrowser Viewlet --->
+		#runEvent(event=prc.xehFileBrowser,eventArguments=prc.fbArgs)#
 	</div>
 </div>
 </cfoutput>

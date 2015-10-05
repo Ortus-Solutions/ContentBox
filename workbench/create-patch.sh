@@ -49,4 +49,4 @@ cd $REPO_ROOT
 git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | zip $REPO_ROOT/workbench/patches/$3/patch.zip -@
 
 # create delete filelisting patch, exclude external stuff
-git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 | grep -E -v '^(includes|config|tests?|views|model|layouts|handlers|workbench)' > $REPO_ROOT/workbench/patches/$3/deletes.txt
+git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 | grep -E -v '^(includes|config|tests?|views|models|layouts|handlers|workbench)' > $REPO_ROOT/workbench/patches/$3/deletes.txt

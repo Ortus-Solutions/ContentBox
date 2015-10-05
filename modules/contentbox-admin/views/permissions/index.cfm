@@ -1,176 +1,183 @@
 ﻿<cfoutput>
-<div class="row-fluid" id="main-content">
-	<div class="box">
-		<!--- Body Header --->
-		<div class="header">
-			<i class="icon-lock icon-large"></i>
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1">
+        	<i class="fa fa-lock fa-lg"></i>
 			Permissions
-		</div>
-		
-		<!--- Body --->
-		<div class="body">
-			
-			<!--- MessageBox --->
-			#getPlugin("MessageBox").renderit()#
-			
-			<!---Import Log --->
-			<cfif flash.exists( "importLog" )>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        <!---Import Log --->
+		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
-			</cfif>
-			
-			<!--- PermissionForm --->
-			#html.startForm(name="permissionForm",action=prc.xehPermissionRemove)#
-			#html.hiddenField(name="permissionID",value="")#
-			
-			<!--- Content Bar --->
-			<div class="well well-small">
-				<!--- Command Bar --->
-				<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
-				<div class="pull-right">
-					<!---Global --->
-					<div class="btn-group">
-				    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##">
-							Bulk Actions <span class="caret"></span>
-						</a>
-				    	<ul class="dropdown-menu">
-				    		<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
-				    		<li><a href="javascript:importContent()"><i class="icon-upload-alt"></i> Import</a></li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_EXPORT")>
-				    		<li class="dropdown-submenu">
-								<a href="##"><i class="icon-download icon-large"></i> Export All</a>
-								<ul class="dropdown-menu text-left">
-									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
-									<li><a href="#event.buildLink(linkto=prc.xehExportAll)#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
-								</ul>
-							</li>
-							</cfif>
-				    	</ul>
-				    </div>
-					<a href="##" onclick="return createPermission();" class="btn btn-danger">Create Permission</a>
-				</div>
-				</cfif>
-				<!--- Filter Bar --->
-				<div class="filterBar">
-					<div>
-						#html.label(field="permissionFilter",content="Quick Filter:",class="inline")#
-						#html.textField(name="permissionFilter",size="30",class="textfield")#
+		</cfif>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+    	#html.startForm(
+            name="permissionForm", 
+            action=prc.xehPermissionRemove, 
+            class="form-vertical"
+        )#
+        	#html.hiddenField(name="permissionID",value="" )#
+        	<div class="panel panel-default">
+				<div class="panel-heading">
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group form-inline no-margin">
+								#html.textField(
+									name="permissionFilter",
+									class="form-control",
+									placeholder="Quick Search"
+								)#
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="pull-right">
+								<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+									<div class="btn-group btn-group-sm">
+								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+											Bulk Actions <span class="caret"></span>
+										</a>
+								    	<ul class="dropdown-menu">
+								    		<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+								    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
+											</cfif>
+											<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
+												<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+											</cfif>
+								    	</ul>
+								    </div>
+									<button onclick="return createPermission();" class="btn btn-sm btn-danger">Create Permission</button>
+								</cfif>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-				
-				<!--- permissions --->
-				<table name="permissions" id="permissions" class="tablesorter table table-hover table-striped" width="98%">
-					<thead>
-						<tr>
-							<th>Permission</th>
-							<th>Description</th>
-							<th class="center">Roles Assigned</th>		
-							<th width="150" class="center {sorter:false}">Actions</th>
-						</tr>
-					</thead>				
-					<tbody>
-						<cfloop array="#prc.permissions#" index="permission">
-						<tr>
-							<td>
-								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT")>
-								<a href="javascript:edit('#permission.getPermissionID()#',
-								   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
-								   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
-								   title="Edit #permission.getPermission()#">#permission.getPermission()#</a>
-								<cfelse>
-									#permission.getPermission()#
-								</cfif>
-							</td>
-							<td>#permission.getDescription()#</td>
-							<td class="center">
-								<span class="badge badge-info">#permission.getNumberOfRoles()#</span>
-							</td>
-							<td class="center">
-								<div class="btn-group">
-								<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
-								<!--- Edit Command --->
-								<a class="btn" href="javascript:edit('#permission.getPermissionID()#',
-								   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
-								   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
-								   title="Edit #permission.getPermission()#"><i class="icon-edit icon-large"></i></a>
-								<!--- Delete Command --->
-								<a class="btn confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#')" data-title="Delete Permission?"><i id="delete_#permission.getPermissionID()#" class="icon-trash icon-large"></i></a>
-								</cfif>
-								</div>
-							</td>
-						</tr>
-						</cfloop>
-					</tbody>
-				</table>			
-			</div>
-         #html.endForm()#	
-	</div>
-</div>
-<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN")>
-<!--- Permissions Editor --->
-<div id="permissionEditorContainer" class="modal hide fade">
-	<div id="modalContent">
-	<div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3>Permission Editor</h3>
+				<div class="panel-body">
+					<!--- permissions --->
+					<table name="permissions" id="permissions" class="tablesorter table-bordered table table-hover table-striped" width="100%">
+						<thead>
+							<tr class="info">
+								<th>Permission</th>
+								<th>Description</th>
+								<th class="text-center">Roles Assigned</th>		
+								<th width="150" class="text-center {sorter:false}">Actions</th>
+							</tr>
+						</thead>				
+						<tbody>
+							<cfloop array="#prc.permissions#" index="permission">
+							<tr>
+								<td>
+									<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+									<a href="javascript:edit('#permission.getPermissionID()#',
+									   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
+									   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
+									   title="Edit #permission.getPermission()#">#permission.getPermission()#</a>
+									<cfelse>
+										#permission.getPermission()#
+									</cfif>
+								</td>
+								<td>#permission.getDescription()#</td>
+								<td class="text-center">
+									<span class="badge badge-info">#permission.getNumberOfRoles()#</span>
+								</td>
+								<td class="text-center">
+									<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+										<!--- Edit Command --->
+										<a class="btn btn-sm btn-primary" href="javascript:edit('#permission.getPermissionID()#',
+										   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
+										   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#');" 
+										   title="Edit #permission.getPermission()#">
+										   	<i class="fa fa-edit fa-lg"></i>
+										</a>
+										<!--- Delete Command --->
+										<a class="btn btn-sm btn-danger confirmIt" title="<i class='fa fa-trash-o'></i> Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
+											<i id="delete_#permission.getPermissionID()#" class="fa fa-trash-o fa-lg"></i>
+										</a>
+									</cfif>
+								</td>
+							</tr>
+							</cfloop>
+						</tbody>
+					</table>			
+				</div>
+			</div>	
+		#html.endForm()#	
     </div>
-	<!--- Create/Edit form --->
-	#html.startForm(action=prc.xehPermissionSave,name="permissionEditor",novalidate="novalidate",class="form-vertical")#
-	<div class="modal-body">
-			#html.hiddenField(name="permissionID",value="")#
-			#html.textField(name="permission",label="Permission:",required="required",maxlength="255",size="30",class="input-block-level",title="The unique permission name",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-			#html.textArea(name="description",label="Description:",cols="20",rows="3",class="input-block-level",required="required",title="A short permission description",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-	</div>
-	<!--- Footer --->
-	<div class="modal-footer">
-		#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##permissionEditorContainer') )")#
-		#html.submitButton(name="btnSave",value="Save",class="btn btn-danger")#
-	</div>
-	#html.endForm()#
-	</div>
 </div>
-</cfif>
-<cfif prc.oAuthor.checkPermission("PERMISSIONS_ADMIN,TOOLS_IMPORT")>
-<!---Import Dialog --->
-<div id="importDialog" class="modal hide fade">
-	<div id="modalContent">
-	    <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	        <h3><i class="icon-copy"></i> Import Permissions</h3>
-	    </div>
-        #html.startForm(name="importForm", action=prc.xehImportAll, class="form-vertical", multipart=true)#
-        <div class="modal-body">
-			<p>Choose the ContentBox <strong>JSON</strong> permissions file to import.</p>
-			
-			#getMyPlugin( plugin="BootstrapFileUpload", module="contentbox" ).renderIt( 
-				name="importFile",
-				required=true
-			)#
-			
-			<label for="overrideContent">Override Permissions?</label>
-			<small>By default all content that exist is not overwritten.</small><br>
-			#html.select(options="true,false", name="overrideContent", selectedValue="false", class="input-block-level",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=control-group")#
-			
-			<!---Notice --->
-			<div class="alert alert-info">
-				<i class="icon-info-sign icon-large"></i> Please note that import is an expensive process, so please be patient when importing.
+<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+	<!--- Permissions Editor --->
+	<div id="permissionEditorContainer" class="modal fade">
+		<div class="modal-dialog">
+		    <div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4><i class="fa fa-lock"></i> Permission Editor</h4>
+				</div>
+				<!--- Create/Edit form --->
+				#html.startForm(
+					action=prc.xehPermissionSave,
+					name="permissionEditor",
+					novalidate="novalidate",
+					class="form-vertical"
+				)#
+				<div class="modal-body">
+					#html.hiddenField(name="permissionID",value="" )#
+					#html.textField(
+						name="permission",
+						label="Permission:",
+						required="required",
+						maxlength="255",
+						size="30",
+						class="form-control",
+						title="The unique permission name",
+						wrapper="div class=controls",
+						labelClass="control-label",
+						groupWrapper="div class=form-group"
+					)#
+					#html.textArea(
+						name="description",
+						label="Description:",
+						cols="20",
+						rows="3",
+						class="form-control",
+						required="required",
+						title="A short permission description",
+						wrapper="div class=controls",
+						labelClass="control-label",
+						groupWrapper="div class=form-group"
+					)#
+				</div>
+				<!--- Footer --->
+				<div class="modal-footer">
+					#html.resetButton(
+						name="btnReset",
+						value="Cancel",
+						class="btn", 
+						onclick="closeModal( $('##permissionEditorContainer') )"
+					)#
+					#html.submitButton( name="btnSave",value="Save",class="btn btn-danger" )#
+				</div>
+				#html.endForm()#
 			</div>
 		</div>
-        <div class="modal-footer">
-            <!--- Button Bar --->
-        	<div id="importButtonBar">
-          		<button class="btn" id="closeButton"> Cancel </button>
-          		<button class="btn btn-danger" id="importButton"> Import </button>
-            </div>
-			<!--- Loader --->
-			<div class="center loaders" id="importBarLoader">
-				<i class="icon-spinner icon-spin icon-large icon-2x"></i>
-				<br>Please wait, doing some hardcore importing action...
-			</div>
-        </div>
-		#html.endForm()#
 	</div>
-</div>
+</cfif>
+<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+	<cfscript>
+		dialogArgs = {
+			title = "Import Permissions",
+			contentArea = "permissions",
+			action = prc.xehImportAll,
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> permissions file to import."
+		};
+	</cfscript>
+	#renderView( view="_tags/dialog/import", args=dialogArgs )#
 </cfif>
 </cfoutput>

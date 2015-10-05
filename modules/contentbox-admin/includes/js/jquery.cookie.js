@@ -54,7 +54,7 @@
         // Write
 
         if (value !== undefined && !$.isFunction(value)) {
-            options = $.extend({}, config.defaults, options);
+            options = $.extend( {}, config.defaults, options);
 
             if (typeof options.expires === 'number') {
                 var days = options.expires, t = options.expires = new Date();
@@ -107,8 +107,8 @@
         }
 
         // Must not alter options, thus extending a fresh object...
-        $.cookie(key, '', $.extend({}, options, { expires: -1 }));
+        $.cookie(key, '', $.extend( {}, options, { expires: -1 } ));
         return !$.cookie(key);
     };
 
-}));
+} ));

@@ -1,4 +1,8 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * ContentBox main module configuration
 */
 component {
@@ -8,7 +12,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "The ContentBox DSN creator module";
-	this.version			= "2.1.0+@build.number@";
+	this.version			= "3.0.0-beta+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "";

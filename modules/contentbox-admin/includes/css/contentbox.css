@@ -1,31 +1,98 @@
+/** Theme Overrides */
+.loaders {
+  margin: 10px;
+  display: none;
+  text-align: center;
+}
+.tipList li {
+  padding: 5px 0px 0px 0px;
+}
+.tab-pane .row.well.well-sm {
+  margin: 0 1px 10px;
+}
+a.btn.btn-danger:link,
+a.btn.btn-danger:visited {
+  color: white !important;
+}
+.nav-tabs > li >a:hover{
+	background-color: #eaeaea;
+}
+/** Header */
+#header .brand{ 
+	background-color: white!important; 
+}
+#header .logo{
+	padding: 15px 0 0 0px !important;
+	background: none !important;
+}
+#header .user-nav {
+    padding-right: 60px;
+}
+/* vertical align */
+#header a.btn-default{
+	padding-top: 6px;
+	vertical-align: middle;
+}
+/* close gap between li's */
+#header .user-nav ul li{
+    margin: 0px 5px;
+}
+#header .user-nav ul li.dropdown.settings .dropdown-menu {
+	width: 230px;
+	left: -80px;
+}
+#header .user-nav ul li.dropdown.settings {
+  	line-height: 39px;
+  	margin: 0px 5px;
+  	padding: 0px;
+}
+#header .user-nav ul li.dropdown.settings .dropdown-menu:after {
+	left: 43%;
+}
+#header .user-nav ul li.dropdown.settings .dropdown-menu:before {
+	left: 43%;
+}
+#login-wrapper #username{
+    padding-left: 32px;
+}
+.main-content-wrapper .dropdown-menu > li > a:hover, .main-content-wrapper .dropdown-menu > li > a:active {
+    background-color: #16a086;
+}
+/** Section Overrides */
+#simple-container{
+	padding-top:10px;
+}
+
+/** Sidebar Mini */
+.sidebar-mini > .sidebar > #profileSidebar{
+	display: none;
+}
+
+/** Media Queries **/
+@media all and (max-width: 437px) {
+	.slide .sld-img {
+		display: none;
+	}
+
+	#title-legend {
+		display: none;
+	}
+}
+@media only screen and (max-width: 853px) {
+  #header {
+    height: 80px;
+  }
+  .main-content-wrapper {
+    margin-left: 0;
+  }
+}
+
 /**============================== ADMIN MAIN ELEMENTS ==============================**/
-html{ 
-	height:100%;
-	color: #3B3B3B;
-}
-body{ 
-	margin: 0;
-	width:100%;
-	height:100%;
-	padding-left: 0px !important;
-	padding-right: 0px !important;
-  	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 13px;
-  	line-height: 20px;
-	color: #333333;
-	background-color: #F5F5F5;
-	background-image: linear-gradient(to bottom, #ddd, #F5F5F5);
-	background-image: -moz-linear-gradient(top, #ddd, #F5F5F5);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ddd), to(#F5F5F5));
-	background-image: -webkit-linear-gradient(top, #ddd, #F5F5F5);
-	background-image: -o-linear-gradient(top, #ddd, #F5F5F5);
-	background-image: linear-gradient(to bottom, #ddd, #F5F5F5);
-	background-repeat: repeat-x;
-}
-ol { list-style:decimal inside; }
-ul { list-style:disc inside; }
 img{ height: inherit; }
 img.img-screenshot{ height: 200px; }
+.gravatar{ height: auto; }
+/**
+ul { list-style:disc inside; }
 input, textarea, .uneditable-input { width: inherit; }
 #wrapper {
 	min-height: 100%;
@@ -39,119 +106,117 @@ input, textarea, .uneditable-input { width: inherit; }
 .container-fluid{ padding-bottom: 30px }
 .hero-unit{padding:50px; margin-top:20px; margin-bottom: 20px}
 .well{ margin-bottom: 10px; margin-top: 10px;}
-.gravatar{ height: auto; }
-/**============================== ADMIN MAIN TOP MENU ==============================**/
-#adminMenuTopNav { font-size: 13px; z-index: 1025}
-#adminMenuTopNav .container{ margin-left: 25px; margin-right: 25px; width: auto;}
-#adminMenuTopNav .brand{ font-size: 14px; padding-right:10px}
-#adminMenuTopNav .nav > li > a { padding: 8px 5px;}
-#adminMenuTopNav .navbar-inner {
-    background-color: #1B1B1B;
-    background-image: linear-gradient(to bottom, #525252, #111111);
-    background-image: -moz-linear-gradient(top, #525252, #111111);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#525252), to(#111111));
-	background-image: -webkit-linear-gradient(top, #525252, #111111);
-	background-image: -o-linear-gradient(top, #525252, #111111);
-	background-image: linear-gradient(to bottom, #525252, #111111);
-	background-repeat: repeat-x;
-    border-color: #252525;
+**/
+/** Widgets **/
+widget {
+    width: 85%;
+    padding:5px;
+    border: solid 1px #dadada;
+    border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    border-bottom-color: #b3b3b3;
+    border-radius: 2px;
+    display:block;
+    cursor:pointer;
+    *background-color: #e6e6e6;
+    background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+    background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+    background-repeat: repeat-x;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all .2s ease;
+    -webkit-transition: all .2s ease;
+    -moz-transition: all .2s ease;
 }
-#adminMenuTopNav #logo{ margin: 5px 10px 0px 0px;float:left;height:25px}
-#adminActionNotifier{ font-size:13px; position: absolute; right:10px; min-width:250px; z-index: 9999; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; margin: auto}
+widget:hover {
+    background-color: #e6e6e6;
+    *background-color: #d1d1d1;
+    transform: scale(1.01);
+    -webkit-transform: scale( 1.01 );
+    -moz-transform: scale( 1.01 );
+}
+widget:hover widgetinfobar {
+    color: #666;
+}
+widgetinfobar {
+    color: #999;
+    font-size: 9pt;
+    display:block;
+    min-height:20px;
+    line-height:20px;
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);
+}
+widgetinfobar::selection {
+    background-color: rgba(255, 255, 255, 0);
+}
+widgetinfobar::-moz-selection {
+    background-color: rgba(255, 255, 255, 1);
+}
+.widget-wrapper {padding:5px;}
+.widget-content {cursor:pointer;clear:right;border: solid 1px #dadada;padding: 10px;border-radius: 4px;margin-bottom:20px;}
+.widget-content.third {width:29%;}
+.widget-content.half {width:46%;}
+.widget-content.spacer {margin-left:20px;}
+.widget-content.selected {background-color:#f1f1f1 !important;}
+.widget-content:hover {background:#f1f1f1;}
+.widget-content:hover .widget-title {background:#dadada;}
+.widget-content img.widget-icon {float:left;margin-right:10px;transition: all .2s ease;-webkit-transition: all .2s ease;-moz-transition: all .2s ease;
+}
+.widget-content img.widget-icon{margin-bottom:15px;}
+.widget-icon-selector{ display: none; clear: both}
+.widget-icon-selector img.widget-icon {margin: 5px; float:left;margin-right:10px;transition: all .2s ease;-webkit-transition: all .2s ease;-moz-transition: all .2s ease;}
+.widget-content img.widget-icon:hover, .widget-icon-selector img.widget-icon:hover {transform: scale(1.01);-webkit-transform: scale( 1.08 );-moz-transform: scale( 1.08 );
+}
+.widget-title {position:relative;text-shadow: 1px 1px 1px rgba(255, 255, 255, 1);background:#efefef; padding:3px 10px;font-size:115%;font-weight:bold;margin: -10px -10px 10px;border-bottom:solid 1px #dadada;}
+.widget-actions {position:relative;font-size:85%;background:#efefef; padding:3px 10px;font-weight:bold;margin: 0px -10px -10px;border-top:solid 1px #dadada;clear:both;}
+.widget-type {font-size:80%;position:absolute;right:0px;margin-right:10px;color:#999;}
+.widget-teaser {line-height: 1.2em;font-size:11px;}
+.widget-footer-left {width: 50%;float: left;text-align: left;}
+.widget-footer-right {width: 50%;float: left;text-align: right;}
+.widget-no-preview {padding: 10px;background: #efefef;border: dashed 1px #dadada;font-weight: bold;margin-right: 15px;}
+.widget-preview-content .widget-no-preview {margin-top:10px;}
+#confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close {z-index:99999;}
+#widget-title-bar img {margin-top:-5px;}
+.widget-total-bar {margin-bottom: 10px;font-size: 8pt;}
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
-#nav-search { padding: 6px 14px 2px 14px; }
+#div-search { padding: 6px 14px 2px 14px; }
+#div-search input{ 
+	background-color: #fafafa;
+    border-radius: 3px;
+    box-shadow: none !important;
+    color: #717171;
+    font-size: 13px;
+    height: 18px;
+    line-height: 18px;
+    min-height: 36px;
+    outline: 0 none;
+    padding: 6px 11px;
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    width: 175px;
+}
 #div-search-results{
 	display: none;
-	top: 35px;background-color: black; padding: 5px 10px; width: 400px; position: absolute; min-height: 100px; z-index: 9999;
-	box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; 
-	border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;
+	top: 60px;
+	left: 312px;
+	background-color: #293949; 
+	padding: 5px 10px; 
+	width: 425px;
+	position: absolute;
+	min-height: 100px;
+	z-index: 9999;
+	box-shadow:0 0 6px #ccc;
+	border-radius:6px;
+	-moz-box-shadow:0 0 6px #ccc;
+	-webkit-box-shadow:0 0 6px #ccc;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
 }
 #div-search-results h2{ color: #31ADE8; font-size: 16px; font-weight: normal;}
 #div-search-results ul{ font-size: 12px}
 #div-search-results li{ margin: 3px 0px }
-/**============================== ADMIN MAIN GENERATED MENU ==============================**/
-#adminMenuBar { top: 41px;  z-index: 1000}
-#adminMenuBar .container{ margin-left: 20px; margin-right: 20px; width: auto;}
-#adminMenuBar .nav > li { line-height:20px;}
-#adminMenuBar .nav > li > a{ padding: 10px;}
-#adminMenuBar .nav li.dropdown:hover ul.dropdown-menu{ display: block; }
-#adminMenuBar .nav li.dropdown ul.dropdown-menu{ margin: 0 !important; }
-#adminMenuBar .navbar-inner {
-    background-color: #343434;
-    background-image: linear-gradient(to bottom, #343434, #111111);
-    background-image: -moz-linear-gradient(top, #343434, #111111);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#343434), to(#111111));
-	background-image: -webkit-linear-gradient(top, #343434, #111111);
-	background-image: -o-linear-gradient(top, #343434, #111111);
-	background-image: linear-gradient(to bottom, #343434, #111111);
-	background-repeat: repeat-x;
-    border-color: #252525;
-}
-/**============================== FOOTER ==============================**/
-.push { height: 50px; }
-footer {
-    background-color: #1B1B1B;
-    opacity: 0.90;
-    background-image: linear-gradient(to bottom, #3B3B3B, #111111);
-    background-image: -moz-linear-gradient(top, #3B3B3B, #111111);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3B3B3B), to(#111111));
-	background-image: -webkit-linear-gradient(top, #3B3B3B, #111111);
-	background-image: -o-linear-gradient(top, #3B3B3B, #111111);
-	background-image: linear-gradient(to bottom, #3B3B3B, #111111);
-	background-repeat: repeat-x;
-    border-color: #252525;
-    border-top: 1px solid #222222;
-    box-shadow: 0 1px 0 #666666 inset;
-    color: #EEEEEE;
-    height: 50px;
-    padding: 20px;
-    font-size: 11px;
-    position: relative;
-	margin-top: -91px;
-}
-footer a { color:#fff; text-decoration:underline; }
-footer a:hover{ color: #3a87ff}
-footer #footerLogo img{ margin:-17px 35px; box-shadow:0 0 6px #ccc; -moz-box-shadow:0 0 6px #ccc; -webkit-box-shadow:0 0 6px #ccc; }
-/**============================== Page Layout with Sidebar ==============================**/
-.sidebar { width: 300px; float:right; margin:0 0 0 25px; }
-.main_column { margin-right: 312px; }
-/**============================== Small Box in Sidebar ==============================**/
-.small_box { margin-bottom:15px; }
-.small_box .header { height:30px; font-size:1.3em; line-height:1.8em; padding:0 12px; }
-.small_box .header img { position:relative; top:2px; float:right; }
-.small_box .body { padding: 10px 10px 5px 10px; font-size:.9em; }
-.small_box { background:#fdfdfd; }
-.small_box .header { background:url(../images/small_box_header_bg.gif) repeat-x bottom; color:#004A7E; }
-/**============================== Box ==============================**/
-.box { margin-bottom:15px; }
-.box .header { height:40px; font-size:1.5em; line-height:1.8em; padding:0 15px; position:relative; }
-.box .header img { position:relative; margin-right:10px; }
-.box .body { padding: 15px 15px 5px; }
-/***** BOXES *****/
-.box { background:#fdfdfd; }
-.box .header { background:url(../images/box_header_bg.gif) repeat-x bottom; color:#004A7E; }
-.box, .small_box { -moz-box-shadow: 0px 0px 10px #808080; -webkit-box-shadow: 0px 0px 10px #808080; }
-.small_box .header, .box .header, .box, .small_box { border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; }
-/**============================== Form Styling ==============================**/
-form label { font-size:1em; font-weight:bold; }
-fieldset { border:1px solid #d2d1d1; background-color:#f5f5f5; padding:8px; margin:10px 2px; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
-fieldset legend { border-bottom: none;font-weight:bold; font-size:16px; width: inherit; line-height:20px; margin-bottom: 0px}
-fieldset legend + .control-group { margin-top: 5px; }
-form textarea,form .wysiwyg { width:98%; }
-.modal form { margin:0px !important; }
-.form-vertical .control-label {
-  float: none;
-  padding-top: inherit;
-  text-align: inherit;
-  width: auto;
-}
-.form-vertical .controls {
-  margin-left: inherit;
-}
-.well .form-actions {
-    padding-left: 0px;
-    padding-bottom:0px;
-}
 /**============================== ColdBox MessageBox ==============================**/
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
@@ -162,42 +227,7 @@ form textarea,form .wysiwyg { width:98%; }
 #FileBrowser #fileListing{min-height: 350px !important ;}
 /**============================== DIFF CSS ==============================**/
 .consoleLog{ border:2px solid #eaeaea;padding:5px;font-size:11px;font-family: courier;background-color:black;color:#66E10D}
-/**============================== UNIQUE CSS ==============================**/
-.loaders { margin:10px; display:none; text-align:center; }
-.tipList li{ padding: 5px 0px 0px 0px; }
-.editorTime{ width:35px; }
-#authorDetails { margin:7px 0 0 45px; font-size:16px; }
-#loginBox {margin: 30px auto; max-width: 350px; -moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px; }
-#loginContent { text-align:center; margin-top: 40px; }
-#loginButtonbar {margin:10px}
-#header_top_authorName { color:orange; font-weight:bold; }
-#categoriesChecks{ overflow: auto; max-height: 250px; border: 1px dotted #707171;}
-#quickPost{display: none;}
-#addCustomFieldButton{margin:0px 10px 0px 10px}
-#contentToolBar{ margin: 5px 0px 0px 0px; padding: 3px; min-height: 30px}
-#contentLabel{margin:2px 0px 10px 0px;}
-#userDetails{ margin: 0px 0px 0px 10px;}
-/** Button Bars ***/
-.actionBar { margin:10px 0 5px; text-align: center }
-.filterBar { margin:10px 0 2px; }
-.buttonBar { float: right; margin:7px 0px 0px 10px;}
-/** ============================== ConfirmIt ============================== **/
-#confirmIt {
-	box-shadow:0 0 15px #ccc;
-	-moz-box-shadow:0 0 15px #ccc; 
-	-webkit-box-shadow:0 0 15px #ccc; 
-	border-radius: 6px;
-	-moz-border-radius:6px; 
-	-webkit-border-radius:6px; 
-	max-width: 400px;
-	max-height: 200px;
-}
-/** ============================== PAGING TABS =============================== **/
-.pagingTabs a:hover { color:#000; background-color:#FCF9C3; }
-.pagingTabs a.selected { color:#000; background-color:#FCF9C3; border:1px solid #AF3D15; }
-.pagingTabsCarrousel { margin-top:5px; }
 /**============================== Utility Classes ==============================**/
-.inline { display:inline; margin:5px 0; }
 .floatLeft { float:left!important; }
 .floatRight { float:right!important; }
 .text{ color: #333333}
@@ -224,76 +254,6 @@ form textarea,form .wysiwyg { width:98%; }
 .cachebox_debugContentCell{clear: none !important;}
 .grabCursors{cursor:grab !important;cursor:-moz-grab !important;cursor:-webkit-grab !important;}
 .hand-cursor{cursor:pointer !important;}
-/**============================== Table Listings ==============================**/
-td,th { font-size: 12px; padding:5px; display:table-cell; vertical-align:middle !important; }
-.selected{ background-color: #fcdddb !important; }
-.table { margin-bottom: 5px;}
-.table-hover tbody tr:hover > td,
-.table-hover tbody tr:hover > th { background-color: #d7eafe; }
-.table tr.success > th {
-  background-color: #dff0d8;
-}
-.table tr.error > th {
-  background-color: #f2dede;
-}
-.table tr.warning > th {
-  background-color: #fcf8e3;
-}
-.table tr.info > th {
-  background-color: #d9edf7;
-}
-.table-hover tr.success:hover > th {
-  background-color: #d0e9c6;
-}
-.table-hover tr.error:hover > th {
-  background-color: #ebcccc;
-}
-.table-hover tr.warning:hover > th {
-  background-color: #faf2cc;
-}
-.table-hover tr.info:hover > th {
-  background-color: #c4e3f3;
-}
-/************** TABLE SORTERS ***************/
-.tablesorter thead tr .header {
-	background: #d9edf7 url(../images/bg.gif) no-repeat center right !important;
-	cursor: pointer  !important;
-	-moz-border-radius: 0px; -webkit-border-radius: 0px; border-radius:0px; 
-	color: inherit !important;
-	height: inherit !important;
-}
-.tablesorter thead tr th, .tablesorter tfoot tr th {
-	background-color: #d9edf7 !important;
-	font-size: 9pt !important;
-	padding: 7px !important;
-}
-.tablesorter thead tr .headerSortUp {
-	background-image: url(../images/asc.gif) !important;
-}
-.tablesorter thead tr .headerSortDown {
-	background-image: url(../images/desc.gif) !important;
-}
-/************** Error styles ***************/ 
-form input.error, form select.error, form textarea.error, form .wysiwyg.error, form input.error:focus, form select.error:focus, form textarea.error:focus, form .wysiwyg.error:focus { border: 1px solid #ff8388; }
-/*.error{
-	height:20px;
-	background-color:#ffcfcb;
-	border:1px solid #ff9289;
-	font-size:12px;
-	font-weight: bold;
-	color:#000;
-	padding:3px 10px;
-	margin-left:-2px;
-	z-index: 9999;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
-	-moz-border-radius-bottomleft:0;
-	-moz-border-radius-topleft:0;
-	-webkit-border-bottom-left-radius:0;
-	-webkit-border-top-left-radius:0;
-	-moz-box-shadow:0 0 6px #ddd;
-	-webkit-box-shadow:0 0 6px #ddd;
-}*/
 /**============================== FORGEBOX CSS ==============================**/
 #forgebox-entrysidebar { width:180px; float:right; }
 #forgebox-entrycontent { width:515px; }
@@ -304,36 +264,3 @@ form input.error, form select.error, form textarea.error, form .wysiwyg.error, f
 .forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
 .forgebox-download { float:right; clear:right; }
 .forgebox-modal{ height: auto; width: 50%}
-/** ==============================  Accordions  ============================== **/
-.accordion .accordion-heading { background:#f7f8f8 url(../images/accordion_heading_bg.gif) repeat-x bottom; color:#111010; border:1px solid #fff; border-bottom:1px solid #ddd; }
-a.accordion-toggle { text-decoration:none; }
-/** ==============================  Vertical Tabs  ============================== **/
-.tabs-left > .nav-tabs { border-right: 1px solid #BBBBBB }
-.tabs-left > .nav-tabs > li, .tabs-left > .nav-tabs > li {
-	background-color: #f5f5f5;
-}
-.tabs-left > .nav-tabs > .active > a, .tabs-left > .nav-tabs > .active > a:hover, .tabs-left > .nav-tabs > .active > a:focus {
-	color: black;
-	background-color: #ffffff;
-	border-color: #BBBBBB transparent #BBBBBB #BBBBBB
-}
-.tabs-left > .nav-tabs > li > a:hover, .tabs-left > .nav-tabs > .active > a:hover {
-	background-color: #9FCEE6;
-}
-/**============================== Navigation in box header ==============================**/
-.box .header .sub_nav { position:absolute; top:8px; right:0; border-bottom: none !important;}
-.box .header .sub_nav li { text-transform:uppercase; margin:0 5px; font-size:.6em; letter-spacing:.05em; }
-.box .header .sub_nav li a { display:block; text-decoration:none; padding:5px 10px; }
-/**============================== Media Querys ==============================**/
-@media (max-width: 979px) {
-	#main-container { padding-top: 20px; }
-	#simple-container { padding-top: 0; }
-	.navbar-fixed-top { margin-bottom: 0 !important; }
-}
-@media (max-width: 1024px) and (min-width:979px) {
-    #adminMenuBarContent.collapse{ width: 990px;}
-}
-@media (min-width: 768px) and (max-width: 820px){
-    #main-sidebar{ width: 30%}
-    #main-content{ width: 100%}
-}

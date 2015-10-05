@@ -1,35 +1,26 @@
 <cfoutput>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	<h3>Insert From ContentStore</h3>
+	<h3><i class="fa fa-hdd-o"></i> Insert From ContentStore</h3>
 </div>
 <div class="modal-body">
-#html.startForm(name="contentStoreEditorSelectorForm")#
-
-	<!--- Loader --->
-	<div class="loaders floatRight" id="contentStoreLoader">
-		<i class="icon-spinner icon-spin icon-large"></i>
-	</div>
-
-	<!--- Content Bar --->
-	<div class="well well-small" id="contentBar">
-
-		<!--- Filter Bar --->
-		<div class="filterBar">
-			<div>
-				#html.label(field="contentSearch",content="Quick Search:",class="inline")#
-				#html.textField(name="contentSearch",size="30",class="textfield",value=rc.search)#
-			</div>
+	#html.startForm(name="contentStoreEditorSelectorForm" )#
+		<!--- Loader --->
+		<div class="loaders floatRight" id="contentStoreLoader">
+			<i class="fa fa-spinner fa-spin fa-lg"></i>
 		</div>
-	</div>
 
-	<!--- Render tables out --->
-	<div id="contentContainer">
-	#renderView(view="contentStore/editorSelectorEntries", module="contentbox-admin")#
-	</div>
+		<!--- Content Bar --->
+	    <div class="form-group well">
+	        #html.label(field="contentSearch",content="Quick Search:",class="control-label" )#
+	        #html.textField(name="contentSearch",size="30",class="form-control",value=rc.search)#
+	    </div>
 
-
-#html.endForm()#
+		<!--- Render tables out --->
+		<div id="contentContainer">
+		#renderView(view="contentStore/editorSelectorEntries", module="contentbox-admin" )#
+		</div>
+	#html.endForm()#
 </div>
 <!--- Button Bar --->
 <div class="modal-footer">

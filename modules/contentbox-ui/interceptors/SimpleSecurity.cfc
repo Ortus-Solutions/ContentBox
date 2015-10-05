@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -37,13 +37,13 @@ component {
 		var content = "";
 
 		// security only for pages or blog entries
-		if( !reFindNoCase("^contentbox\-ui\:", event.getCurrentEvent() ) ){
+		if( !reFindNoCase( "^contentbox\-ui\:", event.getCurrentEvent() ) ){
 			return ;
 		}
 
 		// page or entry content determination
-		if( structKeyExists(prc,"page") ){ content = prc.page; }
-		else if( structKeyExists(prc,"entry") ){ content = prc.entry; }
+		if( structKeyExists(prc,"page" ) ){ content = prc.page; }
+		else if( structKeyExists(prc,"entry" ) ){ content = prc.entry; }
 		else{ return; }
 
 		// Verify password protected
@@ -52,7 +52,7 @@ component {
 		}
 
 		// Verify Incoming Headers to see if we are authorizing already or we can view the page already
-		if( !securityService.isContentViewable( content ) OR len( event.getHTTPHeader("Authorization","") ) ){
+		if( !securityService.isContentViewable( content ) OR len( event.getHTTPHeader( "Authorization","" ) ) ){
 
 			// Verify incoming authorization for content
 			if( securityService.authorizeContent(content,event.getHTTPBasicCredentials().password) ){
@@ -61,11 +61,11 @@ component {
 			};
 
 			// Not secure!
-			event.setHTTPHeader(statusCode="401",value="Unauthorized");
-			event.setHTTPHeader(name="WWW-Authenticate",value="basic realm=""ContentBox content protection, enter the content password""");
+			event.setHTTPHeader(statusCode="401",value="Unauthorized" );
+			event.setHTTPHeader(name="WWW-Authenticate",value="basic realm=""ContentBox content protection, enter the content password""" );
 
 			// secured content data hijack
-			event.renderData(data="<h1>Unathorized Access<p>Content Requires Authentication</p>",statusCode="401");
+			event.renderData(data="<h1>Unathorized Access<p>Content Requires Authentication</p>",statusCode="401" );
 		}
 
 	}

@@ -2,16 +2,16 @@
 <div id="pagerContent">
 <!--- Loader --->
 <div class="loaders floatRight" id="contentPagerLoader">
-	<i class="icon-spinner icon-spin icon-large"></i>
+	<i class="fa fa-spinner fa-spin fa-lg"></i>
 </div>
 
 <!--- content --->
-<table name="content_pager" id="content_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
+<table name="content_pager" id="content_pager" class="table-bordered table table-hover table-condensed table-striped" width="100%">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th>Title</th>
-			<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
-			<th width="50" class="center">Actions</th>
+			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
+			<th width="50" class="text-center">Actions</th>
 		</tr>
 	</thead>
 
@@ -28,39 +28,39 @@
 			<td>
 				<a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#" title="Edit #content.getTitle()#">#content.getTitle()#</a><br/>
 				<small>
-				<i class="icon-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on #content.getActiveContent().getDisplayCreatedDate()#
+				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on #content.getActiveContent().getDisplayCreatedDate()#
 				</small>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif content.isExpired()>
-					<i class="icon-time icon-large textRed" title="Content has expired!"></i>
+					<i class="fa fa-clock-o fa-lg textRed" title="Content has expired!"></i>
 					<span class="hidden">expired</span>
 				<cfelseif content.isPublishedInFuture()>
-					<i class="icon-fighter-jet icon-large textBlue" title="Content Publishes in the future!"></i>
+					<i class="fa fa-fighter-jet fa-lg textBlue" title="Content Publishes in the future!"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif content.isContentPublished()>
-					<i class="icon-ok icon-large textGreen" title="Content Published!"></i>
+					<i class="fa fa-check fa-lg textGreen" title="Content Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
-					<i class="icon-remove icon-large textRed" title="Content Draft!"></i>
+					<i class="fa fa-check fa-lg textRed" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<!--- content Actions --->
-				<div class="btn-group">
-			    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
-						<i class="icon-cogs icon-large"></i>
+				<div class="btn-group btn-group-xs">
+			    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
+						<i class="fa fa-cogs fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oAuthor.checkPermission("CONTENTSOTE_EDITOR,CONTENTSTORE_ADMIN")>
+			    		<cfif prc.oAuthor.checkPermission( "CONTENTSOTE_EDITOR,CONTENTSTORE_ADMIN" )>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 						<!--- Create Child --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="icon-sitemap icon-large"></i> Create Child</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fa fa-sitemap fa-lg"></i> Create Child</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
+						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
 			    	</ul>
 			    </div>
 			</td>
@@ -71,7 +71,7 @@
 
 <!--- Paging --->
 <cfif prc.pager_pagination>
-	#prc.pager_pagingPlugin.renderit(foundRows=prc.pager_contentCount, link=prc.pager_pagingLink, asList=true)#
+	#prc.pager_oPaging.renderit(foundRows=prc.pager_contentCount, link=prc.pager_pagingLink, asList=true)#
 </cfif>
 </div>
 </cfoutput>

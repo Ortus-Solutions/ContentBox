@@ -1,11 +1,11 @@
 <cfoutput>
 <!--- content --->
-<table name="content" id="content" class="tablesorter table table-hover table-striped table-condensed" width="98%">
+<table name="content" id="content" class="table table-bordered table-condensed table-striped table-hover" width="100%">
 	<thead>
-		<tr>
+		<tr class="info">
 			<th>Title</th>
-			<th width="40" class="center"><i class="icon-globe icon-large"></i></th>
-			<th width="120" class="center">Insert</th>
+			<th width="40" class="text-center"><i class="fa fa-globe fa-lg"></i></th>
+			<th width="120" class="text-center">Insert</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -17,19 +17,17 @@
 				<strong>#entry.getTitle()#</strong><br>
 				#entry.getDescription()#
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif entry.getIsPublished()>
-					<i class="icon-ok icon-large textGreen"></i>
+					<i class="fa fa-check fa-lg textGreen"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="icon-remove icon-large textRed"></i>
+					<i class="fa fa-times fa-lg textRed"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center">
-				<div class="btn-group">
-				<button class="btn btn-primary" onclick="return insertContentStore('#entry.getSlug()#')">Insert</button>
-				</div>
+			<td class="text-center">
+				<button class="btn btn-sm btn-default" onclick="return insertContentStore('#entry.getSlug()#')">Insert</button>
 			</td>
 		</tr>
 		</cfloop>
@@ -37,5 +35,5 @@
 </table>
 
 <!--- Paging --->
-#prc.pagingPlugin.renderit(foundRows=prc.contentCount, link=prc.pagingLink, asList=true)#
+#prc.oPaging.renderit(foundRows=prc.contentCount, link=prc.pagingLink, asList=true)#
 </cfoutput>

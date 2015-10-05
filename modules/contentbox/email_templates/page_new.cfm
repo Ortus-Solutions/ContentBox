@@ -1,11 +1,11 @@
 ﻿<cfoutput>
-    <cfset ETH = getPlugin( plugin="EmailTemplateHelper", module="contentbox" )>
+    <cfset ETH = getModel( "EmailTemplateHelper@cb" )>
     #ETH.author( email=args.gravatarEmail, content="
         <strong>@pageAuthor@</strong> created a new page:<br /><a href='@pageURL@'>@pageTitle@</a>
-    ")#
+    " )#
     #ETH.divider()#
     #ETH.heading( content="Page Details" )#
-    #ETH.text("
+    #ETH.text( "
         <table cellpadding='3' cellspacing='3'>
             <tbody>
                 <tr>
@@ -26,7 +26,7 @@
                 </tr>
             </tbody>
         </table>
-    ")#
+    " )#
     #ETH.divider()#
     #ETH.heading( content="Excerpt" )#
     #ETH.text( content="@pageExcerpt@", callout="true" )#

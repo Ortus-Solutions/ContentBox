@@ -1,25 +1,8 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Admin Dashboard
 */
 component extends="baseHandler"{
@@ -30,8 +13,7 @@ component extends="baseHandler"{
 	property name="contentService" 		inject="id:contentService@cb";
 	property name="commentService" 		inject="id:commentService@cb";
 	property name="categoryService"		inject="id:categoryService@cb";
-	property name="settingService"		inject="id:settingService@cb";
-	property name="feedReader"			inject="coldbox:plugin:FeedReader";
+	property name="feedReader"			inject="FeedReader@cbfeeds";
 	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
 
 	// Pre Handler
@@ -53,10 +35,6 @@ component extends="baseHandler"{
 		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
 		prc.xehLatestLogins			= "#prc.cbAdminEntryPoint#.dashboard.latestLogins";
 		
-		// Extra JS/CSS
-		prc.cssAppendList = "../js/morris.js/morris";
-        prc.jsAppendList  = "morris.js/raphael-min,morris.js/morris.min";
-        
 		// Tab Manipulation
 		prc.tabDashboard_home = true;
 		// Installer Check
@@ -139,15 +117,15 @@ component extends="baseHandler"{
 		try{
 			if( len( prc.cbsettings.cb_dashboard_newsfeed ) ){
 				prc.latestNews = feedReader.readFeed( 
-					feedURL=prc.cbsettings.cb_dashboard_newsfeed, 
-					itemsType="query", 
-					maxItems=prc.cbsettings.cb_dashboard_newsfeed_count
+					feedURL 	= prc.cbsettings.cb_dashboard_newsfeed, 
+					itemsType 	= "query", 
+					maxItems 	= prc.cbsettings.cb_dashboard_newsfeed_count
 				);
 			} else {
-				prc.latestNews = { items = queryNew("") };
+				prc.latestNews = { items = queryNew( "" ) };
 			}
 		} catch( Any e ) {
-			prc.latestNews = { items = queryNew("") };
+			prc.latestNews = { items = queryNew( "" ) };
 			log.error( "Error retrieving news feed: #e.message# #e.detail#", e );
 		}
 		
@@ -172,7 +150,7 @@ component extends="baseHandler"{
 			results[ "MESSAGE" ] = "Error removing installer: #e.message#";
 		}
 		
-		event.renderData(data=results, type="json");
+		event.renderData(data=results, type="json" );
 	}
 	
 	// Delete INstaller
@@ -244,7 +222,7 @@ component extends="baseHandler"{
 				event.renderData( type="json", data=data );
 			} else {
 				// MessageBox
-				getPlugin( "MessageBox" ).error( "Error running admin reload module action: #e.message# #e.detail#" );
+				getModel( "messagebox@cbMessagebox" ).error( "Error running admin reload module action: #e.message# #e.detail#" );
 				// relocate back to dashboard
 				setNextEvent( prc.xehDashboard );
 			}
