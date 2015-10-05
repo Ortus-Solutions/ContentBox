@@ -36,7 +36,7 @@
         <link href="#prc.cbroot#/includes/images/ContentBox-Circle-114.png" rel="apple-touch-icon" sizes="114x114"/>
         <!-- Favicon -->
         <link href="#prc.cbroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        
+
         <!--- ********************************************************************* --->
         <!---                           CSS THEME                                   --->
         <!--- ********************************************************************* --->
@@ -51,7 +51,7 @@
     	<link rel="stylesheet" href="#prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.css">
         <!-- spacelab theme-->
         <link href="#prc.cbroot#/includes/spacelab/css/main.css" rel="stylesheet" />
-        
+
         <!--- ********************************************************************* --->
         <!---                          CONTENTBOX                                   --->
         <!--- ********************************************************************* --->
@@ -73,7 +73,7 @@
         <link href="#prc.cbroot#/includes/spacelab/plugins/clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet" />
         <!-- custom contentbox css -->
         <link href="#prc.cbroot#/includes/css/contentbox.css" rel="stylesheet" />
-        
+
         <!--- ********************************************************************* --->
         <!---                           JAVASCRIPT                                  --->
         <!--- ********************************************************************* --->
@@ -123,6 +123,7 @@
         <script src="#prc.cbroot#/includes/js/toastr.min.js"></script>
         <!-- main ContentBox scripts -->
         <script src="#prc.cbroot#/includes/js/contentbox.js"></script>
+
 
         <!--- CKEditor Separate --->
         <script src="#prc.cbroot#/includes/ckeditor/ckeditor.js"></script>
@@ -258,19 +259,19 @@
 							</ul>
 						</li>
 						</cfif>
-                    	
+
                     	<!--- Utils --->
                         #prc.adminMenuService.generateUtilsMenu()#
-                       	
+
                        	<!--- Support Menu --->
                         #prc.adminMenuService.generateSupportMenu()#
-                        
+
                         <!--- Profile --->
                         <li class="profile-photo">
                             #getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
                         </li>
                         #prc.adminMenuService.generateProfileMenu()#
-                        
+
                         <!--- Notifications :
                         TODO: Enable once done
                         <li class="dropdown messages">
@@ -278,7 +279,7 @@
                             <div class="toggle-navigation toggle-right">
                                 <button type="button" class="btn btn-default" id="toggle-right">
                                     <i class="fa fa-bullhorn"></i>
-                                </button>                        
+                                </button>
                             </div>
                         </li>
                         --->
@@ -293,7 +294,7 @@
                 #prc.adminMenuService.generateMenu()#
             </nav>
             <!--sidebar left end-->
-            
+
             <!--main content start-->
             <section class="main-content-wrapper">
                 <section id="main-content">
@@ -309,7 +310,7 @@
 
          	<!--- Footer --->
         	#renderView( view="_tags/footer", module="contentbox-admin" )#
-        </section>  
+        </section>
 
         <!--sidebar right start-->
         <div class="sidebarRight">

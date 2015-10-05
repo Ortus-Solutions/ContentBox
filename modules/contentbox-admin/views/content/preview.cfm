@@ -8,9 +8,9 @@
       <td width="40%" align="center" nowrap>
         <div class="btn-group" style="width:195px">
           <button href="javascript:void(0)" onclick="setModalSize(this); return false;" class="btn btn-primary active"><i class="fa fa-2x fa-desktop"></i></button>
-          <button href="javascript:void(0)" onclick="setModalSize(this,768,1024); return false;" class="btn btn-primary"><i class="fa fa-2x fa-tablet"></i></button>
-          <button href="javascript:void(0)" onclick="setModalSize(this,1024, 768); return false;" class="btn btn-primary"><i class="fa fa-2x fa-tablet fa-rotate-90"></i></button>
-          <button href="javascript:void(0)" onclick="setModalSize(this,320,450); return false;" class="btn btn-primary"><i class="fa fa-2x fa-mobile"></i></button>
+          <button href="javascript:void(0)" onclick="setModalSize(this,768); return false;" class="btn btn-primary"><i class="fa fa-2x fa-tablet"></i></button>
+          <button href="javascript:void(0)" onclick="setModalSize(this,1024); return false;" class="btn btn-primary"><i class="fa fa-2x fa-tablet fa-rotate-90"></i></button>
+          <button href="javascript:void(0)" onclick="setModalSize(this,320); return false;" class="btn btn-primary"><i class="fa fa-2x fa-mobile"></i></button>
         </div>
       </td>
       <td width="30%">

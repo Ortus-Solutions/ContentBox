@@ -9,10 +9,10 @@
 // Quick preview for content
 function previewContent(){
 	// Open the preview window for content
-	openRemoteModal( 
-		getPreviewSelectorURL(), 
-		{ 
-			content		: getEditorContent(), 
+	openRemoteModal(
+		getPreviewSelectorURL(),
+		{
+			content		: getEditorContent(),
 			layout		: $( "##layout" ).val(),
 			title		: $( "##title" ).val(),
 			slug		: $slug.val(),
@@ -54,11 +54,11 @@ function quickSave(){
 	toggleLoaderBar();
 	// Save current content, just in case editor has not saved it
 	if( !$content.val().length ){
-		$content.val( getEditorContent() );	
+		$content.val( getEditorContent() );
 	}
 	// enable for quick save, if disabled
 	var disableSlug = false;
-	if( $slug.prop( "disabled" ) ){ 
+	if( $slug.prop( "disabled" ) ){
 		$slug.prop( "disabled", false );
 		disableSlug = true;
 	}
@@ -80,7 +80,7 @@ function quickSave(){
 	},"json" );
 }
 /**
- * Setup the editors. 
+ * Setup the editors.
  * TODO: Move this to a more OOish approach, don't like it.
  * @param $theForm The form container for the editor
  * @param withExcerpt Using excerpt or not apart from the main 'content' object
@@ -100,12 +100,12 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$changelog				= $targetEditorForm.find( "##changelog" );
 	$slug 					= $targetEditorForm.find('##slug');
 	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
-	
+
 	// with excerpt
 	if( withExcerpt == null ){ withExcerpt = true; }
 	// with changelogs
 	if( withChangelogs == null ){ withChangelogs = true; }
-	
+
 	// Startup the choosen editor
 	#prc.oEditorDriver.startup()#
 
@@ -116,8 +116,8 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	// Activate Form Validator
 	$targetEditorForm.validate( {
     	ignore: 'content',
-    	success:function(e,els){ 
-    		needConfirmation=false; 
+    	success:function(e,els){
+    		needConfirmation=false;
     	},
         submitHandler: function( form ) {
 			// Update Editor Content
@@ -168,7 +168,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$( "##htmlDescription" ).keyup(function(){
 		$( "##html_description_count" ).html( $( "##htmlDescription" ).val().length );
 	} );
-	
+
 }
 
 // Switch Editors
@@ -218,7 +218,7 @@ function createPermalink(linkToUse){
 //disable or enable (toggle) permalink field
 function togglePermalink(){
 	var toggle = $( '##togglePermalink' );
-	// Toggle lock icon on click..	
+	// Toggle lock icon on click..
 	toggle.hasClass( 'fa fa-lock' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fa fa-lock' );
 	//disable input field
 	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
@@ -226,7 +226,7 @@ function togglePermalink(){
 
 function permalinkUniqueCheck( linkToUse ){
 	var linkToUse = ( typeof linkToUse === "undefined" ) ? $slug.val() : linkToUse;
-	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
+	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness
 	if( !linkToUse.length ){ return; }
 	// Verify unique
 	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, contentID: $( "##contentID" ).val() }, function( data ){

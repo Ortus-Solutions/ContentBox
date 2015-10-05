@@ -417,6 +417,26 @@ function openRemoteModal(url,params,w,h,delay){
     return;
 }
 
+
+function setModalSize (activeBtn,w){
+  var frame = $("#previewFrame").length ? $("#previewFrame") : $remoteModal.find(".modal-body"),
+      orig = {'width':$remoteModal.data('width')},
+      fOffset = {'width': $remoteModal.width() - $(frame).width()},
+      modalSize = {'width': w  + fOffset.width};
+
+    //width is bigger than original size
+    if(!w || modalSize.width > orig.width) modalSize = {'width':orig.width}
+
+    //Toggle "Quick Preview" on Mobile View
+    $remoteModal.find(".header-title").toggle(modalSize.width > 500);
+    $(activeBtn).siblings('.active').removeClass('active');
+    $(activeBtn).addClass('active');
+
+    modalSize['margin-left'] = -modalSize.width/2;
+    $remoteModal.animate(modalSize,500);
+
+}
+
 function closeConfirmations(){
 	$confirmIt.modal( 'hide' );
 }

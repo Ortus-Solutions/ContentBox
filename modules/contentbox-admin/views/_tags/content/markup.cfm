@@ -20,7 +20,7 @@
         </cfif>
         <!--- markup --->
         #html.hiddenField(
-            name="markup", 
+            name="markup",
             value=args.content.isLoaded() ? args.content.getMarkup() : prc.defaultMarkup
         )#
         <div class="btn-group btn-group-sm">
@@ -34,6 +34,15 @@
                         <a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</a>
                     </li>
                 </cfloop>
+            </ul>
+        </div>
+        <div class="btn-group btn-group-sm" id="contentAutoSave">
+            <a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
+                Auto Saved
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu autoSaveMenu">
+
             </ul>
         </div>
 
