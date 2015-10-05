@@ -122,18 +122,28 @@
                                 </cfloop>
                             </ul>
                         </div>
+
+                        <div class="btn-group btn-group-sm" id="contentAutoSave">
+                            <a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
+                                Auto Saved
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu autoSaveMenu">
+
+                            </ul>
+                        </div>
                         <!---Right References Panel --->
                         <div class="pull-right">
                             <a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
                                 <i class="fa fa-eye fa-lg"></i>
                             </a>
                         </div>
-                        
+
                         <!--- content --->
                         #html.textarea(
-                            name="content", 
-                            value=htmlEditFormat( prc.content.getContent() ), 
-                            rows="25", 
+                            name="content",
+                            value=htmlEditFormat( prc.content.getContent() ),
+                            rows="25",
                             class="form-control"
                         )#
                     </div>
