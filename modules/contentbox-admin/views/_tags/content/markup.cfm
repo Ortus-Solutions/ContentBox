@@ -36,6 +36,15 @@
                 </cfloop>
             </ul>
         </div>
+        <div class="btn-group btn-group-sm" id="contentAutoSave">
+            <a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
+                Auto Saved
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu autoSaveMenu">
+
+            </ul>
+        </div>
 
         <!---Right References Panel --->
         <div class="pull-right">
