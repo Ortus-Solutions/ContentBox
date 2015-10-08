@@ -417,32 +417,36 @@ function openRemoteModal(url,params,w,h,delay){
     return;
 }
 
+/**
+ * Reize the content preview
+ * @param {object} activeBtn The active button object
+ * @param {numeric} w         The width to use in pixels
+ */
+function setPreviewSize( activeBtn, w ){
+  var frame = $( "#previewFrame" ).length ? $( "#previewFrame" ) : $remoteModal.find( ".modal-body" ),
+      orig 		= { 'width' : $remoteModal.data( 'width' ) },
+      fOffset 	= { 'width' : $remoteModal.width() - $( frame ).width() },
+      modalSize = { 'width' : w + fOffset.width };
 
-function setModalSize (activeBtn,w){
-  var frame = $("#previewFrame").length ? $("#previewFrame") : $remoteModal.find(".modal-body"),
-      orig = {'width':$remoteModal.data('width')},
-      fOffset = {'width': $remoteModal.width() - $(frame).width()},
-      modalSize = {'width': w  + fOffset.width};
+    // width is bigger than original size
+    if( !w || modalSize.width > orig.width ){ modalSize = { 'width' : orig.width }; }
 
-    //width is bigger than original size
-    if(!w || modalSize.width > orig.width) modalSize = {'width':orig.width}
+    // toggle "Quick Preview" on Mobile View
+    $remoteModal.find( ".header-title" ).toggle( modalSize.width > 600 );
+    $( activeBtn ).siblings( '.active' ).removeClass( 'active' );
+    $( activeBtn ).addClass( 'active' );
 
-    //Toggle "Quick Preview" on Mobile View
-    $remoteModal.find(".header-title").toggle(modalSize.width > 500);
-    $(activeBtn).siblings('.active').removeClass('active');
-    $(activeBtn).addClass('active');
-
-    modalSize['margin-left'] = -modalSize.width/2;
-    $remoteModal.animate(modalSize,500);
-
+    modalSize[ 'margin-left' ] = -modalSize.width/2;
+    $remoteModal.animate( modalSize, 500 );
 }
-
+/**
+ * Close confirmation modal
+ */
 function closeConfirmations(){
 	$confirmIt.modal( 'hide' );
 }
 /**
  * Activate modal confirmation windows
- * @return
  */
 function activateConfirmations(){
 	// close button triggers for confirmation dialog
