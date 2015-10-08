@@ -88,65 +88,16 @@
                     )# 
 
                     <!---ContentToolBar --->
-                    <div id="contentToolBar">
-                        <!--- editor selector --->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
-                            <div class="btn-group btn-group-sm">
-                                <a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
-                                    Editor
-                                    <span class="caret"></span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <cfloop array="#prc.editors#" index="thisEditor">
-                                        <li>
-                                            <a href="javascript:switchEditor( '#thisEditor.name#' )">
-                                                #thisEditor.displayName#
-                                            </a>
-                                        </li>
-                                    </cfloop>
-                                </ul>
-                            </div>
-                        </cfif>
-                        <!--- markup --->
-                        #html.hiddenField(name="markup", value=prc.content.isLoaded() ? prc.content.getMarkup() : prc.defaultMarkup)#
-                        <div class="btn-group btn-group-sm">
-                            <a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
-                                Markup : <span id="markupLabel">#prc.content.isLoaded() ? prc.content.getMarkup() : prc.defaultMarkup#</span>
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <cfloop array="#prc.markups#" index="thismarkup">
-                                    <li>
-                                        <a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</a>
-                                    </li>
-                                </cfloop>
-                            </ul>
-                        </div>
+                    <cfset markupArgs = { content=prc.content }>
+                    #renderView( view="_tags/content/markup", args=markupArgs )#    	
 
-                        <div class="btn-group btn-group-sm" id="contentAutoSave">
-                            <a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
-                                Auto Saved
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu autoSaveMenu">
-
-                            </ul>
-                        </div>
-                        <!---Right References Panel --->
-                        <div class="pull-right">
-                            <a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
-                                <i class="fa fa-eye fa-lg"></i>
-                            </a>
-                        </div>
-
-                        <!--- content --->
-                        #html.textarea(
-                            name="content",
-                            value=htmlEditFormat( prc.content.getContent() ),
-                            rows="25",
-                            class="form-control"
-                        )#
-                    </div>
+                    <!--- content --->
+                    #html.textarea(
+                        name="content",
+                        value=htmlEditFormat( prc.content.getContent() ),
+                        rows="25",
+                        class="form-control"
+                    )#
                 </div>
                 <!--- Event --->
                 #announceInterception( "cbadmin_contentStoreEditorInBody" )#
