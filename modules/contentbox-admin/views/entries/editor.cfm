@@ -23,7 +23,6 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">&nbsp;</h3>
                     <div class="actions pull-right">
                         <div class="btn-group btn-group-sm">
                             <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;">
@@ -42,6 +41,7 @@
                             </ul>
                         </div>
                     </div>
+                    <h3 class="panel-title">&nbsp;</h3>
                 </div>
                 <div class="panel-body">
                     <!--- title --->
