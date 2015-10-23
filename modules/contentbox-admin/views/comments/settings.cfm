@@ -19,7 +19,6 @@
             #html.anchor(name="top" )#
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">&nbsp;</h3>
                     <div class="actions pull-right">
                         <!--- Back To Inbox --->
                         #html.href(
@@ -28,6 +27,7 @@
                             href=event.buildlink(prc.xehComments)
                         )# 
                     </div>
+                    <h3 class="panel-title">&nbsp;</h3>
                 </div>
                 <div class="panel-body">
                     <p>From here you can control how the ContentBox commenting system operates.</p>
