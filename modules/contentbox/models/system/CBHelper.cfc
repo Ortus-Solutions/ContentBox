@@ -1320,7 +1320,7 @@ component accessors="true" singleton threadSafe{
 	 * @menu The root menu object that should be rendered
 	 * @slugCache The cache of menu slugs already used in this request
 	 */
-	public string function buildProviderMenu( required contentbox.models.menu.Menu menu, required array slugCache=[] ) {
+	public string function buildProviderMenu( required cbapp.modules.contentbox.models.menu.Menu menu, required array slugCache=[] ) {
 		var listType = arguments.menu.getListType();
 		//arguments.listType = !reFindNoCase( "^(ul|ol)$", arguments.listType ) ? "<ul>" : arguments.listType;
 		// set start
