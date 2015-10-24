@@ -83,7 +83,7 @@ a.btn.btn-danger:visited {
 }
 @media only screen and (max-width: 853px) {
   #header {
-    height: 80px;
+    height: 160px;
   }
   .main-content-wrapper {
     margin-left: 0;
