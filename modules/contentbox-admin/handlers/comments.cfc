@@ -10,6 +10,7 @@ component extend="baseHandler"{
 	// Dependencies
 	property name="commentService"		inject="id:commentService@cb";
 	property name="settingsService"		inject="id:settingService@cb";
+	property name="messagebox" 		inject="messagebox@cbmessagebox";
 
 	// Public properties
 	this.preHandler_except = "pager";
