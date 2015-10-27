@@ -94,6 +94,7 @@ a.btn.btn-danger:visited {
 img{ height: inherit; }
 img.img-screenshot{ height: 200px; }
 .gravatar{ height: auto; }
+.no-margin{ margin: 0!important; }
 /**
 ul { list-style:disc inside; }
 input, textarea, .uneditable-input { width: inherit; }
