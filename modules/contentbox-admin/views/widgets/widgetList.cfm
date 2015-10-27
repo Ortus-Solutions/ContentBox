@@ -35,14 +35,7 @@
                     <!--- Widgets --->
                     <cfloop query="prc.widgets">
                         <cfscript>
-                        	try{
-                            	p = prc.widgetService.getWidget( name=prc.widgets.name, type=prc.widgets.widgetType );
-                        	} catch( Any e ){
-                        		log.error( 'Error Building #prc.widgets.toString()#. #e.message# #e.detail#', e );
-                        		writeOutput( "<div class='alert alert-danger'>Error building '#prc.widgets.name#' widget: #e.message# #e.detail#</div>" );
-                        		continue;
-                        	}
-                            widgetName = prc.widgets.name;
+                        	widgetName = prc.widgets.name;
                             widgetSelector = prc.widgets.name;
                             category = prc.widgets.category;    
                             switch( prc.widgets.widgettype ) {
@@ -53,6 +46,13 @@
                                     widgetName = "~" & widgetName;
                                     break;
                             }
+                        	try{
+                            	p = prc.widgetService.getWidget( name=widgetName, type=prc.widgets.widgetType );
+                        	} catch( Any e ){
+                        		log.error( 'Error Building #prc.widgets.toString()#. #e.message# #e.detail#', e );
+                        		writeOutput( "<div class='alert alert-danger'>Error building '#prc.widgets.name#' widget: #e.message# #e.detail#</div>" );
+                        		continue;
+                        	}
                             iconName = prc.widgets.icon;
                             if( args.cols==2 ) {
                                 extraClasses = "half ";
