@@ -310,9 +310,7 @@ function hideAllTooltips(){
 }
 function toggleFlickers(){
 	$( ".flickerMessages" ).slideToggle();
-	$( ".cbox_messagebox_info" ).slideToggle();
-	$( ".cbox_messagebox_warn" ).slideToggle();
-	$( ".cbox_messagebox_error" ).slideToggle();
+	$(".alert").fadeOut(3000);
 }
 
 /**
