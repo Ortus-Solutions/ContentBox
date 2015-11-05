@@ -1207,14 +1207,14 @@ component accessors="true" singleton threadSafe{
 	* @author The author object to render an avatar from
 	* @size The size of the gravatar, by default we use 25 pixels
 	*/
-	string function quickAvatar( required author, numeric size=25 ){
+	string function quickAvatar( required author, numeric size=25, string class="gravatar" ){
 		var targetEmail = arguments.author;
 		// check if simple or not
 		if( NOT isSimpleValue( arguments.author ) ){
 			targetEmail = arguments.author.getEmail();
 		}
 
-		return wirebox.getInstance( "Avatar@cb" ).renderAvatar( email=targetEmail, size=arguments.size );
+		return wirebox.getInstance( "Avatar@cb" ).renderAvatar( email=targetEmail, size=arguments.size, class=arguments.class );
 	}
 
 	/**
