@@ -197,7 +197,7 @@
                 <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
                     <ul class="nav navbar-nav navbar-left">
                         <li class="hidden-xs" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
-                            <a onclick=null><span class="navbar-img"><i class="fa fa-bars"></i></span><span class="hidden-lg"> Settings</span></a>
+                            <a onclick=null><span class="navbar-img"><i class="fa fa-bars"></i></span><span class="hidden-lg hidden-md"> Settings</span></a>
                         </li>
                         <!---Search --->
                         <cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
@@ -217,14 +217,14 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!--- View Site --->
                         <li class="" data-placement="right auto" title="Visit Site">
-                            <a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><span class="navbar-img"><i class="fa fa-home"></i></span><span class="hidden-lg"> Home</span></a>
+                            <a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><span class="navbar-img"><i class="fa fa-home"></i></span><span class="hidden-lg hidden-md"> Home</span></a>
                         </li>
                         <!--- New Quick Links --->
                         <cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
                         <li class="dropdown" title="Create New..." data-name="create-new" data-placement="right auto">
                             <a href="##" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="navbar-img"><i class="fa fa-plus"></i>
-                                </span><span class="hidden-lg"> Add content</span>
+                                </span><span class="hidden-lg hidden-md"> Add content</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
@@ -283,7 +283,7 @@
                         <li data-name="profile" class="dropdown settings open">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
                                 #getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
-                                <span class="hidden-lg"> Username</span>
+                                <span class="hidden-lg hidden-md"> Username</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li data-name="myprofile" class="">
