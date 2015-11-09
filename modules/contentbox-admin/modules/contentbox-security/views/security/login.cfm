@@ -9,8 +9,8 @@
             </div>
             <div class="panel-body">
             	<!--- Render Messagebox. --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
-
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		#announceInterception( "cbadmin_beforeLoginForm" )#
                 #html.startForm(
                 	action=prc.xehDoLogin, 
                 	name="loginForm", 
@@ -71,6 +71,7 @@
                         </div>
                     </div>
                 #html.endForm()#
+                #announceInterception( "cbadmin_afterLoginForm" )#
             </div>
         </div>
     </div>
