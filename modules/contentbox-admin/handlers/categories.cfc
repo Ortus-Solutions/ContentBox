@@ -49,11 +49,11 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception( "cbadmin_postCategorySave",{category=oCategory} );
 			// messagebox
-			getModel( "messagebox@cbMessagebox" ).setMessage( "info","Category saved!" );
+			cbMessagebox.setMessage( "info","Category saved!" );
 		}
 		else {
 			// messagebox
-			getModel( "messagebox@cbMessagebox" ).setMessage( "warning","Category '#rc.category#' already exists!" );	
+			cbMessagebox.setMessage( "warning","Category '#rc.category#' already exists!" );	
 		}
 		// relocate
 		setNextEvent(prc.xehCategories);
@@ -66,7 +66,7 @@ component extends="baseHandler"{
 		
 		// verify if contentID sent
 		if( !len( rc.categoryID ) ){
-			getModel( "messagebox@cbMessagebox" ).warn( "No categories sent to delete!" );
+			cbMessagebox.warn( "No categories sent to delete!" );
 			setNextEvent(event=prc.xehCategories);
 		}
 		
@@ -95,7 +95,7 @@ component extends="baseHandler"{
 		}
 		
 		// messagebox
-		getModel( "messagebox@cbMessagebox" ).info(messageArray=messages);
+		cbMessagebox.info(messageArray=messages);
 		setNextEvent( prc.xehCategories );
 	}
 
@@ -125,17 +125,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = categoryService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getModel( "messagebox@cbMessagebox" ).info( "Categories imported sucessfully!" );
+				cbMessagebox.info( "Categories imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
+			cbMessagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehCategories );
 	}
