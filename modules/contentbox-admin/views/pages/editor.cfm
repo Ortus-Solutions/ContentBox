@@ -547,6 +547,28 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##featuredImage">
+                                        <i class="fa fa-cloud fa-lg"></i> Featured Image
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="featuredImage" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <a class="btn btn-primary" href="javascript:featuredImagePopup()">Select image</a>
+                                        <a class="featured-image hide btn btn-danger" href="javascript:cancelFI()">cancel</a>
+                                        <div class="featured-image hide form-group">
+                                            <label for="featuredImage"><i class="fa fa-lock fa-lg"></i> Featured Image:</label>
+                                            <input type="text" name="featuredImage" class="form-control" disabled value="" id="imageName">
+                                        </div>
+                                        <p class="post-image hide"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                        
                         </cfif>
                         <!---End HTML Attributes--->    
                         
