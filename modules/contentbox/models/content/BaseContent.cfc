@@ -38,6 +38,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	property name="cacheLastAccessTimeout"	notnull="false" ormtype="integer" default="0" index="idx_cachelastaccesstimeout";
 	property name="markup"					notnull="true" length="100" default="HTML";
 	property name="showInSearch"	 		notnull="true"  ormtype="boolean" default="true" index="idx_showInSearch";
+	property name="featuredImage"	 		notnull="false" ormtype="text" default="" length="255";
 
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property name="creator" notnull="true" cfc="contentbox.models.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
