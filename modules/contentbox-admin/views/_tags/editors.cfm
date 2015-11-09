@@ -293,5 +293,22 @@ function toggleLoaderBar(){
 	$uploaderBarStatus.html( "Saving..." );
 	$uploaderBarLoader.slideToggle();
 }
+
+// FeaturedImage 
+function featuredImagePopup(){
+    popname = window.open('#event.buildLink("cbadmin.module.FeaturedImage.main.index")#','Featured Image', 'height=600,width=600');
+    popname.window.focus();
+}
+function featuredImageCallback(filePath){
+    $(".featured-image").toggleClass("hide");
+    $("##imageName").val(filePath);
+    $(".post-image").append('<img src=#cb.siteRoot()#'+filePath+' height="64px" width="64px">').toggleClass("hide");
+    alert("This is callback:" + filePath);
+}
+function cancelFI(){
+    $("##imageName").val("");
+    $(".post-image").remove().toggleClass("hide");
+    $(".featured-image").toggleClass("hide");
+}
 </script>
 </cfoutput>
