@@ -9,5 +9,5 @@ component{
 	
 	// Global Used DI
 	property name="settingService"	inject="id:settingService@cb";
-
+	property name="cbMessagebox" 	inject="messagebox@cbmessagebox";
 }

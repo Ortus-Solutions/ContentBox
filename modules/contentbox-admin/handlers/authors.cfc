@@ -28,7 +28,7 @@ component extends="baseHandler"{
 			// Validate credentials only if you are an admin or you are yourself.
 			if(  !prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) AND oAuthor.getAuthorID() NEQ prc.oAuthor.getAuthorID() ){
 				// relocate
-				getModel( "messagebox@cbMessagebox" ).error( "You do not have permissions to do this!" );
+				cbMessagebox.error( "You do not have permissions to do this!" );
 				setNextEvent(event=prc.xehAuthors);
 				return;
 			}
@@ -218,7 +218,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences} );
 		// message
-		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Author Preferences Saved!" );
+		cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 		// relocate
 		setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 	}
@@ -238,13 +238,13 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=rc.preferences} );
 			// message
-			getModel( "messagebox@cbMessagebox" ).setMessage( "info","Author Preferences Saved!" );
+			cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 			// relocate
 			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );	
 		}
 		else{
 			// message
-			getModel( "messagebox@cbMessagebox" ).error(messageArray=vResult.getAllErrors());
+			cbMessagebox.error(messageArray=vResult.getAllErrors());
 			// relocate
 			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 		}	
@@ -274,12 +274,12 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception( "cbadmin_postAuthorSave",{author=oAuthor,isNew=newAuthor} );
 			// message
-			getModel( "messagebox@cbMessagebox" ).setMessage( "info","Author saved!" );
+			cbMessagebox.setMessage( "info","Author saved!" );
 			// relocate
 			setNextEvent(prc.xehAuthors);
 		}
 		else{
-			getModel( "messagebox@cbMessagebox" ).warn(messageArray=vResults.getAllErrors());
+			cbMessagebox.warn(messageArray=vResults.getAllErrors());
 			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()#" );
 		}
 
@@ -297,11 +297,11 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception( "cbadmin_onAuthorPasswordChange",{author=oAuthor,password=rc.password} );
 			// message
-			getModel( "messagebox@cbMessagebox" ).info( "Password Updated!" );
+			cbMessagebox.info( "Password Updated!" );
 		}
 		else{
 			// message
-			getModel( "messagebox@cbMessagebox" ).error( "Passwords do not match, please try again!" );
+			cbMessagebox.error( "Passwords do not match, please try again!" );
 		}
 
 		// relocate
@@ -313,7 +313,7 @@ component extends="baseHandler"{
 		var oAuthor	= authorService.get( rc.authorID );
 
 		if( isNull(oAuthor) ){
-			getModel( "messagebox@cbMessagebox" ).setMessage( "warning","Invalid Author detected!" );
+			cbMessagebox.setMessage( "warning","Invalid Author detected!" );
 			setNextEvent( prc.xehAuthors );
 		}
 		// announce event
@@ -324,7 +324,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postAuthorRemove",{authorID=rc.authorID} );
 		// message
-		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Author Removed!" );
+		cbMessagebox.setMessage( "info","Author Removed!" );
 		// redirect
 		setNextEvent(prc.xehAuthors);
 	}
@@ -379,7 +379,7 @@ component extends="baseHandler"{
 		
 		// relocate if not existent
 		if( !prc.user.isLoaded() ){
-			getModel( "messagebox@cbMessagebox" ).warn( "authorID sent is not valid" );
+			cbMessagebox.warn( "authorID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.authors" );
 		}
 		//writeDump( prc.role.getMemento() );abort;
@@ -422,17 +422,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = authorService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getModel( "messagebox@cbMessagebox" ).info( "Users imported sucessfully!" );
+				cbMessagebox.info( "Users imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
+			cbMessagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehAuthors );
 	}
