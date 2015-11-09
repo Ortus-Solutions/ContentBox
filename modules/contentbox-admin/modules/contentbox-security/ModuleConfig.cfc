@@ -44,7 +44,9 @@ component {
 			customInterceptionPoints = [
 				// Login Layout HTML points
 				"cbadmin_beforeLoginHeadEnd", "cbadmin_afterLoginBodyStart", "cbadmin_beforeLoginBodyEnd", 
-				"cbadmin_loginFooter", "cbadmin_beforeLoginContent", "cbadmin_afterLoginContent"
+				"cbadmin_loginFooter", "cbadmin_beforeLoginContent", "cbadmin_afterLoginContent",
+				// Login Form
+				"cbadmin_beforeLoginForm", "cbadmin_afterLoginForm"
 			]
 		};
 		
