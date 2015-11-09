@@ -296,7 +296,7 @@ function toggleLoaderBar(){
 
 // FeaturedImage 
 function featuredImagePopup(){
-    popname = window.open('#event.buildLink("cbadmin.module.FeaturedImage.main.index")#','Featured Image', 'height=600,width=600');
+    popname = window.open('#event.buildLink("cbadmin.module.FeaturedImage.main.index")#?callback=featuredImageCallback','Featured Image', 'height=600,width=600');
     popname.window.focus();
 }
 function featuredImageCallback(filePath){
