@@ -21,7 +21,7 @@
                 	<!--- Event --->
 					#announceInterception( "cbadmin_beforeLoginForm" )#
 
-					#html.hiddenField( name="_securedURL", value=encodeForHTMLAttribute( rc._securedURL ) )#
+					#html.hiddenField( name="_securedURL", value=rc._securedURL )#
 	                
 	                <div class="form-group">
 	                    <div class="col-md-12 controls">
