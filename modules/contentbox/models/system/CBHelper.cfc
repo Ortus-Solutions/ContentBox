@@ -1318,9 +1318,10 @@ component accessors="true" singleton threadSafe{
 	/**
 	 * Builds out a custom menu
 	 * @menu The root menu object that should be rendered
+	 * @menu.doc_generic contentbox.models.menu.Menu
 	 * @slugCache The cache of menu slugs already used in this request
 	 */
-	public string function buildProviderMenu( required contentbox.models.menu.Menu menu, required array slugCache=[] ) {
+	public string function buildProviderMenu( required any menu, required array slugCache=[] ) {
 		var listType = arguments.menu.getListType();
 		//arguments.listType = !reFindNoCase( "^(ul|ol)$", arguments.listType ) ? "<ul>" : arguments.listType;
 		// set start
