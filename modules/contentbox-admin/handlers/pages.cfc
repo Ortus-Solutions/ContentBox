@@ -201,7 +201,7 @@ component extends="baseContentHandler"{
 		event.paramValue( "relatedContentIDs", [] );
 
 		// slugify the incoming title or slug
-		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( rc.slug ) );
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oAuthor.checkPermission( "PAGES_ADMIN" ) ){
