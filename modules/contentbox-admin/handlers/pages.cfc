@@ -201,7 +201,7 @@ component extends="baseContentHandler"{
 		event.paramValue( "relatedContentIDs", [] );
 
 		// slugify the incoming title or slug
-		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( rc.slug ) );
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oAuthor.checkPermission( "PAGES_ADMIN" ) ){
@@ -240,7 +240,7 @@ component extends="baseContentHandler"{
 		if( rc.parentPage NEQ "null" AND page.getContentID() NEQ rc.parentPage ){
 			page.setParent( pageService.get( rc.parentPage ) );
 			// update slug
-			page.setSlug( page.getParent().getSlug() & "/" & ListLast(originalSlug,"/") );
+			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
 		}
 		// Remove parent
 		else if( rc.parentPage EQ "null" ){
