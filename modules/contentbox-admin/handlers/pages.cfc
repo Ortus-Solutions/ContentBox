@@ -240,7 +240,7 @@ component extends="baseContentHandler"{
 		if( rc.parentPage NEQ "null" AND page.getContentID() NEQ rc.parentPage ){
 			page.setParent( pageService.get( rc.parentPage ) );
 			// update slug
-			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
+			page.setSlug( page.getParent().getSlug() & "/" & ListLast(originalSlug,"/") );
 		}
 		// Remove parent
 		else if( rc.parentPage EQ "null" ){
