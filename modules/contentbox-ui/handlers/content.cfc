@@ -174,7 +174,7 @@ component{
 				// Store hits
 				contentService.updateHits( data.contentID );
 				// return cache content to be displayed
-				return data.content;
+				return event.renderData( data=data.content, contentType=data.contentType, isBinary=data.isBinary );
 			}
 		}
 		
