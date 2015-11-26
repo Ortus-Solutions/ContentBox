@@ -147,7 +147,7 @@ component{
 							 !structKeyExists( eventArguments, "noCache" ) AND 
 							 !event.valueExists( "cbCache" ) AND
 							 !flash.exists( "commentErrors" ) );
-		if( cacheEnabled ){
+		if( cacheEnabled AND rc.format!= "pdf" ){
 			// Get appropriate cache provider from settings
 			var cache 		= cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
 			var cacheKey 	= "";
