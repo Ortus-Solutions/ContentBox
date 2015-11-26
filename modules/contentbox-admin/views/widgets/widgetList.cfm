@@ -98,7 +98,7 @@
                                                 </cfif>
                                             </div> <!--- end btn group --->
                                         </cfif>
-                                        <h3 class="panel-title">#p.getName()# #iconName#</h3>
+                                        <h3 class="panel-title">#p.getName()#</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="row">
