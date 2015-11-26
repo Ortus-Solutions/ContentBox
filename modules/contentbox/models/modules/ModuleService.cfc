@@ -139,7 +139,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 		// save deactivated module status
 		save( module );
-
+		//rebuild widgets cache
+		buildModuleWidgetsCache();
+		
 		return this;
 	}
 
@@ -186,7 +188,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 		// save module status
 		save( module );
-
+		//rebuild widgets cache
+		buildModuleWidgetsCache();
+		
 		return this;
 	}
 
