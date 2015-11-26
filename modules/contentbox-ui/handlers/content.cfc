@@ -167,14 +167,17 @@ component{
 			if( !isNull( data ) ){
 				// Set cache headers if allowed
 				if( prc.cbSettings.cb_content_cachingHeader ){
-					event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" );
+					event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" )
+						.setHTTPHeader( name="x-contentbox-cached-content", value="true" );
 				}
-				// Set content type header
-				event.setHTTPHeader( name="Content-type", value=data.contentType );
 				// Store hits
 				contentService.updateHits( data.contentID );
 				// return cache content to be displayed
-				return data.content;
+				event.renderData(
+					data 		= data.content,
+					contentType = data.contentType,
+					isBinary 	= data.isBinary
+				);
 			}
 		}
 		
