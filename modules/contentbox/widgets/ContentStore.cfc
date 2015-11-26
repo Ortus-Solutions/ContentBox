@@ -14,7 +14,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setDescription( "A widget that renders ContentStore content anywhere you like." );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
-		setIcon( "window-text.png" );
+		setIcon( "list-alt" );
 		setCategory( "Content" );
 
 		return this;

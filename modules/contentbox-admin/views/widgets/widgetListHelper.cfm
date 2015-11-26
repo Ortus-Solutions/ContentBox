@@ -17,7 +17,7 @@ $(document).ready(function() {
         // set first item ('All') as selected
         $( '##widget-sidebar' ).find( 'li' ).first().addClass( 'active' ).find( 'a' ).addClass( 'current' );
         // search through widget content to match ones relevant to the search
-        $( '.widget-store' ).find( '.widget-content' ).each(function(){
+        $( '.widget-store' ).find( '.panel' ).each(function(){
             var widget = $( this );
             var wrapper = $( this ).parent();
             if( widget.attr( 'name' ).toLowerCase().indexOf( value.toLowerCase() ) != -1 ) {
@@ -57,7 +57,7 @@ $(document).ready(function() {
         // clear filter
         $( '##widgetFilter' ).val( '' );
         // search store for matching items
-        $( '.widget-store' ).find( '.widget-content' ).each(function(){
+        $( '.widget-store' ).find( '.panel' ).each(function(){
             var widget = $( this );
             var wrapper = $( this ).parent();
             if( value=='all' ) {
