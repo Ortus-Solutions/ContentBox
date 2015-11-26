@@ -43,7 +43,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postPermissionSave",{permission=oPermission} );
 		// messagebox
-		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Permission saved!" );
+		cbMessagebox.setMessage( "info","Permission saved!" );
 		// relocate
 		setNextEvent( prc.xehPermissions );
 	}
@@ -54,13 +54,13 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_prePermissionRemove",{permissionID=rc.permissionID} );
 		// delete by id
 		if( !permissionService.deletePermission( rc.permissionID ) ){
-			getModel( "messagebox@cbMessagebox" ).setMessage( "warning","Invalid Permission detected!" );
+			cbMessagebox.setMessage( "warning","Invalid Permission detected!" );
 		}
 		else{
 			// announce event
 			announceInterception( "cbadmin_postPermissionRemove",{permissionID=rc.permissionID} );
 			// Message
-			getModel( "messagebox@cbMessagebox" ).setMessage( "info","Permission and all relationships Removed!" );
+			cbMessagebox.setMessage( "info","Permission and all relationships Removed!" );
 		}
 		setNextEvent( prc.xehPermissions );
 	}
@@ -91,17 +91,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = permissionService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getModel( "messagebox@cbMessagebox" ).info( "Permissions imported sucessfully!" );
+				cbMessagebox.info( "Permissions imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
+			cbMessagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehPermissions );
 	}

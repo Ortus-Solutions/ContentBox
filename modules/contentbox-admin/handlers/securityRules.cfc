@@ -42,14 +42,14 @@ component extends="baseHandler"{
 		securityInterceptor.loadRules();
 		// announce event
 		announceInterception( "cbadmin_onResetSecurityRules" );
-		getModel( "messagebox@cbMessagebox" ).info( "Security Rules Re-created and Re-applied!" );
+		cbMessagebox.info( "Security Rules Re-created and Re-applied!" );
 		setNextEvent(prc.xehsecurityRules);
 	}
 
 	// Apply the security rules
 	function apply(event,rc,prc){
 		securityInterceptor.loadRules();
-		getModel( "messagebox@cbMessagebox" ).info( "Security Rules Applied!" );
+		cbMessagebox.info( "Security Rules Applied!" );
 		setNextEvent(prc.xehsecurityRules);
 	}
 
@@ -101,10 +101,10 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception( "cbadmin_postSecurityRulesSave",{rule=oRule} );
 			// Message
-			getModel( "messagebox@cbMessagebox" ).info( "Security Rule saved! Isn't that awesome!" );
+			cbMessagebox.info( "Security Rule saved! Isn't that awesome!" );
 		}
 		else{
-			getModel( "messagebox@cbMessagebox" ).warn(errorMessages=errors);
+			cbMessagebox.warn(errorMessages=errors);
 		}
 
 		// relocate back to editor
@@ -123,10 +123,10 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception( "cbadmin_postSecurityRulesRemove",{ruleID=rc.ruleID} );
 			// message
-			getModel( "messagebox@cbMessagebox" ).info( "Security Rule Removed!" );
+			cbMessagebox.info( "Security Rule Removed!" );
 		}
 		else{
-			getModel( "messagebox@cbMessagebox" ).warn( "No ID selected!" );
+			cbMessagebox.warn( "No ID selected!" );
 		}
 		setNextEvent(event=prc.xehsecurityRules);
 	}
@@ -139,7 +139,7 @@ component extends="baseHandler"{
 		
 		// relocate if not existent
 		if( !prc.rule.isLoaded() ){
-			getModel( "messagebox@cbMessagebox" ).warn( "ruleID sent is not valid" );
+			cbMessagebox.warn( "ruleID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.securityrules" );
 		}
 		switch( rc.format ){
@@ -181,17 +181,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = ruleService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getModel( "messagebox@cbMessagebox" ).info( "Rules imported sucessfully!" );
+				cbMessagebox.info( "Rules imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
+			cbMessagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehSecurityRules );
 	}

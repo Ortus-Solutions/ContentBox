@@ -10,7 +10,6 @@ component extends="baseContentHandler"{
 	// Dependencies
 	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="CKHelper"			inject="CKHelper@contentbox-admin";
-	property name="messagebox"			inject="messagebox@cbMessagebox";
 	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	// Public properties
@@ -123,10 +122,10 @@ component extends="baseContentHandler"{
 			// announce event
 			announceInterception( "cbadmin_onContentStoreStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
-			variables.messagebox.info( "#listLen(rc.contentID)# content where set to '#rc.contentStatus#'" );
+			cbMessageBox.info( "#listLen(rc.contentID)# content where set to '#rc.contentStatus#'" );
 		}
 		else{
-			variables.messagebox.warn( "No content selected!" );
+			cbMessageBox.warn( "No content selected!" );
 		}
 		// relocate back
 		if( len( rc.parent ) ){
@@ -197,7 +196,7 @@ component extends="baseContentHandler"{
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
-			variables.messagebox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
+			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
@@ -227,7 +226,7 @@ component extends="baseContentHandler"{
 		// clone this sucker now!
 		contentStoreService.saveContent( clone );
 		// relocate
-		variables.messagebox.info( "Content Cloned, isn't that cool!" );
+		cbMessageBox.info( "Content Cloned, isn't that cool!" );
 		if( clone.hasParent() ){
 			setNextEvent( event=prc.xehContentStore, querystring="parent=#clone.getParent().getContentID()#" );
 		} else {
@@ -280,7 +279,7 @@ component extends="baseContentHandler"{
 			arrayAppend(errors, "Please enter the content to save!" );
 		}
 		if( arrayLen(errors) ){
-			variables.messagebox.warn(messageArray=errors);
+			cbMessageBox.warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
@@ -336,7 +335,7 @@ component extends="baseContentHandler"{
 		}
 		else{
 			// relocate
-			variables.messagebox.info( "content Saved!" );
+			cbMessageBox.info( "content Saved!" );
 			if( content.hasParent() ){
 				setNextEvent( event=prc.xehContentStore, querystring="parent=#content.getParent().getContentID()#" );
 			} else {
@@ -353,7 +352,7 @@ component extends="baseContentHandler"{
 
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
-			variables.messagebox.warn( "No content sent to delete!" );
+			cbMessageBox.warn( "No content sent to delete!" );
 			setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 		}
 
@@ -384,7 +383,7 @@ component extends="baseContentHandler"{
 			}
 		}
 		// messagebox
-		variables.messagebox.info( messageArray=messages );
+		cbMessageBox.info( messageArray=messages );
 		// relocate
 		setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 	}
@@ -488,7 +487,7 @@ component extends="baseContentHandler"{
 
 		// relocate if not existent
 		if( !prc.content.isLoaded() ){
-			variables.messagebox.warn( "ContentID sent is not valid" );
+			cbMessageBox.warn( "ContentID sent is not valid" );
 			setNextEvent( prc.xehContentStore );
 		}
 
@@ -531,17 +530,17 @@ component extends="baseContentHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = contentStoreService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				variables.messagebox.info( "Content imported sucessfully!" );
+				cbMessageBox.info( "Content imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				variables.messagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			variables.messagebox.error( errorMessage );
+			cbMessageBox.error( errorMessage );
 		}
 		setNextEvent( prc.xehContentStore );
 	}
