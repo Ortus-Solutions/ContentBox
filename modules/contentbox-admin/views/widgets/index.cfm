@@ -103,15 +103,15 @@
 		    </div>
 		    <div class="panel-body">
 		    	<p>Render widgets in your layouts and views by using the CB Helper method <code>widget()</code>:</p>
-				<div class="alert alert-success">
+				<div class="bg-helper bg-success">
 					##cb.widget( "name",{arg1=val,arg2=val} )##
 				</div>
 				<p>Render module widgets by appending the module name <code>@module</code>:</p>
-				<div class="alert alert-success">
+				<div class="bg-helper bg-success">
 					##cb.widget( "name@module",{arg1=val,arg2=val} )##
 				</div>
 				<p>Get an instance of a widget in your layouts and views using the CB helper method <code>getWidget()</code></p>
-				<div class="alert alert-success">
+				<div class="bg-helper bg-success">
 					 ##cb.getWidget( "name" )##
 					 ##cb.getWidget( "name@module" )##
 				</div>
