@@ -15,7 +15,7 @@ component extends="contentbox.models.ui.BaseWidget"{
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
-		setIcon( "book.png" );
+		setIcon( "file" );
 		return this;
 	}
 

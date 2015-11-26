@@ -15,7 +15,7 @@ component extends="contentbox.models.ui.BaseWidget"{
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "Utilities" );
-		setIcon( "replay.png" );
+		setIcon( "repeat" );
 		return this;
 	}
 

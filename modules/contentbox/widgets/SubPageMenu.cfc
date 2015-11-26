@@ -14,7 +14,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
         setDescription( "A widget that renders sub pages according to where it is rendered." );
         setAuthor( "Ortus Solutions" );
         setAuthorURL( "http://www.ortussolutions.com" );
-        setIcon( "list.png" );
+        setIcon( "list" );
         setCategory( "Content" );
         return this;
     }
