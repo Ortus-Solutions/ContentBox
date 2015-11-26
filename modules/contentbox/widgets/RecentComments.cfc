@@ -14,7 +14,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setDescription( "A cool basic widget that shows N recent comments from any content object" );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
-		setIcon( "comment-add.png" );
+		setIcon( "comments" );
 		setCategory( "Content" );
 		return this;
 	}
