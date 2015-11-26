@@ -97,6 +97,7 @@ img.img-screenshot{ height: 200px; }
 .no-margin{ margin: 0!important; }
 .panel-heading{ overflow: hidden;}
 .bg-helper{ padding: 15px}
+.tooltip{ position: fixed;}
 /**
 ul { list-style:disc inside; }
 input, textarea, .uneditable-input { width: inherit; }
