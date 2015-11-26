@@ -44,7 +44,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postRoleSave",{role=orole} );
 		// messagebox
-		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Role saved!" );
+		cbMessagebox.setMessage( "info","Role saved!" );
 		// relocate
 		setNextEvent( prc.xehroles );
 	}
@@ -60,7 +60,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postRoleRemove",{roleID=rc.roleID} );
 		// Message
-		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Role Removed!" );
+		cbMessagebox.setMessage( "info","Role Removed!" );
 		// relocate
 		setNextEvent( prc.xehroles );
 	}
@@ -117,7 +117,7 @@ component extends="baseHandler"{
 		
 		// relocate if not existent
 		if( !prc.role.isLoaded() ){
-			getModel( "messagebox@cbMessagebox" ).warn( "roleID sent is not valid" );
+			cbMessagebox.warn( "roleID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.roles" );
 		}
 		//writeDump( prc.role.getMemento() );abort;
@@ -160,17 +160,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = roleService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				getModel( "messagebox@cbMessagebox" ).info( "Roles imported sucessfully!" );
+				cbMessagebox.info( "Roles imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
+			cbMessagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehRoles );
 	}

@@ -81,7 +81,7 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postSettingsSave" );
 		// relocate back to editor
-		getModel( "messagebox@cbMessagebox" ).info( "All ContentBox settings updated! Yeeehaww!" );
+		cbMessagebox.info( "All ContentBox settings updated! Yeeehaww!" );
 		setNextEvent(prc.xehSettings);
 	}
 
@@ -128,17 +128,17 @@ component extends="baseHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = settingsService.importFromFile( importFile=rc.importFile, override=rc.overrideSettings );
-				getModel( "messagebox@cbMessagebox" ).info( "Settings imported sucessfully!" );
+				cbMessagebox.info( "Settings imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";
 			log.error( errorMessage, e );
-			getModel( "messagebox@cbMessagebox" ).error( errorMessage );
+			cbMessagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehRawSettings );
 	}
@@ -188,7 +188,7 @@ component extends="baseHandler"{
 		settingsService.save( setting );
 		settingsService.flushSettingsCache();
 		// messagebox
-		getModel( "messagebox@cbMessagebox" ).setMessage( "info","Setting saved!" );
+		cbMessagebox.setMessage( "info","Setting saved!" );
 		// relocate
 		setNextEvent(event=prc.xehRawSettings,queryString="page=#rc.page#" );
 	}
@@ -199,14 +199,14 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_preSettingRemove",{settingID=rc.settingID} );
 		// delete by id
 		if( !settingsService.deleteByID( rc.settingID ) ){
-			getModel( "messagebox@cbMessagebox" ).setMessage( "warning","Invalid Setting detected!" );
+			cbMessagebox.setMessage( "warning","Invalid Setting detected!" );
 		}
 		else{
 			// announce event
 			announceInterception( "cbadmin_postSettingRemove",{settingID=rc.settingID} );
 			// flush cache
 			settingsService.flushSettingsCache();
-			getModel( "messagebox@cbMessagebox" ).setMessage( "info","Setting Removed!" );
+			cbMessagebox.setMessage( "info","Setting Removed!" );
 		}
 		setNextEvent(prc.xehRawSettings);
 	}
@@ -229,7 +229,7 @@ component extends="baseHandler"{
 	// flush singletons
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
-		getModel( "messagebox@cbMessagebox" ).setMessage( "info","All singletons flushed and awaiting re-creation." );
+		cbMessagebox.setMessage( "info","All singletons flushed and awaiting re-creation." );
 		setNextEvent(event=prc.xehRawSettings,queryString="##wirebox" );
 	}
 

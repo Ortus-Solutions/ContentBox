@@ -10,7 +10,6 @@ component extends="baseContentHandler"{
 	// Dependencies
 	property name="entryService"		inject="id:entryService@cb";
 	property name="CKHelper"			inject="CKHelper@contentbox-admin";
-	property name="messagebox"			inject="messagebox@cbMessagebox";
 	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	// Public properties
@@ -27,7 +26,7 @@ component extends="baseContentHandler"{
 
 		// Verify if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
-			variables.messagebox.warn( "The blog has been currently disabled. You can activate it again in your ContentBox settings panel" );
+			cbMessageBox.warn( "The blog has been currently disabled. You can activate it again in your ContentBox settings panel" );
 			setNextEvent(prc.xehDashboard);
 		}
 	}
@@ -119,10 +118,10 @@ component extends="baseContentHandler"{
 			// announce event
 			announceInterception( "cbadmin_onEntryStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
-			variables.messagebox.info( "#listLen(rc.contentID)# Entries where set to '#rc.contentStatus#'" );
+			cbMessageBox.info( "#listLen(rc.contentID)# Entries where set to '#rc.contentStatus#'" );
 		}
 		else{
-			variables.messagebox.warn( "No entries selected!" );
+			cbMessageBox.warn( "No entries selected!" );
 		}
 
 		// relocate back
@@ -183,7 +182,7 @@ component extends="baseContentHandler"{
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
-			variables.messagebox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
+			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
@@ -208,7 +207,7 @@ component extends="baseContentHandler"{
 		// clone this sucker now!
 		entryService.saveEntry( clone );
 		// relocate
-		variables.messagebox.info( "Entry Cloned, isn't that cool!" );
+		cbMessageBox.info( "Entry Cloned, isn't that cool!" );
 		setNextEvent(event=prc.xehEntries);
 	}
 
@@ -261,7 +260,7 @@ component extends="baseContentHandler"{
 			arrayAppend(errors, "Please enter the content to save!" );
 		}
 		if( arrayLen(errors) ){
-			variables.messagebox.warn(messageArray=errors);
+			cbMessageBox.warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
@@ -314,7 +313,7 @@ component extends="baseContentHandler"{
 		}
 		else{
 			// relocate
-			variables.messagebox.info( "Entry Saved!" );
+			cbMessageBox.info( "Entry Saved!" );
 			setNextEvent(prc.xehEntries);
 		}
 	}
@@ -326,7 +325,7 @@ component extends="baseContentHandler"{
 
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
-			variables.messagebox.warn( "No entries sent to delete!" );
+			cbMessageBox.warn( "No entries sent to delete!" );
 			setNextEvent(event=prc.xehEntries);
 		}
 
@@ -354,7 +353,7 @@ component extends="baseContentHandler"{
 			}
 		}
 		// messagebox
-		variables.messagebox.info(messageArray=messages);
+		cbMessageBox.info(messageArray=messages);
 		// relocate
 		setNextEvent(event=prc.xehEntries);
 	}
@@ -461,7 +460,7 @@ component extends="baseContentHandler"{
 
 		// relocate if not existent
 		if( !prc.entry.isLoaded() ){
-			variables.messagebox.warn( "ContentID sent is not valid" );
+			cbMessageBox.warn( "ContentID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.entries" );
 		}
 
@@ -504,17 +503,17 @@ component extends="baseContentHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = entryService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				variables.messagebox.info( "Entries imported sucessfully!" );
+				cbMessageBox.info( "Entries imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				variables.messagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			variables.messagebox.error( errorMessage );
+			cbMessageBox.error( errorMessage );
 		}
 		setNextEvent( prc.xehEntries );
 	}
