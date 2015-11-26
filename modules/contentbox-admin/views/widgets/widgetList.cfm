@@ -102,7 +102,7 @@
                                     </div>
                                     <div class="panel-body">
                                         <div class="row">
-                                            <div class="col-md-4"><i class="fa fa-#iconName# fa-lg fa-4x"></i></div>
+                                            <div class="col-md-4 text-center"><i class="fa fa-#iconName# fa-lg fa-4x"></i></div>
                                             <div class="col-md-8">#p.getDescription()#</div>
                                         </div>
                                     </div>
