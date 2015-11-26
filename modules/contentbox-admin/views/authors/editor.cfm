@@ -296,7 +296,7 @@
 				
 				<!---Gravatar info --->
 				<cfif prc.cbSettings.cb_gravatar_display>
-				<div class="alert alert-info clearfix">
+				<div class="bg-helper bg-info clearfix">
 					<i class="fa fa-info-circle fa-lg"></i>
 					To change your avatar <a href="http://www.gravatar.com/site/signup/#URLEncodedFormat( prc.author.getEmail() )#" target="_blank">sign up to Gravatar.com</a>
 					and follow the on-screen instructions to add a Gravatar for #prc.author.getEmail()#
