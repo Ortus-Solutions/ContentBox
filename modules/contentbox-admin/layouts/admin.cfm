@@ -117,6 +117,8 @@
         <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js"></script>
         <!-- table filter -->
         <script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
+        <!-- div filter -->
+        <script src="#prc.cbroot#/includes/js/jquery.uidivfilter.js"></script>
         <!-- drag and drop -->
         <script src="#prc.cbroot#/includes/js/jquery.tablednd_0_7.js"></script>
         <!-- toastr -->
