@@ -16,7 +16,7 @@
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="pull-right">
+                    <div class="actions">
                         <a class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fa fa-reply"></i> Back</a>
                     </div>
                 </div>

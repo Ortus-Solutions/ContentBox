@@ -20,7 +20,7 @@
 		<input type="hidden" name="categoryID" id="categoryID" value="" />
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<div class="pull-right">
+				<div class="actions">
 					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 						<div class="btn-group btn-group-sm">
 					    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
