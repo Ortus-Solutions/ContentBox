@@ -5,7 +5,7 @@
  * https://github.com/sydcanem/bootstrap-contextmenu
  *
  * New options added by @jeremyhubble for javascript launching
- *  $('#elem').contextmenu({target:'#menu',before:function(e) { return true; } });
+ *  $('#elem').contextmenu( {target:'#menu',before:function(e) { return true; } } );
  *
  *
  * Twitter Bootstrap (http://twitter.github.com/bootstrap).
@@ -15,7 +15,7 @@
  * bootstrap-contextmenu.js
  * =========================================================
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License" );
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -100,13 +100,13 @@
                 if($(this).data('_context_this_ref') == _this) {
                     _this.onItem.call(this,e,$(e.target));
                 }
-            });
+            } );
 
             $('html').on('click.context.data-api', function (e) {
                 if (!e.ctrlKey) {
                     $target.removeClass('open');
                 }
-            });
+            } );
         }
 
         ,destroy: function() {
@@ -161,7 +161,7 @@
                 $('[data-toggle=context]').each(function() {
                     this.getMenu()
                         .removeClass('open');
-                });
+                } );
             }
         }
     }
@@ -178,7 +178,7 @@
             if (!data) $this.data('context', (data = new ContextMenu($this, options)));
             // "show" method must also be passed the event for positioning
             if (typeof option == 'string') data[option].call(data,e);
-        })();
+        } )();
     }
 
     $.fn.contextmenu.Constructor = ContextMenu;
@@ -190,7 +190,7 @@
         .on('contextmenu.context.data-api', '[data-toggle=context]', function(e) {
                 $(this).contextmenu('show',e);
                 e.preventDefault();
-        });
+        } );
 
 }(window.jQuery));
  No newline at end of file

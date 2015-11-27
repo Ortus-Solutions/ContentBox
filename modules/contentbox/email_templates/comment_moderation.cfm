@@ -1,8 +1,8 @@
 ﻿<cfoutput>
-    <cfset ETH = getPlugin( plugin="EmailTemplateHelper", module="contentbox" )>
+    <cfset ETH = getModel( "EmailTemplateHelper@cb" )>
     #ETH.author( email=args.gravatarEmail, content="
         <strong>@author@</strong> has posted a new, moderated comment on the page:<br /> <a href='@contentURL@'>@contentTitle@<a/>
-    ")#
+    " )#
     #ETH.heading( content="Comment" )#
     #ETH.text( content="@content@", callout="true" )#
     #ETH.buttonBar(

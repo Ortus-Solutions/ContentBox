@@ -1,5 +1,5 @@
 <cfoutput>
-#html.anchor(name="recentNews")#
+#html.anchor(name="recentNews" )#
 <cfif prc.latestNews.items.recordCount>
 	<h3><i class="icon-rss"></i> Recent News</h3>
 	<cfloop query="prc.latestNews.items" endrow="5">

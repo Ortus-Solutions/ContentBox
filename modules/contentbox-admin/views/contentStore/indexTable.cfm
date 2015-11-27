@@ -2,23 +2,23 @@
 <!--- Location Bar --->
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 <div class="breadcrumb">
-  <a href="javascript:contentDrilldown()"><i class="icon-home icon-large"></i></a>
-  #getMyPlugin( plugin="PageBreadcrumbVisitor", module="contentbox-admin" ).visit( prc.oParent )#
+  <a href="javascript:contentDrilldown()"><i class="fa fa-home fa-lg"></i></a>
+  #getModel( "PageBreadcrumbVisitor@contentbox-admin" ).visit( prc.oParent )#
 </div>
 </cfif>
 
 <!--- Hidden Elements --->
-#html.hiddenField( name="parent", value=event.getValue( "parent", "") )#
+#html.hiddenField( name="parent", value=event.getValue( "parent", "" ) )#
 
 <!--- content --->
-<table name="content" id="content" class="tablesorter table table-hover" width="98%">
+<table name="content" id="content" class="table table-striped" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 			<th>Name</th>
 			<th>Slug/Categories</th>
-			<th width="40" class="center"><i class="icon-globe icon-large" title="Published Status"></i></th>
-			<th width="100" class="center {sorter:false}">Actions</th>
+			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
+			<th width="75" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
 
@@ -37,15 +37,15 @@
 				class="selected"
 			</cfif>>
 			<!--- check box --->
-			<td>
+			<td class="text-center">
 				<input type="checkbox" name="contentID" id="contentID" value="#content.getContentID()#" />
 			</td>
 			<td>
 				<!--- Children Dig Deeper --->
 				<cfif content.getNumberOfChildren()>
-					<a href="javascript:contentDrilldown( '#content.getContentID()#' )" class="hand-cursor" title="View Children (#content.getNumberOfChildren()#)"><i class="icon-plus-sign icon-large text"></i></a>
+					<a href="javascript:contentDrilldown( '#content.getContentID()#' )" class="hand-cursor" title="View Children (#content.getNumberOfChildren()#)"><i class="fa fa-plus-square text"></i></a>
 				<cfelse>
-					<i class="icon-circle-blank icon-large"></i>
+					<i class="fa fa-circle-thin"></i>
 				</cfif>
 				<!--- Title --->
 				<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
@@ -58,73 +58,67 @@
 			</td>
 			<td>
 				#content.getSlug()#
-				<br/><small><i class="icon-tag"></i> #content.getCategoriesList()#</small>
+				<br/><small><i class="fa fa-tag"></i> #content.getCategoriesList()#</small>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<cfif content.isExpired()>
-					<i class="icon-time icon-large textRed" title="Content has expired on ( (#content.getDisplayExpireDate()#))"></i>
+					<i class="fa fa-clock-o fa-lg textRed" title="Content has expired on ( (#content.getDisplayExpireDate()#))"></i>
 					<span class="hidden">expired</span>
 				<cfelseif content.isPublishedInFuture()>
-					<i class="icon-fighter-jet icon-large textBlue" title="Content Publishes in the future (#content.getDisplayPublishedDate()#)"></i>
+					<i class="fa fa-fighter-jet fa-lg textBlue" title="Content Publishes in the future (#content.getDisplayPublishedDate()#)"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif content.isContentPublished()>
-					<i class="icon-ok icon-large textGreen" title="Content Published!"></i>
+					<i class="fa fa-check fa-lg textGreen" title="Content Published!"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="icon-remove icon-large textRed" title="Content Draft!"></i>
+					<i class="fa fa-times fa-lg textRed" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
-			<td class="center">
+			<td class="text-center">
 				<!---Info Panel --->
-				<a 	class="btn popovers"
+				<a 	class="btn btn-sm btn-info popovers" 
 					data-contentID="#content.getContentID()#"
-					data-toggle="popover"><i class="icon-info-sign icon-large"></i></a>
+					data-toggle="popover"><i class="fa fa-info-circle fa-lg"></i></a>
 				<!---Info Panel --->
 				<div id="infoPanel_#content.getContentID()#" class="hide">
 					<!---Creator --->
-					<i class="icon-user"></i>
-					Created by <a href="mailto:#content.getCreatorEmail()#">#content.getCreatorName()#</a> on
+					<i class="fa fa-user"></i>
+					Created by <a href="mailto:#content.getCreatorEmail()#">#content.getCreatorName()#</a> on 
 					#content.getDisplayCreatedDate()#
 					</br>
 					<!--- Last Edit --->
-					<i class="icon-calendar"></i>
-					Last edit by <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on
+					<i class="fa fa-calendar"></i> 
+					Last edit by <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on 
 					#content.getActiveContent().getDisplayCreatedDate()#
 				</div>
-
 				<!--- content Actions --->
-				<div class="btn-group">
-			    	<a class="btn dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
-						<i class="icon-cogs icon-large"></i>
+				<div class="btn-group btn-group-sm">
+			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
+						<i class="fa fa-cogs fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oAuthor.checkPermission("CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN")>
+			    		<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 						<!--- Clone Command --->
-						<li><a href="javascript:openCloneDialog('#content.getContentID()#','#URLEncodedFormat(content.getTitle())#')"><i class="icon-copy icon-large"></i> Clone</a></li>
+						<li><a href="javascript:openCloneDialog('#content.getContentID()#','#URLEncodedFormat(content.getTitle())#')"><i class="fa fa-copy fa-lg"></i> Clone</a></li>
 						<!--- Create Child --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="icon-sitemap icon-large"></i> Create Child</a></li>
-						<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN")>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fa fa-sitemap fa-lg"></i> Create Child</a></li>
+						<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
-							<a href="javascript:remove('#content.getContentID()#')" class="confirmIt" data-title="Delete Content?"><i id="delete_#content.getContentID()#" class="icon-trash icon-large" ></i> Delete</a>
+							<a href="javascript:remove('#content.getContentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Content?"><i id="delete_#content.getContentID()#" class="fa fa-trash-o fa-lg" ></i> Delete</a>
 						</li>
 						</cfif>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="icon-edit icon-large"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 						</cfif>
-						<cfif prc.oAuthor.checkPermission("CONTENTSTORE_ADMIN,TOOLS_EXPORT")>
+						<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
-						<li class="dropdown-submenu pull-left">
-							<a href="##"><i class="icon-download icon-large"></i> Export</a>
-							<ul class="dropdown-menu text-left">
-								<li><a href="#event.buildLink(linkto=prc.xehContentExport)#/contentID/#content.getContentID()#.json" target="_blank"><i class="icon-code"></i> as JSON</a></li>
-								<li><a href="#event.buildLink(linkto=prc.xehContentExport)#/contentID/#content.getContentID()#.xml" target="_blank"><i class="icon-sitemap"></i> as XML</a></li>
-							</ul>
-						</li>
+						<li><a href="#event.buildLink(linkto=prc.xehContentExport)#/contentID/#content.getContentID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
+						<li><a href="#event.buildLink(linkto=prc.xehContentExport)#/contentID/#content.getContentID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="icon-time icon-large"></i> History</a></li>
+						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
 			    	</ul>
 			    </div>
 
@@ -133,12 +127,4 @@
 		</cfloop>
 	</tbody>
 </table>
-
-<!--- Paging --->
-<cfif !rc.showAll>
-#prc.pagingPlugin.renderit(foundRows=prc.contentCount, link=prc.pagingLink, asList=true)#
-<cfelse>
-<span class="label label-info">Total Records: #prc.contentCount#</span>
-</cfif>
-
 </cfoutput>

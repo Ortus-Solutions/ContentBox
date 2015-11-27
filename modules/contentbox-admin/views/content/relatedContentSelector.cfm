@@ -1,30 +1,24 @@
 <cfoutput>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Select Related Content</h3>
+    <h3><i class="fa fa-sitemap"></i> Select Related Content</h3>
 </div>
 <div class="modal-body">
-#html.startForm(name="relatedContentSelectorForm")#
+#html.startForm(name="relatedContentSelectorForm" )#
 
     <!--- Loader --->
     <div class="loaders floatRight" id="relatedContentSelectorLoader">
-        <i class="icon-spinner icon-spin icon-large"></i>
+        <i class="fa fa-spinner fa-spin fa-lg"></i>
     </div>
 
     <!--- Content Bar --->
-    <div class="well well-small" id="contentBar">
-
-        <!--- Filter Bar --->
-        <div class="filterBar">
-            <div>
-                #html.label(field="contentSearch",content="Quick Search:",class="inline")#
-                #html.textField(name="contentSearch",size="30",class="textfield",value=rc.search)#
-            </div>
-        </div>
+    <div class="form-group">
+        #html.label(field="contentSearch",content="Quick Search:",class="inline" )#
+        #html.textField(name="contentSearch",size="30",class="form-control",value=rc.search)#
     </div>
 
     <!--- Render tables out --->
-    <div id="contentContainer">
+    <div id="contentContainer" class="tab-wrapper tab-top tab-primary">
         <ul class="nav nav-tabs" id="contentTypes">
             <!---loop over content types--->
             <cfset types = listToArray( rc.contentType )>

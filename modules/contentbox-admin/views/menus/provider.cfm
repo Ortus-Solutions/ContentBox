@@ -1,6 +1,6 @@
 <cfoutput>
-    <a class="dd-handle dd3-handle btn" title="Drag to reorder"><i class="icon-move icon-large"></i></a>
-    <cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-inverse">
+    <a class="dd-handle dd3-handle btn" title="Drag to reorder"><i class="fa fa-crosshairs fa-lg"></i></a>
+    <cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-primary">
     <a class="dd3-type btn #btnCls#" title="#args.provider.getDescription()#"><i class="#args.provider.getIconClass()#"></i></a>
     <div class="dd3-content double" data-toggle="context" data-target="##context-menu">#args.menuItem.getLabel()#</div>
     <div class="dd3-extracontent" style="display:none;">
@@ -12,8 +12,8 @@
         <fieldset>
             <legend>Common Attributes</legend>
             <p>These attributes will be applied to the main &lt;li&gt; element</p>
-            <div class="row-fluid">
-                <span class="span6">
+            <div class="row">
+                <span class="col-md-6">
                     #html.textfield(
                         label="Item Content:",
                         name="label",
@@ -22,13 +22,13 @@
                         maxlength="100",
                         required="required",
                         title="The content for this menu item",
-                        class="textfield input-block-level",
+                        class="form-control",
                         wrapper="div class=controls",
                         labelClass="control-label",
-                        groupWrapper="div class=control-group"
+                        groupWrapper="div class=form-group"
                     )#
                 </span>
-                <span class="span6">
+                <span class="col-md-6">
                     <!--- title --->
                     #html.textfield(
                         label="Title:",
@@ -37,15 +37,15 @@
                         bind=args.menuItem, 
                         maxlength="100",
                         title="The title for this menu item",
-                        class="textfield input-block-level",
+                        class="form-control",
                         wrapper="div class=controls",
                         labelClass="control-label",
-                        groupWrapper="div class=control-group"
+                        groupWrapper="div class=form-group"
                     )#
                 </span>
             </div>
-            <div class="row-fluid">
-                <span class="span6">
+            <div class="row">
+                <span class="col-md-6">
                     #html.textfield(
                         label="Data Attributes:",
                         name="data",
@@ -53,13 +53,13 @@
                         bind=args.menuItem, 
                         maxlength="100",
                         title="Data attributes: You can use JSON ( {""me"":""you""} ) or a comma-delimited list ( me=you,icecream=awesome )",
-                        class="textfield input-block-level",
+                        class="form-control",
                         wrapper="div class=controls",
                         labelClass="control-label",
-                        groupWrapper="div class=control-group"
+                        groupWrapper="div class=form-group"
                     )#
                 </span>
-                <span class="span6">
+                <span class="col-md-6">
                     #html.textfield(
                         label="CSS Classes:",
                         name="itemClass",
@@ -67,10 +67,10 @@
                         bind=args.menuItem, 
                         maxlength="100",
                         title="Additional CSS classes to use for this menu item's HTML element",
-                        class="textfield input-block-level",
+                        class="form-control",
                         wrapper="div class=controls",
                         labelClass="control-label",
-                        groupWrapper="div class=control-group"
+                        groupWrapper="div class=form-group"
                     )#
                 </span>
             </div>
@@ -86,6 +86,6 @@
         </cfif>
         <!---end provider thing--->
     </div>
-    <a class="dd3-expand btn" title="Edit Details"><i class="icon-edit icon-large"></i></a>
-    <a class="dd3-delete btn btn-danger" data-toggle="confirmation" data-title="Are you sure you want to remove this menu item and all its descendants?"><i class="icon-trash icon-large"></i></a>
+    <a class="dd3-expand btn" title="Edit Details"><i class="fa fa-edit fa-lg"></i></a>
+    <a class="dd3-delete btn btn-danger" data-toggle="confirmation" data-title="Are you sure you want to remove this menu item and all its descendants?"><i class="fa fa-trash-o fa-lg"></i></a>
 </cfoutput>

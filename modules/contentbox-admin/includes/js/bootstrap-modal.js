@@ -1,9 +1,9 @@
 /* ===========================================================
- * bootstrap-modal.js v2.1
+ * bootstrap-modal.js v2.2.5
  * ===========================================================
  * Copyright 2012 Jordan Schroter
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the "License" );
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -33,12 +33,17 @@
 		constructor: Modal,
 
 		init: function (element, options) {
+			var that = this;
+
 			this.options = options;
 
 			this.$element = $(element)
 				.delegate('[data-dismiss="modal"]', 'click.dismiss.modal', $.proxy(this.hide, this));
 
-			this.options.remote && this.$element.find('.modal-body').load(this.options.remote);
+			this.options.remote && this.$element.find('.modal-body').load(this.options.remote, function () {
+				var e = $.Event('loaded');
+				that.$element.trigger(e);
+			} );
 
 			var manager = typeof this.options.manager === 'function' ?
 				this.options.manager.call(this) : this.options.manager;
@@ -76,7 +81,7 @@
 
 			this.$element.trigger(e);
 
-			if (!this.isShown || e.isDefaultPrevented()) return (this.isShown = false);
+			if (!this.isShown || e.isDefaultPrevented()) return;
 
 			this.isShown = false;
 
@@ -114,7 +119,7 @@
 					} else {
 						return -($(this).width() / 2) + 'px';
 					}
-				});
+				} );
 			} else {
 				this.$element.css('width', '');
 				this.$element.css('margin-left', '');
@@ -124,14 +129,14 @@
 				.css('overflow', '')
 				.css(prop, '');
 
-			var modalOverflow = $(window).height() - 10 < this.$element.height();
-
 			if (value){
 				this.$element.find('.modal-body')
 					.css('overflow', 'auto')
 					.css(prop, value);
 			}
 
+			var modalOverflow = $(window).height() - 10 < this.$element.height();
+            
 			if (modalOverflow || this.options.modalOverflow) {
 				this.$element
 					.css('margin-top', 0)
@@ -149,27 +154,28 @@
 			if (this.isShown && this.options.consumeTab) {
 				this.$element.on('keydown.tabindex.modal', '[data-tabindex]', function (e) {
 			    	if (e.keyCode && e.keyCode == 9){
-						var $next = $(this),
-							$rollover = $(this);
+						var elements = [],
+							tabindex = Number($(this).data('tabindex'));
 
-						that.$element.find('[data-tabindex]:enabled:not([readonly])').each(function (e) {
-							if (!e.shiftKey){
-						 		$next = $next.data('tabindex') < $(this).data('tabindex') ?
-									$next = $(this) :
-									$rollover = $(this);
+						that.$element.find('[data-tabindex]:enabled:visible:not([readonly])').each(function (ev) {
+							elements.push(Number($(this).data('tabindex')));
+						} );
+						elements.sort(function(a,b){return a-b} );
+						
+						var arrayPos = $.inArray(tabindex, elements);
+						if (!e.shiftKey){
+						 		arrayPos < elements.length-1 ?
+									that.$element.find('[data-tabindex='+elements[arrayPos+1]+']').focus() :
+									that.$element.find('[data-tabindex='+elements[0]+']').focus();
 							} else {
-								$next = $next.data('tabindex') > $(this).data('tabindex') ?
-									$next = $(this) :
-									$rollover = $(this);
+								arrayPos == 0 ?
+									that.$element.find('[data-tabindex='+elements[elements.length-1]+']').focus() :
+									that.$element.find('[data-tabindex='+elements[arrayPos-1]+']').focus();
 							}
-						});
-
-						$next[0] !== $(this)[0] ?
-							$next.focus() : $rollover.focus();
-
+						
 						e.preventDefault();
 					}
-				});
+				} );
 			} else if (!this.isShown) {
 				this.$element.off('keydown.tabindex.modal');
 			}
@@ -182,7 +188,7 @@
 
 				this.$element.on('keyup.dismiss.modal', function (e) {
 					e.which == 27 && that.hide();
-				});
+				} );
 			} else if (!this.isShown) {
 				this.$element.off('keyup.dismiss.modal')
 			}
@@ -198,14 +204,10 @@
 			this.$element.one($.support.transition.end, function () {
 				clearTimeout(timeout);
 				that.hideModal();
-			});
+			} );
 		},
 
 		hideModal: function () {
-			this.$element
-				.hide()
-				.trigger('hidden');
-
 			var prop = this.options.height ? 'height' : 'max-height';
 			var value = this.options.height || this.options.maxHeight;
 
@@ -215,6 +217,9 @@
 					.css(prop, '');
 			}
 
+			this.$element
+				.hide()
+				.trigger('hidden');
 		},
 
 		removeLoading: function () {
@@ -250,7 +255,7 @@
 
 				var that = this;
 				$.support.transition && this.$element.hasClass('fade')?
-					this.$loading.one($.support.transition.end, function () { that.removeLoading() }) :
+					this.$loading.one($.support.transition.end, function () { that.removeLoading() } ) :
 					that.removeLoading();
 
 			} else if (callback) {
@@ -290,28 +295,26 @@
 
 		destroy: function () {
 			var e = $.Event('destroy');
+
 			this.$element.trigger(e);
+
 			if (e.isDefaultPrevented()) return;
 
-			this.teardown();
-		},
-
-		teardown: function () {
-			if (!this.$parent.length){
-				this.$element.remove();
-				this.$element = null;
-				return;
-			}
-
-			if (this.$parent !== this.$element.parent()){
-				this.$element.appendTo(this.$parent);
-			}
-
-			this.$element.off('.modal');
-			this.$element.removeData('modal');
 			this.$element
+				.off('.modal')
+				.removeData('modal')
 				.removeClass('in')
 				.attr('aria-hidden', true);
+			
+			if (this.$parent !== this.$element.parent()) {
+				this.$element.appendTo(this.$parent);
+			} else if (!this.$parent.length) {
+				// modal is not part of the DOM so remove it.
+				this.$element.remove();
+				this.$element = null;
+			}
+
+			this.$element.trigger('destroyed');
 		}
 	};
 
@@ -323,12 +326,12 @@
 		return this.each(function () {
 			var $this = $(this),
 				data = $this.data('modal'),
-				options = $.extend({}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option);
+				options = $.extend( {}, $.fn.modal.defaults, $this.data(), typeof option == 'object' && option);
 
 			if (!data) $this.data('modal', (data = new Modal(this, options)));
 			if (typeof option == 'string') data[option].apply(data, [].concat(args));
 			else if (options.show) data.show()
-		})
+		} )
 	};
 
 	$.fn.modal.defaults = {
@@ -346,7 +349,8 @@
 		resize: false,
 		attentionAnimation: 'shake',
 		manager: 'body',
-		spinner: '<div class="loading-spinner" style="width: 200px; margin-left: -100px;"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>'
+		spinner: '<div class="loading-spinner" style="width: 200px; margin-left: -100px;"><div class="progress progress-striped active"><div class="bar" style="width: 100%;"></div></div></div>',
+		backdropTemplate: '<div class="modal-backdrop" />'
 	};
 
 	$.fn.modal.Constructor = Modal;
@@ -360,15 +364,15 @@
 			var $this = $(this),
 				href = $this.attr('href'),
 				$target = $($this.attr('data-target') || (href && href.replace(/.*(?=#[^\s]+$)/, ''))), //strip for ie7
-				option = $target.data('modal') ? 'toggle' : $.extend({ remote: !/#/.test(href) && href }, $target.data(), $this.data());
+				option = $target.data('modal') ? 'toggle' : $.extend( { remote: !/#/.test(href) && href }, $target.data(), $this.data());
 
 			e.preventDefault();
 			$target
 				.modal(option)
 				.one('hide', function () {
 					$this.focus();
-				})
-		});
-	});
+				} )
+		} );
+	} );
 
 }(window.jQuery);

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <!-- ====================================================================== 
-     ContentBox Modular CMS Build (www.gocontentbox.org)                                                               
+     ContentBox Modular CMS Build
      ====================================================================== -->
  <project name="contentbox-build" default="build.all" basedir="../">
  	<description>
@@ -9,8 +9,8 @@
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
  	<property name="groupID"					value="ortussolutions" />
- 	<property name="contentbox.version"			value="2.1.0"/>
- 	<property name="contentbox.stableversion" 	value="2.0.0" />
+ 	<property name="contentbox.version"			value="3.0.0-beta"/>
+ 	<property name="contentbox.stableversion" 	value="2.1.0" />
  	<property name="contentbox.slug"			value="contentbox"/>
 	
  	<!-- Build Labels -->
@@ -115,8 +115,14 @@
       			<exclude name=".DS_Store" />
       			<exclude name="settings.xml" />
       			<exclude name=".project" />
+      			<exclude name="logs" />
       		</fileset>
         </copy>
+
+        <!-- Install Dependencies -->
+		<exec executable="box" dir="${dir.build}">
+			<arg line="install production=true" />
+		</exec>
         
 		<!-- Replace Build Numbers -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
@@ -126,9 +132,6 @@
 		  <fileset file="${dir.build}/box.json" />
 		</replaceregexp>
 		
-		<!-- API Docs -->
-		<antcall target="build.apidocs" />
-				
 		<!-- Activate DSN Creator link -->
 		<replace file="${dir.build}/Application.cfc" 
 				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
@@ -140,6 +143,7 @@
 		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" basedir="${dir.build}" />
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
 		
 		<!-- Refactor indexes from Source For Express Edition: only use if derby else leave as is
 		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
@@ -158,15 +162,32 @@
  	
  	<!-- Build API Docs -->
  	<target name="build.apidocs" description="Builds the api docs" depends="init">
+ 		<!-- Create API apidocs dir -->
  		<mkdir dir="${dir.api}"/>
- 		<antcall target="update.permissions" />
- 		<!-- Execute DocBox -->
-		<get dest="${dir.build}/colddoc.html" src="${url.api}${contentbox.version}&amp;path=${dir.api}" verbose="true"/>
-		<delete file="${dir.build}/colddoc.html" />
+ 		<!-- Install dependencies for docs -->
+		<exec executable="box" dir="${dir.apidocs}">
+			<arg line="install" />
+		</exec>
+		<!-- Startup the apidocs server, wait for a few seconds for server to start -->
+		<exec executable="box" dir="${dir.apidocs}">
+			<arg line="server start openbrowser=false --force port=${apidocs.port}" />
+		</exec>
+		<sleep seconds="5"/>
+		<!-- Get the apidocs now -->
+		<get dest="${dir.build}/docbox.html" 
+			 src="${url.apidocs}?version=${contentbox.version}&amp;path=${dir.api}" 
+			 verbose="true"
+			 retries="5"/>
+		<delete file="${dir.build}/docbox.html" />
+ 		<!-- stop server -->
+		<exec executable="box" dir="${dir.apidocs}">
+			<arg line="server stop" />
+		</exec>
 		<!-- Zip API Docs -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" algorithm="SHA-512" fileext=".sha512" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
  	</target>
  	
  	<!-- Build war -->
@@ -203,6 +224,7 @@
  		
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
+ 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  		<!-- Cleanup INF like a ninja -->
  		<delete dir="${dir.build}/WEB-INF" />
  	</target>
@@ -249,43 +271,62 @@
  		<copy todir="${dir.build}/express/webapps/ROOT/WEB-INF/lucee" overwrite="true" encoding="UTF-8">
  			<fileset file="${dir.resources}/lucee-web.xml.cfm" />
  		</copy>
+ 		
  		<!-- add execution perms -->
- 		<chmod dir="${dir.build}/express/bin" perm="ugo+rx" includes="*"/>
- 		<!-- Zip server up -->
- 		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express"></zip>
- 		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" />
+ 		<chmod perm="ugo+rx">
+ 			<fileset dir="${dir.build}/express/bin" />
+ 		</chmod>
+ 		
+ 		<!-- NO JRE EXPRESS -->
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express" />
+ 		
+ 		<!-- MAC JRE -->
+ 		<unzip src="${dir.dependencies}/jre-darwin64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
+ 		<chmod perm="ugo+rx">
+ 			<fileset dir="${dir.build}/express/jre/bin" />
+ 		</chmod>
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-darwin64-${contentbox.version}.zip" basedir="${dir.build}/express" />
+ 		<delete dir="${dir.build}/express/jre" />
+
+ 		<!-- LINUX64 JRE -->
+ 		<unzip src="${dir.dependencies}/jre-linux64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
+ 		<chmod perm="ugo+rx">
+ 			<fileset dir="${dir.build}/express/jre/bin" />
+ 		</chmod>
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-linux64-${contentbox.version}.zip" basedir="${dir.build}/express" />
+ 		<delete dir="${dir.build}/express/jre" />
+
+ 		<!-- WINDOWS64 JRE -->
+ 		<unzip src="${dir.dependencies}/jre-win64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
+ 		<chmod perm="ugo+rx">
+ 			<fileset dir="${dir.build}/express/jre/bin" />
+ 		</chmod>
+ 		<zip destfile="${dir.contentbox.exports}/contentbox-express-win64-${contentbox.version}.zip" basedir="${dir.build}/express" />
+
+ 		<!-- Build Checksums -->
+		<checksum forceoverwrite="true" fileext=".md5">
+			<fileset dir="${dir.contentbox.exports}">
+				<include name="contentbox-express-*.zip" />
+			</fileset>
+		</checksum>
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512">
+			<fileset dir="${dir.contentbox.exports}">
+				<include name="contentbox-express-*.zip" />
+			</fileset>
+		</checksum>
+
  		<!-- cleanup -->
  		<delete dir="${dir.build}/express" />
  	</target>
  	
 	<!-- Build all releases-->
-	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.patch">
-		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 	 		 
-			  tofile="${be.exports}/contentbox-be.zip" 
-			  overwrite="true" 
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip.md5" 		 
-			  tofile="${be.exports}/contentbox-be.zip.md5" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" 	 	 
-			  tofile="${be.exports}/contentbox-war-be.zip" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip.md5" 	 
-			  tofile="${be.exports}/contentbox-war-be.zip.md5" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" 	 
-			  tofile="${be.exports}/contentbox-express-be.zip" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		<copy file="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip.md5" 
-			  tofile="${be.exports}/contentbox-express-be.zip.md5" 
-			  overwrite="true"
-			  encoding="UTF-8"/>
-		
+	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.apidocs,build.patch">
+		<!-- Copy as BE to root -->
+		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8" verbose="true">
+			<fileset dir="${dir.contentbox.exports}" />
+			<mapper type="regexp" from="^(.*)(${contentbox.version})(.*)$" to="\1be\3" />
+		</copy>
+
 		<!-- Create Box Repo From macrodef -->
 		<box-repo location="${be.exports}" 
 				  artifactID="${contentbox.slug}" 
@@ -293,7 +334,7 @@
 				  buildID="${build.number}"
 				  latest="${contentbox.version}"
 				  stableVersion="${contentbox.stableversion}"
-				  classifiers="express,war,apidocs,path,patch-db,patch-nocoldbox"/>
+				  classifiers="express,express-linux64,express-darwin64,express-win64,war,apidocs,patch,patch-db,patch-nocoldbox"/>
 		
 		<!-- Cleanup -->
 		<delete dir="${dir.build}" />
@@ -332,6 +373,22 @@
  						version="${lucee.patch}"
  						extension="lco"
  						destination="${dir.dependencies}"/>
+ 		<!-- Download Dependency via box task-->
+ 		<box-dependency groupID="oracle" 
+ 						artifactID="jre"
+ 						version="${jre.version}"
+ 						destination="${dir.dependencies}"
+ 						classifiers="win64"/>
+ 		<box-dependency groupID="oracle" 
+ 						artifactID="jre"
+ 						version="${jre.version}"
+ 						destination="${dir.dependencies}"
+ 						classifiers="darwin64"/>
+ 		<box-dependency groupID="oracle" 
+ 						artifactID="jre"
+ 						version="${jre.version}"
+ 						destination="${dir.dependencies}"
+ 						classifiers="linux64"/>
 	</target>
 	
 </project>

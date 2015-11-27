@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * This simulates the onRequest start for the admin interface
 */
 component extends="coldbox.system.Interceptor"{
@@ -7,7 +11,6 @@ component extends="coldbox.system.Interceptor"{
 	property name="securityService" 	inject="id:securityService@cb";
 	property name="settingService"  	inject="id:settingService@cb";
 	property name="adminMenuService"  	inject="id:adminMenuService@cb";
-	property name="adminThemeService"  	inject="id:adminThemeService@cb";
 
 	/**
 	* Configure CB Request
@@ -17,7 +20,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess(event, interceptData) eventPattern="^(contentbox-admin|contentbox-security)"{
+	function preProcess( event, interceptData ) eventPattern="^(contentbox-admin|contentbox-security)"{
 		var prc = event.getCollection(private=true);
 		var rc	= event.getCollection();
 
@@ -29,13 +32,13 @@ component extends="coldbox.system.Interceptor"{
 		// store module root
 		prc.cbRoot = getContextRoot() & event.getModuleRoot('contentbox-admin');
 		// cb helper
-		prc.CBHelper = getMyPlugin(plugin="CBHelper",module="contentbox");
+		prc.CBHelper = getModel( "CBHelper@cb" );
 		// store admin module entry point
-		prc.cbAdminEntryPoint = getModuleSettings("contentbox-admin").entryPoint;
+		prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 		// store site entry point
-		prc.cbEntryPoint = getModuleSettings("contentbox-ui").entryPoint;
+		prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
 		// store filebrowser entry point
-		prc.cbFileBrowserEntryPoint = getModuleSettings("contentbox-filebrowser").entryPoint;
+		prc.cbFileBrowserEntryPoint = getModuleConfig( "contentbox-filebrowser" ).entryPoint;
 		// Place user in prc
 		prc.oAuthor = securityService.getAuthorSession();
 		// Place global cb options on scope
@@ -44,8 +47,6 @@ component extends="coldbox.system.Interceptor"{
 		prc.cbWidgetRoot = getContextRoot() & event.getModuleRoot('contentbox') & "/widgets";
 		// store admin menu service
 		prc.adminMenuService = adminMenuService;
-		// Theme service
-		prc.adminThemeService = adminThemeService;
 		
 		/************************************** FORCE SSL *********************************************/
 		
@@ -79,7 +80,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehCommentsettings	= "#prc.cbAdminEntryPoint#.comments.settings";
 
 		// Look and Feel Tab
-		prc.xehLayouts		= "#prc.cbAdminEntryPoint#.layouts";
+		prc.xehThemes		= "#prc.cbAdminEntryPoint#.themes";
 		prc.xehWidgets		= "#prc.cbAdminEntryPoint#.widgets";
 		prc.xehGlobalHTML	= "#prc.cbAdminEntryPoint#.globalHTML";
 
@@ -95,13 +96,11 @@ component extends="coldbox.system.Interceptor"{
 
 		// Tools
 		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";
-		prc.xehApiDocs		= "#prc.cbAdminEntryPoint#.apidocs";
 
 		// System
 		prc.xehSettings			= "#prc.cbAdminEntryPoint#.settings";
 		prc.xehSecurityRules	= "#prc.cbAdminEntryPoint#.securityrules";
 		prc.xehRawSettings		= "#prc.cbAdminEntryPoint#.settings.raw";
-		prc.xehEmailTemplates   = "#prc.cbAdminEntryPoint#.emailtemplates";
 		prc.xehAutoUpdater	    = "#prc.cbAdminEntryPoint#.autoupdates";
 		// Stats
 		prc.xehSubscribers 		= "#prc.cbAdminEntryPoint#.subscribers";
@@ -129,7 +128,8 @@ component extends="coldbox.system.Interceptor"{
 			{ name="Reload Site Module", value="contentbox-ui" }
 		];
 		prc.xehAdminAction	= "#prc.cbAdminEntryPoint#.dashboard.reload";
-
+		// Installer Check
+		prc.installerCheck = settingService.isInstallationPresent();
 	}
 
 }

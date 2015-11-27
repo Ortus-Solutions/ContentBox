@@ -1,11 +1,11 @@
 <cfoutput>
-    <cfset ETH = getPlugin( plugin="EmailTemplateHelper", module="contentbox" )>
+    <cfset ETH = getModel( "EmailTemplateHelper@cb" )>
     #ETH.author( email=args.gravatarEmail, content="
         <strong>@currentAuthor@</strong> created a new user:<br /> <a href='@authorURL@'>@authorName@<a/>
-    ")#
+    " )#
     #ETH.divider()#
     #ETH.heading( content="Author Details" )#
-    #ETH.text("
+    #ETH.text( "
         <table cellpadding='3' cellspacing='3'>
             <tbody>
                 <tr>
@@ -22,5 +22,5 @@
                 </tr>
             </tbody>
         </table>
-    ")#
+    " )#
 </cfoutput>

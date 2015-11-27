@@ -3,20 +3,20 @@
 <script type="text/javascript">
 $(document).ready(function() {
  	
-});
+} );
 function qpSaveDraft(){
-	$quickPostForm.find("##isPublished").val('false');
+	$quickPostForm.find( "##isPublished" ).val('false');
 }
 function showQuickPost(){
-    $( '##quickPostModal' ).modal({
+    $( '##quickPostModal' ).modal( {
         maxHeight: 800,
         height: '80%',
         width: 1000
-    });
+    } );
     // pointers
-    var $quickPost          = $("##quickPost");
-    var $quickPostForm      = $("##quickPostForm");
-    var $quickEntryContent  = $quickPostForm.find("##quickcontent");
+    var $quickPost          = $( "##quickPost" );
+    var $quickPostForm      = $( "##quickPostForm" );
+    var $quickEntryContent  = $quickPostForm.find( "##quickcontent" );
     // toolbar config
     var ckToolbar =
     [
@@ -38,7 +38,7 @@ function showQuickPost(){
     $quickPostForm.validate();
 }
 function closeQuickPost(){
-    $(".error").hide();
+    $( ".error" ).hide();
     $( '##quickPostModal' ).modal( 'hide' );
     return false;
 }

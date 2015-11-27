@@ -1,19 +1,20 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A widget that can render out ContentBox pages inline
 */
-component extends="contentbox.model.ui.BaseWidget" singleton{
+component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	PageInclude function init(controller){
-		// super init
-		super.init(controller);
-
+	PageInclude function init(){
 		// Widget Properties
-		setPluginName("PageInclude");
-		setPluginVersion("1.0");
-		setPluginDescription("A widget that can render out a ContentBox page anywhere you like.");
-		setPluginAuthor("Ortus Solutions");
-		setPluginAuthorURL("http://www.ortussolutions.com");
-		setIcon( "page-add.png" );
+		setName( "PageInclude" );
+		setVersion( "1.0" );
+		setDescription( "A widget that can render out a ContentBox page anywhere you like." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
+		setIcon( "file-text-o" );
 		setCategory( "Content" );
 		return this;
 	}
@@ -25,18 +26,18 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	* @defaultValue.hint The string to show if the page does not exist
 	*/
 	any function renderIt(required string slug, string defaultValue){
-		var page = pageService.findWhere({slug=arguments.slug});
+		var page = pageService.findWhere( {slug=arguments.slug} );
 
 		if( !isNull(page) ){
 			return page.renderContent();
 		}
 
 		// default value
-		if( structKeyExists(arguments, "defaultValue") ){
+		if( structKeyExists(arguments, "defaultValue" ) ){
 			return arguments.defaultValue;
 		}
 
-		throw(message="The content slug '#arguments.slug#' does not exist",type="PageIncludeWidget.InvalidPageSlug");
+		throw(message="The content slug '#arguments.slug#' does not exist",type="PageIncludeWidget.InvalidPageSlug" );
 	}
 
 	/**

@@ -2,7 +2,7 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 function toggleRawPreferences(){
-	$("##rawPreferences").slideToggle();
+	$( "##rawPreferences" ).slideToggle();
 }
 </script>
 </cfoutput>

@@ -1,19 +1,20 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A widget that renders sub pages according to where it is rendered.
 */
-component extends="contentbox.model.ui.BaseWidget" singleton {
+component extends="contentbox.models.ui.BaseWidget" singleton {
 
-    function init( controller ){
-        // super init
-        super.init( controller );
-
+    function init(){
         // Widget Properties
-        setPluginName( "SubPageMenu" );
-        setPluginVersion( "1.0" );
-        setPluginDescription( "A widget that renders sub pages according to where it is rendered." );
-        setPluginAuthor( "Ortus Solutions" );
-        setPluginAuthorURL( "http://www.ortussolutions.com" );
-        setIcon( "list.png" );
+        setName( "SubPageMenu" );
+        setVersion( "1.0" );
+        setDescription( "A widget that renders sub pages according to where it is rendered." );
+        setAuthor( "Ortus Solutions" );
+        setAuthorURL( "http://www.ortussolutions.com" );
+        setIcon( "list" );
         setCategory( "Content" );
         return this;
     }

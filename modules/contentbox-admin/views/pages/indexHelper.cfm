@@ -6,19 +6,19 @@
 $(document).ready(function() {
 	// Setup content view
 	setupContentView( { 
-		tableContainer	: $("##pagesTableContainer"), 
+		tableContainer	: $( "##pagesTableContainer" ), 
 		tableURL		: '#event.buildLink( prc.xehPageTable )#',
-		searchField 	: $("##pageSearch"),
+		searchField 	: $( "##pageSearch" ),
 		searchName		: 'searchPages',
-		contentForm 	: $("##pageForm"),
+		contentForm 	: $( "##pageForm" ),
 		bulkStatusURL 	: '#event.buildlink(linkTo=prc.xehPageBulkStatus)#',
-		importDialog 	: $("##importDialog"),
-		cloneDialog		: $("##cloneDialog")
-	});
+		importDialog 	: $( "##importDialog" ),
+		cloneDialog		: $( "##cloneDialog" )
+	} );
 	
 	// load content on startup, using default parents if passed.
 	contentLoad( { parent: '#rc.parent#' } );
 	
-});
+} );
 </script>
 </cfoutput>
