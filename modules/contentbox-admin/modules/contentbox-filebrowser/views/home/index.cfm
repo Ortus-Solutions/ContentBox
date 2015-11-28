@@ -8,7 +8,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 <div class="panel panel-default">
 
 	<div class="panel-heading">
-	#html.startForm( name="filebrowser", class="form-inline" )#
+	#html.startForm( name="filebrowser", class="form-inline", onkeypress="return event.keyCode != 13;" )#
 		#announceInterception( "fb_preTitleBar" )#
 
 		<div class="btn-group btn-group-sm" role="group">
