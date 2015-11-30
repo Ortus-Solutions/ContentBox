@@ -39,11 +39,11 @@
                             <div class="alert alert-danger" id="menuErrors" style="display:none;">
                                 Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
                             </div>
+                            <div id="placeholder-message">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
                             <div class="designer well well-sm">
                                 <div class="dd" id="nestable">
                                     <ol class="dd-list">
                                         #prc.menuItems#
-                                        <div id="placeholder-message">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
                                     </ol>
                                 </div>
                             </div>
