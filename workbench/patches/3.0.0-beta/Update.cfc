@@ -52,6 +52,9 @@ component implements="contentbox.model.updates.IUpdate"{
 		return this;
 	}
 
+	/**
+	* On DI Complete
+	*/
 	function onDIComplete(){
 		// setup update variables.
 		variables.version 			= "3.0.0";
@@ -147,7 +150,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Create new Permissions
 		var perms = [
-			
+			"EDITORS_FEATURED_IMAGE"
 		];
 
 		// iterate and add
@@ -172,6 +175,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		// Setup Permissions
 		var perms = [
+			"EDITORS_FEATURED_IMAGE"
 		];
 
 		// iterate and add
@@ -202,6 +206,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		// Create new Permissions
 		var perms = {
+			"EDITORS_FEATURED_IMAGE" = "Ability to view the featured image panel"
 		};
 
 		for( var key in perms ){

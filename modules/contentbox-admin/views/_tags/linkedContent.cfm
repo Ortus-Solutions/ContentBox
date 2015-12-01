@@ -1,11 +1,4 @@
 <cfoutput>
-    <style>
-        .btn-tiny {
-            padding: 0 3px;
-            font-size: 9.5px;
-            line-height:14px;
-        }
-    </style>
     <script>
         <cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
             var currentLCContentID = #rc.contentID#;
@@ -58,7 +51,7 @@
                     </td>
                     <td class="#publishedClass#">#content.getTitle()#</td>
                     <td width="14" class="center #publishedClass#">
-                        <button id="#content.getContentID()#" class="btn btn-tiny btn-danger" type="button"><i class="fa fa-unlink" title="Break Link to Content"></i></button>
+                        <button id="#content.getContentID()#" class="btn btn-xs btn-danger" type="button"><i class="fa fa-unlink" title="Break Link to Content"></i></button>
                     </td>
                 </tr>
             </cfloop>
