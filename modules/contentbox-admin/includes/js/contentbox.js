@@ -310,9 +310,8 @@ function hideAllTooltips(){
 }
 function toggleFlickers(){
 	$( ".flickerMessages" ).slideToggle();
-	$(".alert").fadeOut(3000);
+	$( ".flickers" ).fadeOut( 3000 );
 }
-
 /**
  * A-la-Carte closing of remote modal windows
  * @return
