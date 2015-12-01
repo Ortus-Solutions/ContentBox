@@ -95,7 +95,6 @@ img{ height: inherit; }
 img.img-screenshot{ height: 200px; }
 .gravatar{ height: auto; }
 .no-margin{ margin: 0!important; }
-.panel-heading{ overflow: hidden;}
 .panel-solid-primary>.panel-footer>a {
     color: white;
 }
