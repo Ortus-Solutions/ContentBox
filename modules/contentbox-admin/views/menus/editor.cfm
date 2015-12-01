@@ -16,8 +16,7 @@
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">&nbsp;</h3>
-                    <div class="actions pull-right">
+                    <div class="pull-right">
                         <a class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fa fa-reply"></i> Back</a>
                     </div>
                 </div>
@@ -40,11 +39,11 @@
                             <div class="alert alert-danger" id="menuErrors" style="display:none;">
                                 Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
                             </div>
+                            <div id="placeholder-message" class="alert alert-info">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
                             <div class="designer well well-sm">
                                 <div class="dd" id="nestable">
                                     <ol class="dd-list">
                                         #prc.menuItems#
-                                        <div id="placeholder-message">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
                                     </ol>
                                 </div>
                             </div>

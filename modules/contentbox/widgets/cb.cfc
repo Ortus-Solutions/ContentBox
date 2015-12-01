@@ -17,7 +17,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setDescription( "A proxy to our CBHelper object" );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
-		setIcon( "wrench-add.png" );
+		setIcon( "wrench" );
 		setCategory( "Utilities" );
 		return this;
 	}

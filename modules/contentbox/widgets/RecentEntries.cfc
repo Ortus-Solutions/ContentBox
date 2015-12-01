@@ -14,7 +14,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setDescription( "A cool basic widget that shows N recent blog entries." );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
-		setIcon( "list.png" );
+		setIcon( "list" );
 		setCategory( "Blog" );
 		return this;
 	}
