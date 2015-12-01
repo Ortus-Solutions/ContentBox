@@ -2,7 +2,7 @@
     <cfif rc.modal>
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4><span id="widget-title-bar"><img width="25" src="#prc.cbroot#/includes/images/widgets/#prc.widget.icon#" /> #rc.mode# '#prc.widget.widget.getName()#' Widget</span></h4>
+            <h4><span id="widget-title-bar"><i class="fa fa-#prc.widget.icon# fa-lg fa-2x"></i> #rc.mode# '#prc.widget.widget.getName()#' Widget</span></h4>
         </div>
         <div class="modal-body">
     </cfif>
