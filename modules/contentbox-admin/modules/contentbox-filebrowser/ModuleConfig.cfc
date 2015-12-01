@@ -3,7 +3,7 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* ContentBox Security module configuration
+* ContentBox file browser module
 */
 component{
 
@@ -55,7 +55,7 @@ component{
 			// Volume Chooser, display the volume navigator
 			volumeChooser = false,
 			// Load jQuery
-			loadJQuery = false,
+			loadJQuery = true,
 			// Load Select Callback hooks
 			loadSelectCallbacks = true,
 			// Quick View image width in pixels
