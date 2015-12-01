@@ -170,12 +170,12 @@ function fbSelect( sID, sPath ){
 function fbQuickView(){
 	// check selection
 	var sPath = $selectedItem.val();
-	if( !sPath.length ){ alert( '#r( "jsmessages.select@fb" )#' ); return; }
+	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
 	// get ID
 	var thisID 	= $selectedItemID.val();
 	var target 	= $( "##"+thisID);
 	// only images
-	if( target.attr( "data-quickview" ) == "false" ){ alert( '#r( "jsmessages.quickview_only_images@fb" )#' ); return; }
+	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	// show it
 	var imgURL = "#event.buildLink( prc.xehFBDownload )#?path="+ escape( target.attr( "data-fullURL" ) );
 	$quickView.slideDown();
@@ -184,12 +184,12 @@ function fbQuickView(){
 function fbRename(){
 	// check selection
 	var sPath = $selectedItem.val();
-	if( !sPath.length ){ alert( '#r( "jsmessages.select@fb" )#' ); return; }
+	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
 	// get ID
 	var thisID 		= $selectedItemID.val();
 	var target 		= $( "##"+thisID);
 	// prompt for new name
-	var newName  = prompt( '#r( "jsmessages.newname@fb" )#', target.attr( "data-name" ) );
+	var newName  = prompt( '#$r( "jsmessages.newname@fb" )#', target.attr( "data-name" ) );
 	// do renaming if prompt not empty
 	if( newName != null){
 		$fileLoaderBar.slideDown();
@@ -204,7 +204,7 @@ function fbRename(){
 function fbUrl(){
 	// check selection
 	var sPath = $selectedItem.val();
-	if( !sPath.length ){ alert( '#r( "jsmessages.select@fb" )#' ); return; }
+	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
 	// get ID
 	var thisID 		= $selectedItemID.val();
 	var target 		= $( "##"+thisID);
@@ -214,7 +214,7 @@ function fbUrl(){
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>
 function fbNewFolder(){
-	var dName = prompt( '#r( "jsmessages.newdirectory@fb" )#' );
+	var dName = prompt( '#$r( "jsmessages.newdirectory@fb" )#' );
 	if( dName != null){
 		$fileLoaderBar.slideDown();
 		$.post( '#event.buildLink( prc.xehFBNewFolder )#',
@@ -230,8 +230,8 @@ function fbNewFolder(){
 <cfif prc.fbSettings.deleteStuff>
 function fbDelete(){
 	var sPath = $selectedItem.val();
-	if( !sPath.length ){ alert( '#r( "jsmessages.select@fb" )#' ); return; }
-	if( confirm( '#r( "jsmessages.delete_confirm@fb" )#' ) ){
+	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
+	if( confirm( '#$r( "jsmessages.delete_confirm@fb" )#' ) ){
 		$fileLoaderBar.slideDown();
 		$.post( '#event.buildLink( prc.xehFBRemove )#',
 				{ path : sPath },
@@ -247,7 +247,7 @@ function fbDelete(){
 function fbDownload(){
 	var sPath = $selectedItem.val();
 	var sType = $selectedItemType.val();
-	if( !sPath.length || sType == "dir" ){ alert( '#r( "jsmessages.select@fb" )#' ); return; }
+	if( !sPath.length || sType == "dir" ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
 	// Trigger the download
 	$( "##downloadIFrame" ).attr( "src","#event.buildLink( prc.xehFBDownload )#?path="+ escape(sPath) );
 }
@@ -335,16 +335,16 @@ $(document).ready(function() {
 		error: function(err, file) {
 			switch(err) {
 				case 'BrowserNotSupported':
-					alert( '#r( "jsmessages.browsernotsupported@fb" )#' );
+					alert( '#$r( "jsmessages.browsernotsupported@fb" )#' );
 					break;
 				case 'TooManyFiles':
-					alert( '#r( "jsmessages.toomanyfiles@fb" )#' );
+					alert( '#$r( "jsmessages.toomanyfiles@fb" )#' );
 					break;
 				case 'FileTooLarge':
-					alert( file.name + ' #r( "jsmessages.toolarge@fb" )#');
+					alert( file.name + ' #$r( "jsmessages.toolarge@fb" )#');
 					break;
 				case 'FileTypeNotAllowed':
-					alert( file.type + ' #r( resource="jsmessages.invalidtype@fb", values=prc.fbSettings.acceptMimeTypes )#' );
+					alert( file.type + ' #$r( resource="jsmessages.invalidtype@fb", values=prc.fbSettings.acceptMimeTypes )#' );
 					break;
 				default:
 					break;

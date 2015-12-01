@@ -278,7 +278,7 @@ function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint
 function getModuleURL(module, event, queryString){
 	var returnURL = "";
 	$.ajax( {
-		url : '#event.buildLink(prc.cbAdminEntryPoint & ".modules.buildModuleLink" )#',
+		url : '#event.buildLink( prc.cbAdminEntryPoint & ".modules.buildModuleLink" )#',
 		data : {module: module, moduleEvent: event, moduleQS: queryString},
 		async : false,
 		success : function(data){
@@ -292,6 +292,31 @@ function toggleLoaderBar(){
 	// Activate Loader
 	$uploaderBarStatus.html( "Saving..." );
 	$uploaderBarLoader.slideToggle();
+}
+// Show asset chooser
+function loadAssetChooser( callback, w, h ){
+	if( w === null ){ w = "75%"; }
+	openRemoteModal(
+		"#event.buildLink( prc.cbAdminEntryPoint & ".ckFileBrowser.assetChooser" )#?callback=" + callback,
+		{},
+		w,
+		h
+	);
+}
+// Select the Featured Image
+function featuredImageCallback( filePath, fileURL, fileType ){
+    $( "##featuredImageControls" ).toggleClass( "hide" );
+    $( "##featuredImage" ).val( filePath );
+    $( "##featuredImageURL" ).val( fileURL );
+    $( "##featuredImagePreview" ).attr( "src", fileURL );
+    closeRemoteModal();
+}
+// Cancel Selection of Featured Image
+function cancelFeaturedImage(){
+    $( "##featuredImage" ).val( "" );
+    $( "##featuredImageURL" ).val( "" );
+    $( "##featuredImagePreview" ).attr( "src", "" );
+    $( "##featuredImageControls" ).toggleClass( "hide" );
 }
 </script>
 </cfoutput>
