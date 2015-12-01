@@ -10,7 +10,7 @@ component extends="baseHandler"{
 		// event to run
 		prc.cbCKfileBrowserDefaultEvent = "contentbox-filebrowser:home.index";
 		// CKEditor callback
-		rc.callback="fbCKSelect";
+		rc.callback = rc.callback ?: "fbCKSelect";
 		// get settings according to contentbox
 		prc.cbCKSetting = settingService.buildFileBrowserSettings();
 		// load jquery as it is standalone
