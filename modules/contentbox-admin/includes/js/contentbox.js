@@ -310,9 +310,8 @@ function hideAllTooltips(){
 }
 function toggleFlickers(){
 	$( ".flickerMessages" ).slideToggle();
-	$(".alert").fadeOut(3000);
+	$( ".flickers" ).fadeOut( 3000 );
 }
-
 /**
  * A-la-Carte closing of remote modal windows
  * @return
@@ -521,15 +520,10 @@ function checkByValue(id,recordID){
 function getToday(us){
 	// default us to true
 	us = ( us == null ? true : us );
-	var fullDate = new Date()
-	var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
-	var theYear = String( fullDate.getFullYear() );
-	var theLen  = theYear.length;
-	theYear = theYear.substring( theLen, theLen - 2 );
 	if( us ){
-		return twoDigitMonth + "/" + fullDate.getDate() + "/" + theYear;
+		return moment().format("MM/DD/YYYY");
 	}
 	else{
-		return fullDate.getDate() + "/" + twoDigitMonth + "/" + theYear;	
+		return moment().format("DD/MM/YYYY");	
 	}
 }
