@@ -33,6 +33,13 @@ component {
 			forgeBoxEntryURL = "http://www.coldbox.org/forgebox/view"
 		};
 
+		// i18n
+		i18n = {
+			resourceBundles = {
+		    	"admin" = "#moduleMapping#/includes/i18n/admin"
+		  	}
+		};
+
 		// Parent Settings
 		parentSettings = {
 		};
