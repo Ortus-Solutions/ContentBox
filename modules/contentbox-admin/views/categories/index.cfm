@@ -16,37 +16,52 @@
 </div>
 <div class="row">
 	<div class="col-md-12">
-		#html.startForm(name="categoryForm", action=prc.xehCategoryRemove, class="form-vertical" )#
+		#html.startForm( name="categoryForm", action=prc.xehCategoryRemove )#
+		#html.hiddenField( name="categoryID", value="" )#
 		<input type="hidden" name="categoryID" id="categoryID" value="" />
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<div class="pull-right">
-					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-						<div class="btn-group btn-group-sm">
-					    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
-								Bulk Actions <span class="caret"></span>
-							</button>
-					    	<ul class="dropdown-menu">
-					    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
-					    		<li><a href="javascript:bulkRemove()" class="confirmIt"
-										data-title="<i class='fa fa-trash-o'></i> Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a></li>
-								</cfif>
-								<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-					    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
-								</cfif>
-					    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
-									<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-									<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
-								</cfif>
-					    	</ul>
-					    </div>
-					</cfif>
-					<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
-						<!--- Create --->
-						<button onclick="return createCategory();" class="btn btn-primary btn-sm">Create Category</button>
-					</cfif>
-				</div>
-			</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group form-inline no-margin">
+							#html.textField( 
+								name="categorySearch",
+								class="form-control",
+								placeholder="Quick Search"
+							)#
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="pull-right">
+							<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<div class="btn-group btn-group-sm">
+							    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+										Bulk Actions <span class="caret"></span>
+									</button>
+							    	<ul class="dropdown-menu">
+							    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+							    		<li><a href="javascript:bulkRemove()" class="confirmIt"
+												data-title="<i class='fa fa-trash-o'></i> Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a></li>
+										</cfif>
+										<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+							    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
+										</cfif>
+							    		<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
+											<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
+											<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+										</cfif>
+							    	</ul>
+							    </div>
+							</cfif>
+							<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+								<!--- Create --->
+								<button onclick="return createCategory();" class="btn btn-primary btn-sm">Create Category</button>
+							</cfif>
+						</div>
+					</div>
+				</div> <!--- end row --->
+				
+			</div> <!--- end panel-heading --->
 			<div class="panel-body">
 				<table id="categories" class="table table-striped" cellspacing="0" width="100%">
 					<thead>
@@ -92,6 +107,7 @@
 		#html.endForm()#
 	</div>
 </div>
+
 
 <!---only show if user has rights to categories admin--->
 <cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
