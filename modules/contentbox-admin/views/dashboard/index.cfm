@@ -25,8 +25,8 @@
 					<div class="alert alert-danger" id="installerCheck">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 						<i class="fa fa-exclamation-triangle fa-2x"></i>
-						The installer module still exists! Please delete it from your server as leaving it online is a security risk.
-						<button class="btn btn-danger btn-sm" onclick="deleteInstaller()">Delete Installer</button>
+						#$r( "dashboard.installer.notice@admin" )#
+						<button class="btn btn-danger btn-sm" onclick="deleteInstaller()">#$r( "dashboard.installer.delete@admin" )#</button>
 					</div>
 				</cfif>
 				<cfif prc.installerCheck.dsncreator>
