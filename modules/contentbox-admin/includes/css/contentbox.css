@@ -95,12 +95,15 @@ img{ height: inherit; }
 img.img-screenshot{ height: 200px; }
 .gravatar{ height: auto; }
 .no-margin{ margin: 0!important; }
+.panel-heading{ min-height: 48px;}
 .panel-solid-primary>.panel-footer>a {
     color: white;
 }
 .panel-solid-primary>.panel-footer>a:hover {
     text-decoration: underline;
 }
+.panel-default .actions i{ color: #fff; }
+.actions{ top: 10px!important; }
 .bg-helper{ padding: 15px}
 .tooltip{ position: fixed;}
 /**
