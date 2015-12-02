@@ -85,8 +85,8 @@ $( document ).ready( function() {
 	$statusText 		= $fileBrowser.find( "##statusText" );
 	$selectButton		= $fileBrowser.find( "##bt_select" );
 	$contextMenu		= $fileBrowser.find( "##fbContextMenu" );
-	$sorting			= $fileBrowser.find( "##fbSorting" );
-	$listType			= $fileBrowser.find( "##listType" );
+	$sorting			= $("##filebrowser").find( "##fbSorting" );
+	$listType			= $("##filebrowser").find( "##listType" );
 	$quickView			= $fileBrowser.find( "##quickViewBar" );
 	$quickViewContents	= $fileBrowser.find( "##quickViewBarContents" );
 	$quickViewCloseBtn	= $fileBrowser.find( "##fbCloseButton" );
@@ -101,7 +101,7 @@ $( document ).ready( function() {
 	$sorting.change(function(){ fbRefresh(); } );
 	$quickViewCloseBtn.click(function(){ fbCloseQuickView(); } );
 	// Quick div filter
-	$fileBrowser.find( "##fbQuickFilter" ).keyup(function(){
+	$("##filebrowser").find( "##fbQuickFilter" ).keyup(function(){
 		$.uiDivFilter( $( ".filterDiv" ), this.value);
 	} )
 
@@ -134,6 +134,7 @@ function fbListTypeChange( listType ){
 }
 function fbRefresh(){
 	$fileLoaderBar.slideDown();
+	console.log('#event.buildLink( prc.xehFBBrowser )#', '#prc.fbSafeCurrentRoot#', $sorting.val(), $listType.val())
 	$fileBrowser.parent().load( '#event.buildLink( prc.xehFBBrowser )#',
 		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val() },
 		function(){
