@@ -486,9 +486,9 @@ component hint="Main filebrowser module handler"{
 		if( NOT event.isAjax() OR arguments.force ){
 			// Add Main Styles
 			var adminRoot = event.getModuleRoot( 'contentbox-admin' );
-        	addAsset( "#adminRoot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" );
+        	/*addAsset( "#adminRoot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" );
        		addAsset( "#adminRoot#/includes/spacelab/css/font-awesome.min.css" );
-       		addAsset( "#adminRoot#/includes/spacelab/css/main.css" );
+       		addAsset( "#adminRoot#/includes/spacelab/css/main.css" );*/
 			addAsset( "#prc.fbModRoot#/includes/css/style.css" );
 			addAsset( "#prc.fbModRoot#/includes/css/jquery.contextMenu.css" );
 
