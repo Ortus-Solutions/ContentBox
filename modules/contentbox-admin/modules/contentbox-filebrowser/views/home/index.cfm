@@ -75,32 +75,34 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 	<div class="panel-body">
 
 		<!--- ContextMenus --->
-		<ul id="fbContextMenu" class="contextMenu">
-			<li class="quickview">
-				<a href="##quickview">#$r( "quickview@fb" )#</a>
+		<div id="context-menu" class="dropdown clearfix">
+		<ul id="fbContextMenu" class="dropdown-menu">
+			<li>
+				<a href="##quickview"><i class="fa fa-camera"></i> #$r( "quickview@fb" )#</a>
 			</li>
 			<cfif len( rc.callback )>
 			<li class="select">
-				<a href="##select">#$r( "select@fb" )#</a>
+				<a href="##select"><i class="fa fa-camera"></i> #$r( "select@fb" )#</a>
 			</li>
 			</cfif>
-			<li class="rename">
-				<a href="##rename">#$r( "rename@fb" )#</a>
+			<li>
+				<a href="##rename"><i class="fa fa-terminal"></i> #$r( "rename@fb" )#</a>
 			</li>
 			<cfif prc.fbSettings.deleteStuff>
-			<li class="delete">
-				<a href="##delete">#$r( "delete@fb" )#</a>
+			<li>
+				<a href="##delete"><i class="fa fa-times"></i> #$r( "delete@fb" )#</a>
 			</li>
 			</cfif>
 			<cfif prc.fbSettings.allowDownload>
-			<li class="download">
-				<a href="##download">#$r( "download@fb" )#</a>
+			<li>
+				<a href="##download"><i class="fa fa-download"></i> #$r( "download@fb" )#</a>
 			</li>
 			</cfif>
-			<li class="link">
-				<a href="##url">URL</a>
+			<li>
+				<a href="##url"><i class="fa fa-external-link"></i> URL</a>
 			</li>
 		</ul>
+		</div>
 		<ul id="fbContextMenuDirectories" class="contextMenu">
 			<cfif len( rc.callback )>
 			<li class="select">
