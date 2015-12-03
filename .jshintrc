@@ -1,0 +1,14 @@
+{
+	"curly" 	: true,
+	"eqeqeq"  	: true,
+	"eqnull" 	: true,
+	"browser" 	: true,
+	"devel" 	: true,
+	"sub"		: true,
+	"globals" 	: {
+		"jQuery" 	: true,
+		"$" 		: true,
+		"module" 	: true,
+		"angular" 	: true
+	}
+}

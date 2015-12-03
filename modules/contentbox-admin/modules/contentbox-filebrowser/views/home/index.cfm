@@ -8,7 +8,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 <div class="panel panel-default" id="FileBrowser" >
 
 	<!--- Panel Heading: Tool Bar --->
-	<div class="panel-heading">
+	<div class="panel-heading" id="FileBrowser-heading">
 	#html.startForm( name="filebrowser", class="form-inline", onkeypress="return event.keyCode != 13;" )#
 		#announceInterception( "fb_preTitleBar" )#
 
@@ -54,12 +54,12 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<!---Grid or listing --->
 		<div class="form-group">
 			<!--- Sorting --->
-			#html.label( field="fbSorting", content=r( "sortby@fb" ))#
-			#html.select( name="fbSorting", class="form-input", options=r( "sortoptions@fb" ), selectedValue=prc.fbPreferences.sorting)#
+			#html.label( field="fbSorting", content=$r( "sortby@fb" ))#
+			#html.select( name="fbSorting", class="form-input", options=$r( "sortoptions@fb" ), selectedValue=prc.fbPreferences.sorting)#
 		</div>
 		<div class="form-group">
 			<!--- Quick Filter --->
-			#html.label( field="fbQuickFilter", content=r( "quickfilter@fb" ) )#
+			#html.label( field="fbQuickFilter", content=$r( "quickfilter@fb" ) )#
 			#html.textField( name="fbQuickFilter", class="form-input" )#
 		</div>
 		#html.hiddenField( name="listType", value=prc.fbPreferences.listType )#
@@ -72,7 +72,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 	</div>
 	<!---/ end panel heading --->
 
-	<div class="panel-body">
+	<div class="panel-body" id="FileBrowser-body">
 
 		<!--- ContextMenus --->
 		<ul id="fbContextMenu" class="contextMenu">
@@ -304,7 +304,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 	</div> <!--- end panel-body --->
 
-	<div class="panel-footer">
+	<div class="panel-footer" id="FileBrowser-footer">
 
 		<!--- Location Bar --->
 		<div id="locationBar">

@@ -26,3 +26,5 @@ coldbox/*
 testbox/*
 modules/contentbox/themes/default/bower_components
 modules/contentbox/themes/default/node_modules
+modules/contentbox-admin/modules/contentbox-filebrowser/node_modules
+modules/contentbox-admin/modules/contentbox-filebrowser/bower_components
