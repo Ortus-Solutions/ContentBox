@@ -172,107 +172,134 @@
         <!--- cbadmin Event --->
         #announceInterception( "cbadmin_afterBodyStart" )#
         <section id="container">
-            <header id="header">
 
+            <nav class="navbar navbar-inverse navbar-fixed-top">
+                <div class="top-navbar">
                 <!--Branding-->
-                <div class="brand text-center">
+                <div class="navbar-header text-center">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="##navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <button type="button" class="navbar-toggle pull-left collapsed" id="toggle-left" data-target="##navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                     <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="right auto">
                         <img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
                     </a>
                 </div>
 
                 <!-- Toggle Navigation Button -->
-                <div class="toggle-navigation toggle-left">
-                    <a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
-                    	<i class="fa fa-bars"></i>
-                    </a>
-                </div>
 
-                <!---Search --->
-				<cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
-				<span class="navbar-search" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
-					<!---Search Results --->
-					<span id="div-search-results"></span>
-					<!---Search Inputs --->
-					<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
-					<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
-				</span>
-				</cfif>
-
-                <!-- User Nav -->
-                <div class="user-nav">
-                    <ul>
-                    	<!--- View Site --->
-                    	<li class="" data-placement="right auto" title="Visit Site">
-                    		<a class="btn btn-default options toggle" href="#event.buildLink( prc.cbEntryPoint )#" target="_blank">
-                    			<i class="fa fa-home"></i>
-                    		</a>
-                    	</li>
-                    	<!--- New Quick Links --->
-				    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
-				    	<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
-				    		<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
-				    			<i class="fa fa-plus"></i>
-				    		</button>
-							<ul class="dropdown-menu">
-								<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
-									<li>
-										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
-											<i class="fa fa-file-o"></i> New Page
-										</a>
-									</li>
-								</cfif>
-								<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
-									<li>
-										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
-											<i class="fa fa-quote-left"></i> New Entry
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-									<li>
-										<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
-											<i class="fa fa-hdd-o"></i> New Content Store
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									<li>
-										<a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
-											<i class="fa fa-user"></i> New User
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
-									<li>
-										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
-											<i class="fa fa-picture-o"></i> New Media
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
-									<li>
-										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+U">
-											<i class="fa fa-list"></i> New Menu
-										</a>
-									</li>
-								</cfif>
-							</ul>
-						</li>
-						</cfif>
-                    	
-                    	<!--- Utils --->
+                <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li class="hidden-xs" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+                            <a onclick=null><span class="navbar-img"><i class="fa fa-bars"></i></span><span class="hidden-lg hidden-md"> Settings</span></a>
+                        </li>
+                        <!---Search --->
+                        <cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
+                            <li class="navbar-form hidden-xs">
+                                <span class="navbar-search" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
+                                    <!---Search Results --->
+                                    <span id="div-search-results"></span>
+                                    <!---Search Inputs --->
+                                    <input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
+                                    <input type="text" placeholder="Global Search" class="form-control" 
+                                            name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
+                                </span>
+                            </li>
+                        </cfif>
+                    </ul>
+                    <!-- User Nav -->
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--- View Site --->
+                        <li class="" data-placement="right auto" title="Visit Site">
+                            <a href="#event.buildLink( prc.cbEntryPoint )#" target="_blank"><span class="navbar-img"><i class="fa fa-home"></i></span><span class="hidden-lg hidden-md"> Home</span></a>
+                        </li>
+                        <!--- New Quick Links --->
+                        <cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
+                        <li class="dropdown" title="Create New..." data-name="create-new" data-placement="right auto">
+                            <a href="##" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="navbar-img"><i class="fa fa-plus"></i>
+                                </span><span class="hidden-lg hidden-md"> Add content</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+                                    <li>
+                                        <a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
+                                            <i class="fa fa-file-o"></i> New Page
+                                        </a>
+                                    </li>
+                                </cfif>
+                                <cfif !prc.cbSettings.cb_site_disable_blog AND prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+                                    <li>
+                                        <a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
+                                            <i class="fa fa-quote-left"></i> New Entry
+                                        </a>
+                                    </li>
+                                </cfif>
+                                <cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+                                    <li>
+                                        <a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
+                                            <i class="fa fa-hdd-o"></i> New Content Store
+                                        </a>
+                                    </li>
+                                </cfif>
+                                <cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+                                    <li>
+                                        <a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
+                                            <i class="fa fa-user"></i> New User
+                                        </a>
+                                    </li>
+                                </cfif>
+                                <cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
+                                    <li>
+                                        <a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
+                                            <i class="fa fa-picture-o"></i> New Media
+                                        </a>
+                                    </li>
+                                </cfif>
+                                <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
+                                    <li>
+                                        <a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+U">
+                                            <i class="fa fa-list"></i> New Menu
+                                        </a>
+                                    </li>
+                                </cfif>
+                            </ul>
+                        </li>
+                        </cfif>
+                        
+                        <!--- Utils --->
                         #prc.adminMenuService.generateUtilsMenu()#
-                       	
-                       	<!--- Support Menu --->
+                        
+                        <!--- Support Menu --->
                         #prc.adminMenuService.generateSupportMenu()#
                         
                         <!--- Profile --->
-                        <li class="profile-photo">
-                            #getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
-                        </li>
-                        #prc.adminMenuService.generateProfileMenu()#
-                        
+                        <li data-name="profile" class="dropdown settings open">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                #getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
+                                <span class="hidden-lg hidden-md"> Username</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li data-name="myprofile" class="">
+                                    <a href="http://127.0.0.1:50048/cbadmin/authors/myprofile" class="" title="" data-keybinding="ctrl+shift+a" data-original-title="ctrl+shift+A">
+                                        <i class="fa fa-camera"></i> My Profile
+                                    </a>
+                                </li>
+                                <li data-name="logout" class="">
+                                    <a href="http://127.0.0.1:50048/cbadmin/security/doLogout" class="" title="" data-keybinding="ctrl+shift+l" data-original-title="ctrl+shift+L">
+                                        <i class="fa fa-power-off"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>                        
                         <!--- Notifications :
                         TODO: Enable once done
                         <li class="dropdown messages">
@@ -286,7 +313,7 @@
                         --->
                     </ul>
                 </div>
-            </header>
+            </nav>
 
             <!--sidebar left start-->
             <nav class="sidebar sidebar-left">
