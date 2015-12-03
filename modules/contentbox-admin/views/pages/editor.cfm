@@ -564,14 +564,12 @@
                                     <div class="form-group text-center">
                                         <!--- Select and Cancel Buttons --->
                                         <a class="btn btn-primary" href="javascript:loadAssetChooser( 'featuredImageCallback' )">Select Image</a>
-                                        <a class="featured-image <cfif !len( prc.page.getFeaturedImageURL() )>hide</cfif> btn btn-danger" href="javascript:cancelFeaturedImage()">Clear</a>
                                         <!--- Featured Image Selection --->
                                         <div class="<cfif !len( prc.page.getFeaturedImageURL() )>hide</cfif> form-group" id="featuredImageControls">
-                                            #html.textField(
+                                        	<a class="btn btn-danger" href="javascript:cancelFeaturedImage()">Clear Image</a>
+                                            #html.hiddenField(
                                             	name 		= "featuredImage",
-                                            	bind 		= prc.page,
-                                            	class 		= "form-control",
-                                            	disabled 	= true
+                                            	bind 		= prc.page
                                             )#
                                             #html.hiddenField(
                                             	name = "featuredImageURL",
