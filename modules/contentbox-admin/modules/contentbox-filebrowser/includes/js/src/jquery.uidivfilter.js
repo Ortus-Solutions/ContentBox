@@ -50,50 +50,51 @@
  *   shown call back function that receives the element that got showned
  */
 jQuery.uiDivFilter = function(jq, phrase, ifHidden, ifShown){
-	if (this.last_phrase === phrase) {
-		return false
-	};
+	if( this.last_phrase === phrase ){
+		return false;
+	}
 	var phrase_length = phrase.length;
 	var words = phrase.toLowerCase().split( " " );
 	var test = "";
 	
-	// Search Method
+	/**
+	 * Search divs for texts
+	 * @return {[type]} [description]
+	 */
 	var search_text = function(){
 		var elem = jQuery(this);
 		if( jQuery.uiDivFilter.has_words( elem.text(), words ) ){
 			elem.show();	
 			// Call callback if defined
-			if( ifShown ){ ifShown(elem) }		
-		}
-		else{
+			if( ifShown ){ ifShown( elem ); }		
+		} else {
 			elem.hide();
 			// Call callback if defined
-			if( ifHidden ){ ifHidden(elem) }
+			if( ifHidden ){ ifHidden( elem ); }
 		}
-	}	
+	};
 	// if added one letter to last time,
 	// just check newest word and only need to hide
 	if( (words.length > 1) && (phrase.substr(0, phrase_length - 1) === this.last_phrase) ) {
-		var words = words[words.length-1];
+		words = words[ words.length-1 ];
 		this.last_phrase = phrase;
 		jq.filter( ":visible" ).each( search_text );
-	}
-	else {
+	} else {
 		this.last_phrase = phrase;
 		jq.each( search_text );
 	}	
 	return jq;
 };
-
-jQuery.uiDivFilter.last_phrase = ""
-
+jQuery.uiDivFilter.last_phrase = "";
 // not jQuery dependent
 // "" [""] -> Boolean
 // "" [""] Boolean -> Boolean
 jQuery.uiDivFilter.has_words = function( str, words, caseSensitive ){
   var text = caseSensitive ? str : str.toLowerCase();
   for (var i=0; i < words.length; i++) {
-    if (text.indexOf(words[i]) === -1) return false;
+		if( text.indexOf(words[i]) === -1 ){
+			return false;
+		}
   }
   return true;
-}
+};

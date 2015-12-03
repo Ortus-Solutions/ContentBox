@@ -5,24 +5,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 ----------------------------------------------------------------------->
 <cfscript>
-function r( 
-	required string resource,
-	string defaultValue,
-	string locale,
-	any values,
-	string bundle
-){
-	// check for resource@bundle convention:
-	if( find( "@", arguments.resource ) ){
-		arguments.bundle 	= listLast( arguments.resource, "@" );
-		arguments.resource 	= listFirst( arguments.resource, "@" );
-	}
-	// hack for cf 9.02 stupid cfscript bug
-	if( structKeyExists( arguments, "defaultValue" ) ){
-		arguments.default = arguments.defaultValue;
-	}
-	return getResource( argumentCollection=arguments );
-}
 function $safe( str ){ return urlEncodedFormat( arguments.str ); }
 function $validIDName( str ){ return JSStringFormat( html.slugify( arguments.str ) ); }
 function $getBackPath( inPath ){
@@ -71,7 +53,7 @@ function $getURLMediaPath( required fbDirRoot, required filePath ){
 }
 </cfscript>
 <cfoutput>
-<!--- Custom Javascript --->
+<!--- *************************************** DYNAMIC JS ******************************--->
 <script language="javascript">
 $( document ).ready( function() {
 	$fileBrowser 		= $( "##FileBrowser" );
@@ -297,8 +279,7 @@ $(document).ready(function() {
 	} );
 	
 	// File drag and drop	
-	var dropbox = $fileBrowser;
-	dropbox.filedrop( {
+	$( "##FileBrowser-body" ).filedrop( {
 		// The name of the $_FILES entry:
 		paramname : 'FILEDATA',
 		<cfif isNumeric( prc.fbSettings.html5uploads.maxfiles )>

@@ -484,33 +484,24 @@ component hint="Main filebrowser module handler"{
 
 		// Load CSS and JS only if not in Ajax Mode or forced
 		if( NOT event.isAjax() OR arguments.force ){
-			// Add Main Styles
-			var adminRoot = event.getModuleRoot( 'contentbox-admin' );
-        	addAsset( "#adminRoot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" );
-       		addAsset( "#adminRoot#/includes/spacelab/css/font-awesome.min.css" );
-       		addAsset( "#adminRoot#/includes/spacelab/css/main.css" );
-			addAsset( "#prc.fbModRoot#/includes/css/style.css" );
-			addAsset( "#prc.fbModRoot#/includes/css/jquery.contextMenu.css" );
-
-			// load jquery if needed
+			// load parent assets if needed
 			if( prc.fbSettings.loadJquery ){
-				addAsset( "#prc.fbModRoot#/includes/javascript/jquery.min.js" );
+				// Add Main Styles
+				var adminRoot = event.getModuleRoot( 'contentbox-admin' );
+				addAsset( "#adminRoot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" );
+	       		addAsset( "#adminRoot#/includes/spacelab/css/font-awesome.min.css" );
+	       		addAsset( "#adminRoot#/includes/spacelab/css/main.css" );
+				addAsset( "#adminRoot#/includes/js/jquery.min.js" );
 			}
 
-			// Add additional JS
-			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.browser.js" );
-			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.uidivfilter.js" );
-			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.contextMenu.min.js" );
+			// LOAD Assets
 
-			// if uploads enabled
-			if( prc.fbSettings.allowUploads ){
-				addAsset( "#prc.fbModRoot#/includes/javascript/jquery.filedrop.js" );
-			}
-
-			// load selection callbacks
-			if( prc.fbSettings.loadSelectCallbacks ){
-				addAsset( "#prc.fbModRoot#/includes/javascript/fbSelectCallbacks.js" );
-			}
+			//injector:css//
+			addAsset( "#prc.fbModRoot#/includes/css/8e195af4.fb.min.css ");
+			//endinjector//
+			//injector:js//
+			addAsset( "#prc.fbModRoot#/includes/js/0c490dec.fb.min.js ");
+			//endinjector//
 		}
 	}
 

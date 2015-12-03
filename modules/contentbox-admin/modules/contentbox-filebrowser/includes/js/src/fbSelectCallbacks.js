@@ -6,7 +6,6 @@
  * This callbacks js is used to place common editor, OS software callbacks so they
  * can be reused.  You can also modify it to add your own.
  */
-
 /**
  * CKEditor Call Back
  * @param sPath
@@ -14,20 +13,25 @@
  * @param sType
  */
 function fbCKSelect( sPath, sURL, sType ){
-	if( !sPath.length || sType == "dir" ){ 
+
+	/**
+	 * Get specific URL param
+	 * @param  {string} paramName Param Nam
+	 * @return {string}           The cleaned param name
+	 */
+	var getURLParam = function(paramName){
+	  var reParam 	= new RegExp( '(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i' );
+	  var match 	= window.location.search.match( reParam );
+	  return ( match && match.length > 1 ) ? match[ 1 ] : '' ;
+	};
+
+	if( !sPath.length || sType === "dir" ){ 
         alert( "Please select a file first." ); 
         return; 
     }
 	var funcNum = getUrlParam( 'CKEditorFuncNum' );
-	window.opener.CKEDITOR.tools.callFunction(funcNum, sURL);
+	window.opener.CKEDITOR.tools.callFunction( funcNum, sURL );
 	window.close();
-}
-
-
-function getUrlParam(paramName){
-  var reParam = new RegExp('(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i') ;
-  var match = window.location.search.match(reParam) ;
-  return (match && match.length > 1) ? match[1] : '' ;
 }
 /**
  * Generic close callback
