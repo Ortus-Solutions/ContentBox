@@ -66,7 +66,6 @@ $( document ).ready( function() {
 	$selectedItemType	= $fileBrowser.find( "##selectedItemType" );
 	$statusText 		= $fileBrowser.find( "##statusText" );
 	$selectButton		= $fileBrowser.find( "##bt_select" );
-	$contextMenu		= $fileBrowser.find( "##fbContextMenu" );
 	$sorting			= $fileBrowser.find( "##fbSorting" );
 	$listType			= $fileBrowser.find( "##listType" );
 	$quickView			= $fileBrowser.find( "##quickViewBar" );
@@ -76,9 +75,9 @@ $( document ).ready( function() {
 	$selectButton.attr( "disabled",true);
 	// history
 	fbSelectHistory = "";
-	// file context menus
-	$fileBrowser.find( ".files" ).contextMenu( {menu: 'fbContextMenu'}, fbContextActions);
-	$fileBrowser.find( ".folders" ).contextMenu( {menu: 'fbContextMenuDirectories'}, fbContextActions);
+	// context menus
+	$fileBrowser.find( ".files" ).contextmenu( { target : '##fbContextMenu' } );
+	$fileBrowser.find( ".folders" ).contextmenu( { target : '##fbContextMenuDirectories' } );
 	// Sorting
 	$sorting.change(function(){ fbRefresh(); } );
 	$quickViewCloseBtn.click(function(){ fbCloseQuickView(); } );
@@ -92,31 +91,13 @@ function fbCloseQuickView(){
 	$quickView.slideUp();
 	$quickViewContents.html( '' );
 }
-function fbContextActions( action,el,pos ){
-	var $context = $(el);
-	fbSelect( $context.attr( "id" ), $context.attr( "data-fullURL" ) );
-	switch(action){
-		case "quickview" : fbQuickView(); break;
-		case "rename" 	 : fbRename(); break;
-		<cfif prc.fbSettings.deleteStuff>
-		case "delete" 	 : fbDelete(); break;
-		</cfif>
-		<cfif prc.fbSettings.allowDownload>
-		case "download"  : fbDownload(); break;
-		</cfif>
-		<cfif len(rc.callback)>
-		case "select" 	 : fbChoose(); break;
-		</cfif>
-		case "url"	 : fbUrl(); break;
-	}
-}
 function fbListTypeChange( listType ){
 	$listType.val( listType );
 	fbRefresh();
 }
 function fbRefresh(){
 	$fileLoaderBar.slideDown();
-	$fileBrowser.parent().load( '#event.buildLink( prc.xehFBBrowser )#',
+	$fileBrowser.load( '#event.buildLink( prc.xehFBBrowser )#',
 		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val() },
 		function(){
 			$fileLoaderBar.slideUp();
@@ -125,7 +106,7 @@ function fbRefresh(){
 function fbDrilldown( inPath ){
 	if( inPath == null ){ inPath = ""; }
 	$fileLoaderBar.slideDown();
-	$fileBrowser.parent().load( '#event.buildLink( prc.xehFBBrowser )#', { path : inPath },function(){
+	$fileBrowser.load( '#event.buildLink( prc.xehFBBrowser )#', { path : inPath },function(){
 		$fileLoaderBar.slideUp();
 	} );
 }
