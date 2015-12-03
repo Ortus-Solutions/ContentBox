@@ -324,10 +324,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 			<!--- Loader Bar --->
 			<div id="loaderBar">
-				<div class="progress">
-				  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
-				  </div>
-				</div>
+				<i class="fa fa-circle-o-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
 			</div>
 
 			<!--- Status Text --->
