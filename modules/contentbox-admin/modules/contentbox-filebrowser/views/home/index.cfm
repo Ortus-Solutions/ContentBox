@@ -75,47 +75,51 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 	<div class="panel-body" id="FileBrowser-body">
 
 		<!--- ContextMenus --->
-		<ul id="fbContextMenu" class="contextMenu">
-			<li class="quickview">
-				<a href="##quickview">#$r( "quickview@fb" )#</a>
-			</li>
-			<cfif len( rc.callback )>
-			<li class="select">
-				<a href="##select">#$r( "select@fb" )#</a>
-			</li>
-			</cfif>
-			<li class="rename">
-				<a href="##rename">#$r( "rename@fb" )#</a>
-			</li>
-			<cfif prc.fbSettings.deleteStuff>
-			<li class="delete">
-				<a href="##delete">#$r( "delete@fb" )#</a>
-			</li>
-			</cfif>
-			<cfif prc.fbSettings.allowDownload>
-			<li class="download">
-				<a href="##download">#$r( "download@fb" )#</a>
-			</li>
-			</cfif>
-			<li class="link">
-				<a href="##url">URL</a>
-			</li>
-		</ul>
-		<ul id="fbContextMenuDirectories" class="contextMenu">
-			<cfif len( rc.callback )>
-			<li class="select">
-				<a href="##select">#$r( "select@fb" )#</a>
-			</li>
-			</cfif>
-			<li class="rename">
-				<a href="##rename">#$r( "rename@fb" )#</a>
-			</li>
-			<cfif prc.fbSettings.deleteStuff>
-			<li class="delete">
-				<a href="##delete">#$r( "delete@fb" )#</a>
-			</li>
-			</cfif>
-		</ul>
+		<div id="fbContextMenu">
+			<ul class="dropdown-menu" role="menu">
+				<li>
+					<a href="javascript:fbQuickView()"><i class="fa fa-camera"></i> #$r( "quickview@fb" )#</a>
+				</li>
+				<cfif len( rc.callback )>
+				<li>
+					<a href="javascript:fbChoose()"><i class="fa fa-check"></i> #$r( "select@fb" )#</a>
+				</li>
+				</cfif>
+				<li>
+					<a href="javascript:fbRename()"><i class="fa fa-terminal"></i> #$r( "rename@fb" )#</a>
+				</li>
+				<cfif prc.fbSettings.deleteStuff>
+				<li>
+					<a href="javascript:fbDelete()"><i class="fa fa-times"></i> #$r( "delete@fb" )#</a>
+				</li>
+				</cfif>
+				<cfif prc.fbSettings.allowDownload>
+				<li>
+					<a href="javascript:fbDownload()"><i class="fa fa-download"></i> #$r( "download@fb" )#</a>
+				</li>
+				</cfif>
+				<li>
+					<a href="javascript:fbUrl()"><i class="fa fa-link"></i> URL</a>
+				</li>
+			</ul>
+		</div>
+		<div id="fbContextMenuDirectories">
+			<ul class="dropdown-menu">
+				<cfif len( rc.callback )>
+				<li>
+					<a href="javascript:fbChoose()"><i class="fa fa-check"></i> #$r( "select@fb" )#</a>
+				</li>
+				</cfif>
+				<li>
+					<a href="javascript:fbRename()"><i class="fa fa-terminal"></i> #$r( "rename@fb" )#</a>
+				</li>
+				<cfif prc.fbSettings.deleteStuff>
+				<li>
+					<a href="javascript:fbDelete()"><i class="fa fa-times"></i> #$r( "delete@fb" )#</a>
+				</li>
+				</cfif>
+			</ul>
+		</div>
 
 		<!--- UploadBar --->
 		<div id="uploadBar">
@@ -134,8 +138,8 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							#html.hiddenField(name="validated",value="false" )#
 							#html.hiddenField(name="overwrite",id="overwrite",value="false" )#
 						</span>
-						<a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-						<span id="file_uploader_button" class="btn btn-primary">Upload</span>
+						<a href="##" class="btn btn-info btn-sm fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<span id="file_uploader_button" class="btn btn-primary btn-sm">Upload</span>
 					</div>
 				</div>
 			</div>

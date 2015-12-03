@@ -65,7 +65,6 @@ module.exports = function( grunt ){
 	        	files : {
 	            	"includes/js/fb.js" : [
 	            		"includes/js/bower.js",
-	            		"includes/js/lib/*.js",
 	            		"includes/js/src/*.js"
 	            	]
 				}
@@ -120,7 +119,7 @@ module.exports = function( grunt ){
 			},
 			js : {
 				files : [ 
-					"includes/js/src/*.js", "includes/js/lib/*.js"
+					"includes/js/src/*.js"
 				],
 				tasks : [ "js" ]
 			},
