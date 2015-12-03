@@ -2,8 +2,8 @@
 <table class="table table-condensed table-hover table-striped tablesorter" width="100%">
 	<thead>
 		<tr>
-			<th>User</th>
-			<th >Date</th>
+			<th>#$r( "dashboard.latestLogins.table.head1@admin" )#</th>
+			<th >#$r( "dashboard.latestLogins.table.head2@admin" )#</th>
 			<th width="40" class="center">IP</th>
 		</tr>
 	</thead>
