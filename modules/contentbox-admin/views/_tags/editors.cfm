@@ -305,6 +305,7 @@ function loadAssetChooser( callback, w, h ){
 }
 // Select the Featured Image
 function featuredImageCallback( filePath, fileURL, fileType ){
+	if( $( "##featuredImage" ).val().length ){ cancelFeaturedImage(); }
     $( "##featuredImageControls" ).toggleClass( "hide" );
     $( "##featuredImage" ).val( filePath );
     $( "##featuredImageURL" ).val( fileURL );
