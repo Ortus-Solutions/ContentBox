@@ -176,7 +176,7 @@
 
                 <!--Branding-->
                 <div class="brand text-center">
-                    <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="right auto">
+                    <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="left auto">
                         <img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
                     </a>
                 </div>
