@@ -32,6 +32,8 @@ $( document ).ready(function() {
 	activateConfirmations();
 	// activate tooltips
 	activateTooltips();
+	// activate navbar state
+	activateNavbarState();
 
     // global Validaiton settings
     $.validator.setDefaults( {
@@ -68,7 +70,7 @@ $( document ).ready(function() {
     };
     // simple method to blank out all form fields 
     $.fn.clearForm = function() {
-    	if( this.data( 'validator') == undefined ){ return; }
+    	if( this.data( 'validator') === undefined ){ return; }
         // reset classes and what not
         this.data( 'validator' ).resetForm();
         // run over input fields and blank them out
@@ -158,10 +160,25 @@ $( document ).ready(function() {
             $.cookie( data, active );
         } );           
     } );
+
+     
 } );
+function activateNavbarState(){
+	var container = $( "#container" );
+	// Bind listener to left toggle action
+    $( '#toggle-left' ).bind( 'click', function(e) {
+    	if( $( window ).width() > 768 ){
+    		state = container.hasClass( "sidebar-mini" );
+    	} else {
+    		state = container.hasClass( "sidebar-opened" );
+    	}
+    	// Store cookie
+    	$.cookie( "sidemenu-collapse", state );
+    } );
+}
 function isSidebarOpen(){
 	var sidebar = $( "#main-sidebar" );
-	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) == "block"  ? true : false );
+	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block"  ? true : false );
 }
 function toggleSidebar(){
 	var sidebar = $( "#main-sidebar" );
@@ -170,7 +187,7 @@ function toggleSidebar(){
 	// nosidebar exit
 	if( type === undefined ){ return; }
 	// toggles
-	if( type == "block" ){
+	if( type === "block" ){
 		sidebar.fadeOut();
 		$( "#sidebar_trigger" ).removeClass( "icon-collapse-alt" ).addClass( "icon-expand-alt" );
 		$( "#main-content" ).removeClass( "span9" ).addClass( "span12" );
@@ -262,7 +279,7 @@ function activateContentSearch(){
 		// Only send requests if more than 2 characters
 		if( $this.val().length > 1 ){
 			$nav_search_results.load( $( "#nav-search-url" ).val(), { search: $this.val() }, function(data){
-				if( $nav_search_results.css( "display" ) == "none" ){
+				if( $nav_search_results.css( "display" ) === "none" ){
 					$nav_search_results.fadeIn().slideDown();
 				}
 			} );
@@ -357,16 +374,16 @@ function openRemoteModal(url,params,w,h,delay){
     var args = {};
     var maxHeight = ($( window ).height() -360);
     // set data values
-    modal.data( 'url', url )
+    modal.data( 'url', url );
 	modal.data( 'params', params );
-    modal.data( 'width', w != undefined ? w : $( window ).width() * .85 );
-    modal.data( 'height', h != undefined ? h : ($( window ).height() -360) );
+    modal.data( 'width', w !== undefined ? w : $( window ).width() * 0.85 );
+    modal.data( 'height', h !== undefined ? h : ($( window ).height() -360) );
     
     // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes)
     if( delay ) {
         var height = modal.data( 'height' );
         // convert height percentage to a numeric value
-        if( height.search && height.search( '%' )!=-1 ) {
+        if( height.search && height.search( '%' )!== -1 ) {
             height = height.replace( '%', '' ) / 100.00;
             height = $( window ).height() * height;
             //modal.data( 'height', height )
@@ -387,7 +404,7 @@ function openRemoteModal(url,params,w,h,delay){
             // in callback, show modal
             var maxHeight = ($( window ).height() -360);
             var currentHeight = modal.height();
-            args.width = w!=undefined ? w : $( window ).width() * .80;
+            args.width = w !== undefined ? w : $( window ).width() * 0.80;
             args.maxHeight = maxHeight;
             if( currentHeight && currentHeight < maxHeight ) {
                 args.height = currentHeight;
@@ -395,8 +412,8 @@ function openRemoteModal(url,params,w,h,delay){
             if( !currentHeight ) {
                 args.height = maxHeight;
             }
-            modal.modal( args )
-        } )
+            modal.modal( args );
+        } );
     }
     return;
 }
@@ -435,7 +452,7 @@ function closeConfirmations(){
 function activateConfirmations(){
 	// close button triggers for confirmation dialog
 	$confirmIt.find( "button" ).click(function(e){
-		if( $(this).attr( "data-action" ) == "confirm" ){
+		if( $(this).attr( "data-action" ) === "confirm" ){
 			$confirmIt.find( "#confirmItButtons" ).hide();
 			$confirmIt.find( "#confirmItLoader" ).fadeIn();
 			window.location =  $confirmIt.data('confirmSrc');
@@ -463,8 +480,8 @@ function activateConfirmations(){
 function popup(url,w,h){
 	var winWidth = 1000;
 	var winHeight = 750;
-	if( w ){ var minWidth = w; }
-	if( h ){ var winHeight = h; }
+	if( w ){ minWidth = w; }
+	if( h ){ winHeight = h; }
 	var xPosition = (screen.width / 2) - (winWidth / 2);
 	var yPosition = (screen.height / 2) - (winHeight / 2);
 	window.open(url,'layoutPreview','resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width='+winWidth+',height='+winHeight+',left='+xPosition+',top='+yPosition+',screenX='+xPosition+',screenY='+yPosition);
@@ -495,8 +512,8 @@ function checkAll(checked,id){
  * @returns
  */
 function checkByValue(id,recordID){
-	$( "input[name='"+id+"']" ).each(function(){
-		if( this.value == recordID ){ this.checked = true; }
+	$( "input[name='" + id + "']" ).each(function(){
+		if( this.value === recordID ){ this.checked = true; }
 		else{ this.checked = false; }
 	} );	
 }
@@ -504,13 +521,12 @@ function checkByValue(id,recordID){
  * Get today's date in us or rest of the world format
  * @param {boolean} us defaults to true
  */
-function getToday(us){
+function getToday( us ){
 	// default us to true
 	us = ( us == null ? true : us );
 	if( us ){
-		return moment().format("MM/DD/YYYY");
-	}
-	else{
-		return moment().format("DD/MM/YYYY");	
+		return moment().format( "MM/DD/YYYY" );
+	} else {
+		return moment().format( "DD/MM/YYYY" );	
 	}
 }

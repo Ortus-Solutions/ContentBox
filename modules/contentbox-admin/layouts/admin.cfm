@@ -171,7 +171,7 @@
     <body class="off-canvas">
         <!--- cbadmin Event --->
         #announceInterception( "cbadmin_afterBodyStart" )#
-        <section id="container">
+        <section id="container" class="#prc.sideMenuClass#">
             <header id="header">
 
                 <!--Branding-->
