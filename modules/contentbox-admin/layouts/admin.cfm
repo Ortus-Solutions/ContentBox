@@ -190,7 +190,7 @@
 
                 <!---Search --->
 				<cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
-				<span class="navbar-search" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
+				<span class="navbar-search" id="div-search" title="ctrl+shift+s or \" data-toggle="tooltip" data-placement="right"/>
 					<!---Search Results --->
 					<span id="div-search-results"></span>
 					<!---Search Inputs --->
@@ -289,7 +289,7 @@
             </header>
 
             <!--sidebar left start-->
-            <nav class="sidebar sidebar-left">
+            <nav class="sidebar sidebar-left" id="main-navbar">
             	<h5 class="sidebar-header">Navigation</h5>
                 <!--- Main Generated Menu --->
                 #prc.adminMenuService.generateMenu()#

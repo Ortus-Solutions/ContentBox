@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$( document ).ready(function() {
 	
 	// setup global variables
 	$confirmIt 			= $('#confirmIt');
@@ -17,17 +17,15 @@ $(document).ready(function() {
     // reset modal content when hidden
 	$remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
-        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i></div>' );
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>' );
     } );
     
 	// Global Tool Tip Settings
 	toolTipSettings	= {
-		 animation: 'slide',
-		 delay: { show: 100, hide: 100 }
+		 animation 	: 'slide',
+		 delay 		: { show: 100, hide: 100 }
 	};
 	
-	// toggle flicker messages
-	$( ".flickerMessages" ).slideDown();
 	// Search Capabilities
 	activateContentSearch();
 	// activate confirmations
@@ -100,30 +98,18 @@ $(document).ready(function() {
         } );
         return data;
     };
+
 	// flicker messages
 	var t = setTimeout( toggleFlickers(), 5000 );
 
-	// Tab link detector
+	// Tab link detector for bootstrap
 	$(function () {
-	   var activeTab = $('[href="' + location.hash + '"]');
-	   activeTab && activeTab.tab('show');
+		var activeTab = $( '[href="' + location.hash + '"]' );
+	   	if( activeTab ){ activeTab.tab( 'show' ); }
 	} );
 	
-	// Sidebar shortcut keys
-	if( $( "#main-sidebar" ).attr( "id" ) === undefined ){
-		$( "#sidebar-toggle" ).hide();
-	}
-	else{
-		jwerty.key( "ctrl+shift+e" , toggleSidebar );
-	}
-
-	// If the sidebar preference is off, toggle it
-	if( $( "body" ).attr( "data-showsidebar" ) == "no" ){
-		toggleSidebar();
-	}
-
 	// Nav Search Shortcut
-	jwerty.key( "ctrl+shift+s" , function(){ $( "#nav-search" ).focus(); return false;} );
+	jwerty.key( "ctrl+shift+s/\\" , function(){ $( "#nav-search" ).focus(); return false; } );
 	
 	// find all links with the key-binding data attribute
 	$( '[data-keybinding]' ).each(function(){
@@ -142,11 +128,12 @@ $(document).ready(function() {
 	} );
 
 	// Hide empty menu's due to permissions.
-	$( "#adminMenuBarContent li.dropdown" ).each(function(){
-		if( !$( this ).find( "ul.dropdown-menu li" ).length ){
+	$( "#main-navbar li.nav-dropdown" ).each( function(){
+		if( !$( this ).find( "ul.nav-sub li" ).length ){
 			$( this ).hide();
 		}
 	} );
+
     // match stateful accordions
     $( '.accordion[data-stateful]' ).each(function() {
         var accordion = $( this ),
