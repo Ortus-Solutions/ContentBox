@@ -130,8 +130,6 @@
 		    <div class="panel-body">
 		    	<ul class="list-unstyled tipList">
 					<li><i class="fa fa-lightbulb-o fa-lg"></i> #$r( "dashboard.index.tipList.1@admin" )#</li>
-					<li><i class="fa fa-lightbulb-o fa-lg"></i> '#$r( "dashboard.index.tipList.2@admin" )#</li>
-					<li><i class="fa fa-lightbulb-o fa-lg"></i> #$r( "dashboard.index.tipList.3@admin" )#</li>
 				</ul>
 		    </div>
 		</div>
