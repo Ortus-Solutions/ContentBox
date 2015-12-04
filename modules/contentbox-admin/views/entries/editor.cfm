@@ -387,9 +387,10 @@
                             <div id="categories" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <!--- Display categories --->
-                                    <div id="categoriesChecks">
+                                    <div class="checkbox margin10">
                                     <cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
-                                        <label class="checkbox">
+                                        <div class="row">
+                                        <label>
                                         #html.checkbox(
                                             name="category_#x#",
                                             value="#prc.categories[ x ].getCategoryID()#",
@@ -397,6 +398,7 @@
                                         )#
                                         #prc.categories[ x ].getCategory()#
                                         </label>
+                                        </div>
                                     </cfloop>
                                     </div>
                 
