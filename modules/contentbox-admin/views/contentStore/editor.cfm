@@ -23,7 +23,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <div class="pull-right">
+                    <div class="actions">
                         <div class="btn-group btn-group-sm">
                             <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehContentStore)#';return false;"><i class="fa fa-reply"></i> Back</button>
                             <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
