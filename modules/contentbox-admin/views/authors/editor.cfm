@@ -15,7 +15,7 @@
     	<div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">&nbsp;</h3>
-                <div class="actions pull-right">
+                <div class="actions">
                     <!--- Back To Inbox --->
                     #announceInterception( "cbadmin_onAuthorEditorActions" )#
 					<!--- Back button --->
