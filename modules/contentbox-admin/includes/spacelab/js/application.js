@@ -24,11 +24,21 @@ var app = function() {
     };
 
     var toggleMenuLeft = function() {
-        $('#toggle-left').bind('click', function(e) {
-           $('body').removeClass('off-canvas-open')    
-            var bodyEl = $('#container');
-            ($(window).width() > 768) ? $(bodyEl).toggleClass('sidebar-mini'): $(bodyEl).toggleClass('sidebar-opened');
-        });
+        var $bodyEl = $('#container');
+        $('body').removeClass('off-canvas-open')    
+
+        function toggleAction(){
+            if($(window).width() > 768){
+                $bodyEl.toggleClass('sidebar-mini');
+                state = $bodyEl.hasClass("sidebar-mini");
+            } else {
+                $bodyEl.toggleClass('sidebar-opened');                
+                state = $bodyEl.hasClass("sidebar-opened");
+            }
+            $.cookie('sidemenu-collapsed',state);
+        }
+        
+        $('#toggle-left').bind('click',toggleAction);
     };
 
     var toggleMenuRight = function() {

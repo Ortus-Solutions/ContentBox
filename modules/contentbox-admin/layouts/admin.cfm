@@ -171,7 +171,12 @@
     <body class="off-canvas">
         <!--- cbadmin Event --->
         #announceInterception( "cbadmin_afterBodyStart" )#
-        <section id="container">
+        <cfset sidemenuClass = "">
+        <cfif structKeyExists(cookie,'sidemenu-collapsed') && cookie['sidemenu-collapsed'] is "true">
+            <cfset sidemenuClass = "sidebar-mini">
+        </cfif>
+
+        <section id="container" class="#sidemenuClass#">
             <header id="header">
 
                 <!--Branding-->
