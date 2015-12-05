@@ -148,7 +148,7 @@ function insertCBWidget(){
     // create new img element
     widgetInfobarImage = new CKEDITOR.dom.element( 'img' );
     widgetInfobarImage.setAttributes( {
-        src: '#prc.cbroot#/includes/images/widgets/#prc.widget.icon#',
+        src: '#prc.cbroot#/includes/images/ContentBox_30.png',
         width: 20,
         height:20,
         align:'left',
