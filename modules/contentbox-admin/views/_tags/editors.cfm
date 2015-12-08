@@ -119,9 +119,6 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	// Activate Form Validator
 	$targetEditorForm.validate( {
     	ignore: 'content',
-    	success:function(e,els){ 
-    		needConfirmation=false; 
-    	},
         submitHandler: function( form ) {
 			// Update Editor Content
         	try{ updateEditorContent(); } catch( err ){ console.log( err ); };
