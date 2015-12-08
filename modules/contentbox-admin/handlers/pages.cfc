@@ -200,6 +200,10 @@ component extends="baseContentHandler"{
 		event.paramValue( "customFieldsCount", 0 );
 		event.paramValue( "relatedContentIDs", [] );
 
+		if( NOT len(rc.publishedDate) ){
+			rc.publishedDate = DateFormat( Now() );
+		}
+		
 		// slugify the incoming title or slug
 		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
 

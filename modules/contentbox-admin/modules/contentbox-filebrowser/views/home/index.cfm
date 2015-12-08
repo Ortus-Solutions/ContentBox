@@ -37,7 +37,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		  <a href="javascript:fbDownload()" class="btn btn-info" title="#$r( "download@fb" )#">
 		  	<i class="fa fa-download"></i>
 		  </a>
-		  <a href="javascript:fbDrilldown()" class="btn btn-info" title="#$r( "quickview@fb" )#">
+		  <a href="javascript:fbQuickView()" class="btn btn-info" title="#$r( "quickview@fb" )#">
 		  	<i class="fa fa-camera"></i>
 		  </a>
 		</div>
