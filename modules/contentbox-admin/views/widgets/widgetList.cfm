@@ -68,7 +68,7 @@
                         <cfset hasProtocol = reFindNoCase( "\b(?:https?):?", p.getAuthorURL() )>
                         <cfset widgetURL = hasProtocol ? p.getAuthorURL() : "http://" & p.getAuthorURL()>
                         <div class="col-md-6">
-                            <div class="panel panel-solid-primary" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getName()#">
+                            <div class="panel panel-default" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getName()#">
                                 <cfif isSimpleValue( p )>
                                     <div class="alert alert-danger">Error loading widget: #widgetName#<br>
                                         <p>Debugging:</p>
@@ -98,7 +98,7 @@
                                                 </cfif>
                                             </div> <!--- end btn group --->
                                         </cfif>
-                                        <h3 class="panel-title">#p.getName()#</h3>
+                                        <h3 class="panel-title"><strong>#p.getName()#</strong></h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="row">
@@ -109,7 +109,7 @@
                                     <div class="panel-footer">
                                         v#p.getVersion()#
                                         By <a href="#widgetURL#" target="_blank">#p.getAuthor()#</a>
-                                        <span class="pull-right">#prc.widgets.widgettype#</span>
+                                        <span class="pull-right label label-primary">#prc.widgets.widgettype#</span>
                                     </div>
                                 </cfif>
                             </div> <!--- end widget-content --->
