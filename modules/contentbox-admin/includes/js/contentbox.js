@@ -54,7 +54,7 @@ $( document ).ready(function() {
             element.remove();
         },
         errorPlacement: function(error, element) {
-            error.appendTo( element.parent( "div.controls" ) );
+            error.appendTo( element.closest( "div.controls" ) );
         }
     } );
     $.fn.resetValidations = function() {

@@ -119,9 +119,6 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	// Activate Form Validator
 	$targetEditorForm.validate( {
     	ignore: 'content',
-    	success:function(e,els){ 
-    		needConfirmation=false; 
-    	},
         submitHandler: function( form ) {
 			// Update Editor Content
         	try{ updateEditorContent(); } catch( err ){ console.log( err ); };
@@ -163,7 +160,6 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
-	needConfirmation = true;
 	// counters
 	$( "##htmlKeywords" ).keyup(function(){
 		$( "##html_keywords_count" ).html( $( "##htmlKeywords" ).val().length );
@@ -201,7 +197,7 @@ function switchMarkup(markupType){
 
 // Ask for leave confirmations
 function askLeaveConfirmation(){
-	if ( checkIsDirty() && needConfirmation ){
+	if ( checkIsDirty() ){
    		return "You have unsaved changes.";
    	}
 }
@@ -243,8 +239,7 @@ function permalinkUniqueCheck( linkToUse ){
 }
 // Toggle drafts on for saving
 function toggleDraft(){
-	needConfirmation = false;
-	$isPublished.val('false');
+	$isPublished.val( 'false' );
 }
 // Quick Publish Action
 function quickPublish(isDraft){
