@@ -90,7 +90,7 @@ function quickSave(){
  * @param saveURL The URL used for saving the content asynchronously
  * @param withChangelogs Using changelogs or not in the editing forms
  */
-function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
+function setupEditors( $theForm, withExcerpt, saveURL, withChangelogs ){
 	// Setup global editor elements
 	$targetEditorForm   	= $theForm;
 	$targetEditorSaveURL 	= saveURL;
@@ -104,19 +104,27 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$slug 					= $targetEditorForm.find('##slug');
 	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
-	// with excerpt
+	// Prevent Enter Submissions
+	$targetEditorForm.keydown( function( e ){
+        if( e.keyCode == 13 ){
+	    	e.preventDefault();
+	        return false;
+	    }
+	} );
+
+	// with excerpt activations
 	if( withExcerpt == null ){ withExcerpt = true; }
-	// with changelogs
+	// with changelogs activations
 	if( withChangelogs == null ){ withChangelogs = true; }
 	
-	// Startup the choosen editor
+	// Startup the choosen editor via driver CFC
 	#prc.oEditorDriver.startup()#
 
-	// Activate Date fields
+	// Activate date pickers
 	$( "[type=date]" ).datepicker();
 	$( ".datepicker" ).datepicker();
 
-	// Activate Form Validator
+	// Activate Form Validators
 	$targetEditorForm.validate( {
     	ignore: 'content',
         submitHandler: function( form ) {
