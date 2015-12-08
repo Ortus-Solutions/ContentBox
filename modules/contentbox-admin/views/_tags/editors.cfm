@@ -222,20 +222,28 @@ function togglePermalink(){
 	//disable input field
 	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
 }
-
+/**
+ * Check if permalink is unique
+ * @param  {string} linkToUse The link to check
+ */
 function permalinkUniqueCheck( linkToUse ){
 	var linkToUse = ( typeof linkToUse === "undefined" ) ? $slug.val() : linkToUse;
 	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
 	if( !linkToUse.length ){ return; }
 	// Verify unique
-	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, contentID: $( "##contentID" ).val() }, function( data ){
-		if( !data.UNIQUE ){
-			$( "##slugCheckErrors" ).html( "The permalink slug you entered is already in use, please enter another one or modify it." ).addClass( "alert" );
-		}
-		else{
-			$( "##slugCheckErrors" ).html( "" ).removeClass( "alert" );
-		}
-	} );
+	$.getJSON( 
+		'#event.buildLink( prc.xehSlugCheck )#', 
+		{ slug : linkToUse, contentID : $( "##contentID" ).val() }, 
+		function( data ){
+			if( !data.UNIQUE ){
+				$( "##slugCheckErrors" )
+					.html( "The permalink slug you entered is already in use, please enter another one or modify it." )
+					.addClass( "alert alert-danger" );
+			} else {
+				$( "##slugCheckErrors" ).html( "" ).removeClass( "alert alert-danger" );
+			}
+		} 
+	);
 }
 // Toggle drafts on for saving
 function toggleDraft(){
