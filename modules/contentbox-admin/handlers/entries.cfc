@@ -232,8 +232,8 @@ component extends="baseContentHandler"{
 		event.paramValue( "customFieldsCount", 0 );
 		event.paramValue( "relatedContentIDs", [] );
 
-		if( NOT len(rc.publishedDate) ){
-			rc.publishedDate = DateFormat( Now() );
+		if( NOT len( rc.publishedDate ) ){
+			rc.publishedDate = dateFormat( now() );
 		}
 
 		// Quick content check
