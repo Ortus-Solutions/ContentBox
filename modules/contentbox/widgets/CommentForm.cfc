@@ -14,7 +14,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setDescription( "A cool basic commenting form for ContentBox content objects." );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
-		setIcon( "comment" );
+		setIcon( "commenting" );
 		setCategory( "Miscellaneous" );
 		return this;
 	}
