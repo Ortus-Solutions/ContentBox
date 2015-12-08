@@ -232,6 +232,10 @@ component extends="baseContentHandler"{
 		event.paramValue( "customFieldsCount", 0 );
 		event.paramValue( "relatedContentIDs", [] );
 
+		if( NOT len(rc.publishedDate) ){
+			rc.publishedDate = DateFormat( Now() );
+		}
+
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent" ) ){
 			rc.content = rc.quickcontent;
