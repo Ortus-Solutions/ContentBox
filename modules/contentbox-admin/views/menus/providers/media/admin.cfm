@@ -3,7 +3,7 @@
         <div class="form-group col-md-12">
             <label for="media" class="control-label">Select Media Item:</label>
             <div class="controls">
-                <div class="input-group">
+                <div class="input-group no-margin">
                     <span class="input-group-addon btn-info select-media">
                        <i class="fa fa-picture-o"></i>
                     </span>
