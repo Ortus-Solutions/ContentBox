@@ -54,7 +54,11 @@ $( document ).ready(function() {
             element.remove();
         },
         errorPlacement: function(error, element) {
-            error.appendTo( element.closest( "div.controls" ) );
+            if($(element).is(":hidden")){
+                return false;
+            }else{
+                error.appendTo( element.closest( "div.controls" ) );
+            }
         }
     } );
     $.fn.resetValidations = function() {
