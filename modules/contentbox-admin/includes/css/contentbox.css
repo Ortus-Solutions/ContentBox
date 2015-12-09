@@ -96,12 +96,14 @@ img.img-screenshot{ height: 200px; }
 .gravatar{ height: auto; }
 .no-margin{ margin: 0!important; }
 .panel-heading{ min-height: 48px;}
+.widget-selector{ cursor: pointer;}
 .panel-solid-primary>.panel-footer>a {
     color: white;
 }
 .panel-solid-primary>.panel-footer>a:hover {
     text-decoration: underline;
 }
+.dropdown-menu > li > a > i{ color: #797979 !important;}
 .panel-default .actions i{ color: #fff; }
 .actions{ top: 10px!important; }
 .bg-helper{ padding: 15px}
