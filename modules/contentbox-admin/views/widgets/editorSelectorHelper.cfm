@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     // Handle clicks on widgets
-    $( '.panel-solid-primary' ).click( function(){
+    $( '.widget-selector' ).click( function(){
         var me = $( this );
         // mark selected
         $( this ).addClass( 'selected' );
