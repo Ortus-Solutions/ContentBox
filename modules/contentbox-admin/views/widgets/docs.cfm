@@ -2,7 +2,7 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4>
-        <img width="25" src="#prc.cbroot#/includes/images/widgets/#prc.icon#" /> #prc.oWidget.getName()# Widget (#prc.widgetType#)
+        <i class="fa fa-#prc.icon#"></i> #prc.oWidget.getName()# Widget (#prc.widgetType#)
     </h4>
 </div>
 <div class="modal-body">

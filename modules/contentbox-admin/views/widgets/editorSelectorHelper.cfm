@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $(document).ready(function() {
     // Handle clicks on widgets
-    $( '.widget-content' ).click( function(){
+    $( '.widget-selector' ).click( function(){
         var me = $( this );
         // mark selected
         $( this ).addClass( 'selected' );

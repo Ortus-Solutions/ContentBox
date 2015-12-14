@@ -14,7 +14,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
         setDescription( "A widget that can render out a ContentBox menu anywhere you like." );
         setAuthor( "Ortus Solutions" );
         setAuthorURL( "http://www.ortussolutions.com" );
-        setIcon( "list.png" );
+        setIcon( "bars" );
         setCategory( "Content" );
         return this;
     }

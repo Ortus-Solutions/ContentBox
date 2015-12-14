@@ -1,6 +1,9 @@
 <cfoutput>
 <!--- Load Editor Custom Assets --->
-#html.addAsset(prc.cbroot & "/includes/css/date.css" )#
+#html.addAsset( prc.cbroot & "/includes/css/date.css" )#
+#html.addAsset( prc.cbroot & "/includes/js/moment.min.js" )#
+#html.addAsset( prc.cbroot & "/includes/js/lz-string.min.js" )#
+#html.addAsset( prc.cbroot & "/includes/js/cb-autosave.js" )#
 <!--- Editor Javascript --->
 <script type="text/javascript">
 // Load Custom Editor Assets, Functions, etc.
@@ -87,7 +90,7 @@ function quickSave(){
  * @param saveURL The URL used for saving the content asynchronously
  * @param withChangelogs Using changelogs or not in the editing forms
  */
-function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
+function setupEditors( $theForm, withExcerpt, saveURL, withChangelogs ){
 	// Setup global editor elements
 	$targetEditorForm   	= $theForm;
 	$targetEditorSaveURL 	= saveURL;
@@ -101,24 +104,29 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 	$slug 					= $targetEditorForm.find('##slug');
 	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
-	// with excerpt
+	// Prevent Enter Submissions
+	$targetEditorForm.keydown( function( e ){
+        if( e.keyCode == 13 ){
+	    	e.preventDefault();
+	        return false;
+	    }
+	} );
+
+	// with excerpt activations
 	if( withExcerpt == null ){ withExcerpt = true; }
-	// with changelogs
+	// with changelogs activations
 	if( withChangelogs == null ){ withChangelogs = true; }
 	
-	// Startup the choosen editor
+	// Startup the choosen editor via driver CFC
 	#prc.oEditorDriver.startup()#
 
-	// Activate Date fields
+	// Activate date pickers
 	$( "[type=date]" ).datepicker();
 	$( ".datepicker" ).datepicker();
 
-	// Activate Form Validator
+	// Activate Form Validators
 	$targetEditorForm.validate( {
     	ignore: 'content',
-    	success:function(e,els){ 
-    		needConfirmation=false; 
-    	},
         submitHandler: function( form ) {
 			// Update Editor Content
         	try{ updateEditorContent(); } catch( err ){ console.log( err ); };
@@ -160,7 +168,6 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
 
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
-	needConfirmation = true;
 	// counters
 	$( "##htmlKeywords" ).keyup(function(){
 		$( "##html_keywords_count" ).html( $( "##htmlKeywords" ).val().length );
@@ -198,7 +205,7 @@ function switchMarkup(markupType){
 
 // Ask for leave confirmations
 function askLeaveConfirmation(){
-	if ( checkIsDirty() && needConfirmation ){
+	if ( checkIsDirty() ){
    		return "You have unsaved changes.";
    	}
 }
@@ -223,25 +230,32 @@ function togglePermalink(){
 	//disable input field
 	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
 }
-
+/**
+ * Check if permalink is unique
+ * @param  {string} linkToUse The link to check
+ */
 function permalinkUniqueCheck( linkToUse ){
 	var linkToUse = ( typeof linkToUse === "undefined" ) ? $slug.val() : linkToUse;
 	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
 	if( !linkToUse.length ){ return; }
 	// Verify unique
-	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, contentID: $( "##contentID" ).val() }, function( data ){
-		if( !data.UNIQUE ){
-			$( "##slugCheckErrors" ).html( "The permalink slug you entered is already in use, please enter another one or modify it." ).addClass( "alert" );
-		}
-		else{
-			$( "##slugCheckErrors" ).html( "" ).removeClass( "alert" );
-		}
-	} );
+	$.getJSON( 
+		'#event.buildLink( prc.xehSlugCheck )#', 
+		{ slug : linkToUse, contentID : $( "##contentID" ).val() }, 
+		function( data ){
+			if( !data.UNIQUE ){
+				$( "##slugCheckErrors" )
+					.html( "The permalink slug you entered is already in use, please enter another one or modify it." )
+					.addClass( "alert alert-danger" );
+			} else {
+				$( "##slugCheckErrors" ).html( "" ).removeClass( "alert alert-danger" );
+			}
+		} 
+	);
 }
 // Toggle drafts on for saving
 function toggleDraft(){
-	needConfirmation = false;
-	$isPublished.val('false');
+	$isPublished.val( 'false' );
 }
 // Quick Publish Action
 function quickPublish(isDraft){
@@ -275,7 +289,7 @@ function getPreviewSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint
 function getModuleURL(module, event, queryString){
 	var returnURL = "";
 	$.ajax( {
-		url : '#event.buildLink(prc.cbAdminEntryPoint & ".modules.buildModuleLink" )#',
+		url : '#event.buildLink( prc.cbAdminEntryPoint & ".modules.buildModuleLink" )#',
 		data : {module: module, moduleEvent: event, moduleQS: queryString},
 		async : false,
 		success : function(data){
@@ -289,6 +303,32 @@ function toggleLoaderBar(){
 	// Activate Loader
 	$uploaderBarStatus.html( "Saving..." );
 	$uploaderBarLoader.slideToggle();
+}
+// Show asset chooser
+function loadAssetChooser( callback, w, h ){
+	if( w === null ){ w = "75%"; }
+	openRemoteModal(
+		"#event.buildLink( prc.cbAdminEntryPoint & ".ckFileBrowser.assetChooser" )#?callback=" + callback,
+		{},
+		w,
+		h
+	);
+}
+// Select the Featured Image
+function featuredImageCallback( filePath, fileURL, fileType ){
+	if( $( "##featuredImage" ).val().length ){ cancelFeaturedImage(); }
+    $( "##featuredImageControls" ).toggleClass( "hide" );
+    $( "##featuredImage" ).val( filePath );
+    $( "##featuredImageURL" ).val( fileURL );
+    $( "##featuredImagePreview" ).attr( "src", fileURL );
+    closeRemoteModal();
+}
+// Cancel Selection of Featured Image
+function cancelFeaturedImage(){
+    $( "##featuredImage" ).val( "" );
+    $( "##featuredImageURL" ).val( "" );
+    $( "##featuredImagePreview" ).attr( "src", "" );
+    $( "##featuredImageControls" ).toggleClass( "hide" );
 }
 </script>
 </cfoutput>

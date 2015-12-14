@@ -4,7 +4,7 @@
 $(document).ready(function() {
 	$commentForm = $( "##commentForm" );
 	//$commentForm.find( "##comments" ).tablesorter();
-	$commentForm.find( "##commentFilter" ).keyup(function(){
+	$( "##commentSearch" ).keyup(function(){
 		$.uiTableFilter( $( "##comments" ), this.value );
 	} );
 	// comment quick look

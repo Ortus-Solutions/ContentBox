@@ -1,5 +1,10 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Comment Cleanup interceptor
+* If logged in user is an admin, this will asychronously check comment moderation expiration settings and (if applicable ) auto-delete moderated comments
 */
 component extends="coldbox.system.Interceptor"{
 
@@ -14,11 +19,11 @@ component extends="coldbox.system.Interceptor"{
     function configure(){}
 
     /**
-     * If logged in user is an admin, this will asychronously check comment moderation expiration settings and (if applicable ) auto-delete moderated comments
+     * on admin login
      */
-    public void function cbadmin_onLogin( required any event ) async="true" {
-        var author = securityService.getAuthorSession();
-        var isContentBoxAdmin = author.checkPermission( "CONTENTBOX_ADMIN" );
+    public void function cbadmin_onLogin( event, interceptData ) async="true" {
+        var author 				= securityService.getAuthorSession();
+        var isContentBoxAdmin 	= author.checkPermission( "CONTENTBOX_ADMIN" );
         // if an admin, continue...
         if( isContentBoxAdmin ) {
             var commentExpiration = settingService.getSetting( "cb_comments_moderation_expiration" );

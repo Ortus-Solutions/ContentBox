@@ -14,7 +14,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
         setDescription( "A nice widget to display your content's related content." );
         setAuthor( "Ortus Solutions" );
         setAuthorURL( "http://www.ortussolutions.com" );
-        setIcon( "tag.png" );
+        setIcon( "sitemap" );
         setCategory( "Content" );
         return this;
     }

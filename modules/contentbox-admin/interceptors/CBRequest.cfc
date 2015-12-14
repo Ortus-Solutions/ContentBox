@@ -21,16 +21,18 @@ component extends="coldbox.system.Interceptor"{
 	* Fired on contentbox requests
 	*/
 	function preProcess( event, interceptData ) eventPattern="^(contentbox-admin|contentbox-security)"{
-		var prc = event.getCollection(private=true);
+		var prc = event.getCollection( private=true );
 		var rc	= event.getCollection();
 
 		// Verify ContentBox installer has been ran?
 		if( !settingService.isCBReady() ){
-			setNextEvent('cbInstaller');
+			setNextEvent( 'cbInstaller' );
 		}
 
+		/************************************** SETUP CONTEXT REQUEST *********************************************/
+
 		// store module root
-		prc.cbRoot = getContextRoot() & event.getModuleRoot('contentbox-admin');
+		prc.cbRoot = getContextRoot() & event.getModuleRoot( "contentbox-admin" );
 		// cb helper
 		prc.CBHelper = getModel( "CBHelper@cb" );
 		// store admin module entry point
@@ -44,9 +46,11 @@ component extends="coldbox.system.Interceptor"{
 		// Place global cb options on scope
 		prc.cbSettings = settingService.getAllSettings(asStruct=true);
 		// Place widgets root location
-		prc.cbWidgetRoot = getContextRoot() & event.getModuleRoot('contentbox') & "/widgets";
+		prc.cbWidgetRoot = getContextRoot() & event.getModuleRoot( "contentbox" ) & "/widgets";
 		// store admin menu service
 		prc.adminMenuService = adminMenuService;
+		// Sidemenu collapsed
+		prc.sideMenuClass = (  ( cookie[ "sidemenu-collapse" ] ?: "false" ) == "true" ? "sidebar-mini" : "" );
 		
 		/************************************** FORCE SSL *********************************************/
 		

@@ -10,7 +10,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setDescription( "A cool basic widget that shows some ContentBox meta links anywhere you like." );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
-		setIcon( "setting.png" );
+		setIcon( "info" );
 		return this;
 	}
 

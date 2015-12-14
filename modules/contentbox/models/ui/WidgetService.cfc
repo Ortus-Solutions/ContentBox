@@ -16,10 +16,10 @@ component accessors="true" singleton threadSafe{
 	property name="coldbox"				inject="coldbox";
 	property name="log"					inject="logbox:logger:{this}";
 
-	// Local properties
-	property name="widgetsPath" 			type="string";
-	property name="widgetsIconsPath" 		type="string";
-	property name="widgetsIconsIncludePath" type="string";
+	/**
+	* The widgets location path
+	*/
+	property name="widgetsPath" 		type="string";
 
 	/**
 	* Constructor
@@ -33,22 +33,7 @@ component accessors="true" singleton threadSafe{
 	*/
 	function onDIComplete(){
 		// Verify widgets path location
-		widgetsPath = moduleSettings[ "contentbox" ].path & "/widgets";
-		// Verify admin is loaded
-		if( structKeyExists( moduleSettings, "contentbox-admin" ) ){
-			widgetsIconsPath 		= moduleSettings[ "contentbox-admin" ].path & "/includes/images/widgets";
-			widgetsIconsIncludePath = moduleSettings[ "contentbox-admin" ].mapping & "/includes/images/widgets";
-		} else {
-			widgetsIconsPath 		= "";
-			widgetsIconsIncludePath = "";
-		}
-	}
-
-	/**
-	* Get a list of widget icons available in the system
-	*/
-	array function getWidgetIcons(){
-		return directoryList( widgetsIconsPath, false, "name", "*.png" );
+		variables.widgetsPath = moduleSettings[ "contentbox" ].path & "/widgets";
 	}
 
 	/**
@@ -56,14 +41,14 @@ component accessors="true" singleton threadSafe{
 	*/
 	string function getWidgetsList(){
 		var w = getWidgets();
-		return valueList(w.name);
+		return valueList( w.name );
 	}
 
 	/**
 	 * Get unique, sorted widget categories from main widget query
 	 * returns Query
 	 */
-	public query function getWidgetCategories() {
+	query function getWidgetCategories() {
 		var widgets = getWidgets();
 		var q = new Query();
 			q.setDbType( 'query' );
@@ -71,6 +56,7 @@ component accessors="true" singleton threadSafe{
 			q.setSQL( 'select distinct category from QoQ order by category ASC' );
 		return q.execute().getResult();
 	}
+
 	/**
 	* Get installed widgets
 	*/
@@ -178,8 +164,8 @@ component accessors="true" singleton threadSafe{
 		if( len( path ) ) {
 			// Init Arguments added for backwards compat
 			return wirebox.getInstance( 
-				name=path, 
-				initArguments={ "controller" = variables.coldbox } 
+				name 			= path, 
+				initArguments	= { "controller" = variables.coldbox } 
 			);
 		}
 	}
@@ -195,13 +181,13 @@ component accessors="true" singleton threadSafe{
 		if( isNull( icon ) || icon == "" ) {
 			switch( type ) {
 				case "layout":
-					icon = "layout_squares_small.png";
+					icon = "th-large";
 					break;
 				case "module":
-					icon="box.png";
+					icon="archive";
 					break;
 				default:
-					icon = "puzzle.png";
+					icon = "puzzle-piece";
 					break;
 			}
 		}
@@ -236,9 +222,8 @@ component accessors="true" singleton threadSafe{
 	 * Gets widget file path by name and type
 	 * @name {String}
 	 * @type {String}
-	 * return String
 	 */
-	string function getWidgetFilePath( required string name, required string type ) {
+	function getWidgetFilePath( required string name, required string type ) {
 		var widgetPath = "";
 		// switch on widget type (core, layout, module )
 		switch( type ) {
@@ -260,35 +245,49 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Remove widget
+	* @widgetFile The location of the widget to remove
 	*/
-	boolean function removeWidget(required widgetFile){
+	boolean function removeWidget( required widgetFile ){
 		var wPath = getWidgetsPath() & "/" & arguments.widgetFile & ".cfc";
-		if( fileExists( wPath) ){ fileDelete( wPath ); return true; }
+		if( fileExists( wPath ) ){ fileDelete( wPath ); return true; }
 		return false;
 	}
 
 	/**
 	* Upload Widget
+	* @fileField The form file field to use
+	* 
+	* @return The CFFile structure from the upload results
 	*/
-	struct function uploadWidget(required fileField){
+	struct function uploadWidget( required fileField ){
 		var destination = getWidgetsPath();
-		var results = fileUpload(destination, arguments.fileField, "", "overwrite" );
+		var results = fileUpload( destination, arguments.fileField, "", "overwrite" );
 		if( results.clientfileext neq "cfc" ){
 			fileDelete( results.serverDirectory & "/" & results.serverfile );
-			throw(message="Invalid widget type detected: #results.clientfileext#", type="InvalidWidgetType" );
+			throw( message="Invalid widget type detected: #results.clientfileext#", type="InvalidWidgetType" );
 		}
 		return results;
 	}
 
-	// rip extensions
-	string function ripExtension(required filename){
-		return reReplace(arguments.filename,"\.[^.]*$","" );
+	/**
+	* Rip Extensions from file name
+	* @fileName The target to rip
+	*/
+	function ripExtension( required filename ){
+		return reReplace( arguments.filename, "\.[^.]*$", "" );
 	}
 
-	any function getWidgetRenderArgs( udf, widget, type ){
+	/**
+	* Get widget rendering arguments
+	* @udf The target UDF to render out arguments for
+	* @widget The widget name
+	* @type The widget type
+	* 
+	* @return The argument metadata structure
+	*/
+	function getWidgetRenderArgs( udf, widget, type ){
 		// get widget
 		var p = getWidget( name=arguments.widget, type=arguments.type );
-		var md = getMetadata( p[ udf ] );
-		return md;
+		return getMetadata( p[ udf ] );
 	}
 }

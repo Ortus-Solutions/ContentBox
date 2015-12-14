@@ -1,0 +1,23 @@
+{
+  "name": "contentbox-filebrowser",
+  "description": "ContentBox FileBrowser",
+  "main": "Gruntfile.js",
+  "authors": [
+    "Luis Majano <lmajano@ortussolutions.com>"
+  ],
+  "license": "APACHE2",
+  "homepage": "https://github.com/Ortus-Solutions/ContentBox",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "includes/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-filedrop": "~0.1.0",
+    "bootstrap-contextmenu": "~0.3.3"
+  }
+}

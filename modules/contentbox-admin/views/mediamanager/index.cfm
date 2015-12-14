@@ -13,7 +13,7 @@
 				    	<i class="fa fa-exchange"></i> Switch Library
 				    	<span class="caret"></span>
 				    </a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu pull-right">
 						<cfloop array="#prc.libraryOptions#" index="thisCollection">
 						<li><a href="javascript:switchLibrary( '#thisCollection.value#' )">#thisCollection.name#</a>	
 						</cfloop>

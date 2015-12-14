@@ -2,14 +2,14 @@
 <!--- Snapshot Box --->
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-camera"></i> Data Snapshots</h3>
+        <h3 class="panel-title"><i class="fa fa-camera"></i> #$r( "dashboard.latestSnapshot.title@admin" )#</h3>
     </div>
     <div class="panel-body panel-group accordion" id="accordion">
         <!---Begin Top Visited--->
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##topcontent">
-                    <i class="fa fa-bar-chart-o fa-lg"></i> Top Hits & Comments
+                    <i class="fa fa-bar-chart-o fa-lg"></i> #$r( "dashboard.latestSnapshot.topHitsAndComments.head@admin" )#
                 </a>
             </div>
             <div id="topcontent" class="panel-collapse collapse active in">
@@ -20,8 +20,8 @@
                     <table class="table table-condensed table-hover table-striped tablesorter" width="100%">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th width="40" class="text-center">Hits</th>
+                                <th>#$r( "dashboard.latestSnapshot.topHitsAndComments.table.head1@admin" )#</th>
+                                <th width="40" class="text-center">#$r( "dashboard.latestSnapshot.topHitsAndComments.table.head2@admin" )#</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -41,8 +41,8 @@
                     <table class="table table-condensed table-hover table-striped tablesorter" width="100%">
                         <thead>
                             <tr>
-                                <th>Title</th>
-                                <th width="40" class="text-center">Comments</th>
+                                <th>#$r( "dashboard.latestSnapshot.topHitsAndComments.table2.head1@admin" )#</th>
+                                <th width="40" class="text-center">#$r( "dashboard.latestSnapshot.topHitsAndComments.table.head2@admin" )#</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -65,7 +65,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##discussion">
-                    <i class="fa fa-comments fa-lg"></i> Discussion Counts
+                    <i class="fa fa-comments fa-lg"></i> #$r( "dashboard.latestSnapshot.discussionCounts@admin" )#
                 </a>
             </div>
             <div id="discussion" class="panel-collapse collapse">
@@ -84,7 +84,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##content">
-                    <i class="fa fa-pencil fa-lg"></i> Content Counts
+                    <i class="fa fa-pencil fa-lg"></i> #$r( "dashboard.latestSnapshot.contentCounts@admin" )#
                 </a>
             </div>
             <div id="content" class="panel-collapse collapse">

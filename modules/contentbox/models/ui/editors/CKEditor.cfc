@@ -1,43 +1,31 @@
 /**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-* Simple textarea editor
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* CKEditor Implementation
 */
 component implements="contentbox.models.ui.editors.IEditor" accessors="true" singleton{
 
-	// The static JSON for our default toolbar
-	property name="TOOLBAR_JSON";
-	// The extra plugins we have created for CKEditor
-	property name="extraPlugins";
-	
 	// DI
 	property name="log" inject="logbox:logger:{this}";
 
+	/**
+	* The static JSON for our default toolbar
+	*/
+	property name="TOOLBAR_JSON";
+
+	/**
+	* The extra plugins we have created for CKEditor
+	*/
+	property name="extraPlugins";
+	
 	/**
 	* Constructor
 	* @coldbox.inject coldbox
 	* @settingService.inject settingService@cb
 	*/
-	function init(required coldbox, required settingService){
+	function init( required coldbox, required settingService ){
 		
 		// register dependencies
 		variables.interceptorService = arguments.coldbox.getInterceptorService();
@@ -74,8 +62,10 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	*/
 	function startup(){
 		// prepare toolbar announcement on startup
-		var iData = { toolbar = deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_toolbar" ) ), 
-					  excerptToolbar = deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" ) ) };
+		var iData = { 
+			toolbar 		= deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_toolbar" ) ), 
+			excerptToolbar 	= deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" ) )
+		};
 		// Announce the editor toolbar is about to be processed
 		interceptorService.processState( "cbadmin_ckeditorToolbar", iData);
 		// Load extra plugins according to our version
@@ -87,7 +77,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		// Announce extra configuration
 		interceptorService.processState( "cbadmin_ckeditorExtraConfig", iData3);
 		// Now prepare our JavaScript and load it. No need to send assets to the head as CKEditor comes pre-bundled
-		return compileJS(iData, iData2, iData3);
+		return compileJS( iData, iData2, iData3 );
 	}
 	
 	/**
@@ -128,11 +118,13 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		return js;
 	};
 	
-	
-	private function compileJS(iData, iData2, iData3){
-		var js = "";
-		var event = requestService.getContext();
-		var cbAdminEntryPoint = event.getValue(name="cbAdminEntryPoint", private=true);
+	/**
+	* Compile the needed JS to display into the screen
+	*/
+	private function compileJS( required iData, required iData2, required iData3 ){
+		var js 					= "";
+		var event 				= requestService.getContext();
+		var cbAdminEntryPoint 	= event.getValue( name="cbAdminEntryPoint", private=true );
 		
 		// CK Editor Integration Handlers
 		var xehCKFileBrowserURL			= "#cbAdminEntryPoint#/ckfilebrowser/";
@@ -192,7 +184,6 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		
 		return js;
 	}
-
 
 	/**
 	* Shutdown the editor(s) on a page

@@ -3,7 +3,7 @@
         <div class="form-group col-md-12">
             <label for="contentTitle" class="control-label">Select Content Item:</label>
             <div class="controls">
-                <div class="input-group">
+                <div class="input-group no-margin">
                     <span class="input-group-addon btn-info select-content">
                        <i class="fa fa-file"></i>
                     </span>

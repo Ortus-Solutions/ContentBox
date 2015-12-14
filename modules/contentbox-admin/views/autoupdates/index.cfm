@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-bolt"></i> Auto Updates</h1>
+        <h1 class="h1"><i class="fa fa-bolt"></i> #$r( "autoUpdates.title@admin" )#</h1>
     </div>
 </div>
 <div class="row">
@@ -10,32 +10,31 @@
             <div class="panel-body">
                 #getModel( "messagebox@cbMessagebox" ).renderit()#
                 
-                <p>You can patch ContentBox in order to receive the latest bugfixes and enhancements from here.  We do encourage you
-                to make backups when doing auto-udpates.</p>
+                <p>#$r( "autoUpdates.body@admin" )#</p>
                 <!---Begin Accordion--->
                 <div id="accordion" class="panel-group accordion">
                     <!---Begin Check--->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##check">
-                                <i class="fa fa-globe fa-lg"></i> Check For Updates
+                                <i class="fa fa-globe fa-lg"></i> #$r( "autoUpdates.checkUpdates.head@admin" )#
                             </a>
                         </div>
                         <div id="check" class="panel-collapse collapse in">
                             <div class="panel-body">
                                 <!--- Update Form --->
                                 #html.startForm(name="updateCheckForm",novalidate="novalidate" )#
-                                    <p>Select your update channel so we can check if there are any new releases available for you.</p>
+                                    <p>#$r( "autoUpdates.checkUpdates.info@admin" )#</p>
                                     
                                     #html.radioButton(name="channel",id="stable",value=prc.updateSlugStable,checked="false",checked=true)#
-                                    <label for="stable" class="inline">Stable Release</label> : Official ContentBox releases.
+                                    <label for="stable" class="inline">#$r( "autoUpdates.checkUpdates.stable.title@admin" )#</label> : #$r( "autoUpdates.checkUpdates.stable.info@admin" )#
                                     <br/>
                                     
                                     #html.radioButton(name="channel",id="beta",value=prc.updateSlugBeta,checked="false" )#
-                                    <label for="beta" class="inline">Bleeding Edge Release</label> : Beta releases can be done at your own risk as it is still in development.
+                                    <label for="beta" class="inline">#$r( "autoUpdates.checkUpdates.bleeding.title@admin" )#</label> : #$r( "autoUpdates.checkUpdates.bleeding.info@admin" )#
                                     
                                     <br/><br/>
-                                    #html.button(value="Check For Updates",class="btn btn-danger",onclick="return checkForUpdates()" )#
+                                    #html.button(value="#$r( "autoUpdates.checkUpdates.button@admin" )#",class="btn btn-danger",onclick="return checkForUpdates()" )#
                                 #html.endForm()#    
                             </div>
                         </div>
@@ -46,7 +45,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##download">
-                                <i class="fa fa-download fa-lg"></i> Download Update
+                                <i class="fa fa-download fa-lg"></i> #$r( "autoUpdates.downloadUpdate.title@admin" )#
                             </a>
                         </div>
                         <div id="download" class="panel-collapse collapse">
@@ -58,7 +57,7 @@
                                     novalidate="novalidate",
                                     class="form-vertical"
                                 )#
-                                    <p>You can apply an update by selecting the download URL of the update archive.</p>
+                                    <p>#$r( "autoUpdates.downloadUpdate.info@admin" )#</p>
                                     
                                     #html.inputfield(
                                         type="url",
@@ -71,7 +70,7 @@
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
                                     )#
-                                    #html.submitButton(value="Install Update", class="btn btn-danger" )#   
+                                    #html.submitButton(value="#$r( "autoUpdates.downloadUpdate.button@admin" )#", class="btn btn-danger" )#   
                                 #html.endForm()#    
                             </div>
                         </div>
@@ -82,7 +81,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##upload">
-                                <i class="fa fa-upload fa-lg"></i> Upload Update
+                                <i class="fa fa-upload fa-lg"></i> #$r( "autoUpdates.uploadUpdate.title@admin" )#
                             </a>
                         </div>
                         <div id="upload" class="panel-collapse collapse">
@@ -95,13 +94,13 @@
                                     novalidate="novalidate",
                                     class="form-vertical"
                                 )#
-                                    <p>You can also apply an update by uploading the update archive.</p>
+                                    <p>#$r( "autoUpdates.uploadUpdate.info@admin" )#</p>
                                     #getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
                                         name    = "filePatch", 
                                         label   = "Upload Patch:",
                                         required= true
                                     )#
-                                    #html.submitButton(value="Upload & Install Update",class="btn btn-danger" )#
+                                    #html.submitButton(value="#$r( "autoUpdates.uploadUpdate.button@admin" )#",class="btn btn-danger" )#
                                 #html.endForm()#    
                             </div>
                         </div>
@@ -113,9 +112,9 @@
                 <!--- Logs --->
                 <cfif len(prc.installLog)>
                     <hr/>
-                    <h3>Installation Log</h3>
+                    <h3>#$r( "autoUpdates.installationLog@admin" )#</h3>
                     <div class="consoleLog">#prc.installLog#</div>
-                    #html.button(value="Clear Log",class="btn btn-primary",onclick="to ('#event.buildLink(prc.xehAutoUpdater)#/index/clearlogs/true')" )#
+                    #html.button(value="#$r( "autoUpdates.installationLog.button@admin" )#",class="btn btn-primary",onclick="to ('#event.buildLink(prc.xehAutoUpdater)#/index/clearlogs/true')" )#
                 </cfif>
             </div>
         </div>
@@ -123,14 +122,14 @@
     <div class="col-md-4">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-info-circle"></i> Components Installed</h3>
+                <h3 class="panel-title"><i class="fa fa-info-circle"></i> #$r( "autoUpdates.componentsInstalled.title@admin" )#</h3>
             </div>
             <div class="panel-body">
                 <table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="98%">
                     <thead>
                         <tr>
-                            <th>Module</th> 
-                            <th width="100" class="text-center">Version</th>
+                            <th>#$r( "autoUpdates.componentsInstalled.table.head1@admin" )#</th> 
+                            <th width="100" class="text-center">#$r( "autoUpdates.componentsInstalled.table.head2@admin" )#</th>
                         </tr>
                     </thead>
                     
@@ -160,7 +159,7 @@
         </div>
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-medkit"></i> Need Help?</h3>
+                <h3 class="panel-title"><i class="fa fa-medkit"></i> #$r( "autoUpdates.needHelp@admin" )#</h3>
             </div>
             <div class="panel-body">
                 <!--- need help --->

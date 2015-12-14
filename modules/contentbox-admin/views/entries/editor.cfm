@@ -23,8 +23,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">&nbsp;</h3>
-                    <div class="actions pull-right">
+                    <div class="actions">
                         <div class="btn-group btn-group-sm">
                             <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;">
                                 <i class="fa fa-reply"></i> Back
@@ -325,7 +324,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fa-hdd-o fa-lg"></i> Cache Settings
+                                        <i class="fa fa-rocket fa-lg"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
@@ -388,9 +387,10 @@
                             <div id="categories" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <!--- Display categories --->
-                                    <div id="categoriesChecks">
+                                    <div class="checkbox margin10">
                                     <cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
-                                        <label class="checkbox">
+                                        <div class="row">
+                                        <label>
                                         #html.checkbox(
                                             name="category_#x#",
                                             value="#prc.categories[ x ].getCategoryID()#",
@@ -398,6 +398,7 @@
                                         )#
                                         #prc.categories[ x ].getCategory()#
                                         </label>
+                                        </div>
                                     </cfloop>
                                     </div>
                 
@@ -449,7 +450,51 @@
                             </div>
                         </div>
                         </cfif>
-                        <!---End HTML Attributes--->    
+                        <!---End HTML Attributes--->
+
+                        <!---Begin Featured Image --->
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
+                                        <i class="fa fa-picture-o fa-lg"></i> Featured Image
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="featuredImagePanel" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div class="form-group text-center">
+                                        <!--- Select and Cancel Buttons --->
+                                        <a class="btn btn-primary" href="javascript:loadAssetChooser( 'featuredImageCallback' )">Select Image</a>
+                                        <a class="featured-image <cfif !len( prc.entry.getFeaturedImageURL() )>hide</cfif> btn btn-danger" href="javascript:cancelFeaturedImage()">Clear</a>
+                                        <!--- Featured Image Selection --->
+                                        <div class="<cfif !len( prc.entry.getFeaturedImageURL() )>hide</cfif> form-group" id="featuredImageControls">
+                                            #html.textField(
+                                            	name 		= "featuredImage",
+                                            	bind 		= prc.entry,
+                                            	class 		= "form-control",
+                                            	disabled 	= true
+                                            )#
+                                            #html.hiddenField(
+                                            	name = "featuredImageURL",
+                                            	bind = prc.entry
+                                            )#
+                                            <!--- Image Preview --->
+                                            <div class="margin10">
+                                            	<cfif len( prc.entry.getFeaturedImageURL() )>
+                                            		<img id="featuredImagePreview" src="#prc.entry.getFeaturedImageURL()#" class="img-thumbnail" height="75">
+                                            	<cfelse>
+                                            		<img id="featuredImagePreview" class="img-thumbnail" height="75">
+                                            	</cfif>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        </cfif>
+                        <!---End Featured Image--->  
                         
                         <!--- Event --->
                         #announceInterception( "cbadmin_entryEditorSidebarAccordion" )#           
