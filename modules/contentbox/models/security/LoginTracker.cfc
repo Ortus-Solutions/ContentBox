@@ -30,6 +30,7 @@ component extends="coldbox.system.Interceptor"{
 	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
 	property name="cb"					inject="cbhelper@cb";
 	property name="systemUtil"			inject="SystemUtil@cb";
+	property name="messagebox"			inject="messagebox@cbMessagebox";
 
 	/**
 	* Configure interceptor
