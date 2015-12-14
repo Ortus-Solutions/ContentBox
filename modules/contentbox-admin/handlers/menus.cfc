@@ -179,7 +179,7 @@ component extends="baseHandler" {
             originalSlug=originalSlug 
         } );
         // messagebox
-        getModel( "messagebox@cbMessagebox" ).setMessage( "info", "Menu saved!" );
+        cbMessagebox.setMessage( "info", "Menu saved!" );
         // relocate
         setNextEvent( prc.xehMenus );
     }
@@ -208,7 +208,7 @@ component extends="baseHandler" {
         
         // verify if contentID sent
         if( !len( rc.menuID ) ){
-            getModel( "messagebox@cbMessagebox" ).warn( "No menus sent to delete!" );
+            cbMessagebox.warn( "No menus sent to delete!" );
             setNextEvent( event=prc.xehMenus );
         }
         
@@ -237,7 +237,7 @@ component extends="baseHandler" {
         }
         
         // messagebox
-        getModel( "messagebox@cbMessagebox" ).info( messageArray=messages );
+        cbMessagebox.info( messageArray=messages );
         setNextEvent( prc.xehMenus );
     }
 
@@ -249,7 +249,7 @@ component extends="baseHandler" {
         
         // relocate if not existent
         if( !prc.menu.isLoaded() ){
-            getModel( "messagebox@cbMessagebox" ).warn( "MenuID sent is not valid" );
+            cbMessagebox.warn( "MenuID sent is not valid" );
             setNextEvent( "#prc.cbAdminEntryPoint#.menus" );
         }
         
@@ -292,17 +292,17 @@ component extends="baseHandler" {
         try {
             if( len( rc.importFile ) and fileExists( rc.importFile ) ){
                 var importLog = menuService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-                getModel( "messagebox@cbMessagebox" ).info( "Menus imported sucessfully!" );
+                cbMessagebox.info( "Menus imported sucessfully!" );
                 flash.put( "importLog", importLog );
             }
             else{
-                getModel( "messagebox@cbMessagebox" ).error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+                cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
             }
         }
         catch( any e ){
             var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
             log.error( errorMessage, e );
-            getModel( "messagebox@cbMessagebox" ).error( errorMessage );
+            cbMessagebox.error( errorMessage );
         }
         setNextEvent( prc.xehMenus );
     }

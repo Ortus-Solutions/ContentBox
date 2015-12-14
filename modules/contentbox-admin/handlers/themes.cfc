@@ -56,14 +56,14 @@ component extends="baseHandler"{
 		var vResults = validateModel( target=rc, constraints=themeService.getSettingsConstraints( rc.themeName ) );
 		// Validate results
 		if( vResults.hasErrors() ){
-			getModel( "messagebox@cbMessagebox" ).error(messageArray=vResults.getAllErrors());
+			cbMessagebox.error(messageArray=vResults.getAllErrors());
 			return index( argumentCollection=arguments );
 		}
 		
 		// Results validated, save settings
 		themeService.saveThemeSettings( name=rc.themeName, settings=rc );
 		settingservice.flushSettingsCache();
-		getModel( "messagebox@cbMessagebox" ).info(message="Theme settings saved!" );
+		cbMessagebox.info(message="Theme settings saved!" );
 		// Relocate
 		setNextEvent(event=prc.xehThemes);
 	}
@@ -75,7 +75,7 @@ component extends="baseHandler"{
 		// clear caches
 		contentService.clearAllCaches();
 		// messages
-		getModel( "messagebox@cbMessagebox" ).info( "#rc.themeName# Activated!" );
+		cbMessagebox.info( "#rc.themeName# Activated!" );
 		// Relocate
 		setNextEvent(prc.xehThemes);
 	}
@@ -83,17 +83,17 @@ component extends="baseHandler"{
 	// rebuild registry
 	function rebuildRegistry(event,rc,prc){
 		themeService.buildThemeRegistry();
-		getModel( "messagebox@cbMessagebox" ).info( "Themes re-scanned and registered!" );
+		cbMessagebox.info( "Themes re-scanned and registered!" );
 		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
 	}
 
 	//Remove
 	function remove(event,rc,prc){
 		if( themeService.removeTheme( rc.themeName ) ){
-			getModel( "messagebox@cbMessagebox" ).info( "Theme Removed Forever!" );
+			cbMessagebox.info( "Theme Removed Forever!" );
 		}
 		else{
-			getModel( "messagebox@cbMessagebox" ).error( "Error removing theme, please check your logs for more information!" );
+			cbMessagebox.error( "Error removing theme, please check your logs for more information!" );
 		}
 		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
 	}
@@ -104,7 +104,7 @@ component extends="baseHandler"{
 
 		// Verify
 		if( len( fp ) eq 0){
-			getModel( "messagebox@cbMessagebox" ).setMessage(type="warning", message="Please choose a file to upload" );
+			cbMessagebox.setMessage(type="warning", message="Please choose a file to upload" );
 		}
 		else{
 			// Upload File
@@ -113,15 +113,15 @@ component extends="baseHandler"{
 
 				if( !results.error ){
 					// Good
-					getModel( "messagebox@cbMessagebox" ).setMessage(type="info", message="Theme Installed Successfully" );
+					cbMessagebox.setMessage(type="info", message="Theme Installed Successfully" );
 				}
 				else{
 					// Bad
-					getModel( "messagebox@cbMessagebox" ).error(results.messages);
+					cbMessagebox.error(results.messages);
 				}
 			}
 			catch(Any e){
-				getModel( "messagebox@cbMessagebox" ).error( "Error uploading file: #e.detail# #e.message#" );
+				cbMessagebox.error( "Error uploading file: #e.detail# #e.message#" );
 			}
 		}
 

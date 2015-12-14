@@ -14,7 +14,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setDescription( "A cool widget that renders your blog categories summary." );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "http://www.ortussolutions.com" );
-		setIcon( "tag.png" );
+		setIcon( "tags" );
 		setCategory( "Blog" );
 		return this;
 	}

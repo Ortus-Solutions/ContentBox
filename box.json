@@ -50,7 +50,7 @@
     },
     "dependencies":{
         "coldbox":"4.1.0+00002",
-        "cborm":"1.0.3",
+        "cborm":"1.1.0",
         "cbmailservices":"1.0.0",
         "cbsecurity":"1.1.0",
         "cbstorages":"1.0.0",
@@ -70,6 +70,6 @@
         "cbantisamy":"coldbox/system/modules/cbantisamy"
     },
     "devDependencies":{
-        "testbox":"2.0.0"
+        "testbox":"2.2.0"
     }
 }

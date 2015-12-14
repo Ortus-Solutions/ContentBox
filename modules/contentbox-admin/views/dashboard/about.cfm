@@ -6,23 +6,21 @@
     		<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="margin10" title="Modular CMS"/>
 		    <h2><span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
 	        <blockquote class="clearfix">
-				<strong>ContentBox</strong> is a modular content platform developed by <a href="http://www.ortussolutions.com">Ortus Solutions</a> and 
-				based on the popular <a href="http://www.coldbox.org">ColdBox Platform</a> development framework.
-				ContentBox is a professional open source project with tons of services, training, customizations and more.
+				<strong>ContentBox</strong> #$r( "dashboard.about.blockquote1.1@admin" )#<a href="http://www.ortussolutions.com">Ortus Solutions</a> #$r( "dashboard.about.blockquote1.2@admin" )# <a href="http://www.coldbox.org">ColdBox Platform</a> #$r( "dashboard.about.blockquote1.3@admin" )#
 				<small><a href="http://www.ortussolutions.com/products/contentbox">www.ortussolutions.com/products/contentbox</a></small>
 			</blockquote>
 		</div>
 
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-		        <h3 class="panel-title">Components</h3>
+		        <h3 class="panel-title">#$r( "dashboard.about.components.title@admin" )#</h3>
 		    </div>
 		    <div class="panel-body">
 		    	<table name="settings" id="settings" class="table table-hover table-striped">
 					<thead>
 						<tr>
-							<th>Module</th>	
-							<th width="100" class="text-center">Version</th>
+							<th>#$r( "dashboard.about.components.table.head1@admin" )#</th>	
+							<th width="100" class="text-center">#$r( "dashboard.about.components.table.head2@admin" )#</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -52,122 +50,120 @@
 
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-		        <h3 class="panel-title">Keyboard Shortcuts</h3>
+		        <h3 class="panel-title">#$r( "dashboard.about.shortcuts.title@admin" )#</h3>
 		    </div>
 		    <div class="panel-body">
-		    	<p>ContentBox offers several quick keyboard shortcuts for major functionality.  If you are extending ContentBox you can easily also leverage our shortcut library as well.
-				You can add some metadata to <code>(e.g., a tags, input buttons, etc.)</code> that have links or inline JavaScript events that are of interest for keyboard shortcuts. 
-				So a tag like so <code>&lt;a href="google.com"/&gt;...&lt;/a&gt;</code> could be adjusted to <code>&lt;a href="google.com" data-keybinding="ctrl+shift+g"/&gt;...&lt;/a&gt;</code>, 
-				and a keystroke of <span class="label label-warning">ctrl+shift+g</span> would auto-redirect to the link. It also works for elements that have inline <span class="label label-warning">onclick</span> events defined.
+		    	<p>#$r( "dashboard.about.shortcuts.body1@admin" )# <code>#$r( "dashboard.about.shortcuts.body2@admin" )#</code> #$r( "dashboard.about.shortcuts.body3@admin" )# <code>&lt;a href="google.com"/&gt;...&lt;/a&gt;</code> #$r( "dashboard.about.shortcuts.body4@admin" )# <code>&lt;a href="google.com" data-keybinding="ctrl+shift+g"/&gt;...&lt;/a&gt;</code>, 
+				#$r( "dashboard.about.shortcuts.body5@admin" )# <span class="label label-warning">ctrl+shift+g</span> #$r( "dashboard.about.shortcuts.body6@admin" )# <span class="label label-warning">onclick</span> #$r( "dashboard.about.shortcuts.body7@admin" )#
 				</p>
 				
 				<table name="settings" id="settings" class="table table-hover table-striped">
 					<thead>
 						<tr>
-							<th>Action</th>	
-							<th width="100" class="text-center">Shortcut</th>
+							<th>#$r( "dashboard.about.shortcuts.table.head1@admin" )#</th>	
+							<th width="100" class="text-center">#$r( "dashboard.about.shortcuts.table.head2@admin" )#</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<th>
-								CKEditor Insert Widget
+								#$r( "dashboard.about.shortcuts.table.r01.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+w</th>
 						</tr>
 						<tr>
 							<th>
-								CKEditor Insert Custom HTML
+								#$r( "dashboard.about.shortcuts.table.r02.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+h</th>
 						</tr>
 						<tr>
 							<th>
-								CKEditor Link To Page
+								#$r( "dashboard.shortcuts.table.r03.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+p</th>
 						</tr>
 						<tr>
 							<th>
-								CKEditor Link To Entry
+								#$r( "dashboard.about.shortcuts.table.r04.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+b</th>
 						</tr>
 						<tr>
 							<th>
-								CKEditor Quick Save
+								#$r( "dashboard.about.shortcuts.table.r05.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+s</th>
 						</tr>
 						<tr>
 							<th>
-								Dashboard
+								#$r( "dashboard.about.shortcuts.table.r06.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+d</th>
 						</tr>
 						<tr>
 							<th>
-								Editors Quick Preview
+								#$r( "dashboard.about.shortcuts.table.r07.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+p</th>
 						</tr>
 						<tr>
 							<th>
-								Log Out
+								#$r( "dashboard.about.shortcuts.table.r08.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+l</th>
 						</tr>
 						<tr>
 							<th>
-								My Profile
+								#$r( "dashboard.about.shortcuts.table.r09.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+a</th>
 						</tr>
 						<tr>
 							<th>
-								New Page
+								#$r( "dashboard.about.shortcuts.table.r10.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+p</th>
 						</tr>
 						<tr>
 							<th>
-								New Post
+								#$r( "dashboard.about.shortcuts.table.r11.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+b</th>
 						</tr>
 						<tr>
 							<th>
-								New Media
+								#$r( "dashboard.about.shortcuts.table.r12.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+m</th>
 						</tr>
 						<tr>
 							<th>
-								New User
+								#$r( "dashboard.about.shortcuts.table.r13.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+u</th>
 						</tr>
 						<tr>
 							<th>
-								Quick Search
+								#$r( "dashboard.about.shortcuts.table.r14.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+s</th>
 						</tr>
 						<tr>
 							<th>
-								Quick Post
+								#$r( "dashboard.about.shortcuts.table.r15.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+q</th>
 						</tr>
 						<tr>
 							<th>
-								Settings
+								#$r( "dashboard.about.shortcuts.table.r16.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+c</th>
 						</tr>
 						<tr>
 							<th>
-								Toggle SideBar
+								#$r( "dashboard.about.shortcuts.table.r17.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+e</th>
 						</tr>
@@ -179,16 +175,16 @@
 
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Need Help?</h3>
+		        <h3 class="panel-title"><i class="fa fa-medkit"></i> #$r( "dashboard.about.help.title@admin" )#</h3>
 		    </div>
 		    <div class="panel-body">
 		    	#renderView(view="_tags/needhelp", module="contentbox-admin" )#
 				
-				<h2>Links</h2>
+				<h2>#$r( "dashboard.about.help.links@admin" )#</h2>
 				<ul>
-					<li><a href="https://github.com/Ortus-Solutions/ContentBox" target="_blank">Source Code</a></li>
-					<li><a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">Submit Bugs/Enhancements</a></li>
-					<li><a href="http://www.ortussolutions.com/services" target="_blank">Professional Services</a></li>
+					<li><a href="https://github.com/Ortus-Solutions/ContentBox" target="_blank">#$r( "dashboard.about.help.sourceCode@admin" )#</a></li>
+					<li><a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">#$r( "dashboard.about.help.submitBugs@admin" )#</a></li>
+					<li><a href="http://www.ortussolutions.com/services" target="_blank">#$r( "dashboard.about.help.services@admin" )#</a></li>
 				</ul>
 		    </div>
 		</div>

@@ -83,7 +83,7 @@ a.btn.btn-danger:visited {
 }
 @media only screen and (max-width: 853px) {
   #header {
-    height: 80px;
+    height: 160px;
   }
   .main-content-wrapper {
     margin-left: 0;
@@ -94,6 +94,14 @@ a.btn.btn-danger:visited {
 img{ height: inherit; }
 img.img-screenshot{ height: 200px; }
 .gravatar{ height: auto; }
+.no-margin{ margin: 0!important; }
+.panel-heading{ min-height: 48px;}
+.widget-selector{ cursor: pointer;}
+.dropdown-menu > li > a > i{ color: #797979 !important;}
+.panel-default .actions i{ color: #fff; }
+.actions{ top: 10px!important; }
+.bg-helper{ padding: 15px}
+.tooltip{ position: fixed;}
 /**
 ul { list-style:disc inside; }
 input, textarea, .uneditable-input { width: inherit; }

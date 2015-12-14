@@ -10,7 +10,6 @@ component extends="baseContentHandler"{
 	// Dependencies
 	property name="pageService"			inject="id:pageService@cb";
 	property name="CKHelper"			inject="id:CKHelper@contentbox-admin";
-	property name="messagebox"			inject="id:messagebox@cbMessagebox";
 	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	// Public properties
@@ -201,8 +200,12 @@ component extends="baseContentHandler"{
 		event.paramValue( "customFieldsCount", 0 );
 		event.paramValue( "relatedContentIDs", [] );
 
+		if( NOT len( rc.publishedDate ) ){
+			rc.publishedDate = dateFormat( now() );
+		}
+		
 		// slugify the incoming title or slug
-		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( rc.slug ) );
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oAuthor.checkPermission( "PAGES_ADMIN" ) ){
@@ -223,7 +226,7 @@ component extends="baseContentHandler"{
 			arrayAppend(errors, "Please enter the content to save!" );
 		}
 		if( arrayLen( errors ) ){
-			variables.messagebox.warn(messageArray=errors);
+			cbMessageBox.warn(messageArray=errors);
 			editor(argumentCollection=arguments);
 			return;
 		}
@@ -287,7 +290,7 @@ component extends="baseContentHandler"{
 		}
 		else{
 			// relocate
-			variables.messagebox.info( "Page Saved!" );
+			cbMessageBox.info( "Page Saved!" );
 			if( page.hasParent() ){
 				setNextEvent( event=prc.xehPages, querystring="parent=#page.getParent().getContentID()#" );
 			} else {
@@ -299,7 +302,7 @@ component extends="baseContentHandler"{
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
-			variables.messagebox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
+			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
@@ -329,7 +332,7 @@ component extends="baseContentHandler"{
 		// clone this sucker now!
 		pageService.savePage( clone );
 		// relocate
-		variables.messagebox.info( "Page Cloned, isn't that cool!" );
+		cbMessageBox.info( "Page Cloned, isn't that cool!" );
 		if( clone.hasParent() ){
 			setNextEvent( event=prc.xehPages, querystring="parent=#clone.getParent().getContentID()#" );
 		} else {
@@ -349,10 +352,10 @@ component extends="baseContentHandler"{
 			// announce event
 			announceInterception( "cbadmin_onPageStatusUpdate", {contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
-			variables.messagebox.info( "#listLen(rc.contentID)# Pages(s) where set to '#rc.contentStatus#'" );
+			cbMessageBox.info( "#listLen(rc.contentID)# Pages(s) where set to '#rc.contentStatus#'" );
 		}
 		else{
-			variables.messagebox.warn( "No pages selected!" );
+			cbMessageBox.warn( "No pages selected!" );
 		}
 		// relocate back
 		if( len( rc.parent ) ){
@@ -370,7 +373,7 @@ component extends="baseContentHandler"{
 
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
-			variables.messagebox.warn( "No pages sent to delete!" );
+			cbMessageBox.warn( "No pages sent to delete!" );
 			setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#" );
 		}
 
@@ -401,7 +404,7 @@ component extends="baseContentHandler"{
 			}
 		}
 		// messagebox
-		variables.messagebox.info( messageArray=messages );
+		cbMessageBox.info( messageArray=messages );
 		// relocate
 		setNextEvent( event=prc.xehPages, queryString="parent=#rc.parent#" );
 	}
@@ -557,7 +560,7 @@ component extends="baseContentHandler"{
 
 		// relocate if not existent
 		if( !prc.page.isLoaded() ){
-			variables.messagebox.warn( "ContentID sent is not valid" );
+			cbMessageBox.warn( "ContentID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.pages" );
 		}
 
@@ -599,17 +602,17 @@ component extends="baseContentHandler"{
 		try{
 			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
 				var importLog = pageService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
-				variables.messagebox.info( "Pages imported sucessfully!" );
+				cbMessageBox.info( "Pages imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			}
 			else{
-				variables.messagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		}
 		catch(any e){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			variables.messagebox.error( errorMessage );
+			cbMessageBox.error( errorMessage );
 		}
 		setNextEvent( prc.xehPages );
 	}

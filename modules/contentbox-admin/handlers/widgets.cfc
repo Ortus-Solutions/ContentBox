@@ -58,7 +58,7 @@ component extends="baseHandler"{
 	//Remove
 	function remove( event, rc, prc ){
 		widgetService.removeWidget( rc.widgetFile );
-		getModel( "messagebox@cbMessagebox" ).info( "Widget Removed Forever!" );
+		cbMessagebox.info( "Widget Removed Forever!" );
 		setNextEvent(prc.xehWidgets);
 	}
 
@@ -68,17 +68,17 @@ component extends="baseHandler"{
 
 		// Verify
 		if( len( fp ) eq 0){
-			getModel( "messagebox@cbMessagebox" ).setMessage(type="warning", message="Please choose a file to upload" );
+			cbMessagebox.setMessage(type="warning", message="Please choose a file to upload" );
 		}
 		else{
 			// Upload File
 			try{
 				widgetService.uploadWidget( "fileWidget" );
 				// Info
-				getModel( "messagebox@cbMessagebox" ).setMessage(type="info", message="Widget Installed Successfully" );
+				cbMessagebox.setMessage(type="info", message="Widget Installed Successfully" );
 			}
 			catch(Any e){
-				getModel( "messagebox@cbMessagebox" ).error( "Error uploading file: #e.detail# #e.message#" );
+				cbMessagebox.error( "Error uploading file: #e.detail# #e.message#" );
 			}
 		}
 

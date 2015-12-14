@@ -1207,14 +1207,14 @@ component accessors="true" singleton threadSafe{
 	* @author The author object to render an avatar from
 	* @size The size of the gravatar, by default we use 25 pixels
 	*/
-	string function quickAvatar( required author, numeric size=25 ){
+	string function quickAvatar( required author, numeric size=25, string class="gravatar" ){
 		var targetEmail = arguments.author;
 		// check if simple or not
 		if( NOT isSimpleValue( arguments.author ) ){
 			targetEmail = arguments.author.getEmail();
 		}
 
-		return wirebox.getInstance( "Avatar@cb" ).renderAvatar( email=targetEmail, size=arguments.size );
+		return wirebox.getInstance( "Avatar@cb" ).renderAvatar( email=targetEmail, size=arguments.size, class=arguments.class );
 	}
 
 	/**
@@ -1318,9 +1318,10 @@ component accessors="true" singleton threadSafe{
 	/**
 	 * Builds out a custom menu
 	 * @menu The root menu object that should be rendered
+	 * @menu.doc_generic contentbox.models.menu.Menu
 	 * @slugCache The cache of menu slugs already used in this request
 	 */
-	public string function buildProviderMenu( required contentbox.models.menu.Menu menu, required array slugCache=[] ) {
+	public string function buildProviderMenu( required any menu, required array slugCache=[] ) {
 		var listType = arguments.menu.getListType();
 		//arguments.listType = !reFindNoCase( "^(ul|ol)$", arguments.listType ) ? "<ul>" : arguments.listType;
 		// set start

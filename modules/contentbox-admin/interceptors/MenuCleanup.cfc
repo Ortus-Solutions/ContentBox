@@ -1,7 +1,12 @@
 /**
-* Comment Cleanup interceptor
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* Menu cleanup thread
 */
 component extends="coldbox.system.Interceptor"{
+	
     // DI
     property name="menuItemService" inject="id:menuItemService@cb";
 

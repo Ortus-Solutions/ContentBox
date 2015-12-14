@@ -11,6 +11,9 @@ component hint="Main filebrowser module handler"{
 	property name="fileUtils"		inject="FileUtils@cb";
 	property name="cookieStorage"	inject="cookieStorage@cbStorages";
 
+	/**
+	* Pre handler
+	*/
 	function preHandler( event, currentAction, rc, prc ){
 		// Detect Module Name Override or default it
 		if( settingExists( "filebrowser_module_name" ) ){
@@ -31,8 +34,8 @@ component hint="Main filebrowser module handler"{
 	}
 
 	/**
-	* @widget.hint Determines if this will run as a viewlet or normal MVC
-	* @settings.hint A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
+	* @widget Determines if this will run as a viewlet or normal MVC
+	* @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	*/
 	function index(
 		event,
@@ -94,7 +97,7 @@ component hint="Main filebrowser module handler"{
 
 		// traversal testing
 		if( NOT isTraversalSecure(prc, prc.fbCurrentRoot) ){
-			getModel( "messagebox@cbMessagebox" ).warn( r( "messages.traversal@fb" ) );
+			getModel( "messagebox@cbMessagebox" ).warn( $r( "messages.traversal@fb" ) );
 			setNextEvent(prc.xehFBBrowser);
 		}
 
@@ -149,7 +152,7 @@ component hint="Main filebrowser module handler"{
 		// Verify credentials else return invalid
 		if( !prc.fbSettings.createFolders ){
 			data.errors = true;
-			data.messages = r( "messages.create_folder_disabled@fb" );
+			data.messages = $r( "messages.create_folder_disabled@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -159,7 +162,7 @@ component hint="Main filebrowser module handler"{
 		rc.dName = URLDecode( trim( rc.dName ) );
 		if( !len( rc.path ) OR !len( rc.dName ) ){
 			data.errors = true;
-			data.messages = r( "messages.invalid_path_name@fb" );
+			data.messages = $r( "messages.invalid_path_name@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -167,7 +170,7 @@ component hint="Main filebrowser module handler"{
 		// Traversal Security
 		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
-			data.messages = r( "messages.traversal_security@fb" );
+			data.messages = $r( "messages.traversal_security@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -183,13 +186,13 @@ component hint="Main filebrowser module handler"{
 
 			fileUtils.directoryCreate( rc.path & "/" & rc.dName );
 			data.errors = false;
-			data.messages = r( resource="messages.folder_created@fb", values="#rc.path#/#rc.dName#" );
+			data.messages = $r( resource="messages.folder_created@fb", values="#rc.path#/#rc.dName#" );
 
 			// Announce it
 			announceInterception( "fb_postFolderCreation", iData );
 		} catch( Any e ){
 			data.errors = true;
-			data.messages = r( resource="messages.error_creating_folder@fb", values="#e.message# #e.detail#" );
+			data.messages = $r( resource="messages.error_creating_folder@fb", values="#e.message# #e.detail#" );
 			log.error( data.messages, e );
 		}
 		// render stuff out
@@ -210,7 +213,7 @@ component hint="Main filebrowser module handler"{
 		// Verify credentials else return invalid
 		if( !prc.fbSettings.deleteStuff ){
 			data.errors = true;
-			data.messages = r( "messages.delete_disabled@fb" );
+			data.messages = $r( "messages.delete_disabled@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -219,7 +222,7 @@ component hint="Main filebrowser module handler"{
 		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
 		if( !len( rc.path ) ){
 			data.errors = true;
-			data.messages = r( "messages.invalid_path@fb" );
+			data.messages = $r( "messages.invalid_path@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -227,7 +230,7 @@ component hint="Main filebrowser module handler"{
 		// Traversal Security
 		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
-			data.messages = r( "messages.traversal_security@fb" );
+			data.messages = $r( "messages.traversal_security@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -247,13 +250,13 @@ component hint="Main filebrowser module handler"{
 				fileUtils.directoryRemove( path=rc.path, recurse=true );
 			}
 			data.errors = false;
-			data.messages = r( resource="messages.removed@fb", values="#rc.path#" );
+			data.messages = $r( resource="messages.removed@fb", values="#rc.path#" );
 
 			// Announce it
 			announceInterception( "fb_postFileRemoval", iData );
 		} catch( Any e ) {
 			data.errors = true;
-			data.messages = r( resource="messages.error_removing@fb", values="#e.message# #e.detail#" );
+			data.messages = $r( resource="messages.error_removing@fb", values="#e.message# #e.detail#" );
 			log.error( data.messages, e );
 		}
 		// render stuff out
@@ -274,7 +277,7 @@ component hint="Main filebrowser module handler"{
 		// Verify credentials else return invalid
 		if( !prc.fbSettings.allowDownload ){
 			data.errors = true;
-			data.messages = r( "messages.download_disabled@fb" );
+			data.messages = $r( "messages.download_disabled@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -283,7 +286,7 @@ component hint="Main filebrowser module handler"{
 		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
 		if( !len( rc.path ) ){
 			data.errors = true;
-			data.messages = r( "messages.invalid_path@fb" );
+			data.messages = $r( "messages.invalid_path@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -291,7 +294,7 @@ component hint="Main filebrowser module handler"{
 		// Traversal Security
 		if( NOT isTraversalSecure(prc, rc.path) ){
 			data.errors = true;
-			data.messages = r( "messages.traversal_security@fb" );
+			data.messages = $r( "messages.traversal_security@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -306,14 +309,14 @@ component hint="Main filebrowser module handler"{
 
 			fileUtils.sendFile( file=rc.path );
 			data.errors = false;
-			data.messages = r( resource="messages.downloaded@fb", values='#rc.path#' );
+			data.messages = $r( resource="messages.downloaded@fb", values='#rc.path#' );
 
 			// Announce it
 			announceInterception( "fb_postFileDownload", iData );
 		}
 		catch(Any e){
 			data.errors = true;
-			data.messages = r( resource="messages.error_downloading@fb", values="#e.message# #e.detail#" );
+			data.messages = $r( resource="messages.error_downloading@fb", values="#e.message# #e.detail#" );
 			log.error( data.messages, e );
 		}
 		// render stuff out
@@ -337,7 +340,7 @@ component hint="Main filebrowser module handler"{
 		rc.name = URLDecode( trim( rc.name ) );
 		if( !len( rc.path ) OR !len( rc.name ) ){
 			data.errors = true;
-			data.messages = r( "messages.invalid_path_name@fb" );
+			data.messages = $r( "messages.invalid_path_name@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -345,7 +348,7 @@ component hint="Main filebrowser module handler"{
 		// Traversal Security
 		if( NOT isTraversalSecure(prc, rc.path) ){
 			data.errors = true;
-			data.messages = r( "messages.traversal_security@fb" );
+			data.messages = $r( "messages.traversal_security@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -366,7 +369,7 @@ component hint="Main filebrowser module handler"{
 				fileUtils.directoryRename( rc.path, rc.name );
 			}
 			data.errors = false;
-			data.messages = r( resource="messages.renamed@fb", values='#rc.path#' );
+			data.messages = $r( resource="messages.renamed@fb", values='#rc.path#' );
 
 			// Announce it
 			announceInterception( "fb_postFileRename", iData );
@@ -374,7 +377,7 @@ component hint="Main filebrowser module handler"{
 		}
 		catch(Any e){
 			data.errors = true;
-			data.messages = r( resource="messages.error_renaming@fb", values="#e.message# #e.detail#" );
+			data.messages = $r( resource="messages.error_renaming@fb", values="#e.message# #e.detail#" );
 			log.error( data.messages, e );
 		}
 		// render stuff out
@@ -394,7 +397,7 @@ component hint="Main filebrowser module handler"{
 		// traversal test
 		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
-			data.messages = r( "messages.traversal_security@fb" );
+			data.messages = $r( "messages.traversal_security@fb" );
 			log.error( data.messages, rc );
 			event.renderData( data=data, type="json" );
 			return;
@@ -403,7 +406,7 @@ component hint="Main filebrowser module handler"{
 		// Verify credentials else return invalid
 		if( !prc.fbSettings.allowUploads ){
 			data.errors = false;
-			data.messages = r( "messages.upload_disabled@fb" );
+			data.messages = $r( "messages.upload_disabled@fb" );
 			event.renderData( data=data, type="json" );
 			return;
 		}
@@ -428,7 +431,7 @@ component hint="Main filebrowser module handler"{
 				log.debug( "File Uploaded!", iData.results);
 			}
 			data.errors = false;
-			data.messages = r( "messages.uploaded@fb" );
+			data.messages = $r( "messages.uploaded@fb" );
 			log.info( data.messages, iData.results );
 
 			// Announce it
@@ -436,7 +439,7 @@ component hint="Main filebrowser module handler"{
 		}
 		catch(Any e){
 			data.errors = true;
-			data.messages = r( resource="messages.error_uploading@fb", values="#e.message# #e.detail#" );
+			data.messages = $r( resource="messages.error_uploading@fb", values="#e.message# #e.detail#" );
 			log.error( data.messages, e );
 			// Announce exception
 			var iData = {
@@ -469,33 +472,36 @@ component hint="Main filebrowser module handler"{
 
 	/**
 	* Load Assets for FileBrowser
+	* @force Force the loading of assets on demand
+	* @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	*/
-	private function loadAssets( event, rc, prc ){
-		// Load CSS and JS only if not in Ajax Mode
-		if( NOT event.isAjax() ){
-			// Add Main Styles
-			addAsset( "#prc.fbModRoot#/includes/css/style.css" );
-			addAsset( "#prc.fbModRoot#/includes/css/jquery.contextMenu.css" );
+	private function loadAssets( event, rc, prc, boolean force=false, struct settings={} ){
+		
+		// merge the settings structs if passed
+		if( !structIsEmpty( arguments.settings ) ){
+			mergeSettings( prc.fbSettings, arguments.settings );
+		}
 
-			// load jquery if needed
+		// Load CSS and JS only if not in Ajax Mode or forced
+		if( NOT event.isAjax() OR arguments.force ){
+			// load parent assets if needed
 			if( prc.fbSettings.loadJquery ){
-				addAsset( "#prc.fbModRoot#/includes/javascript/jquery.min.js" );
+				// Add Main Styles
+				var adminRoot = event.getModuleRoot( 'contentbox-admin' );
+				addAsset( "#adminRoot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" );
+	       		addAsset( "#adminRoot#/includes/spacelab/css/font-awesome.min.css" );
+	       		addAsset( "#adminRoot#/includes/spacelab/css/main.css" );
+				addAsset( "#adminRoot#/includes/js/jquery.min.js" );
 			}
 
-			// Add additional JS
-			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.browser.js" );
-			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.uidivfilter.js" );
-			addAsset( "#prc.fbModRoot#/includes/javascript/jquery.contextMenu.min.js" );
+			// LOAD Assets
 
-			// if uploads enabled
-			if( prc.fbSettings.allowUploads ){
-				addAsset( "#prc.fbModRoot#/includes/javascript/jquery.filedrop.js" );
-			}
-
-			// load selection callbacks
-			if( prc.fbSettings.loadSelectCallbacks ){
-				addAsset( "#prc.fbModRoot#/includes/javascript/fbSelectCallbacks.js" );
-			}
+			//injector:css//
+			addAsset( "#prc.fbModRoot#/includes/css/86901492.fb.min.css ");
+			//endinjector//
+			//injector:js//
+			addAsset( "#prc.fbModRoot#/includes/js/1caede96.fb.min.js ");
+			//endinjector//
 		}
 	}
 
@@ -593,28 +599,5 @@ component hint="Main filebrowser module handler"{
 			};
 			flash.put( name="filebrowser", value=filebrowser, autoPurge=false );
 		}
-	}
-
-	/**
-	* Retrieve i18n resources, this will be in ColdBox soon, remove after.
-	* @resource.hint The resource (key) to retrieve from a loaded bundle or pass a @bundle
-	* @default.hint A default value to send back if the resource (key) not found
-	* @locale.hint Pass in which locale to take the resource from. By default it uses the user's current set locale
-	* @values.hint An array, struct or simple string of value replacements to use on the resource string
-	* @bundle.hint The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
-	*/
-	private any function r(
-		required string resource,
-		string default,
-		string locale,
-		any values,
-		string bundle
-	){
-		// check for resource@bundle convention:
-		if( find( "@", arguments.resource ) ){
-			arguments.bundle 	= listLast( arguments.resource, "@" );
-			arguments.resource 	= listFirst( arguments.resource, "@" );
-		}
-		return getResource( argumentCollection=arguments );
 	}
 }

@@ -8,7 +8,6 @@
 component extends="baseHandler"{
 
 	// DI 
-	property name="messagebox" 		inject="messagebox@cbmessagebox";
 	property name="moduleSettings"	inject="coldbox:moduleSettings:contentbox";
 
 	// Pre Handler
@@ -73,13 +72,13 @@ component extends="baseHandler"{
 			prc.updateFound = updateService.isNewVersion( cVersion=prc.contentboxVersion, nVersion=prc.updateEntry.version );
 			// Verify if we have updates?
 			if( prc.updateFound ){
-				messagebox.info( "Woopeee! There is a new ContentBox update for you!" );
+				cbMessagebox.info( "Woopeee! There is a new ContentBox update for you!" );
 			} else {
-				messagebox.warn( "You have the latest version of ContentBox installed, no update for you!" );
+				cbMessagebox.warn( "You have the latest version of ContentBox installed, no update for you!" );
 			}
 		}
 		catch(Any e){
-			messagebox.error( "Error retrieving update information, please try again later.<br> Diagnostics: #e.detail# #e.message# #e.stackTrace#" );
+			cbMessagebox.error( "Error retrieving update information, please try again later.<br> Diagnostics: #e.detail# #e.message# #e.stackTrace#" );
 			log.error( "Error retrieving ForgeBox information", e);
 		}
 
@@ -92,7 +91,7 @@ component extends="baseHandler"{
 		event.paramValue( "downloadURL","" );
 		// verify download URL
 		if( !len( rc.downloadURL ) ){
-			messagebox.error( "No download URL detected" );
+			cbMessagebox.error( "No download URL detected" );
 			setnextEvent( prc.xehAutoUpdater );
 			return;
 		}
@@ -101,15 +100,15 @@ component extends="baseHandler"{
 			// Apply Update
 			var updateResults = getModel( "UpdateService@cb" ).applyUpdateFromURL( rc.downloadURL );
 			if( updateResults.error ){
-				messagebox.error( "Update Failed! Please check the logs for more information" );
+				cbMessagebox.error( "Update Failed! Please check the logs for more information" );
 			} else {
-				messagebox.info( "Update Applied!" );
+				cbMessagebox.info( "Update Applied!" );
 			}
 			flash.put( "updateLog", updateResults.log);
 			flash.put( "updateRestart", ( !updateResults.error ) );
 		}
 		catch( Any e ){
-			messagebox.error( "Error installing auto-update.<br> Diagnostics: #e.detail# #e.message#" );
+			cbMessagebox.error( "Error installing auto-update.<br> Diagnostics: #e.detail# #e.message#" );
 			log.error( "Error installing auto-update", e);
 		}
 
@@ -122,7 +121,7 @@ component extends="baseHandler"{
 
 		// Verify
 		if( !len( fp ) ){
-			messagebox.warn( "Please choose an update file to upload!" );
+			cbMessagebox.warn( "Please choose an update file to upload!" );
 		}
 		else{
 			// Upload File
@@ -130,15 +129,15 @@ component extends="baseHandler"{
 				// Apply Update
 				var updateResults = getModel( "UpdateService@cb" ).applyUpdateFromUpload( "filePatch" );
 				if( updateResults.error ){
-					messagebox.error( "Update Failed! Please check the logs for more information" );
+					cbMessagebox.error( "Update Failed! Please check the logs for more information" );
 				} else {
-					messagebox.info( "Update Applied!" );
+					cbMessagebox.info( "Update Applied!" );
 				}
 				flash.put( "updateLog", updateResults.log);
 				flash.put( "updateRestart", ( !updateResults.error ) );
 			}
 			catch( Any e ){
-				messagebox.error( "Error uploading update file: #e.detail# #e.message#" );
+				cbMessagebox.error( "Error uploading update file: #e.detail# #e.message#" );
 			}
 		}
 

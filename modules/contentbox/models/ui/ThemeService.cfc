@@ -344,7 +344,7 @@ component accessors="true" threadSafe singleton{
 				continue;
 
 			// Check for theme descriptor by 'theme.cfc' or '#themeName#.cfc'
-			var descriptorPath 		= variables.themesPath & "/#themeName#/theme.cfc";
+			var descriptorPath 		= variables.themesPath & "/#themeName#/Theme.cfc";
 			var descriptorInstance 	= variables.themesInvocationPath & ".#themeName#.Theme";
 			if( !fileExists( descriptorPath ) ){
 				// try by theme name instead

@@ -23,7 +23,7 @@ component extends="baseHandler"{
 		catch(Any e){
 			prc.errors = true;
 			log.error( "Error installing from ForgeBox: #e.message# #e.detail#",e);
-			getModel( "messagebox@cbMessagebox" ).error( "Error connecting to ForgeBox: #e.message# #e.detail#" );
+			cbMessagebox.error( "Error connecting to ForgeBox: #e.message# #e.detail#" );
 		}
 
 		// Add Assets
@@ -49,10 +49,10 @@ component extends="baseHandler"{
 		var results = forgebox.install(rc.downloadURL,rc.installDir);
 		if( results.error ){
 			log.error( "Error installing from ForgeBox: #results.logInfo#",results.logInfo);
-			getModel( "messagebox@cbMessagebox" ).error( "Error installing from ForgeBox: #results.logInfo#" );
+			cbMessagebox.error( "Error installing from ForgeBox: #results.logInfo#" );
 		}
 		else{
-			getModel( "messagebox@cbMessagebox" ).info( "Entry installed from ForgeBox!" );
+			cbMessagebox.info( "Entry installed from ForgeBox!" );
 		}
 		// flash results
 		flash.put( "forgeboxInstallLog", results.logInfo);

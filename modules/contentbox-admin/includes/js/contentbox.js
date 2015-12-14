@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$( document ).ready(function() {
 	
 	// setup global variables
 	$confirmIt 			= $('#confirmIt');
@@ -17,23 +17,23 @@ $(document).ready(function() {
     // reset modal content when hidden
 	$remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
-        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i></div>' );
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>' );
     } );
     
 	// Global Tool Tip Settings
 	toolTipSettings	= {
-		 animation: 'slide',
-		 delay: { show: 100, hide: 100 }
+		 animation 	: 'slide',
+		 delay 		: { show: 100, hide: 100 }
 	};
 	
-	// toggle flicker messages
-	$( ".flickerMessages" ).slideDown();
 	// Search Capabilities
 	activateContentSearch();
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
 	activateTooltips();
+	// activate navbar state
+	activateNavbarState();
 
     // global Validaiton settings
     $.validator.setDefaults( {
@@ -54,7 +54,11 @@ $(document).ready(function() {
             element.remove();
         },
         errorPlacement: function(error, element) {
-            error.appendTo( element.parent( "div.controls" ) );
+            if($(element).is(":hidden")){
+                return false;
+            }else{
+                error.appendTo( element.closest( "div.controls" ) );
+            }
         }
     } );
     $.fn.resetValidations = function() {
@@ -70,7 +74,7 @@ $(document).ready(function() {
     };
     // simple method to blank out all form fields 
     $.fn.clearForm = function() {
-    	if( this.data( 'validator') == undefined ){ return; }
+    	if( this.data( 'validator') === undefined ){ return; }
         // reset classes and what not
         this.data( 'validator' ).resetForm();
         // run over input fields and blank them out
@@ -100,30 +104,18 @@ $(document).ready(function() {
         } );
         return data;
     };
+
 	// flicker messages
 	var t = setTimeout( toggleFlickers(), 5000 );
 
-	// Tab link detector
+	// Tab link detector for bootstrap
 	$(function () {
-	   var activeTab = $('[href="' + location.hash + '"]');
-	   activeTab && activeTab.tab('show');
+		var activeTab = $( '[href="' + location.hash + '"]' );
+	   	if( activeTab ){ activeTab.tab( 'show' ); }
 	} );
 	
-	// Sidebar shortcut keys
-	if( $( "#main-sidebar" ).attr( "id" ) === undefined ){
-		$( "#sidebar-toggle" ).hide();
-	}
-	else{
-		jwerty.key( "ctrl+shift+e" , toggleSidebar );
-	}
-
-	// If the sidebar preference is off, toggle it
-	if( $( "body" ).attr( "data-showsidebar" ) == "no" ){
-		toggleSidebar();
-	}
-
 	// Nav Search Shortcut
-	jwerty.key( "ctrl+shift+s" , function(){ $( "#nav-search" ).focus(); return false;} );
+	jwerty.key( "ctrl+shift+s/\\" , function(){ $( "#nav-search" ).focus(); return false; } );
 	
 	// find all links with the key-binding data attribute
 	$( '[data-keybinding]' ).each(function(){
@@ -142,11 +134,12 @@ $(document).ready(function() {
 	} );
 
 	// Hide empty menu's due to permissions.
-	$( "#adminMenuBarContent li.dropdown" ).each(function(){
-		if( !$( this ).find( "ul.dropdown-menu li" ).length ){
+	$( "#main-navbar li.nav-dropdown" ).each( function(){
+		if( !$( this ).find( "ul.nav-sub li" ).length ){
 			$( this ).hide();
 		}
 	} );
+
     // match stateful accordions
     $( '.accordion[data-stateful]' ).each(function() {
         var accordion = $( this ),
@@ -171,10 +164,25 @@ $(document).ready(function() {
             $.cookie( data, active );
         } );           
     } );
+
+     
 } );
+function activateNavbarState(){
+	var container = $( "#container" );
+	// Bind listener to left toggle action
+    $( '#toggle-left' ).bind( 'click', function(e) {
+    	if( $( window ).width() > 768 ){
+    		state = container.hasClass( "sidebar-mini" );
+    	} else {
+    		state = container.hasClass( "sidebar-opened" );
+    	}
+    	// Store cookie
+    	$.cookie( "sidemenu-collapse", state );
+    } );
+}
 function isSidebarOpen(){
 	var sidebar = $( "#main-sidebar" );
-	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) == "block"  ? true : false );
+	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block"  ? true : false );
 }
 function toggleSidebar(){
 	var sidebar = $( "#main-sidebar" );
@@ -183,7 +191,7 @@ function toggleSidebar(){
 	// nosidebar exit
 	if( type === undefined ){ return; }
 	// toggles
-	if( type == "block" ){
+	if( type === "block" ){
 		sidebar.fadeOut();
 		$( "#sidebar_trigger" ).removeClass( "icon-collapse-alt" ).addClass( "icon-expand-alt" );
 		$( "#main-content" ).removeClass( "span9" ).addClass( "span12" );
@@ -275,7 +283,7 @@ function activateContentSearch(){
 		// Only send requests if more than 2 characters
 		if( $this.val().length > 1 ){
 			$nav_search_results.load( $( "#nav-search-url" ).val(), { search: $this.val() }, function(data){
-				if( $nav_search_results.css( "display" ) == "none" ){
+				if( $nav_search_results.css( "display" ) === "none" ){
 					$nav_search_results.fadeIn().slideDown();
 				}
 			} );
@@ -310,11 +318,8 @@ function hideAllTooltips(){
 }
 function toggleFlickers(){
 	$( ".flickerMessages" ).slideToggle();
-	$( ".cbox_messagebox_info" ).slideToggle();
-	$( ".cbox_messagebox_warn" ).slideToggle();
-	$( ".cbox_messagebox_error" ).slideToggle();
+	$( ".flickers" ).fadeOut( 3000 );
 }
-
 /**
  * A-la-Carte closing of remote modal windows
  * @return
@@ -373,16 +378,16 @@ function openRemoteModal(url,params,w,h,delay){
     var args = {};
     var maxHeight = ($( window ).height() -360);
     // set data values
-    modal.data( 'url', url )
+    modal.data( 'url', url );
 	modal.data( 'params', params );
-    modal.data( 'width', w != undefined ? w : $( window ).width() * .85 );
-    modal.data( 'height', h != undefined ? h : ($( window ).height() -360) );
+    modal.data( 'width', w !== undefined ? w : $( window ).width() * 0.85 );
+    modal.data( 'height', h !== undefined ? h : ($( window ).height() -360) );
     
     // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes)
     if( delay ) {
         var height = modal.data( 'height' );
         // convert height percentage to a numeric value
-        if( height.search && height.search( '%' )!=-1 ) {
+        if( height.search && height.search( '%' )!== -1 ) {
             height = height.replace( '%', '' ) / 100.00;
             height = $( window ).height() * height;
             //modal.data( 'height', height )
@@ -403,7 +408,7 @@ function openRemoteModal(url,params,w,h,delay){
             // in callback, show modal
             var maxHeight = ($( window ).height() -360);
             var currentHeight = modal.height();
-            args.width = w!=undefined ? w : $( window ).width() * .80;
+            args.width = w !== undefined ? w : $( window ).width() * 0.80;
             args.maxHeight = maxHeight;
             if( currentHeight && currentHeight < maxHeight ) {
                 args.height = currentHeight;
@@ -411,23 +416,47 @@ function openRemoteModal(url,params,w,h,delay){
             if( !currentHeight ) {
                 args.height = maxHeight;
             }
-            modal.modal( args )
-        } ) 
+            modal.modal( args );
+        } );
     }
     return;
 }
 
+/**
+ * Reize the content preview
+ * @param {object} activeBtn The active button object
+ * @param {numeric} w         The width to use in pixels
+ */
+function setPreviewSize( activeBtn, w ){
+  var frame = $( "#previewFrame" ).length ? $( "#previewFrame" ) : $remoteModal.find( ".modal-body" ),
+      orig 		= { 'width' : $remoteModal.data( 'width' ) },
+      fOffset 	= { 'width' : $remoteModal.width() - $( frame ).width() },
+      modalSize = { 'width' : w + fOffset.width };
+
+    // width is bigger than original size
+    if( !w || modalSize.width > orig.width ){ modalSize = { 'width' : orig.width }; }
+
+    // toggle "Quick Preview" on Mobile View
+    $remoteModal.find( ".header-title" ).toggle( modalSize.width > 600 );
+    $( activeBtn ).siblings( '.active' ).removeClass( 'active' );
+    $( activeBtn ).addClass( 'active' );
+
+    modalSize[ 'margin-left' ] = -modalSize.width/2;
+    $remoteModal.animate( modalSize, 500 );
+}
+/**
+ * Close confirmation modal
+ */
 function closeConfirmations(){
 	$confirmIt.modal( 'hide' );
 }
 /**
  * Activate modal confirmation windows
- * @return
  */
 function activateConfirmations(){
 	// close button triggers for confirmation dialog
 	$confirmIt.find( "button" ).click(function(e){
-		if( $(this).attr( "data-action" ) == "confirm" ){
+		if( $(this).attr( "data-action" ) === "confirm" ){
 			$confirmIt.find( "#confirmItButtons" ).hide();
 			$confirmIt.find( "#confirmItLoader" ).fadeIn();
 			window.location =  $confirmIt.data('confirmSrc');
@@ -455,8 +484,8 @@ function activateConfirmations(){
 function popup(url,w,h){
 	var winWidth = 1000;
 	var winHeight = 750;
-	if( w ){ var minWidth = w; }
-	if( h ){ var winHeight = h; }
+	if( w ){ minWidth = w; }
+	if( h ){ winHeight = h; }
 	var xPosition = (screen.width / 2) - (winWidth / 2);
 	var yPosition = (screen.height / 2) - (winHeight / 2);
 	window.open(url,'layoutPreview','resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width='+winWidth+',height='+winHeight+',left='+xPosition+',top='+yPosition+',screenX='+xPosition+',screenY='+yPosition);
@@ -487,8 +516,8 @@ function checkAll(checked,id){
  * @returns
  */
 function checkByValue(id,recordID){
-	$( "input[name='"+id+"']" ).each(function(){
-		if( this.value == recordID ){ this.checked = true; }
+	$( "input[name='" + id + "']" ).each(function(){
+		if( this.value === recordID ){ this.checked = true; }
 		else{ this.checked = false; }
 	} );	
 }
@@ -496,18 +525,12 @@ function checkByValue(id,recordID){
  * Get today's date in us or rest of the world format
  * @param {boolean} us defaults to true
  */
-function getToday(us){
+function getToday( us ){
 	// default us to true
 	us = ( us == null ? true : us );
-	var fullDate = new Date()
-	var twoDigitMonth = ((fullDate.getMonth().length+1) === 1)? (fullDate.getMonth()+1) : '0' + (fullDate.getMonth()+1);
-	var theYear = String( fullDate.getFullYear() );
-	var theLen  = theYear.length;
-	theYear = theYear.substring( theLen, theLen - 2 );
 	if( us ){
-		return twoDigitMonth + "/" + fullDate.getDate() + "/" + theYear;
-	}
-	else{
-		return fullDate.getDate() + "/" + twoDigitMonth + "/" + theYear;	
+		return moment().format( "MM/DD/YYYY" );
+	} else {
+		return moment().format( "DD/MM/YYYY" );	
 	}
 }

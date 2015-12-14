@@ -5,18 +5,21 @@ $(document).ready(function() {
 	$categoryForm = $( "##categoryForm" );
 	$categoryEditor = $( "##categoryEditor" );
 	$importDialog = $( "##importDialog" );
-	// table sorting + filtering
-	/*$( "##categories" ).tablesorter();
-	$( "##categoryFilter" ).keyup(function(){
-		$.uiTableFilter( $( "##categories" ), this.value );
-	} );*/
 	// form validator
 	$categoryEditor.validate();
 	// reset
 	$('##btnReset').click(function() {
 		$categoryEditor.find( "##categoryID" ).val( '' );
 	} );
+	//
+	$( "##categorySearch" ).keyup(function(){
+		$.uiTableFilter( $( "##categories" ), this.value );
+	} );
+	// Data tables
 	$('##categories').dataTable( {
+		"paging" : false,
+		"info" : false,
+		"searching" : false,
 		"columnDefs": [
     		{ 
     			"orderable": false, 

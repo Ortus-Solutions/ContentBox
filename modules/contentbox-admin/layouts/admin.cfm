@@ -117,6 +117,8 @@
         <script src="#prc.cbroot#/includes/spacelab/plugins/dataTables/js/dataTables.bootstrap.js"></script>
         <!-- table filter -->
         <script src="#prc.cbroot#/includes/js/jquery.uitablefilter.js"></script>
+        <!-- div filter -->
+        <script src="#prc.cbroot#/includes/js/jquery.uidivfilter.js"></script>
         <!-- drag and drop -->
         <script src="#prc.cbroot#/includes/js/jquery.tablednd_0_7.js"></script>
         <!-- toastr -->
@@ -169,12 +171,12 @@
     <body class="off-canvas">
         <!--- cbadmin Event --->
         #announceInterception( "cbadmin_afterBodyStart" )#
-        <section id="container">
+        <section id="container" class="#prc.sideMenuClass#">
             <header id="header">
 
                 <!--Branding-->
                 <div class="brand text-center">
-                    <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="right auto">
+                    <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="left auto">
                         <img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
                     </a>
                 </div>
@@ -188,7 +190,7 @@
 
                 <!---Search --->
 				<cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
-				<span class="navbar-search" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
+				<span class="navbar-search" id="div-search" title="ctrl+shift+s or \" data-toggle="tooltip" data-placement="right"/>
 					<!---Search Results --->
 					<span id="div-search-results"></span>
 					<!---Search Inputs --->
@@ -287,7 +289,7 @@
             </header>
 
             <!--sidebar left start-->
-            <nav class="sidebar sidebar-left">
+            <nav class="sidebar sidebar-left" id="main-navbar">
             	<h5 class="sidebar-header">Navigation</h5>
                 <!--- Main Generated Menu --->
                 #prc.adminMenuService.generateMenu()#
