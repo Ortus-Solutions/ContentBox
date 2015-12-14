@@ -1,8 +1,28 @@
 ﻿<cfoutput>
+<!--- View Arguments --->
+<cfparam name="args.print" 		default="false">
+<cfparam name="args.sidebar" 	default="true">
+
 <div class="row">
 	<div class="col-sm-9">
 		<!--- ContentBoxEvent --->
 		#cb.event("cbui_preEntryDisplay")#
+
+		
+		<!--- Export and Breadcrumbs Symbols --->
+		<cfif !args.print AND !isNull( "prc.entry" )>
+			<!--- Exports --->
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Export Page...">
+					<i class="fa fa-print"></i> <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a href="#cb.linkEntry(prc.entry)#.print" target="_blank">Print Format</a></li>
+					<li><a href="#cb.linkEntry(prc.entry)#.pdf" target="_blank">PDF</a></li>
+					<li><a href="#cb.linkEntry(prc.entry)#.doc" target="_blank">Word</a></li>
+				</ul>
+			</div>
+		</cfif>
 
 		<!--- post --->
 		<div class="post" id="post_#prc.entry.getContentID()#">
@@ -40,6 +60,7 @@
 				
 			</div>
 
+			<cfif !args.print>
 			<!--- Comments Bar --->
 			#html.anchor(name="comments")#
 			<div class="post-comments">
@@ -66,7 +87,7 @@
 					</div>
 				</div>
 			</div>
-
+			</cfif>
 			<div class="clr"></div>
 
 			<!--- Display Comments --->
@@ -85,9 +106,11 @@
 
 	</div>
 
-	<div class="col-sm-3">
-		#cb.quickView(view='_blogsidebar')#
-	</div>
+	<cfif args.sidebar>
+		<div class="col-sm-3">
+			#cb.quickView(view='_blogsidebar', args=args)#
+		</div>
+	</cfif>
 </div>
 
 <!--- Custom JS --->
