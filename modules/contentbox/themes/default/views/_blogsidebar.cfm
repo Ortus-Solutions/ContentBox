@@ -51,13 +51,14 @@
 	#cb.widget("Archives")#
 </div>
 
+<cfif !args.print>
 <div class="panel panel-default">	
 	<div class="panel-heading">
 		<h4>Entries Search</h4>
 	</div>
 	#cb.widget("SearchForm")#
 </div>
-	
+</cfif>	
 	<!---#cb.widget("Meta",{titleLevel="4"})#--->
 
 
