@@ -67,6 +67,11 @@ component accessors="true"{
 						}
 					}
 				}
+				// Verify null widgetContent
+				if( isNull( widgetContent ) ){
+					log.warn( "Widget: #widgetName# produce no content in page #arguments.content.getTitle()#", attributes );
+					widgetContent = "";
+				}
 			}
 			catch( Any e ){
 				widgetContent = "Error translating widget: #e.message# #e.detail#";

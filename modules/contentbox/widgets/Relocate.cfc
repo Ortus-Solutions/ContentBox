@@ -45,6 +45,8 @@ component extends="contentbox.models.ui.BaseWidget"{
 		if( cb.isEntryView() || cb.isPageView() ){
 			setNextEvent( URL=to, ssl=arguments.ssl, statusCode=arguments.statusCode );
 		}
+		// Return empty content
+		return "";
 	}
 
 }
