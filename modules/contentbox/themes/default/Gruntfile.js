@@ -160,13 +160,13 @@ module.exports = function( grunt ){
 			css : {
 				files : { 
 					"views/_pageIncludes.cfm" 	: [ "includes/css/*theme.min.css" ],
-					"layouts/blog.cfm" 			: [ "includes/css/*theme.min.css" ]
+					"views/_blogIncludes.cfm" 	: [ "includes/css/*theme.min.css" ]
 				}
 			},
 			js : {
 				files : { 
 					"views/_pageIncludes.cfm" 	: [ "includes/js/*theme.min.js" ],
-					"layouts/blog.cfm" 			: [ "includes/js/*theme.min.js" ]
+					"views/_blogIncludes.cfm" 	: [ "includes/js/*theme.min.js" ]
 				}
 			}
 		},
