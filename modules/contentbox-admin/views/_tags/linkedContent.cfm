@@ -33,7 +33,7 @@
             }
         }
     </script>
-    <p>The items below have linked to this #args.contentType# as related content.</p>
+    <p>#$r( "_tags.linkedContent.info@admin" )# #args.contentType#</p>
     <table class="table table-hover table-striped" id="linkedContent-items">
         <tbody>
             <cfloop array="#args.linkedContent#" index="content">
@@ -57,5 +57,5 @@
             </cfloop>
         </tbody>
     </table>
-    <div id="linked-content-empty" class="alert alert-info">There are no links to this #args.contentType#</div>
+    <div id="linked-content-empty" class="alert alert-info">#$r( "_tags.linkedContent.alert@admin" )# #args.contentType#</div>
 </cfoutput>

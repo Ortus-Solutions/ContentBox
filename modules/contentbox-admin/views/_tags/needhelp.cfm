@@ -6,9 +6,7 @@
 </div>
 
 <p class="well-small">
-	<strong>Ortus Solutions</strong> is the company behind anything ColdBox and ContentBox. Need professional support, architecture analysis,
-code reviews, or custom development? 
-<a href="mailto:help@ortussolutions.com">Contact us</a>, we are here
-to help!
+	<strong>Ortus Solutions</strong> #$r( "_tags.needHelp.body@admin" )# 
+<a href="mailto:help@ortussolutions.com">#$r( "_tags.needHelp.contactUs@admin" )#</a>#$r( "_tags.needHelp.weAreHere@admin" )#
 </p>
 </cfoutput>

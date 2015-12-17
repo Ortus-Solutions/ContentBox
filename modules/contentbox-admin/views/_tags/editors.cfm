@@ -136,7 +136,7 @@ function setupEditors($theForm, withExcerpt, saveURL, withChangelogs){
             	// submit
             	form.submit();
             } else {
-            	alert( 'Please enter some content!' );
+            	alert( '#$r( "_tags.editors.alert@admin" )#' );
            	}
         }
     } );
@@ -179,7 +179,7 @@ function switchEditor(editorType){
 	// destroy the editor
 	#prc.oEditorDriver.shutdown()#
 	// Save work
-	if( confirm( "Would you like to save your work before switching editors?" ) ){
+	if( confirm( '#$r( "_tags.editors.qSave@admin" )#' ) ){
 		$changelog.val( 'Editor Change Quick Save' );
 		quickSave();
 	}
@@ -234,7 +234,7 @@ function permalinkUniqueCheck( linkToUse ){
 	// Verify unique
 	$.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, contentID: $( "##contentID" ).val() }, function( data ){
 		if( !data.UNIQUE ){
-			$( "##slugCheckErrors" ).html( "The permalink slug you entered is already in use, please enter another one or modify it." ).addClass( "alert" );
+			$( "##slugCheckErrors" ).html( '#$r( "_tags.editors.permaLinkAlert@admin" )#' ).addClass( "alert" );
 		}
 		else{
 			$( "##slugCheckErrors" ).html( "" ).removeClass( "alert" );

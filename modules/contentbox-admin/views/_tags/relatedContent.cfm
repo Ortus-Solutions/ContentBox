@@ -66,7 +66,7 @@
                         '<td width="14" class="text-center">{1}</td>',
                         '<td>{2}</td>',
                         '<td width="14" class="text-center">',
-                            '<button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>',
+                            '<button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="#$r( "_tags.relatedContent.button.remove.title@admin" )#"></i></button>',
                             '<input type="hidden" name="relatedContentIDs" value="{0}" />',
                         '</td>',
                     '</tr>'
@@ -99,7 +99,7 @@
         }
     </script>
     <button class="btn btn-sm btn-success" type="button" id="add-related-content">
-        <i class="fa fa-plus"></i>  Add related content
+        <i class="fa fa-plus"></i>  #$r( "_tags.relatedContent.button.add.text@admin" )#
     </button>
     <br /><br />
     <table class="table table-hover table-striped" id="relatedContent-items">
@@ -119,12 +119,12 @@
                     </td>
                     <td class="#publishedClass#">#content.getTitle()#</td>
                     <td width="14" class="center #publishedClass#">
-                        <button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>
+                        <button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="#$r( "_tags.relatedContent.button.remove.title@admin" )#"></i></button>
                         <input type="hidden" name="relatedContentIDs" value="#content.getContentID()#" />
                     </td>
                 </tr>
             </cfloop>
         </tbody>
     </table>
-    <div id="related-content-empty" class="alert alert-info">No content has been related!</div>
+    <div id="related-content-empty" class="alert alert-info">#$r( "_tags.relatedContent.alert@admin" )#</div>
 </cfoutput>
