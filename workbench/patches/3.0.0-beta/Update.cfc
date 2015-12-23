@@ -72,6 +72,19 @@ component implements="contentbox.models.updates.IUpdate"{
 			// Verify if less than 2.1.0 with message
 			if( !isValidInstall() ){ return; }
 
+			/****************************** RENAME LAYOUTS TO THEMES ******************************/
+			
+			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
+			if( !DirectoryExists( contentBoxPath & "/themes" ) ) directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );
+
+			/****************************** UPDATE SEARCH PATHS ******************************/
+
+
+			/****************************** RENAME MODULES ******************************/
+			
+			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
+			if( !DirectoryExists( contentBoxPath & "/modules_user" ) ) directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
+
 			/****************************** UPDATE SECURITY RULES ******************************/
 			
 			var aRules = securityRuleService.getAll();
