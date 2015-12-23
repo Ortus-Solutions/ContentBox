@@ -29,7 +29,7 @@ Start Commit Hash: 762aede3a97eb00519e7f171ac4c3c6d6924daca
 End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
 
 */
-component implements="contentbox.model.updates.IUpdate"{
+component implements="contentbox.models.updates.IUpdate"{
 
 	// DI
 	property name="settingService"			inject="id:settingService@cb";
@@ -38,7 +38,6 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="roleService" 			inject="roleService@cb";
 	property name="securityRuleService"		inject="securityRuleService@cb";
 	property name="pageService"				inject="pageService@cb";
-	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
 	property name="contentService" 			inject="contentService@cb";
 	property name="log"						inject="logbox:logger:{this}";
 	property name="wirebox"					inject="wirebox";
