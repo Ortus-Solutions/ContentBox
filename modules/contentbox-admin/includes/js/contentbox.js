@@ -529,8 +529,8 @@ function getToday( us ){
 	// default us to true
 	us = ( us == null ? true : us );
 	if( us ){
-		return moment().format( "MM/DD/YYYY" );
+		return moment().format( "YYYY-MM-DD" );
 	} else {
-		return moment().format( "DD/MM/YYYY" );	
+		return moment().format( "DD-MM-YYYY" );	
 	}
 }
