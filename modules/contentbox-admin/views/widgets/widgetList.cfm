@@ -67,8 +67,9 @@
                         </cfscript>
                         <cfset hasProtocol = reFindNoCase( "\b(?:https?):?", p.getAuthorURL() )>
                         <cfset widgetURL = hasProtocol ? p.getAuthorURL() : "http://" & p.getAuthorURL()>
+                        <cfset widgetCursor = args.mode eq "edit" ? "" : "widget-selector ">
                         <div class="col-md-6">
-                            <div class="panel panel-default widget-selector" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getName()#">
+                            <div class="#widgetCursor#panel panel-default" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getName()#">
                                 <cfif isSimpleValue( p )>
                                     <div class="alert alert-danger">Error loading widget: #widgetName#<br>
                                         <p>Debugging:</p>
