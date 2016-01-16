@@ -300,7 +300,7 @@ component extends="baseContentHandler"{
 		content.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
 
 		// attach a parent page if it exists and not the same
-		if( rc.parentContent NEQ "null" AND content.getContentID() NEQ rc.parentContent ){
+		if( isNumeric(rc.parentContent) AND content.getContentID() NEQ rc.parentContent ){
 			content.setParent( contentStoreService.get( rc.parentContent ) );
 			// update slug
 			content.setSlug( content.getParent().getSlug() & "/" & content.getSlug() );
