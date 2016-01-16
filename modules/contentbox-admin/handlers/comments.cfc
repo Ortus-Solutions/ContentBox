@@ -5,7 +5,7 @@
 * ---
 * Manage comments
 */
-component extend="baseHandler"{
+component extends="baseHandler"{
 
 	// Dependencies
 	property name="commentService"		inject="id:commentService@cb";
