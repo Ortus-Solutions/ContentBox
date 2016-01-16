@@ -40,10 +40,11 @@ module.exports = function( grunt ){
 		bower_concat : {
 			css : { 
 				cssDest : 'includes/css/bower.css',
-				exclude : [ "bootstrap" ]
+				exclude : [ "bootstrap","bootswatch" ]
 			},
 		  	js 	: { 
-		  		dest  	: 'includes/js/bower.js'
+		  		dest  	: 'includes/js/bower.js',
+		  		exclude : [ "bootswatch" ]
 		  	}
 		},
 
@@ -64,6 +65,17 @@ module.exports = function( grunt ){
 						dest 	: 'includes/fonts',
 						flatten : true,
 						filter 	: 'isFile'
+					}
+				]
+			},
+			
+			bootswatch : {
+				files : [
+					{
+						expand	: true,
+						cwd 		: 'bower_components/bootswatch/',
+						src 		: '**/bootstrap.min.css',
+						dest 	: 'includes/css/bootstrap/swatches/'
 					}
 				]
 			}
