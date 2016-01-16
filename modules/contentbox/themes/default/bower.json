@@ -11,6 +11,7 @@
   ],
   "dependencies": {
     "bootstrap": "^3",
-    "components-font-awesome": "~4.4.0"
+    "components-font-awesome": "~4.4.0",
+    "bootswatch": "~3.3.6+1"
   }
 }
