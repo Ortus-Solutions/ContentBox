@@ -40,10 +40,11 @@ module.exports = function( grunt ){
 		bower_concat : {
 			css : { 
 				cssDest : 'includes/css/bower.css',
-				exclude : [ "bootstrap" ]
+				exclude : [ "bootstrap","bootswatch" ]
 			},
 		  	js 	: { 
-		  		dest  	: 'includes/js/bower.js'
+		  		dest  	: 'includes/js/bower.js',
+		  		exclude : [ "bootswatch" ]
 		  	}
 		},
 
@@ -64,6 +65,17 @@ module.exports = function( grunt ){
 						dest 	: 'includes/fonts',
 						flatten : true,
 						filter 	: 'isFile'
+					}
+				]
+			},
+			
+			bootswatch : {
+				files : [
+					{
+						expand	: true,
+						cwd 		: 'bower_components/bootswatch/',
+						src 		: '**/bootstrap.min.css',
+						dest 	: 'includes/css/bootstrap/swatches/'
 					}
 				]
 			}
@@ -160,13 +172,13 @@ module.exports = function( grunt ){
 			css : {
 				files : { 
 					"views/_pageIncludes.cfm" 	: [ "includes/css/*theme.min.css" ],
-					"layouts/blog.cfm" 			: [ "includes/css/*theme.min.css" ]
+					"views/_blogIncludes.cfm" 	: [ "includes/css/*theme.min.css" ]
 				}
 			},
 			js : {
 				files : { 
 					"views/_pageIncludes.cfm" 	: [ "includes/js/*theme.min.js" ],
-					"layouts/blog.cfm" 			: [ "includes/js/*theme.min.js" ]
+					"views/_blogIncludes.cfm" 	: [ "includes/js/*theme.min.js" ]
 				}
 			}
 		},

@@ -11,9 +11,6 @@
 <body>
 	<!--- ContentBoxEvent --->
 	#cb.event("cbui_afterBodyStart")#
-	
-	<!--- Header --->
-	#cb.quickView(view='_header')#
 
 	<!--- Main Body --->
 	<section id="body-main">
@@ -23,8 +20,8 @@
 					<!--- ContentBoxEvent --->
 					#cb.event("cbui_beforeContent")#
 
-					<!--- Content --->
-					#renderview()#
+					<!--- Main View --->
+					#cb.mainView( args={ sidebar=true, print=true } )#
 
 					<!--- ContentBoxEvent --->
 					#cb.event("cbui_afterContent")#
