@@ -198,11 +198,11 @@ component implements="contentbox.models.updates.IUpdate"{
 		// Update Old Permissions
 		var perm = permissionService.findWhere( { name="THEME_ADMIN" } );
 		if( !isNull( perm ) ){
-			perm.setName( "THEME_ADMIN" );
 			perm.setDescription( "Ability to manage themes, default is view only" );
 			permissionService.save( entity=perm, transactional=false );
 		}else{
 			var perm = permissionService.findWhere( { name="LAYOUT_ADMIN" } );
+			perm.setName( "THEME_ADMIN" );
 			perm.setDescription( "Ability to manage themes, default is view only" );
 			permissionService.save( entity=perm, transactional=false );
 		}
