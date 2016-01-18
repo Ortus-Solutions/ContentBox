@@ -29,7 +29,7 @@ Start Commit Hash: 762aede3a97eb00519e7f171ac4c3c6d6924daca
 End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
 
 */
-component implements="contentbox.model.updates.IUpdate"{
+component implements="contentbox.models.updates.IUpdate"{
 
 	// DI
 	property name="settingService"			inject="id:settingService@cb";
@@ -38,7 +38,6 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="roleService" 			inject="roleService@cb";
 	property name="securityRuleService"		inject="securityRuleService@cb";
 	property name="pageService"				inject="pageService@cb";
-	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
 	property name="contentService" 			inject="contentService@cb";
 	property name="log"						inject="logbox:logger:{this}";
 	property name="wirebox"					inject="wirebox";
@@ -76,7 +75,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			/****************************** RENAME LAYOUTS TO THEMES ******************************/
 			
 			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
-			directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );
+			if( !DirectoryExists( contentBoxPath & "/themes" ) ) directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );
 
 			/****************************** UPDATE SEARCH PATHS ******************************/
 
@@ -84,7 +83,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			/****************************** RENAME MODULES ******************************/
 			
 			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
-			directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
+			if( !DirectoryExists( contentBoxPath & "/modules_user" ) ) directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
 
 			/****************************** UPDATE SECURITY RULES ******************************/
 			
@@ -197,8 +196,12 @@ component implements="contentbox.model.updates.IUpdate"{
 
 	private function updatePermissions(){
 		// Update Old Permissions
-		var perm = permissionService.findWhere( { name="LAYOUT_ADMIN" } );
+		var perm = permissionService.findWhere( { name="THEME_ADMIN" } );
 		if( !isNull( perm ) ){
+			perm.setDescription( "Ability to manage themes, default is view only" );
+			permissionService.save( entity=perm, transactional=false );
+		}else{
+			var perm = permissionService.findWhere( { name="LAYOUT_ADMIN" } );
 			perm.setName( "THEME_ADMIN" );
 			perm.setDescription( "Ability to manage themes, default is view only" );
 			permissionService.save( entity=perm, transactional=false );
