@@ -306,7 +306,7 @@ component extends="baseContentHandler"{
 			content.setSlug( content.getParent().getSlug() & "/" & content.getSlug() );
 		}
 		// Remove parent
-		else if( rc.parentContent EQ "null" ){
+		else if( rc.parentContent EQ "null" OR rc.parentContent EQ ""){
 			content.setParent( javaCast( "null", "" ) );
 		}
 
