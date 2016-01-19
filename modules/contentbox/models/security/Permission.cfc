@@ -5,19 +5,40 @@
 * ---
 * A cool Permission entity
 */
-component persistent="true" entityName="cbPermission" table="cb_permission" cachename="cbPermission" cacheuse="read-write"{
+component 	persistent="true" 
+			entityName="cbPermission" 
+			table="cb_permission" 
+			cachename="cbPermission" 
+			cacheuse="read-write"{
 
 	// Primary Key
-	property name="permissionID" fieldtype="id" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'permissionID_seq' }";
+	property 	name="permissionID" 
+				fieldtype="id" 
+				generator="native" 
+				setter="false"  
+				params="{ allocationSize = 1, sequence = 'permissionID_seq' }";
 	
 	// Properties
-	property name="permission"  ormtype="string" notnull="true" length="255" unique="true" default="";
-	property name="description" ormtype="string" notnull="false" default="" length="500";
+	property 	name="permission"  
+				ormtype="string" 
+				notnull="true" 
+				length="255" 
+				unique="true" 
+				default="";
+
+	property 	name="description" 
+				ormtype="string" 
+				notnull="false" 
+				default="" 
+				length="500";
 	
 	// Calculated Fields
-	property name="numberOfRoles" formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_permissionID=permissionID";
+	property 	name="numberOfRoles" 
+				formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_permissionID=permissionID";
 	
-	// Constructor
+	/**
+	* Constructor
+	*/
 	function init(){
 		return this;
 	}
@@ -36,17 +57,15 @@ component persistent="true" entityName="cbPermission" table="cb_permission" cach
 		var pList = listToArray( "permissionID,permission,description,numberOfRoles" );
 		var result = {};
 		
-		for(var thisProp in pList ){
+		for( var thisProp in pList ){
 			if( structKeyExists( variables, thisProp ) ){
 				result[ thisProp ] = variables[ thisProp ];	
-			}
-			else{
+			} else {
 				result[ thisProp ] = "";
 			}
 		}
 		
 		return result;
 	}
-	
 	
 }
