@@ -179,16 +179,16 @@ component implements="contentbox.models.updates.IUpdate"{
 
 	private function updatePermissions(){
 		// Update Old Permissions to New name and description
-		var perm = permissionService.findWhere( { name="LAYOUT_ADMIN" } );
+		var perm = permissionService.findWhere( { permission="LAYOUT_ADMIN" } );
 		// Case where LAYOUT_ADMIN exists
 		if( !isNull( perm ) ){
-			perm.setName( "THEME_ADMIN" );
+			perm.setPermission( "THEME_ADMIN" );
 			perm.setDescription( "Ability to manage themes, default is view only" );
 			permissionService.save( entity=perm, transactional=false );
 			log.info( "LAYOUT_ADMIN permission found, renamed to THEME_ADMIN");
 		} else {
 			// Create it as a new permission only if THEME_ADMIN does not exist
-			var perm = permissionService.findWhere( { name="THEME_ADMIN" } );
+			var perm = permissionService.findWhere( { permission="THEME_ADMIN" } );
 			if( isNull( perm ) ){
 				addPermission( "THEME_ADMIN", "Ability to manage themes, default is view only" );
 			} else {
