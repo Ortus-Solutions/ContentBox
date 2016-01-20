@@ -43,7 +43,7 @@
 	</div>
 
 	<!--- SideBar --->
-	<cfif args.sidebar and !args.print>
+	<cfif args.sidebar>
 	<div class="col-sm-3" id="blog-sidenav">
 		#cb.quickView( view='_blogsidebar', args=args )#
 	</div>
