@@ -1,10 +1,6 @@
 ﻿<cfoutput>
-<!--- View Arguments --->
-<cfparam name="args.print" 		default="false">
-<cfparam name="args.sidebar" 	default="true">
-
 <div class="row">
-	<div class="col-sm-9">
+	<div class="<cfif args.sidebar>col-sm-9<cfelse>col-sm-12</cfif>">
 		<!--- ContentBoxEvent --->
 		#cb.event("cbui_preEntryDisplay")#
 
@@ -17,9 +13,8 @@
 					<i class="fa fa-print"></i> <span class="caret"></span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a href="#cb.linkEntry(prc.entry)#.print" target="_blank">Print Format</a></li>
-					<li><a href="#cb.linkEntry(prc.entry)#.pdf" target="_blank">PDF</a></li>
-					<li><a href="#cb.linkEntry(prc.entry)#.doc" target="_blank">Word</a></li>
+					<li><a href="#cb.linkEntry( prc.entry )#.print" target="_blank">Print Format</a></li>
+					<li><a href="#cb.linkEntry( prc.entry )#.pdf" target="_blank">PDF</a></li>
 				</ul>
 			</div>
 		</cfif>

@@ -15,18 +15,14 @@
 	<!--- Main Body --->
 	<section id="body-main">
 		<div class="container">
-			<div class="row">
-				<div class="col-sm-12">
-					<!--- ContentBoxEvent --->
-					#cb.event("cbui_beforeContent")#
+			<!--- ContentBoxEvent --->
+			#cb.event("cbui_beforeContent")#
 
-					<!--- Main View --->
-					#cb.mainView( args={ sidebar=true, print=true } )#
+			<!--- Main View --->
+			#cb.mainView( args={ sidebar=false, print=true } )#
 
-					<!--- ContentBoxEvent --->
-					#cb.event("cbui_afterContent")#
-				</div>
-			</div>
+			<!--- ContentBoxEvent --->
+			#cb.event("cbui_afterContent")#
 		</div>
 	</section>
 	#cb.quickView(view='_footer')#
