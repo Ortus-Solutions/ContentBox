@@ -1,12 +1,13 @@
 ﻿<cfoutput>
 <div class="row">
+	<!--- Content --->
 	<div class="col-sm-9">
 
 		<!--- ContentBoxEvent --->
-		#cb.event("cbui_preIndexDisplay")#
+		#cb.event( "cbui_preIndexDisplay" )#
 			
 		<!--- Are we filtering by category? --->
-		<cfif len(rc.category)>
+		<cfif len( rc.category )>
 			<p class="infoBar">
 				Category Filtering: '#rc.category#'
 			</p>
@@ -17,7 +18,7 @@
 		</cfif>
 
 		<!--- Are we searching --->
-		<cfif len(rc.q)>
+		<cfif len( rc.q )>
 			<p class="buttonBar">
 				<a class="btn btn-primary" href="#cb.linkHome()#" title="Clear search and view all entries">Clear Search</a>
 			</p>
@@ -27,8 +28,10 @@
 			<br/>
 		</cfif>
 
+		<!--- Entries displayed here --->
 		#cb.quickEntries()#
 
+		<!--- Pagination --->
 		<cfif prc.entriesCount>
 			<div class="contentBar">
 				#cb.quickPaging()#
@@ -36,12 +39,15 @@
 		</cfif>
 
 		<!--- ContentBoxEvent --->
-		#cb.event("cbui_postIndexDisplay")#
-
+		#cb.event( "cbui_postIndexDisplay" )#
 	</div>
 
+	<!--- SideBar --->
+	<cfif args.sidebar and !args.print>
 	<div class="col-sm-3" id="blog-sidenav">
-		#cb.quickView(view='_blogsidebar')#
+		#cb.quickView( view='_blogsidebar', args=args )#
 	</div>
+	</cfif>
+
 </div>
 </cfoutput>
