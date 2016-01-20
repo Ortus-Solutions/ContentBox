@@ -600,7 +600,7 @@ component accessors="true" threadSafe singleton{
 	    							options			= "true,false",
 	    							selectedValue	= thisSetting.defaultValue,
 	    							title			= thisSetting.title,
-	    							class 			= "form-control"
+	    							class 			= "form-control input-lg"
 	    						) 
     						);
     						break;
@@ -612,7 +612,7 @@ component accessors="true" threadSafe singleton{
     								options			= thisSetting.options,
     								selectedValue	= thisSetting.defaultValue,
     								title			= thisSetting.title,
-    								class 			= "form-control"
+    								class 			= "form-control input-lg"
     							) 
     						);
     						break;
