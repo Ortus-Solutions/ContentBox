@@ -12,7 +12,7 @@
 				Category Filtering: '#rc.category#'
 			</p>
 			<p class="buttonBar">
-				<a href="#cb.linkHome()#" class="btn btn-info" title="Remove filter and view all entries">Remove Filter</a>
+				<a href="#cb.linkBlog()#" class="btn btn-info" title="Remove filter and view all entries">Remove Filter</a>
 			</p>
 			<br/>
 		</cfif>
@@ -20,7 +20,7 @@
 		<!--- Are we searching --->
 		<cfif len( rc.q )>
 			<p class="buttonBar">
-				<a class="btn btn-primary" href="#cb.linkHome()#" title="Clear search and view all entries">Clear Search</a>
+				<a class="btn btn-primary" href="#cb.linkBlog()#" title="Clear search and view all entries">Clear Search</a>
 			</p>
 			<div class="infoBar">
 				Searching by: '#rc.q#'
