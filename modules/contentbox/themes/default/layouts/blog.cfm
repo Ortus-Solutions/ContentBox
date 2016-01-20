@@ -1,4 +1,7 @@
 <cfoutput>
+<!--- Global Layout Arguments --->
+<cfparam name="args.print" 		default="false">
+<cfparam name="args.sidebar" 	default="true">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,14 +9,14 @@
 	#cb.quickView( "_blogIncludes" )#
 
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_beforeHeadEnd")#
+	#cb.event( "cbui_beforeHeadEnd" )#
 </head>
 <body>
 	<!--- ContentBoxEvent --->
-	#cb.event("cbui_afterBodyStart")#
+	#cb.event( "cbui_afterBodyStart" )#
 	
 	<!--- Header --->
-	#cb.quickView(view='_header')#
+	#cb.quickView( view='_header' )#
 
 	<!--- Main Body --->
 	<section id="body-main">
@@ -21,18 +24,18 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<!--- ContentBoxEvent --->
-					#cb.event("cbui_beforeContent")#
+					#cb.event( "cbui_beforeContent" )#
 
-					<!--- Content --->
-					#renderview()#
+					<!--- Main View --->
+					#cb.mainView( args=args )#
 
 					<!--- ContentBoxEvent --->
-					#cb.event("cbui_afterContent")#
+					#cb.event( "cbui_afterContent" )#
 				</div>
 			</div>
 		</div>
 	</section>
-	#cb.quickView(view='_footer')#
+	#cb.quickView( view='_footer' )#
 	
 	<!--- ContentBoxEvent --->
 	#cb.event( "cbui_beforeBodyEnd" )#
