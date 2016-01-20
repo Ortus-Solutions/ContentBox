@@ -45,21 +45,9 @@
 							<li>
 								<a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="fa fa-lock"></i> Permissions</a>
 							</li>
-							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
-								<li>
-									<a href="##entries" data-toggle="tab"><i class="fa fa-quote-left"></i> Entries</a>
-								</li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
-								<li>
-									<a href="##pages" data-toggle="tab"><i class="fa fa-pencil"></i> Pages</a>
-								</li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-								<li>
-									<a href="##contentstore" data-toggle="tab"><i class="fa fa-pencil"></i> Content Store</a>
-								</li>
-							</cfif>
+							<li>
+								<a href="##latestEdits" data-toggle="tab"><i class="fa fa-clock-o"></i> Latest Edits</a>
+							</li>
 						</cfif>
 						<!--- cbadmin Event --->
     					#announceInterception( "cbadmin_onAuthorEditorNav" )#
@@ -217,35 +205,83 @@
 							<!--- Permissions --->
 							<div class="tab-pane" id="permissionsTab"></div>
 
-							<!--- My Entries --->
-							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
-								<div class="tab-pane" id="entries">
-									#html.startFieldset(legend="User Entries" )#
-										#prc.entryViewlet#
+							<!--- Latest Edits --->
+							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+								<div class="tab-pane" id="latestEdits">
+									#html.startFieldset( legend="Latest Edits" )#
+										<!--- latest edits --->
+										<table name="latestEditsTable" id="latestEditsTable" class="table table-hover table-condensed table-striped" width="100%">
+											<thead>
+												<tr>
+													<th>Title</th>
+													<th>Date</th>
+													<th width="125">Type</th>
+													<th width="50" class="text-center"><i class="fa fa-globe fa-lg" title="Published"></i></th>
+													<th width="100" class="text-center">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<cfloop array="#prc.latestEdits#" index="thisContent">
+												<tr id="contentID-#thisContent.getContentID()#" data-contentID="#thisContent.getContentID()#"
+													<cfif thisContent.isExpired()>
+														class="danger"
+													<cfelseif thisContent.isPublishedInFuture()>
+														class="success"
+													<cfelseif !thisContent.isContentPublished()>
+														class="warning"
+													</cfif>>
+													<td>#thisContent.getTitle()#</td>
+													<td>#thisContent.getActiveContent().getDisplayCreatedDate()#</td>
+													<td>#thisContent.getContentType()#</td>
+													<td class="text-center">
+														<cfif thisContent.isExpired()>
+															<i class="fa fa-clock-o fa-lg textRed" title="Content has expired on ( (#thisContent.getDisplayExpireDate()#))"></i>
+															<span class="hidden">expired</span>
+														<cfelseif thisContent.isPublishedInFuture()>
+															<i class="fa fa-fighter-jet fa-lg textBlue" title="Content Publishes in the future (#thisContent.getDisplayPublishedDate()#)"></i>
+															<span class="hidden">published in future</span>
+														<cfelseif thisContent.isContentPublished()>
+															<i class="fa fa-check fa-lg textGreen" title="Content Published"></i>
+															<span class="hidden">published in future</span>
+														<cfelse>
+															<i class="fa fa-times fa-lg textRed" title="Content Draft"></i>
+															<span class="hidden">draft</span>
+														</cfif>
+													</td>
+													<td class="text-center">
+													<!--- Content Actions --->
+													<div class="btn-group btn-xs">
+												    	<!--- Editor --->
+											    		<cfif thisContent.getContentType() == "page">
+															<a class="btn btn-info btn-sm" href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page"><i class="fa fa-edit fa-lg"></i></a>
+														<cfelseif thisContent.getContentType() == "contentStore">
+															<a class="btn btn-info btn-sm" href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit ContentStore"><i class="fa fa-edit fa-lg"></i></a>
+														<cfelse>
+															<a class="btn btn-info btn-sm" href="#event.buildLink( prc.xehBlogEditor )#/contentID/#thisContent.getContentID()#" title="Edit Entry"><i class="fa fa-edit fa-lg"></i></a>
+														</cfif>
+														<!--- View in Site --->
+														<cfif listFindNoCase( "page,entry", thisContent.getContentType() )>
+															<cfif thisContent.getContentType() == "page">
+																<a class="btn btn-info btn-sm" href="#prc.CBHelper.linkPage( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
+															<cfelse>
+																<a class="btn btn-info btn-sm" href="#prc.CBHelper.linkEntry( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
+															</cfif>
+														</cfif>
+												    </div>
+												</td>
+												</tr>
+												</cfloop>
+											</tbody>
+										</table>
+										<cfif !arrayLen( prc.latestEdits )>
+											<div class="alert alert-info">
+											No Records Found
+											</div>											
+										</cfif>
 									#html.endFieldSet()#
-									<a href="#event.buildLink( prc.xehEntriesManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
 								</div>
 							</cfif>
 
-							<!--- My Pages --->
-							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
-								<div class="tab-pane" id="pages">
-									#html.startFieldset(legend="User Pages" )#
-										#prc.pageViewlet#
-									#html.endFieldSet()#
-									<a href="#event.buildLink( prc.xehPagesManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
-								</div>
-							</cfif>
-							
-							<!--- My ContentStore --->
-							<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-								<div class="tab-pane" id="contentstore">
-									#html.startFieldset(legend="User Content Store" )#
-										#prc.contentStoreViewlet#
-									#html.endFieldSet()#
-									<a href="#event.buildLink( prc.xehContentStoreManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
-								</div>
-							</cfif>
 						</cfif>
 						<!--- cbadmin Event --->
 						#announceInterception( "cbadmin_onAuthorEditorContent" )#
