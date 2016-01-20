@@ -16,7 +16,7 @@ component extends="baseHandler"{
 	}
 
 	// index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehThemes 			= "#prc.cbAdminEntryPoint#.themes.index";
 		prc.xehThemeRemove 		= "#prc.cbAdminEntryPoint#.themes.remove";
@@ -52,24 +52,31 @@ component extends="baseHandler"{
 	}
 	
 	// save Settings
-	function saveSettings(event,rc,prc){
+	function saveSettings( event, rc, prc ){
 		var vResults = validateModel( target=rc, constraints=themeService.getSettingsConstraints( rc.themeName ) );
 		// Validate results
 		if( vResults.hasErrors() ){
-			cbMessagebox.error(messageArray=vResults.getAllErrors());
+			cbMessagebox.error( messageArray=vResults.getAllErrors() );
 			return index( argumentCollection=arguments );
 		}
+
+		// Announce event
+		announceInterception( "cbadmin_preThemeSettingsSave", { name=rc.themeName } );
 		
 		// Results validated, save settings
 		themeService.saveThemeSettings( name=rc.themeName, settings=rc );
 		settingservice.flushSettingsCache();
-		cbMessagebox.info(message="Theme settings saved!" );
+		cbMessagebox.info( message="Theme settings saved!" );
+
+		// Announce event
+		announceInterception( "cbadmin_postThemeSettingsSave", { name=rc.themeName } );
+
 		// Relocate
-		setNextEvent(event=prc.xehThemes);
+		setNextEvent( event=prc.xehThemes );
 	}
 
 	// activate theme
-	function activate(event,rc,prc){
+	function activate( event, rc, prc ){
 		// Activate the theme
 		themeService.activateTheme( rc.themeName );
 		// clear caches
@@ -81,14 +88,14 @@ component extends="baseHandler"{
 	}
 
 	// rebuild registry
-	function rebuildRegistry(event,rc,prc){
+	function rebuildRegistry( event, rc, prc ){
 		themeService.buildThemeRegistry();
 		cbMessagebox.info( "Themes re-scanned and registered!" );
 		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
 	}
 
 	//Remove
-	function remove(event,rc,prc){
+	function remove( event, rc, prc ){
 		if( themeService.removeTheme( rc.themeName ) ){
 			cbMessagebox.info( "Theme Removed Forever!" );
 		}
@@ -99,7 +106,7 @@ component extends="baseHandler"{
 	}
 
 	//upload
-	function upload(event,rc,prc){
+	function upload( event, rc, prc ){
 		var fp = event.getTrimValue( "fileTheme","" );
 
 		// Verify
