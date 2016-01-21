@@ -76,7 +76,13 @@ component{
 		{ name="hpHeaderText", 		defaultValue="", 		type="textarea", 	label="Homepage Header Text:" },
 		{ name="hpHeaderLink", 		defaultValue="", 		type="text", 		label="Homepage Header Button Link:" },
 		{ name="hpHeaderBg", 		defaultValue="green", 	type="select", 		label="Homepage Header Background:", 	required="false", options="Green,World" },
-		{ name="rssDiscovery", 		defaultValue="true", 	type="boolean",		label="Active RSS Discovery Links", 	required="false" }
+		{ name="rssDiscovery", 		defaultValue="true", 	type="boolean",		label="Active RSS Discovery Links", 	required="false" },
+		{ name="showCategoriesBlogSide", defaultValue="true", type="boolean",		label="Show Categories in Blog Sidebar", 	required="false" },
+		{ name="showRecentEntriesBlogSide", 	defaultValue="true", type="boolean",	label="Show Recent Enties in Blog Sidebar", 	required="false" },
+		{ name="showSiteUpdatesBlogSide", 	defaultValue="true", type="boolean",	label="Show Site Updates in Blog Sidebar", 	required="false" },
+		{ name="showEntryCommentsBlogSide", 	defaultValue="true", type="boolean",	label="Show Entry Comments in Blog Sidebar", 	required="false" },
+		{ name="showArchivesBlogSide", 	defaultValue="true", type="boolean",	label="Show Archives in Blog Sidebar", 	required="false" },
+		{ name="showEntriesSearchBlogSide", 	defaultValue="true", type="boolean",	label="Show Entries Search in Blog Sidebar", 	required="false" }
 		
 	];
 
