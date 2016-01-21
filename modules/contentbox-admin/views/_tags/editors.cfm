@@ -121,8 +121,8 @@ function setupEditors( $theForm, withExcerpt, saveURL, withChangelogs ){
 	#prc.oEditorDriver.startup()#
 
 	// Activate date pickers
-	$( "[type=date]" ).datepicker();
-	$( ".datepicker" ).datepicker();
+	$( "[type=date]" ).datepicker({format: 'yyyy-mm-dd'});
+	$( ".datepicker" ).datepicker({format: 'yyyy-mm-dd'});
 
 	// Activate Form Validators
 	$targetEditorForm.validate( {

@@ -1,35 +1,18 @@
 /**
 ********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-Update for 3.0.0
-
-DB Structure Changes Comment Below
-
-
-Start Commit Hash: 762aede3a97eb00519e7f171ac4c3c6d6924daca
-End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
-
+* ContentBox - A Modular Content Platform
+* Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+* www.ortussolutions.com
+* ---
+* Updater for 3.0.0 Beta Final
+* 
+* DB Structure Changes Comment Below
+* 
+* ---
+* Start Commit Hash: 762aede3a97eb00519e7f171ac4c3c6d6924daca
+* End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
 */
-component implements="contentbox.model.updates.IUpdate"{
+component implements="contentbox.models.updates.IUpdate"{
 
 	// DI
 	property name="settingService"			inject="id:settingService@cb";
@@ -38,7 +21,6 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="roleService" 			inject="roleService@cb";
 	property name="securityRuleService"		inject="securityRuleService@cb";
 	property name="pageService"				inject="pageService@cb";
-	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
 	property name="contentService" 			inject="contentService@cb";
 	property name="log"						inject="logbox:logger:{this}";
 	property name="wirebox"					inject="wirebox";
@@ -60,6 +42,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		variables.version 			= "3.0.0";
 		variables.currentVersion 	= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
 		variables.thisPath			= getDirectoryFromPath( getMetadata( this ).path );
+		variables.contentBoxPath 	= coldbox.getSetting( "modules" )[ "contentbox" ].path;
 	}
 
 	/**
@@ -74,17 +57,16 @@ component implements="contentbox.model.updates.IUpdate"{
 			if( !isValidInstall() ){ return; }
 
 			/****************************** RENAME LAYOUTS TO THEMES ******************************/
-			
-			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
-			directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );
 
-			/****************************** UPDATE SEARCH PATHS ******************************/
-
+			if( !directoryExists( contentBoxPath & "/themes" ) && directoryExists( contentBoxPath & "/layouts" ) ){
+				directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );	
+			}			
 
 			/****************************** RENAME MODULES ******************************/
 			
-			var contentBoxPath = coldbox.getSetting( "modules" )[ "contentbox" ].path;
-			directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
+			if( !directoryExists( contentBoxPath & "/modules_user" ) && directoryExists( contentBoxPath & "/modules" ) ){
+				directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
+			}
 
 			/****************************** UPDATE SECURITY RULES ******************************/
 			
@@ -196,12 +178,22 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 
 	private function updatePermissions(){
-		// Update Old Permissions
-		var perm = permissionService.findWhere( { name="LAYOUT_ADMIN" } );
+		// Update Old Permissions to New name and description
+		var perm = permissionService.findWhere( { permission="LAYOUT_ADMIN" } );
+		// Case where LAYOUT_ADMIN exists
 		if( !isNull( perm ) ){
-			perm.setName( "THEME_ADMIN" );
+			perm.setPermission( "THEME_ADMIN" );
 			perm.setDescription( "Ability to manage themes, default is view only" );
 			permissionService.save( entity=perm, transactional=false );
+			log.info( "LAYOUT_ADMIN permission found, renamed to THEME_ADMIN");
+		} else {
+			// Create it as a new permission only if THEME_ADMIN does not exist
+			var perm = permissionService.findWhere( { permission="THEME_ADMIN" } );
+			if( isNull( perm ) ){
+				addPermission( "THEME_ADMIN", "Ability to manage themes, default is view only" );
+			} else {
+				log.info( "THEME_ADMIN permission found, skipping changes");
+			}
 		}
 
 		// Create new Permissions
@@ -225,6 +217,9 @@ component implements="contentbox.model.updates.IUpdate"{
 		var oSearchSetting = settingService.findWhere( { name="cb_search_adapter" } );
 		oSearchSetting.setValue( "contentbox.models.search.DBSearch" );
 		settingService.save( entity=oSearchSetting, transactional=false );
+
+		// Add new settings
+		addSetting( "cb_site_settings_cache", "Template" );
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/
@@ -413,4 +408,5 @@ component implements="contentbox.model.updates.IUpdate"{
 	private function getDatasource(){
 		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
 	}
+
 }

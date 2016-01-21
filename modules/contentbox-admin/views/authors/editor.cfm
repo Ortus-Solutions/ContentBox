@@ -45,20 +45,13 @@
 							<li>
 								<a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="fa fa-lock"></i> Permissions</a>
 							</li>
-							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
-								<li>
-									<a href="##entries" data-toggle="tab"><i class="fa fa-quote-left"></i> Entries</a>
-								</li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
-								<li>
-									<a href="##pages" data-toggle="tab"><i class="fa fa-pencil"></i> Pages</a>
-								</li>
-							</cfif>
-							<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-								<li>
-									<a href="##contentstore" data-toggle="tab"><i class="fa fa-pencil"></i> Content Store</a>
-								</li>
+							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+							<li>
+								<a href="##latestEdits" data-toggle="tab"><i class="fa fa-clock-o"></i> Latest Edits</a>
+							</li>
+							<li>
+								<a href="##latestDrafts" data-toggle="tab"><i class="fa fa-pencil"></i> Latest Drafts</a>
+							</li>
 							</cfif>
 						</cfif>
 						<!--- cbadmin Event --->
@@ -217,35 +210,18 @@
 							<!--- Permissions --->
 							<div class="tab-pane" id="permissionsTab"></div>
 
-							<!--- My Entries --->
-							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
-								<div class="tab-pane" id="entries">
-									#html.startFieldset(legend="User Entries" )#
-										#prc.entryViewlet#
-									#html.endFieldSet()#
-									<a href="#event.buildLink( prc.xehEntriesManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
+							<!--- Latest Edits --->
+							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+								<div class="tab-pane" id="latestEdits">
+									#prc.latestEditsViewlet#
+								</div>
+
+								<!--- Latest Drafts --->
+								<div class="tab-pane" id="latestDrafts">
+									#prc.latestDraftsViewlet#
 								</div>
 							</cfif>
 
-							<!--- My Pages --->
-							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
-								<div class="tab-pane" id="pages">
-									#html.startFieldset(legend="User Pages" )#
-										#prc.pageViewlet#
-									#html.endFieldSet()#
-									<a href="#event.buildLink( prc.xehPagesManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
-								</div>
-							</cfif>
-							
-							<!--- My ContentStore --->
-							<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-								<div class="tab-pane" id="contentstore">
-									#html.startFieldset(legend="User Content Store" )#
-										#prc.contentStoreViewlet#
-									#html.endFieldSet()#
-									<a href="#event.buildLink( prc.xehContentStoreManager )#" class="btn btn-sm btn-info pull-right">Go to Manager</a>
-								</div>
-							</cfif>
 						</cfif>
 						<!--- cbadmin Event --->
 						#announceInterception( "cbadmin_onAuthorEditorContent" )#

@@ -173,20 +173,21 @@ component accessors="true" threadSafe singleton{
 	}
 	
 	/**
-	* Save theme settings
-	* @name The theme name
-	* @settings The settings struct
+	* Save theme settings as they are coming from form submissions as a struct with a common prefix
+	* cb_theme_{themeName}_{settingName}
+	* @name 		The theme name
+	* @settings 	The settings struct
 	* 
 	* @return ThemeService
 	*/
 	public function saveThemeSettings( required name, required struct settings ) transactional{
-		var oTheme = variables.themeCFCRegistry[ arguments.name ];
-		// iterate and save theme settings
-		for( var thisSetting in oTheme.settings ){
-			// retrieve it first
-			var oSetting = settingService.findWhere( { name="cb_theme_#arguments.name#_#thisSetting.name#" } );
-			oSetting.setValue( settings[ thisSetting.name ] );
-			settingService.save( oSetting );
+		// iterate and add only keys with the right prefix
+		for( var thisSettingName in arguments.settings ){
+			if( findNoCase( "cb_theme_#arguments.name#_", thisSettingName ) ){
+				var oSetting = settingService.findWhere( { name=thisSettingName } );
+				oSetting.setValue( arguments.settings[ thisSettingName ] );
+				settingService.save( oSetting );
+			}
 		}
 
 		return this;
@@ -568,39 +569,41 @@ component accessors="true" threadSafe singleton{
 		savecontent variable="settingForm"{
 
 			for( var x=1; x lte arrayLen( oTheme.settings ); x++ ){
-				var thisSetting 		= oTheme.settings[ x ];
+				var thisSettingMD 		= oTheme.settings[ x ];
 				var requiredText 		= "";
 				var requiredValidator 	= "";
 				
 				// get actual setting value which should be guaranteed to exist
-				var oSetting = settingService.findWhere( { name="cb_theme_#arguments.activeTheme.name#_#thisSetting.name#" } );
-				thisSetting.defaultValue = oSetting.getValue();
+				var settingName = "cb_theme_#arguments.activeTheme.name#_#thisSettingMD.name#";
+				var oSetting 	= settingService.findWhere( { name=settingName } );
+				thisSettingMD.defaultValue = oSetting.getValue();
 				
 				// Default values for settings
-				if( !structKeyExists( thisSetting, "required" ) ){ thisSetting.required = false; }
-				if( !structKeyExists( thisSetting, "label" ) ){ thisSetting.label = thisSetting.name; }
-				if( !structKeyExists( thisSetting, "type" ) ){ thisSetting.type = "text"; }
-				if( !structKeyExists( thisSetting, "title" ) ){ thisSetting.title = ""; }
+				if( !structKeyExists( thisSettingMD, "required" ) ){ thisSettingMD.required = false; }
+				if( !structKeyExists( thisSettingMD, "label" ) ){ thisSettingMD.label = thisSettingMD.name; }
+				if( !structKeyExists( thisSettingMD, "type" ) ){ thisSettingMD.type = "text"; }
+				if( !structKeyExists( thisSettingMD, "title" ) ){ thisSettingMD.title = ""; }
 
 				// required stuff
-				if( thisSetting.required ){
+				if( thisSettingMD.required ){
 					requiredText 		= "<span class='text-danger'>*Required</span>";
 					requiredValidator 	= "required";
 				}
+
 				// writeout control wrapper
 				writeOutput( '<div class="form-group">' );
 					// write out label
-					writeOutput( html.label( field=thisSetting.name, content="#thisSetting.label# #requiredText#" ) );
+					writeOutput( html.label( field=settingName, content="#thisSettingMD.label# #requiredText#" ) );
     				// write out control
-    				switch( thisSetting.type ){
+    				switch( thisSettingMD.type ){
     					case "boolean" : {
     						writeOutput( 
     							html.select( 
-	    							name			= thisSetting.name,
+	    							name			= settingName,
 	    							options			= "true,false",
-	    							selectedValue	= thisSetting.defaultValue,
-	    							title			= thisSetting.title,
-	    							class 			= "form-control"
+	    							selectedValue	= thisSettingMD.defaultValue,
+	    							title			= thisSettingMD.title,
+	    							class 			= "form-control input-lg"
 	    						) 
     						);
     						break;
@@ -608,11 +611,11 @@ component accessors="true" threadSafe singleton{
     					case "select" : {
     						writeOutput( 
     							html.select( 
-    								name 			= thisSetting.name,
-    								options			= thisSetting.options,
-    								selectedValue	= thisSetting.defaultValue,
-    								title			= thisSetting.title,
-    								class 			= "form-control"
+    								name 			= settingName,
+    								options			= thisSettingMD.options,
+    								selectedValue	= thisSettingMD.defaultValue,
+    								title			= thisSettingMD.title,
+    								class 			= "form-control input-lg"
     							) 
     						);
     						break;
@@ -620,10 +623,10 @@ component accessors="true" threadSafe singleton{
     					case "textarea" : {
     						writeOutput( 
     							html.textarea( 
-    								name		= thisSetting.name,
+    								name		= settingName,
     								required	= requiredValidator,
-    								title		= thisSetting.title,
-    								value		= thisSetting.defaultValue,
+    								title		= thisSettingMD.title,
+    								value		= thisSettingMD.defaultValue,
     								class 		= "form-control",
     								rows		= 5
     							) 
@@ -633,11 +636,11 @@ component accessors="true" threadSafe singleton{
     					default:{
     						writeOutput( 
     							html.textfield( 
-    								name		= thisSetting.name,
+    								name		= settingName,
     								class		= "textfield",
     								required	= requiredValidator,
-    								title		= thisSetting.title,
-    								value		= thisSetting.defaultValue,
+    								title		= thisSettingMD.title,
+    								value		= thisSettingMD.defaultValue,
     								class 		= "form-control"
     							) 
     						);

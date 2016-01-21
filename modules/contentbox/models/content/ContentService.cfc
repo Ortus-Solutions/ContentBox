@@ -259,7 +259,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		any category="",
 		boolean asQuery=false,
 		any parent,
-		boolean showInMenu){
+		boolean showInMenu
+	){
 
 		var results = {};
 		var c = newCriteria();
@@ -314,7 +315,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @contentID.hint The list or array of ID's to bulk update
 	* @status.hint The status either 'publish' or 'draft'
 	*/
-	any function bulkPublishStatus(required any contentID, required any status){
+	any function bulkPublishStatus( required any contentID, required any status ){
 		var publish = false;
 
 		// publish flag
@@ -333,6 +334,27 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		saveAll( contentObjects );
 
 		return this;
+	}
+
+	/**
+	* Get latest edits according to criteria
+	* @author 		The author object to use for retrieval
+	* @isPublished	If passed, check if content is published or in draft mode. Else defaults to all states
+	* @max 			The maximum number of records to return
+	*/
+	array function getLatestEdits( any author, boolean isPublished, numeric max=25 ){
+		var c = newCriteria().createAlias( "activeContent", "ac" );
+
+		// isPublished filter
+		if( structKeyExists( arguments, "isPublished") ){
+			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+		}
+		// author filter
+		if( structKeyExists( arguments, "author") ){
+			c.isEq( "ac.author", arguments.author );
+		}
+			
+		return c.list( max=arguments.max, sortOrder="ac.createdDate desc", asQuery=false );
 	}
 
 	/**

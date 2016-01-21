@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- ContentBoxEvent --->
-#cb.event("cbui_BeforeSideBar")#
+#cb.event( "cbui_BeforeSideBar" )#
 
 <div class="panel panel-default">
 	<div class="panel-heading">
@@ -19,10 +19,10 @@
 	<div class="panel-heading">
 		<h4>Recent Entries</h4>
 	</div>
-	#cb.widget('RecentEntries')#
+	#cb.widget( 'RecentEntries' )#
 </div>
 
-	<!--- RSS Buttons --->
+<!--- RSS Buttons --->
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h4>Site Updates</h4>
@@ -32,36 +32,34 @@
 	</ul>
 </div>
 
-	<cfif cb.isEntryView()>
-		<!--- RSS Entry Comments --->
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h4>Entry Comments</h4>
-			</div>
-			<ul>
-				<li><a href="#cb.linkRSS(comments=true,entry=prc.entry)#" title="Subscribe to our Entry's Comment(s) RSS Feed!"><i class="fa fa-rss"></i></a> <a href="#cb.linkRSS(comments=true,entry=prc.entry)#" title="Subscribe to our Entry's Comment(s) RSS Feed!">RSS Feed</a></li>
-			</ul>
+<cfif cb.isEntryView()>
+	<!--- RSS Entry Comments --->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Entry Comments</h4>
 		</div>
-	</cfif>
+		<ul>
+			<li><a href="#cb.linkRSS(comments=true,entry=prc.entry)#" title="Subscribe to our Entry's Comment(s) RSS Feed!"><i class="fa fa-rss"></i></a> <a href="#cb.linkRSS(comments=true,entry=prc.entry)#" title="Subscribe to our Entry's Comment(s) RSS Feed!">RSS Feed</a></li>
+		</ul>
+	</div>
+</cfif>
 
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h4>Archives</h4>
 	</div>
-	#cb.widget("Archives")#
+	#cb.widget( "Archives" )#
 </div>
 
-<cfif !args.print>
 <div class="panel panel-default">	
 	<div class="panel-heading">
 		<h4>Entries Search</h4>
 	</div>
-	#cb.widget("SearchForm")#
+	#cb.widget( "SearchForm" )#
 </div>
-</cfif>	
-	<!---#cb.widget("Meta",{titleLevel="4"})#--->
 
+<!---#cb.widget("Meta",{titleLevel="4"})#--->
 
 <!--- ContentBoxEvent --->
-#cb.event("cbui_afterSideBar")#
+#cb.event( "cbui_afterSideBar" )#
 </cfoutput>

@@ -23,6 +23,8 @@
 		
 	#html.endFieldSet()#
 	#html.endForm()#
+
+	<p>&nbsp;</p>
 	
 	<!--- Add Permission Form--->
 	<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
@@ -39,38 +41,38 @@
 			<!--- Permissions --->
 			<p>You can also add a-la-carte permissions to the user by adding from the selection below:</p>
 			<div class="form-group">
-				<div class="controls">
-					<div class="input-group">
-						<!---Permission list --->
-						<select name="permissionID" id="permissionID" class="form-control input-sm">
-							<cfset noPerms = true>
-							<cfloop array="#prc.permissions#" index="thisPerm">
-								<cfif !prc.author.hasPermission( thisPerm ) AND !prc.author.getRole().hasPermission( thisPerm )>
-									<cfset noperms = false>
-									<option value="#thisPerm.getPermissionID()#">#thisPerm.getPermission()#</option>
-								</cfif>
-							</cfloop>
-							<cfif noPerms>
-								<option value="null">Role has all permissions</option>
+				<div class="input-group">
+					<!---Permission list --->
+					<select name="permissionID" id="permissionID" class="form-control input-sm">
+						<cfset noPerms = true>
+						<cfloop array="#prc.permissions#" index="thisPerm">
+							<cfif !prc.author.hasPermission( thisPerm ) AND !prc.author.getRole().hasPermission( thisPerm )>
+								<cfset noperms = false>
+								<option value="#thisPerm.getPermissionID()#">#thisPerm.getPermission()#</option>
 							</cfif>
-						</select>
-						<span class="input-group-addon btn-danger">
-							<cfif arrayLen( prc.permissions ) GT 0 AND !noPerms>
-								<a href="##" onclick="addPermission();return false;">Add Permission</a>
-							<cfelse>
-								<a href="##" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</a>
-				            </cfif>
-			        	</span>
-					</div>
+						</cfloop>
+						<cfif noPerms>
+							<option value="null">Role has all permissions</option>
+						</cfif>
+					</select>
+					<span class="input-group-btn">
+						<cfif arrayLen( prc.permissions ) GT 0 AND !noPerms>
+							<button type="button" class="btn btn-sm btn-danger" onclick="addPermission();return false;">Add Permission</button>
+						<cfelse>
+							<button type="button" class="btn btn-sm btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
+			            </cfif>
+		        	</span>
 				</div>
 			</div>
 		#html.endFieldSet()#
 	#html.endForm()#
 	</cfif>
+
+	<p>&nbsp;</p>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="alacartePermissions",class="form-vertical" )#
-	#html.startFieldset(legend="Active A-la-carte Permissions" )#
+	#html.startForm( name="alacartePermissions", class="form-vertical" )#
+	#html.startFieldset( legend="Active A-la-carte Permissions" )#
 		<cfif !prc.author.hasPermission()>
 			<small>No permissions assigned!</small>
 		<cfelse>

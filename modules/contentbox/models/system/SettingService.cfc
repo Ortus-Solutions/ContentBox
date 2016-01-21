@@ -8,13 +8,15 @@
 component extends="cborm.models.VirtualEntityService" accessors="true" threadsafe singleton{
 
 	// DI properties
-	property name="cache" 			inject="cachebox:default";
+	property name="cachebox" 		inject="cachebox";
 	property name="moduleSettings"	inject="coldbox:setting:modules";
 	property name="appMapping"		inject="coldbox:setting:appMapping";
 	property name="requestService"	inject="coldbox:requestService";
 
-	// Properties
-	property name="settingsCacheKey" type="string";
+	/**
+	* The cache provider name. This is lazy-loaded upon request
+	*/
+	property name="cacheProviderName";
 
 	/**
 	* Constructor
@@ -22,9 +24,15 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	SettingService function init(){
 		// init it
 		super.init( entityName="cbSetting" );
-		// settings cache key
-		setSettingsCacheKey( "cb-settings-#cgi.http_host#" );
+		variables.cacheProviderName = "";
 		return this;
+	}
+
+	/**
+	* Retrieve a multi-tenant settings cache key
+	*/
+	string function getSettingsCacheKey(){
+		return "cb-settings-#cgi.http_host#";
 	}
 	
 	/**
@@ -111,17 +119,22 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 
 	/**
 	* Get all settings
+	* @asStruct Indicator if we should return structs or array of objects
+	* 
+	* @return struct or array of objects
 	*/
-	function getAllSettings(asStruct=false){
-		// retrieve from cache
-		var settings = cache.get( settingsCacheKey );
+	function getAllSettings( boolean asStruct=false ){
+		var cache 		= getSettingsCacheProvider();
+		var cacheKey 	= getSettingsCacheKey();
+		// retrieve all settings from cache
+		var settings = cache.get( getSettingsCacheKey() );
 
 		// found in cache?
 		if( isNull( settings ) ){
 			// not found, so query db
 			var settings = list( sortOrder="name" );
-			// cache them for an hour
-			cache.set( settingsCacheKey, settings, 60 );
+			// cache them for 2 hours
+			cache.set( cacheKey, settings, 90 );
 		}
 
 		// convert to struct
@@ -137,26 +150,27 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	}
 
 	/**
-	* flush settings cache
+	* flush settings cache for current multi-tenant host
 	*/
-	function flushSettingsCache(){
-		cache.clear( settingsCacheKey );
+	SettingService function flushSettingsCache(){
+		getSettingsCacheProvider().clear( getSettingsCacheKey() );
+		return this;
 	}
 
 	/**
 	* Bulk saving of options using a memento structure of options
 	*/
-	any function bulkSave(struct memento){
-		var settings 	= getAllSettings(asStruct=true);
+	any function bulkSave( struct memento ){
+		var settings 	= getAllSettings( asStruct=true );
 		var oOption  	= "";
 		var newOptions 	= [];
 
 		// iterate over settings
 		for(var key in settings){
 			// save only sent in setting keys
-			if( structKeyExists(memento, key) ){
-				oOption = findWhere( {name=key} );
-				oOption.setValue( memento[key] );
+			if( structKeyExists( memento, key ) ){
+				oOption = findWhere( { name=key } );
+				oOption.setValue( memento[ key ] );
 				arrayAppend( newOptions, oOption );
 			}
 		}
@@ -208,7 +222,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	/**
 	* setting search returns struct with keys [settings,count]
 	*/
-	struct function search(search="", max=0, offset=0, sortOrder="name asc" ){
+	struct function search( search="", max=0, offset=0, sortOrder="name asc" ){
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
@@ -229,9 +243,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="settingID,name,value" )
+		return c.withProjections( property="settingID,name,value" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="name" );
+			.list( sortOrder="name" );
 			 
 	}
 	
@@ -290,5 +304,30 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		
 		return importLog.toString(); 
 	}
+
+	/**
+	* Get the cache provider object to be used for settings
+	* @return coldbox.system.cache.ICacheProvider
+	*/
+	function getSettingsCacheProvider(){
+		if( !len( variables.cacheProviderName ) ){
+			lock name="settingsCacheProviderName" timeout="10" throwOnTimeout="true"{
+				if( !len( variables.cacheProviderName ) ){
+					// query db for cache name
+					var cacheProvider = newCriteria()
+						.isEq( "name", "cb_site_settings_cache" )
+						.get();
+					// lazy load it.
+					variables.cacheProviderName = cacheprovider.getValue();
+				}
+			}
+		}
+		// Return the cache to use.
+		return cacheBox.getCache( variables.cacheProviderName );
+	}
+
+	/******************************** PRIVATE ************************************************/
+
+	
 
 }

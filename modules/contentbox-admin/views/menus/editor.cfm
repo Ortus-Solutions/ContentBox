@@ -27,7 +27,7 @@
                     <menu class="well well-small">
                         <p>Click any of the options below to insert a new menu item of that type.</p>
                         <cfloop collection="#prc.providers#" item="provider">
-                            <a class="btn btn-sm provider btn-info" data-provider="#provider#"><span style="display:inline-block;" title="#prc.providers[ provider].getDescription()#"><i class="#prc.providers[ provider].getIconClass()#"></i> #provider#</span></a>
+                            <a class="btn btn-sm provider btn-info" data-provider="#provider#" title="#prc.providers[ provider].getDescription()#"><i class="#prc.providers[ provider].getIconClass()#"></i> #provider#</a>
                         </cfloop>
                         <a class="btn btn-sm btn-primary pull-right" data-action="collapse-all"><span style="display:inline-block;" title="Collapse All"><i class="fa fa-minus"></i> Collapse All</span></a>
                         <a class="btn btn-sm btn-primary pull-right" data-action="expand-all" style="margin-right:4px;"><span style="display:inline-block;" title="Expand All"><i class="fa fa-plus"></i> Expand All</span></a>

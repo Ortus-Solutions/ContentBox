@@ -4,7 +4,7 @@
     <h3>Cached Settings</h3>
 </div>
 <div class="modal-body">
-    <h4>Cached Metadata</h4>
+    <h2>Cached Metadata</h2>
     <!--- settings --->
     <table class="table table-hover table-condensed table-striped" width="98%">
     	<thead>
@@ -19,17 +19,17 @@
     	</thead>
     	<tbody>
     		<tr>
-    			<td class="text-center">#rc.metadata.hits#</td>
-    			<td class="text-center">#rc.metadata.isExpired#</td>
-    			<td class="text-center">#rc.metadata.created#</td>
-    			<td class="text-center">#rc.metadata.lastAccessed#</td>
-    			<td class="text-center">#rc.metadata.timeout#</td>
-    			<td class="text-center">#rc.metadata.lastAccessTimeout#</td>
+    			<td class="text-center">#prc.metadata.hits#</td>
+    			<td class="text-center">#prc.metadata.isExpired#</td>
+    			<td class="text-center">#prc.metadata.created#</td>
+    			<td class="text-center">#prc.metadata.lastAccessed#</td>
+    			<td class="text-center">#prc.metadata.timeout#</td>
+    			<td class="text-center">#prc.metadata.lastAccessTimeout#</td>
     		</tr>
     	</tbody>
     </table>
     
-    <h4>Cached Data</h4>
+    <h2>Cached Data</h2>
     <!--- settings --->
     <table name="settings" id="settings" class="table table-hover table-condensed table-striped" width="98%">
     	<thead>
@@ -39,10 +39,10 @@
     		</tr>
     	</thead>
     	<tbody>
-    		<cfloop query="rc.settings">
+    		<cfloop query="prc.settings">
     		<tr>
-    			<td>#rc.settings.name#</td>
-    			<td>#HTMLEditFormat( rc.settings.value )#</td>
+    			<td>#HTMLEditFormat( prc.settings.name#</td>
+    			<td>#HTMLEditFormat( prc.settings.value )#</td>
     		</tr>
     		</cfloop>
     	</tbody>

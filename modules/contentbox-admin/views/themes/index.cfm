@@ -111,6 +111,10 @@
 												<em>None</em>
 											</cfif>
 										</div>
+
+										<!--- Announce display Event --->
+										#announceInterception( "cbadmin_onThemeInfo", { theme=prc.activeTheme } )#
+
 		                                <!---Theme Settings --->
 										<cfif len( prc.activeTheme.settings )>
 											<h1>Theme Settings:</h1>
@@ -118,8 +122,11 @@
 												#html.hiddenField( name="themeName", value=prc.activeTheme.name )#
 												#prc.themeService.buildSettingsForm( prc.activeTheme )#
 												
+												<!--- Announce display Event --->
+												#announceInterception( "cbadmin_onThemeSettings", { theme=prc.activeTheme } )#
+
 												<div class="form-group">
-													#html.submitButton(value="Save Settings", class="btn btn-danger" )#
+													#html.submitButton( value="Save Settings", class="btn btn-danger" )#
 												</div>
 
 			                                #html.endForm()#

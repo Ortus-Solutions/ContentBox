@@ -5,7 +5,7 @@
 * ---
 * Manage comments
 */
-component extend="baseHandler"{
+component extends="baseHandler"{
 
 	// Dependencies
 	property name="commentService"		inject="id:commentService@cb";
@@ -79,11 +79,11 @@ component extend="baseHandler"{
 			announceInterception( "cbadmin_onCommentStatusUpdate", {commentID=rc.commentID,status=rc.commentStatus} );
 			// Message
 			data.messages = "#listLen( rc.commentID )# Comment(s) #rc.commentStatus#d";
-			messagebox.info( data.messages );
+			cbMessagebox.info( data.messages );
 		} else {
 			data.messages = "No comments selected!";
 			data.error = true;
-			messagebox.warn( data.messages );
+			cbMessagebox.warn( data.messages );
 		}
 		
 		// If ajax call, return as ajax
@@ -111,7 +111,7 @@ component extend="baseHandler"{
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue( "commentID",0) );
 		if( isNull(rc.Comment) ){
-			messagebox.error( "The commentID #rc.commentID# is invalid." );
+			cbMessagebox.error( "The commentID #rc.commentID# is invalid." );
 			setNextEvent(prc.xehComments);
 			return;
 		}
@@ -141,7 +141,7 @@ component extend="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postCommentSave",{comment=oComment} );
 		// notice
-		messagebox.info( "Comment Saved!" );
+		cbMessagebox.info( "Comment Saved!" );
 		// relocate
 		setNextEvent(prc.xehComments);
 	}
@@ -156,7 +156,7 @@ component extend="baseHandler"{
 		announceInterception( "cbadmin_postCommentRemoveAllModerated" );
 		// message
 		data.messages = "Moderated Comment(s) Removed!";
-		messagebox.info( data.messages );
+		cbMessagebox.info( data.messages );
 		// If ajax call, return as ajax
 		if( event.isAjax() ){
 			event.renderData( data=data, type="json" );
@@ -198,7 +198,7 @@ component extend="baseHandler"{
 		if( arrayLen( rc.commentID ) eq 0 ){
 			arrayAppend( data.message, "No comments selected!" );
 			data.error = true;
-			messagebox.warn( data.messages );
+			cbMessagebox.warn( data.messages );
 		}
 
 		// If ajax call, return as ajax
@@ -276,7 +276,7 @@ component extend="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_postCommentSettingsSave" );
 		// relocate back to editor
-		messagebox.info( "All comment settings updated!" );
+		cbMessagebox.info( "All comment settings updated!" );
 		setNextEvent(prc.xehCommentsettings);
 	}
 }
