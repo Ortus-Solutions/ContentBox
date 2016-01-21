@@ -78,32 +78,37 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 		savecontent variable="results"{
 			writeOutput('
 			<div class="searchResults">
-				<div class="searchResultsCount">
+				<div class="well well-sm searchResultsCount">
 					Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!
 				</div>
-				<ul>
 			');
 
 			for(var item in searchItems ){
-				writeOutput('
-				<li>
-					<a href="#cb.linkContent(item)#">#item.getTitle()#</a><br/>
-					<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ))#</p>
-					<cite>#item.getContentType()# -> <a href="#cb.linkContent(item)#">#cb.linkContent(item)#</a></cite><br/>
-				');
+				writeOutput( '
+				<div class="panel panel-default">
+  					<div class="panel-heading">
+						<a href="#cb.linkContent(item)#" class="panel-title">#item.getTitle()#</a>
+					</div>
+					<div class="panel-body">
+						<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ))#</p>
+						<cite><span class="label label-primary">#item.getContentType()#</span> : <a href="#cb.linkContent(item)#">#cb.linkContent(item)#</a></cite><br/>
+					</div>
+				' );
 
 
 				if( item.hasCategories() ){
-					writeOutput('
-					<cite>Categories: #item.getCategoriesList()#</cite><br />
-					');
+					writeOutput( '<div class="panel-footer"><cite>Categories: ' );
+					for( var categoryItem in #item.getCategoriesList()# ){
+						writeOutput(' <span class="label label-primary">#categoryItem#</span>' );
+					}
+					writeOutput( '</cite></div>' );
 				}
 
-				writeOutput('</li>');
+				writeOutput('</div>');
 
 			};
 
-			writeOutput( "</ul></div>" );
+			writeOutput( "</div>" );
 		}
 
 		return results;
