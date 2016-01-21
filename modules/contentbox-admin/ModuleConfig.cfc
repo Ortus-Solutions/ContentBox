@@ -113,7 +113,9 @@ component {
 				// Version Screens
 				"cbadmin_onVersionIndex", "cbadmin_onVersionDiff",
 				// Menu events
-				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove"
+				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove",
+				// Global Search
+				"onGlobalSearchRequest", "onGlobalSearchDisplay"
 			])
 		};
 
