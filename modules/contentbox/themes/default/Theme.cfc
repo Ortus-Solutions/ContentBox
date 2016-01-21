@@ -70,7 +70,7 @@ component{
 	this.screenShotURL	= "screenshot.png";
 	// Layout Settings
 	this.settings = [
-		{ name="cbBootswatchTheme", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", options="Default,Green" },
+		{ name="cbBootswatchTheme", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", options="cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" },
 		{ name="footerBox", 		defaultValue="", 		type="textarea", 	label="Footer Text:" },
 		{ name="hpHeaderTitle", 	defaultValue="", 		type="text", 		label="Homepage Header Title:" },
 		{ name="hpHeaderText", 		defaultValue="", 		type="textarea", 	label="Homepage Header Text:" },
