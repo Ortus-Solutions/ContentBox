@@ -75,6 +75,9 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 		var total	 	= arguments.searchResults.getTotal();
 		var searchTerm  = arguments.searchResults.getSearchTerm();
 
+		// Broadcast Interception
+		announceInterception('onGlobalSearchDisplay', arguments.searchResults);
+		
 		savecontent variable="results"{
 			writeOutput('
 			<div class="searchResults">

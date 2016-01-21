@@ -110,6 +110,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		boolean showInSearch=false
 	){
 
+		// Broadcast Interception
+		announceInterception('onGlobalSearchRequest', arguments);
+
 		var results = {};
 		var c = newCriteria();
 
