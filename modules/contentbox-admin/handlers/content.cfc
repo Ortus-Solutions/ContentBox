@@ -53,7 +53,7 @@ component extends="baseHandler"{
 	}
 	
 	/**
-	* Search for content
+	* Global Admin search
 	* @return html
 	*/
 	function search( event, rc, prc ){
@@ -72,9 +72,10 @@ component extends="baseHandler"{
 		// Search for Authors
 		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
 		prc.minAuthorCount = ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
-		
-		// cb helper
+		// cb helper on scope
 		prc.cb = variables.CBHelper;
+		// announce event
+		announceInterception( "onGlobalSearchRequest" );
 		// renderdata
 		event.renderdata( data = renderView( "content/search" ) );
 	}
