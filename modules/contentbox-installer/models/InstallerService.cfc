@@ -274,6 +274,7 @@ component accessors="true"{
 			"cb_site_blog_entrypoint" 				= "blog",
 			"cb_site_ssl" 							= "false",
 			"cb_site_poweredby" 					= "true",
+			"cb_site_settings_cache"				= "Template",
 
 			// Security Settings
 			"cb_security_login_blocker" 			= "true",

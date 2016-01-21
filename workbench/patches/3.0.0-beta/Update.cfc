@@ -217,6 +217,9 @@ component implements="contentbox.models.updates.IUpdate"{
 		var oSearchSetting = settingService.findWhere( { name="cb_search_adapter" } );
 		oSearchSetting.setValue( "contentbox.models.search.DBSearch" );
 		settingService.save( entity=oSearchSetting, transactional=false );
+
+		// Add new settings
+		addSetting( "cb_site_settings_cache", "Template" );
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/

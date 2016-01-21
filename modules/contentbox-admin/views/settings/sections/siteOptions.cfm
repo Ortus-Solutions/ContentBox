@@ -85,6 +85,20 @@
             </div>
         </div>
 
+        <!--- Caching of Settings --->
+        <div class="form-group">
+	        <label class="control-label" for="cb_site_settings_cache">Settings Cache Provider:</label>
+	        <div class="controls">
+	            <small>Choose the CacheBox provider to cache global site settings into.</small><br/>
+	            #html.select(
+	                name			= "cb_site_settings_cache",
+	                options			= prc.cacheNames,
+	                selectedValue	= prc.cbSettings.cb_site_settings_cache,
+	                class			= "input-sm"
+	            )#
+	        </div>
+	    </div>
+
     </fieldset>
     <!---Blog Entries --->
     <fieldset>
