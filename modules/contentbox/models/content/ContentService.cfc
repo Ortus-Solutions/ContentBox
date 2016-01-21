@@ -337,16 +337,24 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get latest edits from a user disregarding content type
-	* @user The user object to use for retrieval
-	* @max The maximum number of records to return
+	* Get latest edits according to criteria
+	* @author 		The author object to use for retrieval
+	* @isPublished	If passed, check if content is published or in draft mode. Else defaults to all states
+	* @max 			The maximum number of records to return
 	*/
-	array function getLatestUserEdits( required user, numeric max=25 ){
-		var c = newCriteria()
-			.createAlias( "activeContent", "ac" )
-			.isEq( "ac.author", arguments.user )
-			.list( max=arguments.max, sortOrder="ac.createdDate desc", asQuery=false );
-		return c;
+	array function getLatestEdits( any author, boolean isPublished, numeric max=25 ){
+		var c = newCriteria().createAlias( "activeContent", "ac" );
+
+		// isPublished filter
+		if( structKeyExists( arguments, "isPublished") ){
+			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+		}
+		// author filter
+		if( structKeyExists( arguments, "author") ){
+			c.isEq( "ac.author", arguments.author );
+		}
+			
+		return c.list( max=arguments.max, sortOrder="ac.createdDate desc", asQuery=false );
 	}
 
 	/**

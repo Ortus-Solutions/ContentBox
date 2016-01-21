@@ -14,7 +14,6 @@ component extends="baseHandler"{
 	property name="roleService"			inject="id:roleService@cb";
 	property name="editorService"		inject="id:editorService@cb";
 	property name="paging"				inject="id:paging@cb";
-	property name="contentService"		inject="id:contentService@cb";
 	
 	// pre handler
 	function preHandler( event, rc, prc, action, eventArguments){
@@ -130,7 +129,15 @@ component extends="baseHandler"{
 			prc.preferencesViewlet 	= listPreferences(  event, rc, prc  );
 		}
 		// Latest Edits
-		prc.latestEdits = contentService.getLatestUserEdits( prc.author );
+		prc.latestEditsViewlet = runEvent(
+			event 			= "contentbox-admin:content.latestContentEdits",
+			eventArguments 	= { author = prc.author }
+		)
+		// Latest Drafts
+		prc.latestDraftsViewlet = runEvent(
+			event 			= "contentbox-admin:content.latestContentEdits",
+			eventArguments 	= { author = prc.author, isPublished = false }
+		)
 		// Editor
 		prc.tabUsers_manage = true;
 		// view
