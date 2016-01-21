@@ -43,7 +43,6 @@
 				<ul class="dropdown-menu">
 					<li><a href="#cb.linkPage( cb.getCurrentPage() )#.print" target="_blank">Print Format</a></li>
 					<li><a href="#cb.linkPage( cb.getCurrentPage() )#.pdf" target="_blank">PDF</a></li>
-					<li><a href="#cb.linkPage( cb.getCurrentPage() )#.doc" target="_blank">Word</a></li>
 				</ul>
 			</div>
 

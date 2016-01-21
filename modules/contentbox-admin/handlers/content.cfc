@@ -3,7 +3,7 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* Manage content
+* Manage Generic content actions
 */
 component extends="baseHandler"{
 
@@ -14,8 +14,11 @@ component extends="baseHandler"{
 	property name="authorService"		inject="id:authorService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 
-	// content preview
-	function preview(event,rc,prc){
+	/**
+	* Content Preview from editors
+	* @return html
+	*/
+	function preview( event, rc, prc ){
 		// param incoming data
 		event.paramValue( "layout","pages" )
 			.paramValue( "content","" )
@@ -49,31 +52,42 @@ component extends="baseHandler"{
 		event.setView( view="content/preview", layout="ajax" );
 	}
 	
-	function search(event,rc,prc){
+	/**
+	* Global Admin search
+	* @return html
+	*/
+	function search( event, rc, prc ){
 		// Params
 		event.paramValue( "search", "" );
 		// Search for content
-		prc.results = contentService.searchContent( searchTerm=rc.search, 
-													max=prc.cbSettings.cb_admin_quicksearch_max, 
-													sortOrder="title", 
-													isPublished="all",
-													searchActiveContent=false );
+		prc.results = contentService.searchContent( 
+			searchTerm			= rc.search, 
+			max					= prc.cbSettings.cb_admin_quicksearch_max, 
+			sortOrder			= "title", 
+			isPublished			= "all",
+			searchActiveContent	= false 
+		);
 		prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
 		
 		// Search for Authors
 		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
 		prc.minAuthorCount = ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
-		
-		// cb helper
+		// cb helper on scope
 		prc.cb = variables.CBHelper;
+		// announce event
+		announceInterception( "onGlobalSearchRequest" );
 		// renderdata
 		event.renderdata( data = renderView( "content/search" ) );
 	}
 
-	function slugUnique(event,rc,prc){
+	/**
+	* Check if a slug is unique
+	* @return json
+	*/
+	function slugUnique( event, rc, prc ){
 		// Params
-		event.paramValue( "slug", "" );
-		event.paramValue( "contentID", "" );
+		event.paramValue( "slug", "" )
+			.paramValue( "contentID", "" );
 
 		var data = {
 			"UNIQUE" = false
@@ -83,10 +97,13 @@ component extends="baseHandler"{
 			data[ "UNIQUE" ] = contentService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
 		}
 		
-		event.renderData(data=data, type="json" );
+		event.renderData( data=data, type="json" );
 	}
 
-	// related content selector
+	/**
+	* Render the content selector from editors
+	* @return html
+	*/
 	function relatedContentSelector( event, rc, prc ){
 		// paging default
 		event.paramValue( "page", 1 )
@@ -104,49 +121,60 @@ component extends="baseHandler"{
 		prc.pagingLink 	= "javascript:pagerLink( @page@, '#rc.contentType#' )";
 
 		// search entries with filters and all
-		var contentResults = contentService.searchContent( searchTerm=rc.search,
-														   offset=prc.paging.startRow-1,
-														   max=prc.cbSettings.cb_paging_maxrows,
-														   sortOrder="slug asc",
-														   searchActiveContent=false,
-														   contentTypes=rc.contentType,
-														   excludeIDs=rc.excludeIDs );
+		var contentResults = contentService.searchContent( 
+			searchTerm			= rc.search,
+			offset				= prc.paging.startRow-1,
+			max					= prc.cbSettings.cb_paging_maxrows,
+			sortOrder			= "slug asc",
+			searchActiveContent	= false,
+			contentTypes		= rc.contentType,
+			excludeIDs			= rc.excludeIDs 
+		);
 		// setup data for display
-		prc.content = contentResults.content;
-		prc.contentCount  = contentResults.count;
-		prc.CBHelper 	= CBHelper;
+		prc.content 		= contentResults.content;
+		prc.contentCount  	= contentResults.count;
+		prc.CBHelper 		= CBHelper;
 
 		// if ajax and searching, just return tables
 		return renderView( view="content/relatedContentResults", module="contentbox-admin" );
 	}
 
+	/**
+	* Show the related content panel
+	* @return html
+	*/
 	function showRelatedContentSelector( event, rc, prc ) {
-		event.paramValue( "search", "" );
-		event.paramValue( "clear", false );
-		event.paramValue( "excludeIDs", "" );
-		event.paramValue( "contentType", "Page,Entry,ContentStore" );
+		event.paramValue( "search", "" )
+			.paramValue( "clear", false )
+			.paramValue( "excludeIDs", "" )
+			.paramValue( "contentType", "Page,Entry,ContentStore" );
 		// exit handlers
-		prc.xehRelatedContentSelector	= "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
+		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 		prc.CBHelper = CBHelper;
-		event.setView(view="content/relatedContentSelector",layout="ajax" );
+		event.setView( view="content/relatedContentSelector", layout="ajax" );
 	}
 
+	/**
+	* Break related content links
+	* @return json
+	*/
 	function breakContentLink( event, rc, prc ) {
-		event.paramValue( "contentID", "" );
-		event.paramValue( "linkedID", "" );
+		event.paramValue( "contentID", "" )
+			.paramValue( "linkedID", "" );
 		var data = {};
 		if( len( rc.contentID ) && len( rc.linkedID ) ) {
 			var currentContent = ContentService.get( rc.contentID );
 			var linkedContent = ContentService.get( rc.linkedID );
 			linkedContent.removeRelatedContent( currentContent );
-			ContentService.save( linkedContent );
+			contentService.save( linkedContent );
 			data[ "SUCCESS" ] = true;
 		}
 		event.renderData( data=data, type="json" );
 	}
 
 	/**
-	* Reset Content Hits
+	* Reset Content Hits on one or more content items
+	* @return json
 	*/
 	any function resetHits( event, rc, prc ){
 		event.paramValue( "contentID", 0 );
@@ -180,6 +208,38 @@ component extends="baseHandler"{
 			type		= "json", 
 			statusCode	= response.statusCode, 
 			statusText	= ( arrayLen( response.data.messages ) ? 'Error processing request please look at data messages' : 'Ok' ) 
+		);
+	}
+
+	/**
+	* This viewlet shows latest content edits via arguments
+	* @author 		The optional author to look for latest edits only
+	* @author.generic contentbox.models.security.Author
+	* @isPublished 	Boolean indicator if you need to search on all published states, only published, or only draft
+	* @max 			The maximum number of records, capped at 25 by default
+	* 
+	* @return html
+	*/
+	function latestContentEdits( 
+		event, 
+		rc, 
+		prc,
+		any author,
+		boolean isPublished,
+		numeric max = 25
+	){
+		// Setup args
+		var args = { max = arguments.max };
+		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
+		if( structKeyExists( arguments, "isPublished" ) ){ args.isPublished = arguments.isPublished; }
+		// Get latest content edits with criteria
+		var latestEdits = contentService.getLatestEdits( argumentCollection = args );
+
+		// view pager
+		return renderView( 
+			view 	= "content/latestEdits", 
+			module 	= "contentbox-admin",
+			args 	= { latestEdits = latestEdits }
 		);
 	}
 

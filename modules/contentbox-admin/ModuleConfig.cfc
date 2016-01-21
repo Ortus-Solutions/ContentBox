@@ -106,14 +106,16 @@ component {
 				"cbadmin_preGlobalHTMLSave","cbadmin_postGlobalHTMLSave",
 				// Security Rules Events
 				"cbadmin_preSecurityRulesSave", "cbadmin_postSecurityRulesSave", "cbadmin_preSecurityRulesRemove", "cbadmin_postSecurityRulesRemove", "cbadmin_onResetSecurityRules",
-				// Layout Themes
-				"cbadmin_onLayoutActivation", "cbadmin_onLayoutDeactivation",
+				// Themes
+				"cbadmin_onThemeActivation", "cbadmin_onThemeDeactivation", "cbadmin_preThemeSettingsSave", "cbadmin_postThemeSettingsSave", "cbadmin_onThemeSettings", "cbadmin_onThemeInfo",
 				// Version Control
 				"cbadmin_preContentVersionRemove","cbadmin_postContentVersionRemove","cbadmin_preContentVersionRollback", "cbadmin_postContentVersionRollback",
 				// Version Screens
 				"cbadmin_onVersionIndex", "cbadmin_onVersionDiff",
 				// Menu events
-				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove"
+				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove",
+				// Global Search
+				"onGlobalSearchRequest", "onGlobalSearchDisplay"
 			])
 		};
 

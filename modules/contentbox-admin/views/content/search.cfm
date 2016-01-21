@@ -35,4 +35,7 @@
 	<li><em>No Results</em></li>
 </cfif>
 </ul>
+
+<!--- Custom Content --->
+#anounceInterception( "onGlobalSearchDisplay" )#
 </cfoutput>

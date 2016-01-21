@@ -233,12 +233,18 @@ component extends="baseHandler"{
 		setNextEvent(event=prc.xehRawSettings,queryString="##wirebox" );
 	}
 
-	// View cached Keys
+	/**
+	* View settings cached data
+	* @return html
+	*/
 	function viewCached( event, rc, prc ){
-		var key = settingsService.getSettingsCacheKey();
-		rc.settings = getColdBoxOCM().get( key );
-		rc.metadata = getColdBoxOCM().getCachedObjectMetadata( key );
-		event.setView(view="settings/viewCached",layout="ajax" );
+		var cache 		= settingsService.getSettingsCacheProvider();
+		var cacheKey 	= settingsService.getSettingsCacheKey();
+		// get Cached Settings
+		prc.settings 	= cache.get( cacheKey );
+		prc.metadata 	= cache.getCachedObjectMetadata( cacheKey );
+
+		event.setView( view="settings/viewCached", layout="ajax" );
 	}
 
 	// Show full Auth Logs

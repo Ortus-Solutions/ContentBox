@@ -8,6 +8,7 @@ module.exports = function( grunt ){
 
 	// CSS Task
 	grunt.registerTask( "css", [
+		"sass:css",			//Bootswatch to sass
 		"clean:revcss", 		//clean old rev css
 		"bower_concat:css",		//bower concat
 		"concat:css", 			//concat css 
@@ -69,12 +70,34 @@ module.exports = function( grunt ){
 				]
 			},
 			
+			bootswatchSkinTemplate : {
+				files : [
+					{
+						expand	: true,
+						cwd 		: 'includes/css/src/',
+						src 		: 'includes/css/src/skin.scss',
+						dest 	: 'bower_components/bootswatch/cerulean/'
+					}
+				]
+			},
+			
 			bootswatch : {
 				files : [
 					{
 						expand	: true,
 						cwd 		: 'bower_components/bootswatch/',
 						src 		: '**/bootstrap.min.css',
+						dest 	: 'includes/css/bootstrap/swatches/'
+					}
+				]
+			},
+			
+			bootswatchSkin : {
+				files : [
+					{
+						expand	: true,
+						cwd 		: 'bower_components/bootswatch/',
+						src 		: '**/skin.css',
 						dest 	: 'includes/css/bootstrap/swatches/'
 					}
 				]
@@ -129,6 +152,17 @@ module.exports = function( grunt ){
 			}
 		}, // end cache busting
 
+
+		sass: {
+			css: {
+				files: grunt.file.expandMapping(['bower_components/bootswatch/**/skin.scss'], 'css', {
+    					rename: function (dest, matched) {
+        					return matched.replace(/\.scss$/, '.css');
+    					}
+				})
+			}
+		},
+		
 		// Cleanup
 		clean : {
 			// css
