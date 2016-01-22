@@ -60,24 +60,30 @@
 					<div class="tab-content">
 						<!--- cbadmin Event --->
 						#announceInterception( "cbadmin_preDashboardTabContent" )#
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
+						<!--- ****************************************************************************************** --->
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<div class="tab-pane" id="recentContentTab">
-								<div class="" id="latestPages">
+								<div class="" id="latestSystemEdits">
 									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 								</div>
-								<div class="" id="latestEntries">
-									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
-								</div>
-								<div class="" id="latestContentStore">
+								<div class="" id="latestUserDrafts">
 									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 								</div>
 							</div>
 						</cfif>
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST COMMENTS --->
+						<!--- ****************************************************************************************** --->
 						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 							<div class="tab-pane" id="latestComments">
 								<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 							</div>
 						</cfif>
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST NEWS TAB --->
+						<!--- ****************************************************************************************** --->
 						<div class="tab-pane" id="latestNews">
 							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 						</div>

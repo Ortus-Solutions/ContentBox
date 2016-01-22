@@ -10,12 +10,12 @@
 </cfif>
 #html.startForm(name="commentPagerForm" )#
 <!--- comments --->
-<table name="comments_pager" id="comments_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
+<table name="comments_pager" id="comments_pager" class="table table-hover table-condensed table-striped" width="100%">
 	<thead>
 		<tr>
 			<th width="200">Author</th>
 			<th>Comment</th>
-			<th width="150" class="text-center">Date</th>			
+			<th width="175" class="text-center">Date</th>			
 			<th width="100" class="text-center">Actions</th>
 		</tr>
 	</thead>
@@ -56,10 +56,10 @@
 							<a class="btn btn-xs btn-info" href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 						</cfif>
 						<!--- Delete Command --->
-						<a class="btn btn-xs btn-danger" title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o fa-lg" ></i></a>
+						<a class="btn btn-xs btn-info" title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o fa-lg" ></i></a>
 					</cfif>
 					<!--- View in Site --->
-					<a class="btn btn-xs btn-primary" href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye fa-lg"></i></a>
+					<a class="btn btn-xs btn-info" href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye fa-lg"></i></a>
 				</div>
 			</td>
 		</tr>

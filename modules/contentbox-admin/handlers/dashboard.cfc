@@ -16,27 +16,28 @@ component extends="baseHandler"{
 	property name="feedReader"			inject="FeedReader@cbfeeds";
 	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
 
-	// Pre Handler
+	/**
+	* Pre handler 
+	*/
 	function preHandler( event, action, eventArguments, rc, prc ){
-		prc.tabDashboard = true;
 	}
 
-	// dashboard index
+	/**
+	* Main dashboard event
+	* @return html
+	*/
 	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehDeleteInstaller 		= "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
 		prc.xehDeleteDSNCreator 	= "#prc.cbAdminEntryPoint#.dashboard.deleteDSNCreator";
 		// Ajax Loaded handlers
-		prc.xehLatestEntries		= "#prc.cbAdminEntryPoint#.dashboard.latestEntries";
-		prc.xehLatestPages			= "#prc.cbAdminEntryPoint#.dashboard.latestPages";
-		prc.xehLatestContentStore	= "#prc.cbAdminEntryPoint#.dashboard.latestContentStore";
+		prc.xehLatestSystemEdits	= "#prc.cbAdminEntryPoint#.dashboard.latestSystemEdits";
+		prc.xehLatestUserDrafts		= "#prc.cbAdminEntryPoint#.dashboard.latestUserDrafts";
 		prc.xehLatestComments		= "#prc.cbAdminEntryPoint#.dashboard.latestComments";
 		prc.xehLatestNews			= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
 		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
 		prc.xehLatestLogins			= "#prc.cbAdminEntryPoint#.dashboard.latestLogins";
 		
-		// Tab Manipulation
-		prc.tabDashboard_home = true;
 		// Installer Check
 		prc.installerCheck = settingService.isInstallationPresent();
 		// announce event
@@ -45,7 +46,10 @@ component extends="baseHandler"{
 		event.setView( "dashboard/index" );
 	}
 	
-	// latest snapshot
+	/**
+	* Produce the latest system snapshots
+	* @return html
+	*/
 	function latestSnapshot( event, rc, prc ){
 		// Few counts
 		prc.entriesCount			= entryService.count();
@@ -74,35 +78,37 @@ component extends="baseHandler"{
 		// render view out.
 		event.setView( view="dashboard/latestSnapshot", layout="ajax" );
 	}
-	
-	// Latest Entries
-	function latestEntries( event, rc, prc ){
-		// Get entries viewlet: Stupid cf9 and its local scope blown on argument literals
-		var eArgs = { max=prc.cbSettings.cb_dashboard_recentEntries, pagination=false, latest=true };
-		prc.entriesViewlet = runEvent( event="contentbox-admin:entries.pager", eventArguments=eArgs );
-		
-		event.setView( view="dashboard/latestEntries", layout="ajax" );
+
+	/**
+	* Produce the latest currently logged in user drafts
+	* @return html
+	*/
+	function latestUserDrafts( event, rc, prc ){
+		// Latest Edits
+		prc.latestDraftsViewlet = runEvent(
+			event 			= "contentbox-admin:content.latestContentEdits",
+			eventArguments 	= { max = 10, author = prc.oAuthor }
+		)
+		event.setView( view="dashboard/latestUserDrafts", layout="ajax" );
+	}
+
+	/**
+	* Produce the latest system content edits
+	* @return html
+	*/
+	function latestSystemEdits( event, rc, prc ){
+		// Latest Edits
+		prc.latestEditsViewlet = runEvent(
+			event 			= "contentbox-admin:content.latestContentEdits",
+			eventArguments 	= { max=10 }
+		)
+		event.setView( view="dashboard/latestSystemEdits", layout="ajax" );
 	}
 	
-	// Latest ContentStore
-	function latestContentStore( event, rc, prc ){
-		// Get contentStore viewlet: Stupid cf9 and its local scope blown on argument literals
-		var eArgs = { max=prc.cbSettings.cb_dashboard_recentContentStore, pagination=false, latest=true };
-		prc.contentStoreViewlet = runEvent( event="contentbox-admin:contentstore.pager", eventArguments=eArgs );
-		
-		event.setView( view="dashboard/latestContentStore", layout="ajax" );
-	}
-	
-	// Latest Pages
-	function latestPages( event, rc, prc ){
-		// Get Pages viewlet
-		var eArgs = { max=prc.cbSettings.cb_dashboard_recentPages,pagination=false, latest=true, sorting=false };
-		prc.pagesViewlet = runEvent( event="contentbox-admin:pages.pager",eventArguments=eArgs );
-		
-		event.setView( view="dashboard/latestPages", layout="ajax" );
-	}
-	
-	// Latest Comments
+	/**
+	* Produce the latest system comments
+	* @return html
+	*/
 	function latestComments( event, rc, prc ){
 		// Get Comments viewlet
 		var eArgs = { max=prc.cbSettings.cb_dashboard_recentComments,pagination=false };
@@ -111,7 +117,10 @@ component extends="baseHandler"{
 		event.setView( view="dashboard/latestComments", layout="ajax" );
 	}
 	
-	// Latest News
+	/**
+	* Produce the latest system news
+	* @return html
+	*/
 	function latestNews( event, rc, prc ){
 		// Get latest ContentBox news
 		try{
@@ -132,13 +141,29 @@ component extends="baseHandler"{
 		event.setView( view="dashboard/latestNews", layout="ajax" );
 	}
 
-	// Latest logins
+	/**
+	* Produce the latest system logins
+	* @return html
+	*/
 	function latestLogins( event, rc, prc ){
 		prc.lastLogins = loginTrackerService.getLastLogins( max = prc.cbsettings.cb_security_blocktime );
 		event.setView( view="dashboard/latestLogins", layout="ajax" );
 	}
+
+	/**
+	* ContentBox about page
+	* @return html
+	*/
+	function about( event, rc, prc ){
+		event.setView( "dashboard/about" );
+	}
 	
-	// Delete Installer
+	/*************************************** UTILITY ACTIONS *********************************/
+
+	/**
+	* delete installer module
+	* @return JSON
+	*/
 	function deleteInstaller(){
 		var results = { "ERROR" = false, "MESSAGE" = "" };
 		
@@ -153,7 +178,10 @@ component extends="baseHandler"{
 		event.renderData(data=results, type="json" );
 	}
 	
-	// Delete INstaller
+	/**
+	* delete DSN Creator module
+	* @return JSON
+	*/
 	function deleteDSNCreator(){
 		var results = { "ERROR" = false, "MESSAGE" = "" };
 		
@@ -168,13 +196,10 @@ component extends="baseHandler"{
 		event.renderData( data=results, type="json" );
 	}
 
-	// about
-	function about( event, rc, prc ){
-		prc.tabDashboard_about = true;
-		event.setView( "dashboard/about" );
-	}
-
-	// reload modules
+	/**
+	* Reload System Actions
+	* @return relocation if synchronous, json if ajax
+	*/
 	function reload( event, rc, prc ){
 		try{
 			switch( rc.targetModule ){

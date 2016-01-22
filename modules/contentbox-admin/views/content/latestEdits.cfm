@@ -1,5 +1,4 @@
 <cfoutput>
-#html.startFieldset( legend="Latest Edits" )#
 <!--- latest edits --->
 <table name="latestEditsTable" id="latestEditsTable" class="table table-hover table-condensed table-striped" width="100%">
 	<thead>
@@ -24,15 +23,23 @@
 				<!--- Editor --->
 	    		<cfif thisContent.getContentType() == "page">
 					<a href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page">#thisContent.getTitle()#</a>
+					<br>
+					<span class="label label-default">#thisContent.getContentType()#</span>
 				<cfelseif thisContent.getContentType() == "contentStore">
 					<a href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit ContentStore">#thisContent.getTitle()#</a>
+					<br>
+					<span class="label label-info">#thisContent.getContentType()#</span>
 				<cfelse>
 					<a href="#event.buildLink( prc.xehBlogEditor )#/contentID/#thisContent.getContentID()#" title="Edit Entry">#thisContent.getTitle()#</a>
+					<br>
+					<span class="label label-primary">#thisContent.getContentType()#</span>
 				</cfif>
-				<br>
-				<span class="label label-warning">#thisContent.getContentType()#</span>
 			</td>
-			<td>#thisContent.getActiveContent().getDisplayCreatedDate()#</td>
+			<td>
+				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#thisContent.getAuthorEmail()#">#thisContent.getAuthorName()#</a>
+				<br>
+				#thisContent.getActiveContent().getDisplayCreatedDate()#
+			</td>
 			<td class="text-center">
 				<cfif thisContent.isExpired()>
 					<i class="fa fa-clock-o fa-lg textRed" title="Content has expired on ( (#thisContent.getDisplayExpireDate()#))"></i>
@@ -58,6 +65,8 @@
 					<cfelse>
 						<a class="btn btn-primary btn-sm" href="#prc.CBHelper.linkEntry( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
 					</cfif>
+				<cfelse>
+					<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page"><i class="fa fa-edit fa-lg"></i></a>
 				</cfif>
 		    </div>
 		</td>
@@ -70,5 +79,4 @@
 	No Records Found
 	</div>											
 </cfif>
-#html.endFieldSet()#
 </cfoutput>
