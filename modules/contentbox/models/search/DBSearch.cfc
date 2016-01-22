@@ -119,7 +119,7 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 	* utility to strip HTML
 	*/
 	private function stripHTML(stringTarget){
-		return REReplaceNoCase(arguments.stringTarget,"<[^>]*>","","ALL" );
+		return REReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" );
 	}
 
 	/**

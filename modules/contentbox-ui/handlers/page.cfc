@@ -169,7 +169,7 @@ component extends="content" singleton{
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
 			prc.searchResults 			= getModel( "SearchResults@cb" );
-			prc.searchResultsContent 	= "Please enter a search term to search on.";
+			prc.searchResultsContent 	= "<div class='alert alert-info'>Please enter a search term to search on.</div>";
 		}
 		
 		// set skin search
