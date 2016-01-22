@@ -5,7 +5,7 @@
           <table style="width:100%">
             <tr>
               <td width="30%">
-                <h3 style="margin: 9px 0;"><i class="fa fa-eye fa-lg"></i>&nbsp; <span class="header-title">Quick Previews</span></h3>
+                <h3 style="margin: 9px 0;"><i class="fa fa-eye fa-lg"></i>&nbsp; <span class="header-title">Responsive Previews</span></h3>
               </td>
               <td width="40%" align="center" nowrap>
                 <div class="btn-group" style="width:250px">
