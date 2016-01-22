@@ -51,11 +51,11 @@
     "dependencies":{
         "coldbox":"4.1.0+00002",
         "cborm":"1.1.0",
-        "cbmailservices":"1.0.0",
-        "cbsecurity":"1.1.0",
+        "cbmailservices":"1.1.0",
+        "cbsecurity":"1.2.0",
         "cbstorages":"1.0.0",
         "cbfeeds":"1.0.1",
-        "cbmessagebox":"1.0.0",
+        "cbmessagebox":"2.0.0",
         "cbantisamy":"1.2.0"
     },
     "installPaths":{
