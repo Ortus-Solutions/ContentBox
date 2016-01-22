@@ -87,7 +87,7 @@ component extends="baseHandler"{
 		// Latest Edits
 		prc.latestDraftsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { max = 10, author = prc.oAuthor }
+			eventArguments 	= { max = 10, author = prc.oAuthor, isPublished = false }
 		)
 		event.setView( view="dashboard/latestUserDrafts", layout="ajax" );
 	}
