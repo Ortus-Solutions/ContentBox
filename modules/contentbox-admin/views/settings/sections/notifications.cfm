@@ -43,7 +43,7 @@
         #html.label(
             class="control-label",
             field="cb_notify_author",
-            content="<i class='icon-user'></i> Send a notification when a user has been created or removed:"
+            content="<i class='fa fa-user'></i> Send a notification when a user has been created or removed:"
         )#
         <div class="controls">
             #html.radioButton( 
@@ -63,7 +63,7 @@
         #html.label(
             class="control-label",
             field="cb_notify_entry",
-            content="<i class='icon-quote-left'></i> Send a notification when a blog entry has been created or removed:"
+            content="<i class='fa fa-quote-left'></i> Send a notification when a blog entry has been created or removed:"
         )#
         <div class="controls">
             #html.radioButton( 
@@ -83,7 +83,7 @@
         #html.label(
             class="control-label",
             field="cb_notify_page",
-            content="<i class='icon-file-alt'></i> Send a notification when a page has been created or removed:"
+            content="<i class='fa fa-file'></i> Send a notification when a page has been created or removed:"
         )#
         <div class="controls">
             #html.radioButton( 
@@ -103,7 +103,7 @@
         #html.label(
             class="control-label",
             field="cb_notify_contentstore",
-            content="<i class='icon-hdd'></i> Send a notification when a content store object has been created or removed:"
+            content="<i class='fa fa-hdd-o'></i> Send a notification when a content store object has been created or removed:"
         )#
         <div class="controls">
             #html.radioButton( 
