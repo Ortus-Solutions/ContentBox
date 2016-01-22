@@ -317,6 +317,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 					var cacheProvider = newCriteria()
 						.isEq( "name", "cb_site_settings_cache" )
 						.get();
+					// if null default it
+					if( isNull( cacheProvider ) ){
+						save(
+							new( properties={ name="cb_site_settings_cache", value="Template" } )
+						);
+					}
 					// lazy load it.
 					variables.cacheProviderName = cacheprovider.getValue();
 				}
