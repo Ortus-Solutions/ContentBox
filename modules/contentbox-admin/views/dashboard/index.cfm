@@ -129,16 +129,6 @@
 		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#
 		    </div>
 		</div>
-		<div class="panel panel-primary">
-		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-question-circle"></i> #$r( "dashboard.index.helpTips@admin" )#</h3>
-		    </div>
-		    <div class="panel-body">
-		    	<ul class="list-unstyled tipList">
-					<li><i class="fa fa-lightbulb-o fa-lg"></i> #$r( "dashboard.index.tipList.1@admin" )#</li>
-				</ul>
-		    </div>
-		</div>
 		<!--- Event --->
 		#announceInterception( "cbadmin_postDashboardSideBar" )#
     </div>
