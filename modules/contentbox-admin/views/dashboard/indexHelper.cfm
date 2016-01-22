@@ -3,22 +3,29 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
- 	$( "##latestEntries" ).load( '#event.buildLink( prc.xehLatestEntries )#' );
-	$( "##latestPages" ).load( '#event.buildLink( prc.xehLatestPages )#' );
-	$( "##latestContentStore" ).load( '#event.buildLink( prc.xehLatestContentStore )#' );
-	</cfif>
+ 	// Load My Latest Drafts
+	$( "##latestSystemEdits" ).load( '#event.buildLink( prc.xehLatestSystemEdits )#' );
+	// Load latest System Edits
+ 	$( "##latestUserDrafts" ).load( '#event.buildLink( prc.xehLatestUserDrafts )#' );
+ 	</cfif>
+	// Load news
 	$( "##latestNews" ).load( '#event.buildLink( prc.xehLatestNews )#' );
 	<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+	// Load comments
 	$( "##latestComments" ).load( '#event.buildLink( prc.xehLatestComments )#' );
 	</cfif>
 	<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
+	// Load snapshots
 	$( "##latestSnapshot" ).load( '#event.buildLink( prc.xehLatestSnapshot )#' );
 	</cfif>
 	<cfif prc.oAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
-		$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );		
+	// Load latest logsin
+	$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );		
 	</cfif>
+	// Select first dashboard tab
 	$( "##dashboardTabs a:first" ).tab( 'show' )
 } );
+<!--- If Admin, show Module Cleanups --->
 <cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
 function deleteInstaller(){
 	deleteModule( '#event.buildLink(prc.xehDeleteInstaller)#', "installerCheck" );

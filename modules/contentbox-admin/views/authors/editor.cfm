@@ -213,12 +213,16 @@
 							<!--- Latest Edits --->
 							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 								<div class="tab-pane" id="latestEdits">
+									#html.startFieldSet( legend="Latest Edits" )#
 									#prc.latestEditsViewlet#
+									#html.endFieldSet()#
 								</div>
 
 								<!--- Latest Drafts --->
 								<div class="tab-pane" id="latestDrafts">
+									#html.startFieldSet( legend="Latest Drafts" )#
 									#prc.latestDraftsViewlet#
+									#html.endFieldSet()#
 								</div>
 							</cfif>
 
