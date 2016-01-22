@@ -51,6 +51,7 @@ module.exports = function( grunt ){
 
 		// Copy UI Fonts to destination
 		copy : {
+			
 			fonts : {
 				files : [
 					{ 
@@ -74,8 +75,8 @@ module.exports = function( grunt ){
 				files : [
 					{
 						expand	: true,
-						cwd 		: 'includes/css/src/',
-						src 		: 'includes/css/src/skin.scss',
+						cwd 	: 'includes/css/src/',
+						src 	: 'includes/css/src/skin.scss',
 						dest 	: 'bower_components/bootswatch/cerulean/'
 					}
 				]
@@ -85,8 +86,8 @@ module.exports = function( grunt ){
 				files : [
 					{
 						expand	: true,
-						cwd 		: 'bower_components/bootswatch/',
-						src 		: '**/bootstrap.min.css',
+						cwd 	: 'bower_components/bootswatch/',
+						src 	: '**/bootstrap.min.css',
 						dest 	: 'includes/css/bootstrap/swatches/'
 					}
 				]
@@ -96,8 +97,8 @@ module.exports = function( grunt ){
 				files : [
 					{
 						expand	: true,
-						cwd 		: 'bower_components/bootswatch/',
-						src 		: '**/skin.css',
+						cwd 	: 'bower_components/bootswatch/',
+						src 	: '**/skin.css',
 						dest 	: 'includes/css/bootstrap/swatches/'
 					}
 				]
@@ -152,13 +153,13 @@ module.exports = function( grunt ){
 			}
 		}, // end cache busting
 
-
-		sass: {
-			css: {
-				files: grunt.file.expandMapping(['bower_components/bootswatch/**/skin.scss'], 'css', {
-    					rename: function (dest, matched) {
-        					return matched.replace(/\.scss$/, '.css');
-    					}
+		// SASS Compilation
+		sass : {
+			css : {
+				files : grunt.file.expandMapping( [ 'bower_components/bootswatch/**/skin.scss' ], 'css', {
+					rename : function( dest, matched ){
+    					return matched.replace( /\.scss$/, '.css' );
+					}
 				})
 			}
 		},
