@@ -13,10 +13,10 @@
 	 <!--- History --->
 	<div class="buttonBar">
 		<cfif arrayLen( prc.versionsPager_versions ) gt 1>
-		<button class="btn btn-sm btn-danger" onclick="return versionsPagerDiff();"><i class="icon-exchange"></i> Compare Versions</button>
+		<button class="btn btn-sm btn-danger" onclick="return versionsPagerDiff();"><i class="fa fa-exchange"></i> Compare Versions</button>
 		</cfif>
 		<cfif prc.versionsPager_viewFullHistory>
-		<button class="btn btn-sm btn-default" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"><i class="icon-time"></i> Full History</button>
+		<button class="btn btn-sm btn-default" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"><i class="fa fa-clock-o"></i> Full History</button>
 		</cfif>
 	</div>
 	

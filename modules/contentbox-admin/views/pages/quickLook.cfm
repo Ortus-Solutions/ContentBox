@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3><i class="icon-eye-open"></i> #prc.page.getTitle()#</h3>
+    <h3><i class="fa fa-eye"></i> #prc.page.getTitle()#</h3>
 </div>
 <div class="modal-body">
     #prc.page.renderContent()#

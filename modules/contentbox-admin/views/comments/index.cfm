@@ -14,7 +14,7 @@
         <!--- Info Bar --->
 		<cfif NOT prc.cbSettings.cb_comments_enabled>
 			<div class="alert alert-info">
-				<i class="icon-exclamation-sign fa-lg"></i>
+				<i class="fa fa-exclamation-triangle fa-lg"></i>
 				Comments are currently disabled site-wide!
 			</div>
 		</cfif>
@@ -125,7 +125,7 @@
 									    </div>
 									</cfif>
 									<!--- View in Site --->
-									<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="icon-eye-open fa-lg"></i></a>
+									<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye fa-lg"></i></a>
 								</td>
 							</tr>
 							</cfloop>

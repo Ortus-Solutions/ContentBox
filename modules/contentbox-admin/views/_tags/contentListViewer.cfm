@@ -126,7 +126,7 @@ function activateInfoPanels(){
 		},
 		trigger : 'hover',
 		placement : 'left',
-		title : '<i class="icon-info-sign"></i> Quick Info',
+		title : '<i class="fa fa-info-circle"></i> Quick Info',
 		delay : { show: 200, hide: 500 }
 	} );
 }
@@ -145,7 +145,7 @@ function activateQuickLook( $table, quickLookURL ){
 function remove( contentID, id ){
 	id = typeof id !== 'undefined' ? id : 'contentID';
 	if( contentID != null ){
-		$( "##delete_"+ contentID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+		$( "##delete_"+ contentID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue( id, contentID );		
 	}
 	$contentForm.submit();
@@ -161,7 +161,7 @@ function bulkChangeStatus(status, contentID){
 	$contentForm.find( "##contentStatus" ).val( status );
 	// only submit if something selected
 	if( contentID != null ){
-		$( "##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+		$( "##status_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('contentID',contentID);	
 	}
 	$contentForm.submit();

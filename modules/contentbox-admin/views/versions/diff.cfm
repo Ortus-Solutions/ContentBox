@@ -6,7 +6,7 @@
                 <!--if dismissable-->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="diffTitle">
-                	<i class="icon-time fa-lg"></i>
+                	<i class="fa fa-clock-o fa-lg"></i>
 					Comparing Version <strong>#prc.currentVersion#</strong> and <strong>#prc.oldVersion#</strong>
 				</h4>
             </div>

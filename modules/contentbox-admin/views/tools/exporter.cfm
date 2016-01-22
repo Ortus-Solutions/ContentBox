@@ -325,7 +325,7 @@
     <div id="modalContent">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4><i class="icon-exchange"></i> Export Preview</h4>
+            <h4><i class="fa fa-exchange"></i> Export Preview</h4>
         </div>
         <div class="modal-body" id="previewBody"></div>
     </div>

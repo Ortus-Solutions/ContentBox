@@ -188,7 +188,7 @@
 						)#
 						<!---Notice --->
 						<div class="alert alert-info">
-							<i class="icon-info-sign fa-lg"></i> Please note that import is an expensive process, so please be patient when importing.
+							<i class="fa fa-info-circle fa-lg"></i> Please note that import is an expensive process, so please be patient when importing.
 						</div>
 	                </div>
 	                <!-- footer -->

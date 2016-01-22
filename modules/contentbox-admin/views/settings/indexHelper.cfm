@@ -6,7 +6,7 @@ $(document).ready(function() {
 } );
 function emailTest(){
 	$( "##emailTestDiv" ).html( "" );
-	$( "##iTest" ).addClass( "icon-spin" );
+	$( "##iTest" ).addClass( "fa-spin" );
 	$.post('#event.buildLink( prc.xehEmailTest )#',
 		{
 		  cb_site_mail_server : $( "##cb_site_mail_server" ).val(),
@@ -27,7 +27,7 @@ function emailTest(){
 			else{
 				$( "##emailTestDiv" ).html('<div class="alert alert-success">Test email sent to ' + $( "##cb_site_outgoingEmail" ).val() + ', please verify you received it.</div>');
 			}
-			$( "##iTest" ).removeClass( "icon-spin" );
+			$( "##iTest" ).removeClass( "fa-spin" );
 		},
 		"JSON"
 	);

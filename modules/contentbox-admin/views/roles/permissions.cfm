@@ -48,7 +48,7 @@
 			<cfif !prc.role.hasPermission()>
 				<small>No permissions assigned!</small>
 			<cfelse>
-				<p>Below are the currently assigned permissions. You can optionally remove permissions by clicking on the remove button (<i class="icon-remove fa-lg textRed"></i>).</p>
+				<p>Below are the currently assigned permissions. You can optionally remove permissions by clicking on the remove button (<i class="fa fa-minus-circle fa-lg textRed"></i>).</p>
 			</cfif>			
 		
 			

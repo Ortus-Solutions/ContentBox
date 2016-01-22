@@ -138,7 +138,7 @@ function importContent(){
 	} );
 }
 function removeAuthor(authorID){
-	$( "##delete_"+ authorID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+	$( "##delete_"+ authorID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
 	$( "##authorID" ).val( authorID );
 	$( "##authorForm" ).submit();
 }
