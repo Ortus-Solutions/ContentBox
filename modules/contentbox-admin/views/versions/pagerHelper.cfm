@@ -24,7 +24,7 @@ function versionsPagerDiff(){
 }
 <cfif prc.oAuthor.checkPermission( "VERSIONS_DELETE" )>
 function versionsPagerRemove(versionID){
-	$('##version_delete_'+versionID).removeClass( "icon-remove-sign" ).addClass( "icon-spin icon-spinner" );
+	$('##version_delete_'+versionID).removeClass( "fa fa-minus-circle" ).addClass( "fa-spin fa-spinner" );
 	// ajax remove change
 	$.post( "#event.buildlink(linkTo=prc.xehVersionRemove)#", {versionID:versionID}, function(data){
 		closeConfirmations();
@@ -34,14 +34,14 @@ function versionsPagerRemove(versionID){
 		}
 		else{
 			adminNotifier( "error", data.MESSAGES, 10000 );
-			$('##version_delete_'+versionID).removeClass( "icon-spin icon-spinner" ).addClass( "icon-remove-sign" );
+			$('##version_delete_'+versionID).removeClass( "fa-spin fa-spinner" ).addClass( "fa fa-minus-circle" );
 		}
 	},"json" );	
 }
 </cfif>
 <cfif prc.oAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
 function versionsPagerRollback(versionID){
-	$('##version_rollback_'+versionID).addClass( "icon-spin" );
+	$('##version_rollback_'+versionID).addClass( "fa-spin" );
 	// ajax rollback change
 	$.post( "#event.buildlink(linkTo=prc.xehVersionRollback)#",{revertID:versionID},function(data){
 		closeConfirmations();
@@ -51,7 +51,7 @@ function versionsPagerRollback(versionID){
 		}
 		else{
 			adminNotifier( "error", data.MESSAGES, 10000 );
-			$('##version_rollback_'+versionID).removeClass( "icon-spin" );
+			$('##version_rollback_'+versionID).removeClass( "fa-spin" );
 		}
 	},"json" );	
 }

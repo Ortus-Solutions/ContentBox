@@ -5,7 +5,7 @@
 		<tr>
 			<th>Secured</th>
 			<th>Credentials</th>
-			<th class="text-center"><i class="icon-reorder fa-lg"></i></th>
+			<th class="text-center"><i class="fa fa-arrows fa-lg"></i></th>
 			<th class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>

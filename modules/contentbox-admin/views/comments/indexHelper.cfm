@@ -36,14 +36,14 @@ function changeStatus(status,recordID){
 	$commentForm.attr( "action","#event.buildlink(linkTo=prc.xehCommentstatus)#" );
 	$commentForm.find( "##commentStatus" ).val(status);
 	if( recordID != null ){
-		$( "##status_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+		$( "##status_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('commentID',recordID);	
 	}
 	$commentForm.submit();
 }
 function remove(recordID){
 	if( recordID != null ){
-		$( "##delete_"+ recordID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+		$( "##delete_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('commentID',recordID);		
 	}
 	//Submit Form

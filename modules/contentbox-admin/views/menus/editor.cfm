@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="icon-sort-by-attributes-alt fa-lg"></i> Menu Designer
+            <i class="fa fa-sort-amount-desc fa-lg"></i> Menu Designer
         </h1>
     </div>
 </div>
@@ -159,7 +159,7 @@
     <div id="modalContent">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3><i class="icon-eye-open"></i> Menu Preview</h3>
+            <h3><i class="fa fa-eye"></i> Menu Preview</h3>
         </div>
         <div class="modal-body"></div>
     </div>

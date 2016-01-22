@@ -28,15 +28,6 @@
                     <a href="###ct#" data-toggle="tab"><i class="#getContentTypeIconCls( ct )# icon-small" title="#ct#"></i> #ct#</a>
                 </li>
             </cfloop>
-            <!---<li class="active">
-                <a href="##Page" data-toggle="tab"><i class="icon-file-alt icon-small" title="Page"></i> Page</a>
-            </li>
-            <li>
-                <a href="##Entry" data-toggle="tab"><i class="icon-quote-left icon-small" title="Entry"></i> Entry</a>
-            </li>
-            <li>
-                <a href="##ContentStore" data-toggle="tab"><i class="icon-hdd icon-small" title="ContentStore"></i> ContentStore</a>
-            </li>--->
         </ul>
         <div class="tab-content">
             <cfloop from="1" to="#arrayLen( types )#" index="i">

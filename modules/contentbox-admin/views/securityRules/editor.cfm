@@ -25,7 +25,7 @@
                     #html.startFieldset( legend="Rule Match" )#
                         <!--- Usage --->
                         <div class="alert alert-danger">
-                            <i class="icon-warning-sign fa-lg"></i>
+                            <i class="fa fa-exclamation-triangle fa-lg"></i>
                             Please remember that the secure and white lists are lists of 
                             <a href="http://www.regular-expressions.info/reference.html" target="_blank">regular expressions</a> that will match against an incoming
                             event pattern string or a routed URL string.  So remember the event pattern syntax: <em>[moduleName:][package.]handler[.action]</em> if you will

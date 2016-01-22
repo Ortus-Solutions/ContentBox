@@ -17,7 +17,7 @@
 				#html.textarea(name="quickcontent",required="required" )#
 			
 			<!--- Categories --->
-			#html.startFieldset(legend='<i class="icon-tags fa-lg"></i> Categories')#
+			#html.startFieldset(legend='<i class="fa fa-tags fa-lg"></i> Categories')#
 				<div class="controls">
 				<cfloop from="1" to="#arrayLen(prc.qpCategories)#" index="x">
 					<label class="checkbox inline control-label">

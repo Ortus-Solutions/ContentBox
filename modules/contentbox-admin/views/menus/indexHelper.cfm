@@ -114,7 +114,7 @@ function contentLoad( criteria ){
 function remove( menuID, id ){
     id = typeof id !== 'undefined' ? id : 'menuID';
     if( menuID != null ){
-        $( "##delete_" + menuID ).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
+        $( "##delete_" + menuID ).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
         checkByValue( id, menuID );      
     }
     $contentForm.submit();

@@ -1,7 +1,7 @@
 <cfoutput>
 <!--- Content --->
 <span class="floatRight"><button class="btn btn-xs btn-danger" onclick="closeSearchBox()" title="close search panel"><i class="fa fa-minus"></i></button></span>
-<h2><i class="icon-tasks"></i> Content ( #prc.minContentCount# of #prc.results.count# )<h2>
+<h2><i class="fa fa-newspaper-o"></i> Content ( #prc.minContentCount# of #prc.results.count# )<h2>
 <ul>
 <cfloop array="#prc.results.content#" index="thisContent">
 	<cfif thisContent.getContentType() eq "contentStore">
@@ -24,7 +24,7 @@
 </ul>
 
 <!--- Users --->
-<h2><i class="icon-user"></i> Users ( #prc.minAuthorCount# of #prc.authors.count# )<h2>
+<h2><i class="fa fa-user"></i> Users ( #prc.minAuthorCount# of #prc.authors.count# )<h2>
 <ul>
 <cfloop array="#prc.authors.authors#" index="thisAuthor">
 	<li>
@@ -37,5 +37,5 @@
 </ul>
 
 <!--- Custom Content --->
-#anounceInterception( "onGlobalSearchDisplay" )#
+#announceInterception( "onGlobalSearchDisplay" )#
 </cfoutput>

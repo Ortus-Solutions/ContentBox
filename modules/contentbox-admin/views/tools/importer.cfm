@@ -48,21 +48,6 @@
                                             name="CBUpload",
                                             required=true
                                         )# 
-                                        <!---<div class="fileupload fileupload-new" data-provides="fileupload">
-                                            <div class="input-append textfield">
-                                                <div class="uneditable-input span3">
-                                                    <i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
-                                                </div>
-                                                <span class="btn btn-file">
-                                                    <span class="fileupload-new">Select file</span>
-                                                    <span class="fileupload-exists">Change</span>
-                                                    <input type="file" name="CBUpload" />
-                                                    #html.hiddenField(name="validated",value="false" )#
-                                                    #html.hiddenField(name="overwrite",id="overwrite",value="false" )#
-                                                </span>
-                                                <a href="##" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-                                            </div>
-                                        </div>--->
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +62,7 @@
                         
                         <!--- dsn Info --->
                         <fieldset>
-                        <legend><i class="icon-bolt fa-lg"></i> <strong>Datasource Options</strong></legend>
+                        <legend><i class="fa fa-bolt fa-lg"></i> <strong>Datasource Options</strong></legend>
                             <p>
                                 This server must have a defined datasource to the source blog database in order to import it. Please
                                 make sure this datasource exists in the ColdFusion administrator.
@@ -110,7 +95,7 @@
                         
                         <!--- importer --->
                         <fieldset>
-                        <legend><i class="icon-cog fa-lg"></i> <strong>Source Content</strong></legend>
+                        <legend><i class="fa fa-cog fa-lg"></i> <strong>Source Content</strong></legend>
                             #html.select(
                                 name="importer",
                                 options="Select Source,Mango,WordPress,BlogCFC,MachBlog",

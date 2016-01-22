@@ -22,7 +22,7 @@
 		    <div class="panel-body">
 		    	<!--- Usage --->
 				<div class="alert alert-danger">
-					<i class="icon-warning-sign fa-lg"></i>
+					<i class="fa fa-exclamation-triangle fa-lg"></i>
 					Please remember that the security rules are fired in the order shown. You can drag and drop
 					the rows to the desired order of firing. Be careful with security rules as with much power comes great responsibility!
 				</div>
