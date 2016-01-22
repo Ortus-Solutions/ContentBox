@@ -19,11 +19,11 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 
 	/**
 	* Search content and return an standardized ContentBox Results object.
-	* @searchTerm.hint The search term to search on
-	* @max.hint The max results to return if paging
-	* @offset.hint The offset to use in the search results if paging
+	* @searchTerm The search term to search on
+	* @max The max results to return if paging
+	* @offset The offset to use in the search results if paging
 	*/
-	contentbox.models.search.SearchResults function search(required string searchTerm, numeric max=0, numeric offset=0){
+	contentbox.models.search.SearchResults function search( required string searchTerm, numeric max=0, numeric offset=0 ){
 		// get new search results object
 		var searchResults 	= wirebox.getInstance( "SearchResults@cb" );
 		var sTime 			= getTickCount();
@@ -33,7 +33,8 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 				offset			= arguments.offset,
 				max				= arguments.max,
 				searchTerm		= arguments.searchTerm,
-				showInSearch	= true
+				showInSearch	= true,
+				contentTypes	= "Page,Entry"
 			);
 			var args = {
 				results 	= results.content,
@@ -58,16 +59,16 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 
 	/**
 	* Render the search results according to the adapter and returns HTML
-	* @searchResults.hint The search results object
+	* @searchResults The search results object
 	*/
-	any function renderSearch(required string searchTerm, numeric max=0, numeric offset=0){
+	any function renderSearch( required string searchTerm, numeric max=0, numeric offset=0 ){
 		var searchResults = search(argumentCollection=arguments);
 		return renderSearchWithResults( searchResults );
 	}
 
 	/**
 	* Render the search results according the passed in search results object
-	* @searchResults.hint The search results object
+	* @searchResults The search results object
 	*/
 	any function renderSearchWithResults(required contentbox.models.search.SearchResults searchResults){
 		var results 	= "";
@@ -123,8 +124,8 @@ component accessors="true" implements="contentbox.models.search.ISearchAdapter" 
 
 	/**
 	* Utility function to help you highlight search terms in content
-	* @term.hint The search term
-	* @content.hint The content searched
+	* @term The search term
+	* @content The content searched
 	*/
 	private function highlightSearchTerm(required term, required content){
 		var match 	= findNoCase(arguments.term, arguments.content);

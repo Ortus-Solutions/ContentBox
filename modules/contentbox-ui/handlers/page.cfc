@@ -143,11 +143,12 @@ component extends="content" singleton{
 
 	/**
 	* Content Search
+	* @return html
 	*/
 	function search( event, rc, prc ){
 		// incoming params
-		event.paramValue( "page", 1 );
-		event.paramValue( "q", "" );
+		event.paramValue( "page", 1 )
+			.paramValue( "q", "" );
 
 		// cleanup
 		rc.q = HTMLEditFormat( trim( rc.q ) );
@@ -156,18 +157,19 @@ component extends="content" singleton{
 		prc.oPaging 			= getModel( "paging@cb" );
 		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
 		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
-		
+
 		// get search results
 		if( len( rc.q ) ){
 			var searchAdapter = searchService.getSearchAdapter();
-			prc.searchResults = searchAdapter.search( offset=prc.pagingBoundaries.startRow-1,
-												      max=prc.cbSettings.cb_search_maxResults,
-												   	  searchTerm=rc.q );
+			prc.searchResults = searchAdapter.search( 
+				offset 		= prc.pagingBoundaries.startRow-1,
+				max 		= prc.cbSettings.cb_search_maxResults,
+				searchTerm	= rc.q 
+			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
-		}
-		else{
-			prc.searchResults = getModel( "SearchResults@cb" );
-			prc.searchResultsContent = "Please enter a search term to search on.";
+		} else {
+			prc.searchResults 			= getModel( "SearchResults@cb" );
+			prc.searchResultsContent 	= "Please enter a search term to search on.";
 		}
 		
 		// set skin search
