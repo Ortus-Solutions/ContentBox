@@ -2,17 +2,17 @@
 	switch( msgStruct.type ){
 		case "info" : {
 			local.cssType = " alert-info";
-			local.iconType = "icon-info-sign";
+			local.iconType = "fa fa-info-circle";
 			break;
 		}	
 		case "error" : {
 			local.cssType = " alert-danger";
-			local.iconType = "icon-minus-sign";
+			local.iconType = "fa fa-frown-o";
 			break;
 		}	
 		default : {
-			local.cssType = "";
-			local.iconType = "icon-warning-sign";
+			local.cssType = " alert-warning";
+			local.iconType = "fa fa-exclamation-triangle";
 		}
 	}
 </cfscript>
