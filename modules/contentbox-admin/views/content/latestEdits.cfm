@@ -21,11 +21,11 @@
 			</cfif>>
 			<td>
 				<!--- Editor --->
-	    		<cfif thisContent.getContentType() == "page">
+	    		<cfif thisContent.getContentType() eq "page">
 					<a href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page">#thisContent.getTitle()#</a>
 					<br>
 					<span class="label label-default">#thisContent.getContentType()#</span>
-				<cfelseif thisContent.getContentType() == "contentStore">
+				<cfelseif thisContent.getContentType() eq "contentStore">
 					<a href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit ContentStore">#thisContent.getTitle()#</a>
 					<br>
 					<span class="label label-info">#thisContent.getContentType()#</span>
@@ -60,7 +60,7 @@
 			<div class="btn-group btn-xs">
 				<!--- View in Site --->
 				<cfif listFindNoCase( "page,entry", thisContent.getContentType() )>
-					<cfif thisContent.getContentType() == "page">
+					<cfif thisContent.getContentType() eq "page">
 						<a class="btn btn-primary btn-sm" href="#prc.CBHelper.linkPage( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
 					<cfelse>
 						<a class="btn btn-primary btn-sm" href="#prc.CBHelper.linkEntry( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
