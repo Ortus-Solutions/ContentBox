@@ -310,6 +310,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	* @return coldbox.system.cache.ICacheProvider
 	*/
 	function getSettingsCacheProvider(){
+		// Double lock for race conditions on the lazy loaded cache provider name
 		if( !len( variables.cacheProviderName ) ){
 			lock name="settingsCacheProviderName" timeout="10" throwOnTimeout="true"{
 				if( !len( variables.cacheProviderName ) ){
@@ -317,18 +318,20 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 					var cacheProvider = newCriteria()
 						.isEq( "name", "cb_site_settings_cache" )
 						.get();
-					// if null default it
+					// if null default it to 'Template' cache in ColdBox
+					// This will mostly happen on updates or old instances, not new setup instances
 					if( isNull( cacheProvider ) ){
 						save(
 							new( properties={ name="cb_site_settings_cache", value="Template" } )
 						);
+						variables.cacheProviderName = "Template";
+					} else {
+						variables.cacheProviderName = cacheprovider.getValue();
 					}
-					// lazy load it.
-					variables.cacheProviderName = cacheprovider.getValue();
 				}
 			}
 		}
-		// Return the cache to use.
+		// Return the cache to use, now that the cache name has been lazy loaded.
 		return cacheBox.getCache( variables.cacheProviderName );
 	}
 
