@@ -15,7 +15,9 @@ component extends="baseHandler"{
 	property name="editorService"		inject="id:editorService@cb";
 	property name="paging"				inject="id:paging@cb";
 	
-	// pre handler
+	/**
+	* Pre handler
+	*/
 	function preHandler( event, rc, prc, action, eventArguments){
 		// Tab control
 		prc.tabUsers = true;
@@ -35,7 +37,10 @@ component extends="baseHandler"{
 		}
 	}
 
-	// index
+	/**
+	* List system authors
+	* @return html
+	*/
 	function index( event, rc, prc ){
 		// View all tab
 		prc.tabUsers_manage = true;
@@ -54,7 +59,10 @@ component extends="baseHandler"{
 		event.setView( "authors/index" );
 	}
 
-	// build out user table
+	/**
+	* Build out system author's table + filters
+	* @return html
+	*/
 	function indexTable( event, rc, prc ){
 		// paging
 		event.paramValue( "page", 1 )
@@ -93,21 +101,27 @@ component extends="baseHandler"{
 		event.setView( view="authors/indexTable", layout="ajax" );
 	}
 
-	// username check
+	/**
+	* System username checks
+	* @return json
+	*/
 	function usernameCheck( event, rc, prc ){
 		var found = true;
 
 		event.paramValue( "username","" );
 
 		// only check if we have a username
-		if( len(username) ){
+		if( len( username ) ){
 			found = authorService.usernameFound( rc.username );
 		}
 
-		event.renderData(type="json",data=found);
+		event.renderData( type="json",data=found );
 	}
 
-	// user editor
+	/**
+	* Author editor panel
+	* @return html
+	*/
 	function editor( event, rc, prc ){
 		// exit handlers
 		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#.authors.save";
@@ -132,32 +146,25 @@ component extends="baseHandler"{
 		prc.latestEditsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
 			eventArguments 	= { author = prc.author }
-		)
+		);
 		// Latest Drafts
 		prc.latestDraftsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
 			eventArguments 	= { author = prc.author, isPublished = false }
-		)
+		);
 		// Editor
 		prc.tabUsers_manage = true;
 		// view
 		event.setView( "authors/editor" );
 	}
 
-	// shortcut to your profile
+	/**
+	* Shortcut to author profile
+	* @return html
+	*/
 	function myprofile( event, rc, prc ){
 		rc.authorID = prc.oAuthor.getAuthorID();
 		editor( argumentCollection=arguments );
-	}
-	
-	// List preferences
-	private function listPreferences( event, rc, prc ){
-		// get editors for preferences
-		prc.editors = editorService.getRegisteredEditors();
-		// Get All registered markups so we can display them
-		prc.markups = editorService.getRegisteredMarkups();
-		// render out view
-		return renderView(view="authors/listPreferences", module="contentbox-admin" );
 	}
 	
 	// change user editor preferences
@@ -437,5 +444,20 @@ component extends="baseHandler"{
 			cbMessagebox.error( errorMessage );
 		}
 		setNextEvent( prc.xehAuthors );
+	}
+
+	/******************************************** PRIVATE ****************************************************/
+
+	/**
+	* List author preferences
+	* @return view
+	*/
+	private function listPreferences( event, rc, prc ){
+		// get editors for preferences
+		prc.editors = editorService.getRegisteredEditors();
+		// Get All registered markups so we can display them
+		prc.markups = editorService.getRegisteredMarkups();
+		// render out view
+		return renderView( view="authors/listPreferences", module="contentbox-admin" );
 	}
 }
