@@ -88,7 +88,7 @@ component extends="baseHandler"{
 		prc.latestDraftsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
 			eventArguments 	= { max = 10, author = prc.oAuthor, isPublished = false }
-		)
+		);
 		event.setView( view="dashboard/latestUserDrafts", layout="ajax" );
 	}
 
@@ -101,7 +101,7 @@ component extends="baseHandler"{
 		prc.latestEditsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
 			eventArguments 	= { max=10 }
-		)
+		);
 		event.setView( view="dashboard/latestSystemEdits", layout="ajax" );
 	}
 	
@@ -112,8 +112,10 @@ component extends="baseHandler"{
 	function latestComments( event, rc, prc ){
 		// Get Comments viewlet
 		var eArgs = { max=prc.cbSettings.cb_dashboard_recentComments,pagination=false };
-		prc.commentsViewlet = runEvent( event="contentbox-admin:comments.pager", eventArguments=eArgs );
-	
+		prc.commentsViewlet = runEvent( 
+			event 			= "contentbox-admin:comments.pager", 
+			eventArguments 	= eArgs 
+		);
 		event.setView( view="dashboard/latestComments", layout="ajax" );
 	}
 	
