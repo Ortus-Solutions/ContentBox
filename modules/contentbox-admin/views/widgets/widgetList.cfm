@@ -78,7 +78,7 @@
                                 <cfelse>
                                     <div class="panel-heading">
                                         <cfif args.mode eq "edit">
-                                            <div class="btn-group btn-group-sm pull-right">
+                                            <div class="btn-group btn-group-sm actions">
                                                 <!---read docs--->
                                                 <a data-toggle="tooltip" data-placement="left" title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'} )">
                                                     <i class="fa fa-book fa-lg"></i> 
