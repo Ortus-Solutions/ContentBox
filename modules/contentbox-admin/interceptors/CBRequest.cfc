@@ -50,7 +50,10 @@ component extends="coldbox.system.Interceptor"{
 		// store admin menu service
 		prc.adminMenuService = adminMenuService;
 		// Sidemenu collapsed
-		prc.sideMenuClass = (  ( cookie[ "sidemenu-collapse" ] ?: "false" ) == "true" ? "sidebar-mini" : "" );
+		prc.sideMenuClass = "";
+		if( structKeyExists( cookie, "sidemenu-collapse" ) and cookie[ "sidemenu-collapse" ] == "true" ){
+			prc.sideMenuClass = "sidebar-mini";
+		}
 		
 		/************************************** FORCE SSL *********************************************/
 		
