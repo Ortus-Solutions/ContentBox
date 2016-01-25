@@ -322,6 +322,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 						save(
 							new( properties={ name="cb_site_settings_cache", value="Template" } )
 						);
+						variables.cacheProviderName = "Template";
+						return cacheBox.getCache( variables.cacheProviderName );
 					}
 					// lazy load it.
 					variables.cacheProviderName = cacheprovider.getValue();
