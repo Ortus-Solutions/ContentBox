@@ -16,19 +16,22 @@ component extends="baseHandler"{
 	property name="LoginTrackerService"	inject="id:LoginTrackerService@cb";
 	property name="mailService"			inject="id:mailservice@cbMailservices";
 	
-	// pre handler
+	/**
+	* Pre handler
+	*/
 	function preHandler( event, rc, prc, action, eventArguments ){
-		// Tab control
-		prc.tabSystem = true;
 	}
 
-	// index
+	/**
+	* Settings manager
+	* @return html
+	*/
 	function index( event, rc, prc ){
 		// Exit Handler
 		prc.xehSaveSettings = "#prc.cbAdminEntryPoint#.settings.save";
 		prc.xehEmailTest	= "#prc.cbAdminEntryPoint#.settings.emailTest";
 		// pages
-		prc.pages = pageService.search(sortOrder="slug asc",isPublished=true).pages;
+		prc.pages = pageService.search( sortOrder="slug asc", isPublished=true ).pages;
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
 		// Get All registered markups so we can display them
@@ -45,33 +48,40 @@ component extends="baseHandler"{
 		event.setView( "settings/index" );
 	}
 	
-	// email test
+	/**
+	* Email Testing of settings
+	* @return json
+	*/
 	function emailTest( event, rc, prc ){
-		var mail = mailservice.newMail(to=rc.cb_site_outgoingEmail,
-									   from=rc.cb_site_outgoingEmail,
-									   subject="ContentBox Test",
-									   server=rc.cb_site_mail_server,
-									   username=rc.cb_site_mail_username,
-									   password=rc.cb_site_mail_password,
-									   port=rc.cb_site_mail_smtp,
-									   useTLS=rc.cb_site_mail_tls,
-									   useSSL=rc.cb_site_mail_ssl,
-									   body='Test Email From ContentBox');
+		var mail = mailservice.newMail(
+			to			= rc.cb_site_outgoingEmail,
+			from		= rc.cb_site_outgoingEmail,
+			subject		= "ContentBox Test",
+			server		= rc.cb_site_mail_server,
+			username	= rc.cb_site_mail_username,
+			password	= rc.cb_site_mail_password,
+			port		= rc.cb_site_mail_smtp,
+			useTLS		= rc.cb_site_mail_tls,
+			useSSL		= rc.cb_site_mail_ssl,
+			body		= 'Test Email From ContentBox'
+		);
 		// send it out
 		var results = mailService.send( mail );
 		
 		event.renderData( data=results, type="json" );		
 	}
 
-	// save settings
+	/**
+	* Save settings
+	*/
 	function save( event, rc, prc ){
 		// announce event
 		announceInterception( "cbadmin_preSettingsSave",{ oldSettings = prc.cbSettings, newSettings = rc } );
 		// bulk save the options
-		settingsService.bulkSave(rc);
+		settingsService.bulkSave( rc );
 		// Do blog entry point change
-		var ses = getInterceptor( "SES" );
-		var routes = ses.getRoutes();
+		var ses 	= getInterceptor( "SES" );
+		var routes 	= ses.getRoutes();
 		for( var key in routes ){
 			if( key.namespaceRouting eq "blog" ){
 				key.pattern = key.regexpattern = replace(  rc[ "cb_site_blog_entrypoint" ] , "/", "-", "all" ) & "/";
@@ -85,7 +95,10 @@ component extends="baseHandler"{
 		setNextEvent(prc.xehSettings);
 	}
 
-	// raw settings manager
+	/**
+	* Raw settings manager
+	* @return html
+	*/
 	function raw( event, rc, prc ){
 		// exit Handlers
 		prc.xehSettingRemove 	= "#prc.cbAdminEntryPoint#.settings.remove";
@@ -109,41 +122,10 @@ component extends="baseHandler"{
 		event.setView( "settings/raw" );
 	}
 	
-	// Export All settings
-	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		
-		// get all prepared content objects
-		var data  		= settingsService.getAllForExport();
-		var filename 	= "Settings." & ( rc.format eq "xml" ? "xml" : "json" );
-				
-		event.renderData( data=data, formats="xml,json", xmlRootName="settings" )
-			.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
-	}
-
-	// import settings
-	function importAll( event, rc, prc ){
-		event.paramValue( "importFile", "" );
-		event.paramValue( "overrideSettings", false );
-		try{
-			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
-				var importLog = settingsService.importFromFile( importFile=rc.importFile, override=rc.overrideSettings );
-				cbMessagebox.info( "Settings imported sucessfully!" );
-				flash.put( "importLog", importLog );
-			}
-			else{
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
-			}
-		}
-		catch(any e){
-			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";
-			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
-		}
-		setNextEvent( prc.xehRawSettings );
-	}
-
-	// retrieve raw settings table
+	/**
+	* Present the raw settings table
+	* @return html
+	*/
 	function rawtable( event, rc, prc ){
 		// params
 		event.paramValue( "page", 1 );
@@ -169,7 +151,49 @@ component extends="baseHandler"{
 		event.setView(view="settings/rawSettingsTable", layout="ajax" );
 	}
 
-	// mappingDump
+	/**
+	* Export all settings as either xml or json
+	* @return xml,json
+	*/
+	function exportAll( event, rc, prc ){
+		event.paramValue( "format", "json" );
+		
+		// get all prepared content objects
+		var data  		= settingsService.getAllForExport();
+		var filename 	= "Settings." & ( rc.format eq "xml" ? "xml" : "json" );
+				
+		event.renderData( data=data, formats="xml,json", xmlRootName="settings" )
+			.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
+	}
+
+	/**
+	* Import all settings from a file packet
+	*/
+	function importAll( event, rc, prc ){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideSettings", false );
+		try{
+			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
+				var importLog = settingsService.importFromFile( importFile=rc.importFile, override=rc.overrideSettings );
+				cbMessagebox.info( "Settings imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			}
+			else{
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			}
+		}
+		catch(any e){
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";
+			log.error( errorMessage, e );
+			cbMessagebox.error( errorMessage );
+		}
+		setNextEvent( prc.xehRawSettings );
+	}
+
+	/**
+	* WireBox mapping dump
+	* @return html
+	*/
 	function mappingDump( event, rc, prc ){
 		// params
 		event.paramValue( "id","" );
@@ -177,7 +201,9 @@ component extends="baseHandler"{
 		event.setView(view="settings/mappingDump",layout="ajax" );
 	}
 
-	// saveRaw
+	/**
+	* Save all raw settings
+	*/
 	function saveRaw( event, rc, prc ){
 		// params
 		event.paramValue( "page",1);
@@ -193,7 +219,9 @@ component extends="baseHandler"{
 		setNextEvent(event=prc.xehRawSettings,queryString="page=#rc.page#" );
 	}
 
-	// remove
+	/**
+	* Remove a setting
+	*/
 	function remove( event, rc, prc ){
 		// announce event
 		announceInterception( "cbadmin_preSettingRemove",{settingID=rc.settingID} );
@@ -211,7 +239,9 @@ component extends="baseHandler"{
 		setNextEvent(prc.xehRawSettings);
 	}
 
-	// flush cache
+	/**
+	* Flush settings cache
+	*/
 	function flushCache( event, rc, prc ){
 		var data = { error = false, messages = "" };
 		try{
@@ -226,7 +256,9 @@ component extends="baseHandler"{
 		event.renderData(data=data, type="json" );
 	}
 
-	// flush singletons
+	/**
+	* Flush WireBox singletons
+	*/
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
 		cbMessagebox.setMessage( "info","All singletons flushed and awaiting re-creation." );
@@ -247,7 +279,10 @@ component extends="baseHandler"{
 		event.setView( view="settings/viewCached", layout="ajax" );
 	}
 
-	// Show full Auth Logs
+	/**
+	* Display the auth logs manager
+	* @return html
+	*/
 	function authLogs( event, rc, prc ){
 		prc.featureEnabled 	= prc.cbsettings.cb_security_login_blocker;
 		prc.xehTruncate 	= "#prc.cbAdminEntryPoint#.settings.truncateAuthLogs";
@@ -262,7 +297,7 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* truncateAuthLogs
+	* truncate all auth logs
 	*/
 	any function truncateAuthLogs( event, rc, prc ){
 		loginTrackerService.truncate();

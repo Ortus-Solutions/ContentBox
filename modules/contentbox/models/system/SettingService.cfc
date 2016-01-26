@@ -14,9 +14,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	property name="requestService"	inject="coldbox:requestService";
 
 	/**
-	* The cache provider name. This is lazy-loaded upon request
+	* The cache provider name to use for settings caching. Defaults to 'template' cache.
+	* This can also be set in the global ContentBox settings page to any CacheBox cache.
 	*/
-	property name="cacheProviderName";
+	property name="cacheProviderName" default="template";
 
 	/**
 	* Constructor
@@ -24,7 +25,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	SettingService function init(){
 		// init it
 		super.init( entityName="cbSetting" );
-		variables.cacheProviderName = "";
+		// load cache provider 
+		loadCacheProviderName();
+		
 		return this;
 	}
 
@@ -153,20 +156,25 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	* flush settings cache for current multi-tenant host
 	*/
 	SettingService function flushSettingsCache(){
+		// Clear out the settings cache
 		getSettingsCacheProvider().clear( getSettingsCacheKey() );
+		// Re-load cache provider name, in case user changed it
+		loadCacheProviderName();
 		return this;
 	}
 
 	/**
 	* Bulk saving of options using a memento structure of options
+	* This is usually done from the settings display manager
+	* @memento The struct of settings
 	*/
-	any function bulkSave( struct memento ){
+	SettingService function bulkSave( struct memento ){
 		var settings 	= getAllSettings( asStruct=true );
 		var oOption  	= "";
 		var newOptions 	= [];
 
 		// iterate over settings
-		for(var key in settings){
+		for( var key in settings ){
 			// save only sent in setting keys
 			if( structKeyExists( memento, key ) ){
 				oOption = findWhere( { name=key } );
@@ -310,33 +318,28 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	* @return coldbox.system.cache.ICacheProvider
 	*/
 	function getSettingsCacheProvider(){
-		// Double lock for race conditions on the lazy loaded cache provider name
-		if( !len( variables.cacheProviderName ) ){
-			lock name="settingsCacheProviderName" timeout="10" throwOnTimeout="true"{
-				if( !len( variables.cacheProviderName ) ){
-					// query db for cache name
-					var cacheProvider = newCriteria()
-						.isEq( "name", "cb_site_settings_cache" )
-						.get();
-					// if null default it to 'Template' cache in ColdBox
-					// This will mostly happen on updates or old instances, not new setup instances
-					if( isNull( cacheProvider ) ){
-						save(
-							new( properties={ name="cb_site_settings_cache", value="Template" } )
-						);
-						variables.cacheProviderName = "Template";
-					} else {
-						variables.cacheProviderName = cacheprovider.getValue();
-					}
-				}
-			}
-		}
-		// Return the cache to use, now that the cache name has been lazy loaded.
+		// Return the cache to use
 		return cacheBox.getCache( variables.cacheProviderName );
 	}
 
 	/******************************** PRIVATE ************************************************/
 
-	
+	/**
+	* Load the cache provider name from DB or default value
+	*/
+	private SettingService function loadCacheProviderName(){
+		// query db for cache name
+		var oProvider = newCriteria()
+			.isEq( "name", "cb_site_settings_cache" )
+			.get();
+		// Check if setting in DB already, else default it
+		if( !isNull( cacheProvider ) ){
+			variables.cacheProviderName = oProvider.getValue();
+		} else {
+			// default cache provider name
+			variables.cacheProviderName = "template";
+		}
+		return this;
+	}
 
 }
