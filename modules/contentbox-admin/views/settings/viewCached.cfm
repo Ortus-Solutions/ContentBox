@@ -41,7 +41,7 @@
     	<tbody>
     		<cfloop query="prc.settings">
     		<tr>
-    			<td>#HTMLEditFormat( prc.settings.name#</td>
+    			<td>#HTMLEditFormat( prc.settings.name )#</td>
     			<td>#HTMLEditFormat( prc.settings.value )#</td>
     		</tr>
     		</cfloop>
