@@ -474,7 +474,7 @@
                                             	name 		= "featuredImage",
                                             	bind 		= prc.entry,
                                             	class 		= "form-control",
-                                            	disabled 	= true
+                                            	readonly 	= true
                                             )#
                                             #html.hiddenField(
                                             	name = "featuredImageURL",
