@@ -592,13 +592,13 @@ component accessors="true" threadSafe singleton{
 				
 				if ( structKeyExists( thisSettingMD, "group" ) && thisSettingMD.group != lastGroup ){
 					if ( lastGroup != "NeverHadAGroup" ){
-						writeOutput( '</div></div>');
+						writeOutput( '</div></div>' );
 					}
-					writeOutput('<div class="panel panel-primary">');
+					writeOutput( '<div class="panel panel-primary">' );
   						if ( thisSettingMD.group != "" ){
-  							writeOutput( '<div class="panel-heading">' & thisSettingMD.group & '</div>');	
+  							writeOutput( '<div class="panel-heading">' & thisSettingMD.group & '</div>' );	
   						}
-					writeOutput( '<div class="panel-body">');
+					writeOutput( '<div class="panel-body">' );
 					
 					lastGroup = thisSettingMD.group;
 				}
