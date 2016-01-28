@@ -305,8 +305,9 @@ component accessors="true" singleton threadSafe{
 	* Prepare a ContentBox UI request. This sets ups settings, theme, etc. This method is usualy called
 	* automatically for you on the UI module. However, you can use it a-la-carte if you are building
 	* ajax or module extensions
+	* @layout An optional layout to set for you in the request. 
 	*/
-	CBHelper function prepareUIRequest(){
+	CBHelper function prepareUIRequest( string layout ){
 		var event 	= getRequestContext();
 		var prc 	= getRequestCollection( private=true );
 		var rc		= getRequestCollection();
@@ -331,6 +332,11 @@ component accessors="true" singleton threadSafe{
 		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
 		// announce event
 		this.event( "cbui_preRequest" );
+
+		// Do we set a layout for them already?
+		if( structKeyExists( arguments, "layout" ) ){
+			event.setLayout( name=arguments.layout, module="contentbox" );
+		}
 		
 		/************************************** FORCE SITE WIDE SSL *********************************************/
 		
