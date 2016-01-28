@@ -291,7 +291,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fa fa-hdd-o fa-lg"></i> Cache Settings
+                                        <i class="fa fa-rocket fa-lg"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
