@@ -295,11 +295,22 @@
                                             #html.select(
                                                 name="allowComments",
                                                 options="Yes,No",
-                                                selectedValue=yesNoFormat(prc.entry.getAllowComments()), 
+                                                selectedValue=yesNoFormat( prc.entry.getAllowComments() ), 
                                                 class="form-control input-sm"
                                             )#
                                         </div>
                                     </cfif>
+
+                                    <div class="form-group">
+                                        <!--- Show in Search --->
+                                        #html.select(
+                                            name="showInSearch",
+                                            label="Show In Search:",
+                                            class="form-control input-sm",
+                                            options="Yes,No",
+                                            selectedValue=yesNoFormat( prc.entry.getShowInSearch() )
+                                        )#
+                                    </div>
                 
                                     <!--- Password Protection --->
                                     <div class="form-group">
