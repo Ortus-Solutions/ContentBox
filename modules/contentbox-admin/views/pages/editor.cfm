@@ -283,7 +283,17 @@
                                             label="Show In Menus:",
                                             class="form-control input-sm",
                                             options="Yes,No",
-                                            selectedValue=yesNoFormat(prc.page.getShowInMenu())
+                                            selectedValue=yesNoFormat( prc.page.getShowInMenu() )
+                                        )#
+                                    </div>
+                                    <div class="form-group">
+                                        <!--- Show in Search --->
+                                        #html.select(
+                                            name="showInSearch",
+                                            label="Show In Search:",
+                                            class="form-control input-sm",
+                                            options="Yes,No",
+                                            selectedValue=yesNoFormat( prc.page.getShowInSearch() )
                                         )#
                                     </div>
                                     <div class="form-group">
