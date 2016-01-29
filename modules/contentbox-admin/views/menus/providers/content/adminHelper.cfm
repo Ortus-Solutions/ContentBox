@@ -21,6 +21,8 @@
             label.val( title );
             updateLabel( label );
             typeIcon.removeClass( 'btn-danger' ).addClass( 'btn-primary' );
+            $('##menuForm').valid();
+            toggleErrors('off');
             return false;
         }
     </script>
