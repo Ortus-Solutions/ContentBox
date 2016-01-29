@@ -277,6 +277,10 @@ module.exports = function( grunt ){
 				files : [ "includes/css/src/*.css" ],
 				tasks : [ "css" ]
 			},
+			scss : {
+				files : [ "includes/css/src/*.scss" ],
+				tasks : [ "scss", "css", "copy" ]
+			},
 			js : {
 				files : [ 
 					"includes/js/src/*.js"
