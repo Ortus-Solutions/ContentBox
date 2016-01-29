@@ -4,7 +4,12 @@ module.exports = function( grunt ){
 	grunt.registerTask( "default", [ "watch" ] );
 
 	// Build All
-	grunt.registerTask( "all", [ "css", "js", "copy" ] );
+	grunt.registerTask( "all", [ "scss", "css", "js", "copy" ] );
+
+	// SCSS Task
+	grunt.registerTask( "scss", [
+		"copy:bootswatchSkinTemplate"	//Copy Sass to Bootswatch
+	] );
 
 	// CSS Task
 	grunt.registerTask( "css", [
@@ -76,8 +81,98 @@ module.exports = function( grunt ){
 					{
 						expand	: true,
 						cwd 	: 'includes/css/src/',
-						src 	: 'includes/css/src/skin.scss',
+						src 	: 'skin.scss',
 						dest 	: 'bower_components/bootswatch/cerulean/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/cosmo/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/cyborg/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/darkly/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/flatly/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/journal/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/lumen/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/paper/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/readable/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/sandstone/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/simplex/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/slate/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/spacelab/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/superhero/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/united/'
+					},
+					{
+						expand	: true,
+						cwd 	: 'includes/css/src/',
+						src 	: 'skin.scss',
+						dest 	: 'bower_components/bootswatch/yeti/'
 					}
 				]
 			},
@@ -120,7 +215,7 @@ module.exports = function( grunt ){
 	            	"includes/js/theme.js" : [
 	            		"includes/js/bower.js",
 	            		"includes/js/src/**.js",
-	            	]
+	            		]
 				}
 			}
 		}, // end concat
