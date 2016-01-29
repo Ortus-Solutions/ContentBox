@@ -30,6 +30,8 @@
             updateLabel( label );
             typeIcon.removeClass( 'btn-danger' ).addClass( 'btn-info' );
             win.close();
+            $('##menuForm').valid();
+            toggleErrors('off');
             return false;
         }
     </script>
