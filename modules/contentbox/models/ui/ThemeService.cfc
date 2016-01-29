@@ -567,7 +567,7 @@ component accessors="true" threadSafe singleton{
 		if( !structKeyExists( oTheme, "settings" ) OR !arrayLen( oTheme.settings ) ){ return settingForm; }
 
 		savecontent variable="settingForm"{
-
+			var lastGroup = "NeverHadAGroup";
 			for( var x=1; x lte arrayLen( oTheme.settings ); x++ ){
 				var thisSettingMD 		= oTheme.settings[ x ];
 				var requiredText 		= "";
@@ -589,7 +589,20 @@ component accessors="true" threadSafe singleton{
 					requiredText 		= "<span class='text-danger'>*Required</span>";
 					requiredValidator 	= "required";
 				}
-
+				
+				if ( structKeyExists( thisSettingMD, "group" ) && thisSettingMD.group != lastGroup ){
+					if ( lastGroup != "NeverHadAGroup" ){
+						writeOutput( '</div></div>' );
+					}
+					writeOutput( '<div class="panel panel-primary">' );
+  						if ( thisSettingMD.group != "" ){
+  							writeOutput( '<div class="panel-heading">' & thisSettingMD.group & '</div>' );	
+  						}
+					writeOutput( '<div class="panel-body">' );
+					
+					lastGroup = thisSettingMD.group;
+				}
+				
 				// writeout control wrapper
 				writeOutput( '<div class="form-group">' );
 					// write out label
@@ -647,6 +660,9 @@ component accessors="true" threadSafe singleton{
     					}
     				}
 				writeOutput( '</div>' );
+			}
+			if ( lastGroup != "NeverHadAGroup" ){
+				writeOutput( '</div></div>' );
 			}
 		}
 		
