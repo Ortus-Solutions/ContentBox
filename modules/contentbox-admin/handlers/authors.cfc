@@ -142,16 +142,18 @@ component extends="baseHandler"{
 			var args = { authorID=rc.authorID, sorting=false, max=5, pagination=false, latest=true };
 			prc.preferencesViewlet 	= listPreferences(  event, rc, prc  );
 		}
-		// Latest Edits
-		prc.latestEditsViewlet = runEvent(
-			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { author = prc.author }
-		);
-		// Latest Drafts
-		prc.latestDraftsViewlet = runEvent(
-			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { author = prc.author, isPublished = false }
-		);
+		if( len(prc.author.getEmail()) ){
+			// Latest Edits
+			prc.latestEditsViewlet = runEvent(
+				event 			= "contentbox-admin:content.latestContentEdits",
+				eventArguments 	= { author = prc.author }
+			)
+			// Latest Drafts
+			prc.latestDraftsViewlet = runEvent(
+				event 			= "contentbox-admin:content.latestContentEdits",
+				eventArguments 	= { author = prc.author, isPublished = false }
+			)
+		}
 		// Editor
 		prc.tabUsers_manage = true;
 		// view
