@@ -45,10 +45,10 @@
 								<!--- Themes Navigation Bar --->
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<a href="##active" data-toggle="tab"><i class="fa fa-star fa-lg"></i> Active Theme</a>
+										<a href="##active" data-toggle="tab"><i class="fa fa-star fa-lg"></i> Active <span class="hidden-xs">Theme</span></a>
 									</li>
 									<li>
-										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns fa-lg"></i> Installed Themes</a>
+										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns fa-lg"></i> Installed <span class="hidden-xs">Themes</span></a>
 									</li>
 								</ul>
 								<!--- Tab Content --->
@@ -111,10 +111,6 @@
 												<em>None</em>
 											</cfif>
 										</div>
-
-										<!--- Announce display Event --->
-										#announceInterception( "cbadmin_onThemeInfo", { theme=prc.activeTheme } )#
-
 		                                <!---Theme Settings --->
 										<cfif len( prc.activeTheme.settings )>
 											<h1>Theme Settings:</h1>
@@ -122,11 +118,8 @@
 												#html.hiddenField( name="themeName", value=prc.activeTheme.name )#
 												#prc.themeService.buildSettingsForm( prc.activeTheme )#
 												
-												<!--- Announce display Event --->
-												#announceInterception( "cbadmin_onThemeSettings", { theme=prc.activeTheme } )#
-
 												<div class="form-group">
-													#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+													#html.submitButton(value="Save Settings", class="btn btn-danger" )#
 												</div>
 
 			                                #html.endForm()#

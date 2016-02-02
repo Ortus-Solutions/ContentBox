@@ -43,16 +43,16 @@
 					<ul class="nav nav-tabs" id="dashboardTabs">
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<li>
-								<a href="##recentContentTab" data-toggle="tab"><i class="fa fa-pencil"></i> #$r( "dashboard.index.nav-tabs.head1@admin" )#</a>
+								<a href="##recentContentTab" data-toggle="tab"><i class="fa fa-pencil"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span></a>
 							</li>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 							<li>
-								<a href="##latestComments" data-toggle="tab"><i class="fa fa-comments"></i> #$r( "dashboard.index.nav-tabs.head2@admin" )#</a>
+								<a href="##latestComments" data-toggle="tab"><i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span></a>
 							</li>
 						</cfif>
 						<li>
-							<a href="##latestNews" data-toggle="tab"><i class="fa fa-rss"></i> #$r( "dashboard.index.nav-tabs.head3@admin" )#</a>
+							<a href="##latestNews" data-toggle="tab"><i class="fa fa-rss"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head3@admin" )#</span></a>
 						</li>
 						<!--- cbadmin Event --->
 						#announceInterception( "cbadmin_onDashboardTabNav" )#
@@ -60,30 +60,24 @@
 					<div class="tab-content">
 						<!--- cbadmin Event --->
 						#announceInterception( "cbadmin_preDashboardTabContent" )#
-						<!--- ****************************************************************************************** --->
-						<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
-						<!--- ****************************************************************************************** --->
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<div class="tab-pane" id="recentContentTab">
-								<div class="" id="latestSystemEdits">
+								<div class="" id="latestPages">
 									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 								</div>
-								<div class="" id="latestUserDrafts">
+								<div class="" id="latestEntries">
+									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+								</div>
+								<div class="" id="latestContentStore">
 									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 								</div>
 							</div>
 						</cfif>
-						<!--- ****************************************************************************************** --->
-						<!--- LATEST COMMENTS --->
-						<!--- ****************************************************************************************** --->
 						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 							<div class="tab-pane" id="latestComments">
 								<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 							</div>
 						</cfif>
-						<!--- ****************************************************************************************** --->
-						<!--- LATEST NEWS TAB --->
-						<!--- ****************************************************************************************** --->
 						<div class="tab-pane" id="latestNews">
 							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 						</div>
@@ -127,6 +121,16 @@
 		    </div>
 		    <div class="panel-body">
 		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#
+		    </div>
+		</div>
+		<div class="panel panel-primary">
+		    <div class="panel-heading">
+		        <h3 class="panel-title"><i class="fa fa-question-circle"></i> #$r( "dashboard.index.helpTips@admin" )#</h3>
+		    </div>
+		    <div class="panel-body">
+		    	<ul class="list-unstyled tipList">
+					<li><i class="fa fa-lightbulb-o fa-lg"></i> #$r( "dashboard.index.tipList.1@admin" )#</li>
+				</ul>
 		    </div>
 		</div>
 		<!--- Event --->
