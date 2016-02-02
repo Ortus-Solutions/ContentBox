@@ -137,23 +137,22 @@ component extends="baseHandler"{
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
 		// get roles
 		prc.roles = roleService.list( sortOrder="role", asQuery=false );
-		// viewlets
+		// viewlets only if editing a user
 		if( prc.author.isLoaded() ){
+			// Preferences Viewlet
 			var args = { authorID=rc.authorID, sorting=false, max=5, pagination=false, latest=true };
 			prc.preferencesViewlet 	= listPreferences(  event, rc, prc  );
+			// Latest Edits
+			prc.latestEditsViewlet = runEvent(
+				event 			= "contentbox-admin:content.latestContentEdits",
+				eventArguments 	= { author = prc.author }
+			);
+			// Latest Drafts
+			prc.latestDraftsViewlet = runEvent(
+				event 			= "contentbox-admin:content.latestContentEdits",
+				eventArguments 	= { author = prc.author, isPublished = false }
+			);
 		}
-		// Latest Edits
-		prc.latestEditsViewlet = runEvent(
-			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { author = prc.author }
-		);
-		// Latest Drafts
-		prc.latestDraftsViewlet = runEvent(
-			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { author = prc.author, isPublished = false }
-		);
-		// Editor
-		prc.tabUsers_manage = true;
 		// view
 		event.setView( "authors/editor" );
 	}
