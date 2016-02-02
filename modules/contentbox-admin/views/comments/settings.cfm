@@ -15,7 +15,7 @@
             name="commentSettingsForm", 
             action=rc.xehSaveSettings, 
             class="form-vertical"
-        )#		
+        )#      
             #html.anchor(name="top" )#
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -24,9 +24,9 @@
                     <div class="tab-wrapper tab-left tab-primary">
                         <!--- Documentation Navigation Bar --->
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="##general_options" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> General Options</a></li>
-                            <li><a href="##moderation" data-toggle="tab"><i class="fa fa-unlock fa-lg"></i> Moderation</a></li>
-                            <li><a href="##notifications" data-toggle="tab"><i class="fa fa-envelope fa-lg"></i> Notifications</a></li>
+                            <li class="active"><a href="##general_options" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">General Options</span></a></li>
+                            <li><a href="##moderation" data-toggle="tab"><i class="fa fa-unlock fa-lg"></i> <span class="hidden-xs">Moderation</span></a></li>
+                            <li><a href="##notifications" data-toggle="tab"><i class="fa fa-envelope fa-lg"></i> <span class="hidden-xs">Notifications</span></a></li>
                             <!--- cbadmin Event --->
                             #announceInterception( "cbadmin_onCommentSettingsNav" )#
                         </ul>       

@@ -21,16 +21,16 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> Raw Settings</a>
+                            <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">Raw Settings</span></a>
                         </li>
                         <li>
-                            <a href="##wirebox" data-toggle="tab"><i class="fa fa-th fa-lg"></i> WireBox</a>
+                            <a href="##wirebox" data-toggle="tab"><i class="fa fa-th fa-lg"></i> <span class="hidden-xs">WireBox</span></a>
                         </li>
                         <li>
-                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o fa-lg"></i>  CacheBox</a>
+                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o fa-lg"></i>  <span class="hidden-xs">CacheBox</span></a>
                         </li>
                         <li>
-                            <a href="##_events" data-toggle="tab"><i class="fa fa-bullhorn fa-lg"></i> Events</a>
+                            <a href="##_events" data-toggle="tab"><i class="fa fa-bullhorn fa-lg"></i> <span class="hidden-xs">Events</span></a>
                         </li>
                     </ul>
                     <!-- End Tabs -->
@@ -69,9 +69,9 @@
                                                     <li><a href="javascript:importSettings()"><i class="fa fa-upload"></i> Import Settings</a></li>
                                                     </cfif>
                                                     <cfif prc.oAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-														<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-														<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
-													</cfif>
+                                                        <li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
+                                                        <li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+                                                    </cfif>
                                                 </ul>
                                             </div>
                                             
