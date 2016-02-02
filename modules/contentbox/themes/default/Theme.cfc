@@ -70,19 +70,22 @@ component{
 	this.screenShotURL	= "screenshot.png";
 	// Layout Settings
 	this.settings = [
-		{ name="cbBootswatchTheme", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", options="cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" },
-		{ name="footerBox", 		defaultValue="", 		type="textarea", 	label="Footer Text:" },
-		{ name="hpHeaderTitle", 	defaultValue="", 		type="text", 		label="Homepage Header Title:" },
-		{ name="hpHeaderText", 		defaultValue="", 		type="textarea", 	label="Homepage Header Text:" },
-		{ name="hpHeaderLink", 		defaultValue="", 		type="text", 		label="Homepage Header Button Link:" },
-		{ name="hpHeaderBg", 		defaultValue="green", 	type="select", 		label="Homepage Header Background:", 	required="false", options="Green,World" },
-		{ name="rssDiscovery", 		defaultValue="true", 	type="boolean",		label="Active RSS Discovery Links", 	required="false" },
-		{ name="showCategoriesBlogSide", defaultValue="true", type="boolean",		label="Show Categories in Blog Sidebar", 	required="false" },
-		{ name="showRecentEntriesBlogSide", 	defaultValue="true", type="boolean",	label="Show Recent Enties in Blog Sidebar", 	required="false" },
-		{ name="showSiteUpdatesBlogSide", 	defaultValue="true", type="boolean",	label="Show Site Updates in Blog Sidebar", 	required="false" },
-		{ name="showEntryCommentsBlogSide", 	defaultValue="true", type="boolean",	label="Show Entry Comments in Blog Sidebar", 	required="false" },
-		{ name="showArchivesBlogSide", 	defaultValue="true", type="boolean",	label="Show Archives in Blog Sidebar", 	required="false" },
-		{ name="showEntriesSearchBlogSide", 	defaultValue="true", type="boolean",	label="Show Entries Search in Blog Sidebar", 	required="false" }
+		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", options="cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" },
+		{ name="headerLogo", 		group="Header", defaultValue="", 		type="text", 	label="Logo URL:" },
+		{ name="footerBox", 		group="Footer", defaultValue="", 		type="textarea", 	label="Footer Text:" },
+		{ name="hpHeaderTitle", 	group="Homepage", defaultValue="", 		type="text", 		label="Homepage Header Title:" },
+		{ name="hpHeaderText",	group="Homepage", defaultValue="", 		type="textarea", 	label="Homepage Header Text:" },
+		{ name="hpHeaderLink", 	group="Homepage", 	defaultValue="", 		type="text", 		label="Homepage Header Button Link:" },
+		{ name="hpHeaderBtnText", 	group="Homepage", 	defaultValue="", 		type="text", 		label="Homepage Header Button Text:" },
+		{ name="hpHeaderBg", 	group="Homepage", 	defaultValue="green", 	type="select", 		label="Homepage Header Background:", 	required="false", options="Green,World" },
+		{ name="hpHeaderImgBg", 	group="Homepage", 	defaultValue="", 	type="text", 		label="Homepage Header Image Background:" },
+		{ name="rssDiscovery", 	group="Homepage", 	defaultValue="true", 	type="boolean",		label="Active RSS Discovery Links", 	required="false" },
+		{ name="showCategoriesBlogSide", group="Blog Sidebar Options", defaultValue="true", type="boolean",		label="Show Categories in Blog Sidebar", 	required="false" },
+		{ name="showRecentEntriesBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Recent Enties in Blog Sidebar", 	required="false" },
+		{ name="showSiteUpdatesBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Site Updates in Blog Sidebar", 	required="false" },
+		{ name="showEntryCommentsBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Entry Comments in Blog Sidebar", 	required="false" },
+		{ name="showArchivesBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Archives in Blog Sidebar", 	required="false" },
+		{ name="showEntriesSearchBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Entries Search in Blog Sidebar", 	required="false" }
 		
 	];
 
