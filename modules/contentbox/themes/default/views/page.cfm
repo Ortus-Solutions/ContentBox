@@ -5,11 +5,24 @@
 
 <!--- If homepage, present homepage jumbotron --->
 <cfif cb.isHomePage()>
-	<div class="body-header-jumbotron jumbotron #cb.themeSetting( 'hpHeaderBg' )#-bg">
+	<cfif cb.themeSetting( 'hpHeaderImgBg' ) is not "">
+		<cfset imgBackground = 'style="background-image: url(' & cb.themeSetting( 'hpHeaderImgBg' ) & ')"'>
+	<cfelse>
+		<cfset imgBackground = "">
+	</cfif>
+	<div class="body-header-jumbotron jumbotron #cb.themeSetting( 'hpHeaderBg' )#-bg" #imgBackground#>
 		<div class="container">
 			<h1>#cb.themeSetting( 'hpHeaderTitle' )#</h1>
 			<p>#cb.themeSetting( 'hpHeaderText' )#</p>
-			<p><a class="btn btn-primary btn-lg" href="#cb.themeSetting( 'hpHeaderLink' )#" role="button">Learn more</a></p>
+			<p>
+				<a class="btn btn-primary btn-lg" href="#cb.themeSetting( 'hpHeaderLink' )#" role="button">
+					<cfif cb.themeSetting( 'hpHeaderBtnText' ) is "">
+						Learn more
+					<cfelse>
+						#cb.themeSetting( 'hpHeaderBtnText' )#
+					</cfif>
+				</a>
+			</p>
 		</div>
 	</div>
 <cfelse>
