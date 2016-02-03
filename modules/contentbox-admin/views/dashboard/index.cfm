@@ -43,16 +43,16 @@
 					<ul class="nav nav-tabs" id="dashboardTabs">
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<li>
-								<a href="##recentContentTab" data-toggle="tab"><i class="fa fa-pencil"></i> #$r( "dashboard.index.nav-tabs.head1@admin" )#</a>
+								<a href="##recentContentTab" data-toggle="tab"><i class="fa fa-pencil"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span></a>
 							</li>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 							<li>
-								<a href="##latestComments" data-toggle="tab"><i class="fa fa-comments"></i> #$r( "dashboard.index.nav-tabs.head2@admin" )#</a>
+								<a href="##latestComments" data-toggle="tab"><i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span></a>
 							</li>
 						</cfif>
 						<li>
-							<a href="##latestNews" data-toggle="tab"><i class="fa fa-rss"></i> #$r( "dashboard.index.nav-tabs.head3@admin" )#</a>
+							<a href="##latestNews" data-toggle="tab"><i class="fa fa-rss"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head3@admin" )#</span></a>
 						</li>
 						<!--- cbadmin Event --->
 						#announceInterception( "cbadmin_onDashboardTabNav" )#
