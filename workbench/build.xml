@@ -116,6 +116,7 @@
       			<exclude name="settings.xml" />
       			<exclude name=".project" />
       			<exclude name="logs" />
+      			<exclude name="server.json" />
       		</fileset>
         </copy>
 
