@@ -103,6 +103,8 @@
 				<exclude name="views/**"/>
 				<exclude name="includes/**"/>
 				<exclude name="handlers/**"/>
+				<exclude name="server.json"/>
+				<exclude name="box.json"/>
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
