@@ -24,16 +24,16 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="##global" data-toggle="tab"><i class="fa fa-globe fa-lg"></i> Global Layout</a>
+                            <a href="##global" data-toggle="tab"><i class="fa fa-globe fa-lg"></i> <span class="hidden-xs">Global Layout</span></a>
                         </li>
                         <li>
-                            <a href="##entry" data-toggle="tab"><i class="fa fa-quote-left fa-lg"></i> Blog Entries</a>
+                            <a href="##entry" data-toggle="tab"><i class="fa fa-quote-left fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
                         </li>
                         <li>
-                            <a href="##comments" data-toggle="tab"><i class="fa fa-comments fa-lg"></i> Comments</a>
+                            <a href="##comments" data-toggle="tab"><i class="fa fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
                         </li>
                         <li>
-                            <a href="##pages" data-toggle="tab"><i class="fa fa-pencil fa-lg"></i> Pages</a>
+                            <a href="##pages" data-toggle="tab"><i class="fa fa-pencil fa-lg"></i> <span class="hidden-xs">Pages</span></a>
                         </li>
                     </ul>
                     #html.startForm(

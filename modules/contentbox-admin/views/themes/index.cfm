@@ -45,10 +45,10 @@
 								<!--- Themes Navigation Bar --->
 								<ul class="nav nav-tabs">
 									<li class="active">
-										<a href="##active" data-toggle="tab"><i class="fa fa-star fa-lg"></i> Active Theme</a>
+										<a href="##active" data-toggle="tab"><i class="fa fa-star fa-lg"></i> <span class="hidden-xs">Active Theme</span></a>
 									</li>
 									<li>
-										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns fa-lg"></i> Installed Themes</a>
+										<a href="##themesPane" data-toggle="tab"><i class="fa fa-columns fa-lg"></i> <span class="hidden-xs">Installed Themes</span></a>
 									</li>
 								</ul>
 								<!--- Tab Content --->
