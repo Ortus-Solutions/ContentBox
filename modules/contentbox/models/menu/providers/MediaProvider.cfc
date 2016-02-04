@@ -59,8 +59,7 @@ component implements="contentbox.models.menu.providers.IMenuItemProvider" extend
      */ 
     public string function getDisplayTemplate( required any menuItem, required struct options={} ) {
         var viewArgs = {
-            menuItem=arguments.menuItem,
-            data = arguments.menuItem.getMemento()
+            menuItem=arguments.menuItem
         };
         return renderer.get().renderExternalView( 
             view="/contentbox/models/menu/views/media/display",
