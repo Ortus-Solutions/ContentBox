@@ -280,7 +280,7 @@ function getWidgetInstanceURL(){ return '#event.buildLink( prc.cbAdminEntryPoint
 // Page Selection Integration
 function getPageSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".pages.editorselector" )#';}
 // Entry Selection Integration
-function getEntrySelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector" )#';}
+function getEntrySelectorURL(){ return #prc.cbSettings.cb_site_disable_blog# ? '' : '#event.buildLink(prc.cbAdminEntryPoint & ".entries.editorselector" )#';}
 // ContentStore Selection Integration
 function getContentStoreSelectorURL(){ return '#event.buildLink(prc.cbAdminEntryPoint & ".contentStore.editorselector" )#';}
 // Preview Integration
