@@ -29,37 +29,6 @@
                     )#
                 </span>
                 <span class="col-md-6">
-                    <!--- title --->
-                    #html.textfield(
-                        label="Title:",
-                        name="title",
-                        id="",
-                        bind=args.menuItem, 
-                        maxlength="100",
-                        title="The title for this menu item",
-                        class="form-control",
-                        wrapper="div class=controls",
-                        labelClass="control-label",
-                        groupWrapper="div class=form-group"
-                    )#
-                </span>
-            </div>
-            <div class="row">
-                <span class="col-md-6">
-                    #html.textfield(
-                        label="Data Attributes:",
-                        name="data",
-                        id="",
-                        bind=args.menuItem, 
-                        maxlength="100",
-                        title="Data attributes: You can use JSON ( {""me"":""you""} ) or a comma-delimited list ( me=you,icecream=awesome )",
-                        class="form-control",
-                        wrapper="div class=controls",
-                        labelClass="control-label",
-                        groupWrapper="div class=form-group"
-                    )#
-                </span>
-                <span class="col-md-6">
                     #html.textfield(
                         label="CSS Classes:",
                         name="itemClass",
@@ -82,6 +51,40 @@
                 <p>These attributes can be used to customize the item's content</p>
                 <!---do provider thing--->
                 #args.provider.getAdminTemplate( menuItem=args.menuItem )#
+
+                <div class="row">
+                    <span class="col-md-6">
+                        <!--- data attribute --->
+                        #html.textfield(
+                            label="Data Attributes:",
+                            name="data",
+                            id="",
+                            bind=args.menuItem, 
+                            maxlength="100",
+                            title="Data attributes: You can use JSON ( {""me"":""you""} ) or a comma-delimited list ( me=you,icecream=awesome )",
+                            class="form-control",
+                            wrapper="div class=controls",
+                            labelClass="control-label",
+                            groupWrapper="div class=form-group"
+                        )#
+                    </span>
+                    <span class="col-md-6">
+                        <!--- title --->
+                        #html.textfield(
+                            label="Title:",
+                            name="title",
+                            id="",
+                            bind=args.menuItem, 
+                            maxlength="100",
+                            title="The title for this menu item",
+                            class="form-control",
+                            wrapper="div class=controls",
+                            labelClass="control-label",
+                            groupWrapper="div class=form-group"
+                        )#
+                    </span>
+                </div>
+
             </fieldset>
         </cfif>
         <!---end provider thing--->
