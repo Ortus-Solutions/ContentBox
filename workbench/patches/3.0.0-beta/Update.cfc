@@ -8,11 +8,13 @@
 * 
 * DB Structure Changes Comment Below
 * 
+* Remove Interface for conversion from 2.1 to 3.0
+*
 * ---
 * Start Commit Hash: 762aede3a97eb00519e7f171ac4c3c6d6924daca
 * End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
 */
-component implements="contentbox.models.updates.IUpdate"{
+component {
 
 	// DI
 	property name="settingService"			inject="id:settingService@cb";
