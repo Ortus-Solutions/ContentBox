@@ -260,7 +260,7 @@ component accessors="true"{
 		// Create Settings
 		var settings = {
 			// Installation security salt
-			"cb_salt" 					= hash( createUUID() & getTickCount() & now(), "SHA-512" ),
+			"cb_salt" 								= hash( createUUID() & getTickCount() & now(), "SHA-512" ),
 
 			// Site Settings
 			"cb_site_name" 							= setup.getSiteName(),
@@ -456,7 +456,8 @@ component accessors="true"{
 		// Create setting objects and save
 		var aSettings = [];
 		for( var key in settings ){
-			var props = { name = key, value= trim( settings[ key ] ) };
+			// Prepare core setting
+			var props = { name = key, value= trim( settings[ key ], isCore = true ) };
 			arrayAppend( aSettings, settingService.new( properties=props ) );
 		}
 
@@ -497,8 +498,8 @@ component accessors="true"{
 			content 	= "What an amazing blog entry, congratulations!",
 			author 		= "Awesome Joe",
 			authorIP 	= cgi.REMOTE_ADDR,
-			authorEmail	= "awesomejoe@gocontentbox.com",
-			authorURL 	= "www.gocontentbox.com",
+			authorEmail	= "awesomejoe@contentbox.org",
+			authorURL 	= "www.ortussolutions.com",
 			isApproved 	= true
 		} );
 		comment.setRelatedContent( entry );
@@ -510,8 +511,8 @@ component accessors="true"{
 			content 		= "I am some bad words and bad comment not approved",
 			author 			= "Bad Joe",
 			authorIP 		= cgi.REMOTE_ADDR,
-			authorEmail 	= "badjoe@gocontentbox.com",
-			authorURL 		= "www.gocontentbox.com",
+			authorEmail 	= "badjoe@contentbox.org",
+			authorURL 		= "www.ortussolutions.com",
 			isApproved 		= false
 		} );
 		comment.setRelatedContent( entry );

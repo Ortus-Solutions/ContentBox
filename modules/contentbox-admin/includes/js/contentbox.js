@@ -454,17 +454,17 @@ function closeConfirmations(){
  * Activate modal confirmation windows
  */
 function activateConfirmations(){
-	// close button triggers for confirmation dialog
-	$confirmIt.find( "button" ).click(function(e){
-		if( $(this).attr( "data-action" ) === "confirm" ){
-			$confirmIt.find( "#confirmItButtons" ).hide();
-			$confirmIt.find( "#confirmItLoader" ).fadeIn();
-			window.location =  $confirmIt.data('confirmSrc');
-		}
-	} );
-	
+    // close button triggers for confirmation dialog
+    $confirmIt.find( "button" ).click(function(e){
+        if( $(this).attr( "data-action" ) === "confirm" ){
+            $confirmIt.find( "#confirmItButtons" ).hide();
+            $confirmIt.find( "#confirmItLoader" ).fadeIn();
+            window.location =  $confirmIt.data('confirmSrc');
+        }
+    } );
+    
 	// Activate dynamic confirmations from <a> of class confirmIt
-	$('a.confirmIt').click(function(e){
+	$( ".confirmIt" ).click( function( e ){
 		// setup the href
 		$confirmIt.data( "confirmSrc", $(this).attr('href'));
         // defaults

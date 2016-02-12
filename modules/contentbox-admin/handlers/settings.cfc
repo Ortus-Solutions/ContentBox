@@ -206,10 +206,11 @@ component extends="baseHandler"{
 	*/
 	function saveRaw( event, rc, prc ){
 		// params
-		event.paramValue( "page",1);
+		event.paramValue( "page", 1 )
+			.paramValue( "isCore", false );
 
 		// populate and get setting
-		var setting = populateModel( settingsService.get(id=rc.settingID) );
+		var setting = populateModel( settingsService.get( id = rc.settingID ) );
     	// save new setting
 		settingsService.save( setting );
 		settingsService.flushSettingsCache();

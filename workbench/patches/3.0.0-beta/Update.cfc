@@ -220,6 +220,15 @@ component {
 		oSearchSetting.setValue( "contentbox.models.search.DBSearch" );
 		settingService.save( entity=oSearchSetting, transactional=false );
 
+		// Update all settings to core
+		var oSettings = settingService.findAll();
+		for( var thisSetting in oSettings ){
+			if( reFindNoCase( "^cb_", thisSetting.getName() ) ){
+				thisSetting.setIsCore( true );
+				settingService.save( entity=thisSetting, transactional = false );
+			}
+		}
+
 		// Add new settings
 		addSetting( "cb_site_settings_cache", "Template" );
 	}
