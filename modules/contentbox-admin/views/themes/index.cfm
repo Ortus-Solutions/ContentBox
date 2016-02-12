@@ -111,6 +111,16 @@
 												<em>None</em>
 											</cfif>
 										</div>
+										<!---Modules --->
+										<div id="theme-modules">
+											<i class="fa fa-bolt"></i>
+											<strong>Theme Modules: </strong> 
+											<cfif len( prc.activeTheme.modules )>
+												#prc.activeTheme.modules#
+											<cfelse>
+												<em>None</em>
+											</cfif>
+										</div>
 
 										<!--- Announce display Event --->
 										#announceInterception( "cbadmin_onThemeInfo", { theme=prc.activeTheme } )#
