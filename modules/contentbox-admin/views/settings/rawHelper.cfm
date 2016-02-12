@@ -101,6 +101,7 @@ function settingsLoad(search, viewAll, page){
 		{ search: search, viewAll: viewAll, page: page }, 
 		function(){
 			$(this).fadeIn();
+			activateConfirmations();
 	} );
 }
 function settingsPaginate(page){
@@ -111,11 +112,14 @@ function viewAllSettings(){
 	$('##settingsTableContainer').fadeOut();
 	settingsLoad( "", true );
 }
-function edit(settingID,name,value){
+function edit( settingID, name, value, isCore ){
 	openModal( $( "##settingEditorContainer" ), 500, 300 );
 	$settingEditor.find( "##settingID" ).val( settingID );
 	$settingEditor.find( "##name" ).val( name );
 	$settingEditor.find( "##value" ).val( value );
+	if( isCore === true ){
+		$settingEditor.find( "##isCore" ).attr( "checked", true );
+	}
 	$settingEditor.find( "##btnSave" ).val( "Update" );
 	$settingEditor.find( "##btnReset" ).val( "Cancel" );
 }
@@ -129,9 +133,13 @@ function createSetting(){
 	$settingEditor.find( "##settingID" ).val( '' );
 	$settingEditor.find( "##name" ).val( '' );
 	$settingEditor.find( "##value" ).val( '' );
+	$settingEditor.find( "##isCore" ).attr( "checked", false );
 	$settingEditor.find( "##btnSave" ).val( "Save" );
-	openModal( $( "##settingEditorContainer" ), 500, 300 );
+	openModal( $( "##settingEditorContainer" ), 500, 350 );
 	return false;
+}
+function submitSettingForm(){
+	$( "##settingEditor" ).submit();
 }
 </script>
 </cfoutput>
