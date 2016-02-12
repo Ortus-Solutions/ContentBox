@@ -16,6 +16,7 @@ component accessors="true" threadSafe singleton{
 	property name="wirebox"				inject="wirebox";
 	property name="html"				inject="HTMLHelper@coldbox";
 	property name="cbHelper"			inject="provider:CBHelper@cb";
+	property name="moduleService"		inject="coldbox:moduleService";
 
 	// The location in disk of the themes
 	property name="themesPath";
@@ -162,6 +163,15 @@ component accessors="true" threadSafe singleton{
 				variables.widgetCache[ widgetName ] = widgetPath;
 			}
 
+			// activate theme modules
+			var aModules = listToArray( iData.themeRecord.modules );
+			for( var thisModule in aModules ){
+				moduleService.registerAndActivateModule( 
+					moduleName 		= thisModule, 
+					invocationPath 	= "#variables.themesInvocationPath#.#themeName#.modules" 
+				);
+			}
+
 			// Announce theme activation
 			interceptorService.processState( "cbadmin_onThemeActivation", iData );
 			
@@ -286,14 +296,22 @@ component accessors="true" threadSafe singleton{
 			variables.themeCFCRegistry[ oTheme.getValue() ].onDeactivation();
 		}
 
+		// unload theme modules
+		var aModules = listToArray( iData.themeRecord.modules );
+		for( var thisModule in aModules ){
+			moduleService.unload( thisModule );
+		}
+
 		// Unregister theme Descriptor Interceptor
 		interceptorService.unregister( interceptorName="cbTheme-#oTheme.getValue()#" );
+
 		// setup the new theme value
 		oTheme.setValue( arguments.themeName );
 		// save the new theme setting
 		settingService.save( oTheme );
 		// Startup active theme
 		startupActiveTheme();
+		
 		// flush the settings
 		settingService.flushSettingsCache();
 
@@ -335,6 +353,7 @@ component accessors="true" threadSafe singleton{
 		QueryAddColumn( rawThemes, "layouts", [] );
 		QueryAddColumn( rawThemes, "settings", [] );
 		QueryAddColumn( rawThemes, "widgets", [] );
+		QueryAddColumn( rawThemes, "modules", [] );
 
 		// Register each theme CFC
 		for( var x=1; x lte rawThemes.recordCount; x++ ){
@@ -397,6 +416,13 @@ component accessors="true" threadSafe singleton{
 				rawThemes.widgets[ x ] = replacenocase( valueList( thisWidgets.name ), ".cfm", "", "all" );
 			} else {
 				rawThemes.widgets[ x ] = "";
+			}
+			// Theme Modules
+			if( directoryExists( variables.themesPath & "/#themeName#/modules" ) ){
+				var thisModules = directoryList( variables.themesPath & "/#themeName#/modules", false, "query" );
+				rawThemes.modules[ x ] = valueList( thisModules.name );
+			} else {
+				rawThemes.modules[ x ] = "";
 			}
 			
 			// Theme layouts
