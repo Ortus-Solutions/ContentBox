@@ -94,7 +94,9 @@
 									<button type="button" class="btn btn-primary btn-sm" onclick="javascript:edit('#category.getCategoryID()#','#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
 									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="fa fa-edit"></i></button>
 									<!--- Delete Command --->
-									<button type="button" class="btn btn-danger btn-sm" title="Delete Category" onclick="javascript:removeCategory('#category.getcategoryID()#')" class="confirmIt" data-title="Delete Category?"><i class="fa fa-trash-o" id="delete_#category.getCategoryID()#"></i></button>
+									<a class="btn btn-danger btn-sm confirmIt" href="javascript:removeCategory('#category.getcategoryID()#')" title="Delete Category" data-title="Delete Category?">
+										<i class="fa fa-trash-o" id="delete_#category.getCategoryID()#"></i>
+									</a>
 									</cfif>
 								</div>
 							</td>
