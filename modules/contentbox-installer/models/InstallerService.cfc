@@ -457,7 +457,7 @@ component accessors="true"{
 		var aSettings = [];
 		for( var key in settings ){
 			// Prepare core setting
-			var props = { name = key, value= trim( settings[ key ], isCore = true ) };
+			var props = { name = key, value = trim( settings[ key ] ), isCore = true };
 			arrayAppend( aSettings, settingService.new( properties=props ) );
 		}
 
