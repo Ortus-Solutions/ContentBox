@@ -1362,7 +1362,7 @@ component accessors="true" singleton threadSafe{
 			// check that item can be added
 			if( item.canDisplay( options=extras ) ) {
 				// get template from provider
-				menuString &= '<li #item.getAttributesAsString()#>' & item.getProvider().getDisplayTemplate( item, extras );
+				menuString &= '<li class="#item.getItemClass()#">' & item.getProvider().getDisplayTemplate( item, extras );
 				// if this menu item has children...
 				if( item.hasChild() ) {
 					// recurse, recurse, recurse!

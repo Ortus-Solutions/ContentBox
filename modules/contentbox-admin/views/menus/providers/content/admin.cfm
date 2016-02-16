@@ -30,12 +30,18 @@
         </span>
         <span class="col-md-6">
             #html.select(
-                options="_blank,_self,_parent,_top", 
+                options=html.options([
+                    {"name"= "Select", "value"= ""},
+                    {"name"= "_self", "value"= "_self"},
+                    {"name"= "_blank", "value"= "_blank"},
+                    {"name"= "_parent", "value"= "_parent"},
+                    {"name"= "_top", "value"= "_top"}
+                ]),
+                selectedValue="",
                 name="target",
                 label="Target:",
                 id="",
                 bind=args.menuItem, 
-                required="required",
                 title="Where URL should be opened",
                 class="form-control input-sm",
                 wrapper="div class=controls",

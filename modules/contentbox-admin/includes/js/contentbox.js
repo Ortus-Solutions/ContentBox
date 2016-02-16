@@ -374,6 +374,9 @@ function openModal(div, w, h){
  * @return
  */
 function openRemoteModal(url,params,w,h,delay){
+    if(!url){
+        return;
+    }
     var modal = $remoteModal;
     var args = {};
     var maxHeight = ($( window ).height() -360);

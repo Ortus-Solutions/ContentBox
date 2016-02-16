@@ -15,8 +15,6 @@
                 groupWrapper="div class=form-group"
             )#
         </span>
-    </div>
-    <div class="row">
         <span class="col-md-6">
             #html.textfield(
                 label="URL Classes:",
