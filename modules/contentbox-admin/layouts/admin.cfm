@@ -204,7 +204,7 @@
                     <ul>
                     	<!--- View Site --->
                     	<li class="" data-placement="right auto" title="Visit Site">
-                    		<a class="btn btn-default options toggle" href="#event.buildLink( prc.cbEntryPoint )#" target="_blank">
+                    		<a class="btn btn-default options toggle" href="#event.buildLink( linkTo=prc.cbEntryPoint, ssl=prc.cbSettings.cb_site_ssl )#" target="_blank">
                     			<i class="fa fa-home"></i>
                     		</a>
                     	</li>
