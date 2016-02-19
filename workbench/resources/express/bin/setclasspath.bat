@@ -21,7 +21,7 @@ rem endorsed directory.
 rem ---------------------------------------------------------------------------
 
 rem Embedded JRE
-set "JRE_HOME=../jre"
+if exist "../jre/bin/java.exe" set "JRE_HOME=../jre"
 
 rem Make sure prerequisite environment variables are set
 
