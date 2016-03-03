@@ -341,7 +341,7 @@ component accessors="true" singleton threadSafe{
 		/************************************** FORCE SITE WIDE SSL *********************************************/
 		
 		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
-			setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
+			controller.setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
 		}
 
 		/************************************** IDENTITY HEADER *********************************************/
