@@ -197,8 +197,8 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Get the site base SES URL
 	*/
-	function siteBaseURL(){
-		return replacenocase( getRequestContext().buildLink( '' ), "index.cfm", "" );
+	function siteBaseURL( sslenabled=false ){
+		return replacenocase( getRequestContext().buildLink( linkTo='', ssl=arguments.sslenabled ), "index.cfm", "" );
 	}
 
 	/**
