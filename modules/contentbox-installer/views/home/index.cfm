@@ -6,6 +6,7 @@
     <div class="panel-body">
         #html.startForm( 
             action 		= "cbinstaller/install", 
+            ssl			= event.isSSL(),
             name 		= "installerForm", 
             novalidate 	= "novalidate", 
             class 		= "form-vertical" 
