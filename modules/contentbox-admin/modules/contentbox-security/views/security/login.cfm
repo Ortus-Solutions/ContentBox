@@ -13,6 +13,7 @@
 
                 #html.startForm(
                 	action		= prc.xehDoLogin, 
+                	ssl 		= event.isSSL(),
                 	name		= "loginForm", 
                 	novalidate	= "novalidate", 
                 	class		= "form-horizontal"
