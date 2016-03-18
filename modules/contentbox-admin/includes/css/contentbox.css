@@ -66,7 +66,10 @@ a.btn.btn-danger:visited {
 #simple-container{
 	padding-top:10px;
 }
-
+/** SideBar Overrides */
+.sidebar{
+	z-index: 0;
+}
 /** Sidebar Mini */
 .sidebar-mini > .sidebar > #profileSidebar{
 	display: none;
@@ -89,6 +92,11 @@ a.btn.btn-danger:visited {
   .main-content-wrapper {
     margin-left: 0;
   }
+}
+
+/** Bootsrap Overrides **/
+.input-group .form-control{
+	z-index:0;
 }
 
 /**============================== ADMIN MAIN ELEMENTS ==============================**/

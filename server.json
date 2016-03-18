@@ -1,3 +1,14 @@
 {
-    "force":true
+    "force":true,
+    "web":{
+        "rewrites":{
+            "enable":"true"
+        },
+        "http":{
+            "port":"8589"
+        }
+    },
+    "JVM":{
+        "heapSize":"512"
+    }
 }
