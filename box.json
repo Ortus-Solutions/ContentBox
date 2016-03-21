@@ -38,13 +38,7 @@
     "testbox":{
         "runner":[
             {
-                "cf10":"http://cf10contentbox.local/tests/runner.cfm"
-            },
-            {
-                "cf11":"http://cf11contentbox.local/tests/runner.cfm"
-            },
-            {
-                "lucee":"http://luceecontentbox.local/tests/runner.cfm"
+                "default":"http://localhost:8589/tests/runner.cfm"
             }
         ]
     },
