@@ -86,25 +86,27 @@
 		<!--Unzip Patch To remove excludes -->
 		<unzip src="${dir.patches}/${contentbox.version}/patch.zip" dest="${dir.patches}/${contentbox.version}/patch" overwrite="true">
 			<patternset>
-		        <exclude name="workbench/**"/>
-				<exclude name="tests/"/>
-				<exclude name="config/"/>
-				<exclude name="Application.cfc"/>
-				<exclude name="readme.txt"/>
-				<exclude name="readme.md"/>
-				<exclude name="favicon.ico"/>
-				<exclude name="license.txt"/>
 				<exclude name=".htaccess"/>
+				<exclude name=".jshintrc"/>
+				<exclude name="Application.cfc"/>
+				<exclude name="box.json"/>
 				<exclude name="build.number"/>
-				<exclude name="models" />
+				<exclude name="config/"/>
+				<exclude name="favicon.ico"/>
+				<exclude name="handlers/**"/>
+				<exclude name="includes/**"/>
+				<exclude name="index.cfm"/>
+				<exclude name="layouts/**"/>
+				<exclude name="license.txt"/>
+				<exclude name="models/**" />
 				<exclude name="modules/contentbox-dsncreator/**"/>
 				<exclude name="modules/contentbox-installer/**"/>
-				<exclude name="layouts/**"/>
-				<exclude name="views/**"/>
-				<exclude name="includes/**"/>
-				<exclude name="handlers/**"/>
+				<exclude name="readme.txt"/>
+				<exclude name="readme.md"/>
 				<exclude name="server.json"/>
-				<exclude name="box.json"/>
+				<exclude name="tests/"/>
+				<exclude name="views/**"/>
+		        <exclude name="workbench/**"/>
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
@@ -121,7 +123,9 @@
 		
 		<!-- Incorporate Dependencies -->
 		<copy todir="${dir.patches}/${contentbox.version}/patch/coldbox" encoding="UTF-8" overwrite="true">
-			<fileset dir="coldbox" />
+			<fileset dir="coldbox">
+				<exclude name="testbox/**" />
+			</fileset>
 		</copy>
 		
 		<!-- Zip now as excludes removed. -->
