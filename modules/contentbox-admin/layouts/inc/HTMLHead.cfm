@@ -68,6 +68,7 @@
 
     <!---  Blocking JS - Libraries required for in-page JS --->
     <script type="application/javascript" src="#prc.cbroot#/includes/js/preLib.js"></script>
+    <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox/admin.js"></script>
 
 </head>
 </cfoutput>

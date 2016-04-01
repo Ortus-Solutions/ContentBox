@@ -67,6 +67,7 @@ module.exports = function(grunt) {
 						,"bower_components/underscore/underscore-min.js"
 						,"bower_components/moment/min/moment-with-locales.min.js"
 						,"devincludes/vendor/modernizr.min.js"
+						,"devincludes/js/app.js"
 					],
 
 					//Libraries which are brought in before the </body> end
@@ -153,16 +154,28 @@ module.exports = function(grunt) {
 
 		  js:{
 		  	// Single Javascript files to copy from bower
-		  	files: [ {
-		  		expand: true,
-		  		flatten:true,
-		  		cwd: 'bower_components/',
-		  		src: [ 
-					"respond/dest/respond.min.js",
-					"html5shiv/dist/html5shiv.min.js"
-		  		],
-		  		dest: '../modules/contentbox-admin/includes/js/'	
-		  	}]
+		  	files: [ 
+			  	{
+			  		expand: true,
+			  		flatten:true,
+			  		cwd: 'bower_components/',
+			  		src: [ 
+						"respond/dest/respond.min.js",
+						"html5shiv/dist/html5shiv.min.js"
+			  		],
+			  		dest: '../modules/contentbox-admin/includes/js/'	
+			  	},
+			  	//Extra version of jQuery for CB FileBrowser
+			  	{
+			  		expand: true,
+			  		flatten:true,
+			  		cwd: 'bower_components/',
+			  		src: [ 
+						"jquery/dist/jquery.min.js"
+			  		],
+			  		dest: '../modules/contentbox-admin/includes/js/'	
+			  	}
+		  	]
 		  },
 
 		  plugins: {
