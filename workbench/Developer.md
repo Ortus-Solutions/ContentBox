@@ -5,6 +5,18 @@ Asset Compilation
 
 All assets for this project are compiled using Grunt.  Developers modifying Javascript or SCSS/CSS assets should use the files located in `workbench/devincludes`.  Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use Gruntfile.js to configure your asset distributions.
 
+To setup your development environment, install NPM and then run:
+
+```
+cd workbench
+npm install -g bower
+npm install
+bower install
+```
+
+To start Grunt compilation, run `Grunt` from the workbench directory.  Directories and relevant files, along with the `Gruntfile.js`, itself, will be watched for changes, which will recompile relevant assets.
+
+
 The following conventions have been applied:
 
 CSS/SCSS
