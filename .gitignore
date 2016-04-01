@@ -20,6 +20,8 @@ contentbox-codexwiki
 .idea
 workbench/build-contentbox/**
 workbench/dependencies
+workbench/node_modules
+workbench/bower_components
 Icon?
 workbench/build.number
 workbench/apidocs/docbox
