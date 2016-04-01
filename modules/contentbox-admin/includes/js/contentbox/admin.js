@@ -303,16 +303,17 @@ function openRemoteModal(url, params, w, h, delay) {
     modal.data("url", url);
     modal.data("params", params);
     modal.data("width", w !== undefined ? w : $(window).width() * .85);
-    modal.data("height", h !== undefined ? h : $(window).height() - 360);
+    modal.data("height", h !== undefined ? h : maxHeight);
     if (delay) {
         var height = modal.data("height");
         if (height.search && height.search("%") !== -1) {
             height = height.replace("%", "") / 100;
             height = $(window).height() * height;
+            modal.data("height", height);
         }
         modal.data("delay", true);
         args.width = modal.data("width");
-        if (height < maxHeight) {
+        if (height >= maxHeight) {
             args.height = maxHeight;
         }
         modal.modal(args);

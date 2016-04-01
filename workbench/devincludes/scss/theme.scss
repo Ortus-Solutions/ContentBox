@@ -4,20 +4,6 @@
 //External Libs
 @import "../../bower_components/font-awesome-sass/assets/stylesheets/font-awesome";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "../../bower_components/animate.css/animate.min";
-@import "../../bower_components/switchery/dist/switchery.min";
-@import "../../bower_components/toastr/toastr.scss";
-
-//path-relative plugin URL includes
-@import url( 'animate.css' );
-@import url( '../plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css' );
-@import url( '../plugins/clockpicker/bootstrap-clockpicker.min.css' );
-@import url( '../plugins/bootstrap-fileinput/css/fileinput.min.css' );
-@import url( '../plugins/datatables/css/dataTables.bootstrap.css' );
-@import url( '../plugins/jquery-star-rating/rating.css' );
-@import url( '../plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css' );
-@import url( '../plugins/bootstrap-modal/css/bootstrap-modal.css' );
-@import url( '../plugins/tablesorter/css/theme.default.min.css' );
 
 /*
  *
@@ -60,4 +46,23 @@
 @import "theme/_wizard.scss";
 @import "theme/_switch.scss";  
 @import "theme/_media-queries.scss";
+
+//Post-Theme External Libs
+@import "../../bower_components/animate.css/animate.min";
+@import "../../bower_components/toastr/toastr.scss";
+
+//path-relative plugin URL includes
+@import url( 'animate.css' );
+@import url( '../plugins/bootstrap-fileinput/css/fileinput.min.css' );
+@import url( '../plugins/datatables/css/dataTables.bootstrap.css' );
+@import url( '../plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css' );
+@import url( '../plugins/clockpicker/bootstrap-clockpicker.min.css' );
+@import url( '../plugins/jquery-star-rating/rating.css' );
+@import url( '../plugins/bootstrap-modal/css/bootstrap-modal-bs3patch.css' );
+@import url( '../plugins/bootstrap-modal/css/bootstrap-modal.css' );
+@import url( '../plugins/tablesorter/css/theme.default.min.css' );
+@import url( 'bootstrap-fileupload.css' );
+@import url( 'bootstrap-responsive.css' );
+@import url( 'switchery.min.css' );
+
 

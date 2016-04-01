@@ -1,16 +1,19 @@
 module.exports = function(grunt) {
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
+		/**
+		* Directory watch tasks, which will force individual re-compilations
+		**/
 		watch: {
 
 			recompile: {
 				files:[ 'Gruntfile.js', 'require.build.js' ],
-				tasks:[ 'sass:dist','sass:distTheme', 'uglify:libraries', 'uglify:contentboxJS', 'copy:js', 'copy:fonts', 'copy:css', 'copy:plugins' ]	
+				tasks:[ 'sass:distTheme', 'uglify:libraries', 'uglify:contentboxJS', 'copy:js', 'copy:fonts', 'copy:css', 'copy:plugins' ]	
 			},
 
 			sass: {
 				files: ['devincludes/scss/*.{scss,sass}','devincludes/scss/**/*.{scss,sass}','devincludes/scss/**/**/*.{scss,sass}'],
-				tasks: ['sass:dist','sass:distTheme']
+				tasks: ['sass:distTheme']
 			},
 
             contentBoxJS: {
@@ -29,11 +32,9 @@ module.exports = function(grunt) {
 				sourceMap: true,
 				outputStyle: 'compressed'
 			},
-			dist: {
-				files: {
-					'../modules/contentbox-admin/includes/css/relax.css': 'devincludes/scss/relax.scss',
-				}
-			},
+			/**
+			* Contentbox and Theme SCSS Compilation
+			**/
 			distTheme: {
 			    options: {
 			      style: 'expanded',
@@ -49,9 +50,14 @@ module.exports = function(grunt) {
 
 		//uglification/copy of views and pages
 		uglify: {
+
+			/**
+			* Compiled OSS Libraries
+			**/
 			libraries:{
 				options:{
 					preserveComments: true,
+					mangle:false,
 					banner: '/*! ContentBox Consolidated Open Source Javascript Libraries. Generated: <%= grunt.template.today("dd-mm-yyyy") %> */\n\n'
 				},
 
@@ -98,7 +104,9 @@ module.exports = function(grunt) {
 				}
 
 			},
-
+			/**
+			* ContentBox Custom JS Compiliation
+			**/
 			contentboxJS: {
 			 	options: {
 			  	beautify: true,
@@ -117,11 +125,11 @@ module.exports = function(grunt) {
 		},
 
 		/**
-		* Libraries with JS and/or CSS, but w/o SCSS support
+		* Libraries with JS and/or CSS w/o SCSS support - migrated to their respective project plugin directories
 		**/
 		copy: {
+		  //Fonts to be copied over - will *replace* distribution fonts directory
 		  fonts:{
-		  	//Fonts to be copied over - will replace distribution fonts directory
 		  	files: [ {
 		  		expand: true,
 		  		cwd: 'devincludes/',
@@ -131,9 +139,9 @@ module.exports = function(grunt) {
 		  		dest: '../modules/contentbox-admin/includes/'	
 		  	}]
 		  },
+		  // Single CSS files to copy from bower
 		  css: {
 		  	files: [
-			      // Single CSS files to copy from bower
 			      {
 			      	expand: true,
 			      	flatten:true, 
@@ -155,6 +163,9 @@ module.exports = function(grunt) {
 		      ]
 		  },
 
+		  /**
+		  * Individual Javascript files migrated to project /includes/js 
+		  **/
 		  js:{
 		  	// Single Javascript files to copy from bower
 		  	files: [ 
@@ -168,6 +179,7 @@ module.exports = function(grunt) {
 			  		],
 			  		dest: '../modules/contentbox-admin/includes/js/'	
 			  	},
+
 			  	//Extra version of jQuery for CB FileBrowser
 			  	{
 			  		expand: true,
@@ -180,7 +192,9 @@ module.exports = function(grunt) {
 			  	}
 		  	]
 		  },
-
+		  /**
+		  * Compiled Plugins migrated to project /includes/plugins/
+		  **/
 		  plugins: {
 		    files: [
 		      //legacy JS
@@ -324,12 +338,28 @@ module.exports = function(grunt) {
 		    ],
 		  },
 		}
+		/**
+		* Directory Resets for Compiled Scripts - Clears the directories below in preparation for recompile
+		* Only runs on on initial Grunt startup.  If removing plugins, you will need to restart Grunt
+		**/
+		,clean:{
+			options: {
+		      force: true
+		    },
+		    targetIncludes: [ 
+				'../modules/contentbox-admin/includes/plugins',
+				'../modules/contentbox-admin/includes/fonts',
+				'../modules/contentbox-admin/includes/css',
+				'../modules/contentbox-admin/includes/js'
+			]
+		} 
 
 	});
 	grunt.loadNpmTasks('grunt-sass');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.registerTask('default', ['sass:dist','sass:distTheme', 'uglify:libraries' , 'uglify:contentboxJS', 'copy:css', 'copy:js', 'copy:fonts', 'copy:plugins', 'watch']);
+	grunt.loadNpmTasks('grunt-contrib-clean');
+	grunt.registerTask('default', ['clean:targetIncludes','sass:distTheme', 'uglify:libraries' , 'uglify:contentboxJS', 'copy:css', 'copy:js', 'copy:fonts', 'copy:plugins', 'watch']);
 	
 };

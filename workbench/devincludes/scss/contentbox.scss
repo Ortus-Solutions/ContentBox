@@ -200,6 +200,13 @@ widgetinfobar::-moz-selection {
 .widget-no-preview {padding: 10px;background: #efefef;border: dashed 1px #dadada;font-weight: bold;margin-right: 15px;}
 .widget-preview-content .widget-no-preview {margin-top:10px;}
 #confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close {z-index:99999;}
+.modal-scrollable{
+    .modal.modal-overflow.in{
+        position: absolute;
+        left: 50%;
+    }    
+}
+
 #widget-title-bar img {margin-top:-5px;}
 .widget-total-bar {margin-bottom: 10px;font-size: 8pt;}
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/

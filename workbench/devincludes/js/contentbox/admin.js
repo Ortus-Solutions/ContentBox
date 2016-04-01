@@ -384,7 +384,7 @@ function openRemoteModal(url,params,w,h,delay){
     modal.data( 'url', url );
 	modal.data( 'params', params );
     modal.data( 'width', w !== undefined ? w : $( window ).width() * 0.85 );
-    modal.data( 'height', h !== undefined ? h : ($( window ).height() -360) );
+    modal.data( 'height', h !== undefined ? h : maxHeight );
     
     // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes)
     if( delay ) {
@@ -393,12 +393,12 @@ function openRemoteModal(url,params,w,h,delay){
         if( height.search && height.search( '%' )!== -1 ) {
             height = height.replace( '%', '' ) / 100.00;
             height = $( window ).height() * height;
-            //modal.data( 'height', height )
+            modal.data( 'height', height )
         }
         // set delay data in element
         modal.data( 'delay', true );
         args.width = modal.data( 'width' );
-        if( height < maxHeight ) {
+        if( height >= maxHeight ) {
             args.height = maxHeight;
         }
         // show modal
