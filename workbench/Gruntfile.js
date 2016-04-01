@@ -89,8 +89,11 @@ module.exports = function(grunt) {
 						,"bower_components/lz-string/libs/lz-string.min.js"
 						,"bower_components/raphael/raphael-min.js" 
 						,"bower_components/jquery-i18n-properties/jquery.i18n.properties.min.js"
-						,"devincludes/vendor/bootstrap-modalmanager.js"
+						,"bower_components/bootstrap-modal/js/bootstrap-modalmanager.js"
+						,"bower_components/bootstrap-modal/js/bootstrap-modal.js"
 						,"bower_components/clockpicker/dist/bootstrap-clockpicker.min.js"
+						,"bower_components/datatables/media/js/jquery.dataTables.min.js"
+						,"bower_components/datatables/media/js/dataTables.bootstrap.min.js"
 					]
 				}
 
