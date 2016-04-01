@@ -22,7 +22,7 @@ The following conventions have been applied:
 CSS/SCSS
 --------
 
-The directory `workbench/devincludes/scss` contains all of the SCSS theme files.  Only two files are compiled to the production CSS:  `theme.scss` ( The spacewalk theme and dependencies ), and `contentbox.scss` ( The application customizations ).  Global variables used may be set in `_globals.scss`
+The directory `workbench/devincludes/scss` contains all of the SCSS theme files.  Only two files are compiled to the production CSS:  `theme.scss` ( The Spacelab theme and dependencies ), and `contentbox.scss` ( The application customizations ).  Global variables used may be set in `_globals.scss`
 
 
 Javascript Assets
