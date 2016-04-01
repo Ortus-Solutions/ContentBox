@@ -95,8 +95,6 @@ module.exports = function(grunt) {
 						,"bower_components/lz-string/libs/lz-string.min.js"
 						,"bower_components/raphael/raphael-min.js" 
 						,"bower_components/jquery-i18n-properties/jquery.i18n.properties.min.js"
-						,"bower_components/bootstrap-modal/js/bootstrap-modalmanager.js"
-						,"bower_components/bootstrap-modal/js/bootstrap-modal.js"
 						,"bower_components/clockpicker/dist/bootstrap-clockpicker.min.js"
 						,"bower_components/datatables/media/js/jquery.dataTables.min.js"
 						,"bower_components/datatables/media/js/dataTables.bootstrap.min.js"
@@ -267,17 +265,6 @@ module.exports = function(grunt) {
 		      		'**'
 		      	], 
 		      	dest: '../modules/contentbox-admin/includes/plugins/dataTables/'
-		      },
-		      //Bootstrap Modal Extensions
-		      {
-		      	expand: true,
-		      	cwd: 'bower_components/bootstrap-modal/', 
-		      	src: [
-		      		'css/**',
-		      		'js/**',
-		      		'img/**'
-		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/bootstrap-modal/'
 		      },
 		      //Bootstrap DatePicker
 		      {

@@ -5,12 +5,13 @@ $(document).ready(function() {
     $remoteModal.on("shown", function() {
         var modal = $remoteModal;
         if (modal.data("delay")) {
-            modal.load(modal.data("url"), modal.data("params"));
+            modal.find(".modal-content").load(modal.data("url"), modal.data("params"));
+            $(".modal-dialog", modal).addClass("modal-lg");
         }
     });
     $remoteModal.on("hidden.bs.modal", function() {
         var modal = $remoteModal;
-        modal.html('<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>');
+        modal.find(".modal-content").html('<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>');
     });
     toolTipSettings = {
         animation: "slide",
@@ -318,7 +319,7 @@ function openRemoteModal(url, params, w, h, delay) {
         }
         modal.modal(args);
     } else {
-        modal.load(url, params, function() {
+        modal.find(".modal-content").load(url, params, function() {
             var maxHeight = $(window).height() - 360;
             var currentHeight = modal.height();
             args.width = w !== undefined ? w : $(window).width() * .8;

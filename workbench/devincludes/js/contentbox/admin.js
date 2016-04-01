@@ -6,18 +6,19 @@ $( document ).ready(function() {
     
     // handler for "shown" event in modals
 	$remoteModal.on( 'shown', function() {
-        var modal = $remoteModal; 
+        var modal = $remoteModal;
         // only run if modal is in delayed mode
         if( modal.data( 'delay' ) ) {
             // load the modal content
-            modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
+            modal.find('.modal-content').load( modal.data( 'url' ), modal.data( 'params' ) );
+            $( '.modal-dialog', modal ).addClass( 'modal-lg' );     
         }        
     } );
 
     // reset modal content when hidden
 	$remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
-        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>' );
+        modal.find('.modal-content').html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>' );
     } );
     
 	// Global Tool Tip Settings
@@ -407,7 +408,7 @@ function openRemoteModal(url,params,w,h,delay){
     // otherwise, front-load the request and then create modal
     else {
         // load request for content
-        modal.load( url, params, function() {
+        modal.find('.modal-content').load( url, params, function() {
             // in callback, show modal
             var maxHeight = ($( window ).height() -360);
             var currentHeight = modal.height();
