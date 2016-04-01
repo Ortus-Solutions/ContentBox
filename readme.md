@@ -91,9 +91,12 @@ box server start --rewritesEnable
 ```
 
 ## Collaboration
+
 If you want to develop and hack at the source, you will need to download [CommandBox](http://www.ortussolutions.com/products/commandbox) first.  Then in the root of this project, type `box install`.  This will download the necessary dependencies to develop and test ContentBox.  You can then go ahead and start an embedded server `box server start --rewritesEnable` and start hacking around and contributing.  
 
 For running our test suites you will need 2 more steps, so please refer to the [Readme](tests/readme.md) in the tests folder.
+
+If developing CSS and Javascript assets, please read `workbench/Developer.md`.
 
 ---
  
