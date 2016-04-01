@@ -1,0 +1,43 @@
+ .slider.slider-horizontal {
+    margin:10px 0;
+}
+.slider.slider-vertical {
+    margin:0 10px;
+}
+.slider-handle.round {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #EFF2F7;
+    background: #fff;
+    cursor: pointer;
+}
+.slider-default .slider-selection {
+    background-image:none;
+    background-color:$defaultColor;
+}
+.slider-primary .slider-selection {
+    background-image:none;
+    background-color:$primaryColor;
+}
+.slider-success .slider-selection {
+    background-image:none;
+    background-color:$successColor;
+}
+.slider-warning .slider-selection {
+    background-image:none;
+    background-color:$warningColor;
+}
+.slider-info .slider-selection {
+    background-image:none;
+    background-color:$infoColor;
+}
+.slider-danger .slider-selection {
+    background-image:none;
+    background-color:$dangerColor;
+}
+#RGB {
+    height: 239px;
+    background: #808080;
+    @include roundBorders(3px);
+}

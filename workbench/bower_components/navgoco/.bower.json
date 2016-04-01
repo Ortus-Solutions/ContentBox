@@ -1,0 +1,14 @@
+{
+  "name": "navgoco",
+  "homepage": "https://github.com/tefra/navgoco",
+  "version": "0.2.1",
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.1",
+    "commit": "66ef2099a9a07bea8cad20bad1514da4735fd79c"
+  },
+  "_source": "git://github.com/tefra/navgoco.git",
+  "_target": "~0.2.1",
+  "_originalSource": "navgoco"
+}

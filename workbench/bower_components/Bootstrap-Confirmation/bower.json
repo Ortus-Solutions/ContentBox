@@ -1,0 +1,14 @@
+{
+  "name": "Bootstrap-Confirmation",
+  "version": "0.0.2",
+  "homepage": "https://github.com/ethaizone/Bootstrap-Confirmation",
+  "authors": [
+    "ethaizone"
+  ],
+  "description": "bootstrap-confirmation",
+  "main": "./bootstrap-confirmation.js",
+  "keywords": [
+    "confirmation"
+  ],
+  "license": "MIT"
+}

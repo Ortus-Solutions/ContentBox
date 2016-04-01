@@ -1,0 +1,22 @@
+{
+  "name": "Bootstrap-Confirmation",
+  "homepage": "https://github.com/ethaizone/Bootstrap-Confirmation",
+  "authors": [
+    "ethaizone"
+  ],
+  "description": "bootstrap-confirmation",
+  "main": "./bootstrap-confirmation.js",
+  "keywords": [
+    "confirmation"
+  ],
+  "license": "MIT",
+  "_release": "b7495a3639",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "b7495a3639d59f34bf95ede256332dfe72e393e5"
+  },
+  "_source": "git://github.com/rochappy/Bootstrap-Confirmation.git",
+  "_target": "*",
+  "_originalSource": "bootstrap-confirmation"
+}

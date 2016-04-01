@@ -1,0 +1,13 @@
+{
+  "name": "jquery-star-rating",
+  "homepage": "https://github.com/irfan/jquery-star-rating",
+  "_release": "7cdb5a8594",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "7cdb5a8594fc209db7e66d1336123ce1ef8983aa"
+  },
+  "_source": "git://github.com/irfan/jquery-star-rating.git",
+  "_target": "*",
+  "_originalSource": "jquery-star-rating"
+}

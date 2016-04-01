@@ -1,0 +1,21 @@
+{
+  "name": "contentbox",
+  "version": "2.1.0",
+  "description": "The modular CMS for Coldbox",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ortus Solutions",
+  "devDependencies": {
+    "almond": "^0.3.1",
+    "grunt": "^0.4.5",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-contrib-uglify": "~0.9.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-sass": "~1.1.0-beta"
+  },
+  "dependencies": {
+    "requirejs": "^2.2.0"
+  }
+}

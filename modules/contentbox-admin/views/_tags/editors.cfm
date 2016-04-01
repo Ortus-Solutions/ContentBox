@@ -1,9 +1,7 @@
 <cfoutput>
 <!--- Load Editor Custom Assets --->
 #html.addAsset( prc.cbroot & "/includes/css/date.css" )#
-#html.addAsset( prc.cbroot & "/includes/js/moment.min.js" )#
-#html.addAsset( prc.cbroot & "/includes/js/lz-string.min.js" )#
-#html.addAsset( prc.cbroot & "/includes/js/cb-autosave.js" )#
+#html.addAsset( prc.cbroot & "/includes/js/contentbox/autosave.js" )#
 <!--- Editor Javascript --->
 <script type="text/javascript">
 // Load Custom Editor Assets, Functions, etc.

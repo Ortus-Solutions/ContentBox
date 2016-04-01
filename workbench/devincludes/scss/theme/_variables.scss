@@ -1,0 +1,13 @@
+   //Colors
+   $defaultColor:#bdc3c7; //grey
+   $defaultColorHover:lighten($defaultColor,5%); //light grey
+   $primaryColor:#1ABC9C; //turquoise (main app color)
+   $primaryColorHover:lighten($primaryColor,5%); //light turquoise (main app hover color)
+   $successColor:#2dcc70; //green
+   $successColorHover:lighten($successColor,5%); //light green
+   $warningColor:#f1c40f; //yellow
+   $warningColorHover:lighten($warningColor,5%); //light yellow
+   $infoColor:#3598db; //blue
+   $infoColorHover:lighten($infoColor,5%); //light blue
+   $dangerColor:#e84c3d; //red
+   $dangerColorHover:lighten($dangerColor,5%); //light red

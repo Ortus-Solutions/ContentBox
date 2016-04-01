@@ -1,0 +1,19 @@
+{
+  "name": "bootstrap-confirmation",
+  "version": "0.0.2",
+  "description": "bootstrap-confirmation",
+  "main": "./bootstrap-confirmation.js",
+  "author": "ethaizone",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rochappy/Bootstrap-Confirmation.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rochappy/Bootstrap-Confirmation/issues"
+  },
+  "homepage": "https://github.com/rochappy/Bootstrap-Confirmation"
+}

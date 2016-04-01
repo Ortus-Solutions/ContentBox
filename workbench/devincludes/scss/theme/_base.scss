@@ -1,0 +1,41 @@
+
+ body {
+    color:#5D5F63;
+    background:#F0F1F6;
+    font-family:'Open Sans', sans-serif;
+    padding:0px;
+    margin:0px;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+     height: 100%;
+}
+a:link, a:visited {
+    text-decoration: none;
+    outline:none;
+    color:$primaryColor;
+}
+a:hover, a:active {
+    outline:none;
+    text-decoration: none;
+    color:#16a086;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family:'Source Sans Pro', Arial, sans-serif;
+}
+p {
+    font-size: 14px;
+}
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+img {
+    max-width: 100%;
+}
+::selection {
+    background:#fff7dd;
+}
+::-moz-selection {
+    background:#fff7dd;
+}

@@ -1,0 +1,24 @@
+{
+  "name": "TableDnD",
+  "version": "0.9.1",
+  "main": [
+    "./js/jquery.tablednd.js"
+  ],
+  "ignore": [
+    "LICENCE",
+    "README.md"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.7.0"
+  },
+  "homepage": "https://github.com/isocra/TableDnD",
+  "_release": "0.9.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.9.1",
+    "commit": "e8aaea356779c95edbfc0b4267c15e92b5c52afd"
+  },
+  "_source": "git://github.com/isocra/TableDnD.git",
+  "_target": "~0.9.1",
+  "_originalSource": "TableDnD"
+}
