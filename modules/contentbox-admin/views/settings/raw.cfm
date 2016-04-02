@@ -116,6 +116,7 @@
                                     <!--- Create/Edit form --->
                                     #html.startForm(
                                         action      = prc.xehSettingsave, 
+                                        ssl         = event.isSSL(),
                                         name        = "settingEditor", 
                                         novalidate  = "novalidate", 
                                         class       = "vertical-form"
