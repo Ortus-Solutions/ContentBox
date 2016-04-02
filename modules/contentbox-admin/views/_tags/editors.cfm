@@ -203,9 +203,14 @@ function switchMarkup(markupType){
 	$( "##markupLabel" ).html( markupType );
 }
 
+var wasSubmitted = false;
+function setWasSubmitted(){
+	wasSubmitted = true;
+}
+
 // Ask for leave confirmations
 function askLeaveConfirmation(){
-	if ( checkIsDirty() ){
+	if ( checkIsDirty() && !wasSubmitted ){
    		return "You have unsaved changes.";
    	}
 }

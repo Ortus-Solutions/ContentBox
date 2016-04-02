@@ -148,8 +148,8 @@
         <div class="actionBar">
             <div class="btn-group">
             &nbsp;<input type="button" class="btn" value="Save" data-keybinding="ctrl+s" onclick="quickSave()">
-            &nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft()">
-            &nbsp;<input type="submit" class="btn btn-danger" value="Publish">
+            &nbsp;<input type="submit" class="btn" value="&nbsp; Draft &nbsp;" onclick="toggleDraft();setWasSubmitted()">
+            &nbsp;<input type="submit" class="btn btn-danger" value="Publish" onclick="setWasSubmitted()">
             </div>
         </div>
          <!--- Loader --->
