@@ -38,67 +38,28 @@
         <!-- Favicon -->
         <link href="#assetroot#/includes/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
-		<!--- ********************************************************************* --->
-        <!---                           CSS THEME                                   --->
+		 <!--- ********************************************************************* --->
+        <!---                           CSS                                           --->
         <!--- ********************************************************************* --->
 
-        <!-- Bootstrap core CSS -->
-        <link href="#assetroot#/includes/spacelab/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-        <!-- fonts from font awesome -->
-        <link href="#assetroot#/includes/spacelab/css/font-awesome.min.css" rel="stylesheet" />
-        <!-- css animate -->
-        <link href="#assetroot#/includes/spacelab/css/animate.css" rel="stylesheet" />
-        <!-- Switchery -->
-        <link rel="stylesheet" href="#assetroot#/includes/spacelab/plugins/switchery/switchery.min.css">
-        <!-- spacelab theme-->
-        <link href="#assetroot#/includes/spacelab/css/main.css" rel="stylesheet" />
+        <link rel="stylesheet" href="#assetroot#/includes/css/theme.css"/>
+        <link rel="stylesheet" href="#assetroot#/includes/css/contentbox.css"/>
 
-        <!--- ********************************************************************* --->
-        <!---                          CONTENTBOX CSS                               --->
-        <!--- ********************************************************************* --->
-
-        <!-- custom contentbox css -->
-        <link href="#assetroot#/includes/css/contentbox.css" rel="stylesheet" />
+         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="#assetroot#/includes/spacelab/js/html5shiv.min.js"></script>
+        <script src="#assetroot#/includes/spacelab/js/respond.min.js"></script>
+        <![endif]-->
         
        	<!--- ********************************************************************* --->
         <!---                           JAVASCRIPT                                  --->
         <!--- ********************************************************************* --->
 
-        <!-- modernizr for feature detection -->
-        <script src="#assetroot#/includes/spacelab/js/modernizr.min.js"></script>
-        <!-- jquery main -->
-        <script src="#assetroot#/includes/spacelab/js/jquery.min.js"></script>
-        <!-- bootstrap js -->
-        <script src="#assetroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"></script>
-        <!-- Navigation -->
-        <script src="#assetroot#/includes/spacelab/plugins/navgoco/jquery.navgoco.min.js"></script>
-        <!-- spacelab js -->
-        <script src="#assetroot#/includes/spacelab/js/application.js"></script>
-
-        <!--- ********************************************************************* --->
-        <!---                          CONTENTBOX JAVASCRIPT                        --->
-        <!--- ********************************************************************* --->
-
-        <!-- validation -->
-        <script src="#assetroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js"></script>
-        <script src="#assetroot#/includes/spacelab/plugins/validation/js/jquery.validate.bootstrap.js"></script>
-        <!-- jwerty -->
-        <script src="#assetroot#/includes/js/jwerty.js"></script>
-        <!-- main ContentBox scripts -->
-        <script src="#assetroot#/includes/js/contentbox.js"></script>
-	    
-	    <!--- ********************************************************************* --->
-        <!---                           FONTS 	                                    --->
-        <!--- ********************************************************************* --->
-
-	    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
-	    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+        
+        <!---  Blocking JS - Libraries required for in-page JS --->
+        <script type="application/javascript" src="#assetroot#/includes/js/preLib.js"></script>
+        <script type="application/javascript" src="#assetroot#/includes/js/contentbox/admin.js"></script>
 	   
-	    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	    <!--[if lt IE 9]>
-	    <script src="assets/js/html5shiv.js"></script>
-	    <script src="assets/js/respond.min.js"></script>
-	    <![endif]-->
 	</head>
 	<body class="animated fadeIn">
 		<!--- Header Container --->
@@ -119,6 +80,17 @@
 		<section id="simple-container" class="container-fluid">
 			<cfinclude template="views/index.cfm">
 		</section>
+
+        <!--- ********************************************************************* --->
+        <!---                           Post-Libs                                   --->
+        <!--- ********************************************************************* --->
+        <script type="application/javascript" src="#assetroot#/includes/js/postLib.js"></script>
+    
+        <!--- ********************************************************************* --->
+        <!---        Fonts - Brought in last to prevent blocking issues             --->
+        <!--- ********************************************************************* --->
+        <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
 	</body>
 </html>
 </cfoutput>

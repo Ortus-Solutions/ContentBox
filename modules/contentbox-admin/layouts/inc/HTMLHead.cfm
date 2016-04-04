@@ -9,7 +9,9 @@
     <!--- SES --->
     <base href="#cb.siteBaseURL()#" />
     <!--- Title --->
-    <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>
+    <cfif structKeyExists( prc, 'cb_site_name' )>
+        <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>        
+    </cfif>
     <!--- Description --->
     <meta name="description" content="ContentBox Modular CMS - Admin">
     <!--- Viewport for scaling --->
