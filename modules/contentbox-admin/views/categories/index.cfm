@@ -71,7 +71,7 @@
 							<th>Slug</th>		
 							<th width="75" class="text-center">Pages</th>
 							<th width="75" class="text-center">Entries</th>	
-							<th width="50" class="text-center {sorter:false}">Actions</th>
+							<th width="100" class="text-center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
 					<tbody>
