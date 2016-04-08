@@ -27,7 +27,6 @@
     "jquery.metadata": "*",
     "tablesorter": "jquery.tablesorter#~2.25.6",
     "jquery-star-rating": "*",
-    "bootstrap-fileinput": "~4.3.1",
     "moment": "~2.12.0",
     "lz-string": "~1.4.4",
     "toastr": "~2.1.2",
