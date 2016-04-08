@@ -246,7 +246,6 @@ module.exports = function(grunt) {
 					'jvectormap/**',
 					'mask/**',
 					'messenger/**',
-					'ratings/**',
 					'sortNestable/**',
 					'todo/**',
 					'validation/**',
@@ -319,7 +318,7 @@ module.exports = function(grunt) {
 		      	src: [
 		      		'css/**',
 		      		'js/**'
-		      	], 
+		      	],
 		      	dest: '../modules/contentbox-admin/includes/plugins/tablesorter/'
 		      },
 
@@ -327,7 +326,7 @@ module.exports = function(grunt) {
 		      {
 		      	expand: true,
 		      	flatten: true,
-		      	cwd: 'bower_components/jquery-star-rating/src/', 
+		      	cwd: 'bower_components/jquery-star-rating/min/', 
 		      	src: [
 		      		'rating.css',
 		      		'rating.js'
