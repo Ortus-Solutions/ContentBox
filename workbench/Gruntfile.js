@@ -97,7 +97,9 @@ module.exports = function(grunt) {
 					//Libraries which are brought in before the </body> end
 					'../modules/contentbox-admin/includes/js/postLib.js':
 					[
-				      	"bower_components/jquery-i18n-properties/jquery.i18n.properties.min.js"
+				      	"bower_components/bootstrap-modal/js/bootstrap-modalmanager.js"
+				      	,"bower_components/bootstrap-modal/js/bootstrap-modal.js"
+				      	,"bower_components/jquery-i18n-properties/jquery.i18n.properties.min.js"
 				      	,"bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
 						,"bower_components/es6-shim/es6-shim.min.js"
 				      	,"bower_components/switchery/dist/switchery.min.js"
@@ -166,6 +168,8 @@ module.exports = function(grunt) {
 			      	src: [
 			      		'animate.css/animate.css'
 			      		,'morris.js/morris.css'
+			      		,'bootstrap-modal/css/bootstrap-modal-bs3patch.css'
+			      		,'bootstrap-modal/css/bootstrap-modal.css'
 			      	], 
 			      	dest: '../modules/contentbox-admin/includes/css/',
 			      },
@@ -295,17 +299,6 @@ module.exports = function(grunt) {
 		      		'locales/**'
 		      	], 
 		      	dest: '../modules/contentbox-admin/includes/plugins/bootstrap-datepicker/'
-		      },
-		      //Bootstrap Fileinput
-		      {
-		      	expand: true,
-		      	cwd: 'bower_components/bootstrap-fileinput/', 
-		      	src: [
-		      		'css/**',
-		      		'js/**',
-		      		'img/**'
-		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/bootstrap-fileinput/'
 		      },
 		      //Bootstrap Clockpicker
 		      {
