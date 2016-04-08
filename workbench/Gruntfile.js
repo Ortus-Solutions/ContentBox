@@ -45,6 +45,7 @@ module.exports = function(grunt) {
             },
 		},
 
+		// SCSS Compilation to css
 		sass: {
 			options: {
 				sourceMap: true,
@@ -102,15 +103,16 @@ module.exports = function(grunt) {
 				      	,"bower_components/switchery/dist/switchery.min.js"
 						,"bower_components/Scrollify/jquery.scrollify.min.js"
 						,"bower_components/toastr/toastr.min.js"
-						,"bower_components/navgoco/src/jquery.navgoco.min.js"
 						,"bower_components/Bootstrap-Confirmation/bootstrap-confirmation.js"
 						,"bower_components/bootstrap-contextmenu/bootstrap-contextmenu.js"
 						,"bower_components/jquery-nestable/jquery.nestable.js"
 						,"bower_components/TableDnD/dist/jquery.tablednd.min.js"
 						,"bower_components/jwerty/jwerty.js"
 						,"bower_components/jquery.metadata/jquery.metadata.js"
+						,"bower_components/navgoco/src/jquery.navgoco.min.js"
 						,"bower_components/lz-string/libs/lz-string.min.js"
-						,"bower_components/raphael/raphael-min.js" 
+						,"bower_components/raphael/raphael-min.js"
+						,"bower_components/morris.js/morris.min.js" 
 						,"bower_components/jquery-i18n-properties/jquery.i18n.properties.min.js"
 						,"bower_components/clockpicker/dist/bootstrap-clockpicker.min.js"
 						,"bower_components/datatables/media/js/jquery.dataTables.min.js"
@@ -163,6 +165,7 @@ module.exports = function(grunt) {
 			      	cwd: 'bower_components/', 
 			      	src: [
 			      		'animate.css/animate.css'
+			      		,'morris.js/morris.css'
 			      	], 
 			      	dest: '../modules/contentbox-admin/includes/css/',
 			      },
@@ -239,7 +242,6 @@ module.exports = function(grunt) {
 					'jvectormap/**',
 					'mask/**',
 					'messenger/**',
-					'morris/**',
 					'ratings/**',
 					'sortNestable/**',
 					'todo/**',
