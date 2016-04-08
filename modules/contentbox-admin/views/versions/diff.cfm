@@ -53,7 +53,7 @@
 				</div>
 
 				<!--- Simple Comparisons --->
-				<table class="diff tablesorter">
+				<table class="diff table table-condensed">
 					<thead>
 						<tr>
 							<th colspan="2" class="text-center">Version #prc.oldVersion#</th>

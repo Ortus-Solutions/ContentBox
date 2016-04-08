@@ -1,0 +1,42 @@
+{
+  "name": "ContentBoxCMS",
+  "version" : "0.0.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": "latest",
+    "bootstrap-sass": "latest",
+    "font-awesome-sass": "latest",
+    "html5shiv": "latest",
+    "es6-shim": "~0.34.4",
+    "morris.js": "morrisjs#~0.5.1",
+    "ckeditor": "~4.5.8",
+    "Bootstrap-Confirmation": "bootstrap-confirmation#*",
+    "bootstrap-datepicker": "~1.6.0",
+    "bootstrap-modal": "~2.2.6",
+    "jquery.cookie": "~1.4.1",
+    "jquery-nestable": "*",
+    "TableDnD": "~0.9.1",
+    "jquery-validation": "jquery.validate#~1.13.0",
+    "jwerty": "~0.3.2",
+    "jquery-star-rating": "*",
+    "moment": "~2.12.0",
+    "lz-string": "~1.4.4",
+    "toastr": "~2.1.2",
+    "respond": "~1.4.2",
+    "clockpicker": "~0.0.7",
+    "animate.css": "~3.5.1",
+    "switchery": "~0.8.1",
+    "navgoco": "~0.2.1",
+    "jquery-i18n-properties": "~1.2.2",
+    "datatables": "~1.10.11"
+  },
+  "resolutions": {
+    "jquery": "2.2.3",
+    "bootstrap": "~3"
+  }
+}

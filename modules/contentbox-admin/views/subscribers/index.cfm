@@ -32,7 +32,7 @@
                                     <div class="col-md-6">
                                         <h3>All Subscriptions</h3>
                                             <!--- comment subscriptions --->
-                                            <table name="commentSubscriptions" id="commentSubscriptions" class="tablesorter table table-striped table-hover" width="98%">
+                                            <table name="commentSubscriptions" id="commentSubscriptions" class="table table-striped table-hover" width="98%">
                                                 <thead>
                                                     <tr>
                                                         <th>Content</th>     

@@ -27,8 +27,8 @@ component extends="baseHandler"{
 		}
 
 		// Add Assets
-		addAsset( "#prc.cbroot#/includes/js/ratings/jquery.ratings.pack.js" );
-		addAsset( "#prc.cbroot#/includes/js/ratings/jquery.ratings.css" );
+		addAsset( "#prc.cbroot#/includes/plugins/jquery-star-rating/rating.js" );
+		addAsset( "#prc.cbroot#/includes/plugins/jquery-star-rating/rating.css" );
 
 		// Entries title
 		switch(rc.orderBy){

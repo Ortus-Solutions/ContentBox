@@ -78,6 +78,11 @@ component{
 
 	// request start
 	public boolean function onRequestStart( string targetPage ){
+		// Just in case bootstrap is missing, let's restart it manually
+		if( !structKeyExists( application, "cbBootstrap") ){
+			onApplicationStart();
+		}
+		
 		// Local Logging
 		if( structKeyExists( application, "cbController") AND application.cbController.getSetting( "environment" ) == "development" ){
 			this.ormsettings.logSQL = true;

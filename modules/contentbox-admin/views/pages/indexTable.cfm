@@ -11,7 +11,7 @@
 #html.hiddenField(name="parent", value=event.getValue( "parent","" ))#
 
 <!--- pages --->
-<table id="pages" name="pages" class="table table-striped" cellspacing="0" width="100%">
+<table id="pages" name="pages" class="table table-striped table-hover table-condensed" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
@@ -21,7 +21,7 @@
 			<th width="40" class="text-center"><i class="fa fa-th-list fa-lg" title="Show in Menu"></i></th>
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published"></i></th>
 			<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>
-			<th width="100" class="text-center {sorter:false}">Actions</th>
+			<th width="115" class="text-center {sorter:false}">Actions</th>
         </tr>
     </thead>
     <tbody>

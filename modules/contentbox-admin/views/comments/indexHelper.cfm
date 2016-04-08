@@ -3,7 +3,6 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$commentForm = $( "##commentForm" );
-	//$commentForm.find( "##comments" ).tablesorter();
 	$( "##commentSearch" ).keyup(function(){
 		$.uiTableFilter( $( "##comments" ), this.value );
 	} );

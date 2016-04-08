@@ -22,7 +22,7 @@
 	
 	#html.startForm(name="versionsPagerForm" )#
 
-	<table id="versionsHistoryTable" width="100%" class="tablesorter table table-hover table-condensed table-striped" border="0">
+	<table id="versionsHistoryTable" width="100%" class="table table-hover table-condensed table-striped" border="0">
 		<thead>
 			<tr>
 				<th width="50" class="text-center">Diff</th>

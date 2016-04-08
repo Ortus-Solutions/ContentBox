@@ -6,7 +6,7 @@
 	</div>
 
 	<!--- entries --->
-	<table name="pages_pager" id="pages_pager" class="tablesorter table table-hover table-condensed table-striped" width="100%">
+	<table name="pages_pager" id="pages_pager" class="table table-hover table-condensed table-striped" width="100%">
 		<thead>
 			<tr>
 				<th>Page</th>

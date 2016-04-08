@@ -1,0 +1,26 @@
+/* LEGEND */
+#legend { font-size:9px;line-height:1em;margin:1em 0;padding:0.5em;}
+#legend h3{	margin-bottom:10px;}
+#legend dl, #legend dd {display:inline;float:left;margin:0 0.5em 0 0;padding:0;}
+#legend dt {border:1px solid #999999;float:left;height:0.8em;margin:0.1em 0.5em 0.1em 2em;overflow:hidden;width:0.8em;}
+/* DIFF */
+table.diff { width: 100%; }
+table.diff, table.diff tr { margin: 0px;	padding: 0px;}
+table.diff tr:hover, table.diff td:hover { background: #d7eafe; }
+table.diff td { 
+	margin: 0px; 
+	padding: 3px; 
+	border-collapse: collapse; 
+	font-family: "Courier New";
+	font-size: 11px;
+	font-weight: bold;
+	line-height: normal;
+	vertical-align: top; 
+	}
+.diff td.linenum {background-color: #EFEFEF;color: #666666;	text-align: right;}
+.ins { background-color: #afa; }
+.insLight { background-color: #EFFFEF; }
+.del { background-color: #faa; }
+.delLight{ background-color: #FFEFEF;}
+.upd { background-color: #aaf; }
+.diffContent{width:100%;overflow:auto;height:auto;line-height: 1.2em;}
