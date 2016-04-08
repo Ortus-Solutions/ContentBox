@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- entries --->
-<table name="entries" id="entries" class="table table-striped" cellspacing="0" width="100%">
+<table name="entries" id="entries" class="table table-striped table-hover table-condensed" cellspacing="0" width="100%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
