@@ -7,17 +7,6 @@
     <!--- CKEditor Separate --->
     <script src="#prc.cbroot#/includes/plugins/ckeditor/ckeditor.js"></script>
     <script src="#prc.cbroot#/includes/plugins/ckeditor/adapters/jquery.js"></script>
-    <script type="application/javascript">
-        //configure i18n assets
-        jQuery.i18n.properties({
-            name:'admin', 
-            path:'#prc.cbroot#/includes/i18n/', 
-            mode:'map',
-            language:'#getLocale()#',
-            checkAvailableLanguages: true,
-            async: true
-        });
-    </script>
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
     <!--- ********************************************************************* --->
