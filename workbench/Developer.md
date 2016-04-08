@@ -152,6 +152,7 @@ CSS
 "#prc.cbroot#/includes/js/jquery.tablednd_0_7.js"
 <!-- toastr -->
 "#prc.cbroot#/includes/js/toastr.min.js"
+
 <!-- main ContentBox scripts -->
 "#prc.cbroot#/includes/js/contentbox.js"
 

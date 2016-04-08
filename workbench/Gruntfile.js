@@ -201,7 +201,7 @@ module.exports = function(grunt) {
 			  		dest: '../modules/contentbox-admin/includes/js/'	
 			  	},
 
-			  	//Extra version of jQuery for CB FileBrowser
+			  	// Extra version of jQuery for CB FileBrowser
 			  	{
 			  		expand: true,
 			  		flatten:true,
@@ -213,21 +213,12 @@ module.exports = function(grunt) {
 			  	}
 		  	]
 		  },
+		  
 		  /**
 		  * Compiled Plugins migrated to project /includes/plugins/
 		  **/
 		  plugins: {
 		    files: [
-		      //legacy JS
-		      {
-		      	expand: true,
-		      	flatten:true, 
-		      	cwd: 'devincludes/', 
-		      	src: [
-		      		'vendor/*.js'
-		      	], 
-		      	dest: '../modules/contentbox-admin/includes/js/',
-		      },
 		      //Legacy Plugins
 		      {
 		      	expand: true,
