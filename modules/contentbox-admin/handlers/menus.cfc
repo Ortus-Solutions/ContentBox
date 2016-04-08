@@ -94,7 +94,7 @@ component extends="baseHandler" {
         prc.providers = menuItemService.getProviders();
         // add assets
         prc.cssAppendList = "";       
-        prc.jsAppendList  = "bootstrap-confirmation";        
+        prc.jsAppendList  = "";        
         // view
         event.setView( "menus/editor" );
     }
