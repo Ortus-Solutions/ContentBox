@@ -246,7 +246,6 @@ module.exports = function(grunt) {
 					'jvectormap/**',
 					'mask/**',
 					'messenger/**',
-					'sortNestable/**',
 					'todo/**',
 					'validation/**',
 					'waypoints/**',
