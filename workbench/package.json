@@ -1,6 +1,5 @@
 {
   "name": "contentbox",
-  "version": "2.1.0",
   "description": "The modular CMS for Coldbox",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
