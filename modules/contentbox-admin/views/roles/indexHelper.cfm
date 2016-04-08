@@ -25,7 +25,6 @@ $(document).ready(function() {
 	} );
 	</cfif>
 	// table sorting + filtering
-	//$( "##roles" ).tablesorter();
 	$( "##roleFilter" ).keyup(function(){
 		$.uiTableFilter( $( "##roles" ), this.value );
 	} );

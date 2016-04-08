@@ -4,7 +4,6 @@
 $(document).ready(function() {
 	$importDialog = $( "##importDialog" );
 	// table sorting + filtering
-	//$( "##permissions" ).tablesorter();
 	$( "##permissions" ).dataTable( {
 		"paging": false,
 		"info": false,

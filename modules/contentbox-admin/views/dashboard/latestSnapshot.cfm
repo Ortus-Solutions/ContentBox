@@ -17,7 +17,7 @@
                     <!--- Top Visited Content Chart --->
                     <div id="top-visited-chart"></div>
                     <!--- Table Report --->
-                    <table class="table table-condensed table-hover table-striped tablesorter" width="100%">
+                    <table class="table table-condensed table-hover table-striped" width="100%">
                         <thead>
                             <tr>
                                 <th>#$r( "dashboard.latestSnapshot.topHitsAndComments.table.head1@admin" )#</th>
@@ -38,7 +38,7 @@
                     <!--- Top Visited Content Chart --->
                     <div id="top-commented-chart"></div>
                     <!--- Table Report --->
-                    <table class="table table-condensed table-hover table-striped tablesorter" width="100%">
+                    <table class="table table-condensed table-hover table-striped" width="100%">
                         <thead>
                             <tr>
                                 <th>#$r( "dashboard.latestSnapshot.topHitsAndComments.table2.head1@admin" )#</th>

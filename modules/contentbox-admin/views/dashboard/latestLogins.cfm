@@ -1,5 +1,5 @@
 <cfoutput>
-<table class="table table-condensed table-hover table-striped tablesorter" width="100%">
+<table class="table table-condensed table-hover table-striped" width="100%">
 	<thead>
 		<tr>
 			<th>#$r( "dashboard.latestLogins.table.head1@admin" )#</th>

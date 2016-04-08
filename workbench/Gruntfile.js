@@ -311,17 +311,6 @@ module.exports = function(grunt) {
 		      	dest: '../modules/contentbox-admin/includes/plugins/clockpicker/',
 		      	filter: 'isFile'
 		      },
-		      //jQuery Tablesorter
-		      {
-		      	expand: true,
-		      	cwd: 'bower_components/tablesorter/dist/', 
-		      	src: [
-		      		'css/**',
-		      		'js/**'
-		      	],
-		      	dest: '../modules/contentbox-admin/includes/plugins/tablesorter/'
-		      },
-
 		      //jQuery Star Rating
 		      {
 		      	expand: true,

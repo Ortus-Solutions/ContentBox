@@ -25,7 +25,6 @@
     "jquery-validation": "jquery.validate#~1.13.0",
     "jwerty": "~0.3.2",
     "jquery.metadata": "*",
-    "tablesorter": "jquery.tablesorter#~2.25.6",
     "jquery-star-rating": "*",
     "moment": "~2.12.0",
     "lz-string": "~1.4.4",
