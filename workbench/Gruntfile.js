@@ -145,21 +145,29 @@ module.exports = function(grunt) {
 		/**
 		* Libraries with JS and/or CSS w/o SCSS support - migrated to their respective project plugin directories
 		**/
-		copy: {
-		  //Fonts to be copied over - will *replace* distribution fonts directory
-		  fonts:{
-		  	files: [ {
-		  		expand: true,
-		  		cwd: 'devincludes/',
-		  		src: [ 
-					"fonts/**"
-		  		],
-		  		dest: '../modules/contentbox-admin/includes/'	
-		  	}]
+		copy : {
+			//Fonts to be copied over - will *replace* distribution fonts directory
+		  	fonts : {
+			  	files : [ 
+			  		{ 
+						expand 	: true, 
+						flatten : true,
+						src 	: 'bower_components/font-awesome-sass/assets/fonts/font-awesome/**',
+						filter 	: 'isFile',
+						dest 	: '../modules/contentbox-admin/includes/fonts/font-awesome'
+					},
+					{ 
+						expand 	: true, 
+						flatten : true,
+						src 	: 'bower_components/bootstrap-sass/assets/fonts/bootstrap/**',
+						filter 	: 'isFile',
+						dest 	: '../modules/contentbox-admin/includes/fonts/bootstrap'
+					}
+			  	]
 		  },
 		  // Single CSS files to copy from bower
-		  css: {
-		  	files: [
+		  css : {
+		  	files : [
 			      {
 			      	expand: true,
 			      	flatten:true, 
