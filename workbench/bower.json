@@ -1,17 +1,6 @@
 {
   "name": "ContentBoxCMS",
-  "homepage": "https://github.com/jclausen/ContentBox",
-  "author": "Luis Majano <lmajano@ortussolutions.com>",
-  "contributors": [
-    "Brad Wood <bdw429s@gmail.com>",
-    "Curt Gratz <gratzc@compknowhow.com>",
-    "Gavin Pickin <gavin@ortussolutions.com>",
-    "Jon Clausen <jon_clausen@silowebworks.com>"
-  ],
-  "description": "The Modular CMS for Coldbox",
-  "main": "",
-  "moduleType": [],
-  "license": "Apache v2.0",
+  "version" : "0.0.0",
   "private": true,
   "ignore": [
     "**/.*",
@@ -23,11 +12,9 @@
     "bootstrap-sass": "latest",
     "font-awesome-sass": "latest",
     "html5shiv": "latest",
-    "underscore": "~1.8.3",
-    "backbone": "~1.2.3",
     "es6-shim": "~0.34.4",
     "morris.js": "morrisjs#~0.5.1",
-    "ckeditor": "~4.5.7",
+    "ckeditor": "~4.5.8",
     "Bootstrap-Confirmation": "bootstrap-confirmation#*",
     "bootstrap-contextmenu": "~0.3.4",
     "bootstrap-datepicker": "~1.6.0",
@@ -52,7 +39,10 @@
     "Scrollify": "~0.1.13",
     "navgoco": "~0.2.1",
     "jquery-i18n-properties": "~1.2.2",
-    "datatables": "~1.10.11",
-    "Flot": "flot#~0.8.3"
+    "datatables": "~1.10.11"
+  },
+  "resolutions": {
+    "jquery": "2.2.3",
+    "bootstrap": "~3"
   }
 }

@@ -16,6 +16,12 @@ bower install
 
 To start Grunt compilation, run `Grunt` from the workbench directory.  Directories and relevant files, along with the `Gruntfile.js`, itself, will be watched for changes, which will recompile relevant assets.
 
+**Todo**:
+* Copy/Concat/Minify into a single css file for the assets
+* Copy `fonts` from the grunt file dynamically instead of manually
+* Cleanup on plugins
+* Linting on the custom JS files for standards (jshint)
+* Cache busting and auto injector on the CFML includes
 
 The following conventions have been applied:
 
@@ -42,7 +48,12 @@ prc.jsAppendList  = "../plugins/morris/js/raphael-min,../plugins/morris/js/morri
 ```
 
 **Vendor Libraries**
-All JS files in the `workbench/devincludes/js` directory will be optimized by Grunt and deployed, recursively, to the `contentbox-admin/includes/css` directory.  For libraries, which should be compiled in to that directory for loading at runtime, please use the `workbench/devincludes/vendor` directory or add them to the `preLib` or `postLib` compilations, if used globaly.
+
+All the JS/CSS libraries that are not in bower and will be copied by Grunt to their appropriate destinations:
+* `contentbox-admin/includes/js`
+* `contentbox-admin/includes/css`
+
+All JS files in the `workbench/devincludes/js` directory will be optimized by Grunt and deployed, recursively, to the `contentbox-admin/includes/js` directory.  For libraries, which should be compiled in to that directory for loading at runtime, please use the `workbench/devincludes/vendor` directory or add them to the `preLib` or `postLib` compilations, if used globaly.
 
 **Plugins**
 

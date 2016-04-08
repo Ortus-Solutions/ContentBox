@@ -1,4 +1,22 @@
 module.exports = function(grunt) {
+
+	// Register Tasks
+	grunt.registerTask( 
+		'default', 
+		[ 
+			'clean:targetIncludes',
+			'sass:distTheme', 
+			'uglify:libraries', 
+			'uglify:contentboxJS',
+			'copy:css',
+			'copy:js',
+			'copy:fonts',
+			'copy:plugins',
+			'watch'
+		]
+	);
+
+	// Init grunt config
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 		/**
@@ -7,7 +25,7 @@ module.exports = function(grunt) {
 		watch: {
 
 			recompile: {
-				files:[ 'Gruntfile.js', 'require.build.js' ],
+				files:[ 'Gruntfile.js' ],
 				tasks:[ 'sass:distTheme', 'uglify:libraries', 'uglify:contentboxJS', 'copy:js', 'copy:fonts', 'copy:css', 'copy:plugins' ]	
 			},
 
@@ -70,7 +88,6 @@ module.exports = function(grunt) {
 						,"bower_components/jquery.cookie/jquery.cookie.js"
 						,"bower_components/jquery-validation/dist/jquery.validate.min.js"
 						,"bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"
-						,"bower_components/underscore/underscore-min.js"
 						,"bower_components/moment/min/moment-with-locales.min.js"
 						,"devincludes/vendor/modernizr.min.js"
 						,"devincludes/js/app.js"
@@ -324,12 +341,12 @@ module.exports = function(grunt) {
 		      }
 		    ],
 		  },
-		}
+		},
 		/**
 		* Directory Resets for Compiled Scripts - Clears the directories below in preparation for recompile
 		* Only runs on on initial Grunt startup.  If removing plugins, you will need to restart Grunt
 		**/
-		,clean:{
+		clean:{
 			options: {
 		      force: true
 		    },
@@ -342,11 +359,10 @@ module.exports = function(grunt) {
 		} 
 
 	});
-	grunt.loadNpmTasks('grunt-sass');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.registerTask('default', ['clean:targetIncludes','sass:distTheme', 'uglify:libraries' , 'uglify:contentboxJS', 'copy:css', 'copy:js', 'copy:fonts', 'copy:plugins', 'watch']);
-	
+
+	// Load tasks
+	// Load Tasks
+	require( 'matchdep' )
+		.filterDev( 'grunt-*' )
+		.forEach( grunt.loadNpmTasks );
 };
