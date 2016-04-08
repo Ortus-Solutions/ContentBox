@@ -213,34 +213,20 @@ module.exports = function(grunt) {
 			  	}
 		  	]
 		  },
-		  
+
 		  /**
-		  * Compiled Plugins migrated to project /includes/plugins/
+		  * Compiled Plugins moved to /includes/plugins/
+		  * These are loaded not on every page but determined by certain conditions
 		  **/
 		  plugins: {
 		    files: [
-		      //Legacy Plugins
+		      // Theme Plugins: Added a-la-carte
 		      {
 		      	expand: true,
 		      	cwd: 'devincludes/plugins/', 
 		      	src: [
-		      		'bootstrap-slider/**',
-					'bootstrap-wysihtml5/**',
-					'c3Chart/**',
-					'chartjs/**',
-					'countTo/**',
-					'flot/**',
-					'fullcalendar/**',
-					'gmaps/**',
 					'icheck/**',
-					'jvectormap/**',
-					'mask/**',
-					'messenger/**',
-					'todo/**',
-					'validation/**',
-					'waypoints/**',
-					'weather/**',
-					'wizard/**'
+					'mask/**'
 		      	], 
 		      	dest: '../modules/contentbox-admin/includes/plugins/',
 		      },
@@ -287,18 +273,6 @@ module.exports = function(grunt) {
 		      		'locales/**'
 		      	], 
 		      	dest: '../modules/contentbox-admin/includes/plugins/bootstrap-datepicker/'
-		      },
-		      //Bootstrap Clockpicker
-		      {
-		      	expand: true,
-		      	flatten: true,
-		      	cwd: 'bower_components/clockpicker/dist/', 
-		      	src: [
-		      		'bootstrap-clockpicker.min.js',
-		      		'bootstrap-clockpicker.min.css'
-		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/clockpicker/',
-		      	filter: 'isFile'
 		      },
 		      //jQuery Star Rating
 		      {
