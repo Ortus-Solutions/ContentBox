@@ -236,16 +236,11 @@
             </div>
         </div>
         <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Loading...</h3>
-                    </div>
-                    <div class="modal-body" id="remoteModelContent">
-                        <i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i>
-                    </div>
-                    <div class="modal-footer"></div>
-                </div>
+            <div class="modal-header">
+                <h3>Loading...</h3>
+            </div>
+            <div class="modal-body" id="remoteModelContent">
+                <i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i>
             </div>
         </div>
 

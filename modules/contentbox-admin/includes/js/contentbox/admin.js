@@ -5,13 +5,12 @@ $(document).ready(function() {
     $remoteModal.on("shown", function() {
         var modal = $remoteModal;
         if (modal.data("delay")) {
-            modal.find(".modal-content").load(modal.data("url"), modal.data("params"));
-            $(".modal-dialog", modal).addClass("modal-lg");
+            modal.load(modal.data("url"), modal.data("params"));
         }
     });
     $remoteModal.on("hidden.bs.modal", function() {
         var modal = $remoteModal;
-        modal.find(".modal-content").html('<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>');
+        modal.html('<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>');
     });
     toolTipSettings = {
         animation: "slide",
@@ -304,22 +303,21 @@ function openRemoteModal(url, params, w, h, delay) {
     modal.data("url", url);
     modal.data("params", params);
     modal.data("width", w !== undefined ? w : $(window).width() * .85);
-    modal.data("height", h !== undefined ? h : maxHeight);
+    modal.data("height", h !== undefined ? h : $(window).height() - 360);
     if (delay) {
         var height = modal.data("height");
         if (height.search && height.search("%") !== -1) {
             height = height.replace("%", "") / 100;
             height = $(window).height() * height;
-            modal.data("height", height);
         }
         modal.data("delay", true);
         args.width = modal.data("width");
-        if (height >= maxHeight) {
+        if (height < maxHeight) {
             args.height = maxHeight;
         }
         modal.modal(args);
     } else {
-        modal.find(".modal-content").load(url, params, function() {
+        modal.load(url, params, function() {
             var maxHeight = $(window).height() - 360;
             var currentHeight = modal.height();
             args.width = w !== undefined ? w : $(window).width() * .8;

@@ -1,40 +1,39 @@
 $( document ).ready(function() {
-	
-	// setup global variables
-	$confirmIt 			= $('#confirmIt');
-	$remoteModal 		= $( "#modal" );
+    
+    // setup global variables
+    $confirmIt          = $('#confirmIt');
+    $remoteModal        = $( "#modal" );
     
     // handler for "shown" event in modals
-	$remoteModal.on( 'shown', function() {
-        var modal = $remoteModal;
+    $remoteModal.on( 'shown', function() {
+        var modal = $remoteModal; 
         // only run if modal is in delayed mode
         if( modal.data( 'delay' ) ) {
             // load the modal content
-            modal.find('.modal-content').load( modal.data( 'url' ), modal.data( 'params' ) );
-            $( '.modal-dialog', modal ).addClass( 'modal-lg' );     
+            modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
         }        
     } );
 
     // reset modal content when hidden
-	$remoteModal.on( 'hidden.bs.modal', function() {
+    $remoteModal.on( 'hidden.bs.modal', function() {
         var modal = $remoteModal;
-        modal.find('.modal-content').html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>' );
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>' );
     } );
     
-	// Global Tool Tip Settings
-	toolTipSettings	= {
-		 animation 	: 'slide',
-		 delay 		: { show: 100, hide: 100 }
-	};
-	
-	// Search Capabilities
-	activateContentSearch();
-	// activate confirmations
-	activateConfirmations();
-	// activate tooltips
-	activateTooltips();
-	// activate navbar state
-	activateNavbarState();
+    // Global Tool Tip Settings
+    toolTipSettings = {
+         animation  : 'slide',
+         delay      : { show: 100, hide: 100 }
+    };
+    
+    // Search Capabilities
+    activateContentSearch();
+    // activate confirmations
+    activateConfirmations();
+    // activate tooltips
+    activateTooltips();
+    // activate navbar state
+    activateNavbarState();
 
     // global Validaiton settings
     $.validator.setDefaults( {
@@ -75,7 +74,7 @@ $( document ).ready(function() {
     };
     // simple method to blank out all form fields 
     $.fn.clearForm = function() {
-    	if( this.data( 'validator') === undefined ){ return; }
+        if( this.data( 'validator') === undefined ){ return; }
         // reset classes and what not
         this.data( 'validator' ).resetForm();
         // run over input fields and blank them out
@@ -106,40 +105,40 @@ $( document ).ready(function() {
         return data;
     };
 
-	// flicker messages
-	var t = setTimeout( toggleFlickers(), 5000 );
+    // flicker messages
+    var t = setTimeout( toggleFlickers(), 5000 );
 
-	// Tab link detector for bootstrap
-	$(function () {
-		var activeTab = $( '[href="' + location.hash + '"]' );
-	   	if( activeTab ){ activeTab.tab( 'show' ); }
-	} );
-	
-	// Nav Search Shortcut
-	jwerty.key( "ctrl+shift+s/\\" , function(){ $( "#nav-search" ).focus(); return false; } );
-	
-	// find all links with the key-binding data attribute
-	$( '[data-keybinding]' ).each(function(){
-		var boundItem = $( this );
-		jwerty.key( boundItem.data( 'keybinding' ), function(){ 
-			// give precedence to onclick
-			if( boundItem.attr( 'onclick' ) ) {
-				// if onclick, call event
-				boundItem.click();
-			}
-			else {
-				// otherwise, follow link
-				to( boundItem.attr( 'href' ) );
-			} 
-		} );
-	} );
+    // Tab link detector for bootstrap
+    $(function () {
+        var activeTab = $( '[href="' + location.hash + '"]' );
+        if( activeTab ){ activeTab.tab( 'show' ); }
+    } );
+    
+    // Nav Search Shortcut
+    jwerty.key( "ctrl+shift+s/\\" , function(){ $( "#nav-search" ).focus(); return false; } );
+    
+    // find all links with the key-binding data attribute
+    $( '[data-keybinding]' ).each(function(){
+        var boundItem = $( this );
+        jwerty.key( boundItem.data( 'keybinding' ), function(){ 
+            // give precedence to onclick
+            if( boundItem.attr( 'onclick' ) ) {
+                // if onclick, call event
+                boundItem.click();
+            }
+            else {
+                // otherwise, follow link
+                to( boundItem.attr( 'href' ) );
+            } 
+        } );
+    } );
 
-	// Hide empty menu's due to permissions.
-	$( "#main-navbar li.nav-dropdown" ).each( function(){
-		if( !$( this ).find( "ul.nav-sub li" ).length ){
-			$( this ).hide();
-		}
-	} );
+    // Hide empty menu's due to permissions.
+    $( "#main-navbar li.nav-dropdown" ).each( function(){
+        if( !$( this ).find( "ul.nav-sub li" ).length ){
+            $( this ).hide();
+        }
+    } );
 
     // match stateful accordions
     $( '.accordion[data-stateful]' ).each(function() {
@@ -169,62 +168,62 @@ $( document ).ready(function() {
      
 } );
 function activateNavbarState(){
-	var container = $( "#container" );
-	// Bind listener to left toggle action
+    var container = $( "#container" );
+    // Bind listener to left toggle action
     $( '#toggle-left' ).bind( 'click', function(e) {
-    	if( $( window ).width() > 768 ){
-    		state = container.hasClass( "sidebar-mini" );
-    	} else {
-    		state = container.hasClass( "sidebar-opened" );
-    	}
-    	// Store cookie
-    	$.cookie( "sidemenu-collapse", state );
+        if( $( window ).width() > 768 ){
+            state = container.hasClass( "sidebar-mini" );
+        } else {
+            state = container.hasClass( "sidebar-opened" );
+        }
+        // Store cookie
+        $.cookie( "sidemenu-collapse", state );
     } );
 }
 function isSidebarOpen(){
-	var sidebar = $( "#main-sidebar" );
-	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block"  ? true : false );
+    var sidebar = $( "#main-sidebar" );
+    return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block"  ? true : false );
 }
 function toggleSidebar(){
-	var sidebar = $( "#main-sidebar" );
-	var type 	= sidebar.css( "display" );
-	var sidebarState = false;
-	// nosidebar exit
-	if( type === undefined ){ return; }
-	// toggles
-	if( type === "block" ){
-		sidebar.fadeOut();
-		$( "#sidebar_trigger" ).removeClass( "icon-collapse-alt" ).addClass( "icon-expand-alt" );
-		$( "#main-content" ).removeClass( "span9" ).addClass( "span12" );
-	}
-	else{
-		$( "#sidebar_trigger" ).removeClass( "icon-expand-alt" ).addClass( "icon-collapse-alt" );
-		sidebar.fadeIn();
-		$( "#main-content" ).removeClass( "span12" ).addClass( "span9" );
-		sidebarState = true;
-	}
-	// Call change user editor preference
-	$.ajax( {
-		url : $( "#sidebar-toggle" ).attr( "data-stateurl" ),
-		data : { sidebarState: sidebarState },
-		async : true
-	} );
+    var sidebar = $( "#main-sidebar" );
+    var type    = sidebar.css( "display" );
+    var sidebarState = false;
+    // nosidebar exit
+    if( type === undefined ){ return; }
+    // toggles
+    if( type === "block" ){
+        sidebar.fadeOut();
+        $( "#sidebar_trigger" ).removeClass( "icon-collapse-alt" ).addClass( "icon-expand-alt" );
+        $( "#main-content" ).removeClass( "span9" ).addClass( "span12" );
+    }
+    else{
+        $( "#sidebar_trigger" ).removeClass( "icon-expand-alt" ).addClass( "icon-collapse-alt" );
+        sidebar.fadeIn();
+        $( "#main-content" ).removeClass( "span12" ).addClass( "span9" );
+        sidebarState = true;
+    }
+    // Call change user editor preference
+    $.ajax( {
+        url : $( "#sidebar-toggle" ).attr( "data-stateurl" ),
+        data : { sidebarState: sidebarState },
+        async : true
+    } );
 }
 function adminAction( action, actionURL ){
-	if( action != 'null' ){
-		$( "#adminActionsIcon" ).addClass( "icon-spin textOrange" );
-		// Run Action Dispatch
-		$.post( actionURL , {targetModule: action}, function(data){
-			if( data.ERROR ){
-				adminNotifier( "error", "<i class='icon-exclamation-sign'></i> <strong>Error running action, check logs!</strong>" );
-			}
-			else{
-				adminNotifier( "info", "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>" );
-			}
-			$( "#adminActionsIcon" ).removeClass( "icon-spin textOrange" );
-			
-		} );
-	}
+    if( action != 'null' ){
+        $( "#adminActionsIcon" ).addClass( "icon-spin textOrange" );
+        // Run Action Dispatch
+        $.post( actionURL , {targetModule: action}, function(data){
+            if( data.ERROR ){
+                adminNotifier( "error", "<i class='icon-exclamation-sign'></i> <strong>Error running action, check logs!</strong>" );
+            }
+            else{
+                adminNotifier( "info", "<i class='icon-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>" );
+            }
+            $( "#adminActionsIcon" ).removeClass( "icon-spin textOrange" );
+            
+        } );
+    }
 }
 /**
  * Send an admin notifier popup for a few seconds
@@ -233,18 +232,18 @@ function adminAction( action, actionURL ){
  * @param delay The delay of the message, defaults to 1500 ms
  */
 function adminNotifier(type, message, delay){
-	/*
+    /*
     var $notifier = $( "#adminActionNotifier" ).attr( "class", "alert hide" );
-	if( type == null ){ type = "warn";  }
-	if( delay == null ){ delay = 1500;  }
-	// add type css
-	switch( type ){
-		case "info" : { $notifier.addClass( "alert-info" ); break; }
-		case "error" : { $notifier.addClass( "alert-error" ); break; }
-		case "success" : { $notifier.addClass( "alert-success" ); break; }
-	}
-	// show with message and delay and reset.
-	$notifier.fadeIn().html( message ).delay( delay ).fadeOut();
+    if( type == null ){ type = "warn";  }
+    if( delay == null ){ delay = 1500;  }
+    // add type css
+    switch( type ){
+        case "info" : { $notifier.addClass( "alert-info" ); break; }
+        case "error" : { $notifier.addClass( "alert-error" ); break; }
+        case "success" : { $notifier.addClass( "alert-success" ); break; }
+    }
+    // show with message and delay and reset.
+    $notifier.fadeIn().html( message ).delay( delay ).fadeOut();
     */
     switch( type ){
         case "info" : { toastr.info( message ); break; }
@@ -254,72 +253,72 @@ function adminNotifier(type, message, delay){
     
 }
 function activateContentSearch(){
-	// local refs
-	$nav_search 		= $( "#nav-search" );
-	$nav_search_results = $( "#div-search-results" );
-	// opacity
-	$nav_search.css( "opacity","0.8" );
-	// focus effects
-	$nav_search.focusin( function(){
-		//if( $nav_search.is( ":focus" ) ){ return; }
-    	$( this ).animate( {
-		    	opacity: 1.0,
-		    	width  : '+=250',
-		  	}, 
-		  	500, 
-		  	function(){} 
-		);
+    // local refs
+    $nav_search         = $( "#nav-search" );
+    $nav_search_results = $( "#div-search-results" );
+    // opacity
+    $nav_search.css( "opacity","0.8" );
+    // focus effects
+    $nav_search.focusin( function(){
+        //if( $nav_search.is( ":focus" ) ){ return; }
+        $( this ).animate( {
+                opacity: 1.0,
+                width  : '+=250',
+            }, 
+            500, 
+            function(){} 
+        );
     } ).blur( function(){
-    	$( this ).animate( {
-				opacity: 0.50,
-		    	width  : '-=250',
-			}, 
-			500, 
-			function(){}
-		);
+        $( this ).animate( {
+                opacity: 0.50,
+                width  : '-=250',
+            }, 
+            500, 
+            function(){}
+        );
     } );
-	// keyup quick search
-	$nav_search.keyup(function(){
-		var $this = $(this);
-		// Only send requests if more than 2 characters
-		if( $this.val().length > 1 ){
-			$nav_search_results.load( $( "#nav-search-url" ).val(), { search: $this.val() }, function(data){
-				if( $nav_search_results.css( "display" ) === "none" ){
-					$nav_search_results.fadeIn().slideDown();
-				}
-			} );
-		}
-		
-	} );
-	// add click listener to body to hide quick search panel
+    // keyup quick search
+    $nav_search.keyup(function(){
+        var $this = $(this);
+        // Only send requests if more than 2 characters
+        if( $this.val().length > 1 ){
+            $nav_search_results.load( $( "#nav-search-url" ).val(), { search: $this.val() }, function(data){
+                if( $nav_search_results.css( "display" ) === "none" ){
+                    $nav_search_results.fadeIn().slideDown();
+                }
+            } );
+        }
+        
+    } );
+    // add click listener to body to hide quick search panel
     $( 'body' ).click( function( e ){
        var target = $( e.target ),
            ipTarget = target.closest( '#div-search' );
        // if click occurs within visible element, add to ignore list
        if( !ipTarget.length ){
            //run global hide methods
-    	   closeSearchBox();
+           closeSearchBox();
        }
     } );
 }
 function closeSearchBox(){
-	$( "#div-search-results" ).slideUp();
-	$( "#nav-search" ).val( '' );
+    $( "#div-search-results" ).slideUp();
+    $( "#nav-search" ).val( '' );
 }
 function quickLinks( inURL ){
-	if( inURL != 'null' )
-		window.location = inURL;
+    if( inURL != 'null' )
+        window.location = inURL;
 }
 function activateTooltips(){
-	//Tooltip 
+    //Tooltip 
     $( '[title]' ).tooltip( toolTipSettings );
 }
 function hideAllTooltips(){
-	$( ".tooltip" ).hide();
+    $( ".tooltip" ).hide();
 }
 function toggleFlickers(){
-	$( ".flickerMessages" ).slideToggle();
-	$( ".flickers" ).fadeOut( 3000 );
+    $( ".flickerMessages" ).slideToggle();
+    $( ".flickers" ).fadeOut( 3000 );
 }
 /**
  * A-la-Carte closing of remote modal windows
@@ -341,7 +340,7 @@ function closeModal(div){
     if( frm.length ) {
         $( frm[0] ).clearForm();        
     }
-	div.modal( 'hide' );
+    div.modal( 'hide' );
 }
 /**
  * Open a new local modal window.
@@ -383,9 +382,9 @@ function openRemoteModal(url,params,w,h,delay){
     var maxHeight = ($( window ).height() -360);
     // set data values
     modal.data( 'url', url );
-	modal.data( 'params', params );
+    modal.data( 'params', params );
     modal.data( 'width', w !== undefined ? w : $( window ).width() * 0.85 );
-    modal.data( 'height', h !== undefined ? h : maxHeight );
+    modal.data( 'height', h !== undefined ? h : ($( window ).height() -360) );
     
     // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes)
     if( delay ) {
@@ -394,12 +393,12 @@ function openRemoteModal(url,params,w,h,delay){
         if( height.search && height.search( '%' )!== -1 ) {
             height = height.replace( '%', '' ) / 100.00;
             height = $( window ).height() * height;
-            modal.data( 'height', height )
+            //modal.data( 'height', height )
         }
         // set delay data in element
         modal.data( 'delay', true );
         args.width = modal.data( 'width' );
-        if( height >= maxHeight ) {
+        if( height < maxHeight ) {
             args.height = maxHeight;
         }
         // show modal
@@ -408,7 +407,7 @@ function openRemoteModal(url,params,w,h,delay){
     // otherwise, front-load the request and then create modal
     else {
         // load request for content
-        modal.find('.modal-content').load( url, params, function() {
+        modal.load( url, params, function() {
             // in callback, show modal
             var maxHeight = ($( window ).height() -360);
             var currentHeight = modal.height();
@@ -433,8 +432,8 @@ function openRemoteModal(url,params,w,h,delay){
  */
 function setPreviewSize( activeBtn, w ){
   var frame = $( "#previewFrame" ).length ? $( "#previewFrame" ) : $remoteModal.find( ".modal-body" ),
-      orig 		= { 'width' : $remoteModal.data( 'width' ) },
-      fOffset 	= { 'width' : $remoteModal.width() - $( frame ).width() },
+      orig      = { 'width' : $remoteModal.data( 'width' ) },
+      fOffset   = { 'width' : $remoteModal.width() - $( frame ).width() },
       modalSize = { 'width' : w + fOffset.width };
 
     // width is bigger than original size
@@ -452,7 +451,7 @@ function setPreviewSize( activeBtn, w ){
  * Close confirmation modal
  */
 function closeConfirmations(){
-	$confirmIt.modal( 'hide' );
+    $confirmIt.modal( 'hide' );
 }
 /**
  * Activate modal confirmation windows
@@ -467,10 +466,10 @@ function activateConfirmations(){
         }
     } );
     
-	// Activate dynamic confirmations from <a> of class confirmIt
-	$( ".confirmIt" ).click( function( e ){
-		// setup the href
-		$confirmIt.data( "confirmSrc", $(this).attr('href'));
+    // Activate dynamic confirmations from <a> of class confirmIt
+    $( ".confirmIt" ).click( function( e ){
+        // setup the href
+        $confirmIt.data( "confirmSrc", $(this).attr('href'));
         // defaults
         var dataMessage = $(this).attr('data-message') ? $(this).attr('data-message') : 'Are you sure you want to perform this action?';
         var dataTitle = $(this).attr('data-title') ? $(this).attr('data-title') : 'Are you sure?';
@@ -478,21 +477,21 @@ function activateConfirmations(){
         $confirmIt.find( "#confirmItMessage" ).html( dataMessage );
         // set title
         $confirmIt.find( "#confirmItTitle" ).html( dataTitle );
-		// show the confirmation when clicked
-		//$confirmIt.data( "overlay" ).load();
-		$confirmIt.modal();
-		// prevent default action
-		e.preventDefault();
-	} );
+        // show the confirmation when clicked
+        //$confirmIt.data( "overlay" ).load();
+        $confirmIt.modal();
+        // prevent default action
+        e.preventDefault();
+    } );
 }
 function popup(url,w,h){
-	var winWidth = 1000;
-	var winHeight = 750;
-	if( w ){ minWidth = w; }
-	if( h ){ winHeight = h; }
-	var xPosition = (screen.width / 2) - (winWidth / 2);
-	var yPosition = (screen.height / 2) - (winHeight / 2);
-	window.open(url,'layoutPreview','resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width='+winWidth+',height='+winHeight+',left='+xPosition+',top='+yPosition+',screenX='+xPosition+',screenY='+yPosition);
+    var winWidth = 1000;
+    var winHeight = 750;
+    if( w ){ minWidth = w; }
+    if( h ){ winHeight = h; }
+    var xPosition = (screen.width / 2) - (winWidth / 2);
+    var yPosition = (screen.height / 2) - (winHeight / 2);
+    window.open(url,'layoutPreview','resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width='+winWidth+',height='+winHeight+',left='+xPosition+',top='+yPosition+',screenX='+xPosition+',screenY='+yPosition);
 }
 /**
  * Relocation shorcuts
@@ -500,8 +499,8 @@ function popup(url,w,h){
  * @returns {Boolean}
  */
 function to(link){
-	window.location = link;
-	return false;
+    window.location = link;
+    return false;
 }
 /**
  * Check all checkboxes utility function
@@ -509,9 +508,9 @@ function to(link){
  * @param id
  */
 function checkAll(checked,id){
-	$( "input[name='"+id+"']" ).each(function(){
-		this.checked = checked;
-	} );
+    $( "input[name='"+id+"']" ).each(function(){
+        this.checked = checked;
+    } );
 }
 /**
  * Check all checkboxes by value
@@ -520,21 +519,21 @@ function checkAll(checked,id){
  * @returns
  */
 function checkByValue(id,recordID){
-	$( "input[name='" + id + "']" ).each(function(){
-		if( this.value === recordID ){ this.checked = true; }
-		else{ this.checked = false; }
-	} );	
+    $( "input[name='" + id + "']" ).each(function(){
+        if( this.value === recordID ){ this.checked = true; }
+        else{ this.checked = false; }
+    } );    
 }
 /**
  * Get today's date in us or rest of the world format
  * @param {boolean} us defaults to true
  */
 function getToday( us ){
-	// default us to true
-	us = ( us == null ? true : us );
-	if( us ){
-		return moment().format( "YYYY-MM-DD" );
-	} else {
-		return moment().format( "DD-MM-YYYY" );	
-	}
+    // default us to true
+    us = ( us == null ? true : us );
+    if( us ){
+        return moment().format( "YYYY-MM-DD" );
+    } else {
+        return moment().format( "DD-MM-YYYY" ); 
+    }
 }
