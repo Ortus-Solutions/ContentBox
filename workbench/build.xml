@@ -171,7 +171,7 @@
 		</exec>
 		<!-- Startup the apidocs server, wait for a few seconds for server to start -->
 		<exec executable="box" dir="${dir.apidocs}">
-			<arg line="server start openbrowser=false --force port=${apidocs.port}" />
+			<arg line="server start" />
 		</exec>
 		<sleep seconds="5"/>
 		<!-- Get the apidocs now -->

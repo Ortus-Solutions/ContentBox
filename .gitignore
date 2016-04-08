@@ -11,6 +11,7 @@ web.config
 "Icon\r"
 Icon?
 WEB-INF/**
+artifacts/**
 # Workbench dependencies
 workbench/resources/WEB-INF/*
 workbench/build-contentbox/**
