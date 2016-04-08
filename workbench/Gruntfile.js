@@ -88,6 +88,7 @@ module.exports = function(grunt) {
 				      	"bower_components/jquery/dist/jquery.min.js"
 						,"bower_components/jquery.cookie/jquery.cookie.js"
 						,"bower_components/jquery-validation/dist/jquery.validate.min.js"
+						,"devincludes/vendor/jquery.validate.bootstrap.js"
 						,"bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"
 						,"bower_components/moment/min/moment-with-locales.min.js"
 						,"bower_components/lz-string/libs/lz-string.min.js"
