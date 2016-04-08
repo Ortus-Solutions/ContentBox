@@ -117,9 +117,6 @@ module.exports = function(grunt) {
 						,"bower_components/toastr/toastr.min.js"
 						,"bower_components/Bootstrap-Confirmation/bootstrap-confirmation.js"
 						,"bower_components/jquery-nestable/jquery.nestable.js"
-
-						,"bower_components/bootstrap-contextmenu/bootstrap-contextmenu.js"
-						
 					]
 				}
 

@@ -16,7 +16,6 @@
     "morris.js": "morrisjs#~0.5.1",
     "ckeditor": "~4.5.8",
     "Bootstrap-Confirmation": "bootstrap-confirmation#*",
-    "bootstrap-contextmenu": "~0.3.4",
     "bootstrap-datepicker": "~1.6.0",
     "bootstrap-modal": "~2.2.6",
     "jquery.cookie": "~1.4.1",
