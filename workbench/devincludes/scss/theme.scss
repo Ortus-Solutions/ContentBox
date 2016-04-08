@@ -47,17 +47,17 @@
 @import "theme/_switch.scss";  
 @import "theme/_media-queries.scss";
 
-//Post-Theme External Libs
+// Post-Theme External Libs
 @import "../../bower_components/toastr/toastr.scss";
 
-//path-relative plugin URL includes
+// External CSS needed by libs
 @import url( 'animate.css' );
 @import url( 'switchery.min.css' );
-@import url( '../plugins/datatables/css/dataTables.bootstrap.css' );
 @import url( 'morris.css' );
 @import url( 'bootstrap-fileupload.css' );
 @import url( 'bootstrap-modal-bs3patch.css' );
 @import url( 'bootstrap-modal.css' );
+@import url( 'nestable.css' );
+@import url( '../plugins/datatables/css/dataTables.bootstrap.css' );
 @import url( '../plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css' );
 @import url( '../plugins/clockpicker/bootstrap-clockpicker.min.css' );
-@import url( 'nestable.css' );

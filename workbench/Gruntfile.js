@@ -40,7 +40,7 @@ module.exports = function(grunt) {
             },
 
             vendorJS: {
-            	files: ['devincludes/vendor/*.js'],
+            	files: ['devincludes/vendor/js/*.js'],
             	tasks: ['copy:plugins']
             },
 		},
@@ -88,11 +88,11 @@ module.exports = function(grunt) {
 				      	"bower_components/jquery/dist/jquery.min.js"
 						,"bower_components/jquery.cookie/jquery.cookie.js"
 						,"bower_components/jquery-validation/dist/jquery.validate.min.js"
-						,"devincludes/vendor/jquery.validate.bootstrap.js"
+						,"devincludes/vendor/js/jquery.validate.bootstrap.js"
 						,"bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"
 						,"bower_components/moment/min/moment-with-locales.min.js"
 						,"bower_components/lz-string/libs/lz-string.min.js"
-						,"devincludes/vendor/modernizr.min.js"
+						,"devincludes/vendor/js/modernizr.min.js"
 						,"devincludes/js/app.js"
 					],
 
@@ -108,12 +108,12 @@ module.exports = function(grunt) {
 						,"bower_components/raphael/raphael-min.js"
 						,"bower_components/morris.js/morris.min.js"
 						,"bower_components/clockpicker/dist/bootstrap-clockpicker.min.js"
-						,"devincludes/vendor/bootstrap-fileupload.js"
+						,"devincludes/vendor/js/bootstrap-fileupload.js"
 						,"bower_components/jwerty/jwerty.js"
 						,"bower_components/datatables/media/js/jquery.dataTables.min.js"
 						,"bower_components/datatables/media/js/dataTables.bootstrap.min.js"
-						,"devincludes/vendor/jquery.uitablefilter.js"
-						,"devincludes/vendor/jquery.uidivfilter.js"
+						,"devincludes/vendor/js/jquery.uitablefilter.js"
+						,"devincludes/vendor/js/jquery.uidivfilter.js"
 						,"bower_components/TableDnD/dist/jquery.tablednd.min.js"
 						,"bower_components/toastr/toastr.min.js"
 						,"bower_components/Bootstrap-Confirmation/bootstrap-confirmation.js"
@@ -177,7 +177,7 @@ module.exports = function(grunt) {
 			      	flatten:true, 
 			      	cwd: 'devincludes/', 
 			      	src: [
-			      		'vendor/*.css'
+			      		'vendor/css/*.css'
 			      	], 
 			      	dest: '../modules/contentbox-admin/includes/css/',
 			      }
@@ -220,7 +220,7 @@ module.exports = function(grunt) {
 		  **/
 		  plugins: {
 		    files: [
-		      // Theme Plugins: Added a-la-carte
+		      // Theme Required Plugins: Added a-la-carte
 		      {
 		      	expand: true,
 		      	cwd: 'devincludes/plugins/', 
@@ -230,7 +230,6 @@ module.exports = function(grunt) {
 		      	], 
 		      	dest: '../modules/contentbox-admin/includes/plugins/',
 		      },
-
 		      // CKEditor
 		      {
 		      	expand: true,
@@ -238,21 +237,22 @@ module.exports = function(grunt) {
 		      	src: [
 		      		'ckeditor/plugins/**',
 		      		'ckeditor/adapters/**',
-		      		'ckeditor/skins/**',
+		      		'ckeditor/skins/moono/**',
 		      		'ckeditor/lang/**',
-		      		'ckeditor/*.js',
+		      		'ckeditor/ckeditor.js',
+		      		'ckeditor/styles.js',
 		      		'ckeditor/*.css',
 		      	], 
 		      	dest: '../modules/contentbox-admin/includes/plugins/',
 		      },
-		      //ContentBox CKEditor Plugins
+		      //ContentBox CKEditor Config + Plugins
 		      {
 		      	expand: true,
-		      	cwd: 'devincludes/plugins/ckeditor/plugins/', 
+		      	cwd: 'devincludes/plugins/ckeditor/', 
 		      	src: [
 		      		'**'
 		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/ckeditor/plugins/',
+		      	dest: '../modules/contentbox-admin/includes/plugins/ckeditor/',
 		      },
 		      //DataTables
 		      {
@@ -273,6 +273,18 @@ module.exports = function(grunt) {
 		      		'locales/**'
 		      	], 
 		      	dest: '../modules/contentbox-admin/includes/plugins/bootstrap-datepicker/'
+		      },
+		      //Bootstrap Clockpicker
+		      {
+		      	expand: true,
+		      	flatten: true,
+		      	cwd: 'bower_components/clockpicker/dist/', 
+		      	src: [
+		      		'bootstrap-clockpicker.min.js',
+		      		'bootstrap-clockpicker.min.css'
+		      	], 
+		      	dest: '../modules/contentbox-admin/includes/plugins/clockpicker/',
+		      	filter: 'isFile'
 		      },
 		      //jQuery Star Rating
 		      {
