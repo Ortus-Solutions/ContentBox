@@ -88,8 +88,6 @@ CSS
 "#prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.css"
 <!-- spacelab theme-->
 "#prc.cbroot#/includes/spacelab/css/main.css"
-
-CONTENTBOX
 <!-- datatables -->
 "#prc.cbroot#/includes/spacelab/plugins/dataTables/css/dataTables.css"
 <!-- morris -->
@@ -112,38 +110,35 @@ CONTENTBOX
 <!---                           JAVASCRIPT                                  --->
 <!--- ********************************************************************* --->
 
-<!-- modernizr for feature detection -->
-"#prc.cbroot#/includes/spacelab/js/modernizr.min.js"
 <!-- jquery main -->
 "#prc.cbroot#/includes/spacelab/js/jquery.min.js"
+<!-- cookie helper -->
+"#prc.cbroot#/includes/js/jquery.cookie.js"
+<!-- validation -->
+"#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js"
 <!-- bootstrap js -->
 "#prc.cbroot#/includes/spacelab/plugins/bootstrap/js/bootstrap.min.js"
+<!-- modernizr for feature detection -->
+"#prc.cbroot#/includes/spacelab/js/modernizr.min.js"
+<!-- spacelab js -->
+#prc.cbroot#/includes/spacelab/js/application.js"
+
+
+<!-- modal -->
+"#prc.cbroot#/includes/js/bootstrap-modalmanager.js"
+"#prc.cbroot#/includes/js/bootstrap-modal.js"
+<!-- datepicker -->
+"#prc.cbroot#/includes/js/bootstrap-datepicker.js"
 <!-- Navigation -->
 #prc.cbroot#/includes/spacelab/plugins/navgoco/jquery.navgoco.min.js"
 #prc.cbroot#/includes/spacelab/plugins/switchery/switchery.min.js"
 <!-- morris graphs -->
 #prc.cbroot#/includes/spacelab/plugins/morris/js/raphael-min.js"
 #prc.cbroot#/includes/spacelab/plugins/morris/js/morris.min.js"
-<!-- spacelab js -->
-#prc.cbroot#/includes/spacelab/js/application.js"
-
-<!--- ********************************************************************* --->
-<!---                          CONTENTBOX JAVASCRIPT                        --->
-<!--- ********************************************************************* --->
-
 <!-- clock picker -->
 "#prc.cbroot#/includes/spacelab/plugins/clockpicker/bootstrap-clockpicker.min.js"
 <!-- file upload -->
 "#prc.cbroot#/includes/js/bootstrap-fileupload.js"
-<!-- modal -->
-"#prc.cbroot#/includes/js/bootstrap-modalmanager.js"
-"#prc.cbroot#/includes/js/bootstrap-modal.js"
-<!-- datepicker -->
-"#prc.cbroot#/includes/js/bootstrap-datepicker.js"
-<!-- cookie helper -->
-"#prc.cbroot#/includes/js/jquery.cookie.js"
-<!-- validation -->
-"#prc.cbroot#/includes/spacelab/plugins/validation/js/jquery.validate.min.js"
 <!-- jwerty -->
 "#prc.cbroot#/includes/js/jwerty.js"
 <!-- datatables -->
