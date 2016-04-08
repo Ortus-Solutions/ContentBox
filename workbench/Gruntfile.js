@@ -18,49 +18,54 @@ module.exports = function(grunt) {
 
 	// Init grunt config
 	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
+		pkg : grunt.file.readJSON( 'package.json' ),
 		/**
 		* Directory watch tasks, which will force individual re-compilations
 		**/
-		watch: {
+		watch : {
 
-			recompile: {
-				files:[ 'Gruntfile.js' ],
-				tasks:[ 'sass:distTheme', 'uglify:libraries', 'uglify:contentboxJS', 'copy:js', 'copy:fonts', 'copy:css', 'copy:plugins' ]	
+			recompile : {
+				files : [ 'Gruntfile.js', 'bower.json' ],
+				tasks : [ 'sass:distTheme', 'uglify:libraries', 'uglify:contentboxJS', 'copy:js', 'copy:fonts', 'copy:css', 'copy:plugins' ]	
 			},
 
-			sass: {
-				files: ['devincludes/scss/*.{scss,sass}','devincludes/scss/**/*.{scss,sass}','devincludes/scss/**/**/*.{scss,sass}'],
-				tasks: ['sass:distTheme']
+			sass : {
+				files : [ 'devincludes/scss/*.{scss,sass}','devincludes/scss/**/*.{scss,sass}','devincludes/scss/**/**/*.{scss,sass}' ],
+				tasks : [ 'sass:distTheme' ]
 			},
 
-            contentBoxJS: {
-            	files: ['devincludes/js/contentbox/**/*.js'],
-            	tasks: ['uglify:contentboxJS']
+            contentBoxJS : {
+            	files : [ 'devincludes/js/contentbox/**/*.js' ],
+            	tasks : [ 'uglify:contentboxJS' ]
             },
 
-            vendorJS: {
-            	files: ['devincludes/vendor/js/*.js'],
-            	tasks: ['copy:plugins']
+            vendorJS : {
+            	files : [ 'devincludes/vendor/js/*.js' ],
+            	tasks : [ 'copy:js', 'copy:plugins' ]
             },
+
+            vendorCSS : {
+            	files : [ 'devincludes/vendor/css/*.css' ],
+            	tasks : [ 'copy:css', 'copy:plugins' ]
+            }
 		},
 
 		// SCSS Compilation to css
-		sass: {
-			options: {
-				sourceMap: true,
-				outputStyle: 'compressed'
+		sass : {
+			options : {
+				sourceMap  	: true,
+				outputStyle : 'compressed'
 			},
 			/**
 			* Contentbox and Theme SCSS Compilation
 			**/
 			distTheme: {
-			    options: {
-			      style: 'expanded',
-			      lineNumbers: true, // 1
-			      sourcemap: false
+			    options : {
+					style 		: 'expanded',
+					lineNumbers : true, // 1
+					sourcemap 	: false
 			    },
-			    files: {
+			    files : {
 					'../modules/contentbox-admin/includes/css/theme.css': 'devincludes/scss/theme.scss',
 					'../modules/contentbox-admin/includes/css/contentbox.css': 'devincludes/scss/contentbox.scss'
 				}
@@ -68,19 +73,19 @@ module.exports = function(grunt) {
 		},
 
 		//uglification/copy of views and pages
-		uglify: {
+		uglify : {
 
 			/**
 			* Compiled OSS Libraries
 			**/
-			libraries:{
-				options:{
-					preserveComments: true,
-					mangle:false,
-					banner: '/*! ContentBox Consolidated Open Source Javascript Libraries. Generated: <%= grunt.template.today("dd-mm-yyyy") %> */\n\n'
+			libraries :{
+				options :{
+					preserveComments 	: true,
+					mangle 				: false,
+					banner 				: '/*! ContentBox Consolidated Open Source Javascript Libraries. Generated: <%= grunt.template.today("dd-mm-yyyy") %> */\n\n'
 				},
 
-				files: {
+				files : {
 
 					//Libraries which are included in the HTML <head>
 					'../modules/contentbox-admin/includes/js/preLib.js':
@@ -125,20 +130,20 @@ module.exports = function(grunt) {
 			/**
 			* ContentBox Custom JS Compiliation
 			**/
-			contentboxJS: {
-			 	options: {
-			  	beautify: true,
-			  	mangle: false,
-			  	compress: false,
-			    // the banner is inserted at the top of the output
-			    banner: '/*! Copyright <%= grunt.template.today("yyyy") %> - Ortus Solutions (Compiled: <%= grunt.template.today("dd-mm-yyyy") %>) */\n'
+			contentboxJS : {
+			 	options : {
+				  	beautify 	: true,
+				  	mangle 		: false,
+				  	compress 	: false,
+				    // the banner is inserted at the top of the output
+				    banner 		: '/*! Copyright <%= grunt.template.today("yyyy") %> - Ortus Solutions (Compiled: <%= grunt.template.today("dd-mm-yyyy") %>) */\n'
 			  	},
-			  	files: [{
-		          expand: true,
-			      cwd: 'devincludes/js',
-		          src: 'contentbox/**/*.js',
-		          dest: '../modules/contentbox-admin/includes/js/'
-			    }]
+			  	files : [ {
+					expand 	: true,
+					cwd 	: 'devincludes/js',
+					src 	: 'contentbox/**/*.js',
+					dest 	: '../modules/contentbox-admin/includes/js/'
+			    } ]
 		    }
 		},
 
@@ -169,25 +174,25 @@ module.exports = function(grunt) {
 		  css : {
 		  	files : [
 			      {
-			      	expand: true,
-			      	flatten:true, 
-			      	cwd: 'bower_components/', 
-			      	src: [
+			      	expand 	: true,
+			      	flatten :true, 
+			      	cwd 	: 'bower_components/', 
+			      	src 	: [
 			      		'animate.css/animate.css'
 			      		,'morris.js/morris.css'
 			      		,'bootstrap-modal/css/bootstrap-modal-bs3patch.css'
 			      		,'bootstrap-modal/css/bootstrap-modal.css'
 			      	], 
-			      	dest: '../modules/contentbox-admin/includes/css/',
+			      	dest 	: '../modules/contentbox-admin/includes/css/',
 			      },
 			      {
-			      	expand: true,
-			      	flatten:true, 
-			      	cwd: 'devincludes/', 
-			      	src: [
+			      	expand 	: true,
+			      	flatten :true, 
+			      	cwd 	: 'devincludes/', 
+			      	src 	: [
 			      		'vendor/css/*.css'
 			      	], 
-			      	dest: '../modules/contentbox-admin/includes/css/',
+			      	dest 	: '../modules/contentbox-admin/includes/css/',
 			      }
 		      ]
 		  },
@@ -195,29 +200,29 @@ module.exports = function(grunt) {
 		  /**
 		  * Individual Javascript files migrated to project /includes/js 
 		  **/
-		  js:{
+		  js : {
 		  	// Single Javascript files to copy from bower
-		  	files: [ 
+		  	files : [ 
 			  	{
-			  		expand: true,
-			  		flatten:true,
-			  		cwd: 'bower_components/',
-			  		src: [ 
+			  		expand 	: true,
+			  		flatten : true,
+			  		cwd 	: 'bower_components/',
+			  		src 	: [ 
 						"respond/dest/respond.min.js",
 						"html5shiv/dist/html5shiv.min.js"
 			  		],
-			  		dest: '../modules/contentbox-admin/includes/js/'	
+			  		dest 	: '../modules/contentbox-admin/includes/js/'	
 			  	},
 
 			  	// Extra version of jQuery for CB FileBrowser
 			  	{
-			  		expand: true,
-			  		flatten:true,
-			  		cwd: 'bower_components/',
-			  		src: [ 
+			  		expand 	: true,
+			  		flatten : true,
+			  		cwd 	: 'bower_components/',
+			  		src 	: [ 
 						"jquery/dist/jquery.min.js"
 			  		],
-			  		dest: '../modules/contentbox-admin/includes/js/'	
+			  		dest 	: '../modules/contentbox-admin/includes/js/'	
 			  	}
 		  	]
 		  },
@@ -226,23 +231,23 @@ module.exports = function(grunt) {
 		  * Compiled Plugins moved to /includes/plugins/
 		  * These are loaded not on every page but determined by certain conditions
 		  **/
-		  plugins: {
-		    files: [
+		  plugins : {
+		    files : [
 		      // Theme Required Plugins: Added a-la-carte
 		      {
-		      	expand: true,
-		      	cwd: 'devincludes/plugins/', 
-		      	src: [
+		      	expand 	: true,
+		      	cwd 	: 'devincludes/plugins/', 
+		      	src 	: [
 					'icheck/**',
 					'mask/**'
 		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/',
+		      	dest 	: '../modules/contentbox-admin/includes/plugins/',
 		      },
 		      // CKEditor
 		      {
-		      	expand: true,
-		      	cwd: 'bower_components/', 
-		      	src: [
+		      	expand 	: true,
+		      	cwd 	: 'bower_components/', 
+		      	src 	: [
 		      		'ckeditor/plugins/**',
 		      		'ckeditor/adapters/**',
 		      		'ckeditor/skins/moono/**',
@@ -251,59 +256,59 @@ module.exports = function(grunt) {
 		      		'ckeditor/styles.js',
 		      		'ckeditor/*.css',
 		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/',
+		      	dest 	: '../modules/contentbox-admin/includes/plugins/',
 		      },
 		      //ContentBox CKEditor Config + Plugins
 		      {
-		      	expand: true,
-		      	cwd: 'devincludes/plugins/ckeditor/', 
-		      	src: [
+		      	expand 	: true,
+		      	cwd 	: 'devincludes/plugins/ckeditor/', 
+		      	src 	: [
 		      		'**'
 		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/ckeditor/',
+		      	dest 	: '../modules/contentbox-admin/includes/plugins/ckeditor/',
 		      },
 		      //DataTables
 		      {
-		      	expand: true,
-		      	cwd: 'bower_components/datatables/media/', 
-		      	src: [
+		      	expand 	: true,
+		      	cwd 	: 'bower_components/datatables/media/', 
+		      	src 	: [
 		      		'**'
 		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/dataTables/'
+		      	dest 	: '../modules/contentbox-admin/includes/plugins/dataTables/'
 		      },
 		      //Bootstrap DatePicker
 		      {
-		      	expand: true,
-		      	cwd: 'bower_components/bootstrap-datepicker/dist/', 
-		      	src: [
+		      	expand 	: true,
+		      	cwd 	: 'bower_components/bootstrap-datepicker/dist/', 
+		      	src 	: [
 		      		'css/**',
 		      		'js/**',
 		      		'locales/**'
 		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/bootstrap-datepicker/'
+		      	dest 	: '../modules/contentbox-admin/includes/plugins/bootstrap-datepicker/'
 		      },
 		      //Bootstrap Clockpicker
 		      {
-		      	expand: true,
-		      	flatten: true,
-		      	cwd: 'bower_components/clockpicker/dist/', 
-		      	src: [
+		      	expand 	: true,
+		      	flatten : true,
+		      	cwd 	: 'bower_components/clockpicker/dist/', 
+		      	src 	: [
 		      		'bootstrap-clockpicker.min.js',
 		      		'bootstrap-clockpicker.min.css'
 		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/clockpicker/',
-		      	filter: 'isFile'
+		      	dest 	: '../modules/contentbox-admin/includes/plugins/clockpicker/',
+		      	filter 	: 'isFile'
 		      },
 		      //jQuery Star Rating
 		      {
-		      	expand: true,
-		      	flatten: true,
-		      	cwd: 'bower_components/jquery-star-rating/min/', 
-		      	src: [
+		      	expand 	: true,
+		      	flatten : true,
+		      	cwd 	: 'bower_components/jquery-star-rating/min/', 
+		      	src 	: [
 		      		'rating.css',
 		      		'rating.js'
 		      	], 
-		      	dest: '../modules/contentbox-admin/includes/plugins/jquery-star-rating/'
+		      	dest 	: '../modules/contentbox-admin/includes/plugins/jquery-star-rating/'
 		      }
 		    ],
 		  },
@@ -312,11 +317,11 @@ module.exports = function(grunt) {
 		* Directory Resets for Compiled Scripts - Clears the directories below in preparation for recompile
 		* Only runs on on initial Grunt startup.  If removing plugins, you will need to restart Grunt
 		**/
-		clean:{
-			options: {
-		      force: true
+		clean : {
+			options : {
+		      force : true
 		    },
-		    targetIncludes: [ 
+		    targetIncludes : [ 
 				'../modules/contentbox-admin/includes/plugins',
 				'../modules/contentbox-admin/includes/fonts',
 				'../modules/contentbox-admin/includes/css',
