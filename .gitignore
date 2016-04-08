@@ -7,7 +7,7 @@ settings.xml
 logs/**
 *.cache.*
 .idea
-/web.config
+web.config
 "Icon\r"
 Icon?
 WEB-INF/**
