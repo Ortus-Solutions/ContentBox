@@ -2,8 +2,8 @@
 @import "globals";
 
 //External Libs
-@import "../../bower_components/font-awesome-sass/assets/stylesheets/font-awesome";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../../bower_components/font-awesome-sass/assets/stylesheets/font-awesome";
 
 /*
  *
@@ -48,7 +48,6 @@
 @import "theme/_media-queries.scss";
 
 //Post-Theme External Libs
-@import "../../bower_components/animate.css/animate.min";
 @import "../../bower_components/toastr/toastr.scss";
 
 //path-relative plugin URL includes
