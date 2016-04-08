@@ -42,8 +42,6 @@ component extends="baseHandler"{
 		prc.installerCheck = settingService.isInstallationPresent();
 		// announce event
 		announceInterception( "cbadmin_onDashboard" );
-		prc.cssAppendList = "../plugins/morris/css/morris";       
-   		prc.jsAppendList  = "../plugins/morris/js/raphael-min,../plugins/morris/js/morris.min";  
 		// dashboard view
 		event.setView( "dashboard/index" );
 	}
