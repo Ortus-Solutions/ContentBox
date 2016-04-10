@@ -4,13 +4,25 @@ $( document ).ready(function() {
     $confirmIt          = $('#confirmIt');
     $remoteModal        = $( "#modal" );
     
-    // handler for "shown" event in modals
+    // show modal
+    $remoteModal.on( 'show.bs.modal', function() {
+        var modal = $remoteModal;
+        modal.find('.modal-dialog').css( {
+            width     : modal.data( 'width' ),
+            height    : modal.data( 'height' )
+        } );
+    } );
+
     $remoteModal.on( 'shown.bs.modal', function() {
-        var modal = $remoteModal; 
+        var modal = $remoteModal;
         // only run if modal is in delayed mode
         if( modal.data( 'delay' ) ) {
-            // load the modal content
-            modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
+            modal.load( modal.data( 'url' ), modal.data( 'params' ), function(){
+                modal.find('.modal-dialog').css( {
+                    width     : modal.data( 'width' ),
+                    height    : modal.data( 'height' )
+                } );
+            } );
         }        
     } );
 
@@ -394,7 +406,7 @@ function openRemoteModal( url, params, w, h, delay ){
         if( height.search && height.search( '%' )!== -1 ) {
             height = height.replace( '%', '' ) / 100.00;
             height = $( window ).height() * height;
-            modal.data( 'height', height )
+            modal.data( 'height', height );
         }
         // set delay data in element
         modal.data( 'delay', true );
@@ -402,7 +414,6 @@ function openRemoteModal( url, params, w, h, delay ){
         if( height < maxHeight ) {
             args.height = maxHeight;
         }
-        // show modal
         modal.modal( args );
     }
     // otherwise, front-load the request and then create modal

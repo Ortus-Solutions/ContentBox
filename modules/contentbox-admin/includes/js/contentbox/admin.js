@@ -2,10 +2,22 @@
 $(document).ready(function() {
     $confirmIt = $("#confirmIt");
     $remoteModal = $("#modal");
+    $remoteModal.on("show.bs.modal", function() {
+        var modal = $remoteModal;
+        modal.find(".modal-dialog").css({
+            width: modal.data("width"),
+            height: modal.data("height")
+        });
+    });
     $remoteModal.on("shown.bs.modal", function() {
         var modal = $remoteModal;
         if (modal.data("delay")) {
-            modal.load(modal.data("url"), modal.data("params"));
+            modal.load(modal.data("url"), modal.data("params"), function() {
+                modal.find(".modal-dialog").css({
+                    width: modal.data("width"),
+                    height: modal.data("height")
+                });
+            });
         }
     });
     $remoteModal.on("hidden.bs.modal", function() {
