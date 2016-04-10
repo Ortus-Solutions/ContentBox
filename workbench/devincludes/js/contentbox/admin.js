@@ -5,8 +5,7 @@ $( document ).ready(function() {
     $remoteModal        = $( "#modal" );
     
     // handler for "shown" event in modals
-    /**
-    $remoteModal.on( 'shown', function() {
+    $remoteModal.on( 'shown.bs.modal', function() {
         var modal = $remoteModal; 
         // only run if modal is in delayed mode
         if( modal.data( 'delay' ) ) {
@@ -14,7 +13,6 @@ $( document ).ready(function() {
             modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
         }        
     } );
-    **/
 
     // reset modal content when hidden
     $remoteModal.on( 'hidden.bs.modal', function() {
@@ -396,7 +394,7 @@ function openRemoteModal( url, params, w, h, delay ){
         if( height.search && height.search( '%' )!== -1 ) {
             height = height.replace( '%', '' ) / 100.00;
             height = $( window ).height() * height;
-            //modal.data( 'height', height )
+            modal.data( 'height', height )
         }
         // set delay data in element
         modal.data( 'delay', true );
@@ -429,7 +427,7 @@ function openRemoteModal( url, params, w, h, delay ){
 }
 
 /**
- * Reize the content preview
+ * Resize the content preview
  * @param {object} activeBtn The active button object
  * @param {numeric} w         The width to use in pixels
  */
