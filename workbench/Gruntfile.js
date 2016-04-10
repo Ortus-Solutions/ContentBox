@@ -104,9 +104,7 @@ module.exports = function(grunt) {
 					//Libraries which are brought in before the </body> end
 					'../modules/contentbox-admin/includes/js/postLib.js':
 					[
-				      	"bower_components/bootstrap-modal/js/bootstrap-modalmanager.js"
-				      	,"bower_components/bootstrap-modal/js/bootstrap-modal.js"
-				      	,"bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+				      	"bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
 						,"bower_components/es6-shim/es6-shim.min.js"
 				      	,"bower_components/navgoco/src/jquery.navgoco.min.js"
 				      	,"bower_components/switchery/dist/switchery.min.js"
@@ -180,8 +178,6 @@ module.exports = function(grunt) {
 			      	src 	: [
 			      		'animate.css/animate.css'
 			      		,'morris.js/morris.css'
-			      		,'bootstrap-modal/css/bootstrap-modal-bs3patch.css'
-			      		,'bootstrap-modal/css/bootstrap-modal.css'
 			      	], 
 			      	dest 	: '../modules/contentbox-admin/includes/css/',
 			      },

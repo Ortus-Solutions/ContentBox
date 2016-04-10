@@ -71,15 +71,19 @@
 		<cfif len(prc.entries.description)>
 			<a href="##entry_description_#prc.entries.entryID#" role="button" data-toggle="modal"><i class="fa fa-plus"></i> Read Description</a>
 			<div id="entry_description_#prc.entries.entryID#" class="modal forgebox-modal fade">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4>Description</h4>
-				</div>
-				<div class="modal-body">
-					#prc.entries.description#
-				</div>
-				<div class="modal-footer">
-					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				<div class="modal-dialog modal-lg" role="document" >
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h4>Description</h4>
+						</div>
+						<div class="modal-body">
+							#prc.entries.description#
+						</div>
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						</div>
+					</div>
 				</div>
 			</div><br/>
 		</cfif>
@@ -87,15 +91,19 @@
 		<cfif len(prc.entries.installinstructions)>
 			<a href="##entry_ii_#prc.entries.entryID#" role="button" data-toggle="modal"><i class="fa fa-plus"></i> Read Installation Instructions</a>
 			<div id="entry_ii_#prc.entries.entryID#" class="modal forgebox-modal fade">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h3>Installation Instructions</h3>
-				</div>
-				<div class="modal-body">
-					#prc.entries.installinstructions#
-				</div>
-				<div class="modal-footer">
-					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				<div class="modal-dialog modal-lg" role="document" >
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3>Installation Instructions</h3>
+						</div>
+						<div class="modal-body">
+							#prc.entries.installinstructions#
+						</div>
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						</div>
+					</div>
 				</div>
 			</div><br/>
 		</cfif>
@@ -103,15 +111,19 @@
 		<cfif len(prc.entries.changelog)>
 			<a href="##entry_cl_#prc.entries.entryID#" role="button" data-toggle="modal"><i class="fa fa-plus"></i> Read Changelog</a>
 			<div id="entry_cl_#prc.entries.entryID#" class="modal forgebox-modal fade">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h3>Changelog</h3>
-				</div>
-				<div class="modal-body">
-					#prc.entries.changelog#
-				</div>
-				<div class="modal-footer">
-					<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+				<div class="modal-dialog modal-lg" role="document" >
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3>Changelog</h3>
+						</div>
+						<div class="modal-body">
+							#prc.entries.changelog#
+						</div>
+						<div class="modal-footer">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+						</div>
+					</div>
 				</div>
 			</div><br/>
 		</cfif>

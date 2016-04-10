@@ -411,16 +411,6 @@ component extends="baseContentHandler"{
 		event.renderData(data=trim( variables.HTMLHelper.slugify( rc.slug ) ),type="plain" );
 	}
 
-	// quick post viewlet
-	function quickPost( event, rc, prc ){
-		// get all categories for quick post
-		prc.qpCategories = categoryService.getAll(sortOrder="category" );
-		// exit handlers
-		prc.xehQPEntrySave = "#prc.cbAdminEntryPoint#.entries.save";
-		// render it out
-		return renderView(view="entries/quickPost",module="contentbox-admin" );
-	}
-
 	// editor selector
 	function editorSelector( event, rc, prc ){
 		// paging default

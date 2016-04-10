@@ -17,7 +17,6 @@
     "ckeditor": "~4.5.8",
     "Bootstrap-Confirmation": "bootstrap-confirmation#*",
     "bootstrap-datepicker": "~1.6.0",
-    "bootstrap-modal": "~2.2.6",
     "jquery.cookie": "~1.4.1",
     "jquery-nestable": "*",
     "TableDnD": "~0.9.1",
@@ -32,7 +31,6 @@
     "animate.css": "~3.5.1",
     "switchery": "~0.8.1",
     "navgoco": "~0.2.1",
-    "jquery-i18n-properties": "~1.2.2",
     "datatables": "~1.10.11"
   },
   "resolutions": {

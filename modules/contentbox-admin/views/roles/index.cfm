@@ -136,58 +136,63 @@
 <cfif prc.oAuthor.checkPermission( "ROLES_ADMIN" )>
 	<!--- Role Editor --->
 	<div id="roleEditorContainer" class="modal fade">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h4><i class="fa fa-group"></i> Role Editor</h4>
-	    </div>
-		<!--- Create/Edit form --->
-		#html.startForm(
-			action=prc.xehRoleSave,
-			name="roleEditor",
-			novalidate="novalidate",
-			class="form-vertical"
-		)#
-		<div class="modal-body">
-			#html.hiddenField(name="roleID",value="" )#
-			#html.textField(
-				name="role",
-				label="Role:",
-				required="required",
-				maxlength="255",
-				size="30",
-				class="form-control",
-				title="A unique role name",
-				wrapper="div class=controls",
-				labelClass="control-label",
-				groupWrapper="div class=form-group"
-			)#
-			#html.textArea(
-				name="description",
-				label="Description:",
-				cols="20",
-				rows="3",
-				class="form-control",
-				title="A short role description",
-				wrapper="div class=controls",
-				labelClass="control-label",
-				groupWrapper="div class=form-group"
-			)#
-		</div>
-		<!--- Footer --->
-		<div class="modal-footer">
-			#html.resetButton(
-				name="btnReset",
-				value="Cancel",
-				class="btn", 
-				onclick="closeModal( $('##roleEditorContainer') )"
-			)#
-			#html.submitButton(
-				name="btnSave",
-				value="Save",
-				class="btn btn-danger"
-			)#
-		</div>
-		#html.endForm()#
+		<div class="modal-dialog" role="document" >
+			<div class="modal-content">
+		
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4><i class="fa fa-group"></i> Role Editor</h4>
+			    </div>
+				<!--- Create/Edit form --->
+				#html.startForm(
+					action=prc.xehRoleSave,
+					name="roleEditor",
+					novalidate="novalidate",
+					class="form-vertical"
+				)#
+				<div class="modal-body">
+					#html.hiddenField(name="roleID",value="" )#
+					#html.textField(
+						name="role",
+						label="Role:",
+						required="required",
+						maxlength="255",
+						size="30",
+						class="form-control",
+						title="A unique role name",
+						wrapper="div class=controls",
+						labelClass="control-label",
+						groupWrapper="div class=form-group"
+					)#
+					#html.textArea(
+						name="description",
+						label="Description:",
+						cols="20",
+						rows="3",
+						class="form-control",
+						title="A short role description",
+						wrapper="div class=controls",
+						labelClass="control-label",
+						groupWrapper="div class=form-group"
+					)#
+				</div>
+				<!--- Footer --->
+				<div class="modal-footer">
+					#html.resetButton(
+						name="btnReset",
+						value="Cancel",
+						class="btn", 
+						onclick="closeModal( $('##roleEditorContainer') )"
+					)#
+					#html.submitButton(
+						name="btnSave",
+						value="Save",
+						class="btn btn-danger"
+					)#
+				</div>
+				#html.endForm()#
+				</div>
+			</div>
 		</div>
 	</div>
 </cfif>

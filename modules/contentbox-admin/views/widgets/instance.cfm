@@ -1,10 +1,12 @@
 <cfoutput>
     <cfif rc.modal>
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4><span id="widget-title-bar"><i class="fa fa-#prc.widget.icon# fa-lg fa-2x"></i> #rc.mode# '#prc.widget.widget.getName()#' Widget</span></h4>
-        </div>
-        <div class="modal-body">
+        <div class="modal-dialog modal-lg" role="document" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4><span id="widget-title-bar"><i class="fa fa-#prc.widget.icon# fa-lg fa-2x"></i> #rc.mode# '#prc.widget.widget.getName()#' Widget</span></h4>
+                </div>
+                <div class="modal-body">
     </cfif>
         <div id="widget-preview-wrapper">
             <div class="widget-arguments" id="widget-arguments">
@@ -154,15 +156,17 @@
             </div>
         </div>
     <cfif rc.modal>
-        </div>
-        <div class="modal-footer">
-            <div class="widget-footer-right">
-                <cfif rc.mode eq "edit">
-                    <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Cancel</a>
-                    <button class="btn btn-info" id="widget-button-update">Update Widget</button>
-                <cfelse>
-                    <a id="widget-button-close" href="javascript:void(0);" class="btn btn-info" onclick="closeRemoteModal()">Close</a>
-                </cfif>
+                </div>
+                <div class="modal-footer">
+                    <div class="widget-footer-right">
+                        <cfif rc.mode eq "edit">
+                            <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Cancel</a>
+                            <button class="btn btn-info" id="widget-button-update">Update Widget</button>
+                        <cfelse>
+                            <a id="widget-button-close" href="javascript:void(0);" class="btn btn-info" onclick="closeRemoteModal()">Close</a>
+                        </cfif>
+                    </div>
+                </div>
             </div>
         </div>
     </cfif>

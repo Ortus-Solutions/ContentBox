@@ -152,7 +152,9 @@
         	#renderView( view="_tags/footer", module="contentbox-admin" )#
         </section>  
 
-        <!--sidebar right start-->
+        <!--- ************************************************************************************************--->
+        <!---                               RIGHT SIDEBAR                                         --->
+        <!--- ************************************************************************************************--->
         <div class="sidebarRight">
 	        <div id="rightside-navigation">
 	            <div class="sidebar-heading"><i class="fa fa-bullhorn"></i> Notifications</div>
@@ -210,9 +212,11 @@
 	    </div>
         <!--sidebar right end-->
 
-        <!--- ConfirmIt modal --->
+        <!--- ************************************************************************************************--->
+        <!---                               CONFIRM IT MODAL TEMPLATE                                         --->
+        <!--- ************************************************************************************************--->
         <div id="confirmIt" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmItTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <!--header-->
                     <div class="modal-header">
@@ -232,18 +236,29 @@
                             <button class="btn btn-danger" data-action="confirm"><i class="icon-check"></i>  Confirm </button>
                         </span>
                     </div>
+                </div> <!--- end modal-content --->
+            </div> <!--- end modal-dialog --->
+        </div>
+
+        <!--- ************************************************************************************************--->
+        <!---                               REMOTE MODAL TEMPLATE                                             --->
+        <!--- ************************************************************************************************--->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remoteModal" aria-hidden="true" id="modal">
+             <div class="modal-dialog modal-lg" role="document" >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>Loading...</h3>
+                    </div>
+                    <div class="modal-body" id="remoteModelContent">
+                        <i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i>
+                    </div>
                 </div>
             </div>
         </div>
-        <div id="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-            <div class="modal-header">
-                <h3>Loading...</h3>
-            </div>
-            <div class="modal-body" id="remoteModelContent">
-                <i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i>
-            </div>
-        </div>
 
+        <!--- ************************************************************************************************--->
+        <!---                               BODY END VIEW                                                     --->
+        <!--- ************************************************************************************************--->
         <cfinclude template="inc/HTMLBodyEnd.cfm"/>
         
     </body>

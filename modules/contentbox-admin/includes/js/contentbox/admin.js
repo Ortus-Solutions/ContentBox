@@ -1,13 +1,7 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 08-04-2016) */
+/*! Copyright 2016 - Ortus Solutions (Compiled: 10-04-2016) */
 $(document).ready(function() {
     $confirmIt = $("#confirmIt");
     $remoteModal = $("#modal");
-    $remoteModal.on("shown", function() {
-        var modal = $remoteModal;
-        if (modal.data("delay")) {
-            modal.load(modal.data("url"), modal.data("params"));
-        }
-    });
     $remoteModal.on("hidden.bs.modal", function() {
         var modal = $remoteModal;
         modal.html('<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>');
@@ -295,6 +289,7 @@ function openModal(div, w, h) {
 
 function openRemoteModal(url, params, w, h, delay) {
     if (!url) {
+        console.log("URL needed");
         return;
     }
     var modal = $remoteModal;

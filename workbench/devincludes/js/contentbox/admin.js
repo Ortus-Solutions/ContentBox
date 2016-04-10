@@ -5,6 +5,7 @@ $( document ).ready(function() {
     $remoteModal        = $( "#modal" );
     
     // handler for "shown" event in modals
+    /**
     $remoteModal.on( 'shown', function() {
         var modal = $remoteModal; 
         // only run if modal is in delayed mode
@@ -13,6 +14,7 @@ $( document ).ready(function() {
             modal.load( modal.data( 'url' ), modal.data( 'params' ) );    
         }        
     } );
+    **/
 
     // reset modal content when hidden
     $remoteModal.on( 'hidden.bs.modal', function() {
@@ -322,7 +324,6 @@ function toggleFlickers(){
 }
 /**
  * A-la-Carte closing of remote modal windows
- * @return
  */
 function closeRemoteModal(){
     var frm = $remoteModal.find( 'form' );
@@ -335,7 +336,7 @@ function closeRemoteModal(){
 * Close a local modal window
 * @param div The jquery div object that represents the dialog.
 */
-function closeModal(div){
+function closeModal( div ){
     var frm = div.find( 'form' );
     if( frm.length ) {
         $( frm[0] ).clearForm();        
@@ -373,13 +374,15 @@ function openModal(div, w, h){
  * @param delay Whether or not to delay loading of dialog until after dialog is created (useful for iframes)
  * @return
  */
-function openRemoteModal(url,params,w,h,delay){
-    if(!url){
+function openRemoteModal( url, params, w, h, delay ){
+    if( !url ){
+        console.log( "URL needed" );
         return;
     }
     var modal = $remoteModal;
     var args = {};
-    var maxHeight = ($( window ).height() -360);
+    var maxHeight = ( $( window ).height() -360 );
+    
     // set data values
     modal.data( 'url', url );
     modal.data( 'params', params );
@@ -409,8 +412,8 @@ function openRemoteModal(url,params,w,h,delay){
         // load request for content
         modal.load( url, params, function() {
             // in callback, show modal
-            var maxHeight = ($( window ).height() -360);
-            var currentHeight = modal.height();
+            var maxHeight       = ( $( window ).height() -360 );
+            var currentHeight   = modal.height();
             args.width = w !== undefined ? w : $( window ).width() * 0.80;
             args.maxHeight = maxHeight;
             if( currentHeight && currentHeight < maxHeight ) {

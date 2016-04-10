@@ -108,51 +108,55 @@
 
                             <!--- Settings Editor --->
                             <div id="settingEditorContainer" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title"><i class="fa fa-cogs"></i> Setting Editor</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <!--- Create/Edit form --->
-                                    #html.startForm(
-                                        action      = prc.xehSettingsave, 
-                                        name        = "settingEditor", 
-                                        novalidate  = "novalidate", 
-                                        class       = "vertical-form"
-                                    )#
-                                        <input type="hidden" name="settingID" id="settingID" value="" />
-                                        <div class="form-group">
-                                            <label for="name" class="control-label">Setting:</label>
-                                            <div class="controls">
-                                                <input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="form-control"/>
-                                            </div>
+                                <div class="modal-dialog modal-lg" role="document" >
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title"><i class="fa fa-cogs"></i> Setting Editor</h4>
                                         </div>
-                                        <div class="checkbox">
-                                            <label>
-                                              <input type="checkbox" name="isCore" id="isCore" value="true"> <strong>Core Setting</strong>
-                                            </label>
+                                        <div class="modal-body">
+                                            <!--- Create/Edit form --->
+                                            #html.startForm(
+                                                action      = prc.xehSettingsave, 
+                                                name        = "settingEditor", 
+                                                novalidate  = "novalidate", 
+                                                class       = "vertical-form"
+                                            )#
+                                                <input type="hidden" name="settingID" id="settingID" value="" />
+                                                <div class="form-group">
+                                                    <label for="name" class="control-label">Setting:</label>
+                                                    <div class="controls">
+                                                        <input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="form-control"/>
+                                                    </div>
+                                                </div>
+                                                <div class="checkbox">
+                                                    <label>
+                                                      <input type="checkbox" name="isCore" id="isCore" value="true"> <strong>Core Setting</strong>
+                                                    </label>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="value" class="control-label">Value:</label>
+                                                    <div class="controls">
+                                                        <textarea name="value" id="value" rows="7" class="form-control"></textarea>
+                                                    </div>
+                                                </div>
+                                            #html.endForm()#
                                         </div>
-                                        <div class="form-group">
-                                            <label for="value" class="control-label">Value:</label>
-                                            <div class="controls">
-                                                <textarea name="value" id="value" rows="7" class="form-control"></textarea>
-                                            </div>
+                                        <div class="modal-footer">
+                                            #html.resetButton(
+                                                name="btnReset",
+                                                value="Cancel",
+                                                class="btn", 
+                                                onclick="closeModal( $('##settingEditorContainer') )"
+                                            )#
+                                            #html.button(
+                                                name="btnSave",
+                                                value="Save",
+                                                class="btn btn-danger",
+                                                onclick="submitSettingForm()"
+                                            )#
                                         </div>
-                                    #html.endForm()#
-                                </div>
-                                <div class="modal-footer">
-                                    #html.resetButton(
-                                        name="btnReset",
-                                        value="Cancel",
-                                        class="btn", 
-                                        onclick="closeModal( $('##settingEditorContainer') )"
-                                    )#
-                                    #html.button(
-                                        name="btnSave",
-                                        value="Save",
-                                        class="btn btn-danger",
-                                        onclick="submitSettingForm()"
-                                    )#
+                                    </div>
                                 </div>
                             </div>
                         </div>

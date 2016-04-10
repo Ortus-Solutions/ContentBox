@@ -1,4 +1,4 @@
-/*! ContentBox Consolidated Open Source Javascript Libraries. Generated: 08-04-2016 */
+/*! ContentBox Consolidated Open Source Javascript Libraries. Generated: 10-04-2016 */
 
 /*! jQuery v2.2.3 | (c) jQuery Foundation | jquery.org/license */
 /*!

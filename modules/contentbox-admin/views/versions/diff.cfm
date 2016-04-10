@@ -1,6 +1,8 @@
 ﻿<cfoutput>
 #html.addAsset( "#prc.cbRoot#/includes/css/diff.css" )#
 <div id="diff">
+	<div class="modal-dialog modal-lg" role="document" >
+		<div class="modal-content">
             <!--header-->
             <div class="modal-header">
                 <!--if dismissable-->
@@ -93,5 +95,7 @@
             <div class="modal-footer">
                 <button class="btn" onclick="closeRemoteModal()"> Close </button>
             </div>
+        </div>
+    </div>
 </div>
 </cfoutput>
