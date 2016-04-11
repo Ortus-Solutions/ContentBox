@@ -401,28 +401,29 @@ function openRemoteModal( url, params, w, h, delay ){
 }
 
 /**
- * Resize the content preview
+ * Resize the modal content preview window
  * @param {object} activeBtn The active button object
- * @param {numeric} w         The width to use in pixels
+ * @param {numeric} w The width to use in pixels
  */
 function setPreviewSize( activeBtn, w ){
-  var frame = $( "#previewFrame" ).length ? $( "#previewFrame" ) : $remoteModal.find( ".modal-dialog" ),
-      orig      = { 'width' : $remoteModal.data( 'width' ) },
-      fOffset   = { 'width' : $remoteModal.width() - $( frame ).width() },
-      modalSize = { 'width' : w + fOffset.width };
+    var modalDialog = $remoteModal.find( ".modal-dialog" ),
+        frame       = $( "#previewFrame" ).length ? $( "#previewFrame" ) : modalDialog,
+        orig        = { 'width' : $remoteModal.data( 'width' ) },
+        modalSize   = { 'width' : w };
 
-    // width is bigger than original size
-    if( !w || modalSize.width > orig.width ){ modalSize = { 'width' : orig.width }; }
+    // width is bigger than original size, reset to original
+    if( !w || modalSize.width > orig.width ){ 
+        modalSize = { 'width' : orig.width }; 
+    }
 
-    // toggle "Quick Preview" on Mobile View
+    // toggle "Quick Preview" on Mobile Views
     $remoteModal.find( ".header-title" ).toggle( modalSize.width > 600 );
-    $( activeBtn ).siblings( '.active' ).removeClass( 'active' );
-    $( activeBtn ).addClass( 'active' );
+    // Set current active buttons
+    $( activeBtn ).siblings( '.btn-primary' ).removeClass( 'btn-primary' ).addClass( "btn-info" );
+    $( activeBtn ).removeClass( "btn-info" ).addClass( 'btn-primary' );
 
-    //modalSize[ 'margin-left' ] = -modalSize.width/2;
-    modalSize[ 'margin-left' ] = 'auto';
-    modalSize[ 'margin-right' ] = 'auto';
-    $remoteModal.animate( modalSize, 500 );
+    // resize it now.
+    modalDialog.animate( modalSize, 500 );
 }
 /**
  * Attach modal listeners to global modals: Remote and ConfirmIt
@@ -431,7 +432,7 @@ function attachModalListeners(){
     // Remote show event: Usually we resize the window here.
     $remoteModal.on( 'show.bs.modal', function() {
         var modal = $remoteModal;
-        modal.find('.modal-dialog').css( {
+        modal.find( '.modal-dialog' ).css( {
             width     : modal.data( 'width' ),
             height    : modal.data( 'height' )
         } );

@@ -311,12 +311,10 @@ function openRemoteModal(url, params, w, h, delay) {
 }
 
 function setPreviewSize(activeBtn, w) {
-    var frame = $("#previewFrame").length ? $("#previewFrame") : $remoteModal.find(".modal-dialog"), orig = {
+    var modalDialog = $remoteModal.find(".modal-dialog"), frame = $("#previewFrame").length ? $("#previewFrame") : modalDialog, orig = {
         width: $remoteModal.data("width")
-    }, fOffset = {
-        width: $remoteModal.width() - $(frame).width()
     }, modalSize = {
-        width: w + fOffset.width
+        width: w
     };
     if (!w || modalSize.width > orig.width) {
         modalSize = {
@@ -324,11 +322,9 @@ function setPreviewSize(activeBtn, w) {
         };
     }
     $remoteModal.find(".header-title").toggle(modalSize.width > 600);
-    $(activeBtn).siblings(".active").removeClass("active");
-    $(activeBtn).addClass("active");
-    modalSize["margin-left"] = "auto";
-    modalSize["margin-right"] = "auto";
-    $remoteModal.animate(modalSize, 500);
+    $(activeBtn).siblings(".btn-primary").removeClass("btn-primary").addClass("btn-info");
+    $(activeBtn).removeClass("btn-info").addClass("btn-primary");
+    modalDialog.animate(modalSize, 500);
 }
 
 function attachModalListeners() {

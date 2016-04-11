@@ -2,25 +2,59 @@
 <div class="modal-dialog modal-lg" role="document" >
 	<div class="modal-content">
 		<div class="modal-header">
-			<table style="width:100%">
-				<tr>
-					<td width="30%">
-						<h3 style="margin: 9px 0;"><i class="fa fa-eye fa-lg"></i>&nbsp; <span class="header-title">Responsive Previews</span></h3>
-					</td>
-					<td width="40%" align="center" nowrap>
-						<div class="btn-group" style="width:250px">
-							<button href="javascript:void( 0 )" onclick="setPreviewSize( this); return false;" class="btn btn-primary active"><i class="fa fa-2x fa-desktop"></i></button>
-							<button href="javascript:void( 0 )" onclick="setPreviewSize( this, 768 ); return false;" class="btn btn-primary"><i class="fa fa-2x fa-tablet"></i></button>
-							<button href="javascript:void( 0 )" onclick="setPreviewSize( this, 1024 ); return false;" class="btn btn-primary"><i class="fa fa-2x fa-tablet fa-rotate-90"></i></button>
-							<button href="javascript:void( 0 )" onclick="setPreviewSize( this, 320 ); return false;" class="btn btn-primary"><i class="fa fa-2x fa-mobile"></i></button>
-							<button href="javascript:void( 0 )" onclick="setPreviewSize( this, 568 ); return false;" class="btn btn-primary"><i class="fa fa-2x fa-mobile fa-rotate-90"></i></button>
-						</div>
-					</td>
-					<td width="30%">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					</td>
-				</tr>
-			</table>
+
+			<div class="row">
+				<div class="col-md-3">
+					<h3 style="margin: 9px 0;"><i class="fa fa-eye fa-lg"></i>&nbsp; <span class="header-title">Responsive Previews</span></h3>
+				</div>
+				<div class="col-md-6 text-center">
+					<div class="btn-group" role="group" aria-label="Preview Resizer" style="min-width: 200px">
+						<button href="javascript:void( 0 )" 
+								role="group" 
+								title="Desktop View"
+								onclick="setPreviewSize( this ); return false;" 
+								class="btn btn-primary btn-sm"
+						>
+							<i class="fa fa-2x fa-desktop"></i>
+						</button>
+						<button href="javascript:void( 0 )" 
+								role="group" 
+								title="Tablet View"
+								onclick="setPreviewSize( this, 768 ); return false;" 
+								class="btn btn-info btn-sm"
+						>
+							<i class="fa fa-2x fa-tablet"></i>
+						</button>
+						<button href="javascript:void( 0 )" 
+								role="group" 
+								title="Horizontal Tablet View"
+								onclick="setPreviewSize( this, 1024 ); return false;" 
+								class="btn btn-info btn-sm"
+						>
+							<i class="fa fa-2x fa-tablet fa-rotate-90"></i>
+						</button>
+						<button href="javascript:void( 0 )" 
+								role="group" 
+								title="Phone View"
+								onclick="setPreviewSize( this, 320 ); return false;" 
+								class="btn btn-info btn-sm"
+						>
+							<i class="fa fa-2x fa-mobile"></i>
+						</button>
+						<button href="javascript:void( 0 )" 
+								role="group" 
+								title="Horizontal Phone View"
+								onclick="setPreviewSize( this, 568 ); return false;" 
+								class="btn btn-info btn-sm"
+						>
+							<i class="fa fa-2x fa-mobile fa-rotate-90"></i>
+						</button>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+			</div>
 		</div>
 		<div class="modal-body">
 			<!---hidden form for preview submit, has to be a form as content can be quite large

@@ -22,7 +22,7 @@ function previewContent(){
 			parentPage	: $( "##parentPage" ).val() || ''
 		},
 		$( window ).width() - 50,
-		$( window ).height() - 50,
+		$( window ).height() - 200,
         true
 	);
 }
