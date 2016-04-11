@@ -12,7 +12,7 @@ openRemoteModal() is part of contentbox js
                     getWidgetSelectorURL(), 
                     { editorName: editor.name }, 
                     $( window ).width() - 200,
-                    $( window ).height() - 200,
+                    $( window ).height() - 300,
                     true 
                 );
     		}
