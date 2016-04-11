@@ -25,7 +25,7 @@ module.exports = function(grunt) {
 		watch : {
 
 			recompile : {
-				files : [ 'Gruntfile.js', 'bower.json' ],
+				files : [ 'Gruntfile.js', 'bower.json', 'devincludes/plugins/**' ],
 				tasks : [ 'sass:distTheme', 'uglify:libraries', 'uglify:contentboxJS', 'copy:js', 'copy:fonts', 'copy:css', 'copy:plugins' ]	
 			},
 
