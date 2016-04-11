@@ -4,33 +4,8 @@ $( document ).ready(function() {
     $confirmIt          = $('#confirmIt');
     $remoteModal        = $( "#modal" );
     
-    // show modal
-    $remoteModal.on( 'show.bs.modal', function() {
-        var modal = $remoteModal;
-        modal.find('.modal-dialog').css( {
-            width     : modal.data( 'width' ),
-            height    : modal.data( 'height' )
-        } );
-    } );
-
-    $remoteModal.on( 'shown.bs.modal', function() {
-        var modal = $remoteModal;
-        // only run if modal is in delayed mode
-        if( modal.data( 'delay' ) ) {
-            modal.load( modal.data( 'url' ), modal.data( 'params' ), function(){
-                modal.find('.modal-dialog').css( {
-                    width     : modal.data( 'width' ),
-                    height    : modal.data( 'height' )
-                } );
-            } );
-        }        
-    } );
-
-    // reset modal content when hidden
-    $remoteModal.on( 'hidden.bs.modal', function() {
-        var modal = $remoteModal;
-        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>' );
-    } );
+    // Attach modal listeners
+    attachModalListeners();
     
     // Global Tool Tip Settings
     toolTipSettings = {
@@ -318,8 +293,9 @@ function closeSearchBox(){
     $( "#nav-search" ).val( '' );
 }
 function quickLinks( inURL ){
-    if( inURL != 'null' )
+    if( inURL != 'null' ){
         window.location = inURL;
+    }
 }
 function activateTooltips(){
     //Tooltip 
@@ -333,46 +309,41 @@ function toggleFlickers(){
     $( ".flickers" ).fadeOut( 3000 );
 }
 /**
- * A-la-Carte closing of remote modal windows
+ * Close the remote loaded modal
  */
 function closeRemoteModal(){
-    var frm = $remoteModal.find( 'form' );
-    if( frm.length ) {
-        $( frm[0] ).clearForm();        
-    }
     $remoteModal.modal( 'hide' );
+}
+/**
+ * Reset a modal form according to the passed container
+ * @param  {object} container The container
+ */
+function resetContainerForms( container ){
+    // Clears a form in the div element, usually to reset forms in dialogs.
+    var frm = container.find( 'form' );
+    if( frm.length ) {
+        $( frm[ 0 ] ).clearForm();
+    }
 }
 /**
 * Close a local modal window
 * @param div The jquery div object that represents the dialog.
 */
 function closeModal( div ){
-    var frm = div.find( 'form' );
-    if( frm.length ) {
-        $( frm[0] ).clearForm();        
-    }
     div.modal( 'hide' );
 }
 /**
- * Open a new local modal window.
+ * Open a new local modal window based on a div container
  * @param div The jquery object of the div to extract the HTML from.
  * @param w The width of the modal
  * @param h The height of the modal
- * @return
  */
-function openModal(div, w, h){
-    div.modal( {
-        width: w,
-        height: h
-    } );
+function openModal( div, w, h ){
+    // Open the modal
+    div.modal();
     // attach a listener to clear form when modal closes
     $( div ).on( 'hidden.bs.modal', function() {
-        if( !$( this ).hasClass( 'in' ) ) {
-            var frm = $( this ).find( 'form' );
-            if( frm.length ) {
-                $( frm[0] ).clearForm();        
-            }
-        }
+        resetContainerForms( $( this ) );
     } );
 }
 /**
@@ -385,53 +356,45 @@ function openModal(div, w, h){
  * @return
  */
 function openRemoteModal( url, params, w, h, delay ){
+    // if no URL, set warning and exit
     if( !url ){
         console.log( "URL needed" );
         return;
     }
     var modal = $remoteModal;
     var args = {};
-    var maxHeight = ( $( window ).height() -360 );
+    var maxHeight   = ( $( window ).height() - 200 );
+    var maxWidth    = ( $( window ).width() * 0.85 );
     
-    // set data values
+    // Set default values for modal data elements
     modal.data( 'url', url );
     modal.data( 'params', params );
-    modal.data( 'width', w !== undefined ? w : $( window ).width() * 0.85 );
-    modal.data( 'height', h !== undefined ? h : ($( window ).height() -360) );
+    modal.data( 'width', w !== undefined ? w : maxWidth );
+    modal.data( 'height', h !== undefined ? h : maxHeight );
+
+    // convert height percentage to a numeric value
+    var height = modal.data( 'height' );
+    if( height.search && height.search( '%' )!== -1 ) {
+        height = height.replace( '%', '' ) / 100.00;
+        height = $( window ).height() * height;
+    }
+    // Check max heights conditions
+    if( height > maxHeight ) {
+        height = maxHeight;
+    }
+    modal.data( 'height', height );
     
-    // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes)
+    // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes to load correctly)
     if( delay ) {
-        var height = modal.data( 'height' );
-        // convert height percentage to a numeric value
-        if( height.search && height.search( '%' )!== -1 ) {
-            height = height.replace( '%', '' ) / 100.00;
-            height = $( window ).height() * height;
-            modal.data( 'height', height );
-        }
-        // set delay data in element
         modal.data( 'delay', true );
-        args.width = modal.data( 'width' );
-        if( height < maxHeight ) {
-            args.height = maxHeight;
-        }
-        modal.modal( args );
+        modal.modal();
     }
     // otherwise, front-load the request and then create modal
     else {
-        // load request for content
+        // load request for content modal
         modal.load( url, params, function() {
-            // in callback, show modal
-            var maxHeight       = ( $( window ).height() -360 );
-            var currentHeight   = modal.height();
-            args.width = w !== undefined ? w : $( window ).width() * 0.80;
-            args.maxHeight = maxHeight;
-            if( currentHeight && currentHeight < maxHeight ) {
-                args.height = currentHeight;
-            }
-            if( !currentHeight ) {
-                args.height = maxHeight;
-            }
-            modal.modal( args );
+            // Show modal, once content has being retrieved
+            modal.modal();
         } );
     }
     return;
@@ -443,7 +406,7 @@ function openRemoteModal( url, params, w, h, delay ){
  * @param {numeric} w         The width to use in pixels
  */
 function setPreviewSize( activeBtn, w ){
-  var frame = $( "#previewFrame" ).length ? $( "#previewFrame" ) : $remoteModal.find( ".modal-body" ),
+  var frame = $( "#previewFrame" ).length ? $( "#previewFrame" ) : $remoteModal.find( ".modal-dialog" ),
       orig      = { 'width' : $remoteModal.data( 'width' ) },
       fOffset   = { 'width' : $remoteModal.width() - $( frame ).width() },
       modalSize = { 'width' : w + fOffset.width };
@@ -456,8 +419,44 @@ function setPreviewSize( activeBtn, w ){
     $( activeBtn ).siblings( '.active' ).removeClass( 'active' );
     $( activeBtn ).addClass( 'active' );
 
-    modalSize[ 'margin-left' ] = -modalSize.width/2;
+    //modalSize[ 'margin-left' ] = -modalSize.width/2;
+    modalSize[ 'margin-left' ] = 'auto';
+    modalSize[ 'margin-right' ] = 'auto';
     $remoteModal.animate( modalSize, 500 );
+}
+/**
+ * Attach modal listeners to global modals: Remote and ConfirmIt
+ */
+function attachModalListeners(){
+    // Remote show event: Usually we resize the window here.
+    $remoteModal.on( 'show.bs.modal', function() {
+        var modal = $remoteModal;
+        modal.find('.modal-dialog').css( {
+            width     : modal.data( 'width' ),
+            height    : modal.data( 'height' )
+        } );
+    } );
+    // Remote shown event: Delayed loading of content
+    $remoteModal.on( 'shown.bs.modal', function() {
+        var modal = $remoteModal;
+        // only run if modal is in delayed mode
+        if( modal.data( 'delay' ) ) {
+            modal.load( modal.data( 'url' ), modal.data( 'params' ), function(){
+                modal.find('.modal-dialog').css( {
+                    width     : modal.data( 'width' ),
+                    height    : modal.data( 'height' )
+                } );
+            } );
+        }        
+    } );
+    // Remote hidden event: Reset loader
+    $remoteModal.on( 'hidden.bs.modal', function() {
+        var modal = $remoteModal;
+        // reset modal html
+        modal.html( '<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>' );
+        // reset container forms
+        resetContainerForms( modal );
+    } );
 }
 /**
  * Close confirmation modal

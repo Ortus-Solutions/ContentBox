@@ -1,29 +1,8 @@
-/*! Copyright 2016 - Ortus Solutions (Compiled: 10-04-2016) */
+/*! Copyright 2016 - Ortus Solutions (Compiled: 11-04-2016) */
 $(document).ready(function() {
     $confirmIt = $("#confirmIt");
     $remoteModal = $("#modal");
-    $remoteModal.on("show.bs.modal", function() {
-        var modal = $remoteModal;
-        modal.find(".modal-dialog").css({
-            width: modal.data("width"),
-            height: modal.data("height")
-        });
-    });
-    $remoteModal.on("shown.bs.modal", function() {
-        var modal = $remoteModal;
-        if (modal.data("delay")) {
-            modal.load(modal.data("url"), modal.data("params"), function() {
-                modal.find(".modal-dialog").css({
-                    width: modal.data("width"),
-                    height: modal.data("height")
-                });
-            });
-        }
-    });
-    $remoteModal.on("hidden.bs.modal", function() {
-        var modal = $remoteModal;
-        modal.html('<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>');
-    });
+    attachModalListeners();
     toolTipSettings = {
         animation: "slide",
         delay: {
@@ -258,7 +237,9 @@ function closeSearchBox() {
 }
 
 function quickLinks(inURL) {
-    if (inURL != "null") window.location = inURL;
+    if (inURL != "null") {
+        window.location = inURL;
+    }
 }
 
 function activateTooltips() {
@@ -275,33 +256,24 @@ function toggleFlickers() {
 }
 
 function closeRemoteModal() {
-    var frm = $remoteModal.find("form");
-    if (frm.length) {
-        $(frm[0]).clearForm();
-    }
     $remoteModal.modal("hide");
 }
 
-function closeModal(div) {
-    var frm = div.find("form");
+function resetContainerForms(container) {
+    var frm = container.find("form");
     if (frm.length) {
         $(frm[0]).clearForm();
     }
+}
+
+function closeModal(div) {
     div.modal("hide");
 }
 
 function openModal(div, w, h) {
-    div.modal({
-        width: w,
-        height: h
-    });
+    div.modal();
     $(div).on("hidden.bs.modal", function() {
-        if (!$(this).hasClass("in")) {
-            var frm = $(this).find("form");
-            if (frm.length) {
-                $(frm[0]).clearForm();
-            }
-        }
+        resetContainerForms($(this));
     });
 }
 
@@ -312,44 +284,34 @@ function openRemoteModal(url, params, w, h, delay) {
     }
     var modal = $remoteModal;
     var args = {};
-    var maxHeight = $(window).height() - 360;
+    var maxHeight = $(window).height() - 200;
+    var maxWidth = $(window).width() * .85;
     modal.data("url", url);
     modal.data("params", params);
-    modal.data("width", w !== undefined ? w : $(window).width() * .85);
-    modal.data("height", h !== undefined ? h : $(window).height() - 360);
+    modal.data("width", w !== undefined ? w : maxWidth);
+    modal.data("height", h !== undefined ? h : maxHeight);
+    var height = modal.data("height");
+    if (height.search && height.search("%") !== -1) {
+        height = height.replace("%", "") / 100;
+        height = $(window).height() * height;
+    }
+    if (height > maxHeight) {
+        height = maxHeight;
+    }
+    modal.data("height", height);
     if (delay) {
-        var height = modal.data("height");
-        if (height.search && height.search("%") !== -1) {
-            height = height.replace("%", "") / 100;
-            height = $(window).height() * height;
-            modal.data("height", height);
-        }
         modal.data("delay", true);
-        args.width = modal.data("width");
-        if (height < maxHeight) {
-            args.height = maxHeight;
-        }
-        modal.modal(args);
+        modal.modal();
     } else {
         modal.load(url, params, function() {
-            var maxHeight = $(window).height() - 360;
-            var currentHeight = modal.height();
-            args.width = w !== undefined ? w : $(window).width() * .8;
-            args.maxHeight = maxHeight;
-            if (currentHeight && currentHeight < maxHeight) {
-                args.height = currentHeight;
-            }
-            if (!currentHeight) {
-                args.height = maxHeight;
-            }
-            modal.modal(args);
+            modal.modal();
         });
     }
     return;
 }
 
 function setPreviewSize(activeBtn, w) {
-    var frame = $("#previewFrame").length ? $("#previewFrame") : $remoteModal.find(".modal-body"), orig = {
+    var frame = $("#previewFrame").length ? $("#previewFrame") : $remoteModal.find(".modal-dialog"), orig = {
         width: $remoteModal.data("width")
     }, fOffset = {
         width: $remoteModal.width() - $(frame).width()
@@ -364,8 +326,35 @@ function setPreviewSize(activeBtn, w) {
     $remoteModal.find(".header-title").toggle(modalSize.width > 600);
     $(activeBtn).siblings(".active").removeClass("active");
     $(activeBtn).addClass("active");
-    modalSize["margin-left"] = -modalSize.width / 2;
+    modalSize["margin-left"] = "auto";
+    modalSize["margin-right"] = "auto";
     $remoteModal.animate(modalSize, 500);
+}
+
+function attachModalListeners() {
+    $remoteModal.on("show.bs.modal", function() {
+        var modal = $remoteModal;
+        modal.find(".modal-dialog").css({
+            width: modal.data("width"),
+            height: modal.data("height")
+        });
+    });
+    $remoteModal.on("shown.bs.modal", function() {
+        var modal = $remoteModal;
+        if (modal.data("delay")) {
+            modal.load(modal.data("url"), modal.data("params"), function() {
+                modal.find(".modal-dialog").css({
+                    width: modal.data("width"),
+                    height: modal.data("height")
+                });
+            });
+        }
+    });
+    $remoteModal.on("hidden.bs.modal", function() {
+        var modal = $remoteModal;
+        modal.html('<div class="modal-header"><h3>Loading...</h3></div><div class="modal-body" id="removeModelContent"><i class="fa fa-spinner fa-spin fa-lg fa-4x"></i></div>');
+        resetContainerForms(modal);
+    });
 }
 
 function closeConfirmations() {
