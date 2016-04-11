@@ -409,6 +409,22 @@
                                             )#
                                         </div>
                                     </cfif>
+
+                                    <!--- SSL Only --->
+                                    <div class="form-group">
+                                        <i class="icon-shield icon-large"></i>
+                                        #html.label(
+                                            field="sslOnly",
+                                            content="SSL Only:",
+                                            class="inline"
+                                        )#
+                                        #html.select(
+                                            name="sslOnly",
+                                            options="Yes,No", 
+                                            selectedValue=yesNoFormat( prc.page.getSSLOnly() ), 
+                                            class="form-control input-sm"
+                                        )#
+                                    </div>
                                     
                                     <!--- Password Protection --->
                                     <div class="form-group">
