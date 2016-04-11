@@ -175,6 +175,14 @@ function adminAction(action, actionURL) {
 }
 
 function adminNotifier(type, message, delay) {
+    toastr.options = {
+        closeButton: true,
+        preventDuplicates: true,
+        progressBar: true,
+        showDuration: "300",
+        timeOut: "2000",
+        positionClass: "toast-top-center"
+    };
     switch (type) {
       case "info":
         {
@@ -191,6 +199,18 @@ function adminNotifier(type, message, delay) {
       case "success":
         {
             toastr.success(message);
+            break;
+        }
+
+      case "warning":
+        {
+            toastr.warning(message);
+            break;
+        }
+
+      default:
+        {
+            toastr.info(message);
             break;
         }
     }

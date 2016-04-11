@@ -214,28 +214,27 @@ function adminAction( action, actionURL ){
 }
 /**
  * Send an admin notifier popup for a few seconds
- * @param type The type to send: Defaults to warn, available are warn, info, error, success
+ * @param type The type to send: Defaults to warn, available are warning, info, error, success
  * @param message The message to display in the notifier
  * @param delay The delay of the message, defaults to 1500 ms
  */
-function adminNotifier(type, message, delay){
-    /*
-    var $notifier = $( "#adminActionNotifier" ).attr( "class", "alert hide" );
-    if( type == null ){ type = "warn";  }
-    if( delay == null ){ delay = 1500;  }
-    // add type css
-    switch( type ){
-        case "info" : { $notifier.addClass( "alert-info" ); break; }
-        case "error" : { $notifier.addClass( "alert-error" ); break; }
-        case "success" : { $notifier.addClass( "alert-success" ); break; }
-    }
-    // show with message and delay and reset.
-    $notifier.fadeIn().html( message ).delay( delay ).fadeOut();
-    */
+function adminNotifier( type, message, delay ){
+    toastr.options = {
+        "closeButton"       : true,
+        "preventDuplicates" : true,
+        "progressBar"       : true,
+        "showDuration"      : "300",
+        "timeOut"           : "2000",
+        "positionClass"     : "toast-top-center"
+    };
     switch( type ){
         case "info" : { toastr.info( message ); break; }
         case "error" : { toastr.error( message ); break; }
         case "success" : { toastr.success( message ); break; }
+        case "warning" : { toastr.warning( message ); break; }
+        default : {
+            toastr.info( message ); break;
+        }
     }
     
 }
