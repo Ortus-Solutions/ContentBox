@@ -20,13 +20,12 @@
 		<div class="collapse navbar-collapse" id="cb-nav-collapse">
 			<ul class="nav navbar-nav navbar-right">
 				<cfset menuData = cb.rootMenu( type="data", levels="2" )>
-
 				<!--- Iterate and build pages --->
 				<cfloop array="#menuData#" index="menuItem">
 					<cfif structKeyExists( menuItem, "subPageMenu" )>
 						<li class="dropdown">
 							<a href="#menuItem.link#" class="dropdown-toggle" data-toggle="dropdown">#menuItem.title# <b class="caret"></b></a>
-							#buildSubMenu( menuItem.subPageMenu )#
+							#buildSubMenu( menuData=menuItem.subPageMenu, parentLink=menuItem.link, parentTitle=menuItem.title )#
 						</li>
 					<cfelse>
 						<cfif cb.isPageView() AND event.buildLink( cb.getCurrentPage().getSlug() ) eq menuItem.link>
@@ -72,14 +71,18 @@
 </div>
 
 <cfscript>
-any function buildSubMenu( required menuData ){
+any function buildSubMenu( required menuData, required parentLink, required parentTitle ){
 	var menu = '<ul class="dropdown-menu">';
+
+	// Parent
+	menu &= '<li><a href="#parentLink#"><i class="fa fa-chevron-down"></i> <strong>#parentTitle#</strong></a></li><li role="separator" class="divider"></li>';
+
 	for( var menuItem in arguments.menuData ){
 		if( !structKeyExists( menuItem, "subPageMenu" ) ){
 			menu &= '<li><a href="#menuItem.link#">#menuItem.title#</a></li>';
 		} else {
 			menu &= '<li class="dropdown-submenu"><a href="#menuItem.link#" class="dropdown-toggle" data-toggle="dropdown">#menuItem.title#</a>';
-			menu &= buildSubMenu( menuItem.subPageMenu );
+			menu &= buildSubMenu( menuItem.subPageMenu, menuItem.link, menuItem.parentTitle );
 			menu &= '</li>';
 		}
 	}
