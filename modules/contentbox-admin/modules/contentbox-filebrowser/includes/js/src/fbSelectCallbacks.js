@@ -19,17 +19,17 @@ function fbCKSelect( sPath, sURL, sType ){
 	 * @param  {string} paramName Param Nam
 	 * @return {string}           The cleaned param name
 	 */
-	var getURLParam = function(paramName){
-	  var reParam 	= new RegExp( '(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i' );
-	  var match 	= window.location.search.match( reParam );
-	  return ( match && match.length > 1 ) ? match[ 1 ] : '' ;
+	var getURLParam = function( paramName ){
+		var reParam 	= new RegExp( '(?:[\?&]|&amp;)' + paramName + '=([^&]+)', 'i' );
+		var match 	= window.location.search.match( reParam );
+		return ( match && match.length > 1 ) ? match[ 1 ] : '' ;
 	};
-
+	
 	if( !sPath.length || sType === "dir" ){ 
         alert( "Please select a file first." ); 
         return; 
     }
-	var funcNum = getUrlParam( 'CKEditorFuncNum' );
+	var funcNum = getURLParam( 'CKEditorFuncNum' );
 	window.opener.CKEDITOR.tools.callFunction( funcNum, sURL );
 	window.close();
 }

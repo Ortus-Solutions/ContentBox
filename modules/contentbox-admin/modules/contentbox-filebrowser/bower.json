@@ -1,19 +1,14 @@
 {
   "name": "contentbox-filebrowser",
+  "version" : "0.0.0",
+  "private" : true,
   "description": "ContentBox FileBrowser",
   "main": "Gruntfile.js",
-  "authors": [
-    "Luis Majano <lmajano@ortussolutions.com>"
-  ],
-  "license": "APACHE2",
-  "homepage": "https://github.com/Ortus-Solutions/ContentBox",
-  "moduleType": [],
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "includes/lib",
-    "test",
     "tests"
   ],
   "dependencies": {
