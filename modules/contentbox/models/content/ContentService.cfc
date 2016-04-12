@@ -433,7 +433,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	string function importFromData(
 		required any importData,
 		boolean override=false,
-		required any importLog){
+		required any importLog
+	){
 
 		var allContent = [];
 
@@ -489,7 +490,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		required any contentData,
 		required any importLog,
 		any parent,
-		struct newContent={} ){
+		struct newContent={} 
+	){
 
 		// setup
 		var thisContent 	= arguments.contentData;
@@ -506,11 +508,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// populate content from data and ignore relationships, we need to build those manually.
-		populator.populateFromStruct( target=oContent,
-									  memento=thisContent,
-									  exclude="creator,parent,children,categories,customfields,contentversions,comments",
-									  composeRelationships=false,
-									  nullEmptyInclude="publishedDate,expireDate" );
+		populator.populateFromStruct( 
+			target					= oContent,
+			memento					= thisContent,
+			exclude					= "creator,parent,children,categories,customfields,contentversions,comments,stats",
+			composeRelationships	= false,
+			nullEmptyInclude		= "publishedDate,expireDate" 
+		);
 
 		// determine author else ignore import
 		var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
@@ -535,6 +539,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				else{
 					arguments.importLog.append( "Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>" );
 				}
+			}
+
+			// STATS
+			if( structKeyExists( thisContent, "stats" ) ){
+				var oStat = statsService.new( { hits = thisContent.stats.hits } );
+				oStat.setRelatedContent( oContent );
+				oContent.setStats( oStat );
 			}
 
 			// CHILDREN

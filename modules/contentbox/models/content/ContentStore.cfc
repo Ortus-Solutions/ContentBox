@@ -43,10 +43,32 @@ component 	persistent="true"
 	/************************************** PUBLIC *********************************************/
 	
 	/**
-	* Get a flat representation of this contentStore
-	* slugCache.hint Cache of slugs to prevent infinite recursions
+	* Get a flat representation of this entry
+	* @slugCache Cache of slugs to prevent infinite recursions
+	* @counter
+	* @showAuthor Show author in memento or not
+	* @showComments Show comments in memento or not
+	* @showCustomFields Show comments in memento or not
+	* @showContentVersions Show content versions in memento or not
+	* @showParent Show parent in memento or not
+	* @showChildren Show children in memento or not
+	* @showCategories Show categories in memento or not
+	* @showRelatedContent Show related Content in memento or not
+	* @showStats Show stats in memento or not
 	*/
-	function getMemento( array slugCache=[] ){
+	function getMemento( 
+		required array slugCache=[], 
+		counter=0,
+		boolean showAuthor=true,
+		boolean showComments=true,
+		boolean showCustomFields=true,
+		boolean showContentVersions=true,
+		boolean showParent=true,
+		boolean showChildren=true,
+		boolean showCategories=true,
+		boolean showRelatedContent=true,
+		boolean showStats=true
+	){
 		var pList = listToArray( "description" );
 		var result = super.getMemento( argumentCollection=arguments );
 		
