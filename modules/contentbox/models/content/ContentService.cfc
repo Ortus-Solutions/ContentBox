@@ -237,7 +237,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			if( arguments.content.hasStats() ){
 				delete( arguments.content.getStats() );
 			}
-			if( arguments.content.hasChildren() ){
+			if( arguments.content.hasChild() ){
 				for( var thisChild in arguments.content.getChildren() ){
 					deleteContent( thisChild );
 				}
