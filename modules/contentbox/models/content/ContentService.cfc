@@ -25,7 +25,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Constructor
-	* @entityName.hint The content entity name to bind this service to.
+	* @entityName The content entity name to bind this service to.
 	*/
 	ContentService function init(entityName="cbContent" ){
 		// init it
@@ -36,7 +36,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Clear all content caches
-	* @async.hint Run it asynchronously or not, defaults to false
+	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllCaches( boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
@@ -48,7 +48,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Clear all page wrapper caches
-	* @async.hint Run it asynchronously or not, defaults to false
+	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllPageWrapperCaches( boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
@@ -60,8 +60,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Clear all page wrapper caches
-	* @slug.hint The slug partial to clean on
-	* @async.hint Run it asynchronously or not, defaults to false
+	* @slug The slug partial to clean on
+	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearPageWrapperCaches( required any slug, boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
@@ -73,8 +73,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Clear a page wrapper cache
-	* @slug.hint The slug to clean
-	* @async.hint Run it asynchronously or not, defaults to false
+	* @slug The slug to clean
+	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearPageWrapper( required any slug, boolean async=false ){
 		var settings = settingService.getAllSettings(asStruct=true);
@@ -86,16 +86,16 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Searches published content with cool paramters, remember published content only
-	* @searchTerm.hint The search term to search
-	* @max.hint The maximum number of records to paginate
-	* @offset.hint The offset in the pagination
-	* @asQuery.hint Return as query or array of objects, defaults to array of objects
-	* @sortOrder.hint The sorting of the search results, defaults to publishedDate DESC
-	* @isPublished.hint Search for published, non-published or both content objects [true, false, 'all']
-	* @searchActiveContent.hint Search only content titles or both title and active content. Defaults to both.
-	* @contentTypes.hint Limit search to list of content types (comma-delimited). Leave blank to search all content types
-	* @excludeIDs.hint List of IDs to exclude from search
-	* @showInSearch.hint If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	* @searchTerm The search term to search
+	* @max The maximum number of records to paginate
+	* @offset The offset in the pagination
+	* @asQuery Return as query or array of objects, defaults to array of objects
+	* @sortOrder The sorting of the search results, defaults to publishedDate DESC
+	* @isPublished Search for published, non-published or both content objects [true, false, 'all']
+	* @searchActiveContent Search only content titles or both title and active content. Defaults to both.
+	* @contentTypes Limit search to list of content types (comma-delimited). Leave blank to search all content types
+	* @excludeIDs List of IDs to exclude from search
+	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	*/
 	function searchContent(
 		any searchTerm="",
@@ -166,7 +166,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Get an id from a slug of a content object
-	* @slug.hint The slug to search an ID for.
+	* @slug The slug to search an ID for.
 	*/
 	function getIDBySlug(required any slug){
 		var results = newCriteria()
@@ -181,8 +181,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	/**
 	* Find a published content object by slug and published unpublished flags, if not found it returns
 	* a new content object
-	* @slug.hint The slug to search
-	* @showUnpublished.hint To also show unpublished content, defaults to false.
+	* @slug The slug to search
+	* @showUnpublished To also show unpublished content, defaults to false.
 	*/
 	function findBySlug(required any slug, required boolean showUnpublished=false){
 		var c = newCriteria();
@@ -200,8 +200,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Verify an incoming slug is unique or not
-	* @slug.hint The slug to search for uniqueness
-	* @contentID.hint Limit the search to the passed contentID usually for updates
+	* @slug The slug to search for uniqueness
+	* @contentID Limit the search to the passed contentID usually for updates
 	*/
 	function isSlugUnique(required any slug, any contentID="" ){
 		var c = newCriteria()
@@ -216,27 +216,35 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Delete a content object safely via hierarchies
-	* @content.hint the Content object to delete
+	* @content the Content object to delete
 	*/
-	ContentService function deleteContent(required any content){
-		// Check for dis-associations
-		if( arguments.content.hasParent() ){
-			arguments.content.getParent().removeChild( arguments.content );
+	ContentService function deleteContent( required any content ){
+		
+		transaction{
+			// Check for dis-associations
+			if( arguments.content.hasParent() ){
+				arguments.content.getParent().removeChild( arguments.content );
+			}
+			if( arguments.content.hasCategories() ){
+				arguments.content.removeAllCategories();
+			}
+			if( arguments.content.hasRelatedContent() ) {
+				arguments.content.getRelatedContent().clear();
+			}
+			if( arguments.content.hasLinkedContent() ) {
+				arguments.content.removeAllLinkedContent();
+			}
+			if( arguments.content.hasStats() ){
+				delete( arguments.content.getStats() );
+			}
+			if( arguments.content.hasChildren() ){
+				for( var thisChild in arguments.content.getChildren() ){
+					deleteContent( thisChild );
+				}
+			}
+			// now delete it
+			delete( entity=arguments.content, transactional=false );
 		}
-		if( arguments.content.hasCategories() ){
-			arguments.content.removeAllCategories();
-		}
-		if( arguments.content.hasRelatedContent() ) {
-			arguments.content.getRelatedContent().clear();
-		}
-		if( arguments.content.hasLinkedContent() ) {
-			arguments.content.removeAllLinkedContent();
-		}
-		if( arguments.content.hasStats() ){
-			delete( arguments.content.getStats() );
-		}
-		// now delete it
-		delete( arguments.content );
 
 		// return service
 		return this;
@@ -244,13 +252,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Find published content objects
-	* @max.hint The maximum number of records to paginate
-	* @offset.hint The offset in the pagination
-	* @searchTerm.hint The search term to search
-	* @category.hint The category to filter the content on
-	* @asQuery.hint Return as query or array of objects, defaults to array of objects
-	* @parent.hint The parent ID to filter on or not
-	* @showInMenu.hint Whether to filter with the show in menu bit or not
+	* @max The maximum number of records to paginate
+	* @offset The offset in the pagination
+	* @searchTerm The search term to search
+	* @category The category to filter the content on
+	* @asQuery Return as query or array of objects, defaults to array of objects
+	* @parent The parent ID to filter on or not
+	* @showInMenu Whether to filter with the show in menu bit or not
 	*/
 	function findPublishedContent(
 		numeric max=0,
@@ -312,8 +320,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Bulk Publish Status Updates
-	* @contentID.hint The list or array of ID's to bulk update
-	* @status.hint The status either 'publish' or 'draft'
+	* @contentID The list or array of ID's to bulk update
+	* @status The status either 'publish' or 'draft'
 	*/
 	any function bulkPublishStatus( required any contentID, required any status ){
 		var publish = false;
@@ -359,7 +367,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Get the top visited content entries
-	* @max.hint The maximum to retrieve, defaults to 5 entries
+	* @max The maximum to retrieve, defaults to 5 entries
 	*/
 	array function getTopVisitedContent( numeric max=5 ){
 		var c = newCriteria()
@@ -369,7 +377,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Get the top commented content entries
-	* @max.hint The maximum to retrieve, defaults to 5 entries
+	* @max The maximum to retrieve, defaults to 5 entries
 	*/
 	array function getTopCommentedContent( numeric max=5 ){
 		var c = newCriteria()
@@ -379,7 +387,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Get all content for export as flat data
-	* @inData.hint The data to use for exporting, usually concrete implementtions can override this.
+	* @inData The data to use for exporting, usually concrete implementtions can override this.
 	*/
 	array function getAllForExport(any inData){
 		var result = [];
@@ -401,8 +409,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
-	* @importFile.hint The absolute file path to use for importing
-	* @override.hint Override records or not
+	* @importFile The absolute file path to use for importing
+	* @override Override records or not
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
@@ -418,9 +426,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Import data from an array of structures of content or just one structure of a content entry
-	* @importData.hint The data to import
-	* @override.hint Override records or not
-	* @importLog.hint The import log buffer
+	* @importData The data to import
+	* @override Override records or not
+	* @importLog The import log buffer
 	*/
 	string function importFromData(
 		required any importData,
@@ -472,10 +480,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Inflate a content object from a ContentBox JSON structure
-	* @contentData.hint The content structure inflated from JSON
-	* @importLog.hint The string builder import log
-	* @parent.hint If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
-	* @newContent.hint Map of new content by slug; useful for avoiding new content collisions with recusive relationships
+	* @contentData The content structure inflated from JSON
+	* @importLog The string builder import log
+	* @parent If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
+	* @newContent Map of new content by slug; useful for avoiding new content collisions with recusive relationships
 	*/
 	public function inflateFromStruct(
 		required any contentData,
@@ -661,8 +669,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Update a content's hits with some async flava
-	* @contentID.hint The content id to update
-	* @async.hint Async or not
+	* @contentID The content id to update
+	* @async Async or not
 	*/
 	ContentService function updateHits(required contentID, boolean async=true){
 		// if in thread already or not async
@@ -704,7 +712,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
 	* Get a unique slug hash
-	* @slug.hint The slug to unique it
+	* @slug The slug to unique it
 	*/
 	private function getUniqueSlugHash( required string slug ){
 		return "#arguments.slug#-#lcase( left( hash( now() ), 5 ) )#";

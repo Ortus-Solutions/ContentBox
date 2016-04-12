@@ -5,7 +5,12 @@
 * ---
 * A mapped super class used for contentbox content: entries and pages
 */
-component persistent="true" entityname="cbContent" table="cb_content" cachename="cbContent" cacheuse="read-write" discriminatorColumn="contentType"{
+component 	persistent="true" 
+			entityname="cbContent" 
+			table="cb_content" 
+			cachename="cbContent" 
+			cacheuse="read-write" 
+			discriminatorColumn="contentType"{
 
 	/************************************** DI INJECTIONS *********************************************/
 
@@ -272,6 +277,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 				cfc="contentbox.models.content.Stats" 
 				fieldtype="one-to-one" 
 				mappedBy="relatedContent"
+				cascade="all"
 				lazy="true"
 				fetch="join";
 
@@ -375,7 +381,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	/**
 	 * Override the setRelatedContent
-	 * @relatedContent.hint The related content to set
+	 * @relatedContent The related content to set
 	 */
 	BaseContent function setRelatedContent( required array relatedContent ) {
 		if( hasRelatedContent() ) {
@@ -390,7 +396,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	/**
 	* Inflates from comma-delimited list (or array) of id's
-	* @relatedContent.hint The list or array of relatedContent ids
+	* @relatedContent The list or array of relatedContent ids
 	*/
 	BaseContent function inflateRelatedContent( required any relatedContent ){
 		var allContent = [];
@@ -460,8 +466,8 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	/**
 	* Shortcut to get a custom field value
-	* @key.hint The custom field key to get
-	* @defaultValue.hint The default value if the key is not found.
+	* @key The custom field key to get
+	* @defaultValue The default value if the key is not found.
 	*/
 	any function getCustomField( required key, defaultValue ){
 		var fields = getCustomFieldsAsStruct();
@@ -548,103 +554,129 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	/**
 	* Get a flat representation of this entry
-	* slugCache.hint Cache of slugs to prevent infinite recursions
+	* @slugCache Cache of slugs to prevent infinite recursions
+	* @counter
+	* @showAuthor Show author in memento or not
+	* @showComments Show comments in memento or not
+	* @showCustomFields Show comments in memento or not
+	* @showContentVersions Show content versions in memento or not
+	* @showParent Show parent in memento or not
+	* @showChildren Show children in memento or not
+	* @showCategories Show categories in memento or not
+	* @showRelatedContent Show related Content in memento or not
+	* @showStats Show stats in memento or not
 	*/
-	function getMemento( required array slugCache=[], counter=0 ){
-		var pList = contentService.getPropertyNames();
-		var result = {};
+	function getMemento( 
+		required array slugCache=[], 
+		counter=0,
+		boolean showAuthor=true,
+		boolean showComments=true,
+		boolean showCustomFields=true,
+		boolean showContentVersions=true,
+		boolean showParent=true,
+		boolean showChildren=true,
+		boolean showCategories=true,
+		boolean showRelatedContent=true,
+		boolean showStats=true
+	){
+		var pList 	= contentService.getPropertyNames();
+		var result 	= {};
 
 		// Do simple properties only
-		for(var x=1; x lte arrayLen( pList ); x++ ){
+		for( var x=1; x lte arrayLen( pList ); x++ ){
 			if( structKeyExists( variables, pList[ x ] ) ){
 				if( isSimpleValue( variables[ pList[ x ] ] ) ){
 					result[ pList[ x ] ] = variables[ pList[ x ] ];
 				}
-			}
-			else{
+			} else {
 				result[ pList[ x ] ] = "";
 			}
 		}
 
 		// Do Author Relationship
-		if( hasCreator() ){
+		if( arguments.showAuthor && hasCreator() ){
 			result[ "creator" ] = {
-				creatorID = getCreator().getAuthorID(),
-				firstname = getCreator().getFirstname(),
-				lastName = getCreator().getLastName(),
-				email = getCreator().getEmail(),
-				username = getCreator().getUsername()
+				creatorID 	= getCreator().getAuthorID(),
+				firstname 	= getCreator().getFirstname(),
+				lastName 	= getCreator().getLastName(),
+				email 		= getCreator().getEmail(),
+				username 	= getCreator().getUsername()
 			};
 		}
 
 		// Comments
-		if( hasComment() ){
+		if( arguments.showComments && hasComment() ){
 			result[ "comments" ] = [];
 			for( var thisComment in variables.comments ){
 				arrayAppend( result[ "comments" ], thisComment.getMemento() );
 			}
-		}
-		else{
+		} else if( arguments.showComments ){
 			result[ "comments" ] = [];
 		}
+
+		// Stats
+		if( arguments.showStats && hasStats() ){
+			result[ "stats" ] = getStats().getMemento();
+		} else if( arguments.showStats ){
+			result[ "stats" ] = { statsID = 0, hits = 0 };
+		}
+
 		// Custom Fields
-		if( hasCustomField() ){
+		if( arguments.showCustomFields && hasCustomField() ){
 			result[ "customfields" ] = [];
 			for( var thisField in variables.customfields ){
 				arrayAppend( result[ "customfields" ], thisField.getMemento() );
 			}
-		}
-		else{
+		} else if( arguments.showCustomFields ){
 			result[ "customfields" ] = [];
 		}
 		// Versions
-		if( hasContentVersion() ){
+		if( arguments.showContentVersions && hasContentVersion() ){
 			result[ "contentversions" ] = [];
 			for( var thisVersion in variables.contentversions ){
 				arrayAppend( result[ "contentversions" ], thisVersion.getMemento() );
 			}
-		}
-		else{
+		} else if( arguments.showContentVersions ){
 			result[ "contentversions" ] = [];
 		}
 		// Parent
-		if( hasParent() ){
+		if( arguments.showParent && hasParent() ){
 			result[ "parent" ] = {
-				contentID = getParent().getContentID(),
-				slug = getParent().getSlug(),
-				title = getParent().getTitle()
+				contentID 	= getParent().getContentID(),
+				slug 		= getParent().getSlug(),
+				title 		= getParent().getTitle()
 			};
 		}
 		// Children
-		if( hasChild() ){
+		if( arguments.showChildren && hasChild() ){
 			result[ "children" ] = [];
 			for( var thisChild in variables.children ){
 				arrayAppend( result[ "children" ], thisChild.getMemento() );
 			}
-		}
-		else{
+		} else if( arguments.showChildren ){
 			result[ "children" ] = [];
 		}
 		// Categories
-		if( hasCategories() ){
+		if( arguments.showCategories && hasCategories() ){
 			result[ "categories" ] = [];
 			for( var thisCategory in variables.categories ){
 				arrayAppend( result[ "categories" ], thisCategory.getMemento() );
 			}
-		}
-		else{
+		} else if( arguments.showCategories ){
 			result[ "categories" ] = [];
 		}
 
 		// Related Content
-		result[ "relatedcontent" ] = [];
-		if( hasRelatedContent() && !arrayFindNoCase( arguments.slugCache, getSlug() ) ) {
+		if( arguments.showRelatedContent && hasRelatedContent() && !arrayFindNoCase( arguments.slugCache, getSlug() ) ) {
 			// add slug to cache
 			arrayAppend( arguments.slugCache, getSlug() );
 			for( var content in variables.relatedContent ) {
 				arrayAppend( result[ "relatedcontent" ], content.getMemento( slugCache=arguments.slugCache ) );
 			}
+		} else if( arguments.showRelatedContent ){
+			result[ "relatedcontent" ] = [];
 		}
+
 		return result;
 	}
 
@@ -669,14 +701,16 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 	* Get recursive slug paths to get ancestry, DEPRECATED.
 	* @deprecated
 	*/
-	function getRecursiveSlug(separator="/" ){
+	function getRecursiveSlug( separator="/" ){
 		var pPath = "";
 		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
 		return pPath & arguments.separator & getSlug();
 	}
 
 
-	// Retrieves the latest content string from the latest version un-translated
+	/**
+	* Retrieves the latest content string from the latest version un-translated
+	*/
 	function getContent(){
 		// return active content if we have any
 		if( hasActiveContent() ){
@@ -686,11 +720,14 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 		return '';
 	}
 
-	// Get the latest active content object, null if none has been assigned yet.
+	/**
+	* Get the latest active content object, empty new one if none assigned
+	*/
 	function getActiveContent(){
 		if( hasActiveContent() ){
-			return activeContent[1];
+			return activeContent[ 1 ];
 		}
+		return contentVersionService.new();
 	}
 
 	/**
@@ -790,12 +827,12 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	/**
 	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
-	* @author.hint The author doing the cloning
-	* @original.hint The original content object that will be cloned into this content object
-	* @originalService.hint The ContentBox content service object
-	* @publish.hint Publish pages or leave as drafts
-	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
-	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
+	* @author The author doing the cloning
+	* @original The original content object that will be cloned into this content object
+	* @originalService The ContentBox content service object
+	* @publish Publish pages or leave as drafts
+	* @originalSlugRoot The original slug that will be replaced in all cloned content
+	* @newSlugRoot The new slug root that will be replaced in all cloned content
 	*/
 	BaseContent function prepareForClone(required any author,
 										 required any original,
@@ -941,7 +978,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	/**
 	* add published timestamp to property
-	* @timeString.hint The joined time string (e.g., 12:00)
+	* @timeString The joined time string (e.g., 12:00)
 	*/
 	any function addJoinedPublishedTime( required string timeString ){
 		var splitTime = listToArray( arguments.timeString, ":" );
@@ -968,7 +1005,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	/**
 	* add expired timestamp to property
-	* @timeString.hint The joined time string (e.g., 12:00)
+	* @timeString The joined time string (e.g., 12:00)
 	*/
 	any function addJoinedExpiredTime( required string timeString ){
 		var splitTime = listToArray( arguments.timeString, ":" );
@@ -1043,7 +1080,7 @@ component persistent="true" entityname="cbContent" table="cb_content" cachename=
 
 	/**
 	* Renders the content silently so no caching, or extra fluff is done, just content translation rendering.
-	* @content.hint The content markup to translate, by default it uses the active content version's content
+	* @content The content markup to translate, by default it uses the active content version's content
 	*/
 	any function renderContentSilent(any content=getContent()) profile{
 		// render content out, prepare builder

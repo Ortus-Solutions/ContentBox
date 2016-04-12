@@ -365,7 +365,9 @@ component extends="baseContentHandler"{
 		}
 	}
 
-	// remove
+	/**
+	* Remove a page
+	*/
 	function remove( event, rc, prc ){
 		// params
 		event.paramValue( "contentID", "" )
@@ -374,14 +376,14 @@ component extends="baseContentHandler"{
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
 			cbMessageBox.warn( "No pages sent to delete!" );
-			setNextEvent(event=prc.xehPages, queryString="parent=#rc.parent#" );
+			setNextEvent( event=prc.xehPages, queryString="parent=#rc.parent#" );
 		}
 
 		// Inflate to array
 		rc.contentID = listToArray( rc.contentID );
 		var messages = [];
 
-		// Iterate and remove
+		// Iterate and remove pages
 		for( var thisContentID in rc.contentID ){
 			var page = pageService.get( thisContentID );
 			if( isNull( page ) ){
@@ -391,16 +393,16 @@ component extends="baseContentHandler"{
 				var contentID 	= page.getContentID();
 				var title		= page.getTitle();
 				// announce event
-				announceInterception( "cbadmin_prePageRemove", { page=page } );
-				// Diassociate it
+				announceInterception( "cbadmin_prePageRemove", { page = page } );
+				// Diassociate it, bi-directional relationship
 				if( page.hasParent() ){
 					page.getParent().removeChild( page );
 				}
-				// Delete it
+				// Send for deletion
 				pageService.deleteContent( page );
 				arrayAppend( messages, "Page '#title#' removed" );
 				// announce event
-				announceInterception( "cbadmin_postPageRemove", { contentID=contentID } );
+				announceInterception( "cbadmin_postPageRemove", { contentID = contentID } );
 			}
 		}
 		// messagebox
@@ -552,11 +554,13 @@ component extends="baseContentHandler"{
 		}
 	}
 
-	// Export Entry
+	/**
+	* Export a page hierarchy
+	*/
 	function export( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get page
-		prc.page  = pageService.get( event.getValue( "contentID",0) );
+		prc.page = pageService.get( event.getValue( "contentID", 0 ) );
 
 		// relocate if not existent
 		if( !prc.page.isLoaded() ){
@@ -567,12 +571,12 @@ component extends="baseContentHandler"{
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.page.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=prc.page.getMemento(), type=rc.format, xmlRootName="page" )
+				event.renderData( data=prc.page.getMemento(), type=rc.format, xmlRootName="page" )
 					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#" );
+				event.renderData( data="Invalid export type: #rc.format#" );
 			}
 		}
 	}

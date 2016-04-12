@@ -39,4 +39,25 @@ component persistent="true" entityname="cbStats" table="cb_stats" batchsize="25"
 
 	/************************************** PUBLIC *********************************************/
 
+	/**
+	* is loaded?
+	*/
+	boolean function isLoaded(){
+		return len( variables.statsID );
+	}
+
+	/**
+	* Get memento representation
+	*/
+	function getMemento(){
+		var pList = listToArray( "statsID,hits" );
+		var result = {};
+		
+		for( var thisProp in pList ){
+			result[ thisProp ] = variables[ thisProp ];	
+		}
+		
+		return result;
+	}
+
 }

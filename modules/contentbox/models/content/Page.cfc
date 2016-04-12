@@ -93,7 +93,6 @@ component 	persistent="true"
 	* Render excerpt
 	*/
 	any function renderExcerpt(){
-		
 		// Check if we need to translate
 		if( NOT len( renderedExcerpt ) ){
 			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
@@ -117,18 +116,17 @@ component 	persistent="true"
 	
 	/**
 	* Get a flat representation of this page
-	* slugCache.hint Cache of slugs to prevent infinite recursions
+	* slugCache Cache of slugs to prevent infinite recursions
 	*/
 	function getMemento( array slugCache=[] ){
-		var pList = listToArray( "layout,mobileLayout,order,showInMenu,excerpt" );
-		var result = super.getMemento( argumentCollection=arguments );
+		var pList 	= listToArray( "layout,mobileLayout,order,showInMenu,excerpt,SSLOnly" );
+		var result 	= super.getMemento( argumentCollection=arguments );
 		
 		// Local Memento Properties
-		for(var thisProp in pList ){
+		for( var thisProp in pList ){
 			if( structKeyExists( variables, thisProp ) ){
 				result[ thisProp ] = variables[ thisProp ];	
-			}
-			else{
+			} else {
 				result[ thisProp ] = "";
 			}
 		}
@@ -172,12 +170,12 @@ component 	persistent="true"
 
 	/**
 	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
-	* @author.hint The author doing the cloning
-	* @original.hint The original content object that will be cloned into this content object
-	* @originalService.hint The ContentBox content service object
-	* @publish.hint Publish pages or leave as drafts
-	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
-	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
+	* @author The author doing the cloning
+	* @original The original content object that will be cloned into this content object
+	* @originalService The ContentBox content service object
+	* @publish Publish pages or leave as drafts
+	* @originalSlugRoot The original slug that will be replaced in all cloned content
+	* @newSlugRoot The new slug root that will be replaced in all cloned content
 	*/
 	BaseContent function prepareForClone(
 		required any author, 
@@ -204,15 +202,15 @@ component 	persistent="true"
 		var errors = [];
 
 		// limits
-		HTMLKeyWords 		= left(HTMLKeywords,160);
-		HTMLDescription 	= left(HTMLDescription,160);
-		passwordProtection 	= left(passwordProtection,100);
-		title				= left(title,200);
-		slug				= left(slug,200);
+		HTMLKeyWords 		= left( HTMLKeywords, 160 );
+		HTMLDescription 	= left( HTMLDescription, 160 );
+		passwordProtection 	= left( passwordProtection, 100 );
+		title				= left( title, 200 );
+		slug				= left( slug, 200 );
 
 		// Required
-		if( !len(title) ){ arrayAppend(errors, "Title is required" ); }
-		if( !len(layout) ){ arrayAppend(errors, "Layout is required" ); }
+		if( !len( title ) ){ arrayAppend( errors, "Title is required" ); }
+		if( !len( layout ) ){ arrayAppend( errors, "Layout is required" ); }
 
 		return errors;
 	}
