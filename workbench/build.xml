@@ -105,18 +105,19 @@
       	<copy todir="${dir.build}" encoding="UTF-8">
       		<fileset dir=".">
       			<exclude name=".idea/**" />
-      			<exclude name="_paidModules**" />
-  				<exclude name=".git/**" />
-  				<exclude name=".settings/**" />
-      			<exclude name="workbench/**" />
-      			<exclude name="tests/**" />
-      			<exclude name="WEB-INF/**" />
-      			<exclude name=".gitignore" />
       			<exclude name=".DS_Store" />
-      			<exclude name="settings.xml" />
+      			<exclude name=".git/**" />
+      			<exclude name=".gitignore" />
+      			<exclude name=".jshintrc" />
       			<exclude name=".project" />
+  				<exclude name=".settings/**" />
       			<exclude name="logs" />
+      			<exclude name="settings.xml" />
       			<exclude name="server.json" />
+      			<exclude name="tests/**" />
+      			<exclude name="testbox/**" />
+      			<exclude name="workbench/**" />
+      			<exclude name="WEB-INF/**" />
       		</fileset>
         </copy>
 
