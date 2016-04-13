@@ -168,7 +168,7 @@
                             <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Cancel</a>
                             <button class="btn btn-info" id="widget-button-update">Update Widget</button>
                         <cfelse>
-                            <a id="widget-button-close" href="javascript:void(0);" class="btn btn-info" onclick="closeRemoteModal()">Close</a>
+                            <a id="widget-button-close" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Close</a>
                         </cfif>
                     </div>
                 </div>

@@ -175,8 +175,8 @@ widgetinfobar::-moz-selection {
 .widget-actions {position:relative;font-size:85%;background:#efefef; padding:3px 10px;font-weight:bold;margin: 0px -10px -10px;border-top:solid 1px #dadada;clear:both;}
 .widget-type {font-size:80%;position:absolute;right:0px;margin-right:10px;color:#999;}
 .widget-teaser {line-height: 1.2em;font-size:11px;}
-.widget-footer-left {width: 50%;float: left;text-align: left;}
-.widget-footer-right {width: 50%;float: left;text-align: right;}
+.widget-footer-left {float: left; text-align: left;}
+.widget-footer-right {float: right; text-align: right;}
 .widget-no-preview {padding: 10px;background: #efefef;border: dashed 1px #dadada;font-weight: bold;margin-right: 15px;}
 .widget-preview-content .widget-no-preview {margin-top:10px;}
 #widget-title-bar img {margin-top:-5px;}

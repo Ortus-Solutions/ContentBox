@@ -18,7 +18,7 @@
                     	</ul>
                         <cfloop array="#prc.metadata#" index="method">
                     		<div class="rendermethod" id="#method.name#" <cfif method.name neq "renderIt">style="display:none;"</cfif>>
-                            	<h3>#method.name#()</h3>
+                            	<h3><code>#method.name#()</code></h3>
                             	<ul>
                             		<li><strong>Hint: </strong> <cfif structKeyExists( method, "hint" )>#method.hint#<cfelse>N/A</cfif></li>
                             		<li><strong>Arguments: </strong>
@@ -37,11 +37,21 @@
                             				<tbody>
                             					<cfloop array="#method.parameters#" index="i">
                             					<tr>
-                            						<td>#i.name#</td>
-                            						<td><cfif structKeyExists( i, "type" )>#i.type#<cfelse>Any</cfif></td>
-                            						<td><cfif structKeyExists( i, "required" )>#i.required#<cfelse>true</cfif></td>
-                            						<td><cfif structKeyExists( i, "default" )>#i.default#</cfif></td>
-                            						<td><cfif structKeyExists( i, "hint" )>#i.hint#</cfif></td>
+                            						<td>
+                                                        <code>#i.name#</code>
+                                                    </td>
+                            						<td>
+                                                        <code><cfif structKeyExists( i, "type" )>#i.type#<cfelse>Any</cfif></code>
+                                                    </td>
+                            						<td>
+                                                        <cfif structKeyExists( i, "required" )>#i.required#<cfelse>true</cfif>
+                                                    </td>
+                            						<td>
+                                                        <cfif structKeyExists( i, "default" )>#i.default#</cfif>
+                                                    </td>
+                            						<td>
+                                                        <cfif structKeyExists( i, "hint" )>#i.hint#</cfif>
+                                                    </td>
                             					</tr>
                             					</cfloop>
                             				</tbody>
@@ -78,7 +88,7 @@
                 &nbsp;
             </div>
             <div class="widget-footer-right">
-                <button class="btn" onclick="closeRemoteModal()"> Close </button>
+                <button class="btn btn-danger" onclick="closeRemoteModal()"> Close </button>
             </div>
         </div>
     </div>
