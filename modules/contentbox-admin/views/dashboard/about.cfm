@@ -79,7 +79,7 @@
 						</tr>
 						<tr>
 							<th>
-								#$r( "dashboard.shortcuts.table.r03.1@admin" )#
+								#$r( "dashboard.about.shortcuts.table.r03.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+p</th>
 						</tr>
