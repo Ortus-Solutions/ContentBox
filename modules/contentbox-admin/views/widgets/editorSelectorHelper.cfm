@@ -9,16 +9,16 @@ $(document).ready(function() {
         $( this ).addClass( 'selected' );
         // make ajax request for arguments form
         $.ajax( {
-            type: 'GET',
-            url: getWidgetInstanceURL(),
-            data: {
-                widgetName: $( this ).attr( 'name' ),
-                widgetType: $( this ).attr( 'type' ),
-                widgetDisplayName: $( this ).attr( 'displayname' ),
-                widgetUDF: 'renderIt',
-                editorName: '#rc.editorName#'
+            type    : 'GET',
+            url     : getWidgetInstanceURL(),
+            data    : {
+                widgetName          : $( this ).attr( 'name' ),
+                widgetType          : $( this ).attr( 'type' ),
+                widgetDisplayName   : $( this ).attr( 'displayname' ),
+                widgetUDF           : 'renderIt',
+                editorName          : '#rc.editorName#'
             },
-            success: function( data ) {
+            success  : function( data ) {
                 // update content
                 $( '##widget-detail' ).html( data );
                 // fire switch method
@@ -73,8 +73,8 @@ function switchWidgetFormMode( mode ) {
                 form = detail.find( 'form' ).serializeArray();
                 widgetName = detail.find( '##widgetName' ).val();
                 widgetDisplayName = detail.find( '##widgetDisplayName' ).val();
-                src = findSelectedWidget().find( 'img' ).attr( 'src' );
-                titleBar.html( '<img width="25" src="' + src + '" /> Insert \'' +widgetDisplayName+ '\' Widget' );
+                iconName = detail.find( "##widgetIcon" ).val();
+                titleBar.html( '<i class="fa fa-' + iconName + '"></i> Insert \'' +widgetDisplayName+ '\' Widget' );
                 //updatePreview();
             } )
             break;

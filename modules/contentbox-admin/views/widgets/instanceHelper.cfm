@@ -1,11 +1,4 @@
 <cfset event.paramValue( "editorName", "" )> 
-<style>
-    .widget-preview {margin-left:340px;}
-    .widget-preview-refresh {font-size:12px;float: right;margin-top:-25px;}
-    .widget-arguments {width:300px;margin-top:5px;float:left;}
-    .widget-preview-content {padding:20px;border:dashed 4px #eaeaea;border-radius:4px;margin-top:20px;}
-    .widget-preview .well h4 {margin:0px;}
-</style>
 <cfoutput>
 <!--- Custom Javascript --->
 <script type="text/javascript">

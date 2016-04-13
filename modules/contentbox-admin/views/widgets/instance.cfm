@@ -8,9 +8,9 @@
                 </div>
                 <div class="modal-body">
     </cfif>
-        <div id="widget-preview-wrapper">
-            <div class="widget-arguments" id="widget-arguments">
-                #html.startForm(name="widgetArgsForm_#prc.widget.name#", class="form-vertical" )#
+        <div id="widget-preview-wrapper" class="row">
+            <div class="widget-arguments col-md-3" id="widget-arguments">
+                #html.startForm( name="widgetArgsForm_#prc.widget.name#", class="form-vertical" )#
                     <fieldset <cfif arrayLen( prc.metadata ) eq 1>style="display:none;"</cfif>>
                         <legend>Public Methods</legend>
                         <label for="renderMethodSelect"><strong>Select a Method:</strong></label>
@@ -20,7 +20,7 @@
                             </cfloop> 
                         </select>
                     </fieldset>
-                    #html.startFieldSet(legend="Widget Arguments" )#
+                    #html.startFieldSet( legend="Widget Arguments" )#
                     <!--- instructions --->
                     <cfif arrayLen( prc.md.parameters )> 
                         <p>Please fill out the arguments for this widget:</p>
@@ -56,9 +56,9 @@
                         <div class="form-group">
                             <!--- label --->
                             #html.label( 
-                                field=thisArg.name, 
-                                content="#thisArg.label# (#thisArg.type#) #requiredText#", 
-                                class="control-label" 
+                                field   = thisArg.name, 
+                                content = "#thisArg.label# (#thisArg.type#) #requiredText#", 
+                                class   = "control-label" 
                             )#
                             <div class="controls">
                                 <!--- argument hint --->
@@ -127,30 +127,35 @@
                     </cfloop>
                     <!--- hidden usage fields --->
                     #html.hiddenfield( 
-                        name="widgetName", 
-                        id="widgetName", 
-                        value=prc.widget.name 
+                        name    = "widgetName", 
+                        id      = "widgetName", 
+                        value   = prc.widget.name 
                     )#
                     #html.hiddenfield( 
-                        name="widgetDisplayName", 
-                        id="widgetDisplayName", 
-                        value=prc.widget.widget.getName() 
+                        name    = "widgetIcon", 
+                        id      = "widgetIcon", 
+                        value   = prc.widget.icon 
                     )#
                     #html.hiddenfield( 
-                        name="widgetType", 
-                        value=prc.widget.widgetType 
+                        name    = "widgetDisplayName", 
+                        id      = "widgetDisplayName", 
+                        value   = prc.widget.widget.getName() 
                     )#
                     #html.hiddenfield( 
-                        name="widgetUDF", 
-                        value=prc.widget.udf 
+                        name    = "widgetType", 
+                        value   = prc.widget.widgetType 
+                    )#
+                    #html.hiddenfield( 
+                        name    = "widgetUDF", 
+                        value   = prc.widget.udf 
                     )#
                     #html.endFieldSet()#
                 #html.endForm()#
             </div>    
-            <div class="widget-preview">
+            <div class="widget-preview col-md-9">
                 <div class="well well-sm">
                     <h4>Widget Preview</h4>
-                    <a href="javascript:void(0);" class="widget-preview-refresh btn btn-mini btn-default"><i class="fa fa-refresh"></i> Refresh</a>
+                    <a href="javascript:void( 0 );" class="widget-preview-refresh btn btn-mini btn-default"><i class="fa fa-refresh"></i> Refresh</a>
                 </div>
                 <div id="widget-preview-content" class="widget-preview-content"></div>
             </div>

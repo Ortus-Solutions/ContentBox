@@ -69,7 +69,13 @@
                         <cfset widgetURL = hasProtocol ? p.getAuthorURL() : "http://" & p.getAuthorURL()>
                         <cfset widgetCursor = args.mode eq "edit" ? "" : "widget-selector ">
                         <div class="col-md-6">
-                            <div class="#widgetCursor#panel panel-default" name="#widgetName#" category="#category#" type="#prc.widgets.widgettype#" displayname="#p.getName()#">
+                            <div    class="#widgetCursor#panel panel-info" 
+                                    name="#widgetName#" 
+                                    category="#category#" 
+                                    type="#prc.widgets.widgettype#" 
+                                    displayname="#p.getName()#"
+                                    iconName="#iconName#"
+                            >
                                 <cfif isSimpleValue( p )>
                                     <div class="alert alert-danger">Error loading widget: #widgetName#<br>
                                         <p>Debugging:</p>

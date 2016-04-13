@@ -103,28 +103,11 @@ img.img-screenshot{ height: 200px; }
 .gravatar{ height: auto; }
 .no-margin{ margin: 0!important; }
 .panel-heading{ min-height: 48px;}
-.widget-selector{ cursor: pointer;}
 .dropdown-menu > li > a > i{ color: #797979 !important;}
 .panel-default .actions i{ color: #fff; }
 .actions{ top: 10px!important; }
 .bg-helper{ padding: 15px}
 .tooltip{ position: fixed;}
-/**
-ul { list-style:disc inside; }
-input, textarea, .uneditable-input { width: inherit; }
-#wrapper {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	margin: 0 auto -91px;
-}
-#main-container { padding-top: 100px; margin-bottom: 20px; }
-#simple-container { padding-top: 60px; }
-#main-sidebar{ margin-left: 20px !important;}
-.container-fluid{ padding-bottom: 30px }
-.hero-unit{padding:50px; margin-top:20px; margin-bottom: 20px}
-.well{ margin-bottom: 10px; margin-top: 10px;}
-**/
 /** Widgets **/
 widget {
     width: 85%;
@@ -172,6 +155,7 @@ widgetinfobar::selection {
 widgetinfobar::-moz-selection {
     background-color: rgba(255, 255, 255, 1);
 }
+.widget-selector{ cursor: pointer;}
 .widget-wrapper {padding:5px;}
 .widget-content {cursor:pointer;clear:right;border: solid 1px #dadada;padding: 10px;border-radius: 4px;margin-bottom:20px;}
 .widget-content.third {width:29%;}
@@ -197,17 +181,12 @@ widgetinfobar::-moz-selection {
 .widget-preview-content .widget-no-preview {margin-top:10px;}
 #widget-title-bar img {margin-top:-5px;}
 .widget-total-bar {margin-bottom: 10px;font-size: 8pt;}
+.widget-preview-refresh {font-size:12px;float: right;margin-top:-25px;}
+.widget-preview-content {padding:20px;border:dashed 4px #eaeaea;border-radius:4px;margin-top:20px;}
+.widget-preview .well h4 {margin:0px;}
 
 /* Modals */
 #confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close {z-index:99999;}
-/**
-.modal-scrollable{
-    .modal.modal-overflow.in{
-        position: absolute;
-        left: 50%;
-    }    
-}
-**/
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
 #div-search { padding: 6px 14px 2px 14px; }
 #div-search input{ 
