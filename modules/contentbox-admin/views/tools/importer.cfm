@@ -125,15 +125,15 @@
                             </div>
                             <!--- Roles --->
                             #html.select(
-                                label="Default Author Role:",
-                                name="roleID",
-                                options=prc.roles,
-                                column="roleID",
-                                nameColumn="role",
-                                class="form-control input-sm",
-                                wrapper="div class=controls",
-                                labelClass="control-label",
-                                groupWrapper="div class=form-group"
+                                label       = "Default Author Role:",
+                                name        = "roleID",
+                                options     = prc.roles,
+                                column      = "roleID",
+                                nameColumn  = "role",
+                                class       = "form-control input-sm",
+                                wrapper     = "div class=controls",
+                                labelClass  = "control-label",
+                                groupWrapper= "div class=form-group"
                             )#
                         </fieldset> 
 
@@ -142,10 +142,10 @@
                     <!--- Submit Button --->
                     <div class="actionBar" id="uploadBar">
                         #html.button(
-                            type="submit",
-                            id="import_button",
-                            value="<i class='fa fa-check'></i> Start Import",
-                            class="btn btn-danger btn-large"
+                            type    = "submit",
+                            id      = "import_button",
+                            value   = "<i class='fa fa-check'></i> Start Import",
+                            class   = "btn btn-danger btn-lg"
                         )#
                     </div>
                     

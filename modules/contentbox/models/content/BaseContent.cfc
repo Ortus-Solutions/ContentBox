@@ -668,6 +668,7 @@ component 	persistent="true"
 
 		// Related Content
 		if( arguments.showRelatedContent && hasRelatedContent() && !arrayFindNoCase( arguments.slugCache, getSlug() ) ) {
+			result[ "relatedcontent" ] = [];
 			// add slug to cache
 			arrayAppend( arguments.slugCache, getSlug() );
 			for( var content in variables.relatedContent ) {
@@ -680,13 +681,16 @@ component 	persistent="true"
 		return result;
 	}
 
+	/**
+	* Verify and rotate maximum content versions
+	*/
 	private function maxContentVersionChecks(){
 		if( !len( settingService.getSetting( "cb_versions_max_history" ) )  ){ return; }
 
 		// How many versions do we have?
 		var versionCounts = contentVersionService.newCriteria().isEq( "relatedContent.contentID", getContentID() ).count();
 		// Have we passed the limit?
-		if( (versionCounts+1) GT settingService.getSetting( "cb_versions_max_history" ) ){
+		if( ( versionCounts + 1 ) GT settingService.getSetting( "cb_versions_max_history" ) ){
 			var oldestVersion = contentVersionService.newCriteria()
 				.isEq( "relatedContent.contentID", getContentID() )
 				.isEq( "isActive", javaCast( "boolean", false ) )
@@ -706,7 +710,6 @@ component 	persistent="true"
 		if( hasParent() ){ pPath = getParent().getRecursiveSlug(); }
 		return pPath & arguments.separator & getSlug();
 	}
-
 
 	/**
 	* Retrieves the latest content string from the latest version un-translated
@@ -834,12 +837,14 @@ component 	persistent="true"
 	* @originalSlugRoot The original slug that will be replaced in all cloned content
 	* @newSlugRoot The new slug root that will be replaced in all cloned content
 	*/
-	BaseContent function prepareForClone(required any author,
-										 required any original,
-										 required any originalService,
-										 required boolean publish,
-										 required any originalSlugRoot,
-										 required any newSlugRoot){
+	BaseContent function prepareForClone(
+		required any author,
+		required any original,
+		required any originalService,
+		required boolean publish,
+		required any originalSlugRoot,
+		required any newSlugRoot
+	){
 		// set not published
 		setIsPublished( arguments.publish);
 		// reset creation date

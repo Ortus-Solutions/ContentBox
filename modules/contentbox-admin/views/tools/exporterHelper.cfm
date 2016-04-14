@@ -64,11 +64,15 @@ function doExport(){
     }
 }
 function previewExport() {
-    $.post( '#event.buildLink( prc.xehPreviewExport )#', $( "##exporterForm" ).serialize(), function( data, textStatus, jqXHR ){
-        var target = $( '##exportPreviewDialog' );
-        $( '##previewBody' ).html( data );
-        openModal( target );
-    } );
+    $.post( 
+        '#event.buildLink( prc.xehPreviewExport )#', 
+        $( "##exporterForm" ).serialize(), 
+        function( data, textStatus, jqXHR ){
+            var target = $( '##exportPreviewDialog' );
+            $( '##previewBody' ).html( data );
+            openModal( target );
+        } 
+    );
 }
 function activateLoaders(){
     $( "##uploadBar" ).slideToggle();

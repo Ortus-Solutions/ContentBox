@@ -110,7 +110,9 @@ component extends="baseHandler"{
 		setNextEvent(prc.xehToolsImport);
 	}
 	
-	// exporter
+	/**
+	* Show the exporter
+	*/
 	function exporter( event, rc, prc ) {
 		// Exit Handlers
 		prc.xehExport 			= "#prc.cbAdminEntryPoint#.tools.doExport";
@@ -120,7 +122,7 @@ component extends="baseHandler"{
 		prc.tabTools_export = true;
 		prc.emailTemplates 	= templateService.getTemplates();
 		prc.modules 		= moduleService.findModules().modules;
-		prc.themes 		= themeService.getThemes();
+		prc.themes 			= themeService.getThemes();
 		prc.widgets 		= widgetService.getWidgets();
 		prc.widgetService 	= widgetService;
 		
@@ -128,22 +130,29 @@ component extends="baseHandler"{
 		event.setView( "tools/exporter" );
 	}
 	
+	/**
+	* Preview of the export
+	*/
 	function previewExport( event, rc, prc ) {
 		// get targets
-		var targets = prepareExportTargets( rc );
-		var contentBoxExporter = getModel( "ContentBoxExporter@cb" );
+		var targets 			= prepareExportTargets( rc );
+		var contentBoxExporter 	= getModel( "ContentBoxExporter@cb" );
 		// build up exporter instance from targets in rc
 		prc.descriptor = contentBoxExporter.setup( targets ).getDescriptor();
+		// Sort the content
+		prc.aSortedContent = structSort( prc.descriptor.content, "text", "asc", "name" );
 		// render back the descriptor data as json
 		event.setView( view="tools/exporterPreview", layout="ajax" );
 	}
 
-	// do export
+	/**
+	* Process a real export
+	*/
 	function doExport( event, rc, prc ) {
 		// get targets
-		var targets = prepareExportTargets( rc );
-		var contentBoxExporter = getModel( "ContentBoxExporter@cb" );
-		var exportResult = contentBoxExporter.setup( targets ).export();
+		var targets 			= prepareExportTargets( rc );
+		var contentBoxExporter 	= getModel( "ContentBoxExporter@cb" );
+		var exportResult 		= contentBoxExporter.setup( targets ).export();
 		// export the content
 		var exportFilePath = exportResult.exportfile;
 		// save success message
@@ -154,12 +163,16 @@ component extends="baseHandler"{
 
 	/**************************************** PRIVATE ****************************************/
 
+	/**
+	* Looks at incoming export variables and prepares correct target elements from
+	* the RC.  Prefix is `EXPORT_`
+	*/
 	private struct function prepareExportTargets( required struct rc ) {
 		var targets = {};
-		for( var key in rc ) {
+		for( var key in arguments.rc ) {
 			if( left( key, 7 ) == "EXPORT_" ) {
 				var realKey = replaceNoCase( key, "EXPORT_", "", "one" );
-				targets[ realkey ] = rc[ key ];
+				targets[ realkey ] = arguments.rc[ key ];
 			}
 		}
 		return targets;

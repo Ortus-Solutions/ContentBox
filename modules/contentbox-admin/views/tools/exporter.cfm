@@ -294,20 +294,19 @@
                         <hr>
                     </fieldset>
 
-
                     <!--- Submit Button --->
                     <div class="actionBar" id="uploadBar">
                         #html.button( 
-                            type="button", 
-                            value="<i class='fa fa-search'></i> Preview Export", 
-                            class="btn btn-primary btn-normal btn-large", 
-                            onclick="return previewExport()" 
+                            type    = "button", 
+                            value   = "<i class='fa fa-search'></i> Preview Export", 
+                            class   = "btn btn-primary btn-normal btn-lg", 
+                            onclick = "return previewExport()" 
                         )#
                         #html.button( 
-                            type="button", 
-                            value="<i class='fa fa-download' id='export-icon'></i> Start Export", 
-                            class="btn btn-danger btn-large", 
-                            onclick="doExport()" 
+                            type    = "button", 
+                            value   = "<i class='fa fa-download' id='export-icon'></i> Start Export", 
+                            class   = "btn btn-danger btn-lg", 
+                            onclick = "doExport()" 
                         )#
                     </div>
                     
@@ -321,8 +320,11 @@
         #html.endForm()#
     </div>
 </div>
-<div id="exportPreviewDialog" class="modal fade">
-    <div class="modal-dialog modal-lg" role="document" >
+<!--- ************************************************************************************************--->
+<!---                               EXPORT PREVIEW DIALOG                                             --->
+<!--- ************************************************************************************************--->
+<div id="exportPreviewDialog" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
