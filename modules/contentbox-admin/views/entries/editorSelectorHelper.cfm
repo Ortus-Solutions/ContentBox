@@ -2,7 +2,7 @@
 <!--- Shared Dynamic JS --->
 #renderView(view="_tags/contentSelector",prePostExempt=true)#
 <!--- Custom Javascript --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
  	// Shared Pointers
 	$entryEditorSelectorForm 	= $( "##entryEditorSelectorForm" );

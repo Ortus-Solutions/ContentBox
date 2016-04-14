@@ -24,7 +24,7 @@
         }
     </style>
     <!--- Custom Javascript --->
-    <script type="text/javascript">
+    <script>
     $( document ).ready(function() {
         // Shared Pointers
         $relatedContentSelectorForm    = $( "##relatedContentSelectorForm" );

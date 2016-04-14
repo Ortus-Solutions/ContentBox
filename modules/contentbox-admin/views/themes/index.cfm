@@ -240,7 +240,7 @@
 															</cfif>
 															<!--- description --->
 															#prc.themes.description#<br/>
-															<div class="well well-small">
+															<div class="well well-sm">
 																Theme located in <em title="#prc.themesPath#/#prc.themes.name#">#prc.themesPath#/#prc.themes.name#</em>
 															</div>
 														</td>

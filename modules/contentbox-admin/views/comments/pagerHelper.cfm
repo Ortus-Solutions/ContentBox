@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
 	// quick look
 	$( "##comments_pager" ).find( "tr" ).bind( "contextmenu",function(e) {

@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- Custom Javascript --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
 	<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
  	// Load My Latest Drafts

@@ -2,7 +2,7 @@
 <!--- Render Commong editor functions --->
 #renderView( view="_tags/editors", prePostExempt=true )#
 <!--- Custom Javascript --->
-<script type="text/javascript">
+<script>
 $( document ).ready( function(){
  	// Editor Pointers
 	$contentForm = $( "##contentForm" );

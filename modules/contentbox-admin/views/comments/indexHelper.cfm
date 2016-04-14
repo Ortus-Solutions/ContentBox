@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
 	$commentForm = $( "##commentForm" );
 	$( "##commentSearch" ).keyup(function(){

@@ -17,7 +17,7 @@
                     <h3>What, you thought exporting content would be hard? Sorry to disappoint! ;)</h3>
                     <br />
                     <div class="row" style="margin: 0px 1px;">
-                        <div class="col-md-6 well well-small text-center alert-success">
+                        <div class="col-md-6 well well-sm text-center alert-success">
                             <h2>Option ##1: Everything!</h2>
                             <small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />
                             <label class="btn btn-success btn-toggle radio" for="export_everything">
@@ -25,7 +25,7 @@
                             </label>
                         </div>
                         <div class="col-md-1">&nbsp;</div>
-                        <div class="col-md-5 well well-small text-center">
+                        <div class="col-md-5 well well-sm text-center">
                             <h2>Option ##2: Mr. Picky</h2>
                             <small>For the more discriminating, select only the bits that you want to export.</small><br />
                             <label class="btn btn-toggle radio" for="export_selective">

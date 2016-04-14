@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- Editor Javascript --->
-<script type="text/javascript">
+<script>
 // Setup the content view with the settings object
 function setupContentView( settings ){
 	// setup model properties

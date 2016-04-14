@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- Custom JS --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
     // table sorting + filtering
     $( "##widgetFilter" ).keyup(function(){

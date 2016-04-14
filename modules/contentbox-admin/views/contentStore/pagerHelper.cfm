@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
 	$contentPager = $( "##content_pager" );
 	$contentPagerLoader = $( "##contentPagerLoader" );

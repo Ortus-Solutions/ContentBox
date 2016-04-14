@@ -5,7 +5,7 @@
 	</a>
 </div>
 
-<p class="well-small">
+<p class="well-sm">
 	<strong>Ortus Solutions</strong> is the company behind anything ColdBox and ContentBox. Need professional support, architecture analysis,
 code reviews, or custom development? 
 <a href="mailto:help@ortussolutions.com">Contact us</a>, we are here

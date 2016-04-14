@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
 	$pagesPager = $( "##pages_pager" );
 	$pagesPager.find( "tr:even" ).addClass( "even" );

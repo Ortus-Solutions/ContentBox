@@ -1,7 +1,7 @@
 <cfoutput>
 
 <!--- page JS --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
     // Setup content view
     setupView( { 

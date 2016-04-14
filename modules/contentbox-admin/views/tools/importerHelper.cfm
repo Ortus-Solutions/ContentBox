@@ -1,9 +1,5 @@
 ﻿<cfoutput>
-<style>
-    .checkbox-spacer {margin-top:5px;}
-    .btn-toggle.radio {padding-left:30px;}
-</style>	
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
 	$importForm = $( "##importerForm" );
 	var $importDialog = $( "##importDialog" );

@@ -74,7 +74,7 @@
 		</div>
 	</div>	
 	<!--- Custom JS --->
-	<script type="text/javascript">
+	<script>
 		$(document).ready(function() {
 			// Dynamic Add
 			$( ".dynamicAdd" ).click(function() {

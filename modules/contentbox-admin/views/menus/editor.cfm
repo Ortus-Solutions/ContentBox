@@ -24,7 +24,7 @@
                     #getModel( "messagebox@cbMessagebox" ).renderit()#
 
                      
-                    <menu class="well well-small">
+                    <menu class="well well-sm">
                         <p>Click any of the options below to insert a new menu item of that type.</p>
                         <cfloop collection="#prc.providers#" item="provider">
                             <a class="btn btn-sm provider btn-info" data-provider="#provider#" title="#prc.providers[ provider].getDescription()#"><i class="#prc.providers[ provider].getIconClass()#"></i> #provider#</a>

@@ -1,5 +1,5 @@
 <cfoutput>
-<script type="text/javascript">
+<script>
 function selectCBContent(slug,title,type){
 	var editor = $( "###rc.editorName#" ).ckeditorGet();
 	var link = editor.document.createElement( 'a' );

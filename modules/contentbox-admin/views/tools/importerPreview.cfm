@@ -1,10 +1,11 @@
 <cfoutput>
-<div class="modal-dialog modal-lg" role="document" >
+<div class="modal-dialog modal-lg" role="document" tabindex="-1" >
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3><i class="fa fa-copy"></i> Import Preview</h3>
         </div>
+        <cfdump var="#prc#" top="2" /><cfabort />
         <cfif not structKeyExists( prc, "contents" )>
             <div class="modal-body" id="modal-body">
                 <!--- messageBox --->

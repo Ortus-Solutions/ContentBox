@@ -1,5 +1,5 @@
 <cfoutput>
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
 	// tables references
 	$content = $( "##content" );

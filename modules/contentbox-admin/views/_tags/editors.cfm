@@ -3,7 +3,7 @@
 #html.addAsset( prc.cbroot & "/includes/css/date.css" )#
 #html.addAsset( prc.cbroot & "/includes/js/contentbox/autosave.js" )#
 <!--- Editor Javascript --->
-<script type="text/javascript">
+<script>
 // Load Custom Editor Assets, Functions, etc.
 #prc.oEditorDriver.loadAssets()#
 
