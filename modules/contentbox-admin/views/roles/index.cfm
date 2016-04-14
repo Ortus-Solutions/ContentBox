@@ -135,7 +135,7 @@
 </div>
 <cfif prc.oAuthor.checkPermission( "ROLES_ADMIN" )>
 	<!--- Role Editor --->
-	<div id="roleEditorContainer" class="modal fade">
+	<div id="roleEditorContainer" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document" >
 			<div class="modal-content">
 		

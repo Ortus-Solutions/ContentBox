@@ -113,7 +113,7 @@
 </div>
 <cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 	<!--- Permissions Editor --->
-	<div id="permissionEditorContainer" class="modal fade">
+	<div id="permissionEditorContainer" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 		    <div class="modal-content">
 				<div class="modal-header">
