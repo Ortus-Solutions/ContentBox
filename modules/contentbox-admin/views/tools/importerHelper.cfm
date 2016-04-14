@@ -1,15 +1,16 @@
 ﻿<cfoutput>
 <script>
 $(document).ready(function() {
-	$importForm = $( "##importerForm" );
-	var $importDialog = $( "##importDialog" );
-	$tabs = $( "##import_tabs" );
-	$button = $( "##import_button" );
-	$validator = $importForm.validate();
+	$importForm	 	= $( "##importerForm" );
+	$importDialog 	= $( "##importDialog" );
+	$tabs 			= $( "##import_tabs" );
+	$button 		= $( "##import_button" );
+	$validator 		= $importForm.validate();
+	
 	// form validation handler
-	$importForm.submit(function( e ){
-		var formvals = $importForm.collect();
-		var active = formvals.importtype;
+	$importForm.submit( function( e ){
+		var formvals 	= $importForm.collect();
+		var active 		= formvals.importtype;
 		$importForm.resetValidations();
 		// add validations as needed based on active tab
 		switch( active ) {
@@ -53,21 +54,20 @@ $(document).ready(function() {
 		// check valid state
 		if ( $importForm.valid() ) {
 			activateLoaders();
-		}
-		else {
+		} else {
 			e.preventDefault();
 			removeValidations();
 		}
 	} );
+
 	// handle export type selection
-    $( 'input[name=importtype]' ).change(function() {
-        $( 'input[name=importtype]' ).each(function(){
+    $( 'input[name=importtype]' ).change( function(){
+        $( 'input[name=importtype]' ).each( function(){
         	var parent = $( this ).parent();
             if( this.checked ) {
                 parent.addClass( 'btn-success' );
                 parent.parent().addClass( 'alert-success' );
-            }
-            else {
+            } else {
                 parent.removeClass( 'btn-success' );
                 parent.parent().removeClass( 'alert-success' );
             }
@@ -77,18 +77,18 @@ $(document).ready(function() {
         if( this.id == 'import-contentbox' ) {
         	dbContent.hide( 'fast' );
             cbContent.show( 'fast' );
-        }        
-        else {
+        } else {
             cbContent.hide( 'fast' );
             dbContent.show( 'fast' );
         }
     } );
+
 	// close button
-	$importDialog.delegate( '##closeButton', 'click', function(e){
+	$importDialog.delegate( '##closeButton', 'click', function( e ){
 		closeModal( $importDialog ); return false;
 	} );
 	// clone button
-	$importDialog.delegate( '##importButton', 'click', function(e){
+	$importDialog.delegate( '##importButton', 'click', function( e ){
 		$importForm.submit();
 	} );
 } );
