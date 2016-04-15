@@ -13,12 +13,16 @@ component accessors="true" threadSafe{
 	property name="appPath" 		inject="coldbox:setting:ApplicationPath";
 	property name="moduleConfig"	inject="coldbox:moduleConfig:contentbox";
 
-	// properties
+	/**
+	* The patches location in the system
+	*/
 	property name="patchesLocation";
 
 	/************************************** CONSTRUCTOR *********************************************/
 
-	// Constructor
+	/**
+	* Constructor
+	*/
 	UpdateService function init(){
 		return this;
 	}
@@ -28,17 +32,22 @@ component accessors="true" threadSafe{
 	*/
 	void function onDIComplete(){
 		// setup location paths
-		patcheslocation 	= moduleConfig.path & "/updates";
+		patcheslocation = moduleConfig.path & "/updates";
 	}
 
 
 	/************************************** PUBLIC *********************************************/
 
 
-	// Apply updates from a download URL, return results struct: [error,logInfo]
-	struct function applyUpdateFromURL(required string downloadURL){
-		var log 			= createObject( "java","java.lang.StringBuilder" ).init( "" );
-		var results 		= {error=true, logInfo=""};
+	/**
+	* Apply updates from a download URL, return results struct: [error,logInfo]
+	* @downloadURL The download URL for the update
+	* 
+	* @return results struct : { error:boolean, logInfo:string }
+	*/
+	struct function applyUpdateFromURL( required string downloadURL ){
+		var log 			= createObject( "java", "java.lang.StringBuilder" ).init( "" );
+		var results 		= { error=true, logInfo="" };
 		var fileName 		= getFileFromPath( arguments.downloadURL );
 
 		// download patch and extracted?
@@ -54,10 +63,15 @@ component accessors="true" threadSafe{
 		return results;
 	}
 
-	// Apply updates from an upload, return results struct: [error,logInfo]
-	struct function applyUpdateFromUpload(required fileField){
+	/**
+	* Apply updates from an upload, return results struct: [error,logInfo]
+	* @fileField The file field form name
+	* 
+	* @return results struct : { error:boolean, logInfo:string }
+	*/
+	struct function applyUpdateFromUpload( required fileField ){
 		var log 			= createObject( "java","java.lang.StringBuilder" ).init( "" );
-		var results 		= {error=true,logInfo=""};
+		var results 		= { error=true, logInfo="" };
 
 		try{
 			// upload patch
@@ -72,8 +86,7 @@ component accessors="true" threadSafe{
 			if( applyUpdateOnDisk( log ) ){
 				results.error = false;
 			}
-		}
-		catch(any e){
+		} catch( any e ) {
 			log.append( "Exception uploading patch: #e.message# #e.detail#<br/>" );
 		}
 
@@ -84,6 +97,8 @@ component accessors="true" threadSafe{
 
 	/**
 	* Process patch update removals if any
+	* @path The path of the patch
+	* @log The log buffer
 	*/
 	function processRemovals(required path, required log){
 		// verify the path exists on the incoming path
@@ -98,17 +113,15 @@ component accessors="true" threadSafe{
 		// if there are files, then remove, else continue
 		if( len( removalText ) ){
 			var files = listToArray( removalText, chr(10) );
-			for(var thisFile in files){
+			for( var thisFile in files ){
 				if( fileExists( expandPath( "/#thisFile#" ) ) ){
 					fileDelete( expandPath( "/#thisFile#" ) );
 					arguments.log.append( "Removed: #thisFile#<br/>" );
-				}
-				else{
+				} else {
 					arguments.log.append( "File Not Found, so not removed: #thisFile#<br/>" );
 				}
 			}
-		}
-		else{
+		} else {
 			arguments.log.append( "No updated files to remove. <br/>" );
 		}
 
@@ -118,6 +131,8 @@ component accessors="true" threadSafe{
 
 	/**
 	* Process updated files
+	* @path The path of the patch
+	* @log The log buffer
 	*/
 	function processUpdates(required path, required log){
 
@@ -130,8 +145,7 @@ component accessors="true" threadSafe{
 		// test zip has files?
 		try{
 			var listing = zipUtil.list( arguments.path );
-		}
-		catch(Any e){
+		} catch( Any e ) {
 			// bad zip file.
 			arguments.log.append( "Error getting listing of zip archive, bad zip.<br />" );
 			rethrow;
@@ -140,7 +154,11 @@ component accessors="true" threadSafe{
 		// good zip file
 		arguments.log.append( "Patch Zip archive detected, beginning to expand update: #arguments.path#<br />" );
 		// extract it
-		zipUtil.extract(zipFilePath=arguments.path, extractPath=appPath, overwriteFiles="true" );
+		zipUtil.extract(
+			zipFilePath		= arguments.path, 
+			extractPath		= appPath, 
+			overwriteFiles	= "true" 
+		);
 		// more logging
 		arguments.log.append( "Patch Updates uncompressed.<br />" );
 
@@ -148,13 +166,20 @@ component accessors="true" threadSafe{
 		fileDelete( arguments.path );
 	}
 
-	// Build an updater CFC from our patch locations
-	contentbox.models.updates.IUpdate function buildUpdater(){
+	/**
+	 * Build an updater CFC from our patch locations
+	 * @return contentbox.models.updates.IUpdate
+	 */
+	any function buildUpdater(){
 		return wirebox.getInstance( "contentbox.updates.Update" );
 	}
 
-	// Download the patch from URL and mark it as ok or not
-	boolean function downloadPatch(required string downloadURL, required log){
+	/**
+	* Download the patch from URL and mark it as ok or not
+	* @downloadURL The download URL
+	* @log The log file buffer
+	*/
+	boolean function downloadPatch( required string downloadURL, required log ){
 		var fileName = getFileFromPath( arguments.downloadURL );
 
 		try{
@@ -179,8 +204,12 @@ component accessors="true" threadSafe{
 		return extractPatch(filename,log);
 	}
 
-	// extract a patch in the updates location
-	boolean function extractPatch(required string filename, required log){
+	/**
+	* extract a patch in the updates location
+	* @fileName The file to extract
+	* @log The log file buffer
+	*/
+	boolean function extractPatch( required string filename, required log ){
 		// Unzip File?
 		if ( listLast(arguments.filename,"." ) eq "zip" ){
 
@@ -213,10 +242,10 @@ component accessors="true" threadSafe{
 
 	/**
 	* Check for version updates
-	* cVersion.hint The current version of the system
-	* nVersion.hint The newer version received
+	* @cVersion The current version of the system
+	* @nVersion The newer version received
 	*/
-	function isNewVersion( cVersion, nVersion ){
+	boolean function isNewVersion( required string cVersion, required string nVersion ){
 		/**
 		Semantic version: major.minor.revision-alpha.1+build
 		**/
@@ -254,6 +283,8 @@ component accessors="true" threadSafe{
 
 	/**
 	* Parse the semantic version
+	* @version The version string
+	* 
 	* @return struct:{major,minor,revision,beid,buildid}
 	*/
 	private struct function parseSemanticVersion( required string version ){
@@ -303,22 +334,30 @@ component accessors="true" threadSafe{
 
 	/**
 	* Upload an update file to disk
+	* @fileField The file field on the form
 	*/
-	struct function uploadUpdate(required fileField){
-		return fileUpload( getPatchesLocation(), arguments.fileField, "application/zip,application/x-zip-compressed,application/octet-stream", "overwrite" );
+	struct function uploadUpdate( required fileField ){
+		return fileUpload( 
+			getPatchesLocation(), 
+			arguments.fileField, 
+			"application/zip,application/x-zip-compressed,application/octet-stream", 
+			"overwrite" 
+		);
 	}
 
 	/************************************** PRIVATE *********************************************/
 
-	// Apply an already downloaded update on disk
-	private boolean function applyUpdateOnDisk(required log){
+	/**
+	* Apply an already downloaded update on disk
+	* @log The log buffer
+	*/
+	private boolean function applyUpdateOnDisk( required log ){
 		var results = false;
 
 		// Verify Patch integrity
 		if( !fileExists( getPatchesLocation() & "/Update.cfc" ) ){
 			arguments.log.append( "Update.cfc not found in downloaded package, skipping patch update.<br/>" );
-		}
-		else{
+		} else {
 			try{
 				var updater = buildUpdater();
 
@@ -337,11 +376,9 @@ component accessors="true" threadSafe{
 				arguments.log.append( "Update.cfc - called postInstallation() method.<br/>" );
 
 				results = true;
-			}
-			catch(any e){
+			} catch( any e ) {
 				arguments.log.append( "Error applying update: #e.message# #e.detail#<br/>#e.stacktrace#" );
-			}
-			finally{
+			} finally {
 				// Finally Remove Updater
 				if( fileExists( getPatchesLocation() & "/Update.cfc" ) ){
 					fileDelete( getPatchesLocation() & "/Update.cfc" );
