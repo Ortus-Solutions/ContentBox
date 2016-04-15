@@ -221,7 +221,7 @@ component {
 		settingService.save( entity=oSearchSetting, transactional=false );
 
 		// Update all settings to core
-		var oSettings = settingService.findAll();
+		var oSettings = settingService.getAll();
 		for( var thisSetting in oSettings ){
 			if( reFindNoCase( "^cb_", thisSetting.getName() ) ){
 				thisSetting.setIsCore( true );
