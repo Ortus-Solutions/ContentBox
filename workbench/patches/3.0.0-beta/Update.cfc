@@ -81,21 +81,11 @@ component {
 				securityRuleService.save( entity=oRule, transactional=false );
 			}
 
-			/****************************** UPDATE SETTINGS + PERMISSIONS ******************************/
-
-			// Update new settings
-			updateSettings();
-			// Update Permissions
-			updatePermissions();
-			// Update Roles with new permissions
-			updateAdmin();
-			updateEditor();
-
-			log.info("Finalized #version# patching");
+			log.info( "Finalized #version# preInstallation patching" );
 		}
 		catch(Any e){
 			ORMClearSession();
-			log.error("Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e);
+			log.error( "Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e );
 			rethrow;
 		}
 
@@ -108,9 +98,24 @@ component {
 		try{
 			// Verify if less than 2.1.0 with message
 			if( !isValidInstall() ){ return; }
-
 			// Make changes on disk take effect
-			ORMREload();
+			ORMCloseSession();
+			ORMReload();
+			if( structKeyExists( server, "lucee" ) ){
+				pagePoolClear();
+			}
+
+			/****************************** UPDATE SETTINGS + PERMISSIONS ******************************/
+			transaction{
+				// Update new settings
+				updateSettings();
+				// Update Permissions
+				updatePermissions();
+				// Update Roles with new permissions
+				updateAdmin();
+				updateEditor();
+			}
+
 		}
 		catch(Any e){
 			ORMClearSession();
