@@ -78,7 +78,7 @@ component {
 					oRule.setPermissions( replaceNoCase( oRule.getPermissions(), "LAYOUT_ADMIN", "THEME_ADMIN", "all" ) );
 					oRule.setSecureList( replaceNoCase( oRule.getSecureList(), "layouts", "themes", "all" ) );
 				}
-				securityRuleService.save( entity=oRule, transactional=false );
+				securityRuleService.save( entity=oRule );
 			}
 
 			log.info( "Finalized #version# preInstallation patching" );
@@ -106,15 +106,14 @@ component {
 			}
 
 			/****************************** UPDATE SETTINGS + PERMISSIONS ******************************/
-			transaction{
-				// Update new settings
-				updateSettings();
-				// Update Permissions
-				updatePermissions();
-				// Update Roles with new permissions
-				updateAdmin();
-				updateEditor();
-			}
+			
+			// Update new settings
+			updateSettings();
+			// Update Permissions
+			updatePermissions();
+			// Update Roles with new permissions
+			updateAdmin();
+			updateEditor();
 
 		}
 		catch(Any e){
@@ -191,7 +190,7 @@ component {
 		if( !isNull( perm ) ){
 			perm.setPermission( "THEME_ADMIN" );
 			perm.setDescription( "Ability to manage themes, default is view only" );
-			permissionService.save( entity=perm, transactional=false );
+			permissionService.save( entity=perm );
 			log.info( "LAYOUT_ADMIN permission found, renamed to THEME_ADMIN");
 		} else {
 			// Create it as a new permission only if THEME_ADMIN does not exist
@@ -218,19 +217,19 @@ component {
 		var oldLayoutSetting = settingService.findWhere( { name="cb_site_layout" } );
 		if( !isNull( oldLayoutSetting ) ){
 			oldLayoutSetting.setName( "cb_site_theme" );
-			settingService.save( entity=oldLayoutSetting, transactional=false );
+			settingService.save( entity=oldLayoutSetting );
 		}
 		// Update Search setting
 		var oSearchSetting = settingService.findWhere( { name="cb_search_adapter" } );
 		oSearchSetting.setValue( "contentbox.models.search.DBSearch" );
-		settingService.save( entity=oSearchSetting, transactional=false );
+		settingService.save( entity=oSearchSetting );
 
 		// Update all settings to core
 		var oSettings = settingService.getAll();
 		for( var thisSetting in oSettings ){
 			if( reFindNoCase( "^cb_", thisSetting.getName() ) ){
 				thisSetting.setIsCore( true );
-				settingService.save( entity=thisSetting, transactional = false );
+				settingService.save( entity=thisSetting );
 			}
 		}
 
@@ -244,7 +243,7 @@ component {
 		var props = { permission=arguments.permission, description=arguments.description };
 		// only add if not found
 		if( isNull( permissionService.findWhere( { permission=props.permission } ) ) ){
-			permissionService.save( entity=permissionService.new( properties=props ), transactional=false );
+			permissionService.save( entity=permissionService.new( properties=props ) );
 			log.info( "Added #arguments.permission# permission" );
 		} else {
 			log.info( "Skipped #arguments.permission# permission addition as it was already in system" );
@@ -257,7 +256,7 @@ component {
 			setting = settingService.new();
 			setting.setValue( trim( arguments.value ) );
 			setting.setName( arguments.name );
-			settingService.save( entity=setting, transactional=false );
+			settingService.save( entity=setting );
 			log.info( "Added #arguments.name# setting" );
 		} else {
 			log.info( "Skipped #arguments.name# setting, already there" );
