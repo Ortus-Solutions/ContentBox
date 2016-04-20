@@ -1,10 +1,3 @@
-//global variables
-@import "globals";
-
-//External Libs
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "../../bower_components/font-awesome-sass/assets/stylesheets/font-awesome";
-
 /*
  *
  *   SpaceLab - Responsive Admin Theme
@@ -12,10 +5,16 @@
  *
 */
 
+// ContentBox global variables
+@import "globals";
+
+// External Libs
+@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../../bower_components/font-awesome-sass/assets/stylesheets/font-awesome";
+
 // Variables, Mixins
 @import "theme/_variables.scss";
 @import "theme/_mixins.scss";
-
 @import "theme/_base.scss"; 
 @import "theme/_badges.scss";
 @import "theme/_backgrounds.scss";  
@@ -49,13 +48,5 @@
 
 // Post-Theme External Libs
 @import "../../bower_components/toastr/toastr.scss";
-
-// External CSS needed by libs
-@import url( 'animate.css' );
-@import url( 'switchery.min.css' );
-@import url( 'morris.css' );
-@import url( 'bootstrap-fileupload.css' );
-@import url( 'nestable.css' );
-@import url( '../plugins/datatables/css/dataTables.bootstrap.css' );
-@import url( '../plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css' );
-@import url( '../plugins/clockpicker/bootstrap-clockpicker.min.css' );
+// Finally Include the ContentBox Theme CSS
+@import "contentbox.scss";

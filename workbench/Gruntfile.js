@@ -4,15 +4,32 @@ module.exports = function(grunt) {
 	grunt.registerTask( 
 		'default', 
 		[ 
-			'clean:targetIncludes',
-			'sass:distTheme', 
-			'uglify:libraries', 
+			'clean:targetIncludes', // clean target
+			'sass:distTheme', // sass compilation
+			'cssmin', // css minifications
+			'clean:themecss', // cleanup combined css
+			'rev:css', // create revision cache buster
+			'clean:mincss', // clean min version
+			'injector:css', // inject css location
+			'uglify:libraries', // uglify JS libraries
 			'uglify:contentboxJS',
-			'copy:css',
 			'copy:js',
 			'copy:fonts',
 			'copy:plugins',
 			'watch'
+		]
+	);
+	grunt.registerTask( 
+		'css', 
+		[ 
+			'clean:css', // clean target
+			'copy:fonts', //copy fonts
+			'sass:distTheme', // sass compilation
+			'cssmin', // css minifications
+			'clean:themecss', // cleanup combined css
+			'rev:css', // create revision cache buster
+			'clean:mincss', // clean min version
+			'injector:css' // inject css location
 		]
 	);
 
@@ -26,12 +43,12 @@ module.exports = function(grunt) {
 
 			recompile : {
 				files : [ 'Gruntfile.js', 'bower.json', 'devincludes/plugins/**' ],
-				tasks : [ 'sass:distTheme', 'uglify:libraries', 'uglify:contentboxJS', 'copy:js', 'copy:fonts', 'copy:css', 'copy:plugins' ]	
+				tasks : [ 'default' ]	
 			},
 
 			sass : {
 				files : [ 'devincludes/scss/*.{scss,sass}','devincludes/scss/**/*.{scss,sass}','devincludes/scss/**/**/*.{scss,sass}' ],
-				tasks : [ 'sass:distTheme' ]
+				tasks : [ 'sass:distTheme', 'cssmin', 'clean:themecss' ]
 			},
 
             contentBoxJS : {
@@ -46,28 +63,21 @@ module.exports = function(grunt) {
 
             vendorCSS : {
             	files : [ 'devincludes/vendor/css/*.css' ],
-            	tasks : [ 'copy:css', 'copy:plugins' ]
+            	tasks : [ 'sass:distTheme', 'cssmin', 'clean:themecss', 'copy:plugins' ]
             }
 		},
 
 		// SCSS Compilation to css
 		sass : {
 			options : {
-				sourceMap  	: true,
-				outputStyle : 'compressed'
+				sourceMap : false
 			},
 			/**
 			* Contentbox and Theme SCSS Compilation
 			**/
 			distTheme: {
-			    options : {
-					style 		: 'expanded',
-					lineNumbers : true, // 1
-					sourcemap 	: false
-			    },
 			    files : {
-					'../modules/contentbox-admin/includes/css/theme.css': 'devincludes/scss/theme.scss',
-					'../modules/contentbox-admin/includes/css/contentbox.css': 'devincludes/scss/contentbox.scss'
+					'../modules/contentbox-admin/includes/css/theme.css' : 'devincludes/scss/theme.scss'
 				}
 			 }
 		},
@@ -146,6 +156,62 @@ module.exports = function(grunt) {
 		},
 
 		/**
+		 * CSS Min
+		 * Minifies the theme + bower + vendor css
+		 */
+		cssmin : {
+			options : {
+				sourceMap : true
+			},
+			target : {
+				files : {
+					'../modules/contentbox-admin/includes/css/contentbox.min.css' : [ 
+						'../modules/contentbox-admin/includes/css/theme.css'
+						// BOWER COMPONENTS
+						,'bower_components/animate.css/animate.css'
+						,'bower_components/switchery/dist/switchery.min.css'
+						,'bower_components/morris.js/morris.css'
+						// VENDORS
+						,'devincludes/vendor/css/*.css'
+						// PLUGINS
+						,'devincludes/plugins/datatables/css/dataTables.bootstrap.css'
+						,'devincludes/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css'
+						,'devincludes/plugins/clockpicker/bootstrap-clockpicker.min.css'
+					]
+				}
+			}
+		},
+
+		/**
+		 * Cache Busting
+		 */
+		rev : {
+			css : {
+				files : { src : [ '../modules/contentbox-admin/includes/css/contentbox.min.css' ] }
+			}
+		}, // end cache busting
+
+		/**
+		 * HTML Injector for include locations
+		 */
+		injector : {
+			options : {
+				relative : false,
+				transform : function( filepath, index, length ){
+					if( filepath.indexOf( ".js" ) !== -1 ){
+						return '<script src="#prc.cbroot#/includes/js/' + filepath.substr( filepath.lastIndexOf( '/' ) + 1 ) + '"></script>';
+					}
+					return '<link rel="stylesheet" href="#prc.cbroot#/includes/css/' + filepath.substr( filepath.lastIndexOf( '/' ) + 1 ) + '">';					
+				}
+			},
+			css : {
+				files : { 
+					"../modules/contentbox-admin/layouts/inc/HTMLHead.cfm" : [ '../modules/contentbox-admin/includes/css/*contentbox.min.css' ]	
+				}
+			}
+		},
+
+		/**
 		* Libraries with JS and/or CSS w/o SCSS support - migrated to their respective project plugin directories
 		**/
 		copy : {
@@ -167,148 +233,124 @@ module.exports = function(grunt) {
 						dest 	: '../modules/contentbox-admin/includes/fonts/bootstrap'
 					}
 			  	]
-		  },
-		  // Single CSS files to copy from bower
-		  css : {
-		  	files : [
-			      {
-			      	expand 	: true,
-			      	flatten :true, 
-			      	cwd 	: 'bower_components/', 
-			      	src 	: [
-			      		'animate.css/animate.css'
-			      		,'morris.js/morris.css'
-			      	], 
-			      	dest 	: '../modules/contentbox-admin/includes/css/',
-			      },
-			      {
-			      	expand 	: true,
-			      	flatten :true, 
-			      	cwd 	: 'devincludes/', 
-			      	src 	: [
-			      		'vendor/css/*.css'
-			      	], 
-			      	dest 	: '../modules/contentbox-admin/includes/css/',
-			      }
-		      ]
-		  },
+		  	},
 
-		  /**
-		  * Individual Javascript files migrated to project /includes/js 
-		  **/
-		  js : {
-		  	// Single Javascript files to copy from bower
-		  	files : [ 
-			  	{
-			  		expand 	: true,
-			  		flatten : true,
-			  		cwd 	: 'bower_components/',
-			  		src 	: [ 
-						"respond/dest/respond.min.js",
-						"html5shiv/dist/html5shiv.min.js"
-			  		],
-			  		dest 	: '../modules/contentbox-admin/includes/js/'	
-			  	},
+			/**
+			* Individual Javascript files migrated to project /includes/js 
+			**/
+			js : {
+				// Single Javascript files to copy from bower
+				files : [ 
+				  	{
+				  		expand 	: true,
+				  		flatten : true,
+				  		cwd 	: 'bower_components/',
+				  		src 	: [ 
+							"respond/dest/respond.min.js",
+							"html5shiv/dist/html5shiv.min.js"
+				  		],
+				  		dest 	: '../modules/contentbox-admin/includes/js/'	
+				  	},
+				  	// Extra version of jQuery for CB FileBrowser
+				  	{
+				  		expand 	: true,
+				  		flatten : true,
+				  		cwd 	: 'bower_components/',
+				  		src 	: [ 
+							"jquery/dist/jquery.min.js"
+				  		],
+				  		dest 	: '../modules/contentbox-admin/includes/js/'	
+				  	}
+				]
+			},
 
-			  	// Extra version of jQuery for CB FileBrowser
-			  	{
-			  		expand 	: true,
-			  		flatten : true,
-			  		cwd 	: 'bower_components/',
-			  		src 	: [ 
-						"jquery/dist/jquery.min.js"
-			  		],
-			  		dest 	: '../modules/contentbox-admin/includes/js/'	
-			  	}
-		  	]
-		  },
+			/**
+			* Compiled Plugins moved to /includes/plugins/
+			* These are loaded not on every page but determined by certain conditions
+			**/
+			plugins : {
+				files : [
+					// Theme Required Plugins: Added a-la-carte
+					{
+						expand 	: true,
+						cwd 	: 'devincludes/plugins/', 
+						src 	: [
+						'icheck/**',
+						'mask/**'
+						], 
+						dest 	: '../modules/contentbox-admin/includes/plugins/',
+					},
+					// CKEditor
+					{
+						expand 	: true,
+						cwd 	: 'bower_components/', 
+						src 	: [
+							'ckeditor/plugins/**',
+							'ckeditor/adapters/**',
+							'ckeditor/skins/moono/**',
+							'ckeditor/lang/**',
+							'ckeditor/ckeditor.js',
+							'ckeditor/styles.js',
+							'ckeditor/*.css',
+						], 
+						dest 	: '../modules/contentbox-admin/includes/plugins/',
+					},
+					//ContentBox CKEditor Config + Plugins
+					{
+						expand 	: true,
+						cwd 	: 'devincludes/plugins/ckeditor/', 
+						src 	: [
+							'**'
+						], 
+						dest 	: '../modules/contentbox-admin/includes/plugins/ckeditor/',
+					},
+					//DataTables
+					{
+						expand 	: true,
+						cwd 	: 'bower_components/datatables/media/', 
+						src 	: [
+							'**'
+						], 
+						dest 	: '../modules/contentbox-admin/includes/plugins/dataTables/'
+					},
+					//Bootstrap DatePicker
+					{
+						expand 	: true,
+						cwd 	: 'bower_components/bootstrap-datepicker/dist/', 
+						src 	: [
+							'css/**',
+							'js/**',
+							'locales/**'
+						], 
+						dest 	: '../modules/contentbox-admin/includes/plugins/bootstrap-datepicker/'
+					},
+					//Bootstrap Clockpicker
+					{
+						expand 	: true,
+						flatten : true,
+						cwd 	: 'bower_components/clockpicker/dist/', 
+						src 	: [
+							'bootstrap-clockpicker.min.js',
+							'bootstrap-clockpicker.min.css'
+						], 
+						dest 	: '../modules/contentbox-admin/includes/plugins/clockpicker/',
+						filter 	: 'isFile'
+					},
+					//jQuery Star Rating
+					{
+						expand 	: true,
+						flatten : true,
+						cwd 	: 'bower_components/jquery-star-rating/min/', 
+						src 	: [
+							'rating.css',
+							'rating.js'
+						], 
+						dest 	: '../modules/contentbox-admin/includes/plugins/jquery-star-rating/'
+					}
+				],
+			}, // end plugins
+		}, // end copy task
 
-		  /**
-		  * Compiled Plugins moved to /includes/plugins/
-		  * These are loaded not on every page but determined by certain conditions
-		  **/
-		  plugins : {
-		    files : [
-		      // Theme Required Plugins: Added a-la-carte
-		      {
-		      	expand 	: true,
-		      	cwd 	: 'devincludes/plugins/', 
-		      	src 	: [
-					'icheck/**',
-					'mask/**'
-		      	], 
-		      	dest 	: '../modules/contentbox-admin/includes/plugins/',
-		      },
-		      // CKEditor
-		      {
-		      	expand 	: true,
-		      	cwd 	: 'bower_components/', 
-		      	src 	: [
-		      		'ckeditor/plugins/**',
-		      		'ckeditor/adapters/**',
-		      		'ckeditor/skins/moono/**',
-		      		'ckeditor/lang/**',
-		      		'ckeditor/ckeditor.js',
-		      		'ckeditor/styles.js',
-		      		'ckeditor/*.css',
-		      	], 
-		      	dest 	: '../modules/contentbox-admin/includes/plugins/',
-		      },
-		      //ContentBox CKEditor Config + Plugins
-		      {
-		      	expand 	: true,
-		      	cwd 	: 'devincludes/plugins/ckeditor/', 
-		      	src 	: [
-		      		'**'
-		      	], 
-		      	dest 	: '../modules/contentbox-admin/includes/plugins/ckeditor/',
-		      },
-		      //DataTables
-		      {
-		      	expand 	: true,
-		      	cwd 	: 'bower_components/datatables/media/', 
-		      	src 	: [
-		      		'**'
-		      	], 
-		      	dest 	: '../modules/contentbox-admin/includes/plugins/dataTables/'
-		      },
-		      //Bootstrap DatePicker
-		      {
-		      	expand 	: true,
-		      	cwd 	: 'bower_components/bootstrap-datepicker/dist/', 
-		      	src 	: [
-		      		'css/**',
-		      		'js/**',
-		      		'locales/**'
-		      	], 
-		      	dest 	: '../modules/contentbox-admin/includes/plugins/bootstrap-datepicker/'
-		      },
-		      //Bootstrap Clockpicker
-		      {
-		      	expand 	: true,
-		      	flatten : true,
-		      	cwd 	: 'bower_components/clockpicker/dist/', 
-		      	src 	: [
-		      		'bootstrap-clockpicker.min.js',
-		      		'bootstrap-clockpicker.min.css'
-		      	], 
-		      	dest 	: '../modules/contentbox-admin/includes/plugins/clockpicker/',
-		      	filter 	: 'isFile'
-		      },
-		      //jQuery Star Rating
-		      {
-		      	expand 	: true,
-		      	flatten : true,
-		      	cwd 	: 'bower_components/jquery-star-rating/min/', 
-		      	src 	: [
-		      		'rating.css',
-		      		'rating.js'
-		      	], 
-		      	dest 	: '../modules/contentbox-admin/includes/plugins/jquery-star-rating/'
-		      }
-		    ],
-		  },
-		},
 		/**
 		* Directory Resets for Compiled Scripts - Clears the directories below in preparation for recompile
 		* Only runs on on initial Grunt startup.  If removing plugins, you will need to restart Grunt
@@ -322,7 +364,13 @@ module.exports = function(grunt) {
 				'../modules/contentbox-admin/includes/fonts',
 				'../modules/contentbox-admin/includes/css',
 				'../modules/contentbox-admin/includes/js'
-			]
+			],
+			css 		: [ '../modules/contentbox-admin/includes/css' ],
+			themecss	: [ "../modules/contentbox-admin/includes/css/theme.css" ],
+			mincss 		: [ "../modules/contentbox-admin/includes/css/contentbox.min.css" ],
+			revcss 		: [ "../modules/contentbox-admin/includes/css/*contentbox.min.css" ],
+			js 			: [ '../modules/contentbox-admin/includes/js' ],
+			plugins		: [ '../modules/contentbox-admin/includes/plugins' ]
 		} 
 
 	});

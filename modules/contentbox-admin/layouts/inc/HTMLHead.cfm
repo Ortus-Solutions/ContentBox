@@ -32,8 +32,10 @@
     <!--- ********************************************************************* --->
     <!---                           CSS                                           --->
     <!--- ********************************************************************* --->
-    <link rel="stylesheet" href="#prc.cbroot#/includes/css/theme.css"/>
-    <link rel="stylesheet" href="#prc.cbroot#/includes/css/contentbox.css"/>
+    <!-- injector:css -->
+    <link rel="stylesheet" href="#prc.cbroot#/includes/css/2068d5dd.contentbox.min.css">
+    <!-- endinjector -->
+
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
     <!--- ********************************************************************* --->

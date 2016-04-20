@@ -1,11 +1,8 @@
 /**
- * Custom stuff
- */
-.placeholder {width:250px;border: 1px dashed #4183C4;margin-bottom:5px;border-radius:3px;}
-/**
- * Nestable
+ * Nestable CSS used by any nestable UI elements
  */
 
+.placeholder {width:250px;border: 1px dashed #4183C4;margin-bottom:5px;border-radius:3px;}
 .dd { 
     position: relative; 
     display: block; 
