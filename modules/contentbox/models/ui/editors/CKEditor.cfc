@@ -24,19 +24,25 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* Constructor
 	* @coldbox.inject coldbox
 	* @settingService.inject settingService@cb
+	* @html.inject HTMLHelper@coldbox
 	*/
-	function init( required coldbox, required settingService ){
+	function init( 
+		required coldbox, 
+		required settingService,
+		required html
+	){
 		
 		// register dependencies
 		variables.interceptorService = arguments.coldbox.getInterceptorService();
 		variables.requestService	 = arguments.coldbox.getRequestService();
 		variables.coldbox 			 = arguments.coldbox;
 		variables.settingService	 = arguments.settingService;
+		variables.html 				 = arguments.html;
 		
 		// Store admin entry point and base URL settings
-		ADMIN_ENTRYPOINT = arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
-		HTML_BASE_URL	 = arguments.coldbox.getSetting( "htmlBaseURL" );
-		
+		ADMIN_ENTRYPOINT 	= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
+		ADMIN_ROOT 			= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].mapping;
+		HTML_BASE_URL	 	= variables.requestService.getContext().getHTMLBaseURL();
 		// Register our CKEditor events
 		interceptorService.appendInterceptionPoints( "cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig" );
 		
@@ -87,6 +93,10 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	function loadAssets(){
 		var js = "";
 		
+		// Load Assets, they are included with ContentBox
+		html.addAsset( "#variables.ADMIN_ROOT#/includes/plugins/ckeditor/ckeditor.js" );
+		html.addAsset( "#variables.ADMIN_ROOT#/includes/plugins/ckeditor/adapters/jquery.js" );
+
 		savecontent variable="js"{
 			writeOutput( "
 			function checkIsDirty(){
