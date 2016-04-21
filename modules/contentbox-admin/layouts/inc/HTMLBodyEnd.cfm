@@ -3,10 +3,11 @@
     <!--- ********************************************************************* --->
     <!---                           Post-Libs                                   --->
     <!--- ********************************************************************* --->
-    <script type="application/javascript" src="#prc.cbroot#/includes/js/postLib.js"></script>
-    <!--- CKEditor Separate --->
-    <script src="#prc.cbroot#/includes/plugins/ckeditor/ckeditor.js"></script>
-    <script src="#prc.cbroot#/includes/plugins/ckeditor/adapters/jquery.js"></script>
+    <cfif getSetting( "environment" ) eq "development">
+        <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-post.js"></script>
+    <cfelse>
+        <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-post.min.js"></script>
+    </cfif>
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
     <!--- ********************************************************************* --->

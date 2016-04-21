@@ -32,9 +32,7 @@
     <!--- ********************************************************************* --->
     <!---                           CSS                                           --->
     <!--- ********************************************************************* --->
-    <!-- injector:css -->
-    <link rel="stylesheet" href="#prc.cbroot#/includes/css/2068d5dd.contentbox.min.css">
-    <!-- endinjector -->
+    <link rel="stylesheet" href="#prc.cbroot#/includes/css/contentbox.min.css">
 
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
@@ -66,7 +64,10 @@
     <!---                            JS LIBRARIES FOR IN-PAGE JS                --->
     <!--- ********************************************************************* --->
     <!---  Blocking JS - Libraries required for in-page JS --->
-    <script type="application/javascript" src="#prc.cbroot#/includes/js/preLib.js"></script>
-    <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox/admin.js"></script>
+    <cfif getSetting( "environment" ) eq "development">
+        <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-pre.js"></script>
+    <cfelse>
+        <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-pre.min.js"></script>
+    </cfif>
 </head>
 </cfoutput>
