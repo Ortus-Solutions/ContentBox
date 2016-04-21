@@ -1,69 +1,87 @@
 # Development Notes:
 
-Asset Compilation
------------------
+## Asset Compilation
 
-All assets for this project are compiled using Grunt.  Developers modifying Javascript or SCSS/CSS assets should use the files located in `workbench/devincludes`.  Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use Gruntfile.js to configure your asset distributions.
+All assets for this project are compiled using Grunt and managed via Bower.  Developers modifying Javascript or SCSS/CSS assets should use the files located in `workbench/devincludes`.  Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use `Gruntfile.js` to configure your asset distributions.
 
-To setup your development environment, install NPM and then run:
+## Setup
+To setup your development environment, install [NodeJS](https://nodejs.org/en/) and then run:
 
 ```
 cd workbench
+## Install Bower and Grunt-cli globally
 npm install -g bower
+npm install -g grunt-cli
+## Install Node assets
 npm install
+## Install Bower assets
 bower install
 ```
 
 To start Grunt compilation, run `Grunt` from the workbench directory.  Directories and relevant files, along with the `Gruntfile.js`, itself, will be watched for changes, which will recompile relevant assets.
 
-**Todo**:
-* Copy/Concat/Minify into a single css file for the assets
-* Copy `fonts` from the grunt file dynamically instead of manually
-* Cleanup on plugins
-* Linting on the custom JS files for standards (jshint)
-* Cache busting and auto injector on the CFML includes
+## CSS/SCSS
 
-The following conventions have been applied:
+The directory `workbench/devincludes/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.  
 
-CSS/SCSS
---------
+### Bower CSS
+All needed CSS from bower libraries are added via the `cssmin` task.
 
-The directory `workbench/devincludes/scss` contains all of the SCSS theme files.  Only two files are compiled to the production CSS:  `theme.scss` ( The Spacelab theme and dependencies ), and `contentbox.scss` ( The application customizations ).  Global variables used may be set in `_globals.scss`
+### Vendor CSS
+Vendor CSS files are added into `workbench/devincludes/vendor/css`.
+
+### Output
+The build process will produce a `modules/contentbox-admin/includes/css/contentbox.min.css` according to the theme, vendor CSS, and bower CSS.
 
 
-Javascript Assets
------------------
+## Javascript Assets
+
+**ContentBox Libraries**
+
+All JS files in the `workbench/devincludes/js` are the core ContentBox JavaScript libraries.  They will all be minified and sent to a `contentbox-pre.js` library.
 
 **Global Libraries**
 
-Two global libraries of OSS and Theme Javascript are compiled by Grunt: `preLib.js`, which is brought in to the `<head>` of the layout and `postLib.js`, which is brought in before the body end.  PreLib is intended for only files which would cause page load to throw errors.   To speed up page load times, please add any new assets to the `postLib` compilation and ensure that they are protected from errors during the page load (e.g. within a `$( document ).ready()` function.).  The long-term goal is to eliminate the use of in-view Javascript and load necessary assets at runtime.  Ideally, this would result in the elimination of the `preLib` requirement.
+Two global libraries are created in ContentBox:
 
-**Runtime Assets**
+* `contentbox-pre.js` : Loaded in the `<head>` section
+* `contentbox-post.js` : Loaded after the `<body>` section
 
-To load an asset at Runtime, please use the `prc.jsAppendList` and `prc.cssAppendList` variables in your handlers, which are relative to the module `/includes/js|css` directories, like so:
+> Tip: Please look in the `Gruntfile.js` for determination of the libraries loading pre and post.
+
+## Vendor Libaries ##
+
+JavaScript libraries not managed by Bower will be placed under the `workbench/devincludes/vendor/js` folder and optimized by our build process into their appropriate global libraries.
+
+
+## Runtime Assets
+
+To load an asset at Runtime, please use the `prc.jsAppendList, prc.jsFullAppendList` and `prc.cssAppendList, prc.cssFullAppendList` variables in your handlers.
+
+> **Note**: No extensions are required for each list.
+
+The `Full` lists are absolute or http locations, while the normal append lists are are relative to the module's css/js folder: `/includes/js|css`:
 
 ```
+// relative
 prc.cssAppendList = "../plugins/morris/css/morris";       
-prc.jsAppendList  = "../plugins/morris/js/raphael-min,../plugins/morris/js/morris.min";  
+prc.jsAppendList  = "../plugins/morris/js/raphael-min,../plugins/morris/js/morris.min";
+
+// full
+prc.jsFullList = "https://cdnjs.cloudflare.com/ajax/libs/mocha/2.4.5/mocha.min"
+prc.cssFullList = "https://cdnjs.cloudflare.com/ajax/libs/mocha/2.4.5/mocha"
+
 ```
 
-**Vendor Libraries**
-
-All the JS/CSS libraries that are not in bower and will be copied by Grunt to their appropriate destinations:
-* `contentbox-admin/includes/js`
-* `contentbox-admin/includes/css`
-
-All JS files in the `workbench/devincludes/js` directory will be optimized by Grunt and deployed, recursively, to the `contentbox-admin/includes/js` directory.  For libraries, which should be compiled in to that directory for loading at runtime, please use the `workbench/devincludes/vendor` directory or add them to the `preLib` or `postLib` compilations, if used globaly.
 
 **Plugins**
 
-Plugins which do not have SCSS support, or which are used only for specific handler/actions, should be deployed as plugins.  See the Grunt `copy:plugins` task array for examples.
+Plugins which are used only for specific handler/actions, should be deployed as plugins.  See the Grunt `copy:plugins` task array for examples.
 
 
-Cleanup and Re-compilation
------------------------------
+## Cleanup and Re-compilation
 
-**Warning:** The following module directories are cleared on initial Grunt Startup and should not be used for development:
+> **Warning:** The following module directories are cleared on initial Grunt Startup and should not be used for development:
 
 - `modules/contentbox-admin/includes/css`
 - `modules/contentbox-admin/includes/js`
