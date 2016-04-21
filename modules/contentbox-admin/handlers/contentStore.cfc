@@ -9,7 +9,7 @@ component extends="baseContentHandler"{
 
 	// Dependencies
 	property name="contentStoreService"	inject="id:contentStoreService@cb";
-	property name="CKHelper"			inject="CKHelper@contentbox-admin";
+	property name="CKHelper"			inject="CKHelper@contentbox-ckeditor";
 	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 
 	// Public properties
