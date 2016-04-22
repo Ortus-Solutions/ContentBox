@@ -51,14 +51,9 @@ module.exports = function(grunt) {
 				tasks : [ 'css' ]
 			},
 
-            contentBoxJS : {
-            	files : [ 'devincludes/js/contentbox/**/*.js' ],
-            	tasks : [ 'uglify:contentboxJS' ]
-            },
-
-            vendorJS : {
-            	files : [ 'devincludes/vendor/js/*.js' ],
-            	tasks : [ 'copy:js', 'copy:plugins' ]
+            js : {
+            	files : [ 'devincludes/js/**/*.js', 'devincludes/vendor/js/*.js' ],
+            	tasks : [ 'js' ]
             }
 		},
 
