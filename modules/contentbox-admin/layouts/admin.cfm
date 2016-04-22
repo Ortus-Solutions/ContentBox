@@ -6,28 +6,28 @@
 <!--[if gt IE 8]><!-->
 <html class="no-js">
 <!--<![endif]-->
-    <cfinclude template="inc/HTMLHead.cfm"/>
-    <body class="off-canvas">
-        <!--- cbadmin Event --->
-        #announceInterception( "cbadmin_afterBodyStart" )#
-        <section id="container" class="#prc.sideMenuClass#">
-            <header id="header">
+	<cfinclude template="inc/HTMLHead.cfm"/>
+	<body class="off-canvas">
+		<!--- cbadmin Event --->
+		#announceInterception( "cbadmin_afterBodyStart" )#
+		<section id="container" class="#prc.sideMenuClass#">
+			<header id="header">
 
-                <!--Branding-->
-                <div class="brand text-center">
-                    <a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="left auto">
-                        <img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
-                    </a>
-                </div>
+				<!--Branding-->
+				<div class="brand text-center">
+					<a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="left auto">
+						<img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
+					</a>
+				</div>
 
-                <!-- Toggle Navigation Button -->
-                <div class="toggle-navigation toggle-left">
-                    <a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
-                    	<i class="fa fa-bars"></i>
-                    </a>
-                </div>
+				<!-- Toggle Navigation Button -->
+				<div class="toggle-navigation toggle-left">
+					<a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+						<i class="fa fa-bars"></i>
+					</a>
+				</div>
 
-                <!---Search --->
+				<!---Search --->
 				<cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
 				<span class="navbar-search" id="div-search" title="ctrl+shift+s or \" data-toggle="tooltip" data-placement="right"/>
 					<!---Search Results --->
@@ -38,21 +38,21 @@
 				</span>
 				</cfif>
 
-                <!-- User Nav -->
-                <div class="user-nav">
-                    <ul>
-                    	<!--- View Site --->
-                    	<li class="" data-placement="right auto" title="Visit Site">
-                    		<a class="btn btn-default options toggle" href="#event.buildLink( linkTo=prc.cbEntryPoint, ssl=prc.cbSettings.cb_site_ssl )#" target="_blank">
-                    			<i class="fa fa-home"></i>
-                    		</a>
-                    	</li>
-                    	<!--- New Quick Links --->
-				    	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
-				    	<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
-				    		<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
-				    			<i class="fa fa-plus"></i>
-				    		</button>
+				<!-- User Nav -->
+				<div class="user-nav">
+					<ul>
+						<!--- View Site --->
+						<li class="" data-placement="right auto" title="Visit Site">
+							<a class="btn btn-default options toggle" href="#event.buildLink( linkTo=prc.cbEntryPoint, ssl=prc.cbSettings.cb_site_ssl )#" target="_blank">
+								<i class="fa fa-home"></i>
+							</a>
+						</li>
+						<!--- New Quick Links --->
+						<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
+						<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
+							<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
+								<i class="fa fa-plus"></i>
+							</button>
 							<ul class="dropdown-menu">
 								<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 									<li>
@@ -99,168 +99,168 @@
 							</ul>
 						</li>
 						</cfif>
-                    	
-                    	<!--- Utils --->
-                        #prc.adminMenuService.generateUtilsMenu()#
-                       	
-                       	<!--- Support Menu --->
-                        #prc.adminMenuService.generateSupportMenu()#
-                        
-                        <!--- Profile --->
-                        <li class="profile-photo">
-                            #getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
-                        </li>
-                        #prc.adminMenuService.generateProfileMenu()#
-                        
-                        <!--- Notifications :
-                        TODO: Enable once done
-                        <li class="dropdown messages">
-                            <span class="badge badge-danager animated bounceIn" id="new-messages">5</span>
-                            <div class="toggle-navigation toggle-right">
-                                <button type="button" class="btn btn-default" id="toggle-right">
-                                    <i class="fa fa-bullhorn"></i>
-                                </button>                        
-                            </div>
-                        </li>
-                        --->
-                    </ul>
-                </div>
-            </header>
+						
+						<!--- Utils --->
+						#prc.adminMenuService.generateUtilsMenu()#
+						
+						<!--- Support Menu --->
+						#prc.adminMenuService.generateSupportMenu()#
+						
+						<!--- Profile --->
+						<li class="profile-photo">
+							#getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
+						</li>
+						#prc.adminMenuService.generateProfileMenu()#
+						
+						<!--- Notifications :
+						TODO: Enable once done
+						<li class="dropdown messages">
+							<span class="badge badge-danager animated bounceIn" id="new-messages">5</span>
+							<div class="toggle-navigation toggle-right">
+								<button type="button" class="btn btn-default" id="toggle-right">
+									<i class="fa fa-bullhorn"></i>
+								</button>                        
+							</div>
+						</li>
+						--->
+					</ul>
+				</div>
+			</header>
 
-            <!--sidebar left start-->
-            <nav class="sidebar sidebar-left" id="main-navbar">
-            	<h5 class="sidebar-header">Navigation</h5>
-                <!--- Main Generated Menu --->
-                #prc.adminMenuService.generateMenu()#
-            </nav>
-            <!--sidebar left end-->
-            
-            <!--main content start-->
-            <section class="main-content-wrapper">
-                <section id="main-content">
-                    <!--- cbadmin event --->
-                    #announceInterception( "cbadmin_beforeContent" )#
-                    <!--- Main Content --->
-                    #renderView()#
-                    <!--- cbadmin event --->
-                    #announceInterception( "cbadmin_afterContent" )#
-                </section>
-            </section>
-            <!--main content end-->
+			<!--sidebar left start-->
+			<nav class="sidebar sidebar-left" id="main-navbar">
+				<h5 class="sidebar-header">Navigation</h5>
+				<!--- Main Generated Menu --->
+				#prc.adminMenuService.generateMenu()#
+			</nav>
+			<!--sidebar left end-->
+			
+			<!--main content start-->
+			<section class="main-content-wrapper">
+				<section id="main-content">
+					<!--- cbadmin event --->
+					#announceInterception( "cbadmin_beforeContent" )#
+					<!--- Main Content --->
+					#renderView()#
+					<!--- cbadmin event --->
+					#announceInterception( "cbadmin_afterContent" )#
+				</section>
+			</section>
+			<!--main content end-->
 
-         	<!--- Footer --->
-        	#renderView( view="_tags/footer", module="contentbox-admin" )#
-        </section>  
+			<!--- Footer --->
+			#renderView( view="_tags/footer", module="contentbox-admin" )#
+		</section>  
 
-        <!--- ************************************************************************************************--->
-        <!---                               RIGHT SIDEBAR                                         --->
-        <!--- ************************************************************************************************--->
-        <div class="sidebarRight">
-	        <div id="rightside-navigation">
-	            <div class="sidebar-heading"><i class="fa fa-bullhorn"></i> Notifications</div>
-                    <div class="sidebar-title">system</div>
-                    <div class="list-contacts">
-                        <cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.installer>
-                            <div class="list-item">
-                                <div class="list-item-image">
-                                    <i class="fa fa-warning img-circle"></i>
-                                </div>
-                                <div class="list-item-content">
-                                    <h4>
-                                        Installer Module
-                                        <span class="actions dropdown pull-right">
-                                            <button class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></button>
-                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                <li role="presentation">
-                                                    <a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteInstaller()">
-                                                        <i class="fa fa-trash-o"></i> Delete Installer
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </span>
-                                    </h4>
-                                    <p>The installer module still exists! Please delete it from your server as leaving it online is a security risk.</p>
-                                </div>
-                            </div>
-                        </cfif>
-                        <cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.dsncreator>
-                            <div class="list-item">
-                                <div class="list-item-image">
-                                    <i class="fa fa-warning img-circle"></i>
-                                </div>
-                                <div class="list-item-content">
-                                    <h4>
-                                        DSN Creator Module
-                                        <span class="actions dropdown pull-right">
-                                            <button class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></button>
-                                            <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                                                <li role="presentation">
-                                                    <a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteDSNCreator()">
-                                                        <i class="fa fa-trash-o"></i> Delete DSN Creator
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </span>
-                                    </h4>
-                                    <p>The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.</p>
-                                </div>
-                            </div>
-                        </cfif>
-                    </div>
-                </div>
-	        </div>
-	    </div>
-        <!--sidebar right end-->
+		<!--- ************************************************************************************************--->
+		<!---                               RIGHT SIDEBAR                                         --->
+		<!--- ************************************************************************************************--->
+		<div class="sidebarRight">
+			<div id="rightside-navigation">
+				<div class="sidebar-heading"><i class="fa fa-bullhorn"></i> Notifications</div>
+					<div class="sidebar-title">system</div>
+					<div class="list-contacts">
+						<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.installer>
+							<div class="list-item">
+								<div class="list-item-image">
+									<i class="fa fa-warning img-circle"></i>
+								</div>
+								<div class="list-item-content">
+									<h4>
+										Installer Module
+										<span class="actions dropdown pull-right">
+											<button class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></button>
+											<ul class="dropdown-menu dropdown-menu-right" role="menu">
+												<li role="presentation">
+													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteInstaller()">
+														<i class="fa fa-trash-o"></i> Delete Installer
+													</a>
+												</li>
+											</ul>
+										</span>
+									</h4>
+									<p>The installer module still exists! Please delete it from your server as leaving it online is a security risk.</p>
+								</div>
+							</div>
+						</cfif>
+						<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.dsncreator>
+							<div class="list-item">
+								<div class="list-item-image">
+									<i class="fa fa-warning img-circle"></i>
+								</div>
+								<div class="list-item-content">
+									<h4>
+										DSN Creator Module
+										<span class="actions dropdown pull-right">
+											<button class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></button>
+											<ul class="dropdown-menu dropdown-menu-right" role="menu">
+												<li role="presentation">
+													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteDSNCreator()">
+														<i class="fa fa-trash-o"></i> Delete DSN Creator
+													</a>
+												</li>
+											</ul>
+										</span>
+									</h4>
+									<p>The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.</p>
+								</div>
+							</div>
+						</cfif>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--sidebar right end-->
 
-        <!--- ************************************************************************************************--->
-        <!---                               CONFIRM IT MODAL TEMPLATE                                         --->
-        <!--- ************************************************************************************************--->
-        <div id="confirmIt" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmItTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <!--header-->
-                    <div class="modal-header">
-                        <!--if dismissable-->
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="confirmItTitle">Are you sure?</h4>
-                    </div>
-                    <!--body-->
-                    <div class="modal-body">
-                        <p id="confirmItMessage">Are you sure you want to perform this action?</p>
-                    </div>
-                    <!-- footer -->
-                    <div class="modal-footer">
-                        <span id="confirmItLoader" style="display:none"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
-                        <span id="confirmItButtons">
-                            <button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Cancel</button>
-                            <button class="btn btn-danger" data-action="confirm"><i class="icon-check"></i>  Confirm </button>
-                        </span>
-                    </div>
-                </div> <!--- end modal-content --->
-            </div> <!--- end modal-dialog --->
-        </div>
+		<!--- ************************************************************************************************--->
+		<!---                               CONFIRM IT MODAL TEMPLATE                                         --->
+		<!--- ************************************************************************************************--->
+		<div id="confirmIt" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="confirmItTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<!--header-->
+					<div class="modal-header">
+						<!--if dismissable-->
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="confirmItTitle">Are you sure?</h4>
+					</div>
+					<!--body-->
+					<div class="modal-body">
+						<p id="confirmItMessage">Are you sure you want to perform this action?</p>
+					</div>
+					<!-- footer -->
+					<div class="modal-footer">
+						<span id="confirmItLoader" style="display:none"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
+						<span id="confirmItButtons">
+							<button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Cancel</button>
+							<button class="btn btn-danger" data-action="confirm"><i class="icon-check"></i>  Confirm </button>
+						</span>
+					</div>
+				</div> <!--- end modal-content --->
+			</div> <!--- end modal-dialog --->
+		</div>
 
-        <!--- ************************************************************************************************--->
-        <!---                               REMOTE MODAL TEMPLATE                                             --->
-        <!--- ************************************************************************************************--->
-        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remoteModal" aria-hidden="true" id="modal">
-             <div class="modal-dialog modal-lg" role="document" >
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h3>Loading...</h3>
-                    </div>
-                    <div class="modal-body" id="remoteModelContent">
-                        <i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<!--- ************************************************************************************************--->
+		<!---                               REMOTE MODAL TEMPLATE                                             --->
+		<!--- ************************************************************************************************--->
+		<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remoteModal" aria-hidden="true" id="modal">
+			 <div class="modal-dialog modal-lg" role="document" >
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3>Loading...</h3>
+					</div>
+					<div class="modal-body" id="remoteModelContent">
+						<i class="fa fa-spinner fa fa-spin fa-lg icon-4x"></i>
+					</div>
+				</div>
+			</div>
+		</div>
 
-        <!--- ************************************************************************************************--->
-        <!---                               BODY END VIEW                                                     --->
-        <!--- ************************************************************************************************--->
-        <cfinclude template="inc/HTMLBodyEnd.cfm"/>
-        
-    </body>
+		<!--- ************************************************************************************************--->
+		<!---                               BODY END VIEW                                                     --->
+		<!--- ************************************************************************************************--->
+		<cfinclude template="inc/HTMLBodyEnd.cfm"/>
+		
+	</body>
 </html>
 </cfoutput>
