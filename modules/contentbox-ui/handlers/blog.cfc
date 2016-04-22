@@ -5,7 +5,7 @@
 * ---
 * Handler For ContentBox blog pages
 */
-component extends="content" singleton{
+component extends="content"{
 
 	// DI
 	property name="entryService" inject="id:entryService@cb";
