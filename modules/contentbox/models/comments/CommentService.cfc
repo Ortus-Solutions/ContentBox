@@ -14,6 +14,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="log"					inject="logbox:logger:{this}";
 	property name="interceptorService"	inject="coldbox:interceptorService";
+	property name="loginTrackerService"	inject="loginTrackerService@cb";
 
 	/**
 	* Constructor
@@ -102,7 +103,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var results = { moderated=true, messages=[] };
 
 		// Log the IP Address
-		inComment.setAuthorIP( cgi.remote_addr );
+		inComment.setAuthorIP( loginTrackerService.getRealIP() );
 		// Default moderation
 		inComment.setIsApproved( false );
 
