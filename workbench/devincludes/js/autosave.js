@@ -101,9 +101,11 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 
 	//Run Init Code
 	editor.on( isCK ? 'change' : 'keyup', startTimer ); //Run Auto Save
+	
 	// Load Previous AutoLoad when selected from the Dropdown menu
 	$( '#' + ddMenuID ).on( 'click', 'li > a', function( evt ){
 		loadContent( $( evt.currentTarget ).data( 'id' ) );
 	});
+	
 	updateAutoSaveMenu();
 };

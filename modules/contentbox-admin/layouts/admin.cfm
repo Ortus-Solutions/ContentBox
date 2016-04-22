@@ -14,7 +14,9 @@
 	<!--- ************************************************************************************************--->
 	<!---                               BODY START					                                      --->
 	<!--- ************************************************************************************************--->
-	<body class="off-canvas">
+	<body 	class="off-canvas" 
+			data-showsidebar="#lcase( yesNoFormat( prc.oAuthor.getPreference( "sidebarState", true ) ) )#"
+	>
 
 		<!--- cbadmin Event --->
 		#announceInterception( "cbadmin_afterBodyStart" )#
@@ -159,6 +161,21 @@
 				<section id="main-content">
 					<!--- cbadmin event --->
 					#announceInterception( "cbadmin_beforeContent" )#
+					
+					<!--- Side Bar Trigger --->
+					<div 	class="pull-right" 
+							id="main-content-sidebar-trigger"
+							data-stateurl="#event.buildLink( prc.xehAuthorSideBar )#"
+							style="display: none;"
+					>
+						<button type="button" 
+								class="btn btn-primary btn-xs"
+								title="Toggle Right Sidebar (ctrl+shift+e)"
+								data-keybinding="ctrl+shift+e"
+								onclick="toggleSidebar()"
+						><i class="fa fa-minus-square-o"></i> Sidebar</button>
+					</div>
+
 					<!--- Main Content --->
 					#renderView()#
 					<!--- cbadmin event --->

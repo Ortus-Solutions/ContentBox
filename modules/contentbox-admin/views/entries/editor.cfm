@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
             #getModel( "messagebox@cbMessagebox" ).renderit()#
 
@@ -129,7 +129,7 @@
             <!--- Event --->
             #announceInterception( "cbadmin_entryEditorFooter" )#
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" id="main-content-sidebar">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-info-circle"></i> Entry Details</h3>

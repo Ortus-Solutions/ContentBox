@@ -66,8 +66,10 @@
     <!---  Blocking JS - Libraries required for in-page JS --->
     <cfif getSetting( "environment" ) eq "development">
         <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-pre.js"></script>
+        <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-app.js"></script>
     <cfelse>
         <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-pre.min.js"></script>
+        <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-app.min.js"></script>
     </cfif>
 </head>
 </cfoutput>

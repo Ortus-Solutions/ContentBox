@@ -1,18 +1,20 @@
 ﻿<cfoutput>
 <!--- Page Form  --->
 #html.startForm(
-    action=prc.xehPageSave,
-    name="pageForm",
-    novalidate="novalidate",
-    class="form-vertical"
+    action      = prc.xehPageSave,
+    name        = "pageForm",
+    novalidate  = "novalidate",
+    class       = "form-vertical"
 )#
+
     <div class="row">
         <div class="col-md-12">
             <h1 class="h1"><i class="fa fa-edit"></i> Page Editor</h1>
         </div>
     </div>
+
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
             #getModel( "messagebox@cbMessagebox" ).renderit()#
 
@@ -133,7 +135,7 @@
             <!--- Event --->
             #announceInterception( "cbadmin_pageEditorFooter" )#
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" id="main-content-sidebar">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-info-circle"></i> Page Details</h3>
@@ -630,5 +632,6 @@
             #announceInterception( "cbadmin_pageEditorSidebarFooter" )# 
         </div>
     </div>
+
 #html.endForm()#
 </cfoutput>

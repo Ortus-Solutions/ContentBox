@@ -262,7 +262,7 @@ function quickPublish(isDraft){
 		toggleDraft();
 	}
 	// Verify changelogs and open sidebar if closed:
-	if( $changelogMandatory && !isSidebarOpen() ){
+	if( $changelogMandatory && !isMainSidebarOpen() ){
 		toggleSidebar();
 	}
 	// submit form

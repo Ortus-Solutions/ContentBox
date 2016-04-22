@@ -56,6 +56,7 @@
         
         <!---  Blocking JS - Libraries required for in-page JS --->
         <script type="application/javascript" src="#assetroot#/includes/js/contentbox-pre.min.js"></script>
+         <script type="application/javascript" src="#assetroot#/includes/js/contentbox-app.min.js"></script>
 	   
 	</head>
 	<body class="animated fadeIn">

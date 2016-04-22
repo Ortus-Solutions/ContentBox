@@ -15,9 +15,8 @@ module.exports = function(grunt) {
 		[ 
 			'clean:js', // clean targets
 			'clean:plugins', // clean plugins
-			'concat:prejs', // build concatenated libs
-			'concat:postjs', // build concatenated libs
-			'uglify:libraries', // uglify libraries
+			'concat', // concat everything
+			'uglify', // uglify everything
 			'copy:js', // Copy standalone libs
 			'copy:plugins', // Copy plugins
 		]
@@ -51,9 +50,14 @@ module.exports = function(grunt) {
 				tasks : [ 'css' ]
 			},
 
-            js : {
-            	files : [ 'devincludes/js/**/*.js', 'devincludes/vendor/js/*.js' ],
+            libsjs : {
+            	files : [ 'devincludes/vendor/js/*.js' ],
             	tasks : [ 'js' ]
+            },
+
+            appjs : {
+            	files : [ 'devincludes/js/*.js' ],
+            	tasks : [ 'concat:appjs', 'uglify:appjs' ]
             }
 		},
 
@@ -105,6 +109,15 @@ module.exports = function(grunt) {
 		 * Concat JS
 		 */
 		concat : {
+
+			// ContentBox App Libraries
+			appjs : {
+				src 	: [
+					"devincludes/js/**/*.js"
+				],
+				dest 	: '../modules/contentbox-admin/includes/js/contentbox-app.js'
+			},
+			
 			// Pre Lib: Libraries which are brough in the <head> section
 			prejs : {
 				src : [
@@ -118,8 +131,6 @@ module.exports = function(grunt) {
 						// Vendor Libraries
 						,"devincludes/vendor/js/jquery.validate.bootstrap.js"
 						,"devincludes/vendor/js/modernizr.min.js"
-						// ContentBox Global Libraries
-						,"devincludes/js/**/*.js"
 	            ],
 	            dest : '../modules/contentbox-admin/includes/js/contentbox-pre.js'
 	        },
@@ -155,17 +166,26 @@ module.exports = function(grunt) {
 		 * Uglify compress JS
 		 */
 		uglify : {
+			// Options
+			options : {
+				preserveComments 	: false,
+				mangle 				: false,
+				banner 				: '/*! ContentBox Modular CMS. Generated: <%= grunt.template.today( "dd-mm-yyyy" ) %> */\n\n'
+			},
+
+			// ContentBox App
+			appjs : {
+				files : {
+					'../modules/contentbox-admin/includes/js/contentbox-app.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-app.js" ]
+				}
+			},
+
+			// JS Libraries
 			libraries :{
-				options :{
-					preserveComments 	: false,
-					mangle 				: false,
-					banner 				: '/*! ContentBox Modular CMS. Generated: <%= grunt.template.today( "dd-mm-yyyy" ) %> */\n\n'
-				},
 				files : {
 					'../modules/contentbox-admin/includes/js/contentbox-pre.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-pre.js" ],
 					'../modules/contentbox-admin/includes/js/contentbox-post.min.js' 	: [ "../modules/contentbox-admin/includes/js/contentbox-post.js" ]
 				}
-
 			},
 		},
 

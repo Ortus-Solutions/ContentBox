@@ -19,9 +19,6 @@ component extends="baseHandler"{
 	* Pre handler
 	*/
 	function preHandler( event, rc, prc, action, eventArguments){
-		// Tab control
-		prc.tabUsers = true;
-		
 		// Specific admin validation actions
 		if( listFindNoCase( "save,editor,savePreferences,passwordChange,saveRawPreferences", arguments.action ) ){
 			// Get incoming author to verify credentials
@@ -166,7 +163,9 @@ component extends="baseHandler"{
 		editor( argumentCollection=arguments );
 	}
 	
-	// change user editor preferences
+	/**
+	* change user editor preferences
+	*/
 	function changeEditor( event, rc, prc ){
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		try{
@@ -185,28 +184,30 @@ component extends="baseHandler"{
 		event.renderData(type="json", data=results);
 	}
 	
-	// change user sidebar preferences
+	/**
+	* Change user sidebar preferences
+	*/
 	function changeSidebarState( event, rc, prc ){
 		event.paramvalue( "sidebarState", false );
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		try{
 			// store the new author preference	
-			prc.oAuthor.setPreference(name="sidebarstate", value=rc.sidebarstate);
+			prc.oAuthor.setPreference( name="sidebarstate", value=rc.sidebarstate );
 			// save Author preference
 			authorService.saveAuthor( prc.oAuthor );
 			results[ "MESSAGES" ] = "Sidebar state saved";
-		}
-		catch(Any e){
-			log.error( "Error saving preferences.", e);
-			results[ "ERROR" ] = true;
-			results[ "MESSAGES" ] = e.detail & e.message;
+		} catch(Any e) {
+			log.error( "Error saving preferences.", e );
+			results[ "ERROR" ] 		= true;
+			results[ "MESSAGES" ] 	= e.detail & e.message;
 		}
 		// return preference saved
-		event.renderData(type="json", data=results);
+		event.renderData( type="json", data=results );
 	}
 	
-
-	// save user
+	/**
+	* Save user preferences
+	*/
 	function savePreferences( event, rc, prc ){
 		var oAuthor 		= authorService.get(id=rc.authorID);
 		var allPreferences 	= {};
@@ -231,7 +232,9 @@ component extends="baseHandler"{
 		setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 	}
 	
-	// save raw preferences
+	/**
+	* Save raw preferences
+	*/
 	function saveRawPreferences( event, rc, prc ){
 		var oAuthor = authorService.get(id=rc.authorID);
 		// Validate raw preferences
@@ -258,7 +261,9 @@ component extends="baseHandler"{
 		}	
 	}
 	
-	// save user
+	/**
+	* Save user
+	*/
 	function save( event, rc, prc ){
 		// Get new or persisted user
 		var oAuthor = authorService.get(id=rc.authorID);
@@ -293,7 +298,9 @@ component extends="baseHandler"{
 
 	}
 
-	// change passord
+	/**
+	* Change user password
+	*/
 	function passwordChange( event, rc, prc ){
 		var oAuthor = authorService.get(id=rc.authorID);
 
@@ -316,7 +323,9 @@ component extends="baseHandler"{
 		setNextEvent(event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
 	}
 
-	// remove user
+	/**
+	* Remove a user
+	*/
 	function remove( event, rc, prc ){
 		var oAuthor	= authorService.get( rc.authorID );
 
@@ -337,7 +346,9 @@ component extends="baseHandler"{
 		setNextEvent(prc.xehAuthors);
 	}
 
-	// permissions
+	/**
+	* Display permissions tab
+	*/
 	function permissions( event, rc, prc ){
 		// exit Handlers
 		prc.xehPermissionRemove = "#prc.cbAdminEntryPoint#.authors.removePermission";
@@ -351,7 +362,9 @@ component extends="baseHandler"{
 		event.setView(view="authors/permissions",layout="ajax" );
 	}
 
-	// Save permission to the author and gracefully end.
+	/**
+	* Save permission to the author and gracefully end.
+	*/
 	function savePermission( event, rc, prc ){
 		var oAuthor 	= authorService.get( rc.authorID );
 		var oPermission = permissionService.get( rc.permissionID );
@@ -366,7 +379,9 @@ component extends="baseHandler"{
 		event.renderData(data="true",type="json" );
 	}
 
-	// remove permission to a author and gracefully end.
+	/**
+	* Remove permission to a author and gracefully end.
+	*/
 	function removePermission( event, rc, prc ){
 		var oAuthor 	= authorService.get( rc.authorID );
 		var oPermission = permissionService.get( rc.permissionID );
@@ -379,7 +394,9 @@ component extends="baseHandler"{
 		event.renderData(data="true",type="json" );
 	}
 	
-	// Export Entry
+	/**
+	* Export a user
+	*/
 	function export( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get user
@@ -404,7 +421,9 @@ component extends="baseHandler"{
 		}
 	}
 	
-	// Export All Entries
+	/**
+	* Export all users
+	*/
 	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
@@ -423,7 +442,9 @@ component extends="baseHandler"{
 		}
 	}
 	
-	// import entries
+	/**
+	* Import all users
+	*/
 	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );

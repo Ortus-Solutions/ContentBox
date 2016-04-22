@@ -62,7 +62,7 @@
 		<!---Sidebar --->
 		#html.select( 
 			name="preference.sidebarState",
-			label="Show Sidebar",
+			label="Show Content Sidebar",
 			options="yes,no",
 			class="form-control input-sm",
 			selectedValue=prc.author.getPreference( "sidebarState", "no" ),

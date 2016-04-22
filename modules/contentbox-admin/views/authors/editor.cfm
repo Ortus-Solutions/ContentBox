@@ -10,7 +10,7 @@
 </div>
 
 <div class="row">
-    <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>">
+    <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>" id="main-content-slot">
     	#getModel( "messagebox@cbMessagebox" ).renderIt()#
     	<div class="panel panel-default">
             <div class="panel-heading">
@@ -237,7 +237,7 @@
     </div>
 
     <cfif prc.author.isLoaded()>
-    <div class="col-md-4">
+    <div class="col-md-4" id="main-content-sidebar">
     	<div class="panel panel-primary">
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-eye"></i> Details</h3>

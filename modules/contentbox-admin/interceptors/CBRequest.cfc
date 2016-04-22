@@ -20,7 +20,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess( event, interceptData ) eventPattern="^(contentbox-admin|contentbox-security)"{
+	function preProcess( event, interceptData ) eventPattern="^contentbox\-(admin|security|filebrowser|ckeditor)"{
 		var prc = event.getCollection( private=true );
 		var rc	= event.getCollection();
 
