@@ -5,7 +5,7 @@
 * ---
 * Manages page displays
 */
-component extends="content" singleton{
+component extends="content"{
 
 	// DI
 	property name="pageService"			inject="id:pageService@cb";
@@ -17,7 +17,9 @@ component extends="content" singleton{
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
 	
-	// pre Handler
+	/**
+	* Pre Handler
+	*/
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 	}
@@ -61,7 +63,7 @@ component extends="content" singleton{
 	}
 	
 	/**
-	* Around entry page advice that provides caching and multi-output format
+	* Around page advice that provides caching and multi-output format
 	*/
 	function aroundIndex( event, rc, prc , eventArguments ){
 		// setup wrap arguments

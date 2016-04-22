@@ -115,6 +115,46 @@ component 	persistent="true"
 	}
 
 	/**
+	* Get a flat representation of this entry but for UI response format which
+	* restricts the data being generated.
+	* @slugCache Cache of slugs to prevent infinite recursions
+	* @showComments Show comments in memento or not
+	* @showCustomFields Show comments in memento or not
+	* @showParent Show parent in memento or not
+	* @showChildren Show children in memento or not
+	* @showCategories Show categories in memento or not
+	* @showRelatedContent Show related Content in memento or not
+	*/
+	struct function getResponseMemento(
+		required array slugCache=[], 
+		boolean showAuthor=true,
+		boolean showComments=true,
+		boolean showCustomFields=true,
+		boolean showParent=true,
+		boolean showChildren=true,
+		boolean showCategories=true,
+		boolean showRelatedContent=true
+	){
+		var pList 	= [
+			"showInMenu"
+		];
+		var result 	= super.getResponseMemento( argumentCollection=arguments );
+		
+		result[ "excerpt" ] = renderExcerpt();
+
+		// Local Memento Properties
+		for( var thisProp in pList ){
+			if( structKeyExists( variables, thisProp ) ){
+				result[ thisProp ] = variables[ thisProp ];	
+			} else {
+				result[ thisProp ] = "";
+			}
+		}
+		
+		return result;
+	};
+
+	/**
 	* Get a flat representation of this entry
 	* @slugCache Cache of slugs to prevent infinite recursions
 	* @counter
@@ -141,7 +181,14 @@ component 	persistent="true"
 		boolean showRelatedContent=true,
 		boolean showStats=true
 	){
-		var pList 	= listToArray( "layout,mobileLayout,order,showInMenu,excerpt,SSLOnly" );
+		var pList 	= [
+			"layout",
+			"mobileLayout",
+			"order",
+			"showInMenu",
+			"excerpt",
+			"SSLOnly"
+		];
 		var result 	= super.getMemento( argumentCollection=arguments );
 		
 		// Local Memento Properties

@@ -23,7 +23,9 @@ component{
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
 	
-	// pre Handler
+	/**
+	* Pre Handler
+	*/
 	function preHandler( event, rc, prc ,action,eventArguments){
 		// Maintenance Mode?
 		if( prc.cbSettings.cb_site_maintenance ){
@@ -32,13 +34,21 @@ component{
 		}
 
 		// Get all categories
-		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
+		prc.categories = categoryService.list ( sortOrder="category", asQuery=false );
 
 		// Home page determination either blog or a page
 		// Blog routes are in the blog namespace
-		if( event.getCurrentRoute() eq "/" AND prc.cbSettings.cb_site_homepage neq "cbBlog" AND event.getCurrentRoutedNamespace() neq "blog" ){
+		if( event.getCurrentRoute() eq "/" AND 
+			prc.cbSettings.cb_site_homepage neq "cbBlog" AND 
+			event.getCurrentRoutedNamespace() neq "blog" 
+		){
 			event.overrideEvent( "contentbox-ui:page.index" );
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
+		}
+
+		// If UI export is disabled, default to contentbox
+		if( !prc.cbSettings.cb_content_uiexport ){
+			rc.format = "html";
 		}
 	}
 	
@@ -47,13 +57,15 @@ component{
 	*/
 	function previewSite( event, rc, prc ){
 		// Param incoming data
-		event.paramValue( "l", "" );
-		event.paramValue( "h", "" );
+		event.paramValue( "l", "" )
+			.paramValue( "h", "" );
 		
 		var author = getModel( "securityService@cb" ).getAuthorSession();
 		// valid Author?
-		if( author.isLoaded() AND author.isLoggedIn() AND compareNoCase( hash(author.getAuthorID()), rc.h) EQ 0){
-			
+		if( author.isLoaded() AND 
+			author.isLoggedIn() AND 
+			compareNoCase( hash( author.getAuthorID() ), rc.h ) EQ 0
+		){
 			// Place theme on scope
 			prc.cbTheme = rc.l;
 			// Place theme root location
@@ -64,23 +76,20 @@ component{
 				event.overrideEvent( "contentbox-ui:page.index" );
 				prc.pageOverride = prc.cbSettings.cb_site_homepage;
 				// run it
-				var eArgs = {noCache=true};
-				runEvent(event="contentbox-ui:page.index", eventArguments=eArgs);
+				var eArgs = { noCache=true };
+				runEvent( event="contentbox-ui:page.index", eventArguments=eArgs );
 				// Override the layout
-				event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox" );
-			}
-			else{
+				event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" );
+			} else {
 				// Override layout and event so we can display it
 				event.setLayout( "#rc.l#/layouts/blog" )
 					.overrideEvent( "contentbox-ui:blog.index" );
 				// run it
 				runEvent( "contentbox-ui:blog.index" );
 			}
-			
-		}
-		else{
+		} else {
 			// 	Invalid Credentials
-			setNextEvent(URL=CBHelper.linkBlog());
+			setNextEvent( URL=CBHelper.linkBlog() );
 		}
 	}
 	
@@ -90,40 +99,46 @@ component{
 	function maintenance( event, rc, prc ){
 		// If no maintenance view exists, just output data
 		if( !themeService.themeMaintenanceViewExists() ){
-			event.renderData(data=prc.cbSettings.cb_site_maintenance_message);
-		}
-		else{
+			event.renderData( data=prc.cbSettings.cb_site_maintenance_message );
+		} else {
 			// output maintenance view
-			event.setLayout(name="#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#", module="contentbox" )
-				.setView(view="#prc.cbTheme#/views/maintenance", module="contentbox" );
+			event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#", module="contentbox" )
+				.setView( view="#prc.cbTheme#/views/maintenance", module="contentbox" );
 		}
-		
 	}
 
 	/*
 	* Error Control
 	*/
-	function onError(event,faultAction,exception,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
-
+	function onError( event, rc, prc, faultAction, exception, eventArguments ){
 		// store exceptions
 		prc.faultAction = arguments.faultAction;
 		prc.exception   = arguments.exception;
 
 		// announce event
-		announceInterception( "cbui_onError",{faultAction=arguments.faultAction,exception=arguments.exception,eventArguments=arguments.eventArguments} );
+		announceInterception( 
+			"cbui_onError",
+			{
+				faultAction 	= arguments.faultAction,
+				exception 		= arguments.exception,
+				eventArguments 	= arguments.eventArguments
+			} 
+		);
 
 		// Set view to render
-		event.setLayout(name="#prc.cbTheme#/layouts/pages", module="contentbox" )
-			.setView(view="#prc.cbTheme#/views/error", module="contentbox" );
+		event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
+			.setView( view="#prc.cbTheme#/views/error", module="contentbox" );
 	}
 
 	/************************************** PRIVATE *********************************************/
 
 	/**
 	* Content display around advice that provides caching for content display and multi-format capabilities
-	* @action.hint The action to wrap
+	* @event Request context
+	* @rc Request collection
+	* @prc Private request collection
+	* @eventArguments Event arguments
+	* @action The action to wrap
 	* @contentCaching Wether content caching is enabled or not
 	*/
 	private function wrapContentAdvice( 
@@ -134,19 +149,20 @@ component{
 		required action,
 		required boolean contentCaching
 	){
-	
 		// param incoming multi UI formats
-		event.paramValue( "format", "contentbox" );
+		event.paramValue( "format", "html" );
 		// If UI export is disabled, default to contentbox
 		if( !prc.cbSettings.cb_content_uiexport ){
-			rc.format = "contentbox";
+			rc.format = "html";
 		}
 
 		// Caching Enabled? Then test if data is in cache.
-		var cacheEnabled = ( arguments.contentCaching AND 
-							 !structKeyExists( eventArguments, "noCache" ) AND 
-							 !event.valueExists( "cbCache" ) AND
-							 !flash.exists( "commentErrors" ) );
+		var cacheEnabled = ( 
+			arguments.contentCaching AND 
+			!structKeyExists( eventArguments, "noCache" ) AND 
+			!event.valueExists( "cbCache" ) AND
+			!flash.exists( "commentErrors" ) 
+		);
 		if( cacheEnabled ){
 			// Get appropriate cache provider from settings
 			var cache 		= cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
@@ -155,10 +171,10 @@ component{
 			if( structKeyExists( prc, "pageOverride" ) and len( prc.pageOverride ) ){
 				cacheKey = "cb-content-wrapper-#cgi.http_host#-#prc.pageOverride#/";
 			} else {
-				cacheKey = "cb-content-wrapper-#cgi.http_host#-#left( event.getCurrentRoutedURL(), 255 )#";
+				cacheKey = "cb-content-wrapper-#cgi.http_host#-#left( event.getCurrentRoutedURL(), 500 )#";
 			}
 			
-			// Incorporate internal hash + rc distinct hash.
+			// Incorporate internal hash + rc distinct hash + formats
 			cacheKey &= hash( ".#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
 			
 			// get content data from cache
@@ -182,15 +198,29 @@ component{
 		}
 		
 		// Prepare data packet for rendering and caching and more
-		var data = { contentID = "", contentType="text/html", isBinary=false };
+		var data = { 
+			contentID = "", 
+			contentType="text/html", 
+			isBinary=false 
+		};
+		// Prepare args for action execution
+		var args = {
+			event 	= arguments.event,
+			rc 		= arguments.rc,
+			prc 	= arguments.prc
+		}
+		structAppend( args, arguments.eventArguments );
 		// execute the wrapped action
-		data.content = arguments.action( arguments.event, arguments.rc, arguments.prc );
+		data.content = arguments.action( argumentCollection=args );
 		
 		// Check for missing page? If so, just return, no need to do multiple formats or caching for a missing page
 		if( structKeyExists( prc, "missingPage" ) ){ return; }
 		
+		// Get the content object required: page or entry
+		var oContent = ( structKeyExists( prc, "page" ) ? prc.page : prc.entry );
+
 		// generate content only if content is not set, else means handler generated content.
-		if ( isNull( data.content ) ){
+		if( isNull( data.content ) ){
 			data.content = renderLayout( 
 				layout 		= "#prc.cbTheme#/layouts/#themeService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
 				module 		= "contentbox",
@@ -208,25 +238,49 @@ component{
 			}
 			case "doc" : {
 				data.contentType	= "application/msword";
+				data.isBinary 		= false;
 				break;
+			}
+			case "json" : {
+				data.content 		= dataMarshaller.marshallData( data=oContent.getResponseMemento(), type="json" );
+				data.contentType	= "application/json";
+				data.isBinary 		= false;
+				break;
+			}
+			case "xml" : {
+				data.content 		= dataMarshaller.marshallData( 
+					data 		= oContent.getResponseMemento(), 
+					type 		= "xml", 
+					xmlRootName = lcase( oContent.getContentType() ) 
+				);
+				data.contentType	= "text/xml";
+				data.isBinary 		= false;
+				break;
+			}
+			default : {
+				data.contentType 	= "text/html";
+				data.isBinary 		= false;
 			}
 		}
 		
 		// Tell renderdata to render it
-		event.renderData( data=data.content, contentType=data.contentType, isBinary=data.isBinary );
-		
-		// Get the content object
-		var oContent = ( structKeyExists( prc, "page" ) ? prc.page : prc.entry ); 
+		event.renderData( 
+			data 		= data.content, 
+			contentType = data.contentType, 
+			isBinary 	= data.isBinary
+		);
 		
 		// verify if caching is possible by testing the content parameters
 		if( cacheEnabled AND oContent.isLoaded() AND oContent.getCacheLayout() AND oContent.getIsPublished() ){
-			// store page ID as we have it by now
+			// store content ID as we have it by now
 			data.contentID = oContent.getContentID();
 			// Cache data
-			cache.set(cachekey,
-					  data,
-					  (oContent.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : oContent.getCacheTimeout()),
-					  (oContent.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : oContent.getCacheLastAccessTimeout()) );
+			cache.set(
+				cachekey,
+				data,
+				( oContent.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : oContent.getCacheTimeout() ),
+				( oContent.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : oContent.getCacheLastAccessTimeout())  
+			);
 		}
 	}
 
