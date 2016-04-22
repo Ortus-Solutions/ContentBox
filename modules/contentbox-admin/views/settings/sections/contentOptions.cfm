@@ -60,21 +60,21 @@
         <!--- UI Exports --->
         <div class="form-group">
             #html.label(
-                class="control-label",
-                field="cb_content_uiexport",
-                content="Allow UI content export display:"
+                class   = "control-label",
+                field   = "cb_content_uiexport",
+                content = "Allow UI content export formats:"
             )#
             <div class="controls">
-                <small>Enable/Disabled the ability to export pages/blog/etc from the UI via format extensions like pdf,doc,print.</small><br/>
+                <small>Enable/Disabled the ability to export pages/blog/etc from the UI module via format extensions like pdf,doc,print,json, and xml.</small><br/>
                 #html.radioButton(
-                    name="cb_content_uiexport",
-                    checked=prc.cbSettings.cb_content_uiexport,
-                    value=true
+                    name    = "cb_content_uiexport",
+                    checked = prc.cbSettings.cb_content_uiexport,
+                    value   = true
                 )# Yes
                 #html.radioButton(
-                    name="cb_content_uiexport",
-                    checked=not prc.cbSettings.cb_content_uiexport,
-                    value=false
+                    name    = "cb_content_uiexport",
+                    checked = not prc.cbSettings.cb_content_uiexport,
+                    value   = false
                 )# No
             </div>
         </div>

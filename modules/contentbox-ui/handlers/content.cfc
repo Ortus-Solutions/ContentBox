@@ -45,6 +45,11 @@ component{
 			event.overrideEvent( "contentbox-ui:page.index" );
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
 		}
+
+		// If UI export is disabled, default to contentbox
+		if( !prc.cbSettings.cb_content_uiexport ){
+			rc.format = "html";
+		}
 	}
 	
 	/**
@@ -145,10 +150,10 @@ component{
 		required boolean contentCaching
 	){
 		// param incoming multi UI formats
-		event.paramValue( "format", "contentbox" );
+		event.paramValue( "format", "html" );
 		// If UI export is disabled, default to contentbox
 		if( !prc.cbSettings.cb_content_uiexport ){
-			rc.format = "contentbox";
+			rc.format = "html";
 		}
 
 		// Caching Enabled? Then test if data is in cache.
