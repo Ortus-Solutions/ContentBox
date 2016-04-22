@@ -20,6 +20,7 @@ component cache=false{
 		// setup asset root from administrator as that is the holder of 
 		// all things assets :)
 		prc.assetRoot 		= getContextRoot() & getModuleConfig( "contentbox-admin" ).mapping;
+		prc.cbroot 			= prc.assetroot;
 		prc.adminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 		prc.uiEntryPoint 	= getModuleConfig( "contentbox-ui" ).entryPoint;
 		prc.langs 			= getModuleSettings( "contentbox" ).languages;

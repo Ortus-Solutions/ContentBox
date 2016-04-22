@@ -113,12 +113,12 @@ component accessors="true"{
 
 		// determine engine and setup the appropriate file for the rewrite engine
 		switch( arguments.setup.getRewrite_Engine() ){
-			case "mod_rewrite" :{
+			case "mod_rewrite" : {
 				// do nothing, .htaccess already on root
 				break;
 			}
-			case "contentbox_express" :{
-				// do nothing, tuckey already setup at the servlet level
+			case "contentbox_express" : case "commandbox" {
+				// do nothing, tuckey already setup at the servlet level on both commandbox and express.
 				break;
 			}
 			case "iis7" : {

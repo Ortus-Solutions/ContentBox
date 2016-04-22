@@ -1,10 +1,10 @@
 <cfoutput>
 <script language="javascript">
-$( document ).ready(function() {
+$( document ).ready( function(){
     var $installerForm = $( "##installerForm" )
 	// form validators
 	$installerForm.validate( {
-        showErrors: function( errorMap, errorList ) {
+        showErrors : function( errorMap, errorList ){
             var errors = this.numberOfInvalids();
             if ( errors ) {
                 var msg = '<p><strong>#cb.r( "validation.errors@installer" )#</strong></p><ul>';
@@ -19,8 +19,8 @@ $( document ).ready(function() {
     } );
 	
 	// password validator
-	$.validator.addMethod( 'passwordmatch', function( value, element ) {
-        return ( value==$( "[name=password]" ).val() ) ? true : false;
+	$.validator.addMethod( 'passwordmatch', function( value, element ){
+        return ( value == $( "[name=password]" ).val() ) ? true : false;
     }, '#cb.r( "validation.passwordmatch@installer" )#' );
 } );
 
