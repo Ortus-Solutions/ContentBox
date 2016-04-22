@@ -669,7 +669,7 @@ component accessors="true" singleton threadSafe{
 
 	){
 		arguments.event = adminRoot() & ".module.#arguments.module#.#arguments.event#";
-		return super.setNextEvent( argumentCollection=arguments );
+		return controller.setNextEvent( argumentCollection=arguments );
 	}
 
 	/**
