@@ -59,16 +59,28 @@
 			groupWrapper="div class=form-group" 
 		)#
 		
-		<!---Sidebar --->
+		<!--- Nav Bar Collapse --->
 		#html.select( 
-			name="preference.sidebarState",
-			label="Show Content Sidebar",
-			options="yes,no",
-			class="form-control input-sm",
-			selectedValue=prc.author.getPreference( "sidebarState", "no" ),
-			wrapper="div class=controls",
-			labelClass="control-label",
-			groupWrapper="div class=form-group" 
+			name  			= "preference.sidemenuCollapse",
+			label 			= "Collapsed Left Navbar",
+			options 		= "yes,no",
+			class 			= "form-control input-sm",
+			selectedValue 	= prc.author.getPreference( "sidemenuCollapse", "no" ),
+			wrapper 		= "div class=controls",
+			labelClass 		= "control-label",
+			groupWrapper 	= "div class=form-group" 
+		)#
+
+		<!--- Right Sidebar --->
+		#html.select( 
+			name  			= "preference.sidebarState",
+			label 			= "Show Content Sidebar",
+			options 		= "yes,no",
+			class 			= "form-control input-sm",
+			selectedValue 	= prc.author.getPreference( "sidebarState", "yes" ),
+			wrapper 		= "div class=controls",
+			labelClass		= "control-label",
+			groupWrapper 	= "div class=form-group" 
 		)#
 		
 		<!--- Admin Event --->

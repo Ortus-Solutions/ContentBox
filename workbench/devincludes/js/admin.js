@@ -176,16 +176,20 @@ function activateNavbarState(){
     var container = $( "#container" );
     // Bind listener to left toggle action
     $( '#toggle-left' ).bind( 'click', function(e) {
-        console( 'toggle clicked' );
-        // Setup state according to width
-        var state = container.hasClass( "sidebar-opened" );
-        if( $( window ).width() > 768 ){
-            state = container.hasClass( "sidebar-mini" );
-        }
-        // Store cookie
-        $.cookie( "sidemenu-collapse", state );
 
-        console( 'toggle cookie saved' );
+        // Verify window size, do not store if in mobile mode
+        if( $( window ).width() > 768 ){
+            // Are we opened or closed?
+            sidemenuCollapse = ( container.hasClass( "sidebar-mini" ) ? "no" : "yes" );
+
+            // Call change user editor preference
+            $.ajax( {
+                url     : $( "body" ).attr( "data-preferenceURL" ),
+                data    : { value : sidemenuCollapse, preference : "sidemenuCollapse" },
+                async   : true
+            } );
+        }
+
     } );
 }
 /**
@@ -222,8 +226,8 @@ function toggleSidebar(){
 
     // Call change user editor preference
     $.ajax( {
-        url     : $( "#main-content-sidebar-trigger" ).attr( "data-stateurl" ),
-        data    : { sidebarState : sidebarState },
+        url     : $( "body" ).attr( "data-preferenceURL" ),
+        data    : { value : sidebarState, preference : "sidebarstate" },
         async   : true
     } );
 }

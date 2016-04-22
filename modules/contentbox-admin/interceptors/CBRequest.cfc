@@ -51,7 +51,8 @@ component extends="coldbox.system.Interceptor"{
 		prc.adminMenuService = adminMenuService;
 		// Sidemenu collapsed
 		prc.sideMenuClass = "";
-		if( structKeyExists( cookie, "sidemenu-collapse" ) and cookie[ "sidemenu-collapse" ] == "true" ){
+		// Is sidemenu collapsed for user?
+		if( prc.oAuthor.getPreference( "sidemenuCollapse", false ) == "true" ){
 			prc.sideMenuClass = "sidebar-mini";
 		}
 		
@@ -99,7 +100,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehAuthorEditor		= "#prc.cbAdminEntryPoint#.authors.editor";
 		prc.xehPermissions		= "#prc.cbAdminEntryPoint#.permissions";
 		prc.xehRoles			= "#prc.cbAdminEntryPoint#.roles";
-		prc.xehAuthorSideBar 	= "#prc.cbAdminEntryPoint#.authors.changeSidebarState";
+		prc.xehSavePreference 	= "#prc.cbAdminEntryPoint#.authors.saveSinglePreference";
 
 		// Tools
 		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";

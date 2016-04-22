@@ -183,24 +183,27 @@ component extends="baseHandler"{
 		// return preference saved
 		event.renderData(type="json", data=results);
 	}
-	
+
 	/**
-	* Change user sidebar preferences
+	* Save user preference async
 	*/
-	function changeSidebarState( event, rc, prc ){
-		event.paramvalue( "sidebarState", false );
+	function saveSinglePreference( event, rc, prc ){
+		event.paramvalue( "preference", "" )
+			.paramValue( "value", "" );
 		var results = { "ERROR" = false, "MESSAGES" = "" };
-		try{
+
+		// Check preference value
+		if( len( rc.preference ) ){
 			// store the new author preference	
-			prc.oAuthor.setPreference( name="sidebarstate", value=rc.sidebarstate );
+			prc.oAuthor.setPreference( name=rc.preference, value=rc.value );
 			// save Author preference
 			authorService.saveAuthor( prc.oAuthor );
-			results[ "MESSAGES" ] = "Sidebar state saved";
-		} catch(Any e) {
-			log.error( "Error saving preferences.", e );
+			results[ "MESSAGES" ] = "Preference saved";
+		} else {
 			results[ "ERROR" ] 		= true;
-			results[ "MESSAGES" ] 	= e.detail & e.message;
+			results[ "MESSAGES" ] 	= "No preference sent!"
 		}
+
 		// return preference saved
 		event.renderData( type="json", data=results );
 	}

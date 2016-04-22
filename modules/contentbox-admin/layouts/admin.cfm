@@ -16,6 +16,7 @@
 	<!--- ************************************************************************************************--->
 	<body 	class="off-canvas" 
 			data-showsidebar="#lcase( yesNoFormat( prc.oAuthor.getPreference( "sidebarState", true ) ) )#"
+			data-preferenceURL="#event.buildLink( prc.xehSavePreference )#"
 	>
 
 		<!--- cbadmin Event --->
@@ -165,7 +166,6 @@
 					<!--- Side Bar Trigger --->
 					<div 	class="pull-right" 
 							id="main-content-sidebar-trigger"
-							data-stateurl="#event.buildLink( prc.xehAuthorSideBar )#"
 							style="display: none;"
 					>
 						<button type="button" 
