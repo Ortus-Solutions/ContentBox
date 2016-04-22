@@ -42,23 +42,20 @@
         <!---                           CSS                                           --->
         <!--- ********************************************************************* --->
 
-        <link rel="stylesheet" href="#assetroot#/includes/css/theme.css"/>
-        <link rel="stylesheet" href="#assetroot#/includes/css/contentbox.css"/>
+        <link rel="stylesheet" href="#assetroot#/includes/css/contentbox.min.css"/>
 
          <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-        <script src="#assetroot#/includes/spacelab/js/html5shiv.min.js"></script>
-        <script src="#assetroot#/includes/spacelab/js/respond.min.js"></script>
+        <script src="#assetroot#/includes/js/html5shiv.min.js"></script>
+        <script src="#assetroot#/includes/js/respond.min.js"></script>
         <![endif]-->
         
        	<!--- ********************************************************************* --->
         <!---                           JAVASCRIPT                                  --->
         <!--- ********************************************************************* --->
-
         
         <!---  Blocking JS - Libraries required for in-page JS --->
-        <script type="application/javascript" src="#assetroot#/includes/js/preLib.js"></script>
-        <script type="application/javascript" src="#assetroot#/includes/js/contentbox/admin.js"></script>
+        <script type="application/javascript" src="#assetroot#/includes/js/contentbox-pre.min.js"></script>
 	   
 	</head>
 	<body class="animated fadeIn">
@@ -84,7 +81,7 @@
         <!--- ********************************************************************* --->
         <!---                           Post-Libs                                   --->
         <!--- ********************************************************************* --->
-        <script type="application/javascript" src="#assetroot#/includes/js/postLib.js"></script>
+        <script type="application/javascript" src="#assetroot#/includes/js/contentbox-post.min.js"></script>
     
         <!--- ********************************************************************* --->
         <!---        Fonts - Brought in last to prevent blocking issues             --->
