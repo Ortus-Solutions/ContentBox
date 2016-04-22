@@ -11,7 +11,7 @@ component{
 	//include "modules/contentbox-installer/includes/dsn_relocation.cfm";
 
 	// Application properties, modify as you see fit
-	this.name 				= "ContentBox-Shell-" & hash( getCurrentTemplatePath() );
+	this.name 				= "ContentBox" & hash( getCurrentTemplatePath() );
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan( 0, 1, 0, 0 );
 	this.setClientCookies 	= true;
@@ -84,7 +84,13 @@ component{
 		}
 		
 		// Local Logging
-		if( structKeyExists( application, "cbController") AND application.cbController.getSetting( "environment" ) == "development" ){
+		if( structKeyExists( application, "cbController") AND 
+			application.cbController.getSetting( "environment" ) == "development" 
+		){
+			if( application.cbBootstrap.isFWReinit() ){
+				if( structKeyExists( server, "lucee" ) ){ pagePoolClear(); }
+				ORMREload();
+			}
 			this.ormsettings.logSQL = true;
 		}
 
