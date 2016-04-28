@@ -5,68 +5,170 @@
 * ---
 * I am a ContentBox User/Author entity
 */
-component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="25" cachename="cbAuthor" cacheuse="read-write" {
+component 	persistent="true" 
+			entityname="cbAuthor" 
+			table="cb_author" 
+			batchsize="25" 
+			extends="contentbox.models.BaseEntity"
+			cachename="cbAuthor" 
+			cacheuse="read-write"{
 
-	// DI
+	/* *********************************************************************
+	**							DI									
+	********************************************************************* */
+
 	property name="authorService"		inject="authorService@cb" persistent="false";
 
-	// Properties
-	property name="authorID" 	fieldtype="id" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'authorID_seq' }";
-	property name="firstName"	length="100" notnull="true";
-	property name="lastName"	length="100" notnull="true";
-	property name="email"		length="255" notnull="true" index="idx_email";
-	property name="username"	length="100" notnull="true" index="idx_login" unique="true";
-	property name="password"	length="100" notnull="true" index="idx_login";
-	property name="isActive" 	ormtype="boolean" notnull="true" default="false" index="idx_login,idx_activeAuthor";
-	property name="lastLogin" 	ormtype="timestamp" notnull="false";
-	property name="createdDate" ormtype="timestamp" notnull="true" update="false";
-	property name="biography"   ormtype="text" 		notnull="false" length="8000" default="";
-	// Preferences are stored as JSON
-	property name="preferences" ormtype="text" 		notnull="false" length="8000" default="";
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
+
+	property 	name="authorID" 	
+				fieldtype="id" 
+				generator="native" 
+				setter="false" 
+				params="{ allocationSize = 1, sequence = 'authorID_seq' }";
+
+	property 	name="firstName"	
+				length="100" 
+				notnull="true";
+
+	property 	name="lastName"	
+				length="100" 
+				notnull="true";
+
+	property 	name="email"		
+				length="255" 
+				notnull="true" index="idx_email";
+
+	property 	name="username"	
+				length="100" 
+				notnull="true" 
+				index="idx_login" 
+				unique="true";
+
+	property 	name="password"	
+				length="100" 
+				notnull="true" 
+				index="idx_login";
+
+	property 	name="isActive" 	
+				ormtype="boolean" 
+				notnull="true" 
+				default="false" 
+				index="idx_login,idx_activeAuthor";
+
+	property 	name="lastLogin" 	
+				ormtype="timestamp" 
+				notnull="false";
+
+	property 	name="biography"   
+				ormtype="text" 		
+				notnull="false" 
+				length="8000"
+				default="";
+
+	property 	name="preferences" 
+				ormtype="text" 		
+				notnull="false" 
+				length="8000" 
+				default="";
 	
+	/* *********************************************************************
+	**							RELATIONSHIPS									
+	********************************************************************* */
+
 	// O2M -> Entries
-	property name="entries" singularName="entry" type="array" fieldtype="one-to-many" cfc="contentbox.models.content.Entry"
-			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="save-update" batchsize="10" orderby="publishedDate DESC";
+	property 	name="entries" 
+				singularName="entry" 
+				type="array"
+				fieldtype="one-to-many"
+				cfc="contentbox.models.content.Entry"
+			 	fkcolumn="FK_authorID" 
+			 	inverse="true" 
+			 	lazy="extra" 
+			 	cascade="save-update" 
+			 	batchsize="10" 
+			 	orderby="publishedDate DESC";
 
 	// O2M -> Pages
-	property name="pages" singularName="page" type="array" fieldtype="one-to-many" cfc="contentbox.models.content.Page"
-			 fkcolumn="FK_authorID" inverse="true" lazy="extra" cascade="save-update" batchsize="10" orderby="publishedDate DESC";
+	property 	name="pages" 
+				singularName="page" 
+				type="array" 
+				fieldtype="one-to-many" 
+				cfc="contentbox.models.content.Page"
+				fkcolumn="FK_authorID" 
+				inverse="true" 
+				lazy="extra" 
+				cascade="save-update" 
+				batchsize="10" 
+				orderby="publishedDate DESC";
 
 	// M20 -> Role
-	property name="role" notnull="true" fieldtype="many-to-one" cfc="contentbox.models.security.Role" fkcolumn="FK_roleID" lazy="true";
+	property 	name="role" 
+				notnull="true" 
+				fieldtype="many-to-one" 
+				cfc="contentbox.models.security.Role" 
+				fkcolumn="FK_roleID" 
+				lazy="true";
 
 	// M2M -> A-la-carte Author Permissions
-	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra"
-			 cfc="contentbox.models.security.Permission" cascade="all"
-			 fkcolumn="FK_authorID" linktable="cb_authorPermissions" inversejoincolumn="FK_permissionID" orderby="permission";
+	property 	name="permissions" 
+				singularName="permission" 
+				fieldtype="many-to-many" 
+				type="array" 
+				lazy="extra"
+			 	cfc="contentbox.models.security.Permission" 
+			 	cascade="all"
+			 	fkcolumn="FK_authorID" 
+			 	linktable="cb_authorPermissions" 
+			 	inversejoincolumn="FK_permissionID" 
+			 	orderby="permission";
+
+	/* *********************************************************************
+	**							CALCULATED FIELDS									
+	********************************************************************* */
 
 	// Calculated properties
-	property name="numberOfEntries" formula="select count(*) from cb_content as content where content.FK_authorID=authorID and content.contentType='entry'" ;
-	property name="numberOfPages" 	formula="select count(*) from cb_content as content where content.FK_authorID=authorID and content.contentType='page'" ;
+	property 	name="numberOfEntries" 
+				formula="select count(*) from cb_content as content 
+						where content.FK_authorID=authorID and content.contentType='entry'" ;
+
+	property 	name="numberOfPages" 	
+				formula="select count(*) from cb_content as content 
+						where content.FK_authorID=authorID and content.contentType='page'" ;
+
+	/* *********************************************************************
+	**							NON PERSISTED PROPERTIES									
+	********************************************************************* */
 
 	// Non-persisted properties
-	property name="loggedIn"		persistent="false" default="false" type="boolean";
-	property name="permissionList" 	persistent="false";
+	property 	name="loggedIn"		
+				persistent="false" 
+				default="false" 
+				type="boolean";
 	
+	property 	name="permissionList" 	
+				persistent="false";
+	
+	/* *********************************************************************
+	**							PK + CONSTRAINTS									
+	********************************************************************* */
+
+	this.pk = "authorID";
+
 	// Validation Constraints
 	this.constraints ={
-		"firstName" = {required=true, size="1..100"},
-		"lastName" 	= {required=true, size="1..100"},
-		"email" 	= {required=true, size="1..255", type="email"},
-		"username" 	= {required=true, size="1..100", unique="true"},
-		"password"	= {required=true, size="1..100"}
+		"firstName" = { required=true, size="1..100" },
+		"lastName" 	= { required=true, size="1..100" },
+		"email" 	= { required=true, size="1..255", type="email" },
+		"username" 	= { required=true, size="1..100", unique="true" },
+		"password"	= { required=true, size="1..100" }
 	};
 
-	/* ----------------------------------------- ORM EVENTS -----------------------------------------  */
-
-	/*
-	* In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
-	*/
-	public void function preInsert(){
-		setCreatedDate( now() );
-	}
-
-	/* ----------------------------------------- PUBLIC -----------------------------------------  */
+	/* *********************************************************************
+	**							PUBLIC FUNCTIONS									
+	********************************************************************* */
 
 	/**
 	* Constructor
@@ -78,6 +180,8 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 		// Setup empty preferences
 		setPreferences( {} );
 		
+		super.init();
+
 		return this;
 	}
 
@@ -159,28 +263,12 @@ component persistent="true" entityname="cbAuthor" table="cb_author" batchsize="2
 	}
 
 	/**
-	* Get formatted createdDate
-	*/
-	string function getDisplayCreatedDate(){
-		var createdDate = getCreatedDate();
-		if( isNull( createdDate ) ){ return ""; }
-		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm tt" );
-	}
-
-	/**
 	* Retrieve full name
 	*/
 	string function getName(){
 		return getFirstName() & " " & getLastName();
 	}
 
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return ( len( getAuthorID() ) ? true : false );
-	}
-	
 	/**
 	* Get a flat representation of this entry
 	*/

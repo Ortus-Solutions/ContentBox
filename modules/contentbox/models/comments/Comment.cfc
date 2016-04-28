@@ -5,20 +5,76 @@
 * ---
 * I am a Comment Entity
 */
-component persistent="true" entityname="cbComment" table="cb_comment" batchsize="25" cachename="cbComment" cacheuse="read-write" {
+component	persistent="true" 
+			entityname="cbComment" 
+			table="cb_comment" 
+			batchsize="25" 
+			extends="contentbox.models.BaseEntity"
+			cachename="cbComment" 
+			cacheuse="read-write"{
 
-	// PROPERTIES
-	property name="commentID" fieldtype="id" generator="native" setter="false" params="{ allocationSize = 1, sequence = 'commentID_seq' }";
-	property name="content" 		ormtype="text" 	notnull="true";
-	property name="author"			length="100" 	notnull="true";
-	property name="authorIP"		length="100" 	notnull="true";
-	property name="authorEmail"		length="255" 	notnull="true";
-	property name="authorURL"		length="255" 	notnull="false";
-	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_commentCreatedDate";
-	property name="isApproved" 		notnull="true"  ormtype="boolean" 	default="false" index="idx_contentComment,idx_approved";
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
+
+	property 	name="commentID" 
+				fieldtype="id" 
+				generator="native" 
+				setter="false" 
+				params="{ allocationSize = 1, sequence = 'commentID_seq' }";
+
+	property 	name="content" 		
+				ormtype="text" 	
+				notnull="true";
+
+	property 	name="author"			
+				length="100" 	
+				notnull="true";
+
+	property 	name="authorIP"		
+				length="100" 	
+				notnull="true";
+
+	property 	name="authorEmail"		
+				length="255" 	
+				notnull="true";
+
+	property 	name="authorURL"		
+				length="255" 	
+				notnull="false";
+
+	property 	name="isApproved" 		
+				notnull="true"  
+				ormtype="boolean" 	
+				default="false" 
+				index="idx_contentComment,idx_approved";
+
+	/* *********************************************************************
+	**							RELATIONSHIPS									
+	********************************************************************* */
 
 	// M20 -> Content loaded as a proxy
-	property name="relatedContent" notnull="true" cfc="contentbox.models.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_contentID" lazy="true" index="idx_contentComment";
+	property 	name="relatedContent" 
+				notnull="true" 
+				cfc="contentbox.models.content.BaseContent" 
+				fieldtype="many-to-one" 
+				fkcolumn="FK_contentID" 
+				lazy="true" 
+				index="idx_contentComment";
+
+	/* *********************************************************************
+	**							CONSTRAINTS + PK									
+	********************************************************************* */
+
+	this.pk = "commentID";
+
+	this.constraints = {
+		"content" 		= { required = true },
+		"author" 		= { required = true, size="1..100" },
+		"authorIP" 		= { required = true, size="1..100" },
+		"authorEmail" 	= { required = true, size="1..255", type="email" },	
+		"authorURL" 	= { required = true, size="1..255", type="URL" }
+	};
 
 	/************************************** CONSTRUCTOR *********************************************/
 
@@ -28,6 +84,8 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	function init(){
 		variables.isApproved 	= false;
 		variables.createdDate	= now();
+
+		super.init();
 
 		return this;
 	}
@@ -61,14 +119,6 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	}
 
 	/**
-	* Get formatted createdDate
-	*/
-	string function getDisplayCreatedDate(){
-		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm tt" );
-	}
-
-	/**
 	* Get parent slug from either the page it belongs or the entry it belongs to.
 	*/
 	function getParentSlug(){
@@ -82,13 +132,6 @@ component persistent="true" entityname="cbComment" table="cb_comment" batchsize=
 	function getParentTitle(){
 		if( hasRelatedContent() ){ return getRelatedContent().getTitle(); }
 		return "";
-	}
-
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return len( getCommentID() );
 	}
 
 }

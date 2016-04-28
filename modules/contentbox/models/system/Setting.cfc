@@ -7,7 +7,12 @@
 * settings cannot be deleted from the geek settings UI to prevent caos.  Admins would have
 * to remove core settings via the DB only as a precautionary measure.
 */
-component persistent="true" entityname="cbSetting" table="cb_setting" cachename="cbSetting" cacheuse="read-write"{
+component  	persistent="true" 
+			entityname="cbSetting" 
+			table="cb_setting" 
+			extends="contentbox.models.BaseEntity"
+			cachename="cbSetting" 
+			cacheuse="read-write"{
 
 	/* *********************************************************************
 	**							PROPERTIES									
@@ -35,6 +40,12 @@ component persistent="true" entityname="cbSetting" table="cb_setting" cachename=
 				index="idx_core";
 
 	/* *********************************************************************
+	**							PK + CONSTRAINTS									
+	********************************************************************* */
+	
+	this.pk = "settingID";
+
+	/* *********************************************************************
 	**							PUBLIC METHODS									
 	********************************************************************* */
 
@@ -43,6 +54,8 @@ component persistent="true" entityname="cbSetting" table="cb_setting" cachename=
 	*/
 	function init(){
 		variables.isCore = false;
+
+		super.init();
 		
 		return this;
 	}

@@ -5,26 +5,87 @@
 * ---
 * A cool SecurityRule entity
 */
-component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" cachename="cbSecurityRule" cacheuse="read-write"{
+component 	persistent="true" 
+			table="cb_securityRule" 
+			entityName="cbSecurityRule" 
+			extends="contentbox.models.BaseEntity"
+			cachename="cbSecurityRule" 
+			cacheuse="read-write"{
 
-	// Primary Key
-	property name="ruleID" fieldtype="id" column="ruleID" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'ruleID_seq' }";
-	
-	// Properties
-	property name="whitelist" 	ormtype="string"  	notnull="false" 	default="" length="255";
-	property name="securelist" 	ormtype="string"  	notnull="true" 		default="" length="255";
-	property name="roles" 		ormtype="string"  	notnull="false"  	default="" length="255";
-	property name="permissions" ormtype="string"  	notnull="false"  	default="" length="500";
-	property name="redirect"	ormtype="string"  	notnull="true"  	default="" length="500";
-	property name="useSSL"		ormtype="boolean" 	notnull="false" 	default="false";
-	property name="order"		ormtype="integer" 	notnull="true" 		default="0";
-	property name="match"		ormtype="string"  	notnull="false" 	default="" length="50";
-		
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
+
+	property 	name="ruleID" 
+				fieldtype="id" 
+				column="ruleID" 
+				generator="native" 
+				setter="false" 
+				params="{ allocationSize = 1, sequence = 'ruleID_seq' }";
+
+	property 	name="whitelist" 	
+				ormtype="string"  	
+				notnull="false" 	
+				default="" 
+				length="255";
+
+	property 	name="securelist" 	
+				ormtype="string"  	
+				notnull="true" 		
+				default="" 
+				length="255";
+
+	property 	name="roles" 		
+				ormtype="string"  	
+				notnull="false"  	
+				default="" 
+				length="255";
+
+	property 	name="permissions" 	
+				ormtype="string"  	
+				notnull="false"  	
+				default="" 
+				length="500";
+
+	property 	name="redirect"		
+				ormtype="string"  	
+				notnull="true"  	
+				default="" 
+				length="500";
+
+	property 	name="useSSL"		
+				ormtype="boolean" 	
+				notnull="false" 	
+				default="false";
+
+	property 	name="order"		
+				ormtype="integer" 	
+				notnull="true" 		
+				default="0";
+
+	property 	name="match"		
+				ormtype="string"  	
+				notnull="false" 	
+				default="" 
+				length="50";
+
+	/* *********************************************************************
+	**							PK + CONSTRAINTS									
+	********************************************************************* */
+
+	this.pk = "ruleID";
+
+	/* *********************************************************************
+	**							PUBLIC FUNCTIONS									
+	********************************************************************* */
+
 	// Constructor
 	function init(){
 		variables.match 	= 'event';
 		variables.useSSL 	= false;
 		variables.order  	= 0;
+
+		super.init();
 
 		return this;
 	}
@@ -58,13 +119,6 @@ component persistent="true" table="cb_securityRule" entityName="cbSecurityRule" 
 		if( !len(redirect) ){ arrayAppend(errors, "Redirect is required" ); }
 		
 		return errors;
-	}
-	
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return ( len( getRuleID() ) ? true : false );
 	}
 	
 	/**

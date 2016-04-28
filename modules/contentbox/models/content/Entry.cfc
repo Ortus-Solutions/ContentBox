@@ -5,15 +5,36 @@
 * ---
 * I am a blog entry entity that is amazing
 */
-component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25" cachename="cbEntry" cacheuse="read-write" extends="BaseContent" joinColumn="contentID" discriminatorValue="Entry"{
+component 	persistent="true" 
+			entityname="cbEntry" 
+			table="cb_entry" 
+			batchsize="25" 
+			cachename="cbEntry" 
+			cacheuse="read-write" 
+			extends="BaseContent" 
+			joinColumn="contentID" 
+			discriminatorValue="Entry"{
 
-	// Properties
-	property name="excerpt" notnull="false" ormtype="text" default="" length="8000";
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
+
+	property 	name="excerpt" 
+				notnull="false" 
+				ormtype="text" 
+				default="" 
+				length="8000";
 	
-	// Non-Persistable Properties
-	property name="renderedExcerpt" persistent="false";
+	/* *********************************************************************
+	**							NON PERSISTED PROPERTIES									
+	********************************************************************* */
+	
+	property 	name="renderedExcerpt" 
+				persistent="false";
 
-	/************************************** CONSTRUCTOR *********************************************/
+	/* *********************************************************************
+	**							CONSTRUCTOR									
+	********************************************************************* */
 
 	/**
 	* constructor
@@ -31,7 +52,9 @@ component persistent="true" entityname="cbEntry" table="cb_entry" batchsize="25"
 		return this;
 	}
 
-	/************************************** PUBLIC *********************************************/
+	/* *********************************************************************
+	**							PUBLIC FUNCTIONS									
+	********************************************************************* */
 	
 	/**
 	* Get a flat representation of this entry but for UI response format which

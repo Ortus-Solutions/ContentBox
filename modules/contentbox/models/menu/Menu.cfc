@@ -5,56 +5,65 @@
 * ---
 * Core Menu Entity
 */
-component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMenu" cacheuse="read-write" {
+component   persistent="true" 
+            entityName="cbMenu" 
+            table="cb_menu" 
+            extends="contentbox.models.BaseEntity"
+            cachename="cbMenu" 
+            cacheuse="read-write" {
     
-    // DI Injections
-    property name="menuService"     inject="menuService@cb"             persistent="false";
-    property name="menuItemService" inject="menuItemService@cb"         persistent="false";
-    property name="ORMService"      inject="entityservice"              persistent="false";
+    /* *********************************************************************
+    **                          DI                                  
+    ********************************************************************* */
+
+    property name="menuService"         inject="menuService@cb"         persistent="false";
+    property name="menuItemService"     inject="menuItemService@cb"     persistent="false";
+    property name="ORMService"          inject="entityservice"          persistent="false";
     
-    // Non-relational Properties
-    property name="menuID"
-             fieldtype="id"
-             generator="native"
-             setter="false"
-              
-             params="{ allocationSize = 1, sequence = 'menuID_seq' }";
+    /* *********************************************************************
+    **                          PROPERTIES                                  
+    ********************************************************************* */
 
-    property name="title"
-             notnull="true"
-             ormtype="string"
-             length="200"
-             default=""
-             index="idx_menutitle";
+    property    name="menuID"
+                fieldtype="id"
+                generator="native"
+                setter="false"
+                params="{ allocationSize = 1, sequence = 'menuID_seq' }";
 
-    property name="slug"
-             notnull="true"
-             ormtype="string"
-             length="200"
-             default=""
-             unique="true"
-             index="idx_menuslug";
+    property    name="title"
+                notnull="true"
+                ormtype="string"
+                length="200"
+                default=""
+                index="idx_menutitle";
 
-    property name="menuClass"
-             ormtype="string"
-             length="160"
-             default="";
+    property    name="slug"
+                notnull="true"
+                ormtype="string"
+                length="200"
+                default=""
+                unique="true"
+                index="idx_menuslug";
 
-    property name="listClass"
-             ormtype="string"
-             length="160"
-             default="";
+    property    name="menuClass"
+                ormtype="string"
+                length="160"
+                default="";
 
-    property name="listType"
-             ormtype="string"
-             length="20"
-             default="ul";
+    property    name="listClass"
+                ormtype="string"
+                length="160"
+                default="";
 
-    property name="createdDate"
-             ormtype="timestamp"
-             notnull="true"
-             update="false";
-    
+    property    name="listType"
+                ormtype="string"
+                length="20"
+                default="ul";
+
+    /* *********************************************************************
+    **                          RELATIONSHIPS                                  
+    ********************************************************************* */
+
     // O2M -> Comments
     property name="menuItems"
              singularName="menuItem"
@@ -66,7 +75,19 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
              inverse="true" 
              lazy="extra"; 
 
-    /************************************** CONSTRUCTOR *********************************************/
+    /* *********************************************************************
+    **                          PK + CONSTRAINTS                                  
+    ********************************************************************* */
+
+    this.pk = "menuID";
+
+    this.constraints = {
+
+    };
+
+    /* *********************************************************************
+    **                          CONSTRUCTOR                                  
+    ********************************************************************* */
 
     /**
     * constructor
@@ -75,10 +96,14 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
         variables.listType      = "ul";
         variables.menuItems     = [];
 
+        super.init();
+
         return this;
     }
 
-    /************************************** PUBLIC *********************************************/
+    /* *********************************************************************
+    **                          PUBLIC FUNCTIONS                                  
+    ********************************************************************* */
     
     /**
     * @Override due to bi-directional relationships 
@@ -104,20 +129,6 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
             variables.menuItems = arguments.menuItems;
         }
         return this;
-    }
-
-    /*
-     * In built event handler method, which is called if you set ormsettings.eventhandler = true in Application.cfc
-     */
-    public void function preInsert(){
-        variables.createdDate = now();
-    }
-
-    /**
-    * is loaded?
-    */
-    public boolean function isLoaded(){
-        return ( len( getMenuID() ) ? true : false );
     }
 
     /**
@@ -182,7 +193,9 @@ component persistent="true" entityName="cbMenu" table="cb_menu" cachename="cbMen
         return result;
     }
 
-    /************************************** PRIVATE *********************************************/
+    /* *********************************************************************
+    **                          PRIVATE FUNCTIONS                                  
+    ********************************************************************* */
 
     /**
     * Recusive function to build menu items hierarchy from raw data

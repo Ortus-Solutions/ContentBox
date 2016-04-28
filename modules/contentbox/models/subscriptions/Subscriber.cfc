@@ -5,39 +5,65 @@
 * ---
 * I am a Subscriber Entity
 */
-component persistent="true" entityname="cbSubscriber" table="cb_subscribers" cachename="cbSubscriber" cacheuse="read-write" {
+component   persistent="true" 
+            entityname="cbSubscriber" 
+            table="cb_subscribers" 
+            extends="contentbox.models.BaseEntity"
+            cachename="cbSubscriber" 
+            cacheuse="read-write"{
 
-    // PROPERTIES
-    property name="subscriberID" fieldtype="id" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'subscriberID_seq' }";
-    property name="subscriberEmail" notnull="true" length="255" index="idx_subscriberEmail";
-    property name="subscriberToken" notnull="true";
-    property name="createdDate" notnull="true" ormtype="timestamp" update="false" default="" index="idx_subscriberCreatedDate";
+    /* *********************************************************************
+    **                          PROPERTIES                                  
+    ********************************************************************* */
 
-    property name="subscriptions" singularName="subscription" fieldtype="one-to-many" type="array" lazy="extra" batchsize="25" orderby="createdDate" cfc="contentbox.models.subscriptions.BaseSubscription" fkcolumn="FK_subscriberID" inverse="true" cascade="all-delete-orphan";
-    /************************************** CONSTRUCTOR *********************************************/
+    property    name="subscriberID" 
+                fieldtype="id" 
+                generator="native" 
+                setter="false" 
+                params="{ allocationSize = 1, sequence = 'subscriberID_seq' }";
 
-    /**
-    * constructor
-    */
-    function init(){
-        createdDate = now();
-    }
+    property    name="subscriberEmail" 
+                notnull="true" 
+                length="255" 
+                index="idx_subscriberEmail";
 
-    /************************************** PUBLIC *********************************************/
+    property    name="subscriberToken" 
+                notnull="true";
+
+    /* *********************************************************************
+    **                          RELATIONSHIPS
+    ********************************************************************* */
+
+    property    name="subscriptions" 
+                singularName="subscription" 
+                fieldtype="one-to-many" 
+                type="array" 
+                lazy="extra" 
+                batchsize="25" 
+                orderby="createdDate" 
+                cfc="contentbox.models.subscriptions.BaseSubscription" 
+                fkcolumn="FK_subscriberID" 
+                inverse="true" 
+                cascade="all-delete-orphan";
+    
+    /* *********************************************************************
+    **                          PK + CONSTRAINTS                                    
+    ********************************************************************* */
+
+    this.pk = "subscriberID";
+
+    /* *********************************************************************
+    **                          PUBLIC FUNCTIONS                                    
+    ********************************************************************* */
 
     public void function preInsert() {
+        super.preInsert();
         if( isNull( getSubscriberToken() ) ) {
             var tkn = getSubscriberEmail() & getCreatedDate();
             setSubscriberToken( hash( tkn ) );
         }
     }
 
-    /**
-    * is loaded?
-    */
-    boolean function isLoaded(){
-        return ( len( getSubscriberID() ) ? true : false );
-    }
     /**
     * Returns a slim representation of subscriptions by type
     */

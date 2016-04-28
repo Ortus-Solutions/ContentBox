@@ -5,29 +5,98 @@
 * ---
 * I am a versioned piece of content
 */
-component persistent="true" entityname="cbContentVersion" table="cb_contentVersion" batchsize="25" cachename="cbContentVersion" cacheuse="read-write"{
+component	persistent="true" 
+			entityname="cbContentVersion" 
+			table="cb_contentVersion" 
+			batchsize="25" 
+			extends="contentbox.models.BaseEntity"
+			cachename="cbContentVersion" 
+			cacheuse="read-write"{
 
-	// DI Injections
-	property name="interceptorService"		inject="coldbox:interceptorService" persistent="false";
+	/* *********************************************************************
+	**							DI
+	********************************************************************* */
 
-	// PROPERTIES
-	property name="contentVersionID" fieldtype="id" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'contentVersionID_seq' }";
-	property name="content"    		notnull="true"  ormtype="text" length="8000" default="";
-	property name="changelog"  		notnull="false" ormtype="text" length="8000" default="";
-	property name="version"			notnull="true"  ormtype="integer"	default="1" index="idx_version";
-	property name="createdDate" 	notnull="true"  ormtype="timestamp"	update="false" default="" index="idx_versionCreatedDate";
-	property name="isActive" 		notnull="true"  ormtype="boolean"   	default="false" index="idx_activeContentVersion,idx_contentVersions";
+	property name="interceptorService"		inject="coldbox:interceptorService"		persistent="false";
+
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
+
+	property 	name="contentVersionID" 
+				fieldtype="id" 
+				generator="native" 
+				setter="false"  
+				params="{ allocationSize = 1, sequence = 'contentVersionID_seq' }";
+
+	property 	name="content"    		
+				notnull="true" 
+				ormtype="text" 
+				length="8000" 
+				default="";
+
+	property 	name="changelog"  		
+				notnull="false" 
+				ormtype="text" 
+				length="8000" 
+				default="";
+
+	property 	name="version"			
+				notnull="true" 
+				ormtype="integer"	
+				default="1" 
+				index="idx_version";
+
+	property 	name="isActive" 		
+				notnull="true" 
+				ormtype="boolean"   	
+				default="false" 
+				index="idx_activeContentVersion,idx_contentVersions";
+
+	/* *********************************************************************
+	**							RELATIONSHIPS									
+	********************************************************************* */
 
 	// M20 -> Author loaded as a proxy and fetched immediately
-	property name="author" notnull="true" cfc="contentbox.models.security.Author" fieldtype="many-to-one" fkcolumn="FK_authorID" lazy="true" fetch="join";
+	property 	name="author" 
+				notnull="true" 
+				cfc="contentbox.models.security.Author" 
+				fieldtype="many-to-one" 
+				fkcolumn="FK_authorID" 
+				lazy="true" 
+				fetch="join";
 
 	// M20 -> relatedContent
-	property name="relatedContent" notnull="true" cfc="contentbox.models.content.BaseContent" fieldtype="many-to-one" fkcolumn="FK_contentID" lazy="true" fetch="join" index="idx_contentVersions";
+	property 	name="relatedContent" 
+				notnull="true" 
+				cfc="contentbox.models.content.BaseContent" 
+				fieldtype="many-to-one" 
+				fkcolumn="FK_contentID" 
+				lazy="true" 
+				fetch="join" 
+				index="idx_contentVersions";
 
-	// Non-Persistable Properties
-	property name="renderedContent" persistent="false";
+	/* *********************************************************************
+	**							NON PERSISTED PROPERTIES									
+	********************************************************************* */
 
-	/************************************** CONSTRUCTOR *********************************************/
+	property 	name="renderedContent" 
+				persistent="false";
+
+	/* *********************************************************************
+	**							PK + CONSTRAINTS									
+	********************************************************************* */
+
+	this.pk = "contentVersionID";
+
+	this.constraints = {
+		"content" = { required=true },
+		"version" = { required=true, type="integer" }
+	};
+
+	/* *********************************************************************
+	**							CONSTRUCTOR									
+	********************************************************************* */
 
 	/**
 	* constructor
@@ -39,11 +108,15 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 		variables.content 			= "";
 		variables.changelog 		= "";
 		variables.renderedContent 	= "";
+
+		super.init();
 		
 		return this;
 	}
 
-	/************************************** PUBLIC *********************************************/
+	/* *********************************************************************
+	**							PUBLIC FUNCTIONS									
+	********************************************************************* */
 	
 	/**
 	* Get memento representation
@@ -87,14 +160,6 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 	}
 
 	/**
-	* Get formatted createdDate
-	*/
-	string function getDisplayCreatedDate(){
-		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm tt" );
-	}
-
-	/**
 	* Get parent slug from the related content it belongs to
 	*/
 	function getParentSlug(){
@@ -108,13 +173,6 @@ component persistent="true" entityname="cbContentVersion" table="cb_contentVersi
 	function getParentTitle(){
 		if( hasRelatedContent() ){ return getRelatedContent().getTitle(); }
 		return "";
-	}
-
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return len( getContentVersionID() );
 	}
 
 	/**

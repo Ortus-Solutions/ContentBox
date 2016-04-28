@@ -8,11 +8,14 @@
 component 	persistent="true" 
 			entityname="cbContent" 
 			table="cb_content" 
+			extends="contentbox.models.BaseEntity"
 			cachename="cbContent" 
 			cacheuse="read-write" 
 			discriminatorColumn="contentType"{
 
-	/************************************** DI INJECTIONS *********************************************/
+	/* *********************************************************************
+	**							DI INJECTIONS									
+	********************************************************************* */
 
 	property 	name="cachebox" 				inject="cachebox" 					persistent="false";
 	property 	name="settingService"			inject="id:settingService@cb" 		persistent="false";
@@ -22,11 +25,15 @@ component 	persistent="true"
 	property 	name="contentService"			inject="contentService@cb"			persistent="false";
 	property 	name="contentVersionService"	inject="contentVersionService@cb"	persistent="false";
 
-	/************************************** NON-PERSITABLEPROPRETIES *********************************************/
+	/* *********************************************************************
+	**							NON PERSISTED PROPERTIES									
+	********************************************************************* */
 
 	property 	name="renderedContent" persistent="false";
 
-	/************************************** PROPERTIES *********************************************/
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
 
 	property 	name="contentID" 				
 				notnull="true"	
@@ -54,12 +61,6 @@ component 	persistent="true"
 				default="" 
 				unique="true" 
 				index="idx_slug,idx_publishedSlug";
-	
-	property 	name="createdDate" 			
-				notnull="true"  
-				ormtype="timestamp" 
-				update="false" 
-				index="idx_createdDate";
 	
 	property 	name="publishedDate"			
 				notnull="false" 
@@ -144,7 +145,9 @@ component 	persistent="true"
 				default="" 
 				length="255";
 
-	/************************************** RELATIONSHIPS *********************************************/
+	/* *********************************************************************
+	**							RELATIONSHIPS									
+	********************************************************************* */
 			
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property 	name="creator" 
@@ -281,7 +284,9 @@ component 	persistent="true"
 				lazy="true"
 				fetch="join";
 
-	/************************************** CALCULATED FIELDS *********************************************/
+	/* *********************************************************************
+	**							CALCULATED FIELDS									
+	********************************************************************* */
 
 	property 	name="numberOfHits" 				
 				formula="select cs.hits from cb_stats cs where cs.FK_contentID=contentID" 
@@ -303,7 +308,15 @@ component 	persistent="true"
 				formula="select count(*) from cb_content content where content.FK_parentID=contentID" 
 				default="0";
 
-	/************************************** VERIONING METHODS *********************************************/
+	/* *********************************************************************
+	**							PK + CONSTRAINTS									
+	********************************************************************* */
+
+	this.pk = "contentID";
+
+	/* *********************************************************************
+	**							PUBLIC FUNCTIONS									
+	********************************************************************* */
 
 	/**
 	* Base constructor
@@ -318,6 +331,8 @@ component 	persistent="true"
 		variables.markup 					= "HTML";
 		variables.contentType 				= "";
 		variables.showInSearch				= true;
+
+		super.init();
 
 		return this;
 	}
@@ -1081,18 +1096,10 @@ component 	persistent="true"
 	}
 
 	/**
-	* Get formatted createdDate
-	*/
-	string function getDisplayCreatedDate(){
-		var createdDate = getCreatedDate();
-		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm tt" );
-	}
-
-	/**
 	* Get formatted expireDate
 	*/
 	string function getDisplayExpireDate(){
-		if( isNull(expireDate) ){ return "N/A"; }
+		if( isNull( expireDate ) ){ return "N/A"; }
 		return dateFormat( expireDate, "dd mmm yyyy" ) & " " & timeFormat(expireDate, "hh:mm tt" );
 	}
 

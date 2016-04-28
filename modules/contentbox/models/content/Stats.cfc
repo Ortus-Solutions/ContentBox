@@ -5,9 +5,18 @@
 * ---
 * A class to track stats for content
 */
-component persistent="true" entityname="cbStats" table="cb_stats" batchsize="25" cachename="cbStats" cacheuse="read-write" {
+component 	persistent="true" 
+			entityname="cbStats" 
+			table="cb_stats" 
+			batchsize="25" 
+			extends="contentbox.models.BaseEntity"
+			cachename="cbStats" 
+			cacheuse="read-write" {
 
-	// Properties
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
+
 	property 	name="statsID" 
 				fieldtype="id" 
 				generator="native" 
@@ -19,6 +28,10 @@ component persistent="true" entityname="cbStats" table="cb_stats" batchsize="25"
 				ormtype="long" 
 				default="0";
 	
+	/* *********************************************************************
+	**							RELATIONSHIPS									
+	********************************************************************* */
+
 	// O2O -> Content
 	property 	name="relatedContent" 
 				notnull="true" 
@@ -28,23 +41,27 @@ component persistent="true" entityname="cbStats" table="cb_stats" batchsize="25"
 				lazy="true" 
 				fetch="join";
 
-	/************************************** CONSTRUCTOR *********************************************/
+	/* *********************************************************************
+	**							PK + CONSTRAINTS									
+	********************************************************************* */
+
+	this.pk = "statsID";
+
+	/* *********************************************************************
+	**							CONSTRUCTOR									
+	********************************************************************* */
 
 	/**
 	* constructor
 	*/
 	function init(){
+		super.init();
 		return this;
 	}
 
-	/************************************** PUBLIC *********************************************/
-
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return len( variables.statsID );
-	}
+	/* *********************************************************************
+	**							PUBLIC FUNCTIONS									
+	********************************************************************* */
 
 	/**
 	* Get memento representation

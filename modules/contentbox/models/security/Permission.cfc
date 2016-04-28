@@ -7,18 +7,21 @@
 */
 component 	persistent="true" 
 			entityName="cbPermission" 
-			table="cb_permission" 
+			table="cb_permission"
+			extends="contentbox.models.BaseEntity"
 			cachename="cbPermission" 
 			cacheuse="read-write"{
 
-	// Primary Key
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
+
 	property 	name="permissionID" 
 				fieldtype="id" 
 				generator="native" 
 				setter="false"  
 				params="{ allocationSize = 1, sequence = 'permissionID_seq' }";
 	
-	// Properties
 	property 	name="permission"  
 				ormtype="string" 
 				notnull="true" 
@@ -32,22 +35,31 @@ component 	persistent="true"
 				default="" 
 				length="500";
 	
+	/* *********************************************************************
+	**							CALCULATED FIELDS									
+	********************************************************************* */
+
 	// Calculated Fields
 	property 	name="numberOfRoles" 
-				formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_permissionID=permissionID";
-	
+				formula="select count(*) from cb_rolePermissions as rolePermissions 
+						where rolePermissions.FK_permissionID=permissionID";
+
+	/* *********************************************************************
+	**							PK + CONSTRAINTS									
+	********************************************************************* */
+
+	this.pk = "permissionID";
+
+	/* *********************************************************************
+	**							PUBLIC FUNCITONS									
+	********************************************************************* */
+
 	/**
 	* Constructor
 	*/
 	function init(){
+		super.init();
 		return this;
-	}
-	
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return ( len( getPermissionID() ) ? true : false );
 	}
 	
 	/**

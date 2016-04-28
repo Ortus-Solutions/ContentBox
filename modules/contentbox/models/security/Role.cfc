@@ -5,32 +5,92 @@
 * ---
 * A cool Role entity
 */
-component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRole" cacheuse="read-write"{
-	// DI
+component 	persistent="true" 
+			entityName="cbRole" 
+			table="cb_role" 
+			extends="contentbox.models.BaseEntity"
+			cachename="cbRole" 
+			cacheuse="read-write"{
+	
+	/* *********************************************************************
+	**							DI									
+	********************************************************************* */
+
 	property name="permissionService" 	inject="permissionService@cb" persistent="false";
 	
-	// Primary Key
-	property name="roleID" fieldtype="id" generator="native" setter="false"  params="{ allocationSize = 1, sequence = 'roleID_seq' }";
+	/* *********************************************************************
+	**							PROPERTIES									
+	********************************************************************* */
+
+	property 	name="roleID" 
+				fieldtype="id" 
+				generator="native" 
+				setter="false" 
+				params="{ allocationSize = 1, sequence = 'roleID_seq' }";
 	
-	// Properties
-	property name="role"  		ormtype="string" notnull="true" length="255" unique="true" default="";
-	property name="description" ormtype="string" notnull="false" default="" length="500";
+	property 	name="role" 
+				ormtype="string" 
+				notnull="true" 
+				length="255" 
+				unique="true" 
+				default="";
 	
+	property 	name="description" 
+				ormtype="string" 
+				notnull="false" 
+				default="" 
+				length="500";
+	
+	/* *********************************************************************
+	**							RELATIONSHIPS							
+	********************************************************************* */
+
 	// M2M -> Permissions
-	property name="permissions" singularName="permission" fieldtype="many-to-many" type="array" lazy="extra" orderby="permission" cascade="all" cacheuse="read-write"  
-			  cfc="contentbox.models.security.Permission" fkcolumn="FK_roleID" linktable="cb_rolePermissions" inversejoincolumn="FK_permissionID"; 
+	property	name="permissions" 
+				singularName="permission" 
+				fieldtype="many-to-many" 
+				type="array" 
+				lazy="extra" 
+				orderby="permission" 
+				cascade="all" 
+				cacheuse="read-write"  
+			  	cfc="contentbox.models.security.Permission" 
+			  	fkcolumn="FK_roleID" 
+			  	linktable="cb_rolePermissions" 
+			  	inversejoincolumn="FK_permissionID"; 
 	
-	// Calculated Fields
-	property name="numberOfPermissions" formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_roleID=roleID";
-	property name="numberOfAuthors" 	formula="select count(*) from cb_author as author where author.FK_roleID=roleID";
+	/* *********************************************************************
+	**							CALUCLATED FIELDS									
+	********************************************************************* */
+
+	property 	name="numberOfPermissions" 
+				formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_roleID=roleID";
 	
-	// Non-Persistable Fields
+	property 	name="numberOfAuthors" 	
+				formula="select count(*) from cb_author as author where author.FK_roleID=roleID";
+	
+	/* *********************************************************************
+	**							NON PERSISTED PROPERTIES									
+	********************************************************************* */
+
 	property name="permissionList" 	persistent="false";
+
+	/* *********************************************************************
+	**							PK + CONSTRAINTS							
+	********************************************************************* */
+
+	this.pk = "roleID";
+
+	/* *********************************************************************
+	**							PUBLIC FUNCTIONS									
+	********************************************************************* */
 	
 	// Constructor
 	function init(){
 		permissions 	= [];
 		permissionList	= '';
+		super.init();
+
 		return this;
 	}
 
@@ -86,13 +146,6 @@ component persistent="true" entityName="cbRole" table="cb_role" cachename="cbRol
 			variables.permissions = arguments.permissions;
 		}
 		return this;
-	}
-	
-	/**
-	* is loaded?
-	*/
-	boolean function isLoaded(){
-		return ( len( getRoleID() ) ? true : false );
 	}
 	
 	/**
