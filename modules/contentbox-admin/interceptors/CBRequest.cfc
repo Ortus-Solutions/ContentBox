@@ -15,12 +15,19 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Configure CB Request
 	*/
-	function configure(){}
+	function configure(){
+		variables.childModulesRegex = arrayToList( getModuleConfig( "contentbox-admin" ).childModules, "|" );
+	}
 
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess( event, interceptData ) eventPattern="^contentbox\-(admin|security|filebrowser|ckeditor)"{
+	function preProcess( event, interceptData ){
+		// Only execute for admin or child modules
+		if( !reFindNoCase( "^(contentbox-admin|#variables.childModulesRegex#)", event.getCurrentEvent() ) ){
+			return;
+		}
+		// Pointers
 		var prc = event.getCollection( private=true );
 		var rc	= event.getCollection();
 
