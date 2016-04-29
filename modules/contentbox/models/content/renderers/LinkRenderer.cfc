@@ -1,27 +1,38 @@
 /**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * A content renderer that transforms _page:XX_ and _entry:XX_ into page and entry links
 */
-component accessors="true"{
-	
-	// DI
-	property name="cb" 			inject="id:CBHelper@cb";
-	property name="log"			inject="logbox:logger:{this}";
-	
-	void function configure(){}
+component accessors="true" extends="BaseRenderer"{
 	
 	/**
 	* Execute on content translations for pages and blog entries
 	*/
 	void function cb_onContentRendering(event, struct interceptData){
-		translateContent(builder=arguments.interceptData.builder, content=arguments.interceptData.content);
+		translateContent( 
+			builder	= arguments.interceptData.builder, 
+			content = arguments.interceptData.content, 
+			event	= arguments.event 
+		);
 	}
 
-	private function determineSlug(required tagString){
-		var slug = reReplaceNoCase(arguments.tagString,"(page|entry|pagessl|entryssl)\:\[","" );
-		return reReplaceNoCase(slug,"\]$","" );
+	/**
+	* Determine slug from incoming string
+	* @tagString The tag string
+	*/
+	private function determineSlug( required tagString ){
+		var slug = reReplaceNoCase( arguments.tagString, "(page|entry|pagessl|entryssl)\:\[", "" );
+		return reReplaceNoCase( slug, "\]$", "" );
 	}
 
-	private function translateContent(required builder, content){
+	/**
+	* Translate content
+	* @builder The Java String Builder
+	* @content The content object
+	*/
+	private function translateContent( required builder, content ){
 		// our mustaches pattern
 		var regex 		= "(page|pagessl|entry|entryssl|root)\:\[[^\]]*]";
 		// match contentbox links in our incoming builder and build our targets array and len
@@ -31,13 +42,13 @@ component accessors="true"{
 		var linkContent = "";
 		
 		// Loop over found links
-		for(var x=1; x lte targetLen; x++){
+		for( var x=1; x lte targetLen; x++ ){
 			tagString = targets[ x ];
 			
 			// convert quotes to standards
-			tagString = replace(tagString,"&##34;",'"',"all" );
-			tagString = replace(tagString,"&##39;","'","all" );
-			tagString = replace(tagString,"&quot;","'","all" );
+			tagString = replace( tagString, "&##34;", '"', "all" );
+			tagString = replace( tagString, "&##39;", "'", "all" );
+			tagString = replace( tagString, "&quot;", "'", "all" );
 			
 			try{
 				
@@ -50,26 +61,17 @@ component accessors="true"{
 					case "root"  	: { linkContent = cb.themeRoot(); break; }
 				}
 				
-			}
-			catch(Any e){
+			} catch( Any e ) {
 				linkContent = "Error translating link: #e.message# #e.detail#";
-				log.error( "Error translating link on target: #targets[ x ]#", e);
+				log.error( "Error translating link on target: #targets[ x ]#", e );
 			}
 			
 			// PROCESS REPLACING 
-			
-			// get location of target
-			var rLocation 	= builder.indexOf( targets[ x ] );
-			var rLen 		= len( targets[ x ] );
-			
-			// Loop findings of same {{{}}} instances to replace
-			while( rLocation gt -1 ){
-				// Replace it
-				builder.replace( javaCast( "int", rLocation), javaCast( "int", rLocation+rLen), linkContent);
-				// look again
-				rLocation = builder.indexOf( targets[ x ], javaCast( "int", rLocation) );
-			}
-			
+			multiStringReplace( 
+				builder 	= arguments.builder,
+				indexOf	 	= targets[ x ],
+				replaceWith = linkContent
+			);
 		}
 	}
 	
