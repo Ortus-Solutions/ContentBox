@@ -54,10 +54,12 @@ component   persistent="true"
 	 */
 	public struct function getMemento(){
 		var result = super.getMemento();
+		
 		// add our subclasses's properties
 		result[ "contentSlug" ] = getContentSlug();
-		result[ "urlClass" ] = getURLClass();
-		result[ "target" ] = getTarget();
+		result[ "urlClass" ] 	= getURLClass();
+		result[ "target" ] 		= getTarget();
+
 		return result;
 	}
 

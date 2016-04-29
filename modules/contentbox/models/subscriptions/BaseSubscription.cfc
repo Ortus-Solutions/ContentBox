@@ -59,4 +59,23 @@ component   persistent="true"
     **                          PUBLIC FUNCTIONS                                    
     ********************************************************************* */
 
+    /**
+    * Get memento representation
+    * @excludes Exclude Properties
+    * @showSubscriber Show the subscriber
+    */
+    function getMemento( excludes="", boolean showSubscriber=true ){
+        var pList   = listToArray( "subscriptionToken,type" );
+        var result  = getBaseMemento( properties=pList, excludes=arguments.excludes );
+        
+        // Subscriber
+        if( arguments.showSubscriber && hasSubscriber() ){
+            result[ "subscriber" ] = getSubscriber().getMemento( showSubscriptions=false );      
+        } else if( arguments.showSubscriber ){
+            result[ "subscriber" ] = {};            
+        }
+
+        return result;
+    }
+
 }

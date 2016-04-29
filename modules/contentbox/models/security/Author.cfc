@@ -271,36 +271,32 @@ component 	persistent="true"
 
 	/**
 	* Get a flat representation of this entry
+	* @excludes Exclude properties
+	* @showRole Show Roles
+	* @showPermissions Show permissions
 	*/
-	function getMemento(){
-		var pList = authorService.getPropertyNames();
-		var result = {};
+	function getMemento( 
+		excludes="",
+		boolean showRole=true,
+		boolean showPermissions=true
+	){
+		var pList 	= [];
+		// Do this to convert native Array to CF Array for content properties
+		pList.addAll( authorService.getPropertyNames() );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
-		// Do simple properties only
-		for(var x=1; x lte arrayLen( pList ); x++ ){
-			if( structKeyExists( variables, pList[ x ] ) ){
-				if( isSimpleValue( variables[ pList[ x ] ] ) ){
-					result[ pList[ x ] ] = variables[ pList[ x ] ];	
-				}
-			}
-			else{
-				result[ pList[ x ] ] = "";
-			}
-		}
-
 		// Do Role Relationship
-		if( hasRole() ){
+		if( arguments.showRole && hasRole() ){
 			result[ "role" ] = getRole().getMemento();
 		}
 		
 		// Permissions
-		if( hasPermission() ){
+		if( arguments.showPermissions && hasPermission() ){
 			result[ "permissions" ] = [];
 			for( var thisPerm in variables.permissions ){
 				arrayAppend( result[ "permissions" ], thisPerm.getMemento() );
 			}
-		}
-		else{
+		} else if( arguments.showPermissions ) {
 			result[ "permissions" ] = [];
 		}
 		

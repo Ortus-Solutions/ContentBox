@@ -76,4 +76,14 @@ component 	persistent="true"
 		return this;
 	}
 
+	/**
+	* Get memento representation
+	*/
+	function getMemento( excludes="" ){
+		var pList 	= listToArray( "value,attempts,lastLoginSuccessIP,isBlocked" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
+		
+		return result;
+	}
+
 }

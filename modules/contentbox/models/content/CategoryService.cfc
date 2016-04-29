@@ -119,7 +119,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="categoryID,category,slug" )
+		return c.withProjections( property="categoryID,category,slug,createdDate,modifiedDate,isDeleted" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list(sortOrder="category" );
 			 

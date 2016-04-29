@@ -76,19 +76,8 @@ component 	persistent="true"
 		boolean showCategories=true,
 		boolean showRelatedContent=true
 	){
-		var pList 	= [
-			"description"
-		];
+		arguments.properties = listToArray( "description" );
 		var result 	= super.getResponseMemento( argumentCollection=arguments );
-		
-		// Local Memento Properties
-		for( var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			} else {
-				result[ thisProp ] = "";
-			}
-		}
 		
 		return result;
 	};
@@ -120,18 +109,8 @@ component 	persistent="true"
 		boolean showRelatedContent=true,
 		boolean showStats=true
 	){
-		var pList = listToArray( "description" );
-		var result = super.getMemento( argumentCollection=arguments );
-		
-		// Local Memento Properties
-		for(var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			}
-			else{
-				result[ thisProp ] = "";
-			}
-		}
+		arguments.properties = listToArray( "description" );
+		var result 	= super.getMemento( argumentCollection=arguments );
 		
 		return result;
 	}

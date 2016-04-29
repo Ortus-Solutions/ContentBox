@@ -63,18 +63,9 @@ component 	persistent="true"
 	/**
 	* Get memento representation
 	*/
-	function getMemento(){
-		var pList = listToArray( "customFieldID,key,value" );
-		var result = {};
-		
-		for(var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			}
-			else{
-				result[ thisProp ] = "";
-			}	
-		}
+	function getMemento( excludes="" ){
+		var pList 	= listToArray( "key,value" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		return result;
 	}

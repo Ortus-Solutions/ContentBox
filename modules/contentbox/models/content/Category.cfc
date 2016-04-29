@@ -76,13 +76,9 @@ component 	persistent="true"
 	/**
 	* Get memento representation
 	*/
-	function getMemento(){
-		var pList = listToArray( "categoryID,category,slug,numberOfEntries,numberOfPages" );
-		var result = {};
-		
-		for(var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
-		}
+	struct function getMemento( excludes="" ){
+		var pList 	= listToArray( "category,slug,numberOfEntries,numberOfPages" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		return result;
 	}

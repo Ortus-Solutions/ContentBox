@@ -419,7 +419,7 @@ component extends="baseHandler"{
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#" );
+				event.renderData( data="Invalid export type: #rc.format#" );
 			}
 		}
 	}

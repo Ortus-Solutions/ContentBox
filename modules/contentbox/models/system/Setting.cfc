@@ -65,4 +65,15 @@ component  	persistent="true"
 		return this;
 	}
 
+	/**
+	* Get memento representation
+	* @excludes Property excludes
+	*/
+	function getMemento( excludes="" ){
+		var pList 	= listToArray( "name,value,isCore" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
+		
+		return result;
+	}
+
 }

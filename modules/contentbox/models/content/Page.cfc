@@ -153,21 +153,12 @@ component 	persistent="true"
 		boolean showCategories=true,
 		boolean showRelatedContent=true
 	){
-		var pList 	= [
+		arguments.properties = [
 			"showInMenu"
 		];
 		var result 	= super.getResponseMemento( argumentCollection=arguments );
 		
 		result[ "excerpt" ] = renderExcerpt();
-
-		// Local Memento Properties
-		for( var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			} else {
-				result[ thisProp ] = "";
-			}
-		}
 		
 		return result;
 	};
@@ -199,7 +190,7 @@ component 	persistent="true"
 		boolean showRelatedContent=true,
 		boolean showStats=true
 	){
-		var pList 	= [
+		arguments.properties 	= [
 			"layout",
 			"mobileLayout",
 			"order",
@@ -208,15 +199,6 @@ component 	persistent="true"
 			"SSLOnly"
 		];
 		var result 	= super.getMemento( argumentCollection=arguments );
-		
-		// Local Memento Properties
-		for( var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			} else {
-				result[ thisProp ] = "";
-			}
-		}
 		
 		return result;
 	}

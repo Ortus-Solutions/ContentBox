@@ -129,20 +129,11 @@ component   persistent="true"
 	/**
 	 * Get a flat representation of this menu item
 	 */
-	public struct function getMemento(){
-		var pList = menuItemService.getPropertyNames();
-		var result = {};
-		// Do simple properties only
-		for( var x=1; x lte arrayLen( pList ); x++ ){
-			if( structKeyExists( variables, pList[ x ] ) ){
-				if( isSimpleValue( variables[ pList[ x ] ] ) ){
-					result[ pList[ x ] ] = variables[ pList[ x ] ]; 
-				}
-			}
-			else{
-				result[ pList[ x ] ] = "";
-			}
-		}
+	public struct function getMemento( excludes="" ){
+		var pList 	= [];
+		pList.addAll( menuItemService.getPropertyNames() );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
+		
 		// add contentType
 		result[ "menuType" ] = getMenuType();
 		// set empty children

@@ -70,13 +70,9 @@ component 	persistent="true"
 	/**
 	* Get memento representation
 	*/
-	function getMemento(){
-		var pList = listToArray( "statsID,hits" );
-		var result = {};
-		
-		for( var thisProp in pList ){
-			result[ thisProp ] = variables[ thisProp ];	
-		}
+	function getMemento( excludes="" ){
+		var pList 	= listToArray( "hits" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		return result;
 	}

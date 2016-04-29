@@ -61,6 +61,29 @@ component   persistent="true"
     **                          PUBLIC FUNCTIONS                                    
     ********************************************************************* */
 
+    /**
+    * Get memento representation
+    * @excludes Property excludes
+    * @showSubscriptions Show the subscriptions
+    */
+    function getMemento( excludes="", boolean showSubscriptions=true ){
+        var pList   = listToArray( "subscriberEmail,subscriberToken" );
+        var result  = getBaseMemento( properties=pList, excludes=arguments.excludes );
+
+        // subscriptions
+        if( arguments.showSubscriptions && hasSubscription() ){
+            result[ "subscriptions" ] = [];   
+            for( var thisSub in variables.subscriptions ){
+                result[ "subscriptions" ].append( thisSub.getMemento( showSubscriber=false ) );
+            }
+        } else if ( arguments.showSubscriptions ){
+            result[ "subscriptions" ] = [];   
+        }
+        
+        return result;
+    }
+
+
     public void function preInsert() {
         super.preInsert();
         if( isNull( getSubscriberToken() ) ) {

@@ -155,32 +155,24 @@ component 	persistent="true"
 	
 	/**
 	* Get memento representation
+	* @excludes Exclude properties
+	* @showPermissions Show permissions or not
 	*/
-	function getMemento(){
-		var pList = listToArray( "roleID,role,description" );
-		var result = {};
-		
-		for(var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			}
-			else{
-				result[ thisProp ] = "";
-			}
-		}
+	function getMemento( excludes="", boolean showPermissions=true ){
+		var pList = listToArray( "role,description" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		// Do Permissions
-		if( hasPermission() ){
+		if( arguments.showPermissions && hasPermission() ){
 			result[ "permissions" ]= [];
 			for( var thisPerm in variables.permissions ){
 				arrayAppend( result[ "permissions" ], thisPerm.getMemento() );
 			}
-		}
-		else{
+		} else if( arguments.showPermissions ){
 			result[ "permissions" ] = [];
 		}
-		
+
 		return result;
 	}
-	
+
 }

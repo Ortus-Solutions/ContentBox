@@ -121,26 +121,17 @@ component	persistent="true"
 	/**
 	* Get memento representation
 	*/
-	function getMemento(){
-		var pList = listToArray( "contentVersionID,content,changelog,version,createdDate,isActive" );
-		var result = {};
-		
-		for(var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			}
-			else{
-				result[ thisProp ] = "";
-			}	
-		}
+	function getMemento( excludes="" ){
+		var pList 	= listToArray( "content,changelog,version,isActive" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		result[ "author" ] = {
-			authorID = getAuthor().getAuthorID(),
-			firstname = getAuthor().getFirstname(),
-			lastName = getAuthor().getLastName(),
-			email = getAuthor().getEmail(),
-			username = getAuthor().getUsername(),
-			role = getAuthor().getRole().getRole()
+			"authorID" 	= getAuthor().getAuthorID(),
+			"firstname" = getAuthor().getFirstname(),
+			"lastName" 	= getAuthor().getLastName(),
+			"email" 	= getAuthor().getEmail(),
+			"username" 	= getAuthor().getUsername(),
+			"role" 		= getAuthor().getRole().getRole()
 		};
 		
 		return result;

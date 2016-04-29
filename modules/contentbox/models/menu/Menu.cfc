@@ -166,21 +166,12 @@ component   persistent="true"
      * Get a flat representation of this menu
      * slugCache.hint Cache of slugs to prevent infinite recursions
      */
-    public struct function getMemento(){
-        var pList = menuService.getPropertyNames();
-        var result = {};
+    public struct function getMemento( excludes="" ){
+        var pList   = [];
+        // Do this to convert native Array to CF Array for content properties
+        pList.addAll( menuService.getPropertyNames() );
+        var result  = getBaseMemento( properties=pList, excludes=arguments.excludes );
         
-        // Do simple properties only
-        for( var x=1; x lte arrayLen( pList ); x++ ){
-            if( structKeyExists( variables, pList[ x ] ) ){
-                if( isSimpleValue( variables[ pList[ x ] ] ) ){
-                    result[ pList[ x ] ] = variables[ pList[ x ] ]; 
-                }
-            }
-            else{
-                result[ pList[ x ] ] = "";
-            }
-        }
         // menu items
         if( hasMenuItem() ){
             result[ "menuItems" ] = [];
@@ -190,10 +181,10 @@ component   persistent="true"
                     arrayAppend( result[ "menuItems" ], thisMenuItem.getMemento() );
                 }                  
             }
-        }
-        else{
+        } else {
             result[ "menuItems" ] = [];
         }
+        
         return result;
     }
 

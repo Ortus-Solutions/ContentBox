@@ -592,6 +592,8 @@ component 	persistent="true"
 	* @showChildren Show children in memento or not
 	* @showCategories Show categories in memento or not
 	* @showRelatedContent Show related Content in memento or not
+	* @excludes Excludes
+	* @properties Additional properties to incorporate in the memento
 	*/
 	struct function getResponseMemento(
 		required array slugCache=[], 
@@ -601,7 +603,9 @@ component 	persistent="true"
 		boolean showParent=true,
 		boolean showChildren=true,
 		boolean showCategories=true,
-		boolean showRelatedContent=true
+		boolean showRelatedContent=true,
+		excludes="",
+		array properties
 	){
 		var pList 	= [
 			"title",
@@ -612,16 +616,11 @@ component 	persistent="true"
 			"featuredImageURL",
 			"contentType"
 		];
-		var result 	= {};
-
-		// Basic Properties
-		for( var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			} else {
-				result[ thisProp ] = "";
-			}
+		// Add incoming properties
+		if( structKeyExists( arguments, "properties" ) ){
+			pList.addAll( arguments.properties );
 		}
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 
 		// Properties
 		result[ "content" ] 		= renderContent();
@@ -727,6 +726,8 @@ component 	persistent="true"
 	* @showCategories Show categories in memento or not
 	* @showRelatedContent Show related Content in memento or not
 	* @showStats Show stats in memento or not
+	* @excludes Excludes
+	* @properties Additional properties to incorporate in the memento
 	*/
 	function getMemento( 
 		required array slugCache=[], 
@@ -739,30 +740,27 @@ component 	persistent="true"
 		boolean showChildren=true,
 		boolean showCategories=true,
 		boolean showRelatedContent=true,
-		boolean showStats=true
+		boolean showStats=true,
+		excludes="",
+		array properties
 	){
-		var pList 	= contentService.getPropertyNames();
-		var result 	= {};
-
-		// Do simple properties only
-		for( var x=1; x lte arrayLen( pList ); x++ ){
-			if( structKeyExists( variables, pList[ x ] ) ){
-				if( isSimpleValue( variables[ pList[ x ] ] ) ){
-					result[ pList[ x ] ] = variables[ pList[ x ] ];
-				}
-			} else {
-				result[ pList[ x ] ] = "";
-			}
+		var pList 	= [];
+		// Do this to convert native Array to CF Array for content properties
+		pList.addAll( contentService.getPropertyNames() );
+		// Add incoming properties
+		if( structKeyExists( arguments, "properties" ) ){
+			pList.addAll( arguments.properties );
 		}
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 
 		// Do Author Relationship
 		if( arguments.showAuthor && hasCreator() ){
 			result[ "creator" ] = {
-				creatorID 	= getCreator().getAuthorID(),
-				firstname 	= getCreator().getFirstname(),
-				lastName 	= getCreator().getLastName(),
-				email 		= getCreator().getEmail(),
-				username 	= getCreator().getUsername()
+				"creatorID" 	= getCreator().getAuthorID(),
+				"firstname" 	= getCreator().getFirstname(),
+				"lastName" 		= getCreator().getLastName(),
+				"email" 		= getCreator().getEmail(),
+				"username" 		= getCreator().getUsername()
 			};
 		}
 
@@ -804,9 +802,9 @@ component 	persistent="true"
 		// Parent
 		if( arguments.showParent && hasParent() ){
 			result[ "parent" ] = {
-				contentID 	= getParent().getContentID(),
-				slug 		= getParent().getSlug(),
-				title 		= getParent().getTitle()
+				"contentID" 	= getParent().getContentID(),
+				"slug" 		= getParent().getSlug(),
+				"title" 		= getParent().getTitle()
 			};
 		}
 		// Children

@@ -66,21 +66,13 @@ component 	persistent="true"
 		super.init();
 		return this;
 	}
-	
+
 	/**
 	* Get memento representation
 	*/
-	function getMemento(){
-		var pList = listToArray( "permissionID,permission,description,numberOfRoles" );
-		var result = {};
-		
-		for( var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			} else {
-				result[ thisProp ] = "";
-			}
-		}
+	function getMemento( excludes="" ){
+		var pList = listToArray( "permission,description,numberOfRoles" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		return result;
 	}

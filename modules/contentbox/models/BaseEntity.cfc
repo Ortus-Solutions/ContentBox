@@ -89,6 +89,14 @@ component mappedsuperclass="true" accessors="true"{
 	}
 
 	/**
+	* Convert and epoch milliseconds into local time object.
+	* @epoch The epoch time in milliseconds
+	*/
+	function epochToLocal( required epoch ) {
+		return dateAdd( "l", arguments.epoch, dateConvert( "utc2Local", "January 1 1970 00:00" ) );
+	}
+
+	/**
 	* Build out property mementos
 	* Date/Time objects are produced as UTC milliseconds since January 1, 1970 (Epoch)
 	* @properties The array properties to incorporate into the base memento
@@ -99,6 +107,7 @@ component mappedsuperclass="true" accessors="true"{
 
 		// add in base properties
 		arguments.properties.addAll( [ 
+			this.pk,
 			"createdDate", 
 			"modifiedDate", 
 			"isDeleted" 

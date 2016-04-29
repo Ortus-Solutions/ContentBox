@@ -95,18 +95,9 @@ component	persistent="true"
 	/**
 	* Get memento representation
 	*/
-	function getMemento(){
-		var pList = listToArray( "commentID,content,author,authorIP,authorEmail,authorURL,createdDate,isApproved" );
-		var result = {};
-		
-		for(var thisProp in pList ){
-			if( structKeyExists( variables, thisProp ) ){
-				result[ thisProp ] = variables[ thisProp ];	
-			}
-			else{
-				result[ thisProp ] = "";
-			}	
-		}
+	function getMemento( excludes="" ){
+		var pList 	= listToArray( "content,author,authorIP,authorEmail,authorURL,isApproved" );
+		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		return result;
 	}
