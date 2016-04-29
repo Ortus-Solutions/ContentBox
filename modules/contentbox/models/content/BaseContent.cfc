@@ -314,6 +314,21 @@ component 	persistent="true"
 
 	this.pk = "contentID";
 
+	this.constraints = {
+		"title" 				= { required = true, size = "1..200" },
+		"slug" 					= { required = true, size = "1..200" },
+		"publishedDate"			= { required = false, type = "date" },
+		"expireDate" 			= { required = true, type = "date" },	
+		"passwordProtection" 	= { required = false, size = "1..100" },
+		"HTMLKeywords" 			= { required = false, size = "1..160" },
+		"HTMLDescription"		= { required = false, size = "1..160" },
+		"cacheTimeout"			= { required=false, type="numeric" },
+		"cacheLastAccessTimeout"= { required=false, type="numeric" },
+		"markup"				= { required = true, size = "1..100" },
+		"featuredImage"			= { required = false, size = "1..255" },
+		"featuredImageURL"		= { required = false, size = "1..255" }
+	};
+
 	/* *********************************************************************
 	**							PUBLIC FUNCTIONS									
 	********************************************************************* */

@@ -76,6 +76,16 @@ component 	persistent="true"
 
 	this.pk = "moduleID";
 
+	this.constraints = {
+		"name"	 				= { required = true, size = "1..255" },
+		"title"	 				= { required = true, size = "1..255" },
+		"version"				= { required = false, size = "1..255" },
+		"entryPoint"			= { required = false, size = "1..255" },
+		"author"				= { required = false, size = "1..255" },
+		"webURL"				= { required = false, size = "1..500" },
+		"forgeBoxSlug"			= { required = false, size = "1..255" }
+	};
+
 	/* *********************************************************************
 	**							PUBLIC FUNCTIONS									
 	********************************************************************* */

@@ -39,7 +39,8 @@ component 	persistent="true"
 
 	property 	name="email"		
 				length="255" 
-				notnull="true" index="idx_email";
+				notnull="true" 
+				index="idx_email";
 
 	property 	name="username"	
 				length="100" 
@@ -157,12 +158,11 @@ component 	persistent="true"
 
 	this.pk = "authorID";
 
-	// Validation Constraints
 	this.constraints ={
 		"firstName" = { required=true, size="1..100" },
 		"lastName" 	= { required=true, size="1..100" },
 		"email" 	= { required=true, size="1..255", type="email" },
-		"username" 	= { required=true, size="1..100", unique="true" },
+		"username" 	= { required=true, size="1..100" },
 		"password"	= { required=true, size="1..100" }
 	};
 

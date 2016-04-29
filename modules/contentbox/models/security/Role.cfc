@@ -81,6 +81,11 @@ component 	persistent="true"
 
 	this.pk = "roleID";
 
+	this.constraints = {
+		"role"	 			= { required = true, size = "1..255" },
+		"description"		= { required = false, size = "1..500" }
+	};
+
 	/* *********************************************************************
 	**							PUBLIC FUNCTIONS									
 	********************************************************************* */

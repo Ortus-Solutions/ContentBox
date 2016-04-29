@@ -35,6 +35,14 @@ component   persistent="true"
                 notnull="false" 
                 ormtype="string" 
                 default="";
+
+    /* *********************************************************************
+    **                          PK + CONSTRAINTS                                  
+    ********************************************************************* */
+
+    this.constraints[ "url" ]           = { required = false, size = "1..255" };
+    this.constraints[ "target" ]        = { required = false, size = "1..255" };
+    this.constraints[ "urlClass" ]      = { required = false, size = "1..255" };
     
     /* *********************************************************************
     **                          PUBLIC FUNCTIONS                                  

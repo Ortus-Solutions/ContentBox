@@ -45,6 +45,11 @@ component  	persistent="true"
 	
 	this.pk = "settingID";
 
+	this.constraints ={
+		"name" 		= { required=true, size="1..100" },
+		"value" 	= { required=true }
+	};
+
 	/* *********************************************************************
 	**							PUBLIC METHODS									
 	********************************************************************* */

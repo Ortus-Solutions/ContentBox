@@ -60,6 +60,14 @@ component 	persistent="true"
 			 	persistent="false";
 
 	/* *********************************************************************
+	**							CONSTRAINTS									
+	********************************************************************* */
+
+	this.constraints[ "layout" ]		= { required = false, size = "1..200" };
+	this.constraints[ "mobileLayout" ]	= { required = false, size = "1..200" };
+	this.constraints[ "order" ]			= { required = true, type="numeric" };
+
+	/* *********************************************************************
 	**							CONSTRUCTOR									
 	********************************************************************* */
 

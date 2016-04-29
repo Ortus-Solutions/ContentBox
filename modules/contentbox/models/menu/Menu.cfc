@@ -82,7 +82,11 @@ component   persistent="true"
     this.pk = "menuID";
 
     this.constraints = {
-
+        "title"                 = { required = true, size = "1..200" },
+        "slug"                  = { required = true, size = "1..200" },
+        "menuClass"             = { required = false, size = "1..160" },
+        "listClass"             = { required = false, size = "1..160" },
+        "listType"              = { required = false, size = "1..20" }
     };
 
     /* *********************************************************************

@@ -75,6 +75,16 @@ component 	persistent="true"
 
 	this.pk = "ruleID";
 
+	this.constraints = {
+		"whitelist"	 			= { required = false, size = "1..255" },
+		"securelist"			= { required = false, size = "1..255" },
+		"roles"					= { required = false, size = "1..255" },
+		"permissions"			= { required = false, size = "1..500" },
+		"redirect"				= { required = false, size = "1..500" },
+		"order"					= { required = false, type="numeric" },
+		"match"					= { required = false, size = "1..50" }
+	};
+
 	/* *********************************************************************
 	**							PUBLIC FUNCTIONS									
 	********************************************************************* */

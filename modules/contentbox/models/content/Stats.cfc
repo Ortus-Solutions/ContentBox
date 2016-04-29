@@ -47,6 +47,10 @@ component 	persistent="true"
 
 	this.pk = "statsID";
 
+	this.constraints = {
+		"hits"	= { required = false, type="numeric" }
+	};
+
 	/* *********************************************************************
 	**							CONSTRUCTOR									
 	********************************************************************* */

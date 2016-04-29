@@ -52,6 +52,11 @@ component   persistent="true"
 
     this.pk = "subscriberID";
 
+    this.constraints ={
+        "subscriptionToken" = { required=true, size="1..255" },
+        "subscriberEmail"   = { required=true, size="1..255", type="email" }
+    };
+
     /* *********************************************************************
     **                          PUBLIC FUNCTIONS                                    
     ********************************************************************* */

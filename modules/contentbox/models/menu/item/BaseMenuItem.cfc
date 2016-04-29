@@ -99,6 +99,13 @@ component   persistent="true"
 
 	this.pk = "menuItemID";
 
+	this.constraints = {
+		"title" 				= { required = true, size = "1..200" },
+		"label"	 				= { required = false, size = "1..200" },
+		"itemClass"				= { required = false, size = "1..200" },
+		"data"					= { required = false, size = "1..255" }
+	};
+
 	/* *********************************************************************
 	**                          CONSTRUCTOR                                  
 	********************************************************************* */

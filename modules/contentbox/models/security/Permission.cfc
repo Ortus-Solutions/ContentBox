@@ -50,6 +50,11 @@ component 	persistent="true"
 
 	this.pk = "permissionID";
 
+	this.constraints = {
+		"permission"		= { required = true, size = "1..255" },
+		"description"		= { required = false, size = "1..500" }
+	};
+
 	/* *********************************************************************
 	**							PUBLIC FUNCITONS									
 	********************************************************************* */
