@@ -105,8 +105,8 @@ component {
 				pagePoolClear();
 			}
 
-			/****************************** UPDATE SETTINGS + PERMISSIONS ******************************/
-			
+			// Update new timestamp fields
+			updateTimestampFields();
 			// Update new settings
 			updateSettings();
 			// Update Permissions
@@ -114,11 +114,9 @@ component {
 			// Update Roles with new permissions
 			updateAdmin();
 			updateEditor();
-
-		}
-		catch(Any e){
+		} catch( Any e ) {
 			ORMClearSession();
-			log.error("Error doing #version# patch postInstallation. #e.message# #e.detail#", e);
+			log.error( "Error doing #version# patch postInstallation. #e.message# #e.detail#", e );
 			rethrow;
 		}
 	}
@@ -126,7 +124,7 @@ component {
 	/************************************** PRIVATE *********************************************/
 
 	private function isValidInstall(){
-		// Verify if less than 1.6.0 with message
+		// Verify if less than 2.1.0 with message
 		if( replace( currentVersion, ".", "", "all" )  LT 210 ){
 			log.info( "Cannot patch this installation until you upgrade to 2.1.0 first. You can find all of our patches here available for download: http://www.ortussolutions.com/products/contentbox. Then apply this patch." );
 			return false;
@@ -237,8 +235,6 @@ component {
 		addSetting( "cb_site_settings_cache", "Template" );
 	}
 
-	/************************************** DB MIGRATION OPERATIONS *********************************************/
-
 	private function addPermission( permission, description ){
 		var props = { permission=arguments.permission, description=arguments.description };
 		// only add if not found
@@ -264,6 +260,60 @@ component {
 
 		return this;
 	}
+
+	private function updateTimestampFields(){
+		
+		var tables = [
+			"cb_author",
+			"cb_category",
+			"cb_comment",
+			"cb_content",
+			"cb_contentVersion",
+			"cb_customField",
+			"cb_loginAttempts",
+			"cb_menu",
+			"cb_menuItem",
+			"cb_module",
+			"cb_permission",
+			"cb_role",
+			"cb_securityRule",
+			"cb_setting",
+			"cb_stats",
+			"cb_subscribers",
+			"cb_subscriptions"
+		];
+
+		for( var thisTable in tables ){
+			var q = new Query( sql = "update #thisTable# set modifiedDate = :modifiedDate" );
+			q.setParam( name="modifiedDate", value ="#createODBCDateTime( now() )#" );
+			var results = q.execute().getResult();
+			log.info( "Update #thisTable# modified date", results );	
+		}
+		
+		// Creation tables now
+		tables = [
+			"cb_category",
+			"cb_customField",
+			"cb_menu",
+			"cb_menuItem",
+			"cb_module",
+			"cb_permission",
+			"cb_role",
+			"cb_securityRule",
+			"cb_setting",
+			"cb_stats",
+			"cb_subscribers"
+		];
+		for( var thisTable in tables ){
+			var q = new Query( sql = "update #thisTable# set createDate = :modifiedDate" );
+			q.setParam( name="createdDate", value ="#createODBCDateTime( now() )#" );
+			var results = q.execute().getResult();
+			log.info( "Update #thisTable# created date", results );	
+		}
+			
+	}
+
+	/************************************** DB MIGRATION OPERATIONS *********************************************/
 
 	// Add a new column: type=[varchar, boolean, text]
 	private function addColumn(required table, required column, required type, required limit, boolean nullable=false, defaultValue){
@@ -405,23 +455,28 @@ component {
 
 	// get Columns
 	private function getTableColumns(required table){
-		if( structkeyexists( server, "railo") ){
-			return new RailoDBInfo().getTableColumns(datasource=getDatasource(), table=arguments.table);
+		if( structkeyexists( server, "lucee" ) || structKeyExists( server, "railo" ) ){
+			return new DBInfo().getTableColumns( datasource=getDatasource(), table=arguments.table );
 		}
-		return new dbinfo(datasource=getDatasource(), table=arguments.table).columns();
+		return new dbinfo( datasource=getDatasource(), table=arguments.table ).columns();
 	}
 
 	// Get the database type
 	private function getDatabaseType(){
-		if( structkeyexists( server, "railo") ){
-			return new RailoDBInfo().getDatabaseType(datasource=getDatasource()).database_productName;
+		if( structkeyexists( server, "lucee" ) || structKeyExists( server, "railo" ) ){
+			return new DBInfo().getDatabaseType(datasource=getDatasource()).database_productName;
 		}
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
 
 	// Get the default datasource
 	private function getDatasource(){
-		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+		try{
+			return new cborm.models.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+		} catch( any e ){
+			return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+		}
+		
 	}
 
 }
