@@ -34,7 +34,7 @@ component accessors="true"{
 		// widget tag syntax
 		var regex   = "<widget\b[^>]*>(.*?)</widget>";
 		// match widgets in our incoming builder and build our targets array and len
-		var targets 	= reMatch( regex, builder.toString() );
+		var targets 	= reMatchNoCase( regex, builder.toString() );
 		var targetLen 	= arrayLen( targets );
 		var isModuleWidget = false;
 		var attributes = "";

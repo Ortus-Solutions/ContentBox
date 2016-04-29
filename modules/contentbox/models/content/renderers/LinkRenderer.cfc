@@ -25,7 +25,7 @@ component accessors="true"{
 		// our mustaches pattern
 		var regex 		= "(page|pagessl|entry|entryssl|root)\:\[[^\]]*]";
 		// match contentbox links in our incoming builder and build our targets array and len
-		var targets 	= reMatch( regex, builder.toString() );
+		var targets 	= reMatchNoCase( regex, builder.toString() );
 		var targetLen 	= arrayLen( targets );
 		var tagString	= "";
 		var linkContent = "";
