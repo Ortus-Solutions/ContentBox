@@ -34,6 +34,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 	property name="log"					inject="logbox:logger:{this}";
 	property name="interceptorService"	inject="coldbox:interceptorService";
 	property name="settingService" 		inject="id:settingService@cb";
+	property name="bCrypt"				inject="BCrypt@BCrypt";
 
 	//------------------------------------------------------------------------------------------------
 	// Constructor
@@ -77,7 +78,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 			                  password=arguments.dsnPassword,sql="select username, password, name from tblUsers" ).execute().getResult();
 			for(var x = 1; x lte qAuthors.recordcount; x++) {
 				var props = {email=qAuthors.username[ x ], username=qAuthors.username[ x ],
-				                  password=hash(defaultPassword, authorService.getHashType()),isActive=1,
+				                  password=bcrypt.hashPassword( defaultPassword ),isActive=1,
 				                  firstName=listFirst(qAuthors.name[ x ], " " ),
 				                  lastName=trim(replacenocase(qAuthors.name[ x ], listFirst(qAuthors.name[ x ], " " ), "" ))};
 

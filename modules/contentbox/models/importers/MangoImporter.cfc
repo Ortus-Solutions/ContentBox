@@ -17,6 +17,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 	property name="customFieldService" 	inject="id:customFieldService@cb";
 	property name="log"					inject="logbox:logger:{this}";
 	property name="htmlHelper"			inject="HTMLHelper@coldbox";
+	property name="bCrypt"				inject="BCrypt@BCrypt";
 	
 	
 	/**
@@ -70,7 +71,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 			var q = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#author" ).execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
-				var props = {email=q.email[ x ], username=q.username[ x ], password=hash(defaultPassword, authorService.getHashType() ),isActive=1,
+				var props = {email=q.email[ x ], username=q.username[ x ], password=bcrypt.hashPassword( defaultPassword ),isActive=1,
 						     firstName=listFirst(q.name[ x ]," " ), lastName=trim(replacenocase(q.name[ x ], listFirst(q.name[ x ]," " ), "" ))};
 				var author = authorService.new(properties=props);
 				author.setRole( defaultRole );

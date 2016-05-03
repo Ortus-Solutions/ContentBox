@@ -16,6 +16,7 @@ component  implements="ICBImporter" {
 	property name="customFieldService" 	inject="id:customFieldService@cb";
 	property name="log"					inject="logbox:logger:{this}";
 	property name="htmlHelper"			inject="HTMLHelper@coldbox";
+	property name="bCrypt"				inject="BCrypt@BCrypt";
 	
 	
 	/**
@@ -67,7 +68,7 @@ component  implements="ICBImporter" {
 						      password=arguments.dsnPassword,
 						      sql="select * from #arguments.tablePrefix#machblog_user" ).execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
-				var props = {email=q.email[ x ], username=q.email[ x ], password=hash(defaultPassword, authorService.getHashType() ),isActive=q.is_active[ x ],
+				var props = {email=q.email[ x ], username=q.email[ x ], password=bcrypt.hashPassword( defaultPassword ),isActive=q.is_active[ x ],
 						     firstName=q.first_name[ x ], lastName=q.last_name[ x ]};
 				var author = authorService.new(properties=props);
 				author.setRole( defaultRole );

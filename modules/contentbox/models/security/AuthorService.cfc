@@ -11,9 +11,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	property name="populator" 			inject="wirebox:populator";
 	property name="permissionService"	inject="permissionService@cb";
 	property name="roleService"			inject="roleService@cb";
-	
-	// User hashing type
-	property name="hashType";
+	property name="bCrypt"				inject="BCrypt@BCrypt";
 	
 	/**
 	* Constructor
@@ -21,21 +19,24 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	AuthorService function init(){
 		// init it
 		super.init( entityName="cbAuthor" );
-	    setHashType( "SHA-256" );
 	    
 		return this;
 	}
 	
 	/**
 	* Save an author with extra pizazz!
+	* @author The author object
+	* @passwordChange Are we changing the password
+	* @transaactional Auto transactions
 	*/
-	function saveAuthor(author, boolean passwordChange=false, boolean transactional=true){
+	function saveAuthor( required author, boolean passwordChange=false, boolean transactional=true ){
 		// hash password if new author
 		if( !arguments.author.isLoaded() OR arguments.passwordChange ){
-			arguments.author.setPassword( hash(arguments.author.getPassword(), getHashType()) );
+			// bcrypt the incoming password
+			arguments.author.setPassword( variables.bcrypt.hashPassword( arguments.author.getPassword() ) );
 		}
 		// save the author
-		save(entity=author, transactional=arguments.transactional);
+		save( entity=author, transactional=arguments.transactional );
 	}
 	
 	/**

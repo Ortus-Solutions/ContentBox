@@ -32,7 +32,7 @@ component{
 			//Extension Points
 			applicationHelper 			= "",
 			viewsHelper					= "",
-			modulesExternalLocation		= [ "/cbapp/modules" ],
+			modulesExternalLocation		= [ "/modules_app" ],
 			viewsExternalLocation		= "",
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
@@ -46,7 +46,8 @@ component{
 
 			//Application Aspects
 			handlerCaching 				= true,
-			eventCaching				= true
+			eventCaching				= true,
+			viewCaching 				= true
 		};
 
 		// custom settings
@@ -127,7 +128,15 @@ component{
 		logbox.appenders.files = { 
 			class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {
-				filename = "ContentBox", filePath="/cbapp/logs", async=true
+				filename = "ContentBox", filePath="logs", async=true
+			}
+		};
+
+		// Mail settings for writing to log files instead of sending mail on dev.
+		mailsettings.protocol = {
+			class = "cbmailservices.models.protocols.FileProtocol",
+			properties = {
+				filePath = "logs"
 			}
 		};
 		//logbox.debug 	= ["coldbox.system.interceptors.Security"];

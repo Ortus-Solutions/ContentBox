@@ -17,6 +17,7 @@ component implements="ISecurityService" singleton{
 	property name="CBHelper"		inject="id:CBHelper@cb";
 	property name="log"				inject="logbox:logger:{this}";
 	property name="cache"			inject="cachebox:default";
+	property name="bCrypt"			inject="BCrypt@BCrypt";
 	
 	/**
 	* Constructor
@@ -132,24 +133,59 @@ component implements="ISecurityService" singleton{
 	* @username The username to validate
 	* @password The password to validate
 	*/
-	boolean function authenticate(required username, required password){
-		// hash password
-		arguments.password = hash( arguments.password, authorService.getHashType() );
-		var author = authorService.findWhere( {
+	boolean function authenticate( required username, required password ){
+
+		// Find username
+		var oAuthor = authorService.findWhere( {
 			username = arguments.username,
-			password = arguments.password,
-			isActive = true
+			isActive = true,
+			isDeleted=false
 		} );
-		
+		// Verify
+		if( isNull( oAuthor ) ){ return false; }
+
+		// Determine password type
+		var isBcrypt = ( findNoCase( "$", oAuthor.getPassword() ) ? true : false );
+		// Hash password according to algorithm
+		var isSamePassword = false;
+		if( isBcrypt ){
+			try{
+				isSamePassword = variables.bCrypt.checkPassword( arguments.password, oAuthor.getPassword() );
+			} catch( any "java.lang.IllegalArgumentException" ){
+				// Usually means the value is not bcrypt.
+				isSamePassword = false;
+			}
+		} else {
+			// Legacy hash compare
+			isSamePassword = ( compareNoCase( 
+					hash( arguments.password, "SHA-256" ), 
+					oAuthor.getPassword() 
+				) eq 0 ? true : false );
+			// If same 
+		}
+
 		//check if found and return verification
-		if( not isNull( author ) ){
+		if( isSamePassword ){
+			// Do we update the password algorithm?
+			if( !isBcrypt ){
+				oAuthor.setPassword( encryptString( arguments.password ) );
+			}
 			// Set last login date
-			updateAuthorLoginTimestamp( author );
+			updateAuthorLoginTimestamp( oAuthor );
 			// set them in session
-			setAuthorSession( author );
+			setAuthorSession( oAuthor );
 			return true;
 		}
+
 		return false;	
+	}
+
+	/**
+	* Leverages bcrypt to encrypt a string
+	* @string The string to bcrypt
+	*/
+	string function encryptString( required string ){
+		return bCrypt.hashPassword( arguments.string );
 	}
 	
 	/**
@@ -220,7 +256,7 @@ component implements="ISecurityService" singleton{
 		// generate temporary password
 		var genPassword = hash( results.author.getEmail() & results.author.getAuthorID() & now() );
 		// get settings
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		
 		// set it in the user and save reset password
 		results.author.setPassword( genPassword );
