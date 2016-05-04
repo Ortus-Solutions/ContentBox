@@ -282,7 +282,7 @@ component 	persistent="true"
 	){
 		var pList 	= [];
 		// Do this to convert native Array to CF Array for content properties
-		pList.addAll( authorService.getPropertyNames() );
+		arrayAppend( pList, authorService.getPropertyNames(), true );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		// Do Role Relationship

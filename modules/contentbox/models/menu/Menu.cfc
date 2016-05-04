@@ -168,8 +168,8 @@ component   persistent="true"
      */
     public struct function getMemento( excludes="" ){
         var pList   = [];
+        arrayAppend( pList, menuService.getPropertyNames(), true );
         // Do this to convert native Array to CF Array for content properties
-        pList.addAll( menuService.getPropertyNames() );
         var result  = getBaseMemento( properties=pList, excludes=arguments.excludes );
         
         // menu items

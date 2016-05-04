@@ -8,9 +8,34 @@
 component   persistent="true" 
             entityname="cbSubscription" 
             table="cb_subscriptions" 
-            extends="contentbox.models.BaseEntity"
+            extends="contentbox.models.BaseEntityMethods"
             cachename="cbSubscription" 
             cacheuse="read-write"{
+
+    /* *********************************************************************
+    **                          PROPERTIES again due to ACF Bug                                 
+    ********************************************************************* */
+
+    property    name="createdDate"  
+                type="date"
+                ormtype="timestamp"
+                notnull="true"
+                update="false"
+                index="idx_createDate";
+
+    property    name="modifiedDate" 
+                type="date"
+                ormtype="timestamp"
+                notnull="true"
+                index="idx_modifiedDate";
+
+    property    name="isDeleted"        
+                ormtype="boolean"
+                sqltype="bit"   
+                notnull="true" 
+                default="false" 
+                dbdefault="0" 
+                index="idx_deleted";
 
     /* *********************************************************************
     **                          PROPERTIES                                  

@@ -8,7 +8,7 @@
 component 	persistent="true" 
 			entityname="cbContent" 
 			table="cb_content" 
-			extends="contentbox.models.BaseEntity"
+			extends="contentbox.models.BaseEntityMethods"
 			cachename="cbContent" 
 			cacheuse="read-write" 
 			discriminatorColumn="contentType"{
@@ -30,6 +30,31 @@ component 	persistent="true"
 	********************************************************************* */
 
 	property 	name="renderedContent" persistent="false";
+
+	/* *********************************************************************
+	**							STUPID PROPERTIES DUE TO ACF BUG									 
+	********************************************************************* */
+
+	property 	name="createdDate" 	
+				type="date"
+				ormtype="timestamp"
+				notnull="true"
+				update="false"
+				index="idx_createDate";
+
+	property 	name="modifiedDate"	
+				type="date"
+				ormtype="timestamp"
+				notnull="true"
+				index="idx_modifiedDate";
+
+	property 	name="isDeleted"		
+				ormtype="boolean"
+				sqltype="bit" 	
+				notnull="true" 
+				default="false" 
+				dbdefault="0" 
+				index="idx_deleted";
 
 	/* *********************************************************************
 	**							PROPERTIES									
@@ -746,7 +771,7 @@ component 	persistent="true"
 	){
 		var pList 	= [];
 		// Do this to convert native Array to CF Array for content properties
-		pList.addAll( contentService.getPropertyNames() );
+		arrayAppend( pList, contentService.getPropertyNames(), true );
 		// Add incoming properties
 		if( structKeyExists( arguments, "properties" ) ){
 			pList.addAll( arguments.properties );

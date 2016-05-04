@@ -23,6 +23,30 @@ component   persistent="true"
 	**                          PROPERTIES                                  
 	********************************************************************* */
 
+	property 	name="createdDate" 	
+				type="date"
+				ormtype="timestamp"
+				notnull="true"
+				update="false"
+				insert="false";
+
+	property 	name="modifiedDate" 	
+				type="date"
+				ormtype="timestamp"
+				notnull="true"
+				update="false"
+				insert="false";
+
+	property 	name="isDeleted"		
+				ormtype="boolean"
+				sqltype="bit" 	
+				notnull="true" 
+				default="false" 
+				dbdefault="0" 
+				index="idx_deleted"
+				insert="false"
+				update="false";
+
 	property    name="menuItemID"
 				fieldtype="id"
 				generator="native"
@@ -128,10 +152,11 @@ component   persistent="true"
 
 	/**
 	 * Get a flat representation of this menu item
+	 * @excludes Exclude properties
 	 */
 	public struct function getMemento( excludes="" ){
-		var pList 	= [];
-		pList.addAll( menuItemService.getPropertyNames() );
+		var pList = [ ];
+		arrayAppend( pList, menuItemService.getPropertyNames(), true );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		// add contentType
