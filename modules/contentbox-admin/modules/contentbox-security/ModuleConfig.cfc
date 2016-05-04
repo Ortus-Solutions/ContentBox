@@ -16,7 +16,7 @@ component {
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin/security";
-	this.dependencies 		= [];
+	this.dependencies 		= [ "contentbox-admin" ];
 
 	function configure(){
 

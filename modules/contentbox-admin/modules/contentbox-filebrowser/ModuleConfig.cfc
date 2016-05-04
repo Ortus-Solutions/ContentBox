@@ -19,6 +19,7 @@ component{
 	this.layoutParentLookup = true;
 	// Module Entry Point
 	this.entryPoint			= "cbFileBrowser";
+	this.dependencies 		= [ "contentbox-admin" ];
 
 	function configure(){
 
