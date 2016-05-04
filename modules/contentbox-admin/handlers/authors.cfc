@@ -201,7 +201,7 @@ component extends="baseHandler"{
 			results[ "MESSAGES" ] = "Preference saved";
 		} else {
 			results[ "ERROR" ] 		= true;
-			results[ "MESSAGES" ] 	= "No preference sent!"
+			results[ "MESSAGES" ] 	= "No preference sent!";
 		}
 
 		// return preference saved
