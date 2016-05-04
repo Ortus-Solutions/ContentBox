@@ -22,6 +22,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	property name="populator"				inject="wirebox:populator";
 	property name="systemUtil"				inject="SystemUtil@cb";
 	property name="statsService"			inject="statsService@cb";
+	property name="dateUtil"		inject="DateUtil@cb";
 
 	/**
 	* Constructor
@@ -495,17 +496,22 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// setup
 		var thisContent 	= arguments.contentData;
-		var badDateRegex  = " -\d{4}$";
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
 		var oContent = findBySlug( slug=thisContent.slug, showUnpublished=true );
 		// add to newContent map so we can avoid slug collisions in recursive relationships
 		newContent[ thisContent.slug ] = oContent;
-		// date conversion tests
-		thisContent.publishedDate 	= reReplace( thisContent.publishedDate, badDateRegex, "" );
+		
+		// date cleanups, just in case.
+		var badDateRegex  	= " -\d{4}$";
 		thisContent.createdDate 	= reReplace( thisContent.createdDate, badDateRegex, "" );
-		if( len( thisContent.expireDate ) ){
-			thisContent.expireDate = reReplace( thisContent.expireDate, badDateRegex, "" );
-		}
+		thisContent.modifiedDate 	= reReplace( thisContent.modifiedDate, badDateRegex, "" );
+		thisContent.publishedDate 	= reReplace( thisContent.publishedDate, badDateRegex, "" );
+		thisContent.expireDate	 	= reReplace( thisContent.expireDate, badDateRegex, "" );
+		// Epoch to Local
+		thisContent.createdDate 	= dateUtil.epochToLocal( thisContent.createdDate );
+		thisContent.modifiedDate 	= dateUtil.epochToLocal( thisContent.modifiedDate );
+		thisContent.publishedDate 	= dateUtil.epochToLocal( thisContent.publishedDate );
+		thisContent.expireDate 		= dateUtil.epochToLocal( thisContent.expireDate );
 
 		// populate content from data and ignore relationships, we need to build those manually.
 		populator.populateFromStruct( 

@@ -251,7 +251,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections( property="settingID,name,value" )
+		return c.withProjections( property="settingID,name,value,createdDate,modifiedDate,isDeleted" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder="name" );
 			 
@@ -283,9 +283,24 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		for( var thisSetting in arguments.importData ){
 			var args = { name = thisSetting.name };
 			var oSetting = findWhere( criteria=args );
+
+			// date cleanups, just in case.
+			var badDateRegex  	= " -\d{4}$";
+			thisSetting.createdDate 	= reReplace( thisSetting.createdDate, badDateRegex, "" );
+			thisSetting.modifiedDate 	= reReplace( thisSetting.modifiedDate, badDateRegex, "" );
+			// Epoch to Local
+			thisSetting.createdDate 	= dateUtil.epochToLocal( thisSetting.createdDate );
+			thisSetting.modifiedDate 	= dateUtil.epochToLocal( thisSetting.modifiedDate );
+
 			// if null, then create it
 			if( isNull( oSetting ) ){
-				var args = { name = thisSetting.name, value = javaCast( "string", thisSetting.value ) };
+				var args = { 
+					name 			= thisSetting.name, 
+					value 			= javaCast( "string", thisSetting.value ),
+					createdDate 	= thisSeting.createdDate,
+					modifiedDate 	= thisSetting.modifiedDate,
+					isDeleted 		= thisSetting.isDeleted
+				};
 				arrayAppend( allSettings, new( properties=args ) );
 				// logs
 				importLog.append( "New setting imported: #thisSetting.name#<br>" );
@@ -293,10 +308,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 			// else only override if true
 			else if( arguments.override ){
 				oSetting.setValue( javaCast( "string", thisSetting.value ) );
+				oSetting.setIsDeleted( thisSetting.isDeleted );
 				arrayAppend( allSettings, oSetting );
 				importLog.append( "Overriding setting: #thisSetting.name#<br>" );
-			}
-			else{
+			} else {
 				importLog.append( "Skipping setting: #thisSetting.name#<br>" );
 			}
 		}
@@ -305,8 +320,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		if( arrayLen( allSettings ) ){
 			saveAll( allSettings );
 			importLog.append( "Saved all imported and overriden settings!" );
-		}
-		else{
+		} else {
 			importLog.append( "No settings imported as none where found or able to be overriden from the import file." );
 		}
 		

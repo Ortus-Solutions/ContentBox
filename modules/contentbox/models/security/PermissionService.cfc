@@ -64,7 +64,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="permissionID,permission,description" )
+		return c.withProjections(property="permissionID,permission,description,createdDate,modifiedDate,isDeleted" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list(sortOrder="permission" );
 			 
@@ -102,6 +102,14 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			var oPermission = this.findByPermission( thisPermission.permission );
 			oPermission = ( isNull( oPermission) ? new() : oPermission );
 			
+			// date cleanups, just in case.
+			var badDateRegex  	= " -\d{4}$";
+			thisPermission.createdDate 	= reReplace( thisPermission.createdDate, badDateRegex, "" );
+			thisPermission.modifiedDate 	= reReplace( thisPermission.modifiedDate, badDateRegex, "" );
+			// Epoch to Local
+			thisPermission.createdDate 	= dateUtil.epochToLocal( thisPermission.createdDate );
+			thisPermission.modifiedDate 	= dateUtil.epochToLocal( thisPermission.modifiedDate );
+
 			// populate content from data
 			populator.populateFromStruct( target=oPermission, memento=thisPermission, exclude="permissionID", composeRelationships=false );
 			

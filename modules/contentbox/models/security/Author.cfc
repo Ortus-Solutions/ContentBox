@@ -280,9 +280,8 @@ component 	persistent="true"
 		boolean showRole=true,
 		boolean showPermissions=true
 	){
-		var pList 	= [];
 		// Do this to convert native Array to CF Array for content properties
-		arrayAppend( pList, authorService.getPropertyNames(), true );
+		var pList = listToArray( arrayToList( authorService.getPropertyNames() ) );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		// Do Role Relationship
@@ -299,7 +298,7 @@ component 	persistent="true"
 		} else if( arguments.showPermissions ) {
 			result[ "permissions" ] = [];
 		}
-		
+
 		return result;
 	}
 	

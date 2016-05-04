@@ -11,6 +11,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	property name="htmlHelper" 		inject="HTMLHelper@coldbox";
 	property name="populator"  		inject="wirebox:populator";
 	property name="contentService"	inject="contentService@cb";
+	property name="dateUtil"		inject="DateUtil@cb";
 	
 	/**
 	* Constructor
@@ -168,6 +169,14 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			var oCategory = this.findBySlug( slug=thisCategory.slug);
 			oCategory = ( isNull( oCategory) ? new() : oCategory );
 			
+			// date cleanups, just in case.
+			var badDateRegex  	= " -\d{4}$";
+			thisCategory.createdDate 	= reReplace( thisCategory.createdDate, badDateRegex, "" );
+			thisCategory.modifiedDate 	= reReplace( thisCategory.modifiedDate, badDateRegex, "" );
+			// Epoch to Local
+			thisCategory.createdDate 	= dateUtil.epochToLocal( thisCategory.createdDate );
+			thisCategory.modifiedDate 	= dateUtil.epochToLocal( thisCategory.modifiedDate );
+
 			// populate content from data
 			populator.populateFromStruct( target=oCategory, memento=thisCategory, exclude="categoryID", composeRelationships=false );
 			

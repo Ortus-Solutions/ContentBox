@@ -167,8 +167,7 @@ component   persistent="true"
      * slugCache.hint Cache of slugs to prevent infinite recursions
      */
     public struct function getMemento( excludes="" ){
-        var pList   = [];
-        arrayAppend( pList, menuService.getPropertyNames(), true );
+        var pList   = listToArray( arrayToList( menuService.getPropertyNames() ) );
         // Do this to convert native Array to CF Array for content properties
         var result  = getBaseMemento( properties=pList, excludes=arguments.excludes );
         

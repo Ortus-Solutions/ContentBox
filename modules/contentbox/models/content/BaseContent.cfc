@@ -769,9 +769,8 @@ component 	persistent="true"
 		excludes="",
 		array properties
 	){
-		var pList 	= [];
 		// Do this to convert native Array to CF Array for content properties
-		arrayAppend( pList, contentService.getPropertyNames(), true );
+		var pList = listToArray( arrayToList( contentService.getPropertyNames() ) );
 		// Add incoming properties
 		if( structKeyExists( arguments, "properties" ) ){
 			pList.addAll( arguments.properties );

@@ -104,7 +104,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function getAllForExport(){
 		var c = newCriteria();
 		
-		return c.withProjections(property="ruleID,whitelist,securelist,roles,permissions,redirect,useSSL,order,match" )
+		return c.withProjections(property="ruleID,whitelist,securelist,roles,permissions,redirect,useSSL,order,match,createdDate,modifiedDate,isDeleted" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list(sortOrder="order" );
 	}
@@ -142,6 +142,14 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			var oRule = this.findWhere( criteria=args );
 			oRule = ( isNull( oRule) ? new() : oRule );
 			
+			// date cleanups, just in case.
+			var badDateRegex  	= " -\d{4}$";
+			thisRule.createdDate 	= reReplace( thisRule.createdDate, badDateRegex, "" );
+			thisRule.modifiedDate 	= reReplace( thisRule.modifiedDate, badDateRegex, "" );
+			// Epoch to Local
+			thisRule.createdDate 	= dateUtil.epochToLocal( thisRule.createdDate );
+			thisRule.modifiedDate 	= dateUtil.epochToLocal( thisRule.modifiedDate );
+
 			// populate content from data
 			populator.populateFromStruct( target=oRule, memento=thisRule, exclude="ruleID", composeRelationships=false );
 			

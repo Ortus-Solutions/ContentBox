@@ -12,6 +12,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	property name="permissionService"	inject="permissionService@cb";
 	property name="roleService"			inject="roleService@cb";
 	property name="bCrypt"				inject="BCrypt@BCrypt";
+	property name="dateUtil"			inject="DateUtil@cb";
 	
 	/**
 	* Constructor
@@ -131,7 +132,6 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
 		var allUsers 		= [];
-		var badDateRegex  	= " -\d{4}$";
 		
 		// if struct, inflate into an array
 		if( isStruct( arguments.importData ) ){
@@ -144,11 +144,15 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			var oUser = this.findByUsername( thisUser.username );
 			oUser = ( isNull( oUser ) ? new() : oUser );
 			
-			// date conversion tests
+			// date cleanups, just in case.
+			var badDateRegex  	= " -\d{4}$";
 			thisUser.createdDate 	= reReplace( thisUser.createdDate, badDateRegex, "" );
-			if( len( thisUser.lastLogin ) ){
-				thisUser.lastLogin = reReplace( thisUser.lastLogin, badDateRegex, "" );
-			}
+			thisUser.lastLogin 		= reReplace( thisUser.lastLogin, badDateRegex, "" );
+			thisUser.modifiedDate 	= reReplace( thisUser.modifiedDate, badDateRegex, "" );
+			// Epoch to Local
+			thisUser.createdDate 	= dateUtil.epochToLocal( thisUser.createdDate );
+			thisUser.lastLogin 		= dateUtil.epochToLocal( thisUser.lastLogin );
+			thisUser.createdDate 	= dateUtil.epochToLocal( thisUser.modifiedDate );
 			
 			// populate content from data
 			populator.populateFromStruct( target=oUser, memento=thisUser, exclude="role,authorID,permissions", composeRelationships=false );

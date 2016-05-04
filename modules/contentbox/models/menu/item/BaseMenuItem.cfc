@@ -155,8 +155,7 @@ component   persistent="true"
 	 * @excludes Exclude properties
 	 */
 	public struct function getMemento( excludes="" ){
-		var pList = [ ];
-		arrayAppend( pList, menuItemService.getPropertyNames(), true );
+		var pList = listToArray( arrayToList( menuItemService.getPropertyNames() ) );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		// add contentType

@@ -84,6 +84,14 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			var oRole = this.findByRole( thisRole.role );
 			oRole = ( isNull( oRole ) ? new() : oRole );
 			
+			// date cleanups, just in case.
+			var badDateRegex  	= " -\d{4}$";
+			thisRole.createdDate 	= reReplace( thisRole.createdDate, badDateRegex, "" );
+			thisRole.modifiedDate 	= reReplace( thisRole.modifiedDate, badDateRegex, "" );
+			// Epoch to Local
+			thisRole.createdDate 	= dateUtil.epochToLocal( thisRole.createdDate );
+			thisRole.modifiedDate 	= dateUtil.epochToLocal( thisRole.modifiedDate );
+
 			// populate content from data
 			populator.populateFromStruct( target=oRole, memento=thisRole, exclude="roleID", composeRelationships=false );
 			

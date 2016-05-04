@@ -1,25 +1,8 @@
 /**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-
-http://www.apache.org/licenses/LICENSE-2.0 
-
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Service to handle menu operations.
 */
 component extends="cborm.models.VirtualEntityService" accessors="true" singleton {
@@ -28,6 +11,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     property name="populator"       inject="wirebox:populator";
     property name="renderer"        inject="provider:ColdBoxRenderer";
     property name="menuItemService" inject="id:menuItemService@cb";
+    property name="dateUtil"        inject="DateUtil@cb";
     
     /**
     * Constructor
@@ -139,7 +123,6 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     */
     string function importFromData( required importData, boolean override=false, importLog ){
         var allMenus        = [];
-        var badDateRegex    = " -\d{4}$";
         
         // if struct, inflate into an array
         if( isStruct( arguments.importData ) ){
@@ -151,8 +134,14 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
             var oMenu = this.findBySlug( menu.slug );
             oMenu = ( isNull( oMenu ) ? new() : oMenu );
             
-            // date conversion tests
-            menu.createdDate  = reReplace( menu.createdDate, badDateRegex, "" );            
+            // date cleanups, just in case.
+            var badDateRegex    = " -\d{4}$";
+            menu.createdDate    = reReplace( menu.createdDate, badDateRegex, "" );
+            menu.modifiedDate   = reReplace( menu.modifiedDate, badDateRegex, "" );
+            // Epoch to Local
+            menu.createdDate    = dateUtil.epochToLocal( menu.createdDate );
+            menu.modifiedDate   = dateUtil.epochToLocal( menu.modifiedDate );
+
             // populate content from data
             populator.populateFromStruct( target=oMenu, memento=menu, composeRelationships=false, exclude="menuItems" );
             // Compose Menu Items

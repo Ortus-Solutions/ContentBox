@@ -65,14 +65,6 @@ component mappedsuperclass="true"{
 	}
 
 	/**
-	* Convert and epoch milliseconds into local time object.
-	* @epoch The epoch time in milliseconds
-	*/
-	function epochToLocal( required epoch ) {
-		return dateAdd( "l", arguments.epoch, dateConvert( "utc2Local", "January 1 1970 00:00" ) );
-	}
-
-	/**
 	* Build out property mementos
 	* Date/Time objects are produced as UTC milliseconds since January 1, 1970 (Epoch)
 	* @properties The array properties to incorporate into the base memento
@@ -97,10 +89,9 @@ component mappedsuperclass="true"{
 				!listFindNoCase( arguments.excludes, thisProp ) &&
 				isSimpleValue( variables[ thisProp ] )
 			){
-				//ISO 8601 time
+				// Formatted Date/Time
 				if( isDate( variables[ thisProp ] ) ){
-					//result[ thisProp ] = dateFormat( variables[ thisProp ], "yyyy-MM-dd" ) & "T" & timeFormat( variables[ thisProp ], "HH:mm:ss" );	
-					result[ thisProp ] = variables[ thisProp ].getTime();
+					result[ thisProp ] = dateFormat( variables[ thisProp ], "medium" ) & " " & timeFormat( variables[ thisProp ], "full" );
 				} else {
 					result[ thisProp ] = variables[ thisProp ];	
 				}
