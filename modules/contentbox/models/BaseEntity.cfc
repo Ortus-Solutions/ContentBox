@@ -85,7 +85,7 @@ component mappedsuperclass="true" accessors="true"{
 	* Verify if entity is loaded or not
 	*/
 	boolean function isLoaded(){
-		return ( isNull( variables[ this.pk ] ) OR !len( variables[ this.pk ] ) ? false : true );
+		return ( !structKeyExists( variables, this.pk ) OR !len( variables[ this.pk ] ) ? false : true );
 	}
 
 	/**
