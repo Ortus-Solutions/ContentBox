@@ -151,17 +151,13 @@ component implements="ISecurityService" singleton{
 		if( isBcrypt ){
 			try{
 				isSamePassword = variables.bCrypt.checkPassword( arguments.password, oAuthor.getPassword() );
-			} catch( any "java.lang.IllegalArgumentException" ){
+			} catch( "java.lang.IllegalArgumentException" e){
 				// Usually means the value is not bcrypt.
 				isSamePassword = false;
 			}
 		} else {
 			// Legacy hash compare
-			isSamePassword = ( compareNoCase( 
-					hash( arguments.password, "SHA-256" ), 
-					oAuthor.getPassword() 
-				) eq 0 ? true : false );
-			// If same 
+			isSamePassword = ( compareNoCase( hash( arguments.password, "SHA-256" ), oAuthor.getPassword() ) eq 0 ? true : false );
 		}
 
 		//check if found and return verification
