@@ -143,25 +143,12 @@ component extends="baseHandler" {
 	*/
 	function menuTable( event, rc, prc ){
 		// params
-		event.paramValue( "page", 1 )
-			.paramValue( "searchMenu","" )
-			.paramValue( "isFiltering", false, true )
-			.paramValue( "showAll", false );
+		event.paramValue( "searchMenu","" )
+			.paramValue( "isFiltering", false, true );
 
-		// prepare paging object
-		prc.oPaging         = getModel( "Paging@cb" );
-		prc.paging          = prc.oPaging.getBoundaries();
-		prc.pagingLink      = "javascript:contentPaginate(@page@)";
-		
-		// is Filtering?
-		if( rc.showAll ) { 
-			prc.isFiltering = true;
-		}
 		// search content with filters and all
 		var results = menuService.search(
 			searchTerm  = rc.searchMenu,
-			offset		= ( rc.showAll ? 0 : prc.paging.startRow-1 ),
-			max 		= ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
 			sortOrder	= "createdDate desc" 
 		);
 		prc.menus 		= results.menus;

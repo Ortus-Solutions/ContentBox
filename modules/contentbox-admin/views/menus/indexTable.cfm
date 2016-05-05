@@ -1,6 +1,6 @@
 <cfoutput>
     <!--- menus --->
-    <table name="menu" id="menu" class="table table-hover" width="100%">
+    <table name="menu" id="menu" class="table table-striped" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'menuID')"/></th>
@@ -55,10 +55,4 @@
             </cfloop>
         </tbody>
     </table>
-    <!--- Paging --->
-    <cfif !rc.showAll>
-        #prc.oPaging.renderit(foundRows=prc.menuCount, link=prc.pagingLink, asList=true)#
-        <cfelse>
-        <span class="label label-info">Total Records: #prc.menuCount#</span>
-    </cfif>
 </cfoutput>
