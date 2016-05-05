@@ -1,6 +1,6 @@
 {
     "name":"ContentBox Modular CMS",
-    "version":"3.0.0-beta+@build.number@",
+    "version":"3.0.0-rc+@build.number@",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "slug":"contentbox",
     "type":"cms",
