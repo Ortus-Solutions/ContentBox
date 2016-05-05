@@ -31,16 +31,21 @@
                 <menu class="well well-sm">
                     <p>Click any of the options below to insert a new menu item of that type.</p>
                     <cfloop collection="#prc.providers#" item="provider">
-                        <a class="btn btn-sm provider btn-info" data-provider="#provider#" title="#prc.providers[ provider ].getDescription()#">
-                            <i class="#prc.providers[ provider].getIconClass()#"></i> #provider#
-                        </a>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-sm provider btn-info" data-provider="#provider#" title="#prc.providers[ provider ].getDescription()#">
+                                <i class="#prc.providers[ provider].getIconClass()#"></i> #provider#
+                            </a>
+                        </div>
                     </cfloop>
-                    <a class="btn btn-sm btn-primary pull-right" data-action="collapse-all">
-                        <span style="display:inline-block;" title="Collapse All"><i class="fa fa-minus"></i> Collapse All</span>
-                    </a>
-                    <a class="btn btn-sm btn-primary pull-right" data-action="expand-all" style="margin-right:4px;">
-                        <span style="display:inline-block;" title="Expand All"><i class="fa fa-plus"></i> Expand All</span>
-                    </a>
+
+                    <div class="btn-group pull-right" role="group">
+                        <a class="btn btn-sm btn-primary" data-action="collapse-all">
+                            <span style="display:inline-block;" title="Collapse All"><i class="fa fa-minus"></i> Collapse All</span>
+                        </a>
+                        <a class="btn btn-sm btn-primary" data-action="expand-all" style="margin-right:4px;">
+                            <span style="display:inline-block;" title="Expand All"><i class="fa fa-plus"></i> Expand All</span>
+                        </a>
+                    </div>
                 </menu>
 
                 <div class="row">
