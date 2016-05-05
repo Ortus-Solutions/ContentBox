@@ -181,16 +181,8 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var xehCKFileBrowserURLImage	= "#cbAdminEntryPoint#/ckfilebrowser/";
 		var xehCKFileBrowserURLFlash	= "#cbAdminEntryPoint#/ckfilebrowser/";
 		
-		/**
-		 We build the compiled JS with the knowledge of some inline variables we have context to
-		 $excerpt - The excerpt jquery object
-		 $content - The content jquery object
-		 withExcerpt - an argument telling us if an excerpt is available to render or not
-		*/
-		
 		savecontent variable="js"{
 			writeOutput( "
-
 			// Activate on content object
 			simpleMDE_content = new SimpleMDE( { 
 				element 		: $content[ 0 ],
@@ -286,7 +278,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 						}
 					]
 				} );
-			}
+			};
 			simpleMDETargetEditor = '';
 			simpleMDE_content.isDirty = false;
 			simpleMDE_content.codemirror.on( 'change', function(){
