@@ -8,7 +8,7 @@
 component   persistent="true" 
 			entityName="cbMenuItem" 
 			table="cb_menuItem" 
-			extends="contentbox.models.BaseEntity"
+			extends="contentbox.models.BaseEntityMethods"
 			cachename="cbMenuItem" 
 			cacheuse="read-write" 
 			discriminatorColumn="menuType"{
@@ -18,9 +18,9 @@ component   persistent="true"
 	********************************************************************* */
 
 	property name="menuItemService" inject="menuItemService@cb" persistent="false";
-	
+
 	/* *********************************************************************
-	**                          PROPERTIES                                  
+	**							PROPERTIES due to CF9 Bug									
 	********************************************************************* */
 
 	property 	name="createdDate" 	
@@ -28,14 +28,13 @@ component   persistent="true"
 				ormtype="timestamp"
 				notnull="true"
 				update="false"
-				insert="false";
+				index="idx_createDate";
 
-	property 	name="modifiedDate" 	
+	property 	name="modifiedDate"	
 				type="date"
 				ormtype="timestamp"
 				notnull="true"
-				update="false"
-				insert="false";
+				index="idx_modifiedDate";
 
 	property 	name="isDeleted"		
 				ormtype="boolean"
@@ -43,9 +42,11 @@ component   persistent="true"
 				notnull="true" 
 				default="false" 
 				dbdefault="0" 
-				index="idx_deleted"
-				insert="false"
-				update="false";
+				index="idx_deleted";
+	
+	/* *********************************************************************
+	**                          PROPERTIES                                  
+	********************************************************************* */
 
 	property    name="menuItemID"
 				fieldtype="id"
