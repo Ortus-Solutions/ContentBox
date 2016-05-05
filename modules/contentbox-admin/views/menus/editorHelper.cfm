@@ -265,6 +265,14 @@
                 if( $( this ).attr( 'disabled' ) ) {
                     return false;
                 }
+                $( "##saveEvent" ).val( "" );
+                saveMenu();
+            } );
+            // add listener to submit button
+            $( '##submitSave' ).on( 'click', function() {
+                if( $( this ).attr( 'disabled' ) ) {
+                    return false;
+                }
                 saveMenu();
             } );
             // add listener for preview
