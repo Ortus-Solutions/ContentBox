@@ -112,35 +112,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 					simpleMDE_excerpt.codemirror.replaceRange( content, { line: simpleMDE_excerpt.codemirror.lastLine() } );
 				}
 			}
-			" );
-		}
-		
-		return js;
-	};
-	
-	/**
-	* Compile the needed JS to display into the screen
-	*/
-	private function compileJS(){
-		var js 					= "";
-		var event 				= requestService.getContext();
-		var cbAdminEntryPoint 	= event.getValue( name="cbAdminEntryPoint", private=true );
-		
-		// CK Editor Integration Handlers
-		var xehCKFileBrowserURL			= "#cbAdminEntryPoint#/ckfilebrowser/";
-		var xehCKFileBrowserURLImage	= "#cbAdminEntryPoint#/ckfilebrowser/";
-		var xehCKFileBrowserURLFlash	= "#cbAdminEntryPoint#/ckfilebrowser/";
-		
-		/**
-		 We build the compiled JS with the knowledge of some inline variables we have context to
-		 $excerpt - The excerpt jquery object
-		 $content - The content jquery object
-		 withExcerpt - an argument telling us if an excerpt is available to render or not
-		*/
-		
-		savecontent variable="js"{
-			writeOutput( "
-			
+
 			// Insert Widgets
 			$insertCBWidget = function( editor ){
 				// Open the selector widget dialog.
@@ -190,6 +162,34 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 				insertEditorContent( simpleMDETargetEditor, link );
 				closeRemoteModal();
 			}
+			" );
+		}
+		
+		return js;
+	};
+	
+	/**
+	* Compile the needed JS to display into the screen
+	*/
+	private function compileJS(){
+		var js 					= "";
+		var event 				= requestService.getContext();
+		var cbAdminEntryPoint 	= event.getValue( name="cbAdminEntryPoint", private=true );
+		
+		// CK Editor Integration Handlers
+		var xehCKFileBrowserURL			= "#cbAdminEntryPoint#/ckfilebrowser/";
+		var xehCKFileBrowserURLImage	= "#cbAdminEntryPoint#/ckfilebrowser/";
+		var xehCKFileBrowserURLFlash	= "#cbAdminEntryPoint#/ckfilebrowser/";
+		
+		/**
+		 We build the compiled JS with the knowledge of some inline variables we have context to
+		 $excerpt - The excerpt jquery object
+		 $content - The content jquery object
+		 withExcerpt - an argument telling us if an excerpt is available to render or not
+		*/
+		
+		savecontent variable="js"{
+			writeOutput( "
 
 			// Activate on content object
 			simpleMDE_content = new SimpleMDE( { 
