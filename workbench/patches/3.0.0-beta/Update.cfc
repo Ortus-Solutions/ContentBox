@@ -114,6 +114,8 @@ component {
 			// Update Roles with new permissions
 			updateAdmin();
 			updateEditor();
+			// Update CK Editor
+			updateCKEditorPlugins();
 		} catch( Any e ) {
 			ORMClearSession();
 			log.error( "Error doing #version# patch postInstallation. #e.message# #e.detail#", e );
@@ -311,6 +313,40 @@ component {
 			log.info( "Update #thisTable# created date", results );	
 		}
 			
+	}
+
+	private function updateCKEditorPlugins(){
+		// Update extra plugins
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_extraplugins" } );
+		if( !isNull( setting ) ){
+			var plugins = listToArray( setting.getValue() );
+			// native markdown support
+			if( !arrayFindNoCase( plugins, "markdown") ){
+				arrayAppend( plugins, "markdown" );
+			}
+			// save back
+			setting.setValue( arrayToList( plugins ) );
+			// save it
+			settingService.save( entity=setting, transactional=false );
+		}
+
+		// Update Toolbars
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_toolbar" } );
+		if( !isNull( setting ) ){
+			var value = replaceNoCase( setting.getValue(), '"Source",', '"Markdown","Source",' );
+			// save back
+			setting.setValue( value );
+			// save it
+			settingService.save( entity=setting, transactional=false );
+		}
+		// Update Excerpt Toolbars
+		var setting = settingService.findWhere( { name = "cb_editors_ckeditor_excerpt_toolbar" } );
+		if( !isNull( setting ) ){
+			var value = replaceNoCase( setting.getValue(), '"Source",', '"Markdown","Source",' );
+			// save back
+			setting.setValue( value );
+		}
+
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/
