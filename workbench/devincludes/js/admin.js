@@ -507,27 +507,29 @@ function closeConfirmations(){
  */
 function activateConfirmations(){
     // close button triggers for confirmation dialog
-    $confirmIt.find( "button" ).click(function(e){
-        if( $(this).attr( "data-action" ) === "confirm" ){
+    $confirmIt.find( "button" ).click( function( e ){
+        if( $( this ).attr( "data-action" ) === "confirm" ){
             $confirmIt.find( "#confirmItButtons" ).hide();
             $confirmIt.find( "#confirmItLoader" ).fadeIn();
-            window.location =  $confirmIt.data('confirmSrc');
+            window.location =  $confirmIt.data( 'confirmSrc' );
         }
     } );
     
     // Activate dynamic confirmations from <a> of class confirmIt
     $( ".confirmIt" ).click( function( e ){
+        // Enable button
+        $confirmIt.find( "#confirmItButtons" ).fadeIn();
+        $confirmIt.find( "#confirmItLoader" ).hide();
         // setup the href
-        $confirmIt.data( "confirmSrc", $(this).attr('href'));
+        $confirmIt.data( "confirmSrc", $( this ).attr( 'href' ) );
         // defaults
-        var dataMessage = $(this).attr('data-message') ? $(this).attr('data-message') : 'Are you sure you want to perform this action?';
-        var dataTitle = $(this).attr('data-title') ? $(this).attr('data-title') : 'Are you sure?';
+        var dataMessage = $( this ).attr( 'data-message' ) ? $( this ).attr( 'data-message' ) : 'Are you sure you want to perform this action?';
+        var dataTitle   = $( this ).attr( 'data-title' ) ? $( this ).attr( 'data-title' ) : 'Are you sure?';
         // set message
         $confirmIt.find( "#confirmItMessage" ).html( dataMessage );
         // set title
         $confirmIt.find( "#confirmItTitle" ).html( dataTitle );
         // show the confirmation when clicked
-        //$confirmIt.data( "overlay" ).load();
         $confirmIt.modal();
         // prevent default action
         e.preventDefault();
