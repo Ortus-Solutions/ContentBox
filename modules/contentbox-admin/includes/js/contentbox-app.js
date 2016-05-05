@@ -824,7 +824,10 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 
 	var editorID = editor.attr( 'id' );
 	var saveStoreKey = 'autosave_' + window.location + "_" + editorID;
-	var isCK = ( CKEDITOR && CKEDITOR.instances.hasOwnProperty( editorID ) );
+	var isCK = false;
+	if( typeof( CKEDITOR ) !== 'undefined' && CKEDITOR.instances.hasOwnProperty( editorID )  ){
+		isCK = true;
+	}
 	var timer = 0, savingActive = false;
 
 	// Setup SavesStore

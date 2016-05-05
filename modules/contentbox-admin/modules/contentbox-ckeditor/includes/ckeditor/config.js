@@ -6,7 +6,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-	config.extraPlugins 				= 'cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre'; 
+	config.extraPlugins 				= 'cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre,markdown'; 
 	config.tabSpaces 					= 4;
 	config.enableTabKeyTools 			= true;
 	config.entities 					= false;
@@ -16,7 +16,11 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removePlugins 				= 'autogrow';
 	// Allow i,a,span empty tags
 	config.protectedSource.push( /<(i|span|a) [^>]*><\/(i|span|a)>/g );
-	config.protectedSource.push( /<ins[\s|\S]+?<\/ins>/g); // Protects <INS> tags 
+	config.protectedSource.push( /<ins[\s|\S]+?<\/ins>/g); // Protects <INS> tags
+	// Markdown editor
+	config.markdown	= {
+		theme : "paraiso-dark"
+	};
 	//config.protectedSource.push( /<\/(i|span|a)>/g );
 	//config.protectedSource.push( /<(i|span|a) *?\>/g );
 };

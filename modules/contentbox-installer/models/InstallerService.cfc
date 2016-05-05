@@ -420,7 +420,7 @@ component accessors="true"{
 			"cb_editors_default" 					= "ckeditor",
 			"cb_editors_markup" 					= "HTML",
 			"cb_editors_ckeditor_toolbar" 			= '[
-{ "name": "document",    "items" : [ "Source","-","Maximize","ShowBlocks" ] },
+{ "name": "document",    "items" : [ "Markdown","Source","-","Maximize","ShowBlocks" ] },
 { "name": "clipboard",   "items" : [ "Cut","Copy","Paste","PasteText","PasteFromWord","-","Undo","Redo" ] },
 { "name": "editing",     "items" : [ "Find","Replace","SpellChecker"] },
 { "name": "forms",       "items" : [ "Form", "Checkbox", "Radio", "TextField", "Textarea", "Select", "Button","HiddenField" ] },
@@ -436,14 +436,14 @@ component accessors="true"{
 ]',
 			"cb_editors_ckeditor_excerpt_toolbar" 	= '
 [
-    { "name": "document",    "items" : [ "Source","ShowBlocks" ] },
+    { "name": "document",    "items" : [ "Markdown","Source","-","Maximize","ShowBlocks" ] },
     { "name": "basicstyles", "items" : [ "Bold","Italic","Underline","Strike","Subscript","Superscript"] },
     { "name": "paragraph",   "items" : [ "NumberedList","BulletedList","-","Outdent","Indent","CreateDiv"] },
     { "name": "links",       "items" : [ "Link","Unlink","Anchor" ] },
     { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
     { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbContentStore","cbLinks","cbEntryLinks" ] }
 ]' ,
-			"cb_editors_ckeditor_extraplugins" 		= "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre",
+			"cb_editors_ckeditor_extraplugins" 		= "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre,markdown",
 
 			// Search Settings
 			"cb_search_adapter" 					= "contentbox.models.search.DBSearch",

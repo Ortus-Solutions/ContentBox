@@ -1,6 +1,16 @@
 <cfoutput>
 <script>
 function selectCBContent(slug,title,type){
+
+	// NO CKEditor
+	if( typeof( CKEDITOR ) == 'undefined' ){
+		var link = "[" + title + "](" + type + ":[" + slug + "])";
+		insertEditorContent( '#rc.editorName#', link );
+		closeRemoteModal();
+		return false;
+	}
+
+	// CKEDITOR Specific 
 	var editor = $( "###rc.editorName#" ).ckeditorGet();
 	var link = editor.document.createElement( 'a' );
 	link.setAttribute( 'href', type+':['+slug+']');

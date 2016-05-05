@@ -130,6 +130,31 @@ function insertCBWidget(){
     // add selector to args form
     args = form.serializeArray();
     vals = getFormValues();
+
+    // NO CKEditor
+    if( typeof( CKEDITOR ) == 'undefined' ){
+        var widget = "{{{" + vals.widgetName;
+
+        // Function name
+        if( vals.widgetUDF.toLowerCase() !== "renderit" ){
+            widget += "." + vals.widgetUDF;
+        }
+
+        // Arguments
+        var blacklistKeys = ['widgetName','widgetType','widgetDisplayName','renderMethodSelect','widgetUDF']
+        for( var item in vals ){
+            if( $.inArray( item, blacklistKeys ) == -1 ) {
+                widget += " " + item + "=" + "'" + vals[ item ] + "'";
+            }
+        }
+
+        // close it
+        widget += "}}}";
+        insertEditorContent( '#rc.editorName#', widget );
+        closeRemoteModal();
+        return false;
+    }
+    
     // create new widget element
     widgetContent = new CKEDITOR.dom.element( 'widget' );
     widgetContent.setAttributes( vals );

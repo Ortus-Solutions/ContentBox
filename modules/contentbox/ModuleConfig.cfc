@@ -17,7 +17,7 @@ component {
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
 	this.modelNamespace 	= "cb";
-	this.dependencies 		= [ "cborm", "cbmailservices", "cbstorages", "cbantisamy", "cbfeeds", "cbmessagebox", "cbsecurity", "bcrypt" ];
+	this.dependencies 		= [ "cborm", "cbmailservices", "cbstorages", "cbantisamy", "cbfeeds", "cbmessagebox", "cbsecurity", "bcrypt", "cbmarkdown" ];
 	this.cfmapping 			= "contentbox";
 
 	function configure(){
@@ -80,7 +80,8 @@ component {
 			// Content Renderers, remember order is important.
 			{ class="contentbox.models.content.renderers.LinkRenderer", name="LinkRenderer@cb" },
 			{ class="contentbox.models.content.renderers.WidgetRenderer", name="WidgetRenderer@cb" },
-			{ class="contentbox.models.content.renderers.SettingRenderer", name="SettingRenderer@cb" }
+			{ class="contentbox.models.content.renderers.SettingRenderer", name="SettingRenderer@cb" },
+			{ class="contentbox.models.content.renderers.MarkdownRenderer", name="MarkdownRenderer@cb" }
 		];
 
 		// Manual Mappings
@@ -104,7 +105,6 @@ component {
 	* Development tier
 	*/
 	function development(){
-		//parentSettings.jsmin_enable = false;
 	}
 
 	/**

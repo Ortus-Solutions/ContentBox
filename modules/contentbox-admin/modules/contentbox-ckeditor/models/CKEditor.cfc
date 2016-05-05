@@ -42,6 +42,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		// Store admin entry point and base URL settings
 		ADMIN_ENTRYPOINT 	= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
 		ADMIN_ROOT 			= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].mapping;
+		CKEDITOR_ROOT 		= arguments.coldbox.getSetting( "modules" )[ "contentbox-ckeditor" ].mapping;
 		HTML_BASE_URL	 	= variables.requestService.getContext().getHTMLBaseURL();
 		// Register our CKEditor events
 		interceptorService.appendInterceptionPoints( "cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig" );
@@ -94,8 +95,8 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var js = "";
 		
 		// Load Assets, they are included with ContentBox
-		html.addAsset( "#variables.ADMIN_ROOT#/includes/plugins/ckeditor/ckeditor.js" );
-		html.addAsset( "#variables.ADMIN_ROOT#/includes/plugins/ckeditor/adapters/jquery.js" );
+		html.addAsset( "#variables.CKEDITOR_ROOT#/includes/ckeditor/ckeditor.js" );
+		html.addAsset( "#variables.CKEDITOR_ROOT#/includes/ckeditor/adapters/jquery.js" );
 
 		savecontent variable="js"{
 			writeOutput( "
