@@ -1,17 +1,16 @@
  <cfoutput>
     <script>
-        var confirmConfig = {
-            placement: 'right',
-            title: 'Are you sure you want to remove this menu item and all its descendants?',
-            singleton: true,
-            container: 'body',
-            href: 'javascript:void(0);',
-            onConfirm: function( e, target ) {
-                $( target ).confirmation('destroy')
-                $( target ).closest( '.dd3-item' ).remove();
-                togglePlaceholderMessage();
-            }
-        };
+        /**
+         * Remove a menu item
+         * @param  {string} target The item ID target to remove
+         */
+        function removeMenuItem( target ){
+            $( "##" + target ).remove();
+            togglePlaceholderMessage();
+            closeConfirmations();
+            previewMenu();
+        }
+
         // Create Slug
         function createSlug( linkToUse ){
             var linkToUse = ( typeof linkToUse === "undefined" ) ? $( "##title" ).val() : linkToUse,
@@ -108,7 +107,7 @@
                 extra.toggle( 300 );
                 extra.find( 'input[name^=label]' ).focus();
                 var element = $( this );
-                $( element ).find( '[data-toggle="confirmation"]' ).confirmation( confirmConfig );
+                activateConfirmations();
             } );
             activateTooltips();
         }
@@ -260,7 +259,7 @@
                 } )
                 $contextMenu.hide();
             } );
-            // add listener to submit button
+            // add listener to submit button and close
             $( '##submitMenu' ).on( 'click', function() {
                 if( $( this ).attr( 'disabled' ) ) {
                     return false;
@@ -268,7 +267,7 @@
                 $( "##saveEvent" ).val( "" );
                 saveMenu();
             } );
-            // add listener to submit button
+            // add listener to submit save & stay
             $( '##submitSave' ).on( 'click', function() {
                 if( $( this ).attr( 'disabled' ) ) {
                     return false;
@@ -279,8 +278,6 @@
             $( '##preview-button' ).on( 'click', function() {
                 previewMenu();
             } );
-            // add confirmation toggle
-            $( '[data-toggle="confirmation"]' ).confirmation( confirmConfig );
             // setup expand listeners
             $( '##nestable' ).on('click', '.dd3-expand', function() {
                 var me = $( this ),

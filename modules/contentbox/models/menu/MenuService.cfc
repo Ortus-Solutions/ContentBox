@@ -179,7 +179,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     * @menuString.hint build-up string for menu content
     * @inChild.hint flag for whether the content item is being evaluated as itself, or as a child of another item
     */
-    public String function buildEditableMenu( required array menu, required string menuString="", boolean inChild=false ) {
+    public String function buildEditableMenu( required array menu, required string menuString="", boolean inChild=false ){
         // loop over menu items
         for( var item in arguments.menu ) {
             var providerContent = "";
@@ -193,6 +193,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
             // build out the item
             if( !skipItem ) {
                 arguments.menuString &= '<li id="key_#item.getMenuItemID()#" class="dd-item dd3-item" data-id="#item.getMenuItemID()#">';
+                
                 // render default menu item
                 var args = { menuItem=item, provider=item.getProvider() };
                 savecontent variable="providerContent" {
@@ -203,15 +204,18 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
                     ));
                 };
                 menuString &= providerContent;
+
                 // if this item has children, recursively call this method to build them out too
                 if( item.hasChild() ) {
-                    menuString &='<ol class="dd-list">';
+                    menuString &= '<ol class="dd-list">';
                     menuString &= buildEditableMenu( menu=item.getChildren(), inChild=true );
-                    menuString &='</ol>';
+                    menuString &= '</ol>';
                 }
-                menuString &='</li>';   
+
+                menuString &= '</li>';   
             }
         }
+
         return menuString;
     }
 
