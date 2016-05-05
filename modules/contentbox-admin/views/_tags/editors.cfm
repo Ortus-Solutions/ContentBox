@@ -98,14 +98,6 @@ function setupEditors( $theForm, withExcerpt, saveURL, withChangelogs ){
 	$slug 					= $targetEditorForm.find('##slug');
 	$changelogMandatory		= #prc.cbSettings.cb_versions_commit_mandatory#;
 	
-	// Prevent Enter Submissions
-	$targetEditorForm.keydown( function( e ){
-        if( e.keyCode == 13 ){
-	    	e.preventDefault();
-	        return false;
-	    }
-	} );
-
 	// with excerpt activations
 	if( withExcerpt == null ){ withExcerpt = true; }
 	// with changelogs activations

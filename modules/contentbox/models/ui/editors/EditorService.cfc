@@ -30,7 +30,8 @@ component accessors="true" threadSafe singleton{
 		registerEditor( arguments.wirebox.getInstance( "TextareaEditor@cb" ) );
 		
 		// register default markup
-		registerMarkup( "HTML" );
+		registerMarkup( "HTML" )
+			.registerMarkup( "Markdown" );
 
 		return this;
 	}
