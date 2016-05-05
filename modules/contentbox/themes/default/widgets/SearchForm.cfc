@@ -1,41 +1,45 @@
 /**
-* Simple widget to generate a search form
-
-All widgets inherit the following properties available to you:
-
-property name="categoryService"			inject="id:categoryService@cb";
-property name="entryService"			inject="id:entryService@cb";
-property name="pageService"				inject="id:pageService@cb";
-property name="contentService"			inject="id:contentService@cb";
-property name="contentVersionService"	inject="id:contentVersionService@cb";
-property name="authorService"			inject="id:authorService@cb";
-property name="commentService"			inject="id:commentService@cb";
-property name="customHTMLService"		inject="id:customHTMLService@cb";
-property name="cb"						inject="id:CBHelper@cb";
-property name="securityService" 		inject="id:securityService@cb";
-property name="html"					inject="coldbox:plugin:HTMLHelper";
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* This widget creates a simple ContentBox search form
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
 	
-	SearchForm function init(controller){
-		// Init parent
-		super.init( arguments.controller );
-		
+	SearchForm function init(){
 		// Widget Properties
-		setName("SearchForm");
-		setVersion("1.0");
-		setDescription("Simple widget to generate a search form");
-		setAuthor("Tropicalista");
-		setAuthorURL("http://www.tropicalseo.net");
-		setForgeBoxSlug("");
-		
+		setName( "SearchForm" );
+		setVersion( "2.0" );
+		setDescription( "This widget creates a simple ContentBox search form." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
+		setCategory( "Miscellaneous" );
+		setIcon( "search" );
 		return this;
 	}
 
 	/**
-	* This is the main renderit method you will need to implement in concrete widgets
+	* This widget creates a simple ContentBox search form
+	* @type.hint The type of search form: content or blog, default is content
+	* @label.hint The label to use, defaults to 'Search for:'
+	* @title.hint The title to show before the dropdown or list, defaults to H2
+	* @titleLevel.hint The H{level} to use, by default we use H2
+	* @placeholder.hint Add a placeholder to the query textfield
+	* @querycss.hint The css classes of the textfield query
+	* @buttoncss.hint The search button css classes
+	* @formcss.hint The form css classes
 	*/
-	any function renderIt(string type="content", string label="Search for", string title="", string titleLevel="2", string placeholder="", string querycss="", string buttoncss="", string formcss=""){
+	any function renderIt(
+		string type="content", 
+		string label="Search for", 
+		string title="", 
+		string titleLevel="2", 
+		string placeholder="", 
+		string querycss="", 
+		string buttoncss="", 
+		string formcss="" 
+	){
 		var rString	= "";
 		var event = getRequestContext();
 
@@ -49,14 +53,14 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 			action = cb.linkSearch();
 		}
 		// Check incoming query
-		local.q = event.getValue( "q", "" );
+		local.q = htmlEditFormat( event.getValue( "q", "" ) );
 
 		// generate recent comments
 		saveContent variable="rString"{
 			writeOutput('
-			#html.startForm(name="searchForm", action=cb.linkSearch(), class=arguments.formcss)#
+			#html.startForm( name="searchForm", action=action, class=arguments.formcss )#
 			    <div class="input-group">
-					#html.textField(name="q", placeholder="Search", value=local.q, class="form-control")#
+					#html.textField( name="q", placeholder="Search", value=local.q, class="form-control")#
 			      <span class="input-group-btn">
 			        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
 			      </span>
