@@ -517,6 +517,10 @@ function activateConfirmations(){
     
     // Activate dynamic confirmations from <a> of class confirmIt
     $( ".confirmIt" ).click( function( e ){
+        // Enable button
+        $confirmIt.find( "#confirmItButtons" ).fadeIn();
+        $confirmIt.find( "#confirmItLoader" ).hide();
+        
         // setup the href
         $confirmIt.data( "confirmSrc", $(this).attr('href'));
         // defaults
