@@ -208,7 +208,7 @@ component{
 			event 	= arguments.event,
 			rc 		= arguments.rc,
 			prc 	= arguments.prc
-		}
+		};
 		structAppend( args, arguments.eventArguments );
 		// execute the wrapped action
 		data.content = arguments.action( argumentCollection=args );
