@@ -1,6 +1,6 @@
 <cfoutput>
     <!--- menus --->
-    <table name="menu" id="menu" class="table table-striped" width="100%" cellspacing="0">
+    <table name="menu" id="menu" class="table table-striped table-hover table-condensed" width="100%" cellspacing="0">
         <thead>
             <tr>
                 <th id="checkboxHolder" class="{sorter:false}" width="20"><input type="checkbox" onClick="checkAll(this.checked,'menuID')"/></th>

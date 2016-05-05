@@ -58,7 +58,7 @@
 				</div>
 				<div class="panel-body">
 					<!--- comments --->
-					<table name="comments" id="comments" class="table table-striped table-hover" width="98%">
+					<table name="comments" id="comments" class="table table-striped table-hover table-condensed" width="98%">
 						<thead>
 							<tr>
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
@@ -92,7 +92,9 @@
 								</td>
 								<td>
 									<!--- Entry Or Page --->
-									<strong>#comment.getParentTitle()#</strong> 
+									<strong>
+										<a title="Open in Site" href="#prc.CBHelper.linkComment(comment)#">#comment.getParentTitle()#</a>
+									</strong> 
 									<br/>
 									#left(comment.getContent(),prc.cbSettings.cb_comments_maxDisplayChars)#
 									<cfif len(comment.getContent()) gt prc.cbSettings.cb_comments_maxDisplayChars>....<strong>more</strong></cfif>
@@ -104,7 +106,7 @@
 									<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>
-											<a class="btn btn-sm btn-info" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
+											<a class="btn btn-sm btn-danger" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
 										<cfelse>
 											<a class="btn btn-sm btn-info" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 										</cfif>
@@ -124,8 +126,6 @@
 									    	</ul>
 									    </div>
 									</cfif>
-									<!--- View in Site --->
-									<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye fa-lg"></i></a>
 								</td>
 							</tr>
 							</cfloop>

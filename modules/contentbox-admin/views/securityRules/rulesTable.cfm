@@ -3,8 +3,7 @@
 <table name="rules" id="rules" class="table table-hover table-striped table-condensed" width="100%">
 	<thead>
 		<tr>
-			<th>Secured</th>
-			<th>Credentials</th>
+			<th>Security Rule</th>
 			<th class="text-center"><i class="fa fa-arrows fa-lg"></i></th>
 			<th class="text-center {sorter:false}">Actions</th>
 		</tr>
@@ -17,9 +16,7 @@
 				<strong>Match:</strong> #rule.getMatch()#<br/>
 				<strong>SecureList:</strong> #rule.getSecureList()#<br/>
 				<strong>WhiteList:</strong> #rule.getWhiteList()#<br/>
-				<strong>Redirect To:</strong>#rule.getRedirect()# (SSL: #yesNoFormat( rule.getUseSSL() )#)
-			</td>
-			<td>
+				<strong>Redirect To:</strong>#rule.getRedirect()# (SSL: #yesNoFormat( rule.getUseSSL() )#)<br>
 				<strong>Permissions:</strong>#rule.getPermissions()#<br/>
 				<strong>Roles:</strong>#rule.getRoles()#
 			</td>

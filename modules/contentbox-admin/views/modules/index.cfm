@@ -56,7 +56,7 @@
 								</div>
 				
 								<!--- modules --->
-								<table name="modules" id="modules" class="table table-hover table-striped" width="100%">
+								<table name="modules" id="modules" class="table table-striped table-hover table-condensed" width="100%">
 									<thead>
 										<tr>
 											<th>Module</th>

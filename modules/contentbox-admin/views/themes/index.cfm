@@ -197,7 +197,7 @@
 										#html.startForm(name="themeForm",action=prc.xehThemeRemove)#
 											#html.hiddenField(name="themeName" )#
 											<!--- themes --->
-											<table name="themes" id="themes" class="table table-striped table-hover" width="100%">
+											<table name="themes" id="themes" class="table table-striped table-hover table-condensed" width="100%">
 												<thead>
 													<tr>
 														<th width="200">Theme Info</th>
