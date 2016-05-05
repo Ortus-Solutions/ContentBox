@@ -261,7 +261,7 @@ module.exports = function(grunt) {
 							'ckeditor/styles.js',
 							'ckeditor/*.css',
 						], 
-						dest 	: '../modules/contentbox-admin/includes/plugins/',
+						dest 	: '../modules/contentbox-admin/modules/contentbox-ckeditor/includes/',
 					},
 					// ContentBox CKEditor Config + Plugins
 					{
@@ -270,7 +270,7 @@ module.exports = function(grunt) {
 						src 	: [
 							'**'
 						], 
-						dest 	: '../modules/contentbox-admin/includes/plugins/ckeditor/',
+						dest 	: '../modules/contentbox-admin/modules/contentbox-ckeditor/includes/ckeditor',
 					},
 					// jQuery Star Rating
 					{
@@ -299,7 +299,8 @@ module.exports = function(grunt) {
 				'../modules/contentbox-admin/includes/plugins',
 				'../modules/contentbox-admin/includes/fonts',
 				'../modules/contentbox-admin/includes/css',
-				'../modules/contentbox-admin/includes/js'
+				'../modules/contentbox-admin/includes/js',
+				'../modules/contentbox-admin/modules/contentbox-ckeditor/includes',
 			],
 			css 		: [ '../modules/contentbox-admin/includes/css' ],
 			themecss	: [ "../modules/contentbox-admin/includes/css/theme.css" ],

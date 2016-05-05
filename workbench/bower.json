@@ -1,6 +1,6 @@
 {
   "name": "ContentBoxCMS",
-  "version" : "0.0.0",
+  "version": "0.0.0",
   "private": true,
   "description": "ContentBox CMS Admin Assets",
   "ignore": [
@@ -34,7 +34,8 @@
     "animate.css": "~3.5.1",
     "switchery": "~0.8.1",
     "navgoco": "~0.2.1",
-    "datatables": "~1.10.11"
+    "datatables": "~1.10.11",
+    "simplemde": "^1.10.1"
   },
   "resolutions": {
     "jquery": "2.2.3",
