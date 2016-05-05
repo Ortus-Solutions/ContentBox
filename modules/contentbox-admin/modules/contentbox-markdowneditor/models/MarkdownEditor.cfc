@@ -171,6 +171,26 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
     			openRemoteModal( getPageSelectorURL(), { editorName: editor } );
 			};
 
+			// Insert Media
+			$insertCBMedia = function( editor ){
+				simpleMDETargetEditor = editor;
+				openRemoteModal(
+					'/cbadmin/ckFileBrowser/assetChooser?callback=$insertCBMediaContent',
+					{},
+					'75%'
+				);
+			};
+			// Choose Media
+			$insertCBMediaContent = function( sPath, sURL, sType ){
+				if( !sPath.length || sType === 'dir' ){ 
+			        alert( 'Please select a file first.' ); 
+			        return; 
+			    }
+				var link = '![' + sURL.substr( sURL.lastIndexOf( '/' ) + 1 ) + ']('+ sURL + ')';
+				insertEditorContent( simpleMDETargetEditor, link );
+				closeRemoteModal();
+			}
+
 			// Activate on content object
 			simpleMDE_content = new SimpleMDE( { 
 				element 		: $content[ 0 ],
@@ -208,6 +228,12 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 						action : function(){ $insertCBPageLink( 'content' ); },
 						className : 'fa fa-file-o',
 						title : 'Insert ContentBox Page Link'
+					},
+					{
+						name : 'cbMediaManager',
+						action : function(){ $insertCBMedia( 'content' ); },
+						className : 'fa fa-database',
+						title : 'Insert ContentBox Media'
 					}
 				]
 			} );
@@ -251,12 +277,18 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 							action : function(){ $insertCBPageLink( 'excerpt' ); },
 							className : 'fa fa-file-o',
 							title : 'Insert ContentBox Page Link'
+						},
+						{
+							name : 'cbMediaManager',
+							action : function(){ $insertCBMedia( 'excerpt' ); },
+							className : 'fa fa-database',
+							title : 'Insert ContentBox Media'
 						}
 					]
 				} );
 			}
+			simpleMDETargetEditor = '';
 			simpleMDE_content.isDirty = false;
-			simpleMDE_content.spellChecker = true;
 			simpleMDE_content.codemirror.on( 'change', function(){
 			    simpleMDE_content.isDirty = true;
 			} );
