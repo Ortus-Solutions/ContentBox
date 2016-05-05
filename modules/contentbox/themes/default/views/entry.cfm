@@ -83,7 +83,8 @@
 				</div>
 			</div>
 			</cfif>
-			<div class="clr"></div>
+
+			<hr>
 
 			<!--- Display Comments --->
 			<div id="comments">

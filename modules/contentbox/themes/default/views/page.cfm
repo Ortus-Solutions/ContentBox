@@ -102,7 +102,7 @@
 				</div>
 
 				<!--- clear --->
-				<div class="clr"></div>
+				<hr>
 
 				<!--- Display Comments --->
 				<div id="comments">
