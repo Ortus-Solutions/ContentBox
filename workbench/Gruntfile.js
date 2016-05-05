@@ -272,6 +272,15 @@ module.exports = function(grunt) {
 						], 
 						dest 	: '../modules/contentbox-admin/modules/contentbox-ckeditor/includes/ckeditor',
 					},
+					// Markdown Editor
+					{
+						expand 	: true,
+						cwd 	: 'bower_components/simplemde/dist', 
+						src 	: [
+							'**'
+						], 
+						dest 	: '../modules/contentbox-admin/modules/contentbox-markdowneditor/includes/',
+					},
 					// jQuery Star Rating
 					{
 						expand 	: true,
@@ -301,6 +310,7 @@ module.exports = function(grunt) {
 				'../modules/contentbox-admin/includes/css',
 				'../modules/contentbox-admin/includes/js',
 				'../modules/contentbox-admin/modules/contentbox-ckeditor/includes',
+				'../modules/contentbox-admin/modules/contentbox-markdowneditor/includes'
 			],
 			css 		: [ '../modules/contentbox-admin/includes/css' ],
 			themecss	: [ "../modules/contentbox-admin/includes/css/theme.css" ],

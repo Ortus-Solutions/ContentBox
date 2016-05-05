@@ -3,7 +3,7 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* CKEditor Implementation
+* SimpleMDE Implementation
 */
 component implements="contentbox.models.ui.editors.IEditor" accessors="true" singleton{
 
@@ -15,11 +15,6 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	*/
 	property name="TOOLBAR_JSON";
 
-	/**
-	* The extra plugins we have created for CKEditor
-	*/
-	property name="extraPlugins";
-	
 	/**
 	* Constructor
 	* @coldbox.inject coldbox
@@ -41,10 +36,10 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		
 		// Store admin entry point and base URL settings
 		ADMIN_ENTRYPOINT 	= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
-		ADMIN_ROOT 			= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].mapping;
+		EDITOR_ROOT 		= arguments.coldbox.getSetting( "modules" )[ "contentbox-markdowneditor" ].mapping;
 		HTML_BASE_URL	 	= variables.requestService.getContext().getHTMLBaseURL();
-		// Register our CKEditor events
-		interceptorService.appendInterceptionPoints( "cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig" );
+		// Register our Editor events
+		//interceptorService.appendInterceptionPoints( "cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig" );
 		
 		return this;
 	}
@@ -53,37 +48,22 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* Get the internal name of an editor
 	*/
 	function getName(){
-		return "ckeditor";
+		return "markdown";
 	}
 	
 	/**
 	* Get the display name of an editor
 	*/
 	function getDisplayName(){
-		return "CKEditor";
+		return "Markdown Editor";
 	};
 	
 	/**
 	* Startup the editor(s) on a page
 	*/
 	function startup(){
-		// prepare toolbar announcement on startup
-		var iData = { 
-			toolbar 		= deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_toolbar" ) ), 
-			excerptToolbar 	= deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" ) )
-		};
-		// Announce the editor toolbar is about to be processed
-		interceptorService.processState( "cbadmin_ckeditorToolbar", iData);
-		// Load extra plugins according to our version
-		var iData2 = { extraPlugins = listToArray( settingService.getSetting( "cb_editors_ckeditor_extraplugins" ) ) };
-		// Announce extra plugins to see if user implements more.
-		interceptorService.processState( "cbadmin_ckeditorExtraPlugins", iData2);
-		// Load extra configuration
-		var iData3 = { extraConfig = "" };
-		// Announce extra configuration
-		interceptorService.processState( "cbadmin_ckeditorExtraConfig", iData3);
-		// Now prepare our JavaScript and load it. No need to send assets to the head as CKEditor comes pre-bundled
-		return compileJS( iData, iData2, iData3 );
+		// Now prepare our JavaScript and load it.
+		return compileJS();
 	}
 	
 	/**
@@ -94,33 +74,43 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var js = "";
 		
 		// Load Assets, they are included with ContentBox
-		html.addAsset( "#variables.ADMIN_ROOT#/includes/plugins/ckeditor/ckeditor.js" );
-		html.addAsset( "#variables.ADMIN_ROOT#/includes/plugins/ckeditor/adapters/jquery.js" );
+		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde.min.css" );
+		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde.min.js" );
+		// Custom Styles
+		html.addStyleContent( "
+			.CodeMirror{
+			    height: 400px;
+			}
+			.CodeMirror-fullscreen{
+				z-index: 9999 !important;
+			}
+			div.fullscreen{
+				z-index: 9999 !important;
+			}
+		", true );
 
 		savecontent variable="js"{
 			writeOutput( "
 			function checkIsDirty(){
-				return $content.ckeditorGet().checkDirty();
+				return simpleMDE_content.isDirty;
 			}
 			function getEditorContent(){
-				return $content.ckeditorGet().getData();
+				return simpleMDE_content.value();
 			}
 			function getEditorExcerpt(){
-				return $excerpt.ckeditorGet().getData();
+				return simpleMDE_excerpt.value();
 			}
 			function updateEditorContent(){
-				CKEDITOR.instances.content.updateElement();
 			}
 			function updateEditorExcerpt(){
-				CKEDITOR.instances.excerpt.updateElement();
 			}
 			function insertEditorContent( editorName, content ){
-				// if simple value, insert as html
-				if( jQuery.type( content ) == 'string' )
-					$( '##' + editorName ).ckeditorGet().insertHtml( content );
-				// else insert as element
-				else
-					$( '##' + editorName ).ckeditorGet().insertElement( content );
+				var cm 	= simpleMDE_content.codemirror;
+				if( editorName.indexOf( 'content' ) >= 0 ){
+					cm.replaceRange( content, { line: cm.lastLine() } );
+				} else {
+					simpleMDE_excerpt.codemirror.replaceRange( content, { line: simpleMDE_excerpt.codemirror.lastLine() } );
+				}
 			}
 			" );
 		}
@@ -131,7 +121,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	/**
 	* Compile the needed JS to display into the screen
 	*/
-	private function compileJS( required iData, required iData2, required iData3 ){
+	private function compileJS(){
 		var js 					= "";
 		var event 				= requestService.getContext();
 		var cbAdminEntryPoint 	= event.getValue( name="cbAdminEntryPoint", private=true );
@@ -140,17 +130,6 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var xehCKFileBrowserURL			= "#cbAdminEntryPoint#/ckfilebrowser/";
 		var xehCKFileBrowserURLImage	= "#cbAdminEntryPoint#/ckfilebrowser/";
 		var xehCKFileBrowserURLFlash	= "#cbAdminEntryPoint#/ckfilebrowser/";
-		
-		// Determine Extra Plugins code
-		var extraPlugins = "";
-		if( arrayLen( arguments.iData2.extraPlugins ) ){
-			extraPlugins = "extraPlugins : '#arrayToList( arguments.iData2.extraPlugins )#',";
-		}
-		// Determin Extra Configuration
-		var extraConfig = "";
-		if( len( arguments.iData3.extraConfig ) ){
-			extraConfig = "#arguments.iData3.extraConfig#,";
-		}
 		
 		/**
 		 We build the compiled JS with the knowledge of some inline variables we have context to
@@ -161,34 +140,126 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		
 		savecontent variable="js"{
 			writeOutput( "
-			// toolbar Configuration
-			var ckToolbar = $.parseJSON( '#serializeJSON( arguments.iData.toolbar )#' );
-			var ckExcerptToolbar = $.parseJSON( '#serializeJSON( arguments.iData.excerptToolbar )#' );
 			
-			// Activate ckeditor on content object
-			$content.ckeditor( function(){}, {
-					#extraPlugins#
-					#extraConfig#
-					toolbar: ckToolbar,
-					toolbarCanCollapse: true,
-					height:400,
-					filebrowserBrowseUrl : '#event.buildLink( xehCKFileBrowserURL )#',
-					filebrowserImageBrowseUrl : '#event.buildLink( xehCKFileBrowserURLIMage )#',
-					filebrowserFlashBrowseUrl : '#event.buildLink( xehCKFileBrowserURLFlash )#',
-					baseHref : '#HTML_BASE_URL#/'
-				} );
-				
+			// Insert Widgets
+			$insertCBWidget = function( editor ){
+				// Open the selector widget dialog.
+    			openRemoteModal( 
+                    getWidgetSelectorURL(), 
+                    { editorName : editor }, 
+                    $( window ).width() - 200,
+                    $( window ).height() - 300,
+                    true 
+                );
+			};
+
+			// Insert ContentStore
+			$insertCBContentStore = function( editor ){
+				// Open the selector widget dialog.
+    			openRemoteModal( getContentStoreSelectorURL(), { editorName: editor } );
+			};
+
+			// Insert Entry Link
+			$insertCBEntryLink = function( editor ){
+				// Open the selector widget dialog.
+    			openRemoteModal( getEntrySelectorURL(), { editorName: editor } );
+			};
+
+			// Insert Page Link
+			$insertCBPageLink = function( editor ){
+				// Open the selector widget dialog.
+    			openRemoteModal( getPageSelectorURL(), { editorName: editor } );
+			};
+
+			// Activate on content object
+			simpleMDE_content = new SimpleMDE( { 
+				element 		: $content[ 0 ],
+				autosave 		: { enabled : false },
+				promptURLs 		: true,
+				tabSize 		: 4,
+				forceSync 		: true,
+				placeholder 	: 'Type here...',
+				spellChecker 	: false,
+				toolbar 		: [ 
+					'bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', '|', 
+					'code', 'quote', 'unordered-list', 'ordered-list', '|', 
+					'link', 'image', 'table', 'horizontal-rule', '|',
+					'preview', 'side-by-side', 'fullscreen', 'guide', '|',
+					{
+						name : 'cbWidget',
+						action : function(){ $insertCBWidget( 'content' ); },
+						className : 'fa fa-magic',
+						title : 'Insert a ContentBox Widget'
+					},
+					{
+						name : 'cbContentStore',
+						action : function(){ $insertCBContentStore( 'content' ); },
+						className : 'fa fa-hdd-o',
+						title : 'Insert ContentBox Content Store Item'
+					},
+					{
+						name : 'cbEntryLink',
+						action : function(){ $insertCBEntryLink( 'content' ); },
+						className : 'fa fa-quote-left',
+						title : 'Insert ContentBox Entry Link'
+					},
+					{
+						name : 'cbPageLink',
+						action : function(){ $insertCBPageLink( 'content' ); },
+						className : 'fa fa-file-o',
+						title : 'Insert ContentBox Page Link'
+					}
+				]
+			} );
+
 			// Active Excerpts
-			if (withExcerpt) {
-				$excerpt.ckeditor(function(){}, {
-					#extraConfig#
-					toolbar: ckExcerptToolbar,
-					toolbarCanCollapse: true,
-					height: 200,
-					filebrowserBrowseUrl: '#event.buildLink( xehCKFileBrowserURL )#',
-					baseHref: '#HTML_BASE_URL#/'
+			if( withExcerpt ){
+				// Activate on content object
+				simpleMDE_excerpt = new SimpleMDE( { 
+					element  		: $excerpt[ 0 ],
+					autosave  		: { enabled : false },
+					promptURLs  	: true,
+					tabSize  		: 4,
+					forceSync  		: true,
+					placeholder 	: 'Type here...',
+					spellChecker  	: false,
+					toolbar  		: [ 
+						'bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', '|', 
+						'code', 'quote', 'unordered-list', 'ordered-list', '|', 
+						'link', 'image', 'table', 'horizontal-rule', '|',
+						'preview', 'side-by-side', 'fullscreen', 'guide', '|',
+						{
+							name : 'cbWidget',
+							action : function(){ $insertCBWidget( 'excerpt' ); },
+							className : 'fa fa-magic',
+							title : 'Insert a ContentBox Widget'
+						},
+						{
+							name : 'cbContentStore',
+							action : function(){ $insertCBContentStore( 'excerpt' ); },
+							className : 'fa fa-hdd-o',
+							title : 'Insert ContentBox Content Store Item'
+						},
+						{
+							name : 'cbEntryLink',
+							action : function(){ $insertCBEntryLink( 'excerpt' ); },
+							className : 'fa fa-quote-left',
+							title : 'Insert ContentBox Entry Link'
+						},
+						{
+							name : 'cbPageLink',
+							action : function(){ $insertCBPageLink( 'excerpt' ); },
+							className : 'fa fa-file-o',
+							title : 'Insert ContentBox Page Link'
+						}
+					]
 				} );
 			}
+			simpleMDE_content.isDirty = false;
+			simpleMDE_content.spellChecker = true;
+			simpleMDE_content.codemirror.on( 'change', function(){
+			    simpleMDE_content.isDirty = true;
+			} );
 			" );
 		}
 		
@@ -199,7 +270,22 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* Shutdown the editor(s) on a page
 	*/
 	function shutdown(){
+		var js = "";
+		savecontent variable="js"{
+			writeOutput( "
+			// Activate on content object
+			simpleMDE_content.toTextArea();
+			simpleMDE_content = null;
+
+			// Active Excerpts
+			if( withExcerpt ){
+				simpleMDE_excerpt.toTextArea();
+				simpleMDE_excerpt = null;
+			}
+			" );
+		}
 		
+		return js;
 	}
 
 } 

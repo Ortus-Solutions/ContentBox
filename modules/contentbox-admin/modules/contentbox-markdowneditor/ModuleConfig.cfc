@@ -3,19 +3,19 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* ContentBox Admin CKEditor Module
+* ContentBox Admin Markdown Editor Module
 */
 component {
 
 	// Module Properties
-	this.title 				= "ContentBox CKEditor";
+	this.title 				= "ContentBox Markdown Editor";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
-	this.description 		= "ContentBox CKEditor Module";
+	this.description 		= "ContentBox Markdown Module";
 	this.version			= "3.0.0-beta+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
-	this.entryPoint			= "cbadmin/ckeditor";
+	this.entryPoint			= "cbadmin/markdown";
 	this.dependencies 		= [ "contentbox-admin" ];
 
 	/**
@@ -43,7 +43,7 @@ component {
 	*/
 	function onLoad(){
 		var editorService = wirebox.getInstance( "EditorService@cb" );
-		editorService.registerEditor( wirebox.getInstance( "CKEditor@contentbox-ckeditor" ) );
+		editorService.registerEditor( wirebox.getInstance( "MarkdownEditor@contentbox-markdowneditor" ) );
 	}
 
 	/**
@@ -51,7 +51,7 @@ component {
 	*/
 	function onUnload(){
 		var editorService = wirebox.getInstance( "EditorService@cb" );
-		editorService.unregisterEditor( 'ckeditor' );
+		editorService.unregisterEditor( 'markdown' );
 	}
 
 }
