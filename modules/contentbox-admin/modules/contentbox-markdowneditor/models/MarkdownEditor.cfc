@@ -299,11 +299,12 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			// Activate on content object
 			simpleMDE_content.toTextArea();
 			simpleMDE_content = null;
-
 			// Active Excerpts
-			if( withExcerpt ){
+			try{
 				simpleMDE_excerpt.toTextArea();
 				simpleMDE_excerpt = null;
+			} catch( any ){
+				// ignore.
 			}
 			" );
 		}
