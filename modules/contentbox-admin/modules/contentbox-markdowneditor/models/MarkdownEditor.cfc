@@ -303,7 +303,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			try{
 				simpleMDE_excerpt.toTextArea();
 				simpleMDE_excerpt = null;
-			} catch( any ){
+			} catch( error ){
 				// ignore.
 			}
 			" );
