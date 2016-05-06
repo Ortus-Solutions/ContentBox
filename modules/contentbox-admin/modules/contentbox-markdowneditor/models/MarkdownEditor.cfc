@@ -11,11 +11,6 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	property name="log" inject="logbox:logger:{this}";
 
 	/**
-	* The static JSON for our default toolbar
-	*/
-	property name="TOOLBAR_JSON";
-
-	/**
 	* Constructor
 	* @coldbox.inject coldbox
 	* @settingService.inject settingService@cb
@@ -38,8 +33,13 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		ADMIN_ENTRYPOINT 	= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
 		EDITOR_ROOT 		= arguments.coldbox.getSetting( "modules" )[ "contentbox-markdowneditor" ].mapping;
 		HTML_BASE_URL	 	= variables.requestService.getContext().getHTMLBaseURL();
+
+		// Store Toolbars
+		variables.toolbarJS 		= buildToolbarJS( 'content' );
+		variables.toolbarExcerptJS 	= buildToolbarJS( 'excerpt' );
+		
 		// Register our Editor events
-		//interceptorService.appendInterceptionPoints( "cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig" );
+		interceptorService.appendInterceptionPoints( "cbadmin_mdEditorToolbar,cbadmin_mdEditorExtraConfig" );
 		
 		return this;
 	}
@@ -62,8 +62,19 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* Startup the editor(s) on a page
 	*/
 	function startup(){
+		// prepare toolbar announcement on startup
+		var iData = { 
+			toolbar 		= variables.toolbarJS, 
+			excerptToolbar 	= variables.toolbarExcerptJS
+		};
+		// Announce the editor toolbar is about to be processed
+		interceptorService.processState( "cbadmin_mdEditorToolbar", iData );
+		// Load extra configuration
+		var iData2 = { extraConfig = "" };
+		// Announce extra configuration
+		interceptorService.processState( "cbadmin_mdEditorExtraConfig", iData2 );
 		// Now prepare our JavaScript and load it.
-		return compileJS();
+		return compileJS( iData, iData2 );
 	}
 	
 	/**
@@ -170,20 +181,20 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	/**
 	* Compile the needed JS to display into the screen
 	*/
-	private function compileJS(){
+	private function compileJS( required iData, required iData2 ){
 		var js 					= "";
-		var event 				= requestService.getContext();
-		var cbAdminEntryPoint 	= event.getValue( name="cbAdminEntryPoint", private=true );
 		
-		// CK Editor Integration Handlers
-		var xehCKFileBrowserURL			= "#cbAdminEntryPoint#/ckfilebrowser/";
-		var xehCKFileBrowserURLImage	= "#cbAdminEntryPoint#/ckfilebrowser/";
-		var xehCKFileBrowserURLFlash	= "#cbAdminEntryPoint#/ckfilebrowser/";
-		
+		// Determine Extra Configuration
+		var extraConfig = "";
+		if( len( arguments.iData2.extraConfig ) ){
+			extraConfig = "#arguments.iData2.extraConfig#,";
+		}
+
 		savecontent variable="js"{
 			writeOutput( "
 			// Activate on content object
 			simpleMDE_content = new SimpleMDE( { 
+				#extraConfig#
 				element 		: $content[ 0 ],
 				autosave 		: { enabled : false },
 				promptURLs 		: true,
@@ -191,48 +202,14 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 				forceSync 		: true,
 				placeholder 	: 'Type here...',
 				spellChecker 	: false,
-				toolbar 		: [ 
-					'bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', '|', 
-					'code', 'quote', 'unordered-list', 'ordered-list', '|', 
-					'link', 'image', 'table', 'horizontal-rule', '|',
-					'preview', 'side-by-side', 'fullscreen', 'guide', '|',
-					{
-						name : 'cbWidget',
-						action : function(){ $insertCBWidget( 'content' ); },
-						className : 'fa fa-magic',
-						title : 'Insert a ContentBox Widget'
-					},
-					{
-						name : 'cbContentStore',
-						action : function(){ $insertCBContentStore( 'content' ); },
-						className : 'fa fa-hdd-o',
-						title : 'Insert ContentBox Content Store Item'
-					},
-					{
-						name : 'cbEntryLink',
-						action : function(){ $insertCBEntryLink( 'content' ); },
-						className : 'fa fa-quote-left',
-						title : 'Insert ContentBox Entry Link'
-					},
-					{
-						name : 'cbPageLink',
-						action : function(){ $insertCBPageLink( 'content' ); },
-						className : 'fa fa-file-o',
-						title : 'Insert ContentBox Page Link'
-					},
-					{
-						name : 'cbMediaManager',
-						action : function(){ $insertCBMedia( 'content' ); },
-						className : 'fa fa-database',
-						title : 'Insert ContentBox Media'
-					}
-				]
+				toolbar 		: #arguments.iData.toolbar#
 			} );
 
 			// Active Excerpts
 			if( withExcerpt ){
 				// Activate on content object
 				simpleMDE_excerpt = new SimpleMDE( { 
+					#extraConfig#
 					element  		: $excerpt[ 0 ],
 					autosave  		: { enabled : false },
 					promptURLs  	: true,
@@ -240,46 +217,15 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 					forceSync  		: true,
 					placeholder 	: 'Type here...',
 					spellChecker  	: false,
-					toolbar  		: [ 
-						'bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', '|', 
-						'code', 'quote', 'unordered-list', 'ordered-list', '|', 
-						'link', 'image', 'table', 'horizontal-rule', '|',
-						'preview', 'side-by-side', 'fullscreen', 'guide', '|',
-						{
-							name : 'cbWidget',
-							action : function(){ $insertCBWidget( 'excerpt' ); },
-							className : 'fa fa-magic',
-							title : 'Insert a ContentBox Widget'
-						},
-						{
-							name : 'cbContentStore',
-							action : function(){ $insertCBContentStore( 'excerpt' ); },
-							className : 'fa fa-hdd-o',
-							title : 'Insert ContentBox Content Store Item'
-						},
-						{
-							name : 'cbEntryLink',
-							action : function(){ $insertCBEntryLink( 'excerpt' ); },
-							className : 'fa fa-quote-left',
-							title : 'Insert ContentBox Entry Link'
-						},
-						{
-							name : 'cbPageLink',
-							action : function(){ $insertCBPageLink( 'excerpt' ); },
-							className : 'fa fa-file-o',
-							title : 'Insert ContentBox Page Link'
-						},
-						{
-							name : 'cbMediaManager',
-							action : function(){ $insertCBMedia( 'excerpt' ); },
-							className : 'fa fa-database',
-							title : 'Insert ContentBox Media'
-						}
-					]
+					toolbar 		: #arguments.iData.excerptToolbar#
 				} );
 			};
+
+			// Global Configuration Variables
 			simpleMDETargetEditor = '';
 			simpleMDE_content.isDirty = false;
+
+			// Listen for Editor Changes
 			simpleMDE_content.codemirror.on( 'change', function(){
 			    simpleMDE_content.isDirty = true;
 			} );
@@ -310,6 +256,75 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		}
 		
 		return js;
+	}
+
+	/**
+	* Build the toolbar JS according to editor name
+	* @editor The editor name to bind the toolbar to
+	*/
+	private function buildToolbarJS( required editor ){
+		return "[ 
+			{
+				name : 'cbSave',
+				action : function(){ quickSave(); },
+				className : 'fa fa-save',
+				title : 'ContentBox Quick Save'
+			},
+			{
+				name : 'cbUndo',
+				action : function(){ simpleMDE_#arguments.editor#.undo(); },
+				className : 'fa fa-undo',
+				title : 'Undo'
+			},
+			{
+				name : 'cbRedo',
+				action : function(){ simpleMDE_#arguments.editor#.redo(); },
+				className : 'fa fa-repeat',
+				title : 'Redo'
+			},
+			'|',
+			'bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', '|', 
+			'code', 'quote', 'unordered-list', 'ordered-list', '|', 
+			'link', 'image', 'table', 'horizontal-rule', '|',
+			'preview', 'side-by-side', 'fullscreen', 
+			{
+				name : 'cbLivePreview',
+				action : function(){ previewContent(); },
+				className : 'fa fa-bolt',
+				title : 'ContentBox Responsive Preview'
+			},
+			'|',
+			{
+				name : 'cbWidget',
+				action : function(){ $insertCBWidget( '#arguments.editor#' ); },
+				className : 'fa fa-magic',
+				title : 'Insert a ContentBox Widget'
+			},
+			{
+				name : 'cbContentStore',
+				action : function(){ $insertCBContentStore( '#arguments.editor#' ); },
+				className : 'fa fa-hdd-o',
+				title : 'Insert ContentBox Content Store Item'
+			},
+			{
+				name : 'cbEntryLink',
+				action : function(){ $insertCBEntryLink( '#arguments.editor#' ); },
+				className : 'fa fa-quote-left',
+				title : 'Insert ContentBox Entry Link'
+			},
+			{
+				name : 'cbPageLink',
+				action : function(){ $insertCBPageLink( '#arguments.editor#' ); },
+				className : 'fa fa-file-o',
+				title : 'Insert ContentBox Page Link'
+			},
+			{
+				name : 'cbMediaManager',
+				action : function(){ $insertCBMedia( '#arguments.editor#' ); },
+				className : 'fa fa-database',
+				title : 'Insert ContentBox Media'
+			}
+		]";
 	}
 
 } 
