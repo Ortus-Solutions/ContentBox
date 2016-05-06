@@ -30,7 +30,7 @@ CKEDITOR.plugins.add( 'insertpre',
 			editor.ui.addButton && editor.ui.addButton( 'InsertPre',
 				{
 					label : editor.lang.insertpre.title,
-					icon : this.path + 'icons/insertpre.png',
+					icon : this.path + 'insertpre.png',
 					command : 'insertpre',
 					toolbar: 'insert,99'
 				} );
@@ -41,7 +41,7 @@ CKEDITOR.plugins.add( 'insertpre',
 				editor.addMenuItem( 'insertpre',
 					{
 						label : editor.lang.insertpre.edit,
-						icon : this.path + 'icons/insertpre.png',
+						icon : this.path + 'insertpre.png',
 						command : 'insertpre',
 						group : 'code'
 					});
