@@ -105,11 +105,10 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			function updateEditorExcerpt(){
 			}
 			function insertEditorContent( editorName, content ){
-				var cm 	= simpleMDE_content.codemirror;
 				if( editorName.indexOf( 'content' ) >= 0 ){
-					cm.replaceRange( content, { line: cm.lastLine() } );
+					simpleMDE_content.codemirror.replaceRange( content, simpleMDE_content.codemirror.getCursor() );
 				} else {
-					simpleMDE_excerpt.codemirror.replaceRange( content, { line: simpleMDE_excerpt.codemirror.lastLine() } );
+					simpleMDE_excerpt.codemirror.replaceRange( content, simpleMDE_excerpt.codemirror.getCursor() );
 				}
 			}
 
