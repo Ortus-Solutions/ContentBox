@@ -516,14 +516,16 @@
                                     <!--- Display categories --->
                                     <div id="categoriesChecks">
                                     <cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
-                                        <label class="checkbox">
-                                        #html.checkbox(
-                                            name="category_#x#",
-                                            value="#prc.categories[ x ].getCategoryID()#",
-                                            checked=prc.page.hasCategories( prc.categories[ x ] )
-                                        )#
-                                        #prc.categories[ x ].getCategory()#
-                                        </label>
+                                        <div class="checkbox">
+                                            <label>
+                                            #html.checkbox(
+                                                name="category_#x#",
+                                                value="#prc.categories[ x ].getCategoryID()#",
+                                                checked=prc.page.hasCategories( prc.categories[ x ] )
+                                            )#
+                                            #prc.categories[ x ].getCategory()#
+                                            </label>
+                                        </div>
                                     </cfloop>
                                     </div>
                 
