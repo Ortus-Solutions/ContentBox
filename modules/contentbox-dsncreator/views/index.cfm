@@ -13,8 +13,11 @@
 				</p>
 			</div>
 		</cfif>
-        <div class="jumbotron">
-			<h1>Welcome To ContentBox!</h1>
+        <div class="jumbotron text-center">
+			<h1>
+				<i class="fa fa-database fa-2x"></i><br>
+				Welcome To ContentBox!
+			</h1>
 			<p>
 				You are one step closer to releasing your content out of its box! The first step in our installer is to make sure
 				we can connect to your database of choice.  So if you have not created an empty database for ContenBox yet, please go do
@@ -25,6 +28,7 @@
 			<fieldset>
 				<legend>Datasource Created?</legend>
 				<p>Do you have a datasource created already?</p>
+				
 				<div class="form-group">
 					<div class="controls">
 						<label class="inline control-label">
@@ -41,9 +45,14 @@
 			<fieldset id="dsnPanelExists" style="display: none">
 				<legend>Created Datasource Information:</legend>
 				<form name="dsnUseForm" id="dsnUseForm" action="index.cfm" method="post" novalidate="novalidate">
+					
 					<input type="hidden" name="action" id="action" value="process" />
 					<input type="hidden" name="dsnCreated" value="true" />
+					
+					<div class="alert alert-info">
 					<p>Please fill in the name of the datasource connection setup in your CFML engine.</p>
+					</div>
+					
 					<label class="control-label">Datasource Name: 
 						<input type="text" name="dsnName" id="dsnName" class="form-control" size="40"/>
 					</label>
@@ -59,16 +68,22 @@
 			<fieldset id="dsnPanelCreate" style="display: none">
 				<legend>Datasource Creation Information:</legend>
 				<form name="dsnForm" id="dsnForm" action="index.cfm" method="post" novalidate="novalidate">
+					
 					<input type="hidden" name="action" id="action" value="process" />
 					<input type="hidden" name="dsnCreated" value="false" />
+					
+					<div class="alert alert-info">
 					<p>Please fill in all the required information so we can create the datasource connection for you.</p>
+					</div>
+					
 					<div class="form-group">
 						<div class="controls">
-							<label class="control-label" for="cfpassword">CFML Administrator Password: </label>
-							<br /><small>Your CFML engine administrator password. Contact your hosting provider or system administrator if you do not have one. (If you are using the Express edition use 'contentbox')<br/></small>
+							<label class="control-label" for="cfpassword">CFML Admin Password or Web Context Password: </label>
+							<br /><small>Your CFML engine administrator password or the Lucee Web Context password. Contact your hosting provider or system administrator if you do not have one. (If you are using the Express Edition ONLY then use <code>contentbox</code> or <a href="/lucee/admin/web.cfm" target="_blank">click here</a> to set one up)<br/></small>
 							<input type="password" class="form-control" size="40" name="cfpassword" id="cfpassword" required="required" />
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dsnCreateName">Datasource Name:</label>
@@ -76,6 +91,7 @@
 							<input type="text" class="form-control" size="40" name="dsnCreateName" id="dsnCreateName" required="required" />
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbType">Database Type:</label>
@@ -92,6 +108,7 @@
 							</select>
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbServer">Database Server:</label>
@@ -99,20 +116,23 @@
 							<input type="text" class="form-control" size="40" name="dbServer" id="dbServer" required="required" />
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbName">Database Name:</label>
-							<br /><small>The name of the database that will be used for ContentBox.<br/></small>
+							<br /><small>The name of the database that will be used for ContentBox. If using the embedded database, this will be used for the location as well within the application.<br/></small>
 							<input type="text" class="form-control" size="40" name="dbName" id="dbName" required="required" />
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbUsername">Database Username:</label>
-							<br /><small>The name of the database user that will use the connection. (Use sa for embedded database)<br/></small>
+							<br /><small>The name of the database user that will use the connection. (Use <code>sa</code> for embedded database)<br/></small>
 							<input type="text" class="form-control" size="40" name="dbUsername" id="dbUsername" />
 						</div>
 					</div>
+					
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbUsername">Database Password:</label>
@@ -120,11 +140,13 @@
 							<input type="password" class="form-control" size="40" name="dbPassword" id="dbPassword" />
 						</div>
 					</div>
+
 					<div class="actionBar">	
 						<input name="verifyDataButton" id="verifyDataButton" type="button" class="btn btn-primary" value="Verify Data" onclick="verifyData()" />
 						<input name="createDSNButton" id="createDSNButton" type="submit" class="btn btn-danger" value="Create Datasource" style="display: none" />
 						<div id="actionBarLoader" style="display:none"><i class="icon-spinner icon-spin fa-lg fa-2x"></i> Creating, Please Wait...</div>
 					</div>
+
 				</form>
 			</fieldset>
 		</div>
