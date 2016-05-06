@@ -8,8 +8,7 @@ logs/**
 *.cache.*
 .idea
 web.config
-"Icon\r"
-Icon?
+/"Icon\r"
 WEB-INF/**
 artifacts/**
 # Workbench dependencies
