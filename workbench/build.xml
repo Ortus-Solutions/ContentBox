@@ -104,6 +104,7 @@
 		<!-- Copy Source -->	
       	<copy todir="${dir.build}" encoding="UTF-8">
       		<fileset dir=".">
+      			<exclude name="artifacts/**" />
       			<exclude name=".idea/**" />
       			<exclude name=".DS_Store" />
       			<exclude name=".git/**" />
@@ -111,7 +112,7 @@
       			<exclude name=".jshintrc" />
       			<exclude name=".project" />
   				<exclude name=".settings/**" />
-      			<exclude name="logs" />
+      			<exclude name="logs/**" />
       			<exclude name="settings.xml" />
       			<exclude name="server.json" />
       			<exclude name="tests/**" />
@@ -121,6 +122,8 @@
       		</fileset>
         </copy>
 
+		<!-- Cleanup Dependencies -->
+		<delete dir="${dir.build}/coldbox" />
         <!-- Install Dependencies -->
 		<exec executable="box" dir="${dir.build}">
 			<arg line="install production=true" />

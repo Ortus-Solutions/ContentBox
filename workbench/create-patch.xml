@@ -157,6 +157,7 @@
 		
 		<!-- Remove coldbox entries for non-coldbox patch -->
 		<delete dir="${dir.patches}/${contentbox.version}/patch/coldbox" includeemptydirs="true"/>
+		<delete file="${dir.patches}/${contentbox.version}/patch.zip" />
 		<!-- Zip patch.zip -->
 		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
 		<!-- Delete Patch unzipped Folder -->
