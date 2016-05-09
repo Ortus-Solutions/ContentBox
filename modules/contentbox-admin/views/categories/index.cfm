@@ -18,7 +18,6 @@
 	<div class="col-md-12">
 		#html.startForm( name="categoryForm", action=prc.xehCategoryRemove )#
 		#html.hiddenField( name="categoryID", value="" )#
-		<input type="hidden" name="categoryID" id="categoryID" value="" />
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="row">
