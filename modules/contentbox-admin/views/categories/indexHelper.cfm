@@ -64,6 +64,7 @@ function edit(categoryID,category,slug){
 function removeCategory(categoryID){
 	var $categoryForm = $( "##categoryForm" );
 	$( "##delete_"+ categoryID).removeClass( "fa-trash-o" ).addClass( "fa-spin fa-spinner" );
+	checkAll(false,'categoryID');
 	$categoryForm.find( "##categoryID" ).val( categoryID );
 	$categoryForm.submit();
 }
