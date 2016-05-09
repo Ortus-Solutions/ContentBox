@@ -113,6 +113,7 @@ function contentLoad( criteria ){
 // Remove menu
 function remove( menuID, id ){
     id = typeof id !== 'undefined' ? id : 'menuID';
+    checkAll( false, id );
     if( menuID != null ){
         $( "##delete_" + menuID ).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
         checkByValue( id, menuID );      
