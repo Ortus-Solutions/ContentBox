@@ -144,6 +144,7 @@ function activateQuickLook( $table, quickLookURL ){
 // Remove content
 function remove( contentID, id ){
 	id = typeof id !== 'undefined' ? id : 'contentID';
+	checkAll( false, id );
 	if( contentID != null ){
 		$( "##delete_"+ contentID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue( id, contentID );		

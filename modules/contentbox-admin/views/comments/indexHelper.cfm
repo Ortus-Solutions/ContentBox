@@ -41,6 +41,7 @@ function changeStatus(status,recordID){
 	$commentForm.submit();
 }
 function remove(recordID){
+	checkAll( false, 'commentID' );
 	if( recordID != null ){
 		$( "##delete_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
 		checkByValue('commentID',recordID);		

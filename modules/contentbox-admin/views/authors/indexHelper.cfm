@@ -139,6 +139,7 @@ function importContent(){
 }
 function removeAuthor(authorID){
 	$( "##delete_"+ authorID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
+	checkAll( false, '##authorID' );
 	$( "##authorID" ).val( authorID );
 	$( "##authorForm" ).submit();
 }
