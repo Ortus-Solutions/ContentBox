@@ -1,8 +1,18 @@
 <cfoutput>
 <script>
-// Load Custom Editor Assets, Functions, etc.
+// Load Custom Editor Assets, Functions, from Editor Driver. This needs to load first
 #prc.oEditorDriver.loadAssets()#
+</script>
 
+<!--- Load Editor Assets Now --->
+<cfif getSetting( "environment" ) eq "development">
+    <script type="application/javascript" src="#prc.cbroot#/includes/plugins/autosave/autosave.js"></script>
+<cfelse>
+    <script type="application/javascript" src="#prc.cbroot#/includes/plugins/autosave/autosave.min.js"></script>
+</cfif>
+
+<script>
+// Continue with Editor scripts
 // Quick preview for content
 function previewContent(){
 	// Open the preview window for content

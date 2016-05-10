@@ -48,14 +48,14 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* Get the internal name of an editor
 	*/
 	function getName(){
-		return "markdown";
+		return "simplemde";
 	}
 	
 	/**
 	* Get the display name of an editor
 	*/
 	function getDisplayName(){
-		return "Markdown Editor";
+		return "Code Editor (Markdown+HTML)";
 	};
 	
 	/**
@@ -85,8 +85,8 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var js = "";
 		
 		// Load Assets, they are included with ContentBox
-		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde.min.css" );
-		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde.min.js" );
+		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde/simplemde.min.css" );
+		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde/simplemde.min.js" );
 		// Custom Styles
 		html.addStyleContent( "
 			.CodeMirror{
@@ -102,6 +102,12 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 
 		savecontent variable="js"{
 			writeOutput( "
+			function getContentEditor(){
+				return simpleMDE_content.codemirror;
+			}
+			function getExcerptEditor(){
+				return simpleMDE_excerpt.codemirror;
+			}
 			function checkIsDirty(){
 				return simpleMDE_content.isDirty;
 			}
@@ -114,6 +120,13 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			function updateEditorContent(){
 			}
 			function updateEditorExcerpt(){
+			}
+			function setEditorContent( editorName, content ){
+				if( editorName.indexOf( 'content' ) >= 0 ){
+					simpleMDE_content.value( content );
+				} else {
+					simpleMDE_excerpt.value( content );
+				}
 			}
 			function insertEditorContent( editorName, content ){
 				if( editorName.indexOf( 'content' ) >= 0 ){

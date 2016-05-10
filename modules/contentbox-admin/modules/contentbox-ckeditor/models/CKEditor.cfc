@@ -100,6 +100,12 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 
 		savecontent variable="js"{
 			writeOutput( "
+			function getContentEditor(){
+				return $content.ckeditorGet();
+			}
+			function getExcerptEditor(){
+				return $excerpt.ckeditorGet();
+			}
 			function checkIsDirty(){
 				return $content.ckeditorGet().checkDirty();
 			}
@@ -114,6 +120,9 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			}
 			function updateEditorExcerpt(){
 				CKEDITOR.instances.excerpt.updateElement();
+			}
+			function setEditorContent( editorName, content ){
+				$( '##' + editorName ).ckeditorGet().setData( content );
 			}
 			function insertEditorContent( editorName, content ){
 				// if simple value, insert as html

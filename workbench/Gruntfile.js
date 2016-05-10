@@ -170,20 +170,24 @@ module.exports = function(grunt) {
 			options : {
 				preserveComments 	: false,
 				mangle 				: false,
+				sourceMap 			: true,
+				drop_console 		: true,
 				banner 				: '/*! ContentBox Modular CMS. Generated: <%= grunt.template.today( "dd-mm-yyyy" ) %> */\n\n'
 			},
 
 			// ContentBox App
 			appjs : {
 				files : {
-					'../modules/contentbox-admin/includes/js/contentbox-app.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-app.js" ]
+					'../modules/contentbox-admin/includes/js/contentbox-app.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-app.js" ],
+					// Autosave
+					'../modules/contentbox-admin/includes/plugins/autosave/autosave.min.js' : [ "devincludes/plugins/autosave/autosave.js" ]
 				}
 			},
 
 			// JS Libraries
 			libraries :{
 				files : {
-					'../modules/contentbox-admin/includes/js/contentbox-pre.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-pre.js" ],
+					'../modules/contentbox-admin/includes/js/contentbox-pre.min.js' 	: [ "../modules/contentbox-admin/includes/js/contentbox-pre.js" ],
 					'../modules/contentbox-admin/includes/js/contentbox-post.min.js' 	: [ "../modules/contentbox-admin/includes/js/contentbox-post.js" ]
 				}
 			},
@@ -217,8 +221,8 @@ module.exports = function(grunt) {
 			* Individual Javascript files migrated to project /includes/js 
 			**/
 			js : {
-				// Single Javascript files to copy from bower
 				files : [ 
+					// Single Javascript files to copy from bower
 				  	{
 				  		expand 	: true,
 				  		flatten : true,
@@ -272,14 +276,14 @@ module.exports = function(grunt) {
 						], 
 						dest 	: '../modules/contentbox-admin/modules/contentbox-ckeditor/includes/ckeditor',
 					},
-					// Markdown Editor
+					// AutoSave
 					{
 						expand 	: true,
-						cwd 	: 'bower_components/simplemde/dist', 
+						cwd 	: 'devincludes/plugins/autosave', 
 						src 	: [
 							'**'
 						], 
-						dest 	: '../modules/contentbox-admin/modules/contentbox-markdowneditor/includes/',
+						dest 	: '../modules/contentbox-admin/includes/plugins/autosave',
 					},
 					// jQuery Star Rating
 					{
@@ -291,7 +295,16 @@ module.exports = function(grunt) {
 							'rating.js'
 						], 
 						dest 	: '../modules/contentbox-admin/includes/plugins/jquery-star-rating/'
-					}
+					},
+					// Simple MDE Editor
+					{
+						expand 	: true,
+						cwd 	: 'bower_components/simplemde/dist', 
+						src 	: [
+							'**'
+						], 
+						dest 	: '../modules/contentbox-admin/modules/contentbox-markdowneditor/includes/simplemde',
+					},
 				],
 			}, // end plugins
 		}, // end copy task

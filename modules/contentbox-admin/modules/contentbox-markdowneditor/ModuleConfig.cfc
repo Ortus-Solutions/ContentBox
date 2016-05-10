@@ -51,7 +51,7 @@ component {
 	*/
 	function onUnload(){
 		var editorService = wirebox.getInstance( "EditorService@cb" );
-		editorService.unregisterEditor( 'markdown' );
+		editorService.unregisterEditor( 'simplemde' );
 	}
 
 }

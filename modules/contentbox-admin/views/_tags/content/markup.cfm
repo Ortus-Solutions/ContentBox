@@ -4,6 +4,7 @@
         <cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
             <div class="btn-group btn-group-sm">
                 <a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+                    <i class="fa fa-keyboard-o"></i>
                     Editor
                     <span class="caret"></span>
                 </a>
@@ -25,6 +26,7 @@
         )#
         <div class="btn-group btn-group-sm">
             <a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+                <i class="fa fa-code"></i>
                 Markup : <span id="markupLabel">#args.content.isLoaded() ? args.content.getMarkup() : prc.defaultMarkup#</span>
                 <span class="caret"></span>
             </a>
@@ -38,6 +40,7 @@
         </div>
         <div class="btn-group btn-group-sm" id="contentAutoSave">
             <a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
+                <i class="fa fa-save"></i>
                 Auto Saved
                 <span class="caret"></span>
             </a>

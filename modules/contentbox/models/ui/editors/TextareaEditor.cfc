@@ -5,7 +5,7 @@
 * ---
 * Simple textarea editor
 */
-component implements="contentbox.models.ui.editors.IEditor" singleton{
+component implements="contentbox.models.ui.editors.IEditor" accessors="true" singleton{
 
 	// DI
 	property name="log" inject="logbox:logger:{this}";
@@ -40,14 +40,20 @@ component implements="contentbox.models.ui.editors.IEditor" singleton{
 		
 		savecontent variable="js"{
 			writeOutput( "
+			function getContentEditor(){
+				return $( '##content' )
+			}
+			function getExcerptEditor(){
+				return $( '##excerpt' )
+			}
 			function checkIsDirty(){
 				return false;
 			}
 			function getEditorContent(){
-				return $('##content').val();
+				return $( '##content' ).val();
 			}
 			function getEditorExcerpt(){
-				return $('##excerpt').val();
+				return $( '##excerpt' ).val();
 			}
 			function updateEditorContent(){
 				// not needed
@@ -55,8 +61,13 @@ component implements="contentbox.models.ui.editors.IEditor" singleton{
 			function updateExcerptContent(){
 				// not needed
 			}
+			function setEditorContent( editorName, content ){
+				$( '##' + editorName ).val( content );
+			}
 			function insertEditorContent( editorName, content ){
 				// not used yet
+				var currentValue = $( '##' + editorName ).val();
+				$( '##' + editorName ).val( currentValue + '\n' + content );
 			}
 			" );
 		}
