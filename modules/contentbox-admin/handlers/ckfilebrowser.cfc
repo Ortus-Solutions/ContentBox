@@ -61,7 +61,9 @@ component extends="baseHandler"{
 			eventArguments 	= { force=true, settings=prc.cbCKSetting } 
 		);
 		// load filebrowser inline
-		return runEvent( event=prc.cbCKfileBrowserDefaultEvent, eventArguments=args );
+		prc.fileBrowser = runEvent( event=prc.cbCKfileBrowserDefaultEvent, eventArguments=args );
+		// view
+		event.setView( view="ckfilebrowser/assetChooser", layout="ajax" );
 	}
 
 }
