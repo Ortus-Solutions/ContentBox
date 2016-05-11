@@ -56,7 +56,7 @@ module.exports = function(grunt) {
             },
 
             appjs : {
-            	files : [ 'devincludes/js/*.js' ],
+            	files : [ 'devincludes/js/**/*.js' ],
             	tasks : [ 'concat:appjs', 'uglify:appjs' ]
             }
 		},
@@ -112,12 +112,15 @@ module.exports = function(grunt) {
 
 			// ContentBox App Libraries
 			appjs : {
-				src 	: [
-					"devincludes/js/**/*.js"
-				],
-				dest 	: '../modules/contentbox-admin/includes/js/contentbox-app.js'
+				files : {
+					'../modules/contentbox-admin/includes/js/contentbox-app.js' : [ "devincludes/js/*.js" ],
+					'../modules/contentbox-admin/includes/js/contentbox-editors.js' : [ 
+						"devincludes/js/editors/editors.js",
+						"devincludes/js/editors/autosave.js" 
+					]
+				}
 			},
-			
+
 			// Pre Lib: Libraries which are brough in the <head> section
 			prejs : {
 				src : [
@@ -179,8 +182,7 @@ module.exports = function(grunt) {
 			appjs : {
 				files : {
 					'../modules/contentbox-admin/includes/js/contentbox-app.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-app.js" ],
-					// Autosave
-					'../modules/contentbox-admin/includes/plugins/autosave/autosave.min.js' : [ "devincludes/plugins/autosave/autosave.js" ]
+					'../modules/contentbox-admin/includes/js/contentbox-editors.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-editors.js" ]
 				}
 			},
 

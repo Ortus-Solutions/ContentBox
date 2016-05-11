@@ -166,7 +166,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		 We build the compiled JS with the knowledge of some inline variables we have context to
 		 $excerpt - The excerpt jquery object
 		 $content - The content jquery object
-		 withExcerpt - an argument telling us if an excerpt is available to render or not
+		 $withExcerpt - an argument telling us if an excerpt is available to render or not
 		*/
 		
 		savecontent variable="js"{
@@ -189,7 +189,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 				} );
 				
 			// Active Excerpts
-			if (withExcerpt) {
+			if( $withExcerpt ){
 				$excerpt.ckeditor(function(){}, {
 					#extraConfig#
 					toolbar: ckExcerptToolbar,

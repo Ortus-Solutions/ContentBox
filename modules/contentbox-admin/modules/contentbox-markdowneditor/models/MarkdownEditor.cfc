@@ -169,11 +169,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			// Insert Media
 			$insertCBMedia = function( editor ){
 				simpleMDETargetEditor = editor;
-				openRemoteModal(
-					'/cbadmin/ckFileBrowser/assetChooser?callback=$insertCBMediaContent',
-					{},
-					'75%'
-				);
+				loadAssetChooser( '$insertCBMediaContent' );
 			};
 			// Choose Media
 			$insertCBMediaContent = function( sPath, sURL, sType ){
@@ -219,7 +215,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			} );
 
 			// Active Excerpts
-			if( withExcerpt ){
+			if( $withExcerpt ){
 				// Activate on content object
 				simpleMDE_excerpt = new SimpleMDE( { 
 					#extraConfig#
