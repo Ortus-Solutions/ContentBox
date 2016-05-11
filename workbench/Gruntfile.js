@@ -146,7 +146,7 @@ module.exports = function(grunt) {
 					,"bower_components/es6-shim/es6-shim.min.js"
 			      	,"bower_components/navgoco/src/jquery.navgoco.min.js"
 			      	,"bower_components/switchery/dist/switchery.min.js"
-					,"bower_components/raphael/raphael.min.js"
+					,"bower_components/raphael/raphael-min.js"
 					,"bower_components/morris.js/morris.min.js"
 					,"bower_components/clockpicker/dist/bootstrap-clockpicker.min.js"
 					,"bower_components/jwerty/jwerty.js"
