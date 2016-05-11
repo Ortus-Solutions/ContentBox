@@ -93,10 +93,10 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			    height: 400px;
 			}
 			.CodeMirror-fullscreen{
-				z-index: 9999 !important;
+				z-index: 1000 !important;
 			}
 			div.fullscreen{
-				z-index: 9999 !important;
+				z-index: 1000 !important;
 			}
 		", true );
 
