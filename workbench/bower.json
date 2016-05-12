@@ -35,7 +35,8 @@
     "switchery": "~0.8.1",
     "navgoco": "~0.2.1",
     "datatables": "~1.10.11",
-    "simplemde": "^1.10.1"
+    "simplemde": "^1.10.1",
+    "jquery-fullscreen": "^1.1.4"
   },
   "resolutions": {
     "jquery": "2.2.3",

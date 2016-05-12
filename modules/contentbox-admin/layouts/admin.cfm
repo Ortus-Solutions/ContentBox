@@ -124,6 +124,13 @@
 						
 						<!--- Support Menu --->
 						#prc.adminMenuService.generateSupportMenu()#
+
+						<!--- FullScreen --->
+						<li class="" data-placement="right auto" title="Fullscreen">
+							<a class="btn btn-default options toggle" href="javascript:toggleFullScreen()" target="_blank">
+								<i class="fa fa-arrows-alt"></i>
+							</a>
+						</li>
 						
 						<!--- Profile --->
 						<li class="profile-photo">

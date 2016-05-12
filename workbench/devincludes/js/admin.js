@@ -588,3 +588,10 @@ function getToday( us ){
         return moment().format( "DD-MM-YYYY" ); 
     }
 }
+
+/**
+ * Go Fullscreen, based on the fullscreen plugin
+ */
+function toggleFullScreen(){
+    $( document ).toggleFullScreen();
+}
