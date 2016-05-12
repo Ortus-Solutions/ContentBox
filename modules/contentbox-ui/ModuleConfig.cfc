@@ -46,7 +46,7 @@ component {
 			// subscribe link
 			{ pattern="/__subscribe", handler="subscription", action="subscribe" },
 			// manage subscriptions
-			{ pattern="/__subscriptions/:subscribertoken", handler="subscription", action="getSubscriptions" },
+			{ pattern="/__subscriptions/:subscribertoken", handler="subscription", action="subscriptions" },
 			// remove subscriptions
 			{ pattern="/__removesubscriptions/", handler="subscription", action="removeSubscriptions" },
 			// unsubscribe link for single subscription
