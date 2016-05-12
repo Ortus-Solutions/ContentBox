@@ -53,7 +53,7 @@
 					</a>
 					
 					<!--- Delete Command --->
-					<a 	class="btn btn-sm btn-danger confirmIt" 
+					<a 	class="btn btn-sm btn-danger #setting.getIsCore() ? '' : 'confirmIt'#"
 						href="javascript:remove('#setting.getsettingID()#')"
 						<cfif setting.getIsCore()>
 						disabled="disabled"							
