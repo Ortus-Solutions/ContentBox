@@ -10,6 +10,8 @@ component mappedsuperclass="true"{
 
 	// PK Pointer			
 	this.pk = "PLEASE_SELECT_ONE";
+	// Constraints Default
+	this.constraints = {};
 
 	/* *********************************************************************
 	**						PUBLIC FUNCTIONS								
