@@ -109,6 +109,7 @@
                 var element = $( this );
                 var index = $.find('.dd-item').length;
                 element.attr('id', 'key_'+index);
+                element.find(".confirmIt").attr("href", "javascript:removeMenuItem( 'key_"+index+"' );");
                 activateConfirmations();
             } );
             activateTooltips();
