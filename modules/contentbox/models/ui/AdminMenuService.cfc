@@ -304,7 +304,7 @@ component accessors="true" threadSafe singleton{
 		var prc		= event.getCollection( private=true );
 		
 		savecontent variable="profileLabel" {
-			writeOutput( '#prc.oAuthor.getName()#' );
+			writeOutput( '#prc.oAuthor.getName()# <b class="caret"></b>' );
 		}
 
 		return profileLabel;
