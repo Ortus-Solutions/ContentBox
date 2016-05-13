@@ -51,7 +51,7 @@
     label=cb.r( "tab.admin.password@installer" ),
     required="required",
     size="100",
-    class="form-control",
+    class="form-control pwcheck",
     wrapper="div class=controls",
     labelClass="control-label",
     groupWrapper="div class=form-group"
