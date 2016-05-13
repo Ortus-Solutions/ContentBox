@@ -48,7 +48,7 @@
 
 				<!---Search --->
 				<cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
-				<span class="navbar-search" id="div-search" title="ctrl+shift+s or \" data-toggle="tooltip" data-placement="right"/>
+				<span class="navbar-search hidden-xs" id="div-search" title="ctrl+shift+s or \" data-toggle="tooltip" data-placement="right"/>
 					<!---Search Results --->
 					<span id="div-search-results"></span>
 					<!---Search Inputs --->
@@ -123,17 +123,19 @@
 						#prc.adminMenuService.generateUtilsMenu()#
 						
 						<!--- Support Menu --->
-						#prc.adminMenuService.generateSupportMenu()#
+						<div class="hidden-xs hidden-sm">
+							#prc.adminMenuService.generateSupportMenu()#
+						</div>
 
 						<!--- FullScreen --->
-						<li class="" data-placement="right auto" title="Fullscreen">
+						<li class="visible-md visible-lg" data-placement="right auto" title="Fullscreen">
 							<a class="btn btn-default options toggle" href="javascript:toggleFullScreen()" target="_blank">
 								<i class="fa fa-arrows-alt"></i>
 							</a>
 						</li>
 						
 						<!--- Profile --->
-						<li class="profile-photo">
+						<li class="profile-photo hidden-xs">
 							#getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
 						</li>
 						#prc.adminMenuService.generateProfileMenu()#
