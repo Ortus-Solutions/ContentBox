@@ -123,12 +123,12 @@
 						#prc.adminMenuService.generateUtilsMenu()#
 						
 						<!--- Support Menu --->
-						<div class="hidden-xs hidden-sm">
+						<span class="hidden-xs hidden-sm">
 							#prc.adminMenuService.generateSupportMenu()#
-						</div>
+						</span>
 
 						<!--- FullScreen --->
-						<li class="visible-md visible-lg" data-placement="right auto" title="Fullscreen">
+						<li class="hidden-xs hidden-sm" data-placement="right auto" title="Fullscreen">
 							<a class="btn btn-default options toggle" href="javascript:toggleFullScreen()" target="_blank">
 								<i class="fa fa-arrows-alt"></i>
 							</a>
