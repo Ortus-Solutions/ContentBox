@@ -1,22 +1,21 @@
 <cfoutput>
 <script language="javascript">
 $( document ).ready( function(){
-    var $installerForm = $( "##installerForm" )
+	// Validate hidden tabs
+	$.validator.setDefaults( {
+		errorPlacement: function(error, element) {
+		    error.appendTo( element.closest( "div.controls" ) );
+		}
+	});
+
+	var $installerForm = $( "##installerForm" )
 	// form validators
 	$installerForm.validate( {
-        showErrors : function( errorMap, errorList ){
-            var errors = this.numberOfInvalids();
-            if ( errors ) {
-                var msg = '<p><strong>#cb.r( "validation.errors@installer" )#</strong></p><ul>';
-                for( var i=0; i<errors; i++ ) {
-                    var label = $( "label[for='"+$(errorList[ i ].element).attr('id')+"']" );
-                    msg += '<li>' + label.text() + ' ' + errorList[ i ].message + '</li>';
-                }
-                msg += '</ul>';
-                var wall = $( "##errorBar" ).addClass( "alert alert-danger" ).fadeIn().html( msg );
-            }
-        }
-    } );
+	        invalidHandler: function(e, validator){
+	            if(validator.errorList.length)
+	            $('##tabs a[href="##' + jQuery(validator.errorList[0].element).closest(".tab-pane").attr('id') + '"]').tab('show')
+	        }
+    	} );
 	
 	// password validator
 	$.validator.addMethod( 'passwordmatch', function( value, element ){
