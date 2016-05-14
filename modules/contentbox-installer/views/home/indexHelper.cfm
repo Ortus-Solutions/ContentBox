@@ -41,7 +41,7 @@ $( document ).ready( function(){
 	   && digit // has at least one digit
 	   && special // has special chars
            && value.length > 7 // at least 8 chars
-	}, 'Password should be at least 8 characters long and should contain at least 1 digit, 1 uppercase, 1 lowercase and 1 special chars' );
+	}, '#cb.r( "validation.passwordcheck@installer" )#' );
 
 } );
 
