@@ -53,14 +53,14 @@
 					</a>
 					
 					<!--- Delete Command --->
-					<a 	class="btn btn-sm btn-danger confirmIt" 
-						href="javascript:remove('#setting.getsettingID()#')"
-						<cfif setting.getIsCore()>
+					<cfif setting.getIsCore()>
+						<a 	class="btn btn-sm btn-danger"
 						disabled="disabled"							
-						title="You cannot delete core settings!"
-						<cfelse>
+					<cfelse>
+						<a 	class="btn btn-sm btn-danger confirmIt"
+						href="javascript:remove('#setting.getsettingID()#', #setting.getIsCore()#)"
 						title="Delete Setting"
-						</cfif>
+					</cfif>
 						data-title="<i class='fa fa-trash-o'></i> Delete Setting?">
 							<i class="fa fa-trash-o fa-lg" id="delete_#setting.getsettingID()#"></i>
 						</a>
