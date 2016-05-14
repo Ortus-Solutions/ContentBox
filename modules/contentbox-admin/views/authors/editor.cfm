@@ -123,7 +123,7 @@
 										required="required",
 										size="50",
 										class="form-control",
-										wrapper="div class=controls",
+										wrapper="div class=controls pwcheck",
 										labelClass="control-label",
 										groupWrapper="div class=form-group"
 									)#
@@ -191,8 +191,8 @@
 								#html.startFieldset(legend="Change Password" )#
 								#html.hiddenField(name="authorID",bind=prc.author)#
 								<!--- Fields --->
-								#html.passwordField(name="password",label="Password:",required="required",size="50",class="form-control",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
-								#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="form-control",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
+								#html.passwordField(name="password",label="Password:",required="required",size="50",class="form-control pwcheck",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
+								#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="form-control pwcheck",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
 								#html.endFieldSet()#
 								
 								<!--- Action Bar --->
