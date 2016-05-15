@@ -122,8 +122,8 @@
 										label="*Password:",
 										required="required",
 										size="50",
-										class="form-control",
-										wrapper="div class=controls pwcheck",
+										class="form-control pwcheck",
+										wrapper="div class=controls",
 										labelClass="control-label",
 										groupWrapper="div class=form-group"
 									)#
