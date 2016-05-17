@@ -75,14 +75,14 @@
 							<ul class="dropdown-menu">
 								<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 									<li>
-										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+P">
+										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
 											<i class="fa fa-file-o"></i> New Page
 										</a>
 									</li>
 								</cfif>
 								<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 									<li>
-										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+B">
+										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+b">
 											<i class="fa fa-quote-left"></i> New Entry
 										</a>
 									</li>
@@ -96,21 +96,21 @@
 								</cfif>
 								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
 									<li>
-										<a data-keybinding="ctrl+shift+u" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+U">
+										<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+a">
 											<i class="fa fa-user"></i> New User
 										</a>
 									</li>
 								</cfif>
 								<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
 									<li>
-										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+M">
+										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
 											<i class="fa fa-picture-o"></i> New Media
 										</a>
 									</li>
 								</cfif>
 								<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
 									<li>
-										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+U">
+										<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
 											<i class="fa fa-list"></i> New Menu
 										</a>
 									</li>

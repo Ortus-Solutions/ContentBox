@@ -20,7 +20,7 @@
 					<thead>
 						<tr>
 							<th>#$r( "dashboard.about.components.table.head1@admin" )#</th>	
-							<th width="100" class="text-center">#$r( "dashboard.about.components.table.head2@admin" )#</th>
+							<th width="300" class="text-center">#$r( "dashboard.about.components.table.head2@admin" )#</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -61,7 +61,7 @@
 					<thead>
 						<tr>
 							<th>#$r( "dashboard.about.shortcuts.table.head1@admin" )#</th>	
-							<th width="100" class="text-center">#$r( "dashboard.about.shortcuts.table.head2@admin" )#</th>
+							<th width="150" class="text-center">#$r( "dashboard.about.shortcuts.table.head2@admin" )#</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -145,9 +145,15 @@
 						</tr>
 						<tr>
 							<th>
+								#$r( "dashboard.about.shortcuts.table.new_menu@admin" )#
+							</th>
+							<th class="text-center">ctrl+shift+v</th>
+						</tr>
+						<tr>
+							<th>
 								#$r( "dashboard.about.shortcuts.table.r14.1@admin" )#
 							</th>
-							<th class="text-center">ctrl+shift+s</th>
+							<th class="text-center">ctrl+shift+s or \</th>
 						</tr>
 						<tr>
 							<th>
