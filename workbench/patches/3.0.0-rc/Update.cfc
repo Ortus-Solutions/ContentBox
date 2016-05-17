@@ -288,7 +288,7 @@ component {
 
 		for( var thisTable in tables ){
 			var q = new Query( sql = "update #thisTable# set modifiedDate = :modifiedDate" );
-			q.setParam( name="modifiedDate", value ="#createODBCDateTime( now() )#" );
+			q.addParam( name="modifiedDate", value ="#createODBCDateTime( now() )#" );
 			var results = q.execute().getResult();
 			log.info( "Update #thisTable# modified date", results );	
 		}
@@ -309,7 +309,7 @@ component {
 		];
 		for( var thisTable in tables ){
 			var q = new Query( sql = "update #thisTable# set createDate = :modifiedDate" );
-			q.setParam( name="createdDate", value ="#createODBCDateTime( now() )#" );
+			q.addParam( name="createdDate", value ="#createODBCDateTime( now() )#" );
 			var results = q.execute().getResult();
 			log.info( "Update #thisTable# created date", results );	
 		}
