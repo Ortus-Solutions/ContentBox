@@ -39,6 +39,16 @@ function getContentStoreSelectorURL(){ return $cbEditorConfig.adminEntryURL + "/
 function getPreviewSelectorURL(){ return $cbEditorConfig.adminEntryURL + "/content/preview"; }
 
 /**
+ * Get author editor preference
+ */
+function getAuthorEditorPreferenceURL(){ return $cbEditorConfig.adminEntryURL + "/authors/changeEditor"; }
+
+/**
+ * Get author save preference
+ */
+function getAuthorSavePreferenceURL(){ return $cbEditorConfig.adminEntryURL + "/authors/saveSinglePreference"; }
+
+/**
  * Get a module URL link
  * @param  {string} module      The module
  * @param  {string} event       The event to execute
@@ -87,7 +97,7 @@ function switchEditor( editorType ){
 	}
 	// Call change user editor preference
 	$.ajax( {
-		url 	: $targetEditorSaveURL,
+		url 	: getAuthorEditorPreferenceURL(),
 		data 	: { editor: editorType },
 		async 	: false,
 		success : function( data ){
