@@ -33,6 +33,7 @@ component {
 	* Constructor
 	*/
 	function init(){
+		setting requestTimeout="999999";
 		return this;
 	}
 
