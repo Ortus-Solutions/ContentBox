@@ -204,7 +204,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			// Activate on content object
 			simpleMDE_content = new SimpleMDE( { 
 				#extraConfig#
-				element 		: $content[ 0 ],
+				element 		: document.getElementById( 'content' ),
 				autosave 		: { enabled : false },
 				promptURLs 		: true,
 				tabSize 		: 4,
@@ -219,7 +219,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 				// Activate on content object
 				simpleMDE_excerpt = new SimpleMDE( { 
 					#extraConfig#
-					element  		: $excerpt[ 0 ],
+					element  		: document.getElementById( 'excerpt' ),
 					autosave  		: { enabled : false },
 					promptURLs  	: true,
 					tabSize  		: 4,
