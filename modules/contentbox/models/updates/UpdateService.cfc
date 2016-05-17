@@ -50,6 +50,8 @@ component accessors="true" threadSafe{
 		var results 		= { error=true, logInfo="" };
 		var fileName 		= getFileFromPath( arguments.downloadURL );
 
+		setting requestTimeout="999999";
+
 		// download patch and extracted?
 		if( downloadPatch( arguments.downloadURL, log ) ){
 			// Apply Patch
@@ -74,6 +76,8 @@ component accessors="true" threadSafe{
 		var results 		= { error=true, logInfo="" };
 
 		try{
+			setting requestTimeout="999999";
+			
 			// upload patch
 			log.append( "Starting upload of patch.<br/>" );
 			var uploadResults = uploadUpdate( arguments.fileField );
