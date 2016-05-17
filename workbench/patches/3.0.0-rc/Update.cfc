@@ -308,7 +308,7 @@ component {
 			"cb_subscribers"
 		];
 		for( var thisTable in tables ){
-			var q = new Query( sql = "update #thisTable# set createDate = :createdDate" );
+			var q = new Query( sql = "update #thisTable# set createdDate = :createdDate" );
 			q.addParam( name="createdDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
 			var results = q.execute().getResult();
 			log.info( "Update #thisTable# created date", results );	
