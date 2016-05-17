@@ -7,7 +7,7 @@ $( document ).ready( function(){
  	// Editor Pointers
 	$entryForm = $( "##entryForm" );
 	// setup editors via _tags/editors.cfm by passing the form container
-	setupEditors( $entryForm, true, '#event.buildLink(prc.xehEntrySave)#' );
+	setupEditors( $entryForm, true, '#event.buildLink( prc.xehEntrySave )#' );
 } );
 </script>
 </cfoutput>
