@@ -205,12 +205,6 @@ component accessors="true" threadSafe singleton{
 			target="_blank" 
 		)
 		.addHeaderSubMenu( 
-			name="google", 
-			label='<i class="fa fa-google-plus"></i> Google+', 
-			href="https://plus.google.com/u/0/111231811346031749369", 
-			target="_blank" 
-		)
-		.addHeaderSubMenu( 
 			name="updates", 
 			label='<i class="fa fa-download"></i> Check for Updates', 
 			href="#event.buildLink( xehAutoUpdates )#" 
