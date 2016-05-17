@@ -488,7 +488,7 @@ component hint="Main filebrowser module handler"{
 			if( prc.fbSettings.loadJquery ){
 				// Add Main Styles
 				var adminRoot = event.getModuleRoot( 'contentbox-admin' );
-				addAsset( "#adminRoot#/includes/css/theme.css" );
+				addAsset( "#adminRoot#/includes/css/contentbox.min.css" );
 				addAsset( "#adminRoot#/includes/js/jquery.min.js" );
 			}
 
