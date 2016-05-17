@@ -281,21 +281,19 @@ function activateContentSearch(){
     $nav_search         = $( "#nav-search" );
     $nav_search_results = $( "#div-search-results" );
     // opacity
-    $nav_search.css( "opacity","0.8" );
+    $nav_search.css( "opacity", "0.8" );
     // focus effects
     $nav_search.focusin( function(){
         //if( $nav_search.is( ":focus" ) ){ return; }
         $( this ).animate( {
-                opacity: 1.0,
-                width  : '+=250',
+                opacity: 1.0
             }, 
             500, 
             function(){} 
         );
     } ).blur( function(){
         $( this ).animate( {
-                opacity: 0.50,
-                width  : '-=250',
+                opacity: 0.50
             }, 
             500, 
             function(){}

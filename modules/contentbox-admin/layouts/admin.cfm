@@ -53,7 +53,7 @@
 					<span id="div-search-results"></span>
 					<!---Search Inputs --->
 					<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
-					<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query"/>
+					<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query" size="30"/>
 				</span>
 				</cfif>
 

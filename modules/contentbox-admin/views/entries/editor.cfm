@@ -1,4 +1,20 @@
 ﻿<cfoutput>
+<div class="btn-group btn-group-xs">
+    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;">
+        <i class="fa fa-reply"></i> Back
+    </button>
+    <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
+        <span class="fa fa-cog"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
+        <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
+        <li><a href="javascript:quickSave()"><i class="fa fa-save"></i> Quick Save</a></li>
+        <cfif prc.entry.isLoaded()>
+        <li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="fa fa-eye"></i> Open In Site</a></li>
+        </cfif>
+    </ul>
+</div>
 <!--- Entry Form  --->
 #html.startForm(
     action=prc.xehEntrySave,
@@ -6,11 +22,6 @@
     novalidate="novalidate",
     class="form-vertical"
 )#
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="h1"><i class="fa fa-edit"></i> Entry Editor</h1>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
@@ -22,26 +33,6 @@
             #html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="actions">
-                        <div class="btn-group btn-group-sm">
-                            <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;">
-                                <i class="fa fa-reply"></i> Back
-                            </button>
-                            <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
-                                <span class="fa fa-cog"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
-                                <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
-                                <li><a href="javascript:quickSave()"><i class="fa fa-save"></i> Quick Save</a></li>
-                                <cfif prc.entry.isLoaded()>
-                                <li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="fa fa-eye"></i> Open In Site</a></li>
-                                </cfif>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
                 <div class="panel-body">
                     <!--- title --->
                     #html.textfield(
