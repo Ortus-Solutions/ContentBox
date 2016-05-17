@@ -24,6 +24,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	property name="statsService"				inject="statsService@cb";
 	property name="dateUtil"					inject="DateUtil@cb";
 	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
+	property name="subscriberService" 			inject="subscriberService@cb";
 
 	/**
 	* Constructor
@@ -652,24 +653,33 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 
 			// Subscriptions
-			/**
 			if( arrayLen( thisContent.commentSubscriptions ) ){
 				var allSubscriptions = [];
 				// recurse on them and inflate hiearchy
 				for( var thisSubscription in thisContent.commentSubscriptions ){
-					// population
-					var oSubscription = populator.populateFromStruct( 
-						target 				 = commentSubscriptionService.new(),
-						memento 			 = thisSubscription,
-						exclude 			 = "subscriptionID",
-						composeRelationships = false 
-					);
-					oSubscription.setRelatedContent( oContent );
+					// Subscription
+					var oSubscription = commentSubscriptionService.new( {
+						relatedContent 		= oContent,
+						subscriptionToken 	= thisSubscription.subscriptionToken,
+						type 				= thisSubscription.type
+					} );
+					// Subscriber
+					var oSubscriber = subscriberService.findBySubscriberEmail( thisSubscription.subscriber.subscriberEmail );
+					if( isNull( oSubscriber ) ){
+						oSubscriber = subscriberService.new( {
+							subscriberEmail = thisSubscription.subscriber.subscriberEmail,
+							subscriberToken = thisSubscription.subscriber.subscriberToken
+						} );
+					}
+					oSubscription.setSubscriber( oSubscriber );
+					oSubscriber.addSubscription( oSubscription );
+					// Save subscriber subscription
+					entitySave( oSubscriber );
+					// add to import
 					arrayAppend( allSubscriptions, oSubscription );
 				}
 				oContent.setCommentSubscriptions( allSubscriptions );
 			}
-			* **/
 
 			// CONTENT VERSIONS
 			if( arrayLen( thisContent.contentversions ) ){
