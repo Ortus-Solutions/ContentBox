@@ -35,7 +35,7 @@
             <div class="panel panel-default">
                 <!-- Nav tabs -->
                 <div class="tab-wrapper margin0">
-                    <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <ul class="nav nav-tabs" role="tablist">
 
                         <li role="presentation" class="active">
                             <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
