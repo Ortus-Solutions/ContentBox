@@ -550,7 +550,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 
 			// STATS
-			if( structKeyExists( thisContent, "stats" ) ){
+			if( structKeyExists( thisContent, "stats" ) && thisContent.stats.hits > 0 ){
 				var oStat = statsService.new( { hits = thisContent.stats.hits } );
 				oStat.setRelatedContent( oContent );
 				oContent.setStats( oStat );
