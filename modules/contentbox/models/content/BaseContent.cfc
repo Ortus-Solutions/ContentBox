@@ -751,6 +751,7 @@ component 	persistent="true"
 	* @showCategories Show categories in memento or not
 	* @showRelatedContent Show related Content in memento or not
 	* @showStats Show stats in memento or not
+	* @showCommentSubscriptions Show comment subscriptions or not
 	* @excludes Excludes
 	* @properties Additional properties to incorporate in the memento
 	*/
@@ -766,7 +767,8 @@ component 	persistent="true"
 		boolean showCategories=true,
 		boolean showRelatedContent=true,
 		boolean showStats=true,
-		excludes="",
+		boolean showCommentSubscriptions=true,
+		excludes="activeContent,linkedContent,commentSubscriptions",
 		array properties
 	){
 		// Do this to convert native Array to CF Array for content properties
@@ -802,7 +804,7 @@ component 	persistent="true"
 		if( arguments.showStats && hasStats() ){
 			result[ "stats" ] = getStats().getMemento();
 		} else if( arguments.showStats ){
-			result[ "stats" ] = { statsID = 0, hits = 0 };
+			result[ "stats" ] = { "statsID" = 0, "hits" = 0 };
 		}
 
 		// Custom Fields
@@ -839,6 +841,15 @@ component 	persistent="true"
 			}
 		} else if( arguments.showChildren ){
 			result[ "children" ] = [];
+		}
+		// Comment Subscriptions
+		if( arguments.showCommentSubscriptions && hasCommentSubscription() ){
+			result[ "commentSubscriptions" ] = [];
+			for( var thisChild in variables.commentSubscriptions ){
+				arrayAppend( result[ "commentSubscriptions" ], thisChild.getMemento() );
+			}
+		} else if( arguments.showCommentSubscriptions ){
+			result[ "commentSubscriptions" ] = [];
 		}
 		// Categories
 		if( arguments.showCategories && hasCategories() ){
