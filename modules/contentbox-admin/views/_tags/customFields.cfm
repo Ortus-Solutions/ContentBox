@@ -1,56 +1,55 @@
 <cfoutput>
 <cfif prc.oAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
-	<div class="panel panel-primary">
-	    <div class="panel-heading">
-	        <h3 class="panel-title"><i class="fa fa-hdd"></i> Custom Fields</h3>
-	    </div>
-	    <div class="panel-body">
-	        <p>
-				You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via 
-				the CB Helper -> 
-				<code>cb.quickCustomFields() or cb.getCustomField(key,[defaultValue])</code>
-			</p>
-			<!--- CustomFields Holder --->
-			<div id="customFields">
-				<!--- Counter Of How Many Custom Fields --->
-				#html.hiddenField(name="customFieldsCount",value=arrayLen( args.customFields ))#
-				<div>
-					<!--- Add CustomField --->
-					<button class="btn btn-sm btn-primary dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;">
-						<i class="fa fa-plus"></i> Add
-					</button>
-					<!--- Remove All Custom Fields --->
-					<button id="removeCustomFieldsButton" class="btn btn-sm btn-danger" onclick="return cleanCustomFields()">
-						<i class="fa fa-trash-o"></i> Remove All
-					</button>
+    <p>
+		You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via 
+		the CB Helper:
+		<code>cb.quickCustomFields() or cb.getCustomField(key,[defaultValue])</code>
+	</p>
+	<!--- CustomFields Holder --->
+	<div id="customFields">
+		<!--- Counter Of How Many Custom Fields --->
+		#html.hiddenField(name="customFieldsCount",value=arrayLen( args.customFields ))#
+		
+		<div>
+			<!--- Add CustomField --->
+			<button class="btn btn-sm btn-primary dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;">
+				<i class="fa fa-plus"></i> Add
+			</button>
+			<!--- Remove All Custom Fields --->
+			<button id="removeCustomFieldsButton" class="btn btn-sm btn-danger" onclick="return cleanCustomFields()">
+				<i class="fa fa-trash-o"></i> Remove All
+			</button>
+		</div>
+
+		<p>&nbsp;</p>
+
+		<!--- Render out Fields --->
+		<cfloop array="#args.customFields#" index="cField" >
+			<div class="margin0 template">
+				<div class="form-group form-inline">
+					<label class="inline control-label">Key: </label>
+					#html.textField(
+						name="CustomFieldKeys",
+						class="form-control customFieldKey",
+						maxsize="255",
+						size="30",
+						value=cField.getKey()
+					)#
+				
+					<label class="inline control-label">Value: </label> 
+					#html.textField(
+						name="CustomFieldValues",
+						class="form-control customFieldValue",
+						size="30",
+						value=cField.getValue()
+					)#
+					
+					<button class="btn btn-danger dynamicRemove" onclick="return false;"><i class="fa fa-trash-o"></i></button>
+				
 				</div>
-				<!--- Render out Fields --->
-				<cfloop array="#args.customFields#" index="cField" >
-					<div class="margin0 template">
-						<div class="form-group form-inline">
-							<label class="inline control-label">Key: </label>
-							#html.textField(
-								name="CustomFieldKeys",
-								class="form-control customFieldKey",
-								maxsize="255",
-								value=cField.getKey()
-							)#
-						
-							<label class="inline control-label">Value: </label> 
-							#html.textField(
-								name="CustomFieldValues",
-								class="form-control customFieldValue",
-								value=cField.getValue()
-							)#
-							
-							<button class="btn btn-danger dynamicRemove" onclick="return false;"><i class="fa fa-trash-o fa-lg"></i></button>
-						
-						</div>
-					</div>
-				</cfloop>
-				<div id="beacon"></div>
 			</div>
-	    </div>
+		</cfloop>
+		<div id="beacon"></div>
 	</div>
 	<!--- CustomFields Template --->
 	<div id="customFieldsTemplate" class="margin0 template" style="display:none;">
@@ -59,13 +58,15 @@
 			#html.textField(
 				name="CustomFieldKeys",
 				class="form-control customFieldKey",
-				maxsize="255"
+				maxsize="255",
+				size="30"
 			)#
 		
 			<label class="inline control-label">Value: </label> 
 			#html.textField(
 				name="CustomFieldValues",
-				class="form-control customFieldValue"
+				class="form-control customFieldValue",
+				size="30"
 			)#
 
 			<button class="btn btn-danger dynamicRemove" onclick="return false;">

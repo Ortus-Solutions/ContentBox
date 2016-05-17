@@ -29,85 +29,114 @@
             #html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
 
             <div class="panel panel-default">
-                <div class="panel-body">
-                    <!--- title --->
-                    #html.textfield(
-                        label="Title:",
-                        name="title",
-                        bind=prc.content,
-                        maxlength="100",
-                        required="required",
-                        title="The title for this content",
-                        class="form-control",
-                        wrapper="div class=controls",
-                        labelClass="control-label",
-                        groupWrapper="div class=form-group"
-                    )#
-                    
-                    <!--- slug --->
-                    <div class="form-group">
-                        <label for="slug" class="control-label">Slug:</label>
-                        <div class="controls">
-                            <div id='slugCheckErrors'></div>
-                            <div class="input-group">
-                                #html.textfield(
-                                    name="slug", 
-                                    bind=prc.content, 
-                                    maxlength="100", 
-                                    class="form-control", 
-                                    title="The unique slug for this content, this is how they are retreived",
-                                    disabled="#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
-                                )#
-                                <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink" data-container="body">
-                                        <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
+
+                <!-- Nav tabs -->
+                <div class="tab-wrapper margin0">
+                    <ul class="nav nav-tabs nav-justified" role="tablist">
+
+                        <li role="presentation" class="active">
+                            <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
+                                <i class="fa fa-edit"></i> Editor
+                            </a>
+                        </li>
+
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
+                            <li role="presentation">
+                                <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
+                                    <i class="fa fa-truck"></i> Custom Fields
                                 </a>
+                            </li>
+                        </cfif>
+
+                        <!---Loaded Panels--->
+                        <cfif prc.content.isLoaded()>
+                            <li role="presentation">
+                                <a href="##history" aria-controls="history" role="tab" data-toggle="tab">
+                                    <i class="fa fa-history"></i> History
+                                </a>
+                            </li>
+                        </cfif>
+                    </ul>
+                </div>
+
+                <div class="panel-body tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="editor">
+                        <!--- title --->
+                        #html.textfield(
+                            label="Title:",
+                            name="title",
+                            bind=prc.content,
+                            maxlength="100",
+                            required="required",
+                            title="The title for this content",
+                            class="form-control",
+                            wrapper="div class=controls",
+                            labelClass="control-label",
+                            groupWrapper="div class=form-group"
+                        )#
+                        
+                        <!--- slug --->
+                        <div class="form-group">
+                            <label for="slug" class="control-label">Slug:</label>
+                            <div class="controls">
+                                <div id='slugCheckErrors'></div>
+                                <div class="input-group">
+                                    #html.textfield(
+                                        name="slug", 
+                                        bind=prc.content, 
+                                        maxlength="100", 
+                                        class="form-control", 
+                                        title="The unique slug for this content, this is how they are retreived",
+                                        disabled="#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
+                                    )#
+                                    <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink" data-container="body">
+                                            <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
+                                    </a>
+                                </div>
                             </div>
+                        </div>      
+
+                        <!--- Description --->
+                        #html.textarea(
+                            name="description",
+                            label="Short Description:",
+                            bind=prc.content,
+                            rows=3,
+                            class="form-control",
+                            title="A short description for metadata purposes",
+                            wrapper="div class=controls",
+                            labelClass="control-label",
+                            groupWrapper="div class=form-group"
+                        )# 
+
+                        <!---ContentToolBar --->
+                        #renderView( view="_tags/content/markup", args={ content=prc.content } )#    	
+
+                        <!--- content --->
+                        #html.textarea(
+                            name="content",
+                            value=htmlEditFormat( prc.content.getContent() ),
+                            rows="25",
+                            class="form-control"
+                        )#
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="custom_fields">
+                        <!--- Custom Fields --->
+                         #renderView( view="_tags/customFields", args={ fieldType="content", customFields=prc.content.getCustomFields() } )#
+                    </div>
+
+                    <!---Loaded Panels--->
+                    <cfif prc.content.isLoaded()>
+                        <div role="tabpanel" class="tab-pane" id="history">
+                            #prc.versionsViewlet#
                         </div>
-                    </div>      
+                    </cfif>
 
-                    <!--- Description --->
-                    #html.textarea(
-                        name="description",
-                        label="Short Description:",
-                        bind=prc.content,
-                        rows=3,
-                        class="form-control",
-                        title="A short description for metadata purposes",
-                        wrapper="div class=controls",
-                        labelClass="control-label",
-                        groupWrapper="div class=form-group"
-                    )# 
-
-                    <!---ContentToolBar --->
-                    <cfset markupArgs = { content=prc.content }>
-                    #renderView( view="_tags/content/markup", args=markupArgs )#    	
-
-                    <!--- content --->
-                    #html.textarea(
-                        name="content",
-                        value=htmlEditFormat( prc.content.getContent() ),
-                        rows="25",
-                        class="form-control"
-                    )#
                 </div>
                 <!--- Event --->
                 #announceInterception( "cbadmin_contentStoreEditorInBody" )#
             </div>
-            <!--- Custom Fields --->
-            <!--- I have to use the json garbage as CF9 Blows up on the implicit structs, come on man! --->
-            <cfset mArgs = {fieldType="content", customFields=prc.content.getCustomFields()}>
-            #renderView(view="_tags/customFields",args=mArgs)#
-            <!---Loaded Panels--->
-            <cfif prc.content.isLoaded()>
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-clock-o fa-lg"></i> Versions</h3>
-                    </div>
-                    <div class="panel-body">
-                        #prc.versionsViewlet#
-                    </div>
-                </div>
-            </cfif>
         
             <!--- Event --->
             #announceInterception( "cbadmin_contentStoreEditorFooter" )#
