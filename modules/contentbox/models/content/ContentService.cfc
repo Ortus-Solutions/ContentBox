@@ -8,21 +8,22 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="settingService"			inject="id:settingService@cb";
-	property name="cacheBox"				inject="cachebox";
-	property name="log"						inject="logbox:logger:{this}";
-	property name="customFieldService" 	 	inject="customFieldService@cb";
-	property name="categoryService" 	 	inject="categoryService@cb";
-	property name="commentService" 	 		inject="commentService@cb";
-	property name="contentVersionService"	inject="contentVersionService@cb";
-	property name="authorService"			inject="authorService@cb";
-	property name="contentStoreService"		inject="contentStoreService@cb";
-	property name="pageService"				inject="pageService@cb";
-	property name="entryService"			inject="entryService@cb";
-	property name="populator"				inject="wirebox:populator";
-	property name="systemUtil"				inject="SystemUtil@cb";
-	property name="statsService"			inject="statsService@cb";
-	property name="dateUtil"		inject="DateUtil@cb";
+	property name="settingService"				inject="id:settingService@cb";
+	property name="cacheBox"					inject="cachebox";
+	property name="log"							inject="logbox:logger:{this}";
+	property name="customFieldService" 	 		inject="customFieldService@cb";
+	property name="categoryService" 	 		inject="categoryService@cb";
+	property name="commentService" 	 			inject="commentService@cb";
+	property name="contentVersionService"		inject="contentVersionService@cb";
+	property name="authorService"				inject="authorService@cb";
+	property name="contentStoreService"			inject="contentStoreService@cb";
+	property name="pageService"					inject="pageService@cb";
+	property name="entryService"				inject="entryService@cb";
+	property name="populator"					inject="wirebox:populator";
+	property name="systemUtil"					inject="SystemUtil@cb";
+	property name="statsService"				inject="statsService@cb";
+	property name="dateUtil"					inject="DateUtil@cb";
+	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
 
 	/**
 	* Constructor
@@ -649,6 +650,26 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				}
 				oContent.setComments( allComments );
 			}
+
+			// Subscriptions
+			/**
+			if( arrayLen( thisContent.commentSubscriptions ) ){
+				var allSubscriptions = [];
+				// recurse on them and inflate hiearchy
+				for( var thisSubscription in thisContent.commentSubscriptions ){
+					// population
+					var oSubscription = populator.populateFromStruct( 
+						target 				 = commentSubscriptionService.new(),
+						memento 			 = thisSubscription,
+						exclude 			 = "subscriptionID",
+						composeRelationships = false 
+					);
+					oSubscription.setRelatedContent( oContent );
+					arrayAppend( allSubscriptions, oSubscription );
+				}
+				oContent.setCommentSubscriptions( allSubscriptions );
+			}
+			* **/
 
 			// CONTENT VERSIONS
 			if( arrayLen( thisContent.contentversions ) ){

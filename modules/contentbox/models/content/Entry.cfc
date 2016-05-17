@@ -116,7 +116,7 @@ component 	persistent="true"
 		boolean showStats=true
 	){
 		// Local Memento Properties
-		var result 	= super.getResponseMemento( argumentCollection=arguments );
+		var result 	= super.getMemento( argumentCollection=arguments );
 		
 		result[ "excerpt" ] = variables.excerpt;
 
