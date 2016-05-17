@@ -517,7 +517,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		populator.populateFromStruct( 
 			target					= oContent,
 			memento					= thisContent,
-			exclude					= "creator,parent,children,categories,customfields,contentversions,comments,stats",
+			exclude					= "creator,parent,children,categories,customfields,contentversions,comments,stats,activeContent,commentSubscriptions,linkedContent",
 			composeRelationships	= false,
 			nullEmptyInclude		= "publishedDate,expireDate" 
 		);
