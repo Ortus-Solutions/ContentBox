@@ -101,8 +101,9 @@ function switchEditor( editorType ){
  * @param theForm The form container for the editor
  * @param withExcerpt Using excerpt or not apart from the main 'content' object
  * @param saveURL The URL used for saving the content asynchronously
+ * @param collapseNav Automatically collapse main navigation for better editing experience 
  */
-function setupEditors( theForm, withExcerpt, saveURL ){
+function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 	// Setup global editor elements
 	$targetEditorForm   	= theForm;
 	$targetEditorSaveURL 	= saveURL;
@@ -176,7 +177,20 @@ function setupEditors( theForm, withExcerpt, saveURL ){
 	$( "#htmlDescription" ).keyup(function(){
 		$( "#html_description_count" ).html( $( "#htmlDescription" ).val().length );
 	} );
-	
+
+	// setup clockpickers
+    $( '.clockpicker' ).clockpicker();
+
+	// setup autosave
+	autoSave( $content, $contentID, 'contentAutoSave' );
+
+	// Collapse navigation for better editing experience
+    var bodyEl = $( '#container' );
+    collapseNav = collapseNav || true;
+    if( collapseNav && !$( bodyEl ).hasClass( 'sidebar-mini' ) ){
+        $( 'body' ).removeClass('off-canvas-open');
+        $( bodyEl ).toggleClass( 'sidebar-mini' );
+    }
 }
 
 
