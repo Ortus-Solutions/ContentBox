@@ -721,6 +721,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Async or not
 	*/
 	ContentService function updateHits(required contentID, boolean async=true){
+		arguments.async = false;
 		// if in thread already or not async
 		if( systemUtil.inThread() OR !arguments.async ){
 			statsService.syncUpdateHits( arguments.contentID );
