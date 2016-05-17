@@ -27,7 +27,7 @@
 			<tr>
 				<th width="50" class="text-center">Diff</th>
 				<th width="50" class="text-center">Version</th>
-				<th width="140" class="text-center">Date</th>
+				<th width="160" class="text-center">Date</th>
 				<th width="90" class="text-center">Author</th>
 				<th>Comment</th>
 				<th width="135" class="text-center">Actions</th>

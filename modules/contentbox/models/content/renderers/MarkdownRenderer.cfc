@@ -19,7 +19,11 @@ component extends="coldbox.system.Interceptor"{
 	* Execute on content translations for pages and blog entries
 	*/
 	void function cb_onContentRendering( any event, struct interceptData ){
-		var thisMarkup = arguments.interceptData.content.getMarkup();
+		// If no markup, then maybe a direct convent version conversion.
+		if( !structKeyExists( arguments.interceptData.content, "getMarkup" ) ){
+			return;
+		}
+		var thisMarkup = arguments.interceptData.content.getMarkup() ;
 
 		// Markdown 
 		if( thisMarkup eq MARKDOWN_EDITOR ){
