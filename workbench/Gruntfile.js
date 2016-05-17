@@ -156,7 +156,7 @@ module.exports = function(grunt) {
 					,"bower_components/toastr/toastr.min.js"
 					,"bower_components/Bootstrap-Confirmation/bootstrap-confirmation.js"
 					,"bower_components/jquery-nestable/jquery.nestable.js"
-					,"bower_components/jquery-fullscreen/jquery.fullscreen-min.js"
+					,"bower_components/jq-fullscreen/release/jquery.fullscreen.min.js"
 					// Vendor libraries
 					,"devincludes/vendor/js/bootstrap-fileupload.js"
 					,"devincludes/vendor/js/jquery.uidivfilter.js"

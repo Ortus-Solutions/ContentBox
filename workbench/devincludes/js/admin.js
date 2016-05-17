@@ -591,5 +591,14 @@ function getToday( us ){
  * Go Fullscreen, based on the fullscreen plugin
  */
 function toggleFullScreen(){
-    $( document ).toggleFullScreen();
+    if( !$.fullscreen.isNativelySupported() ){
+        alert( "Your Browser does not support fullscreen mode." );
+        return false;
+    }
+    if( $.fullscreen.isFullScreen() ){
+        $.fullscreen.exit();
+    } else {
+        $( 'body' ).fullscreen();
+    }
+    
 }
