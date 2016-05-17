@@ -157,12 +157,6 @@
 						</tr>
 						<tr>
 							<th>
-								#$r( "dashboard.about.shortcuts.table.r15.1@admin" )#
-							</th>
-							<th class="text-center">ctrl+shift+q</th>
-						</tr>
-						<tr>
-							<th>
 								#$r( "dashboard.about.shortcuts.table.r16.1@admin" )#
 							</th>
 							<th class="text-center">ctrl+shift+c</th>
