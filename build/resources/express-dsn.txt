@@ -1,0 +1,7 @@
+this.datasources.contentbox = {
+	class: 'org.hsqldb.jdbcDriver',
+	connectionString: 'jdbc:hsqldb:file:contentboxDB/contentbox',
+	blob:true,
+	clob:true
+};
+this.datasource = "contentbox";

@@ -11,14 +11,15 @@ web.config
 "Icon\r"
 WEB-INF/**
 artifacts/**
-# Workbench dependencies
-workbench/resources/WEB-INF/*
-workbench/build-contentbox/**
-workbench/dependencies
+# Build Dependencies
+build/build.number
+build/apidocs/docbox
+build/resources/WEB-INF/*
+build/build-contentbox/**
+build/dependencies
+# Workbench Dependencies
 workbench/node_modules
 workbench/bower_components
-workbench/build.number
-workbench/apidocs/docbox
 # Global Dependencies
 coldbox/*
 testbox/*
