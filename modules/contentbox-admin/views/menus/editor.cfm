@@ -65,7 +65,7 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <h3>Preview <a class="btn btn-sm btn-default" id="preview-button"><i class="fa fa-refresh"></i></a></h3>
+                        <h3>Preview <a class="btn btn-sm btn-primary" id="preview-button"><i class="fa fa-refresh"></i></a></h3>
                         <p>Here's an instant preview of your menu.</p>
                         <div id="preview-panel" class="well well-sm">No Preview Available</div>
                     </div>
