@@ -567,7 +567,6 @@ component extends="baseContentHandler"{
 			cbMessageBox.warn( "ContentID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.pages" );
 		}
-
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.page.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );

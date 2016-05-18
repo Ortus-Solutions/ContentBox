@@ -653,7 +653,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 
 			// Subscriptions
-			if( arrayLen( thisContent.commentSubscriptions ) ){
+			if( isArray( thisContent.commentSubscriptions ) && arrayLen( thisContent.commentSubscriptions ) ){
 				var allSubscriptions = [];
 				// recurse on them and inflate hiearchy
 				for( var thisSubscription in thisContent.commentSubscriptions ){
