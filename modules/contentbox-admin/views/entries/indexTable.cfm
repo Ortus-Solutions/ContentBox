@@ -16,7 +16,7 @@
 		<cfloop array="#prc.entries#" index="entry">
 		<tr data-contentID="#entry.getContentID()#" 
 			<cfif entry.isExpired()>
-				class="expired"
+				class="danger"
 			<cfelseif entry.isPublishedInFuture()>
 				class="futurePublished"
 			<cfelseif !entry.isContentPublished()>
@@ -40,7 +40,7 @@
 			</td>
 			<td class="text-center">
 				<cfif entry.isExpired()>
-					<i class="fa fa-time fa-lg textRed" title="Entry has expired on ( (#entry.getDisplayExpireDate()#))"></i>
+					<i class="fa fa-clock-o fa-lg textRed" title="Entry has expired on ( (#entry.getDisplayExpireDate()#))"></i>
 					<span class="hidden">expired</span>
 				<cfelseif entry.isPublishedInFuture()>
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Entry Publishes in the future (#entry.getDisplayPublishedDate()#)"></i>

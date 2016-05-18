@@ -38,7 +38,7 @@
         <cfloop array="#prc.pages#" index="page">
 			<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#"
 				<cfif page.isExpired()>
-					class="error"
+					class="danger"
 				<cfelseif page.isPublishedInFuture()>
 					class="success"
 				<cfelseif !page.isContentPublished()>
@@ -91,7 +91,7 @@
 				</td>
 				<td class="text-center">
 					<cfif page.isExpired()>
-						<i class="fa fa-time fa-lg textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
+						<i class="fa fa-clock-o fa-lg textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
 					<cfelseif page.isPublishedInFuture()>
 						<i class="fa fa-fighter-jet fa-lg textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>

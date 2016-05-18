@@ -30,7 +30,7 @@
 			<cfif content.getNumberOfChildren()>ondblclick="contentDrilldown( '#content.getContentID()#' )"</cfif>
 			<!---Status bits --->
 			<cfif content.isExpired()>
-				class="expired"
+				class="danger"
 			<cfelseif content.isPublishedInFuture()>
 				class="futurePublished"
 			<cfelseif !content.isContentPublished()>
