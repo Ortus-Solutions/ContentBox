@@ -34,7 +34,7 @@
 				</cfif>
 				<!--- password protect --->
 				<cfif entry.isPasswordProtected()>
-					<i class="fa fa-lock"></i>
+					<i class="fa fa-lock" title="Password Protected Content"></i>
 				</cfif>
 				<br/><small><i class="fa fa-tag"></i> #entry.getCategoriesList()#</small>
 			</td>

@@ -69,7 +69,7 @@
 					</cfif>
 					<!--- password protected --->
 					<cfif page.isPasswordProtected()>
-						<i class="fa fa-lock"></i>
+						<i class="fa fa-lock" title="Password Protected Content"></i>
 					</cfif>
 					<!--- ssl protected --->
 					<cfif page.getSSLOnly()>
