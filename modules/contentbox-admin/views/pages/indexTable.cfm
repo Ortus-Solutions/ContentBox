@@ -17,11 +17,21 @@
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
             	<input type="checkbox" onClick="checkAll(this.checked,'contentID')"/>
             </th>
-			<th>Name</th>
-			<th width="40" class="text-center"><i class="fa fa-th-list fa-lg" title="Show in Menu"></i></th>
-			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published"></i></th>
-			<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>
-			<th width="115" class="text-center {sorter:false}">Actions</th>
+			<th>
+				Name
+			</th>
+			<th width="40" class="text-center">
+				<i class="fa fa-th-list fa-lg" title="Show in Menu"></i>
+			</th>
+			<th width="40" class="text-center">
+				<i class="fa fa-globe fa-lg" title="Published"></i>
+			</th>
+			<th width="40" class="text-center">
+				<i class="fa fa-signal fa-lg" title="Hits"></i>
+			</th>
+			<th width="115" class="text-center {sorter:false}">
+				Actions
+			</th>
         </tr>
     </thead>
     <tbody>
@@ -73,8 +83,10 @@
 				<td class="text-center">
 					<cfif page.getShowInMenu()>
 						<i class="fa fa-check fa-lg textGreen"></i>
+						<span class="hidden">yes</span>
 					<cfelse>
 						<i class="fa fa-times fa-lg textRed"></i>
+						<span class="hidden">no</span>
 					</cfif>
 				</td>
 				<td class="text-center">
