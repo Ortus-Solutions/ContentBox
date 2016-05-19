@@ -12,7 +12,7 @@
         )#
             <div class="tab-wrapper tab-left tab-primary">
                 <!--- Tabs --->
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs" id="tabs" role="tablist">
                     <li class="active"><a href="##introduction" class="current" data-toggle="tab">#cb.r( "tab.intro@installer" )#</a></li>
                     <li><a href="##step1" data-toggle="tab">1: #cb.r( "tab.admin@installer" )#</a></li>
                     <li><a href="##step2" data-toggle="tab">2: #cb.r( "tab.site@installer" )#</a></li>
