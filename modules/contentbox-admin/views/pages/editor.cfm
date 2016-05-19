@@ -180,58 +180,58 @@
                             <div id="pageinfo" class="panel-collapse collapse in">
                                 <div class="panel-body">
                                     <!--- Persisted Info --->
-                                    <table class="table table-hover table-condensed table-striped" width="100%">
+                                    <table class="table table-hover table-condensed table-striped">
                                         <tr>
-                                            <th width="85" class="textRight">Created By:</th>
-                                            <td>
+                                            <th class="col-md-4">Created By:</th>
+                                            <td class="col-md-8">
                                                 <a href="mailto:#prc.page.getCreatorEmail()#">#prc.page.getCreatorName()#</a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="textRight">Created On:</th>
-                                            <td>
+                                            <th class="col-md-4">Created On:</th>
+                                            <td class="col-md-8">
                                                 #prc.page.getDisplayCreatedDate()#
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="textRight">Published On:</th>
-                                            <td>
+                                            <th class="col-md-4">Published On:</th>
+                                            <td class="col-md-8">
                                                 #prc.page.getDisplayPublishedDate()#
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="textRight">Version:</th>
-                                            <td>
+                                            <th class="col-md-4">Version:</th>
+                                            <td class="col-md-8">
                                                 #prc.page.getActiveContent().getVersion()#
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th width="85" class="textRight">Last Edit By:</th>
-                                            <td>
+                                            <th class="col-md-4">Last Edit By:</th>
+                                            <td class="col-md-8">
                                                 <a href="mailto:#prc.page.getAuthorEmail()#">#prc.page.getAuthorName()#</a>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th width="85" class="textRight">Last Edit On:</th>
-                                            <td>
+                                            <th class="col-md-4">Last Edit On:</th>
+                                            <td class="col-md-8">
                                                 #prc.page.getActiveContent().getDisplayCreatedDate()#
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="textRight">Child Pages:</th>
-                                            <td>
+                                            <th class="col-md-4">Child Pages:</th>
+                                            <td class="col-md-8">
                                                 #prc.page.getNumberOfChildren()#
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="textRight">Views:</th>
-                                            <td>
+                                            <th class="col-md-4">Views:</th>
+                                            <td class="col-md-8">
                                                 #prc.page.getNumberOfHits()#
                                             </td>
                                         </tr>
                                         <tr>
-                                            <th class="textRight">Comments:</th>
-                                            <td>
+                                            <th class="col-md-4">Comments:</th>
+                                            <td class="col-md-8">
                                                 #prc.page.getNumberOfComments()#
                                             </td>
                                         </tr>
