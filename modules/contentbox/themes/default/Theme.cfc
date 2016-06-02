@@ -72,6 +72,7 @@ component{
 	this.settings = [
 		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", options="cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" },
 		{ name="headerLogo", 		group="Header", defaultValue="", 		type="text", 	label="Logo URL:" },
+		{ name="showSiteSearch", 	group="Header", defaultValue="true", 	type="boolean",		label="Show Search Form Field in Header", 	required="false" },
 		{ name="footerBox", 		group="Footer", defaultValue="", 		type="textarea", 	label="Footer Text:" },
 		{ name="hpHeaderTitle", 	group="Homepage", defaultValue="", 		type="text", 		label="Homepage Header Title:" },
 		{ name="hpHeaderText",	group="Homepage", defaultValue="", 		type="textarea", 	label="Homepage Header Text:" },
