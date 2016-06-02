@@ -56,6 +56,7 @@
 	</div>
 </nav>
 
+<cfif cb.themeSetting( "showSiteSearch", true )>
 <!--- Search Bar --->
 <div id="body-search">
 	<div class="container">
@@ -69,6 +70,7 @@
 		</form>
 	</div>
 </div>
+</cfif>
 
 <cfscript>
 any function buildSubMenu( required menuData, required parentLink, required parentTitle ){
