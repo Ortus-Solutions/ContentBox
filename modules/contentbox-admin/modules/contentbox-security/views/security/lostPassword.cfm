@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-<div class="row">
+<div>
     <div class="col-md-4" id="login-wrapper">
         <div class="panel panel-primary animated flipInY">
             <div class="panel-heading">
