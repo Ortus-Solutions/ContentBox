@@ -142,7 +142,7 @@
 		<p>
 			#getModel( "Avatar@cb" ).renderAvatar(email=prc.entries.username,size="30" )#
 			<label class="inline">By: </label> <a title="Open Profile" href="http://www.coldbox.org/profiles/show/#prc.entries.username#" target="_blank">#prc.entries.username#</a> |
-			<label class="inline">Updated: </label> #dateFormat(prc.entries.updatedate)# |
+			<label class="inline">Updated: </label> #dateFormat(prc.entries.updateddate)# |
 			<label class="inline">Downloads: </label> #prc.entries.downloads# |
 			<label class="inline">Views: </label> #prc.entries.hits#<br />
 		</p>
