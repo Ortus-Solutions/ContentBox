@@ -152,6 +152,31 @@
                             labelClass="control-label",
                             groupWrapper="div class=form-group"
                         )#
+                        
+                        #html.select(
+                            name="messageType",
+                            label="Relocation Message Type:",
+                            bind=prc.rule,
+                            options="Info,Warn,Error,Fatal,Debug",
+                            class="form-control input-lg",
+                            title="The message type of the relocation",
+                            wrapper="div class=controls",
+                            labelClass="control-label",
+                            groupWrapper="div class=form-group"
+                        )#
+
+                        #html.textField(
+                            name="message",
+                            label="Relocation Message:",
+                            bind=prc.rule,
+                            maxlength="255",
+                            class="form-control",
+                            size="100",
+                            title="The message to show the user upon relocation",
+                            wrapper="div class=controls",
+                            labelClass="control-label",
+                            groupWrapper="div class=form-group"
+                        )#
                     #html.endFieldset()#
                     
                     <!--- Action Bar --->

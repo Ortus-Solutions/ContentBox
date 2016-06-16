@@ -73,6 +73,14 @@ component implements="ISecurityService" singleton{
 				isAllowed = true;
 			}
 		}
+
+		// Check Messages
+		if( !isAllowed AND structKeyExists( rule, "message" ) AND len( rule.message) ){
+			controller.getWireBox().getInstance( "messagebox@cbmessagebox" ).setMessage(
+				type 	= ( structKeyExists( rule, "messageType" ) && len( rule.messageType ) ? rule.messageType : 'info' ),
+				message = rule.message
+			);
+		}
 		
 		return isAllowed;
 	}

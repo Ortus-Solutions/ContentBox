@@ -69,6 +69,19 @@ component 	persistent="true"
 				default="" 
 				length="50";
 
+	property 	name="message"		
+				ormtype="string"  	
+				notnull="false" 	
+				default="" 
+				length="255";
+
+	property 	name="messageType"		
+				ormtype="string"  	
+				notnull="false" 	
+				default="info"
+				dbdefault="'info'"
+				length="50";
+
 	/* *********************************************************************
 	**							PK + CONSTRAINTS									
 	********************************************************************* */
@@ -82,7 +95,9 @@ component 	persistent="true"
 		"permissions"			= { required = false, size = "1..500" },
 		"redirect"				= { required = false, size = "1..500" },
 		"order"					= { required = false, type="numeric" },
-		"match"					= { required = false, size = "1..50" }
+		"match"					= { required = false, size = "1..50" },
+		"message"				= { required = false, size = "1..255" },
+		"messageType"			= { required = false, size = "1..50" }
 	};
 
 	/* *********************************************************************
@@ -91,9 +106,10 @@ component 	persistent="true"
 
 	// Constructor
 	function init(){
-		variables.match 	= 'event';
-		variables.useSSL 	= false;
-		variables.order  	= 0;
+		variables.match 		= 'event';
+		variables.useSSL 		= false;
+		variables.order  		= 0;
+		variables.messageType 	= "info";
 
 		super.init();
 
@@ -135,7 +151,7 @@ component 	persistent="true"
 	* Get memento representation
 	*/
 	function getMemento( excludes="" ){
-		var pList = listToArray( "whitelist,securelist,roles,permissions,redirect,useSSL,order,match" );
+		var pList = listToArray( "whitelist,securelist,roles,permissions,redirect,useSSL,order,match,message,messageType" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		return result;

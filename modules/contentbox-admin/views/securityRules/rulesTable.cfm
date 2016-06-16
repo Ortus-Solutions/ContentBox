@@ -19,6 +19,7 @@
 				<strong>Redirect To:</strong>#rule.getRedirect()# (SSL: #yesNoFormat( rule.getUseSSL() )#)<br>
 				<strong>Permissions:</strong>#rule.getPermissions()#<br/>
 				<strong>Roles:</strong>#rule.getRoles()#
+				<strong>Message:</strong>#rule.getMessageType()#:#rule.getMessage()#
 			</td>
 			<td class="text-center">
 				<div id="ruleid-#rule.getRuleID()#_order">
