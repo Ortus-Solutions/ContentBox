@@ -9,7 +9,7 @@
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
  	<property name="groupID"					value="ortussolutions" />
- 	<property name="contentbox.version"			value="3.0.0-rc"/>
+ 	<property name="contentbox.version"			value="3.0.0"/>
  	<property name="contentbox.stableversion" 	value="2.1.0" />
  	<property name="contentbox.slug"			value="contentbox"/>
 	
@@ -132,10 +132,16 @@
         
 		<!-- Replace Build Numbers -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
-		  <fileset dir="${dir.build}/modules/">
-		  	<include name="**/ModuleConfig.cfc" />
-		  </fileset>
-		  <fileset file="${dir.build}/box.json" />
+			<fileset dir="${dir.build}/modules/">
+				<include name="**/ModuleConfig.cfc" />
+			</fileset>
+			<fileset file="${dir.build}/box.json" />
+		</replaceregexp>
+		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.build}/modules/">
+				<include name="**/ModuleConfig.cfc" />
+			</fileset>
+			<fileset file="${dir.build}/box.json" />
 		</replaceregexp>
 		
 		<!-- Activate DSN Creator link -->

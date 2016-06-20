@@ -9,7 +9,7 @@
 	
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
 	<property name="groupID"			value="ortussolutions" />
-	<property name="contentbox.version"	value="3.0.0-rc"/>
+	<property name="contentbox.version"	value="3.0.0"/>
  	<property name="contentbox.slug"	value="contentbox"/>		
 	
 	<!-- Build Labels -->
@@ -112,15 +112,22 @@
 				<exclude name="tests/"/>
 				<exclude name="views/**"/>
 		        <exclude name="workbench/**"/>
+		        <exclude name="**/apidocs/**"/>
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
 		
 		<!-- Replace Build Numbers For Patch -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
-		  <fileset dir="${dir.patches}/${contentbox.version}/patch">
-		  	<include name="**/ModuleConfig.cfc" />
-		  </fileset>
+			<fileset dir="${dir.patches}/${contentbox.version}/patch">
+				<include name="**/ModuleConfig.cfc" />
+			</fileset>
+		</replaceregexp>
+		<!-- Replace Build Numbers -->
+		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.patches}/${contentbox.version}/patch">
+				<include name="**/ModuleConfig.cfc" />
+			</fileset>
 		</replaceregexp>
 		
 		<!-- Delete original patch for cleanup -->
