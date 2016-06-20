@@ -112,7 +112,7 @@
 				<exclude name="tests/"/>
 				<exclude name="views/**"/>
 		        <exclude name="workbench/**"/>
-		        <exclude name="**/apidocs/**"/>
+		        <exclude name="**/apidocs/*"/>
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
