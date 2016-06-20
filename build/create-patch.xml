@@ -136,6 +136,7 @@
 		<!-- Incorporate Dependencies -->
 		<copy todir="${dir.patches}/${contentbox.version}/patch/coldbox" encoding="UTF-8" overwrite="true">
 			<fileset dir="coldbox">
+				<exclude name="**/apidocs/*" />
 				<exclude name="testbox/**" />
 			</fileset>
 		</copy>
