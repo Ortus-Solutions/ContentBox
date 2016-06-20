@@ -152,7 +152,10 @@
 				 encoding="UTF-8"/>
 		
 		<!-- Zip Source Release -->
-		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" basedir="${dir.build}" />
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 
+				basedir="${dir.build}" 
+				excludes="**/apidocs/*" 
+		/>
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
@@ -212,6 +215,7 @@
 				<exclude name="favicon.ico"/>
 				<exclude name="License.txt"/>
 				<exclude name="assets/**"/>
+				<exclude name="**/apidocs/*"/>
 		    </patternset>
  		</unzip>
  		
