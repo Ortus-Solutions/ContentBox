@@ -1,35 +1,20 @@
 /**
 ********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-Update for 3.0.0
-
-DB Structure Changes Comment Below
-
-
-Start Commit Hash: bbee7a892871478a20c9c15e73053b1f86c85859
-End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
-
+* ContentBox - A Modular Content Platform
+* Copyright 2012 by Luis Majano and Ortus Solutions, Corp
+* www.ortussolutions.com
+* ---
+* Updater for 3.0.0 RC
+* 
+* DB Structure Changes Comment Below
+* 
+* Remove Interface for conversion from 2.1 to 3.0.0 RC
+*
+* ---
+* Start Commit Hash: 762aede3a97eb00519e7f171ac4c3c6d6924daca
+* End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
 */
-component implements="contentbox.model.updates.IUpdate"{
+component {
 
 	// DI
 	property name="settingService"			inject="id:settingService@cb";
@@ -38,7 +23,6 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="roleService" 			inject="roleService@cb";
 	property name="securityRuleService"		inject="securityRuleService@cb";
 	property name="pageService"				inject="pageService@cb";
-	property name="fileUtils"				inject="coldbox:plugin:FileUtils";
 	property name="contentService" 			inject="contentService@cb";
 	property name="log"						inject="logbox:logger:{this}";
 	property name="wirebox"					inject="wirebox";
@@ -49,14 +33,19 @@ component implements="contentbox.model.updates.IUpdate"{
 	* Constructor
 	*/
 	function init(){
+		setting requestTimeout="999999";
 		return this;
 	}
 
+	/**
+	* On DI Complete
+	*/
 	function onDIComplete(){
 		// setup update variables.
 		variables.version 			= "3.0.0";
 		variables.currentVersion 	= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
 		variables.thisPath			= getDirectoryFromPath( getMetadata( this ).path );
+		variables.contentBoxPath 	= coldbox.getSetting( "modules" )[ "contentbox" ].path;
 	}
 
 	/**
@@ -69,19 +58,35 @@ component implements="contentbox.model.updates.IUpdate"{
 
 			// Verify if less than 2.1.0 with message
 			if( !isValidInstall() ){ return; }
-			// Update new settings
-			updateSettings();
-			// Update Permissions
-			updatePermissions();
-			// Update Roles with new permissions
-			updateAdmin();
-			updateEditor();
 
-			log.info("Finalized #version# patching");
+			/****************************** RENAME LAYOUTS TO THEMES ******************************/
+
+			if( !directoryExists( contentBoxPath & "/themes" ) && directoryExists( contentBoxPath & "/layouts" ) ){
+				directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );	
+			}			
+
+			/****************************** RENAME MODULES ******************************/
+			
+			if( !directoryExists( contentBoxPath & "/modules_user" ) && directoryExists( contentBoxPath & "/modules" ) ){
+				directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
+			}
+
+			/****************************** UPDATE SECURITY RULES ******************************/
+			
+			var aRules = securityRuleService.getAll();
+			for( var oRule in aRules ){
+				if( findNoCase( "LAYOUT_ADMIN", oRule.getPermissions() ) ){
+					oRule.setPermissions( replaceNoCase( oRule.getPermissions(), "LAYOUT_ADMIN", "THEME_ADMIN", "all" ) );
+					oRule.setSecureList( replaceNoCase( oRule.getSecureList(), "layouts", "themes", "all" ) );
+				}
+				securityRuleService.save( entity=oRule );
+			}
+
+			log.info( "Finalized #version# preInstallation patching" );
 		}
 		catch(Any e){
 			ORMClearSession();
-			log.error("Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e);
+			log.error( "Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e );
 			rethrow;
 		}
 
@@ -94,15 +99,27 @@ component implements="contentbox.model.updates.IUpdate"{
 		try{
 			// Verify if less than 2.1.0 with message
 			if( !isValidInstall() ){ return; }
-
 			// Make changes on disk take effect
-			ORMREload();
+			ORMCloseSession();
+			ORMReload();
+			if( structKeyExists( server, "lucee" ) ){
+				pagePoolClear();
+			}
 
-
-		}
-		catch(Any e){
+			// Update new timestamp fields
+			updateTimestampFields();
+			// Update new settings
+			updateSettings();
+			// Update Permissions
+			updatePermissions();
+			// Update Roles with new permissions
+			updateAdmin();
+			updateEditor();
+			// Update CK Editor
+			updateCKEditorPlugins();
+		} catch( Any e ) {
 			ORMClearSession();
-			log.error("Error doing #version# patch postInstallation. #e.message# #e.detail#", e);
+			log.error( "Error doing #version# patch postInstallation. #e.message# #e.detail#", e );
 			rethrow;
 		}
 	}
@@ -110,7 +127,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	/************************************** PRIVATE *********************************************/
 
 	private function isValidInstall(){
-		// Verify if less than 1.6.0 with message
+		// Verify if less than 2.1.0 with message
 		if( replace( currentVersion, ".", "", "all" )  LT 210 ){
 			log.info( "Cannot patch this installation until you upgrade to 2.1.0 first. You can find all of our patches here available for download: http://www.ortussolutions.com/products/contentbox. Then apply this patch." );
 			return false;
@@ -122,7 +139,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Create new Permissions
 		var perms = [
-			
+			"EDITORS_FEATURED_IMAGE"
 		];
 
 		// iterate and add
@@ -131,8 +148,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			if( structKeyExists( local, "thisPerm" ) and !oRole.hasPermission( local.thisPerm ) ){
 				oRole.addPermission( local.thisPerm );
 				log.info( "Added #thisPermTitle# permission to admin role" );
-			}
-			else{
+			} else {
 				log.info( "Skipped #thisPermTitle# permission to admin role" );
 			}
 		}
@@ -148,6 +164,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		// Setup Permissions
 		var perms = [
+			"EDITORS_FEATURED_IMAGE"
 		];
 
 		// iterate and add
@@ -168,49 +185,141 @@ component implements="contentbox.model.updates.IUpdate"{
 	}
 
 	private function updatePermissions(){
+		// Update Old Permissions to New name and description
+		var perm = permissionService.findWhere( { permission="LAYOUT_ADMIN" } );
+		// Case where LAYOUT_ADMIN exists
+		if( !isNull( perm ) ){
+			perm.setPermission( "THEME_ADMIN" );
+			perm.setDescription( "Ability to manage themes, default is view only" );
+			permissionService.save( entity=perm );
+			log.info( "LAYOUT_ADMIN permission found, renamed to THEME_ADMIN");
+		} else {
+			// Create it as a new permission only if THEME_ADMIN does not exist
+			var perm = permissionService.findWhere( { permission="THEME_ADMIN" } );
+			if( isNull( perm ) ){
+				addPermission( "THEME_ADMIN", "Ability to manage themes, default is view only" );
+			} else {
+				log.info( "THEME_ADMIN permission found, skipping changes");
+			}
+		}
 
 		// Create new Permissions
 		var perms = {
+			"EDITORS_FEATURED_IMAGE" = "Ability to view the featured image panel"
 		};
 
-		var allperms = [];
-		for(var key in perms){
-			var props = {permission=key, description=perms[ key ]};
-			// only add if not found
-			if( isNull( permissionService.findWhere( {permission=props.permission} ) ) ){
-				permissions[ key ] = permissionService.new(properties=props);
-				arrayAppend(allPerms, permissions[ key ] );
-				log.info( "Added #key# permission" );
-			}
-			else{
-				log.info( "Skipped #key# permission addition as it was already in system" );
-			}
+		for( var key in perms ){
+			addPermission( key, perms[ key ] );
 		}
-		permissionService.saveAll( entities=allPerms, transactional=false );
-
 	}
 
 	private function updateSettings(){
-		// Create New settings
-		//addSetting( "cb_content_cachingHeader", "true" );
+		// Update Theme to layout
+		var oldLayoutSetting = settingService.findWhere( { name="cb_site_layout" } );
+		if( !isNull( oldLayoutSetting ) ){
+			oldLayoutSetting.setName( "cb_site_theme" );
+			settingService.save( entity=oldLayoutSetting );
+		}
+		// Update Search setting
+		var oSearchSetting = settingService.findWhere( { name="cb_search_adapter" } );
+		oSearchSetting.setValue( "contentbox.models.search.DBSearch" );
+		settingService.save( entity=oSearchSetting );
+
+		// Update all settings to core
+		var oSettings = settingService.getAll();
+		for( var thisSetting in oSettings ){
+			if( reFindNoCase( "^cb_", thisSetting.getName() ) ){
+				thisSetting.setIsCore( true );
+				settingService.save( entity=thisSetting );
+			}
+		}
+
+		// Add new settings
+		addSetting( "cb_site_settings_cache", "Template" );
 	}
 
-	/************************************** DB MIGRATION OPERATIONS *********************************************/
+	private function addPermission( permission, description ){
+		var props = { permission=arguments.permission, description=arguments.description };
+		// only add if not found
+		if( isNull( permissionService.findWhere( { permission=props.permission } ) ) ){
+			permissionService.save( entity=permissionService.new( properties=props ) );
+			log.info( "Added #arguments.permission# permission" );
+		} else {
+			log.info( "Skipped #arguments.permission# permission addition as it was already in system" );
+		}
+	}
 
-	private function addSetting(name, value){
+	private function addSetting( name, value ){
 		var setting = settingService.findWhere( { name = arguments.name } );
 		if( isNull( setting ) ){
 			setting = settingService.new();
 			setting.setValue( trim( arguments.value ) );
 			setting.setName( arguments.name );
-			settingService.save(entity=setting, transactional=false);
+			settingService.save( entity=setting );
 			log.info( "Added #arguments.name# setting" );
-		}
-		else{
+		} else {
 			log.info( "Skipped #arguments.name# setting, already there" );
 		}
+
 		return this;
 	}
+
+	private function updateTimestampFields(){
+		
+		var tables = [
+			"cb_author",
+			"cb_category",
+			"cb_comment",
+			"cb_content",
+			"cb_contentVersion",
+			"cb_customField",
+			"cb_loginAttempts",
+			"cb_menu",
+			"cb_menuItem",
+			"cb_module",
+			"cb_permission",
+			"cb_role",
+			"cb_securityRule",
+			"cb_setting",
+			"cb_stats",
+			"cb_subscribers",
+			"cb_subscriptions"
+		];
+
+		for( var thisTable in tables ){
+			var q = new Query( sql = "update #thisTable# set modifiedDate = :modifiedDate" );
+			q.addParam( name="modifiedDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
+			var results = q.execute().getResult();
+			log.info( "Update #thisTable# modified date", results );	
+		}
+		
+		// Creation tables now
+		tables = [
+			"cb_category",
+			"cb_customField",
+			"cb_menu",
+			"cb_menuItem",
+			"cb_module",
+			"cb_permission",
+			"cb_role",
+			"cb_securityRule",
+			"cb_setting",
+			"cb_stats",
+			"cb_subscribers"
+		];
+		for( var thisTable in tables ){
+			var q = new Query( sql = "update #thisTable# set createdDate = :createdDate" );
+			q.addParam( name="createdDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
+			var results = q.execute().getResult();
+			log.info( "Update #thisTable# created date", results );	
+		}
+			
+	}
+
+	private function updateCKEditorPlugins(){
+	}
+
+	/************************************** DB MIGRATION OPERATIONS *********************************************/
 
 	// Add a new column: type=[varchar, boolean, text]
 	private function addColumn(required table, required column, required type, required limit, boolean nullable=false, defaultValue){
@@ -352,22 +461,28 @@ component implements="contentbox.model.updates.IUpdate"{
 
 	// get Columns
 	private function getTableColumns(required table){
-		if( structkeyexists( server, "railo") ){
-			return new RailoDBInfo().getTableColumns(datasource=getDatasource(), table=arguments.table);
+		if( structkeyexists( server, "lucee" ) || structKeyExists( server, "railo" ) ){
+			return new DBInfo().getTableColumns( datasource=getDatasource(), table=arguments.table );
 		}
-		return new dbinfo(datasource=getDatasource(), table=arguments.table).columns();
+		return new dbinfo( datasource=getDatasource(), table=arguments.table ).columns();
 	}
 
 	// Get the database type
 	private function getDatabaseType(){
-		if( structkeyexists( server, "railo") ){
-			return new RailoDBInfo().getDatabaseType(datasource=getDatasource()).database_productName;
+		if( structkeyexists( server, "lucee" ) || structKeyExists( server, "railo" ) ){
+			return new DBInfo().getDatabaseType(datasource=getDatasource()).database_productName;
 		}
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
 
 	// Get the default datasource
 	private function getDatasource(){
-		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+		try{
+			return new cborm.models.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+		} catch( any e ){
+			return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
+		}
+		
 	}
+
 }
