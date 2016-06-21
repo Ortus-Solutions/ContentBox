@@ -119,6 +119,8 @@
       			<exclude name="tests/**" />
       			<exclude name="testbox/**" />
       			<exclude name="workbench/**" />
+      			<exclude name="**/bower_components/**" />
+      			<exclude name="**/node_modules/**" />
       			<exclude name="WEB-INF/**" />
       		</fileset>
         </copy>
@@ -154,7 +156,7 @@
 		<!-- Zip Source Release -->
 		<zip 	destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 
 				basedir="${dir.build}" 
-				excludes="**/apidocs/*" 
+				excludes="**/apidocs/**" 
 		/>
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
