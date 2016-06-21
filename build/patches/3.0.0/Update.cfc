@@ -272,7 +272,7 @@ component {
 			"cb_comment",
 			"cb_content",
 			"cb_contentVersion",
-			"cb_customField",
+			"cb_customfield",
 			"cb_loginAttempts",
 			"cb_menu",
 			"cb_menuItem",
@@ -296,7 +296,7 @@ component {
 		// Creation tables now
 		tables = [
 			"cb_category",
-			"cb_customField",
+			"cb_customfield",
 			"cb_menu",
 			"cb_menuItem",
 			"cb_module",
