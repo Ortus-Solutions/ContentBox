@@ -14,15 +14,13 @@
 		<div class="container">
 			<h1>#cb.themeSetting( 'hpHeaderTitle' )#</h1>
 			<p>#cb.themeSetting( 'hpHeaderText' )#</p>
+			<cfif cb.themeSetting( 'hpHeaderBtnText' ) neq "">
 			<p>
 				<a class="btn btn-primary btn-lg" href="#cb.themeSetting( 'hpHeaderLink' )#" role="button">
-					<cfif cb.themeSetting( 'hpHeaderBtnText' ) is "">
-						Learn more
-					<cfelse>
-						#cb.themeSetting( 'hpHeaderBtnText' )#
-					</cfif>
+					#cb.themeSetting( 'hpHeaderBtnText' )#
 				</a>
 			</p>
+			</cfif>
 		</div>
 	</div>
 <cfelse>
