@@ -215,7 +215,8 @@ component 	persistent="true"
 				type="array" 
 				lazy="extra" 
 				batchsize="25"
-			  	cfc="contentbox.models.content.ContentVersion" 
+			  	cfc="contentbox.models.content.ContentVersion"
+			  	orderby="version desc"
 			  	fkcolumn="FK_contentID" 
 			  	inverse="true" 
 			  	cascade="all-delete-orphan";
@@ -229,6 +230,7 @@ component 	persistent="true"
 				inverse="true"
 			 	cfc="contentbox.models.content.ContentVersion" 
 			 	fkcolumn="FK_contentID" 
+			 	orderby="modifiedDate desc"
 			 	where="isActive = 1" ;
 
 	// M20 -> Parent Page loaded as a proxy
@@ -320,6 +322,10 @@ component 	persistent="true"
 	property 	name="numberOfVersions" 			
 				formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID" 
 				default="0";
+
+	property 	name="numberOfActiveVersions" 			
+				formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID AND cv.isActive = 1" 
+				default="0";
 	
 	property 	name="numberOfComments" 			
 				formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID" 
@@ -391,28 +397,33 @@ component 	persistent="true"
 		// lock it for new content creation
 		lock name="contentbox.addNewContentVersion.#getSlug()#" type="exclusive" timeout="10" throwOnTimeout=true{
 			// get a new version object
-			var newVersion = contentVersionService.new(properties={
-				content		= arguments.content,
-				changelog 	= arguments.changelog
-			} );
+			var newVersion = contentVersionService.new(
+				properties={
+					content		= arguments.content,
+					changelog 	= arguments.changelog
+				} 
+			);
 
 			// join them to author and related content
 			newVersion.setAuthor( arguments.author );
 			newVersion.setRelatedContent( this );
 
 			// Do we already have an active version?
-			if( hasActiveContent() ){
+			if( hasActiveContentSet() ){
 				// deactive the curent version
 				var activeVersion = getActiveContent();
 				activeVersion.setIsActive( false );
-				// increase the new version number
-				newVersion.setVersion( activeVersion.getVersion() + 1 );
 				// cap checks
 				maxContentVersionChecks();
 			}
+
+			// Get the latest content version, to increase the new version number, collection is ordered by 'version' descending
+			if( hasContentVersion() ){
+				newVersion.setVersion( variables.contentVersions[ 1 ].getVersion() + 1 );
+			}
+
 			// Activate the new version
 			newVersion.setIsActive( true );
-
 			// Add it to the content so it can be saved as part of this content object
 			addContentVersion( newVersion );
 		}
@@ -910,22 +921,25 @@ component 	persistent="true"
 	* Retrieves the latest content string from the latest version un-translated
 	*/
 	function getContent(){
-		// return active content if we have any
-		if( hasActiveContent() ){
-			return getActiveContent().getContent();
-		}
-		// else return nothing.
-		return '';
+		return getActiveContent().getContent();
 	}
 
 	/**
 	* Get the latest active content object, empty new one if none assigned
 	*/
 	function getActiveContent(){
-		if( hasActiveContent() ){
+		if( hasActiveContentSet() ){
 			return activeContent[ 1 ];
 		}
 		return contentVersionService.new();
+	}
+
+	/**
+	* Verifies if we have active content versions, at least 1
+	* There is the possibility of no active versions (Edge Case)
+	*/
+	function hasActiveContentSet(){
+		return ( hasActiveContent() AND arrayIsDefined( variables.activeContent, 1 ) );
 	}
 
 	/**
@@ -952,29 +966,21 @@ component 	persistent="true"
 	* Shorthand Author name from latest version
 	*/
 	string function getAuthorName(){
-		if( hasActiveContent() ){
-			return getActiveContent().getAuthorName();
-		}
-		return '';
+		return getActiveContent().getAuthorName();
 	}
 
 	/**
 	* Shorthand Author email from latest version
 	*/
 	string function getAuthorEmail(){
-		if( hasActiveContent() ){
-			return getActiveContent().getAuthorEmail();
-		}
-		return '';
+		return getActiveContent().getAuthorEmail();
 	}
 
 	/**
 	* Shorthand Author from latest version or null if any yet
 	*/
 	any function getAuthor(){
-		if( hasActiveContent() ){
-			return getActiveContent().getAuthor();
-		}
+		return getActiveContent().getAuthor();
 	}
 
 	/************************************** PUBLIC *********************************************/
@@ -1109,10 +1115,11 @@ component 	persistent="true"
 
 	/**
 	* Get display publishedDate
+	* @showTime Show time on return string or not
 	*/
-	string function getPublishedDateForEditor(boolean showTime=false){
+	string function getPublishedDateForEditor( boolean showTime=false ){
 		var pDate = getPublishedDate();
-		if( isNull(pDate) ){ pDate = now(); }
+		if( isNull( pDate ) ){ pDate = now(); }
 		// get formatted date
 		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
 		if( arguments.showTime ){
@@ -1123,14 +1130,15 @@ component 	persistent="true"
 
 	/**
 	* Get display expireDate
+	* @showTime Show time on return string or not
 	*/
-	string function getExpireDateForEditor(boolean showTime=false){
+	string function getExpireDateForEditor( boolean showTime=false ){
 		var pDate = getExpireDate();
-		if( isNull(pDate) ){ pDate = ""; }
+		if( isNull( pDate ) ){ pDate = ""; }
 		// get formatted date
 		var fDate = dateFormat( pDate, "yyyy-mm-dd" );
 		if( arguments.showTime ){
-			fDate &=" " & timeFormat(pDate, "hh:mm tt" );
+			fDate &=" " & timeFormat( pDate, "hh:mm tt" );
 		}
 		return fDate;
 	}
@@ -1219,10 +1227,12 @@ component 	persistent="true"
 	* Verify we can do content caching on this content object using global and local rules
 	*/
 	boolean function canCacheContent(){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 
 		// check global caching first
-		if( (getContentType() eq "page" AND settings.cb_content_caching) OR (getContentType() eq "entry" AND settings.cb_entry_caching)	){
+		if( ( getContentType() eq "page" AND settings.cb_content_caching ) OR 
+			( getContentType() eq "entry" AND settings.cb_entry_caching )	
+		){
 			// check override?
 			return ( getCache() ? true : false );
 		}
@@ -1248,9 +1258,9 @@ component 	persistent="true"
 		}
 
 		// Check if we need to translate
-		if( NOT len(renderedContent) ){
+		if( NOT len( renderedContent ) ){
 			lock name="contentbox.contentrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
-				if( NOT len(renderedContent) ){
+				if( NOT len( renderedContent ) ){
 					// save content
 					renderedContent = renderContentSilent();
 				}
@@ -1260,10 +1270,12 @@ component 	persistent="true"
 		// caching enabled?
 		if( canCacheContent() ){
 			// Store content in cache, of local timeouts are 0 then use global timeouts.
-			cache.set(cacheKey,
-					  renderedContent,
-					  (getCacheTimeout() eq 0 ? settings.cb_content_cachingTimeout : getCacheTimeout()),
-					  (getCacheLastAccessTimeout() eq 0 ? settings.cb_content_cachingTimeoutIdle : getCacheLastAccessTimeout()) );
+			cache.set(
+				cacheKey,
+				renderedContent,
+				( getCacheTimeout() eq 0 ? settings.cb_content_cachingTimeout : getCacheTimeout() ),
+				( getCacheLastAccessTimeout() eq 0 ? settings.cb_content_cachingTimeoutIdle : getCacheLastAccessTimeout() )
+			);
 		}
 
 		// renturn translated content

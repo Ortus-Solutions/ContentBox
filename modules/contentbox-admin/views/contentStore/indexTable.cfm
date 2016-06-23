@@ -35,7 +35,10 @@
 				class="futurePublished"
 			<cfelseif !content.isContentPublished()>
 				class="selected"
-			</cfif>>
+			<cfelseif content.getNumberOfActiveVersions() eq 0 >
+				class="danger" title="No active content versions found, please publish one."
+			</cfif>
+		>
 			<!--- check box --->
 			<td class="text-center">
 				<input type="checkbox" name="contentID" id="contentID" value="#content.getContentID()#" />

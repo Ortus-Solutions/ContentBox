@@ -140,14 +140,20 @@ component	persistent="true"
 	* Shorthand Author name
 	*/
 	string function getAuthorName(){
-		return getAuthor().getName();
+		if( hasAuthor() ){
+			return getAuthor().getName();
+		}
+		return '';
 	}
 
 	/**
 	* Shorthand Author email
 	*/
 	string function getAuthorEmail(){
-		return getAuthor().getEmail();
+		if( hasAuthor() ){
+			return getAuthor().getEmail();
+		}
+		return '';
 	}
 
 	/**

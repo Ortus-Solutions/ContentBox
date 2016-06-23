@@ -27,23 +27,24 @@
 			<tr>
 				<th width="50" class="text-center">Diff</th>
 				<th width="50" class="text-center">Version</th>
+				<th width="50" class="text-center">Active</th>
 				<th width="160" class="text-center">Date</th>
-				<th width="90" class="text-center">Author</th>
-				<th>Comment</th>
-				<th width="135" class="text-center">Actions</th>
+				<th class="text-center">Changelog</th>
+				<th width="100" class="text-center">Actions</th>
 			</tr>
 		</thead>
 		<tbody>
+		<cfset activeVersion = 0>
 		<cfloop array="#prc.versionsPager_versions#" index="thisVersion">
 			<!--- get Active Version --->
 			<cfif thisVersion.getIsActive()>
 				<cfset activeVersion = thisVersion.getVersion()>
 			</cfif>
 			<tr id="version_row_#thisVersion.getContentVersionID()#" data-versionID="#thisVersion.getContentVersionID()#">
-				<td>
+				<td class="text-center">
 					<!--- old version --->
 					<input type="radio" class="rb_oldversion" value="#thisVersion.getContentVersionID()#"
-						   name="old_version" id="old_version" <cfif thisVersion.getVersion() eq (activeVersion-1)>checked="checked"</cfif>>
+						   name="old_version" id="old_version" <cfif thisVersion.getVersion() eq ( activeVersion - 1 )>checked="checked"</cfif>>
 					<!--- current version --->
 					<input type="radio" class="rb_version" value="#thisVersion.getContentVersionID()#"
 						   name="version" id="version" <cfif thisVersion.getIsActive()>checked="checked"</cfif>>
@@ -51,9 +52,18 @@
 				<td class="text-center">
 					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehVersionQuickLook)#/versionID/#thisVersion.getContentVersionID()#')">#thisVersion.getVersion()#</a>
 				</td>
+				<td class="text-center">
+					<cfif thisVersion.getIsActive()>
+						<i class="fa fa-check fa-lg textGreen"></i>
+					<cfelse>
+						<i class="fa fa-times fa-lg textRed"></i>
+					</cfif>
+				</td>
 				<td class="text-center">#thisVersion.getDisplayCreatedDate()#</td>
-				<td class="text-center"><a href="mailto:#thisVersion.getAuthorEmail()#">#thisVersion.getAuthorName()#</a></td>
-				<td>#thisVersion.getChangeLog()#</td>
+				<td>
+					<a href="mailto:#thisVersion.getAuthorEmail()#">#thisVersion.getAuthorName()#</a><br>
+					#thisVersion.getChangeLog()#
+				</td>
 
 				<td class="text-center">
 					<!--- ACTIVE INDICATOR --->

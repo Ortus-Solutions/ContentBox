@@ -9,7 +9,9 @@ component extends="baseHandler"{
 	property name="authorService"			inject="id:authorService@cb";
 	property name="CBHelper"				inject="id:CBHelper@cb";
 
-	// version index
+	/**
+	* Versions History Index
+	*/
 	function index( event, rc, prc ){
 		// param contentID
 		event.paramValue( "contentID","" );
@@ -44,7 +46,12 @@ component extends="baseHandler"{
 		event.setView( view="versions/index" );
 	}
 
-	// version pager
+	/**
+	* Pager Viewlet for version records
+	* @contentID The contentID to iterate records on
+	* @max The maximum records to show
+	* @viewFullHistory View full history or partial paginated results
+	*/
 	function pager( event, rc, prc, required contentID, numeric max=10, boolean viewFullHistory=true ){
 
 		// Incoming
@@ -56,7 +63,7 @@ component extends="baseHandler"{
 		prc.versionsPager_content = contentService.get( arguments.contentID );
 
 		// Get the latest versions
-		var results = contentVersionService.findRelatedVersions(contentID=arguments.contentID, max=arguments.max);
+		var results = contentVersionService.findRelatedVersions( contentID=arguments.contentID, max=arguments.max );
 		prc.versionsPager_count 	= results.count;
 		prc.versionsPager_versions 	= results.versions;
 
@@ -73,17 +80,21 @@ component extends="baseHandler"{
 		prc.xehVersionDiff 		= "#prc.cbAdminEntryPoint#.versions.diff";
 
 		// render out widget
-		return renderView(view="versions/pager", module="contentbox-admin" );
+		return renderView( view="versions/pager", module="contentbox-admin" );
 	}
 
-	// Quick Look
+	/**
+	* Version quick look
+	*/
 	function quickLook( event, rc, prc ){
 		// get content version
 		prc.contentVersion  = contentVersionService.get( event.getValue( "versionID", 0 ) );
 		event.setView( view="versions/quickLook", layout="ajax" );
 	}
 
-	// Remove Version
+	/**
+	* Remove permanently a version
+	*/
 	function remove( event, rc, prc ){
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		event.paramValue( "versionID","" );
@@ -91,11 +102,11 @@ component extends="baseHandler"{
 		// check for length
 		if( len( rc.versionID ) ){
 			// announce event
-			announceInterception( "cbadmin_preContentVersionRemove",{contentVersionID=rc.versionID} );
+			announceInterception( "cbadmin_preContentVersionRemove", { contentVersionID = rc.versionID } );
 			// remove using hibernate bulk
 			contentVersionService.deleteByID( rc.versionID );
 			// announce event
-			announceInterception( "cbadmin_postContentVersionRemove",{contentVersionID=rc.versionID} );
+			announceInterception( "cbadmin_postContentVersionRemove", { contentVersionID = rc.versionID } );
 			// results
 			results.messages = "Version removed!";
 		} else {
@@ -106,7 +117,9 @@ component extends="baseHandler"{
 		event.renderData( type="json", data=results );
 	}
 
-	// rollback Version
+	/**
+	* Rollback a version
+	*/
 	function rollback( event, rc, prc ){
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		event.paramValue( "revertID","" );
@@ -114,15 +127,17 @@ component extends="baseHandler"{
 		var oVersion = contentVersionService.get( rc.revertID );
 		if( !isNull( oVersion ) ){
 			// announce event
-			announceInterception( "cbadmin_preContentVersionRollback", {contentVersion=oVersion} );
+			announceInterception( "cbadmin_preContentVersionRollback", { contentVersion = oVersion } );
 			// Try to revert this version
-			oVersion.getRelatedContent().addNewContentVersion(content=oVersion.getContent(),
-															  changelog="Reverting to version #oVersion.getVersion()#",
-															  author=prc.oAuthor);
+			oVersion.getRelatedContent().addNewContentVersion(
+				content 	= oVersion.getContent(),
+				changelog 	= "Reverting to version #oVersion.getVersion()#",
+				author 	 	= prc.oAuthor
+			);
 			// save
 			contentVersionService.save( oVersion );
 			// announce event
-			announceInterception( "cbadmin_postContentVersionRollback",{contentVersion=oVersion} );
+			announceInterception( "cbadmin_postContentVersionRollback", { contentVersion = oVersion } );
 			// results
 			results.messages = "Version #oVersion.getVersion()# rollback was successfull!";
 		} else {
@@ -130,9 +145,12 @@ component extends="baseHandler"{
 			results.messages = "The versionID sent is not valid!";
 		}
 		// return in json
-		event.renderData(type="json", data=results);
+		event.renderData( type="json", data=results );
 	}
 
+	/**
+	* Diff different versions
+	*/
 	function diff( event, rc, prc ){
 		// exit handlers
 		prc.xehVersionDiff 	= "#prc.cbAdminEntryPoint#.versions.diff";

@@ -43,9 +43,12 @@
 					class="success"
 				<cfelseif !page.isContentPublished()>
 					class="warning"
+				<cfelseif page.getNumberOfActiveVersions() eq 0 >
+					class="danger" title="No active content versions found, please publish one."
 				</cfif>
 				<!--- double click drill down --->
-				<cfif page.getNumberOfChildren()>ondblclick="contentDrilldown( '#page.getContentID()#' )"</cfif>>
+				<cfif page.getNumberOfChildren()>ondblclick="contentDrilldown( '#page.getContentID()#' )"</cfif>
+			>
 				<!--- check box --->
 				<td class="text-center">
 					<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
