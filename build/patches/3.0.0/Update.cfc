@@ -217,8 +217,11 @@ component {
 		// Update Theme to layout
 		var oldLayoutSetting = settingService.findWhere( { name="cb_site_layout" } );
 		if( !isNull( oldLayoutSetting ) ){
-			oldLayoutSetting.setName( "cb_site_theme" );
-			settingService.save( entity=oldLayoutSetting );
+			var oSiteTheme = settingService.findWhere( { name="cb_site_theme" } );
+			if( isNull( oSiteTheme ) ){
+				oldLayoutSetting.setName( "cb_site_theme" );
+				settingService.save( entity=oldLayoutSetting );
+			}
 		}
 		// Update Search setting
 		var oSearchSetting = settingService.findWhere( { name="cb_search_adapter" } );
