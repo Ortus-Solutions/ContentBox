@@ -27,14 +27,17 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     * @menu.hint The menu to save or update
     * @originalSlug.hint If an original slug is passed, then we need to update hierarchy slugs.
     */
-    function saveMenu( required any menu, string originalSlug="" ) transactional{
-        // Verify uniqueness of slug
-        if( !isSlugUnique( slug=arguments.menu.getSlug(), menuID=arguments.menu.getMenuID() ) ){
-            // make slug unique
-            arguments.menu.setSlug( getUniqueSlugHash( arguments.menu.getSlug() ) );
+    function saveMenu( required any menu, string originalSlug="" ){
+        transaction{
+             // Verify uniqueness of slug
+            if( !isSlugUnique( slug=arguments.menu.getSlug(), menuID=arguments.menu.getMenuID() ) ){
+                // make slug unique
+                arguments.menu.setSlug( getUniqueSlugHash( arguments.menu.getSlug() ) );
+            }
+            // Save the target menu
+            save( entity=arguments.menu, transactional=false );
         }
-        // Save the target menu
-        save( entity=arguments.menu, transactional=false );
+       
         return this;
     }
     

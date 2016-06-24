@@ -34,33 +34,35 @@ component accessors="true"{
 	* Execute the installer
 	* @setup The setup object
 	*/
-	function execute( required setup ) transactional{
+	function execute( required setup ){
 
-		// process rerwite
-		if( arguments.setup.getFullRewrite() ){
-			processRewrite( arguments.setup );
+		transaction{
+			// process rerwite
+			if( arguments.setup.getFullRewrite() ){
+				processRewrite( arguments.setup );
+			}
+			// create roles
+			var adminRole = createRoles( arguments.setup );
+			// create Author
+			var author = createAuthor( arguments.setup, adminRole );
+			// create All Settings
+			createSettings( arguments.setup );
+			// create all security rules
+			createSecurityRules( arguments.setup );
+			// Do we create sample data?
+			if( arguments.setup.getpopulateData() ){
+				createSampleData( arguments.setup, author );
+			}
+			// Remove ORM update from Application.cfc
+			// Commented out for better update procedures.
+			// processORMUpdate( arguments.setup );
+			// Process reinit and debug password security
+			processColdBoxPasswords( arguments.setup );
+			// ContentBox is now online, mark it:
+			settingService.activateCB();
+			// Reload Security Rules
+			securityInterceptor.loadRules();
 		}
-		// create roles
-		var adminRole = createRoles( arguments.setup );
-		// create Author
-		var author = createAuthor( arguments.setup, adminRole );
-		// create All Settings
-		createSettings( arguments.setup );
-		// create all security rules
-		createSecurityRules( arguments.setup );
-		// Do we create sample data?
-		if( arguments.setup.getpopulateData() ){
-			createSampleData( arguments.setup, author );
-		}
-		// Remove ORM update from Application.cfc
-		// Commented out for better update procedures.
-		// processORMUpdate( arguments.setup );
-		// Process reinit and debug password security
-		processColdBoxPasswords( arguments.setup );
-		// ContentBox is now online, mark it:
-		settingService.activateCB();
-		// Reload Security Rules
-		securityInterceptor.loadRules();
 	}
 
 	/**

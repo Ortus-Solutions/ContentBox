@@ -94,44 +94,47 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* results = [moderated:boolean,messages:array]
 	* @comment The comment to try to save
 	*/
-	struct function saveComment( required comment ) transactional{
-		// Comment reference
-		var inComment = arguments.comment;
-		// get settings
-		var inSettings = settingService.getAllSettings( asStruct=true );
-		// results
-		var results = { moderated=true, messages=[] };
+	struct function saveComment( required comment ){
+		
+		transaction{
+			// Comment reference
+			var inComment = arguments.comment;
+			// get settings
+			var inSettings = settingService.getAllSettings( asStruct=true );
+			// results
+			var results = { moderated=true, messages=[] };
 
-		// Log the IP Address
-		inComment.setAuthorIP( loginTrackerService.getRealIP() );
-		// Default moderation
-		inComment.setIsApproved( false );
+			// Log the IP Address
+			inComment.setAuthorIP( loginTrackerService.getRealIP() );
+			// Default moderation
+			inComment.setIsApproved( false );
 
-		// Check if activating URL's on Comment Content
-		if( inSettings.cb_comments_urltranslations ){
-			inComment.setContent( activateURLs( inComment.getContent() ) );
-		}
-
-		// Run moderation rules
-		if( runModerationRules( inComment, inSettings ) ){
-			// send for saving, finally phew!
-			save( inComment );
-			// Send Notification or Moderation Email?
-			sendNotificationEmails( inComment, inSettings );
-			// Return results
-			if( inComment.getIsApproved() ){ 
-				results.moderated = false; 
-			} else { 
-				arrayAppend( results.messages, "Comment was moderated! Please wait for the system administrator to approve it." ); 
+			// Check if activating URL's on Comment Content
+			if( inSettings.cb_comments_urltranslations ){
+				inComment.setContent( activateURLs( inComment.getContent() ) );
 			}
-		} else {
-			// Messages
-			arrayAppend( results.messages, "Geez! Comment was blocked!" );
-			// discard it from session
-			evictEntity( inComment );
-			// log it
-			if( log.canWarn() ){
-				log.warn( "Incoming comment was blocked!", inComment.getMemento() );
+
+			// Run moderation rules
+			if( runModerationRules( inComment, inSettings ) ){
+				// send for saving, finally phew!
+				save( inComment );
+				// Send Notification or Moderation Email?
+				sendNotificationEmails( inComment, inSettings );
+				// Return results
+				if( inComment.getIsApproved() ){ 
+					results.moderated = false; 
+				} else { 
+					arrayAppend( results.messages, "Comment was moderated! Please wait for the system administrator to approve it." ); 
+				}
+			} else {
+				// Messages
+				arrayAppend( results.messages, "Geez! Comment was blocked!" );
+				// discard it from session
+				evictEntity( inComment );
+				// log it
+				if( log.canWarn() ){
+					log.warn( "Incoming comment was blocked!", inComment.getMemento() );
+				}
 			}
 		}
 

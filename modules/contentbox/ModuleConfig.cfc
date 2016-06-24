@@ -92,13 +92,6 @@ component {
 		binder.map( "SystemUtil@cb" ).to( "coldbox.system.core.util.Util" );
 		binder.map( "FileUtils@cb" ).to( "coldbox.system.core.util.FileUtils" );
 		
-		// Verify if the AOP mixer is loaded, if not, load it
-		if( !isAOPMixerLoaded() ){
-			loadAOPMixer();
-		}
-		
-		// Load Hibernate Transactions for ContentBox
-		loadHibernateTransactions( binder );
 	}
 	
 	/**
@@ -131,45 +124,5 @@ component {
 	}
 
 	/************************************** PRIVATE *********************************************/
-
-	/**
-	* load hibernatate transactions via AOP
-	*/
-	private function loadHibernateTransactions(binder){
-		// map the hibernate transaction for contentbox
-		binder.mapAspect( aspect="CFTransaction", autoBinding=false )
-			.to( "coldbox.system.aop.aspects.CFTransaction" );
-
-		// bind the aspect
-		binder.bindAspect(
-			classes = binder.match().regex( "contentbox.*" ),
-			methods = binder.match().annotatedWith( "transactional" ),
-			aspects = "CFTransaction"
-		);
-	}
-	
-	// Load AOP Mixer
-	private function loadAOPMixer(){
-		var mixer = new coldbox.system.aop.Mixer();
-		// configure it
-		mixer.configure( wirebox, {} );
-		// register it
-		controller.getInterceptorService().registerInterceptor( interceptorObject=mixer, interceptorName="AOPMixer" );
-	}
-	
-	// Verify if wirebox aop mixer is loaded
-	private function isAOPMixerLoaded(){
-		var listeners 	= wirebox.getBinder().getListeners();
-		var results 	= false;
-		
-		for( var thisListener in listeners ){
-			if( thisListener.class eq "coldbox.system.aop.Mixer" ){
-				results = true;
-				break;
-			}
-		}
-		
-		return results;
-	}
 
 }

@@ -190,13 +190,15 @@ component accessors="true" threadSafe singleton{
 	* 
 	* @return ThemeService
 	*/
-	public function saveThemeSettings( required name, required struct settings ) transactional{
-		// iterate and add only keys with the right prefix
-		for( var thisSettingName in arguments.settings ){
-			if( findNoCase( "cb_theme_#arguments.name#_", thisSettingName ) ){
-				var oSetting = settingService.findWhere( { name=thisSettingName } );
-				oSetting.setValue( arguments.settings[ thisSettingName ] );
-				settingService.save( oSetting );
+	public function saveThemeSettings( required name, required struct settings ){
+		transaction{
+			// iterate and add only keys with the right prefix
+			for( var thisSettingName in arguments.settings ){
+				if( findNoCase( "cb_theme_#arguments.name#_", thisSettingName ) ){
+					var oSetting = settingService.findWhere( { name=thisSettingName } );
+					oSetting.setValue( arguments.settings[ thisSettingName ] );
+					settingService.save( oSetting );
+				}
 			}
 		}
 
@@ -210,15 +212,17 @@ component accessors="true" threadSafe singleton{
 	* 
 	* @return ThemeService
 	*/
-	private any function registerThemeSettings( required name, required array settings ) transactional{
-		// iterate and register theme settings
-		for( var thisSetting in arguments.settings ){
-			// try to retrieve it first
-			var oSetting = settingService.findWhere( { name="cb_theme_#arguments.name#_#thisSetting.name#" } );
-			// If not found, then register it
-			if( isNull( oSetting ) ){
-				var args = { name="cb_theme_#arguments.name#_#thisSetting.name#", value=thisSetting.defaultValue };
-				settingService.save( settingService.new( properties=args ) );
+	private any function registerThemeSettings( required name, required array settings ){
+		transaction{
+			// iterate and register theme settings
+			for( var thisSetting in arguments.settings ){
+				// try to retrieve it first
+				var oSetting = settingService.findWhere( { name="cb_theme_#arguments.name#_#thisSetting.name#" } );
+				// If not found, then register it
+				if( isNull( oSetting ) ){
+					var args = { name="cb_theme_#arguments.name#_#thisSetting.name#", value=thisSetting.defaultValue };
+					settingService.save( settingService.new( properties=args ) );
+				}
 			}
 		}
 
@@ -231,16 +235,19 @@ component accessors="true" threadSafe singleton{
 	* 
 	* @return ThemeService
 	*/
-	private function unregisterThemeSettings( required array settings ) transactional{
-		// iterate and register theme settings
-		for( var thisSetting in arguments.settings ){
-			// try to retrieve it first
-			var oSetting = settingService.findWhere( { name="cb_theme_#arguments.name#_#thisSetting.name#" } );
-			// If not found, then register it
-			if( !isNull( oSetting ) ){
-				settingService.delete( oSetting );
+	private function unregisterThemeSettings( required array settings ){
+		transaction{
+			// iterate and register theme settings
+			for( var thisSetting in arguments.settings ){
+				// try to retrieve it first
+				var oSetting = settingService.findWhere( { name="cb_theme_#arguments.name#_#thisSetting.name#" } );
+				// If not found, then register it
+				if( !isNull( oSetting ) ){
+					settingService.delete( oSetting );
+				}
 			}
 		}
+		
 		return this;
 	}
 
@@ -280,40 +287,42 @@ component accessors="true" threadSafe singleton{
 	* Activate a theme
 	* @themeName The theme name to activate
 	*/
-	function activateTheme( required themeName ) transactional{
-		// Get the current theme setting
-		var oTheme 	= settingService.findWhere( { name="cb_site_theme" } );
+	function activateTheme( required themeName ){
+		transaction{
+			// Get the current theme setting
+			var oTheme 	= settingService.findWhere( { name="cb_site_theme" } );
 
-		// Call deactivation event
-		var iData = {
-			themeName 		= oTheme.getValue(),
-			themeRecord 	= getThemeRecord( oTheme.getValue() )
-		};
-		interceptorService.processState( "cbadmin_onThemeDeactivation", iData );
+			// Call deactivation event
+			var iData = {
+				themeName 		= oTheme.getValue(),
+				themeRecord 	= getThemeRecord( oTheme.getValue() )
+			};
+			interceptorService.processState( "cbadmin_onThemeDeactivation", iData );
 
-		// Call Theme Callback: onDeactivation
-		if( structKeyExists( variables.themeCFCRegistry[ oTheme.getValue() ], "onDeactivation" ) ){
-			variables.themeCFCRegistry[ oTheme.getValue() ].onDeactivation();
+			// Call Theme Callback: onDeactivation
+			if( structKeyExists( variables.themeCFCRegistry[ oTheme.getValue() ], "onDeactivation" ) ){
+				variables.themeCFCRegistry[ oTheme.getValue() ].onDeactivation();
+			}
+
+			// unload theme modules
+			var aModules = listToArray( iData.themeRecord.modules );
+			for( var thisModule in aModules ){
+				moduleService.unload( thisModule );
+			}
+
+			// Unregister theme Descriptor Interceptor
+			interceptorService.unregister( interceptorName="cbTheme-#oTheme.getValue()#" );
+
+			// setup the new theme value
+			oTheme.setValue( arguments.themeName );
+			// save the new theme setting
+			settingService.save( oTheme );
+			// Startup active theme
+			startupActiveTheme();
+			
+			// flush the settings
+			settingService.flushSettingsCache();
 		}
-
-		// unload theme modules
-		var aModules = listToArray( iData.themeRecord.modules );
-		for( var thisModule in aModules ){
-			moduleService.unload( thisModule );
-		}
-
-		// Unregister theme Descriptor Interceptor
-		interceptorService.unregister( interceptorName="cbTheme-#oTheme.getValue()#" );
-
-		// setup the new theme value
-		oTheme.setValue( arguments.themeName );
-		// save the new theme setting
-		settingService.save( oTheme );
-		// Startup active theme
-		startupActiveTheme();
-		
-		// flush the settings
-		settingService.flushSettingsCache();
 
 		return this;
 	}

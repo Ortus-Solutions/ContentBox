@@ -27,23 +27,25 @@ component extends="ContentService" singleton{
 	* 
 	* @return PageService
 	*/
-	function savePage( required any page, string originalSlug="" ) transactional{
+	function savePage( required any page, string originalSlug="" ){
 
-		// Verify uniqueness of slug
-		if( !contentService.isSlugUnique( slug=arguments.page.getSlug(), contentID=arguments.page.getContentID() ) ){
-			// make slug unique
-			arguments.page.setSlug( getUniqueSlugHash( arguments.page.getSlug() ) );
-		}
+		transaction{
+			// Verify uniqueness of slug
+			if( !contentService.isSlugUnique( slug=arguments.page.getSlug(), contentID=arguments.page.getContentID() ) ){
+				// make slug unique
+				arguments.page.setSlug( getUniqueSlugHash( arguments.page.getSlug() ) );
+			}
 
-		// Save the target page
-		save( entity=arguments.page, transactional=false );
+			// Save the target page
+			save( entity=arguments.page, transactional=false );
 
-		// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
-		if( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ){
-			var pagesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
-			for( var thisPage in pagesInNeed ){
-				thisPage.setSlug( replaceNoCase( thisPage.getSlug(), arguments.originalSlug, arguments.page.getSlug() ) );
-				save( entity=thisPage, transactional=false );
+			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
+			if( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ){
+				var pagesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
+				for( var thisPage in pagesInNeed ){
+					thisPage.setSlug( replaceNoCase( thisPage.getSlug(), arguments.originalSlug, arguments.page.getSlug() ) );
+					save( entity=thisPage, transactional=false );
+				}
 			}
 		}
 

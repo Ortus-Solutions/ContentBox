@@ -79,22 +79,25 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	/**
 	* Reset rules to factory shipping standards, this will remove all rules also
 	*/
-	any function resetRules() transactional{
-		// Get rules path
-		var rulesPath = getDirectoryFromPath( getMetadata(this).path ) & "data/securityRules.json";
-		// remove all rules first
-		//var q = new query(sql="delete from cb_securityRule" ).execute();
-		deleteAll(transactional=false);
-		// now re-create them
-		var securityRules = deserializeJSON(  fileRead( rulesPath ) );
-		// iterate over array
-		for(var thisRule in securityRules){
-			if( structKeyExists(thisRule,"ruleID" ) ){
-				structDelete(thisRule,"ruleID" );
+	any function resetRules(){
+		transaction{
+			// Get rules path
+			var rulesPath = getDirectoryFromPath( getMetadata( this ).path ) & "data/securityRules.json";
+			// remove all rules first
+			//var q = new query(sql="delete from cb_securityRule" ).execute();
+			deleteAll( transactional = false );
+			// now re-create them
+			var securityRules = deserializeJSON( fileRead( rulesPath ) );
+			// iterate over array
+			for( var thisRule in securityRules ){
+				if( structKeyExists( thisRule, "ruleID" ) ){
+					structDelete( thisRule, "ruleID" );
+				}
+				var oRule = new( properties=thisRule );
+				save( entity=oRule, transactional=false );
 			}
-			var oRule = new(properties=thisRule);
-			save(entity=oRule, transactional=false);
 		}
+		
 		return this;
 	}
 	

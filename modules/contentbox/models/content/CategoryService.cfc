@@ -81,17 +81,21 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Delete a category which also removes itself from all many-to-many relationships
 	* @category.hint The category object to remove from the system
 	*/
-	boolean function deleteCategory( required category ) transactional{
-		// Remove content relationships
-		var aRelatedContent = removeAllRelatedContent( arguments.category );
-		// Save the related content
-		if( arrayLen( aRelatedContent ) ){
-			contentService.saveAll( entities=aRelatedContent, transactional=false );
+	boolean function deleteCategory( required category ){
+		
+		transaction{
+			// Remove content relationships
+			var aRelatedContent = removeAllRelatedContent( arguments.category );
+			// Save the related content
+			if( arrayLen( aRelatedContent ) ){
+				contentService.saveAll( entities=aRelatedContent, transactional=false );
+			}
+			// Remove it
+			delete( entity=arguments.category, transactional=false );
+			// evict queries
+			ORMEvictQueries( getQueryCacheRegion() );
 		}
-		// Remove it
-		delete( entity=arguments.category, transactional=false );
-		// evict queries
-		ORMEvictQueries( getQueryCacheRegion() );
+		
 		// return results
 		return true;
 	}
