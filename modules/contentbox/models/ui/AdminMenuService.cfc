@@ -95,6 +95,11 @@ component accessors="true" threadSafe singleton{
 		return this;
 	}
 
+	/**
+	 * Build LI attributes
+	 * @event The event context 
+	 * @menu The menu struct
+	 */
 	function buildLIAttributes( required any event, required any menu ) {
         var attributes = {
             "class" = "#menu.class#",
@@ -109,38 +114,48 @@ component accessors="true" threadSafe singleton{
         return createAttributeList( attributes );
     }
 
+    /**
+     * Build Item Attributes
+     * @event The event context 
+	 * @menu The menu struct
+	 * @structDefaults The struct defaults for the item
+     */
     function buildItemAttributes( required any event, required any menu, structDefaults={} ) {
     	var attributes = {
     		"class" = structKeyExists( structDefaults, "class" ) ? structDefaults.class : ""
     	};
-    	if( len( menu.itemClass ) ) {
-    		attributes.class &= " #menu.itemClass#";
+    	if( len( arguments.menu.itemClass ) ) {
+    		attributes.class &= " #arguments.menu.itemClass#";
     	}
-    	if( len( menu.itemId ) ) {
-    		attributes[ "id" ] = menu.itemId;
+    	if( len( arguments.menu.itemId ) ) {
+    		attributes[ "id" ] = arguments.menu.itemId;
     	}
-    	if( structKeyExists( menu, "subMenu" ) && arrayLen( menu.subMenu ) ) {
+    	if( structKeyExists( menu, "subMenu" ) && arrayLen( arguments.menu.subMenu ) ) {
     		attributes[ "data-toggle" ] = "dropdown";
     	}	
-    	if( menu.itemType=="a" ) {
-    		attributes[ "href" ] = "#( isCustomFunction( menu.href ) ? menu.href() : menu.href )#";
+    	if( arguments.menu.itemType=="a" ) {
+    		attributes[ "href" ] = "#( isCustomFunction( arguments.menu.href ) ? arguments.menu.href( arguments.menu, arguments.event ) : arguments.menu.href )#";
     	}
-    	if( menu.itemType=="button" ) {
-    		attributes[ "onclick" ] = "#( isCustomFunction( menu.href ) ? menu.href() : menu.href )#";
+    	if( arguments.menu.itemType=="button" ) {
+    		attributes[ "onclick" ] = "#( isCustomFunction( arguments.menu.href ) ? arguments.menu.href( arguments.menu, arguments.event ) : arguments.menu.href )#";
     	}
-    	if( len( menu.title ) ) {
-    		attributes[ "title" ] = "#menu.title#";
+    	if( len( arguments.menu.title ) ) {
+    		attributes[ "title" ] = "#arguments.menu.title#";
     	}
-    	if( menu.itemType=="a" && len( menu.target ) ) {
-    		attributes[ "target" ] = "#menu.target#";
+    	if( arguments.menu.itemType=="a" && len( arguments.menu.target ) ) {
+    		attributes[ "target" ] = "#arguments.menu.target#";
     	}
     	var attributeList = createAttributeList( attributes );
-    	if( structKeyExists( menu, "data" ) && structCount( menu.data ) ) {
-    		attributeList &= " " & parseADataAttributes( menu.data );
+    	if( structKeyExists( menu, "data" ) && structCount( arguments.menu.data ) ) {
+    		attributeList &= " " & parseADataAttributes( arguments.menu.data );
     	}
     	return attributeList;
 	}
 
+	/**
+	 * Create the attribute list
+	 * @attributes The struct of attributes to build the list from
+	 */
     function createAttributeList( required struct attributes ) {
         var attributeList = "";
         for( var key in arguments.attributes ) {
@@ -160,7 +175,7 @@ component accessors="true" threadSafe singleton{
 		var xehDoLogout			= "#this.ADMIN_ENTRYPOINT#.security.doLogout";
 		var xehAutoUpdates		= "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		var xehAbout			= "#this.ADMIN_ENTRYPOINT#.dashboard.about";
-		var xehAdminAction		= "#this.ADMIN_ENTRYPOINT#.dashboard.reload";
+		var xehAdminAction		= "/#this.ADMIN_ENTRYPOINT#/dashboard/reload";
 
 		// Register About Menu
 		addHeaderMenu( 
@@ -207,12 +222,14 @@ component accessors="true" threadSafe singleton{
 		.addHeaderSubMenu( 
 			name="updates", 
 			label='<i class="fa fa-download"></i> Check for Updates', 
-			href="#event.buildLink( xehAutoUpdates )#" 
+			href=variables.buildLink,
+			href_to=xehAutoUpdates
 		)
 		.addHeaderSubMenu( 
 			name="buildid", 
 			label='ContentBox v.#variables.moduleConfig.version# <br /><span class="label label-warning">(Codename: #variables.moduleConfig.settings.codename#)</span>', 
-			href="#event.buildLink( xehAbout )#",
+			href=variables.buildLink,
+			href_to="xehAbout",
 			class="last"
 		);
 
@@ -226,14 +243,16 @@ component accessors="true" threadSafe singleton{
 			name="myprofile", 
 			title="ctrl+shift+A", 
 			label="<i class='fa fa-camera'></i> My Profile", 
-			href="#event.buildLink( xehMyProfile )#",
+			href=variables.buildLink,
+			href_to="xehMyProfile",
 			data={ keybinding="ctrl+shift+a" } 
 		)
 		.addHeaderSubMenu( 
 			name="logout", 
 			title="ctrl+shift+L", 
 			label="<i class='fa fa-power-off'></i> Logout", 
-			href="#event.buildLink( xehDoLogout )#",
+			href=variables.buildLink,
+			href_to=xehDoLogout,
 			data={ keybinding="ctrl+shift+l" } 
 		);
 		// Register modules reload menu
@@ -250,44 +269,47 @@ component accessors="true" threadSafe singleton{
 		.addHeaderSubMenu( 
 			name="rsscache", 
 			label="Clear RSS Caches", 
-			href="javascript:adminAction( 'rss-purge', '#event.buildLink( xehAdminAction )#' )" 
+			href="javascript:adminAction( 'rss-purge', '#xehAdminAction#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="contentpurge", 
 			label="Clear Content Caches", 
-			href="javascript:adminAction( 'content-purge', '#event.buildLink( xehAdminAction )#' )" 
+			href="javascript:adminAction( 'content-purge', '#xehAdminAction#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="app", 
 			label="Reload Application", 
-			href="javascript:adminAction( 'app', '#event.buildLink( xehAdminAction )#' )" 
+			href="javascript:adminAction( 'app', '#xehAdminAction#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="orm", 
 			label="Reload ORM", 
-			href="javascript:adminAction( 'orm', '#event.buildLink( xehAdminAction )#' )" 
+			href="javascript:adminAction( 'orm', '#xehAdminAction#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="contentboxadmin", 
 			label="Reload Admin Module", 
-			href="javascript:adminAction( 'contentbox-admin', '#event.buildLink( xehAdminAction )#' )" 
-		)
-		.addHeaderSubMenu( 
-			name="contentboxfilebrowser", 
-			label="Reload FileBrowser Module", 
-			href="javascript:adminAction( 'contentbox-filebrowser', '#event.buildLink( xehAdminAction )#' )" 
-		)
-		.addHeaderSubMenu( 
-			name="contentboxsecurity", 
-			label="Reload Security Module", 
-			href="javascript:adminAction( 'contentbox-security', '#event.buildLink( xehAdminAction )#' )" 
+			href="javascript:adminAction( 'contentbox-admin', '#xehAdminAction#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="contentboxui", 
 			label="Reload Site Module", 
-			href="javascript:adminAction( 'contentbox-ui', '#event.buildLink( xehAdminAction )#' )" 
+			href="javascript:adminAction( 'contentbox-ui', '#xehAdminAction#' )" 
 		);
 		return this;
+	}
+
+	/**
+	 * Dynamic href's due to cgi host or site changes.
+	 * This expects a menu.href_to to exist.
+	 * @menu The menu info
+	 * @event The request context
+	 */
+	function buildLink( required menu, required event ){
+		if( structKeyExists( arguments.menu, "href_to" ) ){
+			return arguments.event.buildLink( arguments.menu.href_to );
+		}
+		return 'NO_HREF_TO_OR_JS';
 	}
 
 	/**
@@ -337,17 +359,17 @@ component accessors="true" threadSafe singleton{
 		prc.xehGlobalHTML	= "#this.ADMIN_ENTRYPOINT#.globalHTML";
 
 		// Modules
-		prc.xehModules = "#this.ADMIN_ENTRYPOINT#.modules";
+		prc.xehModules 		= "#this.ADMIN_ENTRYPOINT#.modules";
 
 		// Authors Tab
-		prc.xehAuthors		= "#this.ADMIN_ENTRYPOINT#.authors";
-		prc.xehAuthorEditor	= "#this.ADMIN_ENTRYPOINT#.authors.editor";
+		prc.xehAuthors			= "#this.ADMIN_ENTRYPOINT#.authors";
+		prc.xehAuthorEditor		= "#this.ADMIN_ENTRYPOINT#.authors.editor";
 		prc.xehPermissions		= "#this.ADMIN_ENTRYPOINT#.permissions";
 		prc.xehRoles			= "#this.ADMIN_ENTRYPOINT#.roles";
 
 		// Tools
-		prc.xehToolsImport	= "#this.ADMIN_ENTRYPOINT#.tools.importer";
-		prc.xehToolsExport	= "#this.ADMIN_ENTRYPOINT#.tools.exporter";
+		prc.xehToolsImport		= "#this.ADMIN_ENTRYPOINT#.tools.importer";
+		prc.xehToolsExport		= "#this.ADMIN_ENTRYPOINT#.tools.exporter";
 
 		// System
 		prc.xehSettings			= "#this.ADMIN_ENTRYPOINT#.settings";
@@ -361,55 +383,55 @@ component accessors="true" threadSafe singleton{
 
 		// Dashboard
 		addTopMenu( name=this.DASHBOARD, label="<i class='fa fa-dashboard'></i> Dashboard" )
-			.addSubMenu( name="home", label="Home", href="#event.buildLink(prc.xehDashboard)#" )
-			.addSubMenu( name="about", label="About", href="#event.buildLink(prc.xehAbout)#" )
-			.addSubMenu( name="updates", label="Updates", href="#event.buildLink(prc.xehAutoUpdater)#", permissions="SYSTEM_UPDATES" );
+			.addSubMenu( name="home", label="Home", href=variables.buildLink, href_to=prc.xehDashboard )
+			.addSubMenu( name="about", label="About", href=variables.buildLink, href_to=prc.xehAbout )
+			.addSubMenu( name="updates", label="Updates", href=variables.buildLink, href_to=prc.xehAutoUpdater, permissions="SYSTEM_UPDATES" );
 
 		// Content
 		addTopMenu( name=this.CONTENT, label="<i class='fa fa-pencil'></i> Content" )
-			.addSubMenu( name="Pages", label="Sitemap", href="#event.buildLink(prc.xehPages)#", permissions="PAGES_ADMIN,PAGES_EDITOR" )
-			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href="#event.buildLink(prc.xehEntries)#", permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
-			.addSubMenu( name="contentStore", label="Content Store", href="#event.buildLink(prc.xehContentStore)#", permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
-			.addSubMenu( name="Categories", label="Categories", href="#event.buildLink(prc.xehCategories)#", permissions="CATEGORIES_ADMIN" )
-			.addSubMenu( name="mediaManager", label="Media Manager", href="#event.buildLink(prc.xehMediaManager)#", permissions="MEDIAMANAGER_ADMIN" )
-			.addSubMenu( name="menu", label="Menu Manager", href="#event.buildLink(prc.xehMenuManager)#", permissions="MENUS_ADMIN" );
+			.addSubMenu( name="Pages", label="Sitemap", href=variables.buildLink, href_to=prc.xehPages, permissions="PAGES_ADMIN,PAGES_EDITOR" )
+			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href=variables.buildLink, href_to=prc.xehEntries, permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
+			.addSubMenu( name="contentStore", label="Content Store", href=variables.buildLink, href_to=prc.xehContentStore, permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
+			.addSubMenu( name="Categories", label="Categories", href=variables.buildLink, href_to=prc.xehCategories, permissions="CATEGORIES_ADMIN" )
+			.addSubMenu( name="mediaManager", label="Media Manager", href=variables.buildLink, href_to=prc.xehMediaManager, permissions="MEDIAMANAGER_ADMIN" )
+			.addSubMenu( name="menu", label="Menu Manager", href=variables.buildLink, href_to=prc.xehMenuManager, permissions="MENUS_ADMIN" );
 
 		// Comments
 		addTopMenu( name=this.COMMENTS, label="<i class='fa fa-comment'></i> Comments" )
-			.addSubMenu( name="Inbox", label="Inbox", href="#event.buildLink(prc.xehComments)#", permissions="COMMENTS_ADMIN" )
-			.addSubMenu( name="Settings", label="Settings", href="#event.buildLink(prc.xehCommentsettings)#", permissions="COMMENTS_ADMIN" );
+			.addSubMenu( name="Inbox", label="Inbox", href=variables.buildLink, href_to=prc.xehComments, permissions="COMMENTS_ADMIN" )
+			.addSubMenu( name="Settings", label="Settings", href=variables.buildLink, href_to=prc.xehCommentsettings, permissions="COMMENTS_ADMIN" );
 
 		// Look and Feel
 		addTopMenu( name=this.LOOK_FEEL, label="<i class='fa fa-tint'></i> Look & Feel" )
-			.addSubMenu( name="Themes", label="Themes", href="#event.buildLink(prc.xehThemes)#", permissions="THEME_ADMIN" )
-			.addSubMenu( name="Widgets", label="Widgets", href="#event.buildLink(prc.xehWidgets)#", permissions="WIDGET_ADMIN" )
-			.addSubMenu( name="globalHTML", label="Global HTML", href="#event.buildLink(prc.xehGlobalHTML)#", permissions="GLOBALHTML_ADMIN" );
+			.addSubMenu( name="Themes", label="Themes", href=variables.buildLink, href_to=prc.xehThemes, permissions="THEME_ADMIN" )
+			.addSubMenu( name="Widgets", label="Widgets", href=variables.buildLink, href_to=prc.xehWidgets, permissions="WIDGET_ADMIN" )
+			.addSubMenu( name="globalHTML", label="Global HTML", href=variables.buildLink, href_to=prc.xehGlobalHTML, permissions="GLOBALHTML_ADMIN" );
 
 		// Modules
 		addTopMenu( name=this.MODULES, label="<i class='fa fa-bolt'></i> Modules", permissions="MODULES_ADMIN" )
-			.addSubMenu( name="Manage", label="Manage", href="#event.buildLink(prc.xehModules)#" );
+			.addSubMenu( name="Manage", label="Manage", href=variables.buildLink, href_to=prc.xehModules );
 
 		// User
 		addTopMenu( name=this.USERS, label="<i class='fa fa-user'></i> Users" )
-			.addSubMenu( name="Manage", label="Manage", href="#event.buildLink(prc.xehAuthors)#", permissions="AUTHOR_ADMIN" )
-			.addSubMenu( name="Permissions", label="Permissions", href="#event.buildLink(prc.xehPermissions)#", permissions="PERMISSIONS_ADMIN" )
-			.addSubMenu( name="Roles", label="Roles", href="#event.buildLink(prc.xehRoles)#", permissions="ROLES_ADMIN" );
+			.addSubMenu( name="Manage", label="Manage", href=variables.buildLink, href_to=prc.xehAuthors, permissions="AUTHOR_ADMIN" )
+			.addSubMenu( name="Permissions", label="Permissions", href=variables.buildLink, href_to=prc.xehPermissions, permissions="PERMISSIONS_ADMIN" )
+			.addSubMenu( name="Roles", label="Roles", href=variables.buildLink, href_to=prc.xehRoles, permissions="ROLES_ADMIN" );
 
 		// Tools
 		addTopMenu( name=this.TOOLS, label="<i class='fa fa-wrench'></i> Tools" )
-			.addSubMenu( name="Import", label="Import", href="#event.buildLink(prc.xehToolsImport)#", permissions="TOOLS_IMPORT" )
-			.addSubMenu( name="Export", label="Export", href="#event.buildLink(prc.xehToolsExport)#", permissions="TOOLS_EXPORT" );
+			.addSubMenu( name="Import", label="Import", href=variables.buildLink, href_to=prc.xehToolsImport, permissions="TOOLS_IMPORT" )
+			.addSubMenu( name="Export", label="Export", href=variables.buildLink, href_to=prc.xehToolsExport, permissions="TOOLS_EXPORT" );
 
 		// SYSTEM
 		addTopMenu( name=this.SYSTEM, label="<i class='fa fa-briefcase'></i> System", permissions="SYSTEM_TAB" )
-			.addSubMenu( name="Settings", label="Settings", href="#event.buildLink(prc.xehSettings)#", data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
-			.addSubMenu( name="SecurityRules", label="Security Rules", href="#event.buildLink(prc.xehSecurityRules)#", permissions="SECURITYRULES_ADMIN" )
-			.addSubMenu( name="GeekSettings", label="Geek Settings", href="#event.buildLink(prc.xehRawSettings)#", permissions="SYSTEM_RAW_SETTINGS" )
-			.addSubMenu( name="AuthLogs", label="Auth Logs", href="#event.buildLink(prc.xehAuthLogs)#", permissions="SYSTEM_AUTH_LOGS" );
+			.addSubMenu( name="Settings", label="Settings", href=variables.buildLink, href_to=prc.xehSettings, data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
+			.addSubMenu( name="SecurityRules", label="Security Rules", href=variables.buildLink, href_to=prc.xehSecurityRules, permissions="SECURITYRULES_ADMIN" )
+			.addSubMenu( name="GeekSettings", label="Geek Settings", href=variables.buildLink, href_to=prc.xehRawSettings, permissions="SYSTEM_RAW_SETTINGS" )
+			.addSubMenu( name="AuthLogs", label="Auth Logs", href=variables.buildLink, href_to=prc.xehAuthLogs, permissions="SYSTEM_AUTH_LOGS" );
 		
 		// STATS
 		addTopMenu( name=this.STATS, label="<i class='fa fa-bar-chart-o'></i> Stats" )
-			.addSubMenu( name="Subscribers", label="Subscribers", href="#event.buildLink( prc.xehSubscribers )#", title="View Subscribers" );
+			.addSubMenu( name="Subscribers", label="Subscribers", href=variables.buildLink, href_to=prc.xehSubscribers, title="View Subscribers" );
 
 		return this;
 	}

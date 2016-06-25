@@ -101,6 +101,17 @@ component {
 	}
 
 	/**
+	* Multi-domain hosting, in preparation for multi-site domains
+	* This is for both the admin and UI modules
+	*/
+	function preProcess( event ){
+		// find appmaping
+		var appMapping = ( len( controller.getSetting( 'AppMapping' ) ) ? controller.getSetting( 'AppMapping' ) & "/" : "" );
+		// Setup base URL
+		event.setSESBaseURL( "http" & ( event.isSSL() ? "s" : "" ) & "://#cgi.HTTP_HOST#/#appMapping#" );
+	}
+
+	/**
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){

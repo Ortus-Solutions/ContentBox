@@ -55,11 +55,6 @@ component{
 
 		};
 		
-		messagebox = {
-			styleOverride 	= true,
-			template 		= "/contentbox/models/ui/templates/messagebox.cfm"
-		};
-
 		// environment settings, create a detectEnvironment() method to detect it yourself.
 		// create a function with the name of the environment so it can be executed if that environment is detected
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
