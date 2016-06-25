@@ -1,6 +1,7 @@
 @import "globals";
 
-/** Theme Overrides */
+/**============================== THEME OVERRIDES ==============================**/
+
 .loaders {
   margin: 10px;
   display: none;
@@ -8,16 +9,6 @@
 }
 .tipList li {
   padding: 5px 0px 0px 0px;
-}
-.tab-pane .row.well.well-sm {
-  margin: 0 1px 10px;
-}
-a.btn.btn-danger:link,
-a.btn.btn-danger:visited {
-  color: white !important;
-}
-.nav-tabs > li >a:hover{
-	background-color: #eaeaea;
 }
 /** Header */
 #header .brand{ 
@@ -30,11 +21,13 @@ a.btn.btn-danger:visited {
 #header .user-nav {
 	padding-right: 60px;
 }
+
 /* vertical align */
 #header a.btn-default{
 	padding-top: 6px;
 	vertical-align: middle;
 }
+
 /* close gap between li's */
 #header .user-nav ul li{
 	margin: 0px 5px;
@@ -64,6 +57,7 @@ a.btn.btn-danger:visited {
 .main-content-wrapper #main-content .h1 {
 	padding: 0px 10px 20px 10px;
 }
+
 /** Section Overrides */
 #simple-container{
 	padding-top:10px;
@@ -73,39 +67,32 @@ a.btn.btn-danger:visited {
 	display: none;
 }
 
-/** Media Queries **/
-@media all and (max-width: 437px) {
-	.slide .sld-img {
-		display: none;
-	}
+/**============================== BOOTSTRAP OVERRIDES ==============================**/
 
-	#title-legend {
-		display: none;
-	}
-}
-@media only screen and (max-width: 853px) {
-	#header div.brand{ 
-		display: none; 
-	}
-	.main-content-wrapper {
-		margin-left: 0;
-	}
-}
-@media only screen and (max-width: 660px) {
-    #header{
-    	height: 60px;
-    	.user-nav{
-    		padding-right: 5px;
-    	}
-    }
-}
-
-/** Bootsrap Overrides **/
 .input-group .form-control{
 	z-index:0;
 }
+.tab-pane .row.well.well-sm {
+  margin: 0 1px 10px;
+}
+
+a.btn.btn-danger:link,
+a.btn.btn-danger:visited {
+  color: white !important;
+}
+.nav-tabs > li > a{
+	padding: 15px;
+}
+.nav-tabs > li > a:hover{
+	background-color: #eaeaea;
+}
+
 
 /**============================== ADMIN MAIN ELEMENTS ==============================**/
+
+legend{
+	padding: 10px 0px;
+}
 .actionBar, .form-actions{ text-align: center; margin: 5px; }
 img{ height: inherit; }
 img.img-screenshot{ height: 200px; }
@@ -119,7 +106,9 @@ img.img-screenshot{ height: 200px; }
 .tooltip{ position: fixed;}
 .checkbox-spacer {margin-top:5px;}
 .btn-toggle.radio {padding-left:30px;}  
+
 /**============================== WIDGETS ==============================**/
+
 widget {
 	width: 85%;
 	padding:5px;
@@ -196,9 +185,12 @@ widgetinfobar::-moz-selection {
 .widget-preview-content {padding:20px;border:dashed 4px #eaeaea;border-radius:4px;margin-top:20px;}
 .widget-preview .well h4 {margin:0px;}
 
-/* Modals */
+/**============================== MODALS ==============================**/
+
 #confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close {z-index:99999;}
+
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
+
 #div-search { padding: 6px 14px 2px 14px; }
 #div-search input{ 
 	background-color: #fafafa;
@@ -234,14 +226,19 @@ widgetinfobar::-moz-selection {
 #div-search-results h2{ color: #31ADE8; font-size: 16px; font-weight: normal;}
 #div-search-results ul{ font-size: 12px}
 #div-search-results li{ margin: 3px 0px }
+
 /**============================== ColdBox MessageBox ==============================**/
+
 .cbox_messagebox { font-weight:bold; margin:10px; }
 .cbox_messagebox_info { background:#D1E6EF url(../images/iinfo_icon.png) no-repeat scroll .5em 50%; color:#3760b5; border:1px solid #c3d7ff; margin:.3em auto; padding:0 1em 0 3.5em; }
 .cbox_messagebox_warning { background:#FFF2CF url(../images/warning_icon.png) no-repeat scroll .5em 50%; color:#bc6c34; border:1px solid #bc6c34; margin:.3em auto; padding:0 1em 0 3.5em; }
 .cbox_messagebox_error { background:#FFFFE0 url(../images/error_icon.png) no-repeat scroll .5em 50%; color:#b22723; border:1px solid #ff0606; margin:.3em auto; padding:0 1em 0 3.5em; }
+
 /**============================== FILEBROWSER CSS ==============================**/
+
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}
+
 /**============================== DIFF CSS ==============================**/
 /* LEGEND */
 #legend { 
@@ -292,7 +289,9 @@ table.diff {
 .delLight{ background-color: #FFEFEF;}
 .upd { background-color: #aaf; }
 .diffContent{width:100%;overflow:auto;height:auto;line-height: 1.2em;}
+
 /**============================== Utility Classes ==============================**/
+
 .consoleLog{ border:2px solid #eaeaea;padding:5px;font-size:11px;font-family: courier;background-color:black;color:#66E10D}
 .floatLeft { float:left!important; }
 .floatRight { float:right!important; }
@@ -321,7 +320,9 @@ table.diff {
 .cachebox_debugContentCell{clear: none !important;}
 .grabCursors{cursor:grab !important;cursor:-moz-grab !important;cursor:-webkit-grab !important;}
 .hand-cursor{cursor:pointer !important;}
+
 /**============================== FORGEBOX CSS ==============================**/
+
 #forgebox-entrysidebar { width:180px; float:right; }
 #forgebox-entrycontent { width:515px; }
 .forgeBox-entrybox { margin:10px 0px 0px 0px; border:1px solid #CCC; background:#FFFFFF url(../images/divbg.gif) repeat-x bottom left; padding:10px; -moz-border-radius:10px; -webkit-border-radius:10px; -khtml-border-radius:10px; }
@@ -331,3 +332,32 @@ table.diff {
 .forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
 .forgebox-download { float:right; clear:right; }
 .forgebox-modal{ height: auto; width: 50%}
+
+
+/**============================== MEDIA QUERIES ==============================**/
+
+@media all and (max-width: 437px) {
+	.slide .sld-img {
+		display: none;
+	}
+
+	#title-legend {
+		display: none;
+	}
+}
+@media only screen and (max-width: 853px) {
+	#header div.brand{ 
+		display: none; 
+	}
+	.main-content-wrapper {
+		margin-left: 0;
+	}
+}
+@media only screen and (max-width: 660px) {
+    #header{
+    	height: 60px;
+    	.user-nav{
+    		padding-right: 5px;
+    	}
+    }
+}
