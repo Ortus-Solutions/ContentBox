@@ -41,7 +41,7 @@ component extends="baseHandler"{
 		// ForgeBox Entry URL
 		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
 		// ForgeBox Stuff
-		prc.forgeBoxSlug 		= "contentbox-layouts";
+		prc.forgeBoxSlug 		= "contentbox-themes";
 		prc.forgeBoxInstallDir 	= URLEncodedFormat( themeService.getThemesPath() );
 		prc.forgeboxReturnURL 	= URLEncodedFormat( event.buildLink( linkto=prc.xehThemes, querystring="rescan=true##managePane" ) );
 
