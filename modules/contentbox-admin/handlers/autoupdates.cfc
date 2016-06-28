@@ -10,14 +10,10 @@ component extends="baseHandler"{
 	// DI 
 	property name="moduleSettings"	inject="coldbox:moduleSettings:contentbox";
 
-	// Pre Handler
-	function preHandler( event, rc, prc, action, eventArguments ){
-		prc.tabDashboard = true;
-	}
-
-	// dashboard index
+	/**
+	* Show Auto Updates screen
+	*/
 	function index( event, rc, prc ){
-
 		// exit Handlers
 		prc.xehUpdateCheck		= "#prc.cbAdminEntryPoint#.autoupdates.check";
 		prc.xehInstallUpdate    = "#prc.cbAdminEntryPoint#.autoupdates.apply";
@@ -33,24 +29,25 @@ component extends="baseHandler"{
 		if( flash.exists( "updateRestart" ) and flash.get( "updateRestart" ) ){
 			flash.saveFlash();
 			applicationstop();
-			setnextEvent(prc.xehAutoUpdater);
+			setnextEvent( prc.xehAutoUpdater );
 			return;
 		}
+
 		// clear Logs
 		if( event.valueExists( "clearLogs" ) ){
 			flash.discard( "updateLog" );
 		}
 		// Install Log
-		prc.installLog = flash.get( "updateLog","" );
-
+		prc.installLog = flash.get( "updateLog", "" );
 		// Tab Manipulation
-		prc.tabDashboard_updates = true;
-
+		prc.tabSystem_updates = true;
 		// auto updates
 		event.setView( "autoupdates/index" );
 	}
 
-	// check for updates
+	/**
+	* Check for updates
+	*/
 	function check( event, rc, prc ){
 		// verify the slug
 		event.paramValue( "channel", moduleSettings.updateSlug_stable );
@@ -76,8 +73,7 @@ component extends="baseHandler"{
 			} else {
 				cbMessagebox.warn( "You have the latest version of ContentBox installed, no update for you!" );
 			}
-		}
-		catch(Any e){
+		} catch( Any e ){
 			cbMessagebox.error( "Error retrieving update information, please try again later.<br> Diagnostics: #e.detail# #e.message# #e.stackTrace#" );
 			log.error( "Error retrieving ForgeBox information", e);
 		}
@@ -86,9 +82,11 @@ component extends="baseHandler"{
 		event.setView( view="autoupdates/check", layout="ajax" );
 	}
 
-	// apply for updates
+	/**
+	* Apply updates
+	*/
 	function apply( event, rc, prc ){
-		event.paramValue( "downloadURL","" );
+		event.paramValue( "downloadURL", "" );
 		// verify download URL
 		if( !len( rc.downloadURL ) ){
 			cbMessagebox.error( "No download URL detected" );
@@ -115,15 +113,16 @@ component extends="baseHandler"{
 		setnextEvent( prc.xehAutoUpdater );
 	}
 
-	// upload
+	/**
+	* Upload auto update
+	*/
 	function upload( event, rc, prc ){
 		var fp = event.getTrimValue( "filePatch","" );
 
 		// Verify
 		if( !len( fp ) ){
 			cbMessagebox.warn( "Please choose an update file to upload!" );
-		}
-		else{
+		} else {
 			// Upload File
 			try{
 				// Apply Update
@@ -135,8 +134,7 @@ component extends="baseHandler"{
 				}
 				flash.put( "updateLog", updateResults.log);
 				flash.put( "updateRestart", ( !updateResults.error ) );
-			}
-			catch( Any e ){
+			} catch( Any e ) {
 				cbMessagebox.error( "Error uploading update file: #e.detail# #e.message#" );
 			}
 		}

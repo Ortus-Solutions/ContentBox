@@ -6,7 +6,7 @@
 		<!--- Check Permissions --->
 		<cfif !len( local.topMenu.permissions ) OR prc.oAuthor.checkPermission( local.topMenu.permissions )>
 		<!--- LI --->
-		<li class="nav-dropdown<cfif event.getValue( name='tab#local.topMenu.name#', defaultValue=false, private=true )> active open</cfif>#local.topMenu.class#" 
+		<li class="nav-dropdown<cfif event.getPrivateValue( name='tab#local.topMenu.name#', defaultValue=false )> active open</cfif>#local.topMenu.class#" 
 			data-name="#local.topMenu.name#"
 		>
 			
@@ -26,13 +26,13 @@
 				<cfloop array="#local.topMenu.submenu#" index="local.thisSubMenu">
 					<!--- Security --->
 					<cfif !len( local.thisSubMenu.permissions ) OR prc.oAuthor.checkPermission( local.thisSubMenu.permissions )>
-					<li class="<cfif event.getValue( name="tab#local.topMenu.name#_#local.thisSubMenu.name#", defaultValue=false, private=true )>active</cfif>#local.thisSubMenu.class#" 
+					<li class="<cfif event.getPrivateValue( name="tab#local.topMenu.name#_#local.thisSubMenu.name#", defaultValue=false )>active</cfif>#local.thisSubMenu.class#" 
 						data-name="#local.thisSubMenu.name#"
 					>
 
 						<a href="#( isCustomFunction( local.thisSubMenu.href ) ? local.thisSubMenu.href( local.thisSubMenu, event ) : local.thisSubMenu.href )#"
-							<cfif len(local.thisSubMenu.title)> title="#local.thisSubMenu.title#"</cfif>
-							<cfif len(local.thisSubMenu.target)> target="#local.thisSubMenu.target#"</cfif>
+							<cfif len( local.thisSubMenu.title )> title="#local.thisSubMenu.title#"</cfif>
+							<cfif len( local.thisSubMenu.target )> target="#local.thisSubMenu.target#"</cfif>
 							<cfif structKeyExists( local.thisSubMenu, "data" ) && structCount( local.thisSubMenu.data )>#parseADataAttributes( local.thisSubMenu.data )#</cfif>
 						>
 							#( isCustomFunction( local.thisSubMenu.label ) ? local.thisSubMenu.label() : local.thisSubMenu.label )#

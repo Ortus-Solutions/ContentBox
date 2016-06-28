@@ -10,12 +10,12 @@
 			#getModel( "messagebox@cbMessagebox" ).renderit()#
 
 			<cfif prc.updateFound>
-				#html.startFieldSet(legend="Version Information" )#
+				#html.startFieldSet( legend="Version Information" )#
 					<table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="98%">
 						<thead>
 							<tr class="">
-								<th width="100">#$r( "autoUpdates.check.yourVersion@admin" )#</th>
-								<th width="100">#$r( "autoUpdates.check.newVersion@admin" )#</th>	
+								<th width="150">#$r( "autoUpdates.check.yourVersion@admin" )#</th>
+								<th width="150">#$r( "autoUpdates.check.newVersion@admin" )#</th>	
 								<th>#$r( "autoUpdates.check.updateDate@admin" )#</th>
 							</tr>
 						</thead>
@@ -23,7 +23,7 @@
 							<tr>
 								<th>#prc.contentboxVersion#</th>
 								<th>#prc.updateEntry.version#</th>
-								<th>#prc.updateEntry.updateDate#</th>
+								<th>#prc.updateEntry.updatedDate#</th>
 							</tr>
 						</tbody>
 					</table>
