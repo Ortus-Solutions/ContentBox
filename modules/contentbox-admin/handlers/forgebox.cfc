@@ -4,12 +4,14 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="forgebox"		inject="id:ForgeBox@cb";
+	property name="forgebox" inject="forgebox@forgeboxsdk";
 
-	// index
-	function index(event,rc,prc){
+	/**
+	* Display ForgeBox entries
+	*/
+	function index( event, rc, prc ){
 		// order by
-		event.paramValue( "orderBy","POPULAR" );
+		event.paramValue( "orderBy", "POPULAR" );
 
 		// exit Handlers
 		prc.xeh 	= "#prc.cbAdminEntryPoint#.layouts.remove";

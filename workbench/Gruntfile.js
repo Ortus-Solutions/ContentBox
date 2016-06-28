@@ -288,17 +288,6 @@ module.exports = function(grunt) {
 						], 
 						dest 	: '../modules/contentbox-admin/includes/plugins/autosave',
 					},
-					// jQuery Star Rating
-					{
-						expand 	: true,
-						flatten : true,
-						cwd 	: 'bower_components/jquery-star-rating/min/', 
-						src 	: [
-							'rating.css',
-							'rating.js'
-						], 
-						dest 	: '../modules/contentbox-admin/includes/plugins/jquery-star-rating/'
-					},
 					// Simple MDE Editor
 					{
 						expand 	: true,
