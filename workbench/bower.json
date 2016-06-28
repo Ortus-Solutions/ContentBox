@@ -29,11 +29,11 @@
     "toastr": "~2.1.2",
     "respond": "~1.4.2",
     "clockpicker": "~0.0.7",
-    "animate.css": "~3.5.1",
+    "animate.css": "~3.5.2",
     "switchery": "~0.8.1",
     "navgoco": "~0.2.1",
-    "datatables": "~1.10.11",
-    "simplemde": "^1.10.1",
+    "datatables": "~1.10.12",
+    "simplemde": "^1.11.2",
     "jq-fullscreen": "^0.5.0"
   },
   "resolutions": {
