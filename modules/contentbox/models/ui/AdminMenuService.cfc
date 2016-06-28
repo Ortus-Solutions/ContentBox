@@ -388,12 +388,12 @@ component accessors="true" threadSafe singleton{
 
 		// Content
 		addTopMenu( name=this.CONTENT, label="<i class='fa fa-pencil'></i> Content" )
-			.addSubMenu( name="Pages", label="Sitemap", href=variables.buildLink, href_to=prc.xehPages, permissions="PAGES_ADMIN,PAGES_EDITOR" )
 			.addSubMenu( topMenu=this.CONTENT,name="Blog", label="Blog", href=variables.buildLink, href_to=prc.xehEntries, permissions="ENTRIES_ADMIN,ENTRIES_EDITOR" )
-			.addSubMenu( name="contentStore", label="Content Store", href=variables.buildLink, href_to=prc.xehContentStore, permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
 			.addSubMenu( name="Categories", label="Categories", href=variables.buildLink, href_to=prc.xehCategories, permissions="CATEGORIES_ADMIN" )
+			.addSubMenu( name="contentStore", label="Content Store", href=variables.buildLink, href_to=prc.xehContentStore, permissions="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )
 			.addSubMenu( name="mediaManager", label="Media Manager", href=variables.buildLink, href_to=prc.xehMediaManager, permissions="MEDIAMANAGER_ADMIN" )
-			.addSubMenu( name="menu", label="Menu Manager", href=variables.buildLink, href_to=prc.xehMenuManager, permissions="MENUS_ADMIN" );
+			.addSubMenu( name="menu", label="Menu Manager", href=variables.buildLink, href_to=prc.xehMenuManager, permissions="MENUS_ADMIN" )
+			.addSubMenu( name="Pages", label="Sitemap", href=variables.buildLink, href_to=prc.xehPages, permissions="PAGES_ADMIN,PAGES_EDITOR" );
 
 		// Comments
 		addTopMenu( name=this.COMMENTS, label="<i class='fa fa-comment'></i> Comments" )
@@ -402,9 +402,9 @@ component accessors="true" threadSafe singleton{
 
 		// Look and Feel
 		addTopMenu( name=this.LOOK_FEEL, label="<i class='fa fa-tint'></i> Look & Feel" )
+			.addSubMenu( name="globalHTML", label="Global HTML", href=variables.buildLink, href_to=prc.xehGlobalHTML, permissions="GLOBALHTML_ADMIN" )
 			.addSubMenu( name="Themes", label="Themes", href=variables.buildLink, href_to=prc.xehThemes, permissions="THEME_ADMIN" )
-			.addSubMenu( name="Widgets", label="Widgets", href=variables.buildLink, href_to=prc.xehWidgets, permissions="WIDGET_ADMIN" )
-			.addSubMenu( name="globalHTML", label="Global HTML", href=variables.buildLink, href_to=prc.xehGlobalHTML, permissions="GLOBALHTML_ADMIN" );
+			.addSubMenu( name="Widgets", label="Widgets", href=variables.buildLink, href_to=prc.xehWidgets, permissions="WIDGET_ADMIN" );
 
 		// Modules
 		addTopMenu( name=this.MODULES, label="<i class='fa fa-bolt'></i> Modules", permissions="MODULES_ADMIN" )
@@ -423,10 +423,10 @@ component accessors="true" threadSafe singleton{
 
 		// SYSTEM
 		addTopMenu( name=this.SYSTEM, label="<i class='fa fa-briefcase'></i> System", permissions="SYSTEM_TAB" )
+			.addSubMenu( name="AuthLogs", label="Auth Logs", href=variables.buildLink, href_to=prc.xehAuthLogs, permissions="SYSTEM_AUTH_LOGS" )
+			.addSubMenu( name="GeekSettings", label="Geek Settings", href=variables.buildLink, href_to=prc.xehRawSettings, permissions="SYSTEM_RAW_SETTINGS" )
 			.addSubMenu( name="Settings", label="Settings", href=variables.buildLink, href_to=prc.xehSettings, data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
 			.addSubMenu( name="SecurityRules", label="Security Rules", href=variables.buildLink, href_to=prc.xehSecurityRules, permissions="SECURITYRULES_ADMIN" )
-			.addSubMenu( name="GeekSettings", label="Geek Settings", href=variables.buildLink, href_to=prc.xehRawSettings, permissions="SYSTEM_RAW_SETTINGS" )
-			.addSubMenu( name="AuthLogs", label="Auth Logs", href=variables.buildLink, href_to=prc.xehAuthLogs, permissions="SYSTEM_AUTH_LOGS" )
 			.addSubMenu( name="updates", label="Updates", href=variables.buildLink, href_to=prc.xehAutoUpdater, permissions="SYSTEM_UPDATES" );
 		
 		// STATS
