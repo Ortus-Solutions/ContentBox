@@ -229,7 +229,7 @@ component accessors="true" threadSafe singleton{
 			name="buildid", 
 			label='ContentBox v.#variables.moduleConfig.version# <br /><span class="label label-warning">(Codename: #variables.moduleConfig.settings.codename#)</span>', 
 			href=variables.buildLink,
-			href_to="xehAbout",
+			href_to=xehAbout,
 			class="last"
 		);
 
@@ -384,8 +384,7 @@ component accessors="true" threadSafe singleton{
 		// Dashboard
 		addTopMenu( name=this.DASHBOARD, label="<i class='fa fa-dashboard'></i> Dashboard" )
 			.addSubMenu( name="home", label="Home", href=variables.buildLink, href_to=prc.xehDashboard )
-			.addSubMenu( name="about", label="About", href=variables.buildLink, href_to=prc.xehAbout )
-			.addSubMenu( name="updates", label="Updates", href=variables.buildLink, href_to=prc.xehAutoUpdater, permissions="SYSTEM_UPDATES" );
+			.addSubMenu( name="about", label="About", href=variables.buildLink, href_to=prc.xehAbout );
 
 		// Content
 		addTopMenu( name=this.CONTENT, label="<i class='fa fa-pencil'></i> Content" )
@@ -427,7 +426,8 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( name="Settings", label="Settings", href=variables.buildLink, href_to=prc.xehSettings, data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
 			.addSubMenu( name="SecurityRules", label="Security Rules", href=variables.buildLink, href_to=prc.xehSecurityRules, permissions="SECURITYRULES_ADMIN" )
 			.addSubMenu( name="GeekSettings", label="Geek Settings", href=variables.buildLink, href_to=prc.xehRawSettings, permissions="SYSTEM_RAW_SETTINGS" )
-			.addSubMenu( name="AuthLogs", label="Auth Logs", href=variables.buildLink, href_to=prc.xehAuthLogs, permissions="SYSTEM_AUTH_LOGS" );
+			.addSubMenu( name="AuthLogs", label="Auth Logs", href=variables.buildLink, href_to=prc.xehAuthLogs, permissions="SYSTEM_AUTH_LOGS" )
+			.addSubMenu( name="updates", label="Updates", href=variables.buildLink, href_to=prc.xehAutoUpdater, permissions="SYSTEM_UPDATES" );
 		
 		// STATS
 		addTopMenu( name=this.STATS, label="<i class='fa fa-bar-chart-o'></i> Stats" )
