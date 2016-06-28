@@ -60,13 +60,14 @@ component extends="baseHandler"{
 		prc.updateFound = false;
 
 		// Check for forgebox item
-		var forgeBox 		= getModel( "ForgeBox@cb" );
+		var forgeboxsdk 	= getModel( "ForgeBox@forgeboxsdk" );
 		var updateService 	= getModel( "UpdateService@cb" );
 
 		try{
-			prc.updateEntry = forgeBox.getEntry( slug=rc.channel );
+			prc.entryData 		= forgeboxsdk.getEntry( slug=rc.channel );
+			prc.entryVersion 	= forgeboxsdk.getLatestVersion( slug=rc.channel );
 			// Check if versions are new.
-			prc.updateFound = updateService.isNewVersion( cVersion=prc.contentboxVersion, nVersion=prc.updateEntry.version );
+			prc.updateFound = !updateService.isNewVersion( cVersion=prc.contentboxVersion, nVersion=prc.entryVersion.version );
 			// Verify if we have updates?
 			if( prc.updateFound ){
 				cbMessagebox.info( "Woopeee! There is a new ContentBox update for you!" );
