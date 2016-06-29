@@ -1,8 +1,13 @@
 <cfoutput>
 <title>
-	<!--- Site Title --->
+	<!--- Site Title By Page or Global--->
 	<cfif cb.isPageView()>
-		#cb.getCurrentPage().getTitle()#
+		<!--- Do we have the SEO Title? --->
+		<cfif len( cb.getCurrentPage().getHTMLTitle() )>
+			#cb.getCurrentPage().getHTMLTitle()#
+		<cfelse>
+			#cb.getCurrentPage().getTitle()#
+		</cfif>
 	<cfelse>
 		#cb.siteName()# - #cb.siteTagLine()#
 	</cfif>

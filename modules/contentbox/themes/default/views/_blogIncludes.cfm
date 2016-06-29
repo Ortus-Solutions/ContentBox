@@ -2,7 +2,12 @@
 <title>
 <!--- Site Title --->	
 <cfif cb.isEntryView()>
-	#cb.getCurrentEntry().getTitle()#
+	<!--- Do we have the SEO Title? --->
+	<cfif len( cb.getCurrentEntry().getHTMLTitle() )>
+		#cb.getCurrentEntry().getHTMLTitle()#
+	<cfelse>
+		#cb.getCurrentEntry().getTitle()#
+	</cfif>
 <cfelse>
 	#cb.siteName()# - #cb.siteTagLine()#
 </cfif>

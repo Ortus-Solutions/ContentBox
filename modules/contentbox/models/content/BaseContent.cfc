@@ -124,6 +124,11 @@ component 	persistent="true"
 				notnull="false" 
 				length="160" 
 				default="";
+
+	property 	name="HTMLTitle"			
+				notnull="false" 
+				length="255" 
+				default="";
 	
 	property 	name="cache"					
 				notnull="true"  
@@ -649,6 +654,7 @@ component 	persistent="true"
 			"allowComments",
 			"HTMLKeywords",
 			"HTMLDescription",
+			"HTMLTitle",
 			"featuredImageURL",
 			"contentType"
 		];

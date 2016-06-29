@@ -52,6 +52,14 @@
                             </li>
                         </cfif>
 
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>
+                            <li role="presentation">
+                                <a href="##seo" aria-controls="seo" role="tab" data-toggle="tab">
+                                    <i class="fa fa-cloud"></i> SEO
+                                </a>
+                            </li>
+                        </cfif>
+
                         <!---Loaded Panels--->
                         <cfif prc.entry.isLoaded()>
                             <li role="presentation">
@@ -70,7 +78,8 @@
                 </div>
 
                 <div class="panel-body tab-content">
-
+                    
+                    <!--- Editor --->
                     <div role="tabpanel" class="tab-pane active" id="editor">
                         <!--- title --->
                         #html.textfield(
@@ -128,20 +137,56 @@
                             class="form-control"
                         )#
                     </div>
-
+                    
+                    <!--- Custom Fields --->
                     <div role="tabpanel" class="tab-pane" id="custom_fields">
                         #renderView( view="_tags/customFields", args={ fieldType="Entry", customFields=prc.entry.getCustomFields() } )#
                     </div>
 
-                    <!---Loaded Panels--->
-                    <cfif prc.entry.isLoaded()>
-                    <div role="tabpanel" class="tab-pane" id="history">
-                        #prc.versionsViewlet#
+                    <!--- SEO --->
+                    <div role="tabpanel" class="tab-pane" id="seo">
+                        <div class="form-group">
+                            #html.textfield(
+                                name="htmlTitle",
+                                label="Title: (Leave blank to use blog entry title)", 
+                                bind=prc.entry,
+                                class="form-control",
+                                maxlength="255"
+                            )#
+                        </div>
+                        <div class="form-group">
+                            #html.textArea(
+                                name="htmlKeywords",
+                                label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
+                                bind=prc.entry,
+                                class="form-control",
+                                maxlength="160",
+                                rows="5"
+                            )#
+                        </div>
+                        <div class="form-group">
+                            #html.textArea(
+                                name="htmlDescription",
+                                label="Description: (<span id='html_description_count'>0</span>/160 characters left)", 
+                                bind=prc.entry,
+                                class="form-control",
+                                maxlength="160",
+                                rows="5"
+                            )#
+                        </div>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="comments">
-                        #prc.commentsViewlet#
-                    </div>
+                    <!---Loaded Panels--->
+                    <cfif prc.entry.isLoaded()>
+                        <!--- History --->
+                        <div role="tabpanel" class="tab-pane" id="history">
+                            #prc.versionsViewlet#
+                        </div>
+                        
+                         <!--- Comments --->
+                        <div role="tabpanel" class="tab-pane" id="comments">
+                            #prc.commentsViewlet#
+                        </div>
                     </cfif>
 
                 </div>
@@ -447,44 +492,6 @@
                         </cfif>
                         <!---End Categories--->
                             
-                        <!---Begin HTML Attributes--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>   
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##htmlattributes">
-                                        <i class="fa fa-cloud fa-lg"></i> HTML Attributes
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="htmlattributes" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        #html.textArea(
-                                            name="htmlKeywords",
-                                            label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
-                                            bind=prc.entry,
-                                            class="form-control",
-                                            maxlength="160",
-                                            rows="5"
-                                        )#
-                                    </div>
-                                    <div class="form-group">
-                                        #html.textArea(
-                                            name="htmlDescription",
-                                            label="Description: (<span id='html_description_count'>0</span>/160 characters left)", 
-                                            bind=prc.entry,
-                                            class="form-control",
-                                            maxlength="160",
-                                            rows="5"
-                                        )#
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </cfif>
-                        <!---End HTML Attributes--->
-
                         <!---Begin Featured Image --->
                         <cfif prc.oAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
                         <div class="panel panel-default">
