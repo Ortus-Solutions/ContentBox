@@ -70,7 +70,7 @@ component{
 	this.screenShotURL	= "screenshot.png";
 	// Layout Settings
 	this.settings = [
-		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", options="cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" },
+		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", optionsUDF="getSwatches" },
 		{ name="headerLogo", 		group="Header", defaultValue="", 		type="text", 	label="Logo URL:" },
 		{ name="showSiteSearch", 	group="Header", defaultValue="true", 	type="boolean",		label="Show Search Form Field in Header", 	required="false" },
 		{ name="footerBox", 		group="Footer", defaultValue="", 		type="textarea", 	label="Footer Text:" },
@@ -89,6 +89,13 @@ component{
 		{ name="showEntriesSearchBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Entries Search in Blog Sidebar", 	required="false" }
 		
 	];
+
+	/**
+	* Build the swatches options
+	*/
+	array function getSwatches(){
+		return listToArray( "cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" );
+	}
 
 	/**
 	* Call Back when layout is activated

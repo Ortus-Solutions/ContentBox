@@ -657,10 +657,17 @@ component accessors="true" threadSafe singleton{
     						break;
     					}
     					case "select" : {
+    						var options = "";
+    						// Check options UDF
+    						if( structKeyExists( thisSettingMD, "optionsUDF" ) ){
+    							options = evaluate( "oTheme.#thisSettingMD.optionsUDF#()" );
+    						} else if( structKeyExists( thisSettingMD, "options" ) ){
+    							options = thisSettingMD.options;
+    						} 
     						writeOutput( 
     							html.select( 
     								name 			= settingName,
-    								options			= thisSettingMD.options,
+    								options			= options,
     								selectedValue	= thisSettingMD.defaultValue,
     								title			= thisSettingMD.title,
     								class 			= "form-control input-lg"
