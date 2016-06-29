@@ -152,8 +152,8 @@
                         <div class="form-group">
                             #html.textfield(
                                 name="htmlTitle",
-                                label="Title: (Leave blank to use blog entry title)", 
-                                bind=prc.entry,
+                                label="Title: (Leave blank to use the page name)", 
+                                bind=prc.page,
                                 class="form-control",
                                 maxlength="255"
                             )#
@@ -162,7 +162,7 @@
                             #html.textArea(
                                 name="htmlKeywords",
                                 label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
-                                bind=prc.entry,
+                                bind=prc.page,
                                 class="form-control",
                                 maxlength="160",
                                 rows="5"
@@ -172,7 +172,7 @@
                             #html.textArea(
                                 name="htmlDescription",
                                 label="Description: (<span id='html_description_count'>0</span>/160 characters left)", 
-                                bind=prc.entry,
+                                bind=prc.page,
                                 class="form-control",
                                 maxlength="160",
                                 rows="5"
