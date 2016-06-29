@@ -11,21 +11,8 @@ $(document).ready(function() {
 	// tool tips
 	activateTooltips();
 } );
-function openForgeboxModal(id){
-	$( "##"+id).overlay( {
-		mask: {
-			color: '##fff',
-			loadSpeed: 200,
-			opacity: 0.6 },
-		closeOnClick : true,
-		closeOnEsc : true,
-		oneInstance: false
-	} );
-	// open the modal
-	$( "##"+id).data( "overlay" ).load();
-}
-function installEntry(id, downloadURL){
-	$( "##"+id).html('<div class="text-center"><i class="fa fa-spinner fa-spin fa-lg"></i><br/>Please wait, installing from ForgeBox...</div>');
+function installEntry( id, downloadURL ){
+	$( "##"+id ).html( '<div class="text-center"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i><br/>Please wait, installing from ForgeBox...</div>' );
 	$downloadURL.val( downloadURL );
 	$forgeBoxInstall.submit();
 	return true;
