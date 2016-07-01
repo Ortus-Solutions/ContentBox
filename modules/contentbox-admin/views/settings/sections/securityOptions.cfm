@@ -68,7 +68,7 @@
 
     <!--- Bot Limiter --->
 	<div class="form-group">
-        #html.label( class="control-label", field="cb_security_rate_limiter_bots_only", content="Enable For Automated Requets Only:" )#
+        #html.label( class="control-label", field="cb_security_rate_limiter_bots_only", content="Enable For Automated Requests Only:" )#
         <div class="controls">
             <small>When enabled, it will apply rate limiting only for cookie-less requests. If disabled, it will limit ALL requests, including "legit" user requests. Usually, automated scripts and DOS attacks have no cookies enabled.</small><br/>
 			#html.radioButton( name="cb_security_rate_limiter_bots_only", checked=prc.cbSettings.cb_security_rate_limiter_bots_only, value=true )# Yes
