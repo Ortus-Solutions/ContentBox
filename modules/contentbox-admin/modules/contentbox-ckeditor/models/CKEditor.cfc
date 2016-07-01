@@ -44,8 +44,6 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		ADMIN_ROOT 			= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].mapping;
 		CKEDITOR_ROOT 		= arguments.coldbox.getSetting( "modules" )[ "contentbox-ckeditor" ].mapping;
 		HTML_BASE_URL	 	= variables.requestService.getContext().getHTMLBaseURL();
-		// Register our CKEditor events
-		interceptorService.appendInterceptionPoints( "cbadmin_ckeditorToolbar,cbadmin_ckeditorExtraPlugins,cbadmin_ckeditorExtraConfig" );
 		
 		return this;
 	}
