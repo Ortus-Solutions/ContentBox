@@ -244,7 +244,7 @@ component accessors="true" threadSafe singleton{
 			title="ctrl+shift+A", 
 			label="<i class='fa fa-camera'></i> My Profile", 
 			href=variables.buildLink,
-			href_to="xehMyProfile",
+			href_to=xehMyProfile,
 			data={ keybinding="ctrl+shift+a" } 
 		)
 		.addHeaderSubMenu( 
