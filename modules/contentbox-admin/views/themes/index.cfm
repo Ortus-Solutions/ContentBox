@@ -130,6 +130,8 @@
 											<h1>Theme Settings:</h1>
 											#html.startForm( action=prc.xehSaveSettings, name="layoutSettingsForm" )#	
 												#html.hiddenField( name="themeName", value=prc.activeTheme.name )#
+												
+												<!--- Build out theme settings --->
 												#prc.themeService.buildSettingsForm( prc.activeTheme )#
 												
 												<!--- Announce display Event --->

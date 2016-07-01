@@ -602,7 +602,13 @@ component accessors="true" threadSafe singleton{
 		if( !structKeyExists( oTheme, "settings" ) OR !arrayLen( oTheme.settings ) ){ return settingForm; }
 
 		savecontent variable="settingForm"{
-			var lastGroup = "NeverHadAGroup";
+
+			// Write out panel container
+			writeOutput( '<div id="settings-accordion" class="panel-group accordion">' );
+
+			// Iterate and create settings
+			var lastGroup 	= "NeverHadAGroup";
+			var firstPanel	= true;
 			for( var x=1; x lte arrayLen( oTheme.settings ); x++ ){
 				var thisSettingMD 		= oTheme.settings[ x ];
 				var requiredText 		= "";
@@ -618,30 +624,57 @@ component accessors="true" threadSafe singleton{
 				if( !structKeyExists( thisSettingMD, "label" ) ){ thisSettingMD.label = thisSettingMD.name; }
 				if( !structKeyExists( thisSettingMD, "type" ) ){ thisSettingMD.type = "text"; }
 				if( !structKeyExists( thisSettingMD, "title" ) ){ thisSettingMD.title = ""; }
+				if( !structKeyExists( thisSettingMD, "group" ) ){ thisSettingMD.group = "Main"; }
 
-				// required stuff
+				// required static strings
 				if( thisSettingMD.required ){
 					requiredText 		= "<span class='text-danger'>*Required</span>";
 					requiredValidator 	= "required";
 				}
 				
+				// Starting a group panel?
 				if ( structKeyExists( thisSettingMD, "group" ) && thisSettingMD.group != lastGroup ){
+
+					// Close out previous group panel-body
 					if ( lastGroup != "NeverHadAGroup" ){
-						writeOutput( '</div></div>' );
+						writeOutput( '</div></div></div>' );
 					}
+					
+					// Write out group panel header
 					writeOutput( '<div class="panel panel-primary">' );
   						if ( thisSettingMD.group != "" ){
-  							writeOutput( '<div class="panel-heading">' & thisSettingMD.group & '</div>' );	
+  							writeOutput( '
+  								<div class="panel-heading">
+  									<h4 class="panel-title">
+										<a 	class="accordion-toggle"
+											data-toggle="collapse" 
+											data-parent="##settings-accordion" 
+											href="##settingtab-#hash( thisSettingMD.group )#"
+										>
+											#thisSettingMD.group#
+										</a>
+  									</h4>
+  								</div>
+  							');	
   						}
-					writeOutput( '<div class="panel-body">' );
 					
-					lastGroup = thisSettingMD.group;
+					// Start group body panel 
+					writeOutput( '
+						<div id="settingtab-#hash( thisSettingMD.group )#" class="panel-collapse collapse #firstPanel ? 'in' : ''#" role="tabpanel">
+							<div class="panel-body">
+					' );
+
+					// Set this as the last group
+					lastGroup 	= thisSettingMD.group;
+					firstpanel 	= false;
 				}
 				
 				// writeout control wrapper
 				writeOutput( '<div class="form-group">' );
+					
 					// write out label
 					writeOutput( html.label( field=settingName, content="#thisSettingMD.label# #requiredText#" ) );
+
     				// write out control
     				switch( thisSettingMD.type ){
     					case "boolean" : {
@@ -701,11 +734,19 @@ component accessors="true" threadSafe singleton{
     						);
     					}
     				}
-				writeOutput( '</div>' );
-			}
+
+    			// End form group
+    			writeOutput( '</div>');
+
+			} // end looping over theme settings
+
+			// Finalize Group Panel: In case we only had one setting in this group.
 			if ( lastGroup != "NeverHadAGroup" ){
-				writeOutput( '</div></div>' );
+				writeOutput( '</div></div></div>' );
 			}
+
+			// Finalize Container
+			writeOutput( "</div>" );
 		}
 		
 		return settingForm;
