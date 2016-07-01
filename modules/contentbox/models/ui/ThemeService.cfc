@@ -730,7 +730,7 @@ component accessors="true" threadSafe singleton{
     								title		= thisSettingMD.title,
     								value		= thisSettingMD.defaultValue,
     								class 		= "form-control"
-    							) 
+    							)
     						);
     					}
     				}

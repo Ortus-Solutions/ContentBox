@@ -7,15 +7,28 @@ component extends="baseHandler"{
 	property name="themeService"	inject="id:themeService@cb";
 	property name="contentService"	inject="id:contentService@cb";
 
-	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
-		// Tab control
-		prc.tabLookAndFeel = true;
+	/**
+	* Active Theme
+	*/
+	function active( event, rc, prc ){
+		// exit Handlers
+		prc.xehPreview			= "#prc.cbEntryPoint#.__preview";
+		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.themes.saveSettings";
+
+		// Get them info
+		prc.activeTheme 	= themeService.getActiveTheme();
+		prc.themeService	= themeService;
+
+		// Tab
+		prc.tabLookAndFeel_activeTheme = true;
+
+		// view
+		event.setView( "themes/active" );
 	}
 
-	// index
+	/**
+	* Manage themes
+	*/
 	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehThemes 			= "#prc.cbAdminEntryPoint#.themes.index";
@@ -51,7 +64,9 @@ component extends="baseHandler"{
 		event.setView( "themes/index" );
 	}
 	
-	// save Settings
+	/**
+	* Save theme settings
+	*/
 	function saveSettings( event, rc, prc ){
 		var vResults = validateModel( target=rc, constraints=themeService.getSettingsConstraints( rc.themeName ) );
 		// Validate results
@@ -75,7 +90,9 @@ component extends="baseHandler"{
 		setNextEvent( event=prc.xehThemes );
 	}
 
-	// activate theme
+	/**
+	* Activate a theme
+	*/
 	function activate( event, rc, prc ){
 		// Activate the theme
 		themeService.activateTheme( rc.themeName );
@@ -87,14 +104,18 @@ component extends="baseHandler"{
 		setNextEvent(prc.xehThemes);
 	}
 
-	// rebuild registry
+	/**
+	* Rebuild theme registry
+	*/
 	function rebuildRegistry( event, rc, prc ){
 		themeService.buildThemeRegistry();
 		cbMessagebox.info( "Themes re-scanned and registered!" );
-		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
+		setNextEvent( event=prc.xehThemes, queryString="##themesPane" );
 	}
 
-	//Remove
+	/**
+	* Remove a theme
+	*/
 	function remove( event, rc, prc ){
 		if( themeService.removeTheme( rc.themeName ) ){
 			cbMessagebox.info( "Theme Removed Forever!" );
@@ -105,7 +126,9 @@ component extends="baseHandler"{
 		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
 	}
 
-	//upload
+	/**
+	* Upload a new theme
+	*/
 	function upload( event, rc, prc ){
 		var fp = event.getTrimValue( "fileTheme","" );
 
@@ -134,4 +157,5 @@ component extends="baseHandler"{
 
 		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
 	}
+
 }
