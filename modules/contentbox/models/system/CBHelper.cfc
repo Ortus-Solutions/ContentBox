@@ -655,7 +655,8 @@ component accessors="true" singleton threadSafe{
 	* @statusCode The status code to use in the relocation
 	*/
 	function setNextModuleEvent(
-		required string module, 
+		required string module,
+		required string event,
 		string URL,
 		string URI,
 		string queryString = "",
