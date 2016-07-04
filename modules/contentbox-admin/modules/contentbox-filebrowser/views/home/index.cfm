@@ -89,7 +89,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							#html.hiddenField(name="validated",value="false" )#
 							#html.hiddenField(name="overwrite",id="overwrite",value="false" )#
 						</span>
-						<a href="##" class="btn btn-info btn-sm fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<a href="javascript:void(0)" class="btn btn-info btn-sm fileupload-exists" data-dismiss="fileupload">Remove</a>
 						<span id="file_uploader_button" class="btn btn-primary btn-sm">Upload</span>
 					</div>
 				</div>
