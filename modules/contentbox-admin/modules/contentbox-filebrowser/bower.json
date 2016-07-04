@@ -13,6 +13,6 @@
   ],
   "dependencies": {
     "jquery-filedrop": "~0.1.0",
-    "bootstrap-contextmenu": "~0.3.3"
+    "jQuery-contextMenu": "^2.2.0"
   }
 }

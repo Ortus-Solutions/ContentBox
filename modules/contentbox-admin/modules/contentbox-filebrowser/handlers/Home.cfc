@@ -498,7 +498,7 @@ component hint="Main filebrowser module handler"{
 			addAsset( "#prc.fbModRoot#/includes/css/86901492.fb.min.css ");
 			//endinjector//
 			//injector:js//
-			addAsset( "#prc.fbModRoot#/includes/js/4ba06481.fb.min.js ");
+			addAsset( "#prc.fbModRoot#/includes/js/d7fd824c.fb.min.js ");
 			//endinjector//
 		}
 	}

@@ -72,53 +72,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 	<div class="panel-body" id="FileBrowser-body">
 
-		<!--- ContextMenus --->
-		<div id="fbContextMenu">
-			<ul class="dropdown-menu" role="menu">
-				<li>
-					<a href="javascript:fbQuickView()"><i class="fa fa-camera"></i> #$r( "quickview@fb" )#</a>
-				</li>
-				<cfif len( rc.callback )>
-				<li>
-					<a href="javascript:fbChoose()"><i class="fa fa-check"></i> #$r( "select@fb" )#</a>
-				</li>
-				</cfif>
-				<li>
-					<a href="javascript:fbRename()"><i class="fa fa-terminal"></i> #$r( "rename@fb" )#</a>
-				</li>
-				<cfif prc.fbSettings.deleteStuff>
-				<li>
-					<a href="javascript:fbDelete()"><i class="fa fa-times"></i> #$r( "delete@fb" )#</a>
-				</li>
-				</cfif>
-				<cfif prc.fbSettings.allowDownload>
-				<li>
-					<a href="javascript:fbDownload()"><i class="fa fa-download"></i> #$r( "download@fb" )#</a>
-				</li>
-				</cfif>
-				<li>
-					<a href="javascript:fbUrl()"><i class="fa fa-link"></i> URL</a>
-				</li>
-			</ul>
-		</div>
-		<div id="fbContextMenuDirectories">
-			<ul class="dropdown-menu">
-				<cfif len( rc.callback )>
-				<li>
-					<a href="javascript:fbChoose()"><i class="fa fa-check"></i> #$r( "select@fb" )#</a>
-				</li>
-				</cfif>
-				<li>
-					<a href="javascript:fbRename()"><i class="fa fa-terminal"></i> #$r( "rename@fb" )#</a>
-				</li>
-				<cfif prc.fbSettings.deleteStuff>
-				<li>
-					<a href="javascript:fbDelete()"><i class="fa fa-times"></i> #$r( "delete@fb" )#</a>
-				</li>
-				</cfif>
-			</ul>
-		</div>
-
 		<!--- UploadBar --->
 		<div id="uploadBar">
 			#announceInterception( "fb_preUploadBar" )#
@@ -217,7 +170,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							<cfif prc.fbqListing.type eq "Dir">
 								<!--- Folder --->
 								<div id="#validIDName#"
-									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+									 onClick="javascript:return false;"
 									 class="folders"
 									 data-type="dir"
 									 data-name="#prc.fbqListing.Name#"
@@ -242,7 +195,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 									 data-lastModified="#prc.fbqListing.dateLastModified#"
 									 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 									 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
-									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+									 onClick="javascript:return false;"
 									 <cfif len( rc.callback )>
 									 onDblclick="fbChoose()"
 									 </cfif> >
@@ -264,7 +217,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 					<cfif prc.fbqListing.type eq "Dir">
 						<!--- Folder --->
 						<div id="#validIDName#"
-							 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
 							 class="folders filterDiv"
 							 data-type="dir"
 							 data-name="#prc.fbqListing.Name#"
@@ -288,7 +240,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							 data-lastModified="#prc.fbqListing.dateLastModified#"
 							 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 							 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
-							 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
 							 <cfif len( rc.callback )>
 							 onDblclick="fbChoose()"
 							 </cfif> >
