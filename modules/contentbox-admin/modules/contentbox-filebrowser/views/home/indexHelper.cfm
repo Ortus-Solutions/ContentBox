@@ -82,23 +82,23 @@ $( document ).ready( function() {
             window.console && console.log(m) || alert(m); 
         },
         items: {
-            "Quick view": {name: "Quick view", icon: "fa-edit", callback: function(){
+            "Quick view": {name: "#$r( "quickview@fb" )#", icon: "fa-edit", callback: function(){
             	return fbQuickView();
             }},
-            "Rename": {name: "Rename", icon: "fa-terminal", callback: function(){
+            "Rename": {name: "#$r( "rename@fb" )#", icon: "fa-terminal", callback: function(){
             	return fbRename();
             }},
-           "Delete": {name: "Delete", icon: "fa-times", callback: function(){
+           "Delete": {name: "#$r( "delete@fb" )#", icon: "fa-times", callback: function(){
            	return fbDelete();
            }},
-            "Download": {name: "Download", icon: "fa-download", callback: function(){
+            "Download": {name: "#$r( "download@fb" )#", icon: "fa-download", callback: function(){
             	return fbDownload();
             }},
             "URL": {name: "URL", icon: "fa-link", callback: function(){
             	return fbUrl();
             }},
             "sep1": "---------",
-            "quit": {name: "Quit", icon: function(){
+            "edit": {name: "#$r( "edit@fb" )#", icon: function(){
                 return 'context-menu-icon context-menu-icon-quit';
             }}
         }
