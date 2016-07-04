@@ -114,7 +114,7 @@
 #FileBrowser #statusText{float: left; margin:0px;font-size:10px;}
 #FileBrowser #statusButtons{text-align:right}
 #FileBrowser .folders, #FileBrowser .files{ cursor:pointer;margin: 0px;padding:2px; }
-#FileBrowser .folders.selected, #FileBrowser .files.selected{ background-color: #B3C6F9}
+#FileBrowser .folders.selected, #FileBrowser .files.selected{ background-color: #D9EDF7}
 #FileBrowser .divider{ align: center;}
 #FileBrowser .listTypeOn{ padding: 2px; background-color: orange;}
 #FileBrowser .fbItemBoxPreview{margin: 10px auto auto 0px;text-align: center; cursor: pointer}
