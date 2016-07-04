@@ -52,19 +52,17 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		</div>
 
 		<!---Grid or listing --->
-		<div class="form-group">
+		<div class="form-group pull-right">
 			<!--- Sorting --->
 			#html.label( field="fbSorting", content=$r( "sortby@fb" ))#
-			#html.select( name="fbSorting", class="form-input", options=$r( "sortoptions@fb" ), selectedValue=prc.fbPreferences.sorting)#
+			#html.select( name="fbSorting", class="form-control", options=$r( "sortoptions@fb" ), selectedValue=prc.fbPreferences.sorting)#
 		</div>
-		<div class="form-group">
+		<div class="form-group pull-right">
 			<!--- Quick Filter --->
 			#html.label( field="fbQuickFilter", content=$r( "quickfilter@fb" ) )#
-			#html.textField( name="fbQuickFilter", class="form-input" )#
+			#html.textField( name="fbQuickFilter", class="form-control" )#
 		</div>
 		#html.hiddenField( name="listType", value=prc.fbPreferences.listType )#
-
-		<h3 class="panel-title actions"><strong>#prc.fbSettings.title#</strong></h3>
 
 		<!---event --->
 		#announceInterception( "fb_postTitleBar" )#
@@ -358,6 +356,23 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 	</div>
 
 </div> <!--- end panel FileBrowser --->
+
+<!--- Image modal preview --->
+<div id="modalPreview" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="categoryLabel" aria-hidden="true">
+	<div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-image"></i> Image preview</h4>
+		    </div>
+			<!--- Create/Edit form --->
+			<div class="modal-body">
+				<img src="" class="imagepreview" style="" >
+			</div>
+			<!--- Footer --->
+		</div>
+	</div>
+</div>
 
 <!--- Hidden upload iframe --->
 <iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>

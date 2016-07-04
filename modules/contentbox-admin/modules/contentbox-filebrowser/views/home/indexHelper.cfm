@@ -70,7 +70,6 @@ $( document ).ready( function() {
 	$listType			= $fileBrowser.find( "##listType" );
 	$quickView			= $fileBrowser.find( "##quickViewBar" );
 	$quickViewContents	= $fileBrowser.find( "##quickViewBarContents" );
-	$quickViewCloseBtn	= $fileBrowser.find( "##fbCloseButton" );
 	//disable it
 	$selectButton.attr( "disabled",true);
 	// history
@@ -80,17 +79,12 @@ $( document ).ready( function() {
 	$fileBrowser.find( ".folders" ).contextmenu( { target : '##fbContextMenuDirectories' } );
 	// Sorting
 	$sorting.change(function(){ fbRefresh(); } );
-	$quickViewCloseBtn.click(function(){ fbCloseQuickView(); } );
 	// Quick div filter
 	$fileBrowser.find( "##fbQuickFilter" ).keyup(function(){
 		$.uiDivFilter( $( ".filterDiv" ), this.value);
 	} )
 
 } );
-function fbCloseQuickView(){
-	$quickView.slideUp();
-	$quickViewContents.html( '' );
-}
 function fbListTypeChange( listType ){
 	$listType.val( listType );
 	fbRefresh();
@@ -141,8 +135,8 @@ function fbQuickView(){
 	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	// show it
 	var imgURL = "#event.buildLink( prc.xehFBDownload )#?path="+ escape( target.attr( "data-fullURL" ) );
-	$quickView.slideDown();
-	$quickViewContents.html('<img src="'+imgURL+'" style="max-width:#prc.fbSettings.quickViewWidth#px"/>');
+	$('.imagepreview').attr('src', imgURL);
+	openModal( $( "##modalPreview" ), 500 );
 }
 function fbRename(){
 	// check selection
