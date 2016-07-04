@@ -52,7 +52,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		</div>
 
 		<!---Grid or listing --->
-		<div class="form-group pull-right">
+		<div class="form-group">
 			<!--- Sorting --->
 			#html.label( field="fbSorting", content=$r( "sortby@fb" ))#
 			#html.select( name="fbSorting", class="form-control", options=$r( "sortoptions@fb" ), selectedValue=prc.fbPreferences.sorting)#
