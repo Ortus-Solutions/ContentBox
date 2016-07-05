@@ -98,8 +98,8 @@ $( document ).ready( function() {
             	return fbUrl();
             }},
             "sep1": "---------",
-            "edit": {name: "#$r( "edit@fb" )#", icon: function(){
-                return 'context-menu-icon context-menu-icon-quit';
+            "edit": {name: "#$r( "edit@fb" )#", icon: "fa-edit", callback: function(){
+            	return fbEdit();
             }}
         }
     });
@@ -211,6 +211,15 @@ function fbUrl(){
 	var target 		= $( "##"+thisID);
 	// prompt the URL
 	var newName  = prompt( "URL:", "#event.buildLink( '' )#" + target.attr( "data-relurl" ) );
+}
+function fbEdit(){
+	// check selection
+	var sPath = $selectedItem.val();
+	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
+	// get ID
+	var thisID 		= $selectedItemID.val();
+	var target 		= $( "##"+thisID);
+	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.index' )#",{imageUrl:"#event.buildLink( '' )#" + target.attr( "data-relurl" )}, $( window ).width() - 200, $( window ).width() - 300 );
 }
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>

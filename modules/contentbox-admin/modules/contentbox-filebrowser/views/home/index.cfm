@@ -97,14 +97,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			#announceInterception( "fb_postUploadBar" )#
 		</div>
 
-		<!--- QuickViewBar --->
-		<div id="quickViewBar">
-			<img id="fbCloseButton" src="#prc.fbModRoot#/includes/images/x.png" alt="close"/>
-			#announceInterception( "fb_preQuickViewBar" )#
-			<div id="quickViewBarContents"></div>
-			#announceInterception( "fb_postQuickViewBar" )#
-		</div>
-
 		<!--- Uploader Message --->
 		<div id="uploaderHelp">#$r( "dragdrop@fb" )#</div>
 		
@@ -309,6 +301,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 </div> <!--- end panel FileBrowser --->
 
 <!--- Image modal preview --->
+#announceInterception( "fb_preQuickViewBar" )#
 <div id="modalPreview" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="categoryLabel" aria-hidden="true">
 	<div class="modal-dialog">
         <div class="modal-content" id="modalContent">
@@ -324,6 +317,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		</div>
 	</div>
 </div>
+#announceInterception( "fb_postQuickViewBar" )#
 
 <!--- Hidden upload iframe --->
 <iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>

@@ -119,3 +119,10 @@
 #FileBrowser .listTypeOn{ padding: 2px; background-color: orange;}
 #FileBrowser .fbItemBoxPreview{margin: 10px auto auto 0px;text-align: center; cursor: pointer}
 #FileBrowser .fbItemBox{float:left; margin:5px; width: 150px; height: 150px; border: 1px solid #ccc}
+.jcrop-active,.jcrop-shades div {
+  display: block;
+  max-width:800px;
+  max-height:600px;
+  width: auto;
+  height: auto;
+}
