@@ -221,7 +221,10 @@ function fbEdit(){
 	var target 		= $( "##"+thisID);
 	// only images
 	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
-	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.index' )#",{imageUrl:"#event.buildLink( '' )#" + target.attr( "data-relurl" )}, $( window ).width() - 200, $( window ).width() - 300 );
+	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.index' )#",{
+		imageSrc:target.attr( "data-relUrl" ), 
+		imageUrl:target.attr( "data-fullUrl" )
+	}, $( window ).width() - 200, $( window ).width() - 300 );
 }
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>

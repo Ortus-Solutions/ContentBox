@@ -311,7 +311,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		    </div>
 			<!--- Create/Edit form --->
 			<div class="modal-body">
-				<img src="" class="imagepreview" style="" >
+				<img src="" class="imagepreview img-scaled" style="" >
 			</div>
 			<!--- Footer --->
 		</div>

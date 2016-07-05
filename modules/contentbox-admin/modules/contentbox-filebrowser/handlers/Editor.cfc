@@ -10,6 +10,12 @@ component extends="coldbox.system.EventHandler"{
 	*/
 	any function index( event, rc, prc ){
 		event.paramValue( "imageUrl","" );
+		event.paramValue( "imageSrc","" );
+
+		var info=ImageInfo(rc.imageUrl);
+		rc.width = info.width;
+		rc.height = info.height;
+		rc.imageSrc = #event.buildLink( '' )# & rc.imageSrc;
 		if( event.isAjax() ) {
 			event.renderData( data=renderView( view="editor/index", layout="ajax" ) );
 		}
@@ -39,6 +45,37 @@ component extends="coldbox.system.EventHandler"{
 		    ImageCrop(	sourceImage,
 	                        rc.imgX,
 	                        rc.imgY,
+	                        rc.width,
+	                        rc.height);
+
+		    cfimage (
+		        action = "writeToBrowser",
+		        source = sourceImage
+		    );
+
+		    abort;
+
+		}
+
+	}
+	
+	/**
+	* Index
+	*/
+	any function imageScale( event, rc, prc ){
+		// params
+		event.paramValue( "width","" );
+		event.paramValue( "height","" );
+		event.paramValue( "imgLoc","" );
+
+		if ( len(rc.imgLoc) ){
+
+		    // read the image and create a ColdFusion image object --->
+		    var sourceImage = ImageNew( imgLoc );
+
+		    <!--- crop the image using the supplied coords
+		              from the url request --->
+		    ImageResize(	sourceImage,
 	                        rc.width,
 	                        rc.height);
 
