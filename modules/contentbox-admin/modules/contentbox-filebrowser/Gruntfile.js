@@ -38,8 +38,16 @@ module.exports = function( grunt ){
 
 		// Bower Concat
 		bower_concat : {
+			all: {
+				dest: {
+				  'js': 'includes/js/bower.js',
+				  'css': 'includes/css/bower.css'
+				}
+			},			
 			css : { 
-				cssDest : 'includes/css/bower.css',
+				dest: {
+				  'css': 'includes/css/bower.css'
+				},
 				mainFiles : {}
 			},
 		  	js 	: { 
@@ -56,7 +64,6 @@ module.exports = function( grunt ){
 	        	files : {
 	            	"includes/css/fb.css" : [
 	            		"includes/css/bower.css",
-	            		"includes/css/src/jquery.contextMenu.css",
 	            		"includes/css/src/main.css"
 	            	]
 				} 
