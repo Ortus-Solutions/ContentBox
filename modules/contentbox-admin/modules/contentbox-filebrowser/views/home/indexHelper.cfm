@@ -219,6 +219,8 @@ function fbEdit(){
 	// get ID
 	var thisID 		= $selectedItemID.val();
 	var target 		= $( "##"+thisID);
+	// only images
+	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.index' )#",{imageUrl:"#event.buildLink( '' )#" + target.attr( "data-relurl" )}, $( window ).width() - 200, $( window ).width() - 300 );
 }
 <!--- Create Folders --->
