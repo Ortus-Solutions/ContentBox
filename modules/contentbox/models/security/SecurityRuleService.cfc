@@ -26,7 +26,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	
 	// DI
 	property name="populator" 			inject="wirebox:populator";
-	
+	property name="dateUtil"        inject="DateUtil@cb";
+
 	/**
 	* Constructor
 	*/
