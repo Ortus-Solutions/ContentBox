@@ -14,59 +14,91 @@
                     </div>
                     <div class="col-md-3">
                         <div class="widget-arguments" id="widget-arguments">
-                        <form action="" method="post">
+                        <form class="form" action="" method="post">
                             <legend>Crop image</legend>
-                            <input type="hidden" size="4" id="x" name="x" />
-                            <input type="hidden" size="4" id="y" name="y" />
-                            <input type="hidden" size="4" id="x2" name="x2" />
-                            <input type="hidden" size="4" id="y2" name="y2" />
-                            <input type="hidden" size="4" id="w" name="w" />
-                            <input type="hidden" size="4" id="h" name="h" />
-                            <p>Click on image to activate cropping</p>
-                            <input type="hidden" name="imageFile"
-                                    id="imageFile" value="" />
-                            <button type="button" class="btn btn-primary" disabled="disabled"
-                                    id="imageCrop_btn" value="Crop the image">Crop the image</button>
-                            <button type="button" class="btn btn-primary" disabled="disabled"
-                                    id="revert_btn" value="Revert to original"><i class="fa fa-reply"></i>Revert to original</button>
+                            <div class="" id="collapseCrop">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="x">X</label>
+                                        <input disabled="disabled" type="text" class="form-control" id="x" name="x">
+                                    </div>                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="firstname">Y</label>
+                                        <input disabled="disabled" type="text" class="form-control" id="y" name="y">
+                                    </div>    
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="firstname">Width</label>
+                                        <input disabled="disabled" type="text" class="form-control" id="w" name="w">
+                                    </div>                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="firstname">Height</label>
+                                        <input disabled="disabled" type="text" class="form-control" id="h" name="h">
+                                    </div>    
+                                </div>
+                                <input type="hidden" size="4" id="x2" name="x2" />
+                                <input type="hidden" size="4" id="y2" name="y2" />
+                                <input type="hidden" name="imageName"
+                                        id="imageName" value="#rc.imageName#" />
+                                <input type="hidden" name="imageFile"
+                                        id="imageFile" value="" />
+                                <input type="hidden" name="imagePath"
+                                        id="imagePath" value="#rc.imagePath#" />
+                                <button type="button" class="btn btn-primary" disabled="disabled"
+                                        id="imageCrop_btn" value="Crop the image">Crop the image</button>
+                                <button type="button" class="btn btn-primary"
+                                        id="imageDeselect_btn" value="Crop the image">Deselect</button>
+                                <button type="button" class="btn btn-primary" disabled="disabled"
+                                        id="revert_btn" value="Revert to original"><i class="fa fa-reply"></i>Revert to original</button>
+                            </div>
                         </form>
                         </div>
 
                         <div class="widget-arguments" id="widget-arguments">
                         <form action="" method="post">
-                            <legend>Resize image</legend>
-                            <div class="form-group">
-                                <label class="control-label" for="width">Width</label>
-                                <p>Original dimension: #rc.width# x #rc.height#</p>
-                                <div class="controls">
-                                <small>The new width</small><br>
-                                <input type="text" 
-                                    value="#rc.width#" 
-                                    data-width="#rc.width#" 
-                                    name="width" 
-                                    size="35" 
-                                    class="form-control" 
-                                    onkeyup="calculateProportions(0)" 
-                                    title="The string to show if the page does not exist" id="width">
+                            <legend>Resize image </legend>
+                            <div class="" id="">
+                                <p>Image details: #rc.imageSrc#</p>
+                                <p>Image details: #rc.imagePath#</p>
+                                <div class="form-group">
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="width">Width</label>
+                                            <input value="#rc.width#" 
+                                                    data-width="#rc.width#" 
+                                                    type="text" 
+                                                    class="form-control" 
+                                                    id="width" 
+                                                    name="width" 
+                                                    onkeyup="calculateProportions(0)">
+                                        </div>    
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="height">Height</label>
+                                            <input value="#rc.height#" 
+                                                    data-height="#rc.height#" 
+                                                    type="text" 
+                                                    class="form-control input-sm" 
+                                                    id="height" 
+                                                    name="height" 
+                                                    onkeyup="calculateProportions(1)">
+                                        </div>    
+                                    </div>
+
                                 </div>
-                                <label class="control-label" for="width">Height</label>
-                                <div class="controls">
-                                <small>The new height</small><br>
-                                <input type="text" 
-                                    value="#rc.height#" 
-                                    data-height="#rc.height#" 
-                                    name="height" 
-                                    size="35" 
-                                    class="form-control" 
-                                    onkeyup="calculateProportions(1)" 
-                                    title="The string to show if the page does not exist" 
-                                    id="height">
-                                </div>
+                                <button type="button" class="btn btn-primary" disabled="disabled"
+                                        id="scale_btn" value="Scale">Scale</button>
+                                <button type="button" class="btn btn-primary" disabled="disabled"
+                                        id="revert_scale" value="Revert to original"><i class="fa fa-reply"></i>Revert to original</button>
                             </div>
-                            <button type="button" class="btn btn-primary"
-                                    id="scale_btn" value="Scale">Scale</button>
-                            <button type="button" class="btn btn-primary" disabled="disabled"
-                                    id="revert_scale" value="Revert to original"><i class="fa fa-reply"></i>Revert to original</button>
                         </form>
                         </div>
 
@@ -76,7 +108,7 @@
             <div class="modal-footer">
                 <div class="widget-footer-right">
                         <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Cancel</a>
-                        <button class="btn btn-info" id="widget-button-update">Save image</button>
+                        <button class="btn btn-info" id="imagesave">Save image</button>
                 </div>
             </div>
         </div>

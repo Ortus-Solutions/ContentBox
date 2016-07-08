@@ -222,8 +222,9 @@ function fbEdit(){
 	// only images
 	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.index' )#",{
+		imageName:target.attr( "data-name" ), 
 		imageSrc:target.attr( "data-relUrl" ), 
-		imageUrl:target.attr( "data-fullUrl" )
+		imagePath:target.attr( "data-fullUrl" )
 	}, $( window ).width() - 200, $( window ).width() - 300 );
 }
 <!--- Create Folders --->

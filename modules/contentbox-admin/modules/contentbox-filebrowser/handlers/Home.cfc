@@ -495,10 +495,10 @@ component hint="Main filebrowser module handler"{
 			// LOAD Assets
 
 			//injector:css//
-			addAsset( "#prc.fbModRoot#/includes/css/d4aeaabd.fb.min.css ");
+			addAsset( "#prc.fbModRoot#/includes/css/afbe4e6b.fb.min.css ");
 			//endinjector//
 			//injector:js//
-			addAsset( "#prc.fbModRoot#/includes/js/fc49a762.fb.min.js ");
+			addAsset( "#prc.fbModRoot#/includes/js/b76bf00a.fb.min.js ");
 			//endinjector//
 		}
 	}
