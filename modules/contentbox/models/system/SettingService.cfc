@@ -12,6 +12,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	property name="moduleSettings"	inject="coldbox:setting:modules";
 	property name="appMapping"		inject="coldbox:setting:appMapping";
 	property name="requestService"	inject="coldbox:requestService";
+	property name="dateUtil"        inject="DateUtil@cb";
 
 	/**
 	* The cache provider name to use for settings caching. Defaults to 'template' cache.
@@ -297,7 +298,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 				var args = { 
 					name 			= thisSetting.name, 
 					value 			= javaCast( "string", thisSetting.value ),
-					createdDate 	= thisSeting.createdDate,
+					createdDate 	= thisSetting.createdDate,
 					modifiedDate 	= thisSetting.modifiedDate,
 					isDeleted 		= thisSetting.isDeleted
 				};
