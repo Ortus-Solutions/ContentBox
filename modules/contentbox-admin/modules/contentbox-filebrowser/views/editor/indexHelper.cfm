@@ -112,13 +112,15 @@
 				// 
 				jQuery('##croppedImage').load('#event.buildLink( 'cbFileBrowser.editor.crop' )#',data, function(){
 			        $btn.button('reset');
+			        setTimeout(function(){
+						jQuery('##imageCrop_btn').attr('disabled', 'disabled');
+			        },100)
 				});
 				
 				// disable the image crop button and
 				// enable the revert button
 				jQuery('##revert_btn').removeAttr('disabled');
 				jQuery('##imageDeselect_btn').attr('disabled', 'disabled');
-				jQuery('##imageCrop_btn').attr('disabled', 'disabled');
 				
 				// do not submit the form using the default behaviour
 				return false;
