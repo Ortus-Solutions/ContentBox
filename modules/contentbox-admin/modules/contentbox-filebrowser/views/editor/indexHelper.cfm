@@ -94,6 +94,7 @@
 			
 			jQuery("##imageDeselect_btn").click(function() {					
 			    destroyJcrop();
+			    buildJCrop();
 			    return false;							
 			});
 			

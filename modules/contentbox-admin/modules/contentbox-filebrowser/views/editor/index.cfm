@@ -63,8 +63,6 @@
                         <form action="" method="post">
                             <legend>Resize image </legend>
                             <div class="" id="">
-                                <p>Image details: #rc.imageSrc#</p>
-                                <p>Image details: #rc.imagePath#</p>
                                 <div class="form-group">
 
                                     <div class="col-md-6">
