@@ -1,25 +1,8 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Security rules manager
 */
 component extends="cborm.models.VirtualEntityService" singleton{
@@ -33,7 +16,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	SecurityRuleService function init(){
 		// init it
-		super.init(entityName="cbSecurityRule" );
+		super.init( entityName="cbSecurityRule" );
 
 		return this;
 	}
@@ -42,8 +25,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Get the maximum used order
 	*/
 	numeric function getMaxOrder(){
-		var q = executeQuery(query="select max( sr.order ) from cbSecurityRule as sr",asQuery=false);
-		if( ArrayIsDefined(q,1) ){ return q[1]; }
+		var q = executeQuery( query="select max( sr.order ) from cbSecurityRule as sr", asQuery=false );
+		if( ArrayIsDefined( q, 1 ) ){ 
+			return q[ 1 ]; 
+		}
 		return 0;
 	}
 
@@ -51,13 +36,18 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Get the next maximum used order
 	*/
 	numeric function getNextMaxOrder(){
-		return getMaxOrder()+1;
+		return getMaxOrder() + 1;
 	}
 
 	/**
     * Save rule
     */
-	any function saveRule(required any entity, boolean forceInsert=false, boolean flush=false, boolean transactional=getUseTransactions()){
+	any function saveRule(
+		required any entity, 
+		boolean forceInsert=false, 
+		boolean flush=false, 
+		boolean transactional=getUseTransactions()
+	){
 
 		// determine new or not
 		if( !arguments.entity.isLoaded() ){
@@ -67,14 +57,14 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 		}
 
-		return save(argumentCollection=arguments);
+		return save( argumentCollection=arguments );
 	}
 
 	/**
 	* Get all rules in firing order
 	*/
 	query function getSecurityRules(){
-		return list(sortOrder="order asc" );
+		return list( sortOrder="order asc" );
 	}
 
 	/**
@@ -106,22 +96,25 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Get all data prepared for export
 	*/
 	array function getAllForExport(){
-		var c = newCriteria();
+		var c 			= newCriteria();
+		var propList 	= "ruleID,whitelist,securelist,roles,permissions,redirect,useSSL,order,match,createdDate,modifiedDate,isDeleted";
 		
-		return c.withProjections(property="ruleID,whitelist,securelist,roles,permissions,redirect,useSSL,order,match,createdDate,modifiedDate,isDeleted" )
+		return c.withProjections( property=propList )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="order" );
+			.list( sortOrder="order" );
 	}
 	
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
+	* @importFile The file to import
+	* @override Override data
 	*/
-	string function importFromFile(required importFile, boolean override=false){
+	string function importFromFile( required importFile, boolean override=false ){
 		var data 		= fileRead( arguments.importFile );
 		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
+			throw( message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -130,8 +123,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	
 	/**
 	* Import data from an array of structures 
+	* @importData data to import
+	* @override Override data
+	* @importLog The import log
 	*/
-	string function importFromData(required importData, boolean override=false, importLog){
+	string function importFromData( required importData, boolean override=false, importLog ){
 		var allRules = [];
 		
 		// if struct, inflate into an array
@@ -142,12 +138,19 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		// iterate and import
 		for( var thisRule in arguments.importData ){
 			// Get new or persisted with enough info to match
-			var args = { match=thisRule.match, whitelist=thisRule.whitelist, securelist=thisRule.securelist, redirect=thisRule.redirect, roles=thisRule.roles, permissions=thisRule.permissions };
+			var args = { 
+				match 			= thisRule.match, 
+				whitelist 		= thisRule.whitelist, 
+				securelist 		= thisRule.securelist, 
+				redirect 		= thisRule.redirect, 
+				roles 			= thisRule.roles, 
+				permissions 	= thisRule.permissions 
+			};
 			var oRule = this.findWhere( criteria=args );
-			oRule = ( isNull( oRule) ? new() : oRule );
+			oRule = ( isNull( oRule ) ? new() : oRule );
 			
 			// date cleanups, just in case.
-			var badDateRegex  	= " -\d{4}$";
+			var badDateRegex  		= " -\d{4}$";
 			thisRule.createdDate 	= reReplace( thisRule.createdDate, badDateRegex, "" );
 			thisRule.modifiedDate 	= reReplace( thisRule.modifiedDate, badDateRegex, "" );
 			// Epoch to Local
@@ -155,7 +158,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			thisRule.modifiedDate 	= dateUtil.epochToLocal( thisRule.modifiedDate );
 
 			// populate content from data
-			populator.populateFromStruct( target=oRule, memento=thisRule, exclude="ruleID", composeRelationships=false );
+			populator.populateFromStruct( 
+				target=oRule, 
+				memento=thisRule, 
+				exclude="ruleID", 
+				composeRelationships=false 
+			);
 			
 			// if new or persisted with override then save.
 			if( !oRule.isLoaded() ){
@@ -175,8 +183,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		if( arrayLen( allRules ) ){
 			saveAll( allRules );
 			arguments.importLog.append( "Saved all imported and overriden security rules!" );
-		}
-		else{
+		} else{
 			arguments.importLog.append( "No security rules imported as none where found or able to be overriden from the import file." );
 		}
 		
