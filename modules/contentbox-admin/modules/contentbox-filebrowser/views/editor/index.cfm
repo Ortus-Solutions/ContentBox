@@ -51,7 +51,7 @@
                                         id="imagePath" value="#rc.imagePath#" />
                                 <button type="button" class="btn btn-primary" disabled="disabled"
                                         id="imageCrop_btn" value="Crop the image">Crop the image</button>
-                                <button type="button" class="btn btn-primary"
+                                <button type="button" class="btn btn-primary" disabled="disabled"
                                         id="imageDeselect_btn" value="Crop the image">Deselect</button>
                                 <button type="button" class="btn btn-primary" disabled="disabled"
                                         id="revert_btn" value="Revert to original"><i class="fa fa-reply"></i>Revert to original</button>

@@ -116,8 +116,9 @@
 				
 				// disable the image crop button and
 				// enable the revert button
-				jQuery('##imageCrop_btn').attr('disabled', 'disabled');
 				jQuery('##revert_btn').removeAttr('disabled');
+				jQuery('##imageDeselect_btn').attr('disabled', 'disabled');
+				jQuery('##imageCrop_btn').attr('disabled', 'disabled');
 				
 				// do not submit the form using the default behaviour
 				return false;
@@ -130,17 +131,18 @@
 					aspectRatio: 0,  //If you want to keep aspectRatio
 					boxWidth: 800,   //Maximum width you want for your bigger images
 					boxHeight: 600,  //Maximum Height for your bigger images
-					bgColor: '##fff',
+					bgColor: '##ccc',
 					bgOpacity: '0.5',
+					onRelease: function(){console.log(123)},
 					onChange: showCoords,
 					onSelect: showCoords
 				},function(){
 					jcrop_api = this;
 				});
-				// enable the image crop button and
 				// disable the revert button
-				jQuery('##imageCrop_btn').removeAttr('disabled');
+				jQuery('##imageCrop_btn').attr('disabled', 'disabled');
 				jQuery('##revert_btn').attr('disabled', 'disabled');
+				jQuery('##imageDeselect_btn').attr('disabled', 'disabled');
 			}
 
 			$('.col-md-3').click(function(){
@@ -173,7 +175,10 @@
 			jQuery('##x2').val(c.x2);
 			jQuery('##y2').val(c.y2);
 			jQuery('##w').val(c.w);
-			jQuery('##h').val(c.h);		
+			jQuery('##h').val(c.h);	
+			// enable the image crop button and
+			jQuery("##imageCrop_btn").prop( "disabled", false );
+			jQuery("##imageDeselect_btn").prop( "disabled", false );
 		};
 
 		function calculateProportions( what ) {
