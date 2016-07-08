@@ -148,7 +148,6 @@
 			})
 
 			function destroyJcrop(){
-				console.log(jcrop_api)
 				jcrop_api.destroy();				
 				jQuery('##x').val('0');
 				jQuery('##y').val('0');
