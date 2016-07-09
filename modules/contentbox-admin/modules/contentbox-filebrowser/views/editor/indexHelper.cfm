@@ -10,6 +10,10 @@
 			// set the padding for the crop-selection box
 			var padding = 10;
 			var firstClick = 1;
+			// original image dimensions
+			var imgW = $("##width").attr("data-width");
+			var imgH = $("##height").attr("data-height");
+
 			
 			// set the x and y coords using the image dimensions
 			// and the padding to leave a border
@@ -52,7 +56,11 @@
 
 			});
 
-			jQuery("##scale_btn").click(function(){				
+			jQuery("##scale_btn").click(function(){	
+				// check if cropping is saved
+				if( !$("##croppedImage").find('img').hasClass("img-scaled") ){
+					return confirm("There are unsaved changes. Do you want continue?");
+				}			
 				// organise data into a readable string
 				var data = 'height=' + $("##height").val() + '&width=' + $("##width").val() + 
 						'&imgLoc=' + encodeURIComponent(imgLoc.val());
@@ -67,7 +75,7 @@
 				// disable the image crop button and
 				// enable the revert button
 				jQuery('##imageCrop_btn').attr('disabled', 'disabled');
-				jQuery('##revert_scale').removeAttr('disabled');
+				jQuery('.revert_btn').removeAttr('disabled');
 				
 				// do not submit the form using the default behaviour
 				return false;
@@ -75,7 +83,7 @@
 
 			// selecting revert will create the img html tag complete with
 			// image source attribute, read from the imageFile form field
-			jQuery("##revert_btn").click(function() {					
+			jQuery(".revert_btn").click(function() {					
 				var htmlImg = '<img src="' + jQuery('input[name=imageFile]').val() 
 						+ '" id="cropbox" />';
 				jQuery('##croppedImage').html(htmlImg,{}, function(){
@@ -83,13 +91,9 @@
 				});
 				// instantiate the jcrop plugin
 				setTimeout(buildJCrop, 500);
-				
-			});
-			
-			jQuery("##revert_scale").click(function() {					
-				var htmlImg = '<img src="' + jQuery('input[name=imageFile]').val() 
-						+ '" id="cropbox" />';
-				jQuery('##croppedImage').html(htmlImg);				
+				$("##width").val(imgW);
+				$("##height").val(imgH);
+
 			});
 			
 			jQuery("##imageDeselect_btn").click(function() {					
@@ -146,10 +150,6 @@
 				jQuery('##revert_btn').attr('disabled', 'disabled');
 				jQuery('##imageDeselect_btn').attr('disabled', 'disabled');
 			}
-
-			$('.col-md-3').click(function(){
-				//destroyJcrop();
-			})
 
 			function destroyJcrop(){
 				jcrop_api.destroy();				

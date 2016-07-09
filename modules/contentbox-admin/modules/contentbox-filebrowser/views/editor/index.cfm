@@ -53,7 +53,7 @@
                                         id="imageCrop_btn" value="Crop the image">Crop the image</button>
                                 <button type="button" class="btn btn-primary" disabled="disabled"
                                         id="imageDeselect_btn" value="Crop the image">Deselect</button>
-                                <button type="button" class="btn btn-primary" disabled="disabled"
+                                <button type="button" class="btn btn-primary revert_btn" disabled="disabled"
                                         id="revert_btn" value="Revert to original"><i class="fa fa-reply"></i>Revert to original</button>
                             </div>
                         </form>
@@ -94,7 +94,7 @@
                                 </div>
                                 <button type="button" class="btn btn-primary" disabled="disabled"
                                         id="scale_btn" value="Scale">Scale</button>
-                                <button type="button" class="btn btn-primary" disabled="disabled"
+                                <button type="button" class="btn btn-primary revert_btn" disabled="disabled"
                                         id="revert_scale" value="Revert to original"><i class="fa fa-reply"></i>Revert to original</button>
                             </div>
                         </form>

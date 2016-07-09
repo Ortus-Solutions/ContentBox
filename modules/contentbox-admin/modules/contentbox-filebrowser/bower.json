@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "jquery-filedrop": "~0.1.0",
-    "Jcrop": "^2.0.4",
-    "jQuery-contextMenu": "^2.2.0"
+    "jQuery-contextMenu": "^2.2.0",
+    "Jcrop": "^2.0.4"
   }
 }
