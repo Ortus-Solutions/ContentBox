@@ -85,7 +85,7 @@
 			// image source attribute, read from the imageFile form field
 			jQuery(".revert_btn").click(function() {					
 				var htmlImg = '<img src="' + jQuery('input[name=imageFile]').val() 
-						+ '" id="cropbox" />';
+						+ '" id="cropbox" class="img-scaled" />';
 				jQuery('##croppedImage').html(htmlImg,{}, function(){
 
 				});
