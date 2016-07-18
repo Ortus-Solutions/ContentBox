@@ -141,7 +141,7 @@ function insertCBWidget(){
         }
 
         // Arguments
-        var blacklistKeys = ['widgetName','widgetType','widgetDisplayName','renderMethodSelect','widgetUDF']
+        var blacklistKeys = ['widgetName','widgetType','widgetDisplayName','renderMethodSelect','widgetUDF','widgetIcon']
         for( var item in vals ){
             if( $.inArray( item, blacklistKeys ) == -1 ) {
                 widget += " " + item + "=" + "'" + vals[ item ] + "'";
