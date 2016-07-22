@@ -79,7 +79,13 @@
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="cfpassword">CFML Admin Password or Web Context Password: </label>
-							<br /><small>Your CFML engine administrator password or the Lucee Web Context password. Contact your hosting provider or system administrator if you do not have one. (If you are using the Express Edition ONLY then use <code>contentbox</code> or <a href="/lucee/admin/web.cfm" target="_blank">click here</a> to set one up)<br/></small>
+							<br /><small>Your CFML engine administrator password or the Lucee Web Context password. Contact your hosting provider or system administrator if you do not have one. (If you are using the Express Edition ONLY then use <code>contentbox</code> or 
+							<cfif structKeyExists( server, "lucee" )>
+								<a href="/lucee/admin/web.cfm" target="_blank">click here</a>
+							<cfelse>
+								<a href="/CFIDE/administrator" target="_blank">click here</a>
+							</cfif>
+							 to set one up)<br/></small>
 							<input type="password" class="form-control" size="40" name="cfpassword" id="cfpassword" required="required" />
 						</div>
 					</div>
