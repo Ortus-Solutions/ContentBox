@@ -17,6 +17,9 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 		    <div class="panel-body">
+
+		    	<!--- MessageBox --->
+				#getModel( "messagebox@cbMessagebox" ).renderit()#
 		            
 				<!---screenshot --->
 				<div id="theme-screenshot" class="pull-right">

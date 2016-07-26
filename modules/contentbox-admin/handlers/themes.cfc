@@ -68,6 +68,7 @@ component extends="baseHandler"{
 	* Save theme settings
 	*/
 	function saveSettings( event, rc, prc ){
+		prc.xehActiveTheme = "#prc.cbAdminEntryPoint#.themes.active";
 		var vResults = validateModel( target=rc, constraints=themeService.getSettingsConstraints( rc.themeName ) );
 		// Validate results
 		if( vResults.hasErrors() ){
@@ -87,7 +88,7 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_postThemeSettingsSave", { name=rc.themeName } );
 
 		// Relocate
-		setNextEvent( event=prc.xehThemes );
+		setNextEvent( event=prc.xehActiveTheme );
 	}
 
 	/**
