@@ -128,6 +128,7 @@ component accessors="true" extends="BaseRenderer"{
 				if( reFindNoCase( "\<[^\>\=\:\s]+\:", tagString ) ){
 					tagString = replace( tagString, ":", " " );
 				}
+
 				// Parse arguments separated by commas
 				tagString 		= replace( tagString, "',", "' ", "all" );
 				tagString 		= replace( tagString, '",',  '" ', "all" );
@@ -135,10 +136,18 @@ component accessors="true" extends="BaseRenderer"{
 				isLayoutWidget 	= findNoCase( "~", tagString ) ? true : false;
 				
 				if( isModuleWidget ) {
-					var startPos = find( "@", tagString )+1;
-					var endPos = find( " ", tagString, 1 );
-					moduleName = mid( tagString, startPos, endPos-startPos );
-					tagString = reReplace( tagString, "@.* ", " ", "one" );
+					var startPos 	= find( "@", tagString ) + 1;
+					// default end is last character of closing tag.
+					var endPos 		= find( "/>", tagString );
+					var spacePos 	= find( " ", tagString );
+					// If we have arguments, then change this to first break position
+					if( spacePos > 0 ){
+						endPos = spacePos;
+					}
+					// Get module name now
+					moduleName = mid( tagString, startPos, endPos - startPos );
+					// clean the tag
+					tagString = replacenocase( tagString, "@#moduleName#", "", "one" );
 				}
 				
 				if( isLayoutWidget ) {
@@ -179,6 +188,7 @@ component accessors="true" extends="BaseRenderer"{
 					}
 				}
 			} catch( Any e ) {
+				writeDump( e );abort;
 				widgetContent = "Error translating widget: #e.message# #e.detail#";
 				log.error( "Error translating widget on target: #targets[ x ]#", e);
 			}
