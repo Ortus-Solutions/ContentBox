@@ -273,7 +273,6 @@ component implements="contentbox.models.importers.ICBImporter"{
 		// end of try
 		catch(any e){
 			log.error( "Error importing blog: #e.message# #e.detail#",e);
-			writeDump(e);abort;
 			rethrow;
 		}
 

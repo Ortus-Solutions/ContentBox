@@ -79,7 +79,6 @@ component extends="cborm.models.VirtualEntityService" singleton{
 					}
 				}
 			} catch (any e) {
-				writeDump( var=e );abort;
 				log.error( "Error hit tracking contentID: #arguments.contentID#. #e.message# #e.detail#", e );
 			}
 		}

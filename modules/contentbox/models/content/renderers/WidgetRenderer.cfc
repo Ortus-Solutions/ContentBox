@@ -188,7 +188,6 @@ component accessors="true" extends="BaseRenderer"{
 					}
 				}
 			} catch( Any e ) {
-				writeDump( e );abort;
 				widgetContent = "Error translating widget: #e.message# #e.detail#";
 				log.error( "Error translating widget on target: #targets[ x ]#", e);
 			}
