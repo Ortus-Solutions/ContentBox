@@ -67,7 +67,7 @@ component extends="baseHandler"{
 			prc.entryData 		= forgeboxsdk.getEntry( slug=rc.channel );
 			prc.entryVersion 	= forgeboxsdk.getLatestVersion( slug=rc.channel );
 			// Check if versions are new.
-			prc.updateFound = !updateService.isNewVersion( cVersion=prc.contentboxVersion, nVersion=prc.entryVersion.version );
+			prc.updateFound = updateService.isNewVersion( cVersion=prc.contentboxVersion, nVersion=prc.entryVersion.version );
 			// Verify if we have updates?
 			if( prc.updateFound ){
 				cbMessagebox.info( "Woopeee! There is a new ContentBox update for you!" );
