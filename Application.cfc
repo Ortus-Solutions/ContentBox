@@ -17,6 +17,7 @@ component{
 	this.setClientCookies 	= true;
 	this.setDomainCookies 	= true;
 	this.scriptProtect		= false;
+	this.secureJSON 		= false;
 	
 	/**************************************
 	LUCEE Specific Settings
