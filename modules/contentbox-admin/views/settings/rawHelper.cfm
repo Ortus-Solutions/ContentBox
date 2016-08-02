@@ -54,28 +54,6 @@ $(document).ready(function() {
 	// Load settings
 	settingsLoad( $( "##settingSearch" ).val() );
 } );
-function importSettings(){
-	// local id's
-	var $importForm = $( "##importForm" );
-	// open modal for cloning options
-	openModal( $importDialog, 500, 300 );
-	// form validator and data
-	$importForm.validate( { 
-		submitHandler: function(form){
-           	$importForm.find( "##importButtonBar" ).slideUp();
-			$importForm.find( "##importBarLoader" ).slideDown();
-			form.submit();
-        }
-	} );
-	// close button
-	$importForm.find( "##closeButton" ).click(function(e){
-		closeModal( $importDialog ); return false;
-	} );
-	// clone button
-	$importForm.find( "##importButton" ).click(function(e){
-		$importForm.submit();
-	} );
-}
 function flushSettingsCache(){
 	$( "##specialActionsLoader" ).removeClass( "hidden" );
 	$.ajax( {

@@ -25,7 +25,7 @@ $(document).ready(function() {
 	// form validator
 	$permissionEditor.validate();
 	// reset
-	$('##btnReset').click(function() {
+	$( '##btnReset' ).click( function() {
 		$permissionEditor.find( "##permissionID" ).val( '' );
 	} );
 	</cfif>
@@ -36,28 +36,6 @@ function edit(permissionID,permission,description){
 	$permissionEditor.find( "##permissionID" ).val( permissionID );
 	$permissionEditor.find( "##permission" ).val( permission );
 	$permissionEditor.find( "##description" ).val( description );
-}
-function importContent(){
-	// local id's
-	var $importForm = $( "##importForm" );
-	// open modal for cloning options
-	openModal( $importDialog, 500, 350 );
-	// form validator and data
-	$importForm.validate( { 
-		submitHandler: function(form){
-           	$importForm.find( "##importButtonBar" ).slideUp();
-			$importForm.find( "##importBarLoader" ).slideDown();
-			form.submit();
-        }
-	} );
-	// close button
-	$importForm.find( "##closeButton" ).click(function(e){
-		closeModal( $importDialog ); return false;
-	} );
-	// clone button
-	$importForm.find( "##importButton" ).click(function(e){
-		$importForm.submit();
-	} );
 }
 function remove(permissionID){
 	var $permissionForm = $( "##permissionForm" );

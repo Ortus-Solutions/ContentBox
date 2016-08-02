@@ -109,7 +109,6 @@
 	</div>
 </div>
 
-
 <!---only show if user has rights to categories admin--->
 <cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 	<!--- Category Editor --->
@@ -157,57 +156,17 @@
 		</div>
 	</div>
 </cfif>
+
 <!---only show if user has rights to categories admin and tool import--->
 <cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-	<div id="importDialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="importDiaglogTitle" aria-hidden="true">
-	    <div class="modal-dialog">
-	        <div class="modal-content">
-	            <!--header-->
-	            <div class="modal-header">
-	                <!--if dismissable-->
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title" id="importDiaglogTitle"><i class="fa fa-upload"></i> Import Categories</h4>
-	            </div>
-	            <!--body-->
-	            #html.startForm( name="importForm", action=prc.xehCategoryImport, class="form-vertical", multipart=true, role="form" )#
-	                <div class="modal-body">
-	                    <p>Choose the ContentBox <strong>JSON</strong> categories file to import.</p>
-						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
-							name="importFile", 
-							required=true
-						)#
-						<label for="overrideContent">Override Categories?</label>
-						<small>By default all content that exist is not overwritten.</small><br>
-						#html.select(
-							options="true,false", 
-							name="overrideContent", 
-							selectedValue="false", 
-							class="form-control input-sm",
-							wrapper="div class=controls",
-							labelClass="control-label",
-							groupWrapper="div class=form-group"
-						)#
-						<!---Notice --->
-						<div class="alert alert-info">
-							<i class="fa fa-info-circle fa-lg"></i> Please note that import is an expensive process, so please be patient when importing.
-						</div>
-	                </div>
-	                <!-- footer -->
-	                <div class="modal-footer">
-	                    <!--- Button Bar --->
-			        	<div id="importButtonBar">
-			          		<button class="btn" id="closeButton">Cancel</button>
-			          		<button class="btn btn-danger" id="importButton">Import</button>
-			            </div>
-						<!--- Loader --->
-						<div class="center loaders" id="importBarLoader">
-							<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
-							<br>Please wait, doing some hardcore importing action...
-						</div>
-	                </div>
-	            </form>
-	        </div>
-	    </div>
-	</div>
+	#renderView( 
+		view 	= "_tags/dialog/import",
+		args 	= {
+			title 		= "Import Users",
+			contentArea = "user",
+			action 		= prc.xehImportAll,
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> users file to import."
+		}
+	)#	
 </cfif>
 </cfoutput>

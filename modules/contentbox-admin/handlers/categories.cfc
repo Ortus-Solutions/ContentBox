@@ -22,7 +22,7 @@ component extends="baseHandler"{
 		prc.xehCategoryRemove 	= "#prc.cbAdminEntryPoint#.categories.remove";
 		prc.xehCategoriesSave 	= "#prc.cbAdminEntryPoint#.Categories.save";
 		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.Categories.exportAll";
-		prc.xehCategoryImport	= "#prc.cbAdminEntryPoint#.Categories.importAll";
+		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.Categories.importAll";
 		
 		// Get all categories
 		prc.categories = categoryService.list(sortOrder="category",asQuery=false);

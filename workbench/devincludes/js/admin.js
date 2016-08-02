@@ -600,5 +600,36 @@ function toggleFullScreen(){
     } else {
         $( 'body' ).fullscreen();
     }
+}
+
+/**
+ * Import Content Dialog Forms.
+ * This function takes care of opening a generic configured import dialog and setup all
+ * the events to submit it.
+ */
+function importContent(){
+    // local id's
+    var $importForm = $( "#importForm" );
+    // open modal for cloning options
+    openModal( $importDialog, 500, 350 );
     
+    // form validator button bar loader
+    $importForm.validate( { 
+        submitHandler: function(form){
+            $importForm.find( "#importButtonBar" ).slideUp();
+            $importForm.find( "#importBarLoader" ).slideDown();
+            form.submit();
+        }
+    } );
+    
+    // close button
+    $importForm.find( "#closeButton" ).click( function( e ){
+        closeModal( $importDialog ); 
+        return false;
+    } );
+    
+    // clone button
+    $importForm.find( "#importButton" ).click( function( e ){
+        $importForm.submit();
+    } );
 }

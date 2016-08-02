@@ -101,9 +101,9 @@
 <cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
-			title = "Import Users",
+			title 		= "Import Users",
 			contentArea = "user",
-			action = prc.xehImportAll,
+			action 		= prc.xehImportAll,
 			contentInfo = "Choose the ContentBox <strong>JSON</strong> users file to import."
 		};
 	</cfscript>

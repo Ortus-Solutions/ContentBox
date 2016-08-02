@@ -124,9 +124,9 @@ function remove( menuID, id ){
 function bulkRemove(){
     $contentForm.submit();
 }
-// Import content dialogs
 function importContent(){
-    var $importForm = $importDialog.find( "##importForm" );
+    // local id's
+    var $importForm = $( "##importForm" );
     // open modal for cloning options
     openModal( $importDialog, 500, 350 );
     // form validator and data
