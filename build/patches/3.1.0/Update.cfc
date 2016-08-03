@@ -11,8 +11,7 @@
 * Remove Interface for conversion from 2.1 to 3.0.0 RC
 *
 * ---
-* Start Commit Hash: 762aede3a97eb00519e7f171ac4c3c6d6924daca
-* End Commit Hash: ff79cc3b8a1e7e37bbe5170e91d510c9e46e7e73
+* Start Commit Hash: e1e8f96c1e8c56f852b7af057b9e55cdaa7caf22
 */
 component {
 
@@ -42,7 +41,7 @@ component {
 	*/
 	function onDIComplete(){
 		// setup update variables.
-		variables.version 			= "3.0.0";
+		variables.version 			= "3.1.0";
 		variables.currentVersion 	= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
 		variables.thisPath			= getDirectoryFromPath( getMetadata( this ).path );
 		variables.contentBoxPath 	= coldbox.getSetting( "modules" )[ "contentbox" ].path;
@@ -55,32 +54,6 @@ component {
 		try{
 
 			log.info("About to begin #version# patching");
-
-			// Verify if less than 2.1.0 with message
-			if( !isValidInstall() ){ return; }
-
-			/****************************** RENAME LAYOUTS TO THEMES ******************************/
-
-			if( !directoryExists( contentBoxPath & "/themes" ) && directoryExists( contentBoxPath & "/layouts" ) ){
-				directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );	
-			}			
-
-			/****************************** RENAME MODULES ******************************/
-			
-			if( !directoryExists( contentBoxPath & "/modules_user" ) && directoryExists( contentBoxPath & "/modules" ) ){
-				directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
-			}
-
-			/****************************** UPDATE SECURITY RULES ******************************/
-			
-			var aRules = securityRuleService.getAll();
-			for( var oRule in aRules ){
-				if( findNoCase( "LAYOUT_ADMIN", oRule.getPermissions() ) ){
-					oRule.setPermissions( replaceNoCase( oRule.getPermissions(), "LAYOUT_ADMIN", "THEME_ADMIN", "all" ) );
-					oRule.setSecureList( replaceNoCase( oRule.getSecureList(), "layouts", "themes", "all" ) );
-				}
-				securityRuleService.save( entity=oRule );
-			}
 
 			log.info( "Finalized #version# preInstallation patching" );
 		}
@@ -97,8 +70,6 @@ component {
 	*/
 	function postInstallation(){
 		try{
-			// Verify if less than 2.1.0 with message
-			if( !isValidInstall() ){ return; }
 			// Make changes on disk take effect
 			ORMCloseSession();
 			ORMReload();
@@ -106,17 +77,7 @@ component {
 				pagePoolClear();
 			}
 
-			// Update new timestamp fields
-			updateTimestampFields();
-			// Update new settings
-			updateSettings();
-			// Update Permissions
-			updatePermissions();
-			// Update Roles with new permissions
-			updateAdmin();
-			updateEditor();
-			// Update CK Editor
-			updateCKEditorPlugins();
+			
 		} catch( Any e ) {
 			ORMClearSession();
 			log.error( "Error doing #version# patch postInstallation. #e.message# #e.detail#", e );
@@ -125,15 +86,6 @@ component {
 	}
 
 	/************************************** PRIVATE *********************************************/
-
-	private function isValidInstall(){
-		// Verify if less than 2.1.0 with message
-		if( replace( currentVersion, ".", "", "all" )  LT 210 ){
-			log.info( "Cannot patch this installation until you upgrade to 2.1.0 first. You can find all of our patches here available for download: http://www.ortussolutions.com/products/contentbox. Then apply this patch." );
-			return false;
-		}
-		return true;
-	}
 
 	private function updateAdmin(){
 		var oRole = roleService.findWhere( { role = "Administrator" } );
