@@ -1,15 +1,16 @@
  <cfoutput>
     <script>
-        var confirmConfig = {
-            placement: 'right',
-            title: 'Are you sure you want to remove this menu item and all its descendants?',
-            singleton: true,
-            href: 'javascript:void(0);',
-            onConfirm: function() {
-                $( this ).closest( '.dd3-item' ).remove();
-                togglePlaceholderMessage();
-            }
-        };
+        /**
+         * Remove a menu item
+         * @param  {string} target The item ID target to remove
+         */
+        function removeMenuItem( target ){
+            $( "##" + target ).remove();
+            togglePlaceholderMessage();
+            closeConfirmations();
+            previewMenu();
+        }
+
         // Create Slug
         function createSlug( linkToUse ){
             var linkToUse = ( typeof linkToUse === "undefined" ) ? $( "##title" ).val() : linkToUse,
@@ -22,7 +23,7 @@
                 $slug.val( data );
                 slugUniqueCheck();
                 toggleSlug();
-            });
+            } );
         }
 
         //disable or enable (toggle) slug field
@@ -30,7 +31,7 @@
             var toggle = $( '##toggleSlug' ),
                 $slug = $( '##slug' );
             // Toggle lock icon on click..  
-            toggle.hasClass( 'icon-lock' ) ? toggle.attr( 'class', 'icon-unlock' ) : toggle.attr( 'class', 'icon-lock' );
+            toggle.hasClass( 'fa fa-lock' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fa fa-lock' );
             //disable input field
             $slug.prop( "disabled", !$slug.prop( 'disabled' ) );
         }
@@ -41,7 +42,7 @@
             var count = 0;
             $( '##nestable li' ).each(function() {
                 count++;
-            });
+            } );
             if( count ) {
                 $placeholderMessage.hide();
             }
@@ -106,8 +107,11 @@
                 extra.toggle( 300 );
                 extra.find( 'input[name^=label]' ).focus();
                 var element = $( this );
-                $( element ).find( '[data-toggle="confirmation"]' ).confirmation( confirmConfig );
-            });
+                var index = $.find('.dd-item').length;
+                element.attr('id', 'key_'+index);
+                element.find(".confirmIt").attr("href", "javascript:removeMenuItem( 'key_"+index+"' );");
+                activateConfirmations();
+            } );
             activateTooltips();
         }
         /**
@@ -137,7 +141,7 @@
                     $nestable .find( 'div.error' ).each(function() {
                         $( this ).closest( '.dd3-item' ).children( '.dd3-type' ).removeClass( 'btn-inverse' ).addClass( 'btn-danger' );
                             count++;
-                    });
+                    } );
                     // expand so we can see nested errors
                     $( '.dd' ).nestable( 'expandAll' );
                     if( count ) {
@@ -148,7 +152,7 @@
                     // remove error highlights
                     $nestable .find( '.dd3-type' ).each(function() {
                         $( this ).removeClass( 'btn-danger' ).addClass( 'btn-inverse' );
-                    });
+                    } );
                     $errors.hide();
                     break; 
             }
@@ -165,7 +169,7 @@
                     $fld.attr( 'name', $fld.attr( 'name' ) + '-' + i );
                 }
                 i++;
-            })
+            } )
         }
         /**
          * Saves menu with serialized item data
@@ -181,9 +185,9 @@
                 // prepare data
                 $( '##nestable li' ).each(function() {
                     processItem( $( this ) );
-                });
+                } );
                 // get serialized data
-                $( '##submitMenu' ).attr( 'disabled', true ).html( '<i class="icon-spinner icon-spin"></i> Saving...' );
+                $( '##submitMenu' ).attr( 'disabled', true ).html( '<i class="fa fa-spinner fa-spin"></i> Saving...' );
                 $( '##menuItems' ).val( JSON.stringify( nestable.nestable( 'serialize' ) ) );
                 form.submit();
             }
@@ -205,10 +209,10 @@
                 // prepare data
                 $( '##nestable li' ).each(function() {
                     processItem( $( this ) );
-                });
+                } );
                 // get serialized data
                 $( '##menuItems' ).val( JSON.stringify( nestable.nestable( 'serialize' ) ) );
-                $.ajax({
+                $.ajax( {
                     url: '#event.buildLink( linkTo=prc.xehMenuPreview )#',
                     type: 'POST',
                     data: form.serialize(),
@@ -216,7 +220,7 @@
                         var $panel = $( '##preview-panel' );
                             $panel.html( data );
                     }
-                });
+                } );
             }
             else {
                 toggleErrors( 'on' );
@@ -232,45 +236,51 @@
             // hide context menu
             $( document ).click( function() {
                 $contextMenu.hide();
-            });
+            } );
             // add contextmenu 
             $( '##nestable' ).on( 'contextmenu', ".dd3-content", function( e ) {
                 $menuItemClicked = $( this );
-                $contextMenu.css({
+                $contextMenu.css( {
                     display: "block",
                     left: e.pageX,
                     top: e.pageY
-                });
+                } );
                 return false;
-            });
+            } );
             // add listeners to contextmenu links
             $contextMenu.on( 'click', 'a', function () {
                 var parent = $menuItemClicked.closest( 'li' );
                 var context = $( parent );
                 var provider = $( this ).data( 'provider' );
-                $.ajax({
+                $.ajax( {
                     url: '#event.buildLink( linkto=prc.xehMenuItem )#',
                     data: { type: provider },
                     success: function( data, textStatus, jqXHR ){
                         addMenuItem( data, context );
                         togglePlaceholderMessage();
                     }
-                })
+                } )
                 $contextMenu.hide();
-            });
-            // add listener to submit button
+            } );
+            // add listener to submit button and close
             $( '##submitMenu' ).on( 'click', function() {
                 if( $( this ).attr( 'disabled' ) ) {
                     return false;
                 }
+                $( "##saveEvent" ).val( "" );
                 saveMenu();
-            });
+            } );
+            // add listener to submit save & stay
+            $( '##submitSave' ).on( 'click', function() {
+                if( $( this ).attr( 'disabled' ) ) {
+                    return false;
+                }
+                saveMenu();
+            } );
             // add listener for preview
             $( '##preview-button' ).on( 'click', function() {
                 previewMenu();
-            });
-            // add confirmation toggle
-            $( '[data-toggle="confirmation"]' ).confirmation( confirmConfig );
+            } );
             // setup expand listeners
             $( '##nestable' ).on('click', '.dd3-expand', function() {
                 var me = $( this ),
@@ -279,27 +289,27 @@
 
                 // toggle 
                 prev.slideToggle( 200 );
-            });
+            } );
             // add input listeners to update label field
             $( '##nestable' ).on('keyup change focus blur', 'input[name^=label]', function() {
                 updateLabel( this );
-            });
+            } );
             $( '##nestable' ).on('blur', 'input', function() {
                 previewMenu();
-            });
+            } );
             // provider buttons
             $( '.provider' ).click(function( e ) {
                 e.preventDefault();
                 var provider = $( this ).data( 'provider' );
-                $.ajax({
+                $.ajax( {
                     url: '#event.buildLink( linkto=prc.xehMenuItem )#',
                     data: { type: provider, menuID: '#rc.menuID#' },
                     success: function( data, textStatus, jqXHR ){
                         addMenuItem( data );
                         togglePlaceholderMessage();
                     }
-                })
-            });
+                } )
+            } );
             // toggle buttons
             $( 'a[data-action]' ).on( 'click', function() {
                 var $button = $( this );
@@ -311,7 +321,7 @@
                         $( '.dd' ).nestable( 'collapseAll' );
                         break;
                 }
-            })
+            } )
             // Activate blur slugify on titles
 
             // set up live event for title, do nothing if slug is locked..
@@ -319,17 +329,17 @@
                 if( !$slug.prop( 'disabled' ) ){
                     createSlug( $title.val() );
                 }
-            });
+            } );
             // Activate permalink blur
             $slug.on('blur',function(){
                 if( !$( this ).prop( 'disabled' ) ){
                     slugUniqueCheck();
                 }
-            });
+            } );
             //******** setup nestable menu items **************//
-            $( '##nestable' ).nestable({});
+            $( '##nestable' ).nestable( {} );
             previewMenu();
             togglePlaceholderMessage();
-        });
+        } );
     </script>
 </cfoutput>

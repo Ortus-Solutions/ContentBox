@@ -1,20 +1,16 @@
 <cfoutput>
-<table class="table table-condensed table-hover table-striped tablesorter" width="100%">
+<table class="table table-condensed table-hover table-striped" width="100%">
 	<thead>
 		<tr>
-			<th>User</th>
-			<th >Date</th>
-			<th width="40" class="center">IP</th>
+			<th>#$r( "dashboard.latestLogins.table.head1@admin" )#</th>
+			<th >#$r( "dashboard.latestLogins.table.head2@admin" )#</th>
 		</tr>
 	</thead>
 	<tbody>
 		<cfloop array="#prc.lastLogins#" index="lastlogin">
 			<tr>
-				<td>
-				#lastlogin.getValue()#
-				</td>
-				<td>#LSDateFormat(lastlogin.getCreatedDate())# #LSTimeFormat(lastlogin.getCreatedDate())#</td>
-				<td class="center">#lastlogin.getLastLoginSuccessIP()#</td>
+				<td>#lastlogin.getValue()#</td>
+				<td>#lastLogin.getDisplayCreatedDate()#</td>
 			</tr>
 		</cfloop>
 	</tbody>

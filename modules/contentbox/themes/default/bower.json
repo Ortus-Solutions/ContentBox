@@ -1,0 +1,16 @@
+{
+  "name": "cb3default",
+  "version": "1.0.0",
+  "license": "Apache2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3",
+    "components-font-awesome": "~4.4.0"
+  }
+}

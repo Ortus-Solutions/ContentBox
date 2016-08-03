@@ -1,14 +1,7 @@
 <cfset event.paramValue( "editorName", "" )> 
-<style>
-    .widget-preview {margin-left:320px;}
-    .widget-preview-refresh {font-size:12px;float: right;margin-top:-20px;}
-    .widget-arguments {width:300px;margin-top:-20px;float:left;}
-    .widget-preview-content {padding:20px;border:dashed 4px #eaeaea;border-radius:4px;margin-top:20px;}
-    .widget-preview .well h4 {margin:0px;}
-</style>
 <cfoutput>
 <!--- Custom Javascript --->
-<script type="text/javascript">
+<script>
 $( document ).ready( function() {
     // register listeners
     $( '##widget-button-insert' ).off( 'click.inWidget' ).on( 'click.inWidget', insertCBWidget );
@@ -21,9 +14,9 @@ $( document ).ready( function() {
         else {
             updateArgs( $( this ) );
         }
-    });
+    } );
     updatePreview();
-});
+} );
 
 /*
  * Gets form values from arguments form
@@ -35,7 +28,7 @@ function getFormValues() {
     // loop over form fields, and add form field values to struct
     $.each( form, function(){
         vals[ this.name ] = this.value;
-    });
+    } );
     return vals;
 }
 
@@ -46,7 +39,7 @@ function getFormValues() {
  */
 function updateArgs( select ) {
     var vals = getFormValues();
-    $.ajax({
+    $.ajax( {
         type: 'GET',
         url: getWidgetInstanceURL(),
         data: {
@@ -61,7 +54,7 @@ function updateArgs( select ) {
             // update content
             $( '##widget-preview-wrapper' ).parent().html( data );
         }
-    });
+    } );
 }
 
 /*
@@ -72,7 +65,7 @@ function updatePreview() {
     var vals = getFormValues(),
         me = this;
         // make ajax request for preview content
-        $.ajax({
+        $.ajax( {
             type: 'GET',
             url: getWidgetPreviewURL(),
             data: vals,
@@ -89,7 +82,7 @@ function updatePreview() {
             error: function( e ) {
                 $( '##widget-preview-content' ).html( '<div class="widget-no-preview">No preview available!</div>' );
             }
-        });
+        } );
 }
 
 function buildInfobarText( vals, count ) {
@@ -137,24 +130,49 @@ function insertCBWidget(){
     // add selector to args form
     args = form.serializeArray();
     vals = getFormValues();
+
+    // NO CKEditor
+    if( typeof( CKEDITOR ) == 'undefined' ){
+        var widget = "{{{" + vals.widgetName;
+
+        // Function name
+        if( vals.widgetUDF.toLowerCase() !== "renderit" ){
+            widget += "." + vals.widgetUDF;
+        }
+
+        // Arguments
+        var blacklistKeys = ['widgetName','widgetType','widgetDisplayName','renderMethodSelect','widgetUDF','widgetIcon']
+        for( var item in vals ){
+            if( $.inArray( item, blacklistKeys ) == -1 ) {
+                widget += " " + item + "=" + "'" + vals[ item ] + "'";
+            }
+        }
+
+        // close it
+        widget += "}}}";
+        insertEditorContent( '#rc.editorName#', widget );
+        closeRemoteModal();
+        return false;
+    }
+    
     // create new widget element
     widgetContent = new CKEDITOR.dom.element( 'widget' );
     widgetContent.setAttributes( vals );
     // create new widgetinfobar element
     widgetInfobar = new CKEDITOR.dom.element( 'widgetinfobar' );
-    widgetInfobar.setAttributes({
+    widgetInfobar.setAttributes( {
         contenteditable: false    
-    });
+    } );
     // create new img element
     widgetInfobarImage = new CKEDITOR.dom.element( 'img' );
-    widgetInfobarImage.setAttributes({
-        src: '#prc.cbroot#/includes/images/widgets/#prc.widget.icon#',
+    widgetInfobarImage.setAttributes( {
+        src: '#prc.cbroot#/includes/images/ContentBox_30.png',
         width: 20,
         height:20,
         align:'left',
         style: 'margin-right:5px;',
         contenteditable: false
-    })
+    } )
     widgetInfobar.setText( infobarText );
     widgetInfobar.append( widgetInfobarImage, true );
     widgetContent.append( widgetInfobar );
@@ -166,7 +184,7 @@ function insertCBWidget(){
  * return void
  */
 function updateCBWidget() {
-    var editor = $("###rc.editorName#").ckeditorGet(),
+    var editor = $( "###rc.editorName#" ).ckeditorGet(),
         element = editor.widgetSelection,
         textel = element.getChild( 0 ).getChild( 1 ),
         form = $( '##widget-arguments' ).find( 'form' ),

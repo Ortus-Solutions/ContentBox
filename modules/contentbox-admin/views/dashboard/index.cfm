@@ -1,136 +1,136 @@
 ﻿<cfoutput>
-<div class="row-fluid">
-	<!--- main content --->
-	<div class="span9" id="main-content">
-		<div class="box">
-			<!--- Body Header --->
-			<div class="header">
-				<i class="icon-dashboard icon-larger"></i>
-				#prc.cbSettings.cb_dashboard_welcome_title#
-			</div>
-			<!--- Body --->
-			<div class="body" id="mainBody">
-
-				<!--- Dashboard welcome body --->
-				#prc.cbSettings.cb_dashboard_welcome_body#
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1">
+        	<i class="fa fa-dashboard fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+		    <div class="panel-body">
+		    	<!--- Dashboard welcome body --->
+				<p class="lead">#prc.cbSettings.cb_dashboard_welcome_body#</p>
 
 				<!--- Messagebox --->
-				#getPlugin("MessageBox").renderit()#
+				#getModel( "messagebox@cbMessagebox" ).renderit()#
 				
 				<!--- Event --->
-				#announceInterception("cbadmin_preDashboardContent")#
+				#announceInterception( "cbadmin_preDashboardContent" )#
 				
 				<!--- Installer Checks --->
 				<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
 				<cfif prc.installerCheck.installer>
-					<div class="alert alert-error" id="installerCheck">
-						<a href="##" class="close" data-dismiss="alert">&times;</a>
-						<i class="icon-warning-sign icon-large icon-2x"></i>
-						The installer module still exists! Please delete it from your server as leaving it online is a security risk.
-						<button class="btn btn-danger" onclick="deleteInstaller()">Delete Installer</button>
+					<div class="alert alert-danger" id="installerCheck">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<i class="fa fa-exclamation-triangle fa-2x"></i>
+						#$r( "dashboard.index.installer.notice@admin" )#
+						<button class="btn btn-danger btn-sm" onclick="deleteInstaller()">#$r( "dashboard.index.installer.delete@admin" )#</button>
 					</div>
 				</cfif>
 				<cfif prc.installerCheck.dsncreator>
-					<div class="alert alert-error" id="dsnCreatorCheck">
-						<a href="##" class="close" data-dismiss="alert">&times;</a>
-						<i class="icon-warning-sign icon-large icon-2x"></i>
-						The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.
-						<button class="btn btn-danger" onclick="deleteDSNCreator()">Delete DSN Creator</button>
+					<div class="alert alert-danger" id="dsnCreatorCheck">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<i class="fa fa-exclamation-triangle fa-2x"></i>
+						#$r( "dashboard.index.creator.notice@admin" )#
+						<button class="btn btn-danger btn-sm" onclick="deleteDSNCreator()">#$r( "dashboard.index.creator.delete@admin" )#</button>
 					</div>
 				</cfif>
 				</cfif>
 				
-				<div class="tabbable">
+				<div class="tab-wrapper tab-primary">
 					<ul class="nav nav-tabs" id="dashboardTabs">
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-							<li><a href="##recentContentTab" data-toggle="tab"><i class="icon-pencil"></i> Recent Content</a></li>
+							<li>
+								<a href="##recentContentTab" data-toggle="tab"><i class="fa fa-pencil"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span></a>
+							</li>
 						</cfif>
 						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
-							<li><a href="##latestComments" data-toggle="tab"><i class="icon-comments"></i> Recent Comments</a></li>
+							<li>
+								<a href="##latestComments" data-toggle="tab"><i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span></a>
+							</li>
 						</cfif>
-						<li><a href="##latestNews" data-toggle="tab"><i class="icon-rss"></i> Recent News</a></li>
+						<li>
+							<a href="##latestNews" data-toggle="tab"><i class="fa fa-rss"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head3@admin" )#</span></a>
+						</li>
 						<!--- cbadmin Event --->
-						#announceInterception("cbadmin_onDashboardTabNav")#
+						#announceInterception( "cbadmin_onDashboardTabNav" )#
 					</ul>
 					<div class="tab-content">
 						<!--- cbadmin Event --->
-						#announceInterception("cbadmin_preDashboardTabContent")#
+						#announceInterception( "cbadmin_preDashboardTabContent" )#
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
+						<!--- ****************************************************************************************** --->
 						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<div class="tab-pane" id="recentContentTab">
-								<div class="well well-small" id="latestPages"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
-								<div class="well well-small" id="latestEntries"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
-								<div class="well well-small" id="latestContentStore"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+								<div class="" id="latestSystemEdits">
+									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+								</div>
+								<div class="" id="latestUserDrafts">
+									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+								</div>
 							</div>
 						</cfif>
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST COMMENTS --->
+						<!--- ****************************************************************************************** --->
 						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
-							<div class="well well-small tab-pane" id="latestComments"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+							<div class="tab-pane" id="latestComments">
+								<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+							</div>
 						</cfif>
-						<div class="well well-small tab-pane" id="latestNews"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST NEWS TAB --->
+						<!--- ****************************************************************************************** --->
+						<div class="tab-pane" id="latestNews">
+							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						</div>
 						<!--- cbadmin Event --->
-						#announceInterception("cbadmin_postDashboardTabContent")#
-						<p>&nbsp;</p><p>&nbsp;</p>
+						#announceInterception( "cbadmin_postDashboardTabContent" )#
 					</div>
 				</div>
 				
 				<!--- Event --->
-				#announceInterception("cbadmin_postDashboardContent")#
-				
-			</div>
+				#announceInterception( "cbadmin_postDashboardContent" )#
+		    </div>
 		</div>
-	</div> <!--- end content span --->
-	
-	<div class="span3" id="main-sidebar">
-		<!--- Event --->
-		#announceInterception("cbadmin_preDashboardSideBar")#
+    </div>
+    <div class="col-md-4">
+        <!--- Event --->
+		#announceInterception( "cbadmin_preDashboardSideBar" )#
 		
 		<!---Latest Snapshot --->
 		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
-		<div id="latestSnapshot"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>	
+			<div id="latestSnapshot">
+				<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+			</div>	
 		</cfif>
 
 		<!--- Latest Logins --->
 		<cfif prc.oAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
-			<div class="small_box">
-				<div class="header">
-					<i class="icon-bar-chart icon-small"></i> Latest Logins
-				</div>
-				<div class="body">
-					<div id="latestLogins"><i class="icon-spin icon-spinner icon-large icon-2x"></i></div>
-				</div>
+			<div class="panel panel-primary">
+			    <div class="panel-heading">
+			        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> #$r( "dashboard.index.latestLogins@admin" )#</h3>
+			    </div>
+			    <div class="panel-body">
+			    	<div id="latestLogins"><i class="fa fa-spin fa-spinner fa-lg -2x"></i></div>
+			    </div>
 			</div>
 		</cfif> 
-		
+
 		<!--- Info Box --->
-		<div class="small_box">
-			<div class="header">
-				<i class="icon-medkit"></i> Need Help?
-			</div>
-			<div class="body">
-				#renderview(view="_tags/needhelp", module="contentbox-admin")#
-			</div>
-		</div>	
-
-		<!--- Help Box--->
-		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
-		<div class="small_box" id="help_tips">
-			<div class="header">
-				<i class="icon-question-sign"></i> Help Tips
-			</div>
-			<div class="body">
-				<ul class="unstyled tipList">
-					<li><i class="icon-lightbulb icon-large"></i> Right click on a row to activate quick look!</li>
-					<li><i class="icon-lightbulb icon-large"></i> 'Quick Post' is a minimalistic editing machine</li>
-					<li><i class="icon-lightbulb icon-large"></i> 'Create Entry' is a full blown editing machine</li>
-				</ul>
-			</div>
+		<div class="panel panel-primary">
+		    <div class="panel-heading">
+		        <h3 class="panel-title"><i class="fa fa-medkit"></i> #$r( "dashboard.index.needHelp@admin" )#</h3>
+		    </div>
+		    <div class="panel-body">
+		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#
+		    </div>
 		</div>
-		</cfif>	
-		
 		<!--- Event --->
-		#announceInterception("cbadmin_postDashboardSideBar")#
-	</div>
-	<!--- End SideBar --->
-	
-</div> <!---end Row --->
-
+		#announceInterception( "cbadmin_postDashboardSideBar" )#
+    </div>
+</div>
 </cfoutput>

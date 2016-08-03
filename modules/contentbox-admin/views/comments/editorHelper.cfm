@@ -1,8 +1,8 @@
 ﻿<cfoutput>
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
 	// form validators
-	$("##commentEditForm").validate();
-});
+	$( "##commentEditForm" ).validate();
+} );
 </script>
 </cfoutput>

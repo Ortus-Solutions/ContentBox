@@ -1,30 +1,30 @@
+# Global Ignores
 .DS_Store
+.sass-cache
 .settings/**
 settings.xml
 .project
-_paidModules/**
 logs/**
-/web.config
+*.cache.*
+.idea
+web.config
 "Icon\r"
 WEB-INF/**
-test/logs/**
-modules/contentbox/modules/HTMLCompressor
-modules/contentbox/modules/PasteBin
-modules/contentbox/modules/google-prettify
-modules/_gsdata_
-mxunit
-*.cache.*
-workbench/resources/WEB-INF/lib/railo-server/context/logs
-workbench/resources/WEB-INF/railo/cfclasses
-workbench/resources/WEB-INF/railo/temp
-workbench/resources/WEB-INF/railo/logs
-contentbox-codexwiki
-.idea
-modules/contentbox/modules/FuseGuard
-modules/contentbox/modules/FuseGuardUI
-modules/contentbox/modules/CodeEditorManager
-contentbox-akismet
-workbench/build-contentbox/**
-workbench/dependencies
-Icon?
-workbench/build.number
+artifacts/**
+# Build Dependencies
+build/build.number
+build/apidocs/docbox
+build/resources/WEB-INF/*
+build/build-contentbox/**
+build/dependencies
+# Workbench Dependencies
+workbench/node_modules
+workbench/bower_components
+# Global Dependencies
+coldbox/*
+testbox/*
+# Module Dependencies
+modules/contentbox/themes/default/bower_components
+modules/contentbox/themes/default/node_modules
+modules/contentbox-admin/modules/contentbox-filebrowser/node_modules
+modules/contentbox-admin/modules/contentbox-filebrowser/bower_components

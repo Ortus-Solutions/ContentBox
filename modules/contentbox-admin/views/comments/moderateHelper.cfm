@@ -1,11 +1,11 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
-	$commentForm = $("##commentForm");
-});
+	$commentForm = $( "##commentForm" );
+} );
 function removeComment(){
-	$commentForm.attr("action","#event.buildlink(linkTo=rc.xehCommentRemove)#");
+	$commentForm.attr( "action","#event.buildlink(linkTo=rc.xehCommentRemove)#" );
 }
 </script>
 </cfoutput>

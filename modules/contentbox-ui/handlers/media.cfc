@@ -1,45 +1,28 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-
-http://www.apache.org/licenses/LICENSE-2.0 
-
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
-limitations under the License.
-********************************************************************************
-* Handles RSS Feeds
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* Handles media services
 */
 component singleton{
 
 	// DI
-	property name="mediaService" 	inject="mediaService@cb";
+	property name="mediaService" 	inject="id:mediaService@cb";
 	property name="settingService"  inject="id:settingService@cb";
-	property name="captcha"			inject="coldbox:myplugin:Captcha@contentbox";
+	property name="captchaService"	inject="id:captcha@cb";
 
 	/**
 	* Deliver Media
 	*/
 	function index( event, rc, prc ){
 		// Param cache purge
-		event.paramValue( "cbcache", "false");
+		event.paramValue( "cbcache", "false" );
 		if( !isBoolean( rc.cbcache ) ){ rc.cbcache = false; }
 		
 		// Get the requested media path
 		var replacePath = ( len( prc.cbEntryPoint ) ? "#prc.cbEntryPoint#/" : "" ) & event.getCurrentRoute();
-		prc.mediaPath = trim( replacenocase( event.getCurrentRoutedURL(), replacePath, "" ) );
+		prc.mediaPath = trim( replacenocase( URLDecode( event.getCurrentRoutedURL() ), replacePath, "" ) );
 		prc.mediaPath = reReplace( prc.mediaPath, "\/$", "" );
 		
 		// Determine if ColdBox is doing a format extension detection?
@@ -83,7 +66,7 @@ component singleton{
 			.setHTTPHeader(  name="pragma", 		value="no-cache" )
 			.setHTTPHeader(  name="cache-control",  value="no-cache, no-store, must-revalidate" );
 		// Deliver Captcha
-		var data 	= captcha.display();
+		var data 	= captchaService.display();
 		var imgURL 	= arrayToList( reMatchNoCase( 'src="([^"]*)"', data ) );
 		imgURL 		= replace( replace( imgURL, "src=", "" ) , '"', "", "all" );
 		// deliver image

@@ -1,0 +1,212 @@
+/* ==========================================================================
+   Login
+   ========================================================================== */
+ #login-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    @include transition(all, 3s, ease-in-out);
+}
+#login-wrapper {
+    margin:100px auto;
+    float:none;
+}
+#login-wrapper .logo {
+    color: #fff;
+    font-size: 1.7em;
+    text-transform: uppercase;
+    display: inline-block;
+}
+#login-wrapper .logo:before {
+    background-image: url('../images/ContentBox_90.png');
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding: 0 20px;
+    content:"\00a0";
+}
+#login-wrapper .form-group i {
+    position: absolute;
+    left: 27px;
+    top: 11px;
+}
+#login-wrapper #email, #login-wrapper #password {
+    padding-left:32px;
+}
+/* ==========================================================================
+   Error Pages 404 and 500
+   ========================================================================== */
+#error-container .block-error {
+    width: 400px;
+    margin: 50px auto 0px;
+}
+#error-container header h1.error {
+    font-size:250px;
+}
+#error-container header p {
+    text-transform: uppercase;
+    font-size: 30px;
+}
+#error-container p {
+    margin:10px 0 40px 0;
+}
+/* ==========================================================================
+   Timeline
+   ========================================================================== */
+ .timeline {
+    border-collapse:collapse;
+    border-spacing:0;
+    display:table;
+    position:relative;
+    table-layout:fixed;
+    width:100%;
+}
+.timeline .time-layer {
+    margin-right: -40px;
+    margin-top:30px;
+    position:relative;
+    margin-bottom:30px;
+}
+.timeline:before {
+    background-color:#d8d9df;
+    bottom:0px;
+    content:"";
+    left:50%;
+    position:absolute;
+    top:30px;
+    width:1px;
+    z-index:0;
+}
+h3.timeline-title {
+    margin:0;
+    color:#C8CCD7;
+    font-size:20px;
+    font-weight:400;
+    margin:0 0 5px;
+    text-transform:uppercase;
+}
+.timeline-layer .panel .panel-heading h1 i {
+    color:$defaultColor;
+}
+.timeline-item:before, .timeline-item.left:after {
+    content:"";
+    display:block;
+    width:50%;
+}
+.timeline-item {
+    display:table-row;
+}
+.timeline-layer {
+    display:table-cell;
+    vertical-align:top;
+    width:50%;
+}
+.timeline-layer h1 {
+    font-size:16px;
+    font-weight:300;
+    margin:0 0 5px;
+}
+.timeline-layer .panel {
+    display:block;
+    margin-left:45px;
+    position:relative;
+    text-align:left;
+    background:#fff;
+}
+.timeline-item .timeline-layer .arrow {
+    border-bottom:8px solid transparent;
+    border-top:8px solid transparent;
+    display:block;
+    height:0;
+    left:-7px;
+    position:absolute;
+    top:13px;
+    width:0;
+}
+.timeline-item .timeline-layer .arrow {
+    border-right:8px solid #fff;
+}
+.timeline-item.left .timeline-layer .arrow-left {
+    border-bottom:8px solid transparent;
+    border-top:8px solid transparent;
+    display:block;
+    height:0;
+    right:-7px;
+    position:absolute;
+    top:13px;
+    width:0;
+    left:auto;
+}
+.timeline-item.left .timeline-layer .arrow-left {
+    border-left:8px solid #fff;
+}
+.timeline .timeline-icon {
+    left:-60px;
+    position:absolute;
+    top:5px;
+}
+.timeline .timeline-icon {
+    background:$defaultColor;
+}
+.timeline .timeline-icon {
+   @include roundBorders(50%);
+    display:block;
+    height:30px;
+    width:30px;
+    text-align:center;
+    color:#fff;
+}
+.timeline .timeline-icon i {
+    margin-top:9px;
+}
+.timeline-item.left .timeline-icon {
+    left:auto;
+    right:-60px;
+}
+.timeline .time-icon:before {
+    font-size:16px;
+    margin-top:5px;
+}
+.timeline .timeline-date {
+    left:-245px;
+    position:absolute;
+    text-align:right;
+    top:12px;
+    width:150px;
+    display:none;
+}
+.timeline-item.left .timeline-date {
+    left:auto;
+    right:-245px;
+    text-align:left;
+    display:none;
+}
+.timeline-item.left:before {
+    display:none;
+}
+.timeline-layer p {
+    font-size:14px;
+    margin-bottom:0;
+    color:#999;
+}
+.timeline-layer .panel {
+    margin-bottom:5px;
+}
+.timeline-layer .album {
+    margin-top:20px;
+}
+.timeline-item.left .timeline-layer .album {
+    margin-top:20px;
+    float:right;
+}
+.timeline-layer .notification {
+    background:#FFFFFF;
+    margin-top:20px;
+    padding:4px;
+}
+.timeline-item.left .panel {
+    margin-left:0;
+    margin-right:45px;
+}
+.timeline-item.left h1, .timeline-item.left p {
+    text-align: right;
+}

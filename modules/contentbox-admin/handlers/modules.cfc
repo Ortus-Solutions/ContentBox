@@ -1,4 +1,8 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage modules
 */
 component extends="baseHandler"{
@@ -6,21 +10,22 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="moduleService"	inject="id:moduleService@cb";
 	property name="cb" 				inject="cbHelper@cb";
-	property name="messagebox"		inject="coldbox:plugin:MessageBox";
 
+	// PrePost Actions
 	this.prehandler_except = "execute";
 
 	// pre handler
-	function preHandler(event,action,eventArguments,rc,prc){
+	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
 		prc.tabModules = true;
 	}
 
 	// Build Module Links
 	function buildModuleLink( event, rc, prc ){
-		return cb.buildModuleLink(module=event.getValue( "module","" ),
-								  linkTo=event.getValue( "moduleEvent","" ),
-								  queryString=event.getValue( "moduleQS","" ));
+		return cb.buildModuleLink(
+			module		= event.getValue( "module","" ),
+			linkTo		= event.getValue( "moduleEvent","" ),
+			queryString	= event.getValue( "moduleQS","" ));
 	}
 
 	// proxy a call to a module, all module calls are supposed to return content
@@ -32,19 +37,19 @@ component extends="baseHandler"{
 		// get module by moduleEntryPoint
 		var module = moduleService.findWhere( {entryPoint = rc.moduleEntryPoint} );
 		if( isNull( module ) ){
-			messagebox.warn( "No modules where found with the following entryPoint: #rc.moduleEntryPoint#. Please make sure your module has an entry point." );
+			cbMessagebox.warn( "No modules where found with the following entryPoint: #rc.moduleEntryPoint#. Please make sure your module has an entry point." );
 			return setNextEvent( prc.xehModules );
 		}
 		if( !module.isLoaded() ){
-			messagebox.warn( "The requested module: #rc.moduleEntryPoint# is not valid!" );
+			cbMessagebox.warn( "The requested module: #rc.moduleEntryPoint# is not valid!" );
 			return setNextEvent( prc.xehModules );
 		}
 		if( !module.getIsActive() ){
-			messagebox.warn( "The requested module: #rc.moduleEntryPoint# is not active!" );
+			cbMessagebox.warn( "The requested module: #rc.moduleEntryPoint# is not active!" );
 			return setNextEvent( prc.xehModules );
 		}
 		if( !len(rc.moduleHandler) ){
-			messagebox.warn( "The requested module: #rc.moduleEntryPoint# is valid but the incoming module handler is empty!" );
+			cbMessagebox.warn( "The requested module: #rc.moduleEntryPoint# is valid but the incoming module handler is empty!" );
 			return setNextEvent( prc.xehModules );
 		}
 
@@ -56,13 +61,13 @@ component extends="baseHandler"{
 		if( !isNull( results ) ){ return results; }
 
 		// stash the module view, so it renders in the admin layout if not set already
-		if( !structKeyExists( prc, "viewModule") or !len( prc.viewModule )) {
+		if( !structKeyExists( prc, "viewModule" ) or !len( prc.viewModule )) {
 			prc.viewModule = module.getName();
 		}
 		// Check for renderData
 		if( structIsEmpty( event.getRenderData() ) ){
 			// else normal ColdBox Rendering
-			return controller.getPlugin( "Renderer" ).renderLayout();
+			return controller.getRenderer().renderLayout();
 		}
 
 	}
@@ -90,7 +95,7 @@ component extends="baseHandler"{
 		prc.modulesCount = modules.count;
 
 		// ForgeBox Entry URL
-		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).settings.forgeBoxEntryURL;
+		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
 		// ForgeBox Stuff
 		prc.forgeBoxSlug = "contentbox-modules";
 		prc.forgeBoxInstallDir = URLEncodedFormat( moduleService.getModulesPath() );
@@ -103,35 +108,35 @@ component extends="baseHandler"{
 	//activate
 	function activate( event, rc, prc ){
 		moduleService.activateModule( rc.moduleName );
-		messagebox.info( "Modules Activated, woohoo!" );
+		cbMessagebox.info( "Modules Activated, woohoo!" );
 		setNextEvent(prc.xehModules);
 	}
 
 	//deactivate
 	function deactivate( event, rc, prc ){
 		moduleService.deactivateModule( rc.moduleName );
-		messagebox.info( "Modules Deactivated!" );
+		cbMessagebox.info( "Modules Deactivated!" );
 		setNextEvent(prc.xehModules);
 	}
 
 	//reset
 	function reset( event, rc, prc ){
 		moduleService.resetModules();
-		messagebox.info( "Modules Reset!" );
+		cbMessagebox.info( "Modules Reset!" );
 		setNextEvent(prc.xehModules);
 	}
 
 	//rescan
 	function rescan( event, rc, prc ){
 		moduleService.startup();
-		messagebox.info( "Modules Rescaned and Revamped!" );
+		cbMessagebox.info( "Modules Rescaned and Revamped!" );
 		setNextEvent(prc.xehModules);
 	}
 
 	//Remove
 	function remove( event, rc, prc ){
 		moduleService.deleteModule( rc.moduleName );
-		messagebox.info( "Module Removed Forever!" );
+		cbMessagebox.info( "Module Removed Forever!" );
 		setNextEvent(prc.xehModules);
 	}
 
@@ -141,7 +146,7 @@ component extends="baseHandler"{
 
 		// Verify
 		if( len( fp ) eq 0){
-			messagebox.setMessage(type="warning", message="Please choose a file to upload" );
+			cbMessagebox.warn( "Please choose a file to upload" );
 		}
 		else{
 			// Upload File
@@ -149,21 +154,20 @@ component extends="baseHandler"{
 				var results = moduleService.uploadModule( "fileModule" );
 				if( results.error ){
 					flash.put( "forgeboxInstallLog", results.logInfo );
-					messagebox.error( "Error installing module, please check out the log information." );
+					cbMessagebox.error( "Error installing module, please check out the log information." );
 				}
 				else{
 					// Messagebox
-					messagebox.info( "Module Installed Successfully in your 'modules' folder." );
+					cbMessagebox.info( "Module Installed Successfully in your 'modules' folder." );
 					flash.put( "forgeboxInstallLog", "Please verify if the module was
 					registered successfully by looking below in your modules listing.  Some modules need some manual installations so please verify the file structure in your
 					media manager modules library.  If the module does not appear below, then it was not a valid module installation and some manual work is needed." );
 				}
-			}
-			catch(Any e){
-				messagebox.error( "Error Installing Module: #e.detail# #e.message#" );
+			} catch( Any e ){
+				cbMessagebox.error( "Error Installing Module: #e.detail# #e.message#" );
 			}
 		}
 
-		setNextEvent(prc.xehModules);
+		setNextEvent( prc.xehModules );
 	}
 }

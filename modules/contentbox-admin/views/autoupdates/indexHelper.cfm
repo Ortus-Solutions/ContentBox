@@ -1,16 +1,27 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
-<script type="text/javascript">
+<script>
 $(document).ready(function() {
-	$updateCheckForm = $("##updateCheckForm");
+	$updateCheckForm = $( "##updateCheckForm" );
 	// form validators
-	$("##updateNowForm").validate();
-	$("##uploadNowForm").validate();
-});
+	$( "##updateNowForm" ).validate();
+	$( "##uploadNowForm" ).validate();
+} );
 function checkForUpdates(){
-	var channel = $updateCheckForm.find("input[name='channel']:checked").val();
+	var icon 			= '<i class="fa fa-circle-o-notch fa-spin"></i>';
+	var $btn 			= $( "##btnUpdates" );
+	var originalValue 	= $btn.html();
+
+	$btn.html( icon + originalValue );
+	var channel = $updateCheckForm.find( "input[name='channel']:checked" ).val();
 	// open update modal
-	openRemoteModal('#event.buildLink(prc.xehUpdateCheck)#',{channel:channel});
+	openRemoteModal( 
+		'#event.buildLink(prc.xehUpdateCheck)#',
+		{ channel:channel },
+		function( data ){
+			$btn.html( originalValue );
+		} 
+	);
 	
 	return false;
 }

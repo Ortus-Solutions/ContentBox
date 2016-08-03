@@ -1,20 +1,21 @@
 ﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * This widget creates a simple ContentBox search form
 */
-component extends="contentbox.model.ui.BaseWidget" singleton{
+component extends="contentbox.models.ui.BaseWidget" singleton{
 
-	SearchForm function init(controller){
-		// super init
-		super.init( controller );
-
+	SearchForm function init(){
 		// Widget Properties
-		setPluginName("SearchForm" );
-		setPluginVersion( "2.0" );
-		setPluginDescription( "This widget creates a simple ContentBox search form." );
-		setPluginAuthor( "Ortus Solutions" );
-		setPluginAuthorURL( "http://www.ortussolutions.com" );
+		setName( "SearchForm" );
+		setVersion( "2.0" );
+		setDescription( "This widget creates a simple ContentBox search form." );
+		setAuthor( "Ortus Solutions" );
+		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "Miscellaneous" );
-		setIcon( "search.png" );
+		setIcon( "search" );
 		return this;
 	}
 
@@ -29,13 +30,22 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 	* @buttoncss.hint The search button css classes
 	* @formcss.hint The form css classes
 	*/
-	any function renderIt(string type="content", string label="Search for", string title="", string titleLevel="2", string placeholder="", string querycss="", string buttoncss="", string formcss=""){
+	any function renderIt(
+		string type="content", 
+		string label="Search for", 
+		string title="", 
+		string titleLevel="2", 
+		string placeholder="", 
+		string querycss="", 
+		string buttoncss="", 
+		string formcss="" 
+	){
 		var rString	= "";
 		var event = getRequestContext();
 
 		// Check type
-		if( !reFindNoCase("^(content|blog)$",arguments.type) ){
-			throw(message="Invalid type for search form", detail="Valid types are: content or blog", type="InvalidSearchType");
+		if( !reFindNoCase( "^(content|blog)$", arguments.type ) ){
+			throw( message="Invalid type for search form", detail="Valid types are: content or blog", type="InvalidSearchType" );
 		}
 		// Action
 		var action = cb.linkContentSearch();
@@ -43,14 +53,14 @@ component extends="contentbox.model.ui.BaseWidget" singleton{
 			action = cb.linkSearch();
 		}
 		// Check incoming query
-		local.q = event.getValue( "q", "" );
+		local.q = htmlEditFormat( event.getValue( "q", "" ) );
 
 		// generate recent comments
 		saveContent variable="rString"{
 			writeOutput('
-			#html.startForm(name="searchForm", action=action, class=arguments.formcss)#
-				#html.textField(name="q", label=arguments.label, placeholder=arguments.placeholder, value=local.q, class=arguments.querycss)#
-				#html.submitButton(name="searchSubmitButton", value="Search", class=arguments.buttoncss)#
+			#html.startForm( name="searchForm", action=action, class=arguments.formcss )#
+				#html.textField( name="q", label=arguments.label, placeholder=arguments.placeholder, value=local.q, class=arguments.querycss )#
+				#html.submitButton( name="searchSubmitButton", value="Search", class=arguments.buttoncss )#
 			#html.endForm()#
 			');
 		}

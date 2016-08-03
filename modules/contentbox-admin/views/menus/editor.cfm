@@ -1,63 +1,86 @@
 <cfoutput>
-<div class="row-fluid">
-    #html.startForm( action=prc.xehMenuSave, name="menuForm", novalidate="novalidate", class="form-vertical" )#
-    <div class="span9" id="main-content">
-        <div class="box">
-            <!--- Body Header --->
-            <div class="header">
-                <i class="icon-sort-by-attributes-alt icon-large"></i>
-                Menu Designer
-                <!--- Quick Actions --->
-                <div class="btn-group pull-right" style="margin-top:5px">
-                    <a class="btn btn-inverse" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="icon-reply"></i> Back</a>
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="h1">
+            <i class="fa fa-sort-amount-desc fa-lg"></i> Menu Designer
+        </h1>
+    </div>
+</div>
+
+#html.startForm( 
+    action      = prc.xehMenuSave, 
+    name        = "menuForm", 
+    novalidate  = "novalidate", 
+    class       = "form-vertical" 
+)#
+
+<div class="row">
+
+    <div class="col-md-9">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="actions">
+                    <a class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fa fa-reply"></i> Back</a>
                 </div>
             </div>
-            <!--- Body --->
-            <div class="body">
-                <!--- MessageBox --->
-                #getPlugin( "MessageBox" ).renderit()#
-                <menu class="well well-small">
+            <div class="panel-body">
+                
+                #getModel( "messagebox@cbMessagebox" ).renderit()#
+
+                <menu class="well well-sm">
                     <p>Click any of the options below to insert a new menu item of that type.</p>
                     <cfloop collection="#prc.providers#" item="provider">
-                        <a class="btn btn-small provider btn-info" data-provider="#provider#"><span style="display:inline-block;" title="#prc.providers[ provider].getDescription()#"><i class="#prc.providers[ provider].getIconClass()#"></i> #provider#</span></a>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-sm provider btn-info" data-provider="#provider#" title="#prc.providers[ provider ].getDescription()#">
+                                <i class="#prc.providers[ provider].getIconClass()#"></i> #provider#
+                            </a>
+                        </div>
                     </cfloop>
-                    <a class="btn btn-small pull-right" data-action="collapse-all"><span style="display:inline-block;" title="Collapse All"><i class="icon-minus"></i> Collapse All</span></a>
-                    <a class="btn btn-small pull-right" data-action="expand-all" style="margin-right:4px;"><span style="display:inline-block;" title="Expand All"><i class="icon-plus"></i> Expand All</span></a>
+
+                    <div class="btn-group pull-right" role="group">
+                        <a class="btn btn-sm btn-primary" data-action="collapse-all">
+                            <span style="display:inline-block;" title="Collapse All"><i class="fa fa-minus"></i> Collapse All</span>
+                        </a>
+                        <a class="btn btn-sm btn-primary" data-action="expand-all" style="margin-right:4px;">
+                            <span style="display:inline-block;" title="Expand All"><i class="fa fa-plus"></i> Expand All</span>
+                        </a>
+                    </div>
                 </menu>
-                <div class="row-fluid">
-                    <span class="span7">
+
+                <div class="row">
+                    <div class="col-md-7">
                         <h3>Menu Sandbox</h3>
                         <p>Insert new menu items and then drag-and-drop to get them in the perfect order.</p>
-                        <div class="alert alert-error" id="menuErrors" style="display:none;">
+                        <div class="alert alert-danger" id="menuErrors" style="display:none;">
                             Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
                         </div>
-                        <div class="designer well well-small">
+                        <div id="placeholder-message" class="alert alert-info">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
+                        <div class="designer well well-sm">
                             <div class="dd" id="nestable">
                                 <ol class="dd-list">
                                     #prc.menuItems#
-                                    <div id="placeholder-message">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
                                 </ol>
                             </div>
                         </div>
-                    </span>
-                    <span class="span5">
-                        <h3>Preview <a class="btn btn-small" id="preview-button"><i class="icon-refresh"></i></a></h3>
+                    </div>
+                    <div class="col-md-5">
+                        <h3>Preview <a class="btn btn-sm btn-primary" id="preview-button"><i class="fa fa-refresh"></i></a></h3>
                         <p>Here's an instant preview of your menu.</p>
-                        <div id="preview-panel" class="well well-small">No Preview Available</div>
-                    </span>
+                        <div id="preview-panel" class="well well-sm">No Preview Available</div>
+                    </div>
                 </div>
             </div>
         </div>
         
     </div>
-    <!--- main sidebar --->
-    <div class="span3" id="main-sidebar">
-        <!--- Info Box --->
-        <div class="small_box">
-            <div class="header">
-                <i class="icon-cogs"></i> Menu Data
+
+    <div class="col-md-3">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-cogs"></i> Menu Data</h3>
             </div>
-            <div class="body">
+            <div class="panel-body">
                 <!--- id --->
                 #html.hiddenField( name="menuID", bind=prc.menu )#
                 #html.hiddenField( name="menuItems" )#      
@@ -69,10 +92,10 @@
                     maxlength="100",
                     required="required",
                     title="The title for this menu",
-                    class="textfield input-block-level",
+                    class="form-control",
                     wrapper="div class=controls",
                     labelClass="control-label",
-                    groupWrapper="div class=control-group"
+                    groupWrapper="div class=form-group"
                 )#
                 #html.select(
                     options="ul,ol", 
@@ -81,19 +104,26 @@
                     bind=prc.menu,
                     required="required",
                     title="Select the type of list (ordered or unordered)",
-                    class="textfield input-block-level",
+                    class="form-control input-sm",
                     wrapper="div class=controls",
                     labelClass="control-label",
-                    groupWrapper="div class=control-group"
+                    groupWrapper="div class=form-group"
                 )#
-                <div class="control-group">
+                <div class="form-group">
                     <label for="slug" class="control-label">Menu Slug:</label>
                     <div class="controls">
                         <div id='slugCheckErrors'></div>
-                        <div class="input-append input-block-level">
-                            #html.textfield(name="slug",value=prc.menu.getSlug(),maxlength="100",class="textfield input-block-level",title="The unique slug for this menu", disabled="#prc.menu.isLoaded() ? 'true' : 'false'#")#
-                            <a title="" class="btn add-on" href="javascript:void(0)" onclick="toggleSlug(); return false;" data-original-title="Lock/Unlock Menu Slug">
-                                <i id="toggleSlug" class="icon-#prc.menu.isLoaded() ? 'lock' : 'unlock'#"></i>
+                        <div class="input-group">
+                            #html.textfield(
+                                name="slug",
+                                value=prc.menu.getSlug(),
+                                maxlength="100",
+                                class="form-control",
+                                title="The unique slug for this menu", 
+                                disabled="#prc.menu.isLoaded() ? 'true' : 'false'#"
+                            )#
+                            <a title="" class="input-group-addon" href="javascript:void(0)" onclick="toggleSlug(); return false;" data-original-title="Lock/Unlock Menu Slug" data-container="body">
+                                <i id="toggleSlug" class="fa fa-#prc.menu.isLoaded() ? 'lock' : 'unlock'#"></i>
                             </a>
                         </div>
                     </div>
@@ -104,10 +134,10 @@
                     bind=prc.menu, 
                     maxlength="100",
                     title="Additional CSS classes to use for the main menu HTML element",
-                    class="textfield input-block-level",
+                    class="form-control",
                     wrapper="div class=controls",
                     labelClass="control-label",
-                    groupWrapper="div class=control-group"
+                    groupWrapper="div class=form-group"
                 )#
                 #html.textfield(
                     label="List CSS Classes:",
@@ -115,19 +145,21 @@
                     bind=prc.menu, 
                     maxlength="100",
                     title="CSS classes to apply to all list elements (ul/ol) within this menu",
-                    class="textfield input-block-level",
+                    class="form-control",
                     wrapper="div class=controls",
                     labelClass="control-label",
-                    groupWrapper="div class=control-group"
+                    groupWrapper="div class=form-group"
                 )#
                 <div class="actionBar">
-                    <a class="btn btn-danger" id="submitMenu">Save Menu</a>
+                    <input type="hidden" name="saveEvent" id="saveEvent" value="#prc.xehMenuEditor#" />
+                    <a class="btn btn-primary"  id="submitSave">Save</a>
+                    <a class="btn btn-danger"   id="submitMenu">Save + Close</a>
                 </div>
             </div>
         </div>
     </div>
-    #html.endForm()#
 </div>
+#html.endForm()# 
 
 <!--- CONTEXT MENU TEMPLATE --->
 <div id="context-menu" class="dropdown clearfix" style="position: absolute;display:none;">
@@ -143,13 +175,15 @@
 </div>
 
 <!--- PREVIEW DIALOG --->
-<div id="previewDialog" class="modal hide fade">
-    <div id="modalContent">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3><i class="icon-eye-open"></i> Menu Preview</h3>
+<div id="previewDialog" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3><i class="fa fa-eye"></i> Menu Preview</h3>
+            </div>
+            <div class="modal-body"></div>
         </div>
-        <div class="modal-body"></div>
     </div>
 </div>
 </cfoutput>

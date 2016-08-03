@@ -13,8 +13,8 @@
                 typeIcon = $( this ).closest( '.dd3-item' ).find( '.dd3-type' );
                 var baseURL = '#args.xehMediaSelector#';
                 win = window.open( baseURL, 'fbSelector', 'height=600,width=600' )
-            });
-        });
+            } );
+        } );
         /**
          * Custom callback for menu item selection
          * @param {String} sPath
@@ -30,6 +30,8 @@
             updateLabel( label );
             typeIcon.removeClass( 'btn-danger' ).addClass( 'btn-info' );
             win.close();
+            $('##menuForm').valid();
+            toggleErrors('off');
             return false;
         }
     </script>

@@ -1,42 +1,26 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-* The main ContentBox engine handler
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* Manages page displays
 */
-component extends="content" singleton{
+component extends="content"{
 
 	// DI
 	property name="pageService"			inject="id:pageService@cb";
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
-	property name="layoutService"		inject="id:LayoutService@cb";
-	property name="utility"				inject="coldbox:plugin:Utilities";
+	property name="themeService"		inject="id:themeService@cb";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
 	
-	// pre Handler
-	function preHandler(event, action, eventArguments, rc, prc ){
+	/**
+	* Pre Handler
+	*/
+	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 	}
 
@@ -72,14 +56,14 @@ component extends="content" singleton{
 				return prc.page.renderContent();
 			}
 			default : {
-				event.setLayout( name="#prc.cbLayout#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox" )
-					.setView( view="#prc.cbLayout#/views/page", module="contentbox" );
+				event.setLayout( name="#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox" )
+					.setView( view="#prc.cbTheme#/views/page", module="contentbox" );
 			}
 		} 
 	}
 	
 	/**
-	* Around entry page advice that provides caching and multi-output format
+	* Around page advice that provides caching and multi-output format
 	*/
 	function aroundIndex( event, rc, prc , eventArguments ){
 		// setup wrap arguments
@@ -143,8 +127,8 @@ component extends="content" singleton{
 				return prc.page.renderContent();
 			} else {
 				// set skin view
-				event.setLayout( name="#prc.cbLayout#/layouts/#thisLayout#", module="contentbox" )
-					.setView( view="#prc.cbLayout#/views/page", module="contentbox" );
+				event.setLayout( name="#prc.cbTheme#/layouts/#thisLayout#", module="contentbox" )
+					.setView( view="#prc.cbTheme#/views/page", module="contentbox" );
 			}
 		} else {
 			// missing page
@@ -153,44 +137,46 @@ component extends="content" singleton{
 			// announce event
 			announceInterception( "cbui_onPageNotFound", {page=prc.page, missingPage=prc.missingPage, routedURL=prc.missingRoutedURL} );
 			// set skin not found
-			event.setLayout( name="#prc.cbLayout#/layouts/pages", module="contentbox" )
-				.setView( view="#prc.cbLayout#/views/notfound", module="contentbox" )
+			event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
+				.setView( view="#prc.cbTheme#/views/notfound", module="contentbox" )
 				.setHTTPHeader( "404", "Page not found" );				
 		}
 	}
 
 	/**
 	* Content Search
+	* @return html
 	*/
 	function search( event, rc, prc ){
 		// incoming params
-		event.paramValue( "page", 1 );
-		event.paramValue( "q", "" );
+		event.paramValue( "page", 1 )
+			.paramValue( "q", "" );
 
 		// cleanup
 		rc.q = HTMLEditFormat( trim( rc.q ) );
 
-		// prepare paging plugin
-		prc.pagingPlugin 		= getMyPlugin( plugin="Paging", module="contentbox" );
-		prc.pagingBoundaries	= prc.pagingPlugin.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
+		// prepare paging object
+		prc.oPaging 			= getModel( "paging@cb" );
+		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
 		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
-		
+
 		// get search results
 		if( len( rc.q ) ){
 			var searchAdapter = searchService.getSearchAdapter();
-			prc.searchResults = searchAdapter.search( offset=prc.pagingBoundaries.startRow-1,
-												      max=prc.cbSettings.cb_search_maxResults,
-												   	  searchTerm=rc.q );
+			prc.searchResults = searchAdapter.search( 
+				offset 		= prc.pagingBoundaries.startRow-1,
+				max 		= prc.cbSettings.cb_search_maxResults,
+				searchTerm	= rc.q 
+			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
-		}
-		else{
-			prc.searchResults = getModel( "SearchResults@cb" );
-			prc.searchResultsContent = "Please enter a search term to search on.";
+		} else {
+			prc.searchResults 			= getModel( "SearchResults@cb" );
+			prc.searchResultsContent 	= "<div class='alert alert-info'>Please enter a search term to search on.</div>";
 		}
 		
 		// set skin search
-		event.setLayout( name="#prc.cbLayout#/layouts/#layoutService.getThemeSearchLayout()#", module="contentbox" )
-			.setView( view="#prc.cbLayout#/views/search", module="contentbox" );
+		event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeSearchLayout()#", module="contentbox" )
+			.setView( view="#prc.cbTheme#/views/search", module="contentbox" );
 			
 		// announce event
 		announceInterception( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
@@ -202,15 +188,15 @@ component extends="content" singleton{
 	*/
 	function rss( event, rc, prc ){
 		// params
-		event.paramValue("category","");
-		event.paramValue("entrySlug","");
-		event.paramValue("commentRSS",false);
+		event.paramValue( "category","" );
+		event.paramValue( "entrySlug","" );
+		event.paramValue( "commentRSS",false);
 
 		// Build out the RSS feeds
 		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,entrySlug=rc.entrySlug);
 
 		// Render out the feed xml
-		event.renderData(type="plain",data=feed,contentType="text/xml");
+		event.renderData(type="plain",data=feed,contentType="text/xml" );
 	}
 
 	/**
@@ -240,7 +226,7 @@ component extends="content" singleton{
 		// Verify exclusions
 		if( listFindNoCase( excluded, arguments.layout ) ){ return; }
 		// Verify layout
-		if( !fileExists( expandPath( CBHelper.layoutRoot() & "/layouts/#arguments.layout#.cfm" ) ) ){
+		if( !fileExists( expandPath( CBHelper.themeRoot() & "/layouts/#arguments.layout#.cfm" ) ) ){
 			throw( 
 				message	= "The layout of the page: '#arguments.layout#' does not exist in the current theme.",
 			    detail	= "Please verify your page layout settings",

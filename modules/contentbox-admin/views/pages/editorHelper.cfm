@@ -2,8 +2,8 @@
 <!--- Render Commong editor functions --->
 #renderView( view="_tags/editors", prePostExempt=true )#
 <!--- Custom Javascript --->
-<script type="text/javascript">
-$( document ).ready( function() {
+<script>
+$( document ).ready( function(){
  	// Editor Pointers
 	$pageForm = $( "##pageForm" );
 	// setup editors via _tags/editors.cfm by passing the form container

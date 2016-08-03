@@ -1,0 +1,89 @@
+.panel {
+    border: none;
+    box-shadow: none;
+    @include roundBorders(3px);
+}
+.panel>.panel-heading {
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 15px;
+}
+.panel .actions {
+    position: absolute;
+    right: 30px;
+    top: 18px;
+}
+.panel .actions i {
+    font-size: 1em;
+    margin:0 3px;
+}
+.panel .actions i:hover {
+    cursor:pointer;
+}
+.panel>.panel-footer {
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    padding: 15px;
+}
+.panel-default>.panel-heading {
+    border-color: #eff2f7;
+    background: #fafafa;
+    color:#767676;
+}
+.panel-default .actions i {
+    font-size: 1em;
+    color: $defaultColor;
+    margin:0 3px;
+}
+.panel-default .actions i:hover {
+    cursor:pointer;
+    color:#767676;
+}
+.panel-default>.panel-footer {
+    border-color: #eff2f7;
+    background: #fafafa;
+    color:#767676;
+}
+.panel-primary>.panel-heading {
+    color: #fff;
+    background-color: $primaryColor;
+    border-color: $primaryColor;
+}
+.panel-primary {
+    border-color: $primaryColor;
+}
+.panel-primary>.panel-heading a, .panel-primary>.panel-heading a:hover {
+    color: #fff;
+}
+.panel-solid-default>.panel-heading, .panel-solid-default>.panel-body, .panel-solid-default>.panel-footer {
+    background:$defaultColor;
+    color:#fff;
+    border:none;
+}
+.panel-solid-primary >.panel-heading, .panel-solid-primary >.panel-body, .panel-solid-primary >.panel-footer {
+    background:$primaryColor;
+    color:#fff;
+    border:none;
+}
+.panel-solid-success>.panel-heading, .panel-solid-success>.panel-body, .panel-solid-success>.panel-footer {
+    background:$successColor;
+    color:#fff;
+    border:none;
+}
+.panel-solid-warning >.panel-heading, .panel-solid-warning >.panel-body, .panel-solid-warning >.panel-footer {
+    background:$warningColor;
+    color:#fff;
+    border:none;
+}
+.panel-solid-info>.panel-heading, .panel-solid-info>.panel-body, .panel-solid-info>.panel-footer {
+    background:$infoColor;
+    color:#fff;
+    border:none;
+}
+.panel-solid-danger >.panel-heading, .panel-solid-danger >.panel-body, .panel-solid-danger >.panel-footer {
+    background:$dangerColor;
+    color:#fff;
+    border:none;
+}
