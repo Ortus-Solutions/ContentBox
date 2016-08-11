@@ -21,6 +21,7 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype"{
 	property name="securityService" 		inject="id:securityService@cb";
 	property name="html"					inject="HTMLHelper@coldbox";
 	property name="controller"				inject="coldbox";
+	property name="log"						inject="logbox:logger:{this}";
 	
 	// Local Properties
 	property name="name"					type="string" default="";
