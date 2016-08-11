@@ -350,7 +350,7 @@ component{
 
 		// Captcha Validation
 		if( prc.cbSettings.cb_comments_captcha AND NOT 
-			captchaService.validate( rc.captchacode );
+			captchaService.validate( rc.captchacode ) 
 		){
 			ArrayAppend( commentErrors, "Invalid security code. Please try again." );
 		}
