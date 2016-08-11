@@ -1031,6 +1031,16 @@ component accessors="true" singleton threadSafe{
 		return linkEntry( arguments.content, arguments.ssl ) & "/commentPost";
 	}
 
+	/**
+	 * Easy function to render out a ContentBox Captcha Image.
+	 * This function returns the <img> HTML
+	 * @return html
+	 */
+	function renderCaptcha(){
+		var event = getRequestContext();
+		return "<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha' )#'>";
+	}
+
 	/************************************** widget functions *********************************************/
 
 	/**
