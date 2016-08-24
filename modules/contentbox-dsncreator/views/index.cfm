@@ -20,7 +20,7 @@
 			</h1>
 			<p>
 				You are one step closer to releasing your content out of its box! The first step in our installer is to make sure
-				we can connect to your database of choice.  So if you have not created an empty database for ContenBox yet, please go do
+				we can connect to your database of choice.  So if you have not created an empty database for ContentBox yet, please go do
 				that now.  The next step is for ContentBox to create or use a datasource connection to the database from our CFML engine.
 			</p>
 		</div>
