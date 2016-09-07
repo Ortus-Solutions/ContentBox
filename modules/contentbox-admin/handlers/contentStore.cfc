@@ -263,8 +263,7 @@ component extends="baseContentHandler"{
 		}
 
 		// slugify the incoming title or slug
-		if( NOT len(rc.slug) ){ rc.slug = rc.title; }
-		rc.slug = variables.HTMLHelper.slugify( rc.slug );
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" ) ){
