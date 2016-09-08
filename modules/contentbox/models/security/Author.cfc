@@ -271,17 +271,17 @@ component 	persistent="true"
 
 	/**
 	* Get a flat representation of this entry
-	* @excludes Exclude properties
+	* @excludes Exclude properties, by default it does pages and entries
 	* @showRole Show Roles
 	* @showPermissions Show permissions
 	*/
 	function getMemento( 
-		excludes="",
+		excludes="pages,entries",
 		boolean showRole=true,
 		boolean showPermissions=true
 	){
 		// Do this to convert native Array to CF Array for content properties
-		var pList = listToArray( arrayToList( authorService.getPropertyNames() ) );
+		var pList 	= listToArray( arrayToList( authorService.getPropertyNames() ) );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		// Do Role Relationship
