@@ -25,7 +25,8 @@ limitations under the License.
 component extends="cborm.models.VirtualEntityService" singleton{
 	
 	// DI
-	property name="populator" 	inject="wirebox:populator";
+	property name="populator" 			inject="wirebox:populator";
+	property name="dateUtil"			inject="DateUtil@cb";
 	
 	/**
 	* Constructor
@@ -106,15 +107,20 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			oPermission = ( isNull( oPermission) ? new() : oPermission );
 			
 			// date cleanups, just in case.
-			var badDateRegex  	= " -\d{4}$";
-			thisPermission.createdDate 	= reReplace( thisPermission.createdDate, badDateRegex, "" );
+			var badDateRegex  				= " -\d{4}$";
+			thisPermission.createdDate 		= reReplace( thisPermission.createdDate, badDateRegex, "" );
 			thisPermission.modifiedDate 	= reReplace( thisPermission.modifiedDate, badDateRegex, "" );
 			// Epoch to Local
-			thisPermission.createdDate 	= dateUtil.epochToLocal( thisPermission.createdDate );
+			thisPermission.createdDate 		= dateUtil.epochToLocal( thisPermission.createdDate );
 			thisPermission.modifiedDate 	= dateUtil.epochToLocal( thisPermission.modifiedDate );
 
 			// populate content from data
-			populator.populateFromStruct( target=oPermission, memento=thisPermission, exclude="permissionID", composeRelationships=false );
+			populator.populateFromStruct( 
+				target 				= oPermission, 
+				memento 			= thisPermission, 
+				exclude 			= "permissionID", 
+				composeRelationships= false 
+			);
 			
 			// if new or persisted with override then save.
 			if( !oPermission.isLoaded() ){
