@@ -24,9 +24,9 @@
 		<div class="post-content">
 			<!--- excerpt or content --->
 			<cfif entry.hasExcerpt()>
-				#entry.getExcerpt()#
+				#entry.renderExcerpt()#
 				<div class="post-more">
-					<a href="#cb.linkEntry(entry)#" title="Read The Full Entry!"><button class="btn btn-success">Read More...</button></a>
+					<a href="#cb.linkEntry( entry )#" title="Read The Full Entry!"><button class="btn btn-success">Read More...</button></a>
 				</div>
 			<cfelse>
 				#entry.renderContent()#
