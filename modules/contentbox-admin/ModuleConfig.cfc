@@ -115,7 +115,9 @@ component {
 				// Menu events
 				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove",
 				// Global Search
-				"onGlobalSearchRequest", "onGlobalSearchDisplay"
+				"onGlobalSearchRequest", "onGlobalSearchDisplay",
+				// Static Site Exporters,
+				"cbadmin_preStaticSiteExport", "cbadmin_postStaticSiteExport"
 			])
 		};
 

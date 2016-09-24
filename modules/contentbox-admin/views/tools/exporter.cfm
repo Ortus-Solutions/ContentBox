@@ -4,18 +4,23 @@
         <h1 class="h1"><i class="fa fa-exchange fa-lg"></i> Export Tools</h1>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
+        
         #html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate" )#  
             <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-archive"></i> Export A Box Archive</h3>
+                </div>
                 <div class="panel-body">
-                    <h3>What, you thought exporting content would be hard? Sorry to disappoint! ;)</h3>
-                    <br />
+                    <p>From this panel you can choose to export your entire site or parts of it as a <strong>*.box</strong> archive package.
                     <div class="row" style="margin: 0px 1px;">
                         <div class="col-md-6 well well-sm text-center alert-success">
                             <h2>Option ##1: Everything!</h2>
@@ -318,6 +323,41 @@
                 </div>
             </div>
         #html.endForm()#
+
+        #html.startForm( name="siteGeneratorForm", action=prc.xehSiteGenerator, novalidate="novalidate" )#
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="fa fa-files-o"></i> Static Site Generator</h3>
+                </div>
+                <div class="panel-body">
+                    <p>ContentBox can export your entire site as a static HTML generated site. Please fill out the following options in order to generate your static site.</p>
+                    
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" value="true" name="blogContent" checked="checked"> Include Blog Content
+                        </label>
+                    </div>
+
+                    <!--- Submit Button --->
+                    <div class="actionBar" id="siteGeneratorBar">
+                        #html.button( 
+                            type    = "button", 
+                            value   = "<i class='fa fa-download' id='export-icon'></i> Start Generation", 
+                            class   = "btn btn-danger btn-lg", 
+                            onclick = "doSiteExport()" 
+                        )#
+                    </div>
+
+                    <!--- Loader --->
+                    <div class="text-center loaders" id="siteGeneratorLoader">
+                        <i class="fa fa-spinner fa-spin fa-4x"></i><br/>
+                       <h2>Building your beautiful static site, please wait...</h2><br>
+                    </div>
+
+                </div>
+            </div>
+        #html.endForm()#
+
     </div>
 </div>
 <!--- ************************************************************************************************--->

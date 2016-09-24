@@ -15,6 +15,7 @@ component extends="baseHandler"{
     property name="templateService"     inject="id:emailtemplateService@cb";
 	property name="fileUtils"           inject="id:FileUtils@cb";
 	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
+	property name="staticExporter"		inject="staticExporter@cb";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){
@@ -22,7 +23,9 @@ component extends="baseHandler"{
 		prc.tabTools = true;
 	}
 	
-	// importer
+	/**
+	 * Import Into ContentBox
+	 */
 	function importer( event, rc, prc ){
 		// Exit Handler
 		rc.xehDataImport = "#prc.cbAdminEntryPoint#.tools.doDataImport";
@@ -35,7 +38,9 @@ component extends="baseHandler"{
 		event.setView( "tools/importer" );
 	}
 
-	// preimport check
+	/**
+	 * Pre Import checks
+	 */
 	function doCBPreImport( event, rc, prc ) {
 		event.paramValue( "CBUpload", "" );
 		// make sure upload was valid
@@ -59,7 +64,9 @@ component extends="baseHandler"{
 		event.setView( view="tools/importerPreview", layout="ajax" );
 	}
 
-	// do contentbox package import
+	/**
+	 * Import action
+	 */
 	function doCBImport( event, rc, prc ) {
 		event.paramValue( "CBUpload", "" );
 		event.paramValue( "overwrite", false );
@@ -83,7 +90,9 @@ component extends="baseHandler"{
 		setNextEvent( prc.xehToolsImport );
 	}
 
-	// do database import
+	/**
+	 * Do a data import
+	 */
 	function doDataImport( event, rc, prc ){
 		event.paramValue( "dsn","" );
 		event.paramValue( "dsnUsername","" );
@@ -111,12 +120,13 @@ component extends="baseHandler"{
 	}
 	
 	/**
-	* Show the exporter
+	* Show the exporter console
 	*/
 	function exporter( event, rc, prc ) {
 		// Exit Handlers
 		prc.xehExport 			= "#prc.cbAdminEntryPoint#.tools.doExport";
 		prc.xehPreviewExport 	= "#prc.cbAdminEntryPoint#.tools.previewExport";
+		prc.xehSiteGenerator 	= "#prc.cbAdminEntryPoint#.tools.doStaticSite";
 		
 		// tab
 		prc.tabTools_export = true;
@@ -155,6 +165,28 @@ component extends="baseHandler"{
 		var exportResult 		= contentBoxExporter.setup( targets ).export();
 		// export the content
 		var exportFilePath = exportResult.exportfile;
+		// save success message
+		var filename = variables.HTMLHelper.slugify( settingService.getSetting( "cb_site_name" ) );
+		// send it
+		fileUtils.sendFile( file=exportFilePath, name=fileName, abortAtEnd=true );
+	}
+
+	/**
+	* Export a static site
+	*/
+	function doStaticSite( event, rc, prc ){
+		event.paramValue( "blogContent", false );
+
+		// Export Site
+		var results = staticExporter.export(
+			includeBlog = rc.blogContent,
+			event 		= event, 
+			rc 			= rc,
+			prc 		= prc
+		);
+
+		// export the content
+		var exportFilePath = results.exportFile;
 		// save success message
 		var filename = variables.HTMLHelper.slugify( settingService.getSetting( "cb_site_name" ) );
 		// send it
