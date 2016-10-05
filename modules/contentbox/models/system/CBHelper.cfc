@@ -295,7 +295,8 @@ component accessors="true" singleton threadSafe{
 
 	// Determine if you are in printing or exporting format
 	boolean function isPrintFormat(){
-		return ( getRequestContext().getValue( "format","contentbox" ) eq "contentbox" ? false : true );
+		var currentFormat = getRequestContext().getValue( "format", "contentbox" );
+		return ( listFindNoCase( "contentbox,html", currentFormat ) ? false : true );
 	}
 
 	// get comment errors array, usually when the form elements did not validate
