@@ -401,20 +401,34 @@ component accessors="true" singleton threadSafe{
 	// Determine if you are in the entry view
 	boolean function isEntryView(){
 		var event = getRequestContext();
-		return ( event.getCurrentEvent() eq "contentbox-ui:blog.entry" );
+		return ( 
+			// If in static export, then mark as yes
+			event.getPrivateValue( "staticExport", false )
+			OR
+			// In executing view
+			event.getCurrentEvent() eq "contentbox-ui:blog.entry" 
+		);
 	}
 	/**
 	* Determine if you are in the page view
 	* @page Optional page slug to determine if you are in that page or not.
 	*/
-	boolean function isPageView(page="" ){
+	boolean function isPageView( page="" ){
 		var event = getRequestContext();
-		if( findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND event.valueExists( "page", true ) ){
+		if( 
+			// If in static export, then mark as yes
+			event.getPrivateValue( "staticExport", false ) OR
+			(
+				// Check if in page event
+				findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND 
+				// And page Exists
+				event.valueExists( "page", true ) 
+			)
+		){
 			// slug check
 			if( len( arguments.page ) AND getCurrentPage().getSlug() eq arguments.page ){
 				return true;
-			}
-			else if( !len( arguments.page ) ){
+			} else if( !len( arguments.page ) ){
 				return true;
 			}
 			return false;
