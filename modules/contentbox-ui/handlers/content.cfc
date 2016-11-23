@@ -19,6 +19,7 @@ component{
 	property name="captchaService"		inject="id:captcha@cb";
 	property name="messagebox"			inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller"		inject="DataMarshaller@coldbox";
+	property name="securityService" inject="id:securityService@cb";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -319,7 +320,7 @@ component{
 		required thisContent
 	){
 		var commentErrors = [];
-
+		
 		// param values
 		event.paramValue( "author", "" )
 			.paramValue( "authorURL", "" )
@@ -327,6 +328,12 @@ component{
 			.paramValue( "content", "" )
 			.paramValue( "captchacode", "" )
 			.paramValue( "subscribe", false );
+			
+		//If logged in, bypass the catcha
+		var bypasscaptchacode = "";	
+		if( !isNull( securityService.getAuthorSession() ) ){
+			bypasscaptchacode = true;	
+		}
 		
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
@@ -349,7 +356,7 @@ component{
 		if( !len( rc.content ) ){ arrayAppend( commentErrors, "Please provide a comment!" ); }
 
 		// Captcha Validation
-		if( prc.cbSettings.cb_comments_captcha AND NOT 
+		if( prc.cbSettings.cb_comments_captcha AND bypasscaptchacode == "" AND NOT 
 			captchaService.validate( rc.captchacode ) 
 		){
 			ArrayAppend( commentErrors, "Invalid security code. Please try again." );
@@ -384,7 +391,7 @@ component{
 		// relate it to content
 		comment.setRelatedContent( arguments.thisContent );
 		// save it
-		var results = commentService.saveComment( comment );
+		var results = commentService.saveComment( comment, securityService.getAuthorSession() );
 
 		// announce event
 		announceInterception( "cbui_onCommentPost", {
