@@ -94,7 +94,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* results = [moderated:boolean,messages:array]
 	* @comment The comment to try to save
 	*/
-	struct function saveComment( required comment ){
+	struct function saveComment( required comment, loggedInUser ){
 		
 		transaction{
 			// Comment reference
@@ -115,7 +115,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 
 			// Run moderation rules
-			if( runModerationRules( inComment, inSettings ) ){
+			if( runModerationRules( inComment, inSettings, loggedInUser ) ){
 				// send for saving, finally phew!
 				save( inComment );
 				// Send Notification or Moderation Email?
@@ -195,7 +195,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @comment Comment to moderate check
 	* @settings The contentbox settings to moderate against
 	*/
-	private boolean function runModerationRules( required comment, required settings ){
+	private boolean function runModerationRules( required comment, required settings, loggedInUser ){
 		// Comment reference
 		var inComment 	= arguments.comment;
 		var inSettings 	= arguments.settings;
@@ -203,6 +203,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// Not moderation, just approve and return
 		if( NOT settings.cb_comments_moderation ){
+			inComment.setIsApproved( true );
+			return true;
+		}
+		
+		// Check if user is logged in, and has moderation permissions
+		if( !isNull( arguments.loggedInUser ) && arguments.loggedInUser.checkPermission( 'COMMENTS_ADMIN' ) ){
 			inComment.setIsApproved( true );
 			return true;
 		}
