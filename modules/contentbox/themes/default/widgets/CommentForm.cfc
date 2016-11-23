@@ -24,14 +24,22 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		var cbSettings 	= event.getValue(name="cbSettings",private=true);
 		var captcha		= "";
 		var commentForm = "";
+		var bypasscaptchacode = "";
 		
+		if( !isNull( securityService.getAuthorSession() ) ){
+			event.paramValue("author","#securityService.getAuthorSession().getFirstName()# #securityService.getAuthorSession().getLastName()#");
+			event.paramValue("authorEmail","#securityService.getAuthorSession().getEmail()#");
+			var bypasscaptchacode = true;
+		}
 		// captcha?
 		if( cbSettings.cb_comments_captcha ){
 			saveContent variable="captcha"{
-				writeOutput("
-					<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
-					#html.textField(name="captchacode",label="Enter the security code shown above:",class="form-control",groupWrapper="div class=form-group",required="required",size="50")#
-				");
+				if( !bypasscaptchacode ){
+					writeOutput("
+						<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
+						#html.textField(name="captchacode",label="Enter the security code shown above:",class="form-control",groupWrapper="div class=form-group",required="required",size="50")#
+					");
+				}	
 			}
 		}
 
