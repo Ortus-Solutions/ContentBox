@@ -78,7 +78,7 @@
 			<div id="commentFormShell">
 				<div class="row">
 					<div class="col-sm-12">
-						#cb.quickCommentForm(prc.entry)#
+						#cb.quickCommentForm( prc.entry )#
 					</div>
 				</div>
 			</div>

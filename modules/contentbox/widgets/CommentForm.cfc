@@ -23,18 +23,26 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* The main commenting form widget
 	* @content.hint The content object to build the comment form for: page or entry
 	*/
-	any function renderIt(any content){
-		var event 		= getRequestContext();
-		var cbSettings 	= event.getValue(name="cbSettings",private=true);
-		var captcha		= "";
-		var commentForm = "";
+	any function renderIt( any content ){
+		var event 			= getRequestContext();
+		var cbSettings 		= event.getPrivateValue( name="cbSettings" );
+		var captcha			= "";
+		var commentForm 	= "";
+		var oCurrentAuthor 	= securityService.getAuthorSession();
 		
 		// captcha?
-		if( cbSettings.cb_comments_captcha ){
+		if( !oCurrentAuthor.isLoggedIn() AND cbSettings.cb_comments_captcha ){
 			saveContent variable="captcha"{
 				writeOutput( "
 					<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
-					#html.textField(name="captchacode",label="Enter the security code shown above:",required="required",size="50" )#
+					#html.textField(
+						name 		= "captchacode",
+						label 		= "Enter the security code shown above:",
+						required 	= "required",
+						class 		= "form-control",
+						groupWrapper= "div class=form-group",
+						size 		= "50" 
+					)#
 				" );
 			}
 		}
@@ -42,27 +50,69 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		// generate comment form
 		saveContent variable="commentForm"{
 			writeOutput('
-			#html.startForm( name="commentForm", action=cb.linkCommentPost( arguments.content ), novalidate="novalidate" )#
+			#html.startForm( 
+				name 		= "commentForm", 
+				action 		= cb.linkCommentPost( arguments.content ), 
+				novalidate 	= "novalidate" 
+			)#
 
 				#cb.event( "cbui_preCommentForm" )#
 
 				#getModel( "messagebox@cbMessagebox" ).renderIt()#
 
 				#html.hiddenField( name="contentID", value=arguments.content.getContentID() )#
-				#html.hiddenField( name="contentType",value=arguments.content.getContentType() )#
+				#html.hiddenField( name="contentType", value=arguments.content.getContentType() )#
 
-				#html.textField( name="author", label="Name: (required)",size="50", required="required", value=event.getValue( "author","" ) )#
-				#html.inputField( name="authorEmail", type="email", label="Email: (required)", size="50", required="required", value=event.getValue( "authorEmail","" ) )#
-				#html.inputField( name="authorURL", type="url", label="Website:", size="50", value=event.getValue( "authorURL","" ) )#
+				#html.textField( 
+					name 		= "author", 
+					label 		= "Name: (required)",
+					size 		= "50", 
+					class 		= "form-control",
+					groupWrapper= "div class=form-group",
+					required 	= "required", 
+					value 		= event.getValue( "author", oCurrentAuthor.getName() ) 
+				)#
+				#html.inputField( 
+					name 		= "authorEmail", 
+					type 		= "email", 
+					label 		= "Email: (required)", 
+					size 		= "50", 
+					class 		= "form-control",
+					groupWrapper= "div class=form-group",
+					required 	= "required", 
+					value 		= event.getValue( "authorEmail", oCurrentAuthor.getEmail() ) 
+				)#
+				#html.inputField( 
+					name 		= "authorURL", 
+					type 		= "url", 
+					label 		= "Website:", 
+					size 		= "50", 
+					class 		= "form-control",
+					groupWrapper= "div class=form-group",
+					value 		= event.getValue( "authorURL","" ) 
+				)#
 
-				#html.textArea( name="content", label="Comment:", required="required", value=event.getValue( "content","" ) )#
-				#html.checkBox( name="subscribe", label="Notify me of follow-up comments by email." )#
+				#html.textArea( 
+					name 		= "content", 
+					label 		= "Comment:", 
+					class 		= "form-control",
+					required 	= "required", 
+					value 		= event.getValue( "content","" ) 
+				)#
+				#html.checkBox( 
+					name 			= "subscribe", 
+					label 			= "Notify me of follow-up comments by email.",
+					groupwrapper 	= "div class=checkbox"
+				)#
+				
+				<p>
 				#captcha#
+				</p>
 
 				#cb.event( "cbui_postCommentForm" )#
 
 				<div class="buttons">
-					#html.submitButton( name="commentSubmitButton", value="Submit" )#
+					#html.submitButton( name="commentSubmitButton", value="Submit", class="btn btn-primary" )#
 				</div>
 			#html.endForm()#
 			');

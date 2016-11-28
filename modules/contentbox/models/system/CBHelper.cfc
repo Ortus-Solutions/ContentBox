@@ -24,6 +24,7 @@ component accessors="true" singleton threadSafe{
 	property name="wirebox"				inject="wirebox";
 	property name="controller"			inject="coldbox";
 	property name="resourceService"		inject="resourceService@cbi18n";
+	property name="securityService"		inject="securityService@cb";
 	
 	/**
 	* Constructor 
@@ -335,6 +336,8 @@ component accessors="true" singleton threadSafe{
 		prc.cbthemeRoot = prc.cbRoot & "/themes/" & prc.cbTheme;
 		// Place widgets root location
 		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
+		// Place current logged in Author if any
+		prc.oCurrentAuthor = securityService.getAuthorSession();
 		// announce event
 		this.event( "cbui_preRequest" );
 

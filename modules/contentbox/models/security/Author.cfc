@@ -31,27 +31,32 @@ component 	persistent="true"
 
 	property 	name="firstName"	
 				length="100" 
-				notnull="true";
+				notnull="true"
+				default="";
 
 	property 	name="lastName"	
 				length="100" 
-				notnull="true";
+				notnull="true"
+				default="";
 
 	property 	name="email"		
 				length="255" 
 				notnull="true" 
-				index="idx_email";
+				index="idx_email"
+				default="";
 
 	property 	name="username"	
 				length="100" 
 				notnull="true" 
 				index="idx_login" 
-				unique="true";
+				unique="true"
+				default="";
 
 	property 	name="password"	
 				length="100" 
 				notnull="true" 
-				index="idx_login";
+				index="idx_login"
+				default="";
 
 	property 	name="isActive" 	
 				ormtype="boolean" 

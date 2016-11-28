@@ -60,11 +60,10 @@ component{
 		event.paramValue( "l", "" )
 			.paramValue( "h", "" );
 		
-		var author = getModel( "securityService@cb" ).getAuthorSession();
 		// valid Author?
-		if( author.isLoaded() AND 
-			author.isLoggedIn() AND 
-			compareNoCase( hash( author.getAuthorID() ), rc.h ) EQ 0
+		if( prc.oCurrentAuthor.isLoaded() AND 
+			prc.oCurrentAuthor.isLoggedIn() AND 
+			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) EQ 0
 		){
 			// Place theme on scope
 			prc.cbTheme = rc.l;
@@ -289,20 +288,22 @@ component{
 	*/
 	private function preview( event, rc, prc ){
 		// Param incoming data
-		event.paramValue( "content", "" );
-		event.paramValue( "contentType", "" );
-		event.paramValue( "layout", "" );
-		event.paramValue( "title", "" );
-		event.paramValue( "slug", "" );
-		event.paramValue( "h", "" );
+		event.paramValue( "content", "" )
+			.paramValue( "contentType", "" )
+			.paramValue( "layout", "" )
+			.paramValue( "title", "" )
+			.paramValue( "slug", "" )
+			.paramValue( "h", "" );
+
 		// Get all categories
-		prc.categories = categoryService.list(sortOrder="category",asQuery=false);
-		// get current author, only authors can preview
-		prc.author = getModel( "securityService@cb" ).getAuthorSession();
+		prc.categories = categoryService.list( sortOrder="category", asQuery=false );
 		// valid Author?
-		if( !prc.author.isLoaded() OR !prc.author.isLoggedIn() OR compareNoCase( hash( prc.author.getAuthorID() ), rc.h) NEQ 0){
+		if( !prc.oCurrentAuthor.isLoaded() OR 
+			!prc.oCurrentAuthor.isLoggedIn() OR 
+			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) NEQ 0
+		){
 			// Not an author, kick them out.
-			setNextEvent(URL=CBHelper.linkHome());
+			setNextEvent( URL=CBHelper.linkHome() );
 		}
 	}
 	
@@ -318,7 +319,7 @@ component{
 		required prc, 
 		required thisContent
 	){
-		var commentErrors = [];
+		var commentErrors 	= [];
 
 		// param values
 		event.paramValue( "author", "" )
@@ -343,13 +344,22 @@ component{
 
 		// Validate incoming data
 		commentErrors = [];
-		if( !len( rc.author ) ){ arrayAppend( commentErrors, "Your name is missing!" ); }
-		if( !len( rc.authorEmail ) OR NOT isValid( "email", rc.authorEmail ) ){ arrayAppend( commentErrors, "Your email is missing or is invalid!" ); }
-		if( len( rc.authorURL ) AND NOT isValid( "URL", rc.authorURL ) ){ arrayAppend( commentErrors, "Your website URL is invalid!" ); }
-		if( !len( rc.content ) ){ arrayAppend( commentErrors, "Please provide a comment!" ); }
+		if( !len( rc.author ) ){ 
+			arrayAppend( commentErrors, "Your name is missing!" ); 
+		}
+		if( !len( rc.authorEmail ) OR NOT isValid( "email", rc.authorEmail ) ){ 
+			arrayAppend( commentErrors, "Your email is missing or is invalid!" ); 
+		}
+		if( len( rc.authorURL ) AND NOT isValid( "URL", rc.authorURL ) ){ 
+			arrayAppend( commentErrors, "Your website URL is invalid!" ); 
+		}
+		if( !len( rc.content ) ){ 
+			arrayAppend( commentErrors, "Please provide a comment!" ); 
+		}
 
 		// Captcha Validation
-		if( prc.cbSettings.cb_comments_captcha AND NOT 
+		if( !prc.oCurrentAuthor.isLoggedIn() AND
+			prc.cbSettings.cb_comments_captcha AND NOT 
 			captchaService.validate( rc.captchacode ) 
 		){
 			ArrayAppend( commentErrors, "Invalid security code. Please try again." );
@@ -369,7 +379,10 @@ component{
 			// Message
 			messagebox.warn( arrayToList( commentErrors, "<br>" ) );
 			// Redirect
-			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ), persist="author,authorEmail,authorURL,content" );
+			setNextEvent( 
+				URL 	= CBHelper.linkComments( arguments.thisContent ), 
+				persist = "author,authorEmail,authorURL,content" 
+			);
 			return;
 		}
 	}
@@ -377,22 +390,24 @@ component{
 	/**
 	* Save the comment for a content object
 	* @thisContent.hint The content object
+	* @subscribe Subscribing to comments or not
+	* @prc The prc reference
 	*/
-	private function saveComment( required thisContent, required subscribe=false ){
+	private function saveComment( required thisContent, required subscribe=false, required prc ){
 		// Get new comment to persist
 		var comment = populateModel( commentService.new() );
 		// relate it to content
 		comment.setRelatedContent( arguments.thisContent );
 		// save it
-		var results = commentService.saveComment( comment );
+		var results = commentService.saveComment( comment=comment, loggedInUser=prc.oCurrentAuthor );
 
 		// announce event
 		announceInterception( "cbui_onCommentPost", {
-			comment=comment,
-			content=arguments.thisContent,
-			moderationResults=results,
-			contentType=arguments.thisContent.getContentType(),
-			subscribe = arguments.subscribe
+			comment				= comment,
+			content				= arguments.thisContent,
+			moderationResults	= results,
+			contentType			= arguments.thisContent.getContentType(),
+			subscribe 			= arguments.subscribe
 		} );
 
 		// Check if all good

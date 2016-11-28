@@ -58,7 +58,7 @@ component extends="content"{
 		// Comments need to be empty
 		prc.comments = [];
 		// Create preview version
-		prc.entry.addNewContentVersion(content=URLDecode( rc.content ), author=prc.author)
+		prc.entry.addNewContentVersion( content=URLDecode( rc.content ), author=prc.oCurrentAuthor )
 			.setActiveContent( prc.entry.getContentVersions() );
 		// set skin view
 		event.setLayout( name="#prc.cbTheme#/layouts/#rc.layout#", module="contentbox" )
@@ -209,9 +209,8 @@ component extends="content"{
 		event.paramValue( "entrySlug","" );
 
 		// get the author
-		var author = getModel( "securityService@cb" ).getAuthorSession();
 		var showUnpublished = false;
-		if( author.isLoaded() AND author.isLoggedIn() ){
+		if( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ){
 			var showUnpublished = true;
 		}
 		prc.entry = entryService.findBySlug(rc.entrySlug,showUnpublished);
@@ -274,11 +273,13 @@ component extends="content"{
 		// Try to retrieve entry by slug
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
 		// If null, kick them out
-		if( isNull( thisEntry ) ){ setNextEvent( prc.cbEntryPoint ); }
+		if( isNull( thisEntry ) ){ 
+			setNextEvent( prc.cbEntryPoint ); 
+		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, thisEntry );
 		// Valid commenting, so go and save
-		saveComment( thisEntry, rc.subscribe );
+		saveComment( thisContent=thisEntry, subscribe=rc.subscribe, prc=prc );
 	}
 
 }
