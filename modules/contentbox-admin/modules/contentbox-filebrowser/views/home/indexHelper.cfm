@@ -100,6 +100,9 @@ $( document ).ready( function() {
             "sep1": "---------",
             "edit": {name: "#$r( "edit@fb" )#", icon: "fa-edit", callback: function(){
             	return fbEdit();
+            }},
+            "info": {name: "#$r( "info@fb" )#", icon: "fa-info", callback: function(){
+            	return fbInfo();
             }}
         }
     });
@@ -226,6 +229,20 @@ function fbEdit(){
 		imageSrc:target.attr( "data-relUrl" ), 
 		imagePath:target.attr( "data-fullUrl" )
 	}, $( window ).width() - 200, $( window ).width() - 300 );
+}
+function fbInfo(){
+	// check selection
+	var sPath = $selectedItem.val();
+	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
+	// get ID
+	var thisID 		= $selectedItemID.val();
+	var target 		= $( "##"+thisID);
+	// Show info
+	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.info' )#",{
+		imageName:target.attr( "data-name" ), 
+		imageSrc:target.attr( "data-relUrl" ), 
+		imagePath:target.attr( "data-fullUrl" )
+	}, $( window ).width() - 200, $( window ).width() - 300 )
 }
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>
