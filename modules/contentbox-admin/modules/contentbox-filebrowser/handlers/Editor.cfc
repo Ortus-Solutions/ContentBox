@@ -28,6 +28,30 @@ component extends="coldbox.system.EventHandler"{
 	}
 	
 	/**
+	* Info
+	*/
+	any function info( event, rc, prc ){
+		event.paramValue( "imagePath","" );
+		event.paramValue( "imageSrc","" );
+		event.paramValue( "imageName","" );
+
+		var info=ImageInfo(rc.imagePath);
+		rc.width = info.width;
+		rc.height = info.height;
+		rc.imageRelPath = rc.imageSrc;
+		rc.imageSrc = #event.buildLink( '' )# & rc.imageSrc;
+		
+		prc.imgInfo = ImageInfo( rc.imageSrc );
+
+		if( event.isAjax() ) {
+			event.renderData( data=renderView( view="editor/info", layout="ajax" ) );
+		}
+		else {
+			event.setView( view="editor/info", layout="ajax" );
+		}		
+	}
+	
+	/**
 	* Index
 	*/
 	any function crop( event, rc, prc ){
