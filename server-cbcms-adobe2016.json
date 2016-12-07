@@ -1,0 +1,17 @@
+{
+    "app":{
+        "cfengine":"adobe@2016"
+    },
+    "name":"cbcms-adobe2016",
+    "JVM":{
+        "heapSize":"512"
+    },
+    "web":{
+        "rewrites":{
+            "enable":"true"
+        },
+        "http":{
+            "port":"8589"
+        }
+    }
+}

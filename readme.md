@@ -51,26 +51,22 @@ And constructed with the following guidelines:
 Source Code
 - https://github.com/Ortus-Solutions/ContentBox
 
-Continuous Integration
-- http://jenkins.staging.ortussolutions.com/job/OS-ContentBox%20BE/
-
 Bug Tracking/Agile Boards
 - https://ortussolutions.atlassian.net/browse/CONTENTBOX
 
 Documentation
-- http://contentbox.ortusbooks.com
+- https://contentbox.ortusbooks.com
 
 Blog
-- http://www.ortussolutions.com/blog
+- https://www.ortussolutions.com/blog
 
 ## System Requirements
 - Lucee 4.5+
-- Railo 4+ (Deprecated)
 - ColdFusion 10+
 
 # ContentBox Installation
 
-You can follow in-depth installation instructions here: http://contentbox.ortusbooks.com/content/installation/index.html or you can use [CommandBox](http://www.ortussolutions.com/products/commandbox) to quickly get up and running via the following commands:
+You can follow in-depth installation instructions here: https://contentbox.ortusbooks.com/content/installation/index.html or you can use [CommandBox](https://www.ortussolutions.com/products/commandbox) to quickly get up and running via the following commands:
 
 **Stable Release**
 
@@ -92,7 +88,7 @@ box server start --rewritesEnable
 
 ## Collaboration
 
-If you want to develop and hack at the source, you will need to download [CommandBox](http://www.ortussolutions.com/products/commandbox) first.  Then in the root of this project, type `box install`.  This will download the necessary dependencies to develop and test ContentBox.  You can then go ahead and start an embedded server `box server start --rewritesEnable` and start hacking around and contributing.  
+If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox) first.  Then in the root of this project, type `box install`.  This will download the necessary dependencies to develop and test ContentBox.  You can then go ahead and start an embedded server `box server start --rewritesEnable` and start hacking around and contributing.  
 
 ### Test Suites
 For running our test suites you will need 2 more steps, so please refer to the [Readme](tests/readme.md) in the tests folder.

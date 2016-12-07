@@ -13,6 +13,11 @@
  	<property name="contentbox.stableversion" 	value="3.0.0" />
  	<property name="contentbox.slug"			value="contentbox"/>
 	
+	<!-- Travis -->
+	<condition property="isTravis" else="false">
+    	<isset property="isTravis"/>
+    </condition>
+
  	<!-- Build Labels -->
 	<tstamp prefix="start"/>
  	<!-- Load Contrib Tasks -->
@@ -59,17 +64,22 @@
 			<not><available file="${be.exports}/build.number" /></not>
 			<then><touch file="${be.exports}/build.number" /></then>
 		</if>
-		<propertyfile file="${be.exports}/build.number" comment="Build Number for ANT. Edit not!">
-			<entry key="build.number" 
-					type="int" 
-			     	operation="+"
-					pattern="00000"
-			     	default="00210" />
-		</propertyfile>
-		<property file="${be.exports}/build.number"/>
+		<if>
+			<not><isset property="build.number" /></not>
+			<then>
+				<propertyfile file="${be.exports}/build.number" comment="Build Number for ANT. Edit not!">
+					<entry key="build.number" 
+							type="int" 
+					     	operation="+"
+							pattern="00000"
+					     	default="00210" />
+				</propertyfile>
+				<property file="${be.exports}/build.number"/>
+			</then>
+		</if>
 
 		<!-- Build ID -->
-		<property name="build.label" value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
+		<property name="build.label" value="contentbox-${contentbox.version}+${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
 		
 		<!-- Permissions -->
 		<antcall target="update.permissions" />
@@ -355,7 +365,12 @@
 				  classifiers="express,express-linux64,express-darwin64,express-win64,war,apidocs,patch,patch-db,patch-nocoldbox"/>
 		
 		<!-- Cleanup -->
-		<delete dir="${dir.build}" />
+		<if>
+			<equals arg1="$isTravis" arg2="false" />
+			<then>
+				<delete dir="${dir.build}" />
+			</then>
+		</if>
     </target>
  	
  	<!-- Build Patches -->

@@ -1,6 +1,7 @@
 {
     "name":"ContentBox Modular CMS",
     "version":"@version.number@+@build.number@",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "slug":"contentbox",
     "type":"cms",
