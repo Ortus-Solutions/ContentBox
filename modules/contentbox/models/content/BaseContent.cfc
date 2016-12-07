@@ -397,8 +397,11 @@ component 	persistent="true"
 
 	/**
 	* Add a new content version to save for this content object
+	* @content The incoming content
+	* @changelog The changelog commit
+	* @author The author object
 	*/
-	function addNewContentVersion(required content, changelog="", required author){
+	function addNewContentVersion( required content, changelog="", required author ){
 		// lock it for new content creation
 		lock name="contentbox.addNewContentVersion.#getSlug()#" type="exclusive" timeout="10" throwOnTimeout=true{
 			// get a new version object
@@ -945,7 +948,13 @@ component 	persistent="true"
 	* There is the possibility of no active versions (Edge Case)
 	*/
 	function hasActiveContentSet(){
-		return ( hasActiveContent() AND arrayIsDefined( variables.activeContent, 1 ) );
+		try{
+			return ( hasActiveContent() AND arrayIsDefined( variables.activeContent, 1 ) );
+		}
+		// Stupid Adobe Edge Case on one-to-many bag relationship
+		catch( "java.lang.IndexOutOfBoundsException" e ){
+			return false;
+		}
 	}
 
 	/**
