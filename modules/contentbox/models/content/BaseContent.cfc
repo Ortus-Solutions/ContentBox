@@ -312,7 +312,7 @@ component 	persistent="true"
 				cfc="contentbox.models.content.Stats" 
 				fieldtype="one-to-one" 
 				mappedBy="relatedContent"
-				cascade="all"
+				cascade="all-delete-orphan"
 				lazy="true"
 				fetch="join";
 
