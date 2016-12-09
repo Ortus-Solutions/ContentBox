@@ -1,39 +1,15 @@
 <cfoutput>
-<title>
-	<!--- Site Title By Page or Global--->
-	<cfif cb.isPageView()>
-		<!--- Do we have the SEO Title? --->
-		<cfif len( cb.getCurrentPage().getHTMLTitle() )>
-			#cb.getCurrentPage().getHTMLTitle()#
-		<cfelse>
-			#cb.getCurrentPage().getTitle()#
-		</cfif>
-	<cfelse>
-		#cb.siteName()# - #cb.siteTagLine()#
-	</cfif>
-</title>
+<title>#cb.getContentTitle()#</title>
 
 <!--- ********************************************************************************* --->
 <!--- 					META TAGS														--->
 <!--- ********************************************************************************* --->
+<meta charset="utf-8" /> 
 <meta name="generator" 	 	content="ContentBox powered by ColdBox" />
 <meta name="robots" 	 	content="index,follow" />
 <meta name="viewport" 		content="width=device-width, initial-scale=1">
-<meta charset="utf-8" /> 
-
-<!--- Meta Description By Page or By Site --->
-<cfif cb.isPageView() AND len( cb.getCurrentPage().getHTMLDescription() )>
-	<meta name="description" content="#cb.getCurrentPage().getHTMLDescription()#" />
-<cfelse>
-	<meta name="description" content="#HTMLEditFormat( cb.siteDescription() )#" />
-</cfif>
-
-<!--- Meta Keywords By Page or By Site --->
-<cfif cb.isPageView() AND len( cb.getCurrentPage().getHTMLKeywords() )>
-	<meta name="keywords" 	 content="#cb.getCurrentPage().getHTMLKeywords()#" />
-<cfelse>
-	<meta name="keywords" 	 content="#cb.siteKeywords()#" />
-</cfif>
+<meta name="description" 	content="#cb.getContentDescription()#" />
+<meta name="keywords" 	 	content="#cb.getContentKeywords()#" />
 
 <!--- Base HREF for SES enabled URLs --->
 <base href="#cb.siteBaseURL()#" />

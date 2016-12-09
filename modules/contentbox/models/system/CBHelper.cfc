@@ -565,6 +565,96 @@ component accessors="true" singleton threadSafe{
 		);
 	}
 
+	/************************************** SEO Metadata *********************************************/
+
+	/**
+	 * Get the current content metadata title according to SEO Discovery Rules
+	 */
+	function getContentTitle(){
+		var oCurrentContent = "";
+
+		// Check if in page view or entry view
+		if( isPageView() ){
+			oCurrentContent = getCurrentPage();
+		} else if( isEntryView() ){
+			oCurrentContent = getCurrentEntry();
+		}
+
+		// in context view or global
+		if( isObject( oCurrentContent ) ){
+			// Do we have current page SEO title set?
+			if( len( oCurrentContent.getHTMLTitle() ) ){
+				return oCurrentContent.getHTMLTitle();
+			} 
+			// Get current page slug title
+			return oCurrentContent.getTitle();
+		}
+
+		// Return global site title + tagline
+		return siteName() & " - " & siteTagLine();
+	}
+
+	/**
+	 * Get the current content metadata description according to SEO discovery rules
+	 */
+	function getContentDescription(){
+		var oCurrentContent = "";
+
+		// Check if in page view or entry view
+		if( isPageView() ){
+			oCurrentContent = getCurrentPage();
+		} else if( isEntryView() ){
+			oCurrentContent = getCurrentEntry();
+		}
+
+		// in context view or global
+		if( isObject( oCurrentContent ) ){
+			// Do we have current page SEO description set?
+			if( len( oCurrentContent.getHTMLDescription() ) ){
+				return oCurrentContent.getHTMLDescription();
+			} 
+			
+			// Default description from content in non HTML mode
+			return HTMLEditFormat(
+				REReplaceNoCase( 
+					left( oCurrentContent.getContent(), 160 ), 
+					"<[^>]*>", 
+					"", 
+					"ALL" 
+				)
+			);
+		}
+
+		// Return global site description
+		return HTMLEditFormat( siteDescription() );
+	}
+
+	/**
+	 * Get the current content metadata keywords according to SEO discovery rules
+	 */
+	function getContentKeywords(){
+		var oCurrentContent = "";
+
+		// Check if in page view or entry view
+		if( isPageView() ){
+			oCurrentContent = getCurrentPage();
+		} else if( isEntryView() ){
+			oCurrentContent = getCurrentEntry();
+		}
+
+		// in context view or global
+		if( isObject( oCurrentContent ) AND len( oCurrentContent.getHTMLKeywords() ) ){
+			return oCurrentContent.getHTMLKeywords();
+		}
+
+		// Return global site description
+		return siteKeywords();
+	}
+
+
+
+
+
 	/************************************** search *********************************************/
 
 	// Determine if you are in the search view
