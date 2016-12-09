@@ -15,7 +15,7 @@
         <script src="#prc.cbroot#/includes/js/#js#.js"></script>
     </cfloop>
     <cfloop list="#event.getValue( "jsFullAppendList", "", true )#" index="js">
-        <script src="#js#.js"></script>
+        <script src="#js#"></script>
     </cfloop>
     <!--- ********************************************************************* --->
     <!---        Fonts - Brought in last to prevent blocking issues             --->
