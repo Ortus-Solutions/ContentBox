@@ -675,7 +675,7 @@ component accessors="true" threadSafe singleton{
 				}
 				
 				// writeout control wrapper
-				writeOutput( '<div class="form-group">' );
+				writeOutput( '<div class="form-group" style="margin-top:25px;">' );
 					
 					// write out label
 					writeOutput( html.label( field=settingName, content="#thisSettingMD.label# #requiredText#" ) );
