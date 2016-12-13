@@ -58,6 +58,9 @@
 * - title : The HTML title of the control (defaults to empty string)
 * - options : The select box options. Can be a list or array of values or an array of name-value pair structures
 * - group : lets you group inputs under a Group name - settings should be in order for groupings to work as expected
+* - groupIntro : Lets you add a description for a group of fields
+* - fieldDescription : Lets you add a description for an individual field
+* - fieldHelp : Lets you add a chunk of HTML for a Modal, openable by the User by clicking on question mark next to the field label. Recommended use is to readFiles from the ./includes/help directory, with a helper function, for example: loadHelpFile( 'cbBootswatchTheme.html' ); 
 */
 component{
 	// Layout Variables
@@ -95,6 +98,20 @@ component{
 	*/
 	array function getSwatches(){
 		return listToArray( "cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" );
+	}
+	
+	/**
+	* loadHelpFile - helper function for loading html help into a variable for modal
+	* @helpFileName - the name of the file to read and return
+	* @helpFilePath - the relative directory for the help files. Defaulting to ./includes/help/ inside the theme.
+	* @return the contents of the file or empty string if the file does not exist
+	*/
+	function loadHelpFile( required string helpFileName, string helpFilePath='./includes/help/' ){
+		try {
+			return fileRead( arguments.helpFilePath & arguments.helpFileName );
+		} catch( any e ){
+			return '';
+		}
 	}
 
 	/**
