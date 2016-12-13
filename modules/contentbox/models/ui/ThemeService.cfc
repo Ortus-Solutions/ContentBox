@@ -664,6 +664,11 @@ component accessors="true" threadSafe singleton{
 							<div class="panel-body">
 					' );
 
+					// Show group intro if there is one
+					if( structKeyExists( thisSettingMD, "groupIntro" ) and thisSettingMD.groupIntro gt '' ){
+						writeOutput( '<div style="padding:5px 0px 5px;border-bottom: 1px solid ##ddd;margin-bottom:20px;">' & thisSettingMD.groupIntro & '</div>' );
+					} 
+					
 					// Set this as the last group
 					lastGroup 	= thisSettingMD.group;
 					firstpanel 	= false;
@@ -674,6 +679,17 @@ component accessors="true" threadSafe singleton{
 					
 					// write out label
 					writeOutput( html.label( field=settingName, content="#thisSettingMD.label# #requiredText#" ) );
+					
+					// Generate question mark icon for field Help to open modal
+					if( structKeyExists( thisSettingMD, 'fieldHelp' ) && thisSettingMD.fieldHelp gt '' ){
+						writeOutput( ' <a data-toggle="modal" data-target="##help_#settingName#"><i class="fa fa-question-circle"></i></a>' );	
+					}
+					
+					
+					// write out field description
+					if( structKeyExists( thisSettingMD, "fieldDescription" ) and thisSettingMD.fieldDescription gt '' ){
+						writeOutput( '<div style="padding-bottom:5px;">' & thisSettingMD.fieldDescription & '</div>' );
+					} 
 
     				// write out control
     				switch( thisSettingMD.type ){
@@ -737,7 +753,12 @@ component accessors="true" threadSafe singleton{
 
     			// End form group
     			writeOutput( '</div>');
-
+				
+				// Generate modal for field Help
+				if( structKeyExists( thisSettingMD, 'fieldHelp' ) && thisSettingMD.fieldHelp gt '' ){
+					writeOutput( generateModal( settingName, thisSettingMD ) );
+				}
+					
 			} // end looping over theme settings
 
 			// Finalize Group Panel: In case we only had one setting in this group.
@@ -750,6 +771,25 @@ component accessors="true" threadSafe singleton{
 		}
 		
 		return settingForm;
+	}
+	
+	function generateModal( required settingName, required thisSettingMD ){
+		return '<div class="modal fade" tabindex="-1" role="dialog" id="help_#arguments.settingName#">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				        <h4 class="modal-title">#thisSettingMD.label#</h4>
+				      </div>
+				      <div class="modal-body">
+				       #thisSettingMD.fieldHelp#
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      </div>
+				    </div><!-- /.modal-content -->
+				  </div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->';
 	}
 
 }
