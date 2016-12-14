@@ -568,11 +568,95 @@ component accessors="true" singleton threadSafe{
 	/************************************** SEO Metadata *********************************************/
 
 	/**
+	* Check the Meta struct exists in the PRC
+	*/
+	function checkMetaStruct(){
+		var prc = getPrivateRequestCollection();
+		if( !structKeyExists( prc, "meta" ) ){
+			prc.meta = {};
+		}	
+	}
+	
+	/**
+	* Set the Meta Title for the request
+	* @title - The new title 
+	*/
+	function setMetaTitle( required string title ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.title = arguments.title;
+	}
+	
+	/**
+	* Get the Meta Title for the request
+	*/
+	function getMetaTitle(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "title" ) ){
+			return prc.meta.title;
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	* Set the Meta Description for the request
+	* @description - The new Description 
+	*/
+	function setMetaDescription( required string description ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.description = arguments.description;
+	}
+	
+	/**
+	* Get the Meta description for the request
+	*/
+	function getMetaDescription(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "description" ) ){
+			return prc.meta.description;
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	* Set the Meta Keywords for the request
+	* @keywords - The new Keywords 
+	*/
+	function setMetaKeywords( required string keywords ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.keywords = arguments.keywords;
+	}
+	
+	/**
+	* Get the Meta keywords for the request
+	*/
+	function getMetaKeywords(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "keywords" ) ){
+			return prc.meta.keywords;
+		} else {
+			return '';
+		}
+	}
+	
+	/**
 	 * Get the current content metadata title according to SEO Discovery Rules
 	 */
 	function getContentTitle(){
 		var oCurrentContent = "";
 
+		// If Meta Title is set Manually, return it
+		if( len( getMetaTitle() ) ){
+			return getMetaTitle();
+		}
+		
 		// Check if in page view or entry view
 		if( isPageView() ){
 			oCurrentContent = getCurrentPage();
@@ -600,6 +684,11 @@ component accessors="true" singleton threadSafe{
 	function getContentDescription(){
 		var oCurrentContent = "";
 
+		// If Meta Description is set Manually, return it
+		if( len( getMetaDescription() ) ){
+			return getMetaDescription();
+		}
+		
 		// Check if in page view or entry view
 		if( isPageView() ){
 			oCurrentContent = getCurrentPage();
@@ -635,6 +724,11 @@ component accessors="true" singleton threadSafe{
 	function getContentKeywords(){
 		var oCurrentContent = "";
 
+		// If Meta Keywords is set Manually, return it
+		if( len( getMetaKeywords() ) ){
+			return getMetaKeywords();
+		}
+		
 		// Check if in page view or entry view
 		if( isPageView() ){
 			oCurrentContent = getCurrentPage();
