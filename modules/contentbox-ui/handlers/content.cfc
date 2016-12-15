@@ -30,7 +30,7 @@ component{
 	function preHandler( event, rc, prc ,action,eventArguments){
 		// Maintenance Mode?
 		if( prc.cbSettings.cb_site_maintenance ){
-			if( prc.oCurrentAuthor.getAuthorID() ){
+			if( prc.oCurrentAuthor.getAuthorID() && prc.oCurrentAuthor.checkPermission( "MAINT_MODE_VIEWER" )  ){
 				html.addAsset( "#prc.cbRoot#/includes/js/maint.js" );	
 			} else {
 				event.overrideEvent( "contentbox-ui:page.maintenance" );
