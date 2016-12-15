@@ -13,6 +13,7 @@ component{
 	property name="contentService"		inject="id:contentService@cb";
 	property name="commentService"		inject="id:commentService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
+	property name="html"				inject="HTMLHelper@coldbox";
 	property name="rssService"			inject="id:rssService@cb";
 	property name="themeService"		inject="id:themeService@cb";
 	property name="antiSamy"			inject="antisamy@cbantisamy";
@@ -29,8 +30,12 @@ component{
 	function preHandler( event, rc, prc ,action,eventArguments){
 		// Maintenance Mode?
 		if( prc.cbSettings.cb_site_maintenance ){
-			event.overrideEvent( "contentbox-ui:page.maintenance" );
-			return;
+			if( prc.oCurrentAuthor.getAuthorID() ){
+				html.addAsset( "#prc.cbRoot#/includes/js/maint.js" );	
+			} else {
+				event.overrideEvent( "contentbox-ui:page.maintenance" );
+				return;
+			}
 		}
 
 		// Get all categories
