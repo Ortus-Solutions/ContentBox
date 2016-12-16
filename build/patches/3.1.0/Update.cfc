@@ -91,7 +91,8 @@ component {
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Create new Permissions
 		var perms = [
-			"EDITORS_FEATURED_IMAGE"
+			"EDITORS_FEATURED_IMAGE",
+			"MAINTENANCE_MODE_VIEWER"
 		];
 
 		// iterate and add
@@ -157,7 +158,8 @@ component {
 
 		// Create new Permissions
 		var perms = {
-			"EDITORS_FEATURED_IMAGE" = "Ability to view the featured image panel"
+			"EDITORS_FEATURED_IMAGE" = "Ability to view the featured image panel",
+			"MAINTENANCE_MODE_VIEWER" = "Ability to view the Website front end, even while the site is in maintenance mode."
 		};
 
 		for( var key in perms ){
