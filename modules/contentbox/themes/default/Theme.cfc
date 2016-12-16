@@ -58,6 +58,9 @@
 * - title : The HTML title of the control (defaults to empty string)
 * - options : The select box options. Can be a list or array of values or an array of name-value pair structures
 * - group : lets you group inputs under a Group name - settings should be in order for groupings to work as expected
+* - groupIntro : Lets you add a description for a group of fields
+* - fieldDescription : Lets you add a description for an individual field
+* - fieldHelp : Lets you add a chunk of HTML for a Modal, openable by the User by clicking on question mark next to the field label. Recommended use is to readFiles from the ./includes/help directory, with a helper function, for example: loadHelpFile( 'cbBootswatchTheme.html' ); 
 */
 component{
 	// Layout Variables
@@ -70,18 +73,18 @@ component{
 	this.screenShotURL	= "screenshot.png";
 	// Layout Settings
 	this.settings = [
-		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", optionsUDF="getSwatches" },
-		{ name="headerLogo", 		group="Header", defaultValue="", 		type="text", 	label="Logo URL:" },
+		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", optionsUDF="getSwatches", groupIntro="Control the color scheme of your entire site by changing the Bootswatch theme. Bootswatch is a set of reset colored themes.", fieldHelp="#loadHelpFile( 'cbBootswatchTheme.html' )#" },
+		{ name="headerLogo", 		group="Header", defaultValue="", 		type="text", 	label="Logo URL:", groupIntro="Customize the header section of your theme. You can change the logo and the search field.", fieldDescription="Enter a relative or full url for the website logo." },
 		{ name="showSiteSearch", 	group="Header", defaultValue="true", 	type="boolean",		label="Show Search Form Field in Header", 	required="false" },
-		{ name="footerBox", 		group="Footer", defaultValue="", 		type="textarea", 	label="Footer Text:" },
-		{ name="hpHeaderTitle", 	group="Homepage", defaultValue="", 		type="text", 		label="Homepage Header Title:" },
-		{ name="hpHeaderText",	group="Homepage", defaultValue="", 		type="textarea", 	label="Homepage Header Text:" },
-		{ name="hpHeaderLink", 	group="Homepage", 	defaultValue="", 		type="text", 		label="Homepage Header Button Link:" },
+		{ name="footerBox", 		group="Footer", defaultValue="", 		type="textarea", 	label="Footer Text:", groupIntro="Customize the footer of your site."  },
+		{ name="hpHeaderTitle", 	group="Homepage", defaultValue="", 		type="text", 		label="Homepage Header Title:", fieldDescription="Enter a homepage hero image, header title to grab your users attention.", groupIntro="Customize your homepage, make it stand out from the other pages in your site."  },
+		{ name="hpHeaderText",	group="Homepage", defaultValue="", 		type="textarea", 	label="Homepage Header Text:", fieldDescription="Enter text for your homepage hero image. This is placed below the title, above the homepage button" },
+		{ name="hpHeaderLink", 	group="Homepage", 	defaultValue="", 		type="text", 		label="Homepage Header Button Link:", fieldDescription="Action Link for the homepage hero button" },
 		{ name="hpHeaderBtnText", 	group="Homepage", 	defaultValue="", 		type="text", 		label="Homepage Header Button Text:" },
-		{ name="hpHeaderBg", 	group="Homepage", 	defaultValue="green", 	type="select", 		label="Homepage Header Background:", 	required="false", options="Green,World" },
-		{ name="hpHeaderImgBg", 	group="Homepage", 	defaultValue="", 	type="text", 		label="Homepage Header Image Background:" },
+		{ name="hpHeaderBg", 	group="Homepage", 	defaultValue="green", 	type="select", 		label="Homepage Header Background:", 	required="false", options="Green,World", fieldDescription="Choose a predefined background image for your homepage hero." },
+		{ name="hpHeaderImgBg", 	group="Homepage", 	defaultValue="", 	type="text", 		label="Homepage Header Image Background:", fieldDescription="Enter an URL for a custom Homepage hero image. Overrides the predefined background image." },
 		{ name="rssDiscovery", 	group="Homepage", 	defaultValue="true", 	type="boolean",		label="Active RSS Discovery Links", 	required="false" },
-		{ name="showCategoriesBlogSide", group="Blog Sidebar Options", defaultValue="true", type="boolean",		label="Show Categories in Blog Sidebar", 	required="false" },
+		{ name="showCategoriesBlogSide", group="Blog Sidebar Options", defaultValue="true", type="boolean",		label="Show Categories in Blog Sidebar", 	required="false", groupIntro="By default, you have lots of widgets displayed in the Blog Sidebar. Enable or Disabled those items below." },
 		{ name="showRecentEntriesBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Recent Enties in Blog Sidebar", 	required="false" },
 		{ name="showSiteUpdatesBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Site Updates in Blog Sidebar", 	required="false" },
 		{ name="showEntryCommentsBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Entry Comments in Blog Sidebar", 	required="false" },
@@ -95,6 +98,20 @@ component{
 	*/
 	array function getSwatches(){
 		return listToArray( "cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" );
+	}
+	
+	/**
+	* loadHelpFile - helper function for loading html help into a variable for modal
+	* @helpFileName - the name of the file to read and return
+	* @helpFilePath - the relative directory for the help files. Defaulting to ./includes/help/ inside the theme.
+	* @return the contents of the file or empty string if the file does not exist
+	*/
+	function loadHelpFile( required string helpFileName, string helpFilePath='./includes/help/' ){
+		try {
+			return fileRead( arguments.helpFilePath & arguments.helpFileName );
+		} catch( any e ){
+			return '';
+		}
 	}
 
 	/**

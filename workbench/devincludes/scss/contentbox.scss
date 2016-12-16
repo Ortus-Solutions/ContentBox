@@ -238,6 +238,10 @@ widgetinfobar::-moz-selection {
 #FileBrowser #statusText {margin:0px !important}
 #FileBrowser #fileListing{min-height: 350px !important ;}
 
+/**============================== THEME SETTINGS CSS ==============================**/
+
+.themeGroupInfo { padding:5px 0px 5px;border-bottom: 1px solid #ddd;margin-bottom:20px; }
+
 /**============================== DIFF CSS ==============================**/
 /* LEGEND */
 #legend { 
@@ -306,8 +310,10 @@ table.diff {
 .center { text-align:center!important; margin:auto!important; }
 .padding10 { padding:10px; }
 .padding0 { padding:0px; }
+.paddingBottom5 { padding-bottom:5px; }
 .margin10 { margin:10px; }
 .margin0 { margin:0px; }
+.marginTop25{ margin-top:25px; }
 .width98{ width: 98%; }
 .width96{ width: 96%; }
 .width95{ width: 95%; }
