@@ -312,12 +312,26 @@ component accessors="true" singleton threadSafe{
 	* automatically for you on the UI module. However, you can use it a-la-carte if you are building
 	* ajax or module extensions
 	* @layout An optional layout to set for you in the request. 
+	* @title Optional request page metadata title
+	* @description Optional request page metadata description
+	* @keywords Optional request page metadata keywords
 	*/
-	CBHelper function prepareUIRequest( string layout ){
+	CBHelper function prepareUIRequest( string layout, string title, string description, string keywords ){
 		var event 	= getRequestContext();
 		var prc 	= getRequestCollection( private=true );
 		var rc		= getRequestCollection();
 		
+		// Request Metadata
+		if( structKeyExists( arguments, "title") ){
+			setMetaTitle( arguments.title );
+		}
+		if( structKeyExists( arguments, "description") ){
+			setMetaDescription( arguments.description );
+		}
+		if( structKeyExists( arguments, "keywords") ){
+			setMetaKeywords( arguments.keywords );
+		}
+
 		// store UI module root
 		prc.cbRoot = getContextRoot() & event.getModuleRoot( 'contentbox' );
 		// store module entry point
