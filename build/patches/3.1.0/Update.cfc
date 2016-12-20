@@ -77,6 +77,13 @@ component {
 				pagePoolClear();
 			}
 
+			// Update new settings
+			updateSettings();
+			// Update Permissions
+			updatePermissions();
+			// Update Roles with new permissions
+			updateAdmin();
+			updateEditor();
 			
 		} catch( Any e ) {
 			ORMClearSession();
@@ -91,7 +98,6 @@ component {
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Create new Permissions
 		var perms = [
-			"EDITORS_FEATURED_IMAGE",
 			"MAINTENANCE_MODE_VIEWER"
 		];
 
@@ -117,7 +123,7 @@ component {
 
 		// Setup Permissions
 		var perms = [
-			"EDITORS_FEATURED_IMAGE"
+			"MAINTENANCE_MODE_VIEWER"
 		];
 
 		// iterate and add
@@ -138,27 +144,8 @@ component {
 	}
 
 	private function updatePermissions(){
-		// Update Old Permissions to New name and description
-		var perm = permissionService.findWhere( { permission="LAYOUT_ADMIN" } );
-		// Case where LAYOUT_ADMIN exists
-		if( !isNull( perm ) ){
-			perm.setPermission( "THEME_ADMIN" );
-			perm.setDescription( "Ability to manage themes, default is view only" );
-			permissionService.save( entity=perm );
-			log.info( "LAYOUT_ADMIN permission found, renamed to THEME_ADMIN");
-		} else {
-			// Create it as a new permission only if THEME_ADMIN does not exist
-			var perm = permissionService.findWhere( { permission="THEME_ADMIN" } );
-			if( isNull( perm ) ){
-				addPermission( "THEME_ADMIN", "Ability to manage themes, default is view only" );
-			} else {
-				log.info( "THEME_ADMIN permission found, skipping changes");
-			}
-		}
-
 		// Create new Permissions
 		var perms = {
-			"EDITORS_FEATURED_IMAGE" = "Ability to view the featured image panel",
 			"MAINTENANCE_MODE_VIEWER" = "Ability to view the Website front end, even while the site is in maintenance mode."
 		};
 
@@ -168,31 +155,8 @@ component {
 	}
 
 	private function updateSettings(){
-		// Update Theme to layout
-		var oldLayoutSetting = settingService.findWhere( { name="cb_site_layout" } );
-		if( !isNull( oldLayoutSetting ) ){
-			var oSiteTheme = settingService.findWhere( { name="cb_site_theme" } );
-			if( isNull( oSiteTheme ) ){
-				oldLayoutSetting.setName( "cb_site_theme" );
-				settingService.save( entity=oldLayoutSetting );
-			}
-		}
-		// Update Search setting
-		var oSearchSetting = settingService.findWhere( { name="cb_search_adapter" } );
-		oSearchSetting.setValue( "contentbox.models.search.DBSearch" );
-		settingService.save( entity=oSearchSetting );
-
-		// Update all settings to core
-		var oSettings = settingService.getAll();
-		for( var thisSetting in oSettings ){
-			if( reFindNoCase( "^cb_", thisSetting.getName() ) ){
-				thisSetting.setIsCore( true );
-				settingService.save( entity=thisSetting );
-			}
-		}
-
 		// Add new settings
-		addSetting( "cb_site_settings_cache", "Template" );
+		//addSetting( "cb_site_settings_cache", "Template" );
 	}
 
 	private function addPermission( permission, description ){
