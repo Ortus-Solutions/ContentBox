@@ -112,6 +112,12 @@ component accessors="true"{
 		var c = fileRead( routesPath );
 		c = replacenocase( c, "index.cfm", "", "all" );
 		fileWrite( routesPath, c );
+		
+		// rewrite on routes.cfm
+		var moduleConfigPath = appPath & "modules/contentbox/ModuleConfig.cfm";
+		var c = fileRead( moduleConfigPath );
+		c = replacenocase( c, "index.cfm", "", "all" );
+		fileWrite( moduleConfigPath, c );
 
 		// determine engine and setup the appropriate file for the rewrite engine
 		switch( arguments.setup.getRewrite_Engine() ){
