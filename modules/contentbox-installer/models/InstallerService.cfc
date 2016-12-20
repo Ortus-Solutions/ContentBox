@@ -114,7 +114,7 @@ component accessors="true"{
 		fileWrite( routesPath, c );
 		
 		// rewrite on routes.cfm
-		var moduleConfigPath = appPath & "modules/contentbox/ModuleConfig.cfm";
+		var moduleConfigPath = appPath & "modules/contentbox/ModuleConfig.cfc";
 		var c = fileRead( moduleConfigPath );
 		c = replacenocase( c, "index.cfm", "", "all" );
 		fileWrite( moduleConfigPath, c );
