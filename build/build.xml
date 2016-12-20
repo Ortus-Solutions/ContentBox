@@ -237,7 +237,14 @@
  		<!-- Create Patch directory-->
  		<mkdir dir="${dir.build}/WEB-INF/lib/lucee-server/patches"/>
  		<!-- Deliver Patch -->
- 		<copy file="${dir.dependencies}/lucee-${lucee.patch}.lco" toFile="${dir.build}/WEB-INF/lib/lucee-server/patches/${lucee.patch}.lco" encoding="UTF-8" />
+ 		<if>
+ 			<not><equals arg1="${lucee.patch}" arg2=""></equals></not>
+ 			<then>
+	 			<copy 	file="${dir.dependencies}/lucee-${lucee.patch}.lco" 
+	 					toFile="${dir.build}/WEB-INF/lib/lucee-server/patches/${lucee.patch}.lco" 
+	 					encoding="UTF-8" />
+ 			</then>
+ 		</if>
  		
  		<!-- Copy Tuckey -->
  		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
@@ -401,11 +408,16 @@
  						version="${express.server.version}"
  						destination="${dir.dependencies}"/>
 		<!-- Download Dependency via box task-->
- 		<box-dependency groupID="lucee" 
- 						artifactID="lucee"
- 						version="${lucee.patch}"
- 						extension="lco"
- 						destination="${dir.dependencies}"/>
+		<if>
+ 			<not><equals arg1="${lucee.patch}" arg2=""></equals></not>
+ 			<then>
+	 			<box-dependency groupID="lucee" 
+		 						artifactID="lucee"
+		 						version="${lucee.patch}"
+		 						extension="lco"
+		 						destination="${dir.dependencies}"/>
+ 			</then>
+ 		</if>
  		<!-- Download Dependency via box task-->
  		<box-dependency groupID="oracle" 
  						artifactID="jre"
