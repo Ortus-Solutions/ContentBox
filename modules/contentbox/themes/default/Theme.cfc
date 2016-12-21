@@ -74,7 +74,7 @@ component{
 	// Layout Settings
 	this.settings = [
 		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", optionsUDF="getSwatches", groupIntro="Control the color scheme of your entire site by changing the Bootswatch theme. Bootswatch is a set of reset colored themes.", fieldHelp="#loadHelpFile( 'cbBootswatchTheme.html' )#" },
-		{ name="headerLogo", 		group="Header", defaultValue="", 		type="text", 	label="Logo URL:", groupIntro="Customize the header section of your theme. You can change the logo and the search field.", fieldDescription="Enter a relative or full url for the website logo." },
+		{ name="headerLogo", 		group="Header", defaultValue="", 		type="text", 	label="Logo URL:", groupIntro="Customize the header section of your theme. You can change the logo and the search field.", fieldDescription="Enter a relative or full url for the website logo. This image is not scaled with html or css, so please size it accordingly. Resize the image to approximately 300x50." },
 		{ name="showSiteSearch", 	group="Header", defaultValue="true", 	type="boolean",		label="Show Search Form Field in Header", 	required="false" },
 		{ name="footerBox", 		group="Footer", defaultValue="", 		type="textarea", 	label="Footer Text:", groupIntro="Customize the footer of your site."  },
 		{ name="hpHeaderTitle", 	group="Homepage", defaultValue="", 		type="text", 		label="Homepage Header Title:", fieldDescription="Enter a homepage hero image, header title to grab your users attention.", groupIntro="Customize your homepage, make it stand out from the other pages in your site."  },
