@@ -108,7 +108,7 @@ component {
 		// find appmaping
 		var appMapping = ( len( controller.getSetting( 'AppMapping' ) ) ? controller.getSetting( 'AppMapping' ) & "/" : "" );
 		// Setup base URL
-		event.setSESBaseURL( "http" & ( event.isSSL() ? "s" : "" ) & "://#cgi.HTTP_HOST#/#appMapping#" );
+		event.setSESBaseURL( "http" & ( event.isSSL() ? "s" : "" ) & "://#cgi.HTTP_HOST#/#appMapping#index.cfm" );
 	}
 
 	/**
