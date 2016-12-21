@@ -105,10 +105,11 @@ component {
 	* This is for both the admin and UI modules
 	*/
 	function preProcess( event ){
+		var haveIndex = findnocase( "index.cfm", arguments.event.getSESBaseURL() ) ? "index.cfm" : "";
 		// find appmaping
 		var appMapping = ( len( controller.getSetting( 'AppMapping' ) ) ? controller.getSetting( 'AppMapping' ) & "/" : "" );
-		// Setup base URL
-		event.setSESBaseURL( "http" & ( event.isSSL() ? "s" : "" ) & "://#cgi.HTTP_HOST#/#appMapping#" );
+		// Setup base URL according to incoming host + protocol
+		event.setSESBaseURL( "http" & ( event.isSSL() ? "s" : "" ) & "://#cgi.HTTP_HOST#/#appMapping##haveIndex#" );
 	}
 
 	/**
