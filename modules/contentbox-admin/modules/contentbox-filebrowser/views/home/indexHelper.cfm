@@ -70,27 +70,88 @@ $( document ).ready( function() {
 	$listType			= $fileBrowser.find( "##listType" );
 	$quickView			= $fileBrowser.find( "##quickViewBar" );
 	$quickViewContents	= $fileBrowser.find( "##quickViewBarContents" );
-	$quickViewCloseBtn	= $fileBrowser.find( "##fbCloseButton" );
 	//disable it
 	$selectButton.attr( "disabled",true);
 	// history
 	fbSelectHistory = "";
 	// context menus
-	$fileBrowser.find( ".files" ).contextmenu( { target : '##fbContextMenu' } );
-	$fileBrowser.find( ".folders" ).contextmenu( { target : '##fbContextMenuDirectories' } );
+    $.contextMenu({
+        selector: '.files', 
+        callback: function(key, options) {
+            var m = "clicked: " + key;
+            window.console && console.log(m) || alert(m); 
+        },
+        items: {
+            "Quick view": {name: "#$r( "quickview@fb" )#", icon: "fa-edit", callback: function(){
+            	return fbQuickView();
+            }},
+            "Rename": {name: "#$r( "rename@fb" )#", icon: "fa-terminal", callback: function(){
+            	return fbRename();
+            }},
+           "Delete": {name: "#$r( "delete@fb" )#", icon: "fa-times", callback: function(){
+           	return fbDelete();
+           }},
+            "Download": {name: "#$r( "download@fb" )#", icon: "fa-download", callback: function(){
+            	return fbDownload();
+            }},
+            "URL": {name: "URL", icon: "fa-link", callback: function(){
+            	return fbUrl();
+            }},
+            "sep1": "---------",
+            "edit": {name: "#$r( "edit@fb" )#", icon: "fa-edit", callback: function(){
+            	return fbEdit();
+            }},
+            "info": {name: "#$r( "info@fb" )#", icon: "fa-info", callback: function(){
+            	return fbInfo();
+            }}
+        }
+    });
+    $.contextMenu({
+        selector: '.folders', 
+        callback: function(key, options) {
+            var m = "clicked: " + key;
+            window.console && console.log(m) || alert(m); 
+        },
+        items: {
+            "Rename": {name: "Rename", icon: "fa-terminal", callback: function(){
+            	return fbRename();
+            }},
+           "Delete": {name: "Delete", icon: "fa-times", callback: function(){
+           	return fbDelete();
+           }}
+        }
+    });
+    $('.files,.folders').on('click', function(e){
+		// history cleanup
+		if (fbSelectHistory.length) {
+			$( "##" + fbSelectHistory ).removeClass( "selected" );
+		}
+		// highlight selection
+		var $sItem = $(this);
+		$sItem.addClass( "selected" );
+		$selectedItemType.val( $sItem.attr( "data-type" ) );
+		$selectedItemID.val( $sItem.attr( "id" ) );
+		// save selection
+		$selectedItem.val( $sItem.attr( "data-fullURL" ) );
+		$selectedItemURL.val( $sItem.attr( "data-relURL" ) );
+		// history set
+		fbSelectHistory = $sItem.attr( "id" );
+		// status text
+		$statusText.text( $sItem.attr( "data-name" )+' ('+ $sItem.attr( "data-size" )+'KB '+$sItem.attr( "data-lastModified" )+')');
+		// enable selection button
+		$selectButton.attr( "disabled", false );
+    })  
+
+	//$fileBrowser.find( ".files" ).contextmenu( { target : '##fbContextMenu' } );
+	//$fileBrowser.find( ".folders" ).contextmenu( { target : '##fbContextMenuDirectories' } );
 	// Sorting
 	$sorting.change(function(){ fbRefresh(); } );
-	$quickViewCloseBtn.click(function(){ fbCloseQuickView(); } );
 	// Quick div filter
 	$fileBrowser.find( "##fbQuickFilter" ).keyup(function(){
 		$.uiDivFilter( $( ".filterDiv" ), this.value);
 	} )
 
 } );
-function fbCloseQuickView(){
-	$quickView.slideUp();
-	$quickViewContents.html( '' );
-}
 function fbListTypeChange( listType ){
 	$listType.val( listType );
 	fbRefresh();
@@ -110,26 +171,6 @@ function fbDrilldown( inPath ){
 		$fileLoaderBar.slideUp();
 	} );
 }
-function fbSelect( sID, sPath ){
-	// history cleanup
-	if (fbSelectHistory.length) {
-		$( "##" + fbSelectHistory ).removeClass( "selected" );
-	}
-	// highlight selection
-	var $sItem = $( "##" + sID );
-	$sItem.addClass( "selected" );
-	$selectedItemType.val( $sItem.attr( "data-type" ) );
-	$selectedItemID.val( $sItem.attr( "id" ) );
-	// save selection
-	$selectedItem.val( sPath );
-	$selectedItemURL.val( $sItem.attr( "data-relURL" ) );
-	// history set
-	fbSelectHistory = sID;
-	// status text
-	$statusText.text( $sItem.attr( "data-name" )+' ('+ $sItem.attr( "data-size" )+'KB '+$sItem.attr( "data-lastModified" )+')');
-	// enable selection button
-	$selectButton.attr( "disabled", false );
-}
 function fbQuickView(){
 	// check selection
 	var sPath = $selectedItem.val();
@@ -141,8 +182,8 @@ function fbQuickView(){
 	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	// show it
 	var imgURL = "#event.buildLink( prc.xehFBDownload )#?path="+ escape( target.attr( "data-fullURL" ) );
-	$quickView.slideDown();
-	$quickViewContents.html('<img src="'+imgURL+'" style="max-width:#prc.fbSettings.quickViewWidth#px"/>');
+	$('.imagepreview').attr('src', imgURL);
+	openModal( $( "##modalPreview" ), 500 );
 }
 function fbRename(){
 	// check selection
@@ -173,6 +214,35 @@ function fbUrl(){
 	var target 		= $( "##"+thisID);
 	// prompt the URL
 	var newName  = prompt( "URL:", "#event.buildLink( '' )#" + target.attr( "data-relurl" ) );
+}
+function fbEdit(){
+	// check selection
+	var sPath = $selectedItem.val();
+	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
+	// get ID
+	var thisID 		= $selectedItemID.val();
+	var target 		= $( "##"+thisID);
+	// only images
+	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
+	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.index' )#",{
+		imageName:target.attr( "data-name" ), 
+		imageSrc:target.attr( "data-relUrl" ), 
+		imagePath:target.attr( "data-fullUrl" )
+	}, $( window ).width() - 200, $( window ).width() - 300 );
+}
+function fbInfo(){
+	// check selection
+	var sPath = $selectedItem.val();
+	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
+	// get ID
+	var thisID 		= $selectedItemID.val();
+	var target 		= $( "##"+thisID);
+	// Show info
+	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.info' )#",{
+		imageName:target.attr( "data-name" ), 
+		imageSrc:target.attr( "data-relUrl" ), 
+		imagePath:target.attr( "data-fullUrl" )
+	}, $( window ).width() - 200, $( window ).width() - 300 )
 }
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>

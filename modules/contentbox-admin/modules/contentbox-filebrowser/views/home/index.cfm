@@ -55,16 +55,14 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<div class="form-group">
 			<!--- Sorting --->
 			#html.label( field="fbSorting", content=$r( "sortby@fb" ))#
-			#html.select( name="fbSorting", class="form-input", options=$r( "sortoptions@fb" ), selectedValue=prc.fbPreferences.sorting)#
+			#html.select( name="fbSorting", class="form-control", options=$r( "sortoptions@fb" ), selectedValue=prc.fbPreferences.sorting)#
 		</div>
-		<div class="form-group">
+		<div class="form-group pull-right">
 			<!--- Quick Filter --->
 			#html.label( field="fbQuickFilter", content=$r( "quickfilter@fb" ) )#
-			#html.textField( name="fbQuickFilter", class="form-input" )#
+			#html.textField( name="fbQuickFilter", class="form-control" )#
 		</div>
 		#html.hiddenField( name="listType", value=prc.fbPreferences.listType )#
-
-		<h3 class="panel-title actions"><strong>#prc.fbSettings.title#</strong></h3>
 
 		<!---event --->
 		#announceInterception( "fb_postTitleBar" )#
@@ -73,53 +71,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 	<!---/ end panel heading --->
 
 	<div class="panel-body" id="FileBrowser-body">
-
-		<!--- ContextMenus --->
-		<div id="fbContextMenu">
-			<ul class="dropdown-menu" role="menu">
-				<li>
-					<a href="javascript:fbQuickView()"><i class="fa fa-camera"></i> #$r( "quickview@fb" )#</a>
-				</li>
-				<cfif len( rc.callback )>
-				<li>
-					<a href="javascript:fbChoose()"><i class="fa fa-check"></i> #$r( "select@fb" )#</a>
-				</li>
-				</cfif>
-				<li>
-					<a href="javascript:fbRename()"><i class="fa fa-terminal"></i> #$r( "rename@fb" )#</a>
-				</li>
-				<cfif prc.fbSettings.deleteStuff>
-				<li>
-					<a href="javascript:fbDelete()"><i class="fa fa-times"></i> #$r( "delete@fb" )#</a>
-				</li>
-				</cfif>
-				<cfif prc.fbSettings.allowDownload>
-				<li>
-					<a href="javascript:fbDownload()"><i class="fa fa-download"></i> #$r( "download@fb" )#</a>
-				</li>
-				</cfif>
-				<li>
-					<a href="javascript:fbUrl()"><i class="fa fa-link"></i> URL</a>
-				</li>
-			</ul>
-		</div>
-		<div id="fbContextMenuDirectories">
-			<ul class="dropdown-menu">
-				<cfif len( rc.callback )>
-				<li>
-					<a href="javascript:fbChoose()"><i class="fa fa-check"></i> #$r( "select@fb" )#</a>
-				</li>
-				</cfif>
-				<li>
-					<a href="javascript:fbRename()"><i class="fa fa-terminal"></i> #$r( "rename@fb" )#</a>
-				</li>
-				<cfif prc.fbSettings.deleteStuff>
-				<li>
-					<a href="javascript:fbDelete()"><i class="fa fa-times"></i> #$r( "delete@fb" )#</a>
-				</li>
-				</cfif>
-			</ul>
-		</div>
 
 		<!--- UploadBar --->
 		<div id="uploadBar">
@@ -138,20 +89,12 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							#html.hiddenField(name="validated",value="false" )#
 							#html.hiddenField(name="overwrite",id="overwrite",value="false" )#
 						</span>
-						<a href="##" class="btn btn-info btn-sm fileupload-exists" data-dismiss="fileupload">Remove</a>
+						<a href="javascript:void(0)" class="btn btn-info btn-sm fileupload-exists" data-dismiss="fileupload">Remove</a>
 						<span id="file_uploader_button" class="btn btn-primary btn-sm">Upload</span>
 					</div>
 				</div>
 			</div>
 			#announceInterception( "fb_postUploadBar" )#
-		</div>
-
-		<!--- QuickViewBar --->
-		<div id="quickViewBar">
-			<img id="fbCloseButton" src="#prc.fbModRoot#/includes/images/x.png" alt="close"/>
-			#announceInterception( "fb_preQuickViewBar" )#
-			<div id="quickViewBarContents"></div>
-			#announceInterception( "fb_postQuickViewBar" )#
 		</div>
 
 		<!--- Uploader Message --->
@@ -219,7 +162,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							<cfif prc.fbqListing.type eq "Dir">
 								<!--- Folder --->
 								<div id="#validIDName#"
-									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+									 onClick="javascript:return false;"
 									 class="folders"
 									 data-type="dir"
 									 data-name="#prc.fbqListing.Name#"
@@ -244,7 +187,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 									 data-lastModified="#prc.fbqListing.dateLastModified#"
 									 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 									 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
-									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+									 onClick="javascript:return false;"
 									 <cfif len( rc.callback )>
 									 onDblclick="fbChoose()"
 									 </cfif> >
@@ -266,7 +209,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 					<cfif prc.fbqListing.type eq "Dir">
 						<!--- Folder --->
 						<div id="#validIDName#"
-							 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
 							 class="folders filterDiv"
 							 data-type="dir"
 							 data-name="#prc.fbqListing.Name#"
@@ -290,7 +232,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							 data-lastModified="#prc.fbqListing.dateLastModified#"
 							 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 							 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
-							 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
 							 <cfif len( rc.callback )>
 							 onDblclick="fbChoose()"
 							 </cfif> >
@@ -358,6 +299,25 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 	</div>
 
 </div> <!--- end panel FileBrowser --->
+
+<!--- Image modal preview --->
+#announceInterception( "fb_preQuickViewBar" )#
+<div id="modalPreview" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="categoryLabel" aria-hidden="true">
+	<div class="modal-dialog">
+        <div class="modal-content" id="modalContent">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-image"></i> Image preview</h4>
+		    </div>
+			<!--- Create/Edit form --->
+			<div class="modal-body">
+				<img src="" class="imagepreview img-scaled" style="" >
+			</div>
+			<!--- Footer --->
+		</div>
+	</div>
+</div>
+#announceInterception( "fb_postQuickViewBar" )#
 
 <!--- Hidden upload iframe --->
 <iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
