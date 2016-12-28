@@ -210,7 +210,11 @@ function fbDelete(){
 function fbDownload(){
 	var sPath = $selectedItem.val();
 	var sType = $selectedItemType.val();
-	if( !sPath.length || sType == "dir" ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
+	if( !sPath.length ){ 
+		alert( '#$r( "jsmessages.select@fb" )#' ); return; 
+	} else if ( sType == "dir" ){ 
+		alert( '#$r( "jsmessages.downloadFolder@fb" )#' ); return; 
+	}
 	// Trigger the download
 	$( "##downloadIFrame" ).attr( "src","#event.buildLink( prc.xehFBDownload )#?path="+ escape(sPath) );
 }
