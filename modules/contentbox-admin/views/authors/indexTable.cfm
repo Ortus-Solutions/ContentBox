@@ -61,7 +61,7 @@
 							<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
 							</cfif>
 						<cfelse>
-							<li><a href="javascript:null()"><em>No available actions</em></a></li>
+							<li><a href="javascript:void(0)"><em>No available actions</em></a></li>
 						</cfif>
 			    	</ul>
 			    </div>
