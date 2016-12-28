@@ -317,7 +317,20 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<!--- Location Bar --->
 		<div id="locationBar">
 			#announceInterception( "fb_preLocationBar" )#
-			#replace( prc.fbCurrentRoot, "/", '&nbsp;<i class="fa fa-chevron-right text-info"></i>&nbsp;', "all" )#
+			
+			<cfset crumbDir = "">
+			<cfloop list="#prc.fbCurrentRoot#" delimiters="/" index="crumb">
+				<cfif crumbDir neq "">
+					&nbsp;<i class="fa fa-chevron-right text-info"></i>&nbsp;
+				</cfif>	
+				<cfset crumbDir = crumbDir & crumb & "/">
+				<cfif ( !prc.fbSettings.traversalSecurity OR findNoCase(prc.fbSettings.directoryRoot, crumbDir ) )>
+					<a href="javascript:fbDrilldown('#JSStringFormat( crumbDir )#')">#crumb#</a>
+				<cfelse>
+					#crumb#
+				</cfif>		
+			</cfloop>
+				
 			(#prc.fbqListing.recordCount# #$r( "items@fb" )#)
 			#announceInterception( "fb_postLocationBar" )#
 		</div>
