@@ -115,6 +115,10 @@ link = The link to use for paging, including a placeholder for the page @page@
 			<!--- Calculate Total Pages --->
 			<cfset totalPages = Ceiling( arguments.FoundRows / maxRows )>
 			
+			<cfif currentPage gt totalPages>
+				<cflocation url="#replace(theLink,"@page@",totalPages)#" addtoken="false">
+			</cfif>	
+			
 			<!--- ***************************************************************** --->
 			<!--- Paging Tabs 														--->
 			<!--- ***************************************************************** --->
