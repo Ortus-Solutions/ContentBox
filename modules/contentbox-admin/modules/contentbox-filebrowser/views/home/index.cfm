@@ -220,6 +220,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 								<!--- Folder --->
 								<div id="#validIDName#"
 									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+									 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
 									 class="folders"
 									 data-type="dir"
 									 data-name="#prc.fbqListing.Name#"
@@ -245,6 +246,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 									 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 									 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
 									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+									 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
 									 <cfif len( rc.callback )>
 									 onDblclick="fbChoose()"
 									 </cfif> >
@@ -267,6 +269,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 						<!--- Folder --->
 						<div id="#validIDName#"
 							 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+							 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
 							 class="folders filterDiv"
 							 data-type="dir"
 							 data-name="#prc.fbqListing.Name#"
@@ -291,6 +294,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 							 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
 							 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+							 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
 							 <cfif len( rc.callback )>
 							 onDblclick="fbChoose()"
 							 </cfif> >
