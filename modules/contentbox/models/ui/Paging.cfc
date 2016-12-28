@@ -122,8 +122,8 @@ link = The link to use for paging, including a placeholder for the page @page@
 			<cfoutput>
 			<div class="row">
 				<div class="col-xs-6">
-					<cfset start = ((currentPage*bandGap)-bandGap)+1>
-					<cfset end = currentPage*bandGap GT foundRows ? foundRows : currentPage*bandGap>
+					<cfset start = ((currentPage*maxRows)-maxRows)+1>
+					<cfset end = currentPage*maxRows GT foundRows ? foundRows : currentPage*maxRows>
 					<div class="dataTables_info" role="alert" aria-live="polite" aria-relevant="all">Showing #start# to #end# of #arguments.FoundRows# entries (#totalPages# pages)
 					</div>
 				</div>
