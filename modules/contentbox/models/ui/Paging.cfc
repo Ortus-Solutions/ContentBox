@@ -144,7 +144,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 							<cfset pageFrom=currentPage-bandgap>
 							<cfif arguments.asList><li class="paginate_button" aria-controls="pages" tabindex="0"></cfif>
 							<a href="#replace(theLink,"@page@",1)#">1</a>
-							<a href="javascript:null">...</a>
+							<a href="javascript:void(0)">...</a>
 							<cfif arguments.asList></li></cfif>
 						</cfif>
 						
@@ -163,7 +163,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 						<!--- End Token --->
 						<cfif (currentPage+bandgap) lt totalPages>
 							<cfif arguments.asList><li class="paginate_button" aria-controls="pages" tabindex="0"></cfif>
-							<a href="javascript:null">...</a>
+							<a href="javascript:void(0)">...</a>
 							<a href="#replace(theLink,"@page@",totalPages)#">#totalPages#</a>
 							<cfif arguments.asList></li></cfif>
 						</cfif>
@@ -215,7 +215,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 						<cfset pageFrom=currentPage-bandgap>
 						<cfif arguments.asList><li></cfif>
 						<a href="#replace(theLink,"@page@",1)#">1</a>
-						<a href="javascript:null">...</a>
+						<a href="javascript:void(0)">...</a>
 						<cfif arguments.asList></li></cfif>
 					</cfif>
 					
@@ -234,7 +234,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 					<!--- End Token --->
 					<cfif (currentPage+bandgap) lt totalPages>
 						<cfif arguments.asList><li></cfif>
-						<a href="javascript:null">...</a>
+						<a href="javascript:void(0)">...</a>
 						<a href="#replace(theLink,"@page@",totalPages)#">#totalPages#</a>
 						<cfif arguments.asList></li></cfif>
 					</cfif>
