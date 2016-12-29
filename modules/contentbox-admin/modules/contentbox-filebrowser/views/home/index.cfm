@@ -186,126 +186,132 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 					<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#$r( "back@fb" )#">..</a><br>
 				</cfif>
 			</cfif>
-
+			
+			<!--- Keep count of the excluded items from the display, so we can adjust the item count in the status bar --->
+			<cfset excludeCounter = 0>
+			
 			<!--- Display directories --->
 			<cfif prc.fbqListing.recordcount>
-			<cfloop query="prc.fbqListing">
-
-				<!--- Skip Exclude Filters --->
-				<cfset skipExcludes = false>
-				<cfloop array="#listToArray( prc.fbSettings.excludeFilter )#" index="thisFilter">
-					<cfif reFindNoCase( thisFilter, prc.fbqListing.name )>
-						<cfset skipExcludes = true><cfbreak>
+				<cfloop query="prc.fbqListing">
+	
+					<!--- Skip Exclude Filters --->
+					<cfset skipExcludes = false>
+					<cfloop array="#listToArray( prc.fbSettings.excludeFilter )#" index="thisFilter">
+						<cfif reFindNoCase( thisFilter, prc.fbqListing.name )>
+							<cfset skipExcludes = true><cfbreak>
+						</cfif>
+					</cfloop>
+					<cfif skipExcludes>
+						<cfset excludeCounter++>
+						<cfcontinue>
+					</cfif>
+	
+					<!--- Include Filters --->
+					<cfif NOT reFindNoCase( prc.fbNameFilter, prc.fbqListing.name )><cfcontinue></cfif>
+	
+					<!--- ID Name of the div --->
+					<cfset validIDName = $validIDName( prc.fbqListing.name ) >
+					<!--- URL used for selection --->
+					<cfset plainURL = prc.fbCurrentRoot & "/" & prc.fbqListing.name>
+					<cfset relURL = $getUrlRelativeToPath( prc.fbwebRootPath, plainURL )>
+					<cfset mediaURL = ( ( prc.fbSettings.useMediaPath ) ? $getURLMediaPath( prc.fbDirRoot, plainURL ) : relURL )>
+	
+					<!---Grid or List --->
+					<cfif prc.fbPreferences.listType eq "grid">
+						<!---Grid Listing --->
+						<div class="fbItemBox filterDiv">
+							<div class="fbItemBoxPreview">
+								<!--- Directory or File --->
+								<cfif prc.fbqListing.type eq "Dir">
+									<!--- Folder --->
+									<div id="#validIDName#"
+										 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+										 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+										 class="folders"
+										 data-type="dir"
+										 data-name="#prc.fbqListing.Name#"
+										 data-fullURL="#plainURL#"
+										 data-relURL="#relURL#"
+										 data-lastModified="#dateformat( prc.fbqListing.dateLastModified, 'yyyy-mm-dd' )# #timeformat( prc.fbqListing.dateLastModified, 'hh:mm:ss tt' )#"
+										 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
+										 data-quickview="false"
+										 onDblclick="fbDrilldown('#JSStringFormat( plainURL )#')">
+										<a href="javascript:fbDrilldown('#JSStringFormat( plainURL )#')"><img src="#prc.fbModRoot#/includes/images/directory.png" border="0"  alt="Folder"></a>
+										<br/>
+										#prc.fbqListing.name#
+									</div>
+								<cfelseif prc.fbSettings.showFiles>
+									<!--- Display the DiV --->
+									<div id="#validIDName#"
+										 class="files"
+										 data-type="file"
+										 data-name="#prc.fbqListing.Name#"
+										 data-fullURL="#plainURL#"
+										 data-relURL="#mediaURL#"
+										 data-lastModified="#dateformat( prc.fbqListing.dateLastModified, 'yyyy-mm-dd' )# #timeformat( prc.fbqListing.dateLastModified, 'hh:mm:ss tt' )#"
+										 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
+										 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
+										 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+										 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+										 <cfif len( rc.callback )>
+										 onDblclick="fbChoose()"
+										 </cfif> >
+										<cfif validQuickView( listLast( prc.fbQListing.name, "." ) )>
+											<img src="#event.buildLink(prc.xehFBDownload)#?path=#plainURL#" border="0" alt="quickview" style="max-width: 140px; max-height: 100px">
+										<cfelse>
+											<img src="#prc.fbModRoot#/includes/images/bigfile.png" border="0"  alt="file">
+										</cfif>
+										<br/>
+										#prc.fbqListing.name# <br/>
+										(#numberFormat( prc.fbqListing.size / 1024 )# kb)
+									</div>
+								</cfif>
+							</div>
+						</div>
+					<!--- list --->
+					<cfelse>
+						<!--- Directory or File --->
+						<cfif prc.fbqListing.type eq "Dir">
+							<!--- Folder --->
+							<div id="#validIDName#"
+								 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+								 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+								 class="folders filterDiv"
+								 data-type="dir"
+								 data-name="#prc.fbqListing.Name#"
+								 data-fullURL="#plainURL#"
+								 data-relURL="#relURL#"
+								 data-lastModified="#dateformat( prc.fbqListing.dateLastModified, 'yyyy-mm-dd' )# #timeformat( prc.fbqListing.dateLastModified, 'hh:mm:ss tt' )#"
+								 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
+								 data-quickview="false"
+								 onDblclick="fbDrilldown('#JSStringFormat( plainURL )#')">
+								<a href="javascript:fbDrilldown('#JSStringFormat( plainURL )#')"><img src="#prc.fbModRoot#/includes/images/folder.png" border="0"  alt="Folder"></a>
+								#prc.fbqListing.name#
+							</div>
+						<cfelseif prc.fbSettings.showFiles>
+							<!--- Display the DiV --->
+							<div id="#validIDName#"
+								 class="files filterDiv"
+								 data-type="file"
+								 data-name="#prc.fbqListing.Name#"
+								 data-fullURL="#plainURL#"
+								 data-relURL="#mediaURL#"
+								 data-lastModified="#dateformat( prc.fbqListing.dateLastModified, 'yyyy-mm-dd' )# #timeformat( prc.fbqListing.dateLastModified, 'hh:mm:ss tt' )#"
+								 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
+								 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
+								 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+								 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
+								 <cfif len( rc.callback )>
+								 onDblclick="fbChoose()"
+								 </cfif> >
+								<img src="#prc.fbModRoot#/includes/images/#getImageFile(listLast( prc.fbQListing.name, "." ))#" border="0"  alt="file">
+								#prc.fbqListing.name#
+							</div>
+						</cfif>
 					</cfif>
 				</cfloop>
-				<cfif skipExcludes><cfcontinue></cfif>
-
-				<!--- Include Filters --->
-				<cfif NOT reFindNoCase( prc.fbNameFilter, prc.fbqListing.name )><cfcontinue></cfif>
-
-				<!--- ID Name of the div --->
-				<cfset validIDName = $validIDName( prc.fbqListing.name ) >
-				<!--- URL used for selection --->
-				<cfset plainURL = prc.fbCurrentRoot & "/" & prc.fbqListing.name>
-				<cfset relURL = $getUrlRelativeToPath( prc.fbwebRootPath, plainURL )>
-				<cfset mediaURL = ( ( prc.fbSettings.useMediaPath ) ? $getURLMediaPath( prc.fbDirRoot, plainURL ) : relURL )>
-
-				<!---Grid or List --->
-				<cfif prc.fbPreferences.listType eq "grid">
-					<!---Grid Listing --->
-					<div class="fbItemBox filterDiv">
-						<div class="fbItemBoxPreview">
-							<!--- Directory or File --->
-							<cfif prc.fbqListing.type eq "Dir">
-								<!--- Folder --->
-								<div id="#validIDName#"
-									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-									 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-									 class="folders"
-									 data-type="dir"
-									 data-name="#prc.fbqListing.Name#"
-									 data-fullURL="#plainURL#"
-									 data-relURL="#relURL#"
-									 data-lastModified="#dateformat( prc.fbqListing.dateLastModified, 'yyyy-mm-dd' )# #timeformat( prc.fbqListing.dateLastModified, 'hh:mm:ss tt' )#"
-									 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
-									 data-quickview="false"
-									 onDblclick="fbDrilldown('#JSStringFormat( plainURL )#')">
-									<a href="javascript:fbDrilldown('#JSStringFormat( plainURL )#')"><img src="#prc.fbModRoot#/includes/images/directory.png" border="0"  alt="Folder"></a>
-									<br/>
-									#prc.fbqListing.name#
-								</div>
-							<cfelseif prc.fbSettings.showFiles>
-								<!--- Display the DiV --->
-								<div id="#validIDName#"
-									 class="files"
-									 data-type="file"
-									 data-name="#prc.fbqListing.Name#"
-									 data-fullURL="#plainURL#"
-									 data-relURL="#mediaURL#"
-									 data-lastModified="#dateformat( prc.fbqListing.dateLastModified, 'yyyy-mm-dd' )# #timeformat( prc.fbqListing.dateLastModified, 'hh:mm:ss tt' )#"
-									 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
-									 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
-									 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-									 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-									 <cfif len( rc.callback )>
-									 onDblclick="fbChoose()"
-									 </cfif> >
-									<cfif validQuickView( listLast( prc.fbQListing.name, "." ) )>
-										<img src="#event.buildLink(prc.xehFBDownload)#?path=#plainURL#" border="0" alt="quickview" style="max-width: 140px; max-height: 100px">
-									<cfelse>
-										<img src="#prc.fbModRoot#/includes/images/bigfile.png" border="0"  alt="file">
-									</cfif>
-									<br/>
-									#prc.fbqListing.name# <br/>
-									(#numberFormat( prc.fbqListing.size / 1024 )# kb)
-								</div>
-							</cfif>
-						</div>
-					</div>
-				<!--- list --->
-				<cfelse>
-					<!--- Directory or File --->
-					<cfif prc.fbqListing.type eq "Dir">
-						<!--- Folder --->
-						<div id="#validIDName#"
-							 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-							 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-							 class="folders filterDiv"
-							 data-type="dir"
-							 data-name="#prc.fbqListing.Name#"
-							 data-fullURL="#plainURL#"
-							 data-relURL="#relURL#"
-							 data-lastModified="#dateformat( prc.fbqListing.dateLastModified, 'yyyy-mm-dd' )# #timeformat( prc.fbqListing.dateLastModified, 'hh:mm:ss tt' )#"
-							 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
-							 data-quickview="false"
-							 onDblclick="fbDrilldown('#JSStringFormat( plainURL )#')">
-							<a href="javascript:fbDrilldown('#JSStringFormat( plainURL )#')"><img src="#prc.fbModRoot#/includes/images/folder.png" border="0"  alt="Folder"></a>
-							#prc.fbqListing.name#
-						</div>
-					<cfelseif prc.fbSettings.showFiles>
-						<!--- Display the DiV --->
-						<div id="#validIDName#"
-							 class="files filterDiv"
-							 data-type="file"
-							 data-name="#prc.fbqListing.Name#"
-							 data-fullURL="#plainURL#"
-							 data-relURL="#mediaURL#"
-							 data-lastModified="#dateformat( prc.fbqListing.dateLastModified, 'yyyy-mm-dd' )# #timeformat( prc.fbqListing.dateLastModified, 'hh:mm:ss tt' )#"
-							 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
-							 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
-							 onClick="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-							 onContextMenu="fbSelect('#validIDName#','#JSStringFormat( plainURL )#')"
-							 <cfif len( rc.callback )>
-							 onDblclick="fbChoose()"
-							 </cfif> >
-							<img src="#prc.fbModRoot#/includes/images/#getImageFile(listLast( prc.fbQListing.name, "." ))#" border="0"  alt="file">
-							#prc.fbqListing.name#
-						</div>
-					</cfif>
-				</cfif>
-			</cfloop>
 			<cfelse>
-			<em>#$r( "emptydirectory@fb" )#</em>
+				<em>#$r( "emptydirectory@fb" )#</em>
 			</cfif>
 			#announceInterception( "fb_postFileListing" )#
 		</div> <!--- end fileListing --->
@@ -331,7 +337,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				</cfif>		
 			</cfloop>
 				
-			(#prc.fbqListing.recordCount# #$r( "items@fb" )#)
+			(#prc.fbqListing.recordCount-excludeCounter# #$r( "items@fb" )#)
 			#announceInterception( "fb_postLocationBar" )#
 		</div>
 
