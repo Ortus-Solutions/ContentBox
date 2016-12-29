@@ -13,6 +13,9 @@ dist: trusty
 
 sudo: required
 
+git:
+  depth: 100
+  
 addons:
   apt:
     packages:
