@@ -304,10 +304,10 @@ $(document).ready(function() {
 					alert( '#$r( "jsmessages.browsernotsupported@fb" )#' );
 					break;
 				case 'TooManyFiles':
-					alert( '#$r( "jsmessages.toomanyfiles@fb" )#' );
+					alert( '#$r( resource="jsmessages.toomanyfiles@fb", values=prc.fbSettings.html5uploads.maxfiles )#' );
 					break;
 				case 'FileTooLarge':
-					alert( file.name + ' #$r( "jsmessages.toolarge@fb" )#');
+					alert( file.name + ' #$r( resource="jsmessages.toolarge@fb", values=prc.fbSettings.html5uploads.maxfilesize )#');
 					break;
 				case 'FileTypeNotAllowed':
 					alert( file.type + ' #$r( resource="jsmessages.invalidtype@fb", values=prc.fbSettings.acceptMimeTypes )#' );
