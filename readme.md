@@ -12,6 +12,7 @@
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
 www.ortussolutions.com
 
+[![Build Status](https://travis-ci.org/Ortus-Solutions/ContentBox.svg?branch=development)](https://travis-ci.org/Ortus-Solutions/ContentBox)
 ----
 
 Because of God's grace, this project exists. If you don't like this, then don't read it, its not for you.
