@@ -74,6 +74,7 @@ component{
 	// Layout Settings
 	this.settings = [
 		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", optionsUDF="getSwatches", groupIntro="Control the color scheme of your entire site by changing the Bootswatch theme. Bootswatch is a set of reset colored themes.", fieldHelp="#loadHelpFile( 'cbBootswatchTheme.html' )#" },
+		{ name="overrideHeaderColors", group="Colors", defaultValue="false", type="boolean", label="Override Page Header Colors from Bootswatch:", required="false", fieldDescription="Background and Text color overrides below will only override if this is set to True" },
 		{ name="overrideHeaderBGColor", group="Colors", defaultValue="", type="color", label="Override Page Header BG Color from Bootswatch:", required="false", fieldDescription="Enter a valid CSS color" },
 		{ name="overrideHeaderTextColor", group="Colors", defaultValue="", type="color", label="Override Page Header Text Color from Bootswatch:", required="false", fieldDescription="Enter a valid CSS color" },
 		{ name="cssStyleOverrides",	group="Colors", defaultValue="", 		type="textarea", 	label="CSS Style Overrides:", fieldDescription="Enter CSS you would like added to your Theme to override the defaults from your Bootswatch" },
