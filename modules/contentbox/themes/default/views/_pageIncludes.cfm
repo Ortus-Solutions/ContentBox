@@ -40,6 +40,12 @@
 <link rel="stylesheet" href="#cb.themeRoot()#/includes/css/218c7e65.theme.min.css">
 <!-- endinjector -->
 
+<cfif len( cb.themeSetting( 'cssStyleOverrides' ) )>
+<style>
+	#cb.themeSetting( 'cssStyleOverrides' )#
+</style>	
+</cfif>
+
 <!--- ********************************************************************************* --->
 <!--- 					JAVASCRIPT														--->
 <!--- ********************************************************************************* --->

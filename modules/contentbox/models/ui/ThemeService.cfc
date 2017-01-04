@@ -740,6 +740,20 @@ component accessors="true" threadSafe singleton{
     						);
     						break;
     					}
+    					case "color" : {
+    						writeOutput( 
+    							html.inputField( 
+    								name		= settingName,
+    								class		= "textfield",
+    								required	= requiredValidator,
+    								title		= thisSettingMD.title,
+    								value		= thisSettingMD.defaultValue,
+    								class 		= "form-control",
+    								type		= "color"
+    							)
+    						);
+    						break;
+    					}
     					default:{
     						writeOutput( 
     							html.textfield( 
