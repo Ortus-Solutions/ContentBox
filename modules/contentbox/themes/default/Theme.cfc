@@ -74,6 +74,9 @@ component{
 	// Layout Settings
 	this.settings = [
 		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", optionsUDF="getSwatches", groupIntro="Control the color scheme of your entire site by changing the Bootswatch theme. Bootswatch is a set of reset colored themes.", fieldHelp="#loadHelpFile( 'cbBootswatchTheme.html' )#" },
+		{ name="overrideHeaderBGColor", group="Colors", defaultValue="", type="text", label="Override Page Header BG Color from Bootswatch:", required="false", fieldDescription="Enter a valid CSS color" },
+		{ name="overrideHeaderTextColor", group="Colors", defaultValue="", type="text", label="Override Page Header Text Color from Bootswatch:", required="false", fieldDescription="Enter a valid CSS color" },
+		{ name="cssStyleOverrides",	group="Colors", defaultValue="", 		type="textarea", 	label="CSS Style Overrides:", fieldDescription="Enter CSS you would like added to your Theme to override the defaults from your Bootswatch" },
 		{ name="headerLogo", 		group="Header", defaultValue="", 		type="text", 	label="Logo URL:", groupIntro="Customize the header section of your theme. You can change the logo and the search field.", fieldDescription="Enter a relative or full url for the website logo. This image is not scaled with html or css, so please size it accordingly. Resize the image to approximately 300x50." },
 		{ name="showSiteSearch", 	group="Header", defaultValue="true", 	type="boolean",		label="Show Search Form Field in Header", 	required="false" },
 		{ name="footerBox", 		group="Footer", defaultValue="", 		type="textarea", 	label="Footer Text:", groupIntro="Customize the footer of your site."  },

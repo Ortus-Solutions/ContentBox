@@ -32,11 +32,20 @@
 		</div>
 	</div>
 <cfelse>
-	<div id="body-header">
+	<cfset bodyHeaderStyle = "">
+	<cfif len( cb.themeSetting( 'overrideHeaderBGColor' ) )>
+		<cfset bodyHeaderStyle = bodyHeaderStyle & 'background-color: ' & cb.themeSetting( 'overrideHeaderBGColor' ) & ';'>
+	</cfif>
+	
+	<cfset bodyHeaderH1Style = "">
+	<cfif len( cb.themeSetting( 'overrideHeaderTextColor' ) )>
+		<cfset bodyHeaderH1Style = bodyHeaderH1Style & 'color: ' & cb.themeSetting( 'overrideHeaderTextColor' ) & ';'>
+	</cfif>
+	<div id="body-header" style="#bodyHeaderStyle#">
 		<div class="container">
 			<!--- Title --->
 			<div class="underlined-title">
-				<h1>#prc.page.getTitle()#</h1>
+				<h1 style="#bodyHeaderH1Style#">#prc.page.getTitle()#</h1>
 				<div class="text-divider5">
 					<span></span>
 				</div>

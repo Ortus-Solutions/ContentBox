@@ -18,19 +18,15 @@
 	<!--- Header --->
 	#cb.quickView( view='_header' )#
 
-	<!--- Main Body --->
-	<section id="body-main">
-		<div class="container">
-			<!--- ContentBoxEvent --->
-			#cb.event( "cbui_beforeContent" )#
+	<!--- ContentBoxEvent --->
+	#cb.event( "cbui_beforeContent" )#
 
-			<!--- Main View --->
-			#cb.mainView( args=args )#
+	<!--- Main View --->
+	#cb.mainView( args=args )#
 
-			<!--- ContentBoxEvent --->
-			#cb.event( "cbui_afterContent" )#
-		</div>
-	</section>
+	<!--- ContentBoxEvent --->
+	#cb.event( "cbui_afterContent" )#
+
 	#cb.quickView( view='_footer' )#
 	
 	<!--- ContentBoxEvent --->
