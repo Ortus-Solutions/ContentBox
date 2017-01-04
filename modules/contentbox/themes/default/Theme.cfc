@@ -81,8 +81,12 @@ component{
 		{ name="hpHeaderText",	group="Homepage", defaultValue="", 		type="textarea", 	label="Homepage Header Text:", fieldDescription="Enter text for your homepage hero image. This is placed below the title, above the homepage button" },
 		{ name="hpHeaderLink", 	group="Homepage", 	defaultValue="", 		type="text", 		label="Homepage Header Button Link:", fieldDescription="Action Link for the homepage hero button" },
 		{ name="hpHeaderBtnText", 	group="Homepage", 	defaultValue="", 		type="text", 		label="Homepage Header Button Text:" },
+		{ name="hpHeaderBtnStyle", 	group="Homepage", 	defaultValue="primary", 		type="select", 		label="Homepage Header Button Style:", optionsUDF="getBootstrapButtonStyles", fieldDescription="Select one of the Bootstrap Button Styles for your Button" },
 		{ name="hpHeaderBg", 	group="Homepage", 	defaultValue="green", 	type="select", 		label="Homepage Header Background:", 	required="false", options="Green,World", fieldDescription="Choose a predefined background image for your homepage hero." },
 		{ name="hpHeaderImgBg", 	group="Homepage", 	defaultValue="", 	type="text", 		label="Homepage Header Image Background:", fieldDescription="Enter an URL for a custom Homepage hero image. Overrides the predefined background image." },
+		{ name="hpHeaderBgPos", 	group="Homepage", 	defaultValue="Top Center", type="select", label="Homepage Header Image Background:", optionsUDF="getBackgroundPositions" },
+		{ name="hpHeaderBgPaddingTop", 	group="Homepage", 	defaultValue="100px", type="text", label="Homepage Header Image Top Padding:", fieldDescription="Enter top padding for Homepage hero image. Use one of the following formats: '20px', '10%' or '3em'." },
+		{ name="hpHeaderBgPaddingBottom", 	group="Homepage", 	defaultValue="50px", type="text", label="Homepage Header Image Bottom Padding:", fieldDescription="Enter bottom padding for Homepage hero image. Use one of the following formats: '20px', '10%' or '3em'." },
 		{ name="rssDiscovery", 	group="Homepage", 	defaultValue="true", 	type="boolean",		label="Active RSS Discovery Links", 	required="false" },
 		{ name="showCategoriesBlogSide", group="Blog Sidebar Options", defaultValue="true", type="boolean",		label="Show Categories in Blog Sidebar", 	required="false", groupIntro="By default, you have lots of widgets displayed in the Blog Sidebar. Enable or Disabled those items below." },
 		{ name="showRecentEntriesBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Recent Enties in Blog Sidebar", 	required="false" },
@@ -90,7 +94,6 @@ component{
 		{ name="showEntryCommentsBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Entry Comments in Blog Sidebar", 	required="false" },
 		{ name="showArchivesBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Archives in Blog Sidebar", 	required="false" },
 		{ name="showEntriesSearchBlogSide", 	group="Blog Sidebar Options", defaultValue="true", type="boolean",	label="Show Entries Search in Blog Sidebar", 	required="false" }
-		
 	];
 
 	/**
@@ -98,6 +101,37 @@ component{
 	*/
 	array function getSwatches(){
 		return listToArray( "cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" );
+	}
+	
+	/**
+	*
+	*/
+	array function getBackgroundPositions(){
+		return [ 
+			"Top Left",
+			"Top Center",
+			"Top Right",
+			"Middle Left",
+			"Middle Center",
+			"Middle Right",
+			"Bottom Left",
+			"Bottom Center",
+			"Bottom Right"
+		];
+	}
+	
+	/**
+	*
+	*/
+	array function getBootstrapButtonStyles(){
+		return [ 
+			"default",
+			"primary",
+			"success",
+			"info",
+			"warning",
+			"danger"
+		];
 	}
 	
 	/**
