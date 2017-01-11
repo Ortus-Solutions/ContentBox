@@ -165,6 +165,22 @@ component {
 	private function updateSettings(){
 		// Add new settings
 		//addSetting( "cb_site_settings_cache", "Template" );
+		
+		// Update ckeditor plugins
+		var pluginList = listToArray( "justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe" );
+		var oldPluginsSetting = settingService.findWhere( { name="cb_editors_ckeditor_extraplugins" } );
+		if( !isNull( oldPluginsSetting ) ){
+			var aPlugins = listToArray( oldPluginsSetting.getValue() );
+			// Verify the new plugin list
+			for( var thisPlugin in pluginList ){
+				if( !arrayFindNoCase( aPlugins, thisPlugin ) ){
+					arrayAppend( aPlugins, thisPlugin );
+				}
+			}
+			// Save new list
+			oldPluginsSetting.setValue( arrayToList( aPlugins ) );
+			settingService.save( entity=oldPluginsSetting );
+		}
 	}
 
 	private function addPermission( permission, description ){
