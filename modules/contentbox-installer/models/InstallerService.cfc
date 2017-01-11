@@ -445,7 +445,7 @@ component accessors="true"{
     { "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar" ] },
     { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbContentStore","cbLinks","cbEntryLinks" ] }
 ]' ,
-			"cb_editors_ckeditor_extraplugins" 		= "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre",
+			"cb_editors_ckeditor_extraplugins" 		= "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre,justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe",
 
 			// Search Settings
 			"cb_search_adapter" 					= "contentbox.models.search.DBSearch",
