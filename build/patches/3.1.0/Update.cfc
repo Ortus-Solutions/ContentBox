@@ -8,7 +8,7 @@
 * 
 * DB Structure Changes Comment Below
 * 
-* Remove Interface for conversion from 2.1 to 3.0.0 RC
+* Remove Interface for conversion from 3.0.0 -> 3.1.0
 *
 * ---
 * Start Commit Hash: e1e8f96c1e8c56f852b7af057b9e55cdaa7caf22
@@ -40,7 +40,7 @@ component {
 	* On DI Complete
 	*/
 	function onDIComplete(){
-		// setup update variables.
+		// setup update variables that are used globally
 		variables.version 			= "3.1.0";
 		variables.currentVersion 	= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
 		variables.thisPath			= getDirectoryFromPath( getMetadata( this ).path );
@@ -48,7 +48,8 @@ component {
 	}
 
 	/**
-	* pre installation
+	* pre installation:
+	* This happens before file removals and file updates. Last chance before code changes.
 	*/
 	function preInstallation(){
 		try{
