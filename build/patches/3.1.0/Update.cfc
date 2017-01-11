@@ -27,6 +27,8 @@ component {
 	property name="wirebox"					inject="wirebox";
 	property name="coldbox"					inject="coldbox";
 	property name="securityService" 		inject="id:securityService@cb";
+	property name="flash"					inject="coldbox:flash";
+	property name="cbMessagebox" 			inject="id:messagebox@cbmessagebox";
 
 	/**
 	* Constructor
@@ -69,14 +71,11 @@ component {
 	/**
 	* post installation
 	*/
-	function postInstallation(){
+	function postInstallation( required log ){
 		try{
 			// Make changes on disk take effect
 			ORMCloseSession();
 			ORMReload();
-			if( structKeyExists( server, "lucee" ) ){
-				pagePoolClear();
-			}
 
 			// Update new settings
 			updateSettings();
@@ -85,6 +84,14 @@ component {
 			// Update Roles with new permissions
 			updateAdmin();
 			updateEditor();
+
+			// stop application
+			applicationstop();
+			// Log setup in flash + messagebox
+			flash.put( "updateLog", arguments.log );
+			cbMessagebox.info( "Update Applied!" );
+			// Hard Redirect
+			coldbox.setNextEvent( "cbadmin.autoupdates" );
 			
 		} catch( Any e ) {
 			ORMClearSession();
