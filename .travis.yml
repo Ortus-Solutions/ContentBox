@@ -64,12 +64,12 @@ deploy:
   acl: public_read
 
 after_deploy:
-  # Publish Beta Channel to ForgeBox
-  - cd $TRAVIS_BUILD_DIR/build/build-forgebox/beta-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR
-  # Publish BE Release
-  - cd $TRAVIS_BUILD_DIR/build/build-forgebox/be && box forgebox publish && cd $TRAVIS_BUILD_DIR
-  # Publish Master Assets: Stable Channel + Release
   >
+  # publish beta channel
+  cd $TRAVIS_BUILD_DIR/build/build-forgebox/beta-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+  # publish be release
+  cd $TRAVIS_BUILD_DIR/build/build-forgebox/be && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+  # publish stable channel + stable release
   if [ $TRAVIS_BRANCH == 'master' ]; then
     cd $TRAVIS_BUILD_DIR/build/build-contentbox && box forgebox publish && cd $TRAVIS_BUILD_DIR;
     cd $TRAVIS_BUILD_DIR/build/forgebox/stable-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
