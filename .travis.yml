@@ -65,12 +65,12 @@ deploy:
 after_deploy:
   >
   cd $TRAVIS_BUILD_DIR/build/build-forgebox/beta-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
-  echo `pwd`
+  echo `pwd`;
   cd $TRAVIS_BUILD_DIR/build/build-forgebox/be && box forgebox publish && cd $TRAVIS_BUILD_DIR;
-  echo `pwd`
+  echo `pwd`;
   if [ $TRAVIS_BRANCH == 'master' ]; then
     cd $TRAVIS_BUILD_DIR/build/build-contentbox && box forgebox publish && cd $TRAVIS_BUILD_DIR;
-    echo `pwd`
+    echo `pwd`;
     cd $TRAVIS_BUILD_DIR/build/forgebox/stable-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
   fi
 
