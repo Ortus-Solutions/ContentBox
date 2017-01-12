@@ -65,12 +65,14 @@ deploy:
 
 after_deploy:
   # Publish Beta Channel to ForgeBox
-  - cd $TRAVIS_BUILD_DIR/build/build-forgebox/beta-updates && box forgebox publish
-  # Publish Master Assets 
+  - cd $TRAVIS_BUILD_DIR/build/build-forgebox/beta-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR
+  # Publish BE Release
+  - cd $TRAVIS_BUILD_DIR/build/build-forgebox/be && box forgebox publish && cd $TRAVIS_BUILD_DIR
+  # Publish Master Assets: Stable Channel + Release
   >
   if [ $TRAVIS_BRANCH == 'master' ]; then
-    cd $TRAVIS_BUILD_DIR/build/build-contentbox && box forgebox publish;
-    cd ../build/forgebox/stable-updates && box forgebox publish;
+    cd $TRAVIS_BUILD_DIR/build/build-contentbox && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+    cd $TRAVIS_BUILD_DIR/build/forgebox/stable-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
   fi
 
 # Slack Notifications
