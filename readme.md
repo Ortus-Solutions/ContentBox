@@ -1,19 +1,8 @@
-﻿```
-   ____            _             _   ____            
-  / ___|___  _ __ | |_ ___ _ __ | |_| __ )  _____  __
- | |   / _ \| '_ \| __/ _ \ '_ \| __|  _ \ / _ \ \/ /
- | |__| (_) | | | | ||  __/ | | | |_| |_) | (_) >  < 
-  \____\___/|_| |_|\__\___|_| |_|\__|____/ \___/_/\_\
-                                                     
-```
+﻿[![Build Status](https://travis-ci.org/Ortus-Solutions/ContentBox.svg?branch=development)](https://travis-ci.org/Ortus-Solutions/ContentBox)
 
-# ContentBox Modular CMS - A Modular Content Platform
+<img src="https://www.contentboxcms.org/__media/ContentBox_300.png" class="img-thumbnail"/>
 
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-
-[![Build Status](https://travis-ci.org/Ortus-Solutions/ContentBox.svg?branch=development)](https://travis-ci.org/Ortus-Solutions/ContentBox)
-----
+>Copyright 2012 by Ortus Solutions, Corp - https://www.ortussolutions.com
 
 Because of God's grace, this project exists. If you don't like this, then don't read it, its not for you.
 

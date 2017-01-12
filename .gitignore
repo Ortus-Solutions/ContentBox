@@ -16,6 +16,7 @@ build/build.number
 build/apidocs/docbox
 build/resources/WEB-INF/*
 build/build-contentbox/**
+build/build-forgebox/**
 build/dependencies
 # Workbench Dependencies
 workbench/node_modules

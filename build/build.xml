@@ -52,12 +52,15 @@
 
 		<!-- Cleanup + Init -->
 		<delete dir="${dir.build}" />
+		<delete dir="${dir.forgeboxbuild}"/>
 		<delete verbose="true" failonerror="false">
 			<fileset dir="${dir.contentbox.exports}" />
 		</delete>
 		<mkdir dir="${dir.build}"/>
+		<mkdir dir="${dir.forgeboxbuild}"/>
 		<mkdir dir="${be.exports}"/>
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
+		<chmod file="${dir.forgeboxbuild}/**" perm="g+wxrs" type="both" />
 		
 		<!-- Build Number -->
 		<if>
@@ -135,6 +138,23 @@
       		</fileset>
         </copy>
 
+        <!-- Copy ForgeBox Build Sources -->
+        <copy todir="${dir.forgeboxbuild}" encoding="UTF-8">
+			<fileset dir="${basedir}/build/forgebox" />
+        </copy>
+        <copy todir="${dir.forgeboxbuild}/be" encoding="UTF-8">
+			<fileset file="${basedir}/readme.md" />
+			<fileset file="${basedir}/box.json" />
+        </copy>
+
+        <!-- Replace Build Number to BE Snapshot -->
+		<replaceregexp match='\+@build.number@' replace="-snapshot" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.forgeboxbuild}/be" />
+		</replaceregexp>
+		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.forgeboxbuild}/be" />
+		</replaceregexp>
+
 		<!-- Cleanup Dependencies -->
 		<delete dir="${dir.build}/coldbox" />
         <!-- Install Dependencies -->
@@ -148,12 +168,18 @@
 				<include name="**/ModuleConfig.cfc" />
 			</fileset>
 			<fileset file="${dir.build}/box.json" />
+			<!-- ForgeBox Entries -->
+			<fileset dir="${dir.forgeboxbuild}" />
 		</replaceregexp>
 		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
 			<fileset dir="${dir.build}/modules/">
 				<include name="**/ModuleConfig.cfc" />
 			</fileset>
 			<fileset file="${dir.build}/box.json" />
+			<!-- ForgeBox Entries -->
+			<fileset dir="build/forgebox" />
+			<!-- ForgeBox Entries -->
+			<fileset dir="${dir.forgeboxbuild}" />
 		</replaceregexp>
 		
 		<!-- Activate DSN Creator link -->
@@ -376,6 +402,7 @@
 			<equals arg1="$isTravis" arg2="false" />
 			<then>
 				<delete dir="${dir.build}" />
+				<delete dir="${dir.forgeboxbuild}" />
 			</then>
 		</if>
     </target>

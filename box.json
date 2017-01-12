@@ -6,7 +6,7 @@
     "slug":"contentbox",
     "type":"cms",
     "keywords":"cms,content management,modular cms",
-    "homepage":"https://www.ortussolutions.com/products/contentbox",
+    "homepage":"https://www.contentboxcms.org",
     "documentation":"https://contentbox.ortusbooks.com",
     "repository":{
         "type":"git",
@@ -15,16 +15,6 @@
     "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
     "shortDescription":"A Modular Content Management System",
     "createPackageDirectory":false,
-    "engines":[
-        {
-            "type":"lucee",
-            "version":">4.5"
-        },
-        {
-            "type":"adobe",
-            "version":">10"
-        }
-    ],
     "license":[
         {
             "type":"Apache2",

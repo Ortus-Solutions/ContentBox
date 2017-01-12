@@ -1,0 +1,30 @@
+{
+    "name":"ContentBox Modular CMS Beta Update Channel",
+    "version":"3.1.0",
+    "location":"https://integration.stg.ortussolutions.com/artifacts/ortussolutions/contentbox/contentbox-patch-be.zip",
+    "author":"Ortus Solutions <info@ortussolutions.com>",
+    "slug":"contentbox-beta-updates",
+    "type":"cms",
+    "keywords":"cms,content management,modular cms",
+    "homepage":"https://www.contentboxcms.org",
+    "documentation":"https://contentbox.ortusbooks.com",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/Ortus-Solutions/ContentBox"
+    },
+    "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
+    "shortDescription":"The beta update channel for ContentBox Modular CMS",
+    "createPackageDirectory":false,
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "dependencies":{
+    },
+    "installPaths":{
+    },
+    "devDependencies":{
+    }
+}
