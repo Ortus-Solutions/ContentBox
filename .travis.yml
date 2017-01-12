@@ -53,7 +53,6 @@ deploy:
     branch: 
       - development
       - master
-    condition: "$ENGINE = lucee@4.5"
   skip_cleanup: true
   provider: s3
   access_key_id: $AWS_ACCESS_KEY
