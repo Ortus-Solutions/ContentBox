@@ -53,16 +53,16 @@ component {
 	* pre installation:
 	* This happens before file removals and file updates. Last chance before code changes.
 	*/
-	function preInstallation(){
+	function preInstallation( required log ){
 		try{
 
-			log.info("About to begin #version# patching");
+			arguments.log.append("About to begin #version# patching");
 
-			log.info( "Finalized #version# preInstallation patching" );
+			arguments.log.append( "Finalized #version# preInstallation patching" );
 		}
 		catch(Any e){
 			ORMClearSession();
-			log.error( "Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e );
+			arguments.log.append( "Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e );
 			rethrow;
 		}
 
@@ -95,7 +95,7 @@ component {
 			
 		} catch( Any e ) {
 			ORMClearSession();
-			log.error( "Error doing #version# patch postInstallation. #e.message# #e.detail#", e );
+			arguments.log.append( "Error doing #version# patch postInstallation. #e.message# #e.detail#", e );
 			rethrow;
 		}
 	}
